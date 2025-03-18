@@ -83,61 +83,58 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
       listen: false,
     );
 
-    return Consumer<PlaylistListVM>(
-      builder: (
-        context,
-        playlistListVMlistenTrue,
-        child,
-      ) {
-        return ListTile(
-          leading: IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {
-              _buildPlaylistItemMenu(
-                context: context,
-                playlistListVMlistenTrue: playlistListVMlistenTrue,
-                audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-                warningMessageVMlistenFalse: warningMessageVMlistenFalse,
-              );
-            },
-          ),
-          title: Text(playlist.title),
-          trailing: Checkbox(
-            key: const Key('playlist_checkbox_key'),
-            value: playlist.isSelected,
-            onChanged: (value) async {
-              if (toggleListIfSelected) {
-                // true in the audio player view. If a playlist is
-                // selected, the playlist list is toggled (reduced)
-                // and the new selected playlist current listenable
-                // audio is set in the audio player view.
-                playlistListVMlistenTrue.togglePlaylistsList();
+    final PlaylistListVM playlistListVMlistenFalse =
+        Provider.of<PlaylistListVM>(
+      context,
+      listen: false,
+    );
 
-                // If another playlist is selected in the audio
-                // player view while the current audio is playing,
-                // then the current audio is paused.
-                if (audioPlayerVMlistenFalse.isPlaying) {
-                  await audioPlayerVMlistenFalse.pause();
-                }
-              }
+    return ListTile(
+      leading: IconButton(
+        icon: const Icon(Icons.menu),
+        onPressed: () {
+          _buildPlaylistItemMenu(
+            context: context,
+            playlistListVMlistenFalse: playlistListVMlistenFalse,
+            audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+            warningMessageVMlistenFalse: warningMessageVMlistenFalse,
+          );
+        },
+      ),
+      title: Text(playlist.title),
+      trailing: Checkbox(
+        key: const Key('playlist_checkbox_key'),
+        value: playlist.isSelected,
+        onChanged: (value) async {
+          if (toggleListIfSelected) {
+            // true in the audio player view. If a playlist is
+            // selected, the playlist list is toggled (reduced)
+            // and the new selected playlist current listenable
+            // audio is set in the audio player view.
+            playlistListVMlistenFalse.togglePlaylistsList();
 
-              playlistListVMlistenTrue.setPlaylistSelection(
-                playlistSelectedOrUnselected: playlist,
-                isPlaylistSelected: value!,
-              );
+            // If another playlist is selected in the audio
+            // player view while the current audio is playing,
+            // then the current audio is paused.
+            if (audioPlayerVMlistenFalse.isPlaying) {
+              await audioPlayerVMlistenFalse.pause();
+            }
+          }
 
-              await audioPlayerVMlistenFalse
-                  .setCurrentAudioFromSelectedPlaylist();
-            },
-          ),
-        );
-      },
+          playlistListVMlistenFalse.setPlaylistSelection(
+            playlistSelectedOrUnselected: playlist,
+            isPlaylistSelected: value!,
+          );
+
+          await audioPlayerVMlistenFalse.setCurrentAudioFromSelectedPlaylist();
+        },
+      ),
     );
   }
 
   void _buildPlaylistItemMenu({
     required BuildContext context,
-    required PlaylistListVM playlistListVMlistenTrue,
+    required PlaylistListVM playlistListVMlistenFalse,
     required AudioPlayerVM audioPlayerVMlistenFalse,
     required WarningMessageVM warningMessageVMlistenFalse,
   }) {
@@ -255,20 +252,20 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 return PlaylistInfoDialog(
                   settingsDataService: settingsDataService,
                   playlist: playlist,
-                  playlistJsonFileSize: playlistListVMlistenTrue
+                  playlistJsonFileSize: playlistListVMlistenFalse
                       .getPlaylistJsonFileSize(playlist: playlist),
                 );
               },
             );
             break;
           case PlaylistPopupMenuAction.displayPlaylistAudioComments:
-            if (playlistListVMlistenTrue.getSelectedPlaylists().isEmpty ||
-                playlistListVMlistenTrue.getSelectedPlaylists()[0] !=
+            if (playlistListVMlistenFalse.getSelectedPlaylists().isEmpty ||
+                playlistListVMlistenFalse.getSelectedPlaylists()[0] !=
                     playlist) {
               // the case if the user opens the playlist audio
               // comment dialog on a playlist which is not currently
               // selected
-              playlistListVMlistenTrue.setPlaylistSelection(
+              playlistListVMlistenFalse.setPlaylistSelection(
                 playlistSelectedOrUnselected: playlist,
                 isPlaylistSelected: true,
               );
@@ -342,7 +339,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             break;
           case PlaylistPopupMenuAction.updatePlaylistPlayableAudios:
             int removedPlayableAudioNumber =
-                playlistListVMlistenTrue.updatePlayableAudioLst(
+                playlistListVMlistenFalse.updatePlayableAudioLst(
               playlist: playlist,
             );
 
@@ -355,7 +352,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             break;
           case PlaylistPopupMenuAction.rewindAudioToStart:
             int rewindedPlayableAudioNumber =
-                playlistListVMlistenTrue.rewindPlayableAudioToStart(
+                playlistListVMlistenFalse.rewindPlayableAudioToStart(
               audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
               playlist: playlist,
             );
@@ -398,7 +395,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 // value is null if clicking on Cancel or if the dialog
                 // is dismissed by clicking outside the dialog.
 
-                playlistListVMlistenTrue
+                playlistListVMlistenFalse
                     .updateIndividualPlaylistAndOrAlreadyDownloadedAudioPlaySpeed(
                   audioPlaySpeed: value[0] as double,
                   playlist: playlist,
@@ -411,7 +408,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             // Show the submenu for filtered audio actions
             _showFilteredAudioActionsMenu(
               context: context,
-              playlistListVMlistenTrue: playlistListVMlistenTrue,
+              playlistListVMlistenFalse: playlistListVMlistenFalse,
               warningMessageVMlistenFalse: warningMessageVMlistenFalse,
             );
             break;
@@ -424,7 +421,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 return ConfirmActionDialog(
                   actionFunction: deletePlaylist,
                   actionFunctionArgs: [
-                    playlistListVMlistenTrue,
+                    playlistListVMlistenFalse,
                     playlist,
                   ],
                   dialogTitleOne: _createDeletePlaylistDialogTitle(context),
@@ -445,7 +442,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
 
   void _showFilteredAudioActionsMenu({
     required BuildContext context,
-    required PlaylistListVM playlistListVMlistenTrue,
+    required PlaylistListVM playlistListVMlistenFalse,
     required WarningMessageVM warningMessageVMlistenFalse,
   }) {
     final RenderBox box = context.findRenderObject() as RenderBox;
@@ -528,7 +525,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               }
 
               String selectedPlaylistAudioSortFilterParmsName =
-                  playlistListVMlistenTrue
+                  playlistListVMlistenFalse
                       .getSelectedPlaylistAudioSortFilterParmsNameForView(
                           audioLearnAppViewType:
                               AudioLearnAppViewType.playlistDownloadView,
@@ -558,7 +555,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               //    movedCommentedAudioNumber,
               //    unmovedAudioNumber,
               //  ]
-              List<int> movedUnmovedAudioNumberLst = playlistListVMlistenTrue
+              List<int> movedUnmovedAudioNumberLst = playlistListVMlistenFalse
                   .moveSortFilteredAudioAndCommentAndPictureLstToPlaylist(
                 targetPlaylist: targetPlaylist,
               );
@@ -604,7 +601,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               }
 
               String selectedPlaylistAudioSortFilterParmsName =
-                  playlistListVMlistenTrue
+                  playlistListVMlistenFalse
                       .getSelectedPlaylistAudioSortFilterParmsNameForView(
                           audioLearnAppViewType:
                               AudioLearnAppViewType.playlistDownloadView,
@@ -634,7 +631,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               //    copiedCommentedAudioNumber,
               //    notCopiedAudioNumber,
               //  ]
-              List<int> copiedNotCopiedAudioNumberLst = playlistListVMlistenTrue
+              List<int> copiedNotCopiedAudioNumberLst = playlistListVMlistenFalse
                   .copySortFilteredAudioAndCommentAndPictureLstToPlaylist(
                 targetPlaylist: targetPlaylist,
               );
@@ -661,11 +658,11 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             //    deletedAudioDurationTenthSec,
             //  ]
             List<int> deletedAudioNumberLst =
-                playlistListVMlistenTrue.getFilteredAudioQuantities();
+                playlistListVMlistenFalse.getFilteredAudioQuantities();
 
             int numberOfDeletedCommentedAudio = deletedAudioNumberLst[1];
             String selectedPlaylistAudioSortFilterParmsName =
-                playlistListVMlistenTrue
+                playlistListVMlistenFalse
                     .getSelectedPlaylistAudioSortFilterParmsNameForView(
                         audioLearnAppViewType:
                             AudioLearnAppViewType.playlistDownloadView,
@@ -688,12 +685,12 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   return ConfirmActionDialog(
                     actionFunction: deleteFilteredAudioAndCommentAndPictureLst,
                     actionFunctionArgs: [
-                      playlistListVMlistenTrue,
+                      playlistListVMlistenFalse,
                     ],
                     dialogTitleOne: AppLocalizations.of(context)!
                         .deleteFilteredAudioConfirmationTitle(
                       selectedPlaylistAudioSortFilterParmsName,
-                      playlistListVMlistenTrue.getSelectedPlaylists()[0].title,
+                      playlistListVMlistenFalse.getSelectedPlaylists()[0].title,
                     ),
                     dialogContent: AppLocalizations.of(context)!
                         .deleteFilteredAudioConfirmation(
@@ -766,14 +763,14 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   return ConfirmActionDialog(
                     actionFunction: deleteFilteredAudioAndCommentAndPictureLst,
                     actionFunctionArgs: [
-                      playlistListVMlistenTrue,
+                      playlistListVMlistenFalse,
                     ],
                     dialogTitleOne: AppLocalizations.of(context)!
                         .deleteFilteredCommentedAudioWarningTitleOne,
                     dialogTitleTwo: AppLocalizations.of(context)!
                         .deleteFilteredCommentedAudioWarningTitleTwo(
                       selectedPlaylistAudioSortFilterParmsName,
-                      playlistListVMlistenTrue.getSelectedPlaylists()[0].title,
+                      playlistListVMlistenFalse.getSelectedPlaylists()[0].title,
                     ),
                     dialogContent: AppLocalizations.of(context)!
                         .deleteFilteredCommentedAudioWarning(
@@ -802,9 +799,9 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             //    deletedAudioDurationTenthSec,
             //  ]
             List<int> deletedAudioNumberLst =
-                playlistListVMlistenTrue.getFilteredAudioQuantities();
+                playlistListVMlistenFalse.getFilteredAudioQuantities();
             String selectedPlaylistAudioSortFilterParmsName =
-                playlistListVMlistenTrue
+                playlistListVMlistenFalse
                     .getSelectedPlaylistAudioSortFilterParmsNameForView(
                         audioLearnAppViewType:
                             AudioLearnAppViewType.playlistDownloadView,
@@ -826,12 +823,12 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 return ConfirmActionDialog(
                   actionFunction: deleteFilteredAudioLstFromPlaylistAsWell,
                   actionFunctionArgs: [
-                    playlistListVMlistenTrue,
+                    playlistListVMlistenFalse,
                   ],
                   dialogTitleOne: AppLocalizations.of(context)!
                       .deleteFilteredAudioFromPlaylistAsWellConfirmationTitle(
                     selectedPlaylistAudioSortFilterParmsName,
-                    playlistListVMlistenTrue.getSelectedPlaylists()[0].title,
+                    playlistListVMlistenFalse.getSelectedPlaylists()[0].title,
                   ),
                   dialogContent: AppLocalizations.of(context)!
                       .deleteFilteredAudioConfirmation(
@@ -859,10 +856,9 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 listen: false,
               );
               List<int> redownloadAudioNumberLst =
-                  await playlistListVMlistenTrue
-                      .redownloadSortFilteredAudioLst(
-                        audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-                      );
+                  await playlistListVMlistenFalse.redownloadSortFilteredAudioLst(
+                audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+              );
 
               if (redownloadAudioNumberLst.isNotEmpty) {
                 warningMessageVMlistenFalse.redownloadAudioNumberConfirmation(
@@ -960,10 +956,10 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
   /// playlist. This method is called when the user clicks on the
   /// 'Confirm' button.
   void deletePlaylist(
-    PlaylistListVM playlistListVM,
+    PlaylistListVM playlistListVMlistenFalse,
     Playlist playlistToDelete,
   ) {
-    playlistListVM.deletePlaylist(
+    playlistListVMlistenFalse.deletePlaylist(
       playlistToDelete: playlistToDelete,
     );
   }
