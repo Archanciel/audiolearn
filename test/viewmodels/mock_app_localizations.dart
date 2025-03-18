@@ -1876,4 +1876,8 @@ class MockAppLocalizations extends AppLocalizations {
     Object exceptionMessage,
   ) =>
       "Error downloading audio from Youtube: \"$exceptionMessage\"";
+
+  @override
+  String get clearPlaylistUrlOrSearchButtonTooltip =>
+      "Clear Youtube link or sentence field.";
 }

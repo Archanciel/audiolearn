@@ -295,6 +295,7 @@
   "downloadSingleVideoButtonTooltip": "Télécharger l'audio de la vidéo.\n\nPour télécharger l'audio d'une vidéo Youtube, entrez son URL dans le champ \"Lien Youtube\" et cliquez sur le bouton Un. Vous devez ensuite choisir à quelle playlist l'audio sera ajouté.",
   "addPlaylistButtonTooltip": "Ajouter une playlist Youtube ou locale.\n\nPour ajouter une playlist Youtube, entrez son URL dans le champ \"Lien Youtube\" et cliquez sur le bouton Ajout. IMPORTANT: pour qu'une playlist Youtube puisse être téléchargée par l'application, sa confidentialité ne doit pas être \"Privée\", mais \"Non répertoriée\" ou \"Publique\".\n\nPour définir une playlist locale, cliquez sur le bouton Ajout alors que le champ \"Lien Youtube\" est vide.",
   "stopDownloadingButtonTooltip": "Stopper le téléchargement ...",
+  "clearPlaylistUrlOrSearchButtonTooltip": "Effacer le champ \"Lien Youtube ou recherche\".",
   "playlistToggleButtonInPlaylistDownloadViewTooltip": "Afficher/masquer les playlists.",
   "downloadSelPlaylistsButtonTooltip": "Télécharger les audio's de la playlist sélectionnée.",
   "audioOneSelectedDialogTitle": "Sélectionnez un\naudio",

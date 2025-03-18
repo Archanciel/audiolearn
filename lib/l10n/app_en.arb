@@ -277,6 +277,7 @@
   "downloadSingleVideoButtonTooltip": "Download single video audio.\n\nTo download a single video audio, enter its URL in the \"Youtube Link\" field and click the One button. You then have to select the playlist to which the audio will be added.",
   "addPlaylistButtonTooltip": "Add a Youtube or local playlist.\n\nTo add a Youtube playlist, enter its URL in the \"Youtube Link\" field and click the Add button. IMPORTANT: for a Youtube playlist to be downloaded by the app, its privacy setting must not be \"Private\" but \"Unlisted\" or \"Public\".\n\nTo set up a local playlist, click the Add button while the \"Youtube Link\" field is empty.",
   "stopDownloadingButtonTooltip": "Stop downloading ...",
+  "clearPlaylistUrlOrSearchButtonTooltip": "Clear \"Youtube link or sentence\" field.",
   "playlistToggleButtonInPlaylistDownloadViewTooltip": "Show/hide playlists.",
   "downloadSelPlaylistsButtonTooltip": "Download audio's of the selected playlist.",
   "audioOneSelectedDialogTitle": "Select an audio",
