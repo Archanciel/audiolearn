@@ -1301,9 +1301,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           ),
           _buildDownloadSingleVideoButton(
             context: context,
-            audioDownloadVMlistenFalse: audioDownloadVMlistenFalse,
             themeProviderVM: themeProviderVM,
             playlistListVMlistenFalse: playlistListVMlistenFalse,
+            audioDownloadVMlistenFalse: audioDownloadVMlistenFalse,
             warningMessageVMlistenFalse: warningMessageVMlistenFalse,
           ),
           const SizedBox(
@@ -1311,6 +1311,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           ),
           _buildStopOrDeleteButton(
             context: context,
+            playlistListVMlistenFalse: playlistListVMlistenFalse,
             audioDownloadVMlistenFalse: audioDownloadVMlistenFalse,
             themeProviderVM: themeProviderVM,
           ),
@@ -1597,6 +1598,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
   SizedBox _buildStopOrDeleteButton({
     required BuildContext context,
+    required PlaylistListVM playlistListVMlistenFalse,
     required AudioDownloadVM audioDownloadVMlistenFalse,
     required ThemeProviderVM themeProviderVM,
   }) {
@@ -1671,7 +1673,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             key: const Key('clearPlaylistUrlOrSearchButtonKey'),
             onPressed: () {
               _playlistUrlOrSearchController.clear();
-              setState(() {});
+
+              // Disables the search button and call notifyListeners()
+              playlistListVMlistenFalse.disableSearchSentence();
             },
             style: ButtonStyle(
               // Highlight button when pressed
@@ -1693,9 +1697,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
   SizedBox _buildDownloadSingleVideoButton({
     required BuildContext context,
-    required AudioDownloadVM audioDownloadVMlistenFalse,
     required ThemeProviderVM themeProviderVM,
     required PlaylistListVM playlistListVMlistenFalse,
+    required AudioDownloadVM audioDownloadVMlistenFalse,
     required WarningMessageVM warningMessageVMlistenFalse,
   }) {
     return SizedBox(
@@ -1926,9 +1930,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 if (value.isEmpty ||
                     value.toLowerCase().contains('https://') ||
                     value.toLowerCase().contains('http://')) {
-                  if (playlistListVMlistenTrue.isSearchButtonEnabled) {
                     playlistListVMlistenTrue.disableSearchSentence();
-                  }
                 } else {
                   playlistListVMlistenTrue.isSearchButtonEnabled = true;
                 }

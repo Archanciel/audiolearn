@@ -712,9 +712,11 @@ void main() {
         // the changed displayed audio list. Since the search button was used,
         // modifying the search text applies at each search text change. Then,
         // delete the 'l' letter, then, empty the youtubeUrlOrSearchTextField
-        // and verify that the search icon button is disabled. Finally, enters a
+        // and verify that the search icon button is disabled. Then, enters a
         // letter and verify it has no impact since the search button was not
-        // pressed again.
+        // pressed again. Finally, re-enter the 2 first letters of the 'al' search
+        // word, verify the reduced displayed playlist list then click on the
+        // delete button and verify the result.
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName:
@@ -730,9 +732,34 @@ void main() {
           //                                     contain a search word or sentence
         );
 
+        // Verify the presence of the disabled stop button
+        IntegrationTestUtil.verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr:
+              'stopDownloadingButton', // this button is disabled if the
+          //                                     'Youtube Link or Search' dosn't
+          //                                     contain a search word or sentence
+        );
+
+        // Now add the first 2 letters of the 'al' search word
         List<String> playlistsTitles =
             await _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
           tester: tester,
+        );
+
+        // Verify that the search icon button is enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+        // Verify the presence of the delete button
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr:
+              'clearPlaylistUrlOrSearchButtonKey', // this button is disabled if the
+          //                                     'Youtube Link or Search' dosn't
+          //                                     contain a search word or sentence
         );
 
         // Now add the third letter of the 'al_' search word
@@ -857,8 +884,47 @@ void main() {
           widgetKeyStr: 'search_icon_button',
         );
 
+        // Re-enter the 2 first letters of the 'al' search word
         await _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
           tester: tester,
+        );
+
+        // Now verify the order of the augmented playlist titles
+
+        playlistsTitles = [
+          "local",
+          "local_2",
+        ];
+
+        // Ensure that since the search icon button was now pressed,
+        // the displayed audio list is modified.
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
+        );
+
+        // Now tap on the delete button to empty the search text
+        // field
+        await tester.tap(
+          find.byKey(
+            const Key('clearPlaylistUrlOrSearchButtonKey'),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        // Now verify the order of the augmented playlist titles
+
+        playlistsTitles = [
+          "S8 audio",
+          "local",
+          "local_2",
+        ];
+
+        // Ensure that since the search icon button was now pressed,
+        // the displayed audio list is modified.
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
         // Purge the test playlist directory so that the created test
@@ -879,8 +945,8 @@ void main() {
         // the changed displayed audio list. Since the search button was used,
         // modifying the search text applies at each search text change. Then,
         // delete the 'l' letter, then, enter an https URL in the
-        // youtubeUrlOrSearchTextField
-        // and verify that the search icon button is disabled. Finally, enters a
+        // youtubeUrlOrSearchTextField and verify that the search icon button is
+        // disabled. Finally, enters a
         // letter and verify it has no impact since the search button was not
         // pressed again.
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
@@ -1025,95 +1091,41 @@ void main() {
           widgetKeyStr: 'search_icon_button',
         );
 
-        await _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
+        // Verify that the delete button is now enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
           tester: tester,
+          widgetKeyStr: 'clearPlaylistUrlOrSearchButtonKey',
         );
 
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-      });
-      testWidgets('''Instead of emptying, add http URL. First, enter the search
-           word 'al' in the 'Youtube Link or Search' text field.''',
-          (WidgetTester tester) async {
-        // After entering 'a', verify that the search icon button is now enabled.
-        // Then, enter 'al' search word, click on the enabled search icon button
-        // and verify the reduced displayed playlist list list. Finally, add '_'
-        // to the search word and verify the changed displayed playlist list.
-        //
-        // After that, delete the '_' letter from the 'al_' search word and verify
-        // the changed displayed audio list. Since the search button was used,
-        // modifying the search text applies at each search text change. Then,
-        // delete the 'l' letter, then, enter an http URL in the
-        // youtubeUrlOrSearchTextField
-        // and verify that the search icon button is disabled. Finally, enters a
-        // letter and verify it has no impact since the search button was not
-        // pressed again.
-        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-          tester: tester,
-          savedTestDataDirName:
-              'sort_and_filter_audio_dialog_widget_three_playlists_test',
-          tapOnPlaylistToggleButton: true,
-        );
-
-        // Verify the disabled state of the search icon button
-        IntegrationTestUtil.verifyWidgetIsDisabled(
-          tester: tester,
-          widgetKeyStr: 'search_icon_button', // this button is disabled if the
-          //                                     'Youtube Link or Search' dosn't
-          //                                     contain a search word or sentence
-        );
-
-        List<String> playlistsTitles =
-            await _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
-          tester: tester,
-        );
-
-        // Now add the third letter of the 'al_' search word
+        // Now, click on the delete button to empty the search
+        // text field
         await tester.tap(
           find.byKey(
-            const Key('youtubeUrlOrSearchTextField'),
+            const Key('clearPlaylistUrlOrSearchButtonKey'),
           ),
         );
         await tester.pumpAndSettle();
-        await tester.enterText(
-          find.byKey(
-            const Key('youtubeUrlOrSearchTextField'),
-          ),
-          '_',
-        );
-        await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Verify that the search icon button is still enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
+        // Verify that the search icon button is disabled
+        IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button',
         );
 
-        // And verify the order of the playlist titles. Since
-        // the search icon button was used, modifying the search text
-        // is applied at each search text change
-
-        playlistsTitles = [
-          "local_2",
-        ];
-
-        // Ensure that since the search icon button was used,
-        // the displayed playlist list is modified.
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        // Verify that the stop text button replaced the
+        // delete icon button, but is disabled
+        IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
-          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
+          widgetKeyStr: 'stopDownloadingButton',
         );
 
-        // Verify that the search icon button is still enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
-          tester: tester,
-          widgetKeyStr: 'search_icon_button',
+        // And verify that the search text field is empty
+        expect(
+          (find.byKey(const Key('youtubeUrlOrSearchTextField'))),
+          findsOneWidget,
         );
 
-        // Then erase the third search word letter
+        // Then re-enter a two letters search word
         await tester.tap(
           find.byKey(
             const Key('youtubeUrlOrSearchTextField'),
@@ -1128,36 +1140,20 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Now verify the order of the augmented playlist titles
-
-        playlistsTitles = [
-          "local",
-          "local_2",
-        ];
-
-        // Ensure that since the search icon button was now pressed,
-        // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        // Verify that the search icon button is enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
           tester: tester,
-          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
+          widgetKeyStr: 'search_icon_button',
         );
 
-        // Then erase the second search word letter
-        await tester.tap(
-          find.byKey(
-            const Key('youtubeUrlOrSearchTextField'),
-          ),
+        // Verify that the delete button is enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'clearPlaylistUrlOrSearchButtonKey',
         );
-        await tester.pumpAndSettle();
-        await tester.enterText(
-          find.byKey(
-            const Key('youtubeUrlOrSearchTextField'),
-          ),
-          'a',
-        );
-        await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Now verify the order of the augmented playlist titles
+        // Verify that the playlist titles list was not modified
+        // since the search icon button was not pressed
 
         playlistsTitles = [
           "S8 audio",
@@ -1165,14 +1161,43 @@ void main() {
           "local_2",
         ];
 
-        // Ensure that since the search icon button was now pressed,
-        // the displayed audio list is modified.
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
-        // Now entering https URL instead of search text word
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets('''First, enter 'http' as search word in the 'Youtube Link or
+          Search' text field. This selects the 'http_local' playlist.''',
+          (WidgetTester tester) async {
+        // Then add ':/' to the search sentence. No more playlist are selected,
+        // but the search icon button is still enabled as well as the delete
+        // button. Then, add '/' to the search sentence. The search icon button
+        // is now disabled and the delete button is still enabled. All the
+        // playlist are now displayed since the search button is disabled.
+        // Finally, click on the delete button and verify that the search
+        // sentence is empty and the search icon button is disabled.
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName:
+              'sort_and_filter_audio_dialog_widget_two_playlists_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        // Verify the disabled state of the search icon button
+        IntegrationTestUtil.verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button', // this button is disabled if the
+          //                                     'Youtube Link or Search' dosn't
+          //                                     contain a search word or sentence
+        );
+
+        // Now add the 'http' search word
         await tester.tap(
           find.byKey(
             const Key('youtubeUrlOrSearchTextField'),
@@ -1183,18 +1208,155 @@ void main() {
           find.byKey(
             const Key('youtubeUrlOrSearchTextField'),
           ),
-          'http://www.youtube.com/watch?v=ctD3mbQ7RPk',
+          'http',
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Verify that the search icon button is now disabled
+        // Verify that the search icon button is enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+        // Verify that the delete icon button is enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'clearPlaylistUrlOrSearchButtonKey',
+        );
+
+        // And verify the order of the playlist titles
+        // before tapping on the search icon button.
+
+        List<String> playlistsTitles = [
+          "local",
+          "http_local",
+        ];
+
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
+        );
+
+        // Now tap on the search icon button
+        await tester.tap(find.byKey(const Key('search_icon_button')));
+        await tester.pumpAndSettle();
+
+        // And verify the order of the playlist titles
+        // after tapping on the search icon button.
+
+        playlistsTitles = [
+          "http_local",
+        ];
+
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
+        );
+
+        // Now add the ':/' to the search word
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await tester.enterText(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+          'http:/',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Verify that the search icon button is enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+        // Verify that the delete icon button is enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'clearPlaylistUrlOrSearchButtonKey',
+        );
+
+        // And verify the order of the playlist titles
+        // before tapping on the search icon button.
+
+        playlistsTitles = [
+        ];
+
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
+        );
+
+        // Now add the '/' to the search word
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await tester.enterText(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+          'http://',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Verify that the search icon button is disabled
         IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button',
         );
 
-        await _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
+        // Verify that the delete icon button is enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
           tester: tester,
+          widgetKeyStr: 'clearPlaylistUrlOrSearchButtonKey',
+        );
+
+        // And verify the order of the playlist titles
+        // before tapping on the search icon button.
+
+        playlistsTitles = [
+          "local",
+          "http_local",
+        ];
+
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
+        );
+
+        // Now, click on the delete button to empty the search
+        // text field
+        await tester.tap(
+          find.byKey(
+            const Key('clearPlaylistUrlOrSearchButtonKey'),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        // Verify that the search icon button is disabled
+        IntegrationTestUtil.verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+        // Verify that the stop text button replaced the
+        // delete icon button, but is disabled
+        IntegrationTestUtil.verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr: 'stopDownloadingButton',
+        );
+
+        // And verify that the search text field is empty
+        expect(
+          (find.byKey(const Key('youtubeUrlOrSearchTextField'))),
+          findsOneWidget,
         );
 
         // Purge the test playlist directory so that the created test
@@ -2808,14 +2970,13 @@ void main() {
         appScreenNavigationButton: appScreenNavigationButton,
         doExpandPlaylistList: false,
         playlistToRewindTitle: youtubePlaylistToRewindTitle,
-        audioToPlayTitle:
-            "Les besoins artificiels par R.Keucheyan",
+        audioToPlayTitle: "Les besoins artificiels par R.Keucheyan",
         audioToPlayTitleAndDuration:
             "Les besoins artificiels par R.Keucheyan\n19:05",
         otherAudioTitleToTapOnBeforeRewinding:
-        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         otherAudioTitleToTapOnBeforeRewindingDuration:
-        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n20:32",
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n20:32",
       );
 
       // Now play then pause "Ce qui va vraiment sauver notre espèce
