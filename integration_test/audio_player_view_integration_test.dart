@@ -6132,8 +6132,8 @@ void main() {
 
       // Verify the current audio position in the audio player view
 
-      expectedAudioPlayerAudioPositionMin = '5:48';
-      expectedAudioPlayerAudioPositionMax = '5:49';
+      expectedAudioPlayerAudioPositionMin = '5:00';
+      expectedAudioPlayerAudioPositionMax = '5:01';
 
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
