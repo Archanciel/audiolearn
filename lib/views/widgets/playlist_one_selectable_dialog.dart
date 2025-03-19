@@ -93,8 +93,7 @@ class _PlaylistOneSelectableDialogState
     );
 
     return KeyboardListener(
-      // Using FocusNode to enable clicking on Enter to close
-      // the dialog
+      // Using FocusNode to enable clicking on Enter to close the dialog
       focusNode: _focusNodeDialog,
       onKeyEvent: (event) {
         if (event is KeyDownEvent) {
@@ -114,44 +113,37 @@ class _PlaylistOneSelectableDialogState
           AppLocalizations.of(context)!.playlistOneSelectedDialogTitle,
         ),
         actionsPadding: kDialogActionsPadding,
-        content: SingleChildScrollView(
+        content: Container(
+          width: double.maxFinite,
           child: Column(
             mainAxisSize: MainAxisSize.min, // Use minimum space
             children: [
-              ListView.builder(
-                itemCount: upToDateSelectablePlaylists.length,
-                shrinkWrap: true,
-                itemBuilder: (BuildContext context, int index) {
-                  return RadioListTile<Playlist>(
-                    title: Text(upToDateSelectablePlaylists[index].title),
-                    value: upToDateSelectablePlaylists[index],
-                    groupValue: _selectedPlaylist,
-                    onChanged: (Playlist? value) {
-                      setState(() {
-                        _selectedPlaylist = value;
-                        _downloadSingleVideoAudioAtMusicQuality =
-                            (_selectedPlaylist!.playlistQuality ==
-                                PlaylistQuality.music);
-                      });
-                    },
-                  );
-                },
+              Flexible(
+                child: ListView.builder(
+                  itemCount: upToDateSelectablePlaylists.length,
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, int index) {
+                    return RadioListTile<Playlist>(
+                      title: Text(upToDateSelectablePlaylists[index].title),
+                      value: upToDateSelectablePlaylists[index],
+                      groupValue: _selectedPlaylist,
+                      onChanged: (Playlist? value) {
+                        setState(() {
+                          _selectedPlaylist = value;
+                          _downloadSingleVideoAudioAtMusicQuality =
+                              (_selectedPlaylist!.playlistQuality ==
+                                  PlaylistQuality.music);
+                        });
+                      },
+                    );
+                  },
+                ),
               ),
               (widget.usedFor ==
                           PlaylistOneSelectableDialogUsedFor
                               .moveSingleAudioToPlaylist &&
                       widget.excludedPlaylist!.playlistType ==
-                          PlaylistType.youtube) // when moving an audio
-                  //                               from a playlist, the
-                  //                               excluded playlist is
-                  //                               the source playlist.
-                  //
-                  //                               Adding the checkbox
-                  //                               'keep audio entry in
-                  //                               source playlist' is
-                  //                               useful only if the
-                  //                               source playlist is a
-                  //                               Youtube playlist.
+                          PlaylistType.youtube)
                   ? _buildBottomTextAndCheckboxForMoveAudioToPlaylist(
                       isDarkTheme: isDarkTheme,
                     )
@@ -162,17 +154,13 @@ class _PlaylistOneSelectableDialogState
                           isDarkTheme: isDarkTheme,
                         )
                       : Container(), // here, we are moving an audio from a
-              //                    local playlist or we are copying an
-              //                    audio. In those situations, displaying
-              //                    the keep audio entry in source playlist
-              //                    or at music quality is inadequate.
+              // local playlist or we are copying an audio. In those situations,
+              // displaying the keep audio entry in source playlist or at music
+              // quality is inadequate.
             ],
           ),
         ),
         actions: [
-          // situation of downloading a single video audio. This solves a
-          // bug and is tested by 'Verifying with partial download of single
-          // video audio' integration test
           TextButton(
             key: const Key('confirmButton'),
             onPressed: () {
