@@ -3769,7 +3769,7 @@ void main() {
       Text warningDialogMessage =
           tester.widget(find.byKey(const Key('warningDialogMessage')));
       expect(warningDialogMessage.data,
-          'Local playlist "$localAudioPlaylistTitle" of audio quality added to the end of list of playlists.');
+          'Local playlist "$localAudioPlaylistTitle" of audio quality added to the end of the playlist list.');
 
       // Close the warning dialog by tapping on the Ok button
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));
@@ -18400,10 +18400,10 @@ Future<void> _checkWarningDialog({
 
   if (playlistType == PlaylistType.youtube) {
     expect(warningDialogMessage.data,
-        'Youtube playlist "$playlistTitle" with ${isMusicQuality ? 'music' : 'audio'} quality added to the end of the playlist list.');
+        'Youtube playlist "$playlistTitle" of ${isMusicQuality ? 'music' : 'audio'} quality added to the end of the playlist list.');
   } else {
     expect(warningDialogMessage.data,
-        'Local playlist "$playlistTitle" with ${isMusicQuality ? 'music' : 'audio'} quality added to the end of the playlist list.');
+        'Local playlist "$playlistTitle" of ${isMusicQuality ? 'music' : 'audio'} quality added to the end of the playlist list.');
   }
 
   // Close the warning dialog by tapping on the Ok button

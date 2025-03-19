@@ -79,17 +79,17 @@
       "title": {}
     }
   },
-  "addYoutubePlaylistTitle": "Youtube playlist \"{title}\" with {quality} quality added to the end of the playlist list.",
+  "addYoutubePlaylistTitle": "Youtube playlist \"{title}\" of {quality} quality added to the end of the playlist list.",
   "@addYoutubePlaylistTitle": {
-    "description": "Warning announcing that the playlist was added at end of list of playlists.",
+    "description": "Warning announcing that the playlist was added to the end of the playlist list",
     "placeholders": {
       "title": {},
       "quality": {}
     }
   },
-  "addLocalPlaylistTitle": "Local playlist \"{title}\" of {quality} quality added at end of list of playlists.",
+  "addLocalPlaylistTitle": "Local playlist \"{title}\" of {quality} quality added to the end of the playlist list.",
   "@addLocalPlaylistTitle": {
-    "description": "Warning announcing that the playlist was added at end of list of playlists.",
+    "description": "Warning announcing that the playlist was added to the end of the playlist list.",
     "placeholders": {
       "title": {},
       "quality": {}
