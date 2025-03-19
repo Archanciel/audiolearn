@@ -106,6 +106,15 @@ void main() {
           //                                     contain a search word or sentence
         );
 
+        // Verify the presence of the disabled stop button
+        IntegrationTestUtil.verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr:
+              'stopDownloadingButton', // this button is disabled if the
+          //                                     'Youtube Link or Search' dosn't
+          //                                     contain a search word or sentence
+        );
+
         // Now enter the first letter of the search word
         await tester.tap(
           find.byKey(
@@ -125,6 +134,15 @@ void main() {
         IntegrationTestUtil.verifyWidgetIsEnabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button',
+        );
+
+        // Verify the presence of the delete button
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr:
+              'clearPlaylistUrlOrSearchButtonKey', // this button is disabled if the
+          //                                     'Youtube Link or Search' dosn't
+          //                                     contain a search word or sentence
         );
 
         // Ensure that since the search icon button was not yet pressed,
@@ -325,6 +343,15 @@ void main() {
           widgetKeyStr: 'search_icon_button',
         );
 
+        // Verify the presence of the delete button
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr:
+              'clearPlaylistUrlOrSearchButtonKey', // this button is disabled if the
+          //                                     'Youtube Link or Search' dosn't
+          //                                     contain a search word or sentence
+        );
+
         // And verify the order of the playlist audio titles
 
         audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
@@ -337,6 +364,35 @@ void main() {
           "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Now tap on the delete button to delete the URL in the search
+        // text word
+        await tester.tap(
+          find.byKey(
+            const Key('clearPlaylistUrlOrSearchButtonKey'),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        // Verify that the stop text button replaced the
+        // delete icon button, but is disabled
+        IntegrationTestUtil.verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr: 'stopDownloadingButton',
+        );
+
+        // And verify that the search text field is empty
+        expect(
+          (find.byKey(const Key('youtubeUrlOrSearchTextField'))),
+          findsOneWidget,
+        );
+
+        // And verify the order of the playlist audio titles
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst:
@@ -1283,8 +1339,7 @@ void main() {
         // And verify the order of the playlist titles
         // before tapping on the search icon button.
 
-        playlistsTitles = [
-        ];
+        playlistsTitles = [];
 
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
