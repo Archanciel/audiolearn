@@ -114,31 +114,28 @@ class _PlaylistOneSelectableDialogState
           AppLocalizations.of(context)!.playlistOneSelectedDialogTitle,
         ),
         actionsPadding: kDialogActionsPadding,
-        content: SizedBox(
-          width: double.maxFinite,
+        content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min, // Use minimum space
             children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: upToDateSelectablePlaylists.length,
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    return RadioListTile<Playlist>(
-                      title: Text(upToDateSelectablePlaylists[index].title),
-                      value: upToDateSelectablePlaylists[index],
-                      groupValue: _selectedPlaylist,
-                      onChanged: (Playlist? value) {
-                        setState(() {
-                          _selectedPlaylist = value;
-                          _downloadSingleVideoAudioAtMusicQuality =
-                              (_selectedPlaylist!.playlistQuality ==
-                                  PlaylistQuality.music);
-                        });
-                      },
-                    );
-                  },
-                ),
+              ListView.builder(
+                itemCount: upToDateSelectablePlaylists.length,
+                shrinkWrap: true,
+                itemBuilder: (BuildContext context, int index) {
+                  return RadioListTile<Playlist>(
+                    title: Text(upToDateSelectablePlaylists[index].title),
+                    value: upToDateSelectablePlaylists[index],
+                    groupValue: _selectedPlaylist,
+                    onChanged: (Playlist? value) {
+                      setState(() {
+                        _selectedPlaylist = value;
+                        _downloadSingleVideoAudioAtMusicQuality =
+                            (_selectedPlaylist!.playlistQuality ==
+                                PlaylistQuality.music);
+                      });
+                    },
+                  );
+                },
               ),
               (widget.usedFor ==
                           PlaylistOneSelectableDialogUsedFor
