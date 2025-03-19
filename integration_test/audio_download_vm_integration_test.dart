@@ -143,7 +143,7 @@ Future<void> main() async {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Youtube playlist \"$globalTestPlaylistTitle\" with audio quality added to the end of the playlist list.",
+            "Youtube playlist \"$globalTestPlaylistTitle\" of audio quality added to the end of the playlist list.",
       );
 
       expect(
@@ -299,7 +299,7 @@ Future<void> main() async {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Youtube playlist \"$globalTestPlaylistTitle\" with music quality added to the end of the playlist list.",
+            "Youtube playlist \"$globalTestPlaylistTitle\" of music quality added to the end of the playlist list.",
       );
 
       expect(
