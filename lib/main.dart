@@ -24,7 +24,10 @@ Future<void> main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); // Ensure Flutter bindings are initialized.
 
-  bool isTest = true; // Has no effect on Android app !
+  bool isTest = true; // Has no effect on Android app ! Must be set
+  //                     to false before generating the Windows version
+  //                     of the app so that the app accesses the correct
+  //                     application directory and not the test directory.
   
   // bool deleteAppDir = kDeleteAppDirOnEmulator;
 
@@ -90,7 +93,7 @@ Future<void> _setWindowsAppSizeAndPosition({
 
       // Définissez la largeur et la hauteur de votre fenêtre
       double windowWidth = (isTest) ? 900 : 730;
-      double windowHeight = (isTest) ? 1700 : 1655;
+      double windowHeight = (isTest) ? 1700 : 1355;
 
       // Calculez la position X pour placer la fenêtre sur le côté droit de l'écran
       final double posX = screenRect.right - windowWidth + 10;
