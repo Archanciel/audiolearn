@@ -132,16 +132,10 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
               ),
           ],
         ),
-        content: ConstrainedBox(
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height *
-                0.5, // Limits height to 50% of screen
-          ),
-          child: SingleChildScrollView(
-            child: Text(
-              widget.dialogContent,
-              key: const Key('confirmationDialogMessageKey'),
-            ),
+        content: SingleChildScrollView(
+          child: Text(
+            widget.dialogContent,
+            key: const Key('confirmationDialogMessageKey'),
           ),
         ),
         actions: <Widget>[
