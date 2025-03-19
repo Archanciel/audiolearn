@@ -114,6 +114,7 @@ class _PlaylistOneSelectableDialogState
         ),
         actionsPadding: kDialogActionsPadding,
         content: Container(
+          // Container can not be suppressed
           width: double.maxFinite,
           child: Column(
             mainAxisSize: MainAxisSize.min, // Use minimum space
