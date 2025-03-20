@@ -2523,7 +2523,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Youtube playlist "Essai" with audio quality added to the end of the playlist list.',
+            'Youtube playlist "Essai" of audio quality added to the end of the playlist list.',
         isWarningConfirming: false,
       );
 
@@ -2593,7 +2593,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Youtube playlist "audio_player_view_2_shorts_test" with audio quality added to the end of the playlist list.',
+            'Youtube playlist "audio_player_view_2_shorts_test" of audio quality added to the end of the playlist list.',
         isWarningConfirming: false,
       );
 
