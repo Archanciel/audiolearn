@@ -69,6 +69,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
   String? _selectedSortFilterParametersName;
 
+  bool _doNotScroll = false;
+
   // @override
   // void initState() {
   //   super.initState();
@@ -305,7 +307,15 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       // When an audio is downloading, the list is not scrolled to the
       // current audio item. This enables the newly downloaded audio to
       // be displayed at the top of the audio list.
+      _doNotScroll = true;
+    } else {
+      // necessary, otherwise _selectedSortFilterParametersName will be set
+      // to default after an audio was downloaded. It will not be possible
+      // to add a selected SF parm to the current playlist.
+      _doNotScroll = false;
+    }
 
+    if (_doNotScroll) {
       // In this case, the default sort and filter parameters are applied.
       // This guarantees that the newly downloaded audio will be displayed
       // at the top of the audio list.
