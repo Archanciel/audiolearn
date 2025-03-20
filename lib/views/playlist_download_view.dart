@@ -69,8 +69,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
   String? _selectedSortFilterParametersName;
 
-  bool _doNotScroll = false;
-
   // @override
   // void initState() {
   //   super.initState();
@@ -307,10 +305,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       // When an audio is downloading, the list is not scrolled to the
       // current audio item. This enables the newly downloaded audio to
       // be displayed at the top of the audio list.
-      _doNotScroll = true;
-    }
 
-    if (_doNotScroll) {
       // In this case, the default sort and filter parameters are applied.
       // This guarantees that the newly downloaded audio will be displayed
       // at the top of the audio list.
