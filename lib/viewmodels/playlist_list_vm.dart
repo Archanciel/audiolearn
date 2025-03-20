@@ -458,11 +458,12 @@ class PlaylistListVM extends ChangeNotifier {
 
         return false;
       } catch (_) {
-        // Here, the playlist with this url was not found. This means that
-        // the Youtube playlist must be added. Since the _audioDownloadVM.
-        // addPlaylist() method is asynchronous, the code which uses it can
-        // not be included on the firstWhere.onElse: parameter and instead
-        // is located after this if {...} block.
+        // Here, the playlist with this url was not found in the application
+        // list of playlists. This means that the Youtube playlist must be
+        // added. Since the _audioDownloadVM.addPlaylist() method is
+        // asynchronous, the code which uses it can not be included on the
+        // firstWhere.onElse: parameter and instead is located after this if
+        // {...} block.
       }
     } else if (localPlaylistTitle.isNotEmpty) {
       if (localPlaylistTitle.contains(',')) {
