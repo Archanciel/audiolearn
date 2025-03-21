@@ -631,8 +631,9 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               //    copiedCommentedAudioNumber,
               //    notCopiedAudioNumber,
               //  ]
-              List<int> copiedNotCopiedAudioNumberLst = playlistListVMlistenFalse
-                  .copySortFilteredAudioAndCommentAndPictureLstToPlaylist(
+              List<int> copiedNotCopiedAudioNumberLst =
+                  playlistListVMlistenFalse
+                      .copySortFilteredAudioAndCommentAndPictureLstToPlaylist(
                 targetPlaylist: targetPlaylist,
               );
 
@@ -856,7 +857,8 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 listen: false,
               );
               List<int> redownloadAudioNumberLst =
-                  await playlistListVMlistenFalse.redownloadSortFilteredAudioLst(
+                  await playlistListVMlistenFalse
+                      .redownloadSortFilteredAudioLst(
                 audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
               );
 
@@ -871,6 +873,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               //   the no internet warning thrown by AudioDownloadVM.
               //   notifyDownloadError() can be displayed..
             });
+
             break;
         }
       }
