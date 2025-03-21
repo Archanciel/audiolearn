@@ -85,8 +85,6 @@ class PlaylistListVM extends ChangeNotifier {
 
   final Map<String, String>
       _playlistAudioSFparmsNamesForPlaylistDownloadViewMap = {};
-  get playlistAudioSFparmsNamesForPlaylistDownloadViewMap =>
-      _playlistAudioSFparmsNamesForPlaylistDownloadViewMap;
 
   final Map<String, String> _playlistAudioSFparmsNamesForAudioPlayerViewMap =
       {};
@@ -1029,6 +1027,17 @@ class PlaylistListVM extends ChangeNotifier {
     List<Audio> filteredAudioToRedownload =
         _sortedFilteredSelectedPlaylistPlayableAudioLst!;
 
+    // Storing the sort/filter parameters name of the selected
+    // playlist before redownloading the audio. This name will be
+    // used to restore the sort/filter parameters name after the
+    // audio were redownloaded. This enables PlaylistDownloadView.
+    // _buildExpandedAudioList() to display the empty sort/filter 
+    // audio list instead of the full default SF audio list.
+    String sortFilterParmsName =
+        _playlistAudioSFparmsNamesForPlaylistDownloadViewMap[
+                _uniqueSelectedPlaylist!.title] ??
+            '';
+
     List<dynamic> resultLst =
         await _audioDownloadVM.redownloadPlaylistFilteredAudio(
       targetPlaylist: _uniqueSelectedPlaylist!,
@@ -1036,6 +1045,10 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     int existingAudioFilesNotRedownloadedCount = resultLst[0];
+
+    // Restoring the sort/filter parameters name ...
+    _playlistAudioSFparmsNamesForPlaylistDownloadViewMap[
+        _uniqueSelectedPlaylist!.title] = sortFilterParmsName;
 
     notifyListeners();
 
@@ -1065,6 +1078,24 @@ class PlaylistListVM extends ChangeNotifier {
     }
   }
 
+  void setSortFilterParmsNameForSelectedPlaylist({
+    required AudioLearnAppViewType audioLearnAppViewType,
+    required String audioSortFilterParmsName,
+  }) {
+    List<Playlist> selectedPlaylists = getSelectedPlaylists();
+
+    if (audioLearnAppViewType == AudioLearnAppViewType.playlistDownloadView) {
+      _playlistAudioSFparmsNamesForPlaylistDownloadViewMap[
+          selectedPlaylists[0].title] = audioSortFilterParmsName;
+    } else {
+      // for AudioLearnAppViewType.audioPlayerView
+      _playlistAudioSFparmsNamesForAudioPlayerViewMap[
+          selectedPlaylists[0].title] = audioSortFilterParmsName;
+    }
+
+    notifyListeners();
+  }
+
   /// This method is called when the user executes the audio list item menu
   /// 'Redownload deleted Audio' or the audio player view left appbar menu of the
   /// same name. Once the file is redownloaded, its name is set to the initial
@@ -1081,11 +1112,26 @@ class PlaylistListVM extends ChangeNotifier {
   }) async {
     List<Audio> filteredAudioToRedownload = [audio];
 
+    // Storing the sort/filter parameters name of the selected
+    // playlist before redownloading the audio. This name will be
+    // used to restore the sort/filter parameters name after the
+    // audio were redownloaded. This enables PlaylistDownloadView.
+    // _buildExpandedAudioList() to display sort/filtered audio
+    // list instead of the full default SF audio list.
+    String sortFilterParmsName =
+        _playlistAudioSFparmsNamesForPlaylistDownloadViewMap[
+                _uniqueSelectedPlaylist!.title] ??
+            '';
+
     List<dynamic> resultLst =
         await _audioDownloadVM.redownloadPlaylistFilteredAudio(
       targetPlaylist: _uniqueSelectedPlaylist!,
       filteredAudioToRedownload: filteredAudioToRedownload,
     );
+
+    // Restoring the sort/filter parameters name ...
+    _playlistAudioSFparmsNamesForPlaylistDownloadViewMap[
+        _uniqueSelectedPlaylist!.title] = sortFilterParmsName;
 
     notifyListeners();
 
@@ -1309,6 +1355,7 @@ class PlaylistListVM extends ChangeNotifier {
   List<Audio> getSelectedPlaylistPlayableAudioApplyingSortFilterParameters({
     required AudioLearnAppViewType audioLearnAppViewType,
     AudioSortFilterParameters? passedAudioSortFilterParameters,
+    String passedAudioSortFilterParametersName = '',
   }) {
     List<Playlist> selectedPlaylists = getSelectedPlaylists();
 
@@ -1327,16 +1374,20 @@ class PlaylistListVM extends ChangeNotifier {
 
     // trying to obtain the sort and filter parameters name saved in the
     // view type PlaylistListVM map for the selected playlist
-    if (audioLearnAppViewType == AudioLearnAppViewType.playlistDownloadView) {
-      selectedPlaylistSortFilterParmsName =
-          _playlistAudioSFparmsNamesForPlaylistDownloadViewMap[
-                  selectedPlaylistTitle] ??
-              '';
+    if (passedAudioSortFilterParametersName.isEmpty) {
+      if (audioLearnAppViewType == AudioLearnAppViewType.playlistDownloadView) {
+        selectedPlaylistSortFilterParmsName =
+            _playlistAudioSFparmsNamesForPlaylistDownloadViewMap[
+                    selectedPlaylistTitle] ??
+                '';
+      } else {
+        selectedPlaylistSortFilterParmsName =
+            _playlistAudioSFparmsNamesForAudioPlayerViewMap[
+                    selectedPlaylistTitle] ??
+                '';
+      }
     } else {
-      selectedPlaylistSortFilterParmsName =
-          _playlistAudioSFparmsNamesForAudioPlayerViewMap[
-                  selectedPlaylistTitle] ??
-              '';
+      selectedPlaylistSortFilterParmsName = passedAudioSortFilterParametersName;
     }
 
     // if the user has not selected a sort and filter parameters for the
