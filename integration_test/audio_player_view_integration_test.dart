@@ -3848,11 +3848,11 @@ void main() {
       // Now tap on the pause comment icon button to stop playing
       // the comment
       await tester.tap(find.byKey(const Key('playPauseIconButton')));
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-      await tester.pumpAndSettle(const Duration(milliseconds: 1000));
+      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
 
       // check the current audio's changed position
       final Finder audioPlayerViewAudioPositionFinder =
