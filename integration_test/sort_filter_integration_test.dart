@@ -9188,6 +9188,268 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
       });
+      group(
+          '''After downloading a playlist video, saving a named sort/filter parms
+               to playlist views. This tests a bug fix.''', () {
+        testWidgets(
+            '''Select a sort/filter named parms in the dropdown button list and then
+             save it to the current playlist after having downloaded an audio.''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_newly_downloaded_playlist_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
+              tester: tester);
+
+          // Now, tap on the 'Download' button to download the playlist
+          await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
+          await tester.pumpAndSettle();
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'desc listened' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text('desc listened');
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // And verify the order of the playlist audio titles
+
+          List<String> audioTitlesSortedByDateTimeListenedDescending = [
+            "Les besoins artificiels par R.Keucheyan",
+            "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+            "La résilience insulaire par Fiona Roche",
+            "La surpopulation mondiale par Jancovici et Barrau",
+            // "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst:
+                audioTitlesSortedByDateTimeListenedDescending,
+          );
+
+          String saveAsTitle = 'Desc listened';
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type "Desc listened" in the 'Save as' TextField
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle();
+
+          // Now select the 'Last listened date/time' item in the 'Sort by'
+          // dropdown button
+
+          await tester
+              .tap(find.byKey(const Key('sortingOptionDropdownButton')));
+          await tester.pumpAndSettle();
+
+          await tester.tap(find.text('Last listened date/time'));
+          await tester.pumpAndSettle();
+
+          // Then delete the "Audio download date" descending sort option
+
+          // Find the Text with "Audio downl date" which is located in the
+          // selected sort parameters ListView
+          Finder textFinder = find.descendant(
+            of: find.byKey(const Key('selectedSortingOptionsListView')),
+            matching: find.text('Audio downl date'),
+          );
+
+          // Then find the ListTile ancestor of the 'Audio downl date' Text
+          // widget. The ascending/descending and remove icon buttons are
+          // contained in their ListTile ancestor
+          Finder listTileFinder = find.ancestor(
+            of: textFinder,
+            matching: find.byType(ListTile),
+          );
+
+          // Now, within that ListTile, find the sort option delete IconButton
+          // with key 'removeSortingOptionIconButton'
+          Finder iconButtonFinder = find.descendant(
+            of: listTileFinder,
+            matching: find.byKey(const Key('removeSortingOptionIconButton')),
+          );
+
+          // Tap on the delete icon button to delete the 'Audio downl date'
+          // descending sort option
+          await tester.tap(iconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Now verify the playlist download view state with the 'Desc listened'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'Desc listened' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst:
+                audioTitlesSortedByDateTimeListenedDescending,
+          );
+
+          // Creating a Asc listened sort/filter parms
+
+          // open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type "Asc listened" in the 'Save as' TextField
+
+          saveAsTitle = 'Asc listened';
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle();
+
+          // Now select the 'Last listened date/time' item in the 'Sort by'
+          // dropdown button
+
+          await tester
+              .tap(find.byKey(const Key('sortingOptionDropdownButton')));
+          await tester.pumpAndSettle();
+
+          await tester.tap(find.text('Last listened date/time'));
+          await tester.pumpAndSettle();
+
+          // Find the Text with 'Last listened date/time' which is located
+          // in the selected sort parameters ListView
+          textFinder = find.descendant(
+            of: find.byKey(const Key('selectedSortingOptionsListView')),
+            matching: find.text('Last listened date/time'),
+          );
+
+          // Convert descending to ascending sort order of 'Last listened date/time'.
+          await invertSortingItemOrder(
+            tester: tester,
+            sortingItemName: 'Last listened date/time',
+          );
+
+          // Then delete the "Audio download date" descending sort option
+
+          // Find the Text with "Audio downl date" which is located in the
+          // selected sort parameters ListView
+          textFinder = find.descendant(
+            of: find.byKey(const Key('selectedSortingOptionsListView')),
+            matching: find.text('Audio downl date'),
+          );
+
+          // Then find the ListTile ancestor of the 'Audio downl date' Text
+          // widget. The ascending/descending and remove icon buttons are
+          // contained in their ListTile ancestor
+          listTileFinder = find.ancestor(
+            of: textFinder,
+            matching: find.byType(ListTile),
+          );
+
+          // Now, within that ListTile, find the sort option delete IconButton
+          // with key 'removeSortingOptionIconButton'
+          iconButtonFinder = find.descendant(
+            of: listTileFinder,
+            matching: find.byKey(const Key('removeSortingOptionIconButton')),
+          );
+
+          // Tap on the delete icon button to delete the 'Audio downl date'
+          // descending sort option
+          await tester.tap(iconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Now verify the playlist download view state with the 'Asc listened'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'Asc listened' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          List<String> audioTitlesSortedByDateTimeListenedAscending = [
+            "La surpopulation mondiale par Jancovici et Barrau",
+            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+            "La résilience insulaire par Fiona Roche",
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+            "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+            // "Les besoins artificiels par R.Keucheyan",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst:
+                audioTitlesSortedByDateTimeListenedAscending,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+      });
       group('Deleting saved to playlist named sort/filter parms', () {
         testWidgets(
             '''Delete saved to playlist named sort/filter bug fix verification:
