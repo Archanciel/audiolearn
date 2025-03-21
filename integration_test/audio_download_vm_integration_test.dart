@@ -79,7 +79,8 @@ Future<void> main() async {
       );
     });
 
-    testWidgets('Playlist 2 short audio in spoken quality: playlist dir not exist',
+    testWidgets(
+        'Playlist 2 short audio in spoken quality: playlist dir not exist',
         (WidgetTester tester) async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
@@ -230,7 +231,8 @@ Future<void> main() async {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('Playlist 2 short audio in music quality: playlist dir not exist',
+    testWidgets(
+        'Playlist 2 short audio in music quality: playlist dir not exist',
         (WidgetTester tester) async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
@@ -277,8 +279,8 @@ Future<void> main() async {
       expect(confirmUrlText.data, globalTestPlaylistUrl);
 
       // Set the music quality checkbox to true
-      await tester.tap(find.byKey(
-          const Key('playlistQualityConfirmDialogCheckBox')));
+      await tester
+          .tap(find.byKey(const Key('playlistQualityConfirmDialogCheckBox')));
       await tester.pumpAndSettle();
 
       // Confirm the addition by tapping the 'Add' button in
@@ -1184,6 +1186,434 @@ Future<void> main() async {
       );
     });
   });
+  group('''After downloading a playlist video, saving a named sort/filter parms
+               to playlist views. This tests a bug fix.''', () {
+    testWidgets(
+        'Try playlist 2 short audio in spoken quality: playlist dir not exist',
+        (WidgetTester tester) async {
+      // necessary in case the previous test failed and so did not
+      // delete the its playlist dir
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copying the initial local playlist json file with no audio
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_newly_downloaded_playlist_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      AudioDownloadVM audioDownloadVM =
+          await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
+        tester: tester,
+        forcedLocale: const Locale('en'),
+      );
+
+      // Entering the created playlist URL in the Youtube URL or search
+      // text field of the app
+      await tester.enterText(
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
+        globalTestPlaylistUrl,
+      );
+      await tester.pumpAndSettle();
+
+      // Open the add playlist dialog by tapping the add playlist
+      // button
+      await tester.tap(find.byKey(const Key('addPlaylistButton')));
+      await tester.pumpAndSettle();
+
+      // Check the value of the AlertDialog dialog title
+      Text alertDialogTitle =
+          tester.widget(find.byKey(const Key('playlistConfirmDialogTitleKey')));
+      expect(alertDialogTitle.data, 'Add Youtube Playlist');
+
+      // Check the value of the AlertDialog url Text
+      Text confirmUrlText =
+          tester.widget(find.byKey(const Key('playlistUrlConfirmDialogText')));
+      expect(confirmUrlText.data, globalTestPlaylistUrl);
+
+      // Confirm the addition by tapping the 'Add' button in
+      // the AlertDialog and then on the 'OK' button of the
+      // confirm dialog
+      await tester
+          .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
+      await tester.pumpAndSettle();
+
+      // Add a delay to allow the update playlist URL to finish. 1
+      // second is ok
+      await Future.delayed(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      // Verify the displayed warning dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Youtube playlist \"$globalTestPlaylistTitle\" of audio quality added to the end of the playlist list.",
+      );
+
+      expect(
+        tester
+            .widget<TextField>(find.byKey(
+              const Key('youtubeUrlOrSearchTextField'),
+            ))
+            .controller!
+            .text,
+        '', // 'Youtube Link or Search' displayed in the TextField
+        //     is a hint text and not the actual text !
+      );
+
+      // Now selecting the created playlist by tapping on the
+      // playlist checkbox
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: globalTestPlaylistTitle,
+      );
+
+      // Now typing on the download playlist button to download the
+      // 2 video audio's present the created playlist.
+      await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
+      await tester.pumpAndSettle();
+
+      // Add a delay to allow the download to finish. 5 seconds is ok
+      // when running the audio_download_vm_test only.
+      // Waiting 5 seconds only causes MissingPluginException
+      // 'No implementation found for method $method on channel $name'
+      // when all tsts are run. 7 seconds solve the problem.
+      for (int i = 0; i < 5; i++) {
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
+      }
+
+      Playlist downloadedPlaylist = audioDownloadVM.listOfPlaylist[1];
+
+      _checkDownloadedPlaylist(
+        downloadedPlaylist: downloadedPlaylist,
+        playlistId: globalTestPlaylistId,
+        playlistTitle: globalTestPlaylistTitle,
+        playlistUrl: globalTestPlaylistUrl,
+        playlistDir: globalTestPlaylistDir,
+        isPlaylistSelected: true,
+      );
+
+      // this check fails if the secondsDelay value is too small
+      expect(audioDownloadVM.isDownloading, false);
+
+      expect(audioDownloadVM.downloadProgress, 1.0);
+      expect(audioDownloadVM.lastSecondDownloadSpeed, 0);
+      expect(audioDownloadVM.isHighQuality, false);
+
+      // Checking the data of the audio contained in the downloaded
+      // audio list which contains 2 downloaded Audio's
+      _checkPlaylistDownloadedAudios(
+        downloadedAudioOne: downloadedPlaylist.downloadedAudioLst[0],
+        downloadedAudioTwo: downloadedPlaylist.downloadedAudioLst[1],
+        audioOneFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
+        audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
+      );
+
+      // Checking the data of the audio contained in the playable
+      // audio list;
+      //
+      // playableAudioLst contains Audio's inserted at list start
+      _checkPlaylistDownloadedAudios(
+        downloadedAudioOne: downloadedPlaylist.playableAudioLst[1],
+        downloadedAudioTwo: downloadedPlaylist.playableAudioLst[0],
+        audioOneFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
+        audioTwoFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
+      );
+
+      // Checking if there are 3 files in the directory (2 mp3 and 1 json)
+      final List<FileSystemEntity> files =
+          Directory(globalTestPlaylistDir).listSync(
+        recursive: false,
+        followLinks: false,
+      );
+
+      expect(files.length, 3);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Select a sort/filter named parms in the dropdown button list and then
+             save it to the current playlist after having downloaded an audio.''',
+        (WidgetTester tester) async {
+      // necessary in case the previous test failed and so did not
+      // delete the its playlist dir
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copying the initial local playlist json file with no audio
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_newly_downloaded_playlist_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      AudioDownloadVM audioDownloadVM =
+          await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
+        tester: tester,
+        forcedLocale: const Locale('en'),
+      );
+
+      // Type on the Playlists button to hide the playlist view
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Entering the created playlist URL in the Youtube URL or search
+      // text field of the app
+      await tester.enterText(
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
+        globalTestPlaylistUrl,
+      );
+      await tester.pumpAndSettle();
+
+      // Now, tap on the 'Download' button to download the playlist
+      await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
+      await tester.pumpAndSettle();
+
+      // Now tap on the current dropdown button item to open the dropdown
+      // button items list
+
+      final Finder dropDownButtonFinder =
+          find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+      final Finder dropDownButtonTextFinder = find.descendant(
+        of: dropDownButtonFinder,
+        matching: find.byType(Text),
+      );
+
+      await tester.tap(dropDownButtonTextFinder);
+      await tester.pumpAndSettle();
+
+      // And find the 'spiritual' sort/filter item
+      final Finder spiritualDropDownTextFinder = find.text('spiritual');
+      await tester.tap(spiritualDropDownTextFinder);
+      await tester.pumpAndSettle();
+
+      // And verify the order of the playlist audio titles
+
+      List<String> audioTitlesSortedByDateTimeListenedDescending = [
+        "Les besoins artificiels par R.Keucheyan",
+        "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+        "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        "La résilience insulaire par Fiona Roche",
+        "La surpopulation mondiale par Jancovici et Barrau",
+        // "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+      ];
+
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst:
+            audioTitlesSortedByDateTimeListenedDescending,
+      );
+
+      String saveAsTitle = 'Desc listened';
+
+      // Now open the audio popup menu
+      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+      await tester.pumpAndSettle();
+
+      // Find the sort/filter audio menu item and tap on it to
+      // open the audio sort filter dialog
+      await tester
+          .tap(find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+      await tester.pumpAndSettle();
+
+      // Type "Desc listened" in the 'Save as' TextField
+
+      await tester.enterText(
+          find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+          saveAsTitle);
+      await tester.pumpAndSettle();
+
+      // Now select the 'Last listened date/time' item in the 'Sort by'
+      // dropdown button
+
+      await tester.tap(find.byKey(const Key('sortingOptionDropdownButton')));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Last listened date/time'));
+      await tester.pumpAndSettle();
+
+      // Then delete the "Audio download date" descending sort option
+
+      // Find the Text with "Audio downl date" which is located in the
+      // selected sort parameters ListView
+      Finder textFinder = find.descendant(
+        of: find.byKey(const Key('selectedSortingOptionsListView')),
+        matching: find.text('Audio downl date'),
+      );
+
+      // Then find the ListTile ancestor of the 'Audio downl date' Text
+      // widget. The ascending/descending and remove icon buttons are
+      // contained in their ListTile ancestor
+      Finder listTileFinder = find.ancestor(
+        of: textFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now, within that ListTile, find the sort option delete IconButton
+      // with key 'removeSortingOptionIconButton'
+      Finder iconButtonFinder = find.descendant(
+        of: listTileFinder,
+        matching: find.byKey(const Key('removeSortingOptionIconButton')),
+      );
+
+      // Tap on the delete icon button to delete the 'Audio downl date'
+      // descending sort option
+      await tester.tap(iconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Click on the "Save" button. This closes the sort/filter dialog
+      // and updates the sort/filter playlist download view dropdown
+      // button with the newly created sort/filter parms
+      await tester
+          .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+      await tester.pumpAndSettle();
+
+      // Now verify the playlist download view state with the 'Desc listened'
+      // sort/filter parms applied
+
+      // Verify that the dropdown button has been updated with the
+      // 'Desc listened' sort/filter parms selected
+      IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+        tester: tester,
+        dropdownButtonSelectedTitle: saveAsTitle,
+      );
+
+      // And verify the order of the playlist audio titles
+
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst:
+            audioTitlesSortedByDateTimeListenedDescending,
+      );
+
+      // Creating a Asc listened sort/filter parms
+
+      // open the audio popup menu
+      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+      await tester.pumpAndSettle();
+
+      // Find the sort/filter audio menu item and tap on it to
+      // open the audio sort filter dialog
+      await tester
+          .tap(find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+      await tester.pumpAndSettle();
+
+      // Type "Asc listened" in the 'Save as' TextField
+
+      saveAsTitle = 'Asc listened';
+
+      await tester.enterText(
+          find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+          saveAsTitle);
+      await tester.pumpAndSettle();
+
+      // Now select the 'Last listened date/time' item in the 'Sort by'
+      // dropdown button
+
+      await tester.tap(find.byKey(const Key('sortingOptionDropdownButton')));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Last listened date/time'));
+      await tester.pumpAndSettle();
+
+      // Find the Text with 'Last listened date/time' which is located
+      // in the selected sort parameters ListView
+      textFinder = find.descendant(
+        of: find.byKey(const Key('selectedSortingOptionsListView')),
+        matching: find.text('Last listened date/time'),
+      );
+
+      // Convert descending to ascending sort order of 'Last listened date/time'.
+      await IntegrationTestUtil.invertSortingItemOrder(
+        tester: tester,
+        sortingItemName: 'Last listened date/time',
+      );
+
+      // Then delete the "Audio download date" descending sort option
+
+      // Find the Text with "Audio downl date" which is located in the
+      // selected sort parameters ListView
+      textFinder = find.descendant(
+        of: find.byKey(const Key('selectedSortingOptionsListView')),
+        matching: find.text('Audio downl date'),
+      );
+
+      // Then find the ListTile ancestor of the 'Audio downl date' Text
+      // widget. The ascending/descending and remove icon buttons are
+      // contained in their ListTile ancestor
+      listTileFinder = find.ancestor(
+        of: textFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now, within that ListTile, find the sort option delete IconButton
+      // with key 'removeSortingOptionIconButton'
+      iconButtonFinder = find.descendant(
+        of: listTileFinder,
+        matching: find.byKey(const Key('removeSortingOptionIconButton')),
+      );
+
+      // Tap on the delete icon button to delete the 'Audio downl date'
+      // descending sort option
+      await tester.tap(iconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Click on the "Save" button. This closes the sort/filter dialog
+      // and updates the sort/filter playlist download view dropdown
+      // button with the newly created sort/filter parms
+      await tester
+          .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+      await tester.pumpAndSettle();
+
+      // Now verify the playlist download view state with the 'Asc listened'
+      // sort/filter parms applied
+
+      // Verify that the dropdown button has been updated with the
+      // 'Asc listened' sort/filter parms selected
+      IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+        tester: tester,
+        dropdownButtonSelectedTitle: saveAsTitle,
+      );
+
+      // And verify the order of the playlist audio titles
+
+      List<String> audioTitlesSortedByDateTimeListenedAscending = [
+        "La surpopulation mondiale par Jancovici et Barrau",
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        "La résilience insulaire par Fiona Roche",
+        "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+        "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+        // "Les besoins artificiels par R.Keucheyan",
+      ];
+
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst:
+            audioTitlesSortedByDateTimeListenedAscending,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+  });
 }
 
 void _checkDownloadedPlaylist({
@@ -1199,7 +1629,11 @@ void _checkDownloadedPlaylist({
   expect(downloadedPlaylist.title, playlistTitle);
   expect(downloadedPlaylist.url, playlistUrl);
   expect(downloadedPlaylist.downloadPath, playlistDir);
-  expect(downloadedPlaylist.playlistQuality, (isPlaylistAtVoiceQuality) ? PlaylistQuality.voice : PlaylistQuality.music);
+  expect(
+      downloadedPlaylist.playlistQuality,
+      (isPlaylistAtVoiceQuality)
+          ? PlaylistQuality.voice
+          : PlaylistQuality.music);
   expect(downloadedPlaylist.playlistType,
       (playlistUrl.isNotEmpty) ? PlaylistType.youtube : PlaylistType.local);
   expect(downloadedPlaylist.isSelected, isPlaylistSelected);

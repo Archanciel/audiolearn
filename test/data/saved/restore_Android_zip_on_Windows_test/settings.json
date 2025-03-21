@@ -50,6 +50,38 @@
             "fileSizeEndRangeMB": 0.0,
             "durationStartRangeSec": 0,
             "durationEndRangeSec": 0
+        },
+        "Not playable": {
+            "selectedSortItemLst": [
+                {
+                    "sortingOption": "audioDownloadDate",
+                    "isAscending": false
+                }
+            ],
+            "filterSentenceLst": [
+            ],
+            "sentencesCombination": 0,
+            "ignoreCase": true,
+            "searchAsWellInYoutubeChannelName": true,
+            "searchAsWellInVideoCompactDescription": true,
+            "filterMusicQuality": false,
+            "filterFullyListened": true,
+            "filterPartiallyListened": true,
+            "filterNotListened": true,
+            "filterCommented": true,
+            "filterNotCommented": true,
+            "filterPictured": true,
+            "filterNotPictured": true,
+            "filterPlayable": false,
+            "filterNotPlayable": true,
+            "downloadDateStartRange": null,
+            "downloadDateEndRange": null,
+            "uploadDateStartRange": null,
+            "uploadDateEndRange": null,
+            "fileSizeStartRangeMB": 0.0,
+            "fileSizeEndRangeMB": 2.2,
+            "durationStartRangeSec": 0,
+            "durationEndRangeSec": 0
         }
     },
     "searchHistoryOfAudioSortFilterSettings": "[]"
