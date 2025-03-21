@@ -40,8 +40,6 @@ final String globalTestPlaylistOneAudioDir =
 Future<void> main() async {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  await IntegrationTestUtil.setWindowsAppSizeAndPosition(isTest: true);
-
   group('Download 1 playlist with short audio', () {
     test('Check initial values', () async {
       DirUtil.deleteFilesInDirAndSubDirs(
