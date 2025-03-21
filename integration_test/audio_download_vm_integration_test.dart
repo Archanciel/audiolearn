@@ -97,7 +97,7 @@ Future<void> main() async {
       );
 
       AudioDownloadVM audioDownloadVM =
-          await IntegrationTestUtil.launchIntegrTestApplication(
+          await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
         tester: tester,
         forcedLocale: const Locale('en'),
       );
@@ -248,7 +248,7 @@ Future<void> main() async {
       );
 
       AudioDownloadVM audioDownloadVM =
-          await IntegrationTestUtil.launchIntegrTestApplication(
+          await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
         tester: tester,
         forcedLocale: const Locale('en'),
       );
@@ -408,7 +408,7 @@ Future<void> main() async {
       );
 
       AudioDownloadVM audioDownloadVM =
-          await IntegrationTestUtil.launchIntegrTestApplication(
+          await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
         tester: tester,
         forcedLocale: const Locale('en'),
       );
@@ -547,7 +547,7 @@ Future<void> main() async {
       );
 
       AudioDownloadVM audioDownloadVM =
-          await IntegrationTestUtil.launchIntegrTestApplication(
+          await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
         tester: tester,
         forcedLocale: const Locale('en'),
       );
@@ -692,7 +692,7 @@ Future<void> main() async {
       );
 
       AudioDownloadVM audioDownloadVM =
-          await IntegrationTestUtil.launchIntegrTestApplication(
+          await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
         tester: tester,
         forcedLocale: const Locale('en'),
       );
@@ -844,7 +844,7 @@ Future<void> main() async {
       );
 
       AudioDownloadVM audioDownloadVM =
-          await IntegrationTestUtil.launchIntegrTestApplication(
+          await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
         tester: tester,
         forcedLocale: const Locale('en'),
       );
@@ -996,7 +996,7 @@ Future<void> main() async {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      await IntegrationTestUtil.launchIntegrTestApplication(
+      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
         tester: tester,
         forcedLocale: const Locale('en'),
       );
@@ -1100,7 +1100,7 @@ Future<void> main() async {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      await IntegrationTestUtil.launchIntegrTestApplication(
+      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
         tester: tester,
         forcedLocale: const Locale('en'),
       );

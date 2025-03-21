@@ -1587,15 +1587,13 @@ class IntegrationTestUtil {
     );
   }
 
-  /// This method is used as an alternative to calling app.main(). Since we maybe
-  /// have to use a mock AudioDownloadVM we can not use app.main() to start the app
-  /// because app.main() uses the real AudioDownloadVM and we don't want to make
-  /// the main.dart file dependent off a mock class.
+  /// This method is used as an alternative to calling app.main(). It enables
+  /// to download playlists or video audio files from the internet.
   ///
   /// Passing a [forcedLocale] will force the locale to be used in the test. If
   /// [forcedLocale] is null, the language defined in settings.json will be used.
   /// [forcedLocale] can be const Locale('en') or const Locale('fr').
-  static Future<AudioDownloadVM> launchIntegrTestApplication({
+  static Future<AudioDownloadVM> launchIntegrTestAppEnablingInternetAccess({
     required tester,
     Locale? forcedLocale,
   }) async {
