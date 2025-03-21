@@ -5,6 +5,7 @@ import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_add_remove_sort_filter_options_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:audiolearn/models/playlist.dart';
@@ -21,7 +22,11 @@ import 'integration_test_util.dart';
 ///
 /// So, if you excute those two integration tests, you do not need to execute
 /// this integration test !
-void main() {
+Future<void> main() async {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+  await IntegrationTestUtil.setWindowsAppSizeAndPosition(isTest: true);
+
   playlistDownloadViewSortFilterIntegrationTest();
   audioPlayerViewSortFilterIntegrationTest();
 }
@@ -361,7 +366,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
 
       // Verify that "Title asc" was correctly saved in the playlist
       // json file for the audio player view only.
-      verifyAudioSortFilterParmsNameStoredInPlaylistJsonFile(
+      _verifyAudioSortFilterParmsNameStoredInPlaylistJsonFile(
         selectedPlaylistTitle: 'S8 audio',
         expectedAudioSortFilterParmsName: 'Title asc',
         audioLearnAppViewTypeLst: [AudioLearnAppViewType.audioPlayerView],
@@ -435,7 +440,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
 
       // Verify that the audioPlayingOrder was modified and saved in the
       // playlist
-      verifyAudioSortFilterParmsNameStoredInPlaylistJsonFile(
+      _verifyAudioSortFilterParmsNameStoredInPlaylistJsonFile(
         selectedPlaylistTitle: 'S8 audio',
         expectedAudioSortFilterParmsName: 'Title asc',
         audioLearnAppViewTypeLst: [AudioLearnAppViewType.audioPlayerView],
@@ -610,7 +615,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
 
       // Verify that the audioPlayingOrder was modified and saved in the
       // playlist
-      verifyAudioSortFilterParmsNameStoredInPlaylistJsonFile(
+      _verifyAudioSortFilterParmsNameStoredInPlaylistJsonFile(
         selectedPlaylistTitle: 'S8 audio',
         expectedAudioSortFilterParmsName: 'Title asc',
         audioLearnAppViewTypeLst: [AudioLearnAppViewType.audioPlayerView],
@@ -1778,13 +1783,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             // Convert ascending to descending sort order of 'Audio title'.
             // So, the 'Title asc? sort/filter parms will in fact be descending !!
-            await invertSortingItemOrder(
+            await IntegrationTestUtil.invertSortingItemOrder(
               tester: tester,
               sortingItemName: 'Audio title',
             );
 
             // Now define an audio/video title or description filter word
-            await addAudioFilterStrAndClickOnPlusIconButton(
+            await _addAudioFilterStrAndClickOnPlusIconButton(
               tester: tester,
               audioFilterString: 'Jancovici',
             );
@@ -1925,67 +1930,67 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             // Convert descending to ascending sort order of 'Audio title'.
             // So, the 'Title asc? sort/filter parms will in fact be ascending !!
-            await invertSortingItemOrder(
+            await IntegrationTestUtil.invertSortingItemOrder(
               tester: tester,
               sortingItemName: 'Audio title',
             );
 
             // Select the 'Audio chapter' item in the 'Sort by'
             // dropdown button
-            await selectSortByOption(
+            await _selectSortByOption(
               tester: tester,
               audioSortOption: 'Audio chapter',
             );
 
             // Select the 'Video upload date' item in the 'Sort by'
             // dropdown button
-            await selectSortByOption(
+            await _selectSortByOption(
               tester: tester,
               audioSortOption: 'Video upload date',
             );
 
             // Select the 'Audio duration' item in the 'Sort by'
             // dropdown button
-            await selectSortByOption(
+            await _selectSortByOption(
               tester: tester,
               audioSortOption: 'Audio duration',
             );
 
             // Select the 'Audio listenable remaining duration' item in the 'Sort by'
             // dropdown button
-            await selectSortByOption(
+            await _selectSortByOption(
               tester: tester,
               audioSortOption: 'Audio listenable remaining duration',
             );
 
             // Select the 'Audio downl speed' item in the 'Sort by'
             // dropdown button
-            await selectSortByOption(
+            await _selectSortByOption(
               tester: tester,
               audioSortOption: 'Audio downl speed',
             );
 
             // Select the 'Audio downl duration' item in the 'Sort by'
             // dropdown button
-            await selectSortByOption(
+            await _selectSortByOption(
               tester: tester,
               audioSortOption: 'Audio downl duration',
             );
 
             // Type "Jancovici" in the audio title search sentence TextField
-            await addAudioFilterStrAndClickOnPlusIconButton(
+            await _addAudioFilterStrAndClickOnPlusIconButton(
               tester: tester,
               audioFilterString: 'Jancovici',
             );
 
             // Type "Marine Le Pen" in the audio title search sentence TextField
-            await addAudioFilterStrAndClickOnPlusIconButton(
+            await _addAudioFilterStrAndClickOnPlusIconButton(
               tester: tester,
               audioFilterString: 'Marine Le Pen',
             );
 
             // Type "Emmanuel Macron" in the audio title search sentence TextField
-            await addAudioFilterStrAndClickOnPlusIconButton(
+            await _addAudioFilterStrAndClickOnPlusIconButton(
               tester: tester,
               audioFilterString: 'Emmanuel Macron',
             );
@@ -2064,13 +2069,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.pumpAndSettle();
 
             // Type "Jancovici" in the audio title search sentence TextField
-            await addAudioFilterStrAndClickOnPlusIconButton(
+            await _addAudioFilterStrAndClickOnPlusIconButton(
               tester: tester,
               audioFilterString: 'Jancovici',
             );
 
             // Type "Marine Le Pen" in the audio title search sentence TextField
-            await addAudioFilterStrAndClickOnPlusIconButton(
+            await _addAudioFilterStrAndClickOnPlusIconButton(
               tester: tester,
               audioFilterString: 'Marine Le Pen',
             );
@@ -2150,13 +2155,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.pumpAndSettle();
 
             // Type "Jancovici" in the audio title search sentence TextField
-            await addAudioFilterStrAndClickOnPlusIconButton(
+            await _addAudioFilterStrAndClickOnPlusIconButton(
               tester: tester,
               audioFilterString: 'Jancovici',
             );
 
             // Type "Marine Le Pen" in the audio title search sentence TextField
-            await addAudioFilterStrAndClickOnPlusIconButton(
+            await _addAudioFilterStrAndClickOnPlusIconButton(
               tester: tester,
               audioFilterString: 'Marine Le Pen',
             );
@@ -2241,13 +2246,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.pumpAndSettle();
 
             // Type "Jancovici" in the audio title search sentence TextField
-            await addAudioFilterStrAndClickOnPlusIconButton(
+            await _addAudioFilterStrAndClickOnPlusIconButton(
               tester: tester,
               audioFilterString: 'Jancovici',
             );
 
             // Type "Marine Le Pen" in the audio title search sentence TextField
-            await addAudioFilterStrAndClickOnPlusIconButton(
+            await _addAudioFilterStrAndClickOnPlusIconButton(
               tester: tester,
               audioFilterString: 'Marine Le Pen',
             );
@@ -2866,47 +2871,47 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Convert ascending to descending sort order of 'Audio listenable
             // remaining duration'. So, the 'for test? sort/filter parms will
             // in fact be descending !!
-            await invertSortingItemOrder(
+            await IntegrationTestUtil.invertSortingItemOrder(
               tester: tester,
               sortingItemName: 'Audio listenable remaining duration',
             );
 
-            await removeSortingItem(
+            await _removeSortingItem(
               tester: tester,
               sortingItemName: 'Audio downl date',
             );
 
-            await removeSortingItem(
+            await _removeSortingItem(
               tester: tester,
               sortingItemName: 'Video upload date',
             );
 
-            await removeSortingItem(
+            await _removeSortingItem(
               tester: tester,
               sortingItemName: 'Audio title',
             );
 
-            await removeSortingItem(
+            await _removeSortingItem(
               tester: tester,
               sortingItemName: 'Audio duration',
             );
 
-            await removeSortingItem(
+            await _removeSortingItem(
               tester: tester,
               sortingItemName: 'Last listened date/time',
             );
 
-            await removeSortingItem(
+            await _removeSortingItem(
               tester: tester,
               sortingItemName: 'Audio file size',
             );
 
-            await removeSortingItem(
+            await _removeSortingItem(
               tester: tester,
               sortingItemName: 'Audio downl speed',
             );
 
-            await removeSortingItem(
+            await _removeSortingItem(
               tester: tester,
               sortingItemName: 'Audio downl duration',
             );
@@ -2996,7 +3001,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Convert ascending to descending sort order of 'Audio listenable
             // remaining duration'. So, the 'for test? sort/filter parms will
             // in fact be descending !!
-            await invertSortingItemOrder(
+            await IntegrationTestUtil.invertSortingItemOrder(
               tester: tester,
               sortingItemName: 'Audio listenable remaining duration',
             );
@@ -3079,13 +3084,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Convert ascending to descending sort order of 'Audio title'.
             // So, the 'Title asc? sort/filter p
             //arms will in fact be descending !!
-            await invertSortingItemOrder(
+            await IntegrationTestUtil.invertSortingItemOrder(
               tester: tester,
               sortingItemName: 'Titre audio',
             );
 
             // Now define an audio/video title or description filter word
-            await addAudioFilterStrAndClickOnPlusIconButton(
+            await _addAudioFilterStrAndClickOnPlusIconButton(
               tester: tester,
               audioFilterString: 'Jancovici',
             );
@@ -3225,67 +3230,67 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             // Convert descending to ascending sort order of 'Audio title'.
             // So, the 'Title asc? sort/filter parms will in fact be ascending !!
-            await invertSortingItemOrder(
+            await IntegrationTestUtil.invertSortingItemOrder(
               tester: tester,
               sortingItemName: 'Titre audio',
             );
 
             // Select the 'Audio chapter' item in the 'Sort by'
             // dropdown button
-            await selectSortByOption(
+            await _selectSortByOption(
               tester: tester,
               audioSortOption: 'Chapitre audio',
             );
 
             // Select the 'Video upload date' item in the 'Sort by'
             // dropdown button
-            await selectSortByOption(
+            await _selectSortByOption(
               tester: tester,
               audioSortOption: 'Date mise en ligne vidéo',
             );
 
             // Select the 'Audio duration' item in the 'Sort by'
             // dropdown button
-            await selectSortByOption(
+            await _selectSortByOption(
               tester: tester,
               audioSortOption: 'Durée audio',
             );
 
             // Select the 'Audio listenable remaining duration' item in the 'Sort by'
             // dropdown button
-            await selectSortByOption(
+            await _selectSortByOption(
               tester: tester,
               audioSortOption: 'Durée audio écoutable restante',
             );
 
             // Select the 'Audio downl speed' item in the 'Sort by'
             // dropdown button
-            await selectSortByOption(
+            await _selectSortByOption(
               tester: tester,
               audioSortOption: 'Vitesse téléch audio',
             );
 
             // Select the 'Audio downl duration' item in the 'Sort by'
             // dropdown button
-            await selectSortByOption(
+            await _selectSortByOption(
               tester: tester,
               audioSortOption: 'Durée téléch audio',
             );
 
             // Type "Jancovici" in the audio title search sentence TextField
-            await addAudioFilterStrAndClickOnPlusIconButton(
+            await _addAudioFilterStrAndClickOnPlusIconButton(
               tester: tester,
               audioFilterString: 'Jancovici',
             );
 
             // Type "Marine Le Pen" in the audio title search sentence TextField
-            await addAudioFilterStrAndClickOnPlusIconButton(
+            await _addAudioFilterStrAndClickOnPlusIconButton(
               tester: tester,
               audioFilterString: 'Marine Le Pen',
             );
 
             // Type "Emmanuel Macron" in the audio title search sentence TextField
-            await addAudioFilterStrAndClickOnPlusIconButton(
+            await _addAudioFilterStrAndClickOnPlusIconButton(
               tester: tester,
               audioFilterString: 'Emmanuel Macron',
             );
@@ -3377,13 +3382,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.pumpAndSettle();
 
             // Type "Jancovici" in the audio title search sentence TextField
-            await addAudioFilterStrAndClickOnPlusIconButton(
+            await _addAudioFilterStrAndClickOnPlusIconButton(
               tester: tester,
               audioFilterString: 'Jancovici',
             );
 
             // Type "Marine Le Pen" in the audio title search sentence TextField
-            await addAudioFilterStrAndClickOnPlusIconButton(
+            await _addAudioFilterStrAndClickOnPlusIconButton(
               tester: tester,
               audioFilterString: 'Marine Le Pen',
             );
@@ -3474,13 +3479,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.pumpAndSettle();
 
             // Type "Jancovici" in the audio title search sentence TextField
-            await addAudioFilterStrAndClickOnPlusIconButton(
+            await _addAudioFilterStrAndClickOnPlusIconButton(
               tester: tester,
               audioFilterString: 'Jancovici',
             );
 
             // Type "Marine Le Pen" in the audio title search sentence TextField
-            await addAudioFilterStrAndClickOnPlusIconButton(
+            await _addAudioFilterStrAndClickOnPlusIconButton(
               tester: tester,
               audioFilterString: 'Marine Le Pen',
             );
@@ -4123,47 +4128,47 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Convert ascending to descending sort order of 'Audio listenable
             // remaining duration'. So, the 'for test? sort/filter parms will
             // in fact be descending !!
-            await invertSortingItemOrder(
+            await IntegrationTestUtil.invertSortingItemOrder(
               tester: tester,
               sortingItemName: 'Durée audio écoutable restante',
             );
 
-            await removeSortingItem(
+            await _removeSortingItem(
               tester: tester,
               sortingItemName: 'Date téléch audio',
             );
 
-            await removeSortingItem(
+            await _removeSortingItem(
               tester: tester,
               sortingItemName: 'Date mise en ligne vidéo',
             );
 
-            await removeSortingItem(
+            await _removeSortingItem(
               tester: tester,
               sortingItemName: 'Titre audio',
             );
 
-            await removeSortingItem(
+            await _removeSortingItem(
               tester: tester,
               sortingItemName: 'Durée audio',
             );
 
-            await removeSortingItem(
+            await _removeSortingItem(
               tester: tester,
               sortingItemName: 'Date/heure dernière écoute',
             );
 
-            await removeSortingItem(
+            await _removeSortingItem(
               tester: tester,
               sortingItemName: 'Taille fichier audio',
             );
 
-            await removeSortingItem(
+            await _removeSortingItem(
               tester: tester,
               sortingItemName: 'Vitesse téléch audio',
             );
 
-            await removeSortingItem(
+            await _removeSortingItem(
               tester: tester,
               sortingItemName: 'Durée téléch audio',
             );
@@ -4259,7 +4264,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Convert ascending to descending sort order of 'Audio listenable
             // remaining duration'. So, the 'for test? sort/filter parms will
             // in fact be descending !!
-            await invertSortingItemOrder(
+            await IntegrationTestUtil.invertSortingItemOrder(
               tester: tester,
               sortingItemName: 'Durée audio écoutable restante',
             );
@@ -5025,7 +5030,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         // Convert ascending to descending sort order of 'Audio title'.
         // So, the 'Title asc? sort/filter parms will in fact be descending !!
-        await invertSortingItemOrder(
+        await IntegrationTestUtil.invertSortingItemOrder(
           tester: tester,
           sortingItemName: 'Audio title',
         );
@@ -5443,7 +5448,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         );
 
         // Convert descending to ascending sort order of 'Last listened date/time'.
-        await invertSortingItemOrder(
+        await IntegrationTestUtil.invertSortingItemOrder(
           tester: tester,
           sortingItemName: 'Last listened date/time',
         );
@@ -5680,7 +5685,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         await tester.pumpAndSettle();
 
         // Convert descending to ascending sort order of 'Last listened date/time'.
-        await invertSortingItemOrder(
+        await IntegrationTestUtil.invertSortingItemOrder(
           tester: tester,
           sortingItemName: 'Last listened date/time',
         );
@@ -6277,7 +6282,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Convert ascending to descending sort order of 'Audio title'.
           // So, the 'Title asc? sort/filter parms will in fact be descending !!
-          await invertSortingItemOrder(
+          await IntegrationTestUtil.invertSortingItemOrder(
             tester: tester,
             sortingItemName: 'Audio title',
           );
@@ -7879,7 +7884,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.pumpAndSettle();
 
             // Verify also the audio playable list dialog title and content
-            await verifyAudioPlayableList(
+            await _verifyAudioPlayableList(
               tester: tester,
               currentAudioTitle:
                   "La résilience insulaire par Fiona Roche\n13:35",
@@ -8350,7 +8355,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Convert ascending to descending sort order of 'Titre audio'.
           // So, the 'Title asc? sort/filter parms will in fact be descending !!
-          await invertSortingItemOrder(
+          await IntegrationTestUtil.invertSortingItemOrder(
             tester: tester,
             sortingItemName: 'Titre audio',
           );
@@ -8964,7 +8969,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Save the 'desc listened' sort/filter parms to the 'S8 audio' playlist
           // for playlist download view only
-          await selectAndSaveSortFilterParmsToPlaylist(
+          await _selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: descListenedSortFilterName,
             saveToPlaylistDownloadView: true,
@@ -8992,13 +8997,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Now verify the save ... and remove ... audio popup menu items
           // state
 
-          await verifyAudioPopupMenuItemState(
+          await _verifyAudioPopupMenuItemState(
             tester: tester,
             menuItemKey: 'save_sort_and_filter_audio_parms_in_playlist_item',
             isEnabled: true,
           );
 
-          await verifyAudioPopupMenuItemState(
+          await _verifyAudioPopupMenuItemState(
             tester: tester,
             tapOnAudioPopupMenuButton: false, // since the audio popup menu
             //                                   is already open, do not tap
@@ -9013,7 +9018,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
           // Verify the content of the save sort/filter parms dialog
-          await verifySaveSortFilterParmsToPlaylistDialog(
+          await _verifySaveSortFilterParmsToPlaylistDialog(
             tester: tester,
             playlistTitle: 'S8 audio',
             sortFilterParmsName: descListenedSortFilterName,
@@ -9023,7 +9028,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Select and save the 'Title asc' sort/filter parms to the audio
           // player view of 'S8 audio' playlist
-          await selectAndSaveSortFilterParmsToPlaylist(
+          await _selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: false,
@@ -9065,7 +9070,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           ];
 
           // Verify also the audio playable list dialog title and content
-          await verifyAudioPlayableList(
+          await _verifyAudioPlayableList(
             tester: tester,
             currentAudioTitle:
                 "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik\n13:39",
@@ -9108,7 +9113,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // checkbox and click on Save button in order to remove this
           // Sort/Filter parms name for the playlist sownload view in the
           // playlist.
-          await selectAndRemoveSortFilterParmsToPlaylist(
+          await _selectAndRemoveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: descListenedSortFilterName,
             isOnPlaylistDownloadViewCheckboxDisplayed: true,
@@ -9165,13 +9170,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Now verify the save ... and remove ... audio popup menu items
           // state
 
-          await verifyAudioPopupMenuItemState(
+          await _verifyAudioPopupMenuItemState(
             tester: tester,
             menuItemKey: 'save_sort_and_filter_audio_parms_in_playlist_item',
             isEnabled: false,
           );
 
-          await verifyAudioPopupMenuItemState(
+          await _verifyAudioPopupMenuItemState(
             tester: tester,
             tapOnAudioPopupMenuButton: false, // since the audio popup menu
             //                                   is already open, do not tap
@@ -9179,268 +9184,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             menuItemKey:
                 'remove_sort_and_filter_audio_parms_from_playlist_item',
             isEnabled: false,
-          );
-
-          // Purge the test playlist directory so that the created test
-          // files are not uploaded to GitHub
-          DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
-          );
-        });
-      });
-      group(
-          '''After downloading a playlist video, saving a named sort/filter parms
-               to playlist views. This tests a bug fix.''', () {
-        testWidgets(
-            '''Select a sort/filter named parms in the dropdown button list and then
-             save it to the current playlist after having downloaded an audio.''',
-            (WidgetTester tester) async {
-          // Purge the test playlist directory if it exists so that the
-          // playlist list is empty
-          DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
-          );
-
-          // Copy the test initial audio data to the app dir
-          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-            sourceRootPath:
-                "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_newly_downloaded_playlist_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
-          );
-
-          IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
-              tester: tester);
-
-          // Now, tap on the 'Download' button to download the playlist
-          await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
-          await tester.pumpAndSettle();
-
-          // Now tap on the current dropdown button item to open the dropdown
-          // button items list
-
-          final Finder dropDownButtonFinder =
-              find.byKey(const Key('sort_filter_parms_dropdown_button'));
-
-          final Finder dropDownButtonTextFinder = find.descendant(
-            of: dropDownButtonFinder,
-            matching: find.byType(Text),
-          );
-
-          await tester.tap(dropDownButtonTextFinder);
-          await tester.pumpAndSettle();
-
-          // And find the 'desc listened' sort/filter item
-          final Finder titleAscDropDownTextFinder = find.text('desc listened');
-          await tester.tap(titleAscDropDownTextFinder);
-          await tester.pumpAndSettle();
-
-          // And verify the order of the playlist audio titles
-
-          List<String> audioTitlesSortedByDateTimeListenedDescending = [
-            "Les besoins artificiels par R.Keucheyan",
-            "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
-            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-            "La résilience insulaire par Fiona Roche",
-            "La surpopulation mondiale par Jancovici et Barrau",
-            // "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          ];
-
-          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-            tester: tester,
-            audioOrPlaylistTitlesOrderedLst:
-                audioTitlesSortedByDateTimeListenedDescending,
-          );
-
-          String saveAsTitle = 'Desc listened';
-
-          // Now open the audio popup menu
-          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-          await tester.pumpAndSettle();
-
-          // Find the sort/filter audio menu item and tap on it to
-          // open the audio sort filter dialog
-          await tester.tap(
-              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
-          await tester.pumpAndSettle();
-
-          // Type "Desc listened" in the 'Save as' TextField
-
-          await tester.enterText(
-              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
-              saveAsTitle);
-          await tester.pumpAndSettle();
-
-          // Now select the 'Last listened date/time' item in the 'Sort by'
-          // dropdown button
-
-          await tester
-              .tap(find.byKey(const Key('sortingOptionDropdownButton')));
-          await tester.pumpAndSettle();
-
-          await tester.tap(find.text('Last listened date/time'));
-          await tester.pumpAndSettle();
-
-          // Then delete the "Audio download date" descending sort option
-
-          // Find the Text with "Audio downl date" which is located in the
-          // selected sort parameters ListView
-          Finder textFinder = find.descendant(
-            of: find.byKey(const Key('selectedSortingOptionsListView')),
-            matching: find.text('Audio downl date'),
-          );
-
-          // Then find the ListTile ancestor of the 'Audio downl date' Text
-          // widget. The ascending/descending and remove icon buttons are
-          // contained in their ListTile ancestor
-          Finder listTileFinder = find.ancestor(
-            of: textFinder,
-            matching: find.byType(ListTile),
-          );
-
-          // Now, within that ListTile, find the sort option delete IconButton
-          // with key 'removeSortingOptionIconButton'
-          Finder iconButtonFinder = find.descendant(
-            of: listTileFinder,
-            matching: find.byKey(const Key('removeSortingOptionIconButton')),
-          );
-
-          // Tap on the delete icon button to delete the 'Audio downl date'
-          // descending sort option
-          await tester.tap(iconButtonFinder);
-          await tester.pumpAndSettle();
-
-          // Click on the "Save" button. This closes the sort/filter dialog
-          // and updates the sort/filter playlist download view dropdown
-          // button with the newly created sort/filter parms
-          await tester
-              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
-          await tester.pumpAndSettle();
-
-          // Now verify the playlist download view state with the 'Desc listened'
-          // sort/filter parms applied
-
-          // Verify that the dropdown button has been updated with the
-          // 'Desc listened' sort/filter parms selected
-          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
-            tester: tester,
-            dropdownButtonSelectedTitle: saveAsTitle,
-          );
-
-          // And verify the order of the playlist audio titles
-
-          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-            tester: tester,
-            audioOrPlaylistTitlesOrderedLst:
-                audioTitlesSortedByDateTimeListenedDescending,
-          );
-
-          // Creating a Asc listened sort/filter parms
-
-          // open the audio popup menu
-          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-          await tester.pumpAndSettle();
-
-          // Find the sort/filter audio menu item and tap on it to
-          // open the audio sort filter dialog
-          await tester.tap(
-              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
-          await tester.pumpAndSettle();
-
-          // Type "Asc listened" in the 'Save as' TextField
-
-          saveAsTitle = 'Asc listened';
-
-          await tester.enterText(
-              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
-              saveAsTitle);
-          await tester.pumpAndSettle();
-
-          // Now select the 'Last listened date/time' item in the 'Sort by'
-          // dropdown button
-
-          await tester
-              .tap(find.byKey(const Key('sortingOptionDropdownButton')));
-          await tester.pumpAndSettle();
-
-          await tester.tap(find.text('Last listened date/time'));
-          await tester.pumpAndSettle();
-
-          // Find the Text with 'Last listened date/time' which is located
-          // in the selected sort parameters ListView
-          textFinder = find.descendant(
-            of: find.byKey(const Key('selectedSortingOptionsListView')),
-            matching: find.text('Last listened date/time'),
-          );
-
-          // Convert descending to ascending sort order of 'Last listened date/time'.
-          await invertSortingItemOrder(
-            tester: tester,
-            sortingItemName: 'Last listened date/time',
-          );
-
-          // Then delete the "Audio download date" descending sort option
-
-          // Find the Text with "Audio downl date" which is located in the
-          // selected sort parameters ListView
-          textFinder = find.descendant(
-            of: find.byKey(const Key('selectedSortingOptionsListView')),
-            matching: find.text('Audio downl date'),
-          );
-
-          // Then find the ListTile ancestor of the 'Audio downl date' Text
-          // widget. The ascending/descending and remove icon buttons are
-          // contained in their ListTile ancestor
-          listTileFinder = find.ancestor(
-            of: textFinder,
-            matching: find.byType(ListTile),
-          );
-
-          // Now, within that ListTile, find the sort option delete IconButton
-          // with key 'removeSortingOptionIconButton'
-          iconButtonFinder = find.descendant(
-            of: listTileFinder,
-            matching: find.byKey(const Key('removeSortingOptionIconButton')),
-          );
-
-          // Tap on the delete icon button to delete the 'Audio downl date'
-          // descending sort option
-          await tester.tap(iconButtonFinder);
-          await tester.pumpAndSettle();
-
-          // Click on the "Save" button. This closes the sort/filter dialog
-          // and updates the sort/filter playlist download view dropdown
-          // button with the newly created sort/filter parms
-          await tester
-              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
-          await tester.pumpAndSettle();
-
-          // Now verify the playlist download view state with the 'Asc listened'
-          // sort/filter parms applied
-
-          // Verify that the dropdown button has been updated with the
-          // 'Asc listened' sort/filter parms selected
-          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
-            tester: tester,
-            dropdownButtonSelectedTitle: saveAsTitle,
-          );
-
-          // And verify the order of the playlist audio titles
-
-          List<String> audioTitlesSortedByDateTimeListenedAscending = [
-            "La surpopulation mondiale par Jancovici et Barrau",
-            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-            "La résilience insulaire par Fiona Roche",
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-            "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
-            // "Les besoins artificiels par R.Keucheyan",
-          ];
-
-          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-            tester: tester,
-            audioOrPlaylistTitlesOrderedLst:
-                audioTitlesSortedByDateTimeListenedAscending,
           );
 
           // Purge the test playlist directory so that the created test
@@ -9655,7 +9398,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           const String titleAscSortFilterName = 'Title asc';
 
           // Save the 'Title asc' sort/filter parms to the 'S8 audio' playlist
-          await selectAndSaveSortFilterParmsToPlaylist(
+          await _selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: true,
@@ -9671,13 +9414,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Now switch to 'local' playlist
-          await switchToPlaylist(
+          await _switchToPlaylist(
             tester: tester,
             playlistTitle: 'local',
           );
 
           // Save the 'Title asc' sort/filter parms to the 'local' playlist
-          await selectAndSaveSortFilterParmsToPlaylist(
+          await _selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: true,
@@ -9774,7 +9517,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // ];
 
           // Verify also the audio playable list dialog title and content
-          await verifyAudioPlayableList(
+          await _verifyAudioPlayableList(
             tester: tester,
             currentAudioTitle:
                 "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique\n6:29",
@@ -9790,7 +9533,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Now switch back to the 'S8 audio' playlist
-          await switchToPlaylist(
+          await _switchToPlaylist(
             tester: tester,
             playlistTitle: 'S8 audio',
           );
@@ -9820,7 +9563,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Verify also the audio playable list dialog title and content
-          await verifyAudioPlayableList(
+          await _verifyAudioPlayableList(
             tester: tester,
             currentAudioTitle:
                 "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik\n13:39",
@@ -9929,7 +9672,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Now switch to 'local' playlist
-          await switchToPlaylist(
+          await _switchToPlaylist(
             tester: tester,
             playlistTitle: 'local',
           );
@@ -9997,7 +9740,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           const String titleAscSortFilterName = 'Title asc';
 
           // Save the 'Title asc' sort/filter parms to the 'S8 audio' playlist
-          await selectAndSaveSortFilterParmsToPlaylist(
+          await _selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: true,
@@ -10014,7 +9757,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Now remove the 'Title asc' sort/filter parms from the 'S8 audio'
           // playlist
-          await selectAndRemoveSortFilterParmsToPlaylist(
+          await _selectAndRemoveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
             isOnPlaylistDownloadViewCheckboxDisplayed: true,
@@ -10071,13 +9814,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Now verify the save ... and remove ... audio popup menu items
           // state
 
-          await verifyAudioPopupMenuItemState(
+          await _verifyAudioPopupMenuItemState(
             tester: tester,
             menuItemKey: 'save_sort_and_filter_audio_parms_in_playlist_item',
             isEnabled: false,
           );
 
-          await verifyAudioPopupMenuItemState(
+          await _verifyAudioPopupMenuItemState(
             tester: tester,
             tapOnAudioPopupMenuButton: false, // since the audio popup menu
             //                                   is already open, do not tap
@@ -10094,7 +9837,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Verify also the audio playable list dialog title and content
-          await verifyAudioPlayableList(
+          await _verifyAudioPlayableList(
             tester: tester,
             currentAudioTitle:
                 "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik\n13:39",
@@ -10112,13 +9855,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Now verify the save ... and remove ... audio popup menu items
           // state
 
-          await verifyAudioPopupMenuItemState(
+          await _verifyAudioPopupMenuItemState(
             tester: tester,
             menuItemKey: 'save_sort_and_filter_audio_parms_in_playlist_item',
             isEnabled: false,
           );
 
-          await verifyAudioPopupMenuItemState(
+          await _verifyAudioPopupMenuItemState(
             tester: tester,
             tapOnAudioPopupMenuButton: false, // since the audio popup menu
             //                                   is already open, do not tap
@@ -10171,7 +9914,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           const String titleAscSortFilterName = 'Title asc';
 
           // Save the 'Title asc' sort/filter parms to the 'S8 audio' playlist
-          await selectAndSaveSortFilterParmsToPlaylist(
+          await _selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: true,
@@ -10188,7 +9931,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Now remove the 'Title asc' sort/filter parms from the 'S8 audio'
           // playlist
-          await selectAndRemoveSortFilterParmsToPlaylist(
+          await _selectAndRemoveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
             isOnPlaylistDownloadViewCheckboxDisplayed: true,
@@ -10243,7 +9986,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Verify also the audio playable list dialog title and content
-          await verifyAudioPlayableList(
+          await _verifyAudioPlayableList(
             tester: tester,
             currentAudioTitle:
                 "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik\n13:39",
@@ -10261,13 +10004,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Now verify the save ... and remove ... audio popup menu items
           // state
 
-          await verifyAudioPopupMenuItemState(
+          await _verifyAudioPopupMenuItemState(
             tester: tester,
             menuItemKey: 'save_sort_and_filter_audio_parms_in_playlist_item',
             isEnabled: false,
           );
 
-          await verifyAudioPopupMenuItemState(
+          await _verifyAudioPopupMenuItemState(
             tester: tester,
             tapOnAudioPopupMenuButton: false, // since the audio popup menu
             //                                   is already open, do not tap
@@ -10322,7 +10065,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           const String titleAscSortFilterName = 'Title asc';
 
           // Save the 'Title asc' sort/filter parms to the 'S8 audio' playlist
-          await selectAndSaveSortFilterParmsToPlaylist(
+          await _selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: true,
@@ -10339,7 +10082,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Now remove the 'Title asc' sort/filter parms from the 'S8 audio'
           // playlist
-          await selectAndRemoveSortFilterParmsToPlaylist(
+          await _selectAndRemoveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
             isOnPlaylistDownloadViewCheckboxDisplayed: true,
@@ -10369,13 +10112,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Now verify the save ... and remove ... audio popup menu items
           // state
 
-          await verifyAudioPopupMenuItemState(
+          await _verifyAudioPopupMenuItemState(
             tester: tester,
             menuItemKey: 'save_sort_and_filter_audio_parms_in_playlist_item',
             isEnabled: false,
           );
 
-          await verifyAudioPopupMenuItemState(
+          await _verifyAudioPopupMenuItemState(
             tester: tester,
             tapOnAudioPopupMenuButton: false, // since the audio popup menu
             //                                   is already open, do not tap
@@ -10471,7 +10214,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           ];
 
           // Verify the order of the playlist audio comments
-          await verifyOrderOfPlaylistAudioComments(
+          await _verifyOrderOfPlaylistAudioComments(
             tester: tester,
             expectedCommentTitles: expectedDefaultCommentTitles,
             expectedCommentTimes: expectedDefaultCommentTimes,
@@ -10504,7 +10247,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Save the 'Title asc' sort/filter parms to the 'S8 audio' playlist
-          await selectAndSaveSortFilterParmsToPlaylist(
+          await _selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: true,
@@ -10570,7 +10313,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           ];
 
           // Verify the order of the playlist audio comments
-          await verifyOrderOfPlaylistAudioComments(
+          await _verifyOrderOfPlaylistAudioComments(
             tester: tester,
             expectedCommentTitles: expectedTitleAscCommentTitles,
             expectedCommentTimes: expectedTitleAscCommentTimes,
@@ -10644,7 +10387,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Save the 'Title asc' sort/filter parms to the 'S8 audio' playlist
-          await selectAndSaveSortFilterParmsToPlaylist(
+          await _selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: false,
@@ -10710,7 +10453,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           ];
 
           // Verify the order of the playlist audio comments
-          await verifyOrderOfPlaylistAudioComments(
+          await _verifyOrderOfPlaylistAudioComments(
             tester: tester,
             expectedCommentTitles: expectedTitleAscCommentTitles,
             expectedCommentTimes: expectedTitleAscCommentTimes,
@@ -10787,7 +10530,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Save the 'Title asc' sort/filter parms to the 'S8 audio' playlist
-          await selectAndSaveSortFilterParmsToPlaylist(
+          await _selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: true,
@@ -10852,7 +10595,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           ];
 
           // Verify the order of the playlist audio comments
-          await verifyOrderOfPlaylistAudioComments(
+          await _verifyOrderOfPlaylistAudioComments(
             tester: tester,
             expectedCommentTitles: expectedDefaultCommentTitles,
             expectedCommentTimes: expectedDefaultCommentTimes,
@@ -13525,7 +13268,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
   });
 }
 
-Future<void> selectSortByOption({
+Future<void> _selectSortByOption({
   required WidgetTester tester,
   required String audioSortOption,
 }) async {
@@ -13536,7 +13279,7 @@ Future<void> selectSortByOption({
   await tester.pumpAndSettle();
 }
 
-Future<void> addAudioFilterStrAndClickOnPlusIconButton({
+Future<void> _addAudioFilterStrAndClickOnPlusIconButton({
   required WidgetTester tester,
   required String audioFilterString,
 }) async {
@@ -13554,7 +13297,7 @@ Future<void> addAudioFilterStrAndClickOnPlusIconButton({
   await tester.pumpAndSettle();
 }
 
-Future<void> verifyOrderOfPlaylistAudioComments({
+Future<void> _verifyOrderOfPlaylistAudioComments({
   required WidgetTester tester,
   required List<String> expectedCommentTitles,
   required List<String> expectedCommentTimes,
@@ -13608,7 +13351,7 @@ Future<void> verifyOrderOfPlaylistAudioComments({
   await tester.pumpAndSettle();
 }
 
-Future<void> verifyAudioPopupMenuItemState({
+Future<void> _verifyAudioPopupMenuItemState({
   required WidgetTester tester,
   bool tapOnAudioPopupMenuButton = true,
   required String menuItemKey,
@@ -13628,7 +13371,7 @@ Future<void> verifyAudioPopupMenuItemState({
   expect(menuItem.enabled, isEnabled);
 }
 
-void verifyAudioSortFilterParmsNameStoredInPlaylistJsonFile({
+void _verifyAudioSortFilterParmsNameStoredInPlaylistJsonFile({
   required String selectedPlaylistTitle,
   required String expectedAudioSortFilterParmsName,
   required List<AudioLearnAppViewType> audioLearnAppViewTypeLst,
@@ -13676,7 +13419,7 @@ void verifyAudioSortFilterParmsNameStoredInPlaylistJsonFile({
   );
 }
 
-Future<void> selectAndSaveSortFilterParmsToPlaylist({
+Future<void> _selectAndSaveSortFilterParmsToPlaylist({
   required WidgetTester tester,
   required String sortFilterParmsName,
   required bool saveToPlaylistDownloadView,
@@ -13732,7 +13475,7 @@ Future<void> selectAndSaveSortFilterParmsToPlaylist({
 /// 'For "Download Audio" screen' and 'For "Play Audio" screen' checkboxes
 /// if the {sortFilterParmsName} is not already saved in the playlist
 /// for the screen.
-Future<void> verifySaveSortFilterParmsToPlaylistDialog({
+Future<void> _verifySaveSortFilterParmsToPlaylistDialog({
   required WidgetTester tester,
   required String playlistTitle,
   required String sortFilterParmsName,
@@ -13781,7 +13524,7 @@ Future<void> verifySaveSortFilterParmsToPlaylistDialog({
   await tester.pumpAndSettle();
 }
 
-Future<void> selectAndRemoveSortFilterParmsToPlaylist({
+Future<void> _selectAndRemoveSortFilterParmsToPlaylist({
   required WidgetTester tester,
   required String sortFilterParmsName,
   bool isOnPlaylistDownloadViewCheckboxDisplayed = false,
@@ -13859,7 +13602,7 @@ Future<void> selectAndRemoveSortFilterParmsToPlaylist({
   await tester.pumpAndSettle();
 }
 
-Future<void> switchToPlaylist({
+Future<void> _switchToPlaylist({
   required WidgetTester tester,
   required String playlistTitle,
 }) async {
@@ -13884,7 +13627,7 @@ Future<void> switchToPlaylist({
   await tester.pumpAndSettle(const Duration(milliseconds: 200));
 }
 
-Future<void> verifyAudioPlayableList({
+Future<void> _verifyAudioPlayableList({
   required WidgetTester tester,
   required String currentAudioTitle,
   required String sortFilterParmsName,
@@ -13928,39 +13671,7 @@ Future<void> verifyAudioPlayableList({
   await tester.pumpAndSettle();
 }
 
-Future<void> invertSortingItemOrder({
-  required WidgetTester tester,
-  required String sortingItemName,
-}) async {
-  // Find the Text with sortingItemName which is now located in the
-  // selected sort parameters ListView
-  Finder textFinder = find.descendant(
-    of: find.byKey(const Key('selectedSortingOptionsListView')),
-    matching: find.text(sortingItemName),
-  );
-
-  // Then find the ListTile ancestor of the sortingItemName Text
-  // widget. The ascending/descending and remove icon buttons are
-  // contained in their ListTile ancestor
-  Finder listTileFinder = find.ancestor(
-    of: textFinder,
-    matching: find.byType(ListTile),
-  );
-
-  // Now, within that ListTile, find the sort option ascending/
-  // descending IconButton with key 'sort_ascending_or_descending_button'
-  Finder iconButtonFinder = find.descendant(
-    of: listTileFinder,
-    matching: find.byKey(const Key('sort_ascending_or_descending_button')),
-  );
-
-  // Tap on the ascending/descending icon button to convert ascending
-  // to descending or descending to ascending sort order.
-  await tester.tap(iconButtonFinder);
-  await tester.pumpAndSettle();
-}
-
-Future<void> removeSortingItem({
+Future<void> _removeSortingItem({
   required WidgetTester tester,
   required String sortingItemName,
 }) async {

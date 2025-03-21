@@ -855,8 +855,7 @@ class IntegrationTestUtil {
     bool tapTwiceOnOkButton = false,
   }) async {
     // Ensure the alert dialog is shown
-    final Finder alertDialogDisplayDialogFinder =
-        find.byType(AlertDialog);
+    final Finder alertDialogDisplayDialogFinder = find.byType(AlertDialog);
     expect(alertDialogDisplayDialogFinder, findsOneWidget);
 
     // Check the value of the alert dialog title
@@ -864,12 +863,13 @@ class IntegrationTestUtil {
     Text alertDialogTitle =
         tester.widget(find.byKey(const Key('confirmationDialogTitleKey')).last);
 
-      expect(alertDialogTitle.data, 'CONFIRMATION');
+    expect(alertDialogTitle.data, 'CONFIRMATION');
 
     // Check the value of the alert dialog message
     expect(
       tester
-          .widget<Text>(find.byKey(const Key('confirmationDialogMessageKey')).last)
+          .widget<Text>(
+              find.byKey(const Key('confirmationDialogMessageKey')).last)
           .data,
       alertDialogMessage,
     );
@@ -1596,48 +1596,57 @@ class IntegrationTestUtil {
   static Future<AudioDownloadVM> launchIntegrTestAppEnablingInternetAccess({
     required tester,
     Locale? forcedLocale,
+    SharedPreferences? mockSharedPreferences,
   }) async {
+    SettingsDataService settingsDataService;
 
-      final SettingsDataService settingsDataService = SettingsDataService(
+    if (mockSharedPreferences != null) {
+      settingsDataService = SettingsDataService(
+        sharedPreferences: mockSharedPreferences,
+        isTest: true,
+      );
+    } else {
+      settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
+    }
 
-      // load settings from file which does not exist. This
-      // will ensure that the default playlist root path is set
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}settings.json");
+    // load settings from file which does not exist. This
+    // will ensure that the default playlist root path is set
+    await settingsDataService.loadSettingsFromFile(
+        settingsJsonPathFileName:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}settings.json");
 
-      final WarningMessageVM warningMessageVM = WarningMessageVM();
+    final WarningMessageVM warningMessageVM = WarningMessageVM();
 
-      final AudioDownloadVM audioDownloadVM = AudioDownloadVM(
-        warningMessageVM: warningMessageVM,
-        settingsDataService: settingsDataService,
-      );
+    final AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+      warningMessageVM: warningMessageVM,
+      settingsDataService: settingsDataService,
+    );
 
-      final PlaylistListVM playlistListVM = PlaylistListVM(
-        warningMessageVM: warningMessageVM,
-        audioDownloadVM: audioDownloadVM,
-        commentVM: CommentVM(),
-        settingsDataService: settingsDataService,
-      );
+    final PlaylistListVM playlistListVM = PlaylistListVM(
+      warningMessageVM: warningMessageVM,
+      audioDownloadVM: audioDownloadVM,
+      commentVM: CommentVM(),
+      settingsDataService: settingsDataService,
+    );
 
-      // calling getUpToDateSelectablePlaylists() loads all the
-      // playlist json files from the app dir and so enables
-      // playlistListVM to know which playlists are
-      // selected and which are not
-      playlistListVM.getUpToDateSelectablePlaylists();
+    // calling getUpToDateSelectablePlaylists() loads all the
+    // playlist json files from the app dir and so enables
+    // playlistListVM to know which playlists are
+    // selected and which are not
+    playlistListVM.getUpToDateSelectablePlaylists();
 
-      final AudioPlayerVM audioPlayerVM = AudioPlayerVM(
-        settingsDataService: settingsDataService,
-        playlistListVM: playlistListVM,
-        commentVM: CommentVM(),
-      );
+    final AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+      settingsDataService: settingsDataService,
+      playlistListVM: playlistListVM,
+      commentVM: CommentVM(),
+    );
 
-      final DateFormatVM dateFormatVM = DateFormatVM(
-        settingsDataService: settingsDataService,
-      );
+    final DateFormatVM dateFormatVM = DateFormatVM(
+      settingsDataService: settingsDataService,
+    );
 
     await setWindowsAppSizeAndPosition(isTest: true);
 
@@ -1741,6 +1750,38 @@ class IntegrationTestUtil {
         ),
       ),
     );
+    await tester.pumpAndSettle();
+  }
+
+  static Future<void> invertSortingItemOrder({
+    required WidgetTester tester,
+    required String sortingItemName,
+  }) async {
+    // Find the Text with sortingItemName which is now located in the
+    // selected sort parameters ListView
+    Finder textFinder = find.descendant(
+      of: find.byKey(const Key('selectedSortingOptionsListView')),
+      matching: find.text(sortingItemName),
+    );
+
+    // Then find the ListTile ancestor of the sortingItemName Text
+    // widget. The ascending/descending and remove icon buttons are
+    // contained in their ListTile ancestor
+    Finder listTileFinder = find.ancestor(
+      of: textFinder,
+      matching: find.byType(ListTile),
+    );
+
+    // Now, within that ListTile, find the sort option ascending/
+    // descending IconButton with key 'sort_ascending_or_descending_button'
+    Finder iconButtonFinder = find.descendant(
+      of: listTileFinder,
+      matching: find.byKey(const Key('sort_ascending_or_descending_button')),
+    );
+
+    // Tap on the ascending/descending icon button to convert ascending
+    // to descending or descending to ascending sort order.
+    await tester.tap(iconButtonFinder);
     await tester.pumpAndSettle();
   }
 

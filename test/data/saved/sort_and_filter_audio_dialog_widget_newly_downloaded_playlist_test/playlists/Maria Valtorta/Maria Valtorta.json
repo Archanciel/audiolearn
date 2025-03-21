@@ -1,1 +1,18 @@
-{"id":"PLzwWSJNcZTMT44ogHZsevIWe_cQIVriDW","title":"Maria Valtorta","url":"https://youtube.com/playlist?list=PLzwWSJNcZTMT44ogHZsevIWe_cQIVriDW&si=aXqE93MJABsUNztx","playlistType":"youtube","playlistQuality":"voice","audioPlaySpeed":1.0,"downloadPath":"C:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\Maria Valtorta","downloadedAudioLst":[],"playableAudioLst":[],"isSelected":true,"currentOrPastPlayableAudioIndex":-1,"audioSortFilterParmsNamePlaylistDownloadView":"","audioSortFilterParmsNameAudioPlayerView":"","audioPlayingOrder":"ascending"}
+{
+    "id": "PLzwWSJNcZTMT44ogHZsevIWe_cQIVriDW",
+    "title": "Maria Valtorta",
+    "url": "https://youtube.com/playlist?list=PLzwWSJNcZTMT44ogHZsevIWe_cQIVriDW&si=aXqE93MJABsUNztx",
+    "playlistType": "youtube",
+    "playlistQuality": "voice",
+    "audioPlaySpeed": 1.0,
+    "downloadPath": "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\Maria Valtorta",
+    "downloadedAudioLst": [
+    ],
+    "playableAudioLst": [
+    ],
+    "isSelected": true,
+    "currentOrPastPlayableAudioIndex": -1,
+    "audioSortFilterParmsNamePlaylistDownloadView": "",
+    "audioSortFilterParmsNameAudioPlayerView": "",
+    "audioPlayingOrder": "ascending"
+}
