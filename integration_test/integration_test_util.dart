@@ -1024,10 +1024,11 @@ class IntegrationTestUtil {
         expectedAudioPlaySpeed);
   }
 
-  // Method used to verify the listed playlist titles or the listed audio
-  // titles in the audio player view. Is the audio list is verifyed, the
-  // firstAudioListTileIndex is equal to the number of playlist titles
-  // in the list of playlist in case this list is expanded.
+  /// Method used to verify the presence and the order of the listed
+  /// playlist titles or the listed audio titles in the playlist download
+  /// view or the audio player view. If the audio list is verifyed, the
+  /// [firstAudioListTileIndex] is equal to the number of playlist titles
+  /// in the list of playlist in case this list is expanded.
   static void checkAudioOrPlaylistTitlesOrderInListTile({
     required WidgetTester tester,
     required List<String> audioOrPlaylistTitlesOrderedLst,
@@ -1052,6 +1053,41 @@ class IntegrationTestUtil {
 
     // If the list is empty, check that no ListTile is present
     if (audioOrPlaylistTitlesOrderedLst.isEmpty) {
+      expect(tester.widgetList(listTilesFinder).length, 0);
+    }
+  }
+
+  /// Method used to verify the presence (not the order) of the listed
+  /// playlist titles or the listed audio titles in the playlist download
+  /// view or the audio player view.
+  static void checkAudioOrPlaylistTitlesPresenceInListTile({
+    required WidgetTester tester,
+    required List<String> audioOrPlaylistTitlesLst,
+  }) {
+    // Find all ListTile widgets in the current view
+    final Finder listTilesFinder = find.byType(ListTile);
+
+    // Retrieve the text data of each ListTile in the playlist download view
+    final List<String?> audioOrPlaylistTitleLst = tester
+        .widgetList<Text>(find.descendant(
+          of: listTilesFinder,
+          matching: find.byType(Text),
+        ))
+        .map((textWidget) => textWidget.data)
+        .toList();
+
+    // If the audioOrPlaylistTitlesLst is not empty, ensure that all titles
+    // are present in the ListTile widgets
+    if (audioOrPlaylistTitlesLst.isNotEmpty) {
+      for (String title in audioOrPlaylistTitlesLst) {
+        expect(
+          audioOrPlaylistTitleLst.contains(title),
+          true,
+          reason: 'Title "$title" not found in the ListTile list.',
+        );
+      }
+    } else {
+      // If the list is empty, ensure no ListTile widgets are present
       expect(tester.widgetList(listTilesFinder).length, 0);
     }
   }
@@ -1286,11 +1322,19 @@ class IntegrationTestUtil {
     String audioSortFilterParmsNamePlaylistDownloadView = '',
     String audioSortFilterParmsNameAudioPlayerView = '',
     AudioPlayingOrder audioPlayingOrder = AudioPlayingOrder.ascending,
+    String playlistDownloadPath = '',
   }) {
-    final String selectedPlaylistPath = path.join(
-      kPlaylistDownloadRootPathWindowsTest,
-      selectedPlaylistTitle,
-    );
+    final String selectedPlaylistPath;
+
+    if (playlistDownloadPath.isEmpty) {
+      playlistDownloadPath = kPlaylistDownloadRootPathWindowsTest;
+      selectedPlaylistPath = path.join(
+        playlistDownloadPath,
+        selectedPlaylistTitle,
+      );
+    } else {
+      selectedPlaylistPath = playlistDownloadPath;
+    }
 
     final selectedPlaylistFilePathName = path.join(
       selectedPlaylistPath,
