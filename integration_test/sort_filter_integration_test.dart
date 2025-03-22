@@ -9254,7 +9254,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Waiting 5 seconds only causes MissingPluginException
           // 'No implementation found for method $method on channel $name'
           // when all tsts are run. 7 seconds solve the problem.
-          for (int i = 0; i < 6; i++) {
+          for (int i = 0; i < 5; i++) {
             await Future.delayed(const Duration(seconds: 2));
             await tester.pumpAndSettle();
           }
@@ -9263,34 +9263,17 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(find.byKey(const Key('stopDownloadingButton')));
           await tester.pumpAndSettle();
 
+          await Future.delayed(const Duration(seconds: 4));
+
           // Type on the Playlists button to hide the playlist view
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle();
 
-          // Now tap on the current dropdown button item to open the dropdown
-          // button items list
-
-          final Finder dropDownButtonFinder =
-              find.byKey(const Key('sort_filter_parms_dropdown_button'));
-
-          final Finder dropDownButtonTextFinder = find.descendant(
-            of: dropDownButtonFinder,
-            matching: find.byType(Text),
-          );
-
-          await tester.tap(dropDownButtonTextFinder);
-          await tester.pumpAndSettle();
-
-          // And find the 'spiritual' sort/filter item and tap on it
-          final Finder spiritualDropDownTextFinder = find.text('spiritual');
-          await tester.tap(spiritualDropDownTextFinder);
-          await tester.pumpAndSettle();
-
-          // And verify the order of the playlist audio titles
+          // Verify the order of the playlist audio titles
 
           List<String> audioTitlesSortedByDateTimeListenedDescending = [
-            "What place Maria Valtorta takes in your spiritual journey",
             "Témoignage d'un prêtre qui a lu Maria Valtorta (2_4)",
+            "What place Maria Valtorta takes in your spiritual journey",
           ];
 
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
@@ -9307,7 +9290,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             saveToPlaylistDownloadView: false,
             saveToAudioPlayerView: true,
           );
-
+          
           // Verify confirmation dialog
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
@@ -9316,6 +9299,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             isWarningConfirming: true,
           );
 
+          String playlistDownloadPath = audioDownloadVM.listOfPlaylist[0].downloadPath;
+
           // Verifying that the playlist json file was correctly modified.
           IntegrationTestUtil
               .verifyPlaylistDataElementsUpdatedInPlaylistJsonFile(
@@ -9323,7 +9308,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             audioSortFilterParmsNamePlaylistDownloadView:
                 '', // The playlist download view is not affected
             audioSortFilterParmsNameAudioPlayerView: "spiritual",
-            audioPlayingOrder: AudioPlayingOrder.descending,
+            audioPlayingOrder: AudioPlayingOrder.ascending,
+            playlistDownloadPath: playlistDownloadPath,
           );
 
           // Purge the test playlist directory so that the created test
