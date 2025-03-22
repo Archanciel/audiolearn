@@ -1,9 +1,6 @@
-import 'dart:io';
-
 import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
-import 'package:audiolearn/utils/date_time_parser.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/views/widgets/audio_sort_filter_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
@@ -9219,10 +9216,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
       });
       group(
           '''After downloading a playlist video, saving a named sort/filter parms
-               to playlist views. This tests a bug fix.''', () {
+             to playlist views. This tests a bug fix.''', () {
         testWidgets(
-            '''Select a sort/filter named parms in the dropdown button list and then
-             save it to the current playlist after having downloaded an audio.''',
+            '''In playlist list hidden situation, select a sort/filter named parms
+               in the dropdown button list and then save it to the current playlist
+               after having downloaded an audio.''',
             (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
@@ -9306,8 +9304,109 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               .verifyPlaylistDataElementsUpdatedInPlaylistJsonFile(
             selectedPlaylistTitle: 'Maria Valtorta',
             audioSortFilterParmsNamePlaylistDownloadView:
-                '', // The playlist download view is not affected
+                "", // The playlist download view is not affected
             audioSortFilterParmsNameAudioPlayerView: "spiritual",
+            audioPlayingOrder: AudioPlayingOrder.ascending,
+            playlistDownloadPath: playlistDownloadPath,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''In playlist list expanded situation, select a sort/filter named parms
+               in the dropdown button list and then save it to the current playlist after
+               having downloaded an audio.''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_newly_downloaded_playlist_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          AudioDownloadVM audioDownloadVM = await IntegrationTestUtil
+              .launchIntegrTestAppEnablingInternetAccess(
+            tester: tester,
+            forcedLocale: const Locale('en'),
+          );
+
+          // Now typing on the download playlist button to download the
+          // 2 video audio's present the created playlist.
+          await tester
+              .tap(find.byKey(const Key('download_sel_playlists_button')));
+          await tester.pumpAndSettle();
+
+          // Add a delay to allow the download to finish. 5 seconds is ok
+          // when running the audio_download_vm_test only.
+          // Waiting 5 seconds only causes MissingPluginException
+          // 'No implementation found for method $method on channel $name'
+          // when all tsts are run. 7 seconds solve the problem.
+          for (int i = 0; i < 5; i++) {
+            await Future.delayed(const Duration(seconds: 2));
+            await tester.pumpAndSettle();
+          }
+
+          // Click on the stop button to stop the download
+          await tester.tap(find.byKey(const Key('stopDownloadingButton')));
+          await tester.pumpAndSettle();
+
+          await Future.delayed(const Duration(seconds: 4));
+
+          // Verify the order of the playlist audio titles
+
+          List<String> audioTitlesSortedByDateTimeListenedDescending = [
+            "Témoignage d'un prêtre qui a lu Maria Valtorta (2_4)",
+            "What place Maria Valtorta takes in your spiritual journey",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst:
+                audioTitlesSortedByDateTimeListenedDescending,
+            firstAudioListTileIndex: 1,
+          );
+
+          // Type on the Playlists button to hide the playlist view
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Select and save the 'spiritual' sort/filter parms to the audio
+          // player view of the 'Maria Valtorta' playlist
+          await _selectAndSaveSortFilterParmsToPlaylist(
+            tester: tester,
+            sortFilterParmsName: "spiritual",
+            saveToPlaylistDownloadView: true,
+            saveToAudioPlayerView: false,
+            displayPlaylistListBeforeSavingSFtoPlaylist: true,
+          );
+          
+          // Verify confirmation dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                "Sort/filter parameters \"spiritual\" were saved to playlist \"Maria Valtorta\" for screen(s) \"Download Audio\".",
+            isWarningConfirming: true,
+          );
+
+          String playlistDownloadPath = audioDownloadVM.listOfPlaylist[0].downloadPath;
+
+          // Verifying that the playlist json file was correctly modified.
+          IntegrationTestUtil
+              .verifyPlaylistDataElementsUpdatedInPlaylistJsonFile(
+            selectedPlaylistTitle: 'Maria Valtorta',
+            audioSortFilterParmsNamePlaylistDownloadView:
+                "spiritual", // The playlist download view is not affected
+            audioSortFilterParmsNameAudioPlayerView: "",
             audioPlayingOrder: AudioPlayingOrder.ascending,
             playlistDownloadPath: playlistDownloadPath,
           );
@@ -13550,6 +13649,7 @@ Future<void> _selectAndSaveSortFilterParmsToPlaylist({
   required String sortFilterParmsName,
   required bool saveToPlaylistDownloadView,
   required bool saveToAudioPlayerView,
+  bool displayPlaylistListBeforeSavingSFtoPlaylist = false,
 }) async {
   // Tap on the current dropdown button item to open the dropdown
   // button items list
@@ -13569,6 +13669,12 @@ Future<void> _selectAndSaveSortFilterParmsToPlaylist({
   Finder titleAscDropDownTextFinder = find.text(sortFilterParmsName).last;
   await tester.tap(titleAscDropDownTextFinder);
   await tester.pumpAndSettle();
+
+  if (displayPlaylistListBeforeSavingSFtoPlaylist) {
+    // Tap the 'Toggle List' button to display the list of playlists
+    await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    await tester.pumpAndSettle();
+  }
 
   // Now open the audio popup menu
   await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
@@ -13826,110 +13932,4 @@ Future<void> _removeSortingItem({
   // Tap on the removeSortingOptionIconButton
   await tester.tap(iconButtonFinder);
   await tester.pumpAndSettle();
-}
-
-void _checkDownloadedPlaylist({
-  required Playlist downloadedPlaylist,
-  required String playlistId,
-  required String playlistTitle,
-  required String playlistUrl,
-  required String playlistDir,
-  required isPlaylistSelected,
-  bool isPlaylistAtVoiceQuality = true,
-}) {
-  expect(downloadedPlaylist.id, playlistId);
-  expect(downloadedPlaylist.title, playlistTitle);
-  expect(downloadedPlaylist.url, playlistUrl);
-  expect(downloadedPlaylist.downloadPath, playlistDir);
-  expect(
-      downloadedPlaylist.playlistQuality,
-      (isPlaylistAtVoiceQuality)
-          ? PlaylistQuality.voice
-          : PlaylistQuality.music);
-  expect(downloadedPlaylist.playlistType,
-      (playlistUrl.isNotEmpty) ? PlaylistType.youtube : PlaylistType.local);
-  expect(downloadedPlaylist.isSelected, isPlaylistSelected);
-}
-
-// Verify the values of the Audio's extracted from a playlist
-void _checkPlaylistDownloadedAudios({
-  required Audio downloadedAudioOne,
-  required Audio downloadedAudioTwo,
-  required String audioOneFileNamePrefix,
-  required String audioTwoFileNamePrefix,
-  bool downloadedAtMusicQuality = false,
-}) {
-  _checkDownloadedAudioShortVideoOne(
-    downloadedAudioOne: downloadedAudioOne,
-    audioOneFileNamePrefix: audioOneFileNamePrefix,
-    downloadedAtMusicQuality: downloadedAtMusicQuality,
-  );
-
-  _checkDownloadedAudioShortVideoTwo(
-    downloadedAudioTwo: downloadedAudioTwo,
-    audioTwoFileNamePrefix: audioTwoFileNamePrefix,
-    downloadedAtMusicQuality: downloadedAtMusicQuality,
-  );
-}
-
-/// Verify the values of the "audio learn test short video one" downloaded
-/// audio.
-void _checkDownloadedAudioShortVideoOne({
-  required Audio downloadedAudioOne,
-  required String audioOneFileNamePrefix,
-  bool downloadedAtMusicQuality = false,
-}) {
-  expect(downloadedAudioOne.youtubeVideoChannel, "Jean-Pierre Schnyder");
-  expect(downloadedAudioOne.originalVideoTitle,
-      "audio learn test short video one");
-  expect(
-      downloadedAudioOne.validVideoTitle, "audio learn test short video one");
-  expect(downloadedAudioOne.videoUrl,
-      "https://www.youtube.com/watch?v=v7PWb7f_P8M");
-  expect(downloadedAudioOne.compactVideoDescription,
-      "Jean-Pierre Schnyder\n\nCette vidéo me sert à tester AudioLearn, l'app Android que je développe et dont le code est disponible sur GitHub. ...");
-  expect(
-      DateTimeParser.truncateDateTimeToDateOnly(
-          downloadedAudioOne.videoUploadDate),
-      DateTime.parse("2023-06-10"));
-  expect(downloadedAudioOne.audioPlaySpeed, 1.0);
-  expect(downloadedAudioOne.isAudioMusicQuality, downloadedAtMusicQuality);
-
-  String firstAudioFileName = downloadedAudioOne.audioFileName;
-  expect(
-      firstAudioFileName.contains(audioOneFileNamePrefix) &&
-          firstAudioFileName
-              .contains('audio learn test short video one 23-06-10.mp3'),
-      true);
-}
-
-/// Verify the values of the "audio learn test short video two" downloaded
-/// audio.
-void _checkDownloadedAudioShortVideoTwo({
-  required Audio downloadedAudioTwo,
-  required String audioTwoFileNamePrefix,
-  bool downloadedAtMusicQuality = false,
-}) {
-  expect(downloadedAudioTwo.youtubeVideoChannel, "Jean-Pierre Schnyder");
-  expect(downloadedAudioTwo.originalVideoTitle,
-      "audio learn test short video two");
-  expect(
-      downloadedAudioTwo.validVideoTitle, "audio learn test short video two");
-  expect(downloadedAudioTwo.compactVideoDescription,
-      "Jean-Pierre Schnyder\n\nCette vidéo me sert à tester AudioLearn, l'app Android que je développe. ...");
-  expect(downloadedAudioTwo.videoUrl,
-      "https://www.youtube.com/watch?v=uv3VQoWSjBE");
-  expect(
-      DateTimeParser.truncateDateTimeToDateOnly(
-          downloadedAudioTwo.videoUploadDate),
-      DateTime.parse("2023-06-10"));
-  expect(downloadedAudioTwo.audioPlaySpeed, 1.0);
-  expect(downloadedAudioTwo.isAudioMusicQuality, downloadedAtMusicQuality);
-
-  String secondAudioFileName = downloadedAudioTwo.audioFileName;
-  expect(
-      secondAudioFileName.contains(audioTwoFileNamePrefix) &&
-          secondAudioFileName
-              .contains('audio learn test short video two 23-06-10.mp3'),
-      true);
 }
