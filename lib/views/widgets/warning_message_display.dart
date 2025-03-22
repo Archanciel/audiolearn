@@ -76,8 +76,8 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 _displayWarningDialog(
                   context: _context,
-                  message:
-                      AppLocalizations.of(context)!.downloadAudioYoutubeErrorExceptionMessageOnly(
+                  message: AppLocalizations.of(context)!
+                      .downloadAudioYoutubeErrorExceptionMessageOnly(
                     exceptionMessage,
                   ),
                   warningMessageVM: _warningMessageVM,
@@ -176,14 +176,14 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                 AppLocalizations.of(context)!.playlistQualityMusic;
           }
 
-          String addPlaylistTitle;
+          String addedPlaylistMessage;
 
           if (_warningMessageVM.addedPlaylistType == PlaylistType.local) {
-            addPlaylistTitle = AppLocalizations.of(context)!
+            addedPlaylistMessage = AppLocalizations.of(context)!
                 .addLocalPlaylistTitle(addedPlayListTitle, playlistQualityStr);
           } else {
             // Youtube playlist is added
-            addPlaylistTitle = AppLocalizations.of(context)!
+            addedPlaylistMessage = AppLocalizations.of(context)!
                 .addYoutubePlaylistTitle(
                     addedPlayListTitle, playlistQualityStr);
           }
@@ -191,7 +191,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             _displayWarningDialog(
                 context: _context,
-                message: addPlaylistTitle,
+                message: addedPlaylistMessage,
                 warningMessageVM: _warningMessageVM,
                 themeProviderVM: themeProviderVM);
           });
@@ -283,6 +283,40 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
             themeProviderVM: themeProviderVM,
           );
         });
+
+        return const SizedBox.shrink();
+      case WarningMessageType.correctedYoutubePlaylistTitle:
+        String originalPlaylistTitle = _warningMessageVM.originalPlaylistTitle;
+        String correctedPlaylistTitle =
+            _warningMessageVM.correctedPlaylistTitle;
+        PlaylistQuality playlistQuality =
+            _warningMessageVM.addedPlaylistQuality;
+        String playlistQualityStr;
+
+        if (originalPlaylistTitle.isNotEmpty) {
+          if (playlistQuality == PlaylistQuality.voice) {
+            playlistQualityStr =
+                AppLocalizations.of(context)!.playlistQualityAudio;
+          } else {
+            playlistQualityStr =
+                AppLocalizations.of(context)!.playlistQualityMusic;
+          }
+
+          String addedPlaylistMessage;
+
+          // Youtube playlist is added
+          addedPlaylistMessage = AppLocalizations.of(context)!
+              .addCorrectedYoutubePlaylistTitle(originalPlaylistTitle,
+                  playlistQualityStr, correctedPlaylistTitle);
+
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _displayWarningDialog(
+                context: _context,
+                message: addedPlaylistMessage,
+                warningMessageVM: _warningMessageVM,
+                themeProviderVM: themeProviderVM);
+          });
+        }
 
         return const SizedBox.shrink();
       case WarningMessageType.confirmYoutubeChannelModifications:
