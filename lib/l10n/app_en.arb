@@ -87,6 +87,15 @@
       "quality": {}
     }
   },
+  "addCorrectedYoutubePlaylistTitle": "Youtube playlist \"{originalTitle}\" of {quality} quality added with corrected title \"{correctedTitle}\" to the end of the playlist list.",
+  "@addCorrectedYoutubePlaylistTitle": {
+    "description": "Warning announcing that the playlist was added with a corrected title to the end of the playlist list",
+    "placeholders": {
+      "originalTitle": {},
+      "quality": {},
+      "correctedTitle": {}
+    }
+  },
   "addLocalPlaylistTitle": "Local playlist \"{title}\" of {quality} quality added to the end of the playlist list.",
   "@addLocalPlaylistTitle": {
     "description": "Warning announcing that the playlist was added to the end of the playlist list.",

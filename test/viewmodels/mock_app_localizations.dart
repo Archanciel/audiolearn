@@ -1880,4 +1880,12 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get clearPlaylistUrlOrSearchButtonTooltip =>
       "Clear Youtube link or sentence field.";
+
+  @override
+  String addCorrectedYoutubePlaylistTitle(
+    Object originalTitle,
+    Object quality,
+    Object correctedTitle,
+  ) =>
+      "Youtube playlist \"$originalTitle\" of $quality quality added with corrected title \"$correctedTitle\" to the end of the playlist list.";
 }

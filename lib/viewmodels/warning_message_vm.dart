@@ -43,6 +43,10 @@ enum WarningMessageType {
   confirmYoutubeChannelModifications, // The case if the user
   // selected the app 'Youtube channel setting' menu item.
 
+  correctedYoutubePlaylistTitle, // The case if the user
+  // added a Youtube playlist whose title contains one or several
+  // invalid characters, '/' for example.
+
   renameFileNameAlreadyUsed, // The case if the file name proposed
   // for renaming an audio file is the name of an existing
   // file.
@@ -436,6 +440,26 @@ class WarningMessageVM extends ChangeNotifier {
   set invalidYoutubePlaylistTitle(String invalidYoutubePlaylistTitle) {
     _invalidYoutubePlaylistTitle = invalidYoutubePlaylistTitle;
     warningMessageType = WarningMessageType.invalidYoutubePlaylistTitle;
+
+    // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  String _originalPlaylistTitle = '';
+  String get originalPlaylistTitle => _originalPlaylistTitle;
+  String _correctedPlaylistTitle = '';
+  String get correctedPlaylistTitle => _correctedPlaylistTitle;
+
+  void signalCorrectedYoutubePlaylistTitle({
+    required String originalPlaylistTitle,
+    required PlaylistQuality playlistQuality,
+    required String correctedPlaylistTitle,
+  }) {
+    _originalPlaylistTitle = originalPlaylistTitle;
+    _addedPlaylistQuality = playlistQuality;
+    _correctedPlaylistTitle = correctedPlaylistTitle;
+
+    warningMessageType = WarningMessageType.correctedYoutubePlaylistTitle;
 
     // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
     notifyListeners();

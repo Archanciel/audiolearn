@@ -413,6 +413,7 @@ class AudioDownloadVM extends ChangeNotifier {
     String? mockYoutubePlaylistTitle,
   }) async {
     Playlist addedPlaylist;
+    String playlistTitleToCorrect = '';
 
     if (localPlaylistTitle.isNotEmpty) {
       // handling creation of a local playlist
@@ -531,6 +532,17 @@ class AudioDownloadVM extends ChangeNotifier {
         return null;
       }
 
+      if (playlistTitle.contains('/')) {
+        // The case if the Youtube playlist title contains a '/'
+        // character. This character is used to separate the
+        // directories in a path and so can not be used in a
+        // playlist title. For this reason, '/' is replaced by
+        // '-' in the playlist title.
+        playlistTitleToCorrect = playlistTitle;
+
+        playlistTitle = playlistTitle.replaceAll('/', '-');
+      }
+
       int playlistIndex = _listOfPlaylist
           .indexWhere((playlist) => playlist.title == playlistTitle);
 
@@ -548,7 +560,7 @@ class AudioDownloadVM extends ChangeNotifier {
         );
 
         // since the updated playlist is returned. Since its title
-        // is not new, it will not be added to the orderedTitleLst 
+        // is not new, it will not be added to the orderedTitleLst
         // in the SettingsDataService json file, which would cause
         // a bug when filtering audio's of a playlist
         return updatedPlaylist;
@@ -569,11 +581,19 @@ class AudioDownloadVM extends ChangeNotifier {
       );
     }
 
-    warningMessageVM.annoncePlaylistAddition(
-      playlistTitle: addedPlaylist.title,
-      playlistQuality: playlistQuality,
-      playlistType: PlaylistType.youtube,
-    );
+    if (playlistTitleToCorrect.isEmpty) {
+      warningMessageVM.annoncePlaylistAddition(
+        playlistTitle: addedPlaylist.title,
+        playlistQuality: playlistQuality,
+        playlistType: PlaylistType.youtube,
+      );
+    } else {
+      warningMessageVM.signalCorrectedYoutubePlaylistTitle(
+        originalPlaylistTitle: playlistTitleToCorrect,
+        playlistQuality: playlistQuality,
+        correctedPlaylistTitle: addedPlaylist.title,
+      );
+    }
 
     return addedPlaylist;
   }
@@ -591,7 +611,7 @@ class AudioDownloadVM extends ChangeNotifier {
   /// where the new Youtube playlist has the same title than the deleted
   /// or renamed Youtube playlist. In this case, the existing application
   /// playlist is updated with the new Youtube playlist url and id.
-  /// 
+  ///
   /// The updated playlist is returned by the method.
   Playlist _updateYoutubePlaylisrUrl({
     required int playlistIndex,
