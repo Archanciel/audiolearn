@@ -2,9 +2,15 @@ import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
+import 'package:audiolearn/viewmodels/audio_player_vm.dart';
+import 'package:audiolearn/viewmodels/comment_vm.dart';
+import 'package:audiolearn/viewmodels/date_format_vm.dart';
+import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
+import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 import 'package:audiolearn/views/widgets/audio_sort_filter_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_add_remove_sort_filter_options_dialog.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -17,6 +23,7 @@ import 'package:audiolearn/utils/dir_util.dart';
 import 'package:audiolearn/main.dart' as app;
 
 import 'integration_test_util.dart';
+import 'mock_file_picker.dart';
 
 const int secondsDelay = 5; // 7 works, but 10 is safer and 15 solves
 //                              the problems of running the integr tests
@@ -9288,7 +9295,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             saveToPlaylistDownloadView: false,
             saveToAudioPlayerView: true,
           );
-          
+
           // Verify confirmation dialog
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
@@ -9297,7 +9304,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             isWarningConfirming: true,
           );
 
-          String playlistDownloadPath = audioDownloadVM.listOfPlaylist[0].downloadPath;
+          String playlistDownloadPath =
+              audioDownloadVM.listOfPlaylist[0].downloadPath;
 
           // Verifying that the playlist json file was correctly modified.
           IntegrationTestUtil
@@ -9317,10 +9325,10 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
         testWidgets(
-            '''In playlist list expanded situation, select a sort/filter named parms
-               in the dropdown button list and then save it to the current playlist after
-               having downloaded an audio.''',
-            (WidgetTester tester) async {
+            '''In playlist list expand situation, download 2 audio's from the 'Maria Valtorta'
+               playlist. Then hide the list of playlists and select a sort/filter named parms in
+               the dropdown button list. Then expand the list of playlists and save the SF parms to
+               the current playlist.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -9338,6 +9346,201 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               .launchIntegrTestAppEnablingInternetAccess(
             tester: tester,
             forcedLocale: const Locale('en'),
+          );
+
+          // Now typing on the download playlist button to download the
+          // 2 video audio's present the created playlist.
+          await tester
+              .tap(find.byKey(const Key('download_sel_playlists_button')));
+          await tester.pumpAndSettle();
+
+          // Add a delay to allow the download to finish. 5 seconds is ok
+          // when running the audio_download_vm_test only.
+          // Waiting 5 seconds only causes MissingPluginException
+          // 'No implementation found for method $method on channel $name'
+          // when all tsts are run. 7 seconds solve the problem.
+          for (int i = 0; i < 5; i++) {
+            await Future.delayed(const Duration(seconds: 2));
+            await tester.pumpAndSettle();
+          }
+
+          // Click on the stop button to stop the download
+          await tester.tap(find.byKey(const Key('stopDownloadingButton')));
+          await tester.pumpAndSettle();
+
+          await Future.delayed(const Duration(seconds: 4));
+          await tester.pumpAndSettle();
+
+          // Verify the order of the playlist audio titles
+
+          List<String> audioTitlesSortedByDateTimeListenedDescending = [
+            "Témoignage d'un prêtre qui a lu Maria Valtorta (2_4)",
+            "What place Maria Valtorta takes in your spiritual journey",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst:
+                audioTitlesSortedByDateTimeListenedDescending,
+            firstAudioListTileIndex: 1,
+          );
+
+          // Type on the Playlists button to hide the playlist view
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Select and save the 'spiritual' sort/filter parms to the audio
+          // player view of the 'Maria Valtorta' playlist
+          await _selectAndSaveSortFilterParmsToPlaylist(
+            tester: tester,
+            sortFilterParmsName: "spiritual",
+            saveToPlaylistDownloadView: true,
+            saveToAudioPlayerView: false,
+            displayPlaylistListBeforeSavingSFtoPlaylist: true,
+          );
+
+          // Verify confirmation dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                "Sort/filter parameters \"spiritual\" were saved to playlist \"Maria Valtorta\" for screen(s) \"Download Audio\".",
+            isWarningConfirming: true,
+          );
+
+          String playlistDownloadPath =
+              audioDownloadVM.listOfPlaylist[0].downloadPath;
+
+          // Verifying that the playlist json file was correctly modified.
+          IntegrationTestUtil
+              .verifyPlaylistDataElementsUpdatedInPlaylistJsonFile(
+            selectedPlaylistTitle: 'Maria Valtorta',
+            audioSortFilterParmsNamePlaylistDownloadView:
+                "spiritual", // The playlist download view is not affected
+            audioSortFilterParmsNameAudioPlayerView: "",
+            audioPlayingOrder: AudioPlayingOrder.ascending,
+            playlistDownloadPath: playlistDownloadPath,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+      });
+      group(
+          '''First, restore app data from Android zip file to Windows app. Then hide
+               the list of playlists and select a SF parms. The two integration tests
+               test a bug fix.''', () {
+        testWidgets(
+            '''After SF selection, display the list of playlists and redownload the
+               filtered audio's. Verify the empty displayed audio list as well as the
+               possibility of saving the named sort/filter parms to the playlist views.''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}restore_Android_zip_on_Windows_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+          WarningMessageVM warningMessageVM = WarningMessageVM();
+
+          AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+            warningMessageVM: warningMessageVM,
+            settingsDataService: settingsDataService,
+          );
+
+          PlaylistListVM playlistListVM = PlaylistListVM(
+            warningMessageVM: warningMessageVM,
+            audioDownloadVM: audioDownloadVM,
+            commentVM: CommentVM(),
+            settingsDataService: settingsDataService,
+          );
+
+          // calling getUpToDateSelectablePlaylists() loads all the
+          // playlist json files from the app dir and so enables
+          // playlistListVM to know which playlists are
+          // selected and which are not
+          playlistListVM.getUpToDateSelectablePlaylists();
+
+          AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+            settingsDataService: settingsDataService,
+            playlistListVM: playlistListVM,
+            commentVM: CommentVM(),
+          );
+
+          DateFormatVM dateFormatVM = DateFormatVM(
+            settingsDataService: settingsDataService,
+          );
+
+          await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccessWithMock(
+            tester: tester,
+            audioDownloadVM: audioDownloadVM,
+            settingsDataService: settingsDataService,
+            playlistListVM: playlistListVM,
+            warningMessageVM: warningMessageVM,
+            audioPlayerVM: audioPlayerVM,
+            dateFormatVM: dateFormatVM,
+          );
+
+          // AudioDownloadVM audioDownloadVM = await IntegrationTestUtil
+          //     .launchIntegrTestAppEnablingInternetAccess(
+          //   tester: tester,
+          //   forcedLocale: const Locale('en'),
+          // );
+
+          String restorableZipFileName = 'audioLearn_2025-02-02_10_43.zip';
+
+          // Replace the platform instance with your mock
+          MockFilePicker mockFilePicker = MockFilePicker();
+          FilePicker.platform = mockFilePicker;
+
+          mockFilePicker.setSelectedFiles([
+            PlatformFile(
+                name: restorableZipFileName,
+                path:
+                    '$kApplicationPathWindowsTest${path.separator}$restorableZipFileName',
+                size: 1038533), // 1040384
+          ]);
+
+          // Tap the appbar leading popup menu button
+          await tester
+              .tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+          await tester.pumpAndSettle();
+
+          // Now type on the 'Restore Playlists, Comments and Settings
+          // from Zip File ...' menu
+          await tester.tap(find.byKey(const Key(
+              'appBarMenuRestorePlaylistsCommentsAndSettingsFromZip')));
+          await tester.pumpAndSettle(const Duration(seconds: 2));
+
+          // Verify the displayed warning confirmation dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                'Restored 58 playlist and 65 comment json files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+            isWarningConfirming: true,
+            warningTitle: 'CONFIRMATION',
           );
 
           // Now typing on the download playlist button to download the
@@ -9389,7 +9592,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             saveToAudioPlayerView: false,
             displayPlaylistListBeforeSavingSFtoPlaylist: true,
           );
-          
+
           // Verify confirmation dialog
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
@@ -9398,7 +9601,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             isWarningConfirming: true,
           );
 
-          String playlistDownloadPath = audioDownloadVM.listOfPlaylist[0].downloadPath;
+          String playlistDownloadPath =
+              audioDownloadVM.listOfPlaylist[0].downloadPath;
 
           // Verifying that the playlist json file was correctly modified.
           IntegrationTestUtil
