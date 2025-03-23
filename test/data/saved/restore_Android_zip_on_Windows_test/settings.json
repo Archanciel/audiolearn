@@ -74,12 +74,12 @@
             "filterNotPictured": true,
             "filterPlayable": false,
             "filterNotPlayable": true,
-            "downloadDateStartRange": null,
+            "downloadDateStartRange": "2024-11-01T00:00:00.000",
             "downloadDateEndRange": null,
             "uploadDateStartRange": null,
             "uploadDateEndRange": null,
             "fileSizeStartRangeMB": 0.0,
-            "fileSizeEndRangeMB": 2.2,
+            "fileSizeEndRangeMB": 3.9,
             "durationStartRangeSec": 0,
             "durationEndRangeSec": 0
         }
