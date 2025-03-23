@@ -1342,6 +1342,18 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     required PlaylistListVM playlistListVMlistenFalse,
     required WarningMessageVM warningMessageVMlistenFalse,
   }) {
+   // The selected sort and filter parameters name is retrieved
+   // from the playlistListVMl. This fixes the problem of not
+   // being able to save the sort and filter parameters to the
+   // selected playlist after the not playable audio list was
+   // redownloaded.    
+    _selectedSortFilterParametersName = playlistListVMlistenFalse
+        .getSelectedPlaylistAudioSortFilterParmsNameForView(
+      audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+      translatedAppliedSortFilterParmsName:
+          AppLocalizations.of(context)!.sortFilterParametersAppliedName,
+    );
+
     return SizedBox(
       width: kRowButtonGroupWidthSeparator,
       child: PopupMenuButton<PopupMenuButtonType>(
