@@ -764,6 +764,11 @@ class AudioDownloadVM extends ChangeNotifier {
       if (!_isDownloading) {
         _isDownloading = true;
 
+        // This avoid that when downloading a next audio file, the displayed
+        // download progress starts at 100 % !
+
+        _downloadProgress = 0.0;
+
         notifyListeners();
       }
 
@@ -1623,6 +1628,13 @@ class AudioDownloadVM extends ChangeNotifier {
 
       _currentDownloadingAudio = audio;
 
+      // This avoid that when downloading a next audio file, the displayed
+      // download progress starts at 100 % !
+      
+      _downloadProgress = 0.0;
+
+      notifyListeners();
+
       ErrorType errorType = await redownloadSingleVideoAudio();
 
       if (errorType == ErrorType.downloadAudioFileAlreadyOnAudioDirectory) {
@@ -2239,7 +2251,10 @@ class AudioDownloadVM extends ChangeNotifier {
 
     // This avoid that when downloading a next audio file, the displayed
     // download progress starts at 100 % !
+
     _downloadProgress = 0.0;
+
+    notifyListeners();
 
     Duration updateInterval = const Duration(seconds: 1);
     DateTime lastUpdate = DateTime.now();
@@ -2248,7 +2263,7 @@ class AudioDownloadVM extends ChangeNotifier {
         _downloadProgress = totalBytesDownloaded / audioFileSize;
         _lastSecondDownloadSpeed =
             totalBytesDownloaded - previousSecondBytesDownloaded;
-        
+
         notifyListeners();
 
         if (!_isDownloading) {
