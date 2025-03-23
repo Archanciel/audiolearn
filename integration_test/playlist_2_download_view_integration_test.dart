@@ -10809,7 +10809,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchIntegrTestApplicationWithMock(
+      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccessWithMock(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
