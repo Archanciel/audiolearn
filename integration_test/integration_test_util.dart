@@ -1053,7 +1053,7 @@ class IntegrationTestUtil {
 
     // If the list is empty, check that no ListTile is present
     if (audioOrPlaylistTitlesOrderedLst.isEmpty) {
-      expect(tester.widgetList(listTilesFinder).length, 0);
+      expect(tester.widgetList(listTilesFinder).length, (firstAudioListTileIndex == 0) ? 0 : firstAudioListTileIndex + 1);
     }
   }
 
