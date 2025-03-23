@@ -2248,8 +2248,15 @@ class AudioDownloadVM extends ChangeNotifier {
         _downloadProgress = totalBytesDownloaded / audioFileSize;
         _lastSecondDownloadSpeed =
             totalBytesDownloaded - previousSecondBytesDownloaded;
-
+        
         notifyListeners();
+
+        if (!_isDownloading) {
+          // Avoids that the playlist download view is rebuilded
+          // an infiite number of times when the download was stopped
+          // due to a Youtube error.
+          timer.cancel();
+        }
 
         previousSecondBytesDownloaded = totalBytesDownloaded;
         lastUpdate = DateTime.now();
