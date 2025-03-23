@@ -9450,64 +9450,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
-          );
-
-          // Load the settings from the json file. This is necessary
-          // otherwise the ordered playlist titles will remain empty
-          // and the playlist list will not be filled with the
-          // playlists available in the download app test dir
-          await settingsDataService.loadSettingsFromFile(
-              settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-
-          WarningMessageVM warningMessageVM = WarningMessageVM();
-
-          AudioDownloadVM audioDownloadVM = AudioDownloadVM(
-            warningMessageVM: warningMessageVM,
-            settingsDataService: settingsDataService,
-          );
-
-          PlaylistListVM playlistListVM = PlaylistListVM(
-            warningMessageVM: warningMessageVM,
-            audioDownloadVM: audioDownloadVM,
-            commentVM: CommentVM(),
-            settingsDataService: settingsDataService,
-          );
-
-          // calling getUpToDateSelectablePlaylists() loads all the
-          // playlist json files from the app dir and so enables
-          // playlistListVM to know which playlists are
-          // selected and which are not
-          playlistListVM.getUpToDateSelectablePlaylists();
-
-          AudioPlayerVM audioPlayerVM = AudioPlayerVM(
-            settingsDataService: settingsDataService,
-            playlistListVM: playlistListVM,
-            commentVM: CommentVM(),
-          );
-
-          DateFormatVM dateFormatVM = DateFormatVM(
-            settingsDataService: settingsDataService,
-          );
-
-          await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccessWithMock(
+          AudioDownloadVM audioDownloadVM = await IntegrationTestUtil
+              .launchIntegrTestAppEnablingInternetAccess(
             tester: tester,
-            audioDownloadVM: audioDownloadVM,
-            settingsDataService: settingsDataService,
-            playlistListVM: playlistListVM,
-            warningMessageVM: warningMessageVM,
-            audioPlayerVM: audioPlayerVM,
-            dateFormatVM: dateFormatVM,
+            forcedLocale: const Locale('en'),
           );
-
-          // AudioDownloadVM audioDownloadVM = await IntegrationTestUtil
-          //     .launchIntegrTestAppEnablingInternetAccess(
-          //   tester: tester,
-          //   forcedLocale: const Locale('en'),
-          // );
 
           String restorableZipFileName = 'audioLearn_2025-02-02_10_43.zip';
 
@@ -9543,75 +9490,112 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             warningTitle: 'CONFIRMATION',
           );
 
-          // Now typing on the download playlist button to download the
-          // 2 video audio's present the created playlist.
-          await tester
-              .tap(find.byKey(const Key('download_sel_playlists_button')));
+          // Scrolling down the playlists list in order to make accessible
+          // audio_learn_emi playlist
+
+          // Find the playlist list widget using its key
+          final Finder listFinder =
+              find.byKey(const Key('expandable_playlist_list'));
+
+          // Perform the scroll action
+          await tester.drag(listFinder, const Offset(0, -200));
           await tester.pumpAndSettle();
 
-          // Add a delay to allow the download to finish. 5 seconds is ok
-          // when running the audio_download_vm_test only.
-          // Waiting 5 seconds only causes MissingPluginException
-          // 'No implementation found for method $method on channel $name'
-          // when all tsts are run. 7 seconds solve the problem.
-          for (int i = 0; i < 5; i++) {
-            await Future.delayed(const Duration(seconds: 2));
-            await tester.pumpAndSettle();
-          }
+          // Select audio_learn_emi playlist
 
-          // Click on the stop button to stop the download
-          await tester.tap(find.byKey(const Key('stopDownloadingButton')));
-          await tester.pumpAndSettle();
+          String playlistToRedownloadTitle = 'audio_learn_emi';
 
-          await Future.delayed(const Duration(seconds: 4));
-
-          // Verify the order of the playlist audio titles
-
-          List<String> audioTitlesSortedByDateTimeListenedDescending = [
-            "Témoignage d'un prêtre qui a lu Maria Valtorta (2_4)",
-            "What place Maria Valtorta takes in your spiritual journey",
-          ];
-
-          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          await IntegrationTestUtil.selectPlaylist(
             tester: tester,
-            audioOrPlaylistTitlesOrderedLst:
-                audioTitlesSortedByDateTimeListenedDescending,
-            firstAudioListTileIndex: 1,
+            playlistToSelectTitle: playlistToRedownloadTitle,
           );
 
           // Type on the Playlists button to hide the playlist view
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle();
 
-          // Select and save the 'spiritual' sort/filter parms to the audio
-          // player view of the 'Maria Valtorta' playlist
+          await _selectSortFilterParms(
+            tester: tester,
+            sortFilterParmsName: 'Not playable',
+          );
+
+          // Type on the Playlists button to display the playlists list
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Execute the redownload filtered audio menu by clicking first on
+          // the 'Filtered Audio Actions ...' playlist menu item and then
+          // on the 'Redownload Filtered Audio ...' sub-menu item.
+          await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
+            tester: tester,
+            playlistTitle: playlistToRedownloadTitle,
+            playlistSubMenuKeyStr: 'popup_menu_redownload_filtered_audio',
+          );
+
+          // Add a delay to allow the download to finish. 5 seconds is ok
+          // when running the audio_download_vm_test only.
+          // Waiting 5 seconds only causes MissingPluginException
+          // 'No implementation found for method $method on channel $name'
+          // when all tsts are run. 7 seconds solve the problem.
+          for (int i = 0; i < 7; i++) {
+            await Future.delayed(const Duration(seconds: 1));
+            await tester.pumpAndSettle();
+          }
+
+          await Future.delayed(const Duration(seconds: 4));
+
+          // Verify the value of the sort/filter parms name that is
+          // displayed in the first line of the playlist download view
+          expect(
+              tester
+                  .widget<Text>(
+                      find.byKey(const Key('selectedPlaylistSFparmNameText')))
+                  .data,
+              'Not playable');
+
+          // Verify that the playlist audio list is empty since the audio
+          // have been downloaded and are now playable
+
+          List<String> audioTitlesSortedByDateTimeListenedDescending = [];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst:
+                audioTitlesSortedByDateTimeListenedDescending,
+            firstAudioListTileIndex: 6, // number of visible playlists in the
+            //                             playlist list
+          );
+
+          // Select and save the 'Not playable' sort/filter parms to the audio
+          // player view of the 'audio_learn_emi' playlist
           await _selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
-            sortFilterParmsName: "spiritual",
+            sortFilterParmsName: "Not playable",
             saveToPlaylistDownloadView: true,
             saveToAudioPlayerView: false,
-            displayPlaylistListBeforeSavingSFtoPlaylist: true,
+            displayPlaylistListBeforeSavingSFtoPlaylist: false,
+            selectSortFilterParms: false,
           );
 
           // Verify confirmation dialog
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                "Sort/filter parameters \"spiritual\" were saved to playlist \"Maria Valtorta\" for screen(s) \"Download Audio\".",
+                "Sort/filter parameters \"Not playable\" were saved to playlist \"audio_learn_emi\" for screen(s) \"Download Audio\".",
             isWarningConfirming: true,
           );
 
           String playlistDownloadPath =
-              audioDownloadVM.listOfPlaylist[0].downloadPath;
+              audioDownloadVM.listOfPlaylist[2].downloadPath;
 
           // Verifying that the playlist json file was correctly modified.
           IntegrationTestUtil
               .verifyPlaylistDataElementsUpdatedInPlaylistJsonFile(
-            selectedPlaylistTitle: 'Maria Valtorta',
+            selectedPlaylistTitle: 'audio_learn_emi',
             audioSortFilterParmsNamePlaylistDownloadView:
-                "spiritual", // The playlist download view is not affected
-            audioSortFilterParmsNameAudioPlayerView: "",
-            audioPlayingOrder: AudioPlayingOrder.ascending,
+                "Not playable", // The playlist download view is not affected
+            audioSortFilterParmsNameAudioPlayerView: "Downl asc",
+            audioPlayingOrder: AudioPlayingOrder.descending,
             playlistDownloadPath: playlistDownloadPath,
           );
 
@@ -13854,25 +13838,16 @@ Future<void> _selectAndSaveSortFilterParmsToPlaylist({
   required bool saveToPlaylistDownloadView,
   required bool saveToAudioPlayerView,
   bool displayPlaylistListBeforeSavingSFtoPlaylist = false,
+  bool selectSortFilterParms = true,
 }) async {
-  // Tap on the current dropdown button item to open the dropdown
-  // button items list
-
-  Finder dropDownButtonFinder =
-      find.byKey(const Key('sort_filter_parms_dropdown_button'));
-
-  Finder dropDownButtonTextFinder = find.descendant(
-    of: dropDownButtonFinder,
-    matching: find.byType(Text),
-  );
-
-  await tester.tap(dropDownButtonTextFinder);
-  await tester.pumpAndSettle();
-
-  // Find and select the sort filter parms item
-  Finder titleAscDropDownTextFinder = find.text(sortFilterParmsName).last;
-  await tester.tap(titleAscDropDownTextFinder);
-  await tester.pumpAndSettle();
+  if (selectSortFilterParms) {
+    // Tap on the current dropdown button item to open the dropdown
+    // button items list
+    await _selectSortFilterParms(
+      tester: tester,
+      sortFilterParmsName: sortFilterParmsName,
+    );
+  }
 
   if (displayPlaylistListBeforeSavingSFtoPlaylist) {
     // Tap the 'Toggle List' button to display the list of playlists
@@ -13904,6 +13879,30 @@ Future<void> _selectAndSaveSortFilterParmsToPlaylist({
   // Finally, click on save button
   await tester
       .tap(find.byKey(const Key('saveSortFilterOptionsToPlaylistSaveButton')));
+  await tester.pumpAndSettle();
+}
+
+Future<void> _selectSortFilterParms({
+  required WidgetTester tester,
+  required String sortFilterParmsName,
+}) async {
+  // Tap on the current dropdown button item to open the dropdown
+  // button items list
+
+  Finder dropDownButtonFinder =
+      find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+  Finder dropDownButtonTextFinder = find.descendant(
+    of: dropDownButtonFinder,
+    matching: find.byType(Text),
+  );
+
+  await tester.tap(dropDownButtonTextFinder);
+  await tester.pumpAndSettle();
+
+  // Find and select the sort filter parms item
+  Finder titleAscDropDownTextFinder = find.text(sortFilterParmsName).last;
+  await tester.tap(titleAscDropDownTextFinder);
   await tester.pumpAndSettle();
 }
 
