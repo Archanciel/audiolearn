@@ -37,9 +37,9 @@ class PlaylistDownloadView extends StatefulWidget {
   // constructor of AudioListItemWidget.
   final Function(int) onPageChangedFunction;
   final double audioItemHeight = (ScreenMixin.isHardwarePc() ? 73 : 85);
-  final double playlistNotExpamdedScrollAugmentation =
+  final double playlistNotExpandedScrollAugmentation =
       (ScreenMixin.isHardwarePc()) ? 1.38 : 1.55;
-  final double playlistExpamdedScrollAugmentation =
+  final double playlistExpandedScrollAugmentation =
       (ScreenMixin.isHardwarePc()) ? 1 : 1.5;
   final double playlistItemHeight = (ScreenMixin.isHardwarePc() ? 51 : 85);
   final bool isTest;
@@ -72,16 +72,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   bool _doNotScroll = false;
 
   String _selectedPlaylistAudioSortFilterParmsName = '';
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // enabling to download a playlist in the emulator in which
-  //   // pasting a URL is not possible
-  //   // if (kPastedPlaylistUrl.isNotEmpty) {
-  //   //   _playlistUrlController.text = kPastedPlaylistUrl;
-  //   // }
-  // }
 
   @override
   initState() {
@@ -376,10 +366,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
     if (!isPlaylistListExpanded) {
       // the list of playlists is collapsed ...
-      scrollPositionNumber *= widget.playlistNotExpamdedScrollAugmentation;
+      scrollPositionNumber *= widget.playlistNotExpandedScrollAugmentation;
     } else {
       // the list of playlists is expanded ...
-      scrollPositionNumber *= widget.playlistExpamdedScrollAugmentation;
+      scrollPositionNumber *= widget.playlistExpandedScrollAugmentation;
     }
 
     double offset = scrollPositionNumber * widget.audioItemHeight;
