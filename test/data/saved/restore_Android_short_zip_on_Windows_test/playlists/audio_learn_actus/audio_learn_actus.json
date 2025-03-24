@@ -1,0 +1,18 @@
+{
+    "audioPlayingOrder": "ascending",
+    "audioPlaySpeed": 1.0,
+    "audioSortFilterParmsNameAudioPlayerView": "",
+    "audioSortFilterParmsNamePlaylistDownloadView": "",
+    "currentOrPastPlayableAudioIndex": -1,
+    "downloadedAudioLst": [
+    ],
+    "downloadPath": "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\audio_learn_actus",
+    "id": "PLzwWSJNcZTMRqUXAPahA04HJHvU5lNQo5",
+    "isSelected": false,
+    "playableAudioLst": [
+    ],
+    "playlistQuality": "voice",
+    "playlistType": "youtube",
+    "title": "audio_learn_actus",
+    "url": "https://youtube.com/playlist?list=PLzwWSJNcZTMRqUXAPahA04HJHvU5lNQo5&si=vj8oZSb9x1sDi0bB"
+}
