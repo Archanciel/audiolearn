@@ -552,12 +552,13 @@ class IntegrationTestUtil {
     );
   }
 
-  static Future<void> verifyAudioMenuItemsState({
+  /// In this version, the second audio menu item is disabled.
+  static Future<void> verifyTwoFirstAudioMenuItemsState({
     required WidgetTester tester,
-    required bool areAudioMenuItemsDisabled,
+    required bool isFirstAudioMenuItemDisabled,
     required AudioLearnAppViewType audioLearnAppViewType,
   }) async {
-    if (areAudioMenuItemsDisabled) {
+    if (isFirstAudioMenuItemDisabled) {
       verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'define_sort_and_filter_audio_menu_item',
@@ -586,13 +587,6 @@ class IntegrationTestUtil {
         tester: tester,
         widgetKeyStr: 'clear_sort_and_filter_audio_parms_history_menu_item',
       );
-
-      // The save sort and filter audio parameters in playlist menu item
-      // is currently disabled in the audio player view
-      // verifyWidgetIsEnabled(
-      //   tester: tester,
-      //   widgetKeyStr: 'save_sort_and_filter_audio_parms_in_playlist_item',
-      // );
     }
 
     if (audioLearnAppViewType == AudioLearnAppViewType.audioPlayerView) {
@@ -795,9 +789,9 @@ class IntegrationTestUtil {
 
       // since the selected local playlist has audio, the
       // audio menu items are enabled
-      await verifyAudioMenuItemsState(
+      await verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: false,
+        isFirstAudioMenuItemDisabled: false,
         audioLearnAppViewType: audioLearnAppViewType,
       );
     }
