@@ -6,7 +6,7 @@
         "SettingType.language": "Language.english"
     },
     "SettingType.playlists": {
-        "Playlists.orderedTitleLst": "[Maria Valtorta]",
+        "Playlists.orderedTitleLst": "[MaValTest]",
         "Playlists.isMusicQualityByDefault": "false",
         "Playlists.playSpeed": "1.0",
         "Playlists.arePlaylistsDisplayedInPlaylistDownloadView": "true"
@@ -51,7 +51,7 @@
             "durationStartRangeSec": 0,
             "durationEndRangeSec": 0
         },
-        "spiritual": {
+        "short": {
             "selectedSortItemLst": [
                 {
                     "sortingOption": "audioDownloadDate",
@@ -59,7 +59,6 @@
                 }
             ],
             "filterSentenceLst": [
-                "spiritual"
             ],
             "sentencesCombination": 0,
             "ignoreCase": true,
@@ -80,7 +79,7 @@
             "uploadDateStartRange": null,
             "uploadDateEndRange": null,
             "fileSizeStartRangeMB": 0.0,
-            "fileSizeEndRangeMB": 0.0,
+            "fileSizeEndRangeMB": 0.1,
             "durationStartRangeSec": 0,
             "durationEndRangeSec": 0
         }
