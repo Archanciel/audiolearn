@@ -9514,9 +9514,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure that the audio menu items are enabled
-      await IntegrationTestUtil.verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: false,
+        isFirstAudioMenuItemDisabled: false,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -9546,9 +9546,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure that the audio menu items are now disabled
-      await IntegrationTestUtil.verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: true,
+        isFirstAudioMenuItemDisabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -9585,9 +9585,9 @@ void main() {
       // deselected. This is due to the fact that any playlist added
       // by the update playlist JSON file fumctionality is deselected
       // in order that only one playlist is selected after the update.
-      await IntegrationTestUtil.verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: true,
+        isFirstAudioMenuItemDisabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -9669,9 +9669,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure that the audio menu items are enabled
-      await IntegrationTestUtil.verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: false,
+        isFirstAudioMenuItemDisabled: false,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -9701,9 +9701,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure that the audio menu items are now disabled
-      await IntegrationTestUtil.verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: true,
+        isFirstAudioMenuItemDisabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -9740,9 +9740,9 @@ void main() {
       // deselected. This is due to the fact that any playlist added
       // by the update playlist JSON file fumctionality is deselected
       // in order that only one playlist is selected after the update.
-      await IntegrationTestUtil.verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: true,
+        isFirstAudioMenuItemDisabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -9818,9 +9818,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure that the audio menu items are disabled
-      await IntegrationTestUtil.verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: true,
+        isFirstAudioMenuItemDisabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -9850,9 +9850,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure that the audio menu items are now disabled
-      await IntegrationTestUtil.verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: true,
+        isFirstAudioMenuItemDisabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -9884,9 +9884,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure that the audio menu items are now enabled
-      await IntegrationTestUtil.verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: true,
+        isFirstAudioMenuItemDisabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -9967,9 +9967,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure that the audio menu items are disabled
-      await IntegrationTestUtil.verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: true,
+        isFirstAudioMenuItemDisabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -9999,9 +9999,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure that the audio menu items are now disabled
-      await IntegrationTestUtil.verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: true,
+        isFirstAudioMenuItemDisabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -10033,9 +10033,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure that the audio menu items are disabled
-      await IntegrationTestUtil.verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: true,
+        isFirstAudioMenuItemDisabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -13309,9 +13309,9 @@ void main() {
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: true,
+        isFirstAudioMenuItemDisabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -13475,9 +13475,9 @@ void main() {
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: false,
+        isFirstAudioMenuItemDisabled: false,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -13644,9 +13644,9 @@ void main() {
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: true,
+        isFirstAudioMenuItemDisabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -13811,9 +13811,9 @@ void main() {
 
       // since the playlist whose deletion was cancelled has no audio,
       // the audui menu items are disabled
-      await IntegrationTestUtil.verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: true,
+        isFirstAudioMenuItemDisabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -14177,9 +14177,9 @@ void main() {
 
       // since the selected local playlist has no audio, the
       // audio menu item is disabled
-      await IntegrationTestUtil.verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: true,
+        isFirstAudioMenuItemDisabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -14314,9 +14314,9 @@ void main() {
 
       // since the selected local playlist has no audio, the
       // audio menu item is disabled
-      await IntegrationTestUtil.verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: true,
+        isFirstAudioMenuItemDisabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -14400,9 +14400,9 @@ void main() {
 
       // since the selected local playlist has no audio, the
       // audio menu item is disabled
-      await IntegrationTestUtil.verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: true,
+        isFirstAudioMenuItemDisabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -14698,9 +14698,9 @@ void main() {
 
       // since the selected local playlist has no audio, the
       // audio menu item is disabled
-      await IntegrationTestUtil.verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: true,
+        isFirstAudioMenuItemDisabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -14838,9 +14838,9 @@ void main() {
 
       // since the selected local playlist has no audio, the
       // audio menu item is disabled
-      await IntegrationTestUtil.verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: true,
+        isFirstAudioMenuItemDisabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -14956,9 +14956,9 @@ void main() {
 
       // since the selected local playlist has no audio, the
       // audio menu item is disabled
-      await IntegrationTestUtil.verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: true,
+        isFirstAudioMenuItemDisabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -15074,9 +15074,9 @@ void main() {
 
       // since the selected local playlist has no audio, the
       // audio menu item is disabled
-      await IntegrationTestUtil.verifyAudioMenuItemsState(
+      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
         tester: tester,
-        areAudioMenuItemsDisabled: true,
+        isFirstAudioMenuItemDisabled: true,
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
@@ -18562,9 +18562,9 @@ Future<void> _ensureNoButtonIsEnabledSinceNoPlaylistIsSelected(
 
   // since the selected local playlist has no audio, the
   // audio menu items are disabled
-  await IntegrationTestUtil.verifyAudioMenuItemsState(
+  await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
     tester: tester,
-    areAudioMenuItemsDisabled: true,
+    isFirstAudioMenuItemDisabled: true,
     audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
   );
 }

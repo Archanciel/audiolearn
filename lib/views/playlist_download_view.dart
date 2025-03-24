@@ -1342,18 +1342,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     required PlaylistListVM playlistListVMlistenFalse,
     required WarningMessageVM warningMessageVMlistenFalse,
   }) {
-    // The selected sort and filter parameters name is retrieved
-    // from the playlistListVMl. This fixes the problem of not
-    // being able to save the sort and filter parameters to the
-    // selected playlist after the not playable audio list was
-    // redownloaded.
-    // _selectedSortFilterParametersName = playlistListVMlistenFalse
-    //     .getSelectedPlaylistAudioSortFilterParmsNameForView(
-    //   audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
-    //   translatedAppliedSortFilterParmsName:
-    //       AppLocalizations.of(context)!.sortFilterParametersAppliedName,
-    // );
-
     return SizedBox(
       width: kRowButtonGroupWidthSeparator,
       child: PopupMenuButton<PopupMenuButtonType>(
@@ -1372,9 +1360,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             PopupMenuItem<PopupMenuButtonType>(
               key: const Key(
                   'clear_sort_and_filter_audio_parms_history_menu_item'),
-              enabled: (playlistListVMlistenFalse
+              enabled: playlistListVMlistenFalse
                   .getSearchHistoryAudioSortFilterParametersLst()
-                  .isNotEmpty),
+                  .isNotEmpty,
               value: PopupMenuButtonType.clearSortFilterAudioParmsHistory,
               child: Text(AppLocalizations.of(context)!
                   .clearSortFilterAudiosParmsHistoryMenu),
@@ -1383,7 +1371,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               key: const Key(
                   'save_sort_and_filter_audio_parms_in_playlist_item'),
               enabled:
-                  (playlistListVMlistenFalse.isSaveSFparmsToPlaylistMenuEnabled(
+                  playlistListVMlistenFalse.isSaveSFparmsToPlaylistMenuEnabled(
                 audioLearnAppViewType:
                     AudioLearnAppViewType.playlistDownloadView,
                 translatedAppliedSortFilterParmsName:
@@ -1392,7 +1380,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 translatedDefaultSortFilterParmsName:
                     AppLocalizations.of(context)!
                         .sortFilterParametersDefaultName,
-              )),
+              ),
               value: PopupMenuButtonType.saveSortFilterAudioParmsToPlaylist,
               child: Text(AppLocalizations.of(context)!
                   .saveSortFilterAudiosOptionsToPlaylistMenu),
@@ -1400,14 +1388,14 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             PopupMenuItem<PopupMenuButtonType>(
               key: const Key(
                   'remove_sort_and_filter_audio_parms_from_playlist_item'),
-              enabled: (playlistListVMlistenFalse
+              enabled: playlistListVMlistenFalse
                   .isRemoveSFparmsFromPlaylistMenuEnabled(
                 audioLearnAppViewType:
                     AudioLearnAppViewType.playlistDownloadView,
                 translatedAppliedSortFilterParmsName:
                     AppLocalizations.of(context)!
                         .sortFilterParametersAppliedName,
-              )), // this menu item is enabled if a sort filter parms is applied
+              ), // this menu item is enabled if a sort filter parms is applied
               //     to  one or two views of the selected playlist
               value: PopupMenuButtonType.removeSortFilterAudioParmsFromPlaylist,
               child: Text(AppLocalizations.of(context)!
