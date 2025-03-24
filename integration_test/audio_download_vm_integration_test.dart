@@ -168,11 +168,7 @@ Future<void> main() async {
       await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
       await tester.pumpAndSettle();
 
-      // Add a delay to allow the download to finish. 5 seconds is ok
-      // when running the audio_download_vm_test only.
-      // Waiting 5 seconds only causes MissingPluginException
-      // 'No implementation found for method $method on channel $name'
-      // when all tsts are run. 7 seconds solve the problem.
+      // Add a delay to allow the download to finish.
       for (int i = 0; i < 5; i++) {
         await Future.delayed(const Duration(seconds: 2));
         await tester.pumpAndSettle();
@@ -325,11 +321,7 @@ Future<void> main() async {
       await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
       await tester.pumpAndSettle();
 
-      // Add a delay to allow the download to finish. 5 seconds is ok
-      // when running the audio_download_vm_test only.
-      // Waiting 5 seconds only causes MissingPluginException
-      // 'No implementation found for method $method on channel $name'
-      // when all tsts are run. 7 seconds solve the problem.
+      // Add a delay to allow the download to finish.
       for (int i = 0; i < 5; i++) {
         await Future.delayed(const Duration(seconds: 2));
         await tester.pumpAndSettle();
@@ -462,11 +454,7 @@ Future<void> main() async {
       await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
       await tester.pumpAndSettle();
 
-      // Add a delay to allow the download to finish. 5 seconds is ok
-      // when running the audio_download_vm_test only.
-      // Waiting 5 seconds only causes MissingPluginException
-      // 'No implementation found for method $method on channel $name'
-      // when all tsts are run. 7 seconds solve the problem.
+      // Add a delay to allow the download to finish.
       for (int i = 0; i < 8; i++) {
         await Future.delayed(const Duration(seconds: 1));
         await tester.pumpAndSettle();
@@ -609,11 +597,7 @@ Future<void> main() async {
             "Confirm target playlist \"$emptyLocalTestPlaylistTitle\" for downloading single video audio in spoken quality.",
       );
 
-      // Add a delay to allow the download to finish. 5 seconds is ok
-      // when running the audio_download_vm_test only.
-      // Waiting 5 seconds only causes MissingPluginException
-      // 'No implementation found for method $method on channel $name'
-      // when all tsts are run. 7 seconds solve the problem.
+      // Add a delay to allow the download to finish.
       await Future.delayed(const Duration(seconds: secondsDelay));
       await tester.pumpAndSettle();
 
@@ -759,11 +743,7 @@ Future<void> main() async {
             "Confirm target playlist \"$emptyLocalTestPlaylistTitle\" for downloading single video audio in high-quality music format.",
       );
 
-      // Add a delay to allow the download to finish. 5 seconds is ok
-      // when running the audio_download_vm_test only.
-      // Waiting 5 seconds only causes MissingPluginException
-      // 'No implementation found for method $method on channel $name'
-      // when all tsts are run. 7 seconds solve the problem.
+      // Add a delay to allow the download to finish.
       await Future.delayed(const Duration(seconds: secondsDelay));
       await tester.pumpAndSettle();
 
@@ -904,11 +884,7 @@ Future<void> main() async {
       await tester.tap(find.byKey(const Key('okButtonKey')));
       await tester.pumpAndSettle();
 
-      // Add a delay to allow the download to finish. 5 seconds is ok
-      // when running the audio_download_vm_test only.
-      // Waiting 5 seconds only causes MissingPluginException
-      // 'No implementation found for method $method on channel $name'
-      // when all tsts are run. 7 seconds solve the problem.
+      // Add a delay to allow the download to finish.
       for (int i = 0; i < 5; i++) {
         await Future.delayed(const Duration(seconds: 1));
         await tester.pumpAndSettle();
@@ -1053,11 +1029,7 @@ Future<void> main() async {
       await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
       await tester.pumpAndSettle();
 
-      // Add a delay to allow the download to finish. 5 seconds is ok
-      // when running the audio_download_vm_test only.
-      // Waiting 5 seconds only causes MissingPluginException
-      // 'No implementation found for method $method on channel $name'
-      // when all tsts are run. 7 seconds solve the problem.
+      // Add a delay to allow the download to finish.
       for (int i = 0; i < 5; i++) {
         await Future.delayed(const Duration(seconds: 2));
         await tester.pumpAndSettle();
@@ -1157,11 +1129,7 @@ Future<void> main() async {
       await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
       await tester.pumpAndSettle();
 
-      // Add a delay to allow the download to finish. 5 seconds is ok
-      // when running the audio_download_vm_test only.
-      // Waiting 5 seconds only causes MissingPluginException
-      // 'No implementation found for method $method on channel $name'
-      // when all tsts are run. 7 seconds solve the problem.
+      // Add a delay to allow the download to finish.
       for (int i = 0; i < 5; i++) {
         await Future.delayed(const Duration(seconds: 2));
         await tester.pumpAndSettle();
