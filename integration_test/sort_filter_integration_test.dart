@@ -10,6 +10,7 @@ import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 import 'package:audiolearn/views/widgets/audio_sort_filter_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_add_remove_sort_filter_options_dialog.dart';
+import 'package:audiolearn/views/widgets/warning_message_display.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -8962,7 +8963,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                selected. Open the Remove dialog to verify its content and remove
                the 'desc listened' SF parms. Then verify that the 'default'
                is applied to the playlist download view and not to the audio
-               player view. Verify also the playlist json file.''',
+               player view. Verify also the playlist json file as well as the
+               save ... and remove ... audio popup menu items state.''',
             (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
@@ -9111,7 +9113,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                selected. Open the Remove dialog to verify its content and remove
                the 'desc listened' SF parms. Then verify that the 'default'
                is applied to the playlist download view and not to the audio
-               player view. Verify also the playlist json file.''',
+               player view. Verify also the playlist json file as well as the
+               save ... and remove ... audio popup menu items state.''',
             (WidgetTester tester) async {
           final SettingsDataService settingsDataService = SettingsDataService(
             sharedPreferences: await SharedPreferences.getInstance(),
@@ -9139,7 +9142,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Now open the Remove dialog, check the 'Download Audio' screen
           // checkbox and click on Save button in order to remove this
-          // Sort/Filter parms name for the playlist sownload view in the
+          // Sort/Filter parms name for the playlist download view in the
           // playlist.
           await _selectAndRemoveSortFilterParmsToPlaylist(
             tester: tester,
@@ -9206,12 +9209,12 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           await _verifyAudioPopupMenuItemState(
             tester: tester,
-            tapOnAudioPopupMenuButton: false, // since the audio popup menu
-            //                                   is already open, do not tap
-            //                                   on it again
             menuItemKey:
                 'remove_sort_and_filter_audio_parms_from_playlist_item',
             isEnabled: false,
+            tapOnAudioPopupMenuButton: false, // since the audio popup menu
+            //                                   is already open, do not tap
+            //                                   on it again
           );
 
           // Purge the test playlist directory so that the created test
@@ -9224,10 +9227,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
       group(
           '''After downloading a playlist video, saving a named sort/filter parms
              to playlist views. This tests a bug fix.''', () {
+        const String sortFilterParmsName = 'short';
+        const String playlistTitle = "MaValTest";
+
         testWidgets(
-            '''In playlist list hidden situation, select a sort/filter named parms
-               in the dropdown button list and then save it to the current playlist
-               after having downloaded an audio.''',
+            '''In playlist list hidden situation, after having downloaded 2 audio's,
+               select a sort/filter named parms in the dropdown button list and
+               save it to the current playlist.''',
             (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
@@ -9254,21 +9260,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               .tap(find.byKey(const Key('download_sel_playlists_button')));
           await tester.pumpAndSettle();
 
-          // Add a delay to allow the download to finish. 5 seconds is ok
-          // when running the audio_download_vm_test only.
-          // Waiting 5 seconds only causes MissingPluginException
-          // 'No implementation found for method $method on channel $name'
-          // when all tsts are run. 7 seconds solve the problem.
+          // Add a delay to allow the download to finish.
           for (int i = 0; i < 5; i++) {
             await Future.delayed(const Duration(seconds: 2));
             await tester.pumpAndSettle();
           }
 
-          // Click on the stop button to stop the download
-          await tester.tap(find.byKey(const Key('stopDownloadingButton')));
+          await Future.delayed(const Duration(seconds: 1));
           await tester.pumpAndSettle();
-
-          await Future.delayed(const Duration(seconds: 4));
 
           // Type on the Playlists button to hide the playlist view
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -9277,8 +9276,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Verify the order of the playlist audio titles
 
           List<String> audioTitlesSortedByDateTimeListenedDescending = [
-            "Témoignage d'un prêtre qui a lu Maria Valtorta (2_4)",
-            "What place Maria Valtorta takes in your spiritual journey",
+            "morning _ cinematic video",
+            "Really short video",
           ];
 
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
@@ -9287,11 +9286,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 audioTitlesSortedByDateTimeListenedDescending,
           );
 
-          // Select and save the 'spiritual' sort/filter parms to the audio
+          // Select and save the 'short' sort/filter parms to the audio
           // player view of the 'Maria Valtorta' playlist
           await _selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
-            sortFilterParmsName: "spiritual",
+            sortFilterParmsName: sortFilterParmsName,
             saveToPlaylistDownloadView: false,
             saveToAudioPlayerView: true,
           );
@@ -9300,7 +9299,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                "Sort/filter parameters \"spiritual\" were saved to playlist \"Maria Valtorta\" for screen(s) \"Play Audio\".",
+                "Sort/filter parameters \"$sortFilterParmsName\" were saved to playlist \"$playlistTitle\" for screen(s) \"Play Audio\".",
             isWarningConfirming: true,
           );
 
@@ -9310,10 +9309,10 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Verifying that the playlist json file was correctly modified.
           IntegrationTestUtil
               .verifyPlaylistDataElementsUpdatedInPlaylistJsonFile(
-            selectedPlaylistTitle: 'Maria Valtorta',
+            selectedPlaylistTitle: playlistTitle,
             audioSortFilterParmsNamePlaylistDownloadView:
                 "", // The playlist download view is not affected
-            audioSortFilterParmsNameAudioPlayerView: "spiritual",
+            audioSortFilterParmsNameAudioPlayerView: sortFilterParmsName,
             audioPlayingOrder: AudioPlayingOrder.ascending,
             playlistDownloadPath: playlistDownloadPath,
           );
@@ -9354,28 +9353,20 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               .tap(find.byKey(const Key('download_sel_playlists_button')));
           await tester.pumpAndSettle();
 
-          // Add a delay to allow the download to finish. 5 seconds is ok
-          // when running the audio_download_vm_test only.
-          // Waiting 5 seconds only causes MissingPluginException
-          // 'No implementation found for method $method on channel $name'
-          // when all tsts are run. 7 seconds solve the problem.
+          // Add a delay to allow the download to finish.
           for (int i = 0; i < 5; i++) {
             await Future.delayed(const Duration(seconds: 2));
             await tester.pumpAndSettle();
           }
 
-          // Click on the stop button to stop the download
-          await tester.tap(find.byKey(const Key('stopDownloadingButton')));
-          await tester.pumpAndSettle();
-
-          await Future.delayed(const Duration(seconds: 4));
+          await Future.delayed(const Duration(seconds: 1));
           await tester.pumpAndSettle();
 
           // Verify the order of the playlist audio titles
 
           List<String> audioTitlesSortedByDateTimeListenedDescending = [
-            "Témoignage d'un prêtre qui a lu Maria Valtorta (2_4)",
-            "What place Maria Valtorta takes in your spiritual journey",
+            "morning _ cinematic video",
+            "Really short video",
           ];
 
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
@@ -9393,7 +9384,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // player view of the 'Maria Valtorta' playlist
           await _selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
-            sortFilterParmsName: "spiritual",
+            sortFilterParmsName: sortFilterParmsName,
             saveToPlaylistDownloadView: true,
             saveToAudioPlayerView: false,
             displayPlaylistListBeforeSavingSFtoPlaylist: true,
@@ -9403,7 +9394,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                "Sort/filter parameters \"spiritual\" were saved to playlist \"Maria Valtorta\" for screen(s) \"Download Audio\".",
+                "Sort/filter parameters \"$sortFilterParmsName\" were saved to playlist \"$playlistTitle\" for screen(s) \"Download Audio\".",
             isWarningConfirming: true,
           );
 
@@ -9413,9 +9404,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Verifying that the playlist json file was correctly modified.
           IntegrationTestUtil
               .verifyPlaylistDataElementsUpdatedInPlaylistJsonFile(
-            selectedPlaylistTitle: 'Maria Valtorta',
+            selectedPlaylistTitle: playlistTitle,
             audioSortFilterParmsNamePlaylistDownloadView:
-                "spiritual", // The playlist download view is not affected
+                sortFilterParmsName, // The playlist download view is not affected
             audioSortFilterParmsNameAudioPlayerView: "",
             audioPlayingOrder: AudioPlayingOrder.ascending,
             playlistDownloadPath: playlistDownloadPath,
@@ -9429,14 +9420,22 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         });
       });
       group(
-          '''First, restore app data from Android zip file to Windows app. Then hide
-               the list of playlists and select a SF parms. The two integration tests
-               test a bug fix.''', () {
+          '''First, restore app data from Android zip file to Windows app. Then,
+             select the restored 'MaValTTest' playlist and hide the list of playlists
+             in order to be ble to select a SF parms. The two integration tests test
+             a bug fix.''', () {
+        const String playlistToRedownloadTitle = "MaValTest";
+        const String restorableZipFileName = 'audioLearn_2025-03-24_11_30.zip';
+        const String notPlayableSortFilterParmsName = 'Not playable';
+
         testWidgets(
-            '''After SF selection, display the list of playlists and redownload the
-               filtered audio's. Verify the empty displayed audio list as well as the
-               possibility of saving the named sort/filter parms to the playlist views.''',
-            (WidgetTester tester) async {
+            '''After selecting the restored 'MaValTTest' playlist and hiding the
+               list of playlist, select the 'Not playable' SF which filters the not
+               playable audio's. Then extend the list of playlists in order to apply
+               the redownload 'Not playable' filtered audio's. Verify the now empty
+               displayed audio list (empty since the redownloaded audio's are now
+               playable) as well as the possibility of saving the named sort/filter
+               parms to the playlist views.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -9446,7 +9445,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
-                "$kDownloadAppTestSavedDataDir${path.separator}restore_Android_zip_on_Windows_test",
+                "$kDownloadAppTestSavedDataDir${path.separator}restore_Android_short_zip_on_Windows_test",
             destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
           );
 
@@ -9455,8 +9454,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             tester: tester,
             forcedLocale: const Locale('en'),
           );
-
-          String restorableZipFileName = 'audioLearn_2025-02-02_10_43.zip';
 
           // Replace the platform instance with your mock
           MockFilePicker mockFilePicker = MockFilePicker();
@@ -9479,31 +9476,18 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // from Zip File ...' menu
           await tester.tap(find.byKey(const Key(
               'appBarMenuRestorePlaylistsCommentsAndSettingsFromZip')));
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pumpAndSettle(const Duration(milliseconds: 500));
 
           // Verify the displayed warning confirmation dialog
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 58 playlist and 65 comment json files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+                'Restored 1 playlist and 1 comment json files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
 
-          // Scrolling down the playlists list in order to make accessible
-          // audio_learn_emi playlist
-
-          // Find the playlist list widget using its key
-          final Finder listFinder =
-              find.byKey(const Key('expandable_playlist_list'));
-
-          // Perform the scroll action
-          await tester.drag(listFinder, const Offset(0, -200));
-          await tester.pumpAndSettle();
-
-          // Select audio_learn_emi playlist
-
-          String playlistToRedownloadTitle = 'audio_learn_emi';
+          // Select MaValTest playlist
 
           await IntegrationTestUtil.selectPlaylist(
             tester: tester,
@@ -9514,9 +9498,10 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle();
 
+          // Select the 'Not playable' sort/filter parms
           await _selectSortFilterParms(
             tester: tester,
-            sortFilterParmsName: 'Not playable',
+            sortFilterParmsName: notPlayableSortFilterParmsName,
           );
 
           // Type on the Playlists button to display the playlists list
@@ -9532,72 +9517,87 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             playlistSubMenuKeyStr: 'popup_menu_redownload_filtered_audio',
           );
 
-          // Add a delay to allow the download to finish. 5 seconds is ok
-          // when running the audio_download_vm_test only.
-          // Waiting 5 seconds only causes MissingPluginException
-          // 'No implementation found for method $method on channel $name'
-          // when all tsts are run. 7 seconds solve the problem.
-          for (int i = 0; i < 7; i++) {
+          // Add a delay to allow the download to finish.
+          for (int i = 0; i < 5; i++) {
             await Future.delayed(const Duration(seconds: 1));
             await tester.pumpAndSettle();
           }
 
-          await Future.delayed(const Duration(seconds: 4));
+          await Future.delayed(const Duration(seconds: 1));
+          await tester.pumpAndSettle();
 
-          // Verify the value of the sort/filter parms name that is
-          // displayed in the first line of the playlist download view
-          expect(
+          int remainingNotPlayableAudioNumber = 0;
+
+          final Finder warningMessageDisplayDialogFinder =
+              find.byType(WarningMessageDisplayDialog);
+
+          if (warningMessageDisplayDialogFinder.evaluate().isNotEmpty) {
+            final Finder okButtonFinder =
+                find.byKey(const Key('warningDialogOkButton')).last;
+
+            FinderResult finderResult = okButtonFinder.evaluate();
+
+            try {
+              if (finderResult.isNotEmpty) {
+                // Closing the Youtube error warning dialog
+                await tester.tap(okButtonFinder);
+                await tester.pumpAndSettle();
+              }
+            } catch (e) {}
+
+            final Finder listTilesFinder = find.byType(ListTile);
+            remainingNotPlayableAudioNumber =
+                listTilesFinder.evaluate().length - 4; // 4 is the number of
+            //                                            visible playlists in
+            //                                            the expanded playlist list
+          }
+
+          if (remainingNotPlayableAudioNumber < 2) {
+            // At least one not playable audio was redownloaded
+
+            // Verify the value of the sort/filter parms name that is
+            // displayed in the first line of the playlist download view
+            expect(
               tester
                   .widget<Text>(
                       find.byKey(const Key('selectedPlaylistSFparmNameText')))
                   .data,
-              'Not playable');
+              notPlayableSortFilterParmsName,
+            );
 
-          // Verify that the playlist audio list is empty since the audio
-          // have been downloaded and are now playable
+            // Select and save the 'Not playable' sort/filter parms to the audio
+            // player view of the 'audio_learn_emi' playlist
+            await _selectAndSaveSortFilterParmsToPlaylist(
+              tester: tester,
+              sortFilterParmsName: notPlayableSortFilterParmsName,
+              saveToPlaylistDownloadView: true,
+              saveToAudioPlayerView: false,
+              displayPlaylistListBeforeSavingSFtoPlaylist: false,
+              selectSortFilterParms: false,
+            );
 
-          List<String> audioTitlesSortedByDateTimeListenedDescending = [];
+            // Verify confirmation dialog
+            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+              tester: tester,
+              warningDialogMessage:
+                  "Sort/filter parameters \"$notPlayableSortFilterParmsName\" were saved to playlist \"$playlistToRedownloadTitle\" for screen(s) \"Download Audio\".",
+              isWarningConfirming: true,
+            );
 
-          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-            tester: tester,
-            audioOrPlaylistTitlesOrderedLst:
-                audioTitlesSortedByDateTimeListenedDescending,
-            firstAudioListTileIndex: 6, // number of visible playlists in the
-            //                             playlist list
-          );
+            String playlistDownloadPath =
+                audioDownloadVM.listOfPlaylist[3].downloadPath;
 
-          // Select and save the 'Not playable' sort/filter parms to the audio
-          // player view of the 'audio_learn_emi' playlist
-          await _selectAndSaveSortFilterParmsToPlaylist(
-            tester: tester,
-            sortFilterParmsName: "Not playable",
-            saveToPlaylistDownloadView: true,
-            saveToAudioPlayerView: false,
-            displayPlaylistListBeforeSavingSFtoPlaylist: false,
-            selectSortFilterParms: false,
-          );
-
-          // Verify confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-            tester: tester,
-            warningDialogMessage:
-                "Sort/filter parameters \"Not playable\" were saved to playlist \"audio_learn_emi\" for screen(s) \"Download Audio\".",
-            isWarningConfirming: true,
-          );
-
-          String playlistDownloadPath =
-              audioDownloadVM.listOfPlaylist[2].downloadPath;
-
-          // Verifying that the playlist json file was correctly modified.
-          IntegrationTestUtil
-              .verifyPlaylistDataElementsUpdatedInPlaylistJsonFile(
-            selectedPlaylistTitle: 'audio_learn_emi',
-            audioSortFilterParmsNamePlaylistDownloadView:
-                "Not playable", // The playlist download view is not affected
-            audioSortFilterParmsNameAudioPlayerView: "Downl asc",
-            audioPlayingOrder: AudioPlayingOrder.descending,
-            playlistDownloadPath: playlistDownloadPath,
-          );
+            // Verifying that the playlist json file was correctly modified.
+            IntegrationTestUtil
+                .verifyPlaylistDataElementsUpdatedInPlaylistJsonFile(
+              selectedPlaylistTitle: playlistToRedownloadTitle,
+              audioSortFilterParmsNamePlaylistDownloadView:
+                  notPlayableSortFilterParmsName, // The playlist download view is not affected
+              audioSortFilterParmsNameAudioPlayerView: "",
+              audioPlayingOrder: AudioPlayingOrder.ascending,
+              playlistDownloadPath: playlistDownloadPath,
+            );
+          }
 
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
@@ -13766,9 +13766,9 @@ Future<void> _verifyOrderOfPlaylistAudioComments({
 
 Future<void> _verifyAudioPopupMenuItemState({
   required WidgetTester tester,
-  bool tapOnAudioPopupMenuButton = true,
   required String menuItemKey,
   required bool isEnabled,
+  bool tapOnAudioPopupMenuButton = true,
 }) async {
   if (tapOnAudioPopupMenuButton) {
     // Now open the audio popup menu

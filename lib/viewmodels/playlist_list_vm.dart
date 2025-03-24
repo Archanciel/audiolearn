@@ -1031,7 +1031,7 @@ class PlaylistListVM extends ChangeNotifier {
     // playlist before redownloading the audio. This name will be
     // used to restore the sort/filter parameters name after the
     // audio were redownloaded. This enables PlaylistDownloadView.
-    // _buildExpandedAudioList() to display the empty sort/filter 
+    // _buildExpandedAudioList() to display the empty sort/filter
     // audio list instead of the full default SF audio list.
     String sortFilterParmsName =
         _playlistAudioSFparmsNamesForPlaylistDownloadViewMap[
@@ -1570,7 +1570,7 @@ class PlaylistListVM extends ChangeNotifier {
     return _sortedFilteredSelectedPlaylistPlayableAudioLst != null;
   }
 
-  /// Returns false if the passed selected sort and filter parameters name is
+  /// Returns true if the passed selected sort and filter parameters name is
   /// already saved in the selected playlist json file for the playlist download
   /// view and for the audio player view. In this case, the Save sort/filter to
   /// playlist menu item is not enabled.
@@ -1583,10 +1583,10 @@ class PlaylistListVM extends ChangeNotifier {
             selectedSortFilterParametersName &&
         selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView ==
             selectedSortFilterParametersName) {
-      return false;
+      return true;
     }
 
-    return true;
+    return false;
   }
 
   /// Method called when the user selects a Sort and Filter
@@ -1993,6 +1993,8 @@ class PlaylistListVM extends ChangeNotifier {
       model: playlist,
       path: playlist.getPlaylistDownloadFilePathName(),
     );
+
+    notifyListeners();
   }
 
   void removeAudioSortFilterParmsFromPlaylist({
@@ -2602,7 +2604,7 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   /// Method called when the user opens PlaylistAddRemoveSortFilterOptionsDialog.
-  /// The passed parameter {selectzedSortFilterParmsName} contains the name of
+  /// The passed parameter [selectedSortFilterParmsName] contains the name of
   /// the sort filter parameters selected by the user in the dropdown button.
   ///
   /// The returned list content is
@@ -3091,5 +3093,68 @@ class PlaylistListVM extends ChangeNotifier {
       // of the playlist download view is updated
       _uniqueSelectedPlaylist = playlistListVMselectedPlaylist;
     }
+  }
+
+  /// Method called when the user click on the audio popup menu in order to
+  /// enable or not the 'Save sort/filter parameters to playlist' menu item.
+  bool isSaveSFparmsToPlaylistMenuEnabled({
+    required AudioLearnAppViewType audioLearnAppViewType,
+    required String translatedAppliedSortFilterParmsName,
+    required String translatedDefaultSortFilterParmsName,
+  }) {
+    String selectedSortFilterParametersName =
+        getSelectedPlaylistAudioSortFilterParmsNameForView(
+      audioLearnAppViewType: audioLearnAppViewType,
+      translatedAppliedSortFilterParmsName:
+          translatedAppliedSortFilterParmsName,
+    );
+
+    if (selectedSortFilterParametersName.isEmpty) {
+      return false;
+    }
+    
+    if (selectedSortFilterParametersName !=
+            translatedAppliedSortFilterParmsName &&
+        selectedSortFilterParametersName !=
+            translatedDefaultSortFilterParmsName &&
+        !isSortFilterAudioParmsAlreadySavedInPlaylistForAllViews(
+          selectedSortFilterParametersName: selectedSortFilterParametersName,
+        )) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /// Method called when the user click on the audio popup menu in order to
+  /// enable or not the 'Save sort/filter parameters to playlist' menu item.
+  /// 
+  /// This menu item is enabled if a sort filter parms is applied to one or
+  /// two views of the selected playlist
+  bool isRemoveSFparmsFromPlaylistMenuEnabled({
+    required AudioLearnAppViewType audioLearnAppViewType,
+    required String translatedAppliedSortFilterParmsName,
+  }) {
+    String selectedSortFilterParametersName =
+        getSelectedPlaylistAudioSortFilterParmsNameForView(
+      audioLearnAppViewType: audioLearnAppViewType,
+      translatedAppliedSortFilterParmsName:
+          translatedAppliedSortFilterParmsName,
+    );
+
+    // The resultLst list content is
+    // [
+    //   the sort and filter parameters name applied to the playlist download
+    //   view or/and to the audio player view or uniquely to the audio player
+    //   view,
+    //   is audioSortFilterParmsName applied to playlist download view,
+    //   is audioSortFilterParmsName applied to audio player view,
+    // ]
+    List<dynamic> resultLst =
+        getSortFilterParmsNameApplicationValuesToCurrentPlaylist(
+      selectedSortFilterParmsName: selectedSortFilterParametersName,
+    );
+
+    return resultLst[0].isNotEmpty;
   }
 }
