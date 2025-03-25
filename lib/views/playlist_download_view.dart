@@ -224,20 +224,31 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     required WarningMessageVM warningMessageVMlistenFalse,
   }) {
     if (_wasSortFilterAudioSettingsApplied) {
-      List<Audio> sortedFilteredSelectedPlaylistPlayableAudioLst =
-          playlistListVMlistenTrue
-              .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
-                  audioLearnAppViewType:
-                      AudioLearnAppViewType.playlistDownloadView,
-                  passedAudioSortFilterParametersName:
-                      _selectedPlaylistAudioSortFilterParmsName);
+      List<Audio> sortedFilteredSelectedPlaylistPlayableAudioLst;
+
+      // This test fixes a bug which made impossible to search an
+      // audio in the audio list displayed in the situation where
+      // the playlist list was collapsed.
+      if (playlistListVMlistenTrue.isSearchSentenceApplied) {
+        sortedFilteredSelectedPlaylistPlayableAudioLst =
+            playlistListVMlistenTrue
+                .sortedFilteredSelectedPlaylistPlayableAudioLst ?? [];
+      } else {
+        sortedFilteredSelectedPlaylistPlayableAudioLst =
+            playlistListVMlistenTrue
+                .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+                    audioLearnAppViewType:
+                        AudioLearnAppViewType.playlistDownloadView,
+                    passedAudioSortFilterParametersName:
+                        _selectedPlaylistAudioSortFilterParmsName);
+      }
 
       if (sortedFilteredSelectedPlaylistPlayableAudioLst.isNotEmpty) {
         // Here, the user has selected a sort filter parameters
         // in (defined sf parms or default sf parms) in the sort
         // filter parameters button or he has defined a sf parms
-        // in the sort filter dialog and clicked on the save or the
-        // apply button.
+        // in the sort filter dialog and clicked on the save or
+        // on the apply button.
         //
         // If the sort and filter audio settings have been applied
         // then the sortedFilteredSelectedPlaylistPlayableAudioLst
@@ -791,6 +802,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           context: context,
           playlistListVMlistenFalse: playlistListVMlistenFalse,
           warningMessageVMlistenFalse: warningMessageVMlistenFalse,
+          isAudioPopumMenuEnabled:
+              playlistListVMlistenTrue.isOnePlaylistSelected,
         ),
       ],
     );
@@ -1028,7 +1041,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
   /// Updates the sorted and filtered audio list of the selected playlist
   /// according to the sort and filter parameters selected in the dropdown
-  /// button list.
+  /// button list as well as the entered search sentence.
   void _updatePlaylistSortedFilteredAudioList({
     required PlaylistListVM playlistListVMlistenFalse,
     String searchSentence = '',
@@ -1331,11 +1344,13 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     required BuildContext context,
     required PlaylistListVM playlistListVMlistenFalse,
     required WarningMessageVM warningMessageVMlistenFalse,
+    required bool isAudioPopumMenuEnabled,
   }) {
     return SizedBox(
       width: kRowButtonGroupWidthSeparator,
       child: PopupMenuButton<PopupMenuButtonType>(
         key: const Key('audio_popup_menu_button'),
+        enabled: isAudioPopumMenuEnabled,
         icon: const Icon(Icons.filter_list),
         itemBuilder: (BuildContext context) {
           return [
