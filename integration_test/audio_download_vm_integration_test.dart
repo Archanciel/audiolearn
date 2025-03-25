@@ -322,7 +322,7 @@ Future<void> main() async {
       await tester.pumpAndSettle();
 
       // Add a delay to allow the download to finish.
-      for (int i = 0; i < 5; i++) {
+      for (int i = 0; i < 6; i++) {
         await Future.delayed(const Duration(seconds: 2));
         await tester.pumpAndSettle();
       }
