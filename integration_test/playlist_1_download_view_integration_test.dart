@@ -13266,19 +13266,9 @@ void main() {
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      IntegrationTestUtil.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
-      );
-
-      // Now open the audio popup menu
-      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-      await tester.pumpAndSettle();
-
-      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
-        tester: tester,
-        isFirstAudioMenuItemDisabled: true,
-        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Verifying that the selected playlist text field is empty
@@ -13601,19 +13591,9 @@ void main() {
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      IntegrationTestUtil.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
-      );
-
-      // Now open the audio popup menu
-      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-      await tester.pumpAndSettle();
-
-      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
-        tester: tester,
-        isFirstAudioMenuItemDisabled: true,
-        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Verifying that the selected playlist text field is empty
@@ -14653,21 +14633,9 @@ void main() {
         widgetKeyStr: 'audio_quality_checkbox',
       );
 
-      IntegrationTestUtil.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
-      );
-
-      // Now open the audio popup menu
-      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-      await tester.pumpAndSettle();
-
-      // since the selected local playlist has no audio, the
-      // audio menu item is disabled
-      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
-        tester: tester,
-        isFirstAudioMenuItemDisabled: true,
-        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Purge the test playlist directory so that the created test
@@ -14793,21 +14761,9 @@ void main() {
         widgetKeyStr: 'audio_quality_checkbox',
       );
 
-      IntegrationTestUtil.verifyWidgetIsEnabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
-      );
-
-      // Now open the audio popup menu
-      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-      await tester.pumpAndSettle();
-
-      // since the selected local playlist has no audio, the
-      // audio menu item is disabled
-      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
-        tester: tester,
-        isFirstAudioMenuItemDisabled: true,
-        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       );
 
       // Purge the test playlist directory so that the created test
@@ -18515,23 +18471,9 @@ Future<void> _ensureNoButtonIsEnabledSinceNoPlaylistIsSelected(
     widgetKeyStr: 'audio_quality_checkbox',
   );
 
-  // This menu button is always enabled since the Update playlist json file
-  // menu item must be always accessible
-  IntegrationTestUtil.verifyWidgetIsEnabled(
+  IntegrationTestUtil.verifyWidgetIsDisabled(
     tester: tester,
     widgetKeyStr: 'audio_popup_menu_button',
-  );
-
-  // Now open the audio popup menu
-  await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-  await tester.pumpAndSettle();
-
-  // since the selected local playlist has no audio, the
-  // audio menu items are disabled
-  await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
-    tester: tester,
-    isFirstAudioMenuItemDisabled: true,
-    audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
   );
 }
 
