@@ -9451,7 +9451,7 @@ void main() {
     testWidgets(
         '''With Playlist list displayed, execute update playlist json file
            after deleting all files in app audio dir and verify audio menu
-           state. Do same after re-adding app audio dir files.''',
+           state. Do the same after re-adding app audio dir files.''',
         (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -9541,15 +9541,10 @@ void main() {
           .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
       await tester.pumpAndSettle();
 
-      // Now tap on the audio menu button to re-open the audio menu
-      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-      await tester.pumpAndSettle();
-
-      // Ensure that the audio menu items are now disabled
-      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
+      // Verify that the audio menu button is disabled
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
-        isFirstAudioMenuItemDisabled: true,
-        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+        widgetKeyStr: 'audio_popup_menu_button',
       );
 
       // Now restore the app data in the app dir
@@ -9561,12 +9556,8 @@ void main() {
 
       // *** Execute again Updating playlist JSON file menu item
 
-      // Tap twice on the appbar leading popup menu button. First tap
-      // closes the audio popup menu and the second tap opens the
-      // leading popup menu
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
+      // Tap on the appbar leading popup menu button to open
+      // the leading popup menu
       await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
       await tester.pumpAndSettle();
 
@@ -9575,20 +9566,15 @@ void main() {
           .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
       await tester.pumpAndSettle();
 
-      // open the popup menu again
-      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-      await tester.pumpAndSettle();
-
-      // Ensure that the audio menu items are still disabled since the
+      // Ensure that the audio menu button is disabled since the
       // re-added playlist were no longer in the app settings sorted
       // playlist titles and so were added to the application being
       // deselected. This is due to the fact that any playlist added
       // by the update playlist JSON file fumctionality is deselected
       // in order that only one playlist is selected after the update.
-      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
-        isFirstAudioMenuItemDisabled: true,
-        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+        widgetKeyStr: 'audio_popup_menu_button',
       );
 
       // Purge the test playlist directory so that the created test
@@ -9696,15 +9682,10 @@ void main() {
           .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
       await tester.pumpAndSettle();
 
-      // Now tap on the audio menu button to re-open the audio menu
-      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-      await tester.pumpAndSettle();
-
-      // Ensure that the audio menu items are now disabled
-      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
+      // Verify that the audio menu button is disabled
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
-        isFirstAudioMenuItemDisabled: true,
-        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+        widgetKeyStr: 'audio_popup_menu_button',
       );
 
       // Now restore the app data in the app dir
@@ -9716,12 +9697,8 @@ void main() {
 
       // *** Execute again Updating playlist JSON file menu item
 
-      // Tap twice on the appbar leading popup menu button. First tap
-      // closes the audio popup menu and the second tap opens the
-      // leading popup menu
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
+      // Tap on the appbar leading popup menu button to open
+      // the leading popup menu
       await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
       await tester.pumpAndSettle();
 
@@ -9730,20 +9707,15 @@ void main() {
           .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
       await tester.pumpAndSettle();
 
-      // open the popup menu again
-      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-      await tester.pumpAndSettle();
-
-      // Ensure that the audio menu items are still disabled since the
+      // Ensure that the audio menu button is disabled since the
       // re-added playlist were no longer in the app settings sorted
       // playlist titles and so were added to the application being
       // deselected. This is due to the fact that any playlist added
       // by the update playlist JSON file fumctionality is deselected
       // in order that only one playlist is selected after the update.
-      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
-        isFirstAudioMenuItemDisabled: true,
-        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+        widgetKeyStr: 'audio_popup_menu_button',
       );
 
       // Purge the test playlist directory so that the created test
@@ -9796,12 +9768,12 @@ void main() {
       // playlist
 
       // First, find the S8 audio Youtube playlist ListTile Text widget
-      final Finder youtubePlaylistListTileTextWidgetFinder =
+      Finder youtubePlaylistListTileTextWidgetFinder =
           find.text(s8AudioYoutubeEmptyPlaylistTitle);
 
       // Then obtain the Youtube source playlist ListTile widget
       // enclosing the Text widget by finding its ancestor
-      final Finder youtubePlaylistListTileWidgetFinder = find.ancestor(
+      Finder youtubePlaylistListTileWidgetFinder = find.ancestor(
         of: youtubePlaylistListTileTextWidgetFinder,
         matching: find.byType(ListTile),
       );
@@ -9845,15 +9817,10 @@ void main() {
           .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
       await tester.pumpAndSettle();
 
-      // Now tap on the audio menu button to open the audio menu
-      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-      await tester.pumpAndSettle();
-
-      // Ensure that the audio menu items are now disabled
-      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
+      // Verify that the audio menu button is disabled
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
-        isFirstAudioMenuItemDisabled: true,
-        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+        widgetKeyStr: 'audio_popup_menu_button',
       );
 
       // Now restore the app data in the app dir
@@ -9865,12 +9832,8 @@ void main() {
 
       // *** Execute again Updating playlist JSON file menu item
 
-      // Tap twice on the appbar leading popup menu button. First tap
-      // closes the audio popup menu and the second tap opens the
-      // leading popup menu
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
+      // Tap on the appbar leading popup menu button to open
+      // the leading popup menu
       await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
       await tester.pumpAndSettle();
 
@@ -9878,6 +9841,23 @@ void main() {
       await tester
           .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
       await tester.pumpAndSettle();
+
+      // First, find the S8 audio Youtube playlist ListTile Text widget
+      youtubePlaylistListTileTextWidgetFinder =
+          find.text(s8AudioYoutubeEmptyPlaylistTitle);
+
+      // Then obtain the Youtube source playlist ListTile widget
+      // enclosing the Text widget by finding its ancestor
+      youtubePlaylistListTileWidgetFinder = find.ancestor(
+        of: youtubePlaylistListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Select the S8 audio Youtube playlist
+      await _tapPlaylistCheckboxIfNotAlreadyChecked(
+        playlistListTileWidgetFinder: youtubePlaylistListTileWidgetFinder,
+        widgetTester: tester,
+      );
 
       // open the popup menu again
       await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
@@ -9994,15 +9974,10 @@ void main() {
           .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
       await tester.pumpAndSettle();
 
-      // Now tap on the audio menu button to re-open the audio menu
-      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-      await tester.pumpAndSettle();
-
-      // Ensure that the audio menu items are now disabled
-      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
+      // Verify that the audio menu button is disabled
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
-        isFirstAudioMenuItemDisabled: true,
-        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+        widgetKeyStr: 'audio_popup_menu_button',
       );
 
       // Now restore the app data in the app dir
@@ -10014,12 +9989,8 @@ void main() {
 
       // *** Execute again Updating playlist JSON file menu item
 
-      // Tap twice on the appbar leading popup menu button. First tap
-      // closes the audio popup menu and the second tap opens the
-      // leading popup menu
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
+      // Tap on the appbar leading popup menu button to open
+      // the leading popup menu
       await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
       await tester.pumpAndSettle();
 
@@ -10028,15 +9999,10 @@ void main() {
           .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
       await tester.pumpAndSettle();
 
-      // open the popup menu again
-      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-      await tester.pumpAndSettle();
-
-      // Ensure that the audio menu items are disabled
-      await IntegrationTestUtil.verifyTwoFirstAudioMenuItemsState(
+      // Verify that the audio menu button is disabled
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
-        isFirstAudioMenuItemDisabled: true,
-        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+        widgetKeyStr: 'audio_popup_menu_button',
       );
 
       // Purge the test playlist directory so that the created test
