@@ -1709,7 +1709,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               overlayColor: iconButtonTapModification, // Tap feedback color
             ),
             icon: const Icon(
-              Icons.delete_rounded,
+              Icons.delete_forever_rounded,
               size: kSmallIconButtonWidth - 2,
             ),
           ),
