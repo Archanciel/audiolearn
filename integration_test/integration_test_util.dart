@@ -1909,4 +1909,67 @@ class IntegrationTestUtil {
       "Mismatch in expected and actual picture files in '$picturesDir'.\nExpected: $expectedPictureFiles\nActual: $actualPictureFiles",
     );
   }
+
+  static Future<void> verifyPlaylistDataDialogContent({
+    required WidgetTester tester,
+    required String playlistTitle,
+    required String playlistDownloadAudioSortFilterParmsName,
+    required String playlistPlayAudioSortFilterParmsName,
+    isPaylistSelected = true,
+  }) async {
+    Finder playlistToExamineInfoTextWidgetFinder;
+
+    if (isPaylistSelected) {
+      // Firt, find the Playlist ListTile Text widget. Two exist
+      // since the playlist is selected.
+      //
+      // For example, "S8 audio" under the 'Youtube Link or Search'
+      // text field and "S8 audio" as PlaylistItem
+      playlistToExamineInfoTextWidgetFinder = find.text(playlistTitle).at(1);
+    } else {
+      // First, find the Playlist ListTile Text widget.
+      playlistToExamineInfoTextWidgetFinder = find.text(playlistTitle);
+    }
+
+    // Then obtain the Playlist ListTile widget enclosing the Text widget
+    // by finding its ancestor
+    final Finder playlistWithCommentedAudioListTileWidgetFinder = find.ancestor(
+      of: playlistToExamineInfoTextWidgetFinder,
+      matching: find.byType(ListTile),
+    );
+
+    // Now find the leading menu icon button of the playlist and tap on it
+    final Finder playlistListTileLeadingMenuIconButton = find.descendant(
+      of: playlistWithCommentedAudioListTileWidgetFinder,
+      matching: find.byIcon(Icons.menu),
+    );
+
+    // Tap the leading menu icon button to open the popup menu
+    await tester.tap(playlistListTileLeadingMenuIconButton);
+    await tester.pumpAndSettle(); // Wait for popup menu to appear
+
+    // Now find the playlist info popup menu item and tap on it
+    // to open the PlaylistInfoDialog
+    final Finder popupPlaylistInfoMenuItem =
+        find.byKey(const Key("popup_menu_display_playlist_info"));
+
+    await tester.tap(popupPlaylistInfoMenuItem);
+    await tester.pumpAndSettle();
+
+    // Verify the playlist 'Download Audio sort/filter value
+
+    final Text playlistLastDownloadDateTimeTextWidget = tester.widget<Text>(
+        find.byKey(const Key(
+            'playlist_info_download_audio_sort_filter_parameters_key')));
+
+    expect(
+      playlistLastDownloadDateTimeTextWidget.data,
+      playlistDownloadAudioSortFilterParmsName,
+    );
+
+    // Now find the ok button of the playlist info dialog
+    // and tap on it
+    await tester.tap(find.byKey(const Key('playlist_info_ok_button_key')));
+    await tester.pumpAndSettle();
+  }
 }
