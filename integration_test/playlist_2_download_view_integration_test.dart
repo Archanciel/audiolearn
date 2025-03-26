@@ -406,11 +406,13 @@ void main() {
         );
       });
       testWidgets(
-          '''Finish by emptying the search word. First, select the existing
-          'janco' sort/filter parms in the SF dropdown button. Then enter the search
-           word 'La' in the 'Youtube Link''', (WidgetTester tester) async {
-        // Link or Search' text field. After entering 'L', verify that the search
-        // icon button is now enabled. Then, select the 'default' dropdon icon
+          '''Finish by reducing, then emptying the search word. First, select the
+           existing 'janco' sort/filter parms in the SF dropdown button. Then enter
+           the search word 'La' in the 'Youtube ''', (WidgetTester tester) async {
+        // Link or Search' text field. After entering 'La', verify that the search
+        // icon button is now enabled and click on it. Then, reduce the search word
+        // to one letter ('L') and verify that the audio liat was updatefd. Then,
+        // select the 'default' dropdon icon
         // button and verify that now, as the search button was tapped, applying
         // the 'default' sort filter parms is impacted by the still existing search
         // word. Then, empty the search word and verify that the search icon button
@@ -467,7 +469,7 @@ void main() {
           //                                     contain a search word or sentence
         );
 
-        // Now enter the first letter of the search word
+        // Now enter the 2 letters of the search word
         await tester.tap(
           find.byKey(
             const Key('youtubeUrlOrSearchTextField'),
@@ -499,6 +501,71 @@ void main() {
         audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
           "La surpopulation mondiale par Jancovici et Barrau",
         ];
+
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Now reduce the search word to 1 letter
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await tester.enterText(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+          'L',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Verify the order of the playlist audio titles. Since
+        // the search icon button was used, modifying the search text
+        // is applied at each search text change
+
+        audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La surpopulation mondiale par Jancovici et Barrau",
+        ];
+
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
+
+        // Now re-enter the 2 letters of the search word
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await tester.enterText(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+          'La',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // And verify the order of the playlist audio titles. Since
+        // the search icon button was used, modifying the search text
+        // is applied at each search text change
+
+        audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
+          "La surpopulation mondiale par Jancovici et Barrau",
+        ];
+
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
 
         // Tap on the current dropdown button item to open the dropdown
         // button items list
@@ -674,6 +741,12 @@ void main() {
         audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
           "La surpopulation mondiale par Jancovici et Barrau",
         ];
+
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst:
+              audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
+        );
 
         // Tap on the current dropdown button item to open the dropdown
         // button items list
