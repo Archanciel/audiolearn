@@ -226,22 +226,11 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     if (_wasSortFilterAudioSettingsApplied) {
       List<Audio> sortedFilteredSelectedPlaylistPlayableAudioLst;
 
-      // This test fixes a bug which made impossible to search an
-      // audio in the audio list displayed in the situation where
-      // the playlist list was collapsed.
-      if (playlistListVMlistenTrue.isSearchSentenceApplied) {
-        sortedFilteredSelectedPlaylistPlayableAudioLst =
-            playlistListVMlistenTrue
-                .sortedFilteredSelectedPlaylistPlayableAudioLst ?? [];
-      } else {
-        sortedFilteredSelectedPlaylistPlayableAudioLst =
-            playlistListVMlistenTrue
-                .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
-                    audioLearnAppViewType:
-                        AudioLearnAppViewType.playlistDownloadView,
-                    passedAudioSortFilterParametersName:
-                        _selectedPlaylistAudioSortFilterParmsName);
-      }
+      sortedFilteredSelectedPlaylistPlayableAudioLst = playlistListVMlistenTrue
+          .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+              audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+              passedAudioSortFilterParametersName:
+                  _selectedPlaylistAudioSortFilterParmsName);
 
       if (sortedFilteredSelectedPlaylistPlayableAudioLst.isNotEmpty) {
         // Here, the user has selected a sort filter parameters
@@ -1956,10 +1945,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   playlistListVMlistenTrue.isSearchButtonEnabled = true;
                 }
 
-                if (playlistListVMlistenTrue.isPlaylistListExpanded) {
-                  playlistListVMlistenTrue.searchSentence = value;
-                } else {
-                  playlistListVMlistenTrue.searchSentence = value;
+                playlistListVMlistenTrue.searchSentence = value;
+
+                if (!playlistListVMlistenTrue.isPlaylistListExpanded) {
                   _applySortFilterParmsNameChange(
                     playlistListVMlistenFalseOrTrue: playlistListVMlistenTrue,
                     notifyListeners: true,

@@ -122,7 +122,12 @@ class PlaylistListVM extends ChangeNotifier {
   // Set to true when the user clicks on the search icon button and to
   // false when the user empty the 'Youtube link or Search' field or if
   // a URL is pasted in the field.
-  bool isSearchSentenceApplied = false;
+  bool _isSearchSentenceApplied = false;
+  bool get isSearchSentenceApplied => _isSearchSentenceApplied;
+  set isSearchSentenceApplied(bool isSearchSentenceApplied) {
+    _isSearchSentenceApplied = isSearchSentenceApplied;
+    notifyListeners();
+  }
 
   bool _wasSearchButtonClicked = false;
   bool get wasSearchButtonClicked => _wasSearchButtonClicked;
@@ -570,7 +575,7 @@ class PlaylistListVM extends ChangeNotifier {
     if (!_isPlaylistListExpanded) {
       _disableExpandedPaylistListButtons();
     } else {
-      if (isSearchSentenceApplied) {
+      if (_isSearchSentenceApplied) {
         _listOfSelectablePlaylists = getUpToDateSelectablePlaylists();
       }
 
@@ -1363,6 +1368,13 @@ class PlaylistListVM extends ChangeNotifier {
       return [];
     }
 
+    if (_isSearchSentenceApplied) {
+      // This test fixes a bug which made impossible to search an
+      // audio in the audio list displayed in the situation where
+      // the playlist list was collapsed.
+      return _sortedFilteredSelectedPlaylistPlayableAudioLst ?? [];
+    }
+
     Playlist selectedPlaylist =
         selectedPlaylists[0]; // currently, only one playlist can be selected
     List<Audio> selectedPlaylistsAudios = selectedPlaylist.playableAudioLst;
@@ -1627,6 +1639,16 @@ class PlaylistListVM extends ChangeNotifier {
     _audioSortFilterParameters = audioSortFilterParms;
 
     if (searchSentence.isNotEmpty) {
+      // Required so that changing the search sentence by reducing 
+      // or modifying it updates correctly the filtered audio list.
+      _sortedFilteredSelectedPlaylistPlayableAudioLst =
+          _audioSortFilterService.filterAndSortAudioLst(
+        selectedPlaylist: _uniqueSelectedPlaylist!,
+        audioLst: _uniqueSelectedPlaylist!.playableAudioLst,
+        audioSortFilterParameters: _audioSortFilterParameters ??
+            AudioSortFilterParameters.createDefaultAudioSortFilterParameters(),
+      );
+
       searchSentence = searchSentence.toLowerCase();
       _sortedFilteredSelectedPlaylistPlayableAudioLst =
           _sortedFilteredSelectedPlaylistPlayableAudioLst!
@@ -1661,7 +1683,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// sentence.
   void disableSearchSentence() {
     _isSearchButtonEnabled = false;
-    isSearchSentenceApplied = false;
+    _isSearchSentenceApplied = false;
     _wasSearchButtonClicked = false;
 
     notifyListeners();
@@ -3112,7 +3134,7 @@ class PlaylistListVM extends ChangeNotifier {
     if (selectedSortFilterParametersName.isEmpty) {
       return false;
     }
-    
+
     if (selectedSortFilterParametersName !=
             translatedAppliedSortFilterParmsName &&
         selectedSortFilterParametersName !=
@@ -3128,7 +3150,7 @@ class PlaylistListVM extends ChangeNotifier {
 
   /// Method called when the user click on the audio popup menu in order to
   /// enable or not the 'Save sort/filter parameters to playlist' menu item.
-  /// 
+  ///
   /// This menu item is enabled if a sort filter parms is applied to one or
   /// two views of the selected playlist
   bool isRemoveSFparmsFromPlaylistMenuEnabled({
