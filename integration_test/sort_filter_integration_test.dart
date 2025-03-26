@@ -2,11 +2,6 @@ import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
-import 'package:audiolearn/viewmodels/audio_player_vm.dart';
-import 'package:audiolearn/viewmodels/comment_vm.dart';
-import 'package:audiolearn/viewmodels/date_format_vm.dart';
-import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
-import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 import 'package:audiolearn/views/widgets/audio_sort_filter_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_add_remove_sort_filter_options_dialog.dart';
@@ -9542,6 +9537,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 await tester.tap(okButtonFinder);
                 await tester.pumpAndSettle();
               }
+            // ignore: empty_catches
             } catch (e) {}
 
             final Finder listTilesFinder = find.byType(ListTile);
