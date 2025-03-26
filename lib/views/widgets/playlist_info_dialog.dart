@@ -114,6 +114,8 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                 value: playlist.audioPlaySpeed.toString(),
               ),
               createInfoRowFunction(
+                valueTextWidgetKey: Key(
+                    'playlist_info_download_audio_sort_filter_parameters_key'),
                 context: context,
                 label: AppLocalizations.of(context)!.playlistSortFilterLabel(
                   AppLocalizations.of(context)!.appBarTitleDownloadAudio,
@@ -124,6 +126,8 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                     : audioSortFilterParmsNameForPlaylistDownloadView,
               ),
               createInfoRowFunction(
+                valueTextWidgetKey:
+                    Key('playlist_info_play_audio_sort_filter_parameters_key'),
                 context: context,
                 label: AppLocalizations.of(context)!.playlistSortFilterLabel(
                   AppLocalizations.of(context)!.appBarTitleAudioPlayer,

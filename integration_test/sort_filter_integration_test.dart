@@ -6927,8 +6927,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Now select the local playlist in order to apply the created
           // sort/filter parms to it
 
-          // Tap on audio player view playlist button to expand the
-          // list of playlists
+          // Tap on playlist button to expand the list of playlists
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
@@ -7002,7 +7001,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Then reselect the 'S8 audio' playlist
 
-          // Tap on audio player view playlist button to expand the
+          // Tap on playlist button to expand the
           // list of playlists
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle(const Duration(milliseconds: 200));
@@ -7102,12 +7101,12 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Now return to local playlist and verify that the 'default'
           // sort/filter parms is applied
 
-          // Tap on audio player view playlist button to expand the
+          // Tap on playlist button to expand the
           // list of playlists
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-          // Tap on audio player view playlist button to expand the
+          // Tap on playlist button to expand the
           // list of playlists
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle(const Duration(milliseconds: 200));
@@ -9611,7 +9610,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             '''Delete saved to playlist named sort/filter bug fix verification:
 
                Select the 'Title asc' sort/filter parms. Then save it only to
-               playlist download view. Then delete it and verify that the
+               playlist download view. Then delete it. Verify that the playlist
+               info still contains the reference to the deleted SF parms name
+               and verify that the
                'default' sort/filter parms is applied to the playlist download
                view.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
@@ -9732,6 +9733,26 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             confirmDialogMessage: 'S8 audio',
             confirmOrCancelAction: true, // Confirm button is tapped
           );
+
+          // Now verifying that the playlist data dialog still contains
+          // the saved to playlist sort filter values. This is useful
+          // if the user wants to recreste and reapply the deleted sort/
+          // filter parms
+
+          // Tap on playlist button to expand the list of playlists
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+          await IntegrationTestUtil.verifyPlaylistDataDialogContent(
+            tester: tester,
+            playlistTitle: 'S8 audio',
+            playlistDownloadAudioSortFilterParmsName: 'Title asc',
+            playlistPlayAudioSortFilterParmsName: '',
+          );
+
+          // Tap on playlist button to hide the list of playlists
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
           // Now verify the playlist download view state with the 'default'
           // sort/filter parms applied
@@ -9891,6 +9912,34 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             confirmOrCancelAction: true, // Confirm button is tapped
           );
 
+          // Now verifying that the playlist data dialog still contains
+          // the saved to playlist sort filter values. This is useful
+          // if the user wants to recreste and reapply the deleted sort/
+          // filter parms
+
+          // Tap on playlist button to expand the list of playlists
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+          await IntegrationTestUtil.verifyPlaylistDataDialogContent(
+            tester: tester,
+            playlistTitle: 'S8 audio',
+            playlistDownloadAudioSortFilterParmsName: 'Title asc',
+            playlistPlayAudioSortFilterParmsName: 'Title asc',
+            isPaylistSelected: false,
+          );
+
+          await IntegrationTestUtil.verifyPlaylistDataDialogContent(
+            tester: tester,
+            playlistTitle: 'local',
+            playlistDownloadAudioSortFilterParmsName: 'Title asc',
+            playlistPlayAudioSortFilterParmsName: 'Title asc',
+          );
+
+          // Tap on playlist button to hide the list of playlists
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
           // Now verify the playlist download view state with the 'default'
           // sort/filter parms applied
 
@@ -9919,15 +9968,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             audioOrPlaylistTitlesOrderedLst:
                 audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
           );
-
-          // audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
-          //   "morning _ cinematic video",
-          //   "Really short video",
-          //   "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          //   "La résilience insulaire par Fiona Roche",
-          //   "Les besoins artificiels par R.Keucheyan",
-          //   "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-          // ];
 
           // Verify also the audio playable list dialog title and content
           await _verifyAudioPlayableList(
@@ -14044,7 +14084,7 @@ Future<void> _switchToPlaylist({
   // Now select the local playlist in order to apply the created
   // sort/filter parms to it
 
-  // Tap on audio player view playlist button to expand the
+  // Tap on audio playplaylist button to expand the
   // list of playlists
   await tester.tap(find.byKey(const Key('playlist_toggle_button')));
   await tester.pumpAndSettle(const Duration(milliseconds: 200));
