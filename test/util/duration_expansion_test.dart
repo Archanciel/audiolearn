@@ -292,6 +292,66 @@ void main() {
       },
     );
     test(
+      'Duration 13 hours 59 minutes 59 seconds 5 tenth of seconds',
+      () {
+        const Duration duration =
+            Duration(hours: 13, minutes: 59, seconds: 59, milliseconds: 500);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: false),
+            '14:00:00');
+      },
+    );
+    test(
+      'Duration 0 hours 59 minutes 59 seconds 5 tenth of seconds',
+      () {
+        const Duration duration =
+            Duration(hours: 0, minutes: 59, seconds: 59, milliseconds: 500);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: false),
+            '1:00:00');
+      },
+    );
+    test(
+      'Duration 59 minutes 59 seconds 5 tenth of seconds',
+      () {
+        const Duration duration =
+            Duration(minutes: 59, seconds: 59, milliseconds: 500);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: false),
+            '1:00:00');
+      },
+    );
+    test(
+      'Duration 23 minutes 59 seconds 5 tenth of seconds',
+      () {
+        const Duration duration =
+            Duration(minutes: 23, seconds: 59, milliseconds: 500);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: false),
+            '24:00');
+      },
+    );
+    test(
+      'Duration 0 minutes 59 seconds 5 tenth of seconds',
+      () {
+        const Duration duration =
+            Duration(minutes: 0, seconds: 59, milliseconds: 500);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: false),
+            '01:00');
+      },
+    );
+    test(
+      'Duration 59 seconds 5 tenth of seconds',
+      () {
+        const Duration duration =
+            Duration(seconds: 59, milliseconds: 500);
+
+        expect(duration.HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: false),
+            '01:00');
+      },
+    );
+    test(
       'Duration 13 hours 35 minutes 23 seconds 9 tenth of seconds',
       () {
         const Duration duration =

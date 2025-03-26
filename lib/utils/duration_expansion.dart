@@ -101,7 +101,6 @@ extension DurationExpansion on Duration {
     bool addRemainingOneDigitTenthOfSecond = false,
   }) {
     String hoursStr = '';
-
     int hoursInt = inHours.abs();
 
     if (hoursInt > 0) {
@@ -109,16 +108,25 @@ extension DurationExpansion on Duration {
     }
 
     int remainingMinuteInt = inMinutes.remainder(60).abs();
-
-    String remainingMinutesStr;
-
-    if (hoursInt > 0) {
-      remainingMinutesStr = twoDigits(remainingMinuteInt);
-    } else {
-      remainingMinutesStr = remainingMinuteInt.toString();
-    }
-
+    String remainingMinutesStr = hoursInt > 0
+        ? twoDigits(remainingMinuteInt)
+        : remainingMinuteInt.toString();
     String minusStr = inMicroseconds < 0 ? '-' : '';
+
+    // Helper method to handle minute rollover
+    void handleMinuteRollover() {
+      if (remainingMinuteInt == 60) {
+        remainingMinuteInt = 0;
+        hoursInt++;
+        if (hoursInt == 24) {
+          hoursInt = 0; // Reset to 0 when reaching 24:00
+        }
+        hoursStr = '$hoursInt:'; // Update the hours string after rollover
+        remainingMinutesStr = twoDigits(remainingMinuteInt);
+      } else {
+        remainingMinutesStr = twoDigits(remainingMinuteInt);
+      }
+    }
 
     if (addRemainingOneDigitTenthOfSecond) {
       int secondsInt = inSeconds.remainder(60).abs();
@@ -135,19 +143,15 @@ extension DurationExpansion on Duration {
     } else {
       int secondsRounded =
           (inMilliseconds.remainder(60000).abs() / 1000).round();
+
+      // Handle the second rollover (from 59 to 60)
       if (secondsRounded == 60) {
         secondsRounded = 0;
         remainingMinuteInt++;
-        if (remainingMinuteInt == 60) {
-          remainingMinuteInt = 0;
-          hoursInt++;
-          hoursStr = '$hoursInt:';
-        } else {
-          remainingMinutesStr = twoDigits(remainingMinuteInt);
-        }
+        handleMinuteRollover(); // Call the helper to handle the minute and hour rollover
       }
-      String twoDigitSecondsStr = twoDigits(secondsRounded).toString();
 
+      String twoDigitSecondsStr = twoDigits(secondsRounded).toString();
       return '$minusStr$hoursStr$remainingMinutesStr:$twoDigitSecondsStr';
     }
   }
