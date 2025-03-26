@@ -135,6 +135,17 @@ extension DurationExpansion on Duration {
     } else {
       int secondsRounded =
           (inMilliseconds.remainder(60000).abs() / 1000).round();
+      if (secondsRounded == 60) {
+        secondsRounded = 0;
+        remainingMinuteInt++;
+        if (remainingMinuteInt == 60) {
+          remainingMinuteInt = 0;
+          hoursInt++;
+          hoursStr = '$hoursInt:';
+        } else {
+          remainingMinutesStr = twoDigits(remainingMinuteInt);
+        }
+      }
       String twoDigitSecondsStr = twoDigits(secondsRounded).toString();
 
       return '$minusStr$hoursStr$remainingMinutesStr:$twoDigitSecondsStr';
