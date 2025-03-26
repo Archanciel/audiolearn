@@ -9421,7 +9421,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
       group(
           '''First, restore app data from Android zip file to Windows app. Then,
              select the restored 'MaValTTest' playlist and hide the list of playlists
-             in order to be ble to select a SF parms. The two integration tests test
+             in order to be able to select a SF parms. The two integration tests test
              a bug fix.''', () {
         const String playlistToRedownloadTitle = "MaValTest";
         const String restorableZipFileName = 'audioLearn_2025-03-24_11_30.zip';
@@ -9430,11 +9430,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         testWidgets(
             '''After selecting the restored 'MaValTTest' playlist and hiding the
                list of playlist, select the 'Not playable' SF which filters the not
-               playable audio's. Then extend the list of playlists in order to apply
-               the redownload 'Not playable' filtered audio's. Verify the now empty
-               displayed audio list (empty since the redownloaded audio's are now
-               playable) as well as the possibility of saving the named sort/filter
-               parms to the playlist views.''', (WidgetTester tester) async {
+               playable audio's. Then extend the list of playlists in order to redownload
+               the 'Not playable' filtered audio's. Verify the now empty displayed
+               audio list (empty since the redownloaded audio's are now playable) as
+               well as the possibility of saving the named sort/filter parms to the
+               playlist views.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -9597,6 +9597,172 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               playlistDownloadPath: playlistDownloadPath,
             );
           }
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Hiding the list of playlist after selecting the restored 'MaValTTest'
+               playlist and select the 'Not playable' SF which filters the not
+               playable audio's. Redownload only the 'Really short video' audio.
+               Verify the displayed audio list which contains only one not yet
+               redownloaded audio as well as the possibility of saving the named
+               sort/filter parms to the playlist views.''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}restore_Android_short_zip_on_Windows_test",
+            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          );
+
+          AudioDownloadVM audioDownloadVM = await IntegrationTestUtil
+              .launchIntegrTestAppEnablingInternetAccess(
+            tester: tester,
+            forcedLocale: const Locale('en'),
+          );
+
+          // Replace the platform instance with your mock
+          MockFilePicker mockFilePicker = MockFilePicker();
+          FilePicker.platform = mockFilePicker;
+
+          mockFilePicker.setSelectedFiles([
+            PlatformFile(
+                name: restorableZipFileName,
+                path:
+                    '$kApplicationPathWindowsTest${path.separator}$restorableZipFileName',
+                size: 1038533), // 1040384
+          ]);
+
+          // Tap the appbar leading popup menu button
+          await tester
+              .tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+          await tester.pumpAndSettle();
+
+          // Now type on the 'Restore Playlists, Comments and Settings
+          // from Zip File ...' menu
+          await tester.tap(find.byKey(const Key(
+              'appBarMenuRestorePlaylistsCommentsAndSettingsFromZip')));
+          await tester.pumpAndSettle(const Duration(milliseconds: 500));
+
+          // Verify the displayed warning confirmation dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                'Restored 1 playlist and 1 comment json files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+            isWarningConfirming: true,
+            warningTitle: 'CONFIRMATION',
+          );
+
+          // Select MaValTest playlist
+
+          await IntegrationTestUtil.selectPlaylist(
+            tester: tester,
+            playlistToSelectTitle: playlistToRedownloadTitle,
+          );
+
+          // Type on the Playlists button to hide the playlist view
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Select the 'Not playable' sort/filter parms
+          await _selectSortFilterParms(
+            tester: tester,
+            sortFilterParmsName: notPlayableSortFilterParmsName,
+          );
+
+          // Now redownload the 'Really short video' audio
+
+          // First, find the Audio sublist ListTile Text widget
+          String audioToRedownloadTitle = 'Really short video';
+          final Finder targetAudioListTileTextWidgetFinder =
+              find.text(audioToRedownloadTitle);
+
+          // Then obtain the Audio ListTile widget enclosing the Text widget by
+          // finding its ancestor
+          final Finder targetAudioListTileWidgetFinder = find.ancestor(
+            of: targetAudioListTileTextWidgetFinder,
+            matching: find.byType(ListTile),
+          );
+
+          // Now find the leading menu icon button of the Audio ListTile and tap
+          // on it
+          final Finder targetAudioListTileLeadingMenuIconButton =
+              find.descendant(
+            of: targetAudioListTileWidgetFinder,
+            matching: find.byIcon(Icons.menu),
+          );
+
+          // Tap the leading menu icon button to open the popup menu
+          await tester.tap(targetAudioListTileLeadingMenuIconButton);
+          await tester.pumpAndSettle();
+
+          // Now find the popup menu item and tap on it
+          final Finder popupDisplayAudioInfoMenuItemFinder =
+              find.byKey(const Key("popup_menu_redownload_delete_audio"));
+
+          await tester.tap(popupDisplayAudioInfoMenuItemFinder);
+          await tester.pumpAndSettle();
+
+          // Add a delay to allow the download to finish.
+          for (int i = 0; i < 2; i++) {
+            await Future.delayed(const Duration(seconds: 1));
+            await tester.pumpAndSettle();
+          }
+
+          await Future.delayed(const Duration(seconds: 1));
+          await tester.pumpAndSettle();
+
+          // Verify the displayed warning confirmation dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                "The audio \"$audioToRedownloadTitle\" was redownloaded in the playlist \"$playlistToRedownloadTitle\".",
+            isWarningConfirming: true,
+            warningTitle: 'CONFIRMATION',
+          );
+
+          // Select and save the 'Not playable' sort/filter parms to the audio
+          // player view of the 'audio_learn_emi' playlist
+          await _selectAndSaveSortFilterParmsToPlaylist(
+            tester: tester,
+            sortFilterParmsName: notPlayableSortFilterParmsName,
+            saveToPlaylistDownloadView: true,
+            saveToAudioPlayerView: true,
+            displayPlaylistListBeforeSavingSFtoPlaylist: false,
+            selectSortFilterParms: false,
+          );
+
+          // Verify confirmation dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                "Sort/filter parameters \"$notPlayableSortFilterParmsName\" were saved to playlist \"$playlistToRedownloadTitle\" for screen(s) \"Download Audio\" and \"Play Audio\".",
+            isWarningConfirming: true,
+          );
+
+          String playlistDownloadPath =
+              audioDownloadVM.listOfPlaylist[3].downloadPath;
+
+          // Verifying that the playlist json file was correctly modified.
+          IntegrationTestUtil
+              .verifyPlaylistDataElementsUpdatedInPlaylistJsonFile(
+            selectedPlaylistTitle: playlistToRedownloadTitle,
+            audioSortFilterParmsNamePlaylistDownloadView:
+                notPlayableSortFilterParmsName, // The playlist download view is not affected
+            audioSortFilterParmsNameAudioPlayerView: notPlayableSortFilterParmsName,
+            audioPlayingOrder: AudioPlayingOrder.ascending,
+            playlistDownloadPath: playlistDownloadPath,
+          );
 
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
