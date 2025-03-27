@@ -1972,4 +1972,78 @@ class IntegrationTestUtil {
     await tester.tap(find.byKey(const Key('playlist_info_ok_button_key')));
     await tester.pumpAndSettle();
   }
+
+  static Future<void> selectAndSaveSortFilterParmsToPlaylist({
+    required WidgetTester tester,
+    required String sortFilterParmsName,
+    required bool saveToPlaylistDownloadView,
+    required bool saveToAudioPlayerView,
+    bool displayPlaylistListBeforeSavingSFtoPlaylist = false,
+    bool selectSortFilterParms = true,
+  }) async {
+    if (selectSortFilterParms) {
+      // Tap on the current dropdown button item to open the dropdown
+      // button items list
+      await selectSortFilterParmsInDropDownButton(
+        tester: tester,
+        sortFilterParmsName: sortFilterParmsName,
+      );
+    }
+
+    if (displayPlaylistListBeforeSavingSFtoPlaylist) {
+      // Tap the 'Toggle List' button to display the list of playlists
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+    }
+
+    // Now open the audio popup menu
+    await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+    await tester.pumpAndSettle();
+
+    // And open the 'Save sort/filter parameters to playlist' dialog
+    await tester.tap(find
+        .byKey(const Key('save_sort_and_filter_audio_parms_in_playlist_item')));
+    await tester.pumpAndSettle();
+
+    if (saveToPlaylistDownloadView) {
+      // Select the 'For "Download Audio" screen' checkbox
+      await tester.tap(find.byKey(const Key('playlistDownloadViewCheckbox')));
+      await tester.pumpAndSettle();
+    }
+
+    if (saveToAudioPlayerView) {
+      // Select the 'For "Play Audio" screen' checkbox
+      await tester.tap(find.byKey(const Key('audioPlayerViewCheckbox')));
+      await tester.pumpAndSettle();
+    }
+
+    // Finally, click on save button
+    await tester.tap(
+        find.byKey(const Key('saveSortFilterOptionsToPlaylistSaveButton')));
+    await tester.pumpAndSettle();
+  }
+
+  static Future<void> selectSortFilterParmsInDropDownButton({
+    required WidgetTester tester,
+    required String sortFilterParmsName,
+  }) async {
+    // Tap on the current dropdown button item to open the dropdown
+    // button items list
+
+    Finder dropDownButtonFinder =
+        find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+    Finder dropDownButtonTextFinder = find.descendant(
+      of: dropDownButtonFinder,
+      matching: find.byType(Text),
+    );
+
+    await tester.tap(dropDownButtonTextFinder);
+    await tester.pumpAndSettle();
+
+    // Find and select the sort filter parms item
+    Finder titleAscDropDownTextFinder = find.text(sortFilterParmsName).last;
+    await tester.tap(titleAscDropDownTextFinder);
+    await tester.pumpAndSettle();
+  }
 }

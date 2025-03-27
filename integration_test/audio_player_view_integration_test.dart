@@ -3402,6 +3402,80 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
+    testWidgets(
+        '''Save short playable SF parms to audio player view and display the
+           shortened audio playable list in the audio player view.''',
+        (WidgetTester tester) async {
+      const String audioPlayerSelectedPlaylistTitle =
+          'S8 audio'; // Youtube playlist
+      const String audioToPlayTitle =
+          "Quand Aurélien Barrau va dans une école de management";
+      const String audioToSelectInAudioListTitle =
+          'Really short video'; // Short playable audio
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_view_display_audio_list_test',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      // Tap the 'Toggle List' button to avoid displaying the list
+      // of playlists which may hide the audio title we want to
+      // tap on
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      const String shortPlayableSortFilterName = 'short playable';
+
+      // Select 'short playable' SF in the dropdown button and save
+      // it to the audio player view
+      await IntegrationTestUtil.selectAndSaveSortFilterParmsToPlaylist(
+        tester: tester,
+        sortFilterParmsName: shortPlayableSortFilterName,
+        saveToPlaylistDownloadView: false,
+        saveToAudioPlayerView: true,
+      );
+
+      // Verify confirmation dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Sort/filter parameters \"$shortPlayableSortFilterName\" were saved to playlist \"S8 audio\" for screen(s) \"Play Audio\".",
+        isWarningConfirming: true,
+      );
+
+      // Select 'Default' SF in the dropdown button
+      await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
+        tester: tester,
+        sortFilterParmsName: 'default',
+      );
+
+      // Type on the audio to play title in order to open the
+      // AudioPlayerView displaying the audio
+      await tester.tap(find.text(audioToPlayTitle));
+      await tester.pumpAndSettle(const Duration(milliseconds: 500));
+
+      // Now we open the AudioPlayableListDialog by tapping on the
+      // audio title
+      await tester.tap(find.text("$audioToPlayTitle\n17:59"));
+      await tester.pumpAndSettle();
+
+      // Verify the shortened displayed audio list
+      expect(find.text("morning _ cinematic video"), findsOneWidget);
+      expect(find.text("Really short video"), findsOneWidget);
+
+      // Select an audio in the AudioPlayableListDialog
+      await IntegrationTestUtil.selectAudioInAudioPlayableDialog(
+        tester: tester,
+        audioToSelectTitle: audioToSelectInAudioListTitle,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
   });
   group('single undo/redo tests', () {
     testWidgets('forward 1 minute position change',
