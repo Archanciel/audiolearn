@@ -121,6 +121,7 @@ class _PlaylistOneSelectableDialogState
             children: [
               Flexible(
                 child: ListView.builder(
+                  key: const Key('selectable_playlist_list'),
                   itemCount: upToDateSelectablePlaylists.length,
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
