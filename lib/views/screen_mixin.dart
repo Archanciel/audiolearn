@@ -373,32 +373,39 @@ mixin ScreenMixin {
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         children: [
-          Expanded(
-            child: Text(
-              label,
-              style: TextStyle(
-                fontWeight: isTextBold ? FontWeight.bold : FontWeight.normal,
-              ),
-            ),
-          ),
-          Expanded(
-            child: InkWell(
-              child: Text(
-                key: valueTextWidgetKey,
-                value,
-                style: TextStyle(
-                  fontWeight: isTextBold ? FontWeight.bold : FontWeight.normal,
+          const SizedBox(height: 10),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    fontWeight:
+                        isTextBold ? FontWeight.bold : FontWeight.normal,
+                  ),
                 ),
               ),
-              onTap: () {
-                Clipboard.setData(
-                  ClipboardData(text: value),
-                );
-              },
-            ),
+              Expanded(
+                child: InkWell(
+                  child: Text(
+                    key: valueTextWidgetKey,
+                    value,
+                    style: TextStyle(
+                      fontWeight:
+                          isTextBold ? FontWeight.bold : FontWeight.normal,
+                    ),
+                  ),
+                  onTap: () {
+                    Clipboard.setData(
+                      ClipboardData(text: value),
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -462,23 +469,28 @@ mixin ScreenMixin {
     }
 
     // Conditionally wrap the Row with a Tooltip if a tooltip message is provided
-    Widget rowContent = Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+    Widget rowContent = Column(
       children: [
-        Expanded(
-          child: Text(
-            label,
-            style: kDialogLabelStyle,
-          ),
-        ),
-        Expanded(
-          child: TextField(
-            key: valueTextFieldWidgetKey,
-            style: kDialogTextFieldStyle,
-            controller: controller,
-            decoration: getDialogTextFieldInputDecoration(),
-            focusNode: textFieldFocusNode,
-          ),
+        const SizedBox(height: 10),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Text(
+                label,
+                style: kDialogLabelStyle,
+              ),
+            ),
+            Expanded(
+              child: TextField(
+                key: valueTextFieldWidgetKey,
+                style: kDialogTextFieldStyle,
+                controller: controller,
+                decoration: getDialogTextFieldInputDecoration(),
+                focusNode: textFieldFocusNode,
+              ),
+            ),
+          ],
         ),
       ],
     );

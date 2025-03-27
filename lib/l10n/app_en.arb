@@ -827,5 +827,9 @@
       "redownloadedAudioTitle": {}
     }
   },
-  "isPlayableLabel": "Playable"
+  "isPlayableLabel": "Playable",
+  "setPlaylistAudioQuality": "Set Audio Quality ...",
+  "setPlaylistAudioQualityTooltip": "The selected audio quality will be applied to the next downloaded audio's. If the audio quality must be applied to the already downloaded audio's, those audio's must be deleted \"from playlist as well\" so that they will be redownloadable in the modified audio quality.",
+  "setPlaylistAudioQualityDialogTitle": "Playlist audio quality",
+  "selectAudioQuality": "Select audio quality"
 }
