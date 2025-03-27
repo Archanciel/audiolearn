@@ -8993,7 +8993,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Save the 'desc listened' sort/filter parms to the 'S8 audio' playlist
           // for playlist download view only
-          await _selectAndSaveSortFilterParmsToPlaylist(
+          await IntegrationTestUtil.selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: descListenedSortFilterName,
             saveToPlaylistDownloadView: true,
@@ -9052,7 +9052,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Select and save the 'Title asc' sort/filter parms to the audio
           // player view of 'S8 audio' playlist
-          await _selectAndSaveSortFilterParmsToPlaylist(
+          await IntegrationTestUtil.selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: false,
@@ -9282,7 +9282,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Select and save the 'short' sort/filter parms to the audio
           // player view of the 'Maria Valtorta' playlist
-          await _selectAndSaveSortFilterParmsToPlaylist(
+          await IntegrationTestUtil.selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: sortFilterParmsName,
             saveToPlaylistDownloadView: false,
@@ -9376,7 +9376,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Select and save the 'spiritual' sort/filter parms to the audio
           // player view of the 'Maria Valtorta' playlist
-          await _selectAndSaveSortFilterParmsToPlaylist(
+          await IntegrationTestUtil.selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: sortFilterParmsName,
             saveToPlaylistDownloadView: true,
@@ -9493,7 +9493,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Select the 'Not playable' sort/filter parms
-          await _selectSortFilterParms(
+          await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
             tester: tester,
             sortFilterParmsName: notPlayableSortFilterParmsName,
           );
@@ -9537,7 +9537,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 await tester.tap(okButtonFinder);
                 await tester.pumpAndSettle();
               }
-            // ignore: empty_catches
+              // ignore: empty_catches
             } catch (e) {}
 
             final Finder listTilesFinder = find.byType(ListTile);
@@ -9562,7 +9562,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             // Select and save the 'Not playable' sort/filter parms to the audio
             // player view of the 'audio_learn_emi' playlist
-            await _selectAndSaveSortFilterParmsToPlaylist(
+            await IntegrationTestUtil.selectAndSaveSortFilterParmsToPlaylist(
               tester: tester,
               sortFilterParmsName: notPlayableSortFilterParmsName,
               saveToPlaylistDownloadView: true,
@@ -9671,7 +9671,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Select the 'Not playable' sort/filter parms
-          await _selectSortFilterParms(
+          await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
             tester: tester,
             sortFilterParmsName: notPlayableSortFilterParmsName,
           );
@@ -9729,7 +9729,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Select and save the 'Not playable' sort/filter parms to the audio
           // player view of the 'audio_learn_emi' playlist
-          await _selectAndSaveSortFilterParmsToPlaylist(
+          await IntegrationTestUtil.selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: notPlayableSortFilterParmsName,
             saveToPlaylistDownloadView: true,
@@ -9755,7 +9755,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             selectedPlaylistTitle: playlistToRedownloadTitle,
             audioSortFilterParmsNamePlaylistDownloadView:
                 notPlayableSortFilterParmsName, // The playlist download view is not affected
-            audioSortFilterParmsNameAudioPlayerView: notPlayableSortFilterParmsName,
+            audioSortFilterParmsNameAudioPlayerView:
+                notPlayableSortFilterParmsName,
             audioPlayingOrder: AudioPlayingOrder.ascending,
             playlistDownloadPath: playlistDownloadPath,
           );
@@ -9994,7 +9995,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           const String titleAscSortFilterName = 'Title asc';
 
           // Save the 'Title asc' sort/filter parms to the 'S8 audio' playlist
-          await _selectAndSaveSortFilterParmsToPlaylist(
+          await IntegrationTestUtil.selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: true,
@@ -10016,7 +10017,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Save the 'Title asc' sort/filter parms to the 'local' playlist
-          await _selectAndSaveSortFilterParmsToPlaylist(
+          await IntegrationTestUtil.selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: true,
@@ -10355,7 +10356,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           const String titleAscSortFilterName = 'Title asc';
 
           // Save the 'Title asc' sort/filter parms to the 'S8 audio' playlist
-          await _selectAndSaveSortFilterParmsToPlaylist(
+          await IntegrationTestUtil.selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: true,
@@ -10529,7 +10530,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           const String titleAscSortFilterName = 'Title asc';
 
           // Save the 'Title asc' sort/filter parms to the 'S8 audio' playlist
-          await _selectAndSaveSortFilterParmsToPlaylist(
+          await IntegrationTestUtil.selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: true,
@@ -10680,7 +10681,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           const String titleAscSortFilterName = 'Title asc';
 
           // Save the 'Title asc' sort/filter parms to the 'S8 audio' playlist
-          await _selectAndSaveSortFilterParmsToPlaylist(
+          await IntegrationTestUtil.selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: true,
@@ -10862,7 +10863,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Save the 'Title asc' sort/filter parms to the 'S8 audio' playlist
-          await _selectAndSaveSortFilterParmsToPlaylist(
+          await IntegrationTestUtil.selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: true,
@@ -11002,7 +11003,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Save the 'Title asc' sort/filter parms to the 'S8 audio' playlist
-          await _selectAndSaveSortFilterParmsToPlaylist(
+          await IntegrationTestUtil.selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: false,
@@ -11145,7 +11146,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Save the 'Title asc' sort/filter parms to the 'S8 audio' playlist
-          await _selectAndSaveSortFilterParmsToPlaylist(
+          await IntegrationTestUtil.selectAndSaveSortFilterParmsToPlaylist(
             tester: tester,
             sortFilterParmsName: titleAscSortFilterName,
             saveToPlaylistDownloadView: true,
@@ -14032,80 +14033,6 @@ void _verifyAudioSortFilterParmsNameStoredInPlaylistJsonFile({
     loadedSelectedPlaylist.audioPlayingOrder,
     audioPlayingOrder,
   );
-}
-
-Future<void> _selectAndSaveSortFilterParmsToPlaylist({
-  required WidgetTester tester,
-  required String sortFilterParmsName,
-  required bool saveToPlaylistDownloadView,
-  required bool saveToAudioPlayerView,
-  bool displayPlaylistListBeforeSavingSFtoPlaylist = false,
-  bool selectSortFilterParms = true,
-}) async {
-  if (selectSortFilterParms) {
-    // Tap on the current dropdown button item to open the dropdown
-    // button items list
-    await _selectSortFilterParms(
-      tester: tester,
-      sortFilterParmsName: sortFilterParmsName,
-    );
-  }
-
-  if (displayPlaylistListBeforeSavingSFtoPlaylist) {
-    // Tap the 'Toggle List' button to display the list of playlists
-    await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-    await tester.pumpAndSettle();
-  }
-
-  // Now open the audio popup menu
-  await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-  await tester.pumpAndSettle();
-
-  // And open the 'Save sort/filter parameters to playlist' dialog
-  await tester.tap(find
-      .byKey(const Key('save_sort_and_filter_audio_parms_in_playlist_item')));
-  await tester.pumpAndSettle();
-
-  if (saveToPlaylistDownloadView) {
-    // Select the 'For "Download Audio" screen' checkbox
-    await tester.tap(find.byKey(const Key('playlistDownloadViewCheckbox')));
-    await tester.pumpAndSettle();
-  }
-
-  if (saveToAudioPlayerView) {
-    // Select the 'For "Play Audio" screen' checkbox
-    await tester.tap(find.byKey(const Key('audioPlayerViewCheckbox')));
-    await tester.pumpAndSettle();
-  }
-
-  // Finally, click on save button
-  await tester
-      .tap(find.byKey(const Key('saveSortFilterOptionsToPlaylistSaveButton')));
-  await tester.pumpAndSettle();
-}
-
-Future<void> _selectSortFilterParms({
-  required WidgetTester tester,
-  required String sortFilterParmsName,
-}) async {
-  // Tap on the current dropdown button item to open the dropdown
-  // button items list
-
-  Finder dropDownButtonFinder =
-      find.byKey(const Key('sort_filter_parms_dropdown_button'));
-
-  Finder dropDownButtonTextFinder = find.descendant(
-    of: dropDownButtonFinder,
-    matching: find.byType(Text),
-  );
-
-  await tester.tap(dropDownButtonTextFinder);
-  await tester.pumpAndSettle();
-
-  // Find and select the sort filter parms item
-  Finder titleAscDropDownTextFinder = find.text(sortFilterParmsName).last;
-  await tester.tap(titleAscDropDownTextFinder);
-  await tester.pumpAndSettle();
 }
 
 /// The PlaylistAddRemoveSortFilterOptionsDialog only display the
