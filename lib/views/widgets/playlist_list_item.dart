@@ -23,6 +23,7 @@ import 'playlist_comment_list_dialog.dart';
 import 'playlist_info_dialog.dart';
 import 'audio_set_speed_dialog.dart';
 import 'playlist_one_selectable_dialog.dart';
+import 'set_value_to_target_dialog.dart';
 
 enum PlaylistPopupMenuAction {
   openYoutubePlaylist,
@@ -35,6 +36,7 @@ enum PlaylistPopupMenuAction {
   //                               deleted from the app dir
   rewindAudioToStart,
   setPlaylistAudioPlaySpeed,
+  setPlaylistAudioQuality,
   filteredAudioActions,
   deletePlaylist,
 }
@@ -222,6 +224,15 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
           ),
         ),
         PopupMenuItem<PlaylistPopupMenuAction>(
+          key: const Key('popup_menu_set_audio_quality'),
+          value: PlaylistPopupMenuAction.setPlaylistAudioQuality,
+          child: Tooltip(
+            message:
+                AppLocalizations.of(context)!.setPlaylistAudioQualityTooltip,
+            child: Text(AppLocalizations.of(context)!.setPlaylistAudioQuality),
+          ),
+        ),
+        PopupMenuItem<PlaylistPopupMenuAction>(
           key: const Key('popup_menu_filtered_audio_actions'),
           value: PlaylistPopupMenuAction.filteredAudioActions,
           child: Text(AppLocalizations.of(context)!.filteredAudioActions),
@@ -401,6 +412,58 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   playlist: playlist,
                   applyAudioPlaySpeedToPlayableAudios: value[2] as bool,
                 );
+              }
+            });
+            break;
+          case PlaylistPopupMenuAction.setPlaylistAudioQuality:
+            void validateEnteredValueFunction() {}
+            showDialog<List<String>>(
+              barrierDismissible:
+                  false, // Prevents the dialog from closing when tapping outside.
+              context: context,
+              builder: (BuildContext context) {
+                return SetValueToTargetDialog(
+                  dialogTitle: AppLocalizations.of(context)!
+                      .setPlaylistAudioQualityDialogTitle,
+                  dialogCommentStr:
+                      AppLocalizations.of(context)!.selectAudioQuality,
+                  passedValueFieldLabel: '',
+                  passedValueFieldTooltip: '',
+                  passedValueStr: '',
+                  targetNamesLst: [
+                    AppLocalizations.of(context)!.playlistQualityAudio,
+                    AppLocalizations.of(context)!.playlistQualityMusic,
+                  ],
+                  validationFunction: validateEnteredValueFunction,
+                  validationFunctionArgs: [],
+                  checkboxIndexSetToTrue: (playlist.playlistQuality == PlaylistQuality.voice)
+                      ? 0
+                      : 1,  // 0 for audio, 1 for music
+                );
+              },
+            ).then((resultStringLst) {
+              if (resultStringLst == null) {
+                // The case if the Cancel button was pressed.
+                return;
+              }
+
+              String positionStr = resultStringLst[0];
+              String checkboxIndexStr = resultStringLst[1];
+
+              if (checkboxIndexStr == '0') {
+                // The case when the Comment Start Position checkbox is checked.
+              } else {
+                // The case when the Comment End Position checkbox is checked.
+              }
+
+              // Updating the display format according to the provided position.
+              int pointPosition = positionStr.indexOf('.');
+              if (pointPosition != -1) {
+                // If the position contains a tenth of a second (e.g., 00:00:00.0).
+                if (positionStr.substring(pointPosition + 1) != '0') {
+                  if (checkboxIndexStr == '0') {
+                  } else if (checkboxIndexStr == '1') {}
+                }
               }
             });
             break;

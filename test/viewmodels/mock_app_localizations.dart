@@ -1888,4 +1888,17 @@ class MockAppLocalizations extends AppLocalizations {
     Object correctedTitle,
   ) =>
       "Youtube playlist \"$originalTitle\" of $quality quality added with corrected title \"$correctedTitle\" to the end of the playlist list.";
+
+  @override
+  String get setPlaylistAudioQuality => "Set Audio Quality ...";
+
+  @override
+  String get setPlaylistAudioQualityTooltip =>
+      "The audio quality set will be applied to the next downloaded audio's. If the audio quality must be applied to the already download audio's, those audio's must be deleted from playlist as well so that they will be redownloaded in the changed audio quality.";
+
+  @override
+  String get setPlaylistAudioQualityDialogTitle => "Playlist audio quality";
+
+  @override
+  String get selectAudioQuality => "Select audio quality";
 }

@@ -29,6 +29,7 @@ class SetValueToTargetDialog extends StatefulWidget {
   // If isTargetExclusive is false, multiple checkboxes can be selected.
   final bool isTargetExclusive;
 
+  final int checkboxIndexSetToTrue; // The index of the checkbox set to true
   final bool isPassedValueEditable;
 
   final Function
@@ -36,17 +37,28 @@ class SetValueToTargetDialog extends StatefulWidget {
   final List<dynamic>
       validationFunctionArgs; // Arguments for the validation function
 
+  /// If the [passedValueFieldLabel] and the [passedValueStr] are not passed and so
+  /// remains both empty, the dialog will not display the passed value field.
+  /// 
+  /// The [targetNamesLst] contains the names of the checkboxes that will be displayed.
+  /// 
+  /// If the [isTargetExclusive] is set to true, only one checkbox can be selected.
+  /// If the [isTargetExclusive] is set to false, multiple checkboxes can be selected.
+  /// 
+  /// In order to pre-select a checkbox, the [checkboxIndexSetToTrue] must be set to the
+  /// index of the checkbox that should be selected. 
   const SetValueToTargetDialog({
     super.key,
     required this.dialogTitle,
     required this.dialogCommentStr,
-    required this.passedValueFieldLabel,
+    this.passedValueFieldLabel = '',
     this.passedValueFieldTooltip = '',
-    required this.passedValueStr,
+    this.passedValueStr = '',
     required this.targetNamesLst,
     required this.validationFunction,
     required this.validationFunctionArgs,
     this.isTargetExclusive = true,
+    this.checkboxIndexSetToTrue = -1,
     this.isPassedValueEditable = true,
   });
 
@@ -67,7 +79,11 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
     super.initState();
 
     for (int i = 0; i < widget.targetNamesLst.length; i++) {
-      _isCheckboxChecked.add(false);
+      if (i == widget.checkboxIndexSetToTrue) {
+        _isCheckboxChecked.add(true);
+      } else {
+        _isCheckboxChecked.add(false);
+      }
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -124,22 +140,25 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
                 context: context,
                 commentStr: widget.dialogCommentStr,
               ),
-              const SizedBox(height: 10),
-              (widget.isPassedValueEditable)
-                  ? createEditableRowFunction(
-                      context: context,
-                      valueTextFieldWidgetKey:
-                          const Key('passedValueFieldTextField'),
-                      label: widget.passedValueFieldLabel,
-                      labelAndTextFieldTooltip: widget.passedValueFieldTooltip,
-                      controller: _passedValueTextEditingController,
-                      textFieldFocusNode: _focusNodePassedValueTextField,
-                    )
-                  : createInfoRowFunction(
-                      context: context,
-                      label: '',
-                      value: widget.passedValueFieldLabel,
-                    ),
+              (widget.passedValueFieldLabel.isNotEmpty &&
+                      widget.passedValueStr.isNotEmpty)
+                  ? (widget.isPassedValueEditable)
+                      ? createEditableRowFunction(
+                          context: context,
+                          valueTextFieldWidgetKey:
+                              const Key('passedValueFieldTextField'),
+                          label: widget.passedValueFieldLabel,
+                          labelAndTextFieldTooltip:
+                              widget.passedValueFieldTooltip,
+                          controller: _passedValueTextEditingController,
+                          textFieldFocusNode: _focusNodePassedValueTextField,
+                        )
+                      : createInfoRowFunction(
+                          context: context,
+                          label: '',
+                          value: widget.passedValueFieldLabel,
+                        )
+                  : SizedBox.shrink(),
               const SizedBox(height: 10),
               _createCheckboxList(context),
             ],
