@@ -408,7 +408,8 @@ void main() {
       testWidgets(
           '''Finish by reducing, then emptying the search word. First, select the
            existing 'janco' sort/filter parms in the SF dropdown button. Then enter
-           the search word 'La' in the 'Youtube ''', (WidgetTester tester) async {
+           the search word 'La' in the 'Youtube ''',
+          (WidgetTester tester) async {
         // Link or Search' text field. After entering 'La', verify that the search
         // icon button is now enabled and click on it. Then, reduce the search word
         // to one letter ('L') and verify that the audio liat was updatefd. Then,
@@ -8847,6 +8848,119 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
+      testWidgets(
+          '''Using very long playlist list. This test only verifies that the unique
+             playlist selection dialog can display a very long playlist list.''',
+          (tester) async {
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'playlist_selectable_dialog_test',
+          tapOnPlaylistToggleButton: true,
+        );
+
+        const String sourcePlaylistTitle = 'S8 audio';
+
+        // Setting to this variables the currently selected audio title/subTitle
+        // of the 'S8 audio' playlist
+        String currentAudioTitle =
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau";
+
+        // Now we want to tap the popup menu of the Audio ListTile
+        // "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau"
+
+        // First, find the Audio sublist ListTile Text widget
+        Finder sourceAudioListTileTextWidgetFinder =
+            find.text(currentAudioTitle);
+
+        // Then obtain the Audio ListTile widget enclosing the Text widget by
+        // finding its ancestor
+        Finder sourceAudioListTileWidgetFinder = find.ancestor(
+          of: sourceAudioListTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now find the leading menu icon button of the Audio ListTile
+        // and tap on it
+        Finder sourceAudioListTileLeadingMenuIconButton = find.descendant(
+          of: sourceAudioListTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(sourceAudioListTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
+
+        // Now find the copy audio popup menu item and tap on it
+        Finder popupCopyMenuItem =
+            find.byKey(const Key("popup_menu_copy_audio_to_playlist"));
+
+        await tester.tap(popupCopyMenuItem);
+        await tester.pumpAndSettle();
+
+        // Check the value of the select one playlist AlertDialog
+        // dialog title
+        Text alertDialogTitle = tester.widget(
+            find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
+        expect(alertDialogTitle.data, 'Select a playlist');
+
+        // Find the RadioListTile target playlist to which the audio
+        // will be copied
+
+        String longPlaylistTitle =
+            "Add padding or margins To prevent the content from touching the edges of the dialog";
+        String lastPlaylistTitle = "lo20";
+
+        Finder targetPlaylistRadioListTile = find.byWidgetPredicate(
+          (Widget widget) {
+            return widget is RadioListTile &&
+                widget.title is Text &&
+                (widget.title as Text).data == longPlaylistTitle;
+          },
+        );
+
+        expect(targetPlaylistRadioListTile, findsOneWidget);
+
+        // Dropdown the list of playlists in the select one playlist
+        // dialog
+
+        // Find the playlist list widget using its key
+        final listFinder = find.byKey(const Key('selectable_playlist_list'));
+        // Perform the scroll action
+        await tester.drag(listFinder, const Offset(0, -1000));
+        await tester.pumpAndSettle();
+
+        targetPlaylistRadioListTile = find.byWidgetPredicate(
+          (Widget widget) {
+            return widget is RadioListTile &&
+                widget.title is Text &&
+                (widget.title as Text).data == lastPlaylistTitle;
+          },
+        );
+
+        expect(targetPlaylistRadioListTile, findsOneWidget);
+
+        // Tap the target playlist RadioListTile to select it
+        await tester.tap(targetPlaylistRadioListTile);
+        await tester.pumpAndSettle();
+
+        // Now find the confirm button and tap on it
+        await tester.tap(find.byKey(const Key('confirmButton')));
+        await tester.pumpAndSettle();
+
+        // Now verifying the confirm dialog message
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              'Audio "$currentAudioTitle" copied from Youtube playlist "$sourcePlaylistTitle" to local playlist "$lastPlaylistTitle".',
+          isWarningConfirming: true,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
       testWidgets('''Select a fully listened commented audio located
            in default SF parms lower than the filtered SF audio which will be copied
            (was downloaded before them). Then select 'listenedNoCom' SF parms and
@@ -10882,7 +10996,8 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccessWithMock(
+      await IntegrationTestUtil
+          .launchIntegrTestAppEnablingInternetAccessWithMock(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
