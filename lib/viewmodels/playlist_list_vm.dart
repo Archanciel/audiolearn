@@ -1639,7 +1639,7 @@ class PlaylistListVM extends ChangeNotifier {
     _audioSortFilterParameters = audioSortFilterParms;
 
     if (searchSentence.isNotEmpty) {
-      // Required so that changing the search sentence by reducing 
+      // Required so that changing the search sentence by reducing
       // or modifying it updates correctly the filtered audio list.
       _sortedFilteredSelectedPlaylistPlayableAudioLst =
           _audioSortFilterService.filterAndSortAudioLst(
@@ -3178,5 +3178,17 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     return resultLst[0].isNotEmpty;
+  }
+
+  void setPlaylistAudioQuality({
+    required Playlist playlist,
+    required PlaylistQuality playlistQuality,
+  }) {
+    playlist.playlistQuality = playlistQuality;
+
+    JsonDataService.saveToFile(
+      model: playlist,
+      path: playlist.getPlaylistDownloadFilePathName(),
+    );
   }
 }

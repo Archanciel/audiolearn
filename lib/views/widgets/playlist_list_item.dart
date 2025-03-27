@@ -436,9 +436,10 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   ],
                   validationFunction: validateEnteredValueFunction,
                   validationFunctionArgs: [],
-                  checkboxIndexSetToTrue: (playlist.playlistQuality == PlaylistQuality.voice)
-                      ? 0
-                      : 1,  // 0 for audio, 1 for music
+                  checkboxIndexSetToTrue:
+                      (playlist.playlistQuality == PlaylistQuality.voice)
+                          ? 0
+                          : 1, // 0 for audio, 1 for music
                 );
               },
             ).then((resultStringLst) {
@@ -447,23 +448,18 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 return;
               }
 
-              String positionStr = resultStringLst[0];
-              String checkboxIndexStr = resultStringLst[1];
-
-              if (checkboxIndexStr == '0') {
-                // The case when the Comment Start Position checkbox is checked.
-              } else {
-                // The case when the Comment End Position checkbox is checked.
-              }
-
-              // Updating the display format according to the provided position.
-              int pointPosition = positionStr.indexOf('.');
-              if (pointPosition != -1) {
-                // If the position contains a tenth of a second (e.g., 00:00:00.0).
-                if (positionStr.substring(pointPosition + 1) != '0') {
-                  if (checkboxIndexStr == '0') {
-                  } else if (checkboxIndexStr == '1') {}
-                }
+              if (resultStringLst[0] == '0') {
+                // The case when the audio quality is set to audio.
+                playlistListVMlistenFalse.setPlaylistAudioQuality(
+                  playlist: playlist,
+                  playlistQuality: PlaylistQuality.voice,
+                );
+              } else if (resultStringLst[0] == '1') {
+                // The case when the audio quality is set to music.
+                playlistListVMlistenFalse.setPlaylistAudioQuality(
+                  playlist: playlist,
+                  playlistQuality: PlaylistQuality.music,
+                );
               }
             });
             break;

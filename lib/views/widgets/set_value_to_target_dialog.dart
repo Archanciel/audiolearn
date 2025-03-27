@@ -203,6 +203,16 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
   /// Validates the entered value and the selected checkboxes and creates
   /// the list of the entered value and the selected checkbox(es).
   List<String> _createResultList() {
+    if (widget.passedValueFieldLabel.isEmpty && widget.passedValueStr.isEmpty) {
+      // No passed value field, so no need to validate it
+      return _isCheckboxChecked
+          .asMap()
+          .entries
+          .where((entry) => entry.value)
+          .map((entry) => entry.key.toString())
+          .toList();
+    }
+    
     String enteredStr = _passedValueTextEditingController.text;
     String minValueLimitStr = widget.validationFunctionArgs[0].toString();
     String maxValueLimitStr = widget.validationFunctionArgs[1].toString();
