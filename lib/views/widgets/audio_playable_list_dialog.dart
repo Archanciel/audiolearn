@@ -182,7 +182,7 @@ class _AudioPlayableListDialogState extends State<AudioPlayableListDialog>
             child: Column(
               mainAxisSize: MainAxisSize.min, // Use minimum space
               children: [
-                Expanded(
+                Flexible(
                   child: SingleChildScrollView(
                     key: const Key('audioPlayableListKey'),
                     controller: _scrollController,
