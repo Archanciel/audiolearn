@@ -7529,7 +7529,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // displayed audio titles
 
             await tester.tap(find.text(
-                "Cette IA PENSE mieux que NOUS et personne ne veut en parler !\n23:60"));
+                "Cette IA PENSE mieux que NOUS et personne ne veut en parler !\n24:00"));
             await tester.pumpAndSettle();
 
             List<String>
@@ -7679,7 +7679,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // displayed audio titles
 
             await tester.tap(find.text(
-                "Cette IA PENSE mieux que NOUS et personne ne veut en parler !\n23:60"));
+                "Cette IA PENSE mieux que NOUS et personne ne veut en parler !\n24:00"));
             await tester.pumpAndSettle();
 
             List<String>
