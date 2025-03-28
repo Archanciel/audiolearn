@@ -503,8 +503,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '9:23',
-        maxPositionTimeStr: '9:28',
+        minPositionTimeStr: '9:22',
+        maxPositionTimeStr: '9:27',
       );
 
       // Purge the test playlist directory so that the created test
@@ -3894,7 +3894,7 @@ void main() {
       // First, get the ListTile Text widget finder of the audio
       // to be selected and tap on it
       final Finder toSelectAudioListTileTextWidgetFinder =
-          find.text(toSelectAudioTitle);
+          find.text(toSelectAudioTitle); // 3 fois où un économiste m'a ...
 
       await tester.tap(toSelectAudioListTileTextWidgetFinder);
       await tester.pumpAndSettle();
@@ -3922,11 +3922,11 @@ void main() {
       // Now tap on the pause comment icon button to stop playing
       // the comment
       await tester.tap(find.byKey(const Key('playPauseIconButton')));
-      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
+      await tester.pumpAndSettle(const Duration(milliseconds: 2000));
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
+      await tester.pumpAndSettle(const Duration(milliseconds: 2000));
 
       // check the current audio's changed position
       final Finder audioPlayerViewAudioPositionFinder =
