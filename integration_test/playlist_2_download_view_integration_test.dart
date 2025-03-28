@@ -11885,6 +11885,46 @@ void main() {
       });
     });
   });
+  group('Change playlist audio quality tests', () {
+    testWidgets(
+        '''Spoken changed to musical quality. Then, restart the application to verify
+           that the audio quality checkbox state was preserved.''',
+        (tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName:
+            'sort_and_filter_audio_dialog_widget_newly_downloaded_playlist_test',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      const String youtubePlaylistToModifyTitle = 'MaValTest';
+
+      // Rewind all 'S8 audio" playlist audio's to start position
+      await _tapOnRewindPlaylistAudioToStartPositionMenu(
+        tester: tester,
+        playlistToRewindTitle: youtubePlaylistToModifyTitle,
+        numberOfRewindedAudio: 4,
+      );
+
+      // Tap the 'Toggle List' button to reduce the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Rewind again all playlist audio to start position. Since
+      // the playlist was already rewinded, 0 audio will be rewinded !
+      await _tapOnRewindPlaylistAudioToStartPositionMenu(
+        tester: tester,
+        playlistToRewindTitle: youtubePlaylistToModifyTitle,
+        numberOfRewindedAudio: 0,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+  });
 }
 
 void _verifyRestoredPlaylistAndAudio({
@@ -12906,6 +12946,62 @@ Future<void> _tapOnRewindPlaylistAudioToStartPositionMenu({
     tester: tester,
     warningDialogMessage:
         "$numberOfRewindedAudio playlist audio's were repositioned to start.",
+    isWarningConfirming: true,
+  );
+}
+
+Future<void> _tapOnSetAudioQualityMenu({
+  required WidgetTester tester,
+  required String playlistToModifyTitle,
+}) async {
+  // Find the playlist to rewind audio ListTile
+
+  // First, find the Playlist ListTile Text widget
+  final Finder playlistToModifyListTileTextWidgetFinder =
+      find.text(playlistToModifyTitle);
+
+  // Then obtain the Playlist ListTile widget enclosing the Text widget
+  // by finding its ancestor
+  final Finder playlistToModifyListTileWidgetFinder = find.ancestor(
+    of: playlistToModifyListTileTextWidgetFinder,
+    matching: find.byType(ListTile),
+  );
+
+  // Now test changing the playlist audio quality
+
+  // Find the playlist leading menu icon button
+  final Finder playlistToModifyListTileLeadingMenuIconButton = find.descendant(
+    of: playlistToModifyListTileWidgetFinder,
+    matching: find.byIcon(Icons.menu),
+  );
+
+  // Tap the leading menu icon button to open the popup menu
+  await tester.tap(playlistToModifyListTileLeadingMenuIconButton);
+  await tester.pumpAndSettle();
+
+  // Now find the 'Set Audio Quality ...' playlist popup menu item
+  // and tap on it
+  final Finder setAudioQualityPlaylistMenuItem =
+      find.byKey(const Key("popup_menu_set_audio_quality"));
+
+  await tester.tap(setAudioQualityPlaylistMenuItem);
+  await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+  // Check the value of the AlertDialog dialog title
+  Text alertDialogTitle =
+      tester.widget(find.byKey(const Key('setValueToTargetDialogTitleKey')));
+  expect(alertDialogTitle.data, 'Playlist Audio Quality');
+
+  // Check the value of the AlertDialog dialog title
+  Text alertDialogText =
+      tester.widget(find.byKey(const Key('setValueToTargetDialogKey')));
+  expect(alertDialogText.data, 'Select audio quality');
+
+  // Check the label of the two quality checkboxes
+
+  await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+    tester: tester,
+    warningDialogMessage: "3 playlist audio's were repositioned to start.",
     isWarningConfirming: true,
   );
 }
