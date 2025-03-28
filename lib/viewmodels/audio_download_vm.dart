@@ -190,10 +190,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
         // if the playlist is selected, the audio quality checkbox will be
         // checked or not according to the selected playlist quality
-        if (currentPlaylist.isSelected) {
-          isHighQuality =
-              currentPlaylist.playlistQuality == PlaylistQuality.music;
-        }
+        updatePlaylistAudioQuality(playlist: currentPlaylist);
       }
     } catch (e) {
       warningMessageVM.setError(
@@ -207,6 +204,20 @@ class AudioDownloadVM extends ChangeNotifier {
     // notifyListeners();  not necessary since the unique
     //                     Consumer<AudioDownloadVM> is not concerned
     //                     by the _listOfPlaylist changes
+  }
+
+  /// This method is called when the user change a playlist audio quality
+  /// as well when the application is launched.
+  void updatePlaylistAudioQuality({
+    required Playlist playlist,
+  }) {
+    if (playlist.isSelected) {
+      isHighQuality = playlist.playlistQuality == PlaylistQuality.music;
+
+      // Necessary in order to update the playlist quality
+      // checkbox in the playlist download view.
+      notifyListeners();
+    }
   }
 
   /// This is the case if the playlist restored from the zip file corresponds to
@@ -1630,7 +1641,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
       // This avoid that when downloading a next audio file, the displayed
       // download progress starts at 100 % !
-      
+
       _downloadProgress = 0.0;
 
       notifyListeners();
