@@ -9298,7 +9298,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           String playlistDownloadPath =
-              audioDownloadVM.listOfPlaylist[0].downloadPath;
+              audioDownloadVM.listOfPlaylist[2].downloadPath;
 
           // Verifying that the playlist json file was correctly modified.
           IntegrationTestUtil
@@ -9367,7 +9367,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             tester: tester,
             audioOrPlaylistTitlesOrderedLst:
                 audioTitlesSortedByDateTimeListenedDescending,
-            firstAudioListTileIndex: 1,
+            firstAudioListTileIndex: 3,
           );
 
           // Type on the Playlists button to hide the playlist view
@@ -9393,7 +9393,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           String playlistDownloadPath =
-              audioDownloadVM.listOfPlaylist[0].downloadPath;
+              audioDownloadVM.listOfPlaylist[2].downloadPath;
 
           // Verifying that the playlist json file was correctly modified.
           IntegrationTestUtil

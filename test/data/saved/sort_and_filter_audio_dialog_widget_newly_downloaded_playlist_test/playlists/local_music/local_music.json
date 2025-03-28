@@ -1,0 +1,18 @@
+{
+    "id": "local_music",
+    "title": "local_music",
+    "url": "",
+    "playlistType": "local",
+    "playlistQuality": "music",
+    "audioPlaySpeed": 1.0,
+    "downloadPath": "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\local_music",
+    "downloadedAudioLst": [
+    ],
+    "playableAudioLst": [
+    ],
+    "isSelected": false,
+    "currentOrPastPlayableAudioIndex": -1,
+    "audioSortFilterParmsNamePlaylistDownloadView": "",
+    "audioSortFilterParmsNameAudioPlayerView": "",
+    "audioPlayingOrder": "ascending"
+}

@@ -6,7 +6,7 @@
         "SettingType.language": "Language.english"
     },
     "SettingType.playlists": {
-        "Playlists.orderedTitleLst": "[MaValTest]",
+        "Playlists.orderedTitleLst": "[MaValTest, local_music, local_audio]",
         "Playlists.isMusicQualityByDefault": "false",
         "Playlists.playSpeed": "1.0",
         "Playlists.arePlaylistsDisplayedInPlaylistDownloadView": "true"
