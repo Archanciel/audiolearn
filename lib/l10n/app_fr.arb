@@ -24,7 +24,7 @@
       }
     }
   },
-  "musicalQualityTooltip": "Si activé, télécharge en qualité musicale.",
+  "musicalQualityTooltip": "Pour une playlist Youtube, si activé, télécharge en qualité musicale. Pour une playlist locale, si activé, indique que la playlist est en qualité musicale.",
   "ofPreposition": "de",
   "atPreposition": "à",
   "ytPlaylistLinkLabel": "Lien Youtube ou recherche",

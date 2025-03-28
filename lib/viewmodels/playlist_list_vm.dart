@@ -3190,5 +3190,11 @@ class PlaylistListVM extends ChangeNotifier {
       model: playlist,
       path: playlist.getPlaylistDownloadFilePathName(),
     );
+
+    // Necessary in order to update the playlist quality
+    // checkbox in the playlist download view.
+    _audioDownloadVM.updatePlaylistAudioQuality(
+      playlist: playlist,
+    );
   }
 }

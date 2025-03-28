@@ -24,7 +24,7 @@
       }
     }
   },
-  "musicalQualityTooltip": "If set, downloads at musical quality.",
+  "musicalQualityTooltip": "For Youtube playlist, if set, downloads at musical quality. For local playlist, if set, indicates that the playlist is at music quality.",
   "ofPreposition": "of",
   "atPreposition": "at",
   "ytPlaylistLinkLabel": "Youtube Link or Search",
