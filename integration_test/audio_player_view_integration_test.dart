@@ -3932,6 +3932,10 @@ void main() {
       final Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
 
+      // If this test fails, try to rexecute it several times. If
+      // the test continue to fail, restart your computer and
+      // execute flutter clean, then flutter pub get and finally
+      // flutter gen-l10n. This is crazy, but it solves the problem !
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
@@ -4461,6 +4465,10 @@ void main() {
       final Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
 
+      // If this test fails, try to rexecute it several times. If
+      // the test continue to fail, restart your computer and
+      // execute flutter clean, then flutter pub get and finally
+      // flutter gen-l10n. This is crazy, but it solves the problem !
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
@@ -6032,6 +6040,10 @@ void main() {
       expectedAudioPlayerAudioPositionMin = '0:47';
       expectedAudioPlayerAudioPositionMax = '0:49';
 
+      // If this test fails, try to rexecute it several times. If
+      // the test continue to fail, restart your computer and
+      // execute flutter clean, then flutter pub get and finally
+      // flutter gen-l10n. This is crazy, but it solves the problem !
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
