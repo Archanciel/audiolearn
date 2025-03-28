@@ -159,7 +159,6 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
                           value: widget.passedValueFieldLabel,
                         )
                   : SizedBox.shrink(),
-              const SizedBox(height: 10),
               _createCheckboxList(context),
             ],
           ),

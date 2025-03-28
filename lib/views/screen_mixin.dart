@@ -407,6 +407,7 @@ mixin ScreenMixin {
               ),
             ],
           ),
+          const SizedBox(height: 10),
         ],
       ),
     );
@@ -492,6 +493,7 @@ mixin ScreenMixin {
             ),
           ],
         ),
+        const SizedBox(height: 10),
       ],
     );
 
