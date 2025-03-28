@@ -142,7 +142,7 @@ Future<void> main() async {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Youtube playlist \"$globalTestPlaylistTitle\" of audio quality added to the end of the playlist list.",
+            "Youtube playlist \"$globalTestPlaylistTitle\" of spoken quality added to the end of the playlist list.",
       );
 
       expect(
@@ -295,7 +295,7 @@ Future<void> main() async {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Youtube playlist \"$globalTestPlaylistTitle\" of music quality added to the end of the playlist list.",
+            "Youtube playlist \"$globalTestPlaylistTitle\" of musical quality added to the end of the playlist list.",
       );
 
       expect(
@@ -1221,7 +1221,7 @@ Future<void> main() async {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Youtube playlist \"le meilleur chant de canari/chant canari male\" of audio quality added with corrected title \"le meilleur chant de canari-chant canari male\" to the end of the playlist list.",
+            "Youtube playlist \"le meilleur chant de canari/chant canari male\" of spoken quality added with corrected title \"le meilleur chant de canari-chant canari male\" to the end of the playlist list.",
       );
 
       // Purge the test playlist directory so that the created test
@@ -1299,7 +1299,7 @@ Future<void> main() async {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Youtube playlist \"le meilleur chant de canari/chant canari male\" of music quality added with corrected title \"le meilleur chant de canari-chant canari male\" to the end of the playlist list.",
+            "Youtube playlist \"le meilleur chant de canari/chant canari male\" of musical quality added with corrected title \"le meilleur chant de canari-chant canari male\" to the end of the playlist list.",
       );
 
       // Purge the test playlist directory so that the created test
