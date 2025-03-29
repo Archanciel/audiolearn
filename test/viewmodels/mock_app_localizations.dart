@@ -1087,7 +1087,7 @@ class MockAppLocalizations extends AppLocalizations {
       "Show/hide playlists. Then select a playlist to display its current listened audio.";
 
   @override
-  String get playlistCommentsDialogTitle => "Playlist audio comments";
+  String get playlistCommentsDialogTitle => "Playlist Audio Comments";
 
   @override
   String playlistSelectedSnackBarMessage(
