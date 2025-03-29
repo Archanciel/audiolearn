@@ -45,6 +45,8 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
   final ScrollController _scrollController = ScrollController();
   int _audioCommentsLinesNumber = 0;
 
+  bool _isMinimized = false;
+
   @override
   void dispose() {
     _focusNodeDialog.dispose();
@@ -86,10 +88,21 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
       child: AlertDialog(
         title: Row(
           children: [
-            Text(
-              AppLocalizations.of(context)!.commentsDialogTitle,
-            ),
+            Text(AppLocalizations.of(context)!.commentsDialogTitle),
             const SizedBox(width: 15),
+            IconButton(
+              icon: Icon(
+                _isMinimized
+                    ? Icons.expand_less
+                    : Icons.expand_more, // Toggle icon for minimizing/expanding
+                size: 30,
+              ),
+              onPressed: () {
+                setState(() {
+                  _isMinimized = !_isMinimized; // Toggle the minimized state
+                });
+              },
+            ),
             Tooltip(
               message:
                   AppLocalizations.of(context)!.addPositionedCommentTooltip,
@@ -124,23 +137,36 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
             ),
           ],
         ),
-        actionsPadding: kDialogActionsPadding,
-        content: Consumer<CommentVM>(
-          builder: (context, commentVMlistenTrue, child) {
-            return SingleChildScrollView(
-              controller: _scrollController,
-              child: ListBody(
-                children: _buildAudioCommentsLst(
-                  themeProviderVM: themeProviderVM,
-                  audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-                  commentVMlistenTrue: commentVMlistenTrue,
-                  currentAudio: currentAudio,
-                  isDarkTheme: isDarkTheme,
+        content: _isMinimized
+            ? Container(
+                height: 60, // Reduced height for minimized state
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.commentsDialogTitle,
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
+              )
+            : Consumer<CommentVM>(
+                builder: (context, commentVMlistenTrue, child) {
+                  return SingleChildScrollView(
+                    controller: _scrollController,
+                    child: ListBody(
+                      children: _buildAudioCommentsLst(
+                        themeProviderVM: themeProviderVM,
+                        audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+                        commentVMlistenTrue: commentVMlistenTrue,
+                        currentAudio: currentAudio,
+                        isDarkTheme: isDarkTheme,
+                      ),
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
         actions: <Widget>[
           TextButton(
             key: const Key('closeDialogTextButton'),
