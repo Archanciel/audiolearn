@@ -105,6 +105,8 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
   final ScrollController _scrollController = ScrollController();
   int _audioCommentsLinesNumber = 0;
 
+  bool _isMinimized = false;
+
   @override
   void dispose() {
     _focusNodeDialog.dispose();
@@ -128,6 +130,25 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
     FocusScope.of(context).requestFocus(
       _focusNodeDialog,
     );
+
+    if (_isMinimized) {
+      // Retourner un widget positionné qui ne contient que le bouton d'expansion
+      return Positioned(
+        bottom: 20,
+        right: 20,
+        child: FloatingActionButton(
+          mini: true,
+          backgroundColor:
+              Theme.of(context).dialogBackgroundColor.withOpacity(0.7),
+          child: const Icon(Icons.expand_less),
+          onPressed: () {
+            setState(() {
+              _isMinimized = false;
+            });
+          },
+        ),
+      );
+    }
 
     return KeyboardListener(
       // Using FocusNode to enable clicking on Enter to close
@@ -231,8 +252,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
 
               // Since playing a comment changes the audio player
               // position, avoiding to clear the undo/redo lists
-              // enables the user to undo the audio position change.
-              if (audioPlayerVMlistenFalse.isPlaying) {
+              // enables the user to undo the audio position change.             if (audioPlayerVMlistenFalse.isPlaying) {
                 await audioPlayerVMlistenFalse.pause();
               }
 
