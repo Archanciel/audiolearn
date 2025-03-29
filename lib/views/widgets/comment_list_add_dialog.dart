@@ -16,6 +16,26 @@ import '../screen_mixin.dart';
 import 'confirm_action_dialog.dart';
 import 'comment_add_edit_dialog.dart';
 
+// Gestionnaire global pour l'overlay des commentaires
+class CommentDialogManager {
+  static OverlayEntry? _currentOverlay;
+
+  static void closeCurrentOverlay() {
+    if (_currentOverlay != null) {
+      _currentOverlay!.remove();
+      _currentOverlay = null;
+    }
+  }
+
+  static void setCurrentOverlay(OverlayEntry entry) {
+    // Ferme tout overlay précédent avant d'en ouvrir un nouveau
+    closeCurrentOverlay();
+    _currentOverlay = entry;
+  }
+
+  static bool get hasActiveOverlay => _currentOverlay != null;
+}
+
 /// This widget displays a dialog with the list of positionned
 /// comment added to the current audio.
 ///
@@ -34,6 +54,46 @@ class CommentListAddDialog extends StatefulWidget {
 
   @override
   State<CommentListAddDialog> createState() => _CommentListAddDialogState();
+
+  /// Méthode pour afficher le dialogue sans l'overlay sombre quand minimisé
+  static void showCommentDialog({
+    required BuildContext context,
+    required Audio currentAudio,
+  }) {
+    OverlayState? overlayState = Overlay.of(context);
+
+    // Création de l'overlay entry
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Material(
+        color: Colors.transparent,
+        child: Stack(
+          children: [
+            // Détecteur de gestes pour fermer le dialogue quand on clique à l'extérieur
+            Positioned.fill(
+              child: GestureDetector(
+                onTap: () {
+                  CommentDialogManager.closeCurrentOverlay();
+                },
+                child: Container(color: Colors.transparent),
+              ),
+            ),
+            // Le widget du dialogue lui-même
+            Center(
+              child: CommentListAddDialog(
+                currentAudio: currentAudio,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    // Enregistrement dans notre gestionnaire global
+    CommentDialogManager.setCurrentOverlay(overlayEntry);
+
+    // Insertion dans l'overlay
+    overlayState.insert(overlayEntry);
+  }
 }
 
 class _CommentListAddDialogState extends State<CommentListAddDialog>
@@ -166,7 +226,14 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
               await audioPlayerVMlistenFalse.setCurrentAudio(
                 audio: currentAudio,
               );
-              Navigator.of(context).pop();
+
+              if (CommentDialogManager.hasActiveOverlay) {
+                // Fermer le dialogue si un overlay est actif
+                CommentDialogManager.closeCurrentOverlay();
+              } else {
+                // Sinon, fermer le dialogue normal
+                Navigator.of(context).pop();
+              }
             },
           ),
         ],
@@ -534,7 +601,13 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
     required Audio currentAudio,
     Comment? comment,
   }) {
-    Navigator.of(context).pop(); // closes the current dialog
+    if (CommentDialogManager.hasActiveOverlay) {
+      // Fermer le dialogue si un overlay est actif
+      CommentDialogManager.closeCurrentOverlay();
+    } else {
+      // Sinon, fermer le dialogue normal
+      Navigator.of(context).pop();
+    }
 
     showDialog<void>(
       context: context,
