@@ -605,16 +605,17 @@ class AudioPlayerVM extends ChangeNotifier {
 
     _playerCompleteSubscription =
         _audioPlayer!.onPlayerComplete.listen((event) async {
-      if (_isCommentPlaying) {
-        // In this situation, if a comment is playing and arrives to the
-        // audio end, the next audio is not played.
+      // This test is not present in the main branch version !    
+      // if (_isCommentPlaying) {
+      //   // In this situation, if a comment is playing and arrives to the
+      //   // audio end, the next audio is not played.
 
-        // necessary so that the play/pause icon is updated to play.
-        // Otherwise, the icon remains at pause value.
-        currentAudioPlayPauseNotifier.value = false;
+      //   // necessary so that the play/pause icon is updated to play.
+      //   // Otherwise, the icon remains at pause value.
+      //   currentAudioPlayPauseNotifier.value = false;
 
-        return;
-      }
+      //   return;
+      // }
 
       // Ensures that the audio player view audio position slider is
       // updated to end when the audio play was complete. Otherwise,
