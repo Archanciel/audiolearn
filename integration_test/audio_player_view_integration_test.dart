@@ -1654,7 +1654,7 @@ void main() {
         setAudioSpeedTextButtonValue: '1.00x',
       );
 
-      // Select a playlist audio
+      // Select a Playlist audio
 
       // Now we open the AudioPlayableListDialog by tapping on the
       // "Aucun audio sélectionné" title
@@ -3297,7 +3297,7 @@ void main() {
       );
     });
     testWidgets(
-        '''Select an audio in the displayed audio list while current audio is
+        '''Select an Audio in the displayed audio list while current audio is
            playing and then select the previous audio. Then select again the
            previously selected audio and verify that its position corresponds
            to its position when the other audio was selected in the displayed
@@ -3344,7 +3344,7 @@ void main() {
       await tester.tap(find.text("$audioToPlayTitle\n17:59"));
       await tester.pumpAndSettle();
 
-      // Select an audio in the AudioPlayableListDialog
+      // Select an Audio in the AudioPlayableListDialog
       await IntegrationTestUtil.selectAudioInAudioPlayableDialog(
         tester: tester,
         audioToSelectTitle: audioToSelectInAudioListTitle,
@@ -3464,7 +3464,7 @@ void main() {
       expect(find.text("morning _ cinematic video"), findsOneWidget);
       expect(find.text("Really short video"), findsOneWidget);
 
-      // Select an audio in the AudioPlayableListDialog
+      // Select an Audio in the AudioPlayableListDialog
       await IntegrationTestUtil.selectAudioInAudioPlayableDialog(
         tester: tester,
         audioToSelectTitle: audioToSelectInAudioListTitle,
@@ -5278,7 +5278,7 @@ void main() {
       // dialog title
       Text alertDialogTitle = tester
           .widget(find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
-      expect(alertDialogTitle.data, 'Select a playlist');
+      expect(alertDialogTitle.data, 'Select a Playlist');
 
       // Find the RadioListTile target playlist to which the audio
       // will be copied

@@ -570,7 +570,7 @@ Future<void> main() async {
       // dialog title
       Text alertDialogTitle = tester
           .widget(find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
-      expect(alertDialogTitle.data, 'Select a playlist');
+      expect(alertDialogTitle.data, 'Select a Playlist');
 
       // Find the RadioListTile target playlist to which the audio
       // will be downloaded
@@ -711,7 +711,7 @@ Future<void> main() async {
       // dialog title
       Text alertDialogTitle = tester
           .widget(find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
-      expect(alertDialogTitle.data, 'Select a playlist');
+      expect(alertDialogTitle.data, 'Select a Playlist');
 
       // Find the RadioListTile target playlist to which the audio
       // will be downloaded
@@ -859,7 +859,7 @@ Future<void> main() async {
       // dialog title
       Text alertDialogTitle = tester
           .widget(find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
-      expect(alertDialogTitle.data, 'Select a playlist');
+      expect(alertDialogTitle.data, 'Select a Playlist');
 
       // Find the RadioListTile target playlist to which the audio
       // will be downloaded
