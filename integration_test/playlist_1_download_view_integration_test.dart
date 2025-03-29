@@ -3012,7 +3012,7 @@ void main() {
       // dialog title
       Text alertDialogTitle = tester
           .widget(find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
-      expect(alertDialogTitle.data, 'Select a playlist');
+      expect(alertDialogTitle.data, 'Select a Playlist');
 
       // Find the RadioListTile target playlist in which the audio
       // will be downloaded
@@ -3196,7 +3196,7 @@ void main() {
       // dialog title
       Text alertDialogTitle = tester
           .widget(find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
-      expect(alertDialogTitle.data, 'Select a playlist');
+      expect(alertDialogTitle.data, 'Select a Playlist');
 
       // Find the RadioListTile target playlist in which the audio
       // will be downloaded
@@ -3426,7 +3426,7 @@ void main() {
       // dialog title
       Text alertDialogTitle = tester
           .widget(find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
-      expect(alertDialogTitle.data, 'Select a playlist');
+      expect(alertDialogTitle.data, 'Select a Playlist');
 
       // Find the RadioListTile target playlist to which the audio
       // will be downloaded
@@ -3645,7 +3645,7 @@ void main() {
       // dialog title
       Text alertDialogTitle = tester
           .widget(find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
-      expect(alertDialogTitle.data, 'Select a playlist');
+      expect(alertDialogTitle.data, 'Select a Playlist');
 
       // Find the RadioListTile target playlist to which the audio
       // will be downloaded
@@ -12372,7 +12372,7 @@ void main() {
         await tester.tap(find.text('No audio selected'));
         await tester.pumpAndSettle();
 
-        // Select an audio in the AudioPlayableListDialog
+        // Select an Audio in the AudioPlayableListDialog
         await IntegrationTestUtil.selectAudioInAudioPlayableDialog(
           tester: tester,
           audioToSelectTitle: uniqueAudioToDeleteTitle,

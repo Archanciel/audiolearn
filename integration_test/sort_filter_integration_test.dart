@@ -14218,7 +14218,7 @@ Future<void> _verifyAudioPlayableList({
   final TextSpan textSpan = dialogTitle.text as TextSpan;
 
   // Verify the main text content
-  expect(textSpan.text, 'Select an audio'); // Replace with actual expected text
+  expect(textSpan.text, 'Select an Audio'); // Replace with actual expected text
 
   // Verify the nested TextSpan content (children)
   final TextSpan nestedTextSpan = textSpan.children![1] as TextSpan;

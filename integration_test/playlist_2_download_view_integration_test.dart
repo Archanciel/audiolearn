@@ -8434,7 +8434,7 @@ void main() {
         // dialog title
         Text alertDialogTitle = tester.widget(
             find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
-        expect(alertDialogTitle.data, 'Select a playlist');
+        expect(alertDialogTitle.data, 'Select a Playlist');
 
         // Find the RadioListTile target playlist to which the audio
         // will be moved
@@ -8901,7 +8901,7 @@ void main() {
         // dialog title
         Text alertDialogTitle = tester.widget(
             find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
-        expect(alertDialogTitle.data, 'Select a playlist');
+        expect(alertDialogTitle.data, 'Select a Playlist');
 
         // Find the RadioListTile target playlist to which the audio
         // will be copied
@@ -10230,7 +10230,7 @@ void main() {
         // dialog title
         Text alertDialogTitle = tester.widget(
             find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
-        expect(alertDialogTitle.data, 'Select a playlist');
+        expect(alertDialogTitle.data, 'Select a Playlist');
 
         // Find the RadioListTile target playlist to which the audio
         // will be copied
@@ -12253,7 +12253,7 @@ Future<void> _testMovingOrCopyingFilteredAudio({
   // dialog title
   Text alertDialogTitle = tester
       .widget(find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
-  expect(alertDialogTitle.data, 'Select a playlist');
+  expect(alertDialogTitle.data, 'Select a Playlist');
 
   // Find the RadioListTile target playlist to which the audio
   // will be moved or copied
@@ -12429,7 +12429,7 @@ Future<void> _selectNewAudioInAudioPlayerViewAndReturnToPlaylistDownloadView({
   await tester.tap(find.text("$currentAudioTitle\n0:10"));
   await tester.pumpAndSettle();
 
-  // Select an audio in the AudioPlayableListDialog
+  // Select an Audio in the AudioPlayableListDialog
   await IntegrationTestUtil.selectAudioInAudioPlayableDialog(
     tester: tester,
     audioToSelectTitle: newAudioTitle,
@@ -12460,7 +12460,7 @@ Future<void> _selectDateFormat({
   // Check the value of the date format selection dialog title
   Text alertDialogTitle =
       tester.widget(find.byKey(const Key('dateFormatSelectionDialogTitleKey')));
-  expect(alertDialogTitle.data, 'Select the application date format');
+  expect(alertDialogTitle.data, 'Select the Application Date Format');
 
   // Find the RadioListTile date format to select
 

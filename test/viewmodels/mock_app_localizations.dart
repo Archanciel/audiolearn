@@ -447,7 +447,7 @@ class MockAppLocalizations extends AppLocalizations {
   String get playlistJsonFileSizeLabel => 'JSON file size';
 
   @override
-  String get playlistOneSelectedDialogTitle => 'Select a playlist';
+  String get playlistOneSelectedDialogTitle => 'Select a Playlist';
 
   @override
   String get confirmButton => 'Confirm';
@@ -529,7 +529,7 @@ class MockAppLocalizations extends AppLocalizations {
       'Download audio of selected playlist';
 
   @override
-  String get audioOneSelectedDialogTitle => 'Select an audio';
+  String get audioOneSelectedDialogTitle => 'Select an Audio';
 
   @override
   String get audioPositionLabel => 'Audio position';
@@ -611,7 +611,7 @@ class MockAppLocalizations extends AppLocalizations {
   String get appBarTitleAudioExtractor => 'Audio Extractor';
 
   @override
-  String get setAudioPlaySpeedDialogTitle => 'Playback speed';
+  String get setAudioPlaySpeedDialogTitle => 'Playback Speed';
 
   @override
   String get setAudioPlaySpeedTooltip => 'Set audio play speed';
@@ -970,7 +970,7 @@ class MockAppLocalizations extends AppLocalizations {
   String get update => "Update";
 
   @override
-  String get deleteCommentConfirnTitle => "Delete comment";
+  String get deleteCommentConfirnTitle => "Delete Comment";
 
   @override
   String deleteCommentConfirnBody(
@@ -1897,7 +1897,7 @@ class MockAppLocalizations extends AppLocalizations {
       "The audio quality set will be applied to the next downloaded audio's. If the audio quality must be applied to the already download audio's, those audio's must be deleted from playlist as well so that they will be redownloaded in the changed audio quality.";
 
   @override
-  String get setPlaylistAudioQualityDialogTitle => "Playlist audio quality";
+  String get setPlaylistAudioQualityDialogTitle => "Playlist Audio Quality";
 
   @override
   String get selectAudioQuality => "Select audio quality";
