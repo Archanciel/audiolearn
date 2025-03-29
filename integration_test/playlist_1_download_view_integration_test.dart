@@ -16783,7 +16783,7 @@ void main() {
       );
     });
   });
-  group('Playlist audio comments dialog test', () {
+  group('Playlist Audio Comments dialog test', () {
     testWidgets(
         '''On empty playlist, opening the playlist audio comments dialog.''',
         (WidgetTester tester) async {
@@ -16832,7 +16832,7 @@ void main() {
       expect(find.byType(PlaylistCommentListDialog), findsOneWidget);
 
       // Verify the dialog title
-      expect(find.text('Playlist audio comments'), findsOneWidget);
+      expect(find.text('Playlist Audio Comments'), findsOneWidget);
 
       // Verify that the audio comments list of the dialog is empty
 

@@ -6390,7 +6390,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the delete comment dialog title
-      expect(find.text('Delete comment'), findsOneWidget);
+      expect(find.text('Delete Comment'), findsOneWidget);
 
       // Verify the delete comment dialog message
       expect(find.text("Deleting comment \"$commentTitle\"."), findsOneWidget);
@@ -7953,7 +7953,7 @@ Future<void> deleteComment({
   await tester.pumpAndSettle();
 
   // Verify the delete comment dialog title
-  expect(find.text('Delete comment'), findsOneWidget);
+  expect(find.text('Delete Comment'), findsOneWidget);
 
   // Verify the delete comment dialog message
   expect(
