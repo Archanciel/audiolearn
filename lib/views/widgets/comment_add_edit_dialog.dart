@@ -576,10 +576,10 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
           valueListenable:
               audioPlayerVMlistenFalse.currentAudioPositionNotifier,
           builder: (context, currentAudioPosition, child) {
-
             // When the current comment end position is reached,
             // schedule a pause.
-            if (currentAudioPosition >= commentVMlistenFalse.currentCommentEndPosition ||
+            if (currentAudioPosition >=
+                    commentVMlistenFalse.currentCommentEndPosition ||
                 // The 'or' test below is necessary to enable the
                 // pause of a comment whose end position is the same
                 // as the audio end position. For a reason I don't
@@ -752,26 +752,11 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
     // CommentAddEditDialog is re-opened !
     Navigator.of(context).pop(); // close the current dialog
 
-    showDialog<void>(
+    // Using this method enables to minimize the comment list
+    // add dialog.
+    CommentListAddDialog.showCommentDialog(
       context: context,
-      barrierDismissible:
-          false, // This line prevents the dialog from closing when
-      //            tapping outside the dialog
-      // passing the current audio to the dialog instead
-      // of initializing a private _currentAudio variable
-      // in the dialog avoid integr test problems
-      builder: (context) {
-        switch (widget.callerDialog) {
-          case CallerDialog.commentListAddDialog:
-            return CommentListAddDialog(
-              currentAudio: widget.commentableAudio,
-            );
-          case CallerDialog.playlistCommentListAddDialog:
-            return PlaylistCommentListDialog(
-              currentPlaylist: widget.commentableAudio.enclosingPlaylist!,
-            );
-        }
-      },
+      currentAudio: widget.commentableAudio,
     );
 
     if (audioPlayerVMlistenFalse.isPlaying) {

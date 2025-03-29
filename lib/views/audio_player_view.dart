@@ -692,7 +692,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           onTap: (!areAudioButtonsEnabled)
               ? null // Disable the button if no audio selected
               : () {
-                  // Remplacer showDialog par la nouvelle méthode statique
+                  // Using this method enables to minimize the comment list
+                  // add dialog.
                   CommentListAddDialog.showCommentDialog(
                     context: context,
                     currentAudio: currentAudio!,

@@ -146,10 +146,23 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
       child: AlertDialog(
         title: Row(
           children: [
-            Text(
-              AppLocalizations.of(context)!.commentsDialogTitle,
-            ),
+            Text(AppLocalizations.of(context)!.commentsDialogTitle),
             const SizedBox(width: 15),
+            (CommentDialogManager.hasActiveOverlay)
+                // Showing the minimize icon happens only if the comment list
+                // add dialog is opened in the audio player view.
+                ? IconButton(
+                    icon: const Icon(
+                      Icons.expand_more,
+                      size: 30,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isMinimized = true;
+                      });
+                    },
+                  )
+                : const Spacer(),
             Tooltip(
               message:
                   AppLocalizations.of(context)!.addPositionedCommentTooltip,
