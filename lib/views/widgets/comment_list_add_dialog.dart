@@ -58,7 +58,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
   @override
   Widget build(BuildContext context) {
     final ThemeProviderVM themeProviderVM =
-        Provider.of<ThemeProviderVM>(context); // by default, listen is true
+        Provider.of<ThemeProviderVM>(context);
     final AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
       context,
       listen: false,
@@ -71,16 +71,31 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
       _focusNodeDialog,
     );
 
+    if (_isMinimized) {
+      // Retourner un widget positionné qui ne contient que le bouton d'expansion
+      return Positioned(
+        bottom: 20,
+        right: 20,
+        child: FloatingActionButton(
+          mini: true,
+          backgroundColor:
+              Theme.of(context).dialogBackgroundColor.withOpacity(0.7),
+          child: const Icon(Icons.expand_less),
+          onPressed: () {
+            setState(() {
+              _isMinimized = false;
+            });
+          },
+        ),
+      );
+    }
+
     return KeyboardListener(
-      // Using FocusNode to enable clicking on Enter to close
-      // the dialog
       focusNode: _focusNodeDialog,
       onKeyEvent: (event) {
         if (event is KeyDownEvent) {
           if (event.logicalKey == LogicalKeyboardKey.enter ||
               event.logicalKey == LogicalKeyboardKey.numpadEnter) {
-            // executing the same code as in the 'Close'
-            // TextButton onPressed callback
             Navigator.of(context).pop();
           }
         }
@@ -91,15 +106,13 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
             Text(AppLocalizations.of(context)!.commentsDialogTitle),
             const SizedBox(width: 15),
             IconButton(
-              icon: Icon(
-                _isMinimized
-                    ? Icons.expand_less
-                    : Icons.expand_more, // Toggle icon for minimizing/expanding
+              icon: const Icon(
+                Icons.expand_more,
                 size: 30,
               ),
               onPressed: () {
                 setState(() {
-                  _isMinimized = !_isMinimized; // Toggle the minimized state
+                  _isMinimized = true;
                 });
               },
             ),
@@ -107,15 +120,13 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
               message:
                   AppLocalizations.of(context)!.addPositionedCommentTooltip,
               child: IconButton(
-                // add comment icon button
                 key: const Key('addPositionedCommentIconButtonKey'),
                 style: ButtonStyle(
-                  // Highlight button when pressed
                   padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                     const EdgeInsets.symmetric(
                         horizontal: kSmallButtonInsidePadding, vertical: 0),
                   ),
-                  overlayColor: iconButtonTapModification, // Tap feedback color
+                  overlayColor: iconButtonTapModification,
                 ),
                 icon: IconTheme(
                   data: (isDarkTheme
@@ -137,36 +148,22 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
             ),
           ],
         ),
-        content: _isMinimized
-            ? Container(
-                height: 60, // Reduced height for minimized state
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.commentsDialogTitle,
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                  ],
+        content: Consumer<CommentVM>(
+          builder: (context, commentVMlistenTrue, child) {
+            return SingleChildScrollView(
+              controller: _scrollController,
+              child: ListBody(
+                children: _buildAudioCommentsLst(
+                  themeProviderVM: themeProviderVM,
+                  audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+                  commentVMlistenTrue: commentVMlistenTrue,
+                  currentAudio: currentAudio,
+                  isDarkTheme: isDarkTheme,
                 ),
-              )
-            : Consumer<CommentVM>(
-                builder: (context, commentVMlistenTrue, child) {
-                  return SingleChildScrollView(
-                    controller: _scrollController,
-                    child: ListBody(
-                      children: _buildAudioCommentsLst(
-                        themeProviderVM: themeProviderVM,
-                        audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-                        commentVMlistenTrue: commentVMlistenTrue,
-                        currentAudio: currentAudio,
-                        isDarkTheme: isDarkTheme,
-                      ),
-                    ),
-                  );
-                },
               ),
+            );
+          },
+        ),
         actions: <Widget>[
           TextButton(
             key: const Key('closeDialogTextButton'),
@@ -177,14 +174,6 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                   : kTextButtonStyleLightMode,
             ),
             onPressed: () async {
-              // Calling setCurrentAudio() when closing the comment
-              // list dialog is necessary, otherwise, on Android,
-              // clicking on position buttons or audio slider will
-              // not work after a comment was played.
-
-              // Since playing a comment changes the audio player
-              // position, avoiding to clear the undo/redo lists
-              // enables the user to undo the audio position change.
               if (audioPlayerVMlistenFalse.isPlaying) {
                 await audioPlayerVMlistenFalse.pause();
               }
