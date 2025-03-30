@@ -34,6 +34,51 @@ class CommentListAddDialog extends StatefulWidget {
 
   @override
   State<CommentListAddDialog> createState() => _CommentListAddDialogState();
+
+  /// Méthode pour afficher le dialogue sans l'overlay sombre quand minimisé
+  static void showCommentDialog({
+    required BuildContext context,
+    required Audio currentAudio,
+  }) {
+    OverlayState? overlayState = Overlay.of(context);
+
+    // Création de l'overlay entry
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Material(
+        color: Colors.transparent,
+        child: Stack(
+          children: [
+            // Gestionnaire de gestes qui ignore les taps sur l'arrière-plan.
+            // Now clicking outside it does not close the dialog.
+            Positioned.fill(
+              child: GestureDetector(
+                // Absorber les clics sans aucune action
+                onTap: () {
+                  // Ne rien faire quand on clique à l'extérieur
+                  // C'est cette modification qui empêche la fermeture
+                },
+                // Couleur transparente pour capturer les événements
+                // sans rendre l'arrière-plan visible
+                child: Container(color: Colors.transparent),
+              ),
+            ),
+            // Le widget du dialogue lui-même
+            Center(
+              child: CommentListAddDialog(
+                currentAudio: currentAudio,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    // Enregistrement dans notre gestionnaire global
+    CommentDialogManager.setCurrentOverlay(overlayEntry);
+
+    // Insertion dans l'overlay
+    overlayState.insert(overlayEntry);
+  }
 }
 
 class _CommentListAddDialogState extends State<CommentListAddDialog>

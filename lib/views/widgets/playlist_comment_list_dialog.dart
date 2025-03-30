@@ -152,7 +152,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
         ),
         actions: <Widget>[
           TextButton(
-            key: const Key('closeDialogTextButton'),
+            key: const Key('playlistCommentListCloseDialogTextButton'),
             child: Text(
               AppLocalizations.of(context)!.closeTextButton,
               style: (isDarkTheme)

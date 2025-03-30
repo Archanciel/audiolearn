@@ -16847,7 +16847,7 @@ void main() {
       );
 
       // Tap on Close text button
-      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
       await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
@@ -16924,7 +16924,7 @@ void main() {
       );
 
       // Tap on Close text button
-      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
       await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
@@ -16980,7 +16980,7 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
@@ -16997,7 +16997,7 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // When closing the playlist comment dialog, the played comment audio
@@ -17067,7 +17067,7 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
@@ -17084,7 +17084,7 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // When closing the playlist comment dialog, the played comment audio
@@ -17158,7 +17158,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
@@ -17175,7 +17175,7 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Tap on the 'Toggle List' button to hide the playlist list
@@ -17250,7 +17250,7 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
@@ -17267,7 +17267,7 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // When closing the playlist comment dialog, the played comment audio
@@ -17337,7 +17337,7 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
@@ -17354,7 +17354,7 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // When closing the playlist comment dialog, the played comment audio
@@ -17428,7 +17428,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
@@ -17445,7 +17445,7 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Tap on the 'Toggle List' button to hide the playlist list
@@ -17520,7 +17520,7 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
@@ -17537,7 +17537,7 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Tap on the 'Toggle List' button to hide the playlist list
@@ -17611,7 +17611,7 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
@@ -17628,7 +17628,7 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Tap on the 'Toggle List' button to hide the playlist list
@@ -17706,7 +17706,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
@@ -17723,7 +17723,7 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Tap on the 'Toggle List' button to hide the playlist list
@@ -17839,7 +17839,7 @@ void main() {
     //   await tester.pumpAndSettle();
 
     //   // Tap on Close text button
-    //   await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //   await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
     //   await tester.pumpAndSettle();
 
     //   // Now, re-open the playlist comment dialog
@@ -17856,7 +17856,7 @@ void main() {
     //   );
 
     //   // Tap on Close text button
-    //   await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+    //   await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
     //   await tester.pumpAndSettle();
 
     //   // Tap on the 'Toggle List' button to hide the playlist list
@@ -18445,7 +18445,7 @@ Future<void> _checkAudioCommentUsingAudioItemMenu({
   }
 
   // Close the comment list dialog
-  await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+  await tester.tap(find.byKey(const Key('closeDialogTextButton')).last);
   await tester.pumpAndSettle();
 }
 
