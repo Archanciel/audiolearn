@@ -139,12 +139,17 @@ class CommentListAddDialog extends StatefulWidget {
         color: Colors.transparent,
         child: Stack(
           children: [
-            // Détecteur de gestes pour fermer le dialogue quand on clique à l'extérieur
+            // Gestionnaire de gestes qui ignore les taps sur l'arrière-plan.
+            // Now clicking outside it does not close the dialog.
             Positioned.fill(
               child: GestureDetector(
+                // Absorber les clics sans aucune action
                 onTap: () {
-                  CommentDialogManager.closeCurrentOverlay();
+                  // Ne rien faire quand on clique à l'extérieur
+                  // C'est cette modification qui empêche la fermeture
                 },
+                // Couleur transparente pour capturer les événements
+                // sans rendre l'arrière-plan visible
                 child: Container(color: Colors.transparent),
               ),
             ),
