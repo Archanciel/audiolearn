@@ -171,7 +171,8 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
             const SizedBox(width: 15),
             (CommentDialogManager.hasActiveOverlay)
                 // Showing the minimize icon happens only if the comment list
-                // add dialog is opened in the audio player view.
+                // add dialog is was opened in the audio player view by the
+                // CommentDialogManager.
                 ? IconButton(
                     icon: const Icon(
                       Icons.expand_more,
@@ -252,7 +253,8 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
 
               // Since playing a comment changes the audio player
               // position, avoiding to clear the undo/redo lists
-              // enables the user to undo the audio position change.             if (audioPlayerVMlistenFalse.isPlaying) {
+              // enables the user to undo the audio position change.
+              if (audioPlayerVMlistenFalse.isPlaying) {
                 await audioPlayerVMlistenFalse.pause();
               }
 
