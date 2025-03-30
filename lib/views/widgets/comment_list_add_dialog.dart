@@ -123,6 +123,10 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
       context,
       listen: false,
     );
+    final CommentVM commentVMlistenFalse = Provider.of<CommentVM>(
+      context,
+      listen: false,
+    );
     final bool isDarkTheme = themeProviderVM.currentTheme == AppTheme.dark;
     final Audio currentAudio = widget.currentAudio;
 
@@ -220,21 +224,17 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
           ],
         ),
         actionsPadding: kDialogActionsPadding,
-        content: Consumer<CommentVM>(
-          builder: (context, commentVMlistenTrue, child) {
-            return SingleChildScrollView(
-              controller: _scrollController,
-              child: ListBody(
-                children: _buildAudioCommentsLst(
-                  themeProviderVM: themeProviderVM,
-                  audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-                  commentVMlistenTrue: commentVMlistenTrue,
-                  currentAudio: currentAudio,
-                  isDarkTheme: isDarkTheme,
-                ),
-              ),
-            );
-          },
+        content: SingleChildScrollView(
+          controller: _scrollController,
+          child: ListBody(
+            children: _buildAudioCommentsLst(
+              themeProviderVM: themeProviderVM,
+              audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+              commentVMlistenFalse: commentVMlistenFalse,
+              currentAudio: currentAudio,
+              isDarkTheme: isDarkTheme,
+            ),
+          ),
         ),
         actions: <Widget>[
           TextButton(
@@ -279,11 +279,11 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
   List<Widget> _buildAudioCommentsLst({
     required ThemeProviderVM themeProviderVM,
     required AudioPlayerVM audioPlayerVMlistenFalse,
-    required CommentVM commentVMlistenTrue,
+    required CommentVM commentVMlistenFalse,
     required Audio currentAudio,
     required bool isDarkTheme,
   }) {
-    List<Comment> commentsLst = commentVMlistenTrue.loadAudioComments(
+    List<Comment> commentsLst = commentVMlistenFalse.loadAudioComments(
       audio: currentAudio,
     );
 
@@ -332,7 +332,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                     context,
                     listen: false,
                   ),
-                  commentVMlistenTrue: commentVMlistenTrue,
+                  commentVMlistenFalse: commentVMlistenFalse,
                   currentAudio: currentAudio,
                   comment: comment,
                   commentTitleTextStyle: commentTitleTextStyle,
@@ -378,7 +378,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
     required ThemeProviderVM themeProviderVM,
     required AudioPlayerVM audioPlayerVMlistenFalse,
     required DateFormatVM dateFormatVMlistenFalse,
-    required CommentVM commentVMlistenTrue,
+    required CommentVM commentVMlistenFalse,
     required Audio currentAudio,
     required Comment comment,
     required TextStyle commentTitleTextStyle,
@@ -504,7 +504,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                     onPressed: () async {
                       await _confirmDeleteComment(
                         audioPlayerVM: audioPlayerVMlistenFalse,
-                        commentVMlistenTrue: commentVMlistenTrue,
+                        commentVMlistenFalse: commentVMlistenFalse,
                         currentAudio: currentAudio,
                         comment: comment,
                       );
@@ -662,7 +662,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
 
   Future<void> _confirmDeleteComment({
     required AudioPlayerVM audioPlayerVM,
-    required CommentVM commentVMlistenTrue,
+    required CommentVM commentVMlistenFalse,
     required Audio currentAudio,
     required Comment comment,
   }) async {
@@ -670,7 +670,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
       context: context,
       builder: (BuildContext context) {
         return ConfirmActionDialog(
-          actionFunction: commentVMlistenTrue.deleteCommentFunction,
+          actionFunction: commentVMlistenFalse.deleteCommentFunction,
           actionFunctionArgs: [
             comment.id,
             currentAudio,
