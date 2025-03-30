@@ -287,21 +287,29 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
     );
 
     if (_isMinimized) {
-      // Retourner un widget positionné qui ne contient que le bouton d'expansion
-      return Positioned(
-        bottom: 20,
-        right: 20,
-        child: FloatingActionButton(
-          mini: true,
-          backgroundColor:
-              Theme.of(context).dialogBackgroundColor.withOpacity(0.7),
-          child: const Icon(Icons.expand_less),
-          onPressed: () {
-            setState(() {
-              _isMinimized = false;
-            });
-          },
-        ),
+      return Stack(
+        children: [
+          Positioned.fill(
+            child: Container(color: Colors.transparent),
+          ),
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 70, bottom: 280),
+              child: FloatingActionButton(
+                mini: true,
+                backgroundColor:
+                    Theme.of(context).primaryColor.withOpacity(0.7),
+                child: const Icon(Icons.expand_less, color: Colors.white),
+                onPressed: () {
+                  setState(() {
+                    _isMinimized = false;
+                  });
+                },
+              ),
+            ),
+          ),
+        ],
       );
     }
 
