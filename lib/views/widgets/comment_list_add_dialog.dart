@@ -15,7 +15,6 @@ import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/date_format_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../screen_mixin.dart';
-import 'confirm_action_dialog.dart';
 import 'comment_add_edit_dialog.dart';
 
 // Gestionnaire global pour l'overlay des commentaires
@@ -46,13 +45,13 @@ class CommentDeleteConfirmActionDialog extends StatelessWidget {
   final VoidCallback? onCancel; // Nouvelle propriété pour gérer l'annulation
 
   const CommentDeleteConfirmActionDialog({
-    Key? key,
+    super.key,
     required this.actionFunction,
     required this.actionFunctionArgs,
     required this.dialogTitleOne,
     required this.dialogContent,
     this.onCancel, // Paramètre optionnel pour gérer l'annulation
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -252,7 +251,9 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
           if (event.logicalKey == LogicalKeyboardKey.enter ||
               event.logicalKey == LogicalKeyboardKey.numpadEnter) {
             await _whenClosingStopAudioIfPlaying(
-                audioPlayerVMlistenFalse, currentAudio);
+              audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+              currentAudio: currentAudio,
+            );
 
             // Vérifier si nous utilisons un overlay ou un dialogue standard
             if (CommentDialogManager.hasActiveOverlay) {
@@ -344,7 +345,9 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
             ),
             onPressed: () async {
               await _whenClosingStopAudioIfPlaying(
-                  audioPlayerVMlistenFalse, currentAudio);
+                audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+                currentAudio: currentAudio,
+              );
 
               if (CommentDialogManager.hasActiveOverlay) {
                 // Fermer le dialogue si un overlay est actif
@@ -360,8 +363,10 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
     );
   }
 
-  Future<void> _whenClosingStopAudioIfPlaying(
-      AudioPlayerVM audioPlayerVMlistenFalse, Audio currentAudio) async {
+  Future<void> _whenClosingStopAudioIfPlaying({
+    required AudioPlayerVM audioPlayerVMlistenFalse,
+    required Audio currentAudio,
+  }) async {
     // Calling setCurrentAudio() when closing the comment
     // list dialog is necessary, otherwise, on Android,
     // clicking on position buttons or audio slider will
@@ -456,7 +461,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
           onTap: () async {
             if (audioPlayerVMlistenFalse.isPlaying &&
                 _playingComment != comment) {
-              // if the user clicks on a comment while another
+              // if the user clicks on a comment title while another
               // comment is playing, the playing comment is paused.
               // Otherwise, the edited comment keeps playing.
               await audioPlayerVMlistenFalse.pause();
@@ -538,6 +543,11 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                       overlayColor:
                           iconButtonTapModification, // Tap feedback color
                     ),
+                    // The code below enables the CommentListAddDialog to pause
+                    // current playing comment when its end position is reached.
+                    // This is done by listening to the current audio position
+                    // which is updated every 500 milliseconds by the
+                    // audioplayers onPositionChanged listener.
                     icon: ValueListenableBuilder<Duration>(
                       valueListenable:
                           audioPlayerVMlistenFalse.currentAudioPositionNotifier,
@@ -606,7 +616,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                     key: const Key('deleteCommentIconButton'),
                     onPressed: () async {
                       await _confirmDeleteComment(
-                        audioPlayerVM: audioPlayerVMlistenFalse,
+                        audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                         commentVMlistenFalse: commentVMlistenFalse,
                         currentAudio: currentAudio,
                         comment: comment,
@@ -764,7 +774,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
   }
 
   Future<void> _confirmDeleteComment({
-    required AudioPlayerVM audioPlayerVM,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required CommentVM commentVMlistenFalse,
     required Audio currentAudio,
     required Comment comment,
@@ -818,8 +828,8 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
     bool confirmed = await confirmCompleter.future;
 
     // Si l'action est confirmée, mettre en pause la lecture
-    if (confirmed && audioPlayerVM.isPlaying) {
-      await audioPlayerVM.pause();
+    if (confirmed && audioPlayerVMlistenFalse.isPlaying) {
+      await audioPlayerVMlistenFalse.pause();
     }
   }
 
