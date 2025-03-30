@@ -195,18 +195,81 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
 
   bool _isMinimized = false;
 
+  // Add a listener for position changes
+  ValueNotifier<Duration>? _positionNotifier;
+
+  @override
+  void initState() {
+    super.initState();
+    // Set up position monitoring when the widget is created
+    _setupPositionMonitoring();
+  }
+
+  void _setupPositionMonitoring() {
+    final audioPlayerVM = Provider.of<AudioPlayerVM>(context, listen: false);
+
+    // Store a reference to the position notifier
+    _positionNotifier = audioPlayerVM.currentAudioPositionNotifier;
+
+    // Add a listener that will be called whenever the position changes
+    _positionNotifier?.addListener(_checkCommentEndPosition);
+  }
+
+  void _checkCommentEndPosition() {
+    // Skip if no comment is playing
+    if (_playingComment == null) return;
+
+    final audioPlayerVM = Provider.of<AudioPlayerVM>(context, listen: false);
+    final currentAudio = widget.currentAudio;
+    final currentAudioPosition = _positionNotifier?.value;
+
+    // Only proceed if we have valid position data
+    if (currentAudioPosition == null) return;
+
+    // This is the same code from your ValueListenableBuilder
+    // When the current comment end position is reached, schedule a pause
+    if (_playingComment != null &&
+        audioPlayerVM.isPlaying &&
+        (currentAudioPosition >=
+                Duration(
+                  milliseconds:
+                      _playingComment!.commentEndPositionInTenthOfSeconds * 100,
+                ) ||
+            // The 'or' test below is necessary to enable
+            // the pause of a comment whose end position
+            // is the same as the audio end position. For
+            // a reason I don't know, without this
+            // condition, playing such a comment on the
+            // Android smartphone does not call the
+            // audioPlayerVMlistenFalse.pause() method!
+            currentAudioPosition >=
+                currentAudio.audioDuration -
+                    const Duration(milliseconds: 1400))) {
+      // You cannot await here, but you can trigger an
+      // action which will not block the widget tree rendering.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        audioPlayerVM.pause();
+      });
+    }
+  }
+
   @override
   void dispose() {
+    // Remove the listener when the widget is disposed
+    if (_positionNotifier != null) {
+      _positionNotifier!.removeListener(_checkCommentEndPosition);
+      _positionNotifier = null;
+    }
+
     _focusNodeDialog.dispose();
     _scrollController.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final ThemeProviderVM themeProviderVM =
-        Provider.of<ThemeProviderVM>(context); // by default, listen is true
+        Provider.of<ThemeProviderVM>(context);
     final AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
       context,
       listen: false,
@@ -543,63 +606,25 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                       overlayColor:
                           iconButtonTapModification, // Tap feedback color
                     ),
-                    // The code below enables the CommentListAddDialog to pause
-                    // current playing comment when its end position is reached.
-                    // This is done by listening to the current audio position
-                    // which is updated every 500 milliseconds by the
-                    // audioplayers onPositionChanged listener.
-                    icon: ValueListenableBuilder<Duration>(
-                      valueListenable:
-                          audioPlayerVMlistenFalse.currentAudioPositionNotifier,
-                      builder: (context, currentAudioPosition, child) {
-                        // When the current comment end position is
-                        // reached, schedule a pause.
-                        if (_playingComment != null &&
-                            _playingComment == comment &&
-                            (currentAudioPosition >=
-                                    Duration(
-                                      milliseconds: comment
-                                              .commentEndPositionInTenthOfSeconds *
-                                          100,
-                                    ) ||
-                                // The 'or' test below is necessary to enable
-                                // the pause of a comment whose end position
-                                // is the same as the audio end position. For
-                                // a reason I don't know, without this
-                                // condition, playing such a comment on the
-                                // Android smartphone does not call the
-                                // audioPlayerVMlistenFalse.pause() method !
-                                currentAudioPosition >=
-                                    currentAudio.audioDuration -
-                                        const Duration(milliseconds: 1400))) {
-                          // You cannot await here, but you can trigger an
-                          // action which will not block the widget tree
-                          // rendering.
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            audioPlayerVMlistenFalse.pause();
-                          });
-                        }
-
-                        return ValueListenableBuilder<bool>(
-                          valueListenable: audioPlayerVMlistenFalse
-                              .currentAudioPlayPauseNotifier,
-                          builder: (context, isPlaying, child) {
-                            return IconTheme(
-                              data: (isDarkTheme
-                                      ? ScreenMixin.themeDataDark
-                                      : ScreenMixin.themeDataLight)
-                                  .iconTheme,
-                              child: Icon(
-                                // Display pause if this comment is playing and the audio is playing;
-                                // otherwise, display the play_arrow icon.
-                                (_playingComment != null &&
-                                        _playingComment == comment &&
-                                        isPlaying)
-                                    ? Icons.pause
-                                    : Icons.play_arrow,
-                              ),
-                            );
-                          },
+                    // Use a simpler ValueListenableBuilder just for the icon state
+                    icon: ValueListenableBuilder<bool>(
+                      valueListenable: audioPlayerVMlistenFalse
+                          .currentAudioPlayPauseNotifier,
+                      builder: (context, isPlaying, child) {
+                        return IconTheme(
+                          data: (isDarkTheme
+                                  ? ScreenMixin.themeDataDark
+                                  : ScreenMixin.themeDataLight)
+                              .iconTheme,
+                          child: Icon(
+                            // Display pause if this comment is playing and the audio is playing;
+                            // otherwise, display the play_arrow icon.
+                            (_playingComment != null &&
+                                    _playingComment == comment &&
+                                    isPlaying)
+                                ? Icons.pause
+                                : Icons.play_arrow,
+                          ),
                         );
                       },
                     ),
