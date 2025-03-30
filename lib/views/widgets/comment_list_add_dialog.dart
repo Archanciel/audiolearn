@@ -139,14 +139,13 @@ class CommentListAddDialog extends StatefulWidget {
         color: Colors.transparent,
         child: Stack(
           children: [
-            // Gestionnaire de gestes qui ignore les taps sur l'arrière-plan.
+            // Gestionnaire de gestes qui ignore les taps sur l'arrière-plan
             // Now clicking outside it does not close the dialog.
             Positioned.fill(
               child: GestureDetector(
                 // Absorber les clics sans aucune action
                 onTap: () {
                   // Ne rien faire quand on clique à l'extérieur
-                  // C'est cette modification qui empêche la fermeture
                 },
                 // Couleur transparente pour capturer les événements
                 // sans rendre l'arrière-plan visible
@@ -155,9 +154,23 @@ class CommentListAddDialog extends StatefulWidget {
             ),
             // Le widget du dialogue lui-même
             Center(
-              child: CommentListAddDialog(
-                currentAudio: currentAudio,
-              ),
+              child: Builder(builder: (context) {
+                final dialogWidget = CommentListAddDialog(
+                  currentAudio: currentAudio,
+                );
+
+                // Programme l'affectation du focus après le rendu du frame
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  // S'assurer que le FocusNode dans CommentListAddDialog est bien focusé
+                  final state = context
+                      .findAncestorStateOfType<_CommentListAddDialogState>();
+                  if (state != null && state._focusNodeDialog != null) {
+                    FocusScope.of(context).requestFocus(state._focusNodeDialog);
+                  }
+                });
+
+                return dialogWidget;
+              }),
             ),
           ],
         ),
@@ -234,13 +247,21 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
       // Using FocusNode to enable clicking on Enter to close
       // the dialog
       focusNode: _focusNodeDialog,
-      onKeyEvent: (event) {
+      onKeyEvent: (event) async {
         if (event is KeyDownEvent) {
           if (event.logicalKey == LogicalKeyboardKey.enter ||
               event.logicalKey == LogicalKeyboardKey.numpadEnter) {
-            // executing the same code as in the 'Close'
-            // TextButton onPressed callback
-            Navigator.of(context).pop();
+            await _whenClosingStopAudioIfPlaying(
+                audioPlayerVMlistenFalse, currentAudio);
+
+            // Vérifier si nous utilisons un overlay ou un dialogue standard
+            if (CommentDialogManager.hasActiveOverlay) {
+              // Utiliser le gestionnaire global pour fermer le dialogue
+              CommentDialogManager.closeCurrentOverlay();
+            } else {
+              // Sinon, utiliser la navigation standard
+              Navigator.of(context).pop();
+            }
           }
         }
       },
@@ -322,21 +343,8 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                   : kTextButtonStyleLightMode,
             ),
             onPressed: () async {
-              // Calling setCurrentAudio() when closing the comment
-              // list dialog is necessary, otherwise, on Android,
-              // clicking on position buttons or audio slider will
-              // not work after a comment was played.
-
-              // Since playing a comment changes the audio player
-              // position, avoiding to clear the undo/redo lists
-              // enables the user to undo the audio position change.
-              if (audioPlayerVMlistenFalse.isPlaying) {
-                await audioPlayerVMlistenFalse.pause();
-              }
-
-              await audioPlayerVMlistenFalse.setCurrentAudio(
-                audio: currentAudio,
-              );
+              await _whenClosingStopAudioIfPlaying(
+                  audioPlayerVMlistenFalse, currentAudio);
 
               if (CommentDialogManager.hasActiveOverlay) {
                 // Fermer le dialogue si un overlay est actif
@@ -349,6 +357,25 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> _whenClosingStopAudioIfPlaying(
+      AudioPlayerVM audioPlayerVMlistenFalse, Audio currentAudio) async {
+    // Calling setCurrentAudio() when closing the comment
+    // list dialog is necessary, otherwise, on Android,
+    // clicking on position buttons or audio slider will
+    // not work after a comment was played.
+
+    // Since playing a comment changes the audio player
+    // position, avoiding to clear the undo/redo lists
+    // enables the user to undo the audio position change.
+    if (audioPlayerVMlistenFalse.isPlaying) {
+      await audioPlayerVMlistenFalse.pause();
+    }
+
+    await audioPlayerVMlistenFalse.setCurrentAudio(
+      audio: currentAudio,
     );
   }
 
