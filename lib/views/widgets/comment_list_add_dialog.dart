@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -34,6 +36,75 @@ class CommentDialogManager {
   }
 
   static bool get hasActiveOverlay => _currentOverlay != null;
+}
+
+class CommentDeleteConfirmActionDialog extends StatelessWidget {
+  final Function actionFunction;
+  final List<dynamic> actionFunctionArgs;
+  final String dialogTitleOne;
+  final String dialogContent;
+  final VoidCallback? onCancel; // Nouvelle propriété pour gérer l'annulation
+
+  const CommentDeleteConfirmActionDialog({
+    Key? key,
+    required this.actionFunction,
+    required this.actionFunctionArgs,
+    required this.dialogTitleOne,
+    required this.dialogContent,
+    this.onCancel, // Paramètre optionnel pour gérer l'annulation
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final bool isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+
+    return AlertDialog(
+      title: Text(dialogTitleOne),
+      content: Text(dialogContent),
+      actions: <Widget>[
+        TextButton(
+          key: const Key('confirmButton'),
+          child: Text(
+            AppLocalizations.of(context)!.confirmButton,
+            style: (isDarkTheme)
+                ? kTextButtonStyleDarkMode
+                : kTextButtonStyleLightMode,
+          ),
+          onPressed: () async {
+            // Exécuter la fonction d'action avec les arguments
+            if (actionFunctionArgs.isNotEmpty) {
+              await Function.apply(actionFunction, actionFunctionArgs);
+            } else {
+              await actionFunction();
+            }
+
+            // Si nous n'utilisons pas le callback onCancel, fermer avec Navigator
+            if (onCancel == null) {
+              Navigator.of(context).pop();
+            }
+            // Sinon, l'overlay sera fermé par la fonction actionFunction modifiée
+          },
+        ),
+        TextButton(
+          key: const Key('cancelButtonKey'),
+          child: Text(
+            AppLocalizations.of(context)!.cancelButton,
+            style: (isDarkTheme)
+                ? kTextButtonStyleDarkMode
+                : kTextButtonStyleLightMode,
+          ),
+          onPressed: () {
+            // Si onCancel existe, l'appeler, sinon utiliser Navigator.pop
+            if (onCancel != null) {
+              onCancel!();
+            } else {
+              Navigator.of(context).pop();
+            }
+          },
+        ),
+      ],
+    );
+  }
 }
 
 /// This widget displays a dialog with the list of positionned
@@ -666,24 +737,56 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
     required Audio currentAudio,
     required Comment comment,
   }) async {
-    showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return ConfirmActionDialog(
-          actionFunction: commentVMlistenFalse.deleteCommentFunction,
-          actionFunctionArgs: [
-            comment.id,
-            currentAudio,
-          ],
-          dialogTitleOne:
-              AppLocalizations.of(context)!.deleteCommentConfirnTitle,
-          dialogContent: AppLocalizations.of(context)!
-              .deleteCommentConfirnBody(comment.title),
-        );
-      },
+    // Utiliser l'overlay pour afficher le dialogue de confirmation
+    OverlayState? overlayState = Overlay.of(context);
+    OverlayEntry? confirmOverlayEntry;
+
+    // Completer pour attendre la réponse de l'utilisateur
+    Completer<bool> confirmCompleter = Completer<bool>();
+
+    confirmOverlayEntry = OverlayEntry(
+      builder: (context) => Material(
+        color: Colors.black54, // Assombrit l'arrière-plan
+        child: Center(
+          child: CommentDeleteConfirmActionDialog(
+            actionFunction: (id, audio) async {
+              // Supprimer le commentaire
+              commentVMlistenFalse.deleteCommentFunction(id, audio);
+
+              // Fermer le dialogue de confirmation
+              confirmOverlayEntry?.remove();
+
+              // Compléter avec true (action confirmée)
+              confirmCompleter.complete(true);
+            },
+            actionFunctionArgs: [
+              comment.id,
+              currentAudio,
+            ],
+            dialogTitleOne:
+                AppLocalizations.of(context)!.deleteCommentConfirnTitle,
+            dialogContent: AppLocalizations.of(context)!
+                .deleteCommentConfirnBody(comment.title),
+            onCancel: () {
+              // Fermer le dialogue de confirmation
+              confirmOverlayEntry?.remove();
+
+              // Compléter avec false (action annulée)
+              confirmCompleter.complete(false);
+            },
+          ),
+        ),
+      ),
     );
 
-    if (audioPlayerVM.isPlaying) {
+    // Insérer le dialogue de confirmation dans l'overlay
+    overlayState.insert(confirmOverlayEntry);
+
+    // Attendre la réponse de l'utilisateur
+    bool confirmed = await confirmCompleter.future;
+
+    // Si l'action est confirmée, mettre en pause la lecture
+    if (confirmed && audioPlayerVM.isPlaying) {
       await audioPlayerVM.pause();
     }
   }
