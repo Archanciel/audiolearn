@@ -17,7 +17,7 @@ import '../../viewmodels/theme_provider_vm.dart';
 import '../screen_mixin.dart';
 import 'comment_add_edit_dialog.dart';
 
-// Gestionnaire global pour l'overlay des commentaires
+// Global manager for comment overlays
 class CommentDialogManager {
   static OverlayEntry? _currentOverlay;
 
@@ -29,7 +29,7 @@ class CommentDialogManager {
   }
 
   static void setCurrentOverlay(OverlayEntry entry) {
-    // Ferme tout overlay précédent avant d'en ouvrir un nouveau
+    // Close any previous overlay before opening a new one
     closeCurrentOverlay();
     _currentOverlay = entry;
   }
@@ -125,42 +125,42 @@ class CommentListAddDialog extends StatefulWidget {
   @override
   State<CommentListAddDialog> createState() => _CommentListAddDialogState();
 
-  /// Méthode pour afficher le dialogue sans l'overlay sombre quand minimisé
+  /// Method to display the dialog without darkening the screen when minimized
   static void showCommentDialog({
     required BuildContext context,
     required Audio currentAudio,
   }) {
     OverlayState? overlayState = Overlay.of(context);
 
-    // Création de l'overlay entry
+    // Creating the overlay entry
     final overlayEntry = OverlayEntry(
       builder: (context) => Material(
         color: Colors.transparent,
         child: Stack(
           children: [
-            // Gestionnaire de gestes qui ignore les taps sur l'arrière-plan
-            // Now clicking outside it does not close the dialog.
+            // Gesture detector that ignores taps on the background
+            // Now clicking outside will not close the dialog
             Positioned.fill(
               child: GestureDetector(
-                // Absorber les clics sans aucune action
+                // Absorb clicks without any action
                 onTap: () {
-                  // Ne rien faire quand on clique à l'extérieur
+                  // Do nothing when clicking outside
                 },
-                // Couleur transparente pour capturer les événements
-                // sans rendre l'arrière-plan visible
+                // Transparent color to capture events
+                // without making the background visible
                 child: Container(color: Colors.transparent),
               ),
             ),
-            // Le widget du dialogue lui-même
+            // The dialog widget itself
             Center(
               child: Builder(builder: (context) {
                 final dialogWidget = CommentListAddDialog(
                   currentAudio: currentAudio,
                 );
 
-                // Programme l'affectation du focus après le rendu du frame
+                // Schedule focus assignment after frame rendering
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  // S'assurer que le FocusNode dans CommentListAddDialog est bien focusé
+                  // Ensure that the FocusNode in CommentListAddDialog is properly focused
                   final state = context
                       .findAncestorStateOfType<_CommentListAddDialogState>();
                   if (state != null && state._focusNodeDialog != null) {
@@ -176,10 +176,10 @@ class CommentListAddDialog extends StatefulWidget {
       ),
     );
 
-    // Enregistrement dans notre gestionnaire global
+    // Register in our global manager
     CommentDialogManager.setCurrentOverlay(overlayEntry);
 
-    // Insertion dans l'overlay
+    // Insert into the overlay
     overlayState.insert(overlayEntry);
   }
 }
@@ -255,12 +255,12 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
               currentAudio: currentAudio,
             );
 
-            // Vérifier si nous utilisons un overlay ou un dialogue standard
+            // Check if we're using an overlay or a standard dialog
             if (CommentDialogManager.hasActiveOverlay) {
-              // Utiliser le gestionnaire global pour fermer le dialogue
+              // Use the global manager to close the dialog
               CommentDialogManager.closeCurrentOverlay();
             } else {
-              // Sinon, utiliser la navigation standard
+              // Otherwise, use standard navigation
               Navigator.of(context).pop();
             }
           }
@@ -350,10 +350,10 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
               );
 
               if (CommentDialogManager.hasActiveOverlay) {
-                // Fermer le dialogue si un overlay est actif
+                // Close the dialog if an overlay is active
                 CommentDialogManager.closeCurrentOverlay();
               } else {
-                // Sinon, fermer le dialogue normal
+                // Otherwise, close the normal dialog
                 Navigator.of(context).pop();
               }
             },
@@ -779,26 +779,26 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
     required Audio currentAudio,
     required Comment comment,
   }) async {
-    // Utiliser l'overlay pour afficher le dialogue de confirmation
+    // Use overlay to display confirmation dialog
     OverlayState? overlayState = Overlay.of(context);
     OverlayEntry? confirmOverlayEntry;
 
-    // Completer pour attendre la réponse de l'utilisateur
+    // Completer to wait for user response
     Completer<bool> confirmCompleter = Completer<bool>();
 
     confirmOverlayEntry = OverlayEntry(
       builder: (context) => Material(
-        color: Colors.black54, // Assombrit l'arrière-plan
+        color: Colors.black54, // Darkens the background
         child: Center(
           child: CommentDeleteConfirmActionDialog(
             actionFunction: (id, audio) async {
-              // Supprimer le commentaire
+              // Delete the comment
               commentVMlistenFalse.deleteCommentFunction(id, audio);
 
-              // Fermer le dialogue de confirmation
+              // Close the confirmation dialog
               confirmOverlayEntry?.remove();
 
-              // Compléter avec true (action confirmée)
+              // Complete with true (action confirmed)
               confirmCompleter.complete(true);
             },
             actionFunctionArgs: [
@@ -810,10 +810,10 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
             dialogContent: AppLocalizations.of(context)!
                 .deleteCommentConfirnBody(comment.title),
             onCancel: () {
-              // Fermer le dialogue de confirmation
+              // Close the confirmation dialog
               confirmOverlayEntry?.remove();
 
-              // Compléter avec false (action annulée)
+              // Complete with false (action canceled)
               confirmCompleter.complete(false);
             },
           ),
@@ -821,13 +821,13 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
       ),
     );
 
-    // Insérer le dialogue de confirmation dans l'overlay
+    // Insert the confirmation dialog into the overlay
     overlayState.insert(confirmOverlayEntry);
 
-    // Attendre la réponse de l'utilisateur
+    // Wait for user response
     bool confirmed = await confirmCompleter.future;
 
-    // Si l'action est confirmée, mettre en pause la lecture
+    // If the action is confirmed, pause playback
     if (confirmed && audioPlayerVMlistenFalse.isPlaying) {
       await audioPlayerVMlistenFalse.pause();
     }
