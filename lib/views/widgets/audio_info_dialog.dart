@@ -218,6 +218,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
             sizeInBytes: audio.audioFileSize,
           )),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('audioInfoQualityKey'),
           context: context,
           label: AppLocalizations.of(context)!.isMusicQualityLabel,
           value: (audio.isAudioMusicQuality)

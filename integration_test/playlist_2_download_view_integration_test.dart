@@ -11899,7 +11899,8 @@ void main() {
 
       const String youtubePlaylistToModifyTitle = 'MaValTest';
 
-      // Rewind all 'S8 audio" playlist audio's to start position
+      // Set playlist audio quality to musical. Then, the application is
+      // restarted ...
       await _tapOnSetAudioQualityMenu(
         tester: tester,
         playlistToModifyTitle: youtubePlaylistToModifyTitle,
@@ -11908,15 +11909,28 @@ void main() {
     });
     testWidgets(
         '''Restart the application to verify that the audio quality checkbox state was preserved.
-           Then download one audio in the playlist and verify its audio musical quality.''',
+           Then download one audio in the playlist and verify its audio musical quality. Then
+           select the local playlist and restart the application.''',
         (tester) async {
       const String youtubePlaylistToModifyTitle = 'MaValTest';
 
-      AudioDownloadVM audioDownloadVM =
-          await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
+      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
         tester: tester,
         forcedLocale: const Locale('en'),
       );
+
+      IntegrationTestUtil.verifyWidgetIsEnabled(
+        tester: tester,
+        widgetKeyStr: 'audio_quality_checkbox',
+      );
+
+      // Verify that the download at musical quality checkbox is
+      // checked
+      Finder downloadAtMusicalQualityCheckBoxFinder =
+          find.byKey(const Key('audio_quality_checkbox'));
+      Checkbox downloadAtMusicalQualityCheckBoxWidget =
+          tester.widget<Checkbox>(downloadAtMusicalQualityCheckBoxFinder);
+      expect(downloadAtMusicalQualityCheckBoxWidget.value, true);
 
       await IntegrationTestUtil.verifyPlaylistDataDialogContent(
         tester: tester,
@@ -11926,12 +11940,122 @@ void main() {
         playlistAudioQuality: 'musical',
       );
 
-      // Rewind all 'S8 audio" playlist audio's to start position
-      // await _tapOnSetAudioQualityMenu(
-      //   tester: tester,
-      //   playlistToModifyTitle: youtubePlaylistToModifyTitle,
-      //   setMusicQuality: true,
-      // );
+      // Now typing on the download playlist button to download the
+      // new video audio's present the recreated playlist.
+      await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(milliseconds: 1500));
+
+      // Now tap on Stop button to stop the download
+      await tester.tap(find.byKey(const Key('stopDownloadingButton')));
+      await tester.pumpAndSettle();
+
+      // Add a delay to allow the download to finish.
+      for (int i = 0; i < 6; i++) {
+        await Future.delayed(const Duration(seconds: 1));
+        await tester.pumpAndSettle();
+      }
+
+      await IntegrationTestUtil.verifyAudioInfoDialog(
+        tester: tester,
+        audioEnclosingPlaylistTitle: youtubePlaylistToModifyTitle,
+        movedOrCopiedAudioTitle: 'Really short video',
+        movedFromPlaylistTitle: '',
+        movedToPlaylistTitle: '',
+        copiedFromPlaylistTitle: '',
+        copiedToPlaylistTitle: '',
+        audioDuration: '0:00:09.8',
+        audioQuality: 'Yes', // Is musical quality
+      );
+
+      // Now selecting the local playlist by tapping on the
+      // playlist checkbox and restart the application.
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: 'local_audio',
+      );
+    });
+    testWidgets(
+        '''Restart the app. The local playlist is selected and its quality will be set to
+           musical. verify that the audio quality checkbox state was preserved.
+           Then download one audio in the playlist and verify its audio musical quality. Then
+           select the local playlist and restart the application.''',
+        (tester) async {
+      const String youtubePlaylistToModifyTitle = 'MaValTest';
+      const String localPlaylistTitle = 'local_audio';
+
+      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
+        tester: tester,
+        forcedLocale: const Locale('en'),
+      );
+
+      // Set playlist audio quality to musical. Then, the application is
+      // restarted ...
+      await _tapOnSetAudioQualityMenu(
+        tester: tester,
+        playlistToModifyTitle: localPlaylistTitle,
+        setMusicQuality: true,
+      );
+
+      IntegrationTestUtil.verifyWidgetIsDisabled(
+        tester: tester,
+        widgetKeyStr: 'audio_quality_checkbox',
+      );
+
+      // Verify that the download at musical quality checkbox is
+      // checked
+      Finder downloadAtMusicalQualityCheckBoxFinder =
+          find.byKey(const Key('audio_quality_checkbox'));
+      Checkbox downloadAtMusicalQualityCheckBoxWidget =
+          tester.widget<Checkbox>(downloadAtMusicalQualityCheckBoxFinder);
+      expect(downloadAtMusicalQualityCheckBoxWidget.value, true);
+
+      await IntegrationTestUtil.verifyPlaylistDataDialogContent(
+        tester: tester,
+        playlistTitle: localPlaylistTitle,
+        playlistDownloadAudioSortFilterParmsName: 'default',
+        playlistPlayAudioSortFilterParmsName: 'default',
+        playlistAudioQuality: 'musical',
+      );
+
+// STAYED HERE
+
+      // Now typing on the download playlist button to download the
+      // new video audio's present the recreated playlist.
+      await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(milliseconds: 1500));
+
+      // Now tap on Stop button to stop the download
+      await tester.tap(find.byKey(const Key('stopDownloadingButton')));
+      await tester.pumpAndSettle();
+
+      // Add a delay to allow the download to finish.
+      for (int i = 0; i < 6; i++) {
+        await Future.delayed(const Duration(seconds: 1));
+        await tester.pumpAndSettle();
+      }
+
+      await IntegrationTestUtil.verifyAudioInfoDialog(
+        tester: tester,
+        audioEnclosingPlaylistTitle: youtubePlaylistToModifyTitle,
+        movedOrCopiedAudioTitle: 'Really short video',
+        movedFromPlaylistTitle: '',
+        movedToPlaylistTitle: '',
+        copiedFromPlaylistTitle: '',
+        copiedToPlaylistTitle: '',
+        audioDuration: '0:00:09.8',
+        audioQuality: 'Yes', // Is musical quality
+      );
+
+      // Now selecting the local playlist by tapping on the
+      // playlist checkbox and restart the application.
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: 'local',
+      );
     });
   });
 }
