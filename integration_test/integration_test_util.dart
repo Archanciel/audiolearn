@@ -1916,6 +1916,7 @@ class IntegrationTestUtil {
     required String playlistDownloadAudioSortFilterParmsName,
     required String playlistPlayAudioSortFilterParmsName,
     isPaylistSelected = true,
+    String playlistAudioQuality = '',
   }) async {
     Finder playlistToExamineInfoTextWidgetFinder;
 
@@ -1966,6 +1967,17 @@ class IntegrationTestUtil {
       playlistLastDownloadDateTimeTextWidget.data,
       playlistDownloadAudioSortFilterParmsName,
     );
+
+    if (playlistAudioQuality.isNotEmpty) {
+      // Verify the playlist audio quality
+      final Text playlistAudioQualityTextWidget = tester.widget<Text>(
+          find.byKey(const Key('playlist_info_audio_quality_key')));
+
+      expect(
+        playlistAudioQualityTextWidget.data,
+        playlistAudioQuality,
+      );
+    }
 
     // Now find the ok button of the playlist info dialog
     // and tap on it
