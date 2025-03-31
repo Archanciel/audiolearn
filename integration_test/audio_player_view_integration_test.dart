@@ -7460,7 +7460,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Select the first checkbox (Start position)
-      await tester.tap(find.byKey(const Key('checkbox0Key')));
+      await tester.tap(find.byKey(const Key('checkbox_0_key')));
       await tester.pumpAndSettle();
 
       // Tap on the Ok button to set the new position in the comment
@@ -7501,7 +7501,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Select the second checkbox (End position)
-      await tester.tap(find.byKey(const Key('checkbox1Key')));
+      await tester.tap(find.byKey(const Key('checkbox_1_key')));
       await tester.pumpAndSettle();
 
       // Tap on the Ok button to set the comment end position to the
@@ -7617,7 +7617,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Select the first checkbox (Start position)
-      await tester.tap(find.byKey(const Key('checkbox0Key')));
+      await tester.tap(find.byKey(const Key('checkbox_0_key')));
       await tester.pumpAndSettle();
 
       // Tap on the Ok button to set the new position in the comment
@@ -7661,7 +7661,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Select the first checkbox (Start position)
-      await tester.tap(find.byKey(const Key('checkbox0Key')));
+      await tester.tap(find.byKey(const Key('checkbox_0_key')));
       await tester.pumpAndSettle();
 
       // Tap on the Ok button to set the new position in the comment
@@ -7714,7 +7714,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Select the first checkbox (Start position)
-      await tester.tap(find.byKey(const Key('checkbox0Key')));
+      await tester.tap(find.byKey(const Key('checkbox_0_key')));
       await tester.pumpAndSettle();
 
       // Tap on the Ok button to set the new position in the comment
@@ -7762,7 +7762,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Select the first checkbox (Start position)
-      await tester.tap(find.byKey(const Key('checkbox0Key')));
+      await tester.tap(find.byKey(const Key('checkbox_0_key')));
       await tester.pumpAndSettle();
 
       // Tap on the Ok button to set the new position in the comment
@@ -7807,7 +7807,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Select the second checkbox (End position)
-      await tester.tap(find.byKey(const Key('checkbox1Key')));
+      await tester.tap(find.byKey(const Key('checkbox_1_key')));
       await tester.pumpAndSettle();
 
       // Tap on the Ok button to set the new position in the comment
@@ -8016,7 +8016,7 @@ Future<void> simulateEnteringTooBigAndTooSmallAudioPosition({
 
   if (doSetStartOrEndCheckbox) {
     // Select the second checkbox (End position)
-    await tester.tap(find.byKey(const Key('checkbox1Key')));
+    await tester.tap(find.byKey(const Key('checkbox_1_key')));
     await tester.pumpAndSettle();
   }
 
@@ -8062,7 +8062,7 @@ Future<void> simulateEnteringTooBigAndTooSmallAudioPosition({
 
   if (doSetStartOrEndCheckbox) {
     // Select the first checkbox (Start position)
-    await tester.tap(find.byKey(const Key('checkbox0Key')));
+    await tester.tap(find.byKey(const Key('checkbox_0_key')));
     await tester.pumpAndSettle();
   }
 
