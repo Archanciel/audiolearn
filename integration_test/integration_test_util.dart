@@ -2058,4 +2058,119 @@ class IntegrationTestUtil {
     await tester.tap(titleAscDropDownTextFinder);
     await tester.pumpAndSettle();
   }
+
+  static Future<Finder> verifyAudioInfoDialog({
+    required WidgetTester tester,
+    required String audioEnclosingPlaylistTitle,
+    required String movedOrCopiedAudioTitle,
+    required String movedFromPlaylistTitle,
+    required String movedToPlaylistTitle,
+    required String copiedFromPlaylistTitle,
+    required String copiedToPlaylistTitle,
+    required String audioDuration,
+    String audioQuality = '',
+  }) async {
+    // Now we want to tap the popup menu of the Audio ListTile
+    // "audio learn test short video one" in order to display
+    // the audio info dialog
+
+    // First, find the Audio sublist ListTile Text widget
+    final Finder targetAudioListTileTextWidgetFinder =
+        find.text(movedOrCopiedAudioTitle);
+
+    // Then obtain the Audio ListTile widget enclosing the Text widget by
+    // finding its ancestor
+    final Finder targetAudioListTileWidgetFinder = find.ancestor(
+      of: targetAudioListTileTextWidgetFinder,
+      matching: find.byType(ListTile),
+    );
+
+    // Now find the leading menu icon button of the Audio ListTile and tap
+    // on it
+    final Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
+      of: targetAudioListTileWidgetFinder,
+      matching: find.byIcon(Icons.menu),
+    );
+
+    // Tap the leading menu icon button to open the popup menu
+    await tester.tap(targetAudioListTileLeadingMenuIconButton);
+    await tester.pumpAndSettle();
+
+    // Now find the audio info popup menu item and tap on it
+    final Finder popupDisplayAudioInfoMenuItemFinder =
+        find.byKey(const Key("popup_menu_display_audio_info"));
+
+    await tester.tap(popupDisplayAudioInfoMenuItemFinder);
+    await tester.pumpAndSettle();
+
+    // Now verifying the display audio info audio moved dialog
+    // elements
+
+    // Verify the audio channel name
+
+    Text youtubeChannelTextWidget =
+        tester.widget<Text>(find.byKey(const Key('youtubeChannelKey')));
+
+    expect(youtubeChannelTextWidget.data, "Jean-Pierre Schnyder");
+
+    // Verify the enclosing playlist title of the moved audio
+
+    final Text enclosingPlaylistTitleTextWidget =
+        tester.widget<Text>(find.byKey(const Key('enclosingPlaylistTitleKey')));
+
+    expect(
+      enclosingPlaylistTitleTextWidget.data,
+      audioEnclosingPlaylistTitle,
+    );
+
+    // Verify the 'Moved from playlist' title of the moved audio
+
+    final Text movedFromPlaylistTitleTextWidget =
+        tester.widget<Text>(find.byKey(const Key('movedFromPlaylistTitleKey')));
+
+    expect(movedFromPlaylistTitleTextWidget.data, movedFromPlaylistTitle);
+
+    // Verify the 'Moved to playlist title' of the moved audio
+
+    final Text movedToPlaylistTitleTextWidget =
+        tester.widget<Text>(find.byKey(const Key('movedToPlaylistTitleKey')));
+
+    expect(movedToPlaylistTitleTextWidget.data, movedToPlaylistTitle);
+
+    // Verify the 'Copied from playlist' title of the moved audio
+
+    final Text copiedFromPlaylistTitleTextWidget = tester
+        .widget<Text>(find.byKey(const Key('copiedFromPlaylistTitleKey')));
+
+    expect(copiedFromPlaylistTitleTextWidget.data, copiedFromPlaylistTitle);
+
+    // Verify the 'Copied to playlist title' of the moved audio
+
+    final Text copiedToPlaylistTitleTextWidget =
+        tester.widget<Text>(find.byKey(const Key('copiedToPlaylistTitleKey')));
+
+    expect(copiedToPlaylistTitleTextWidget.data, copiedToPlaylistTitle);
+
+    // Verify the 'Audio duration' of the moved audio
+
+    final Text audioDurationTextWidget =
+        tester.widget<Text>(find.byKey(const Key('audioDurationKey')));
+
+    expect(audioDurationTextWidget.data, audioDuration);
+
+    if (audioQuality.isNotEmpty) {
+      // Verify the audio quality of the audio
+      final Text audioQualityTextWidget = tester.widget<Text>(
+          find.byKey(const Key('audioInfoQualityKey')));
+
+      expect(audioQualityTextWidget.data, audioQuality);
+    }
+
+    // Now find the close button of the audio info dialog
+    // and tap on it to close the dialog
+    await tester.tap(find.byKey(const Key('audio_info_close_button_key')));
+    await tester.pumpAndSettle();
+
+    return targetAudioListTileWidgetFinder;
+  }
 }
