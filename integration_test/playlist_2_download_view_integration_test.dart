@@ -11900,29 +11900,38 @@ void main() {
       const String youtubePlaylistToModifyTitle = 'MaValTest';
 
       // Rewind all 'S8 audio" playlist audio's to start position
-      await _tapOnRewindPlaylistAudioToStartPositionMenu(
+      await _tapOnSetAudioQualityMenu(
         tester: tester,
-        playlistToRewindTitle: youtubePlaylistToModifyTitle,
-        numberOfRewindedAudio: 4,
+        playlistToModifyTitle: youtubePlaylistToModifyTitle,
+        setMusicQuality: true,
       );
+    });
+    testWidgets(
+        '''Restart the application to verify that the audio quality checkbox state was preserved.
+           Then download one audio in the playlist and verify its audio musical quality.''',
+        (tester) async {
+      const String youtubePlaylistToModifyTitle = 'MaValTest';
 
-      // Tap the 'Toggle List' button to reduce the list of playlist's.
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
-      // Rewind again all playlist audio to start position. Since
-      // the playlist was already rewinded, 0 audio will be rewinded !
-      await _tapOnRewindPlaylistAudioToStartPositionMenu(
+      AudioDownloadVM audioDownloadVM =
+          await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
         tester: tester,
-        playlistToRewindTitle: youtubePlaylistToModifyTitle,
-        numberOfRewindedAudio: 0,
+        forcedLocale: const Locale('en'),
       );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      await IntegrationTestUtil.verifyPlaylistDataDialogContent(
+        tester: tester,
+        playlistTitle: youtubePlaylistToModifyTitle,
+        playlistDownloadAudioSortFilterParmsName: 'default',
+        playlistPlayAudioSortFilterParmsName: 'default',
+        playlistAudioQuality: 'musical',
       );
+
+      // Rewind all 'S8 audio" playlist audio's to start position
+      // await _tapOnSetAudioQualityMenu(
+      //   tester: tester,
+      //   playlistToModifyTitle: youtubePlaylistToModifyTitle,
+      //   setMusicQuality: true,
+      // );
     });
   });
 }
@@ -12953,6 +12962,8 @@ Future<void> _tapOnRewindPlaylistAudioToStartPositionMenu({
 Future<void> _tapOnSetAudioQualityMenu({
   required WidgetTester tester,
   required String playlistToModifyTitle,
+  required bool setMusicQuality, // true: set music quality,
+  //                                 false: set spoken quality
 }) async {
   // Find the playlist to rewind audio ListTile
 
@@ -12992,18 +13003,18 @@ Future<void> _tapOnSetAudioQualityMenu({
       tester.widget(find.byKey(const Key('setValueToTargetDialogTitleKey')));
   expect(alertDialogTitle.data, 'Playlist Audio Quality');
 
-  // Check the value of the AlertDialog dialog title
+  // Check the value of the AlertDialog dialog text
   Text alertDialogText =
       tester.widget(find.byKey(const Key('setValueToTargetDialogKey')));
   expect(alertDialogText.data, 'Select audio quality');
 
-  // Check the label of the two quality checkboxes
+  // Tap on the ^musical' quality checkbox to select it
+  await tester.tap(find.byKey(const Key('checkbox_1_key')));
+  await tester.pumpAndSettle();
 
-  await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-    tester: tester,
-    warningDialogMessage: "3 playlist audio's were repositioned to start.",
-    isWarningConfirming: true,
-  );
+  // And click on the 'OK' button to confirm the selection
+  await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+  await tester.pumpAndSettle();
 }
 
 void _verifyAllNowUnplayedAudioPlayPauseIconColor({

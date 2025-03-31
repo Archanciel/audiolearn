@@ -102,6 +102,7 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                       .playlistLastDownloadDateTimeLabel,
                   value: lastDownloadDateTimeStr),
               createInfoRowFunction(
+                  valueTextWidgetKey: Key('playlist_info_audio_quality_key'),
                   context: context,
                   label: AppLocalizations.of(context)!.playlistQualityLabel,
                   value: (playlist.playlistQuality == PlaylistQuality.music)
