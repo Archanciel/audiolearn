@@ -692,17 +692,11 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           onTap: (!areAudioButtonsEnabled)
               ? null // Disable the button if no audio selected
               : () {
-                  showDialog<void>(
-                    barrierDismissible:
-                        false, // This line prevents the dialog from closing when
-                    //            tapping outside the dialog
+                  // Using this method enables to minimize the comment list
+                  // add dialog.
+                  CommentListAddDialog.showCommentDialog(
                     context: context,
-                    // passing the current audio to the dialog instead
-                    // of initializing a private _currentAudio variable
-                    // in the dialog avoid integr test problems
-                    builder: (context) => CommentListAddDialog(
-                      currentAudio: currentAudio!,
-                    ),
+                    currentAudio: currentAudio!,
                   );
                 },
           child: circleAvatar,
