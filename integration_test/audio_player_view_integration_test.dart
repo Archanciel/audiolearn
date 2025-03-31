@@ -5550,7 +5550,7 @@ void main() {
         // );
 
         // Tap on the Close button to close the playlist comment dialog
-        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Purge the test playlist directory so that the created test
