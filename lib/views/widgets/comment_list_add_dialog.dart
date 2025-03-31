@@ -295,7 +295,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
           Align(
             alignment: Alignment.bottomLeft,
             child: Padding(
-              padding: const EdgeInsets.only(left: 70, bottom: 280),
+              padding: const EdgeInsets.only(left: 40, bottom: 275),
               child: FloatingActionButton(
                 mini: true,
                 backgroundColor:
