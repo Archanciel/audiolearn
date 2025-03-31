@@ -201,14 +201,11 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 );
                 break;
               case AudioPopupMenuAction.audioComment:
-                showDialog<void>(
+                // Using this method enables to minimize the comment list
+                // add dialog.
+                CommentListAddDialog.showCommentDialog(
                   context: context,
-                  // passing the current audio to the dialog instead
-                  // of initializing a private _currentAudio variable
-                  // in the dialog avoid integr test problems
-                  builder: (context) => CommentListAddDialog(
-                    currentAudio: audio,
-                  ),
+                  currentAudio: audio,
                 );
                 break;
               case AudioPopupMenuAction.modifyAudioTitle:
