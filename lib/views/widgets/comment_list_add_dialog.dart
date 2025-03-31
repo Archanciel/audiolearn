@@ -299,7 +299,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
               child: FloatingActionButton(
                 mini: true,
                 backgroundColor:
-                    Theme.of(context).primaryColor.withOpacity(0.7),
+                    Theme.of(context).primaryColor.withOpacity(0.01),
                 child: const Icon(Icons.expand_less, color: Colors.white),
                 onPressed: () {
                   setState(() {
