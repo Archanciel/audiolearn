@@ -13,7 +13,6 @@ import '../../viewmodels/theme_provider_vm.dart';
 import '../../views/screen_mixin.dart';
 import '../../utils/duration_expansion.dart';
 import 'comment_list_add_dialog.dart';
-import 'playlist_comment_list_dialog.dart';
 import 'set_value_to_target_dialog.dart';
 
 enum CallerDialog {
