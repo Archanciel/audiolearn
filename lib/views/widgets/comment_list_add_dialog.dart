@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -13,8 +15,96 @@ import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/date_format_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../screen_mixin.dart';
-import 'confirm_action_dialog.dart';
 import 'comment_add_edit_dialog.dart';
+
+// Global manager for comment overlays
+class CommentDialogManager {
+  static OverlayEntry? _currentOverlay;
+
+  static void closeCurrentOverlay() {
+    if (_currentOverlay != null) {
+      _currentOverlay!.remove();
+      _currentOverlay = null;
+    }
+  }
+
+  static void setCurrentOverlay(OverlayEntry entry) {
+    // Close any previous overlay before opening a new one
+    closeCurrentOverlay();
+    _currentOverlay = entry;
+  }
+
+  static bool get hasActiveOverlay => _currentOverlay != null;
+}
+
+class CommentDeleteConfirmActionDialog extends StatelessWidget {
+  final Function actionFunction;
+  final List<dynamic> actionFunctionArgs;
+  final String dialogTitleOne;
+  final String dialogContent;
+  final VoidCallback? onCancel; // Nouvelle propriété pour gérer l'annulation
+
+  const CommentDeleteConfirmActionDialog({
+    super.key,
+    required this.actionFunction,
+    required this.actionFunctionArgs,
+    required this.dialogTitleOne,
+    required this.dialogContent,
+    this.onCancel, // Paramètre optionnel pour gérer l'annulation
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final bool isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+
+    return AlertDialog(
+      title: Text(dialogTitleOne),
+      content: Text(dialogContent),
+      actions: <Widget>[
+        TextButton(
+          key: const Key('confirmButton'),
+          child: Text(
+            AppLocalizations.of(context)!.confirmButton,
+            style: (isDarkTheme)
+                ? kTextButtonStyleDarkMode
+                : kTextButtonStyleLightMode,
+          ),
+          onPressed: () async {
+            // Exécuter la fonction d'action avec les arguments
+            if (actionFunctionArgs.isNotEmpty) {
+              await Function.apply(actionFunction, actionFunctionArgs);
+            } else {
+              await actionFunction();
+            }
+
+            // Si nous n'utilisons pas le callback onCancel, fermer avec Navigator
+            if (onCancel == null) {
+              Navigator.of(context).pop();
+            }
+            // Sinon, l'overlay sera fermé par la fonction actionFunction modifiée
+          },
+        ),
+        TextButton(
+          key: const Key('cancelButtonKey'),
+          child: Text(
+            AppLocalizations.of(context)!.cancelButton,
+            style: (isDarkTheme)
+                ? kTextButtonStyleDarkMode
+                : kTextButtonStyleLightMode,
+          ),
+          onPressed: () {
+            // Si onCancel existe, l'appeler, sinon utiliser Navigator.pop
+            if (onCancel != null) {
+              onCancel!();
+            } else {
+              Navigator.of(context).pop();
+            }
+          },
+        ),
+      ],
+    );
+  }
+}
 
 /// This widget displays a dialog with the list of positionned
 /// comment added to the current audio.
@@ -35,48 +125,61 @@ class CommentListAddDialog extends StatefulWidget {
   @override
   State<CommentListAddDialog> createState() => _CommentListAddDialogState();
 
-  /// Méthode pour afficher le dialogue sans l'overlay sombre quand minimisé
+  /// Method to display the dialog without darkening the screen when minimized
   static void showCommentDialog({
     required BuildContext context,
     required Audio currentAudio,
   }) {
     OverlayState? overlayState = Overlay.of(context);
 
-    // Création de l'overlay entry
+    // Creating the overlay entry
     final overlayEntry = OverlayEntry(
       builder: (context) => Material(
         color: Colors.transparent,
         child: Stack(
           children: [
-            // Gestionnaire de gestes qui ignore les taps sur l'arrière-plan.
-            // Now clicking outside it does not close the dialog.
+            // Gesture detector that ignores taps on the background
+            // Now clicking outside will not close the dialog
             Positioned.fill(
               child: GestureDetector(
-                // Absorber les clics sans aucune action
+                // Absorb clicks without any action
                 onTap: () {
-                  // Ne rien faire quand on clique à l'extérieur
-                  // C'est cette modification qui empêche la fermeture
+                  // Do nothing when clicking outside
                 },
-                // Couleur transparente pour capturer les événements
-                // sans rendre l'arrière-plan visible
+                // Transparent color to capture events
+                // without making the background visible
                 child: Container(color: Colors.transparent),
               ),
             ),
-            // Le widget du dialogue lui-même
+            // The dialog widget itself
             Center(
-              child: CommentListAddDialog(
-                currentAudio: currentAudio,
-              ),
+              child: Builder(builder: (context) {
+                final dialogWidget = CommentListAddDialog(
+                  currentAudio: currentAudio,
+                );
+
+                // Schedule focus assignment after frame rendering
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  // Ensure that the FocusNode in CommentListAddDialog is properly focused
+                  final state = context
+                      .findAncestorStateOfType<_CommentListAddDialogState>();
+                  if (state != null && state._focusNodeDialog != null) {
+                    FocusScope.of(context).requestFocus(state._focusNodeDialog);
+                  }
+                });
+
+                return dialogWidget;
+              }),
             ),
           ],
         ),
       ),
     );
 
-    // Enregistrement dans notre gestionnaire global
+    // Register in our global manager
     CommentDialogManager.setCurrentOverlay(overlayEntry);
 
-    // Insertion dans l'overlay
+    // Insert into the overlay
     overlayState.insert(overlayEntry);
   }
 }
@@ -90,19 +193,88 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
   final ScrollController _scrollController = ScrollController();
   int _audioCommentsLinesNumber = 0;
 
+  bool _isMinimized = false;
+
+  // Add a listener for position changes
+  ValueNotifier<Duration>? _positionNotifier;
+
+  @override
+  void initState() {
+    super.initState();
+    // Set up position monitoring when the widget is created
+    _setupPositionMonitoring();
+  }
+
+  void _setupPositionMonitoring() {
+    final audioPlayerVM = Provider.of<AudioPlayerVM>(context, listen: false);
+
+    // Store a reference to the position notifier
+    _positionNotifier = audioPlayerVM.currentAudioPositionNotifier;
+
+    // Add a listener that will be called whenever the position changes
+    _positionNotifier?.addListener(_checkCommentEndPosition);
+  }
+
+  void _checkCommentEndPosition() {
+    // Skip if no comment is playing
+    if (_playingComment == null) return;
+
+    final audioPlayerVM = Provider.of<AudioPlayerVM>(context, listen: false);
+    final currentAudio = widget.currentAudio;
+    final currentAudioPosition = _positionNotifier?.value;
+
+    // Only proceed if we have valid position data
+    if (currentAudioPosition == null) return;
+
+    // This is the same code from your ValueListenableBuilder
+    // When the current comment end position is reached, schedule a pause
+    if (_playingComment != null &&
+        audioPlayerVM.isPlaying &&
+        (currentAudioPosition >=
+                Duration(
+                  milliseconds:
+                      _playingComment!.commentEndPositionInTenthOfSeconds * 100,
+                ) ||
+            // The 'or' test below is necessary to enable
+            // the pause of a comment whose end position
+            // is the same as the audio end position. For
+            // a reason I don't know, without this
+            // condition, playing such a comment on the
+            // Android smartphone does not call the
+            // audioPlayerVMlistenFalse.pause() method!
+            currentAudioPosition >=
+                currentAudio.audioDuration -
+                    const Duration(milliseconds: 1400))) {
+      // You cannot await here, but you can trigger an
+      // action which will not block the widget tree rendering.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        audioPlayerVM.pause();
+      });
+    }
+  }
+
   @override
   void dispose() {
+    // Remove the listener when the widget is disposed
+    if (_positionNotifier != null) {
+      _positionNotifier!.removeListener(_checkCommentEndPosition);
+      _positionNotifier = null;
+    }
+
     _focusNodeDialog.dispose();
     _scrollController.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final ThemeProviderVM themeProviderVM =
-        Provider.of<ThemeProviderVM>(context); // by default, listen is true
+        Provider.of<ThemeProviderVM>(context);
     final AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
+      context,
+      listen: false,
+    );
+    final CommentVM commentVMlistenFalse = Provider.of<CommentVM>(
       context,
       listen: false,
     );
@@ -114,27 +286,78 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
       _focusNodeDialog,
     );
 
+    if (_isMinimized) {
+      return Stack(
+        children: [
+          Positioned.fill(
+            child: Container(color: Colors.transparent),
+          ),
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 70, bottom: 280),
+              child: FloatingActionButton(
+                mini: true,
+                backgroundColor:
+                    Theme.of(context).primaryColor.withOpacity(0.7),
+                child: const Icon(Icons.expand_less, color: Colors.white),
+                onPressed: () {
+                  setState(() {
+                    _isMinimized = false;
+                  });
+                },
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
     return KeyboardListener(
       // Using FocusNode to enable clicking on Enter to close
       // the dialog
       focusNode: _focusNodeDialog,
-      onKeyEvent: (event) {
+      onKeyEvent: (event) async {
         if (event is KeyDownEvent) {
           if (event.logicalKey == LogicalKeyboardKey.enter ||
               event.logicalKey == LogicalKeyboardKey.numpadEnter) {
-            // executing the same code as in the 'Close'
-            // TextButton onPressed callback
-            Navigator.of(context).pop();
+            await _whenClosingStopAudioIfPlaying(
+              audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+              currentAudio: currentAudio,
+            );
+
+            // Check if we're using an overlay or a standard dialog
+            if (CommentDialogManager.hasActiveOverlay) {
+              // Use the global manager to close the dialog
+              CommentDialogManager.closeCurrentOverlay();
+            } else {
+              // Otherwise, use standard navigation
+              Navigator.of(context).pop();
+            }
           }
         }
       },
       child: AlertDialog(
         title: Row(
           children: [
-            Text(
-              AppLocalizations.of(context)!.commentsDialogTitle,
-            ),
+            Text(AppLocalizations.of(context)!.commentsDialogTitle),
             const SizedBox(width: 15),
+            (CommentDialogManager.hasActiveOverlay)
+                // Showing the minimize icon happens only if the comment list
+                // add dialog is was opened in the audio player view by the
+                // CommentDialogManager.
+                ? IconButton(
+                    icon: const Icon(
+                      Icons.expand_more,
+                      size: 30,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isMinimized = true;
+                      });
+                    },
+                  )
+                : const Spacer(),
             Tooltip(
               message:
                   AppLocalizations.of(context)!.addPositionedCommentTooltip,
@@ -170,21 +393,17 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
           ],
         ),
         actionsPadding: kDialogActionsPadding,
-        content: Consumer<CommentVM>(
-          builder: (context, commentVMlistenTrue, child) {
-            return SingleChildScrollView(
-              controller: _scrollController,
-              child: ListBody(
-                children: _buildAudioCommentsLst(
-                  themeProviderVM: themeProviderVM,
-                  audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-                  commentVMlistenTrue: commentVMlistenTrue,
-                  currentAudio: currentAudio,
-                  isDarkTheme: isDarkTheme,
-                ),
-              ),
-            );
-          },
+        content: SingleChildScrollView(
+          controller: _scrollController,
+          child: ListBody(
+            children: _buildAudioCommentsLst(
+              themeProviderVM: themeProviderVM,
+              audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+              commentVMlistenFalse: commentVMlistenFalse,
+              currentAudio: currentAudio,
+              isDarkTheme: isDarkTheme,
+            ),
+          ),
         ),
         actions: <Widget>[
           TextButton(
@@ -196,22 +415,18 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                   : kTextButtonStyleLightMode,
             ),
             onPressed: () async {
-              // Calling setCurrentAudio() when closing the comment
-              // list dialog is necessary, otherwise, on Android,
-              // clicking on position buttons or audio slider will
-              // not work after a comment was played.
-
-              // Since playing a comment changes the audio player
-              // position, avoiding to clear the undo/redo lists
-              // enables the user to undo the audio position change.
-              if (audioPlayerVMlistenFalse.isPlaying) {
-                await audioPlayerVMlistenFalse.pause();
-              }
-
-              await audioPlayerVMlistenFalse.setCurrentAudio(
-                audio: currentAudio,
+              await _whenClosingStopAudioIfPlaying(
+                audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+                currentAudio: currentAudio,
               );
-              Navigator.of(context).pop();
+
+              if (CommentDialogManager.hasActiveOverlay) {
+                // Close the dialog if an overlay is active
+                CommentDialogManager.closeCurrentOverlay();
+              } else {
+                // Otherwise, close the normal dialog
+                Navigator.of(context).pop();
+              }
             },
           ),
         ],
@@ -219,14 +434,35 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
     );
   }
 
+  Future<void> _whenClosingStopAudioIfPlaying({
+    required AudioPlayerVM audioPlayerVMlistenFalse,
+    required Audio currentAudio,
+  }) async {
+    // Calling setCurrentAudio() when closing the comment
+    // list dialog is necessary, otherwise, on Android,
+    // clicking on position buttons or audio slider will
+    // not work after a comment was played.
+
+    // Since playing a comment changes the audio player
+    // position, avoiding to clear the undo/redo lists
+    // enables the user to undo the audio position change.
+    if (audioPlayerVMlistenFalse.isPlaying) {
+      await audioPlayerVMlistenFalse.pause();
+    }
+
+    await audioPlayerVMlistenFalse.setCurrentAudio(
+      audio: currentAudio,
+    );
+  }
+
   List<Widget> _buildAudioCommentsLst({
     required ThemeProviderVM themeProviderVM,
     required AudioPlayerVM audioPlayerVMlistenFalse,
-    required CommentVM commentVMlistenTrue,
+    required CommentVM commentVMlistenFalse,
     required Audio currentAudio,
     required bool isDarkTheme,
   }) {
-    List<Comment> commentsLst = commentVMlistenTrue.loadAudioComments(
+    List<Comment> commentsLst = commentVMlistenFalse.loadAudioComments(
       audio: currentAudio,
     );
 
@@ -275,7 +511,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                     context,
                     listen: false,
                   ),
-                  commentVMlistenTrue: commentVMlistenTrue,
+                  commentVMlistenFalse: commentVMlistenFalse,
                   currentAudio: currentAudio,
                   comment: comment,
                   commentTitleTextStyle: commentTitleTextStyle,
@@ -296,7 +532,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
           onTap: () async {
             if (audioPlayerVMlistenFalse.isPlaying &&
                 _playingComment != comment) {
-              // if the user clicks on a comment while another
+              // if the user clicks on a comment title while another
               // comment is playing, the playing comment is paused.
               // Otherwise, the edited comment keeps playing.
               await audioPlayerVMlistenFalse.pause();
@@ -321,7 +557,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
     required ThemeProviderVM themeProviderVM,
     required AudioPlayerVM audioPlayerVMlistenFalse,
     required DateFormatVM dateFormatVMlistenFalse,
-    required CommentVM commentVMlistenTrue,
+    required CommentVM commentVMlistenFalse,
     required Audio currentAudio,
     required Comment comment,
     required TextStyle commentTitleTextStyle,
@@ -378,58 +614,25 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                       overlayColor:
                           iconButtonTapModification, // Tap feedback color
                     ),
-                    icon: ValueListenableBuilder<Duration>(
-                      valueListenable:
-                          audioPlayerVMlistenFalse.currentAudioPositionNotifier,
-                      builder: (context, currentAudioPosition, child) {
-                        // When the current comment end position is
-                        // reached, schedule a pause.
-                        if (_playingComment != null &&
-                            _playingComment == comment &&
-                            (currentAudioPosition >=
-                                    Duration(
-                                      milliseconds: comment
-                                              .commentEndPositionInTenthOfSeconds *
-                                          100,
-                                    ) ||
-                                // The 'or' test below is necessary to enable
-                                // the pause of a comment whose end position
-                                // is the same as the audio end position. For
-                                // a reason I don't know, without this
-                                // condition, playing such a comment on the
-                                // Android smartphone does not call the
-                                // audioPlayerVMlistenFalse.pause() method !
-                                currentAudioPosition >=
-                                    currentAudio.audioDuration -
-                                        const Duration(milliseconds: 1400))) {
-                          // You cannot await here, but you can trigger an
-                          // action which will not block the widget tree
-                          // rendering.
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            audioPlayerVMlistenFalse.pause();
-                          });
-                        }
-
-                        return ValueListenableBuilder<bool>(
-                          valueListenable: audioPlayerVMlistenFalse
-                              .currentAudioPlayPauseNotifier,
-                          builder: (context, isPlaying, child) {
-                            return IconTheme(
-                              data: (isDarkTheme
-                                      ? ScreenMixin.themeDataDark
-                                      : ScreenMixin.themeDataLight)
-                                  .iconTheme,
-                              child: Icon(
-                                // Display pause if this comment is playing and the audio is playing;
-                                // otherwise, display the play_arrow icon.
-                                (_playingComment != null &&
-                                        _playingComment == comment &&
-                                        isPlaying)
-                                    ? Icons.pause
-                                    : Icons.play_arrow,
-                              ),
-                            );
-                          },
+                    // Use a simpler ValueListenableBuilder just for the icon state
+                    icon: ValueListenableBuilder<bool>(
+                      valueListenable: audioPlayerVMlistenFalse
+                          .currentAudioPlayPauseNotifier,
+                      builder: (context, isPlaying, child) {
+                        return IconTheme(
+                          data: (isDarkTheme
+                                  ? ScreenMixin.themeDataDark
+                                  : ScreenMixin.themeDataLight)
+                              .iconTheme,
+                          child: Icon(
+                            // Display pause if this comment is playing and the audio is playing;
+                            // otherwise, display the play_arrow icon.
+                            (_playingComment != null &&
+                                    _playingComment == comment &&
+                                    isPlaying)
+                                ? Icons.pause
+                                : Icons.play_arrow,
+                          ),
                         );
                       },
                     ),
@@ -446,8 +649,8 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                     key: const Key('deleteCommentIconButton'),
                     onPressed: () async {
                       await _confirmDeleteComment(
-                        audioPlayerVM: audioPlayerVMlistenFalse,
-                        commentVMlistenTrue: commentVMlistenTrue,
+                        audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+                        commentVMlistenFalse: commentVMlistenFalse,
                         currentAudio: currentAudio,
                         comment: comment,
                       );
@@ -579,7 +782,13 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
     required Audio currentAudio,
     Comment? comment,
   }) {
-    Navigator.of(context).pop(); // closes the current dialog
+    if (CommentDialogManager.hasActiveOverlay) {
+      // Fermer le dialogue si un overlay est actif
+      CommentDialogManager.closeCurrentOverlay();
+    } else {
+      // Sinon, fermer le dialogue normal
+      Navigator.of(context).pop();
+    }
 
     showDialog<void>(
       context: context,
@@ -598,30 +807,62 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
   }
 
   Future<void> _confirmDeleteComment({
-    required AudioPlayerVM audioPlayerVM,
-    required CommentVM commentVMlistenTrue,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
+    required CommentVM commentVMlistenFalse,
     required Audio currentAudio,
     required Comment comment,
   }) async {
-    showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return ConfirmActionDialog(
-          actionFunction: commentVMlistenTrue.deleteCommentFunction,
-          actionFunctionArgs: [
-            comment.id,
-            currentAudio,
-          ],
-          dialogTitleOne:
-              AppLocalizations.of(context)!.deleteCommentConfirnTitle,
-          dialogContent: AppLocalizations.of(context)!
-              .deleteCommentConfirnBody(comment.title),
-        );
-      },
+    // Use overlay to display confirmation dialog
+    OverlayState? overlayState = Overlay.of(context);
+    OverlayEntry? confirmOverlayEntry;
+
+    // Completer to wait for user response
+    Completer<bool> confirmCompleter = Completer<bool>();
+
+    confirmOverlayEntry = OverlayEntry(
+      builder: (context) => Material(
+        color: Colors.black54, // Darkens the background
+        child: Center(
+          child: CommentDeleteConfirmActionDialog(
+            actionFunction: (id, audio) async {
+              // Delete the comment
+              commentVMlistenFalse.deleteCommentFunction(id, audio);
+
+              // Close the confirmation dialog
+              confirmOverlayEntry?.remove();
+
+              // Complete with true (action confirmed)
+              confirmCompleter.complete(true);
+            },
+            actionFunctionArgs: [
+              comment.id,
+              currentAudio,
+            ],
+            dialogTitleOne:
+                AppLocalizations.of(context)!.deleteCommentConfirnTitle,
+            dialogContent: AppLocalizations.of(context)!
+                .deleteCommentConfirnBody(comment.title),
+            onCancel: () {
+              // Close the confirmation dialog
+              confirmOverlayEntry?.remove();
+
+              // Complete with false (action canceled)
+              confirmCompleter.complete(false);
+            },
+          ),
+        ),
+      ),
     );
 
-    if (audioPlayerVM.isPlaying) {
-      await audioPlayerVM.pause();
+    // Insert the confirmation dialog into the overlay
+    overlayState.insert(confirmOverlayEntry);
+
+    // Wait for user response
+    bool confirmed = await confirmCompleter.future;
+
+    // If the action is confirmed, pause playback
+    if (confirmed && audioPlayerVMlistenFalse.isPlaying) {
+      await audioPlayerVMlistenFalse.pause();
     }
   }
 
