@@ -695,7 +695,9 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Method called when the user clicks on the Add audio picture menu.
+  /// Method called when the user clicks on the audio item 'Add Audio
+  /// Picture ...' menu or on audio player view left appbar 'Add Audio
+  /// Picture ...' menu.
   void storeAudioPictureFileInPlaylistPictureDir({
     required Audio audio,
     required String pictureFilePathName,
@@ -720,9 +722,11 @@ class PlaylistListVM extends ChangeNotifier {
         targetFileName: createdAudioPictureFileName);
   }
 
-  /// Method called when the user clicks on the Remove audio picture menu. Deleting
-  /// the picture file whose name is the audio file name with the extension .jpg
-  /// will cause the audio player to display no picture for the audio.
+  /// Method called when the user clicks on the audio item 'Remove Audio Picture'
+  /// menu or on audio player view left appbar 'Remove Audio Picture' menu.
+  /// Deleting the picture file whose name is the audio file name with the
+  /// extension .jpg will cause the audio player to display no picture for
+  /// the audio.
   void deleteAudioPictureFileInPlaylistPictureDir({
     required Audio audio,
   }) {
@@ -2506,6 +2510,11 @@ class PlaylistListVM extends ChangeNotifier {
     }
   }
 
+  /// This method is called when the user chooses to change the
+  /// playback speed in the application settings dialog and choose
+  /// to apply this modification to the existing playlists and/or to the
+  /// already downloaded audio contained in the playlists.
+  /// 
   /// This method updates the playlists audio play speed or/and
   /// the audio play speed of the playable audio contained in
   /// the playlists.
