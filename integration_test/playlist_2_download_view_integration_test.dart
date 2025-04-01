@@ -11899,12 +11899,26 @@ void main() {
 
       const String youtubePlaylistToModifyTitle = 'MaValTest';
 
+      await _verifyPlaylistAudioQuality(
+        tester: tester,
+        playlistTitle: youtubePlaylistToModifyTitle,
+        isPlaylistLocal: false,
+        playlistQuality: PlaylistQuality.voice,
+      );
+
       // Set playlist audio quality to musical. Then, the application is
       // restarted ...
       await _tapOnSetAudioQualityMenu(
         tester: tester,
         playlistToModifyTitle: youtubePlaylistToModifyTitle,
         setMusicQuality: true,
+      );
+
+      await _verifyPlaylistAudioQuality(
+        tester: tester,
+        playlistTitle: youtubePlaylistToModifyTitle,
+        isPlaylistLocal: false,
+        playlistQuality: PlaylistQuality.music,
       );
     });
     testWidgets(
@@ -11919,25 +11933,11 @@ void main() {
         forcedLocale: const Locale('en'),
       );
 
-      IntegrationTestUtil.verifyWidgetIsEnabled(
-        tester: tester,
-        widgetKeyStr: 'audio_quality_checkbox',
-      );
-
-      // Verify that the download at musical quality checkbox is
-      // checked
-      Finder downloadAtMusicalQualityCheckBoxFinder =
-          find.byKey(const Key('audio_quality_checkbox'));
-      Checkbox downloadAtMusicalQualityCheckBoxWidget =
-          tester.widget<Checkbox>(downloadAtMusicalQualityCheckBoxFinder);
-      expect(downloadAtMusicalQualityCheckBoxWidget.value, true);
-
-      await IntegrationTestUtil.verifyPlaylistDataDialogContent(
+      await _verifyPlaylistAudioQuality(
         tester: tester,
         playlistTitle: youtubePlaylistToModifyTitle,
-        playlistDownloadAudioSortFilterParmsName: 'default',
-        playlistPlayAudioSortFilterParmsName: 'default',
-        playlistAudioQuality: 'musical',
+        isPlaylistLocal: false,
+        playlistQuality: PlaylistQuality.music,
       );
 
       // Now typing on the download playlist button to download the
@@ -11945,7 +11945,7 @@ void main() {
       await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
       await tester.pumpAndSettle();
 
-      await Future.delayed(const Duration(milliseconds: 1500));
+      await Future.delayed(const Duration(milliseconds: 1000));
 
       // Now tap on Stop button to stop the download
       await tester.tap(find.byKey(const Key('stopDownloadingButton')));
@@ -11969,11 +11969,20 @@ void main() {
         audioQuality: 'Yes', // Is musical quality
       );
 
+      const String localPlaylistTitle = 'local_audio';
+
       // Now selecting the local playlist by tapping on the
       // playlist checkbox and restart the application.
       await IntegrationTestUtil.selectPlaylist(
         tester: tester,
-        playlistToSelectTitle: 'local_audio',
+        playlistToSelectTitle: localPlaylistTitle,
+      );
+
+      await _verifyPlaylistAudioQuality(
+        tester: tester,
+        playlistTitle: localPlaylistTitle,
+        isPlaylistLocal: true,
+        playlistQuality: PlaylistQuality.voice,
       );
     });
     testWidgets(
@@ -11990,6 +11999,13 @@ void main() {
         forcedLocale: const Locale('en'),
       );
 
+      await _verifyPlaylistAudioQuality(
+        tester: tester,
+        playlistTitle: localPlaylistTitle,
+        isPlaylistLocal: true,
+        playlistQuality: PlaylistQuality.voice,
+      );
+
       // Set playlist audio quality to musical. Then, the application is
       // restarted ...
       await _tapOnSetAudioQualityMenu(
@@ -11998,25 +12014,11 @@ void main() {
         setMusicQuality: true,
       );
 
-      IntegrationTestUtil.verifyWidgetIsDisabled(
-        tester: tester,
-        widgetKeyStr: 'audio_quality_checkbox',
-      );
-
-      // Verify that the download at musical quality checkbox is
-      // checked
-      Finder downloadAtMusicalQualityCheckBoxFinder =
-          find.byKey(const Key('audio_quality_checkbox'));
-      Checkbox downloadAtMusicalQualityCheckBoxWidget =
-          tester.widget<Checkbox>(downloadAtMusicalQualityCheckBoxFinder);
-      expect(downloadAtMusicalQualityCheckBoxWidget.value, true);
-
-      await IntegrationTestUtil.verifyPlaylistDataDialogContent(
+      await _verifyPlaylistAudioQuality(
         tester: tester,
         playlistTitle: localPlaylistTitle,
-        playlistDownloadAudioSortFilterParmsName: 'default',
-        playlistPlayAudioSortFilterParmsName: 'default',
-        playlistAudioQuality: 'musical',
+        isPlaylistLocal: true,
+        playlistQuality: PlaylistQuality.music,
       );
 
 // STAYED HERE
@@ -12058,6 +12060,51 @@ void main() {
       );
     });
   });
+}
+
+Future<void> _verifyPlaylistAudioQuality({
+  required WidgetTester tester,
+  required String playlistTitle,
+  required bool isPlaylistLocal,
+  required PlaylistQuality playlistQuality,
+}) async {
+  if (isPlaylistLocal) {
+    IntegrationTestUtil.verifyWidgetIsDisabled(
+      tester: tester,
+      widgetKeyStr: 'audio_quality_checkbox',
+    );
+  } else {
+    IntegrationTestUtil.verifyWidgetIsEnabled(
+      tester: tester,
+      widgetKeyStr: 'audio_quality_checkbox',
+    );
+  }
+
+  Finder downloadAtMusicalQualityCheckBoxFinder =
+      find.byKey(const Key('audio_quality_checkbox'));
+  Checkbox downloadAtMusicalQualityCheckBoxWidget =
+      tester.widget<Checkbox>(downloadAtMusicalQualityCheckBoxFinder);
+  String playlistWrittenQuality;
+
+  if (playlistQuality == PlaylistQuality.music) {
+    // Verify that the download at musical quality checkbox is
+    // checked
+    expect(downloadAtMusicalQualityCheckBoxWidget.value, true);
+    playlistWrittenQuality = 'musical';
+  } else {
+    // Verify that the download at musical quality checkbox is
+    // unchecked
+    expect(downloadAtMusicalQualityCheckBoxWidget.value, false);
+    playlistWrittenQuality = 'spoken';
+  }
+
+  await IntegrationTestUtil.verifyPlaylistDataDialogContent(
+    tester: tester,
+    playlistTitle: playlistTitle,
+    playlistDownloadAudioSortFilterParmsName: 'default',
+    playlistPlayAudioSortFilterParmsName: 'default',
+    playlistAudioQuality: playlistWrittenQuality,
+  );
 }
 
 void _verifyRestoredPlaylistAndAudio({
