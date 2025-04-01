@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:audiolearn/views/my_home_page.dart';
+import 'package:audiolearn/views/widgets/audio_info_dialog.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -2158,10 +2159,16 @@ class IntegrationTestUtil {
 
     expect(audioDurationTextWidget.data, audioDuration);
 
+    await tester.drag(
+      find.byType(AudioInfoDialog),
+      const Offset(0, -300), // Negative value for vertical drag to scroll down
+    );
+    await tester.pumpAndSettle();
+
     if (audioQuality.isNotEmpty) {
       // Verify the audio quality of the audio
-      final Text audioQualityTextWidget = tester.widget<Text>(
-          find.byKey(const Key('audioInfoQualityKey')));
+      final Text audioQualityTextWidget =
+          tester.widget<Text>(find.byKey(const Key('audioInfoQualityKey')));
 
       expect(audioQualityTextWidget.data, audioQuality);
     }

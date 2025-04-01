@@ -11941,19 +11941,18 @@ void main() {
       );
 
       // Now typing on the download playlist button to download the
-      // new video audio's present the recreated playlist.
+      // an audio.
       await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
       await tester.pumpAndSettle();
 
       await Future.delayed(const Duration(milliseconds: 1000));
 
-      // Now tap on Stop button to stop the download
-      await tester.tap(find.byKey(const Key('stopDownloadingButton')));
-      await tester.pumpAndSettle();
-
       // Add a delay to allow the download to finish.
       for (int i = 0; i < 6; i++) {
         await Future.delayed(const Duration(seconds: 1));
+        await tester.pumpAndSettle();
+        // Now tap on Stop button to stop the download
+        await tester.tap(find.byKey(const Key('stopDownloadingButton')));
         await tester.pumpAndSettle();
       }
 
@@ -12006,8 +12005,7 @@ void main() {
         playlistQuality: PlaylistQuality.voice,
       );
 
-      // Set playlist audio quality to musical. Then, the application is
-      // restarted ...
+      // Set playlist audio quality to musical.
       await _tapOnSetAudioQualityMenu(
         tester: tester,
         playlistToModifyTitle: localPlaylistTitle,
@@ -12021,18 +12019,97 @@ void main() {
         playlistQuality: PlaylistQuality.music,
       );
 
-// STAYED HERE
+      const String singleVideoUrl = 'https://youtu.be/uv3VQoWSjBE';
+
+      // Entering the single video URL in the Youtube URL or search text field
+      // of the app
+      await tester.enterText(
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
+        singleVideoUrl,
+      );
+      await tester.pumpAndSettle();
+
+      // Open the target playlist selection dialog by tapping the
+      // download single video button
+      await tester.tap(find.byKey(const Key('downloadSingleVideoButton')));
+      await tester.pumpAndSettle();
+
+      // Find the RadioListTile target playlist to which the audio
+      // will be downloaded
+
+      final Finder radioListTile = find.byWidgetPredicate(
+        (Widget widget) =>
+            widget is RadioListTile &&
+            widget.title is Text &&
+            (widget.title as Text).data == localPlaylistTitle,
+      );
+
+      // Tap the target playlist RadioListTile to select it
+      await tester.tap(radioListTile);
+      await tester.pumpAndSettle();
+
+      // Now find the confirm button and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      // Verify the displayed alert dialog
+      await IntegrationTestUtil.verifyAlertDisplayAndCloseIt(
+        tester: tester,
+        alertDialogMessage:
+            "Confirm target playlist \"$localPlaylistTitle\" for downloading single video audio in high-quality music format.",
+      );
+
+      // Add a delay to allow the download to finish.
+      await Future.delayed(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.verifyAudioInfoDialog(
+        tester: tester,
+        audioEnclosingPlaylistTitle: localPlaylistTitle,
+        movedOrCopiedAudioTitle: 'audio learn test short video two',
+        movedFromPlaylistTitle: '',
+        movedToPlaylistTitle: '',
+        copiedFromPlaylistTitle: '',
+        copiedToPlaylistTitle: '',
+        audioDuration: '0:00:09.8',
+        audioQuality: 'Yes', // Is musical quality
+      );
+
+      // Re-set the unselected MyValTest playlist audio quality
+      // to spoken and then select it to verify the state of the
+      // audio quality checkbox.
+      await _resetUnselectedPlaylistAudioQualityAndThenSelectPlaylist(
+        tester: tester,
+        playlistTitle: youtubePlaylistToModifyTitle,
+        isPlaylistLocal: false,
+        playlistQuality: PlaylistQuality.voice,
+      );
+
+      // Re-set the unselected 'local_audio' playlist audio quality
+      // to spoken and then select it to verify the state of the
+      // audio quality checkbox.
+      await _resetUnselectedPlaylistAudioQualityAndThenSelectPlaylist(
+        tester: tester,
+        playlistTitle: localPlaylistTitle,
+        isPlaylistLocal: true,
+        playlistQuality: PlaylistQuality.voice,
+      );
+
+      // Now, re-select the 'MyValTest' playlist by tapping on the
+      // playlist checkbox.
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: youtubePlaylistToModifyTitle,
+      );
 
       // Now typing on the download playlist button to download the
-      // new video audio's present the recreated playlist.
+      // an audio.
       await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
       await tester.pumpAndSettle();
 
-      await Future.delayed(const Duration(milliseconds: 1500));
-
-      // Now tap on Stop button to stop the download
-      await tester.tap(find.byKey(const Key('stopDownloadingButton')));
-      await tester.pumpAndSettle();
+      await Future.delayed(const Duration(milliseconds: 1000));
 
       // Add a delay to allow the download to finish.
       for (int i = 0; i < 6; i++) {
@@ -12043,23 +12120,73 @@ void main() {
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: youtubePlaylistToModifyTitle,
-        movedOrCopiedAudioTitle: 'Really short video',
+        movedOrCopiedAudioTitle: 'morning _ cinematic video',
         movedFromPlaylistTitle: '',
         movedToPlaylistTitle: '',
         copiedFromPlaylistTitle: '',
         copiedToPlaylistTitle: '',
-        audioDuration: '0:00:09.8',
-        audioQuality: 'Yes', // Is musical quality
-      );
-
-      // Now selecting the local playlist by tapping on the
-      // playlist checkbox and restart the application.
-      await IntegrationTestUtil.selectPlaylist(
-        tester: tester,
-        playlistToSelectTitle: 'local',
+        audioDuration: '0:00:58.9',
+        audioQuality: 'No', // Is musical quality
       );
     });
   });
+}
+
+Future<void> _resetUnselectedPlaylistAudioQualityAndThenSelectPlaylist({
+  required WidgetTester tester,
+  required String playlistTitle,
+  required bool isPlaylistLocal,
+  required PlaylistQuality playlistQuality,
+}) async {
+  if (playlistQuality == PlaylistQuality.voice) {
+    // Re-set the unselected MyValTest playlist audio quality
+    // to spoken.
+    await _tapOnSetAudioQualityMenu(
+      tester: tester,
+      playlistToModifyTitle: playlistTitle,
+      setMusicQuality: false,
+    );
+  } else {
+    // Re-set the unselected MyValTest playlist audio quality
+    // to musical.
+    await _tapOnSetAudioQualityMenu(
+      tester: tester,
+      playlistToModifyTitle: playlistTitle,
+      setMusicQuality: true,
+    );
+  }
+
+  // Now selecting the MyValTest playlist by tapping on the
+  // playlist checkbox.
+  await IntegrationTestUtil.selectPlaylist(
+    tester: tester,
+    playlistToSelectTitle: playlistTitle,
+  );
+
+  if (!isPlaylistLocal) {
+    // Verify that the music quality checkbox is enabled
+    IntegrationTestUtil.verifyWidgetIsEnabled(
+      tester: tester,
+      widgetKeyStr: 'audio_quality_checkbox',
+    );
+  } else {
+    // Verify that the music quality checkbox is disabled
+    IntegrationTestUtil.verifyWidgetIsDisabled(
+      tester: tester,
+      widgetKeyStr: 'audio_quality_checkbox',
+    );
+  }
+
+  Finder downloadAtMusicalQualityCheckBoxFinder =
+      find.byKey(const Key('audio_quality_checkbox'));
+  Checkbox downloadAtMusicalQualityCheckBoxWidget =
+      tester.widget<Checkbox>(downloadAtMusicalQualityCheckBoxFinder);
+
+  if (playlistQuality == PlaylistQuality.voice) {
+    expect(downloadAtMusicalQualityCheckBoxWidget.value, false);
+  } else {
+    expect(downloadAtMusicalQualityCheckBoxWidget.value, true);
+  }
 }
 
 Future<void> _verifyPlaylistAudioQuality({
@@ -13179,9 +13306,15 @@ Future<void> _tapOnSetAudioQualityMenu({
       tester.widget(find.byKey(const Key('setValueToTargetDialogKey')));
   expect(alertDialogText.data, 'Select audio quality');
 
-  // Tap on the ^musical' quality checkbox to select it
-  await tester.tap(find.byKey(const Key('checkbox_1_key')));
-  await tester.pumpAndSettle();
+  if (setMusicQuality) {
+    // Tap on the 'musical' quality checkbox to select it
+    await tester.tap(find.byKey(const Key('checkbox_1_key')));
+    await tester.pumpAndSettle();
+  } else {
+    // Tap on the 'spoken' quality checkbox to select it
+    await tester.tap(find.byKey(const Key('checkbox_0_key')));
+    await tester.pumpAndSettle();
+  }
 
   // And click on the 'OK' button to confirm the selection
   await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
