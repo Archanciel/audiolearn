@@ -10,6 +10,7 @@ import 'package:window_size/window_size.dart';
 
 import 'constants.dart';
 import 'services/permission_requester_service.dart';
+import 'viewmodels/picture_vm.dart';
 import 'viewmodels/playlist_list_vm.dart';
 import 'viewmodels/audio_download_vm.dart';
 import 'viewmodels/audio_player_vm.dart';
@@ -178,7 +179,8 @@ class MainApp extends StatelessWidget with ScreenMixin {
         ChangeNotifierProvider(
             create: (_) => DateFormatVM(
                   settingsDataService: _settingsDataService,
-                ))
+                )),
+        ChangeNotifierProvider(create: (_) => PictureVM())
       ],
       child: Consumer2<ThemeProviderVM, LanguageProviderVM>(
         builder: (context, themeProvider, languageProvider, child) {

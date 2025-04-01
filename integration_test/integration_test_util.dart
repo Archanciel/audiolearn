@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:audiolearn/views/my_home_page.dart';
 import 'package:audiolearn/views/widgets/audio_info_dialog.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -1776,6 +1777,7 @@ class IntegrationTestUtil {
           ChangeNotifierProvider(create: (_) => audioPlayerVM),
           ChangeNotifierProvider(create: (_) => dateFormatVM),
           ChangeNotifierProvider(create: (_) => CommentVM()),
+          ChangeNotifierProvider(create: (_) => PictureVM()),
         ],
         child: Consumer2<ThemeProviderVM, LanguageProviderVM>(
           builder: (context, themeProvider, languageProvider, child) {

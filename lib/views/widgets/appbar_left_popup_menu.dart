@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../../models/audio.dart';
 import '../../models/playlist.dart';
+import '../../viewmodels/picture_vm.dart';
 import '../../viewmodels/playlist_list_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../../constants.dart';
@@ -90,6 +91,11 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
 
         final PlaylistListVM playlistListVMlistenFalse =
             Provider.of<PlaylistListVM>(
+          context,
+          listen: false,
+        );
+
+        final PictureVM pictureVMlistenFalse = Provider.of<PictureVM>(
           context,
           listen: false,
         );
@@ -251,7 +257,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   return;
                 }
 
-                playlistListVMlistenFalse
+                pictureVMlistenFalse
                     .storeAudioPictureFileInPlaylistPictureDir(
                   audio: audio,
                   pictureFilePathName: selectedPictureFilePathName,
