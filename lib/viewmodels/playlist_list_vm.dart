@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:archive/archive.dart';
+import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
@@ -63,6 +64,7 @@ class PlaylistListVM extends ChangeNotifier {
 
   final AudioDownloadVM _audioDownloadVM;
   final CommentVM _commentVM;
+  final PictureVM _pictureVM;
   final WarningMessageVM _warningMessageVM;
   final SettingsDataService _settingsDataService;
 
@@ -140,10 +142,12 @@ class PlaylistListVM extends ChangeNotifier {
     required WarningMessageVM warningMessageVM,
     required AudioDownloadVM audioDownloadVM,
     required CommentVM commentVM,
+    required PictureVM pictureVM,
     required SettingsDataService settingsDataService,
   })  : _warningMessageVM = warningMessageVM,
         _audioDownloadVM = audioDownloadVM,
         _commentVM = commentVM,
+        _pictureVM = pictureVM,
         _settingsDataService = settingsDataService,
         _isPlaylistListExpanded = settingsDataService.get(
               settingType: SettingType.playlists,
@@ -695,60 +699,6 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Method called when the user clicks on the audio item 'Remove Audio Picture'
-  /// menu or on audio player view left appbar 'Remove Audio Picture' menu.
-  /// Deleting the picture file whose name is the audio file name with the
-  /// extension .jpg will cause the audio player to display no picture for
-  /// the audio.
-  void deleteAudioPictureFileInPlaylistPictureDir({
-    required Audio audio,
-  }) {
-    final String playlistDownloadPath = audio.enclosingPlaylist!.downloadPath;
-    final String createdAudioPictureFileName =
-        audio.audioFileName.replaceAll('.mp3', '.jpg');
-
-    final String audioPicturePathFileName =
-        "$playlistDownloadPath${path.separator}$kPictureDirName${path.separator}$createdAudioPictureFileName";
-
-    DirUtil.deleteFileIfExist(
-      pathFileName: audioPicturePathFileName,
-    );
-  }
-
-  /// Returns the audio picture file if it exists, null otherwise.
-  File? getAudioPictureFile({
-    required Audio audio,
-  }) {
-    String audioPicturePathFileName = _buildAudioPictureFilePathName(
-      playlistDownloadPath: audio.enclosingPlaylist!.downloadPath,
-      audioFileName: audio.audioFileName,
-    );
-
-    File file = File(audioPicturePathFileName);
-
-    if (!file.existsSync()) {
-      return null;
-    }
-
-    // Return the File instance
-    return file;
-  }
-
-  /// Returns a string which is the combination of the path of the picture directory
-  /// and the file name to the maybe not existing audio picture file.
-  String _buildAudioPictureFilePathName({
-    required String playlistDownloadPath,
-    required String audioFileName,
-  }) {
-    final String playlistPicturePath =
-        "$playlistDownloadPath${path.separator}$kPictureDirName";
-
-    final String createdAudioPictureFileName =
-        audioFileName.replaceAll('.mp3', '.jpg');
-
-    return "$playlistPicturePath${path.separator}$createdAudioPictureFileName";
-  }
-
   /// Method called when the user confirms deleting the playlist.
   void deletePlaylist({
     required Playlist playlistToDelete,
@@ -979,7 +929,7 @@ class PlaylistListVM extends ChangeNotifier {
       _commentVM.deleteAllAudioComments(commentedAudio: audio);
 
       // deleting the audio picture file if it exists
-      _deleteAudioPictureIfExist(
+      _pictureVM.deleteAudioPictureIfExist(
         audio: audio,
       );
     }
@@ -1202,7 +1152,7 @@ class PlaylistListVM extends ChangeNotifier {
         }
 
         // Moving the audio picture file if it exists
-        _moveAudioPictureToTargetPlaylist(
+        _pictureVM.moveAudioPictureToTargetPlaylist(
           audio: audio,
           targetPlaylist: targetPlaylist,
         );
@@ -1815,7 +1765,7 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     // Moving the audio picture file if it exists
-    _moveAudioPictureToTargetPlaylist(
+    _pictureVM.moveAudioPictureToTargetPlaylist(
       audio: audio,
       targetPlaylist: targetPlaylist,
     );
@@ -1823,35 +1773,6 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
 
     return nextAudio;
-  }
-
-  void _moveAudioPictureToTargetPlaylist({
-    required Audio audio,
-    required Playlist targetPlaylist,
-  }) {
-    // Obtaining the potentially existing audio picture file path
-    // name
-
-    final String playlistDownloadPath = audio.enclosingPlaylist!.downloadPath;
-    final String audioPictureFileName =
-        audio.audioFileName.replaceAll('.mp3', '.jpg');
-    final String audioPicturePathFileName =
-        "$playlistDownloadPath${path.separator}$kPictureDirName${path.separator}$audioPictureFileName";
-
-    if (File(audioPicturePathFileName).existsSync()) {
-      // The case if a picture is associated to the audio
-      final String targetPlaylistPicturePath =
-          "${targetPlaylist.downloadPath}${path.separator}$kPictureDirName";
-
-      // Ensures the target playlist picture directory exists.
-      DirUtil.createDirIfNotExistSync(
-        pathStr: targetPlaylistPicturePath,
-      );
-      DirUtil.moveFileToDirectoryIfNotExistSync(
-        sourceFilePathName: audioPicturePathFileName,
-        targetDirectoryPath: targetPlaylistPicturePath,
-      );
-    }
   }
 
   /// Method called when the user clicks on the 'Copy audio to
@@ -2155,22 +2076,8 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     // deleting the audio picture file if it exists
-    _deleteAudioPictureIfExist(
+    _pictureVM.deleteAudioPictureIfExist(
       audio: audio,
-    );
-  }
-
-  void _deleteAudioPictureIfExist({
-    required Audio audio,
-  }) {
-    final String playlistDownloadPath = audio.enclosingPlaylist!.downloadPath;
-    final String audioPictureFileName =
-        audio.audioFileName.replaceAll('.mp3', '.jpg');
-    final String audioPicturePathFileName =
-        "$playlistDownloadPath${path.separator}$kPictureDirName${path.separator}$audioPictureFileName";
-
-    DirUtil.deleteFileIfExist(
-      pathFileName: audioPicturePathFileName,
     );
   }
 

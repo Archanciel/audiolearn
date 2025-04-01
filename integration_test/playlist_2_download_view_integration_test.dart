@@ -6,6 +6,7 @@ import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/audio_player_vm.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
+import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 import 'package:audiolearn/views/widgets/audio_sort_filter_dialog.dart';
@@ -10977,6 +10978,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
+        pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -11368,7 +11370,7 @@ void main() {
   group('Manage picture for audio', () {
     group('From audio list item in playlist download view', () {
       testWidgets(
-          '''Add picture to audio, then add another picture to the same audio. This
+          '''Add/remove picture to audio, then add another picture to the same audio. This
            will replace the existing picture. The replaced picture file will have
            the same name as the first added picture, but a different size. Then
            delete the audio picture. Finally, re-add a picture to the same audio.''',
@@ -11631,7 +11633,7 @@ void main() {
     });
     group('From appbar left popup menu in audio player view', () {
       testWidgets(
-          '''Add picture to audio, then add another picture to the same audio. This
+          '''Add/remove picture to audio, then add another picture to the same audio. This
            will replace the existing picture. The replaced picture file will have
            the same name as the first added picture, but a different size. Then
            delete the audio picture. Finally, re-add a picture to the same audio.

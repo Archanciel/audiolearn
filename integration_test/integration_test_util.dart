@@ -1673,6 +1673,7 @@ class IntegrationTestUtil {
       warningMessageVM: warningMessageVM,
       audioDownloadVM: audioDownloadVM,
       commentVM: CommentVM(),
+      pictureVM: PictureVM(),
       settingsDataService: settingsDataService,
     );
 

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
+import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:audiolearn/views/widgets/confirm_action_dialog.dart';
 import 'package:audiolearn/views/widgets/audio_modification_dialog.dart';
 import 'package:audiolearn/views/widgets/comment_add_edit_dialog.dart';
@@ -106,6 +107,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
+        pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -125,7 +127,8 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccessWithMock(
+      await IntegrationTestUtil
+          .launchIntegrTestAppEnablingInternetAccessWithMock(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -390,6 +393,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
+        pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -409,7 +413,8 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccessWithMock(
+      await IntegrationTestUtil
+          .launchIntegrTestAppEnablingInternetAccessWithMock(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -542,6 +547,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
+        pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -561,7 +567,8 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccessWithMock(
+      await IntegrationTestUtil
+          .launchIntegrTestAppEnablingInternetAccessWithMock(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -800,6 +807,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
+        pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -819,7 +827,8 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccessWithMock(
+      await IntegrationTestUtil
+          .launchIntegrTestAppEnablingInternetAccessWithMock(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -1590,6 +1599,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
+        pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -1609,7 +1619,8 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccessWithMock(
+      await IntegrationTestUtil
+          .launchIntegrTestAppEnablingInternetAccessWithMock(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -1823,6 +1834,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
+        pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -1842,7 +1854,8 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccessWithMock(
+      await IntegrationTestUtil
+          .launchIntegrTestAppEnablingInternetAccessWithMock(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -1948,7 +1961,8 @@ void main() {
       // now close the app and then restart it in order to load the
       // copied youtube playlist
 
-      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccessWithMock(
+      await IntegrationTestUtil
+          .launchIntegrTestAppEnablingInternetAccessWithMock(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -2014,6 +2028,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
+        pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -2033,7 +2048,8 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccessWithMock(
+      await IntegrationTestUtil
+          .launchIntegrTestAppEnablingInternetAccessWithMock(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -2165,6 +2181,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
+        pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -2184,7 +2201,8 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccessWithMock(
+      await IntegrationTestUtil
+          .launchIntegrTestAppEnablingInternetAccessWithMock(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -2312,6 +2330,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
+        pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -2331,7 +2350,8 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccessWithMock(
+      await IntegrationTestUtil
+          .launchIntegrTestAppEnablingInternetAccessWithMock(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -2465,6 +2485,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
+        pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -2478,7 +2499,8 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccessWithMock(
+      await IntegrationTestUtil
+          .launchIntegrTestAppEnablingInternetAccessWithMock(
         tester: tester,
         audioDownloadVM: mockAudioDownloadVM,
         settingsDataService: settingsDataService,
@@ -2886,7 +2908,9 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('Download single video audio in spoken quality with invalid URL', (tester) async {
+    testWidgets(
+        'Download single video audio in spoken quality with invalid URL',
+        (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -2947,6 +2971,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
+        pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -2966,7 +2991,8 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccessWithMock(
+      await IntegrationTestUtil
+          .launchIntegrTestAppEnablingInternetAccessWithMock(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -3070,7 +3096,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('Download single video audio in music quality with invalid URL', (tester) async {
+    testWidgets('Download single video audio in music quality with invalid URL',
+        (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -3131,6 +3158,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
+        pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -3150,7 +3178,8 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccessWithMock(
+      await IntegrationTestUtil
+          .launchIntegrTestAppEnablingInternetAccessWithMock(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -3213,7 +3242,8 @@ void main() {
       await tester.pumpAndSettle();
 
       // Set the audio quality to music
-      await tester.tap(find.byKey(const Key('downloadSingleVideoAudioAtMusicQualityCheckboxKey')));
+      await tester.tap(find.byKey(
+          const Key('downloadSingleVideoAudioAtMusicQualityCheckboxKey')));
       await tester.pumpAndSettle();
 
       // Now find the confirm button and tap on it
@@ -3319,6 +3349,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
+        pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -3338,7 +3369,8 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccessWithMock(
+      await IntegrationTestUtil
+          .launchIntegrTestAppEnablingInternetAccessWithMock(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -3539,6 +3571,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
+        pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -3558,7 +3591,8 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccessWithMock(
+      await IntegrationTestUtil
+          .launchIntegrTestAppEnablingInternetAccessWithMock(
         tester: tester,
         audioDownloadVM: audioDownloadVM,
         settingsDataService: settingsDataService,
@@ -5707,7 +5741,8 @@ void main() {
       // Now verifying the copied audio info dialog related content
       // in the target local playlist
 
-      Finder targetAudioListTileWidgetFinder = await IntegrationTestUtil.verifyAudioInfoDialog(
+      Finder targetAudioListTileWidgetFinder =
+          await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localAudioTargetOnePlaylistTitle,
         movedOrCopiedAudioTitle: copiedAudioTitle,
@@ -5803,7 +5838,8 @@ void main() {
 
       // Now verifying the copied audio info dialog related content
       // in the source local playlist
-      targetAudioListTileWidgetFinder = await IntegrationTestUtil.verifyAudioInfoDialog(
+      targetAudioListTileWidgetFinder =
+          await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localAudioTargetOnePlaylistTitle,
         movedOrCopiedAudioTitle: copiedAudioTitle,
@@ -5824,7 +5860,8 @@ void main() {
 
       // Now verifying the copied audio info dialog related content
       // in the target local playlist
-      targetAudioListTileWidgetFinder = await IntegrationTestUtil.verifyAudioInfoDialog(
+      targetAudioListTileWidgetFinder =
+          await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localAudioTargetTwoPlaylistTitle,
         movedOrCopiedAudioTitle: copiedAudioTitle,
@@ -6365,7 +6402,8 @@ void main() {
       // Now verifying the moved audio info dialog related content
       // in the target local playlist
 
-      Finder targetAudioListTileWidgetFinder = await IntegrationTestUtil.verifyAudioInfoDialog(
+      Finder targetAudioListTileWidgetFinder =
+          await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localAudioTargetPlaylistTitle,
         movedOrCopiedAudioTitle: movedAudioTitle,
@@ -6513,7 +6551,8 @@ void main() {
         playlistToSelectTitle: youtubeAudioSourcePlaylistTitle,
       );
 
-      targetAudioListTileWidgetFinder = await IntegrationTestUtil.verifyAudioInfoDialog(
+      targetAudioListTileWidgetFinder =
+          await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: youtubeAudioSourcePlaylistTitle,
         movedOrCopiedAudioTitle: movedAudioTitle,
@@ -6594,7 +6633,8 @@ void main() {
       // Now verifying the moved audio info dialog related content
       // in the target local playlist
 
-      targetAudioListTileWidgetFinder = await IntegrationTestUtil.verifyAudioInfoDialog(
+      targetAudioListTileWidgetFinder =
+          await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localAudioTargetPlaylistTitle,
         movedOrCopiedAudioTitle: movedAudioTitle,
@@ -10689,7 +10729,8 @@ void main() {
 
           // Setting to this variables the currently selected audio title/subTitle
           // of the 'S8 audio' playlist
-          String currentAudioTitle = "La surpopulation mondiale par Jancovici et Barrau";
+          String currentAudioTitle =
+              "La surpopulation mondiale par Jancovici et Barrau";
           String currentAudioSubTitle =
               "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.";
 
@@ -10712,8 +10753,7 @@ void main() {
            uncommented audio "Les besoins artificiels par R.Keucheyan" and select
            'Delete Audio ...'. Verify the suppression of the audio mp3. Verify
            also the updated playlist playable audio list and the new not totally
-           played selected audio.''',
-            (tester) async {
+           played selected audio.''', (tester) async {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName:
@@ -10893,7 +10933,8 @@ void main() {
 
           // Setting to this variables the currently selected audio title/subTitle
           // of the 'S8 audio' playlist
-          String currentAudioTitle = "La surpopulation mondiale par Jancovici et Barrau";
+          String currentAudioTitle =
+              "La surpopulation mondiale par Jancovici et Barrau";
           String currentAudioSubTitle =
               "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.";
 
@@ -16847,7 +16888,8 @@ void main() {
       );
 
       // Tap on Close text button
-      await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+      await tester.tap(
+          find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
       await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
@@ -16924,7 +16966,8 @@ void main() {
       );
 
       // Tap on Close text button
-      await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+      await tester.tap(
+          find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
       await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
@@ -16980,7 +17023,8 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+        await tester.tap(
+            find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
@@ -16997,7 +17041,8 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+        await tester.tap(
+            find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // When closing the playlist comment dialog, the played comment audio
@@ -17067,7 +17112,8 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+        await tester.tap(
+            find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
@@ -17084,7 +17130,8 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+        await tester.tap(
+            find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // When closing the playlist comment dialog, the played comment audio
@@ -17158,7 +17205,8 @@ void main() {
         await tester.pumpAndSettle();
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+        await tester.tap(
+            find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
@@ -17175,7 +17223,8 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+        await tester.tap(
+            find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Tap on the 'Toggle List' button to hide the playlist list
@@ -17250,7 +17299,8 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+        await tester.tap(
+            find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
@@ -17267,7 +17317,8 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+        await tester.tap(
+            find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // When closing the playlist comment dialog, the played comment audio
@@ -17337,7 +17388,8 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+        await tester.tap(
+            find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
@@ -17354,7 +17406,8 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+        await tester.tap(
+            find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // When closing the playlist comment dialog, the played comment audio
@@ -17428,7 +17481,8 @@ void main() {
         await tester.pumpAndSettle();
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+        await tester.tap(
+            find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
@@ -17445,7 +17499,8 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+        await tester.tap(
+            find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Tap on the 'Toggle List' button to hide the playlist list
@@ -17520,7 +17575,8 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+        await tester.tap(
+            find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
@@ -17537,7 +17593,8 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+        await tester.tap(
+            find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Tap on the 'Toggle List' button to hide the playlist list
@@ -17611,7 +17668,8 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+        await tester.tap(
+            find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
@@ -17628,7 +17686,8 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+        await tester.tap(
+            find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Tap on the 'Toggle List' button to hide the playlist list
@@ -17706,7 +17765,8 @@ void main() {
         await tester.pumpAndSettle();
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+        await tester.tap(
+            find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
@@ -17723,7 +17783,8 @@ void main() {
         );
 
         // Tap on Close text button
-        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+        await tester.tap(
+            find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Tap on the 'Toggle List' button to hide the playlist list
