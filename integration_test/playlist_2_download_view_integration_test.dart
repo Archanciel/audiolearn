@@ -12128,6 +12128,12 @@ void main() {
         audioDuration: '0:00:58.9',
         audioQuality: 'No', // Is musical quality
       );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
 }
