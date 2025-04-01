@@ -3,6 +3,7 @@
 import 'package:audiolearn/services/sort_filter_parameters.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
+import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -68,6 +69,10 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
       context,
       listen: true,
     );
+    final PictureVM pictureVMlistenFalse = Provider.of<PictureVM>(
+      context,
+      listen: false,
+    );
 
     Color? audioTitleAndSubTitleTextColor;
     Color? audioTitleAndSubTitleBackgroundColor;
@@ -90,6 +95,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
             context: context,
             playlistListVMlistenFalse: playlistListVMlistendFalse,
             audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+            pictureVMlistenFalse: pictureVMlistenFalse,
             audio: audio,
           );
         },
@@ -148,6 +154,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
     required BuildContext context,
     required PlaylistListVM playlistListVMlistenFalse,
     required AudioPlayerVM audioPlayerVMlistenFalse,
+    required PictureVM pictureVMlistenFalse,
     required Audio audio,
   }) {
     final RenderBox listTileBox = context.findRenderObject() as RenderBox;
@@ -309,7 +316,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
               return;
             }
 
-            playlistListVMlistenFalse.storeAudioPictureFileInPlaylistPictureDir(
+            pictureVMlistenFalse.storeAudioPictureFileInPlaylistPictureDir(
               audio: audio,
               pictureFilePathName: selectedPictureFilePathName,
             );
