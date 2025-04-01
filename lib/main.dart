@@ -127,10 +127,14 @@ class MainApp extends StatelessWidget with ScreenMixin {
 
     final CommentVM commentVM = CommentVM();
 
+    final PictureVM pictureVM = PictureVM();
+
+
     final PlaylistListVM playlistListVM = PlaylistListVM(
       warningMessageVM: warningMessageVM,
       audioDownloadVM: audioDownloadVM,
       commentVM: commentVM,
+      pictureVM: pictureVM,
       settingsDataService: _settingsDataService,
     );
 
@@ -180,7 +184,7 @@ class MainApp extends StatelessWidget with ScreenMixin {
             create: (_) => DateFormatVM(
                   settingsDataService: _settingsDataService,
                 )),
-        ChangeNotifierProvider(create: (_) => PictureVM())
+        ChangeNotifierProvider(create: (_) => pictureVM),
       ],
       child: Consumer2<ThemeProviderVM, LanguageProviderVM>(
         builder: (context, themeProvider, languageProvider, child) {

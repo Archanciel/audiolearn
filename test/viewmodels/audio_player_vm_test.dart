@@ -8,6 +8,7 @@ import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/utils/dir_util.dart';
 import 'package:audiolearn/viewmodels/audio_player_vm.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
+import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart' as path;
@@ -1535,6 +1536,7 @@ Future<AudioPlayerVM> createAudioPlayerVM({
     warningMessageVM: warningMessageVM,
     audioDownloadVM: audioDownloadVM,
     commentVM: CommentVM(),
+    pictureVM: PictureVM(),
     settingsDataService: settingsDataService,
   );
   final CommentVM commentVM = CommentVM();

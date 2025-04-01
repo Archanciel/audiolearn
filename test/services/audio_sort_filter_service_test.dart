@@ -4,6 +4,7 @@ import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/services/sort_filter_parameters.dart';
 import 'package:audiolearn/utils/date_time_parser.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
+import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter_test/flutter_test.dart';
 
@@ -10101,6 +10102,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
+        pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -11065,6 +11067,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
+        pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -11283,6 +11286,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
+        pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -11527,6 +11531,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
+        pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -11700,6 +11705,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
+        pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -11799,6 +11805,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
+        pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -11885,6 +11892,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
+        pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -11967,6 +11975,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
+        pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
       );
 
@@ -12037,6 +12046,7 @@ void main() {
           warningMessageVM: warningMessageVM,
           audioDownloadVM: audioDownloadVM,
           commentVM: CommentVM(),
+          pictureVM: PictureVM(),
           settingsDataService: settingsDataService,
         );
 
@@ -12611,6 +12621,7 @@ void main() {
           warningMessageVM: warningMessageVM,
           audioDownloadVM: audioDownloadVM,
           commentVM: CommentVM(),
+          pictureVM: PictureVM(),
           settingsDataService: settingsDataService,
         );
 

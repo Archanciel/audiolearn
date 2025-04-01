@@ -14,6 +14,7 @@ import '../services/settings_data_service.dart';
 import '../utils/duration_expansion.dart';
 import '../viewmodels/audio_player_vm.dart';
 import '../viewmodels/comment_vm.dart';
+import '../viewmodels/picture_vm.dart';
 import '../viewmodels/playlist_list_vm.dart';
 import '../viewmodels/warning_message_vm.dart';
 import '../viewmodels/theme_provider_vm.dart';
@@ -156,21 +157,25 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
   @override
   Widget build(BuildContext context) {
-    PlaylistListVM playlistListVMlistenFalse = Provider.of<PlaylistListVM>(
+    final ThemeProviderVM themeProviderVMlistenFalse =
+        Provider.of<ThemeProviderVM>(
       context,
       listen: false,
     );
-    PlaylistListVM playlistListVMlistenTrue = Provider.of<PlaylistListVM>(
+    final PlaylistListVM playlistListVMlistenFalse =
+        Provider.of<PlaylistListVM>(
+      context,
+      listen: false,
+    );
+    final PlaylistListVM playlistListVMlistenTrue = Provider.of<PlaylistListVM>(
       context,
       listen: true,
     );
-    AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
+    final AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
       context,
       listen: false,
     );
-
-    final ThemeProviderVM themeProviderVMlistenFalse =
-        Provider.of<ThemeProviderVM>(
+    final PictureVM pictureVMlistenFalse = Provider.of<PictureVM>(
       context,
       listen: false,
     );
@@ -196,6 +201,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           themeProviderVM: themeProviderVMlistenFalse,
           playlistListVMlistenFalse: playlistListVMlistenFalse,
           audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+          pictureVMlistenFalse: pictureVMlistenFalse,
         ),
         (playlistListVMlistenFalse.isPlaylistListExpanded)
             ? _buildExpandedPlaylistList(
@@ -203,7 +209,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             : const SizedBox.shrink(),
         _buildPlayButtonOrAudioPicture(
             playlistListVMlistenTrue: playlistListVMlistenTrue,
-            audioPlayerVMlistenFalse: audioPlayerVMlistenFalse),
+            audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+            pictureVMlistenFalse: pictureVMlistenFalse),
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -241,6 +248,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   Widget _buildPlayButtonOrAudioPicture({
     required PlaylistListVM playlistListVMlistenTrue,
     required AudioPlayerVM audioPlayerVMlistenFalse,
+    required PictureVM pictureVMlistenFalse,
   }) {
     return ValueListenableBuilder<String?>(
       valueListenable: audioPlayerVMlistenFalse.currentAudioTitleNotifier,
@@ -248,7 +256,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         File? audioPictureFile;
 
         if (audioPlayerVMlistenFalse.currentAudio != null) {
-          audioPictureFile = playlistListVMlistenTrue.getAudioPictureFile(
+          audioPictureFile = pictureVMlistenFalse.getAudioPictureFile(
               audio: audioPlayerVMlistenFalse.currentAudio!);
         }
 
@@ -275,6 +283,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     required ThemeProviderVM themeProviderVM,
     required PlaylistListVM playlistListVMlistenFalse,
     required AudioPlayerVM audioPlayerVMlistenFalse,
+    required PictureVM pictureVMlistenFalse,
   }) {
     return ValueListenableBuilder<String?>(
       valueListenable: audioPlayerVMlistenFalse.currentAudioTitleNotifier,
@@ -291,7 +300,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         bool areAudioButtonsEnabled;
 
         if (currentAudio != null) {
-          audioPictureFile = playlistListVMlistenFalse.getAudioPictureFile(
+          audioPictureFile = pictureVMlistenFalse.getAudioPictureFile(
               audio: currentAudio);
           areAudioButtonsEnabled = currentAudioTitle != null;
         } else {
