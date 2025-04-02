@@ -1712,6 +1712,7 @@ class IntegrationTestUtil {
           ChangeNotifierProvider(create: (_) => audioPlayerVM),
           ChangeNotifierProvider(create: (_) => dateFormatVM),
           ChangeNotifierProvider(create: (_) => CommentVM()),
+          ChangeNotifierProvider(create: (_) => PictureVM()),
         ],
         child: Consumer2<ThemeProviderVM, LanguageProviderVM>(
           builder: (context, themeProvider, languageProvider, child) {
