@@ -184,13 +184,14 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       listen: true,
     );
 
-    File? audioPictureFile = pictureVMlistenTrue.getAudioPictureFile(
-        audio: audioPlayerVMlistenFalse.currentAudio!);
+    File? audioPictureFile;
 
     if (audioPlayerVMlistenFalse.currentAudio == null) {
       _audioPlaySpeed = 1.0;
     } else {
       _audioPlaySpeed = audioPlayerVMlistenFalse.currentAudio!.audioPlaySpeed;
+      audioPictureFile = pictureVMlistenTrue.getAudioPictureFile(
+        audio: audioPlayerVMlistenFalse.currentAudio!);
     }
 
     Widget viewContent = Column(
