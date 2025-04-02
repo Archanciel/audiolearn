@@ -328,6 +328,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
               event.logicalKey == LogicalKeyboardKey.numpadEnter) {
             await _whenClosingStopAudioIfPlaying(
               audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+              commentVMlistenFalse: commentVMlistenFalse,
               currentAudio: currentAudio,
             );
 
@@ -427,6 +428,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
             onPressed: () async {
               await _whenClosingStopAudioIfPlaying(
                 audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+                commentVMlistenFalse: commentVMlistenFalse,
                 currentAudio: currentAudio,
               );
 
@@ -444,8 +446,10 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
     );
   }
 
+  /// Method called when clicking on dialog close button or on enter (on Windows).
   Future<void> _whenClosingStopAudioIfPlaying({
     required AudioPlayerVM audioPlayerVMlistenFalse,
+    required CommentVM commentVMlistenFalse,
     required Audio currentAudio,
   }) async {
     // Calling setCurrentAudio() when closing the comment
@@ -463,6 +467,11 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
     await audioPlayerVMlistenFalse.setCurrentAudio(
       audio: currentAudio,
     );
+
+    // Useful in order to redisplay the second line play/pause
+    // icon in the audio player view containing a picture when
+    // the comment list dialog is closed.
+    commentVMlistenFalse.wasCommentDialogOpened = false;
   }
 
   List<Widget> _buildAudioCommentsLst({
