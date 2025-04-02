@@ -11886,6 +11886,61 @@ void main() {
         );
       });
     });
+    group('Comment minimization for pictured or not audio', () {
+      testWidgets(
+          '''Click on pictured an commented audio title to open audio player view.''',
+          (WidgetTester tester) async {
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        const String youtubePlaylistTitle = 'Jésus-Christ';
+        final String playlistPictureDir =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$kPictureDirName";
+        const String audioForPictureTitle =
+            'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien';
+        const String audioForPictureTitleDurationStr = '40:53';
+        const String audioAlreadyUsingPictureTitle =
+            'NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE';
+        const String audioAlreadyUsingPictureDurationStr = '24:07';
+        const String pictureFileName =
+            "241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.jpg";
+        const int pictureFileSize = 94507;
+
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'audio_player_picture_test',
+          selectedPlaylistTitle: youtubePlaylistTitle,
+          tapOnPlaylistToggleButton: false,
+        );
+
+        // Available pictures file path
+        String pictureSourcePath =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$kPictureDirName";
+
+        // Go to the audio player view
+        final Finder audioForPictureTitleListTileTextWidgetFinder =
+            find.text(audioAlreadyUsingPictureTitle);
+
+        await tester.tap(audioForPictureTitleListTileTextWidgetFinder);
+        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+          tester: tester,
+        );
+
+
+        // Deleting the added audio picture
+        await _removeAudioPictureInAudioPlayerView(
+          tester: tester,
+          picturedAudioTitle: audioForPictureTitle,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+    });
   });
   group('Change playlist audio quality tests', () {
     testWidgets(
