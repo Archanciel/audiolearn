@@ -13,6 +13,7 @@ import '../../services/settings_data_service.dart';
 import '../../viewmodels/audio_player_vm.dart';
 import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/date_format_vm.dart';
+import '../../viewmodels/picture_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../screen_mixin.dart';
 import 'comment_add_edit_dialog.dart';
@@ -278,6 +279,10 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
       context,
       listen: false,
     );
+    final PictureVM pictureVMlistenFalse = Provider.of<PictureVM>(
+      context,
+      listen: false,
+    );
     final bool isDarkTheme = themeProviderVM.currentTheme == AppTheme.dark;
     final Audio currentAudio = widget.currentAudio;
 
@@ -339,10 +344,15 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
       },
       child: AlertDialog(
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(AppLocalizations.of(context)!.commentsDialogTitle),
             const SizedBox(width: 15),
-            (CommentDialogManager.hasActiveOverlay)
+            (pictureVMlistenFalse.getAudioPictureFile(
+                          audio: currentAudio,
+                        ) !=
+                        null &&
+                    CommentDialogManager.hasActiveOverlay)
                 // Showing the minimize icon happens only if the comment list
                 // add dialog is was opened in the audio player view by the
                 // CommentDialogManager.
