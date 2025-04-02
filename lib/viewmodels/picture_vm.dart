@@ -39,6 +39,8 @@ class PictureVM extends ChangeNotifier {
         sourceFilePathName: pictureFilePathName,
         targetDirectoryPath: playlistPicturePath,
         targetFileName: createdAudioPictureFileName);
+
+    notifyListeners();
   }
 
   /// Method called when the user clicks on the audio item 'Remove Audio Picture'
@@ -59,6 +61,8 @@ class PictureVM extends ChangeNotifier {
     DirUtil.deleteFileIfExist(
       pathFileName: audioPicturePathFileName,
     );
+
+    notifyListeners();
   }
 
   /// Returns the audio picture file if it exists, null otherwise.
