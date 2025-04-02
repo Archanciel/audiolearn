@@ -42,6 +42,16 @@ class CommentVM extends ChangeNotifier {
 
   final List<CommentPlayCommand> _undoCommentPlayCommandLst = [];
 
+  // Used to manage second line play/pause button in audio player
+  // view. This button is not displayed if comment dialog was opened
+  // and/or minimized.
+  bool _wasCommentDialogOpened = false;
+  bool get wasCommentDialogOpened => _wasCommentDialogOpened;
+  set wasCommentDialogOpened(bool value) {
+    _wasCommentDialogOpened = value;
+    notifyListeners();
+  }
+
   CommentVM();
 
   /// If the comment file exists, the list of comments it contains is

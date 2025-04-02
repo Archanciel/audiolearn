@@ -175,10 +175,17 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       context,
       listen: false,
     );
-    final PictureVM pictureVMlistenFalse = Provider.of<PictureVM>(
+    final CommentVM commentVMlistenTrue = Provider.of<CommentVM>(
       context,
-      listen: false,
+      listen: true,
     );
+    final PictureVM pictureVMlistenTrue = Provider.of<PictureVM>(
+      context,
+      listen: true,
+    );
+
+    File? audioPictureFile = pictureVMlistenTrue.getAudioPictureFile(
+        audio: audioPlayerVMlistenFalse.currentAudio!);
 
     if (audioPlayerVMlistenFalse.currentAudio == null) {
       _audioPlaySpeed = 1.0;
@@ -201,7 +208,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           themeProviderVM: themeProviderVMlistenFalse,
           playlistListVMlistenFalse: playlistListVMlistenFalse,
           audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-          pictureVMlistenFalse: pictureVMlistenFalse,
+          commentVMlistenTrue: commentVMlistenTrue,
+          pictureVMlistenTrue: pictureVMlistenTrue,
+          audioPictureFile: audioPictureFile,
         ),
         (playlistListVMlistenFalse.isPlaylistListExpanded)
             ? _buildExpandedPlaylistList(
@@ -210,7 +219,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         _buildPlayButtonOrAudioPicture(
             playlistListVMlistenTrue: playlistListVMlistenTrue,
             audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-            pictureVMlistenFalse: pictureVMlistenFalse),
+            audioPictureFile: audioPictureFile),
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -248,18 +257,11 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   Widget _buildPlayButtonOrAudioPicture({
     required PlaylistListVM playlistListVMlistenTrue,
     required AudioPlayerVM audioPlayerVMlistenFalse,
-    required PictureVM pictureVMlistenFalse,
+    required File? audioPictureFile,
   }) {
     return ValueListenableBuilder<String?>(
       valueListenable: audioPlayerVMlistenFalse.currentAudioTitleNotifier,
       builder: (context, currentAudioTitle, child) {
-        File? audioPictureFile;
-
-        if (audioPlayerVMlistenFalse.currentAudio != null) {
-          audioPictureFile = pictureVMlistenFalse.getAudioPictureFile(
-              audio: audioPlayerVMlistenFalse.currentAudio!);
-        }
-
         return (audioPictureFile != null)
             ? _buildAudioPictureOnScreenCenter(
                 audioPictureFile: audioPictureFile,
@@ -283,7 +285,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     required ThemeProviderVM themeProviderVM,
     required PlaylistListVM playlistListVMlistenFalse,
     required AudioPlayerVM audioPlayerVMlistenFalse,
-    required PictureVM pictureVMlistenFalse,
+    required CommentVM commentVMlistenTrue,
+    required PictureVM pictureVMlistenTrue,
+    required File? audioPictureFile,
   }) {
     return ValueListenableBuilder<String?>(
       valueListenable: audioPlayerVMlistenFalse.currentAudioTitleNotifier,
@@ -296,12 +300,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         // audio playable list dialog.
 
         Audio? currentAudio = audioPlayerVMlistenFalse.currentAudio;
-        File? audioPictureFile;
         bool areAudioButtonsEnabled;
 
         if (currentAudio != null) {
-          audioPictureFile = pictureVMlistenFalse.getAudioPictureFile(
-              audio: currentAudio);
           areAudioButtonsEnabled = currentAudioTitle != null;
         } else {
           areAudioButtonsEnabled = false;
@@ -347,10 +348,11 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                     ),
                   ),
                 ),
-                if (audioPictureFile != null)
+                if (audioPictureFile != null &&
+                    !commentVMlistenTrue.wasCommentDialogOpened)
                   // if a picture is displayed instead of the play button,
                   // then a play or pause button is included in the second
-                  // line
+                  // line except if the comment dialog was opened.
                   ValueListenableBuilder<bool>(
                     valueListenable:
                         audioPlayerVMlistenFalse.currentAudioPlayPauseNotifier,
@@ -404,6 +406,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 _buildCommentsInkWellButton(
                   context: context,
                   audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+                  commentVMlistenTrue: commentVMlistenTrue,
                   areAudioButtonsEnabled: areAudioButtonsEnabled,
                 ),
                 _buildAudioPopupMenuButton(
@@ -645,6 +648,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   Widget _buildCommentsInkWellButton({
     required BuildContext context,
     required AudioPlayerVM audioPlayerVMlistenFalse,
+    required CommentVM commentVMlistenTrue,
     required bool areAudioButtonsEnabled,
   }) {
     CircleAvatar circleAvatar;
@@ -707,6 +711,10 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                     context: context,
                     currentAudio: currentAudio!,
                   );
+
+                  // Hides the second line play/pause button after opening
+                  // the comment dialog if a picture is displayed.
+                  commentVMlistenTrue.wasCommentDialogOpened = true;
                 },
           child: circleAvatar,
         ),
