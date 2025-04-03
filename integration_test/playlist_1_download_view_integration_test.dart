@@ -16909,7 +16909,7 @@ void main() {
       );
 
       // First, open the playlist comment dialog
-      Finder playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
+      Finder playlistCommentListDialogFinder = await IntegrationTestUtil.openPlaylistCommentDialog(
         tester: tester,
         playlistTitle: youtubePlaylistTitle,
       );
@@ -16996,7 +16996,7 @@ void main() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await _openPlaylistCommentDialog(
+            await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17028,7 +17028,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17085,7 +17085,7 @@ void main() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await _openPlaylistCommentDialog(
+            await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17117,7 +17117,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17174,7 +17174,7 @@ void main() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await _openPlaylistCommentDialog(
+            await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17210,7 +17210,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17272,7 +17272,7 @@ void main() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await _openPlaylistCommentDialog(
+            await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17304,7 +17304,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17361,7 +17361,7 @@ void main() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await _openPlaylistCommentDialog(
+            await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17393,7 +17393,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17450,7 +17450,7 @@ void main() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await _openPlaylistCommentDialog(
+            await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17486,7 +17486,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17548,7 +17548,7 @@ void main() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await _openPlaylistCommentDialog(
+            await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17580,7 +17580,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17641,7 +17641,7 @@ void main() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await _openPlaylistCommentDialog(
+            await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17673,7 +17673,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17734,7 +17734,7 @@ void main() {
 
         // First, open the playlist comment dialog
         Finder playlistCommentListDialogFinder =
-            await _openPlaylistCommentDialog(
+            await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17770,7 +17770,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await _openPlaylistCommentDialog(
+        playlistCommentListDialogFinder = await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17838,7 +17838,7 @@ void main() {
 
     //   // First, open the playlist comment dialog
     //   Finder playlistCommentListDialogFinder =
-    //       await openPlaylistCommentDialog(
+    //       await IntegrationTestUtil.openPlaylistCommentDialog(
     //     tester: tester,
     //     playlistTitle: youtubePlaylistTitle,
     //   );
@@ -17904,7 +17904,7 @@ void main() {
     //   await tester.pumpAndSettle();
 
     //   // Now, re-open the playlist comment dialog
-    //   playlistCommentListDialogFinder = await openPlaylistCommentDialog(
+    //   playlistCommentListDialogFinder = await IntegrationTestUtil.openPlaylistCommentDialog(
     //     tester: tester,
     //     playlistTitle: youtubePlaylistTitle,
     //   );
@@ -18172,46 +18172,6 @@ Future<void> _verifyUndoneListenedAudioPosition({
         isPlayingOrPausedWithPositionBetweenAudioStartAndEnd,
     audioPausedDateTime: audioPausedDateTime, // "2024-09-08T14:38:43.283816"
   );
-}
-
-Future<Finder> _openPlaylistCommentDialog({
-  required WidgetTester tester,
-  required String playlistTitle,
-}) async {
-  // First, find the 'S8 audio' playlist sublist ListTile Text widget
-  Finder youtubePlaylistListTileTextWidgetFinder = find.text(playlistTitle);
-
-  // Then obtain the playlist ListTile widget enclosing the Text widget
-  // by finding its ancestor
-  Finder youtubePlaylistListTileWidgetFinder = find.ancestor(
-    of: youtubePlaylistListTileTextWidgetFinder,
-    matching: find.byType(ListTile),
-  );
-
-  // Now we want to tap the popup menu of the 'S8 audio' playlist ListTile
-
-  // Find the leading menu icon button of the playlist ListTile
-  // and tap on it
-  Finder youtubePlaylistListTileLeadingMenuIconButton = find.descendant(
-    of: youtubePlaylistListTileWidgetFinder,
-    matching: find.byIcon(Icons.menu),
-  );
-
-  // Tap the leading menu icon button to open the popup menu
-  await tester.tap(youtubePlaylistListTileLeadingMenuIconButton);
-  await tester.pumpAndSettle();
-
-  // Now find the List comments of playlist audio popup menu
-  // item and tap on it
-  final Finder popupPlaylistAudioCommentsMenuItem =
-      find.byKey(const Key("popup_menu_display_playlist_audio_comments"));
-
-  await tester.tap(popupPlaylistAudioCommentsMenuItem);
-  await tester.pumpAndSettle();
-
-  final Finder playlistCommentListDialogFinder =
-      find.byType(PlaylistCommentListDialog);
-  return playlistCommentListDialogFinder;
 }
 
 Future<void> _verifyAudioTitlesColorInPlaylistCommentDialog({

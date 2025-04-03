@@ -11925,7 +11925,6 @@ void main() {
           const Key('picture_displayed_play_pause_button_key'),
         );
         expect(playPauseButtonFinder, findsOneWidget);
-        await tester.tap(playPauseButtonFinder);
 
         // Tap on the comment icon button to open the comment add list
         // dialog
@@ -11942,7 +11941,6 @@ void main() {
           const Key('picture_displayed_play_pause_button_key'),
         );
         expect(playPauseButtonFinder, findsNothing);
-        await tester.pumpAndSettle();
 
         // Tap on the minimize icon button to minimize the comment add
         // list dialog
@@ -11959,7 +11957,6 @@ void main() {
           const Key('picture_displayed_play_pause_button_key'),
         );
         expect(playPauseButtonFinder, findsNothing);
-        await tester.pumpAndSettle();
 
         // Then, tap on the maximize icon button to reset the comment
         // add list dialog
@@ -11976,7 +11973,6 @@ void main() {
           const Key('picture_displayed_play_pause_button_key'),
         );
         expect(playPauseButtonFinder, findsNothing);
-        await tester.pumpAndSettle();
 
         // Now play the comment and minimize the comment add list dialog.
 
@@ -12127,7 +12123,6 @@ void main() {
           const Key('picture_displayed_play_pause_button_key'),
         );
         expect(playPauseButtonFinder, findsOneWidget);
-        await tester.tap(playPauseButtonFinder);
 
         // Tap on the appbar leading popup menu button
         await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
@@ -12145,7 +12140,6 @@ void main() {
           const Key('picture_displayed_play_pause_button_key'),
         );
         expect(playPauseButtonFinder, findsNothing);
-        await tester.pumpAndSettle();
 
         // Tap on the minimize icon button to minimize the comment add
         // list dialog
@@ -12162,7 +12156,6 @@ void main() {
           const Key('picture_displayed_play_pause_button_key'),
         );
         expect(playPauseButtonFinder, findsNothing);
-        await tester.pumpAndSettle();
 
         // Then, tap on the maximize icon button to reset the comment
         // add list dialog
@@ -12179,57 +12172,6 @@ void main() {
           const Key('picture_displayed_play_pause_button_key'),
         );
         expect(playPauseButtonFinder, findsNothing);
-        await tester.pumpAndSettle();
-
-        // Now play the comment and minimize the comment add list dialog.
-
-        await IntegrationTestUtil.playCommentFromListAddDialog(
-          tester: tester,
-          commentPosition: 1,
-          isCommentListAddDialogAlreadyOpen: true,
-        );
-
-        // Tap on the minimize icon button to minimize the comment add
-        // list dialog
-        minimizeButtonFinder = find.byKey(
-          const Key('minimizeCommentListAddDialogKey'),
-        );
-        await tester.tap(minimizeButtonFinder);
-        await tester.pumpAndSettle();
-
-        // Wait for the comment to finish playing
-        await Future.delayed(const Duration(seconds: 4));
-        await tester.pumpAndSettle();
-
-        // Verify the audio position and remaining duration text
-
-        Text audioPositionText = tester.widget<Text>(
-            find.byKey(const Key('audioPlayerViewAudioPosition')));
-
-        IntegrationTestUtil.verifyPositionWithAcceptableDifferenceSeconds(
-          tester: tester,
-          actualPositionTimeStr: audioPositionText.data!,
-          expectedPositionTimeStr: '23:46',
-          plusMinusSeconds: 1,
-        );
-
-        Text audioRemainingDurationText = tester.widget<Text>(
-            find.byKey(const Key('audioPlayerViewAudioRemainingDuration')));
-
-        IntegrationTestUtil.verifyPositionWithAcceptableDifferenceSeconds(
-          tester: tester,
-          actualPositionTimeStr: audioRemainingDurationText.data!,
-          expectedPositionTimeStr: '0:21',
-          plusMinusSeconds: 1,
-        );
-
-        // Now, tap on the maximize icon button to reset the comment
-        // add list dialog
-        maximizeButtonFinder = find.byKey(
-          const Key('maximizeCommentListAddDialogKey'),
-        );
-        await tester.tap(maximizeButtonFinder);
-        await tester.pumpAndSettle();
 
         // Now play the comment whose end position corresponds to the
         // audio end.
@@ -12253,7 +12195,7 @@ void main() {
 
         // Verify the audio position and remaining duration text
 
-        audioPositionText = tester.widget<Text>(
+        Text audioPositionText = tester.widget<Text>(
             find.byKey(const Key('audioPlayerViewAudioPosition')));
 
         IntegrationTestUtil.verifyPositionWithAcceptableDifferenceSeconds(
@@ -12263,7 +12205,7 @@ void main() {
           plusMinusSeconds: 1,
         );
 
-        audioRemainingDurationText = tester.widget<Text>(
+        Text audioRemainingDurationText = tester.widget<Text>(
             find.byKey(const Key('audioPlayerViewAudioRemainingDuration')));
 
         IntegrationTestUtil.verifyPositionWithAcceptableDifferenceSeconds(
@@ -12285,11 +12227,73 @@ void main() {
         await tester.tap(find.byKey(const Key('closeDialogTextButton')));
         await tester.pumpAndSettle();
 
-        // Deleting the added audio picture
-        // await _removeAudioPictureInAudioPlayerView(
-        //   tester: tester,
-        //   picturedAudioTitle: audioForPictureTitle,
-        // );
+        // Click on the playlist download view icon button to go back to the
+        // playlist download view
+        Finder appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // First, find the Audio sublist ListTile Text widget of
+        // 'NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE'.
+        Finder targetAudioListTileTextWidgetFinder =
+            find.text(audioAlreadyUsingPictureTitle);
+
+        // Then obtain the Audio ListTile widget enclosing the Text widget by
+        // finding its ancestor
+        Finder targetAudioListTileWidgetFinder = find.ancestor(
+          of: targetAudioListTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now find the leading menu icon button of the Audio ListTile and tap
+        // on it
+        Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
+          of: targetAudioListTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(targetAudioListTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
+
+        // Now find the popup menu item and tap on it
+        final Finder popupDisplayAudioCommentMenuItemFinder =
+            find.byKey(const Key("popup_menu_audio_comment"));
+
+        await tester.tap(popupDisplayAudioCommentMenuItemFinder);
+        await tester.pumpAndSettle();
+
+        // Verify that no minimize icon button is displayed in the
+        // comment add list dialog since the dialog isn't open in
+        // the audio player view.
+        minimizeButtonFinder = find.byKey(
+          const Key('minimizeCommentListAddDialogKey'),
+        );
+        expect(minimizeButtonFinder, findsNothing);
+
+        // Then close the comment list dialog
+        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.pumpAndSettle();
+
+        // Now, open the playlist comment dialog
+        Finder playlistCommentListDialogFinder =
+            await IntegrationTestUtil.openPlaylistCommentDialog(
+          tester: tester,
+          playlistTitle: youtubePlaylistTitle,
+        );
+
+        // Verify that no minimize icon button is displayed in the
+        // comment add list dialog since the dialog isn't open in
+        // the audio player view.
+        minimizeButtonFinder = find.byKey(
+          const Key('minimizeCommentListAddDialogKey'),
+        );
+        expect(minimizeButtonFinder, findsNothing);
+
+        // Then close the comment list dialog
+        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+        await tester.pumpAndSettle();
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
