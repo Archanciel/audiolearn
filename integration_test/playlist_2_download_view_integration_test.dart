@@ -11888,24 +11888,20 @@ void main() {
     });
     group('Comment minimization for pictured or not audio', () {
       testWidgets(
-          '''Click on pictured and commented audio title to open audio player view.''',
+          '''Click on the comment icon button after clicking on the pictured and commented audio title to open the
+             audio player view. Then, the comment add list dialog is open. Verify that the play/pause button present
+             when a picture is present was hidden since the comments dialog was opened. Then, minimize the comment
+             add list dialog and verify that the play/pause button displayed when a picture is present remains hidden
+             while the comments dialog is minimized. Finally, maximize the comment add list dialog and verify that
+             the play/pause button displayed when a picture is present remains hidden while the comments dialog is
+             open.
+             
+             Then, play the comment and minimize the comment add list dialog. Do that also with a comment whose end
+             position corresponds to the audio end position.''',
           (WidgetTester tester) async {
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
         const String youtubePlaylistTitle = 'Jésus-Christ';
-        final String playlistPictureDir =
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$kPictureDirName";
-        const String audioForPictureTitle =
-            'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien';
-        const String audioForPictureTitleDurationStr = '40:53';
         const String audioAlreadyUsingPictureTitle =
             'NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE';
-        const String audioAlreadyUsingPictureDurationStr = '24:07';
-        const String pictureFileName =
-            "241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.jpg";
-        const int pictureFileSize = 94507;
 
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
@@ -11913,10 +11909,6 @@ void main() {
           selectedPlaylistTitle: youtubePlaylistTitle,
           tapOnPlaylistToggleButton: false,
         );
-
-        // Available pictures file path
-        String pictureSourcePath =
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$kPictureDirName";
 
         // Go to the audio player view
         final Finder audioForPictureTitleListTileTextWidgetFinder =
@@ -11984,6 +11976,313 @@ void main() {
           const Key('picture_displayed_play_pause_button_key'),
         );
         expect(playPauseButtonFinder, findsNothing);
+        await tester.pumpAndSettle();
+
+        // Now play the comment and minimize the comment add list dialog.
+
+        await IntegrationTestUtil.playCommentFromListAddDialog(
+          tester: tester,
+          commentPosition: 1,
+          isCommentListAddDialogAlreadyOpen: true,
+        );
+
+        // Tap on the minimize icon button to minimize the comment add
+        // list dialog
+        minimizeButtonFinder = find.byKey(
+          const Key('minimizeCommentListAddDialogKey'),
+        );
+        await tester.tap(minimizeButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Wait for the comment to finish playing
+        await Future.delayed(const Duration(seconds: 4));
+        await tester.pumpAndSettle();
+
+        // Verify the audio position and remaining duration text
+
+        Text audioPositionText = tester.widget<Text>(
+            find.byKey(const Key('audioPlayerViewAudioPosition')));
+
+        IntegrationTestUtil.verifyPositionWithAcceptableDifferenceSeconds(
+          tester: tester,
+          actualPositionTimeStr: audioPositionText.data!,
+          expectedPositionTimeStr: '23:46',
+          plusMinusSeconds: 1,
+        );
+
+        Text audioRemainingDurationText = tester.widget<Text>(
+            find.byKey(const Key('audioPlayerViewAudioRemainingDuration')));
+
+        IntegrationTestUtil.verifyPositionWithAcceptableDifferenceSeconds(
+          tester: tester,
+          actualPositionTimeStr: audioRemainingDurationText.data!,
+          expectedPositionTimeStr: '0:21',
+          plusMinusSeconds: 1,
+        );
+
+        // Now, tap on the maximize icon button to reset the comment
+        // add list dialog
+        maximizeButtonFinder = find.byKey(
+          const Key('maximizeCommentListAddDialogKey'),
+        );
+        await tester.tap(maximizeButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Now play the comment whose end position corresponds to the
+        // audio end.
+        await IntegrationTestUtil.playCommentFromListAddDialog(
+          tester: tester,
+          commentPosition: 2,
+          isCommentListAddDialogAlreadyOpen: true,
+        );
+
+        // Tap on the minimize icon button to minimize the comment add
+        // list dialog
+        minimizeButtonFinder = find.byKey(
+          const Key('minimizeCommentListAddDialogKey'),
+        );
+        await tester.tap(minimizeButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Wait for the comment to finish playing
+        await Future.delayed(const Duration(seconds: 4));
+        await tester.pumpAndSettle();
+
+        // Verify the audio position and remaining duration text
+
+        audioPositionText = tester.widget<Text>(
+            find.byKey(const Key('audioPlayerViewAudioPosition')));
+
+        IntegrationTestUtil.verifyPositionWithAcceptableDifferenceSeconds(
+          tester: tester,
+          actualPositionTimeStr: audioPositionText.data!,
+          expectedPositionTimeStr: '24:07',
+          plusMinusSeconds: 1,
+        );
+
+        audioRemainingDurationText = tester.widget<Text>(
+            find.byKey(const Key('audioPlayerViewAudioRemainingDuration')));
+
+        IntegrationTestUtil.verifyPositionWithAcceptableDifferenceSeconds(
+          tester: tester,
+          actualPositionTimeStr: audioRemainingDurationText.data!,
+          expectedPositionTimeStr: '0:00',
+          plusMinusSeconds: 1,
+        );
+
+        // Now, tap on the maximize icon button to reset the comment
+        // add list dialog
+        maximizeButtonFinder = find.byKey(
+          const Key('maximizeCommentListAddDialogKey'),
+        );
+        await tester.tap(maximizeButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Now close the comment list dialog
+        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.pumpAndSettle();
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Click on the 'Audio Comments ...' menu present in the audio player left appbar menu after clicking on
+             the pictured and commented audio title to open the audio player view. Then, the comment add list dialog
+             is open. Verify that the play/pause button present when
+             a picture is present was hidden since the comments dialog was opened. Then, minimize the comment add
+             list dialog and verify that the play/pause button displayed when a picture is present remains hidden
+             while the comments dialog is minimized. Finally, maximize the comment add list dialog and verify that
+             the play/pause button displayed when a picture is present remains hidden while the comments dialog is
+             open.
+             
+             Then, play the comment and minimize the comment add list dialog. Do that also with a comment whose
+             end position corresponds to the audio end position.''',
+          (WidgetTester tester) async {
+        const String youtubePlaylistTitle = 'Jésus-Christ';
+        const String audioAlreadyUsingPictureTitle =
+            'NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE';
+
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'audio_player_picture_test',
+          selectedPlaylistTitle: youtubePlaylistTitle,
+          tapOnPlaylistToggleButton: false,
+        );
+
+        // Go to the audio player view
+        final Finder audioForPictureTitleListTileTextWidgetFinder =
+            find.text(audioAlreadyUsingPictureTitle);
+
+        await tester.tap(audioForPictureTitleListTileTextWidgetFinder);
+        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+          tester: tester,
+        );
+
+        // Verify that the play/pause button displayed when a picture
+        // is present is displayed in the top of audio player view.
+        Finder playPauseButtonFinder = find.byKey(
+          const Key('picture_displayed_play_pause_button_key'),
+        );
+        expect(playPauseButtonFinder, findsOneWidget);
+        await tester.tap(playPauseButtonFinder);
+
+        // Tap on the appbar leading popup menu button
+        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+        await tester.pumpAndSettle();
+
+        // Find the 'Audio Comments ...' menu item and tap on it to open the
+        // comment add list dialog
+        await tester
+            .tap(find.byKey(const Key('appbar_popup_menu_audio_comment')));
+        await tester.pumpAndSettle();
+
+        // Now verify that the play/pause button displayed when a picture
+        // is present was hidden since the comments dialog was opened.
+        playPauseButtonFinder = find.byKey(
+          const Key('picture_displayed_play_pause_button_key'),
+        );
+        expect(playPauseButtonFinder, findsNothing);
+        await tester.pumpAndSettle();
+
+        // Tap on the minimize icon button to minimize the comment add
+        // list dialog
+        Finder minimizeButtonFinder = find.byKey(
+          const Key('minimizeCommentListAddDialogKey'),
+        );
+
+        await tester.tap(minimizeButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Verify again that the play/pause button displayed when a picture
+        // is present remains hidden while the comments dialog is minimized.
+        playPauseButtonFinder = find.byKey(
+          const Key('picture_displayed_play_pause_button_key'),
+        );
+        expect(playPauseButtonFinder, findsNothing);
+        await tester.pumpAndSettle();
+
+        // Then, tap on the maximize icon button to reset the comment
+        // add list dialog
+        Finder maximizeButtonFinder = find.byKey(
+          const Key('maximizeCommentListAddDialogKey'),
+        );
+
+        await tester.tap(maximizeButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Verify that the play/pause button displayed when a picture
+        // is present remains hidden while the comments dialog is open.
+        playPauseButtonFinder = find.byKey(
+          const Key('picture_displayed_play_pause_button_key'),
+        );
+        expect(playPauseButtonFinder, findsNothing);
+        await tester.pumpAndSettle();
+
+        // Now play the comment and minimize the comment add list dialog.
+
+        await IntegrationTestUtil.playCommentFromListAddDialog(
+          tester: tester,
+          commentPosition: 1,
+          isCommentListAddDialogAlreadyOpen: true,
+        );
+
+        // Tap on the minimize icon button to minimize the comment add
+        // list dialog
+        minimizeButtonFinder = find.byKey(
+          const Key('minimizeCommentListAddDialogKey'),
+        );
+        await tester.tap(minimizeButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Wait for the comment to finish playing
+        await Future.delayed(const Duration(seconds: 4));
+        await tester.pumpAndSettle();
+
+        // Verify the audio position and remaining duration text
+
+        Text audioPositionText = tester.widget<Text>(
+            find.byKey(const Key('audioPlayerViewAudioPosition')));
+
+        IntegrationTestUtil.verifyPositionWithAcceptableDifferenceSeconds(
+          tester: tester,
+          actualPositionTimeStr: audioPositionText.data!,
+          expectedPositionTimeStr: '23:46',
+          plusMinusSeconds: 1,
+        );
+
+        Text audioRemainingDurationText = tester.widget<Text>(
+            find.byKey(const Key('audioPlayerViewAudioRemainingDuration')));
+
+        IntegrationTestUtil.verifyPositionWithAcceptableDifferenceSeconds(
+          tester: tester,
+          actualPositionTimeStr: audioRemainingDurationText.data!,
+          expectedPositionTimeStr: '0:21',
+          plusMinusSeconds: 1,
+        );
+
+        // Now, tap on the maximize icon button to reset the comment
+        // add list dialog
+        maximizeButtonFinder = find.byKey(
+          const Key('maximizeCommentListAddDialogKey'),
+        );
+        await tester.tap(maximizeButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Now play the comment whose end position corresponds to the
+        // audio end.
+        await IntegrationTestUtil.playCommentFromListAddDialog(
+          tester: tester,
+          commentPosition: 2,
+          isCommentListAddDialogAlreadyOpen: true,
+        );
+
+        // Tap on the minimize icon button to minimize the comment add
+        // list dialog
+        minimizeButtonFinder = find.byKey(
+          const Key('minimizeCommentListAddDialogKey'),
+        );
+        await tester.tap(minimizeButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Wait for the comment to finish playing
+        await Future.delayed(const Duration(seconds: 4));
+        await tester.pumpAndSettle();
+
+        // Verify the audio position and remaining duration text
+
+        audioPositionText = tester.widget<Text>(
+            find.byKey(const Key('audioPlayerViewAudioPosition')));
+
+        IntegrationTestUtil.verifyPositionWithAcceptableDifferenceSeconds(
+          tester: tester,
+          actualPositionTimeStr: audioPositionText.data!,
+          expectedPositionTimeStr: '24:07',
+          plusMinusSeconds: 1,
+        );
+
+        audioRemainingDurationText = tester.widget<Text>(
+            find.byKey(const Key('audioPlayerViewAudioRemainingDuration')));
+
+        IntegrationTestUtil.verifyPositionWithAcceptableDifferenceSeconds(
+          tester: tester,
+          actualPositionTimeStr: audioRemainingDurationText.data!,
+          expectedPositionTimeStr: '0:00',
+          plusMinusSeconds: 1,
+        );
+
+        // Now, tap on the maximize icon button to reset the comment
+        // add list dialog
+        maximizeButtonFinder = find.byKey(
+          const Key('maximizeCommentListAddDialogKey'),
+        );
+        await tester.tap(maximizeButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Now close the comment list dialog
+        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Deleting the added audio picture

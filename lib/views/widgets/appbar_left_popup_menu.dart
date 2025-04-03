@@ -122,7 +122,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 child: Text(AppLocalizations.of(context)!.displayAudioInfo),
               ),
               PopupMenuItem<AudioPopupMenuAction>(
-                key: const Key('popup_menu_audio_comment'),
+                key: const Key('appbar_popup_menu_audio_comment'),
                 value: AudioPopupMenuAction.audioComment,
                 child: Text(AppLocalizations.of(context)!.commentMenu),
               ),
