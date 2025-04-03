@@ -1,13 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:googleapis/networkservices/v1.dart';
 import 'package:path/path.dart' as path;
 
 import '../constants.dart';
 import '../models/audio.dart';
 import '../models/playlist.dart';
-import '../services/json_data_service.dart';
 import '../utils/dir_util.dart';
 
 class PictureVM extends ChangeNotifier {
