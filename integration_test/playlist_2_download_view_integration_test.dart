@@ -11888,7 +11888,7 @@ void main() {
     });
     group('Comment minimization for pictured or not audio', () {
       testWidgets(
-          '''Click on pictured an commented audio title to open audio player view.''',
+          '''Click on pictured and commented audio title to open audio player view.''',
           (WidgetTester tester) async {
         // Replace the platform instance with your mock
         MockFilePicker mockFilePicker = MockFilePicker();
@@ -11927,12 +11927,70 @@ void main() {
           tester: tester,
         );
 
+        // Verify that the play/pause button displayed when a picture
+        // is present is displayed in the top of audio player view.
+        Finder playPauseButtonFinder = find.byKey(
+          const Key('picture_displayed_play_pause_button_key'),
+        );
+        expect(playPauseButtonFinder, findsOneWidget);
+        await tester.tap(playPauseButtonFinder);
+
+        // Tap on the comment icon button to open the comment add list
+        // dialog
+        Finder commentInkWellButtonFinder = find.byKey(
+          const Key('commentsInkWellButton'),
+        );
+
+        await tester.tap(commentInkWellButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Now verify that the play/pause button displayed when a picture
+        // is present was hidden since the comments dialog was opened.
+        playPauseButtonFinder = find.byKey(
+          const Key('picture_displayed_play_pause_button_key'),
+        );
+        expect(playPauseButtonFinder, findsNothing);
+        await tester.pumpAndSettle();
+
+        // Tap on the minimize icon button to minimize the comment add
+        // list dialog
+        Finder minimizeButtonFinder = find.byKey(
+          const Key('minimizeCommentListAddDialogKey'),
+        );
+
+        await tester.tap(minimizeButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Verify again that the play/pause button displayed when a picture
+        // is present remains hidden while the comments dialog is minimized.
+        playPauseButtonFinder = find.byKey(
+          const Key('picture_displayed_play_pause_button_key'),
+        );
+        expect(playPauseButtonFinder, findsNothing);
+        await tester.pumpAndSettle();
+
+        // Then, tap on the maximize icon button to reset the comment
+        // add list dialog
+        Finder maximizeButtonFinder = find.byKey(
+          const Key('maximizeCommentListAddDialogKey'),
+        );
+
+        await tester.tap(maximizeButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Verify that the play/pause button displayed when a picture
+        // is present remains hidden while the comments dialog is open.
+        playPauseButtonFinder = find.byKey(
+          const Key('picture_displayed_play_pause_button_key'),
+        );
+        expect(playPauseButtonFinder, findsNothing);
+        await tester.pumpAndSettle();
 
         // Deleting the added audio picture
-        await _removeAudioPictureInAudioPlayerView(
-          tester: tester,
-          picturedAudioTitle: audioForPictureTitle,
-        );
+        // await _removeAudioPictureInAudioPlayerView(
+        //   tester: tester,
+        //   picturedAudioTitle: audioForPictureTitle,
+        // );
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
