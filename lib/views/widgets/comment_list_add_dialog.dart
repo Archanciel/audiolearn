@@ -302,6 +302,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
             child: Padding(
               padding: const EdgeInsets.only(left: 40, bottom: 275),
               child: FloatingActionButton(
+                key: const Key('maximizeCommentListAddDialogKey'),
                 mini: true,
                 backgroundColor:
                     Theme.of(context).primaryColor.withOpacity(0.01),
@@ -355,9 +356,10 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                         null &&
                     CommentDialogManager.hasActiveOverlay)
                 // Showing the minimize icon happens only if the comment list
-                // add dialog is was opened in the audio player view by the
+                // add dialog was opened in the audio player view by the
                 // CommentDialogManager.
                 ? IconButton(
+                    key: const Key('minimizeCommentListAddDialogKey'),
                     icon: const Icon(
                       Icons.expand_more,
                       size: 30,
