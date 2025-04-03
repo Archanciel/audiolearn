@@ -132,7 +132,7 @@ class IntegrationTestUtil {
   static void verifyPositionWithAcceptableDifferenceSeconds({
     required WidgetTester tester,
     required String actualPositionTimeStr,
-    required String basePositionTimeStr,
+    required String expectedPositionTimeStr,
     required int plusMinusSeconds,
   }) {
     int actualPositionTenthOfSeconds = DateTimeUtil.convertToTenthsOfSeconds(
@@ -140,7 +140,7 @@ class IntegrationTestUtil {
     );
 
     int convertedBasePositionToTenthsOfSeconds =
-        DateTimeUtil.convertToTenthsOfSeconds(timeString: basePositionTimeStr);
+        DateTimeUtil.convertToTenthsOfSeconds(timeString: expectedPositionTimeStr);
     int expectedMinPositionTenthSeconds =
         convertedBasePositionToTenthsOfSeconds - plusMinusSeconds * 10;
     int expectedMaxPositionTenthSeconds =
@@ -1415,19 +1415,24 @@ class IntegrationTestUtil {
     }
   }
 
+  /// [commentPosition] is the position of the comment in the list set to 1 if you want
+  /// to play the first comment.
   static Future<void> playCommentFromListAddDialog({
     required WidgetTester tester,
     required int commentPosition, // first = 1, second = 2, ...
     bool mustAudioBePaused = false,
+    bool isCommentListAddDialogAlreadyOpen = false,
   }) async {
-    // Tap on the comment icon button to open the comment add list
-    // dialog
-    final Finder commentInkWellButtonFinder = find.byKey(
-      const Key('commentsInkWellButton'),
-    );
+    if (!isCommentListAddDialogAlreadyOpen) {
+      // Tap on the comment icon button to open the comment add list
+      // dialog
+      final Finder commentInkWellButtonFinder = find.byKey(
+        const Key('commentsInkWellButton'),
+      );
 
-    await tester.tap(commentInkWellButtonFinder);
-    await tester.pumpAndSettle();
+      await tester.tap(commentInkWellButtonFinder);
+      await tester.pumpAndSettle();
+    }
 
     // Find the comment list add dialog widget
     final Finder commentListDialogFinder = find.byType(CommentListAddDialog);

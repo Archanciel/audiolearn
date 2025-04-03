@@ -5420,7 +5420,7 @@ void main() {
           tester: tester,
         );
 
-        // Play then pause second comment
+        // Play then pause third comment
         await IntegrationTestUtil.playCommentFromListAddDialog(
           tester: tester,
           commentPosition: 3,
@@ -8786,7 +8786,7 @@ Future<void> _verifyAudioPlayerViewPlaylistSelectionImpact({
     IntegrationTestUtil.verifyPositionWithAcceptableDifferenceSeconds(
       tester: tester,
       actualPositionTimeStr: audioPositionTimeString,
-      basePositionTimeStr: expectedAudioPositionTimeString,
+      expectedPositionTimeStr: expectedAudioPositionTimeString,
       plusMinusSeconds: positionSecondsDifference,
     );
   }
@@ -8804,7 +8804,7 @@ Future<void> _verifyAudioPlayerViewPlaylistSelectionImpact({
     IntegrationTestUtil.verifyPositionWithAcceptableDifferenceSeconds(
       tester: tester,
       actualPositionTimeStr: audioRemainingDurationTimeString,
-      basePositionTimeStr: expectedAudioRemainingDurationTimeString,
+      expectedPositionTimeStr: expectedAudioRemainingDurationTimeString,
       plusMinusSeconds: positionSecondsDifference,
     );
   }
