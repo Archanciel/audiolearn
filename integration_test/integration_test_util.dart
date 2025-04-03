@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:audiolearn/views/my_home_page.dart';
 import 'package:audiolearn/views/widgets/audio_info_dialog.dart';
+import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -140,7 +141,8 @@ class IntegrationTestUtil {
     );
 
     int convertedBasePositionToTenthsOfSeconds =
-        DateTimeUtil.convertToTenthsOfSeconds(timeString: expectedPositionTimeStr);
+        DateTimeUtil.convertToTenthsOfSeconds(
+            timeString: expectedPositionTimeStr);
     int expectedMinPositionTenthSeconds =
         convertedBasePositionToTenthsOfSeconds - plusMinusSeconds * 10;
     int expectedMaxPositionTenthSeconds =
@@ -2188,5 +2190,45 @@ class IntegrationTestUtil {
     await tester.pumpAndSettle();
 
     return targetAudioListTileWidgetFinder;
+  }
+
+  static Future<Finder> openPlaylistCommentDialog({
+    required WidgetTester tester,
+    required String playlistTitle,
+  }) async {
+    // First, find the 'S8 audio' playlist sublist ListTile Text widget
+    Finder youtubePlaylistListTileTextWidgetFinder = find.text(playlistTitle);
+
+    // Then obtain the playlist ListTile widget enclosing the Text widget
+    // by finding its ancestor
+    Finder youtubePlaylistListTileWidgetFinder = find.ancestor(
+      of: youtubePlaylistListTileTextWidgetFinder,
+      matching: find.byType(ListTile),
+    );
+
+    // Now we want to tap the popup menu of the playlist ListTile
+
+    // Find the leading menu icon button of the playlist ListTile
+    // and tap on it
+    Finder youtubePlaylistListTileLeadingMenuIconButton = find.descendant(
+      of: youtubePlaylistListTileWidgetFinder,
+      matching: find.byIcon(Icons.menu),
+    );
+
+    // Tap the leading menu icon button to open the popup menu
+    await tester.tap(youtubePlaylistListTileLeadingMenuIconButton);
+    await tester.pumpAndSettle();
+
+    // Now find the List comments of playlist audio popup menu
+    // item and tap on it
+    final Finder popupPlaylistAudioCommentsMenuItem =
+        find.byKey(const Key("popup_menu_display_playlist_audio_comments"));
+
+    await tester.tap(popupPlaylistAudioCommentsMenuItem);
+    await tester.pumpAndSettle();
+
+    final Finder playlistCommentListDialogFinder =
+        find.byType(PlaylistCommentListDialog);
+    return playlistCommentListDialogFinder;
   }
 }
