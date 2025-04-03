@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../../models/audio.dart';
 import '../../models/playlist.dart';
+import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/picture_vm.dart';
 import '../../viewmodels/playlist_list_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
@@ -55,13 +56,21 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
       case AudioLearnAppViewType.playlistDownloadView:
         return _playListDownloadViewPopupMenuButton(context);
       case AudioLearnAppViewType.audioPlayerView:
-        return _audioPlayerViewPopupMenuButton(context);
+        return _audioPlayerViewPopupMenuButton(
+            context: context,
+            commentVMlistenFalse: Provider.of<CommentVM>(
+              context,
+              listen: false,
+            ));
       default:
         return const SizedBox.shrink();
     }
   }
 
-  Widget _audioPlayerViewPopupMenuButton(BuildContext context) {
+  Widget _audioPlayerViewPopupMenuButton({
+    required BuildContext context,
+    required CommentVM commentVMlistenFalse,
+  }) {
     final AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
       context,
       listen: false,
@@ -213,6 +222,10 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   context: context,
                   currentAudio: audio,
                 );
+
+                // Hides the second line play/pause button after opening
+                // the comment dialog if a picture is displayed.
+                commentVMlistenFalse.wasCommentDialogOpened = true;
                 break;
               case AudioPopupMenuAction.modifyAudioTitle:
                 await showDialog<String?>(
@@ -257,8 +270,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   return;
                 }
 
-                pictureVMlistenFalse
-                    .storeAudioPictureFileInPlaylistPictureDir(
+                pictureVMlistenFalse.storeAudioPictureFileInPlaylistPictureDir(
                   audio: audio,
                   pictureFilePathName: selectedPictureFilePathName,
                 );
@@ -274,8 +286,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                     audioPlayerVMlistenFalse.getCurrentAudioTitleWithDuration();
                 break;
               case AudioPopupMenuAction.removeAudioPicture:
-                pictureVMlistenFalse
-                    .deleteAudioPictureFileInPlaylistPictureDir(
+                pictureVMlistenFalse.deleteAudioPictureFileInPlaylistPictureDir(
                   audio: audio,
                 );
 
