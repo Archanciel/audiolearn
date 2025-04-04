@@ -972,13 +972,20 @@ Future<void> main() async {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
+      AudioDownloadVM audioDownloadVM =
+          await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
         tester: tester,
         forcedLocale: const Locale('en'),
       );
 
       const String recreatedPlaylistUrl =
           'https://youtube.com/playlist?list=PLzwWSJNcZTMSwrDOAZEPf0u6YvrKGNnvC';
+      const String recreatedPlaylistId = 'PLzwWSJNcZTMSwrDOAZEPf0u6YvrKGNnvC';
+
+      // Playlist must be copied since recreating the playlist modifies
+      // the original playlist.
+      Playlist playlistBeforeRecreatedCopy =
+          audioDownloadVM.listOfPlaylist[0].copy();
 
       // Entering the recreated playlist URL in the Youtube URL or search
       // text field of the app
@@ -1010,8 +1017,13 @@ Future<void> main() async {
       await Future.delayed(const Duration(seconds: 1));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Youtube playlist \"${playlistBeforeRecreatedCopy.title}\" URL was updated. The playlist can be downloaded with its new URL.",
+      );
+
+      Playlist recreatedPlaylist = audioDownloadVM.listOfPlaylist[0];
 
       expect(
         tester
@@ -1050,6 +1062,14 @@ Future<void> main() async {
         firstAudioListTileIndex: 1,
       );
 
+      _compareNewRecreatedPlaylistToPreviouslyExistingPlaylist(
+        newRecreatedPlaylistWithSameTitle: recreatedPlaylist,
+        previouslyExistingPlaylist: playlistBeforeRecreatedCopy,
+        newRecreatedPlaylistWithSameTitleId: recreatedPlaylistId,
+        newRecreatedPlaylistWithSameTitleUrl: recreatedPlaylistUrl,
+        newDownloadedAudioNumber: 2,
+      );
+
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
@@ -1072,13 +1092,20 @@ Future<void> main() async {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
+      AudioDownloadVM audioDownloadVM =
+          await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
         tester: tester,
         forcedLocale: const Locale('en'),
       );
 
       const String recreatedPlaylistUrl =
           'https://youtube.com/playlist?list=PLzwWSJNcZTMSwrDOAZEPf0u6YvrKGNnvC';
+      const String recreatedPlaylistId = 'PLzwWSJNcZTMSwrDOAZEPf0u6YvrKGNnvC';
+
+      // Playlist must be copied since recreating the playlist modifies
+      // the original playlist.
+      Playlist playlistBeforeRecreatedCopy =
+          audioDownloadVM.listOfPlaylist[0].copy();
 
       // Entering the recreated playlist URL in the Youtube URL or search
       // text field of the app
@@ -1110,8 +1137,14 @@ Future<void> main() async {
       await Future.delayed(const Duration(seconds: 1));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Youtube playlist \"${playlistBeforeRecreatedCopy.title}\" URL was updated. The playlist can be downloaded with its new URL.",
+      );
+
+      Playlist recreatedPlaylist = audioDownloadVM.listOfPlaylist[0];
 
       expect(
         tester
@@ -1148,17 +1181,25 @@ Future<void> main() async {
         firstAudioListTileIndex: 1,
       );
 
+      _compareNewRecreatedPlaylistToPreviouslyExistingPlaylist(
+        newRecreatedPlaylistWithSameTitle: recreatedPlaylist,
+        previouslyExistingPlaylist: playlistBeforeRecreatedCopy,
+        newRecreatedPlaylistWithSameTitleId: recreatedPlaylistId,
+        newRecreatedPlaylistWithSameTitleUrl: recreatedPlaylistUrl,
+        newDownloadedAudioNumber: 2,
+      );
+
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
   });
-  group('''Add Youtube playlist with corrected title. If the added playlist contains
+  group(
+      '''Add Youtube playlist with corrected title. If the added playlist contains
         invalid characters like '/', the playlist is added to the application with a
         corrected title.''', () {
-    testWidgets(
-        'Adding playlist in spoken quality with invalid title.',
+    testWidgets('Adding playlist in spoken quality with invalid title.',
         (WidgetTester tester) async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
@@ -1180,7 +1221,8 @@ Future<void> main() async {
 
       // Entering the created playlist URL in the Youtube URL or search
       // text field of the app
-      var incorrectlyTitledPlaylistUrl = 'https://youtube.com/playlist?list=PL0bW68uqNc07LhkwdJAbF0AyIGnD2Aeq5&si=f_VccuyNuNLvE-ot';
+      var incorrectlyTitledPlaylistUrl =
+          'https://youtube.com/playlist?list=PL0bW68uqNc07LhkwdJAbF0AyIGnD2Aeq5&si=f_VccuyNuNLvE-ot';
 
       await tester.enterText(
         find.byKey(
@@ -1230,8 +1272,7 @@ Future<void> main() async {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-   testWidgets(
-        'Adding playlist in music quality with invalid title.',
+    testWidgets('Adding playlist in music quality with invalid title.',
         (WidgetTester tester) async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
@@ -1253,7 +1294,8 @@ Future<void> main() async {
 
       // Entering the created playlist URL in the Youtube URL or search
       // text field of the app
-      var incorrectlyTitledPlaylistUrl = 'https://youtube.com/playlist?list=PL0bW68uqNc07LhkwdJAbF0AyIGnD2Aeq5&si=f_VccuyNuNLvE-ot';
+      var incorrectlyTitledPlaylistUrl =
+          'https://youtube.com/playlist?list=PL0bW68uqNc07LhkwdJAbF0AyIGnD2Aeq5&si=f_VccuyNuNLvE-ot';
 
       await tester.enterText(
         find.byKey(
@@ -1361,6 +1403,7 @@ void _compareNewRecreatedPlaylistToPreviouslyExistingPlaylist({
   required Playlist previouslyExistingPlaylist,
   required String newRecreatedPlaylistWithSameTitleId,
   required String newRecreatedPlaylistWithSameTitleUrl,
+  required int newDownloadedAudioNumber,
 }) {
   expect(newRecreatedPlaylistWithSameTitle.id,
       newRecreatedPlaylistWithSameTitleId);
@@ -1376,13 +1419,19 @@ void _compareNewRecreatedPlaylistToPreviouslyExistingPlaylist({
       previouslyExistingPlaylist.audioPlaySpeed);
   expect(newRecreatedPlaylistWithSameTitle.playlistType,
       previouslyExistingPlaylist.playlistType);
+  expect(newRecreatedPlaylistWithSameTitle.playlistQuality,
+      previouslyExistingPlaylist.playlistQuality);
   expect(newRecreatedPlaylistWithSameTitle.isSelected,
       previouslyExistingPlaylist.isSelected);
 
-  expect(newRecreatedPlaylistWithSameTitle.downloadedAudioLst.length,
-      previouslyExistingPlaylist.downloadedAudioLst.length + 2);
-  expect(newRecreatedPlaylistWithSameTitle.playableAudioLst.length,
-      previouslyExistingPlaylist.playableAudioLst.length + 2);
+  expect(
+      newRecreatedPlaylistWithSameTitle.downloadedAudioLst.length,
+      previouslyExistingPlaylist.downloadedAudioLst.length +
+          newDownloadedAudioNumber);
+  expect(
+      newRecreatedPlaylistWithSameTitle.playableAudioLst.length,
+      previouslyExistingPlaylist.playableAudioLst.length +
+          newDownloadedAudioNumber);
   expect(
       newRecreatedPlaylistWithSameTitle
           .audioSortFilterParmsNameForPlaylistDownloadView,

@@ -16672,7 +16672,6 @@ void main() {
       const String youtubePlaylistTitle =
           'audio_player_view_2_shorts_test'; // Youtube playlist
       const String audioOneTitle = "morning _ cinematic video";
-      const String audioTwoTitle = "Really short video";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
