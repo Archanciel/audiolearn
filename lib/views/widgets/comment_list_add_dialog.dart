@@ -164,7 +164,7 @@ class CommentListAddDialog extends StatefulWidget {
                   // Ensure that the FocusNode in CommentListAddDialog is properly focused
                   final state = context
                       .findAncestorStateOfType<_CommentListAddDialogState>();
-                  if (state != null && state._focusNodeDialog != null) {
+                  if (state != null) {
                     FocusScope.of(context).requestFocus(state._focusNodeDialog);
                   }
                 });
