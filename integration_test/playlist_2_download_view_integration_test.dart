@@ -10964,10 +10964,10 @@ void main() {
       // The mockAudioDownloadVM will be later used to simulate
       // redownloading not playable files after having restored
       // the playlists, comments and settings from the zip file.
-      // MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
-      //   warningMessageVM: warningMessageVM,
-      //   settingsDataService: settingsDataService,
-      // );
+      MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+      );
 
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
@@ -10976,7 +10976,7 @@ void main() {
 
       PlaylistListVM playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
-        audioDownloadVM: audioDownloadVM,
+        audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
         pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
