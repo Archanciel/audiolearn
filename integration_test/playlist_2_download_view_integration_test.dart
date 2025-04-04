@@ -10964,10 +10964,10 @@ void main() {
       // The mockAudioDownloadVM will be later used to simulate
       // redownloading not playable files after having restored
       // the playlists, comments and settings from the zip file.
-      MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
-        warningMessageVM: warningMessageVM,
-        settingsDataService: settingsDataService,
-      );
+      // MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
+      //   warningMessageVM: warningMessageVM,
+      //   settingsDataService: settingsDataService,
+      // );
 
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
@@ -10976,7 +10976,7 @@ void main() {
 
       PlaylistListVM playlistListVM = PlaylistListVM(
         warningMessageVM: warningMessageVM,
-        audioDownloadVM: mockAudioDownloadVM,
+        audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
         pictureVM: PictureVM(),
         settingsDataService: settingsDataService,
@@ -11268,6 +11268,12 @@ void main() {
         playlistTitle: playlistToRedownloadTitle,
         playlistSubMenuKeyStr: 'popup_menu_redownload_filtered_audio',
       );
+
+      // Add a delay to allow the download to finish.
+      for (int i = 0; i < 5; i++) {
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
+      }
 
       // Verifying and closing the confirm dialog
 
