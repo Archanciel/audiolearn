@@ -113,7 +113,7 @@ class _PlaylistOneSelectableDialogState
           AppLocalizations.of(context)!.playlistOneSelectedDialogTitle,
         ),
         actionsPadding: kDialogActionsPadding,
-        content: Container(
+        content: SizedBox(
           // Container can not be suppressed
           width: double.maxFinite,
           child: Column(
