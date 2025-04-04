@@ -72,7 +72,7 @@
   "deleteAudioFromPlaylistAswell": "Delete Audio from Playlist as well ...",
   "deleteAudioFromPlaylistAswellWarning": "If the deleted audio video \"{audioTitle}\" remains in the \"{playlistTitle}\" Youtube playlist, it will be downloaded again the next time you download the playlist !",
   "warningDialogTitle": "WARNING",
-  "updatedPlaylistUrlTitle": "Playlist \"{title}\" URL was updated. The playlist can be downloaded with its new URL.",
+  "updatedPlaylistUrlTitle": "Youtube playlist \"{title}\" URL was updated. The playlist can be downloaded with its new URL.",
   "@updatedPlaylistUrlTitle": {
     "description": "Warning announcing that the playlist url was updated.",
     "placeholders": {
