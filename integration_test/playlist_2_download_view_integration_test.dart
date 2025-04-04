@@ -11675,6 +11675,13 @@ void main() {
           tester: tester,
         );
 
+        // Verify that the picture play/pause button is not present
+        // since no picture is displayed.
+        expect(
+          find.byKey(const Key('picture_displayed_play_pause_button_key')),
+          findsNothing,
+        );
+
         // First picture addition
         String pictureFilePathName =
             await _addPictureToAudioExecutingAudioPlayerViewLeftAppbarMenu(
@@ -12276,13 +12283,6 @@ void main() {
         await tester.tap(find.byKey(const Key('closeDialogTextButton')));
         await tester.pumpAndSettle();
 
-        // Now, open the playlist comment dialog
-        Finder playlistCommentListDialogFinder =
-            await IntegrationTestUtil.openPlaylistCommentDialog(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-        );
-
         // Verify that no minimize icon button is displayed in the
         // comment add list dialog since the dialog isn't open in
         // the audio player view.
@@ -12292,7 +12292,8 @@ void main() {
         expect(minimizeButtonFinder, findsNothing);
 
         // Then close the comment list dialog
-        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+        await tester.tap(
+            find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Purge the test playlist directory so that the created test

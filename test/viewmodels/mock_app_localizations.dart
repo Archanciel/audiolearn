@@ -213,7 +213,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String updatedPlaylistUrlTitle(Object title) {
-    return 'Playlist "$title" URL was updated. The playlist can be downloaded with its new URL.';
+    return 'Youtube playlist "$title" URL was updated. The playlist can be downloaded with its new URL.';
   }
 
   @override

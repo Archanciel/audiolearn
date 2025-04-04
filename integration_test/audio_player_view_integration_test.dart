@@ -61,6 +61,13 @@ void main() {
         tester: tester,
       );
 
+      // Verify that the play/pause button displayed when a picture
+      // is present is not displayed.
+      Finder playPauseButtonFinder = find.byKey(
+        const Key('picture_displayed_play_pause_button_key'),
+      );
+      expect(playPauseButtonFinder, findsNothing);
+
       await tester.tap(find.byIcon(Icons.play_arrow));
       await tester.pumpAndSettle();
 
@@ -940,7 +947,7 @@ void main() {
         '''Audio no picture plays comment to end. This audio is a partially
            listened last audio. A comment whose end position is at end is played.
            Then verify that the play/pause button is transformed from pause to
-           play button. This verifies a bug fix.''', (
+           play button. This verifies a bug fix. Then, select a pictured audio.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'local';
@@ -1016,8 +1023,7 @@ void main() {
         additionalMilliseconds: 1000,
       );
 
-      // Verify that the play button is present (due to the bug, the
-      // pause button is displayed).
+      // Verify that the picture play/pause button is present.
       expect(
         find.byKey(const Key('picture_displayed_play_pause_button_key')),
         findsOneWidget,
@@ -5550,7 +5556,8 @@ void main() {
         // );
 
         // Tap on the Close button to close the playlist comment dialog
-        await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+        await tester.tap(
+            find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
         await tester.pumpAndSettle();
 
         // Purge the test playlist directory so that the created test
@@ -7295,6 +7302,13 @@ void main() {
         expectedIcon: Icons.bookmark_outline_outlined,
         expectedIconColor: Colors.white,
         expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
+      );
+
+      // Verify that the picture play/pause button is not present
+      // since no picture is displayed.
+      expect(
+        find.byKey(const Key('picture_displayed_play_pause_button_key')),
+        findsNothing,
       );
 
       // Tap on the comment icon button to open the comment add list
