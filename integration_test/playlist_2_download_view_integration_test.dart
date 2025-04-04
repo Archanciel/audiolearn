@@ -12283,6 +12283,11 @@ void main() {
         await tester.tap(find.byKey(const Key('closeDialogTextButton')));
         await tester.pumpAndSettle();
 
+        await IntegrationTestUtil.openPlaylistCommentDialog(
+          tester: tester,
+          playlistTitle: youtubePlaylistTitle,
+        );
+
         // Verify that no minimize icon button is displayed in the
         // comment add list dialog since the dialog isn't open in
         // the audio player view.
