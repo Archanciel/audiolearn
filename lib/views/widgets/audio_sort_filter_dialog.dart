@@ -42,17 +42,19 @@ class AudioSortFilterDialog extends StatefulWidget {
   final FocusNode focusNode;
   final WarningMessageVM warningMessageVM;
   final CalledFrom calledFrom;
+  final SettingsDataService settingsDataService;
 
   const AudioSortFilterDialog({
     super.key,
+    required this.settingsDataService,
+    required this.warningMessageVM,
     required this.selectedPlaylist,
     required this.selectedPlaylistAudioLst,
-    this.audioSortFilterParametersName = '',
     required this.audioSortFilterParameters,
     required this.audioLearnAppViewType,
     required this.focusNode,
-    required this.warningMessageVM,
     required this.calledFrom,
+    this.audioSortFilterParametersName = '',
   });
 
   @override
@@ -127,8 +129,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
 
   int _historicalAudioSortFilterParametersIndex = 0;
 
-  final AudioSortFilterService _audioSortFilterService =
-      AudioSortFilterService();
+  late AudioSortFilterService _audioSortFilterService;
 
   List<AudioSortFilterParameters> _historicalAudioSortFilterParametersLst = [];
   static const int _maxDisplayableStringLength = 34;
@@ -137,6 +138,9 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   void initState() {
     super.initState();
 
+    _audioSortFilterService = AudioSortFilterService(
+      settingsDataService: widget.settingsDataService,
+    );
     _audioSortFilterParameters = widget.audioSortFilterParameters;
     _dialogTextFieldDecoration = getDialogTextFieldInputDecoration();
 

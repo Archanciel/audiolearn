@@ -10978,7 +10978,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 

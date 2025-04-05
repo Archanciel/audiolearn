@@ -21,6 +21,7 @@ import 'services/settings_data_service.dart';
 import 'utils/dir_util.dart';
 import 'views/my_home_page.dart';
 import 'views/screen_mixin.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); // Ensure Flutter bindings are initialized.
@@ -29,7 +30,7 @@ Future<void> main() async {
   //                     to false before generating the Windows version
   //                     of the app so that the app accesses the correct
   //                     application directory and not the test directory.
-  
+
   // bool deleteAppDir = kDeleteAppDirOnEmulator;
 
   // Parse command line arguments in integration tests
@@ -127,8 +128,9 @@ class MainApp extends StatelessWidget with ScreenMixin {
 
     final CommentVM commentVM = CommentVM();
 
-    final PictureVM pictureVM = PictureVM();
-
+    final PictureVM pictureVM = PictureVM(
+      settingsDataService: _settingsDataService,
+    );
 
     final PlaylistListVM playlistListVM = PlaylistListVM(
       warningMessageVM: warningMessageVM,

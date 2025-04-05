@@ -1680,7 +1680,9 @@ class IntegrationTestUtil {
       warningMessageVM: warningMessageVM,
       audioDownloadVM: audioDownloadVM,
       commentVM: CommentVM(),
-      pictureVM: PictureVM(),
+      pictureVM: PictureVM(
+        settingsDataService: settingsDataService,
+      ),
       settingsDataService: settingsDataService,
     );
 
@@ -1714,12 +1716,16 @@ class IntegrationTestUtil {
               create: (_) => LanguageProviderVM(
                     settingsDataService: settingsDataService,
                   )),
+          ChangeNotifierProvider(
+            create: (_) => PictureVM(
+              settingsDataService: settingsDataService,
+            ),
+          ),
           ChangeNotifierProvider(create: (_) => playlistListVM),
           ChangeNotifierProvider(create: (_) => warningMessageVM),
           ChangeNotifierProvider(create: (_) => audioPlayerVM),
           ChangeNotifierProvider(create: (_) => dateFormatVM),
           ChangeNotifierProvider(create: (_) => CommentVM()),
-          ChangeNotifierProvider(create: (_) => PictureVM()),
         ],
         child: Consumer2<ThemeProviderVM, LanguageProviderVM>(
           builder: (context, themeProvider, languageProvider, child) {
@@ -1781,12 +1787,16 @@ class IntegrationTestUtil {
               create: (_) => LanguageProviderVM(
                     settingsDataService: settingsDataService,
                   )),
+          ChangeNotifierProvider(
+            create: (_) => PictureVM(
+              settingsDataService: settingsDataService,
+            ),
+          ),
           ChangeNotifierProvider(create: (_) => playlistListVM),
           ChangeNotifierProvider(create: (_) => warningMessageVM),
           ChangeNotifierProvider(create: (_) => audioPlayerVM),
           ChangeNotifierProvider(create: (_) => dateFormatVM),
           ChangeNotifierProvider(create: (_) => CommentVM()),
-          ChangeNotifierProvider(create: (_) => PictureVM()),
         ],
         child: Consumer2<ThemeProviderVM, LanguageProviderVM>(
           builder: (context, themeProvider, languageProvider, child) {

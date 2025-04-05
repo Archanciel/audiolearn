@@ -35,6 +35,8 @@ const String kApplicationVersion = '1.3.84';
 const String kApplicationPath = "/storage/emulated/0/Documents/audiolearn";
 const String kPlaylistDownloadRootPath =
     "/storage/emulated/0/Documents/audiolearn/playlists";
+const String kApplicationPicturePath =
+    "/storage/emulated/0/Documents/audiolearn/pictures";
 const String kSettingsFileName = 'settings.json';
 const String kOrderedPlaylistTitlesFileName = 'savedOrderedPlaylistTitles.txt';
 
@@ -43,6 +45,8 @@ const String kApplicationPathWindowsTest =
     "C:\\development\\flutter\\audiolearn\\test\\data\\audio";
 const String kPlaylistDownloadRootPathWindowsTest =
     "C:\\development\\flutter\\audiolearn\\test\\data\\audio";
+const String kApplicationPicturePathWindowsTest =
+    "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\pictures";
 const String kDownloadAppTestSavedDataDir =
     "C:\\development\\flutter\\audiolearn\\test\\data\\saved";
 
@@ -51,6 +55,8 @@ const String kApplicationPathWindows =
     "C:\\audiolearn";
 const String kPlaylistDownloadRootPathWindows =
     "C:\\audiolearn\\playlists";
+const String kApplicationPicturePathWindows =
+    "C:\\audiolearn\\pictures";
 
 const String kCommentDirName = 'comments';
 const String kPictureDirName = 'pictures';

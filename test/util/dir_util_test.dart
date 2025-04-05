@@ -95,7 +95,7 @@ void main() {
         listJsonPathFileNames = DirUtil.listPathFileNamesInSubDirs(
           rootPath: kPlaylistDownloadRootPathWindowsTest,
           fileExtension: 'json',
-          excludeDirName: 'comments',
+          excludeDirNamesLst: ['comments'],
         );
 
         expect(listJsonPathFileNames.length, 2);

@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:audiolearn/models/comment.dart';
-
 import '../models/audio.dart';
 import '../models/playlist.dart';
+import '../models/comment.dart';
+import '../models/picture.dart';
 import 'sort_filter_parameters.dart';
 
 typedef FromJsonFunction<T> = T Function(Map<String, dynamic> jsonDataMap);
@@ -83,6 +83,7 @@ class JsonDataService {
     AudioSortFilterParameters: (jsonDataMap) =>
         AudioSortFilterParameters.fromJson(jsonDataMap),
     Comment: (jsonDataMap) => Comment.fromJson(jsonDataMap),
+    Picture: (jsonDataMap) => Picture.fromJson(jsonDataMap),
   };
 
   // typedef ToJsonFunction<T> = Map<String, dynamic> Function(T model);
@@ -93,6 +94,7 @@ class JsonDataService {
     AudioSortFilterParameters: (audioSortFilterParameters) =>
         audioSortFilterParameters.toJson(),
     Comment: (model) => model.toJson(),
+    Picture: (model) => model.toJson(),
   };
 
   static void saveToFile({
@@ -181,7 +183,7 @@ class JsonDataService {
       if (jsonStr.isEmpty) {
         return [];
       }
-      
+
       try {
         return decodeJsonList(jsonStr, type);
       } on StateError {
@@ -221,7 +223,7 @@ class JsonDataService {
     Type type,
   ) {
     final fromJsonFunction = _fromJsonFunctionsMap[type];
-
+    
     if (fromJsonFunction != null) {
       final jsonData = jsonDecode(jsonString);
       if (jsonData is List) {

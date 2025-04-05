@@ -779,6 +779,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                     false, // This line prevents the dialog from closing when tapping outside
                 builder: (BuildContext context) {
                   return AudioSortFilterDialog(
+                    settingsDataService: widget.settingsDataService,
+                    warningMessageVM: warningMessageVMlistenFalse,
                     selectedPlaylist: playlistListVMlistenFalse
                         .uniqueSelectedPlaylist!, // selected playlist
                     selectedPlaylistAudioLst: playlistListVMlistenFalse
@@ -792,7 +794,6 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                     audioLearnAppViewType:
                         AudioLearnAppViewType.audioPlayerView,
                     focusNode: focusNode,
-                    warningMessageVM: warningMessageVMlistenFalse,
                     calledFrom: CalledFrom.audioPlayerViewAudioMenu,
                   );
                 },

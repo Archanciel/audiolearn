@@ -1,15 +1,15 @@
 import 'dart:math';
 
-import 'package:audiolearn/models/comment.dart';
-import 'package:audiolearn/utils/date_time_util.dart';
-import 'package:audiolearn/viewmodels/comment_vm.dart';
+import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:flutter/foundation.dart';
-import 'package:path/path.dart' as path;
 
-import '../constants.dart';
+import '../models/comment.dart';
+import '../utils/date_time_util.dart';
 import '../models/audio.dart';
 import '../models/playlist.dart';
 import '../utils/dir_util.dart';
+import '../viewmodels/comment_vm.dart';
+import '../viewmodels/picture_vm.dart';
 import '../viewmodels/date_format_vm.dart';
 import 'sort_filter_parameters.dart';
 
@@ -19,6 +19,12 @@ enum SortFilterParmsVersion {
 }
 
 class AudioSortFilterService {
+  final SettingsDataService _settingsDataService;
+
+  AudioSortFilterService({
+    required SettingsDataService settingsDataService,
+  }) : _settingsDataService = settingsDataService;
+
   /// Method called by filterAndSortAudioLst(). This method is used
   /// to sort the audio list by the given sorting items contained in
   /// passed selectedSortItemLst. A SortingItem associates a SortingOption
@@ -1150,9 +1156,11 @@ class AudioSortFilterService {
       return filteredAudios;
     }
 
-    CommentVM commentVM = CommentVM();
-    Map<String, List<Comment>> commentsMap = commentVM.getPlaylistAudioComments(
-      playlist: filteredAudios.first.enclosingPlaylist!,
+    Playlist playlist = filteredAudios.first.enclosingPlaylist!;
+
+    Map<String, List<Comment>> commentsMap =
+        CommentVM().getPlaylistAudioComments(
+      playlist: playlist,
     );
 
     // If the 'Commented' checkbox was set to false (by
@@ -1179,11 +1187,9 @@ class AudioSortFilterService {
       return filteredAudios;
     }
 
-    List<String> playlistPictureFileNamesLst = DirUtil.listFileNamesInDir(
-      directoryPath:
-          "${selectedPlaylist.downloadPath}${path.separator}$kPictureDirName",
-      fileExtension: 'jpg',
-    );
+    List<String> playlistPictureFileNamesNoExtLst =
+        PictureVM(settingsDataService: _settingsDataService)
+            .getPlaylistAudioPicturedFileNamesNoExtLst(playlist: playlist);
 
     // If the 'Pictured' checkbox was set to false (by
     // default it is set to true), the returned audio list
@@ -1191,7 +1197,7 @@ class AudioSortFilterService {
     if (!audioSortFilterParameters.filterPictured) {
       filteredAudios = _filterAudioLstByRemovingPicturedAudio(
         audioLst: filteredAudios,
-        playlistPictureFileNamedLst: playlistPictureFileNamesLst,
+        playlistPictureFileNameNoExtdLst: playlistPictureFileNamesNoExtLst,
       );
     }
 
@@ -1202,7 +1208,7 @@ class AudioSortFilterService {
     if (!audioSortFilterParameters.filterNotPictured) {
       filteredAudios = _filterAudioLstByRemovingUnPicturedAudio(
         audioLst: filteredAudios,
-        playlistPictureFileNamedLst: playlistPictureFileNamesLst,
+        playlistPictureFileNameNoExtdLst: playlistPictureFileNamesNoExtLst,
       );
     }
 
@@ -1306,27 +1312,33 @@ class AudioSortFilterService {
 
   List<Audio> _filterAudioLstByRemovingPicturedAudio({
     required List<Audio> audioLst,
-    required List<String> playlistPictureFileNamedLst,
+    required List<String> playlistPictureFileNameNoExtdLst,
   }) {
     return audioLst.where((audio) {
       // Returns only audio for which no picture was added, i.e. the
       // playlistPictureFileNamedLst does not contain the audio
       // file name with the '.jpg' extension.
-      return !playlistPictureFileNamedLst
-          .contains(audio.audioFileName.replaceFirst('.mp3', '.jpg'));
+      return !playlistPictureFileNameNoExtdLst.contains(
+        DirUtil.getFileNameWithoutMp3Extension(
+          mp3FileName: audio.audioFileName,
+        ),
+      );
     }).toList();
   }
 
   List<Audio> _filterAudioLstByRemovingUnPicturedAudio({
     required List<Audio> audioLst,
-    required List<String> playlistPictureFileNamedLst,
+    required List<String> playlistPictureFileNameNoExtdLst,
   }) {
     // Returns only audio for which a picture was added, i.e. the
     // playlistPictureFileNamedLst does contain the audio
     // file name with the '.jpg' extension.
     return audioLst.where((audio) {
-      return playlistPictureFileNamedLst
-          .contains(audio.audioFileName.replaceFirst('.mp3', '.jpg'));
+      return playlistPictureFileNameNoExtdLst.contains(
+        DirUtil.getFileNameWithoutMp3Extension(
+          mp3FileName: audio.audioFileName,
+        ),
+      );
     }).toList();
   }
 
@@ -1335,9 +1347,8 @@ class AudioSortFilterService {
     required List<String> playlistPlayableAudioNamesLst,
   }) {
     return audioLst.where((audio) {
-    // Returns only audio for which a mp3 does not exist.
-      return !playlistPlayableAudioNamesLst
-          .contains(audio.audioFileName);
+      // Returns only audio for which a mp3 does not exist.
+      return !playlistPlayableAudioNamesLst.contains(audio.audioFileName);
     }).toList();
   }
 
@@ -1347,8 +1358,7 @@ class AudioSortFilterService {
   }) {
     // Returns only audio for which a mp3 exist.
     return audioLst.where((audio) {
-      return playlistPlayableAudioNamesLst
-          .contains(audio.audioFileName);
+      return playlistPlayableAudioNamesLst.contains(audio.audioFileName);
     }).toList();
   }
 

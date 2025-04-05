@@ -1,44 +1,129 @@
 import 'dart:io';
 
+import 'package:audiolearn/services/json_data_service.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
 
 import '../constants.dart';
 import '../models/audio.dart';
+import '../models/picture.dart';
 import '../models/playlist.dart';
+import '../services/settings_data_service.dart';
 import '../utils/dir_util.dart';
 
 class PictureVM extends ChangeNotifier {
+  late String _applicationPicturePath;
+  final SettingsDataService _settingsDataService;
 
-  PictureVM();
+  PictureVM({
+    required SettingsDataService settingsDataService,
+  }) : _settingsDataService = settingsDataService {
+    _applicationPicturePath =
+        DirUtil.getApplicationPicturePath(isTest: _settingsDataService.isTest);
+  }
 
   /// Method called when the user clicks on the audio item 'Add Audio
   /// Picture ...' menu or on audio player view left appbar 'Add Audio
   /// Picture ...' menu.
+  ///
+  /// [pictureFilePathName] was obtained from the file picker dialog.
   void storeAudioPictureFileInPlaylistPictureDir({
     required Audio audio,
     required String pictureFilePathName,
   }) {
-    final String playlistDownloadPath = audio.enclosingPlaylist!.downloadPath;
+    // Copy the picture file to the application picture directory
+    DirUtil.copyFileToDirectory(
+      sourceFilePathName: pictureFilePathName,
+      targetDirectoryPath: _applicationPicturePath,
+    );
+
+    _addPictureToAudioPictureJsonFile(
+      pictureFileName: DirUtil.getFileNameFromPathFileName(
+        pathFileName: pictureFilePathName,
+      ),
+      audio: audio,
+    );
+
+    notifyListeners();
+  }
+
+  void _addPictureToAudioPictureJsonFile({
+    required String pictureFileName,
+    required Audio audio,
+  }) {
+    String pictureJsonFilePathName = _buildPictureJsonFilePathName(
+      playlistDownloadPath: audio.enclosingPlaylist!.downloadPath,
+      audioFileName: audio.audioFileName,
+    );
+
+    List<Picture> pictureLst = JsonDataService.loadListFromFile(
+      jsonPathFileName: pictureJsonFilePathName,
+      type: Picture,
+    );
+
+    if (pictureLst.isEmpty) {
+      // Create the playlist dir so that the picture json file
+      // can be created
+      DirUtil.createDirIfNotExistSync(
+        pathStr: DirUtil.getPathFromPathFileName(
+          pathFileName: pictureJsonFilePathName,
+        ),
+      );
+    }
+
+    pictureLst.add(
+      Picture(fileName: pictureFileName),
+    );
+
+    _sortAndSavePictureLst(
+      pictureLst: pictureLst,
+      pictureFilePathName: pictureJsonFilePathName,
+    );
+
+    notifyListeners();
+  }
+
+  /// Returns a string which is the combination of the path of the playlist picture
+  /// directory and the file name to the maybe not yet existing picture json file.
+  String _buildPictureJsonFilePathName({
+    required String playlistDownloadPath,
+    required String audioFileName,
+  }) {
     final String playlistPicturePath =
         "$playlistDownloadPath${path.separator}$kPictureDirName";
 
-    // Ensure the directory exists, otherwise create it
-    Directory targetDirectory = Directory(playlistPicturePath);
+    final String createdPictureFileName =
+        audioFileName.replaceAll('.mp3', '.json');
 
-    if (!targetDirectory.existsSync()) {
-      targetDirectory.createSync();
-    }
+    return "$playlistPicturePath${path.separator}$createdPictureFileName";
+  }
 
-    final String createdAudioPictureFileName =
-        audio.audioFileName.replaceAll('.mp3', '.jpg');
+  void _sortAndSavePictureLst({
+    required List<Picture> pictureLst,
+    required String pictureFilePathName,
+  }) {
+    pictureLst.sort(
+      (a, b) => a.lastDisplayDateTime.compareTo(b.lastDisplayDateTime),
+    );
 
-    DirUtil.copyFileToDirectory(
-        sourceFilePathName: pictureFilePathName,
-        targetDirectoryPath: playlistPicturePath,
-        targetFileName: createdAudioPictureFileName);
+    JsonDataService.saveListToFile(
+      data: pictureLst,
+      jsonPathFileName: pictureFilePathName,
+    );
+  }
 
-    notifyListeners();
+  int getAudioPicturesNumber({
+    required Audio audio,
+  }) {
+    String pictureJsonFilePathName = _buildPictureJsonFilePathName(
+      playlistDownloadPath: audio.enclosingPlaylist!.downloadPath,
+      audioFileName: audio.audioFileName,
+    );
+
+    return JsonDataService.loadListFromFile(
+      jsonPathFileName: pictureJsonFilePathName,
+      type: Picture,
+    ).length;
   }
 
   /// Method called when the user clicks on the audio item 'Remove Audio Picture'
@@ -64,17 +149,29 @@ class PictureVM extends ChangeNotifier {
   }
 
   /// Returns the audio picture file if it exists, null otherwise.
-  /// 
+  ///
   /// This method is used to deter4mine if the 'Remove audio picture'
   /// menu item is displayed or not for the audio item and the audio
   /// player view left appbar.
   File? getAudioPictureFile({
     required Audio audio,
   }) {
-    String audioPicturePathFileName = _buildAudioPictureFilePathName(
+    String pictureJsonFilePathName = _buildPictureJsonFilePathName(
       playlistDownloadPath: audio.enclosingPlaylist!.downloadPath,
       audioFileName: audio.audioFileName,
     );
+
+    List<Picture> pictureLst = JsonDataService.loadListFromFile(
+      jsonPathFileName: pictureJsonFilePathName,
+      type: Picture,
+    );
+
+    if (pictureLst.isEmpty) {
+      return null;
+    }
+
+    String audioPicturePathFileName =
+        "$_applicationPicturePath${path.separator}${pictureLst[0].fileName}";
 
     File file = File(audioPicturePathFileName);
 
@@ -86,19 +183,32 @@ class PictureVM extends ChangeNotifier {
     return file;
   }
 
-  /// Returns a string which is the combination of the path of the picture directory
-  /// and the file name to the maybe not existing audio picture file.
-  String _buildAudioPictureFilePathName({
-    required String playlistDownloadPath,
-    required String audioFileName,
+  List<String> getPlaylistAudioPicturedFileNamesNoExtLst({
+    required Playlist playlist,
   }) {
-    final String playlistPicturePath =
+    String playlistDownloadPath = playlist.downloadPath;
+    String playlistPicturePath =
         "$playlistDownloadPath${path.separator}$kPictureDirName";
 
-    final String createdAudioPictureFileName =
-        audioFileName.replaceAll('.mp3', '.jpg');
+    List<String> audioPictureFileNamesLst = [];
+    Directory dir = Directory(playlistPicturePath);
 
-    return "$playlistPicturePath${path.separator}$createdAudioPictureFileName";
+    if (!dir.existsSync()) {
+      // If the playlist has no picture directory, an empty list
+      // is returned.
+      return audioPictureFileNamesLst;
+    }
+
+    final List<FileSystemEntity> files = dir.listSync();
+
+    for (FileSystemEntity file in files) {
+      if (file is File && file.path.endsWith('.json')) {
+        String fileName = DirUtil.getFileNameFromPathFileName(pathFileName: file.path);
+        audioPictureFileNamesLst.add(fileName.substring(0, fileName.length - 5));
+      }
+    }
+
+    return audioPictureFileNamesLst;
   }
 
   void deleteAudioPictureIfExist({

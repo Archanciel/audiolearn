@@ -105,7 +105,6 @@ class CommentVM extends ChangeNotifier {
       commentFilePathName: commentFilePathName,
     );
 
-    // Add comment to the database
     notifyListeners();
   }
 
