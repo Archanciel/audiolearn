@@ -90,6 +90,7 @@ class SettingsDataService {
   ];
 
   final bool _isTest;
+  bool get isTest => _isTest;
 
   // This map contains the named AudioSortFilterParameters. The
   // AudioSortFilterParameters by default is named 'default'
@@ -362,7 +363,7 @@ class SettingsDataService {
       set(
         settingType: SettingType.dataLocation,
         settingSubType: DataLocation.playlistRootPath,
-        value: await DirUtil.getPlaylistDownloadRootPath(
+        value: DirUtil.getPlaylistDownloadRootPath(
           isTest: _isTest,
         ),
       );

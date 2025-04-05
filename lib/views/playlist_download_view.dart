@@ -1142,6 +1142,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             //                            closing when tapping outside it
             builder: (BuildContext context) {
               return AudioSortFilterDialog(
+                settingsDataService: widget.settingsDataService,
+                warningMessageVM: warningMessageVMlistenFalse,
                 selectedPlaylist:
                     playlistListVMlistenFalse.uniqueSelectedPlaylist!,
                 selectedPlaylistAudioLst: playlistListVMlistenFalse
@@ -1158,7 +1160,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 audioLearnAppViewType:
                     AudioLearnAppViewType.playlistDownloadView,
                 focusNode: focusNode,
-                warningMessageVM: warningMessageVMlistenFalse,
                 calledFrom: CalledFrom.playlistDownloadView,
               );
             },
@@ -1410,6 +1411,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 // closing when tapping outside the dialog
                 builder: (BuildContext context) {
                   return AudioSortFilterDialog(
+                    settingsDataService: widget.settingsDataService,
+                    warningMessageVM: warningMessageVMlistenFalse,
                     selectedPlaylist:
                         playlistListVMlistenFalse.uniqueSelectedPlaylist!,
                     selectedPlaylistAudioLst: playlistListVMlistenFalse
@@ -1423,7 +1426,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     audioLearnAppViewType:
                         AudioLearnAppViewType.playlistDownloadView,
                     focusNode: focusNode,
-                    warningMessageVM: warningMessageVMlistenFalse,
                     calledFrom: CalledFrom.playlistDownloadViewAudioMenu,
                   );
                 },

@@ -116,7 +116,7 @@ class AudioDownloadVM extends ChangeNotifier {
     List<String> playlistPathFileNameLst = DirUtil.listPathFileNamesInSubDirs(
       rootPath: _playlistsRootPath,
       fileExtension: 'json',
-      excludeDirName: kCommentDirName,
+      excludeDirNamesLst: [kCommentDirName, kPictureDirName],
     );
 
     // Removing settings.json from the list of playlist json files if

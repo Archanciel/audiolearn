@@ -94,8 +94,7 @@ class PlaylistListVM extends ChangeNotifier {
   Playlist? _uniqueSelectedPlaylist;
   Playlist? get uniqueSelectedPlaylist => _uniqueSelectedPlaylist;
 
-  final AudioSortFilterService _audioSortFilterService =
-      AudioSortFilterService();
+  final AudioSortFilterService _audioSortFilterService;
 
   // The next fields are used to manage the search sentence entered
   // by the user in the 'Youtube URL or search sentence' field of the
@@ -154,7 +153,10 @@ class PlaylistListVM extends ChangeNotifier {
               settingSubType:
                   Playlists.arePlaylistsDisplayedInPlaylistDownloadView,
             ) ??
-            false;
+            false,
+        _audioSortFilterService = AudioSortFilterService(
+          settingsDataService: settingsDataService,
+        );
 
   List<Playlist> getUpToDateSelectablePlaylistsExceptExcludedPlaylist({
     required Playlist excludedPlaylist,
@@ -2394,7 +2396,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// playback speed in the application settings dialog and choose
   /// to apply this modification to the existing playlists and/or to the
   /// already downloaded audio contained in the playlists.
-  /// 
+  ///
   /// This method updates the playlists audio play speed or/and
   /// the audio play speed of the playable audio contained in
   /// the playlists.

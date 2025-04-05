@@ -151,11 +151,25 @@ void main() {
   ];
 
   group('filter test: ignoring case, filter audio list on validVideoTitle only',
-      () {
+      () async {
     late AudioSortFilterService audioSortFilterService;
 
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
     setUp(() {
-      audioSortFilterService = AudioSortFilterService();
+      audioSortFilterService = AudioSortFilterService(
+        settingsDataService: settingsDataService,
+      );
     });
     test('filter by <tendance crypto> AND <en 2024>', () {
       List<Audio> expectedFilteredAudios = [
@@ -346,11 +360,25 @@ void main() {
   });
   group(
       'filter test: not ignoring case, filter audio list on validVideoTitle only',
-      () {
+      () async {
     late AudioSortFilterService audioSortFilterService;
 
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
     setUp(() {
-      audioSortFilterService = AudioSortFilterService();
+      audioSortFilterService = AudioSortFilterService(
+        settingsDataService: settingsDataService,
+      );
     });
     test('filter by <tendance crypto> AND <en 2024>', () {
       List<Audio> expectedFilteredAudios = [
@@ -538,11 +566,25 @@ void main() {
   });
   group(
       'filter test: ignoring case, filter audio list on validVideoTitle or compactVideoDescription test',
-      () {
+      () async {
     late AudioSortFilterService audioSortFilterService;
 
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
     setUp(() {
-      audioSortFilterService = AudioSortFilterService();
+      audioSortFilterService = AudioSortFilterService(
+        settingsDataService: settingsDataService,
+      );
     });
     test('filter by <investir en 2024> AND <éthique et tac>', () {
       List<Audio> expectedFilteredAudios = [];
@@ -623,11 +665,25 @@ void main() {
   });
   group(
       'filter test: not ignoring case, filter audio list on validVideoTitle or compactVideoDescription',
-      () {
+      () async {
     late AudioSortFilterService audioSortFilterService;
 
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
     setUp(() {
-      audioSortFilterService = AudioSortFilterService();
+      audioSortFilterService = AudioSortFilterService(
+        settingsDataService: settingsDataService,
+      );
     });
     test('filter by <investir en 2024> AND <éthique et tac>', () {
       List<Audio> expectedFilteredAudios = [];
@@ -723,11 +779,25 @@ void main() {
   });
   group(
       '''filter test: by start/end download date or/and start/end video upload date.''',
-      () {
+      () async {
     late AudioSortFilterService audioSortFilterService;
 
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
     setUp(() {
-      audioSortFilterService = AudioSortFilterService();
+      audioSortFilterService = AudioSortFilterService(
+        settingsDataService: settingsDataService,
+      );
     });
     test('filter by start/end download date', () {
       List<Audio> expectedFilteredAudios = [
@@ -803,11 +873,25 @@ void main() {
       expect(filteredAudioLst, expectedFilteredAudios);
     });
   });
-  group('''filter test: by file size range or/and audio duration range.''', () {
+  group('''filter test: by file size range or/and audio duration range.''', () async {
     late AudioSortFilterService audioSortFilterService;
 
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
     setUp(() {
-      audioSortFilterService = AudioSortFilterService();
+      audioSortFilterService = AudioSortFilterService(
+        settingsDataService: settingsDataService,
+      );
     });
     test('filter by 110 MB to 130 MB file size range', () {
       List<Audio> expectedFilteredAudios = [audioOne, audioThree, audioFour];
@@ -920,11 +1004,25 @@ void main() {
       expect(filteredAudioLst, expectedFilteredAudios);
     });
   });
-  group('sort audio lst by one SortingOption', () {
+  group('sort audio lst by one SortingOption', () async {
     late AudioSortFilterService audioSortFilterService;
 
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
     setUp(() {
-      audioSortFilterService = AudioSortFilterService();
+      audioSortFilterService = AudioSortFilterService(
+        settingsDataService: settingsDataService,
+      );
     });
     group('sort audio lst by title SortingOption', () {
       test('sort by title', () {
@@ -8896,11 +8994,25 @@ void main() {
       );
     });
   });
-  group("sort audio lst by multiple SortingOption's", () {
+  group("sort audio lst by multiple SortingOption's", () async {
     late AudioSortFilterService audioSortFilterService;
 
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
     setUp(() {
-      audioSortFilterService = AudioSortFilterService();
+      audioSortFilterService = AudioSortFilterService(
+        settingsDataService: settingsDataService,
+      );
     });
     test('sort by duration and title', () {
       final Audio zebra = Audio.fullConstructor(
@@ -9086,11 +9198,25 @@ void main() {
       );
     });
   });
-  group('filterAndSortAudioLst by title and description', () {
+  group('filterAndSortAudioLst by title and description', () async {
     late AudioSortFilterService audioSortFilterService;
 
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
     setUp(() {
-      audioSortFilterService = AudioSortFilterService();
+      audioSortFilterService = AudioSortFilterService(
+        settingsDataService: settingsDataService,
+      );
     });
 
     test('with search word present in in title only', () {
@@ -9815,11 +9941,25 @@ void main() {
       );
     });
   });
-  group('filterAndSortAudioLst by title only', () {
+  group('filterAndSortAudioLst by title only', () async {
     late AudioSortFilterService audioSortFilterService;
 
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
     setUp(() {
-      audioSortFilterService = AudioSortFilterService();
+      audioSortFilterService = AudioSortFilterService(
+        settingsDataService: settingsDataService,
+      );
     });
 
     test('with search word in title and in compact description', () {
@@ -10102,7 +10242,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -10112,7 +10254,9 @@ void main() {
       // selected and which are not
       playlistListVM.getUpToDateSelectablePlaylists();
 
-      audioSortFilterService = AudioSortFilterService();
+      audioSortFilterService = AudioSortFilterService(
+        settingsDataService: settingsDataService,
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -11067,7 +11211,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -11077,7 +11223,9 @@ void main() {
       // selected and which are not
       playlistListVM.getUpToDateSelectablePlaylists();
 
-      audioSortFilterService = AudioSortFilterService();
+      audioSortFilterService = AudioSortFilterService(
+        settingsDataService: settingsDataService,
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -11286,7 +11434,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -11296,7 +11446,9 @@ void main() {
       // selected and which are not
       playlistListVM.getUpToDateSelectablePlaylists();
 
-      audioSortFilterService = AudioSortFilterService();
+      audioSortFilterService = AudioSortFilterService(
+        settingsDataService: settingsDataService,
+      );
     });
     test('filter commented or not commented audio', () {
       List<Audio> audioList = playlistListVM
@@ -11531,7 +11683,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -11541,7 +11695,9 @@ void main() {
       // selected and which are not
       playlistListVM.getUpToDateSelectablePlaylists();
 
-      audioSortFilterService = AudioSortFilterService();
+      audioSortFilterService = AudioSortFilterService(
+        settingsDataService: settingsDataService,
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -11705,7 +11861,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -11805,7 +11963,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -11892,7 +12052,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -11975,7 +12137,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -12046,7 +12210,9 @@ void main() {
           warningMessageVM: warningMessageVM,
           audioDownloadVM: audioDownloadVM,
           commentVM: CommentVM(),
-          pictureVM: PictureVM(),
+          pictureVM: PictureVM(
+            settingsDataService: settingsDataService,
+          ),
           settingsDataService: settingsDataService,
         );
 
@@ -12056,7 +12222,9 @@ void main() {
         // selected and which are not
         playlistListVM.getUpToDateSelectablePlaylists();
 
-        audioSortFilterService = AudioSortFilterService();
+        audioSortFilterService = AudioSortFilterService(
+          settingsDataService: settingsDataService,
+        );
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
@@ -12621,7 +12789,9 @@ void main() {
           warningMessageVM: warningMessageVM,
           audioDownloadVM: audioDownloadVM,
           commentVM: CommentVM(),
-          pictureVM: PictureVM(),
+          pictureVM: PictureVM(
+            settingsDataService: settingsDataService,
+          ),
           settingsDataService: settingsDataService,
         );
 
@@ -12631,7 +12801,9 @@ void main() {
         // selected and which are not
         playlistListVM.getUpToDateSelectablePlaylists();
 
-        audioSortFilterService = AudioSortFilterService();
+        audioSortFilterService = AudioSortFilterService(
+          settingsDataService: settingsDataService,
+        );
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub

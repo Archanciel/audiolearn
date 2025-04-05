@@ -60,7 +60,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -273,7 +275,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -344,7 +348,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -418,7 +424,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -489,7 +497,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -567,7 +577,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -636,7 +648,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -710,7 +724,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -781,7 +797,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -921,7 +939,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -990,7 +1010,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -1077,7 +1099,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -1164,7 +1188,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -1347,7 +1373,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -1560,7 +1588,9 @@ void main() {
       warningMessageVM: warningMessageVM,
       audioDownloadVM: audioDownloadVM,
       commentVM: CommentVM(),
-      pictureVM: PictureVM(),
+      pictureVM: PictureVM(
+        settingsDataService: settingsDataService,
+      ),
       settingsDataService: settingsDataService,
     );
 
@@ -1688,7 +1718,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -1782,7 +1814,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -1879,7 +1913,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 

@@ -1536,7 +1536,9 @@ Future<AudioPlayerVM> createAudioPlayerVM({
     warningMessageVM: warningMessageVM,
     audioDownloadVM: audioDownloadVM,
     commentVM: CommentVM(),
-    pictureVM: PictureVM(),
+    pictureVM: PictureVM(
+      settingsDataService: settingsDataService,
+    ),
     settingsDataService: settingsDataService,
   );
   final CommentVM commentVM = CommentVM();

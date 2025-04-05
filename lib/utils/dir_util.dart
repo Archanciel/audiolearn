@@ -24,7 +24,7 @@ class DirUtil {
   }
 
   /// Returns the path of the application directory. If the application directory
-  /// does not exist, it is created. The path returned depends on the platform.
+  /// does not exist, it is created. The returned path depends on the platform.
   static String getApplicationPath({
     bool isTest = false,
   }) {
@@ -53,9 +53,9 @@ class DirUtil {
     }
   }
 
-  static Future<String> getPlaylistDownloadRootPath({
+  static String getPlaylistDownloadRootPath({
     bool isTest = false,
-  }) async {
+  }) {
     if (Platform.isWindows) {
       if (isTest) {
         return kPlaylistDownloadRootPathWindowsTest;
@@ -66,10 +66,10 @@ class DirUtil {
       // On Android or mobile emulator
       Directory dir = Directory(kPlaylistDownloadRootPath);
 
-      if (!await dir.exists()) {
+      if (!dir.existsSync()) {
         try {
           // now create the playlist dir
-          await dir.create();
+          dir.createSync();
         } catch (e) {
           // Handle the exception, e.g., directory not created
           print('Directory could not be created: $e');
@@ -80,9 +80,41 @@ class DirUtil {
     }
   }
 
-  static Future<String> removeAudioDownloadHomePathFromPathFileName(
-      {required String pathFileName}) async {
-    String path = await getPlaylistDownloadRootPath();
+  /// Returns the path of the application picture directory. If the application
+  /// picture directory does not exist, it is created. The returned path depends
+  /// on the platform.
+  static String getApplicationPicturePath({
+    bool isTest = false,
+  }) {
+    if (Platform.isWindows) {
+      if (isTest) {
+        return kApplicationPicturePathWindowsTest;
+      } else {
+        return kApplicationPicturePathWindows;
+      }
+    } else {
+      // On Android or mobile emulator
+      // avoids that the application can not be run after it was
+      // installed on the smartphone
+      Directory dir = Directory(kApplicationPicturePath);
+
+      if (!dir.existsSync()) {
+        try {
+          dir.createSync();
+        } catch (e) {
+          // Handle the exception, e.g., directory not created
+          print('Directory could not be created: $e');
+        }
+      }
+
+      return kApplicationPicturePath;
+    }
+  }
+
+  static String removeAudioDownloadHomePathFromPathFileName({
+    required String pathFileName,
+  }) {
+    String path = getPlaylistDownloadRootPath();
     String pathFileNameWithoutHomePath = pathFileName.replaceFirst(path, '');
 
     return pathFileNameWithoutHomePath;
@@ -152,6 +184,18 @@ class DirUtil {
     required String mp3FileName,
   }) {
     return mp3FileName.substring(0, mp3FileName.length - 4);
+  }
+
+  static String getFileNameWithoutJsonExtension({
+    required String jsonFileName,
+  }) {
+    return jsonFileName.substring(0, jsonFileName.length - 5);
+  }
+
+  static String getFileNameFromPathFileName({
+    required String pathFileName,
+  }) {
+    return path.basename(pathFileName);
   }
 
   static void deleteFilesAndSubDirsOfDir({
@@ -297,14 +341,14 @@ class DirUtil {
     }
   }
 
-  static Future<void> copyFileToDirectory({
+  static void copyFileToDirectory({
     required String sourceFilePathName,
     required String targetDirectoryPath,
     String? targetFileName,
-  }) async {
+  }) {
     File sourceFile = File(sourceFilePathName);
 
-    if (!await sourceFile.exists()) {
+    if (!sourceFile.existsSync()) {
       return;
     }
 
@@ -312,29 +356,38 @@ class DirUtil {
     String targetPathFileName =
         '$targetDirectoryPath${path.separator}$copiedFileName';
 
-    await sourceFile.copy(targetPathFileName);
+    sourceFile.copySync(targetPathFileName);
   }
 
   static List<String> listPathFileNamesInSubDirs({
     required String rootPath,
     required String fileExtension,
-    String? excludeDirName, // Default directory name to exclude
+    List<String>? excludeDirNamesLst, // List of directory names to exclude
   }) {
     List<String> pathFileNameList = [];
 
     final Directory dir = Directory(rootPath);
     final RegExp pattern = RegExp(r'\.' + RegExp.escape(fileExtension) + r'$');
-    RegExp? excludePattern;
+    List<RegExp>? excludePatterns;
 
-    if (excludeDirName != null) {
-      excludePattern = RegExp(RegExp.escape(excludeDirName) + r'[/\\]');
+    if (excludeDirNamesLst != null && excludeDirNamesLst.isNotEmpty) {
+      excludePatterns = excludeDirNamesLst
+          .map((dirName) => RegExp(RegExp.escape(dirName) + r'[/\\]'))
+          .toList();
     }
 
     for (FileSystemEntity entity
         in dir.listSync(recursive: true, followLinks: false)) {
       if (entity is File && pattern.hasMatch(entity.path)) {
-        // Check if the file's path does not contain the excluded directory name
-        if (excludePattern == null || !excludePattern.hasMatch(entity.path)) {
+        bool shouldExclude = false;
+
+        // Check if the file's path contains any of the excluded directory names
+        if (excludePatterns != null) {
+          shouldExclude =
+              excludePatterns.any((pattern) => pattern.hasMatch(entity.path));
+        }
+
+        if (!shouldExclude) {
           // Check if the file is not directly in the root path
           String relativePath = entity.path
               .replaceFirst(RegExp(RegExp.escape(rootPath) + r'[/\\]?'), '');

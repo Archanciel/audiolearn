@@ -107,7 +107,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -393,7 +395,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -547,7 +551,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -807,7 +813,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -1599,7 +1607,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -1834,7 +1844,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -2028,7 +2040,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -2181,7 +2195,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -2330,7 +2346,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -2485,7 +2503,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -2971,7 +2991,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -3158,7 +3180,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: mockAudioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -3349,7 +3373,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -3571,7 +3597,9 @@ void main() {
         warningMessageVM: warningMessageVM,
         audioDownloadVM: audioDownloadVM,
         commentVM: CommentVM(),
-        pictureVM: PictureVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
         settingsDataService: settingsDataService,
       );
 
@@ -16908,7 +16936,8 @@ void main() {
       );
 
       // First, open the playlist comment dialog
-      Finder playlistCommentListDialogFinder = await IntegrationTestUtil.openPlaylistCommentDialog(
+      Finder playlistCommentListDialogFinder =
+          await IntegrationTestUtil.openPlaylistCommentDialog(
         tester: tester,
         playlistTitle: youtubePlaylistTitle,
       );
@@ -17027,7 +17056,8 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await IntegrationTestUtil.openPlaylistCommentDialog(
+        playlistCommentListDialogFinder =
+            await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17116,7 +17146,8 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await IntegrationTestUtil.openPlaylistCommentDialog(
+        playlistCommentListDialogFinder =
+            await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17209,7 +17240,8 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await IntegrationTestUtil.openPlaylistCommentDialog(
+        playlistCommentListDialogFinder =
+            await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17303,7 +17335,8 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await IntegrationTestUtil.openPlaylistCommentDialog(
+        playlistCommentListDialogFinder =
+            await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17392,7 +17425,8 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await IntegrationTestUtil.openPlaylistCommentDialog(
+        playlistCommentListDialogFinder =
+            await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17485,7 +17519,8 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await IntegrationTestUtil.openPlaylistCommentDialog(
+        playlistCommentListDialogFinder =
+            await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17579,7 +17614,8 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await IntegrationTestUtil.openPlaylistCommentDialog(
+        playlistCommentListDialogFinder =
+            await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17672,7 +17708,8 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await IntegrationTestUtil.openPlaylistCommentDialog(
+        playlistCommentListDialogFinder =
+            await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
@@ -17769,7 +17806,8 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now, re-open the playlist comment dialog
-        playlistCommentListDialogFinder = await IntegrationTestUtil.openPlaylistCommentDialog(
+        playlistCommentListDialogFinder =
+            await IntegrationTestUtil.openPlaylistCommentDialog(
           tester: tester,
           playlistTitle: youtubePlaylistTitle,
         );
