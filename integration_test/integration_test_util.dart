@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:audiolearn/models/picture.dart';
 import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:audiolearn/views/my_home_page.dart';
 import 'package:audiolearn/views/widgets/audio_info_dialog.dart';
@@ -1567,69 +1568,27 @@ class IntegrationTestUtil {
     );
   }
 
-  static Future<void> verifyPictureSuppression({
-    required WidgetTester tester,
+  static void verifyPictureSuppression({
     required String playlistPictureDir,
     required String audioForPictureTitle,
-    required List<String> pictureFileNamesLst,
-    bool goToAudioPlayerView = true,
-  }) async {
-    // Now verifying that the playlist picture directory does not contains
-    // the added picture file
-    List<String> playlistPicturesLst = DirUtil.listFileNamesInDir(
-      directoryPath: playlistPictureDir,
-      fileExtension: 'jpg',
-    );
+    required String deletedPictureFileName,
+  })  {
+    String pictureJsonFilePathName = "$playlistPictureDir${path.separator}$audioForPictureTitle.json";
 
-    expect(playlistPicturesLst, pictureFileNamesLst);
+    List<Picture> pictureLst = JsonDataService.loadListFromFile(
+      jsonPathFileName: pictureJsonFilePathName,
+      type: Picture,
+    ).map((dynamic item) => item as Picture).toList();
 
-    if (goToAudioPlayerView) {
-      // Now go to the audio player view
-      Finder appScreenNavigationButton =
-          find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
-        tester: tester,
+    // Now verifying that the pictureLst directory does not contains
+    // the deletedPictureFileName.
+    for (Picture picture in pictureLst) {
+      expect(
+        picture.fileName,
+        isNot(deletedPictureFileName),
+        reason: 'The picture file name should not be $deletedPictureFileName',
       );
     }
-
-    // Due to the not working integration test which prevents the
-    // audio picture to be displayed, we open and close the playable
-    // audio list dialog. This will cause the added picture to be
-    // displayed. When a picture is added manually in the Audio Learn
-    // application, the picture IS displayed after the 'Add Audio
-    // Picture' menu was executed !
-
-    String audioTitleWithDuration = '$audioForPictureTitle\n40:53';
-
-    await tester.tap(find.text(audioTitleWithDuration));
-    await tester.pumpAndSettle();
-
-    // Tap on Cancel button to close the
-    // DisplaySelectableAudioListDialog
-    await tester.tap(find.text('Close'));
-    await tester.pumpAndSettle();
-
-    // Now that the audio picture was deleted, verify that the
-    // regular play/pause button is displayed
-    expect(
-      find.byKey(const Key('middleScreenPlayPauseButton')),
-      findsOneWidget,
-    );
-
-    // Now that the audio picture was deleted, verify that the
-    // play/pause button is no more displayed at top of the screen
-    expect(
-      find.byKey(const Key('picture_displayed_play_pause_button_key')),
-      findsNothing,
-    );
-
-    // Now that the audio picture was deleted, verify that the
-    // audio title with duration is displayed
-    expect(
-      find.text(audioTitleWithDuration),
-      findsOneWidget,
-    );
   }
 
   /// This method is used as an alternative to calling app.main(). It enables
