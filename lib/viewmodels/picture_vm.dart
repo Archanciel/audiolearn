@@ -50,7 +50,7 @@ class PictureVM extends ChangeNotifier {
     // Copy the picture file to the application picture directory.
     // If the picture file already exists in the application picture
     // directory, it is not copied again.
-    DirUtil.copyFileToDirectoryIfNotExist(
+    DirUtil.copyFileToDirectoryIfNotExistSync(
       sourceFilePathName: pictureFilePathName,
       targetDirectoryPath: _applicationPicturePath,
     );
@@ -195,6 +195,7 @@ class PictureVM extends ChangeNotifier {
     return file;
   }
 
+  /// Returns the list of Picture objects associated to the passed audio.
   List<Picture> _getAudioPicturesLst({
     required Audio audio,
   }) {
@@ -206,7 +207,7 @@ class PictureVM extends ChangeNotifier {
     List<Picture> pictureLst = JsonDataService.loadListFromFile(
       jsonPathFileName: pictureJsonFilePathName,
       type: Picture,
-    );
+    ).map((dynamic item) => item as Picture).toList();
 
     return pictureLst;
   }
@@ -255,32 +256,33 @@ class PictureVM extends ChangeNotifier {
     );
   }
 
-  void moveAudioPictureToTargetPlaylist({
+  void moveAudioPictureJsonFileToTargetPlaylist({
     required Audio audio,
     required Playlist targetPlaylist,
   }) {
-    // Obtaining the potentially existing audio picture file path
-    // name
+    final String playlistPictureJsonSourcePathFileName =
+        "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kPictureDirName${path.separator}${audio.audioFileName.replaceAll('.mp3', '.json')}";
+    final String playlistPicturesTargetPath =
+        "${targetPlaylist.downloadPath}${path.separator}$kPictureDirName";
 
-    final String playlistDownloadPath = audio.enclosingPlaylist!.downloadPath;
-    final String audioPictureFileName =
-        audio.audioFileName.replaceAll('.mp3', '.jpg');
-    final String audioPicturePathFileName =
-        "$playlistDownloadPath${path.separator}$kPictureDirName${path.separator}$audioPictureFileName";
+    DirUtil.moveFileToDirectoryIfNotExistSync(
+      sourceFilePathName: playlistPictureJsonSourcePathFileName,
+      targetDirectoryPath: playlistPicturesTargetPath,
+    );
+  }
 
-    if (File(audioPicturePathFileName).existsSync()) {
-      // The case if a picture is associated to the audio
-      final String targetPlaylistPicturePath =
-          "${targetPlaylist.downloadPath}${path.separator}$kPictureDirName";
+  void copyAudioPictureToTargetPlaylist({
+    required Audio audio,
+    required Playlist targetPlaylist,
+  }) {
+    final String playlistPictureJsonSourcePathFileName =
+        "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kPictureDirName${path.separator}${audio.audioFileName.replaceAll('.mp3', '.json')}";
+    final String playlistPicturesTargetPath =
+        "${targetPlaylist.downloadPath}${path.separator}$kPictureDirName";
 
-      // Ensures the target playlist picture directory exists.
-      DirUtil.createDirIfNotExistSync(
-        pathStr: targetPlaylistPicturePath,
-      );
-      DirUtil.moveFileToDirectoryIfNotExistSync(
-        sourceFilePathName: audioPicturePathFileName,
-        targetDirectoryPath: targetPlaylistPicturePath,
-      );
-    }
+    DirUtil.copyFileToDirectoryIfNotExistSync(
+      sourceFilePathName: playlistPictureJsonSourcePathFileName,
+      targetDirectoryPath: playlistPicturesTargetPath,
+    );
   }
 }
