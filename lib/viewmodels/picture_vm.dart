@@ -47,8 +47,10 @@ class PictureVM extends ChangeNotifier {
       }
     }
 
-    // Copy the picture file to the application picture directory
-    DirUtil.copyFileToDirectory(
+    // Copy the picture file to the application picture directory.
+    // If the picture file already exists in the application picture
+    // directory, it is not copied again.
+    DirUtil.copyFileToDirectoryIfNotExist(
       sourceFilePathName: pictureFilePathName,
       targetDirectoryPath: _applicationPicturePath,
     );

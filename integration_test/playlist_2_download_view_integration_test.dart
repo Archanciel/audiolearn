@@ -7956,15 +7956,14 @@ void main() {
         // moved or not
 
         List<String> availableAudioPictureFileNameLst = [
-          "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.jpg",
-          "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.jpg",
-          "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.jpg",
-          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.jpg",
+          "Barrau.jpg",
+          "Jancovici.jpg",
+          "Prière.jpg",
         ];
 
         List<String> listPictureJpgFileNames = DirUtil.listFileNamesInDir(
           directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kPictureDirName",
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kPictureDirName",
           fileExtension: 'jpg',
         );
 
@@ -9817,10 +9816,9 @@ void main() {
         // copied or not
 
         List<String> availableAudioPictureFileNameLst = [
-          "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.jpg",
-          "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.jpg",
-          "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.jpg",
-          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.jpg",
+          "Jancovici.jpg",
+          "Barrau.jpg",
+          "Prière.jpg",
         ];
 
         List<String> listPictureJpgFileNames = DirUtil.listFileNamesInDir(

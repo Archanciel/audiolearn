@@ -341,7 +341,7 @@ class DirUtil {
     }
   }
 
-  static void copyFileToDirectory({
+  static void copyFileToDirectoryIfNotExist({
     required String sourceFilePathName,
     required String targetDirectoryPath,
     String? targetFileName,
@@ -356,6 +356,18 @@ class DirUtil {
     String targetPathFileName =
         '$targetDirectoryPath${path.separator}$copiedFileName';
 
+    // If the target file already exists, do not copy
+    if (File(targetPathFileName).existsSync()) {
+      return;
+    }
+
+    // Create the target directory if it does not exist
+    Directory targetDirectory = Directory(targetDirectoryPath);
+
+    if (!targetDirectory.existsSync()) {
+      targetDirectory.createSync(recursive: true);
+    }
+    
     sourceFile.copySync(targetPathFileName);
   }
 
