@@ -4,6 +4,7 @@ class Picture {
   String fileName;
   final DateTime additionToAudioDateTime;
   late DateTime lastDisplayDateTime;
+  bool isDisplayable = true;
 
   Picture({
     required this.fileName,
@@ -18,6 +19,7 @@ class Picture {
     required this.fileName,
     required this.additionToAudioDateTime,
     required this.lastDisplayDateTime,
+    required this.isDisplayable,
   });
 
   factory Picture.fromJson(Map<String, dynamic> json) {
@@ -25,6 +27,7 @@ class Picture {
       fileName: json['fileName'],
       additionToAudioDateTime: DateTime.parse(json['additionToAudioDateTime']),
       lastDisplayDateTime: DateTime.parse(json['lastDisplayDateTime']),
+      isDisplayable: json['isDisplayable'] ?? true,
     );
   }
 
@@ -34,6 +37,7 @@ class Picture {
       'fileName': fileName,
       'additionToAudioDateTime': additionToAudioDateTime.toIso8601String(),
       'lastDisplayDateTime': lastDisplayDateTime.toIso8601String(),
+      'isDisplayable': isDisplayable,
     };
   }
 
@@ -43,9 +47,9 @@ class Picture {
       return true;
     }
 
-    return other is Picture && other.fileName == fileName;
+    return other is Picture && other.additionToAudioDateTime == additionToAudioDateTime;
   }
 
   @override
-  int get hashCode => fileName.hashCode;
+  int get hashCode => additionToAudioDateTime.hashCode;
 }
