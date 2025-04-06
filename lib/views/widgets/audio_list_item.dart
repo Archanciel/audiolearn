@@ -323,7 +323,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
             break;
           case AudioPopupMenuAction.removeAudioPicture:
             pictureVMlistenFalse
-                .deleteAudioPictureFileInPlaylistPictureDir(
+                .removeAudioPicture(
               audio: audio,
             );
             break;

@@ -286,7 +286,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                     audioPlayerVMlistenFalse.getCurrentAudioTitleWithDuration();
                 break;
               case AudioPopupMenuAction.removeAudioPicture:
-                pictureVMlistenFalse.deleteAudioPictureFileInPlaylistPictureDir(
+                pictureVMlistenFalse.removeAudioPicture(
                   audio: audio,
                 );
 
