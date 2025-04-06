@@ -270,7 +270,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   return;
                 }
 
-                pictureVMlistenFalse.storeAudioPictureFileInPlaylistPictureDir(
+                pictureVMlistenFalse.addPictureToAudio(
                   audio: audio,
                   pictureFilePathName: selectedPictureFilePathName,
                 );

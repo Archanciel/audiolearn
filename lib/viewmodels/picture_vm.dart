@@ -27,10 +27,26 @@ class PictureVM extends ChangeNotifier {
   /// Picture ...' menu.
   ///
   /// [pictureFilePathName] was obtained from the file picker dialog.
-  void storeAudioPictureFileInPlaylistPictureDir({
+  void addPictureToAudio({
     required Audio audio,
     required String pictureFilePathName,
   }) {
+    List<Picture> pictureLst = _getAudioPicturesLst(
+      audio: audio,
+    );
+
+    String pictureFileName = DirUtil.getFileNameFromPathFileName(
+      pathFileName: pictureFilePathName,
+    );
+
+    // If the picture file name already exists in the audio picture
+    // json file, it is not added.
+    for (Picture picture in pictureLst) {
+      if (picture.fileName == pictureFileName) {
+        return;
+      }
+    }
+
     // Copy the picture file to the application picture directory
     DirUtil.copyFileToDirectory(
       sourceFilePathName: pictureFilePathName,
@@ -156,14 +172,8 @@ class PictureVM extends ChangeNotifier {
   File? getAudioPictureFile({
     required Audio audio,
   }) {
-    String pictureJsonFilePathName = _buildPictureJsonFilePathName(
-      playlistDownloadPath: audio.enclosingPlaylist!.downloadPath,
-      audioFileName: audio.audioFileName,
-    );
-
-    List<Picture> pictureLst = JsonDataService.loadListFromFile(
-      jsonPathFileName: pictureJsonFilePathName,
-      type: Picture,
+    List<Picture> pictureLst = _getAudioPicturesLst(
+      audio: audio,
     );
 
     if (pictureLst.isEmpty) {
@@ -181,6 +191,22 @@ class PictureVM extends ChangeNotifier {
 
     // Return the File instance
     return file;
+  }
+
+  List<Picture> _getAudioPicturesLst({
+    required Audio audio,
+  }) {
+    String pictureJsonFilePathName = _buildPictureJsonFilePathName(
+      playlistDownloadPath: audio.enclosingPlaylist!.downloadPath,
+      audioFileName: audio.audioFileName,
+    );
+
+    List<Picture> pictureLst = JsonDataService.loadListFromFile(
+      jsonPathFileName: pictureJsonFilePathName,
+      type: Picture,
+    );
+
+    return pictureLst;
   }
 
   List<String> getPlaylistAudioPicturedFileNamesNoExtLst({
@@ -203,8 +229,10 @@ class PictureVM extends ChangeNotifier {
 
     for (FileSystemEntity file in files) {
       if (file is File && file.path.endsWith('.json')) {
-        String fileName = DirUtil.getFileNameFromPathFileName(pathFileName: file.path);
-        audioPictureFileNamesLst.add(fileName.substring(0, fileName.length - 5));
+        String fileName =
+            DirUtil.getFileNameFromPathFileName(pathFileName: file.path);
+        audioPictureFileNamesLst
+            .add(fileName.substring(0, fileName.length - 5));
       }
     }
 
