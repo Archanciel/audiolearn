@@ -7952,8 +7952,8 @@ void main() {
           );
         }
 
-        // Verify the presence of the audio picture files which will be later
-        // moved or not
+        // Verify the presence of the application audio picture files which
+        // will be not be moved
 
         List<String> availableAudioPictureFileNameLst = [
           "Barrau.jpg",
@@ -8036,22 +8036,22 @@ void main() {
           );
         }
 
-        // Verify in source playlist directory that the audio picture
+        // Verify in source playlist directory that the audio json picture
         // files were moved from
 
-        List<String> audioPictureFileNameToMoveLst = [
-          "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.jpg",
-          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.jpg",
+        List<String> audioPictureJsonFileNameToMoveLst = [
+          "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.json",
+          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.json",
         ];
 
         listCommentJsonFileNames = DirUtil.listFileNamesInDir(
           directoryPath:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kPictureDirName",
-          fileExtension: 'jpg',
+          fileExtension: 'json',
         );
 
         for (String audioPictureFileNameToMove
-            in audioPictureFileNameToMoveLst) {
+            in audioPictureJsonFileNameToMoveLst) {
           expect(
             listCommentJsonFileNames.contains(audioPictureFileNameToMove),
             false,
@@ -8097,13 +8097,13 @@ void main() {
         // Verify that the other audio picture files were not moved
 
         List<String> audioPictureFileNameNotMovedLst = [
-          "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.jpg",
+          "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.json",
         ];
 
         listCommentJsonFileNames = DirUtil.listFileNamesInDir(
           directoryPath:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kPictureDirName",
-          fileExtension: 'jpg',
+          fileExtension: 'json',
         );
 
         for (String audioPictureFileNameNotMoved
@@ -8184,7 +8184,7 @@ void main() {
           );
         }
 
-        // Verify the target playlist directory in which the audio picture
+        // Verify the target playlist directory in which the audio picture json
         // files were moved
 
         final String tempPlaylistPictureDir =
@@ -8192,11 +8192,11 @@ void main() {
 
         listPictureJpgFileNames = DirUtil.listFileNamesInDir(
           directoryPath: tempPlaylistPictureDir,
-          fileExtension: 'jpg',
+          fileExtension: 'json',
         );
 
         for (String audioPictureFileNameMoved
-            in audioPictureFileNameToMoveLst) {
+            in audioPictureJsonFileNameToMoveLst) {
           expect(
             listPictureJpgFileNames.contains(audioPictureFileNameMoved),
             true,
@@ -8335,9 +8335,9 @@ void main() {
         // Verifying the moved audio's to which a picture is associated
 
         const String pictureFileNameOne =
-            "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.jpg";
+            "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.json";
         const String pictureFileNameTwo =
-            "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.jpg";
+            "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.json";
 
         final String pictureFilePathNameOne =
             "$tempPlaylistPictureDir${path.separator}$pictureFileNameOne";
@@ -9814,16 +9814,15 @@ void main() {
 
         // Verify the presence of the audio picture files which will be later
         // copied or not
-
         List<String> availableAudioPictureFileNameLst = [
-          "Jancovici.jpg",
           "Barrau.jpg",
+          "Jancovici.jpg",
           "Prière.jpg",
         ];
 
         List<String> listPictureJpgFileNames = DirUtil.listFileNamesInDir(
           directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kPictureDirName",
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kPictureDirName",
           fileExtension: 'jpg',
         );
 
@@ -9904,14 +9903,14 @@ void main() {
         // picture files are still present
 
         List<String> audioPictureFileNameToCopyLst = [
-          "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.jpg",
-          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.jpg",
+          "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.json",
+          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.json",
         ];
 
         listCommentJsonFileNames = DirUtil.listFileNamesInDir(
           directoryPath:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kPictureDirName",
-          fileExtension: 'jpg',
+          fileExtension: 'json',
         );
 
         for (String audioPictureFileNameToCopy
@@ -9993,7 +9992,7 @@ void main() {
 
         listPictureJpgFileNames = DirUtil.listFileNamesInDir(
           directoryPath: tempPlaylistPictureDir,
-          fileExtension: 'jpg',
+          fileExtension: 'json',
         );
 
         for (String audioPictureFileNameCopied
@@ -10130,9 +10129,9 @@ void main() {
         // Verifying the copied audio's to which a picture is associated
 
         const String pictureFileNameOne =
-            "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.jpg";
+            "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.json";
         const String pictureFileNameTwo =
-            "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.jpg";
+            "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.json";
 
         final String pictureFilePathNameOne =
             "$tempPlaylistPictureDir${path.separator}$pictureFileNameOne";

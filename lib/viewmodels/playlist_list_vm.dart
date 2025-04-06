@@ -1154,7 +1154,7 @@ class PlaylistListVM extends ChangeNotifier {
         }
 
         // Moving the audio picture file if it exists
-        _pictureVM.moveAudioPictureToTargetPlaylist(
+        _pictureVM.moveAudioPictureJsonFileToTargetPlaylist(
           audio: audio,
           targetPlaylist: targetPlaylist,
         );
@@ -1213,7 +1213,7 @@ class PlaylistListVM extends ChangeNotifier {
         }
 
         // Copying the audio picture file if it exists
-        _copyAudioPictureToTargetPlaylist(
+        _pictureVM.copyAudioPictureToTargetPlaylist(
           audio: audio,
           targetPlaylist: targetPlaylist,
         );
@@ -1767,7 +1767,7 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     // Moving the audio picture file if it exists
-    _pictureVM.moveAudioPictureToTargetPlaylist(
+    _pictureVM.moveAudioPictureJsonFileToTargetPlaylist(
       audio: audio,
       targetPlaylist: targetPlaylist,
     );
@@ -1804,7 +1804,7 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     // Copying the audio picture file if it exists
-    _copyAudioPictureToTargetPlaylist(
+    _pictureVM.copyAudioPictureToTargetPlaylist(
       audio: audio,
       targetPlaylist: targetPlaylist,
     );
@@ -1812,36 +1812,6 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
 
     return true;
-  }
-
-  void _copyAudioPictureToTargetPlaylist({
-    required Audio audio,
-    required Playlist targetPlaylist,
-  }) {
-    // Obtaining the potentially existing audio picture file path
-    // name
-
-    final String playlistDownloadPath = audio.enclosingPlaylist!.downloadPath;
-    final String audioPictureFileName =
-        audio.audioFileName.replaceAll('.mp3', '.jpg');
-    final String audioPicturePathFileName =
-        "$playlistDownloadPath${path.separator}$kPictureDirName${path.separator}$audioPictureFileName";
-
-    if (File(audioPicturePathFileName).existsSync()) {
-      // The case if a picture is associated to the audio
-      final String targetPlaylistPicturePath =
-          "${targetPlaylist.downloadPath}${path.separator}$kPictureDirName";
-      final String targetAudioPicturePathFileName =
-          "$targetPlaylistPicturePath${path.separator}$audioPictureFileName";
-
-      // Ensures the target playlist picture directory exists.
-      DirUtil.createDirIfNotExistSync(
-        pathStr: targetPlaylistPicturePath,
-      );
-      File(audioPicturePathFileName).copySync(
-        targetAudioPicturePathFileName,
-      );
-    }
   }
 
   /// Method called when the user selected the Update playable

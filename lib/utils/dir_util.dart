@@ -341,7 +341,7 @@ class DirUtil {
     }
   }
 
-  static void copyFileToDirectoryIfNotExist({
+  static void copyFileToDirectoryIfNotExistSync({
     required String sourceFilePathName,
     required String targetDirectoryPath,
     String? targetFileName,
@@ -367,7 +367,7 @@ class DirUtil {
     if (!targetDirectory.existsSync()) {
       targetDirectory.createSync(recursive: true);
     }
-    
+
     sourceFile.copySync(targetPathFileName);
   }
 
@@ -516,6 +516,13 @@ class DirUtil {
     String targetPathFileName =
         '$targetDirectoryPath${path.separator}$copiedFileName';
 
+    // Create the target directory if it does not exist
+    Directory targetDirectory = Directory(targetDirectoryPath);
+
+    if (!targetDirectory.existsSync()) {
+      targetDirectory.createSync(recursive: true);
+    }
+
     // If the source file does not exist or the target file already exist,
     // move is not performed and false is returned.
     if (!sourceFile.existsSync() || File(targetPathFileName).existsSync()) {
@@ -543,6 +550,13 @@ class DirUtil {
     String copiedFileName = targetFileName ?? sourceFile.uri.pathSegments.last;
     String targetPathFileName =
         '$targetDirectoryPath${path.separator}$copiedFileName';
+
+    // Create the target directory if it does not exist
+    Directory targetDirectory = Directory(targetDirectoryPath);
+
+    if (!targetDirectory.existsSync()) {
+      targetDirectory.createSync(recursive: true);
+    }
 
     // If the source file does not exist or the target file already exist and
     // overwriteFileIfExist is not true, copy is not performed and false is

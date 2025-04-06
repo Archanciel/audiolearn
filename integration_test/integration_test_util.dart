@@ -1503,16 +1503,10 @@ class IntegrationTestUtil {
     // the added picture file
     List<String> playlistPicturesLst = DirUtil.listFileNamesInDir(
       directoryPath: playlistPictureDir,
-      fileExtension: 'jpg',
+      fileExtension: 'json',
     );
 
     expect(playlistPicturesLst, pictureFileNamesLst);
-
-    // Verifying the added picture file size
-    IntegrationTestUtil.verifyFileSize(
-      filePathName: pictureFilePathName,
-      fileSizeInBytes: pictureFileSize,
-    );
 
     if (goToAudioPlayerView) {
       // Now go to the audio player view
