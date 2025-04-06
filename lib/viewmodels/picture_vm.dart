@@ -31,7 +31,7 @@ class PictureVM extends ChangeNotifier {
     required Audio audio,
     required String pictureFilePathName,
   }) {
-    List<Picture> pictureLst = _getAudioPicturesLst(
+    List<Picture> pictureLst = _getAudioPicturesLstInAudioPictureJsonFile(
       audio: audio,
     );
 
@@ -146,24 +146,45 @@ class PictureVM extends ChangeNotifier {
 
   /// Method called when the user clicks on the audio item 'Remove Audio Picture'
   /// menu or on audio player view left appbar 'Remove Audio Picture' menu.
-  /// Deleting the picture file whose name is the audio file name with the
-  /// extension .jpg will cause the audio player to display no picture for
-  /// the audio.
-  void deleteAudioPictureFileInPlaylistPictureDir({
+  void removeAudioPicture({
     required Audio audio,
   }) {
-    final String playlistDownloadPath = audio.enclosingPlaylist!.downloadPath;
-    final String createdAudioPictureFileName =
-        audio.audioFileName.replaceAll('.mp3', '.jpg');
+    List<Picture> pictureLst = _getAudioPicturesLstInAudioPictureJsonFile(
+      audio: audio,
+    );
 
-    final String audioPicturePathFileName =
-        "$playlistDownloadPath${path.separator}$kPictureDirName${path.separator}$createdAudioPictureFileName";
-
-    DirUtil.deleteFileIfExist(
-      pathFileName: audioPicturePathFileName,
+    _removeAudioPictureFromAudioPictureJsonFile(
+      audio: audio,
+      pictureToRemove: pictureLst.last,
     );
 
     notifyListeners();
+  }
+
+  void _removeAudioPictureFromAudioPictureJsonFile({
+    required Audio audio,
+    required Picture pictureToRemove,
+  }) {
+    String pictureJsonFilePathName = _buildPictureJsonFilePathName(
+      playlistDownloadPath: audio.enclosingPlaylist!.downloadPath,
+      audioFileName: audio.audioFileName,
+    );
+
+    List<Picture> pictureLst = JsonDataService.loadListFromFile(
+      jsonPathFileName: pictureJsonFilePathName,
+      type: Picture,
+    );
+
+    if (pictureLst.isEmpty) {
+      return;
+    }
+
+    pictureLst.remove(pictureToRemove);
+
+    _sortAndSavePictureLst(
+      pictureLst: pictureLst,
+      pictureFilePathName: pictureJsonFilePathName,
+    );
   }
 
   /// Returns the audio picture file if it exists, null otherwise.
@@ -174,7 +195,7 @@ class PictureVM extends ChangeNotifier {
   File? getAudioPictureFile({
     required Audio audio,
   }) {
-    List<Picture> pictureLst = _getAudioPicturesLst(
+    List<Picture> pictureLst = _getAudioPicturesLstInAudioPictureJsonFile(
       audio: audio,
     );
 
@@ -183,7 +204,7 @@ class PictureVM extends ChangeNotifier {
     }
 
     String audioPicturePathFileName =
-        "$_applicationPicturePath${path.separator}${pictureLst[0].fileName}";
+        "$_applicationPicturePath${path.separator}${pictureLst.last.fileName}";
 
     File file = File(audioPicturePathFileName);
 
@@ -195,8 +216,10 @@ class PictureVM extends ChangeNotifier {
     return file;
   }
 
-  /// Returns the list of Picture objects associated to the passed audio.
-  List<Picture> _getAudioPicturesLst({
+  /// Returns the list of Picture objects associated to the passed audio and
+  /// listed in the json file whose name is the audio file name with the
+  /// extension .json.
+  List<Picture> _getAudioPicturesLstInAudioPictureJsonFile({
     required Audio audio,
   }) {
     String pictureJsonFilePathName = _buildPictureJsonFilePathName(
