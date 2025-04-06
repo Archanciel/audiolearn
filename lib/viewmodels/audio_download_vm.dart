@@ -113,23 +113,15 @@ class AudioDownloadVM extends ChangeNotifier {
     // updateSettingsAndPlaylistJsonFiles() method.
     _listOfPlaylist = [];
 
-    List<String> playlistPathFileNameLst = DirUtil.listPathFileNamesInSubDirs(
-      rootPath: _playlistsRootPath,
-      fileExtension: 'json',
-      excludeDirNamesLst: [kCommentDirName, kPictureDirName],
-    );
-
-    // Removing settings.json from the list of playlist json files if
-    // it is present in the list.
-    playlistPathFileNameLst.removeWhere(
-      (filePath) => filePath.contains(kSettingsFileName),
+    List<String> playlistPathFileNamesLst = DirUtil.getPlaylistPathFileNamesLst(
+      baseDir: _playlistsRootPath,
     );
 
     bool arePlaylistsRestoredFromAndroidToWindows = false;
     String playlistWindowsDownloadRootPath = '';
 
     try {
-      for (String playlistPathFileName in playlistPathFileNameLst) {
+      for (String playlistPathFileName in playlistPathFileNamesLst) {
         Playlist currentPlaylist = JsonDataService.loadFromFile(
           jsonPathFileName: playlistPathFileName,
           type: Playlist,

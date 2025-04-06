@@ -359,6 +359,33 @@ class DirUtil {
     sourceFile.copySync(targetPathFileName);
   }
 
+  static List<String> getPlaylistPathFileNamesLst({
+    required String baseDir,
+  }) {
+    final playlistsDir = Directory(baseDir);
+    final List<String> jsonPathFileNamesLst = [];
+
+    // Check if the directory exists
+    if (!playlistsDir.existsSync()) {
+      print('Error: Directory $baseDir does not exist.');
+      return jsonPathFileNamesLst;
+    }
+
+    // Get all subdirectories in the playlists directory
+    for (final entity in playlistsDir.listSync()) {
+      if (entity is Directory) {
+        // For each subdirectory, look for JSON files
+        for (final file in entity.listSync()) {
+          if (file is File && file.path.endsWith('.json')) {
+            jsonPathFileNamesLst.add(file.path);
+          }
+        }
+      }
+    }
+
+    return jsonPathFileNamesLst;
+  }
+
   static List<String> listPathFileNamesInSubDirs({
     required String rootPath,
     required String fileExtension,
