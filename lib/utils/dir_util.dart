@@ -376,7 +376,9 @@ class DirUtil {
       if (entity is Directory) {
         // For each subdirectory, look for JSON files
         for (final file in entity.listSync()) {
-          if (file is File && file.path.endsWith('.json')) {
+          if (file is File &&
+              file.path.endsWith('.json') &&
+              !file.path.endsWith('settings.json')) {
             jsonPathFileNamesLst.add(file.path);
           }
         }
