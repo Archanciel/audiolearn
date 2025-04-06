@@ -11419,7 +11419,7 @@ void main() {
         );
 
         List<String> pictureFileNamesLst = [
-          "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.jpg",
+          "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
         ];
 
         // Now verifying the audio picture addition result
@@ -11480,11 +11480,10 @@ void main() {
           picturedAudioTitle: audioForPictureTitle,
         );
 
-        await IntegrationTestUtil.verifyPictureSuppression(
-          tester: tester,
+        IntegrationTestUtil.verifyPictureSuppression(
           playlistPictureDir: playlistPictureDir,
           audioForPictureTitle: audioForPictureTitle,
-          pictureFileNamesLst: [],
+          deletedPictureFileName: secondPictureFileName,
         );
 
         // Now go back to the playlist download view and add again a
@@ -11540,7 +11539,7 @@ void main() {
             'NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE';
         const String audioAlreadyUsingPictureDurationStr = '24:07';
         const String pictureFileName =
-            "241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.jpg";
+            "241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.json";
         const int pictureFileSize = 94507;
 
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
@@ -11566,8 +11565,8 @@ void main() {
         );
 
         List<String> pictureFileNamesLst = [
-          '241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.jpg',
-          "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.jpg",
+          '241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.json',
+          "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
         ];
 
         // Now verifying the audio picture addition result
@@ -11598,14 +11597,13 @@ void main() {
         );
 
         List<String> pictureFileNamesAfterDeletionLst = [
-          '241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.jpg',
+          '241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.json',
         ];
 
-        await IntegrationTestUtil.verifyPictureSuppression(
-          tester: tester,
+         IntegrationTestUtil.verifyPictureSuppression(
           playlistPictureDir: playlistPictureDir,
           audioForPictureTitle: audioForPictureTitle,
-          pictureFileNamesLst: pictureFileNamesAfterDeletionLst,
+          deletedPictureFileName: "Jésus je T'aime.jpg"
         );
 
         // Go back to playlist download view in order to ensure that
@@ -11698,7 +11696,7 @@ void main() {
         );
 
         List<String> pictureFileNamesLst = [
-          "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.jpg",
+          "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
         ];
 
         // Now verifying the audio picture addition result
@@ -11746,12 +11744,10 @@ void main() {
           picturedAudioTitle: audioForPictureTitle,
         );
 
-        await IntegrationTestUtil.verifyPictureSuppression(
-          tester: tester,
+         IntegrationTestUtil.verifyPictureSuppression(
           playlistPictureDir: playlistPictureDir,
           audioForPictureTitle: audioForPictureTitle,
-          pictureFileNamesLst: [],
-          goToAudioPlayerView: false,
+          deletedPictureFileName: "Jésus je T'aime.jpg"
         );
 
         // Third picture addition
@@ -11801,7 +11797,7 @@ void main() {
             'NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE';
         const String audioAlreadyUsingPictureDurationStr = '24:07';
         const String pictureFileName =
-            "241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.jpg";
+            "241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.json";
         const int pictureFileSize = 94507;
 
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
@@ -11835,8 +11831,8 @@ void main() {
         );
 
         List<String> pictureFileNamesLst = [
-          '241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.jpg',
-          "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.jpg",
+          '241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.json',
+          "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
         ];
 
         // Now verifying the audio picture addition result
@@ -11859,15 +11855,13 @@ void main() {
         );
 
         List<String> pictureFileNamesAfterDeletionLst = [
-          '241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.jpg',
+          '241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.json',
         ];
 
-        await IntegrationTestUtil.verifyPictureSuppression(
-          tester: tester,
+         IntegrationTestUtil.verifyPictureSuppression(
           playlistPictureDir: playlistPictureDir,
           audioForPictureTitle: audioForPictureTitle,
-          pictureFileNamesLst: pictureFileNamesAfterDeletionLst,
-          goToAudioPlayerView: false,
+          deletedPictureFileName: "Jésus je T'aime.jpg"
         );
 
         // Go back to playlist download view in order to ensure that
