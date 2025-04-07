@@ -54,8 +54,16 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
   Widget build(BuildContext context) {
     switch (audioLearnAppViewType) {
       case AudioLearnAppViewType.playlistDownloadView:
+        // The appbar left popup menu button key
+        // 'appBarLeadingPopupMenuWidget' is defined
+        // in the parent widget, i.e. MyHomePageState
+        // instance,
         return _playListDownloadViewPopupMenuButton(context);
       case AudioLearnAppViewType.audioPlayerView:
+        // The appbar left popup menu button key
+        // 'appBarLeadingPopupMenuWidget' is defined
+        // in the parent widget, i.e. MyHomePageState
+        // instance,
         return _audioPlayerViewPopupMenuButton(
             context: context,
             commentVMlistenFalse: Provider.of<CommentVM>(
