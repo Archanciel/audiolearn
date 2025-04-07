@@ -1302,13 +1302,12 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             width: kRowSmallWidthSeparator,
           ),
           _buildDownloadSingleVideoButton(
-            context: context,
-            themeProviderVM: themeProviderVM,
-            playlistListVMlistenFalse: playlistListVMlistenFalse,
-            audioDownloadVMlistenFalse: audioDownloadVMlistenFalse,
-            warningMessageVMlistenFalse: warningMessageVMlistenFalse,
-            containsURL: _containsURL
-          ),
+              context: context,
+              themeProviderVM: themeProviderVM,
+              playlistListVMlistenFalse: playlistListVMlistenFalse,
+              audioDownloadVMlistenFalse: audioDownloadVMlistenFalse,
+              warningMessageVMlistenFalse: warningMessageVMlistenFalse,
+              containsURL: _containsURL),
           const SizedBox(
             width: kRowSmallWidthSeparator,
           ),
@@ -1684,6 +1683,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             key: const Key('clearPlaylistUrlOrSearchButtonKey'),
             onPressed: () {
               _playlistUrlOrSearchController.clear();
+              _containsURL = false;
 
               // Disables the search button and call notifyListeners()
               playlistListVMlistenFalse.disableSearchSentence();
@@ -1726,7 +1726,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           key: const Key('downloadSingleVideoButton'),
           style: ButtonStyle(
             shape: getButtonRoundedShape(
-                currentTheme: themeProviderVM.currentTheme),
+              currentTheme: themeProviderVM.currentTheme,
+              isButtonEnabled: containsURL,
+              context: context,
+            ),
             padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
               const EdgeInsets.symmetric(
                   horizontal: kSmallButtonInsidePadding,
@@ -1734,15 +1737,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   vertical: 0),
             ),
             overlayColor: textButtonTapModification, // Tap feedback color
-            // Ajout de la modification de l'état du bouton basé sur containsURL
-            backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
-              if (!containsURL) {
-                return themeProviderVM.currentTheme == AppTheme.dark
-                    ? Colors.grey.shade800 // Couleur désactivée en mode sombre
-                    : Colors.grey.shade300; // Couleur désactivée en mode clair
-              }
-              return Colors.transparent; // Couleur par défaut quand actif
-            }),
           ),
           onPressed: containsURL
               ? () {
@@ -1898,14 +1892,15 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               ),
               Text(
                 AppLocalizations.of(context)!.downloadSingleVideoAudio,
-                style: (themeProviderVM.currentTheme == AppTheme.dark)
-                    ? containsURL
+                style: (containsURL)
+                    ? (themeProviderVM.currentTheme == AppTheme.dark)
                         ? kTextButtonStyleDarkMode
-                        : kTextButtonStyleDarkMode.copyWith(color: Colors.grey)
-                    : containsURL
-                        ? kTextButtonStyleLightMode
-                        : kTextButtonStyleLightMode.copyWith(
-                            color: Colors.grey),
+                        : kTextButtonStyleLightMode
+                    : const TextStyle(
+                        // required to display the button in grey if
+                        // the button is disabled
+                        fontSize: kTextButtonFontSize,
+                      ),
               ),
             ],
           ),
@@ -1963,12 +1958,14 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               ),
               maxLines: 1,
               onChanged: (String value) {
-                _containsURL = value.toLowerCase().contains('https://') ||
-                    value.toLowerCase().contains('http://');
-
-                if (_containsURL) {
-                  setState(() {});
+                if (value.toLowerCase().contains('https://') ||
+                    value.toLowerCase().contains('http://')) {
+                  _containsURL = true;
+                } else {
+                  _containsURL = false;
                 }
+
+                setState(() {});
 
                 if (value.isEmpty || _containsURL) {
                   playlistListVMlistenTrue.disableSearchSentence();
