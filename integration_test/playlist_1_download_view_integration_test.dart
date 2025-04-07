@@ -16925,7 +16925,11 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('''Playlist comments color verification.''',
+    testWidgets('''Playlist comments color verification. In the playlist comment dialog, verify
+           that the audio titles are displayed in the correct color: the current commented audio
+           color is white on blue. The partially listened commented audio color is blue. The fully
+           listened commented audio color is pink. Finally, the not listened commented audio color
+           is white. Verify as well the comments titles color, which is white.''',
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
 
@@ -16958,7 +16962,7 @@ void main() {
         playlistCommentListDialogFinder: playlistCommentListDialogFinder,
       );
 
-      // Verifying the color of the comments titles in the playlist comment
+      // Verifying the color of comments titles in the playlist comment
       // dialog
 
       await IntegrationTestUtil.checkAudioTextColor(
