@@ -352,6 +352,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                     targetPlaylist: targetPlaylist,
                     keepAudioInSourcePlaylistDownloadedAudioLst:
                         keepAudioDataInSourcePlaylist,
+                    audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                   );
 
                   // if the passed nextAudio is null, the displayed audio

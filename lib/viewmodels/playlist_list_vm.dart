@@ -1128,10 +1128,16 @@ class PlaylistListVM extends ChangeNotifier {
     required Playlist targetPlaylist,
   }) {
     List<Audio> filteredAudioToMove =
-        _sortedFilteredSelectedPlaylistPlayableAudioLst!;
+        _sortedFilteredSelectedPlaylistPlayableAudioLst ?? [];
+
+    if (filteredAudioToMove.isEmpty) {
+      return [0, 0, 0];
+    }
+
     int movedAudioNumber = 0;
     int movedCommentedAudioNumber = 0;
     int unmovedAudioNumber = 0;
+    Playlist sourcePlaylist = filteredAudioToMove[0].enclosingPlaylist!;
 
     for (Audio audio in filteredAudioToMove) {
       if (_audioDownloadVM.moveAudioToPlaylist(
@@ -1156,6 +1162,7 @@ class PlaylistListVM extends ChangeNotifier {
         // Moving the audio picture file if it exists
         _pictureVM.moveAudioPictureJsonFileToTargetPlaylist(
           audio: audio,
+          sourcePlaylist: sourcePlaylist,
           targetPlaylist: targetPlaylist,
         );
       } else {
@@ -1743,6 +1750,7 @@ class PlaylistListVM extends ChangeNotifier {
     required Audio audio,
     required Playlist targetPlaylist,
     required bool keepAudioInSourcePlaylistDownloadedAudioLst,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
   }) {
     // Obtaining the audio which will replace the moved audio
     // in the audio player view.
@@ -1750,6 +1758,8 @@ class PlaylistListVM extends ChangeNotifier {
       audioLearnAppViewType: audioLearnAppViewType,
       currentAudio: audio,
     );
+
+    Playlist sourcePlaylist = audio.enclosingPlaylist!;
 
     bool wasAudioMoved = _audioDownloadVM.moveAudioToPlaylist(
         audioToMove: audio,
@@ -1769,8 +1779,16 @@ class PlaylistListVM extends ChangeNotifier {
     // Moving the audio picture file if it exists
     _pictureVM.moveAudioPictureJsonFileToTargetPlaylist(
       audio: audio,
+      sourcePlaylist: sourcePlaylist,
       targetPlaylist: targetPlaylist,
     );
+
+    // Required, otherwise, when opening the audio in the audio
+    // player view, the picture is not displayed since the
+    // audioPlayerVM current audio is the moved audio and so
+    // the audio pictures json file is not available since it 
+    // has been moved !
+    audioPlayerVMlistenFalse.clearCurrentAudio();
 
     notifyListeners();
 

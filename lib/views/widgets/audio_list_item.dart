@@ -322,8 +322,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
             );
             break;
           case AudioPopupMenuAction.removeAudioPicture:
-            pictureVMlistenFalse
-                .removeAudioPicture(
+            pictureVMlistenFalse.removeAudioPicture(
               audio: audio,
             );
             break;
@@ -362,13 +361,13 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
               bool keepAudioDataInSourcePlaylist =
                   resultMap['keepAudioDataInSourcePlaylist'];
               playlistVMlistnedFalse.moveAudioAndCommentAndPictureToPlaylist(
-                audioLearnAppViewType:
-                    AudioLearnAppViewType.playlistDownloadView,
-                audio: audio,
-                targetPlaylist: targetPlaylist,
-                keepAudioInSourcePlaylistDownloadedAudioLst:
-                    keepAudioDataInSourcePlaylist,
-              );
+                  audioLearnAppViewType:
+                      AudioLearnAppViewType.playlistDownloadView,
+                  audio: audio,
+                  targetPlaylist: targetPlaylist,
+                  keepAudioInSourcePlaylistDownloadedAudioLst:
+                      keepAudioDataInSourcePlaylist,
+                  audioPlayerVMlistenFalse: audioPlayerVMlistenFalse);
             });
             break;
           case AudioPopupMenuAction.copyAudioToPlaylist:
