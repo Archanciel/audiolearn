@@ -426,6 +426,7 @@ class PictureVM extends ChangeNotifier {
   /// Method called by PlaylistListVM.
   void moveAudioPictureJsonFileToTargetPlaylist({
     required Audio audio,
+    required Playlist sourcePlaylist,
     required Playlist targetPlaylist,
   }) {
     final String playlistPictureJsonSourcePathFileName =
@@ -433,10 +434,47 @@ class PictureVM extends ChangeNotifier {
     final String playlistPicturesTargetPath =
         "${targetPlaylist.downloadPath}${path.separator}$kPictureDirName";
 
+    List<Picture> pictureLst = _getAudioPicturesLstInAudioPictureJsonFile(
+      audio: audio,
+    );
+
     DirUtil.moveFileToDirectoryIfNotExistSync(
       sourceFilePathName: playlistPictureJsonSourcePathFileName,
       targetDirectoryPath: playlistPicturesTargetPath,
     );
+
+    // All pictures of the source audio are deleted and added in the
+    // application pictureAudioMap.json file for the moved audio.
+    //
+    // Example: the first line references the source audio file name,
+    //          the second line references the target audio file name.
+    //
+    // "winter.jpg": [
+    //    "MaValTest|250407-150507-morning _ cinematic video 23-07-01",
+    //    "a_local|250407-150507-morning _ cinematic video 23-07-01"
+    // ],
+
+    // "chateau.jpg": [
+    //    "MaValTest|250407-150507-morning _ cinematic video 23-07-01",
+    //    "a_local|250407-150507-morning _ cinematic video 23-07-01"
+    // ]
+    for (Picture picture in pictureLst) {
+      String pictureFileName = picture.fileName;
+      String audioFileName = audio.audioFileName;
+
+      _removePictureAudioAssociation(
+        pictureFileName: pictureFileName,
+        audioFileName: audioFileName,
+        audioPlaylistTitle: sourcePlaylist.title,
+      );
+      _addPictureAudioAssociation(
+        pictureFileName: pictureFileName,
+        audioFileName: audioFileName,
+        audioPlaylistTitle: targetPlaylist.title,
+      );
+    }
+
+    notifyListeners();
   }
 
   /// Method called by PlaylistListVM.
@@ -444,14 +482,43 @@ class PictureVM extends ChangeNotifier {
     required Audio audio,
     required Playlist targetPlaylist,
   }) {
-    final String playlistPictureJsonSourcePathFileName =
+    final String audioPictureJsonSourcePathFileName =
         "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kPictureDirName${path.separator}${audio.audioFileName.replaceAll('.mp3', '.json')}";
     final String playlistPicturesTargetPath =
         "${targetPlaylist.downloadPath}${path.separator}$kPictureDirName";
 
     DirUtil.copyFileToDirectoryIfNotExistSync(
-      sourceFilePathName: playlistPictureJsonSourcePathFileName,
+      sourceFilePathName: audioPictureJsonSourcePathFileName,
       targetDirectoryPath: playlistPicturesTargetPath,
     );
+
+    List<Picture> pictureLst = _getAudioPicturesLstInAudioPictureJsonFile(
+      audio: audio,
+    );
+
+    // All pictures of the source audio are added in the application
+    // pictureAudioMap.json file for the audio copy.
+    //
+    // Example: the first line references the source audio file name,
+    //          the second line references the target audio file name.
+    //
+    // "winter.jpg": [
+    //    "MaValTest|250407-150507-morning _ cinematic video 23-07-01",
+    //    "a_local|250407-150507-morning _ cinematic video 23-07-01"
+    // ],
+
+    // "chateau.jpg": [
+    //    "MaValTest|250407-150507-morning _ cinematic video 23-07-01",
+    //    "a_local|250407-150507-morning _ cinematic video 23-07-01"
+    // ]
+    for (Picture picture in pictureLst) {
+      _addPictureAudioAssociation(
+        pictureFileName: picture.fileName,
+        audioFileName: audio.audioFileName,
+        audioPlaylistTitle: targetPlaylist.title,
+      );
+    }
+
+    notifyListeners();
   }
 }

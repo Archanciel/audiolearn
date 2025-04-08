@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:audiolearn/services/sort_filter_parameters.dart';
+import 'package:audiolearn/viewmodels/audio_player_vm.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:path/path.dart' as path;
@@ -2116,13 +2117,13 @@ void testCopyAudioToPlaylist({
   }
 }
 
-void testMoveAudioAndCommentToPlaylist({
+Future<void> testMoveAudioAndCommentToPlaylist({
   required PlaylistListVM playlistListVM,
   required Playlist sourcePlaylist,
   required int sourceAudioIndex,
   required Playlist targetPlaylist,
   required bool hasCommentFile,
-}) {
+}) async {
   Audio sourceAudio = sourcePlaylist.playableAudioLst[sourceAudioIndex];
   String commentFileName =
       sourceAudio.audioFileName.replaceFirst('.mp3', '.json');
@@ -2138,11 +2139,54 @@ void testMoveAudioAndCommentToPlaylist({
     );
   }
 
+    SettingsDataService settingsDataService;
+
+      settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+    // load settings from file which does not exist. This
+    // will ensure that the default playlist root path is set
+    await settingsDataService.loadSettingsFromFile(
+        settingsJsonPathFileName:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}settings.json");
+
+    final WarningMessageVM warningMessageVM = WarningMessageVM();
+
+    final AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+      warningMessageVM: warningMessageVM,
+      settingsDataService: settingsDataService,
+    );
+
+    final PlaylistListVM playlistListVM = PlaylistListVM(
+      warningMessageVM: warningMessageVM,
+      audioDownloadVM: audioDownloadVM,
+      commentVM: CommentVM(),
+      pictureVM: PictureVM(
+        settingsDataService: settingsDataService,
+      ),
+      settingsDataService: settingsDataService,
+    );
+
+    // calling getUpToDateSelectablePlaylists() loads all the
+    // playlist json files from the app dir and so enables
+    // playlistListVM to know which playlists are
+    // selected and which are not
+    playlistListVM.getUpToDateSelectablePlaylists();
+
+    final AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+      settingsDataService: settingsDataService,
+      playlistListVM: playlistListVM,
+      commentVM: CommentVM(),
+    );
+
   playlistListVM.moveAudioAndCommentAndPictureToPlaylist(
     audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
     audio: sourceAudio,
     targetPlaylist: targetPlaylist,
     keepAudioInSourcePlaylistDownloadedAudioLst: true,
+    audioPlayerVMlistenFalse: audioPlayerVM,
   );
 
   List<Audio> sourcePlaylistDownloadedAudioLst =
