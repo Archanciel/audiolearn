@@ -6439,8 +6439,6 @@ void main() {
       const String emptyPlaylistTitle = 'Empty'; // Local empty playlist
       const String uncommentedAudioTitle =
           "La surpopulation mondiale par Jancovici et Barrau";
-      const String uncommentedAudioFileNameNoExt =
-          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,

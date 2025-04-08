@@ -54,11 +54,23 @@ void main() {
         // search button was tapped, applying the 'default' sort filter parms
         // is impacted by the still existing search word. Then, enters a https URL
         // in youtubeUrlOrSearchTextField and verify that the search icon button
-        // is disabled.
+        // is disabled. and that the download single video button is enabled. Then,
+        // tap on the delete button to delete the URL in the search text word and
+        // verify that the search icon button is disabled and that the download
+        // single video button is disabled. Finally, verify that the search text
+        // field is empty and that the displayed audio list is the same as the one
+        // before entering the search word.
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
           tapOnPlaylistToggleButton: false,
+        );
+
+        // Verify that the download single video button is
+        // now disabled
+        IntegrationTestUtil.verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr: 'downloadSingleVideoButton',
         );
 
         // Select 'janco' dropdown button item to apply the existing
@@ -344,6 +356,13 @@ void main() {
           widgetKeyStr: 'search_icon_button',
         );
 
+        // Verify that the download single video button is
+        // now enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'downloadSingleVideoButton',
+        );
+
         // Verify the presence of the delete button
         IntegrationTestUtil.verifyWidgetIsEnabled(
           tester: tester,
@@ -385,6 +404,13 @@ void main() {
         IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'stopDownloadingButton',
+        );
+
+        // Verify that the download single video button is
+        // now disabled
+        IntegrationTestUtil.verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr: 'downloadSingleVideoButton',
         );
 
         // And verify that the search text field is empty
@@ -1355,6 +1381,13 @@ void main() {
           widgetKeyStr: 'clearPlaylistUrlOrSearchButtonKey',
         );
 
+        // Verify that the download single video button is
+        // disabled
+        IntegrationTestUtil.verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr: 'downloadSingleVideoButton',
+        );
+
         // And verify the order of the playlist titles
         // before tapping on the search icon button.
 
@@ -1411,6 +1444,13 @@ void main() {
           widgetKeyStr: 'clearPlaylistUrlOrSearchButtonKey',
         );
 
+        // Verify that the download single video button is
+        // disabled
+        IntegrationTestUtil.verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr: 'downloadSingleVideoButton',
+        );
+
         // And verify the order of the playlist titles
         // before tapping on the search icon button.
 
@@ -1446,6 +1486,13 @@ void main() {
         IntegrationTestUtil.verifyWidgetIsEnabled(
           tester: tester,
           widgetKeyStr: 'clearPlaylistUrlOrSearchButtonKey',
+        );
+
+        // Verify that the download single video button is
+        // now enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'downloadSingleVideoButton',
         );
 
         // And verify the order of the playlist titles
