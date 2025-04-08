@@ -712,12 +712,12 @@ class AudioPlayerVM extends ChangeNotifier {
   /// audio title to be displayed in the AudioPlayerView screen since
   /// _currentAudio == null.
   Future<void> _handleNoPlayableAudioAvailable() async {
-    await _clearCurrentAudio();
+    await clearCurrentAudio();
 
     _clearUndoRedoLists();
   }
 
-  Future<void> _clearCurrentAudio() async {
+  Future<void> clearCurrentAudio() async {
     _currentAudio = null;
     _currentAudioTotalDuration = Duration.zero;
     _currentAudioPosition = const Duration(seconds: 0);
