@@ -60,6 +60,7 @@ const String kApplicationPicturePathWindows =
 
 const String kCommentDirName = 'comments';
 const String kPictureDirName = 'pictures';
+const String kPictureAudioMapFileName = 'pictureAudioMap.json';
 
 // this constant enables to download a playlist in the emulator in which
 // pasting a URL is not possible. The constant is used in
