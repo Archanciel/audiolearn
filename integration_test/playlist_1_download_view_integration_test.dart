@@ -16925,7 +16925,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('''Playlist comments color verification. In the playlist comment dialog, verify
+    testWidgets(
+        '''Playlist comments color verification. In the playlist comment dialog, verify
            that the audio titles are displayed in the correct color: the current commented audio
            color is white on blue. The partially listened commented audio color is blue. The fully
            listened commented audio color is pink. Finally, the not listened commented audio color
@@ -17000,6 +17001,227 @@ void main() {
       // Tap on Close text button
       await tester.tap(
           find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+      await tester.pumpAndSettle();
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''With playlist comment menu, manage comments in initially empty playlist. Copy audio
+           to the empty playlist, add a comment and then delete it.''', (WidgetTester tester) async {
+      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+      const String emptyPlaylistTitle = 'Empty'; // Local empty playlist
+      const String uncommentedAudioTitle =
+          "La surpopulation mondiale par Jancovici et Barrau";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_comment_test',
+        selectedPlaylistTitle: emptyPlaylistTitle,
+      );
+
+      // First, open the playlist comment dialog
+      Finder playlistCommentListDialogFinder =
+          await IntegrationTestUtil.openPlaylistCommentDialog(
+        tester: tester,
+        playlistTitle: emptyPlaylistTitle,
+      );
+
+      // Tap the playlist popup menu button
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      // Verify that the appbar popup menu is empty
+      expect(find.byType(PopupMenuItem), findsNothing);
+
+      // Copy an uncommented audio from the Youtube playlist to
+      // the empty playlist
+      // await copyAudioFromSourceToTargetPlaylist(
+      //   tester: tester,
+      //   sourcePlaylistTitle: youtubePlaylistTitle,
+      //   targetPlaylistTitle: emptyPlaylistTitle,
+      //   audioToCopyTitle: uncommentedAudioTitle, // "La surpopulation mondiale
+      //   //                                           par Jancovici et Barrau"
+      // );
+
+      // Now we want to tap on the copied uncommented audio in the
+      // empty playlist in order to open the AudioPlayerView displaying
+      // the audio
+
+      // First, select the empty playlist
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: emptyPlaylistTitle,
+      );
+
+      // Then, get the ListTile Text widget finder of the uncommented
+      // audio copied in the empty playlist and tap on it to open the
+      // AudioPlayerView
+      final Finder audioTitleNotYetCommentedFinder =
+          find.text(uncommentedAudioTitle);
+      await tester.tap(audioTitleNotYetCommentedFinder);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+
+      // Ensure that the comment playlist directory does not exist
+      final Directory directory = Directory(
+          "kPlaylistDownloadRootPathWindows${path.separator}$emptyPlaylistTitle${path.separator}$kCommentDirName");
+
+      expect(directory.existsSync(), false);
+
+      // Now tap the appbar leading popup menu button which now
+      // displays all the usable menu items available on an existing
+      // audio.
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      // Find the 'Audio Comments ...' menu item and tap on it to open the
+      // comment add list dialog
+      await tester
+          .tap(find.byKey(const Key('appbar_popup_menu_audio_comment')));
+      await tester.pumpAndSettle();
+
+      // Verify that the comment dialog is displayed
+      expect(find.text('Comments'), findsOneWidget);
+
+      // Verify that no comment is displayed in the comment list
+      final commentWidget = find.byKey(const ValueKey('commentTitleKey'));
+
+      // Assert that no comment widgets are found
+      expect(commentWidget, findsNothing);
+
+      // Now tap on the Add comment icon button to open the add
+      // edit comment dialog
+      await tester
+          .tap(find.byKey(const Key('addPositionedCommentIconButtonKey')));
+      await tester.pumpAndSettle();
+
+      // Verify style of title TextField and enter title text
+      String commentTitle = 'Comment title';
+      // await checkTextFieldStyleAndEnterText(
+      //   tester: tester,
+      //   textFieldKeyStr: 'commentTitleTextField',
+      //   fontSize: 16,
+      //   fontWeight: FontWeight.bold,
+      //   textToEnter: commentTitle,
+      // );
+
+      // Verify style of comment TextField and enter comment text
+      String commentText = 'Comment text';
+      String commentContentTextFieldKeyStr = 'commentContentTextField';
+      // await checkTextFieldStyleAndEnterText(
+      //   tester: tester,
+      //   textFieldKeyStr: commentContentTextFieldKeyStr,
+      //   fontSize: 16,
+      //   fontWeight: FontWeight.normal,
+      //   textToEnter: commentText,
+      // );
+
+      // Verify audio title displayed in the comment dialog
+      expect(
+        find.text(uncommentedAudioTitle),
+        findsOneWidget, // "La surpopulation mondiale par Jancovici
+        //                  et Barrau"
+      );
+
+      String expectedAudioPlayerViewCurrentAudioPosition = '0:43';
+
+      // Verify the initial comment position displayed in the
+      // comment start and end positions in the comment dialog.
+      // This position was the audio player view position when
+      // the comment dialog was opened.
+      String commentStartAndEndInitialPosition =
+          expectedAudioPlayerViewCurrentAudioPosition;
+
+      final Finder commentStartTextWidgetFinder =
+          find.byKey(const Key('commentStartPositionText')); // 0:43
+      final Finder commentEndTextWidgetFinder =
+          find.byKey(const Key('commentEndPositionText')); // 0:43
+
+      expect(
+        tester.widget<Text>(commentStartTextWidgetFinder).data!,
+        commentStartAndEndInitialPosition, // 0:43
+      );
+      expect(
+        tester.widget<Text>(commentEndTextWidgetFinder).data!,
+        commentStartAndEndInitialPosition, // 0:43
+      );
+
+      // Tap on add text button
+      final Finder addOrUpdateCommentTextButton =
+          find.byKey(const Key('addOrUpdateCommentTextButton'));
+      await tester.tap(addOrUpdateCommentTextButton);
+      await tester.pumpAndSettle();
+
+      // Verify that the comment list dialog now displays the
+      // added comment
+
+      final Finder commentListDialogFinder = find.byType(CommentListAddDialog);
+
+      expect(
+          find.descendant(
+              of: commentListDialogFinder, matching: find.text(commentTitle)),
+          findsOneWidget);
+      expect(
+          find.descendant(
+              of: commentListDialogFinder, matching: find.text(commentText)),
+          findsOneWidget);
+
+      expect(
+          find.descendant(
+            of: commentListDialogFinder,
+            matching: find.text(expectedAudioPlayerViewCurrentAudioPosition),
+          ),
+          findsNWidgets(2));
+      expect(
+          find.descendant(
+            of: commentListDialogFinder,
+            matching: find.text(frenchDateFormatYy.format(DateTime.now())),
+          ),
+          findsOneWidget);
+
+      // Now close the comment list dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
+
+      // Now tap the appbar leading popup menu button which now
+      // displays all the usable menu items available on an existing
+      // audio.
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      // Find the 'Audio Comments ...' menu item and tap on it to open the
+      // comment add list dialog
+      await tester
+          .tap(find.byKey(const Key('appbar_popup_menu_audio_comment')));
+      await tester.pumpAndSettle();
+
+      // Now tap on the delete comment icon button to delete the comment
+      await tester.tap(find.byKey(const Key('deleteCommentIconButton')));
+      await tester.pumpAndSettle();
+
+      // Verify the delete comment dialog title
+      expect(find.text('Delete Comment'), findsOneWidget);
+
+      // Verify the delete comment dialog message
+      expect(find.text("Deleting comment \"$commentTitle\"."), findsOneWidget);
+
+      // Confirm the deletion of the comment
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      // Verify that the comment list dialog now displays no comment
+      expect(
+          find.descendant(
+              of: commentListDialogFinder, matching: find.text(commentTitle)),
+          findsNothing);
+
+      // Now close the comment list dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
       await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
@@ -18017,6 +18239,79 @@ void main() {
     //   );
     // });
     // });
+  });
+  group('Audio item Comments dialog test', () {
+    testWidgets('''Delete comment.''', (WidgetTester tester) async {
+      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+      const String emptyPlaylistTitle = "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique"; // Youtube playlist
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_comment_color_test',
+        selectedPlaylistTitle: youtubePlaylistTitle,
+      );
+
+      // First, find the Empty playlist sublist ListTile Text widget
+      Finder emptyPlaylistListTileTextWidgetFinder =
+          find.text(emptyPlaylistTitle);
+
+      // Then obtain the playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      Finder emptyPlaylistListTileWidgetFinder = find.ancestor(
+        of: emptyPlaylistListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now we want to tap the popup menu of the Empty  playlist ListTile
+
+      // Find the leading menu icon button of the playlist ListTile
+      // and tap on it
+      Finder emptyPlaylistListTileLeadingMenuIconButton = find.descendant(
+        of: emptyPlaylistListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(emptyPlaylistListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the List comments of playlist audio popup menu
+      // item and tap on it
+      final Finder popupPlaylistAudioCommentsMenuItem =
+          find.byKey(const Key("popup_menu_audio_comment"));
+
+      await tester.tap(popupPlaylistAudioCommentsMenuItem);
+      await tester.pumpAndSettle();
+
+      // Verify that the playlist audio comment dialog is displayed
+      expect(find.byType(PlaylistCommentListDialog), findsOneWidget);
+
+      // Verify the dialog title
+      expect(find.text('Comments'), findsOneWidget);
+
+      // Verify that the audio comments list of the dialog is empty
+
+      final Finder playlistCommentsLstFinder = find.byKey(const Key(
+        'playlistCommentsListKey',
+      ));
+
+      // Ensure the list has no child widgets
+      expect(
+        tester.widget<ListBody>(playlistCommentsLstFinder).children.length,
+        0,
+      );
+
+      // Tap on Close text button
+      await tester.tap(
+          find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+      await tester.pumpAndSettle();
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
   });
 }
 
