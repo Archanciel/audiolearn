@@ -1213,7 +1213,7 @@ class PlaylistListVM extends ChangeNotifier {
         }
 
         // Copying the audio picture file if it exists
-        _pictureVM.copyAudioPictureToTargetPlaylist(
+        _pictureVM.copyAudioPictureJsonFileToTargetPlaylist(
           audio: audio,
           targetPlaylist: targetPlaylist,
         );
@@ -1804,7 +1804,7 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     // Copying the audio picture file if it exists
-    _pictureVM.copyAudioPictureToTargetPlaylist(
+    _pictureVM.copyAudioPictureJsonFileToTargetPlaylist(
       audio: audio,
       targetPlaylist: targetPlaylist,
     );
