@@ -490,7 +490,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                   width: kSmallestButtonWidth,
                   child: IconButton(
                     // delete comment icon button
-                    key: const Key('deleteCommentIconButton'),
+                    key: const Key('playlistDeleteCommentIconButton'),
                     onPressed: () async {
                       await _confirmDeleteComment(
                         audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
