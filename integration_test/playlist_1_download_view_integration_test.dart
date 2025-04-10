@@ -17013,7 +17013,8 @@ void main() {
     });
     testWidgets(
         '''With playlist comment menu, manage comments in initially empty playlist. Copy audio
-           to the empty playlist, add a comment and then delete it.''',
+           to the empty playlist, add a comment and then delete it in the audio player view using
+           the left appbar 'Audio Comments ...' menu comment delete icon.''',
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String emptyPlaylistTitle = 'Empty'; // Local empty playlist
@@ -17033,12 +17034,9 @@ void main() {
         playlistTitle: emptyPlaylistTitle,
       );
 
-      // Tap the playlist popup menu button
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      // Now close the comment list dialog
+      await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
       await tester.pumpAndSettle();
-
-      // Verify that the appbar popup menu is empty
-      expect(find.byType(PopupMenuItem), findsNothing);
 
       // Copy an uncommented audio from the Youtube playlist to
       // the empty playlist
@@ -17052,7 +17050,7 @@ void main() {
 
       // Now we want to tap on the copied uncommented audio in the
       // empty playlist in order to open the AudioPlayerView displaying
-      // the audio
+      // the audio to be able to add a comment to it.
 
       // Then, get the ListTile Text widget finder of the uncommented
       // audio copied in the empty playlist and tap on it to open the
@@ -17219,6 +17217,373 @@ void main() {
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets('''Delete comment in audio containing only one comment using the playlist
+                comment dialog.''',
+        (WidgetTester tester) async {
+      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_comment_color_test',
+        selectedPlaylistTitle: youtubePlaylistTitle,
+      );
+
+      // First, find the Youtube playlist audio ListTile Text widget
+      Finder youtubePlaylistTitleTileTextWidgetFinder =
+          find.text(youtubePlaylistTitle);
+
+      // Then obtain the playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      Finder youtubePlaylistTitleTileWidgetFinder = find.ancestor(
+        of: youtubePlaylistTitleTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now we want to tap the popup menu of the youtubePlaylistTitle
+      // ListTile
+
+      // Find the leading menu icon button of the audioTitle ListTile
+      // and tap on it
+      Finder youtubePlaylistTitleTileLeadingMenuIconButton = find.descendant(
+        of: youtubePlaylistTitleTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(youtubePlaylistTitleTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the 'Playlist Audio Comments ...' popup menu item and
+      // tap on it
+      final Finder playlistAudioCommentsPopupMenuItem =
+          find.byKey(const Key("popup_menu_display_playlist_audio_comments"));
+
+      await tester.tap(playlistAudioCommentsPopupMenuItem);
+      await tester.pumpAndSettle();
+
+      // Verify that the playlist audio comment dialog is displayed
+      expect(find.byType(PlaylistCommentListDialog), findsOneWidget);
+
+      // Verify the dialog title
+      expect(find.text('Playlist Audio Comments'), findsOneWidget);
+
+      // Verify that the audio comments list of the playlist comments
+      // dialog has 8 list items
+
+      Finder audioCommentsLstFinder = find.byKey(const Key(
+        'playlistCommentsListKey',
+      ));
+
+      // Ensure the list has height child widgets
+      expect(
+        tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+        8,
+      );
+
+      // Now delete the 'Comment Jancovici' comment
+
+      // Find the comment item in the playlist comments list dialog
+      final Finder rowWithCommentFinder = find.ancestor(
+        of: find.text('Comment Jancovici'),
+        matching: find.byType(Row), // or whatever container widget is used
+      );
+      final Finder deleteCommentIconButtonFinder = find
+          .descendant(
+            of: rowWithCommentFinder,
+            matching: find.byIcon(Icons.clear), // or the appropriate icon
+          )
+          .last; // If there are multiple icons, get the last one
+      await tester.tap(deleteCommentIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the delete comment dialog title
+      expect(find.text('Delete Comment'), findsOneWidget);
+
+      final String commentTitle = 'Comment Jancovici';
+
+      // Verify the delete comment dialog message
+      expect(find.text("Deleting comment \"$commentTitle\"."), findsOneWidget);
+
+      // Confirm the deletion of the comment
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      final Finder commentListDialogFinder =
+          find.byType(PlaylistCommentListDialog);
+
+      // Verify that the comment list dialog doesn't display the
+      // deleted comments title
+      expect(
+          find.descendant(
+              of: commentListDialogFinder, matching: find.text(commentTitle)),
+          findsExactly(0));
+
+      // Ensure the list has now six list items. Since the deleted comment
+      // was the unique comment of the audio, the audio title is no longer
+      // displayed in the playlist comment list dialog, the reason why 2 list
+      // items were removed from playlist comments list.
+      expect(
+        tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+        6,
+      );
+
+      // Now close the comment list dialog
+      await tester.tap(
+          find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+      await tester.pumpAndSettle();
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets('''Delete comment in audio containing two comments using the playlist
+                comment dialog. Before deleting the comment, add a new comment to the
+                audio which contains one comment.''',
+        (WidgetTester tester) async {
+      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_comment_color_test',
+        selectedPlaylistTitle: youtubePlaylistTitle,
+      );
+
+      // First, find the Youtube playlist audio ListTile Text widget
+      Finder youtubePlaylistTitleTileTextWidgetFinder =
+          find.text(youtubePlaylistTitle);
+
+      // Then obtain the playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      Finder youtubePlaylistTitleTileWidgetFinder = find.ancestor(
+        of: youtubePlaylistTitleTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now we want to tap the popup menu of the youtubePlaylistTitle
+      // ListTile
+
+      // Find the leading menu icon button of the playlistTitle ListTile
+      // and tap on it
+      Finder youtubePlaylistTitleTileLeadingMenuIconButton = find.descendant(
+        of: youtubePlaylistTitleTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(youtubePlaylistTitleTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the 'Playlist Audio Comments ...' popup menu item and
+      // tap on it
+       Finder playlistAudioCommentsPopupMenuItem =
+          find.byKey(const Key("popup_menu_display_playlist_audio_comments"));
+
+      await tester.tap(playlistAudioCommentsPopupMenuItem);
+      await tester.pumpAndSettle();
+
+      // Verify that the playlist audio comment dialog is displayed
+      expect(find.byType(PlaylistCommentListDialog), findsOneWidget);
+
+      // Verify the dialog title
+      expect(find.text('Playlist Audio Comments'), findsOneWidget);
+
+      // Verify that the audio comments list of the playlist comments
+      // dialog has 8 list items
+
+      Finder audioCommentsLstFinder = find.byKey(const Key(
+        'playlistCommentsListKey',
+      ));
+
+      // Ensure the list has height list items
+      expect(
+        tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+        8,
+      );
+
+      // Now close the comment list dialog
+      await tester.tap(
+          find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+      await tester.pumpAndSettle();
+
+      // Now add a new comment to the audio "Jancovici m'explique
+      // l’importance des ordres de grandeur face au changement
+      // climatique" which contains already one comment.
+
+      const String oneCommentAudioTitle =
+                      "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
+
+      // Now we want to tap on the one comment audio in the AudioPlayerView
+      // displaying the audio to be able to add a new comment to it.
+
+      // GGet the ListTile Text widget finder of the uncommented audio
+      // copied in the empty playlist and tap on it to open the
+      // AudioPlayerView
+      final Finder oneCommentAudioTitleFinder =
+          find.text(oneCommentAudioTitle);
+      await tester.tap(oneCommentAudioTitleFinder);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+
+      // Now tap the appbar leading popup menu button which now
+      // displays all the usable menu items available on an existing
+      // audio.
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      // Find the 'Audio Comments ...' menu item and tap on it to open the
+      // comment add list dialog
+      await tester
+          .tap(find.byKey(const Key('appbar_popup_menu_audio_comment')));
+      await tester.pumpAndSettle();
+
+      // Now tap on the Add comment icon button to open the add edit comment dialog
+      await tester
+          .tap(find.byKey(const Key('addPositionedCommentIconButtonKey')));
+      await tester.pumpAndSettle();
+
+      // Verify style of title TextField and enter title text
+      String commentTitle = 'New comment title';
+      const String commentText = 'New comment text';
+
+      await IntegrationTestUtil.checkTextFieldStyleAndEnterText(
+        tester: tester,
+        textFieldKeyStr: 'commentTitleTextField',
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+        textToEnter: commentTitle,
+      );
+
+      // Verify style of comment TextField and enter comment text
+      String commentContentTextFieldKeyStr = 'commentContentTextField';
+      await IntegrationTestUtil.checkTextFieldStyleAndEnterText(
+        tester: tester,
+        textFieldKeyStr: commentContentTextFieldKeyStr,
+        fontSize: 16,
+        fontWeight: FontWeight.normal,
+        textToEnter: commentText,
+      );
+
+      // Tap on add text button
+      final Finder addOrUpdateCommentTextButton =
+          find.byKey(const Key('addOrUpdateCommentTextButton'));
+      await tester.tap(addOrUpdateCommentTextButton);
+      await tester.pumpAndSettle();
+
+      // Now close the comment list dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
+
+      // Return to the playlist download view
+      Finder applicationViewNavButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(applicationViewNavButton);
+      await tester.pumpAndSettle();
+
+      // Now delete the 'Comment Jancovici' comment
+
+      // First, find the Youtube playlist audio ListTile Text widget
+       youtubePlaylistTitleTileTextWidgetFinder =
+          find.text(youtubePlaylistTitle);
+
+      // Then obtain the playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+       youtubePlaylistTitleTileWidgetFinder = find.ancestor(
+        of: youtubePlaylistTitleTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now we want to tap the popup menu of the youtubePlaylistTitle
+      // ListTile
+
+      // Find the leading menu icon button of the playlistTitle ListTile
+      // and tap on it
+       youtubePlaylistTitleTileLeadingMenuIconButton = find.descendant(
+        of: youtubePlaylistTitleTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(youtubePlaylistTitleTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the 'Playlist Audio Comments ...' popup menu item and
+      // tap on it
+       playlistAudioCommentsPopupMenuItem =
+          find.byKey(const Key("popup_menu_display_playlist_audio_comments"));
+
+      await tester.tap(playlistAudioCommentsPopupMenuItem);
+      await tester.pumpAndSettle();
+
+
+      audioCommentsLstFinder = find.byKey(const Key(
+        'playlistCommentsListKey',
+      ));
+
+      // Ensure the list has nine list items (after adding one comment)
+      expect(
+        tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+        9,
+      );
+
+      commentTitle = 'Comment Jancovici';
+
+      // Find the comment item in the playlist comments list dialog
+      final Finder rowWithCommentFinder = find.ancestor(
+        of: find.text(commentTitle),
+        matching: find.byType(Row), // or whatever container widget is used
+      );
+      final Finder deleteCommentIconButtonFinder = find
+          .descendant(
+            of: rowWithCommentFinder,
+            matching: find.byIcon(Icons.clear), // or the appropriate icon
+          )
+          .last; // If there are multiple icons, get the last one
+      await tester.tap(deleteCommentIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the delete comment dialog title
+      expect(find.text('Delete Comment'), findsOneWidget);
+
+      // Verify the delete comment dialog message
+      expect(find.text("Deleting comment \"$commentTitle\"."), findsOneWidget);
+
+      // Confirm the deletion of the comment
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      final Finder commentListDialogFinder =
+          find.byType(PlaylistCommentListDialog);
+
+      // Verify that the comment list dialog doesn't display the
+      // deleted comments title
+      expect(
+          find.descendant(
+              of: commentListDialogFinder, matching: find.text(commentTitle)),
+          findsExactly(0));
+
+      // Ensure the list has now 8 list items. Since the deleted comment
+      // was the unique comment of the audio, the audio title is no longer
+      // displayed in the playlist comment list dialog, the reason why 2 list
+      // items were removed from playlist comments list.
+      expect(
+        tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+        8,
+      );
+
+      // Now close the comment list dialog
+      await tester.tap(
+          find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
       await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
