@@ -275,9 +275,9 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
       context,
       listen: false,
     );
-    final CommentVM commentVMlistenFalse = Provider.of<CommentVM>(
+    final CommentVM commentVMlistenTrue = Provider.of<CommentVM>(
       context,
-      listen: false,
+      listen: true,
     );
     final PictureVM pictureVMlistenFalse = Provider.of<PictureVM>(
       context,
@@ -329,7 +329,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
               event.logicalKey == LogicalKeyboardKey.numpadEnter) {
             await _whenClosingStopAudioIfPlaying(
               audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-              commentVMlistenFalse: commentVMlistenFalse,
+              commentVMlistenFalse: commentVMlistenTrue,
               currentAudio: currentAudio,
             );
 
@@ -413,7 +413,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
             children: _buildAudioCommentsLst(
               themeProviderVM: themeProviderVM,
               audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-              commentVMlistenFalse: commentVMlistenFalse,
+              commentVMlistenTrue: commentVMlistenTrue,
               currentAudio: currentAudio,
               isDarkTheme: isDarkTheme,
             ),
@@ -431,7 +431,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
             onPressed: () async {
               await _whenClosingStopAudioIfPlaying(
                 audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-                commentVMlistenFalse: commentVMlistenFalse,
+                commentVMlistenFalse: commentVMlistenTrue,
                 currentAudio: currentAudio,
               );
 
@@ -480,11 +480,11 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
   List<Widget> _buildAudioCommentsLst({
     required ThemeProviderVM themeProviderVM,
     required AudioPlayerVM audioPlayerVMlistenFalse,
-    required CommentVM commentVMlistenFalse,
+    required CommentVM commentVMlistenTrue,
     required Audio currentAudio,
     required bool isDarkTheme,
   }) {
-    List<Comment> commentsLst = commentVMlistenFalse.loadAudioComments(
+    List<Comment> commentsLst = commentVMlistenTrue.loadAudioComments(
       audio: currentAudio,
     );
 
@@ -533,7 +533,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                     context,
                     listen: false,
                   ),
-                  commentVMlistenFalse: commentVMlistenFalse,
+                  commentVMlistenTrue: commentVMlistenTrue,
                   currentAudio: currentAudio,
                   comment: comment,
                   commentTitleTextStyle: commentTitleTextStyle,
@@ -579,7 +579,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
     required ThemeProviderVM themeProviderVM,
     required AudioPlayerVM audioPlayerVMlistenFalse,
     required DateFormatVM dateFormatVMlistenFalse,
-    required CommentVM commentVMlistenFalse,
+    required CommentVM commentVMlistenTrue,
     required Audio currentAudio,
     required Comment comment,
     required TextStyle commentTitleTextStyle,
@@ -672,7 +672,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                     onPressed: () async {
                       await _confirmDeleteComment(
                         audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-                        commentVMlistenFalse: commentVMlistenFalse,
+                        commentVMlistenTrue: commentVMlistenTrue,
                         currentAudio: currentAudio,
                         comment: comment,
                       );
@@ -830,7 +830,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
 
   Future<void> _confirmDeleteComment({
     required AudioPlayerVM audioPlayerVMlistenFalse,
-    required CommentVM commentVMlistenFalse,
+    required CommentVM commentVMlistenTrue,
     required Audio currentAudio,
     required Comment comment,
   }) async {
@@ -848,7 +848,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
           child: CommentDeleteConfirmActionDialog(
             actionFunction: (id, audio) async {
               // Delete the comment
-              commentVMlistenFalse.deleteCommentFunction(id, audio);
+              commentVMlistenTrue.deleteCommentFunction(id, audio);
 
               // Close the confirmation dialog
               confirmOverlayEntry?.remove();
