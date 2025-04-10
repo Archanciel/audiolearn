@@ -409,6 +409,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
         content: SingleChildScrollView(
           controller: _scrollController,
           child: ListBody(
+            key: const Key('audioCommentsListKey'),
             children: _buildAudioCommentsLst(
               themeProviderVM: themeProviderVM,
               audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,

@@ -3025,7 +3025,7 @@ void main() {
         forcedLocale: const Locale('en'),
       );
 
-      const String invalidSingleVideoUrl = 'invalid';
+      const String invalidSingleVideoUrl = 'http://invalid';
 
       // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
@@ -3041,6 +3041,7 @@ void main() {
         ),
         invalidSingleVideoUrl,
       );
+      await tester.pumpAndSettle();
 
       // Ensure the url text field contains the entered url
       TextField urlTextField = tester.widget(find.byKey(
@@ -3214,7 +3215,7 @@ void main() {
         forcedLocale: const Locale('en'),
       );
 
-      const String invalidSingleVideoUrl = 'invalid';
+      const String invalidSingleVideoUrl = 'http://invalid';
 
       // Tap the 'Toggle List' button to display the playlist list. If the list
       // is not opened, checking that a ListTile with the title of
@@ -3230,6 +3231,7 @@ void main() {
         ),
         invalidSingleVideoUrl,
       );
+      await tester.pumpAndSettle();
 
       // Ensure the url text field contains the entered url
       TextField urlTextField = tester.widget(find.byKey(
@@ -4121,7 +4123,7 @@ void main() {
 
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -4135,7 +4137,7 @@ void main() {
 
       List<String> sourcePlaylistCommentLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kCommentDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kCommentDirName',
         fileExtension: 'json',
       );
 
@@ -4149,19 +4151,19 @@ void main() {
 
       List<String> sourcePlaylistPictureLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kPictureDirName',
-        fileExtension: 'jpg',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kPictureDirName',
+        fileExtension: 'json',
       );
 
       expect(sourcePlaylistPictureLst, [
-        "230628-033811-audio learn test short video one 23-06-10.jpg",
+        "230628-033811-audio learn test short video one 23-06-10.json",
       ]);
 
       // And verify that the target playlist directory now
       // contains the audio file copied from the source playlist
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleTwo',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetPlaylistTitleTwo',
         fileExtension: 'mp3',
       );
 
@@ -4172,7 +4174,7 @@ void main() {
       // the audio comment file copied from the source playlist
       List<String> targetPlaylistCommentLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleTwo${path.separator}$kCommentDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetPlaylistTitleTwo${path.separator}$kCommentDirName',
         fileExtension: 'json',
       );
 
@@ -4183,12 +4185,12 @@ void main() {
       // the audio picture file copied from the source playlist
       List<String> targetPlaylistPictureLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleTwo${path.separator}$kPictureDirName',
-        fileExtension: 'jpg',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetPlaylistTitleTwo${path.separator}$kPictureDirName',
+        fileExtension: 'json',
       );
 
       expect(targetPlaylistPictureLst,
-          ["230628-033811-audio learn test short video one 23-06-10.jpg"]);
+          ["230628-033811-audio learn test short video one 23-06-10.json"]);
 
       // Find the target ListTile Playlist containing the audio copied
       // from the source playlist
@@ -4488,7 +4490,7 @@ void main() {
       // contains the audio file copied to the target playlist
       sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -4502,7 +4504,7 @@ void main() {
 
       sourcePlaylistCommentLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kCommentDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kCommentDirName',
         fileExtension: 'json',
       );
 
@@ -4516,19 +4518,19 @@ void main() {
 
       sourcePlaylistPictureLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kPictureDirName',
-        fileExtension: 'jpg',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kPictureDirName',
+        fileExtension: 'json',
       );
 
       expect(sourcePlaylistPictureLst, [
-        "230628-033811-audio learn test short video one 23-06-10.jpg",
+        "230628-033811-audio learn test short video one 23-06-10.json",
       ]);
 
       // And verify that the target playlist directory does not
       // contains the audio file copied from the source playlist
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleThree',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetPlaylistTitleThree',
         fileExtension: 'mp3',
       );
 
@@ -4538,7 +4540,7 @@ void main() {
       // the audio comment file copied from the source playlist
       targetPlaylistCommentLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleThree${path.separator}$kCommentDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetPlaylistTitleThree${path.separator}$kCommentDirName',
         fileExtension: 'json',
       );
 
@@ -4548,8 +4550,8 @@ void main() {
       // the audio picture file copied from the source playlist
       targetPlaylistPictureLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleThree${path.separator}$kPictureDirName',
-        fileExtension: 'jpg',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetPlaylistTitleThree${path.separator}$kPictureDirName',
+        fileExtension: 'json',
       );
 
       expect(targetPlaylistPictureLst, []);
@@ -4595,7 +4597,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$kSettingsFileName");
 
       await app.main();
       await tester.pumpAndSettle();
@@ -4679,7 +4681,7 @@ void main() {
       // contains the audio file copied to the target playlist
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -4692,7 +4694,7 @@ void main() {
       // contains the audio file copied from the source playlist
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleTwo',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetPlaylistTitleTwo',
         fileExtension: 'mp3',
       );
 
@@ -4918,7 +4920,7 @@ void main() {
       // playlist
       sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -4931,7 +4933,7 @@ void main() {
       // contains the audio file copied from the source playlist
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleThree',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetPlaylistTitleThree',
         fileExtension: 'mp3',
       );
 
@@ -4978,7 +4980,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$kSettingsFileName");
 
       await app.main();
       await tester.pumpAndSettle();
@@ -5061,7 +5063,7 @@ void main() {
       // contains the audio file copied to the target playlist
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -5075,7 +5077,7 @@ void main() {
       // playlist
       List<String> sourcePlaylistCommentFileLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kCommentDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kCommentDirName',
         fileExtension: 'json',
       );
 
@@ -5088,7 +5090,7 @@ void main() {
       // contains the audio file copied from the source playlist
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetPlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -5099,7 +5101,7 @@ void main() {
       // the comment file of the audio copied from the source playlist
       List<String> targetPlaylistJsonLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle${path.separator}$kCommentDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetPlaylistTitle${path.separator}$kCommentDirName',
         fileExtension: 'json',
       );
 
@@ -5186,7 +5188,7 @@ void main() {
       // contains the audio file copied from the source playlist
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetPlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -5197,7 +5199,7 @@ void main() {
       // source playlist
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle${path.separator}$kCommentDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetPlaylistTitle${path.separator}$kCommentDirName',
         fileExtension: 'json',
       );
 
@@ -5328,7 +5330,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$kSettingsFileName");
 
       await app.main();
       await tester.pumpAndSettle();
@@ -5411,7 +5413,7 @@ void main() {
       // contains the audio file copied to the target playlist
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -5424,7 +5426,7 @@ void main() {
       // contains the audio file copied from the source playlist
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetPlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -5505,7 +5507,7 @@ void main() {
       // contains the audio file copied from the source playlist
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetPlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -5634,7 +5636,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$kSettingsFileName");
 
       await app.main();
       await tester.pumpAndSettle();
@@ -5727,13 +5729,13 @@ void main() {
 
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetOnePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetOnePlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -5947,7 +5949,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$kSettingsFileName");
 
       await app.main();
       await tester.pumpAndSettle();
@@ -5956,11 +5958,11 @@ void main() {
       // to the 'local3' playlist dir.
 
       String targetPlaylistLocalDir =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleThree";
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetPlaylistTitleThree";
 
       DirUtil.copyFileToDirectorySync(
         sourceFilePathName:
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$copiedCommentedAudioFileName",
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$copiedCommentedAudioFileName",
         targetDirectoryPath: targetPlaylistLocalDir,
       );
 
@@ -6078,7 +6080,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$kSettingsFileName");
 
       await app.main();
       await tester.pumpAndSettle();
@@ -6165,7 +6167,7 @@ void main() {
       // contains the audio file copied from the source playlist
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$newLocalAudioTargetPlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$newLocalAudioTargetPlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -6263,7 +6265,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$kSettingsFileName");
 
       await app.main();
       await tester.pumpAndSettle();
@@ -6356,13 +6358,13 @@ void main() {
 
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetPlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -6379,13 +6381,13 @@ void main() {
 
       List<String> sourcePlaylistCommentLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kCommentDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kCommentDirName',
         fileExtension: 'json',
       );
 
       List<String> targetPlaylistCommentLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle${path.separator}$kCommentDirName',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetPlaylistTitle${path.separator}$kCommentDirName',
         fileExtension: 'json',
       );
 
@@ -6402,14 +6404,14 @@ void main() {
 
       List<String> sourcePlaylistPictureLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kPictureDirName',
-        fileExtension: 'jpg',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$kPictureDirName',
+        fileExtension: 'json',
       );
 
       List<String> targetPlaylistPictureLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitle${path.separator}$kPictureDirName',
-        fileExtension: 'jpg',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetPlaylistTitle${path.separator}$kPictureDirName',
+        fileExtension: 'json',
       );
 
       // Contains only the not moved audio picture
@@ -6417,7 +6419,7 @@ void main() {
 
       // Contains only the moved audio picture
       expect(targetPlaylistPictureLst,
-          ["230628-033811-audio learn test short video one 23-06-10.jpg"]);
+          ["230628-033811-audio learn test short video one 23-06-10.json"]);
 
       // Find the target ListTile Playlist containing the audio moved
       // from the source playlist
@@ -6712,7 +6714,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$kSettingsFileName");
 
       await app.main();
       await tester.pumpAndSettle();
@@ -6842,7 +6844,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$kSettingsFileName");
 
       await app.main();
       await tester.pumpAndSettle();
@@ -6851,11 +6853,11 @@ void main() {
       // to the 'local3' playlist dir.
 
       String targetPlaylistLocalDir =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetPlaylistTitleThree";
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetPlaylistTitleThree";
 
       DirUtil.copyFileToDirectorySync(
         sourceFilePathName:
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$movedCommentedAudioFileName",
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioSourcePlaylistTitle${path.separator}$movedCommentedAudioFileName",
         targetDirectoryPath: targetPlaylistLocalDir,
       );
 
@@ -6973,7 +6975,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$kSettingsFileName");
 
       await app.main();
       await tester.pumpAndSettle();
@@ -7060,7 +7062,7 @@ void main() {
       // contains the audio file moved from the source playlist
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$newLocalAudioTargetPlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$newLocalAudioTargetPlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -7159,7 +7161,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$kSettingsFileName");
 
       await app.main();
       await tester.pumpAndSettle();
@@ -7270,13 +7272,13 @@ void main() {
 
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -7401,13 +7403,13 @@ void main() {
 
       sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioTargetPlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioTargetPlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -7427,12 +7429,12 @@ void main() {
 
       List<String> targetPlaylistPictureLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioTargetPlaylistTitle${path.separator}$kPictureDirName',
-        fileExtension: 'jpg',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioTargetPlaylistTitle${path.separator}$kPictureDirName',
+        fileExtension: 'json',
       );
 
       expect(targetPlaylistPictureLst,
-          ["230628-033811-audio learn test short video one 23-06-10.jpg"]);
+          ["230628-033811-audio learn test short video one 23-06-10.json"]);
 
       // Now verifying the copied audio informations in the source
       // playlist
@@ -7505,7 +7507,7 @@ void main() {
 
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioTargetPlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioTargetPlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -7521,8 +7523,8 @@ void main() {
 
       targetPlaylistPictureLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioTargetPlaylistTitle${path.separator}$kPictureDirName',
-        fileExtension: 'jpg',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioTargetPlaylistTitle${path.separator}$kPictureDirName',
+        fileExtension: 'json',
       );
 
       expect(targetPlaylistPictureLst, []);
@@ -7571,7 +7573,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$kSettingsFileName");
 
       await app.main();
       await tester.pumpAndSettle();
@@ -7682,13 +7684,13 @@ void main() {
 
       List<String> sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
       List<String> targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -7798,13 +7800,13 @@ void main() {
 
       sourcePlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioTargetSourcePlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioTargetSourcePlaylistTitle',
         fileExtension: 'mp3',
       );
 
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioTargetPlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioTargetPlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -7878,7 +7880,7 @@ void main() {
 
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubeAudioTargetPlaylistTitle',
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioTargetPlaylistTitle',
         fileExtension: 'mp3',
       );
 
@@ -11929,12 +11931,12 @@ void main() {
 
           List<String> localPlaylistPictureLst = DirUtil.listFileNamesInDir(
             directoryPath:
-                '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle${path.separator}$kPictureDirName',
-            fileExtension: 'jpg',
+                '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioPlaylistTitle${path.separator}$kPictureDirName',
+            fileExtension: 'json',
           );
 
           expect(localPlaylistPictureLst,
-              ["230628-033811-audio learn test short video one 23-06-10.jpg"]);
+              ["230628-033811-audio learn test short video one 23-06-10.json"]);
 
           // Now we want to tap the popup menu of the unique Audio ListTile
           // "audio learn test short video one"
@@ -11998,7 +12000,7 @@ void main() {
           localPlaylistPictureLst = DirUtil.listFileNamesInDir(
             directoryPath:
                 '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle${path.separator}$kPictureDirName',
-            fileExtension: 'jpg',
+            fileExtension: 'json',
           );
 
           expect(localPlaylistPictureLst, []);
@@ -12240,12 +12242,12 @@ void main() {
 
         List<String> localPlaylistPictureLst = DirUtil.listFileNamesInDir(
           directoryPath:
-              '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle${path.separator}$kPictureDirName',
-          fileExtension: 'jpg',
+              '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localAudioPlaylistTitle${path.separator}$kPictureDirName',
+          fileExtension: 'json',
         );
 
         expect(localPlaylistPictureLst,
-            ["230628-033811-audio learn test short video one 23-06-10.jpg"]);
+            ["230628-033811-audio learn test short video one 23-06-10.json"]);
 
         // Now we tap on the AudioPlayerView icon button to open
         // AudioPlayerView screen
@@ -12329,7 +12331,7 @@ void main() {
         localPlaylistPictureLst = DirUtil.listFileNamesInDir(
           directoryPath:
               '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localAudioPlaylistTitle${path.separator}$kPictureDirName',
-          fileExtension: 'jpg',
+          fileExtension: 'json',
         );
 
         expect(localPlaylistPictureLst, []);
@@ -17011,7 +17013,8 @@ void main() {
     });
     testWidgets(
         '''With playlist comment menu, manage comments in initially empty playlist. Copy audio
-           to the empty playlist, add a comment and then delete it.''', (WidgetTester tester) async {
+           to the empty playlist, add a comment and then delete it.''',
+        (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String emptyPlaylistTitle = 'Empty'; // Local empty playlist
       const String uncommentedAudioTitle =
@@ -17039,23 +17042,17 @@ void main() {
 
       // Copy an uncommented audio from the Youtube playlist to
       // the empty playlist
-      // await copyAudioFromSourceToTargetPlaylist(
-      //   tester: tester,
-      //   sourcePlaylistTitle: youtubePlaylistTitle,
-      //   targetPlaylistTitle: emptyPlaylistTitle,
-      //   audioToCopyTitle: uncommentedAudioTitle, // "La surpopulation mondiale
-      //   //                                           par Jancovici et Barrau"
-      // );
+      await IntegrationTestUtil.copyAudioFromSourceToTargetPlaylist(
+        tester: tester,
+        sourcePlaylistTitle: youtubePlaylistTitle,
+        targetPlaylistTitle: emptyPlaylistTitle,
+        audioToCopyTitle: uncommentedAudioTitle, // "La surpopulation mondiale
+        //                                           par Jancovici et Barrau"
+      );
 
       // Now we want to tap on the copied uncommented audio in the
       // empty playlist in order to open the AudioPlayerView displaying
       // the audio
-
-      // First, select the empty playlist
-      await IntegrationTestUtil.selectPlaylist(
-        tester: tester,
-        playlistToSelectTitle: emptyPlaylistTitle,
-      );
 
       // Then, get the ListTile Text widget finder of the uncommented
       // audio copied in the empty playlist and tap on it to open the
@@ -17102,24 +17099,24 @@ void main() {
 
       // Verify style of title TextField and enter title text
       String commentTitle = 'Comment title';
-      // await checkTextFieldStyleAndEnterText(
-      //   tester: tester,
-      //   textFieldKeyStr: 'commentTitleTextField',
-      //   fontSize: 16,
-      //   fontWeight: FontWeight.bold,
-      //   textToEnter: commentTitle,
-      // );
+      await IntegrationTestUtil.checkTextFieldStyleAndEnterText(
+        tester: tester,
+        textFieldKeyStr: 'commentTitleTextField',
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+        textToEnter: commentTitle,
+      );
 
       // Verify style of comment TextField and enter comment text
       String commentText = 'Comment text';
       String commentContentTextFieldKeyStr = 'commentContentTextField';
-      // await checkTextFieldStyleAndEnterText(
-      //   tester: tester,
-      //   textFieldKeyStr: commentContentTextFieldKeyStr,
-      //   fontSize: 16,
-      //   fontWeight: FontWeight.normal,
-      //   textToEnter: commentText,
-      // );
+      await IntegrationTestUtil.checkTextFieldStyleAndEnterText(
+        tester: tester,
+        textFieldKeyStr: commentContentTextFieldKeyStr,
+        fontSize: 16,
+        fontWeight: FontWeight.normal,
+        textToEnter: commentText,
+      );
 
       // Verify audio title displayed in the comment dialog
       expect(
@@ -18243,7 +18240,8 @@ void main() {
   group('Audio item Comments dialog test', () {
     testWidgets('''Delete comment.''', (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
-      const String emptyPlaylistTitle = "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique"; // Youtube playlist
+      const String audioTitle =
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique"; // Youtube playlist
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -18251,59 +18249,88 @@ void main() {
         selectedPlaylistTitle: youtubePlaylistTitle,
       );
 
-      // First, find the Empty playlist sublist ListTile Text widget
-      Finder emptyPlaylistListTileTextWidgetFinder =
-          find.text(emptyPlaylistTitle);
+      // First, find the Youtube playlist audio ListTile Text widget
+      Finder audioTitleTileTextWidgetFinder = find.text(audioTitle);
 
       // Then obtain the playlist ListTile widget enclosing the Text widget
       // by finding its ancestor
-      Finder emptyPlaylistListTileWidgetFinder = find.ancestor(
-        of: emptyPlaylistListTileTextWidgetFinder,
+      Finder audioTitleTileWidgetFinder = find.ancestor(
+        of: audioTitleTileTextWidgetFinder,
         matching: find.byType(ListTile),
       );
 
-      // Now we want to tap the popup menu of the Empty  playlist ListTile
+      // Now we want to tap the popup menu of the audioTitle ListTile
 
-      // Find the leading menu icon button of the playlist ListTile
+      // Find the leading menu icon button of the audioTitle ListTile
       // and tap on it
-      Finder emptyPlaylistListTileLeadingMenuIconButton = find.descendant(
-        of: emptyPlaylistListTileWidgetFinder,
+      Finder audioTitleTileLeadingMenuIconButton = find.descendant(
+        of: audioTitleTileWidgetFinder,
         matching: find.byIcon(Icons.menu),
       );
 
       // Tap the leading menu icon button to open the popup menu
-      await tester.tap(emptyPlaylistListTileLeadingMenuIconButton);
+      await tester.tap(audioTitleTileLeadingMenuIconButton);
       await tester.pumpAndSettle();
 
-      // Now find the List comments of playlist audio popup menu
-      // item and tap on it
-      final Finder popupPlaylistAudioCommentsMenuItem =
+      // Now find the 'Audio Comments ...' popup menu item and
+      // tap on it
+      final Finder audioCommentsPopupMenuItem =
           find.byKey(const Key("popup_menu_audio_comment"));
 
-      await tester.tap(popupPlaylistAudioCommentsMenuItem);
+      await tester.tap(audioCommentsPopupMenuItem);
       await tester.pumpAndSettle();
 
-      // Verify that the playlist audio comment dialog is displayed
-      expect(find.byType(PlaylistCommentListDialog), findsOneWidget);
+      // Verify that the audio comment dialog is displayed
+      expect(find.byType(CommentListAddDialog), findsOneWidget);
 
       // Verify the dialog title
       expect(find.text('Comments'), findsOneWidget);
 
-      // Verify that the audio comments list of the dialog is empty
+      // Verify that the audio comments list of the dialog has 1 comment
+      // item
 
-      final Finder playlistCommentsLstFinder = find.byKey(const Key(
-        'playlistCommentsListKey',
+      Finder audioCommentsLstFinder = find.byKey(const Key(
+        'audioCommentsListKey',
       ));
 
-      // Ensure the list has no child widgets
+      // Ensure the list has one child widgets
       expect(
-        tester.widget<ListBody>(playlistCommentsLstFinder).children.length,
-        0,
+        tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+        1,
       );
 
-      // Tap on Close text button
-      await tester.tap(
-          find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+      // Now delete the comment item
+
+      // Find the delete icon button of the comment item and tap on it
+      final Finder deleteCommentIconButtonFinder = find.descendant(
+        of: audioCommentsLstFinder,
+        matching: find.byKey(const Key('deleteCommentIconButton')),
+      );
+      await tester.tap(deleteCommentIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the delete comment dialog title
+      expect(find.text('Delete Comment'), findsOneWidget);
+
+      final String commentTitle = 'Comment Jancovici';
+
+      // Verify the delete comment dialog message
+      expect(find.text("Deleting comment \"$commentTitle\"."), findsOneWidget);
+
+      // Confirm the deletion of the comment
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      final Finder commentListDialogFinder = find.byType(CommentListAddDialog);
+
+      // Verify that the comment list dialog now displays no comment
+      expect(
+          find.descendant(
+              of: commentListDialogFinder, matching: find.text(commentTitle)),
+          findsNothing);
+
+      // Now close the comment list dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
       await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
