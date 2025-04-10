@@ -1572,8 +1572,9 @@ class IntegrationTestUtil {
     required String playlistPictureDir,
     required String audioForPictureTitle,
     required String deletedPictureFileName,
-  })  {
-    String pictureJsonFilePathName = "$playlistPictureDir${path.separator}$audioForPictureTitle.json";
+  }) {
+    String pictureJsonFilePathName =
+        "$playlistPictureDir${path.separator}$audioForPictureTitle.json";
 
     List<Picture> pictureLst = JsonDataService.loadListFromFile(
       jsonPathFileName: pictureJsonFilePathName,
@@ -2193,5 +2194,117 @@ class IntegrationTestUtil {
     final Finder playlistCommentListDialogFinder =
         find.byType(PlaylistCommentListDialog);
     return playlistCommentListDialogFinder;
+  }
+
+  static Future<void> checkTextFieldStyleAndEnterText({
+    required WidgetTester tester,
+    required String textFieldKeyStr,
+    required int fontSize,
+    required FontWeight fontWeight,
+    required String textToEnter,
+  }) async {
+    // Find the TextField using the Key
+    final Finder textFieldFinder = find.byKey(Key(textFieldKeyStr));
+
+    // Retrieve the TextField widget
+    final TextField textField = tester.widget<TextField>(textFieldFinder);
+
+    // Extract the TextStyle used in the TextField
+    final TextStyle textStyle = textField.style ?? const TextStyle();
+
+    // Check the font size of the TextField
+    expect(textStyle.fontSize, fontSize);
+
+    if (fontWeight == FontWeight.normal) {
+      // Check the font weight of the TextField
+      expect(textStyle.fontWeight, null);
+    } else {
+      // Check the font weight of the TextField
+      expect(textStyle.fontWeight, fontWeight);
+    }
+
+    // Now enter the text to the text field
+    await tester.enterText(
+      textFieldFinder,
+      textToEnter,
+    );
+
+    await tester.pumpAndSettle();
+  }
+
+  static Future<void> copyAudioFromSourceToTargetPlaylist({
+    required WidgetTester tester,
+    required String sourcePlaylistTitle,
+    required String targetPlaylistTitle,
+    required String audioToCopyTitle,
+  }) async {
+    // First, select the source playlist
+    await IntegrationTestUtil.selectPlaylist(
+      tester: tester,
+      playlistToSelectTitle: sourcePlaylistTitle,
+    );
+
+    // Click on playlist toggle button to hide the playlist list
+    await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    await tester.pumpAndSettle();
+
+    // Now we want to tap the popup menu of the Audio ListTile
+    // "audio learn test short video one"
+
+    // First, find the Audio sublist ListTile Text widget
+    final Finder sourceAudioListTileTextWidgetFinder =
+        find.text(audioToCopyTitle);
+
+    // Then obtain the Audio ListTile widget enclosing the Text widget by
+    // finding its ancestor
+    final Finder sourceAudioListTileWidgetFinder = find.ancestor(
+      of: sourceAudioListTileTextWidgetFinder,
+      matching: find.byType(ListTile),
+    );
+
+    // Now find the leading menu icon button of the Audio ListTile
+    // and tap on it
+    final Finder sourceAudioListTileLeadingMenuIconButton = find.descendant(
+      of: sourceAudioListTileWidgetFinder,
+      matching: find.byIcon(Icons.menu),
+    );
+
+    // Tap the leading menu icon button to open the popup menu
+    await tester.tap(sourceAudioListTileLeadingMenuIconButton);
+    await tester.pumpAndSettle(); // Wait for popup menu to appear
+
+    // Now find the copy audio popup menu item and tap on it
+
+    final Finder popupCopyMenuItem =
+        find.byKey(const Key("popup_menu_copy_audio_to_playlist"));
+
+    await tester.tap(popupCopyMenuItem);
+    await tester.pumpAndSettle();
+
+    // Find the RadioListTile target playlist to which the audio
+    // will be copied
+    final Finder targetPlaylistRadioListTile = find.byWidgetPredicate(
+      (Widget widget) =>
+          widget is RadioListTile &&
+          widget.title is Text &&
+          (widget.title as Text).data == targetPlaylistTitle,
+    );
+
+    // Tap the target playlist RadioListTile to select it
+    await tester.tap(targetPlaylistRadioListTile);
+    await tester.pumpAndSettle();
+
+    // Now find the confirm button and tap on it
+    await tester.tap(find.byKey(const Key('confirmButton')));
+    await tester.pumpAndSettle();
+
+    // Now find the ok button of the confirm dialog
+    // and tap on it
+    await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+    await tester.pumpAndSettle();
+
+    // Click on playlist toggle button to display the playlist list
+    await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    await tester.pumpAndSettle();
   }
 }
