@@ -6286,20 +6286,20 @@ void main() {
           );
         }
 
-        // Verify the presence of the audio picture files which will be later
-        // deleted or not
+        // Verify the presence of the audio picture json files which will be
+        // later deleted or not
 
         List<String> availableAudioPictureFileNameLst = [
-          "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.jpg",
-          "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.jpg",
-          "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.jpg",
-          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.jpg",
+          "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.json",
+          "240107-094528-Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik 23-09-10.json",
+          "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
+          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.json",
         ];
 
         List<String> listPictureJpgFileNames = DirUtil.listFileNamesInDir(
           directoryPath:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kPictureDirName",
-          fileExtension: 'jpg',
+          fileExtension: 'json',
         );
 
         expect(
@@ -6436,14 +6436,14 @@ void main() {
         // Verify that the other audio picture files were not deleted
 
         List<String> audioPictureFileNameNotDeletedLst = [
-          "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.jpg",
-          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.jpg",
+          "231226-094526-Ce qui va vraiment sauver notre espèce par Jancovici et Barrau 23-09-23.json",
+          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.json",
         ];
 
         listCommentJsonFileNames = DirUtil.listFileNamesInDir(
           directoryPath:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kPictureDirName",
-          fileExtension: 'jpg',
+          fileExtension: 'json',
         );
 
         for (String audioPictureFileNameNotDeleted
@@ -7872,6 +7872,9 @@ void main() {
            warning as well as the move of all playlist fully listened audio as well
            as their comments. Verification done on source as well as target playlists.''',
           (tester) async {
+        final String applicationPictureDir =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kPictureDirName";
+
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
@@ -8402,8 +8405,9 @@ void main() {
 
         await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
-          playlistPictureDir: tempPlaylistPictureDir,
-          pictureFilePathName: pictureFilePathNameOne,
+          applicationPictureDir: applicationPictureDir,
+          playlistPictureJsonFilesDir: tempPlaylistPictureDir,
+          pictureFileName: pictureFilePathNameOne,
           pictureFileSize: pictureFileSizeOne,
           audioForPictureTitle: audioTitleOne, // La surpopulation mondiale ...
           audioForPictureTitleDurationStr: audioTitleOneDurationStr,
@@ -8419,8 +8423,9 @@ void main() {
 
         await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
-          playlistPictureDir: tempPlaylistPictureDir,
-          pictureFilePathName: pictureFilePathNameTwo,
+          applicationPictureDir: applicationPictureDir,
+          playlistPictureJsonFilesDir: tempPlaylistPictureDir,
+          pictureFileName: pictureFilePathNameTwo,
           pictureFileSize: pictureFileSizeTwo,
           audioForPictureTitle:
               audioTitleTwo, // Le Secret de la RÉSILIENCE  ...
@@ -9740,6 +9745,8 @@ void main() {
           tapOnPlaylistToggleButton: true,
         );
 
+        final String applicationPictureDir =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kPictureDirName";
         const String sourcePlaylistTitle = 'S8 audio';
         const String targetPlaylistTitle = 'temp';
 
@@ -10196,8 +10203,9 @@ void main() {
 
         await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
-          playlistPictureDir: tempPlaylistPictureDir,
-          pictureFilePathName: pictureFilePathNameOne,
+          applicationPictureDir: applicationPictureDir,
+          playlistPictureJsonFilesDir: tempPlaylistPictureDir,
+          pictureFileName: pictureFilePathNameOne,
           pictureFileSize: pictureFileSizeOne,
           audioForPictureTitle: audioTitleOne, // La surpopulation mondiale ...
           audioForPictureTitleDurationStr: audioTitleOneDurationStr,
@@ -10213,8 +10221,9 @@ void main() {
 
         await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
-          playlistPictureDir: tempPlaylistPictureDir,
-          pictureFilePathName: pictureFilePathNameTwo,
+          applicationPictureDir: applicationPictureDir,
+          playlistPictureJsonFilesDir: tempPlaylistPictureDir,
+          pictureFileName: pictureFilePathNameTwo,
           pictureFileSize: pictureFileSizeTwo,
           audioForPictureTitle:
               audioTitleTwo, // Le Secret de la RÉSILIENCE  ...
@@ -10672,7 +10681,7 @@ void main() {
       // Fill the new directory with playlists
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_integr_test_data",
+            "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_delete_integr_test_data",
         destinationRootPath: modifiedPlaylistRootPath,
       );
 
@@ -10792,7 +10801,7 @@ void main() {
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_integr_test_data",
+            "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_delete_integr_test_data",
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
@@ -10815,6 +10824,12 @@ void main() {
 
       await app.main();
       await tester.pumpAndSettle();
+
+      // First, set the application language to english
+      await IntegrationTestUtil.setApplicationLanguage(
+        tester: tester,
+        language: Language.english,
+      );
 
       // Create a new directory to which the zip file will be saved
 
@@ -10854,9 +10869,9 @@ void main() {
 
       List<String> expectedZipContentLst = [
         "audio_learn_test_download_2_small_videos\\audio_learn_test_download_2_small_videos.json",
+        "audio_learn_test_download_2_small_videos\\comments\\230628-033811-audio learn test short video one 23-06-10.json",
+        "audio_learn_test_download_2_small_videos\\comments\\230628-033813-audio learn test short video two 23-06-10.json",
         "audio_player_view_2_shorts_test\\audio_player_view_2_shorts_test.json",
-        "audio_player_view_2_shorts_test\\comments\\231117-002826-Really short video 23-07-01.json",
-        "audio_player_view_2_shorts_test\\comments\\231117-002828-morning _ cinematic video 23-07-01.json",
         "local_3\\local_3.json",
         "local_audio_playlist_2\\local_audio_playlist_2.json",
         "settings.json",
@@ -11469,11 +11484,15 @@ void main() {
           "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
         ];
 
+        final String applicationPictureDir =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kPictureDirName";
+
         // Now verifying the audio picture addition result
         await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
-          playlistPictureDir: playlistPictureDir,
-          pictureFilePathName: pictureFilePathName,
+          applicationPictureDir: applicationPictureDir,
+          playlistPictureJsonFilesDir: playlistPictureDir,
+          pictureFileName: pictureFilePathName,
           pictureFileSize: pictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
@@ -11504,8 +11523,9 @@ void main() {
         // Now verifying the second audio picture addition result
         await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
-          playlistPictureDir: playlistPictureDir,
-          pictureFilePathName: pictureFilePathName,
+          applicationPictureDir: applicationPictureDir,
+          playlistPictureJsonFilesDir: playlistPictureDir,
+          pictureFileName: pictureFilePathName,
           pictureFileSize: secondPictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
@@ -11555,8 +11575,9 @@ void main() {
         // Now verifying the third audio picture addition result
         await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
-          playlistPictureDir: playlistPictureDir,
-          pictureFilePathName: pictureFilePathName,
+          applicationPictureDir: applicationPictureDir,
+          playlistPictureJsonFilesDir: playlistPictureDir,
+          pictureFileName: pictureFilePathName,
           pictureFileSize: thirdPictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
@@ -11577,16 +11598,15 @@ void main() {
         FilePicker.platform = mockFilePicker;
 
         const String youtubePlaylistTitle = 'Jésus-Christ';
-        final String playlistPictureDir =
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$kPictureDirName";
+        final String applicationPictureDir =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kPictureDirName";
         const String audioForPictureTitle =
             'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien';
         const String audioForPictureTitleDurationStr = '40:53';
         const String audioAlreadyUsingPictureTitle =
             'NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE';
         const String audioAlreadyUsingPictureDurationStr = '24:07';
-        const String pictureFileName =
-            "241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.json";
+        const String pictureFileName = "Jésus, mon amour.jpg";
         const int pictureFileSize = 94507;
 
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
@@ -11596,35 +11616,42 @@ void main() {
           tapOnPlaylistToggleButton: false,
         );
 
-        // Available pictures file path
-        String pictureSourcePath =
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$kPictureDirName";
-
         // First picture addition
         String pictureFilePathName =
             await _addPictureToAudioExecutingAudioListItemMenu(
           tester: tester,
           mockFilePicker: mockFilePicker,
           pictureFileName: pictureFileName,
-          pictureSourcePath: pictureSourcePath,
+          pictureSourcePath: applicationPictureDir,
           pictureFileSize: pictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
         );
+
+        // Picture json files path
+        String playlistPictureJsonFilesDir =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubePlaylistTitle${path.separator}$kPictureDirName";
 
         List<String> pictureFileNamesLst = [
           '241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.json',
           "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
         ];
 
+        List<String> audioForPictureTitleLst = [
+          "Jésus-Christ|241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12",
+          "Jésus-Christ|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+        ];
+
         // Now verifying the audio picture addition result
         await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
-          playlistPictureDir: playlistPictureDir,
-          pictureFilePathName: pictureFilePathName,
+          applicationPictureDir: applicationPictureDir,
+          playlistPictureJsonFilesDir: playlistPictureJsonFilesDir,
+          pictureFileName: pictureFileName,
           pictureFileSize: pictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
           pictureFileNamesLst: pictureFileNamesLst,
+          audioForPictureTitleLst: audioForPictureTitleLst,
           mustPlayableAudioListBeUsed: true,
         );
 
@@ -11647,11 +11674,10 @@ void main() {
           '241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.json',
         ];
 
-         IntegrationTestUtil.verifyPictureSuppression(
-          playlistPictureDir: playlistPictureDir,
-          audioForPictureTitle: audioForPictureTitle,
-          deletedPictureFileName: "Jésus je T'aime.jpg"
-        );
+        IntegrationTestUtil.verifyPictureSuppression(
+            playlistPictureDir: applicationPictureDir,
+            audioForPictureTitle: audioForPictureTitle,
+            deletedPictureFileName: "Jésus je T'aime.jpg");
 
         // Go back to playlist download view in order to ensure that
         // the audio already using a picture was not impacted by
@@ -11665,12 +11691,14 @@ void main() {
         // impacted by the previous picture suppression
         await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
-          playlistPictureDir: playlistPictureDir,
-          pictureFilePathName: pictureFilePathName,
+          applicationPictureDir: applicationPictureDir,
+          playlistPictureJsonFilesDir: playlistPictureJsonFilesDir,
+          pictureFileName: pictureFilePathName,
           pictureFileSize: pictureFileSize,
           audioForPictureTitle: audioAlreadyUsingPictureTitle,
           audioForPictureTitleDurationStr: audioAlreadyUsingPictureDurationStr,
           pictureFileNamesLst: pictureFileNamesAfterDeletionLst,
+          audioForPictureTitleLst: audioForPictureTitleLst,
           mustPlayableAudioListBeUsed: true,
         );
 
@@ -11746,11 +11774,15 @@ void main() {
           "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
         ];
 
+        final String applicationPictureDir =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kPictureDirName";
+
         // Now verifying the audio picture addition result
         await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
-          playlistPictureDir: playlistPictureDir,
-          pictureFilePathName: pictureFilePathName,
+          applicationPictureDir: applicationPictureDir,
+          playlistPictureJsonFilesDir: playlistPictureDir,
+          pictureFileName: pictureFilePathName,
           pictureFileSize: pictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
@@ -11775,8 +11807,9 @@ void main() {
         // Now verifying the second audio picture addition result
         await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
-          playlistPictureDir: playlistPictureDir,
-          pictureFilePathName: pictureFilePathName,
+          applicationPictureDir: applicationPictureDir,
+          playlistPictureJsonFilesDir: playlistPictureDir,
+          pictureFileName: pictureFilePathName,
           pictureFileSize: secondPictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
@@ -11791,11 +11824,10 @@ void main() {
           picturedAudioTitle: audioForPictureTitle,
         );
 
-         IntegrationTestUtil.verifyPictureSuppression(
-          playlistPictureDir: playlistPictureDir,
-          audioForPictureTitle: audioForPictureTitle,
-          deletedPictureFileName: "Jésus je T'aime.jpg"
-        );
+        IntegrationTestUtil.verifyPictureSuppression(
+            playlistPictureDir: playlistPictureDir,
+            audioForPictureTitle: audioForPictureTitle,
+            deletedPictureFileName: "Jésus je T'aime.jpg");
 
         // Third picture addition
         pictureFilePathName =
@@ -11810,8 +11842,9 @@ void main() {
         // Now verifying the third audio picture addition result
         await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
-          playlistPictureDir: playlistPictureDir,
-          pictureFilePathName: pictureFilePathName,
+          applicationPictureDir: applicationPictureDir,
+          playlistPictureJsonFilesDir: playlistPictureDir,
+          pictureFileName: pictureFilePathName,
           pictureFileSize: thirdPictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
@@ -11843,8 +11876,7 @@ void main() {
         const String audioAlreadyUsingPictureTitle =
             'NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE';
         const String audioAlreadyUsingPictureDurationStr = '24:07';
-        const String pictureFileName =
-            "241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.json";
+        const String pictureFileName = "Jésus, mon amour.jpg";
         const int pictureFileSize = 94507;
 
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
@@ -11877,21 +11909,35 @@ void main() {
           pictureFileSize: pictureFileSize,
         );
 
+        // Picture json files path
+        String playlistPictureJsonFilesDir =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubePlaylistTitle${path.separator}$kPictureDirName";
+
         List<String> pictureFileNamesLst = [
           '241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.json',
           "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
         ];
 
+        final String applicationPictureDir =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kPictureDirName";
+
+        List<String> audioForPictureTitleLst = [
+          "Jésus-Christ|241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12",
+          "Jésus-Christ|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+        ];
+
         // Now verifying the audio picture addition result
         await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
-          playlistPictureDir: playlistPictureDir,
-          pictureFilePathName: pictureFilePathName,
+          applicationPictureDir: applicationPictureDir,
+          playlistPictureJsonFilesDir: playlistPictureJsonFilesDir,
+          pictureFileName: pictureFilePathName,
           pictureFileSize: pictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
           pictureFileNamesLst: pictureFileNamesLst,
           goToAudioPlayerView: false,
+          audioForPictureTitleLst: audioForPictureTitleLst,
           mustPlayableAudioListBeUsed: false,
         );
 
@@ -11905,11 +11951,10 @@ void main() {
           '241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.json',
         ];
 
-         IntegrationTestUtil.verifyPictureSuppression(
-          playlistPictureDir: playlistPictureDir,
-          audioForPictureTitle: audioForPictureTitle,
-          deletedPictureFileName: "Jésus je T'aime.jpg"
-        );
+        IntegrationTestUtil.verifyPictureSuppression(
+            playlistPictureDir: playlistPictureDir,
+            audioForPictureTitle: audioForPictureTitle,
+            deletedPictureFileName: "Jésus je T'aime.jpg");
 
         // Go back to playlist download view in order to ensure that
         // the audio already using a picture was not impacted by
@@ -11923,12 +11968,14 @@ void main() {
         // impacted by the previous picture suppression
         await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
-          playlistPictureDir: playlistPictureDir,
-          pictureFilePathName: pictureFilePathName,
+          applicationPictureDir: applicationPictureDir,
+          playlistPictureJsonFilesDir: playlistPictureJsonFilesDir,
+          pictureFileName: pictureFilePathName,
           pictureFileSize: pictureFileSize,
           audioForPictureTitle: audioAlreadyUsingPictureTitle,
           audioForPictureTitleDurationStr: audioAlreadyUsingPictureDurationStr,
           pictureFileNamesLst: pictureFileNamesAfterDeletionLst,
+          audioForPictureTitleLst: audioForPictureTitleLst, 
           mustPlayableAudioListBeUsed: true,
         );
 
