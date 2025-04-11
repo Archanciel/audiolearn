@@ -1527,7 +1527,7 @@ class IntegrationTestUtil {
     List<String> pictureAudioLst =
         applicationPictureJsonMap[pictureFileNameOne] ?? [];
 
-    if (pictureAudioLst.isNotEmpty) {
+    if (audioForPictureTitleLstOne.isNotEmpty) {
       // Verify that the picture audio list contains the audio title
       // and the audio duration
       expect(
@@ -1538,7 +1538,7 @@ class IntegrationTestUtil {
 
     pictureAudioLst = applicationPictureJsonMap[pictureFileNameTwo] ?? [];
 
-    if (pictureAudioLst.isNotEmpty) {
+    if (audioForPictureTitleLstTwo.isNotEmpty) {
       // Verify that the picture audio list contains the audio title
       // and the audio duration
       expect(
@@ -1549,7 +1549,7 @@ class IntegrationTestUtil {
 
     pictureAudioLst = applicationPictureJsonMap[pictureFileNameThree] ?? [];
 
-    if (pictureAudioLst.isNotEmpty) {
+    if (audioForPictureTitleLstThree.isNotEmpty) {
       // Verify that the picture audio list contains the audio title
       // and the audio duration
       expect(
@@ -1645,11 +1645,11 @@ class IntegrationTestUtil {
 
   static void verifyPictureSuppression({
     required String playlistPictureDir,
-    required String audioForPictureTitle,
+    required String audioPictureJsonFileName,
     required String deletedPictureFileName,
   }) {
     String pictureJsonFilePathName =
-        "$playlistPictureDir${path.separator}$audioForPictureTitle.json";
+        "$playlistPictureDir${path.separator}$audioPictureJsonFileName";
 
     List<Picture> pictureLst = JsonDataService.loadListFromFile(
       jsonPathFileName: pictureJsonFilePathName,
