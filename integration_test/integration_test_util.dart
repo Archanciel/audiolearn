@@ -1494,14 +1494,18 @@ class IntegrationTestUtil {
     required WidgetTester tester,
     required String applicationPictureDir,
     required String playlistPictureJsonFilesDir,
-    required String pictureFileName,
+    required String pictureFileNameOne,
     required int pictureFileSize,
     required String audioForPictureTitle,
     required String audioForPictureTitleDurationStr,
-    required List<String> pictureFileNamesLst,
+    required List<String> audioPictureJsonFileNamesLst,
     bool goToAudioPlayerView = true,
     required bool mustPlayableAudioListBeUsed,
-    List<String> audioForPictureTitleLst = const [],
+    List<String> audioForPictureTitleLstOne = const [],
+    String pictureFileNameTwo = '',
+    List<String> audioForPictureTitleLstTwo = const [],
+    String pictureFileNameThree = '',
+    List<String> audioForPictureTitleLstThree = const [],
     bool mustAudioBePaused = false,
   }) async {
     // Now verifying that the playlist picture directory contains
@@ -1511,7 +1515,7 @@ class IntegrationTestUtil {
       fileExtension: 'json',
     );
 
-    expect(playlistPicturesLst, pictureFileNamesLst);
+    expect(playlistPicturesLst, audioPictureJsonFileNamesLst);
 
     // Read the application picture json file and verify its
     // content
@@ -1520,14 +1524,37 @@ class IntegrationTestUtil {
       applicationPicturePath: applicationPictureDir,
     );
 
-    List<String> pictureAudioLst = applicationPictureJsonMap[pictureFileName] ?? [];
+    List<String> pictureAudioLst =
+        applicationPictureJsonMap[pictureFileNameOne] ?? [];
 
     if (pictureAudioLst.isNotEmpty) {
       // Verify that the picture audio list contains the audio title
       // and the audio duration
       expect(
         pictureAudioLst,
-        audioForPictureTitleLst,
+        audioForPictureTitleLstOne,
+      );
+    }
+
+    pictureAudioLst = applicationPictureJsonMap[pictureFileNameTwo] ?? [];
+
+    if (pictureAudioLst.isNotEmpty) {
+      // Verify that the picture audio list contains the audio title
+      // and the audio duration
+      expect(
+        pictureAudioLst,
+        audioForPictureTitleLstTwo,
+      );
+    }
+
+    pictureAudioLst = applicationPictureJsonMap[pictureFileNameThree] ?? [];
+
+    if (pictureAudioLst.isNotEmpty) {
+      // Verify that the picture audio list contains the audio title
+      // and the audio duration
+      expect(
+        pictureAudioLst,
+        audioForPictureTitleLstThree,
       );
     }
 

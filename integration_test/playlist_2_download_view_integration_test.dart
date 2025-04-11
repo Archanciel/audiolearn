@@ -8407,11 +8407,11 @@ void main() {
           tester: tester,
           applicationPictureDir: applicationPictureDir,
           playlistPictureJsonFilesDir: tempPlaylistPictureDir,
-          pictureFileName: pictureFilePathNameOne,
+          pictureFileNameOne: pictureFilePathNameOne,
           pictureFileSize: pictureFileSizeOne,
           audioForPictureTitle: audioTitleOne, // La surpopulation mondiale ...
           audioForPictureTitleDurationStr: audioTitleOneDurationStr,
-          pictureFileNamesLst: movedAudioPictureFileNameLst,
+          audioPictureJsonFileNamesLst: movedAudioPictureFileNameLst,
           mustPlayableAudioListBeUsed: false,
         );
 
@@ -8425,12 +8425,12 @@ void main() {
           tester: tester,
           applicationPictureDir: applicationPictureDir,
           playlistPictureJsonFilesDir: tempPlaylistPictureDir,
-          pictureFileName: pictureFilePathNameTwo,
+          pictureFileNameOne: pictureFilePathNameTwo,
           pictureFileSize: pictureFileSizeTwo,
           audioForPictureTitle:
               audioTitleTwo, // Le Secret de la RÉSILIENCE  ...
           audioForPictureTitleDurationStr: audioTitleTwoDurationStr,
-          pictureFileNamesLst: movedAudioPictureFileNameLst,
+          audioPictureJsonFileNamesLst: movedAudioPictureFileNameLst,
           mustPlayableAudioListBeUsed: false,
         );
 
@@ -10205,11 +10205,11 @@ void main() {
           tester: tester,
           applicationPictureDir: applicationPictureDir,
           playlistPictureJsonFilesDir: tempPlaylistPictureDir,
-          pictureFileName: pictureFilePathNameOne,
+          pictureFileNameOne: pictureFilePathNameOne,
           pictureFileSize: pictureFileSizeOne,
           audioForPictureTitle: audioTitleOne, // La surpopulation mondiale ...
           audioForPictureTitleDurationStr: audioTitleOneDurationStr,
-          pictureFileNamesLst: copiedAudioPictureFileNameLst,
+          audioPictureJsonFileNamesLst: copiedAudioPictureFileNameLst,
           mustPlayableAudioListBeUsed: false,
         );
 
@@ -10223,12 +10223,12 @@ void main() {
           tester: tester,
           applicationPictureDir: applicationPictureDir,
           playlistPictureJsonFilesDir: tempPlaylistPictureDir,
-          pictureFileName: pictureFilePathNameTwo,
+          pictureFileNameOne: pictureFilePathNameTwo,
           pictureFileSize: pictureFileSizeTwo,
           audioForPictureTitle:
               audioTitleTwo, // Le Secret de la RÉSILIENCE  ...
           audioForPictureTitleDurationStr: audioTitleTwoDurationStr,
-          pictureFileNamesLst: copiedAudioPictureFileNameLst,
+          audioPictureJsonFileNamesLst: copiedAudioPictureFileNameLst,
           mustPlayableAudioListBeUsed: false,
         );
 
@@ -11454,7 +11454,7 @@ void main() {
 
         const String localPlaylistTitle = 'local';
         final String playlistPictureDir =
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localPlaylistTitle${path.separator}$kPictureDirName";
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localPlaylistTitle${path.separator}$kPictureDirName";
         const String audioForPictureTitle =
             'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien';
         const String audioForPictureTitleDurationStr = '40:53';
@@ -11469,6 +11469,12 @@ void main() {
         String pictureSourcePath =
             "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kPictureDirName";
 
+        // Select the local playlist whose audio we will add the picture
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: localPlaylistTitle,
+        );
+
         // First picture addition
         String pictureFilePathName =
             await _addPictureToAudioExecutingAudioListItemMenu(
@@ -11479,6 +11485,21 @@ void main() {
           pictureFileSize: pictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
         );
+
+        List<String> audioForPictureTitleLstJesusJeTadore = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+        ];
+
+        List<String> audioForPictureTitleLstJesusLamourDeMaVie = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+        ];
+
+        List<String> audioForPictureTitleLstJesusJeTaime = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01"
+        ];
+
+        String playlistPictureJsonFilesDir =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localPlaylistTitle${path.separator}$kPictureDirName";
 
         List<String> pictureFileNamesLst = [
           "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
@@ -11491,12 +11512,15 @@ void main() {
         await IntegrationTestUtil.verifyPictureAddition(
           tester: tester,
           applicationPictureDir: applicationPictureDir,
-          playlistPictureJsonFilesDir: playlistPictureDir,
-          pictureFileName: pictureFilePathName,
+          playlistPictureJsonFilesDir: playlistPictureJsonFilesDir,
+          pictureFileNameOne: pictureFileName,
           pictureFileSize: pictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
-          pictureFileNamesLst: pictureFileNamesLst,
+          audioPictureJsonFileNamesLst: pictureFileNamesLst,
+          audioForPictureTitleLstOne: audioForPictureTitleLstJesusJeTadore,
+          pictureFileNameTwo: secondPictureFileName,
+          audioForPictureTitleLstTwo: audioForPictureTitleLstJesusJeTaime,
           mustPlayableAudioListBeUsed: true,
         );
 
@@ -11525,11 +11549,17 @@ void main() {
           tester: tester,
           applicationPictureDir: applicationPictureDir,
           playlistPictureJsonFilesDir: playlistPictureDir,
-          pictureFileName: pictureFilePathName,
+          pictureFileNameOne: pictureFileName,
           pictureFileSize: secondPictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
-          pictureFileNamesLst: pictureFileNamesLst,
+          audioPictureJsonFileNamesLst: pictureFileNamesLst,
+          audioForPictureTitleLstOne: audioForPictureTitleLstJesusJeTadore,
+          pictureFileNameTwo: secondPictureFileName,
+          audioForPictureTitleLstTwo: audioForPictureTitleLstJesusJeTadore,
+          pictureFileNameThree: thirdPictureFileName,
+          audioForPictureTitleLstThree:
+              audioForPictureTitleLstJesusLamourDeMaVie,
           mustPlayableAudioListBeUsed: false,
         );
 
@@ -11577,11 +11607,11 @@ void main() {
           tester: tester,
           applicationPictureDir: applicationPictureDir,
           playlistPictureJsonFilesDir: playlistPictureDir,
-          pictureFileName: pictureFilePathName,
+          pictureFileNameOne: pictureFilePathName,
           pictureFileSize: thirdPictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
-          pictureFileNamesLst: pictureFileNamesLst,
+          audioPictureJsonFileNamesLst: pictureFileNamesLst,
           mustPlayableAudioListBeUsed: false,
         );
 
@@ -11646,12 +11676,12 @@ void main() {
           tester: tester,
           applicationPictureDir: applicationPictureDir,
           playlistPictureJsonFilesDir: playlistPictureJsonFilesDir,
-          pictureFileName: pictureFileName,
+          pictureFileNameOne: pictureFileName,
           pictureFileSize: pictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
-          pictureFileNamesLst: pictureFileNamesLst,
-          audioForPictureTitleLst: audioForPictureTitleLst,
+          audioPictureJsonFileNamesLst: pictureFileNamesLst,
+          audioForPictureTitleLstOne: audioForPictureTitleLst,
           mustPlayableAudioListBeUsed: true,
         );
 
@@ -11693,12 +11723,12 @@ void main() {
           tester: tester,
           applicationPictureDir: applicationPictureDir,
           playlistPictureJsonFilesDir: playlistPictureJsonFilesDir,
-          pictureFileName: pictureFilePathName,
+          pictureFileNameOne: pictureFilePathName,
           pictureFileSize: pictureFileSize,
           audioForPictureTitle: audioAlreadyUsingPictureTitle,
           audioForPictureTitleDurationStr: audioAlreadyUsingPictureDurationStr,
-          pictureFileNamesLst: pictureFileNamesAfterDeletionLst,
-          audioForPictureTitleLst: audioForPictureTitleLst,
+          audioPictureJsonFileNamesLst: pictureFileNamesAfterDeletionLst,
+          audioForPictureTitleLstOne: audioForPictureTitleLst,
           mustPlayableAudioListBeUsed: true,
         );
 
@@ -11734,12 +11764,19 @@ void main() {
         const String audioForPictureTitle =
             'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien';
         const String audioForPictureTitleDurationStr = '40:53';
+        const String pictureFileNameZero = "Jésus, mon amour.jpg";
         const String pictureFileName = "Jésus je T'adore.jpg";
         const int pictureFileSize = 154529;
         const String secondPictureFileName = "Jésus je T'aime.jpg";
         const int secondPictureFileSize = 125867;
         const String thirdPictureFileName = "Jésus l'Amour de ma vie.jpg";
         const int thirdPictureFileSize = 187362;
+
+        // Select the local playlist whose audio we will add the picture
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: localPlaylistTitle,
+        );
 
         // Available pictures file path
         String pictureSourcePath =
@@ -11770,6 +11807,25 @@ void main() {
           pictureFileSize: pictureFileSize,
         );
 
+        List<String> audioForPictureTitleLstJesusMonAmour = [
+          "Jésus-Christ|241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12",
+        ];
+
+        List<String> audioForPictureTitleLstJesusJeTadore = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+        ];
+
+        List<String> audioForPictureTitleLstJesusLamourDeMaVie = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+        ];
+
+        List<String> audioForPictureTitleLstJesusJeTaime = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01"
+        ];
+
+        String playlistPictureJsonFilesDir =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localPlaylistTitle${path.separator}$kPictureDirName";
+
         List<String> pictureFileNamesLst = [
           "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
         ];
@@ -11782,11 +11838,16 @@ void main() {
           tester: tester,
           applicationPictureDir: applicationPictureDir,
           playlistPictureJsonFilesDir: playlistPictureDir,
-          pictureFileName: pictureFilePathName,
+          pictureFileNameOne: pictureFileNameZero,
           pictureFileSize: pictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
-          pictureFileNamesLst: pictureFileNamesLst,
+          audioPictureJsonFileNamesLst: [],
+          audioForPictureTitleLstOne: audioForPictureTitleLstJesusMonAmour,
+          pictureFileNameTwo: pictureFileName,
+          audioForPictureTitleLstTwo: audioForPictureTitleLstJesusJeTadore,
+          pictureFileNameThree: secondPictureFileName,
+          audioForPictureTitleLstThree: audioForPictureTitleLstJesusJeTaime,
           goToAudioPlayerView: false,
           mustPlayableAudioListBeUsed: false,
         );
@@ -11809,11 +11870,16 @@ void main() {
           tester: tester,
           applicationPictureDir: applicationPictureDir,
           playlistPictureJsonFilesDir: playlistPictureDir,
-          pictureFileName: pictureFilePathName,
+          pictureFileNameOne: pictureFileNameZero,
           pictureFileSize: secondPictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
-          pictureFileNamesLst: pictureFileNamesLst,
+          audioPictureJsonFileNamesLst: [],
+          audioForPictureTitleLstOne: audioForPictureTitleLstJesusMonAmour,
+          pictureFileNameTwo: pictureFileName,
+          audioForPictureTitleLstTwo: audioForPictureTitleLstJesusJeTadore,
+          pictureFileNameThree: secondPictureFileName,
+          audioForPictureTitleLstThree: audioForPictureTitleLstJesusJeTaime,
           goToAudioPlayerView: false,
           mustPlayableAudioListBeUsed: false,
         );
@@ -11844,11 +11910,16 @@ void main() {
           tester: tester,
           applicationPictureDir: applicationPictureDir,
           playlistPictureJsonFilesDir: playlistPictureDir,
-          pictureFileName: pictureFilePathName,
-          pictureFileSize: thirdPictureFileSize,
+          pictureFileNameOne: pictureFileNameZero,
+          pictureFileSize: secondPictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
-          pictureFileNamesLst: pictureFileNamesLst,
+          audioPictureJsonFileNamesLst: [],
+          audioForPictureTitleLstOne: audioForPictureTitleLstJesusMonAmour,
+          pictureFileNameTwo: pictureFileName,
+          audioForPictureTitleLstTwo: audioForPictureTitleLstJesusJeTadore,
+          pictureFileNameThree: secondPictureFileName,
+          audioForPictureTitleLstThree: audioForPictureTitleLstJesusJeTaime,
           goToAudioPlayerView: false,
           mustPlayableAudioListBeUsed: false,
         );
@@ -11931,13 +12002,13 @@ void main() {
           tester: tester,
           applicationPictureDir: applicationPictureDir,
           playlistPictureJsonFilesDir: playlistPictureJsonFilesDir,
-          pictureFileName: pictureFilePathName,
+          pictureFileNameOne: pictureFilePathName,
           pictureFileSize: pictureFileSize,
           audioForPictureTitle: audioForPictureTitle,
           audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
-          pictureFileNamesLst: pictureFileNamesLst,
+          audioPictureJsonFileNamesLst: pictureFileNamesLst,
           goToAudioPlayerView: false,
-          audioForPictureTitleLst: audioForPictureTitleLst,
+          audioForPictureTitleLstOne: audioForPictureTitleLst,
           mustPlayableAudioListBeUsed: false,
         );
 
@@ -11970,12 +12041,12 @@ void main() {
           tester: tester,
           applicationPictureDir: applicationPictureDir,
           playlistPictureJsonFilesDir: playlistPictureJsonFilesDir,
-          pictureFileName: pictureFilePathName,
+          pictureFileNameOne: pictureFilePathName,
           pictureFileSize: pictureFileSize,
           audioForPictureTitle: audioAlreadyUsingPictureTitle,
           audioForPictureTitleDurationStr: audioAlreadyUsingPictureDurationStr,
-          pictureFileNamesLst: pictureFileNamesAfterDeletionLst,
-          audioForPictureTitleLst: audioForPictureTitleLst, 
+          audioPictureJsonFileNamesLst: pictureFileNamesAfterDeletionLst,
+          audioForPictureTitleLstOne: audioForPictureTitleLst,
           mustPlayableAudioListBeUsed: true,
         );
 
