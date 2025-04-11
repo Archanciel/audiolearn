@@ -1,1 +1,83 @@
-{"downloadedAudioLst":[{"audioDownloadDateTime":"2023-06-28T03:38:13.653778","audioDownloadDurationMs":301,"audioDownloadSpeed":203983,"audioDurationMs":10000,"audioFileName":"230628-033813-audio learn test short video two 23-06-10.mp3","audioFileSize":61425,"compactVideoDescription":"Jean-Pierre Schnyder\n\nCette vidéo me sert à tester AudioLearn, l'app Android que je développe. ...","isMusicQuality":false,"originalVideoTitle":"audio learn test short video two","validVideoTitle":"audio learn test short video two","videoUploadDate":"2023-06-10T00:00:00.000","videoUrl":"https://www.youtube.com/watch?v=uv3VQoWSjBE"},{"audioDownloadDateTime":"2023-06-28T03:38:11.863672","audioDownloadDurationMs":447,"audioDownloadSpeed":321097,"audioDurationMs":24000,"audioFileName":"230628-033811-audio learn test short video one 23-06-10.mp3","audioFileSize":143679,"compactVideoDescription":"Jean-Pierre Schnyder\n\nCette vidéo me sert à tester AudioLearn, l'app Android que je développe et dont le code est disponible sur GitHub. ...","isMusicQuality":false,"originalVideoTitle":"audio learn test short video one","validVideoTitle":"audio learn test short video one","videoUploadDate":"2023-06-10T00:00:00.000","videoUrl":"https://www.youtube.com/watch?v=v7PWb7f_P8M"},{"audioDownloadDateTime":"2023-06-28T03:38:13.653778","audioDownloadDurationMs":301,"audioDownloadSpeed":203983,"audioDurationMs":10000,"audioFileName":"230628-033813-audio learn test short video two 23-06-10.mp3","audioFileSize":61425,"compactVideoDescription":"Jean-Pierre Schnyder\n\nCette vidéo me sert à tester AudioLearn, l'app Android que je développe. ...","isMusicQuality":false,"originalVideoTitle":"audio learn test short video two","validVideoTitle":"audio learn test short video two","videoUploadDate":"2023-06-10T00:00:00.000","videoUrl":"https://www.youtube.com/watch?v=uv3VQoWSjBE"},{"audioDownloadDateTime":"2023-06-28T03:38:11.863672","audioDownloadDurationMs":447,"audioDownloadSpeed":321097,"audioDurationMs":24000,"audioFileName":"230628-033811-audio learn test short video one 23-06-10.mp3","audioFileSize":143679,"compactVideoDescription":"Jean-Pierre Schnyder\n\nCette vidéo me sert à tester AudioLearn, l'app Android que je développe et dont le code est disponible sur GitHub. ...","isMusicQuality":false,"originalVideoTitle":"audio learn test short video one","validVideoTitle":"audio learn test short video one","videoUploadDate":"2023-06-10T00:00:00.000","videoUrl":"https://www.youtube.com/watch?v=v7PWb7f_P8M"},{"audioDownloadDateTime":"2023-06-28T03:38:13.653778","audioDownloadDurationMs":301,"audioDownloadSpeed":203983,"audioDurationMs":10000,"audioFileName":"230628-033813-audio learn test short video two 23-06-10.mp3","audioFileSize":61425,"compactVideoDescription":"Jean-Pierre Schnyder\n\nCette vidéo me sert à tester AudioLearn, l'app Android que je développe. ...","isMusicQuality":false,"originalVideoTitle":"audio learn test short video two","validVideoTitle":"audio learn test short video two","videoUploadDate":"2023-06-10T00:00:00.000","videoUrl":"https://www.youtube.com/watch?v=uv3VQoWSjBE"}],"downloadPath":"C:\\development\\flutter\\audiolearn\\test\\data\\audio\\local_3","id":"local_3","isSelected":false,"playableAudioLst":[],"playlistQuality":"voice","playlistType":"local","title":"local_3","url":""}
+{
+    "downloadedAudioLst": [
+        {
+            "audioDownloadDateTime": "2023-06-28T03:38:13.653778",
+            "audioDownloadDurationMs": 301,
+            "audioDownloadSpeed": 203983,
+            "audioDurationMs": 10000,
+            "audioFileName": "230628-033813-audio learn test short video two 23-06-10.mp3",
+            "audioFileSize": 61425,
+            "compactVideoDescription": "Jean-Pierre Schnyder\n\nCette vidéo me sert à tester AudioLearn, l'app Android que je développe. ...",
+            "isMusicQuality": false,
+            "originalVideoTitle": "audio learn test short video two",
+            "validVideoTitle": "audio learn test short video two",
+            "videoUploadDate": "2023-06-10T00:00:00.000",
+            "videoUrl": "https://www.youtube.com/watch?v=uv3VQoWSjBE"
+        },
+        {
+            "audioDownloadDateTime": "2023-06-28T03:38:11.863672",
+            "audioDownloadDurationMs": 447,
+            "audioDownloadSpeed": 321097,
+            "audioDurationMs": 24000,
+            "audioFileName": "230628-033811-audio learn test short video one 23-06-10.mp3",
+            "audioFileSize": 143679,
+            "compactVideoDescription": "Jean-Pierre Schnyder\n\nCette vidéo me sert à tester AudioLearn, l'app Android que je développe et dont le code est disponible sur GitHub. ...",
+            "isMusicQuality": false,
+            "originalVideoTitle": "audio learn test short video one",
+            "validVideoTitle": "audio learn test short video one",
+            "videoUploadDate": "2023-06-10T00:00:00.000",
+            "videoUrl": "https://www.youtube.com/watch?v=v7PWb7f_P8M"
+        },
+        {
+            "audioDownloadDateTime": "2023-06-28T03:38:13.653778",
+            "audioDownloadDurationMs": 301,
+            "audioDownloadSpeed": 203983,
+            "audioDurationMs": 10000,
+            "audioFileName": "230628-033813-audio learn test short video two 23-06-10.mp3",
+            "audioFileSize": 61425,
+            "compactVideoDescription": "Jean-Pierre Schnyder\n\nCette vidéo me sert à tester AudioLearn, l'app Android que je développe. ...",
+            "isMusicQuality": false,
+            "originalVideoTitle": "audio learn test short video two",
+            "validVideoTitle": "audio learn test short video two",
+            "videoUploadDate": "2023-06-10T00:00:00.000",
+            "videoUrl": "https://www.youtube.com/watch?v=uv3VQoWSjBE"
+        },
+        {
+            "audioDownloadDateTime": "2023-06-28T03:38:11.863672",
+            "audioDownloadDurationMs": 447,
+            "audioDownloadSpeed": 321097,
+            "audioDurationMs": 24000,
+            "audioFileName": "230628-033811-audio learn test short video one 23-06-10.mp3",
+            "audioFileSize": 143679,
+            "compactVideoDescription": "Jean-Pierre Schnyder\n\nCette vidéo me sert à tester AudioLearn, l'app Android que je développe et dont le code est disponible sur GitHub. ...",
+            "isMusicQuality": false,
+            "originalVideoTitle": "audio learn test short video one",
+            "validVideoTitle": "audio learn test short video one",
+            "videoUploadDate": "2023-06-10T00:00:00.000",
+            "videoUrl": "https://www.youtube.com/watch?v=v7PWb7f_P8M"
+        },
+        {
+            "audioDownloadDateTime": "2023-06-28T03:38:13.653778",
+            "audioDownloadDurationMs": 301,
+            "audioDownloadSpeed": 203983,
+            "audioDurationMs": 10000,
+            "audioFileName": "230628-033813-audio learn test short video two 23-06-10.mp3",
+            "audioFileSize": 61425,
+            "compactVideoDescription": "Jean-Pierre Schnyder\n\nCette vidéo me sert à tester AudioLearn, l'app Android que je développe. ...",
+            "isMusicQuality": false,
+            "originalVideoTitle": "audio learn test short video two",
+            "validVideoTitle": "audio learn test short video two",
+            "videoUploadDate": "2023-06-10T00:00:00.000",
+            "videoUrl": "https://www.youtube.com/watch?v=uv3VQoWSjBE"
+        }
+    ],
+    "downloadPath": "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\local_3",
+    "id": "local_3",
+    "isSelected": true,
+    "playableAudioLst": [
+    ],
+    "playlistQuality": "voice",
+    "playlistType": "local",
+    "title": "local_3",
+    "url": ""
+}
