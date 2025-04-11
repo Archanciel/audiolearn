@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:audiolearn/models/picture.dart';
 import 'package:audiolearn/viewmodels/picture_vm.dart';
@@ -1491,23 +1492,44 @@ class IntegrationTestUtil {
 
   static Future<void> verifyPictureAddition({
     required WidgetTester tester,
-    required String playlistPictureDir,
-    required String pictureFilePathName,
+    required String applicationPictureDir,
+    required String playlistPictureJsonFilesDir,
+    required String pictureFileName,
     required int pictureFileSize,
     required String audioForPictureTitle,
     required String audioForPictureTitleDurationStr,
     required List<String> pictureFileNamesLst,
     bool goToAudioPlayerView = true,
     required bool mustPlayableAudioListBeUsed,
+    List<String> audioForPictureTitleLst = const [],
+    bool mustAudioBePaused = false,
   }) async {
     // Now verifying that the playlist picture directory contains
     // the added picture file
     List<String> playlistPicturesLst = DirUtil.listFileNamesInDir(
-      directoryPath: playlistPictureDir,
+      directoryPath: playlistPictureJsonFilesDir,
       fileExtension: 'json',
     );
 
     expect(playlistPicturesLst, pictureFileNamesLst);
+
+    // Read the application picture json file and verify its
+    // content
+
+    Map<String, List<String>> applicationPictureJsonMap = readPictureAudioMap(
+      applicationPicturePath: applicationPictureDir,
+    );
+
+    List<String> pictureAudioLst = applicationPictureJsonMap[pictureFileName] ?? [];
+
+    if (pictureAudioLst.isNotEmpty) {
+      // Verify that the picture audio list contains the audio title
+      // and the audio duration
+      expect(
+        pictureAudioLst,
+        audioForPictureTitleLst,
+      );
+    }
 
     if (goToAudioPlayerView) {
       // Now go to the audio player view
@@ -1566,6 +1588,32 @@ class IntegrationTestUtil {
       find.text(audioTitleWithDuration),
       findsOneWidget,
     );
+  }
+
+  static Map<String, List<String>> readPictureAudioMap({
+    required String applicationPicturePath,
+  }) {
+    final File jsonFile = File(
+        "$applicationPicturePath${path.separator}$kPictureAudioMapFileName");
+
+    try {
+      final String content = jsonFile.readAsStringSync();
+      final Map<String, dynamic> jsonMap = json.decode(content);
+
+      // Convert the dynamic values back to List<String>
+      final Map<String, List<String>> typedMap = {};
+      jsonMap.forEach((key, value) {
+        if (value is List) {
+          typedMap[key] = value.cast<String>();
+        }
+      });
+
+      return typedMap;
+    } catch (e) {
+      // ignore: avoid_print
+      print('Error reading pictureAudio.json: $e');
+      return {};
+    }
   }
 
   static void verifyPictureSuppression({

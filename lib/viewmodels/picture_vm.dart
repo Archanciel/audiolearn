@@ -293,7 +293,7 @@ class PictureVM extends ChangeNotifier {
 
   /// Returns the audio picture file if it exists, null otherwise.
   ///
-  /// This method is used to deter4mine if the 'Remove audio picture'
+  /// This method is used to determine if the 'Remove audio picture'
   /// menu item is displayed or not for the audio item and the audio
   /// player view left appbar.
   File? getAudioPictureFile({
