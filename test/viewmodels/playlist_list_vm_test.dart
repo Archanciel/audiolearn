@@ -18,6 +18,7 @@ import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 
 import '../services/mock_shared_preferences.dart';
+import 'audio_player_vm_test_version.dart';
 
 void main() {
   group('Copy/move audio + comment file to target playlist', () {
@@ -154,7 +155,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test('moveAudioToPlaylist moves audio and its comments to playlist', () {
+    test('moveAudioToPlaylist moves audio and its comments to playlist', () async {
       const String sourcePlaylistTitle = 'S8 audio';
 
       final sourcePlaylistPath = path.join(
@@ -194,13 +195,13 @@ void main() {
       // Needed so that testing equality of source and target audio
       // returns true. This is due to the fact that when copying or
       // moving an audio to a target playlist, the copied or moved
-      // audio play speed is set to the target olaylist audio play
+      // audio play speed is set to the target playlist audio play
       // speed.
       targetPlaylist.audioPlaySpeed = 1.25;
 
-      // Testing move La résilience insulaire par Fiona Roche with
+      // Testing move 'La résilience insulaire par Fiona Roche' with
       // play position at start of audio, no comments
-      testMoveAudioAndCommentToPlaylist(
+     await testMoveAudioAndCommentToPlaylist(
         playlistListVM: playlistListVM,
         sourcePlaylist: sourcePlaylist,
         sourceAudioIndex: 0,
@@ -210,7 +211,7 @@ void main() {
 
       // Testing move Le Secret de la RESILIENCE révélé par Boris Cyrulnik
       // with play position at end of audio and comment file
-      testMoveAudioAndCommentToPlaylist(
+      await testMoveAudioAndCommentToPlaylist(
         playlistListVM: playlistListVM,
         sourcePlaylist: sourcePlaylist,
         sourceAudioIndex: 0,
@@ -220,7 +221,7 @@ void main() {
 
       // Testing move Jancovici répond aux voeux de Macron pour 2024
       // play position 2 seconds before end of audio
-      testMoveAudioAndCommentToPlaylist(
+      await testMoveAudioAndCommentToPlaylist(
         playlistListVM: playlistListVM,
         sourcePlaylist: sourcePlaylist,
         sourceAudioIndex: 2,
@@ -1538,7 +1539,7 @@ void main() {
       List<String> pictureFileNameLst = DirUtil.listFileNamesInDir(
         directoryPath:
             "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kPictureDirName",
-        fileExtension: 'jpg',
+        fileExtension: 'json',
       );
 
       expect(pictureFileNameLst.length, 4);
@@ -1646,7 +1647,7 @@ void main() {
 
     // Testing move La résilience insulaire par Fiona Roche with
     // play position at start of audio, no comments
-    testMoveAudioAndCommentToPlaylist(
+    await testMoveAudioAndCommentToPlaylist(
       playlistListVM: playlistListVM,
       sourcePlaylist: sourcePlaylist,
       sourceAudioIndex: 0,
@@ -1656,7 +1657,7 @@ void main() {
 
     // Testing move Le Secret de la RESILIENCE révélé par Boris Cyrulnik
     // with play position at end of audio and comment file
-    testMoveAudioAndCommentToPlaylist(
+    await testMoveAudioAndCommentToPlaylist(
       playlistListVM: playlistListVM,
       sourcePlaylist: sourcePlaylist,
       sourceAudioIndex: 0,
@@ -1666,7 +1667,7 @@ void main() {
 
     // Testing move Jancovici répond aux voeux de Macron pour 2024
     // play position 2 seconds before end of audio
-    testMoveAudioAndCommentToPlaylist(
+    await testMoveAudioAndCommentToPlaylist(
       playlistListVM: playlistListVM,
       sourcePlaylist: sourcePlaylist,
       sourceAudioIndex: 2,
@@ -1886,7 +1887,7 @@ void main() {
       // Fill the new directory with playlists
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_integr_test_data",
+            "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_delete_integr_test_data",
         destinationRootPath: modifiedPlaylistRootPath,
       );
 
@@ -1900,8 +1901,9 @@ void main() {
       // and the playlist list will not be filled with the
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+        settingsJsonPathFileName:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName",
+      );
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -1928,7 +1930,7 @@ void main() {
         "S8 audio",
       ];
 
-      const String initialPlaylistRootPath =
+      String initialPlaylistRootPath =
           kPlaylistDownloadRootPathWindowsTest;
       const String initialRootSelectedPlaylistTitle = 'S8 audio';
 
@@ -1954,6 +1956,11 @@ void main() {
       ];
 
       const String modifiedRootSelectedPlaylistTitle = 'local_3';
+
+      await settingsDataService.loadSettingsFromFile(
+        settingsJsonPathFileName:
+            "$initialPlaylistRootPath${path.separator}$kSettingsFileName",
+      );
 
       // Verify the modified playlist data
       _verifyPlaylistRelatedData(
@@ -2139,47 +2146,45 @@ Future<void> testMoveAudioAndCommentToPlaylist({
     );
   }
 
-    SettingsDataService settingsDataService;
+  SettingsDataService settingsDataService;
 
-      settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-        isTest: true,
-      );
+  settingsDataService = SettingsDataService(
+    sharedPreferences: MockSharedPreferences(),
+    isTest: true,
+  );
 
-    // load settings from file which does not exist. This
-    // will ensure that the default playlist root path is set
-    await settingsDataService.loadSettingsFromFile(
-        settingsJsonPathFileName:
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}settings.json");
+  await settingsDataService.loadSettingsFromFile(
+      settingsJsonPathFileName:
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}settings.json");
 
-    final WarningMessageVM warningMessageVM = WarningMessageVM();
+  final WarningMessageVM warningMessageVM = WarningMessageVM();
 
-    final AudioDownloadVM audioDownloadVM = AudioDownloadVM(
-      warningMessageVM: warningMessageVM,
+  final AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+    warningMessageVM: warningMessageVM,
+    settingsDataService: settingsDataService,
+  );
+
+  final PlaylistListVM playlistListVM = PlaylistListVM(
+    warningMessageVM: warningMessageVM,
+    audioDownloadVM: audioDownloadVM,
+    commentVM: CommentVM(),
+    pictureVM: PictureVM(
       settingsDataService: settingsDataService,
-    );
+    ),
+    settingsDataService: settingsDataService,
+  );
 
-    final PlaylistListVM playlistListVM = PlaylistListVM(
-      warningMessageVM: warningMessageVM,
-      audioDownloadVM: audioDownloadVM,
-      commentVM: CommentVM(),
-      pictureVM: PictureVM(
-        settingsDataService: settingsDataService,
-      ),
-      settingsDataService: settingsDataService,
-    );
+  // calling getUpToDateSelectablePlaylists() loads all the
+  // playlist json files from the app dir and so enables
+  // playlistListVM to know which playlists are
+  // selected and which are not
+  playlistListVM.getUpToDateSelectablePlaylists();
 
-    // calling getUpToDateSelectablePlaylists() loads all the
-    // playlist json files from the app dir and so enables
-    // playlistListVM to know which playlists are
-    // selected and which are not
-    playlistListVM.getUpToDateSelectablePlaylists();
-
-    final AudioPlayerVM audioPlayerVM = AudioPlayerVM(
-      settingsDataService: settingsDataService,
-      playlistListVM: playlistListVM,
-      commentVM: CommentVM(),
-    );
+  final AudioPlayerVM audioPlayerVM = AudioPlayerVMTestVersion(
+    settingsDataService: settingsDataService,
+    playlistListVM: playlistListVM,
+    commentVM: CommentVM(),
+  );
 
   playlistListVM.moveAudioAndCommentAndPictureToPlaylist(
     audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,

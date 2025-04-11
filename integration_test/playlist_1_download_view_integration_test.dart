@@ -15530,7 +15530,7 @@ void main() {
   });
   group('Rename audio file test and verify comment access', () {
     testWidgets('''Not existing new audio file name and the renamed audio has
-                   no comments.''', (WidgetTester tester) async {
+                   comments.''', (WidgetTester tester) async {
       const String youtubePlaylistTitle =
           'audio_player_view_2_shorts_test'; // Youtube playlist
       const String audioTitle = "Really short video";
@@ -15610,17 +15610,17 @@ void main() {
       // Verify the initial value of the TextField
 
       const String oldFileName =
-          '231117-002826-Really short video 23-07-01.mp3';
+          '231117-002826-Really short video 23-07-01';
 
-      expect(textField.controller!.text, oldFileName);
+      expect(textField.controller!.text, "$oldFileName.mp3");
 
       // Enter new file name
 
-      const String newFileName = '231117-Really short video 23-07-01.mp3';
+      const String newFileName = '231117-Really short video 23-07-01';
 
       await tester.enterText(
         textFieldFinder,
-        newFileName,
+        "$newFileName.mp3",
       );
       await tester.pumpAndSettle();
 
@@ -15632,14 +15632,19 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Audio file \"$oldFileName\" renamed to \"$newFileName\".",
+            "Audio file \"$oldFileName.mp3\" renamed to \"$newFileName.mp3\" as well as comment file \"$oldFileName.json\" renamed to \"$newFileName.json\".",
         isWarningConfirming: true,
       );
 
-      // Verify that the renamed file exists
+      // Verify that the renamed audio file exists
       final String renamedAudioFilePath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$newFileName";
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubePlaylistTitle${path.separator}$newFileName.mp3";
       expect(File(renamedAudioFilePath).existsSync(), true);
+
+      // Verify that the renamed comment file exists
+      final String renamedCommentFilePath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubePlaylistTitle${path.separator}$kCommentDirName${path.separator}$newFileName.json";
+      expect(File(renamedCommentFilePath).existsSync(), true);
 
       // Check the new file name in the audio info dialog
 
@@ -15659,7 +15664,7 @@ void main() {
       final Text audioFileNameTitleTextWidget =
           tester.widget<Text>(find.byKey(const Key('audioFileNameKey')));
 
-      expect(audioFileNameTitleTextWidget.data, newFileName);
+      expect(audioFileNameTitleTextWidget.data, "$newFileName.mp3");
 
       // Tap the Ok button to close the audio info dialog
       await tester.tap(find.byKey(const Key('audio_info_close_button_key')));
@@ -15768,6 +15773,7 @@ void main() {
       // Enter new file name
 
       const String newMp3FileName = '240610-Renamed video 23-07-01.mp3';
+      const String newCommentFileName = '240610-Renamed video 23-07-01.json';
 
       await tester.enterText(
         textFieldFinder,
@@ -15791,10 +15797,15 @@ void main() {
         isWarningConfirming: true,
       );
 
-      // Verify that the renamed file exists
-      final String renamedAudioFilePath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$newMp3FileName";
-      expect(File(renamedAudioFilePath).existsSync(), true);
+      // Verify that the renamed audio file exists
+      final String renamedAudioFilePathName =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubePlaylistTitle${path.separator}$newMp3FileName";
+      expect(File(renamedAudioFilePathName).existsSync(), true);
+
+      // Verify that the renamed comment file exists
+      final String renamedCommentFilePathName =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubePlaylistTitle${path.separator}$kCommentDirName${path.separator}$newCommentFileName";
+      expect(File(renamedCommentFilePathName).existsSync(), true);
 
       // Check the new file name in the audio info dialog
 
@@ -15932,7 +15943,7 @@ void main() {
 
       // Verify that the old name file exists
       final String renamedAudioFilePath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$initialFileName";
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubePlaylistTitle${path.separator}$initialFileName";
       expect(File(renamedAudioFilePath).existsSync(), true);
 
       // Check the old file name in the audio info dialog
@@ -16060,7 +16071,7 @@ void main() {
 
       // Verify that the old name file exists
       final String renamedAudioFilePath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$initialFileName";
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$youtubePlaylistTitle${path.separator}$initialFileName";
       expect(File(renamedAudioFilePath).existsSync(), true);
 
       // Check the old file name in the audio info dialog
