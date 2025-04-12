@@ -1614,7 +1614,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     );
   }
 
-  SizedBox _buildStopOrDeleteButton({
+  Widget _buildStopOrDeleteButton({
     required BuildContext context,
     required PlaylistListVM playlistListVMlistenFalse,
     required AudioDownloadVM audioDownloadVMlistenFalse,
@@ -1623,95 +1623,106 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     bool isAppDownloading = audioDownloadVMlistenFalse.isDownloading &&
         !audioDownloadVMlistenFalse.isDownloadStopping;
 
-    if (isAppDownloading || _playlistUrlOrSearchController.text.isEmpty) {
-      return SizedBox(
-        // sets the rounded TextButton size improving the distance
-        // between the button text and its boarder
-        width: kNormalButtonWidth - 24,
-        height: kNormalButtonHeight,
-        child: Tooltip(
-          message: AppLocalizations.of(context)!.stopDownloadingButtonTooltip,
-          child: TextButton(
-            key: const Key('stopDownloadingButton'),
-            style: ButtonStyle(
-              shape: getButtonRoundedShape(
-                currentTheme: themeProviderVM.currentTheme,
-                isButtonEnabled: isAppDownloading,
-                context: context,
-              ),
-              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                const EdgeInsets.symmetric(
-                  horizontal: kSmallButtonInsidePadding,
-                  vertical: 0,
+    return ValueListenableBuilder<String?>(
+      valueListenable:
+          playlistListVMlistenFalse.youtubeLinkOrSearchSentenceNotifier,
+      builder: (context, currentUrlOrSearchSentence, child) {
+        bool isUrlOrSearchEmpty = currentUrlOrSearchSentence == null ||
+            currentUrlOrSearchSentence.isEmpty;
+
+        if (isAppDownloading || isUrlOrSearchEmpty) {
+          return SizedBox(
+            // sets the rounded TextButton size improving the distance
+            // between the button text and its boarder
+            width: kNormalButtonWidth - 24,
+            height: kNormalButtonHeight,
+            child: Tooltip(
+              message:
+                  AppLocalizations.of(context)!.stopDownloadingButtonTooltip,
+              child: TextButton(
+                key: const Key('stopDownloadingButton'),
+                style: ButtonStyle(
+                  shape: getButtonRoundedShape(
+                    currentTheme: themeProviderVM.currentTheme,
+                    isButtonEnabled: isAppDownloading,
+                    context: context,
+                  ),
+                  padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                    const EdgeInsets.symmetric(
+                      horizontal: kSmallButtonInsidePadding,
+                      vertical: 0,
+                    ),
+                  ),
+                  overlayColor: textButtonTapModification, // Tap feedback color
+                ),
+                onPressed: (isAppDownloading)
+                    ? () {
+                        // Flushbar creation must be located before calling
+                        // the stopDownload method, otherwise the flushbar
+                        // will be located higher.
+                        Flushbar(
+                          flushbarPosition: FlushbarPosition.TOP,
+                          message: AppLocalizations.of(context)!
+                              .audioDownloadingStopping,
+                          duration: const Duration(seconds: 8),
+                          backgroundColor: Colors.purple.shade900,
+                          messageColor: Colors.white,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(8)),
+                        ).show(context);
+                        audioDownloadVMlistenFalse.stopDownload();
+                      }
+                    : null,
+                child: Text(
+                  AppLocalizations.of(context)!.stopDownload,
+                  style: (isAppDownloading)
+                      ? (themeProviderVM.currentTheme == AppTheme.dark)
+                          ? kTextButtonStyleDarkMode
+                          : kTextButtonStyleLightMode
+                      : const TextStyle(
+                          // required to display the button in grey if
+                          // the button is disabled
+                          fontSize: kTextButtonFontSize,
+                        ),
                 ),
               ),
-              overlayColor: textButtonTapModification, // Tap feedback color
             ),
-            onPressed: (isAppDownloading)
-                ? () {
-                    // Flushbar creation must be located before calling
-                    // the stopDownload method, otherwise the flushbar
-                    // will be located higher.
-                    Flushbar(
-                      flushbarPosition: FlushbarPosition.TOP,
-                      message: AppLocalizations.of(context)!
-                          .audioDownloadingStopping,
-                      duration: const Duration(seconds: 8),
-                      backgroundColor: Colors.purple.shade900,
-                      messageColor: Colors.white,
-                      borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    ).show(context);
-                    audioDownloadVMlistenFalse.stopDownload();
-                  }
-                : null,
-            child: Text(
-              AppLocalizations.of(context)!.stopDownload,
-              style: (isAppDownloading)
-                  ? (themeProviderVM.currentTheme == AppTheme.dark)
-                      ? kTextButtonStyleDarkMode
-                      : kTextButtonStyleLightMode
-                  : const TextStyle(
-                      // required to display the button in grey if
-                      // the button is disabled
-                      fontSize: kTextButtonFontSize,
-                    ),
-            ),
-          ),
-        ),
-      );
-    } else {
-      return SizedBox(
-        // sets the rounded TextButton size improving the distance
-        // between the button text and its boarder
-        width: kSmallIconButtonWidth - 2,
-        child: Tooltip(
-          message: AppLocalizations.of(context)!
-              .clearPlaylistUrlOrSearchButtonTooltip,
-          child: IconButton(
-            key: const Key('clearPlaylistUrlOrSearchButtonKey'),
-            onPressed: () {
-              _playlistUrlOrSearchController.clear();
-              _containsURL = false;
+          );
+        } else {
+          return SizedBox(
+            // sets the rounded TextButton size improving the distance
+            // between the button text and its boarder
+            width: kSmallIconButtonWidth - 2,
+            child: Tooltip(
+              message: AppLocalizations.of(context)!
+                  .clearPlaylistUrlOrSearchButtonTooltip,
+              child: IconButton(
+                key: const Key('clearPlaylistUrlOrSearchButtonKey'),
+                onPressed: () {
+                  _playlistUrlOrSearchController.clear();
+                  _containsURL = false;
 
-              // Disables the search button and call notifyListeners()
-              playlistListVMlistenFalse.disableSearchSentence();
-            },
-            style: ButtonStyle(
-              // Highlight button when pressed
-              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                const EdgeInsets.symmetric(
-                    horizontal: kSmallButtonInsidePadding, vertical: 0),
+                  // Disables the search button and call notifyListeners()
+                  playlistListVMlistenFalse.disableSearchSentence();
+                },
+                style: ButtonStyle(
+                  // Highlight button when pressed
+                  padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                    const EdgeInsets.symmetric(
+                        horizontal: kSmallButtonInsidePadding, vertical: 0),
+                  ),
+                  overlayColor: iconButtonTapModification, // Tap feedback color
+                ),
+                icon: const Icon(
+                  Icons.delete_forever_rounded,
+                  size: kSmallIconButtonWidth - 2,
+                ),
               ),
-              overlayColor: iconButtonTapModification, // Tap feedback color
             ),
-            icon: const Icon(
-              Icons.delete_forever_rounded,
-              size: kSmallIconButtonWidth - 2,
-            ),
-          ),
-        ),
-      );
-    }
+          );
+        }
+      },
+    );
   }
 
   SizedBox _buildDownloadSingleVideoButton({

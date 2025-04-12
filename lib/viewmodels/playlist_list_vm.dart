@@ -1630,7 +1630,11 @@ class PlaylistListVM extends ChangeNotifier {
     _isSearchSentenceApplied = false;
     _wasSearchButtonClicked = false;
 
-    notifyListeners();
+    // Causes the clear Youtube link or search sentence icon button to be
+    // replaced by the disabled Stop download text button.
+    youtubeLinkOrSearchSentenceNotifier.value = null;
+
+    // notifyListeners();
   }
 
   /// Method called when the user clicked on the audio popup menu button in the
