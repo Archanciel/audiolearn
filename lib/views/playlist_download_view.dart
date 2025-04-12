@@ -1968,7 +1968,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 // Enable the single video download button appearance
                 // to be updated when a URL is entered or copied in the
                 // text field.
-                setState(() {});
+                // setState(() {});
 
                 if (value.isEmpty || _containsURL) {
                   playlistListVMlistenTrue.disableSearchSentence();

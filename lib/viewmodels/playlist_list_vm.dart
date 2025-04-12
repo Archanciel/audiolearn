@@ -105,7 +105,7 @@ class PlaylistListVM extends ChangeNotifier {
   set isSearchButtonEnabled(bool isSearchButtonEnabled) {
     _isSearchButtonEnabled = isSearchButtonEnabled;
 
-    notifyListeners();
+    // notifyListeners();
   }
 
   String _searchSentence = '';
