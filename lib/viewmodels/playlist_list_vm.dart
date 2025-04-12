@@ -113,6 +113,8 @@ class PlaylistListVM extends ChangeNotifier {
   set searchSentence(String searchSentence) {
     _searchSentence = searchSentence;
 
+    youtubeLinkOrSearchSentenceNotifier.value = searchSentence;
+
     if (_wasSearchButtonClicked) {
       // When the search sentence is set, if he search button was clicked,
       // the list of selectable playlists or the list of audio of the selected
@@ -1792,7 +1794,7 @@ class PlaylistListVM extends ChangeNotifier {
     // Required, otherwise, when opening the audio in the audio
     // player view, the picture is not displayed since the
     // audioPlayerVM current audio is the moved audio and so
-    // the audio pictures json file is not available since it 
+    // the audio pictures json file is not available since it
     // has been moved !
     audioPlayerVMlistenFalse.clearCurrentAudio();
 
