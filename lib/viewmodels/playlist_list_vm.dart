@@ -114,8 +114,9 @@ class PlaylistListVM extends ChangeNotifier {
     _searchSentence = searchSentence;
 
     if (_wasSearchButtonClicked) {
-      // When the search sentence if he search button was clicked, the list of selectable playlists
-      // or the list of audio of the selected playlist must be updated.
+      // When the search sentence is set, if he search button was clicked,
+      // the list of selectable playlists or the list of audio of the selected
+      // playlist must be updated.
       notifyListeners();
     }
   }
