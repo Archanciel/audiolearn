@@ -371,7 +371,7 @@ class PictureVM extends ChangeNotifier {
   }
 
   /// Method called by PlaylistListVM.
-  void deleteAudioPictureIfExist({
+  void deleteAudioPictureJsonFileIfExist({
     required Audio audio,
   }) {
     final String playlistDownloadPath = audio.enclosingPlaylist!.downloadPath;
