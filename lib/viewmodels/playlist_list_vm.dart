@@ -138,6 +138,11 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  // This notifier is used to update the list of playlists
+  // or the list of audio's in the playlist download view.
+  final ValueNotifier<String?> youtubeLinkOrSearchSentenceNotifier =
+      ValueNotifier<String?>(null);
+
   PlaylistListVM({
     required WarningMessageVM warningMessageVM,
     required AudioDownloadVM audioDownloadVM,
