@@ -11495,10 +11495,6 @@ void main() {
           "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
         ];
 
-        List<String> audioForPictureTitleLstJesusLamourDeMaVie = [
-          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
-        ];
-
         List<String> audioForPictureTitleLstJesusJeTaime = [
           "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01"
         ];
@@ -11809,7 +11805,6 @@ void main() {
         );
 
         // First picture addition
-        String pictureFilePathName =
             await _addPictureToAudioExecutingAudioPlayerViewLeftAppbarMenu(
           tester: tester,
           mockFilePicker: mockFilePicker,
@@ -11833,9 +11828,6 @@ void main() {
         List<String> audioForPictureTitleLstJesusJeTaime = [
           "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01"
         ];
-
-        String playlistPictureJsonFilesDir =
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localPlaylistTitle${path.separator}$kPictureDirName";
 
         List<String> pictureFileNamesLst = [
           "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
@@ -11865,7 +11857,6 @@ void main() {
         // the first added picture by the second one.
 
         // Second picture addition
-        pictureFilePathName =
             await _addPictureToAudioExecutingAudioPlayerViewLeftAppbarMenu(
           tester: tester,
           mockFilePicker: mockFilePicker,
@@ -11905,7 +11896,6 @@ void main() {
             deletedPictureFileName: "Jésus je T'aime.jpg");
 
         // Third picture addition
-        pictureFilePathName =
             await _addPictureToAudioExecutingAudioPlayerViewLeftAppbarMenu(
           tester: tester,
           mockFilePicker: mockFilePicker,
