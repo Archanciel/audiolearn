@@ -1965,6 +1965,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   _containsURL = false;
                 }
 
+                // Enable the single video download button appearance
+                // to be updated when a URL is entered or copied in the
+                // text field.
                 setState(() {});
 
                 if (value.isEmpty || _containsURL) {
@@ -1975,7 +1978,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
                 playlistListVMlistenTrue.searchSentence = value;
 
-                if (!playlistListVMlistenTrue.isPlaylistListExpanded) {
+                if (!playlistListVMlistenTrue.isPlaylistListExpanded &&
+                    playlistListVMlistenTrue.wasSearchButtonClicked) {
+                  // Applying sort and filter parameters change if search
+                  // sentence was changed only if the search button was clicked.
                   _applySortFilterParmsNameChange(
                     playlistListVMlistenFalseOrTrue: playlistListVMlistenTrue,
                     notifyListeners: true,
