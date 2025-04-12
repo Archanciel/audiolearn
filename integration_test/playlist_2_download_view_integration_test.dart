@@ -11713,7 +11713,8 @@ void main() {
         IntegrationTestUtil.verifyPictureSuppression(
             playlistPictureDir: playlistPictureDir,
             audioPictureJsonFileName: "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
-            deletedPictureFileName: "Jésus, mon amour.jpg");
+            deletedPictureFileName: "Jésus, mon amour.jpg",
+            isPictureFileNameDeleted: true);
 
         // Go back to playlist download view in order to ensure that
         // the audio already using a picture was not impacted by
@@ -11900,7 +11901,7 @@ void main() {
 
         IntegrationTestUtil.verifyPictureSuppression(
             playlistPictureDir: playlistPictureDir,
-            audioPictureJsonFileName: audioForPictureTitle,
+            audioPictureJsonFileName: "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
             deletedPictureFileName: "Jésus je T'aime.jpg");
 
         // Third picture addition
@@ -12033,8 +12034,9 @@ void main() {
 
         IntegrationTestUtil.verifyPictureSuppression(
             playlistPictureDir: playlistPictureDir,
-            audioPictureJsonFileName: audioForPictureTitle,
-            deletedPictureFileName: "Jésus je T'aime.jpg");
+            audioPictureJsonFileName: "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
+            deletedPictureFileName: "Jésus, mon amour.jpg",
+            isPictureFileNameDeleted: true);
 
         // Go back to playlist download view in order to ensure that
         // the audio already using a picture was not impacted by

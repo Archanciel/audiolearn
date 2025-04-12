@@ -1647,9 +1647,21 @@ class IntegrationTestUtil {
     required String playlistPictureDir,
     required String audioPictureJsonFileName,
     required String deletedPictureFileName,
+    bool isPictureFileNameDeleted = false,
   }) {
     String pictureJsonFilePathName =
         "$playlistPictureDir${path.separator}$audioPictureJsonFileName";
+
+    if (isPictureFileNameDeleted) {
+      // Verify that the picture file name is deleted from the json file
+      expect(
+        File(pictureJsonFilePathName).existsSync(),
+        false,
+        reason: 'The json file $pictureJsonFilePathName should not exist',
+      );
+
+      return;
+    }
 
     List<Picture> pictureLst = JsonDataService.loadListFromFile(
       jsonPathFileName: pictureJsonFilePathName,
