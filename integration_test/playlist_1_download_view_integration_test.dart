@@ -15609,8 +15609,7 @@ void main() {
 
       // Verify the initial value of the TextField
 
-      const String oldFileName =
-          '231117-002826-Really short video 23-07-01';
+      const String oldFileName = '231117-002826-Really short video 23-07-01';
 
       expect(textField.controller!.text, "$oldFileName.mp3");
 
@@ -17039,14 +17038,14 @@ void main() {
       );
 
       // First, open the playlist comment dialog
-      Finder playlistCommentListDialogFinder =
-          await IntegrationTestUtil.openPlaylistCommentDialog(
+      await IntegrationTestUtil.openPlaylistCommentDialog(
         tester: tester,
         playlistTitle: emptyPlaylistTitle,
       );
 
       // Now close the comment list dialog
-      await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+      await tester.tap(
+          find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
       await tester.pumpAndSettle();
 
       // Copy an uncommented audio from the Youtube playlist to
@@ -17236,9 +17235,9 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('''Delete comment in audio containing only one comment using the playlist
-                comment dialog.''',
-        (WidgetTester tester) async {
+    testWidgets(
+        '''Delete comment in audio containing only one comment using the playlist
+                comment dialog.''', (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
@@ -17357,7 +17356,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets('''Delete comment in audio containing two comments using the playlist
+    testWidgets(
+        '''Delete comment in audio containing two comments using the playlist
                 comment dialog. Before deleting the comment, add a new comment to the
                 audio which contains one comment.''',
         (WidgetTester tester) async {
@@ -17396,7 +17396,7 @@ void main() {
 
       // Now find the 'Playlist Audio Comments ...' popup menu item and
       // tap on it
-       Finder playlistAudioCommentsPopupMenuItem =
+      Finder playlistAudioCommentsPopupMenuItem =
           find.byKey(const Key("popup_menu_display_playlist_audio_comments"));
 
       await tester.tap(playlistAudioCommentsPopupMenuItem);
@@ -17431,7 +17431,7 @@ void main() {
       // climatique" which contains already one comment.
 
       const String oneCommentAudioTitle =
-                      "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
 
       // Now we want to tap on the one comment audio in the AudioPlayerView
       // displaying the audio to be able to add a new comment to it.
@@ -17439,8 +17439,7 @@ void main() {
       // GGet the ListTile Text widget finder of the uncommented audio
       // copied in the empty playlist and tap on it to open the
       // AudioPlayerView
-      final Finder oneCommentAudioTitleFinder =
-          find.text(oneCommentAudioTitle);
+      final Finder oneCommentAudioTitleFinder = find.text(oneCommentAudioTitle);
       await tester.tap(oneCommentAudioTitleFinder);
       await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
         tester: tester,
@@ -17504,12 +17503,12 @@ void main() {
       // Now delete the 'Comment Jancovici' comment
 
       // First, find the Youtube playlist audio ListTile Text widget
-       youtubePlaylistTitleTileTextWidgetFinder =
+      youtubePlaylistTitleTileTextWidgetFinder =
           find.text(youtubePlaylistTitle);
 
       // Then obtain the playlist ListTile widget enclosing the Text widget
       // by finding its ancestor
-       youtubePlaylistTitleTileWidgetFinder = find.ancestor(
+      youtubePlaylistTitleTileWidgetFinder = find.ancestor(
         of: youtubePlaylistTitleTileTextWidgetFinder,
         matching: find.byType(ListTile),
       );
@@ -17519,7 +17518,7 @@ void main() {
 
       // Find the leading menu icon button of the playlistTitle ListTile
       // and tap on it
-       youtubePlaylistTitleTileLeadingMenuIconButton = find.descendant(
+      youtubePlaylistTitleTileLeadingMenuIconButton = find.descendant(
         of: youtubePlaylistTitleTileWidgetFinder,
         matching: find.byIcon(Icons.menu),
       );
@@ -17530,12 +17529,11 @@ void main() {
 
       // Now find the 'Playlist Audio Comments ...' popup menu item and
       // tap on it
-       playlistAudioCommentsPopupMenuItem =
+      playlistAudioCommentsPopupMenuItem =
           find.byKey(const Key("popup_menu_display_playlist_audio_comments"));
 
       await tester.tap(playlistAudioCommentsPopupMenuItem);
       await tester.pumpAndSettle();
-
 
       audioCommentsLstFinder = find.byKey(const Key(
         'playlistCommentsListKey',
