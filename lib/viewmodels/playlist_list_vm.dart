@@ -148,6 +148,10 @@ class PlaylistListVM extends ChangeNotifier {
   bool get wasSearchButtonClicked => _wasSearchButtonClicked;
   set wasSearchButtonClicked(bool wasSearchButtonClicked) {
     _wasSearchButtonClicked = wasSearchButtonClicked;
+    // the search icon button will be displayed with an updated
+    // forground and background color or not.
+    wasSearchButtonClickedNotifier.value = wasSearchButtonClicked;
+
     notifyListeners();
   }
 
@@ -159,8 +163,16 @@ class PlaylistListVM extends ChangeNotifier {
   // This notifier is used to update the single video download
   // text button displayed in the playlist download view.
   final ValueNotifier<bool> urlContainedInYoutubeLinkNotifier =
-      ValueNotifier(false); // false means the download text
+      ValueNotifier(false); // false means that the download text
   //                           button will be disabled.
+
+  // This notifier is used to update the single video download
+  // text button displayed in the playlist download view.
+  final ValueNotifier<bool> wasSearchButtonClickedNotifier =
+      ValueNotifier(false); // true means that the search icon
+  //                           button was clicked and so will be
+  //                           displayed with an updated forground
+  //                           and background color.
 
   PlaylistListVM({
     required WarningMessageVM warningMessageVM,

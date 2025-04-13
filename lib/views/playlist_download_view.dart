@@ -644,36 +644,45 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             valueListenable:
                 playlistListVMlistenTrue.youtubeLinkOrSearchSentenceNotifier,
             builder: (context, currentUrlOrSearchSentence, child) {
-              return IconButton(
-                key: const Key('search_icon_button'),
-                onPressed: (currentUrlOrSearchSentence != null &&
-                        currentUrlOrSearchSentence.isNotEmpty)
-                    ? () {
-                        playlistListVMlistenFalse.wasSearchButtonClicked = true;
-                        if (!playlistListVMlistenTrue.isPlaylistListExpanded) {
-                          // the list of playlists is collapsed
-                          playlistListVMlistenFalse.isSearchSentenceApplied =
-                              true;
-                          _applySortFilterParmsNameChange(
-                            playlistListVMlistenFalseOrTrue:
-                                playlistListVMlistenFalse,
-                            notifyListeners: true,
-                          );
-                        }
-                      }
-                    : null,
-                style: ButtonStyle(
-                  // Highlight button when pressed
-                  padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                    const EdgeInsets.symmetric(
-                        horizontal: kSmallButtonInsidePadding, vertical: 0),
-                  ),
-                  overlayColor: iconButtonTapModification, // Tap feedback color
-                ),
-                icon: const Icon(
-                  Icons.search,
-                  size: kSmallIconButtonWidth,
-                ),
+              return ValueListenableBuilder<bool>(
+                valueListenable:
+                    playlistListVMlistenTrue.wasSearchButtonClickedNotifier,
+                builder: (context, wasSearchButtonClicked, child) {
+                  return IconButton(
+                    key: const Key('search_icon_button'),
+                    onPressed: (currentUrlOrSearchSentence != null &&
+                            currentUrlOrSearchSentence.isNotEmpty)
+                        ? () {
+                            playlistListVMlistenFalse.wasSearchButtonClicked =
+                                true;
+                            if (!playlistListVMlistenTrue
+                                .isPlaylistListExpanded) {
+                              // the list of playlists is collapsed
+                              playlistListVMlistenFalse
+                                  .isSearchSentenceApplied = true;
+                              _applySortFilterParmsNameChange(
+                                playlistListVMlistenFalseOrTrue:
+                                    playlistListVMlistenFalse,
+                                notifyListeners: true,
+                              );
+                            }
+                          }
+                        : null,
+                    style: ButtonStyle(
+                      // Highlight button when pressed
+                      padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                        const EdgeInsets.symmetric(
+                            horizontal: kSmallButtonInsidePadding, vertical: 0),
+                      ),
+                      overlayColor:
+                          iconButtonTapModification, // Tap feedback color
+                    ),
+                    icon: const Icon(
+                      Icons.search,
+                      size: kSmallIconButtonWidth,
+                    ),
+                  );
+                },
               );
             },
           ),
