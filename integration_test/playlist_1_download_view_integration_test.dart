@@ -11547,7 +11547,6 @@ void main() {
             warningDialogMessage:
                 'If the deleted audio video "$commentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !',
             isWarningConfirming: false,
-            tapTwiceOnOkButton: true,
           );
 
           // Verify that the applyed Sort/Filter parms name is displayed
