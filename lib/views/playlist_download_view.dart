@@ -1309,13 +1309,13 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           const SizedBox(
             width: kRowSmallWidthSeparator,
           ),
-          _buildDownloadSingleVideoButton(
-              context: context,
-              themeProviderVM: themeProviderVM,
-              playlistListVMlistenFalse: playlistListVMlistenFalse,
-              audioDownloadVMlistenFalse: audioDownloadVMlistenFalse,
-              warningMessageVMlistenFalse: warningMessageVMlistenFalse,
-              containsURL: _containsURL),
+          _buildSingleVideoDownloadButton(
+            context: context,
+            themeProviderVM: themeProviderVM,
+            playlistListVMlistenFalse: playlistListVMlistenFalse,
+            audioDownloadVMlistenFalse: audioDownloadVMlistenFalse,
+            warningMessageVMlistenFalse: warningMessageVMlistenFalse,
+          ),
           const SizedBox(
             width: kRowSmallWidthSeparator,
           ),
@@ -1725,206 +1725,217 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     );
   }
 
-  SizedBox _buildDownloadSingleVideoButton({
+  Widget _buildSingleVideoDownloadButton({
     required BuildContext context,
     required ThemeProviderVM themeProviderVM,
     required PlaylistListVM playlistListVMlistenFalse,
     required AudioDownloadVM audioDownloadVMlistenFalse,
     required WarningMessageVM warningMessageVMlistenFalse,
-    required bool
-        containsURL, // Nouveau paramètre pour la condition d'activation
   }) {
-    return SizedBox(
-      // sets the rounded TextButton size improving the distance
-      // between the button text and its boarder
-      width: kSmallButtonWidth + 8, // necessary to display english text
-      height: kNormalButtonHeight,
-      child: Tooltip(
-        message: AppLocalizations.of(context)!.downloadSingleVideoButtonTooltip,
-        child: TextButton(
-          key: const Key('downloadSingleVideoButton'),
-          style: ButtonStyle(
-            shape: getButtonRoundedShape(
-              currentTheme: themeProviderVM.currentTheme,
-              isButtonEnabled: containsURL,
-              context: context,
-            ),
-            padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-              const EdgeInsets.symmetric(
-                  horizontal: kSmallButtonInsidePadding,
-                  // necessary to display english text
-                  vertical: 0),
-            ),
-            overlayColor: textButtonTapModification, // Tap feedback color
-          ),
-          onPressed: containsURL
-              ? () {
-                  // disabling the sorted filtered playable audio list
-                  // downloading audio of selected playlists so that
-                  // the currently displayed audio list is not sorted
-                  // or/and filtered. This way, the newly downloaded
-                  // audio will be added at top of the displayed audio
-                  // list.
-                  playlistListVMlistenFalse
-                      .disableSortedFilteredPlayableAudioLst();
+    return ValueListenableBuilder<bool>(
+      valueListenable:
+          playlistListVMlistenFalse.urlContainedInYoutubeLinkNotifier,
+      builder: (context, containsURL, child) {
+        return SizedBox(
+          // sets the rounded TextButton size improving the distance
+          // between the button text and its boarder
+          width: kSmallButtonWidth + 8, // necessary to display english text
+          height: kNormalButtonHeight,
+          child: Tooltip(
+            message:
+                AppLocalizations.of(context)!.downloadSingleVideoButtonTooltip,
+            child: TextButton(
+              key: const Key('downloadSingleVideoButton'),
+              style: ButtonStyle(
+                shape: getButtonRoundedShape(
+                  currentTheme: themeProviderVM.currentTheme,
+                  isButtonEnabled: containsURL,
+                  context: context,
+                ),
+                padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                  const EdgeInsets.symmetric(
+                      horizontal: kSmallButtonInsidePadding,
+                      // necessary to display english text
+                      vertical: 0),
+                ),
+                overlayColor: textButtonTapModification, // Tap feedback color
+              ),
+              onPressed: containsURL
+                  ? () {
+                      // disabling the sorted filtered playable audio list
+                      // downloading audio of selected playlists so that
+                      // the currently displayed audio list is not sorted
+                      // or/and filtered. This way, the newly downloaded
+                      // audio will be added at top of the displayed audio
+                      // list.
+                      playlistListVMlistenFalse
+                          .disableSortedFilteredPlayableAudioLst();
 
-                  showDialog<dynamic>(
-                    context: context,
-                    builder: (context) => PlaylistOneSelectableDialog(
-                      usedFor: PlaylistOneSelectableDialogUsedFor
-                          .downloadSingleVideoAudio,
-                      warningMessageVM: warningMessageVMlistenFalse,
-                    ),
-                  ).then((value) {
-                    if (value == 'cancel') {
-                      // Fixes bug which happened when downloading a single
-                      // video audio and clicking on the cancel button of
-                      // the single selection playlist dialog. Without
-                      // this fix, the confirm dialog was displayed although
-                      // the user clicked on the cancel button.
-                      return;
-                    }
+                      showDialog<dynamic>(
+                        context: context,
+                        builder: (context) => PlaylistOneSelectableDialog(
+                          usedFor: PlaylistOneSelectableDialogUsedFor
+                              .downloadSingleVideoAudio,
+                          warningMessageVM: warningMessageVMlistenFalse,
+                        ),
+                      ).then((value) {
+                        if (value == 'cancel') {
+                          // Fixes bug which happened when downloading a single
+                          // video audio and clicking on the cancel button of
+                          // the single selection playlist dialog. Without
+                          // this fix, the confirm dialog was displayed although
+                          // the user clicked on the cancel button.
+                          return;
+                        }
 
-                    Playlist? selectedTargetPlaylist =
-                        value["selectedPlaylist"];
-                    bool isMusicQuality =
-                        value["downloadSingleVideoAudioAtMusicQuality"] ??
-                            false;
+                        Playlist? selectedTargetPlaylist =
+                            value["selectedPlaylist"];
+                        bool isMusicQuality =
+                            value["downloadSingleVideoAudioAtMusicQuality"] ??
+                                false;
 
-                    // Using FocusNode to enable clicking on Enter to close
-                    // the dialog
-                    final FocusNode newFocusNode = FocusNode();
-
-                    // confirming or not the addition of the single video
-                    // audio to the selected playlist
-                    showDialog<String>(
-                      context: context,
-                      builder: (context) => KeyboardListener(
                         // Using FocusNode to enable clicking on Enter to close
                         // the dialog
-                        focusNode: newFocusNode,
-                        onKeyEvent: (event) {
-                          if (event is KeyDownEvent) {
-                            if (event.logicalKey == LogicalKeyboardKey.enter ||
-                                event.logicalKey ==
-                                    LogicalKeyboardKey.numpadEnter) {
-                              // executing the same code as in the 'Ok'
-                              // ElevatedButton onPressed callback
-                              Navigator.of(context).pop('ok');
+                        final FocusNode newFocusNode = FocusNode();
+
+                        // confirming or not the addition of the single video
+                        // audio to the selected playlist
+                        showDialog<String>(
+                          context: context,
+                          builder: (context) => KeyboardListener(
+                            // Using FocusNode to enable clicking on Enter to close
+                            // the dialog
+                            focusNode: newFocusNode,
+                            onKeyEvent: (event) {
+                              if (event is KeyDownEvent) {
+                                if (event.logicalKey ==
+                                        LogicalKeyboardKey.enter ||
+                                    event.logicalKey ==
+                                        LogicalKeyboardKey.numpadEnter) {
+                                  // executing the same code as in the 'Ok'
+                                  // ElevatedButton onPressed callback
+                                  Navigator.of(context).pop('ok');
+                                }
+                              }
+                            },
+                            child: AlertDialog(
+                              title: Text(
+                                AppLocalizations.of(context)!
+                                    .confirmDialogTitle,
+                                key: const Key('confirmationDialogTitleKey'),
+                              ),
+                              actionsPadding:
+                                  // reduces the top vertical space between the buttons
+                                  // and the content
+                                  const EdgeInsets.fromLTRB(10, 0, 10,
+                                      10), // Adjust the value as needed
+                              content: Text(
+                                key: const Key('confirmationDialogMessageKey'),
+                                (isMusicQuality)
+                                    ? AppLocalizations.of(context)!
+                                        .confirmSingleVideoAudioAtMusicQualityPlaylistTitle(
+                                        selectedTargetPlaylist!.title,
+                                      )
+                                    : AppLocalizations.of(context)!
+                                        .confirmSingleVideoAudioPlaylistTitle(
+                                        selectedTargetPlaylist!.title,
+                                      ),
+                                style: kDialogTextFieldStyle,
+                              ),
+                              actions: [
+                                TextButton(
+                                  key: const Key('okButtonKey'),
+                                  child: Text(
+                                    'Ok',
+                                    style: (themeProviderVM.currentTheme ==
+                                            AppTheme.dark)
+                                        ? kTextButtonStyleDarkMode
+                                        : kTextButtonStyleLightMode,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop('ok');
+                                  },
+                                ),
+                                TextButton(
+                                  key: const Key('cancelButtonKey'),
+                                  child: Text(
+                                      AppLocalizations.of(context)!
+                                          .cancelButton,
+                                      style: (themeProviderVM.currentTheme ==
+                                              AppTheme.dark)
+                                          ? kTextButtonStyleDarkMode
+                                          : kTextButtonStyleLightMode),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ).then((value) async {
+                          if (value != null) {
+                            // the case if the user clicked on Ok button
+                            ErrorType errorType =
+                                await audioDownloadVMlistenFalse
+                                    .downloadSingleVideoAudio(
+                              videoUrl:
+                                  _playlistUrlOrSearchController.text.trim(),
+                              singleVideoTargetPlaylist:
+                                  selectedTargetPlaylist!,
+                              downloadAtMusicQuality: isMusicQuality,
+                            );
+
+                            if (errorType == ErrorType.noError) {
+                              // if the single video audio has been
+                              // correctly downloaded, then the playlistUrl
+                              // field is cleared.
+                              _playlistUrlOrSearchController.clear();
+
+                              // Required, otherwise the audio list is not
+                              // updated with the newly downloaded audio.
+                              _updatePlaylistSortedFilteredAudioList(
+                                playlistListVMlistenFalse:
+                                    playlistListVMlistenFalse,
+                              );
                             }
                           }
-                        },
-                        child: AlertDialog(
-                          title: Text(
-                            AppLocalizations.of(context)!.confirmDialogTitle,
-                            key: const Key('confirmationDialogTitleKey'),
+                        });
+                        // required so that clicking on Enter to close the dialog
+                        // works. This intruction must be located after the
+                        // .then() method of the showDialog() method !
+                        newFocusNode.requestFocus();
+                      });
+                    }
+                  : null, // The button will be deactivated if containsURL is false
+              child: Row(
+                mainAxisSize:
+                    MainAxisSize.min, // Make sure that the Row doesn't occupy
+                //                       more space than necessary
+                children: <Widget>[
+                  Icon(
+                    Icons.download_outlined,
+                    size: 18,
+                    // Changer la couleur de l'icône en fonction de l'état du bouton
+                    color: containsURL ? null : Colors.grey,
+                  ),
+                  Text(
+                    AppLocalizations.of(context)!.downloadSingleVideoAudio,
+                    style: (containsURL)
+                        ? (themeProviderVM.currentTheme == AppTheme.dark)
+                            ? kTextButtonStyleDarkMode
+                            : kTextButtonStyleLightMode
+                        : const TextStyle(
+                            // required to display the button in grey if
+                            // the button is disabled
+                            fontSize: kTextButtonFontSize,
                           ),
-                          actionsPadding:
-                              // reduces the top vertical space between the buttons
-                              // and the content
-                              const EdgeInsets.fromLTRB(
-                                  10, 0, 10, 10), // Adjust the value as needed
-                          content: Text(
-                            key: const Key('confirmationDialogMessageKey'),
-                            (isMusicQuality)
-                                ? AppLocalizations.of(context)!
-                                    .confirmSingleVideoAudioAtMusicQualityPlaylistTitle(
-                                    selectedTargetPlaylist!.title,
-                                  )
-                                : AppLocalizations.of(context)!
-                                    .confirmSingleVideoAudioPlaylistTitle(
-                                    selectedTargetPlaylist!.title,
-                                  ),
-                            style: kDialogTextFieldStyle,
-                          ),
-                          actions: [
-                            TextButton(
-                              key: const Key('okButtonKey'),
-                              child: Text(
-                                'Ok',
-                                style: (themeProviderVM.currentTheme ==
-                                        AppTheme.dark)
-                                    ? kTextButtonStyleDarkMode
-                                    : kTextButtonStyleLightMode,
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop('ok');
-                              },
-                            ),
-                            TextButton(
-                              key: const Key('cancelButtonKey'),
-                              child: Text(
-                                  AppLocalizations.of(context)!.cancelButton,
-                                  style: (themeProviderVM.currentTheme ==
-                                          AppTheme.dark)
-                                      ? kTextButtonStyleDarkMode
-                                      : kTextButtonStyleLightMode),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ).then((value) async {
-                      if (value != null) {
-                        // the case if the user clicked on Ok button
-                        ErrorType errorType = await audioDownloadVMlistenFalse
-                            .downloadSingleVideoAudio(
-                          videoUrl: _playlistUrlOrSearchController.text.trim(),
-                          singleVideoTargetPlaylist: selectedTargetPlaylist!,
-                          downloadAtMusicQuality: isMusicQuality,
-                        );
-
-                        if (errorType == ErrorType.noError) {
-                          // if the single video audio has been
-                          // correctly downloaded, then the playlistUrl
-                          // field is cleared.
-                          _playlistUrlOrSearchController.clear();
-
-                          // Required, otherwise the audio list is not
-                          // updated with the newly downloaded audio.
-                          _updatePlaylistSortedFilteredAudioList(
-                            playlistListVMlistenFalse:
-                                playlistListVMlistenFalse,
-                          );
-                        }
-                      }
-                    });
-                    // required so that clicking on Enter to close the dialog
-                    // works. This intruction must be located after the
-                    // .then() method of the showDialog() method !
-                    newFocusNode.requestFocus();
-                  });
-                }
-              : null, // Le bouton sera désactivé si containsURL est false
-          child: Row(
-            mainAxisSize:
-                MainAxisSize.min, // Make sure that the Row doesn't occupy
-            //                       more space than necessary
-            children: <Widget>[
-              Icon(
-                Icons.download_outlined,
-                size: 18,
-                // Changer la couleur de l'icône en fonction de l'état du bouton
-                color: containsURL ? null : Colors.grey,
+                  ),
+                ],
               ),
-              Text(
-                AppLocalizations.of(context)!.downloadSingleVideoAudio,
-                style: (containsURL)
-                    ? (themeProviderVM.currentTheme == AppTheme.dark)
-                        ? kTextButtonStyleDarkMode
-                        : kTextButtonStyleLightMode
-                    : const TextStyle(
-                        // required to display the button in grey if
-                        // the button is disabled
-                        fontSize: kTextButtonFontSize,
-                      ),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 

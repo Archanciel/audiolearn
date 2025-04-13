@@ -115,6 +115,17 @@ class PlaylistListVM extends ChangeNotifier {
 
     youtubeLinkOrSearchSentenceNotifier.value = searchSentence;
 
+    String searchSentenceIInLowerCase = _searchSentence.toLowerCase();
+
+    if (searchSentenceIInLowerCase.contains('https://') ||
+        searchSentenceIInLowerCase.contains('http://')) {
+      // Single video download icon button is enabled
+      urlContainedInYoutubeLinkNotifier.value = true;
+    } else {
+      // Single video download icon button is disabled
+      urlContainedInYoutubeLinkNotifier.value = false;
+    }
+
     if (_wasSearchButtonClicked) {
       // When the search sentence is set, if he search button was clicked,
       // the list of selectable playlists or the list of audio of the selected
@@ -144,6 +155,12 @@ class PlaylistListVM extends ChangeNotifier {
   // or the list of audio's in the playlist download view.
   final ValueNotifier<String?> youtubeLinkOrSearchSentenceNotifier =
       ValueNotifier<String?>(null);
+
+  // This notifier is used to update the single video download
+  // icon button displayed in the playlist download view.
+  final ValueNotifier<bool> urlContainedInYoutubeLinkNotifier =
+      ValueNotifier(false); // false means the download icon
+  //                           button will be disabled.
 
   PlaylistListVM({
     required WarningMessageVM warningMessageVM,
