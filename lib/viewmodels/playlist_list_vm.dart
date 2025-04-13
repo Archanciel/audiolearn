@@ -1671,7 +1671,7 @@ class PlaylistListVM extends ChangeNotifier {
     searchSentence = '';
 
     // Necessary so that displayed audio list is updated to
-    // the valid blist when the search sentence was cleared.
+    // the valid list when the search sentence was cleared.
     notifyListeners();
   }
 
