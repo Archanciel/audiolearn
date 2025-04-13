@@ -1669,6 +1669,10 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Causes the search icon button to be disabled
     searchSentence = '';
+
+    // Necessary so that displayed audio list is updated to
+    // the valid blist when the search sentence was cleared.
+    notifyListeners();
   }
 
   /// Method called when the user clicked on the audio popup menu button in the
