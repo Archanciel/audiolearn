@@ -126,6 +126,14 @@ class PlaylistListVM extends ChangeNotifier {
       urlContainedInYoutubeLinkNotifier.value = false;
     }
 
+    if (searchSentence.isEmpty) {
+      // If the search sentence is empty, the search button is not
+      // clickable and the search icon button will be displayed with
+      // its default color.
+      wasSearchButtonClickedNotifier.value = false;
+      youtubeLinkOrSearchSentenceNotifier.value = null;
+    }
+
     if (_wasSearchButtonClicked) {
       // When the search sentence is set, if he search button was clicked,
       // the list of selectable playlists or the list of audio of the selected
@@ -1659,11 +1667,8 @@ class PlaylistListVM extends ChangeNotifier {
     _isSearchSentenceApplied = false;
     _wasSearchButtonClicked = false;
 
-    // Causes the clear Youtube link or search sentence icon button to be
-    // replaced by the disabled Stop download text button.
-    youtubeLinkOrSearchSentenceNotifier.value = null;
-
-    // notifyListeners();
+    // Causes the search icon button to be disabled
+    searchSentence = '';
   }
 
   /// Method called when the user clicked on the audio popup menu button in the
