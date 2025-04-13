@@ -119,10 +119,10 @@ class PlaylistListVM extends ChangeNotifier {
 
     if (searchSentenceIInLowerCase.contains('https://') ||
         searchSentenceIInLowerCase.contains('http://')) {
-      // Single video download icon button is enabled
+      // Single video download text button is enabled
       urlContainedInYoutubeLinkNotifier.value = true;
     } else {
-      // Single video download icon button is disabled
+      // Single video download text button is disabled
       urlContainedInYoutubeLinkNotifier.value = false;
     }
 
@@ -157,9 +157,9 @@ class PlaylistListVM extends ChangeNotifier {
       ValueNotifier<String?>(null);
 
   // This notifier is used to update the single video download
-  // icon button displayed in the playlist download view.
+  // text button displayed in the playlist download view.
   final ValueNotifier<bool> urlContainedInYoutubeLinkNotifier =
-      ValueNotifier(false); // false means the download icon
+      ValueNotifier(false); // false means the download text
   //                           button will be disabled.
 
   PlaylistListVM({
