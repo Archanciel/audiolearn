@@ -13,8 +13,6 @@ import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:googleapis/cloudbuild/v1.dart';
-import 'package:googleapis/cloudsearch/v1.dart';
 import 'package:path/path.dart' as path;
 import 'package:shared_preferences/shared_preferences.dart';
 
