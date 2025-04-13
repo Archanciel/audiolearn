@@ -644,43 +644,81 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             valueListenable:
                 playlistListVMlistenTrue.youtubeLinkOrSearchSentenceNotifier,
             builder: (context, currentUrlOrSearchSentence, child) {
+              CircleAvatar circleAvatar;
+              const Icon searchIconButton = Icon(
+                Icons.search,
+                size: kSmallIconButtonWidth,
+              );
+
               return ValueListenableBuilder<bool>(
                 valueListenable:
-                    playlistListVMlistenTrue.wasSearchButtonClickedNotifier,
-                builder: (context, wasSearchButtonClicked, child) {
-                  return IconButton(
-                    key: const Key('search_icon_button'),
-                    onPressed: (currentUrlOrSearchSentence != null &&
-                            currentUrlOrSearchSentence.isNotEmpty)
-                        ? () {
-                            playlistListVMlistenFalse.wasSearchButtonClicked =
-                                true;
-                            if (!playlistListVMlistenTrue
-                                .isPlaylistListExpanded) {
-                              // the list of playlists is collapsed
-                              playlistListVMlistenFalse
-                                  .isSearchSentenceApplied = true;
-                              _applySortFilterParmsNameChange(
-                                playlistListVMlistenFalseOrTrue:
-                                    playlistListVMlistenFalse,
-                                notifyListeners: true,
-                              );
-                            }
-                          }
-                        : null,
-                    style: ButtonStyle(
-                      // Highlight button when pressed
-                      padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                        const EdgeInsets.symmetric(
-                            horizontal: kSmallButtonInsidePadding, vertical: 0),
-                      ),
-                      overlayColor:
-                          iconButtonTapModification, // Tap feedback color
-                    ),
-                    icon: const Icon(
-                      Icons.search,
-                      size: kSmallIconButtonWidth,
-                    ),
+                    playlistListVMlistenTrue.urlContainedInYoutubeLinkNotifier,
+                builder: (context, isUrlContainedInYoutubeLink, child) {
+                  // Enables to disable the search button if an url is entered
+                  // in the Youtube link text field.
+                  return ValueListenableBuilder<bool>(
+                    valueListenable:
+                        playlistListVMlistenTrue.wasSearchButtonClickedNotifier,
+                    builder: (context, wasSearchButtonClicked, child) {
+                      if (wasSearchButtonClicked) {
+                        circleAvatar = formatIconBackAndForGroundColor(
+                          context: context,
+                          iconToFormat: searchIconButton,
+                          isIconHighlighted:
+                              true, // since the search icon was clicked, it is
+                          //           highlighted
+                        );
+                      } else if (currentUrlOrSearchSentence == null ||
+                          isUrlContainedInYoutubeLink) {
+                        circleAvatar = formatIconBackAndForGroundColor(
+                          context: context,
+                          iconToFormat: searchIconButton,
+                          isIconHighlighted:
+                              false, // since the search icon has not
+                          //                            yet been clicked, it is not
+                          //                            highlighted
+                          isIconDisabled:
+                              true, // since the search sentence is empty
+                          //                       the search icon is disabled
+                        );
+                      } else {
+                        circleAvatar = formatIconBackAndForGroundColor(
+                          context: context,
+                          iconToFormat: searchIconButton,
+                          isIconHighlighted:
+                              false, // since the search icon has not
+                          //                            yet been clicked, it is not
+                          //                            highlighted
+                        );
+                      }
+
+                      return InkWell(
+                        key: const Key('search_icon_button'),
+                        onTap: (currentUrlOrSearchSentence != null &&
+                                currentUrlOrSearchSentence.isNotEmpty)
+                            ? () {
+                                playlistListVMlistenFalse
+                                    .wasSearchButtonClicked = true;
+                                if (!playlistListVMlistenTrue
+                                    .isPlaylistListExpanded) {
+                                  // the list of playlists is collapsed
+                                  playlistListVMlistenFalse
+                                      .isSearchSentenceApplied = true;
+                                  _applySortFilterParmsNameChange(
+                                    playlistListVMlistenFalseOrTrue:
+                                        playlistListVMlistenFalse,
+                                    notifyListeners: true,
+                                  );
+                                }
+                              }
+                            : null,
+                        child: SizedBox(
+                          width:
+                              85, // Adjust this width based on the size of your largest icon
+                          child: Center(child: circleAvatar),
+                        ),
+                      );
+                    },
                   );
                 },
               );
