@@ -119,7 +119,7 @@ class AudioPlayerVM extends ChangeNotifier {
   // This notifier is used to update the audio play/pause icon
   // button displayed in the audio player view
   final ValueNotifier<bool> currentAudioPlayPauseNotifier =
-      ValueNotifier(false); // false means the play/pause
+      ValueNotifier(false); // false means that the play/pause
   //                           button will be set to play
 
   // This notifier is used to update the audio title with duration
