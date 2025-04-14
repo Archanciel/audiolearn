@@ -115,10 +115,10 @@ class PlaylistListVM extends ChangeNotifier {
 
     youtubeLinkOrSearchSentenceNotifier.value = searchSentence;
 
-    String searchSentenceIInLowerCase = _searchSentence.toLowerCase();
+    String searchSentenceInLowerCase = _searchSentence.toLowerCase();
 
-    if (searchSentenceIInLowerCase.contains('https://') ||
-        searchSentenceIInLowerCase.contains('http://')) {
+    if (searchSentenceInLowerCase.contains('https://') ||
+        searchSentenceInLowerCase.contains('http://')) {
       // Single video download text button is enabled
       urlContainedInYoutubeLinkNotifier.value = true;
     } else {
