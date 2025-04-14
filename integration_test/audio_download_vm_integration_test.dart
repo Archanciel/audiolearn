@@ -145,6 +145,19 @@ Future<void> main() async {
             "Youtube playlist \"$globalTestPlaylistTitle\" of spoken quality added to the end of the playlist list.",
       );
 
+      // Now tap on the delete button to empty the search text
+      // field. The reason is due to using debounce in the
+      // YoutubeUrlOrSearchTextField widget. If the text field is not
+      // emptied, it avoids that the Youtibe playlist addition warning
+      // dialog is shown twice when the 'Add playlist button' button is
+      // tapped.
+      await tester.tap(
+        find.byKey(
+          const Key('clearPlaylistUrlOrSearchButtonKey'),
+        ),
+      );
+      await tester.pumpAndSettle();
+
       expect(
         tester
             .widget<TextField>(find.byKey(
@@ -1025,6 +1038,19 @@ Future<void> main() async {
 
       Playlist recreatedPlaylist = audioDownloadVM.listOfPlaylist[0];
 
+      // Now tap on the delete button to empty the search text
+      // field. The reason is due to using debounce in the
+      // YoutubeUrlOrSearchTextField widget. If the text field is not
+      // emptied, it avoids that the Youtibe playlist addition warning
+      // dialog is shown twice when the 'Add playlist button' button is
+      // tapped.
+      await tester.tap(
+        find.byKey(
+          const Key('clearPlaylistUrlOrSearchButtonKey'),
+        ),
+      );
+      await tester.pumpAndSettle();
+
       expect(
         tester
             .widget<TextField>(find.byKey(
@@ -1136,7 +1162,6 @@ Future<void> main() async {
       // second is ok
       await Future.delayed(const Duration(seconds: 1));
       await tester.pumpAndSettle();
-
 
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
