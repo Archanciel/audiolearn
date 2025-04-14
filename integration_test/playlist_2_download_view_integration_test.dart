@@ -68,7 +68,7 @@ void main() {
 
         // Verify that the download single video button is
         // now disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'downloadSingleVideoButton',
         );
@@ -112,7 +112,7 @@ void main() {
         );
 
         // Verify the disabled state of the search icon button
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button', // this button is disabled if the
           //                                     'Youtube Link or Search' dosn't
@@ -120,7 +120,7 @@ void main() {
         );
 
         // Verify the presence of the disabled stop button
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr:
               'stopDownloadingButton', // this button is disabled if the
@@ -351,7 +351,7 @@ void main() {
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Verify that the search icon button is now disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button',
         );
@@ -401,14 +401,14 @@ void main() {
 
         // Verify that the stop text button replaced the
         // delete icon button, but is disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'stopDownloadingButton',
         );
 
         // Verify that the download single video button is
         // now disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'downloadSingleVideoButton',
         );
@@ -490,7 +490,7 @@ void main() {
         );
 
         // Verify the disabled state of the search icon button
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button', // this button is disabled if the
           //                                     'Youtube Link or Search' dosn't
@@ -646,7 +646,7 @@ void main() {
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Verify that the search icon button is now disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button',
         );
@@ -730,7 +730,7 @@ void main() {
         );
 
         // Verify the disabled state of the search icon button
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button', // this button is disabled if the
           //                                     'Youtube Link or Search' dosn't
@@ -827,7 +827,7 @@ void main() {
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Verify that the search icon button is now disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button',
         );
@@ -882,7 +882,7 @@ void main() {
         );
 
         // Verify the disabled state of the search icon button
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button', // this button is disabled if the
           //                                     'Youtube Link or Search' dosn't
@@ -890,7 +890,7 @@ void main() {
         );
 
         // Verify the presence of the disabled stop button
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr:
               'stopDownloadingButton', // this button is disabled if the
@@ -1036,7 +1036,7 @@ void main() {
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Verify that the search icon button is now disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button',
         );
@@ -1114,7 +1114,7 @@ void main() {
         );
 
         // Verify the disabled state of the search icon button
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button', // this button is disabled if the
           //                                     'Youtube Link or Search' dosn't
@@ -1243,7 +1243,7 @@ void main() {
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Verify that the search icon button is now disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button',
         );
@@ -1264,14 +1264,14 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify that the search icon button is disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button',
         );
 
         // Verify that the stop text button replaced the
         // delete icon button, but is disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'stopDownloadingButton',
         );
@@ -1347,7 +1347,7 @@ void main() {
         );
 
         // Verify the disabled state of the search icon button
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button', // this button is disabled if the
           //                                     'Youtube Link or Search' dosn't
@@ -1383,7 +1383,7 @@ void main() {
 
         // Verify that the download single video button is
         // disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'downloadSingleVideoButton',
         );
@@ -1446,7 +1446,7 @@ void main() {
 
         // Verify that the download single video button is
         // disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'downloadSingleVideoButton',
         );
@@ -1477,7 +1477,7 @@ void main() {
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Verify that the search icon button is disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button',
         );
@@ -1518,14 +1518,14 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify that the search icon button is disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button',
         );
 
         // Verify that the stop text button replaced the
         // delete icon button, but is disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'stopDownloadingButton',
         );
@@ -1593,12 +1593,12 @@ void main() {
           widgetKeyStr: 'move_down_playlist_button',
         );
 
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'download_sel_playlists_button',
         );
 
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'audio_quality_checkbox',
         );
@@ -1673,12 +1673,12 @@ void main() {
           widgetKeyStr: 'move_down_playlist_button',
         );
 
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'download_sel_playlists_button',
         );
 
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'audio_quality_checkbox',
         );
@@ -2141,7 +2141,7 @@ void main() {
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Verify that the search icon button is now disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button',
         );
@@ -2290,7 +2290,7 @@ void main() {
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Verify that the search icon button is now disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button',
         );
@@ -2400,7 +2400,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify that the search icon button is disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button',
         );
@@ -2514,7 +2514,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify that the search icon button is disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button',
         );
@@ -2627,7 +2627,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify that the search icon button is disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button',
         );
@@ -2738,7 +2738,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify that the search icon button is disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button',
         );
@@ -2846,7 +2846,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify that the search icon button is disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button',
         );
@@ -2952,7 +2952,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify that the search icon button is disabled
-        IntegrationTestUtil.verifyWidgetIsDisabled(
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button',
         );
@@ -11579,7 +11579,8 @@ void main() {
 
         IntegrationTestUtil.verifyPictureSuppression(
           playlistPictureDir: playlistPictureDir,
-          audioPictureJsonFileName: "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
+          audioPictureJsonFileName:
+              "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
           deletedPictureFileName: secondPictureFileName,
         );
 
@@ -11708,7 +11709,8 @@ void main() {
 
         IntegrationTestUtil.verifyPictureSuppression(
             playlistPictureDir: playlistPictureDir,
-            audioPictureJsonFileName: "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
+            audioPictureJsonFileName:
+                "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
             deletedPictureFileName: "Jésus, mon amour.jpg",
             isPictureFileNameDeleted: true);
 
@@ -11805,7 +11807,7 @@ void main() {
         );
 
         // First picture addition
-            await _addPictureToAudioExecutingAudioPlayerViewLeftAppbarMenu(
+        await _addPictureToAudioExecutingAudioPlayerViewLeftAppbarMenu(
           tester: tester,
           mockFilePicker: mockFilePicker,
           pictureFileName: pictureFileName,
@@ -11857,7 +11859,7 @@ void main() {
         // the first added picture by the second one.
 
         // Second picture addition
-            await _addPictureToAudioExecutingAudioPlayerViewLeftAppbarMenu(
+        await _addPictureToAudioExecutingAudioPlayerViewLeftAppbarMenu(
           tester: tester,
           mockFilePicker: mockFilePicker,
           pictureFileName: secondPictureFileName,
@@ -11892,11 +11894,12 @@ void main() {
 
         IntegrationTestUtil.verifyPictureSuppression(
             playlistPictureDir: playlistPictureDir,
-            audioPictureJsonFileName: "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
+            audioPictureJsonFileName:
+                "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
             deletedPictureFileName: "Jésus je T'aime.jpg");
 
         // Third picture addition
-            await _addPictureToAudioExecutingAudioPlayerViewLeftAppbarMenu(
+        await _addPictureToAudioExecutingAudioPlayerViewLeftAppbarMenu(
           tester: tester,
           mockFilePicker: mockFilePicker,
           pictureFileName: thirdPictureFileName,
@@ -11972,7 +11975,7 @@ void main() {
         );
 
         // First picture addition
-            await _addPictureToAudioExecutingAudioPlayerViewLeftAppbarMenu(
+        await _addPictureToAudioExecutingAudioPlayerViewLeftAppbarMenu(
           tester: tester,
           mockFilePicker: mockFilePicker,
           pictureFileName: pictureFileName,
@@ -12024,7 +12027,8 @@ void main() {
 
         IntegrationTestUtil.verifyPictureSuppression(
             playlistPictureDir: playlistPictureDir,
-            audioPictureJsonFileName: "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
+            audioPictureJsonFileName:
+                "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
             deletedPictureFileName: "Jésus, mon amour.jpg",
             isPictureFileNameDeleted: true);
 
@@ -12770,7 +12774,7 @@ Future<void> _resetUnselectedPlaylistAudioQualityAndThenSelectPlaylist({
     );
   } else {
     // Verify that the music quality checkbox is disabled
-    IntegrationTestUtil.verifyWidgetIsDisabled(
+    await IntegrationTestUtil.verifyWidgetIsDisabled(
       tester: tester,
       widgetKeyStr: 'audio_quality_checkbox',
     );
@@ -12795,7 +12799,7 @@ Future<void> _verifyPlaylistAudioQuality({
   required PlaylistQuality playlistQuality,
 }) async {
   if (isPlaylistLocal) {
-    IntegrationTestUtil.verifyWidgetIsDisabled(
+    await IntegrationTestUtil.verifyWidgetIsDisabled(
       tester: tester,
       widgetKeyStr: 'audio_quality_checkbox',
     );
@@ -14213,11 +14217,11 @@ void modifySelectedPlaylistBeforeStartingApplication({
   );
 }
 
-void verifyYoutubeSelectedPlaylistButtonsAndCheckbox({
+Future<void> verifyYoutubeSelectedPlaylistButtonsAndCheckbox({
   required WidgetTester tester,
   required bool isPlaylistListDisplayed,
-}) {
-  IntegrationTestUtil.verifyWidgetIsDisabled(
+}) async {
+  await IntegrationTestUtil.verifyWidgetIsDisabled(
     tester: tester,
     widgetKeyStr: 'search_icon_button', // this button is disabled if the
     //                                     'Youtube Link or Search' dosn't
@@ -14259,11 +14263,11 @@ void verifyYoutubeSelectedPlaylistButtonsAndCheckbox({
   );
 }
 
-void verifyLocalSelectedPlaylistButtonsAndCheckbox({
+Future<void> verifyLocalSelectedPlaylistButtonsAndCheckbox({
   required WidgetTester tester,
   required bool isPlaylistListDisplayed,
-}) {
-  IntegrationTestUtil.verifyWidgetIsDisabled(
+}) async {
+  await IntegrationTestUtil.verifyWidgetIsDisabled(
     tester: tester,
     widgetKeyStr: 'search_icon_button', // this button is disabled if the
     //                                     'Youtube Link or Search' dosn't
@@ -14289,12 +14293,12 @@ void verifyLocalSelectedPlaylistButtonsAndCheckbox({
     );
   }
 
-  IntegrationTestUtil.verifyWidgetIsDisabled(
+  await IntegrationTestUtil.verifyWidgetIsDisabled(
     tester: tester,
     widgetKeyStr: 'download_sel_playlists_button',
   );
 
-  IntegrationTestUtil.verifyWidgetIsDisabled(
+  await IntegrationTestUtil.verifyWidgetIsDisabled(
     tester: tester,
     widgetKeyStr: 'audio_quality_checkbox',
   );

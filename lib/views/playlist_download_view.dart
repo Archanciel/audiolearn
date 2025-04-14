@@ -2169,7 +2169,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 //
                 // The value is true if a Youtube playlist has been added.
                 // Then, in this case the playlist url TextField is cleared.
-                _playlistUrlOrSearchController.clear();
+                // _playlistUrlOrSearchController.clear();
               }
             });
           },
