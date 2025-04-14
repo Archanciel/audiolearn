@@ -669,7 +669,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       if (commentVM
           .loadAudioComments(audio: audioPlayerVMlistenFalse.currentAudio!)
           .isEmpty) {
-        circleAvatar = formatIconBackAndForGroundColor(
+        circleAvatar = formatIconBackAndForgroundColor(
           context: context,
           iconToFormat: const Icon(Icons.bookmark_outline_outlined),
           isIconHighlighted: false, // since no comments are defined
@@ -678,7 +678,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           isIconColorStronger: false, // sets the icon color to normal
         );
       } else {
-        circleAvatar = formatIconBackAndForGroundColor(
+        circleAvatar = formatIconBackAndForgroundColor(
             context: context,
             iconToFormat: const Icon(Icons.bookmark_outline_outlined),
             isIconHighlighted: true, // since comments are defined for
@@ -688,7 +688,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             radius: 13.0);
       }
     } else {
-      circleAvatar = formatIconBackAndForGroundColor(
+      circleAvatar = formatIconBackAndForgroundColor(
         context: context,
         iconToFormat: const Icon(Icons.bookmark_outline_outlined),
         isIconHighlighted: false,

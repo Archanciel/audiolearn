@@ -871,7 +871,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                 playOrPauseIcon = const Icon(Icons.pause);
               }
 
-              circleAvatar = formatIconBackAndForGroundColor(
+              circleAvatar = formatIconBackAndForgroundColor(
                 context: context,
                 iconToFormat: playOrPauseIcon,
                 isIconHighlighted: true, // since audio is playing or paused
@@ -882,7 +882,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
               // the audio is not playing or paused at a certain position
               // (i.e. its position is zero or its position is at the end
               // of the audio file)
-              circleAvatar = formatIconBackAndForGroundColor(
+              circleAvatar = formatIconBackAndForgroundColor(
                   context: context,
                   iconToFormat: const Icon(Icons.play_arrow),
                   isIconHighlighted: false, // since audio is at start or end

@@ -622,7 +622,7 @@ mixin ScreenMixin {
   /// widget located in the playlist view. The icon color is stronger
   /// if the audio is fully played. In this case, the icon color
   /// is the same as the slider thumb color.
-  CircleAvatar formatIconBackAndForGroundColor({
+  CircleAvatar formatIconBackAndForgroundColor({
     required BuildContext context,
     required Icon iconToFormat,
     required bool isIconHighlighted,
