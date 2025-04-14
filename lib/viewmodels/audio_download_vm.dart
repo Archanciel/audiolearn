@@ -416,7 +416,10 @@ class AudioDownloadVM extends ChangeNotifier {
     String? mockYoutubePlaylistTitle,
   }) async {
     Playlist addedPlaylist;
-    String playlistTitleToCorrect = '';
+
+    // Will contain the Youtube playlist title which will have to be
+    // corrected
+    String youtubePlaylistTitleToCorrect = '';
 
     if (localPlaylistTitle.isNotEmpty) {
       // handling creation of a local playlist
@@ -541,7 +544,7 @@ class AudioDownloadVM extends ChangeNotifier {
         // directories in a path and so can not be used in a
         // playlist title. For this reason, '/' is replaced by
         // '-' in the playlist title.
-        playlistTitleToCorrect = playlistTitle;
+        youtubePlaylistTitleToCorrect = playlistTitle;
 
         playlistTitle = playlistTitle.replaceAll('/', '-');
       }
@@ -584,7 +587,7 @@ class AudioDownloadVM extends ChangeNotifier {
       );
     }
 
-    if (playlistTitleToCorrect.isEmpty) {
+    if (youtubePlaylistTitleToCorrect.isEmpty) {
       warningMessageVM.annoncePlaylistAddition(
         playlistTitle: addedPlaylist.title,
         playlistQuality: playlistQuality,
@@ -592,7 +595,7 @@ class AudioDownloadVM extends ChangeNotifier {
       );
     } else {
       warningMessageVM.signalCorrectedYoutubePlaylistTitle(
-        originalPlaylistTitle: playlistTitleToCorrect,
+        originalPlaylistTitle: youtubePlaylistTitleToCorrect,
         playlistQuality: playlistQuality,
         correctedPlaylistTitle: addedPlaylist.title,
       );

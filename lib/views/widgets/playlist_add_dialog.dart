@@ -201,7 +201,8 @@ class _PlaylistAddDialogState extends State<PlaylistAddDialog>
       // if the local playlist title is empty, then add the Youtube
       // playlist if the Youtube playlist URL is not empty
       if (widget.playlistUrl.isNotEmpty) {
-        dynamic isYoutubePlaylistAdded = await playlistListVMlistenFalse.addPlaylist(
+        dynamic isYoutubePlaylistAdded =
+            await playlistListVMlistenFalse.addPlaylist(
           playlistUrl: widget.playlistUrl,
           playlistQuality:
               _isChecked ? PlaylistQuality.music : PlaylistQuality.voice,

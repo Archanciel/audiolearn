@@ -197,7 +197,21 @@ void main() {
         playlistType: PlaylistType.youtube,
       );
 
-      // Ensure the URL TextField was emptied
+      // Now tap on the delete button to empty the search text
+      // field. The reason is due to using debounce in the
+      // YoutubeUrlOrSearchTextField widget. If the text field is not
+      // emptied, it avoids that the Youtibe playlist addition warning
+      // dialog is shown twice when the 'Add playlist button' button is
+      // tapped.
+      await tester.tap(
+        find.byKey(
+          const Key('clearPlaylistUrlOrSearchButtonKey'),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // Ensure the URL TextField was emptied. If is emptied, the
+      // displayed warning will displayed twice.
       urlTextField = tester.widget(find.byKey(
         const Key('youtubeUrlOrSearchTextField'),
       ));
@@ -294,7 +308,7 @@ void main() {
       // Open the delete playlist dialog by clicking on the 'Delete
       // playlist ...' playlist menu item
 
-      // Now find the leading menu icon button of the Playlist ListTile
+      // Find the leading menu icon button of the Playlist ListTile
       // and tap on it
       final Finder firstPlaylistListTileLeadingMenuIconButton = find.descendant(
         of: firstListTileFinder,
@@ -645,7 +659,21 @@ void main() {
         playlistType: PlaylistType.youtube,
       );
 
-      // Ensure the URL TextField was emptied
+      // Now tap on the delete button to empty the search text
+      // field. The reason is due to using debounce in the
+      // YoutubeUrlOrSearchTextField widget. If the text field is not
+      // emptied, it avoids that the Youtibe playlist addition warning
+      // dialog is shown twice when the 'Add playlist button' button is
+      // tapped.
+      await tester.tap(
+        find.byKey(
+          const Key('clearPlaylistUrlOrSearchButtonKey'),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // Ensure the URL TextField was emptied. If is emptied, the
+      // displayed warning will displayed twice.
       urlTextField = tester.widget(find.byKey(
         const Key('youtubeUrlOrSearchTextField'),
       ));
@@ -1671,11 +1699,21 @@ void main() {
       await tester.pumpAndSettle();
 
       // Close the warning dialog by tapping on the Ok button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
       await tester.pumpAndSettle();
 
-      // Add a new local playlist with the same title of the first
-      // added local playlist
+      // Now tap on the delete button to empty the search text
+      // field. The reason is due to using debounce in the
+      // YoutubeUrlOrSearchTextField widget. If the text field is not
+      // emptied, it avoids that the Youtibe playlist addition warning
+      // dialog is shown twice when the 'Add playlist button' button is
+      // tapped.
+      await tester.tap(
+        find.byKey(
+          const Key('clearPlaylistUrlOrSearchButtonKey'),
+        ),
+      );
+      await tester.pumpAndSettle();
 
       // Open the add playlist dialog by tapping the add playlist
       // button
@@ -1910,7 +1948,20 @@ void main() {
       // Close the warning dialog by tapping on the Ok button.
       // If the warning dialog is not closed, tapping on the
       // 'Add playlist button' button will fail
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+      await tester.pumpAndSettle();
+
+      // Now tap on the delete button to empty the search text
+      // field. The reason is due to using debounce in the
+      // YoutubeUrlOrSearchTextField widget. If the text field is not
+      // emptied, it avoids that the Youtibe playlist addition warning
+      // dialog is shown twice when the 'Add playlist button' button is
+      // tapped.
+      await tester.tap(
+        find.byKey(
+          const Key('clearPlaylistUrlOrSearchButtonKey'),
+        ),
+      );
       await tester.pumpAndSettle();
 
       // Adding the local playlist
@@ -2556,8 +2607,7 @@ void main() {
       await tester.tap(find.byKey(const Key('addPlaylistButton')));
       await tester.pumpAndSettle();
 
-      // Confirm the addition by tapping the confirmation button in
-      // the AlertDialog
+      // Confirm the addition by tapping the Add button in the AlertDialog
       await tester
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
@@ -2576,7 +2626,7 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      // Tap the 'Download All' button to download the selected playlist.
+      // Tap the 'Download Playlist' button to download the selected playlist.
       // This download is simulated by the mock audio download VM
       await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
       await tester.pumpAndSettle();
@@ -2648,6 +2698,9 @@ void main() {
 
       // Tap the 'Download All' button to download the selected playlist.
       // This download is simulated by the mock audio download VM
+      await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
+      await tester.pumpAndSettle();
+
       await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
       await tester.pumpAndSettle();
 
@@ -2759,7 +2812,21 @@ void main() {
       await tester.tap(playlistDownloadNavButton);
       await tester.pumpAndSettle();
 
-      // Ensure the URL TextField was emptied
+      // Now tap on the delete button to empty the search text
+      // field. The reason is due to using debounce in the
+      // YoutubeUrlOrSearchTextField widget. If the text field is not
+      // emptied, it avoids that the Youtibe playlist addition warning
+      // dialog is shown twice when the 'Add playlist button' button is
+      // tapped.
+      await tester.tap(
+        find.byKey(
+          const Key('clearPlaylistUrlOrSearchButtonKey'),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // Ensure the URL TextField was emptied. If is emptied, the
+      // displayed warning will displayed twice.
       urlTextField = tester.widget(find.byKey(
         const Key('youtubeUrlOrSearchTextField'),
       ));
@@ -15112,7 +15179,7 @@ void main() {
 
           // since a local playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          _verifyLocalSelectedPlaylistButtonsAndCheckbox(
+          await _verifyLocalSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: true,
           );
@@ -15165,7 +15232,7 @@ void main() {
 
           // since a locYoutubeal playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          _verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
+          await _verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: true,
           );
@@ -15217,7 +15284,7 @@ void main() {
 
           // since a locYoutubeal playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          _verifyLocalSelectedPlaylistButtonsAndCheckbox(
+          await _verifyLocalSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: true,
           );
@@ -15270,7 +15337,7 @@ void main() {
 
           // since a locYoutubeal playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          _verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
+          await _verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: true,
           );
@@ -15325,7 +15392,7 @@ void main() {
 
           // since a local playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          _verifyLocalSelectedPlaylistButtonsAndCheckbox(
+          await _verifyLocalSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: false,
           );
@@ -15388,7 +15455,7 @@ void main() {
 
           // since a locYoutubeal playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          _verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
+          await _verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: false,
           );
@@ -15450,7 +15517,7 @@ void main() {
 
           // since a locYoutubeal playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          _verifyLocalSelectedPlaylistButtonsAndCheckbox(
+          await _verifyLocalSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: false,
           );
@@ -15513,7 +15580,7 @@ void main() {
 
           // since a locYoutubeal playlist is selected, verify that
           // some buttons and checkbox are enabled and some are disabled
-          _verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
+          await _verifyYoutubeSelectedPlaylistButtonsAndCheckbox(
             tester: tester,
             isPlaylistListDisplayed: false,
           );
@@ -18773,11 +18840,11 @@ void _modifySelectedPlaylistBeforeStartingApplication({
   );
 }
 
-void _verifyYoutubeSelectedPlaylistButtonsAndCheckbox({
+Future<void> _verifyYoutubeSelectedPlaylistButtonsAndCheckbox({
   required WidgetTester tester,
   required bool isPlaylistListDisplayed,
-}) {
-  IntegrationTestUtil.verifyWidgetIsDisabled(
+}) async {
+  await IntegrationTestUtil.verifyWidgetIsDisabled(
     tester: tester,
     widgetKeyStr: 'search_icon_button', // this button is disabled if the
     //                                     'Youtube Link or Search' dosn't
@@ -18819,11 +18886,11 @@ void _verifyYoutubeSelectedPlaylistButtonsAndCheckbox({
   );
 }
 
-void _verifyLocalSelectedPlaylistButtonsAndCheckbox({
+Future<void> _verifyLocalSelectedPlaylistButtonsAndCheckbox({
   required WidgetTester tester,
   required bool isPlaylistListDisplayed,
-}) {
-  IntegrationTestUtil.verifyWidgetIsDisabled(
+}) async {
+  await IntegrationTestUtil.verifyWidgetIsDisabled(
     tester: tester,
     widgetKeyStr: 'search_icon_button', // this button is disabled if the
     //                                     'Youtube Link or Search' dosn't
@@ -18958,18 +19025,34 @@ Future<void> _checkWarningDialog({
   required String playlistTitle,
   required bool isMusicQuality,
   required PlaylistType playlistType,
+  bool findLast = false,
 }) async {
   // Ensure the warning dialog is shown
   expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
 
   // Check the value of the warning dialog title
-  Text warningDialogTitle =
-      tester.widget(find.byKey(const Key('warningDialogTitle')));
-  expect(warningDialogTitle.data, 'WARNING');
+  if (!findLast) {
+    Text warningDialogTitle =
+        tester.widget(find.byKey(const Key('warningDialogTitle')));
+    expect(warningDialogTitle.data, 'WARNING');
+  } else {
+    // If findLast is true, the warning dialog title should be empty
+    Text warningDialogTitle =
+        tester.widget(find.byKey(const Key('warningDialogTitle')).last);
+    expect(warningDialogTitle.data, 'WARNING');
+  }
 
   // Check the value of the warning dialog message
-  Text warningDialogMessage =
-      tester.widget(find.byKey(const Key('warningDialogMessage')));
+  Text warningDialogMessage;
+
+  if (!findLast) {
+    warningDialogMessage =
+        tester.widget(find.byKey(const Key('warningDialogMessage')));
+  } else {
+    // If findLast is true, the warning dialog message should be the last one
+    warningDialogMessage =
+        tester.widget(find.byKey(const Key('warningDialogMessage')).last);
+  }
 
   if (playlistType == PlaylistType.youtube) {
     expect(warningDialogMessage.data,
@@ -18980,8 +19063,17 @@ Future<void> _checkWarningDialog({
   }
 
   // Close the warning dialog by tapping on the Ok button
-  await tester.tap(find.byKey(const Key('warningDialogOkButton')));
-  await tester.pumpAndSettle();
+  if (!findLast) {
+    await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+    await tester.pumpAndSettle();
+  } else {
+    // If findLast is true, close the warning dialog by tapping on the last Ok button
+    await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+    await tester.pumpAndSettle();
+  }
 }
 
 Future<void> _checkAudioCommentInAudioPlayerView({
