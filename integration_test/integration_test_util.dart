@@ -565,12 +565,12 @@ class IntegrationTestUtil {
     required AudioLearnAppViewType audioLearnAppViewType,
   }) async {
     if (isFirstAudioMenuItemDisabled) {
-      verifyWidgetIsDisabled(
+      await verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'define_sort_and_filter_audio_menu_item',
       );
 
-      verifyWidgetIsDisabled(
+      await verifyWidgetIsDisabled(
         // no Sort/filter parameters history are available in test data
         tester: tester,
         widgetKeyStr: 'clear_sort_and_filter_audio_parms_history_menu_item',
@@ -588,7 +588,7 @@ class IntegrationTestUtil {
         widgetKeyStr: 'define_sort_and_filter_audio_menu_item',
       );
 
-      verifyWidgetIsDisabled(
+      await verifyWidgetIsDisabled(
         // no Sort/filter parameters history are available in test data
         tester: tester,
         widgetKeyStr: 'clear_sort_and_filter_audio_parms_history_menu_item',
@@ -647,11 +647,11 @@ class IntegrationTestUtil {
     }
   }
 
-  static void verifyWidgetIsDisabled({
+  static Future<void> verifyWidgetIsDisabled({
     required WidgetTester tester,
     required String widgetKeyStr,
     bool isSaveSortFilterMenuDisabled = false,
-  }) {
+  }) async {
     // Find the widget by its key
     final Finder widgetFinder = find.byKey(Key(widgetKeyStr));
 
@@ -675,8 +675,55 @@ class IntegrationTestUtil {
       expect(widget.enabled, isFalse,
           reason: 'PopupMenuItem should be disabled');
     } else if (widget is InkWell) {
-      // For InkWell button, check the onTap property
-      expect(widget.onTap, isNull, reason: 'InkWell button should be disabled');
+      // For the specific search button, check the state of its dependencies
+      if (widgetKeyStr == 'search_icon_button') {
+        // load settings from file which does not exist. This
+        // will ensure that the default playlist root path is set
+        SettingsDataService settingsDataService;
+
+        settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}settings.json");
+
+        final WarningMessageVM warningMessageVM = WarningMessageVM();
+
+        final AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+          warningMessageVM: warningMessageVM,
+          settingsDataService: settingsDataService,
+        );
+
+        final PlaylistListVM playlistListVM = PlaylistListVM(
+          warningMessageVM: warningMessageVM,
+          audioDownloadVM: audioDownloadVM,
+          commentVM: CommentVM(),
+          pictureVM: PictureVM(
+            settingsDataService: settingsDataService,
+          ),
+          settingsDataService: settingsDataService,
+        );
+
+        // Get the PlaylistListVM through the widget tree or use a global reference
+        // and check the conditions that would make it disabled
+        final ValueNotifier<String?> searchTextNotifier =
+            playlistListVM.youtubeLinkOrSearchSentenceNotifier;
+        final ValueNotifier<bool> urlContainedNotifier =
+            playlistListVM.urlContainedInYoutubeLinkNotifier;
+
+        final bool isDisabled = searchTextNotifier.value == null ||
+            searchTextNotifier.value!.isEmpty ||
+            urlContainedNotifier.value;
+
+        expect(isDisabled, isTrue, reason: 'Search InkWell should be disabled');
+      } else {
+        // Fall back to the original check for other InkWell widgets
+        expect(widget.onTap, isNull,
+            reason: 'InkWell button should be disabled');
+      }
     } else {
       fail(
           'The widget with key $widgetKeyStr is not a recognized type for this test');
@@ -744,27 +791,27 @@ class IntegrationTestUtil {
         widgetKeyStr: 'audio_popup_menu_button',
       );
     } else {
-      verifyWidgetIsDisabled(
+      await verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'decreaseAudioVolumeIconButton',
       );
 
-      verifyWidgetIsDisabled(
+      await verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'increaseAudioVolumeIconButton',
       );
 
-      verifyWidgetIsDisabled(
+      await verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'setAudioSpeedTextButton',
       );
 
-      verifyWidgetIsDisabled(
+      await verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'commentsInkWellButton',
       );
 
-      verifyWidgetIsDisabled(
+      await verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );

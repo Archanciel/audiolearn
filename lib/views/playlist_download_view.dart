@@ -834,7 +834,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     playlistListVMlistenTrue.wasSearchButtonClickedNotifier,
                 builder: (context, wasSearchButtonClicked, child) {
                   if (wasSearchButtonClicked) {
-                    circleAvatar = formatIconBackAndForGroundColor(
+                    circleAvatar = formatIconBackAndForgroundColor(
                       context: context,
                       iconToFormat: searchIconButton,
                       isIconHighlighted:
@@ -845,7 +845,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     );
                   } else if (currentUrlOrSearchSentence == null ||
                       isUrlContainedInYoutubeLink) {
-                    circleAvatar = formatIconBackAndForGroundColor(
+                    circleAvatar = formatIconBackAndForgroundColor(
                       context: context,
                       iconToFormat: searchIconButton,
                       isIconHighlighted: false, // since the search icon has not
@@ -856,7 +856,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                       //                       the search icon is disabled
                     );
                   } else {
-                    circleAvatar = formatIconBackAndForGroundColor(
+                    circleAvatar = formatIconBackAndForgroundColor(
                       context: context,
                       iconToFormat: searchIconButton,
                       isIconHighlighted: false, // since the search icon has not
