@@ -155,8 +155,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     _debounce = Timer(const Duration(milliseconds: 100), () {
       // This code will run after 300ms of inactivity
       final value = _playlistUrlOrSearchController.text;
-      print('*************$value****');
-      
+
       if (value.toLowerCase().contains('https://') ||
           value.toLowerCase().contains('http://')) {
         _containsURL = true;
@@ -169,11 +168,13 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       } else {
         _playlistListVMlistenTrue.isSearchButtonEnabled = true;
       }
-      
+
       _playlistListVMlistenTrue.searchSentence = value;
-      
+
       if (!_playlistListVMlistenTrue.isPlaylistListExpanded &&
           _playlistListVMlistenTrue.wasSearchButtonClicked) {
+        // Applying sort and filter parameters change if search
+        // sentence was changed only if the search button was clicked.
         _applySortFilterParmsNameChange(
           playlistListVMlistenFalseOrTrue: _playlistListVMlistenTrue,
           notifyListeners: true,
@@ -682,7 +683,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             ),
           ),
         ),
-        _buildSearchIconButton(playlistListVMlistenTrue, playlistListVMlistenFalse),
+        _buildSearchIconButton(
+            playlistListVMlistenTrue, playlistListVMlistenFalse),
         (playlistListVMlistenTrue.isPlaylistListExpanded)
             ? _buildPlaylistMoveIconButtons(
                 playlistListVMlistenFalse: playlistListVMlistenFalse,
@@ -807,96 +809,95 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     );
   }
 
-  SizedBox _buildSearchIconButton(PlaylistListVM playlistListVMlistenTrue, PlaylistListVM playlistListVMlistenFalse) {
+  SizedBox _buildSearchIconButton(PlaylistListVM playlistListVMlistenTrue,
+      PlaylistListVM playlistListVMlistenFalse) {
     return SizedBox(
-        width: kSmallIconButtonWidth,
-        child: ValueListenableBuilder<String?>(
-          valueListenable:
-              playlistListVMlistenTrue.youtubeLinkOrSearchSentenceNotifier,
-          builder: (context, currentUrlOrSearchSentence, child) {
-            CircleAvatar circleAvatar;
-            const Icon searchIconButton = Icon(
-              Icons.search,
-              size: kSmallIconButtonWidth,
-            );
+      width: kSmallIconButtonWidth,
+      child: ValueListenableBuilder<String?>(
+        valueListenable:
+            playlistListVMlistenTrue.youtubeLinkOrSearchSentenceNotifier,
+        builder: (context, currentUrlOrSearchSentence, child) {
+          CircleAvatar circleAvatar;
+          const Icon searchIconButton = Icon(
+            Icons.search,
+            size: kSmallIconButtonWidth,
+          );
 
-            return ValueListenableBuilder<bool>(
-              valueListenable:
-                  playlistListVMlistenTrue.urlContainedInYoutubeLinkNotifier,
-              builder: (context, isUrlContainedInYoutubeLink, child) {
-                // Enables to disable the search button if an url is entered
-                // in the Youtube link text field.
-                return ValueListenableBuilder<bool>(
-                  valueListenable:
-                      playlistListVMlistenTrue.wasSearchButtonClickedNotifier,
-                  builder: (context, wasSearchButtonClicked, child) {
-                    if (wasSearchButtonClicked) {
-                      circleAvatar = formatIconBackAndForGroundColor(
-                        context: context,
-                        iconToFormat: searchIconButton,
-                        isIconHighlighted:
-                            true, // since the search icon was clicked, it is
-                        //           highlighted
-                        iconSize: kSmallIconButtonWidth * 0.8,  
-                        radius: 11,
-                      );
-                    } else if (currentUrlOrSearchSentence == null ||
-                        isUrlContainedInYoutubeLink) {
-                      circleAvatar = formatIconBackAndForGroundColor(
-                        context: context,
-                        iconToFormat: searchIconButton,
-                        isIconHighlighted:
-                            false, // since the search icon has not
-                        //                            yet been clicked, it is not
-                        //                            highlighted
-                        isIconDisabled:
-                            true, // since the search sentence is empty
-                        //                       the search icon is disabled
-                      );
-                    } else {
-                      circleAvatar = formatIconBackAndForGroundColor(
-                        context: context,
-                        iconToFormat: searchIconButton,
-                        isIconHighlighted:
-                            false, // since the search icon has not
-                        //                            yet been clicked, it is not
-                        //                            highlighted
-                      );
-                    }
-
-                    return InkWell(
-                      key: const Key('search_icon_button'),
-                      onTap: (currentUrlOrSearchSentence != null &&
-                              currentUrlOrSearchSentence.isNotEmpty)
-                          ? () {
-                              playlistListVMlistenFalse
-                                  .wasSearchButtonClicked = true;
-                              if (!playlistListVMlistenTrue
-                                  .isPlaylistListExpanded) {
-                                // the list of playlists is collapsed
-                                playlistListVMlistenFalse
-                                    .isSearchSentenceApplied = true;
-                                _applySortFilterParmsNameChange(
-                                  playlistListVMlistenFalseOrTrue:
-                                      playlistListVMlistenFalse,
-                                  notifyListeners: true,
-                                );
-                              }
-                            }
-                          : null,
-                      child: SizedBox(
-                        width:
-                            85, // Adjust this width based on the size of your largest icon
-                        child: Center(child: circleAvatar),
-                      ),
+          return ValueListenableBuilder<bool>(
+            valueListenable:
+                playlistListVMlistenTrue.urlContainedInYoutubeLinkNotifier,
+            builder: (context, isUrlContainedInYoutubeLink, child) {
+              // Enables to disable the search button if an url is entered
+              // in the Youtube link text field.
+              return ValueListenableBuilder<bool>(
+                valueListenable:
+                    playlistListVMlistenTrue.wasSearchButtonClickedNotifier,
+                builder: (context, wasSearchButtonClicked, child) {
+                  if (wasSearchButtonClicked) {
+                    circleAvatar = formatIconBackAndForGroundColor(
+                      context: context,
+                      iconToFormat: searchIconButton,
+                      isIconHighlighted:
+                          true, // since the search icon was clicked, it is
+                      //           highlighted
+                      iconSize: kSmallIconButtonWidth * 0.8,
+                      radius: 11,
                     );
-                  },
-                );
-              },
-            );
-          },
-        ),
-      );
+                  } else if (currentUrlOrSearchSentence == null ||
+                      isUrlContainedInYoutubeLink) {
+                    circleAvatar = formatIconBackAndForGroundColor(
+                      context: context,
+                      iconToFormat: searchIconButton,
+                      isIconHighlighted: false, // since the search icon has not
+                      //                            yet been clicked, it is not
+                      //                            highlighted
+                      isIconDisabled:
+                          true, // since the search sentence is empty
+                      //                       the search icon is disabled
+                    );
+                  } else {
+                    circleAvatar = formatIconBackAndForGroundColor(
+                      context: context,
+                      iconToFormat: searchIconButton,
+                      isIconHighlighted: false, // since the search icon has not
+                      //                            yet been clicked, it is not
+                      //                            highlighted
+                    );
+                  }
+
+                  return InkWell(
+                    key: const Key('search_icon_button'),
+                    onTap: (currentUrlOrSearchSentence != null &&
+                            currentUrlOrSearchSentence.isNotEmpty)
+                        ? () {
+                            playlistListVMlistenFalse.wasSearchButtonClicked =
+                                true;
+                            if (!playlistListVMlistenTrue
+                                .isPlaylistListExpanded) {
+                              // the list of playlists is collapsed
+                              playlistListVMlistenFalse
+                                  .isSearchSentenceApplied = true;
+                              _applySortFilterParmsNameChange(
+                                playlistListVMlistenFalseOrTrue:
+                                    playlistListVMlistenFalse,
+                                notifyListeners: true,
+                              );
+                            }
+                          }
+                        : null,
+                    child: SizedBox(
+                      width:
+                          85, // Adjust this width based on the size of your largest icon
+                      child: Center(child: circleAvatar),
+                    ),
+                  );
+                },
+              );
+            },
+          );
+        },
+      ),
+    );
   }
 
   /// Method called only if the list of playlists is NOT expanded
@@ -2084,37 +2085,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 contentPadding: const EdgeInsets.all(2),
               ),
               maxLines: 1,
-              // onChanged: (String value) {
-              //   if (value.toLowerCase().contains('https://') ||
-              //       value.toLowerCase().contains('http://')) {
-              //     _containsURL = true;
-              //   } else {
-              //     _containsURL = false;
-              //   }
-
-              //   // Enable the single video download button appearance
-              //   // to be updated when a URL is entered or copied in the
-              //   // text field.
-              //   // setState(() {});
-
-              //   if (value.isEmpty || _containsURL) {
-              //     playlistListVMlistenTrue.disableSearchSentence();
-              //   } else {
-              //     playlistListVMlistenTrue.isSearchButtonEnabled = true;
-              //   }
-
-              //   playlistListVMlistenTrue.searchSentence = value;
-
-              //   if (!playlistListVMlistenTrue.isPlaylistListExpanded &&
-              //       playlistListVMlistenTrue.wasSearchButtonClicked) {
-              //     // Applying sort and filter parameters change if search
-              //     // sentence was changed only if the search button was clicked.
-              //     _applySortFilterParmsNameChange(
-              //       playlistListVMlistenFalseOrTrue: playlistListVMlistenTrue,
-              //       notifyListeners: true,
-              //     );
-              //   }
-              // },
             ),
           ),
           Expanded(
