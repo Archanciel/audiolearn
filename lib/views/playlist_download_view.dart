@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:another_flushbar/flushbar.dart';
@@ -68,10 +69,14 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   bool _doNotScroll = false;
   String _selectedPlaylistAudioSortFilterParmsName = '';
   bool _containsURL = false;
+  Timer? _debounce;
+  late PlaylistListVM _playlistListVMlistenTrue;
 
   @override
   initState() {
     super.initState();
+
+    _playlistUrlOrSearchController.addListener(_onTextChanged);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
@@ -131,11 +136,50 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
   @override
   void dispose() {
+    _debounce?.cancel();
+    _playlistUrlOrSearchController.removeListener(_onTextChanged);
     _playlistUrlOrSearchController.dispose();
     _audioScrollController.dispose();
     _playlistScrollController.dispose();
 
     super.dispose();
+  }
+
+  void _onTextChanged() {
+    // Cancel any previous debounce timer
+    if (_debounce?.isActive ?? false) {
+      _debounce!.cancel();
+    }
+
+    // Set a new timer
+    _debounce = Timer(const Duration(milliseconds: 100), () {
+      // This code will run after 300ms of inactivity
+      final value = _playlistUrlOrSearchController.text;
+      print('*************$value****');
+      
+      if (value.toLowerCase().contains('https://') ||
+          value.toLowerCase().contains('http://')) {
+        _containsURL = true;
+      } else {
+        _containsURL = false;
+      }
+
+      if (value.isEmpty || _containsURL) {
+        _playlistListVMlistenTrue.disableSearchSentence();
+      } else {
+        _playlistListVMlistenTrue.isSearchButtonEnabled = true;
+      }
+      
+      _playlistListVMlistenTrue.searchSentence = value;
+      
+      if (!_playlistListVMlistenTrue.isPlaylistListExpanded &&
+          _playlistListVMlistenTrue.wasSearchButtonClicked) {
+        _applySortFilterParmsNameChange(
+          playlistListVMlistenFalseOrTrue: _playlistListVMlistenTrue,
+          notifyListeners: true,
+        );
+      }
+    });
   }
 
   @override
@@ -159,7 +203,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       context,
       listen: false,
     );
-    final PlaylistListVM playlistListVMlistenTrue = Provider.of<PlaylistListVM>(
+    _playlistListVMlistenTrue = Provider.of<PlaylistListVM>(
       context,
       listen: true,
     );
@@ -182,7 +226,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           audioDownloadVMlistenFalse: audioDownloadVMlistenfalse,
           themeProviderVM: themeProviderVM,
           playlistListVMlistenFalse: playlistListVMlistenFalse,
-          playlistListVMlistenTrue: playlistListVMlistenTrue,
+          playlistListVMlistenTrue: _playlistListVMlistenTrue,
           warningMessageVMlistenFalse: warningMessageVMlistenFalse,
         ),
         // displaying the currently downloading audiodownload
@@ -192,7 +236,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             context: context,
             themeProviderVM: themeProviderVM,
             playlistListVMlistenFalse: playlistListVMlistenFalse,
-            playlistListVMlistenTrue: playlistListVMlistenTrue,
+            playlistListVMlistenTrue: _playlistListVMlistenTrue,
             warningMessageVMlistenFalse: warningMessageVMlistenFalse),
         _buildExpandedPlaylistList(
           playlistListVMlistenFalse: playlistListVMlistenFalse,
@@ -206,7 +250,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               )
             : const SizedBox.shrink(), // the list of playlists is collapsed
         _buildExpandedAudioList(
-          playlistListVMlistenTrue: playlistListVMlistenTrue,
+          playlistListVMlistenTrue: _playlistListVMlistenTrue,
           audioDownloadVMlistenTrue: audioDownloadVMlistenTrue,
           warningMessageVMlistenFalse: warningMessageVMlistenFalse,
         ),
@@ -2040,37 +2084,37 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 contentPadding: const EdgeInsets.all(2),
               ),
               maxLines: 1,
-              onChanged: (String value) {
-                if (value.toLowerCase().contains('https://') ||
-                    value.toLowerCase().contains('http://')) {
-                  _containsURL = true;
-                } else {
-                  _containsURL = false;
-                }
+              // onChanged: (String value) {
+              //   if (value.toLowerCase().contains('https://') ||
+              //       value.toLowerCase().contains('http://')) {
+              //     _containsURL = true;
+              //   } else {
+              //     _containsURL = false;
+              //   }
 
-                // Enable the single video download button appearance
-                // to be updated when a URL is entered or copied in the
-                // text field.
-                // setState(() {});
+              //   // Enable the single video download button appearance
+              //   // to be updated when a URL is entered or copied in the
+              //   // text field.
+              //   // setState(() {});
 
-                if (value.isEmpty || _containsURL) {
-                  playlistListVMlistenTrue.disableSearchSentence();
-                } else {
-                  playlistListVMlistenTrue.isSearchButtonEnabled = true;
-                }
+              //   if (value.isEmpty || _containsURL) {
+              //     playlistListVMlistenTrue.disableSearchSentence();
+              //   } else {
+              //     playlistListVMlistenTrue.isSearchButtonEnabled = true;
+              //   }
 
-                playlistListVMlistenTrue.searchSentence = value;
+              //   playlistListVMlistenTrue.searchSentence = value;
 
-                if (!playlistListVMlistenTrue.isPlaylistListExpanded &&
-                    playlistListVMlistenTrue.wasSearchButtonClicked) {
-                  // Applying sort and filter parameters change if search
-                  // sentence was changed only if the search button was clicked.
-                  _applySortFilterParmsNameChange(
-                    playlistListVMlistenFalseOrTrue: playlistListVMlistenTrue,
-                    notifyListeners: true,
-                  );
-                }
-              },
+              //   if (!playlistListVMlistenTrue.isPlaylistListExpanded &&
+              //       playlistListVMlistenTrue.wasSearchButtonClicked) {
+              //     // Applying sort and filter parameters change if search
+              //     // sentence was changed only if the search button was clicked.
+              //     _applySortFilterParmsNameChange(
+              //       playlistListVMlistenFalseOrTrue: playlistListVMlistenTrue,
+              //       notifyListeners: true,
+              //     );
+              //   }
+              // },
             ),
           ),
           Expanded(
