@@ -1810,7 +1810,7 @@ void main() {
       testWidgets('''First, enter the search word 'al' in the 'Youtube Link or
            Search' text field.''', (WidgetTester tester) async {
         // Click on the enabled search icon button and verify the reduced
-        // displayed playlist list list.
+        // displayed playlist list.
         //
         // Then, select one of the filtered playlist and click on the move
         // up icon button to reposition the selected playlist. Verify the
