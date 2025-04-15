@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../../models/playlist.dart';
 import '../../constants.dart';
 import '../../services/settings_data_service.dart';
+import '../../utils/dir_util.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
@@ -975,6 +976,18 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         return const SizedBox.shrink();
       case WarningMessageType.audioNotMovedFromToPlaylist:
         WidgetsBinding.instance.addPostFrameCallback((_) {
+          String notCopiedOrMovedReasonStr = '';
+
+          if (_warningMessageVM.copyOrMoveFileResult ==
+              CopyOrMoveFileResult.sourceFileNotExist) {
+            notCopiedOrMovedReasonStr =
+                AppLocalizations.of(context)!.sinceAbsentFromSourcePlaylist;
+          } else if (_warningMessageVM.copyOrMoveFileResult ==
+              CopyOrMoveFileResult.targetFileAlreadyExists) {
+            notCopiedOrMovedReasonStr = AppLocalizations.of(context)!
+                .sinceAlreadyPresentInTargetPlaylist;
+          }
+
           String audioMovedFromToPlaylistMessage;
 
           if (_warningMessageVM.movedFromPlaylistType == PlaylistType.local) {
@@ -983,6 +996,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                   .audioNotMovedFromLocalPlaylistToLocalPlaylist(
                 _warningMessageVM.movedAudioValidVideoTitle,
                 _warningMessageVM.movedFromPlaylistTitle,
+                notCopiedOrMovedReasonStr,
                 _warningMessageVM.movedToPlaylistTitle,
               );
             } else {
@@ -990,6 +1004,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                   .audioNotMovedFromLocalPlaylistToYoutubePlaylist(
                 _warningMessageVM.movedAudioValidVideoTitle,
                 _warningMessageVM.movedFromPlaylistTitle,
+                notCopiedOrMovedReasonStr,
                 _warningMessageVM.movedToPlaylistTitle,
               );
             }
@@ -1000,6 +1015,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                     .audioNotMovedFromYoutubePlaylistToLocalPlaylist(
                   _warningMessageVM.movedAudioValidVideoTitle,
                   _warningMessageVM.movedFromPlaylistTitle,
+                  notCopiedOrMovedReasonStr,
                   _warningMessageVM.movedToPlaylistTitle,
                 );
               } else {
@@ -1007,6 +1023,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                     .audioNotMovedFromYoutubePlaylistToYoutubePlaylist(
                   _warningMessageVM.movedAudioValidVideoTitle,
                   _warningMessageVM.movedFromPlaylistTitle,
+                  notCopiedOrMovedReasonStr,
                   _warningMessageVM.movedToPlaylistTitle,
                 );
               }
@@ -1016,6 +1033,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                     .audioNotMovedFromYoutubePlaylistToLocalPlaylist(
                   _warningMessageVM.movedAudioValidVideoTitle,
                   _warningMessageVM.movedFromPlaylistTitle,
+                  notCopiedOrMovedReasonStr,
                   _warningMessageVM.movedToPlaylistTitle,
                 );
               } else {
@@ -1023,6 +1041,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                     .audioNotMovedFromYoutubePlaylistToYoutubePlaylist(
                   _warningMessageVM.movedAudioValidVideoTitle,
                   _warningMessageVM.movedFromPlaylistTitle,
+                  notCopiedOrMovedReasonStr,
                   _warningMessageVM.movedToPlaylistTitle,
                 );
               }
@@ -1040,6 +1059,18 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         return const SizedBox.shrink();
       case WarningMessageType.audioNotCopiedFromToPlaylist:
         WidgetsBinding.instance.addPostFrameCallback((_) {
+          String notCopiedOrMovedReasonStr = '';
+
+          if (_warningMessageVM.copyOrMoveFileResult ==
+              CopyOrMoveFileResult.sourceFileNotExist) {
+            notCopiedOrMovedReasonStr =
+                AppLocalizations.of(context)!.sinceAbsentFromSourcePlaylist;
+          } else if (_warningMessageVM.copyOrMoveFileResult ==
+              CopyOrMoveFileResult.targetFileAlreadyExists) {
+            notCopiedOrMovedReasonStr = AppLocalizations.of(context)!
+                .sinceAlreadyPresentInTargetPlaylist;
+          }
+
           String audioCopiedFromToPlaylistMessage;
 
           if (_warningMessageVM.copiedFromPlaylistType == PlaylistType.local) {
@@ -1048,6 +1079,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                   .audioNotCopiedFromLocalPlaylistToLocalPlaylist(
                 _warningMessageVM.copiedAudioValidVideoTitle,
                 _warningMessageVM.copiedFromPlaylistTitle,
+                notCopiedOrMovedReasonStr,
                 _warningMessageVM.copiedToPlaylistTitle,
               );
             } else {
@@ -1055,6 +1087,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                   .audioNotCopiedFromLocalPlaylistToYoutubePlaylist(
                 _warningMessageVM.copiedAudioValidVideoTitle,
                 _warningMessageVM.copiedFromPlaylistTitle,
+                notCopiedOrMovedReasonStr,
                 _warningMessageVM.copiedToPlaylistTitle,
               );
             }
@@ -1064,6 +1097,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                   .audioNotCopiedFromYoutubePlaylistToLocalPlaylist(
                 _warningMessageVM.copiedAudioValidVideoTitle,
                 _warningMessageVM.copiedFromPlaylistTitle,
+                notCopiedOrMovedReasonStr,
                 _warningMessageVM.copiedToPlaylistTitle,
               );
             } else {
@@ -1071,6 +1105,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                   .audioNotCopiedFromYoutubePlaylistToYoutubePlaylist(
                 _warningMessageVM.copiedAudioValidVideoTitle,
                 _warningMessageVM.copiedFromPlaylistTitle,
+                notCopiedOrMovedReasonStr,
                 _warningMessageVM.copiedToPlaylistTitle,
               );
             }

@@ -6,6 +6,12 @@ import 'package:path/path.dart' as path;
 
 import '../constants.dart';
 
+enum CopyOrMoveFileResult {
+  copiedOrMoved,
+  targetFileAlreadyExists,
+  sourceFileNotExist,
+}
+
 class DirUtil {
   static List<String> readUrlsFromFile(String filePath) {
     try {
@@ -506,7 +512,7 @@ class DirUtil {
   /// Returns true if the file has been moved, false otherwise
   /// which happens if the moved file already exist in the
   /// target directory.
-  static bool moveFileToDirectoryIfNotExistSync({
+  static CopyOrMoveFileResult  moveFileToDirectoryIfNotExistSync({
     required String sourceFilePathName,
     required String targetDirectoryPath,
     String? targetFileName,
@@ -523,15 +529,20 @@ class DirUtil {
       targetDirectory.createSync(recursive: true);
     }
 
-    // If the source file does not exist or the target file already exist,
-    // move is not performed and false is returned.
-    if (!sourceFile.existsSync() || File(targetPathFileName).existsSync()) {
-      return false;
+    // If the source file does not exist or the target file already exist and
+    // move is not performed and a CopyOrMoveFileResult is returned.
+    
+    if (!sourceFile.existsSync()) {
+      return CopyOrMoveFileResult.sourceFileNotExist;
+    }
+
+    if (File(targetPathFileName).existsSync()) {
+      return CopyOrMoveFileResult.targetFileAlreadyExists;
     }
 
     sourceFile.renameSync(targetPathFileName);
 
-    return true;
+    return CopyOrMoveFileResult.copiedOrMoved;
   }
 
   /// If [targetFileName] is not provided, the copied file will
@@ -540,7 +551,7 @@ class DirUtil {
   /// Returns true if the file has been copied, false
   /// otherwise in case the copied file already exists in
   /// the target dir and {overwriteFileIfExist} is false.
-  static bool copyFileToDirectorySync({
+  static CopyOrMoveFileResult copyFileToDirectorySync({
     required String sourceFilePathName,
     required String targetDirectoryPath,
     String? targetFileName,
@@ -559,16 +570,20 @@ class DirUtil {
     }
 
     // If the source file does not exist or the target file already exist and
-    // overwriteFileIfExist is not true, copy is not performed and false is
-    // returned.
-    if (!sourceFile.existsSync() ||
-        (!overwriteFileIfExist && File(targetPathFileName).existsSync())) {
-      return false;
+    // overwriteFileIfExist is not true, copy is not performed and a
+    // CopyOrMoveFileResult is returned.
+
+    if (!sourceFile.existsSync()) {
+      return CopyOrMoveFileResult.sourceFileNotExist;
+    }
+
+    if (!overwriteFileIfExist && File(targetPathFileName).existsSync()) {
+      return CopyOrMoveFileResult.targetFileAlreadyExists;
     }
 
     sourceFile.copySync(targetPathFileName);
 
-    return true;
+    return CopyOrMoveFileResult.copiedOrMoved;
   }
 
   /// Return false in case the file to rename does not exist or if a file named
