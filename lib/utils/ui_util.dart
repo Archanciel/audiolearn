@@ -76,7 +76,7 @@ class UiUtil {
     await Provider.of<PlaylistListVM>(
       context,
       listen: false,
-    ).savePlaylistsCommentsAndSettingsJsonFilesToZip(
+    ).savePlaylistsCommentsPicturesAndSettingsJsonFilesToZip(
       targetDirectoryPath: targetSaveDirectoryPath,
     );
   }

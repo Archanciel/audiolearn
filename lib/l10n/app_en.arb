@@ -490,8 +490,8 @@
   "remaining": "Remaining",
   "searchInYoutubeChannelName": "Include Youtube channel",
   "searchInYoutubeChannelNameTooltip": "If set, search words or sentences are searched on Youtube channel name as well.",
-  "savePlaylistAndCommentsToZipMenu": "Save Playlists, Comments and Settings to Zip File ...",
-  "savePlaylistAndCommentsToZipTooltip": "Saving the playlists and their audio comments to a zip file. The zip file will contain the playlists JSON files as well as the comments JSON files. Additionally, the application settings.json will be saved. The audio files will not be included.",
+  "savePlaylistAndCommentsToZipMenu": "Save Playlists, Comments, Pictures and Settings to Zip File ...",
+  "savePlaylistAndCommentsToZipTooltip": "Saving the playlists, their audio comments and pictures to a zip file. The zip file will contain the playlists JSON files as well as the comment and picture JSON files. Additionally, the application settings.json will be saved. The audio files will not be included.",
   "setYoutubeChannelMenu": "Youtube channel setting",
   "confirmYoutubeChannelModifications": "The Youtube channel was set in {numberOfModifiedDownloadedAudio} downloaded audio's and in {numberOfModifiedPlayableAudio} playable audio.",
   "@confirmYoutubeChannelModifications": {
@@ -775,18 +775,19 @@
   "appDataCouldNotBeSavedToZip": "Playlist and comment json files as well as application settings could not be saved to zip.",
   "pictured": "Pictured",
   "notPictured": "Unpictured",
-  "restorePlaylistAndCommentsFromZipMenu": "Restore Playlists, Comments and Settings from Zip File ...",
-  "restorePlaylistAndCommentsFromZipTooltip": "Restoring the playlists, their audio comments and the application settings from a saved zip file. The zip file contains the playlists, the comments as well as the settings JSON files. The audio files are not included in it.",
-  "restoredAppDataFromZip": "Restored {playlistsNumber} playlist and {commentsNumber} comment json files as well as the application settings from \"{filePathName}\".",
+  "restorePlaylistAndCommentsFromZipMenu": "Restore Playlists, Comments, Pictures and Settings from Zip File ...",
+  "restorePlaylistAndCommentsFromZipTooltip": "Restoring the playlists, their audio comments, pictures and the application settings from a saved zip file. The zip file contains the playlists, the comments, the pictures as well as the settings JSON files. The audio files are not included in it.",
+  "restoredAppDataFromZip": "Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture json files as well as the application settings from \"{filePathName}\".",
   "@restoredAppDataFromZip": {
     "description": "Warning message indicating that the default SF parms were not applied to move audio",
     "placeholders": {
       "playlistsNumber": {},
       "commentsNumber": {},
+      "picturesNumber": {},
       "filePathName": {}
     }
   },
-  "appDataCouldNotBeRestoredFromZip": "Playlist and comment json files as well as application settings could not be restored from zip.",
+  "appDataCouldNotBeRestoredFromZip": "Playlist, comment and picture json files as well as application settings could not be restored from zip.",
   "deleteFilteredAudioFromPlaylistAsWell": "Delete filtered Audio's from Playlist as well ...",
   "deleteFilteredAudioFromPlaylistAsWellConfirmationTitle": "Delete audio's filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\" as well (will be re-downloadable)",
   "@deleteFilteredAudioFromPlaylistAsWellConfirmationTitle": {

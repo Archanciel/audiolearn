@@ -10788,7 +10788,7 @@ void main() {
       // TODO: add integr test
     });
   });
-  group('Save playlist, comments and settings to zip file menu test', () {
+  group('Save playlist, comments, pictures and settings to zip file menu test', () {
     testWidgets(
         '''Successful save. The integration test verify the confirmation displayed
            warning''', (WidgetTester tester) async {
@@ -10975,7 +10975,7 @@ void main() {
       );
     });
   });
-  group('Restore playlist, comments and settings from zip file menu test', () {
+  group('Restore playlist, comments, pictures and settings from zip file menu test', () {
     testWidgets(
         '''Sel playlist. Restore Windows zip to Windows application in which
            an existing playlist is selected. Then, select a SF parm and redownload

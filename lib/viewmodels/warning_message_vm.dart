@@ -861,14 +861,18 @@ class WarningMessageVM extends ChangeNotifier {
   int get playlistsNumber => _playlistsNumber;
   int _commentsNumber = 0;
   int get commentsNumber => _commentsNumber;
+  int _picturesNumber = 0;
+  int get picturesNumber => _picturesNumber;
   void confirmRestorationFromZip({
     required String zipFilePathName,
     required int playlistsNumber,
     required int commentsNumber,
+    required int picturesNumber,
   }) {
     _zipFilePathName = zipFilePathName;
     _playlistsNumber = playlistsNumber;
     _commentsNumber = commentsNumber;
+    _picturesNumber = picturesNumber;
 
     warningMessageType = WarningMessageType.restoreAppDataFromZip;
 

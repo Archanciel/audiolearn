@@ -282,7 +282,7 @@ class Audio {
       return true;
     }
 
-    return other is Audio && other.audioFileName == audioFileName;
+    return other is Audio && other.enclosingPlaylist == enclosingPlaylist && other.audioFileName == audioFileName;
   }
 
   @override

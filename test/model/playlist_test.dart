@@ -706,7 +706,7 @@ void copyOneDownloadedAudio(Playlist playlist) {
       audioPlaySpeed: 1.5);
   audio.audioDownloadSpeed = 1000;
   playlist.addCopiedAudioToDownloadAndPlayableLst(
-      copiedAudio: audio, copiedFromPlaylistTitle: 'source playlist title');
+      audioToCopy: audio, copiedFromPlaylistTitle: 'source playlist title');
 }
 
 void copyOneOtherDownloadedAudio(Playlist playlist) {
@@ -721,7 +721,7 @@ void copyOneOtherDownloadedAudio(Playlist playlist) {
       audioPlaySpeed: 1.5);
   audio.audioDownloadSpeed = 1000;
   playlist.addCopiedAudioToDownloadAndPlayableLst(
-      copiedAudio: audio, copiedFromPlaylistTitle: 'source playlist title');
+      audioToCopy: audio, copiedFromPlaylistTitle: 'source playlist title');
 }
 
 void moveOneDownloadedAudio(Playlist playlist) {

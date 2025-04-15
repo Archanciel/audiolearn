@@ -215,18 +215,18 @@ class Playlist {
   /// playableAudioLst order: [available audio last downloaded, ...,
   ///                          available audio first downloaded]
   void addCopiedAudioToDownloadAndPlayableLst({
-    required Audio copiedAudio,
+    required Audio audioToCopy,
     required String copiedFromPlaylistTitle,
   }) {
     // Creating a copy of the audio to be copied so that the
     // original audio will not be modified by this method.
-    Audio copiedAudioCopy = copiedAudio.copy();
+    Audio copiedAudioCopy = audioToCopy.copy();
 
     Audio? existingPlayableAudio;
 
     try {
       existingPlayableAudio = downloadedAudioLst.firstWhere(
-        (audio) => audio == copiedAudio,
+        (audio) => audio == audioToCopy,
       );
     } catch (e) {
       existingPlayableAudio = null;
@@ -235,7 +235,7 @@ class Playlist {
     if (existingPlayableAudio != null) {
       // the case if the audio was deleted from this playlist and
       // then copied to this playlist.
-      playableAudioLst.remove(copiedAudio);
+      playableAudioLst.remove(audioToCopy);
     }
 
     copiedAudioCopy.enclosingPlaylist = this;
