@@ -265,13 +265,85 @@
   "sinceAbsentFromSourcePlaylist": "since it is not present in the source playlist",
   "sinceAlreadyPresentInTargetPlaylist": "since it is already present in the destination playlist",
   "audioNotMovedFromLocalPlaylistToLocalPlaylist": "Audio \"{audioTitle}\" NOT moved from local playlist \"{fromPlaylistTitle}\" to local playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.",
+  "@audioNotMovedFromLocalPlaylistToLocalPlaylist": {
+    "description": "Not moved warning",
+    "placeholders": {
+      "audioTitle": {},
+      "fromPlaylistTitle": {},
+      "notCopiedOrMovedReason": {},
+      "toPlaylistTitle": {}
+    }
+  },
   "audioNotMovedFromLocalPlaylistToYoutubePlaylist": "Audio \"{audioTitle}\" NOT moved from local playlist \"{fromPlaylistTitle}\" to Youtube playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.",
+  "@audioNotMovedFromLocalPlaylistToYoutubePlaylist": {
+    "description": "Not moved warning",
+    "placeholders": {
+      "audioTitle": {},
+      "fromPlaylistTitle": {},
+      "notCopiedOrMovedReason": {},
+      "toPlaylistTitle": {}
+    }
+  },
   "audioNotMovedFromYoutubePlaylistToLocalPlaylist": "Audio \"{audioTitle}\" NOT moved from Youtube playlist \"{fromPlaylistTitle}\" to local playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.",
+  "@audioNotMovedFromYoutubePlaylistToLocalPlaylist": {
+    "description": "Not moved warning",
+    "placeholders": {
+      "audioTitle": {},
+      "fromPlaylistTitle": {},
+      "notCopiedOrMovedReason": {},
+      "toPlaylistTitle": {}
+    }
+  },
   "audioNotMovedFromYoutubePlaylistToYoutubePlaylist": "Audio \"{audioTitle}\" NOT moved from Youtube playlist \"{fromPlaylistTitle}\" to Youtube playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.",
+  "@audioNotMovedFromYoutubePlaylistToYoutubePlaylist": {
+    "description": "Not moved warning",
+    "placeholders": {
+      "audioTitle": {},
+      "fromPlaylistTitle": {},
+      "notCopiedOrMovedReason": {},
+      "toPlaylistTitle": {}
+    }
+  },
   "audioNotCopiedFromLocalPlaylistToLocalPlaylist": "Audio \"{audioTitle}\" NOT copied from local playlist \"{fromPlaylistTitle}\" to local playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.",
+  "@audioNotCopiedFromLocalPlaylistToLocalPlaylist": {
+    "description": "Not moved warning",
+    "placeholders": {
+      "audioTitle": {},
+      "fromPlaylistTitle": {},
+      "notCopiedOrMovedReason": {},
+      "toPlaylistTitle": {}
+    }
+  },
   "audioNotCopiedFromLocalPlaylistToYoutubePlaylist": "Audio \"{audioTitle}\" NOT copied from local playlist \"{fromPlaylistTitle}\" to Youtube playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.",
+  "@audioNotCopiedFromLocalPlaylistToYoutubePlaylist": {
+    "description": "Not moved warning",
+    "placeholders": {
+      "audioTitle": {},
+      "fromPlaylistTitle": {},
+      "notCopiedOrMovedReason": {},
+      "toPlaylistTitle": {}
+    }
+  },
   "audioNotCopiedFromYoutubePlaylistToLocalPlaylist": "Audio \"{audioTitle}\" NOT copied from Youtube playlist \"{fromPlaylistTitle}\" to local playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.",
+  "@audioNotCopiedFromYoutubePlaylistToLocalPlaylist": {
+    "description": "Not moved warning",
+    "placeholders": {
+      "audioTitle": {},
+      "fromPlaylistTitle": {},
+      "notCopiedOrMovedReason": {},
+      "toPlaylistTitle": {}
+    }
+  },
   "audioNotCopiedFromYoutubePlaylistToYoutubePlaylist": "Audio \"{audioTitle}\" NOT copied from Youtube playlist \"{fromPlaylistTitle}\" to Youtube playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.",
+  "@audioNotCopiedFromYoutubePlaylistToYoutubePlaylist": {
+    "description": "Not moved warning",
+    "placeholders": {
+      "audioTitle": {},
+      "fromPlaylistTitle": {},
+      "notCopiedOrMovedReason": {},
+      "toPlaylistTitle": {}
+    }
+  },
   "audioMovedFromLocalPlaylistToLocalPlaylist": "Audio \"{audioTitle}\" moved from local playlist \"{fromPlaylistTitle}\" to local playlist \"{toPlaylistTitle}\".",
   "audioMovedFromLocalPlaylistToYoutubePlaylist": "Audio \"{audioTitle}\" moved from local playlist \"{fromPlaylistTitle}\" to Youtube playlist \"{toPlaylistTitle}\".",
   "audioMovedFromYoutubePlaylistToLocalPlaylist": "Audio \"{audioTitle}\" moved from Youtube playlist \"{fromPlaylistTitle}\" to local playlist \"{toPlaylistTitle}\".",
