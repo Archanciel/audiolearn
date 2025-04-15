@@ -1409,12 +1409,12 @@ class AudioDownloadVM extends ChangeNotifier {
     String fromPlaylistTitle = fromPlaylist.title;
     String targetPlaylistTitle = targetPlaylist.title;
 
-    bool wasFileMoved = DirUtil.moveFileToDirectoryIfNotExistSync(
+    CopyOrMoveFileResult moveFileResult = DirUtil.moveFileToDirectoryIfNotExistSync(
       sourceFilePathName: audioToMove.filePathName,
       targetDirectoryPath: targetPlaylist.downloadPath,
     );
 
-    if (!wasFileMoved) {
+    if (moveFileResult == CopyOrMoveFileResult.targetFileAlreadyExists) {
       if (displayWarningIfAudioAlreadyExists) {
         // the case if the moved audio file already exist in the target
         // playlist directory or not exist in the source playlist directory
@@ -1424,13 +1424,27 @@ class AudioDownloadVM extends ChangeNotifier {
           movedFromPlaylistType: fromPlaylist.playlistType,
           movedToPlaylistTitle: targetPlaylistTitle,
           movedToPlaylistType: targetPlaylist.playlistType,
+          moveFileResult: moveFileResult
         );
 
         return false;
       }
 
       return false;
-    }
+    } else if (moveFileResult == CopyOrMoveFileResult.sourceFileNotExist) {
+      // the case if the moved audio file does not exist in the source
+      // playlist directory
+        warningMessageVM.setAudioNotMovedFromToPlaylistTitles(
+          movedAudioValidVideoTitle: audioToMove.validVideoTitle,
+          movedFromPlaylistTitle: fromPlaylistTitle,
+          movedFromPlaylistType: fromPlaylist.playlistType,
+          movedToPlaylistTitle: targetPlaylistTitle,
+          movedToPlaylistType: targetPlaylist.playlistType,
+          moveFileResult: moveFileResult
+        );
+
+        return false;
+      }
 
     if (keepAudioInSourcePlaylistDownloadedAudioLst) {
       // Keeping audio data in source playlist downloadedAudioLst
@@ -1511,12 +1525,12 @@ class AudioDownloadVM extends ChangeNotifier {
     String fromPlaylistTitle = fromPlaylist.title;
     String targetPlaylistTitle = targetPlaylist.title;
 
-    bool wasFileCopied = DirUtil.copyFileToDirectorySync(
+    CopyOrMoveFileResult copyFileResult = DirUtil.copyFileToDirectorySync(
       sourceFilePathName: audioToCopy.filePathName,
       targetDirectoryPath: targetPlaylist.downloadPath,
     );
 
-    if (!wasFileCopied) {
+    if (copyFileResult == CopyOrMoveFileResult.targetFileAlreadyExists) {
       if (displayWarningIfAudioAlreadyExists) {
         // the case if the moved audio file already exist in the target
         // playlist directory
@@ -1525,10 +1539,23 @@ class AudioDownloadVM extends ChangeNotifier {
             copiedFromPlaylistTitle: fromPlaylistTitle,
             copiedFromPlaylistType: fromPlaylist.playlistType,
             copiedToPlaylistTitle: targetPlaylistTitle,
-            copiedToPlaylistType: targetPlaylist.playlistType);
+            copiedToPlaylistType: targetPlaylist.playlistType,
+            copyFileResult: copyFileResult);
 
         return false;
       }
+
+      return false;
+    } else if (copyFileResult == CopyOrMoveFileResult.sourceFileNotExist) {
+      // the case if the copied audio file does not exist in the source
+      // playlist directory
+      warningMessageVM.setAudioNotCopiedFromToPlaylistTitles(
+          copiedAudioValidVideoTitle: audioToCopy.validVideoTitle,
+          copiedFromPlaylistTitle: fromPlaylistTitle,
+          copiedFromPlaylistType: fromPlaylist.playlistType,
+          copiedToPlaylistTitle: targetPlaylistTitle,
+          copiedToPlaylistType: targetPlaylist.playlistType,
+          copyFileResult: copyFileResult);
 
       return false;
     }

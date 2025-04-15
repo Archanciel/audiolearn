@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 
 import '../models/playlist.dart';
+import '../utils/dir_util.dart';
 import '../views/widgets/set_value_to_target_dialog.dart';
 
 enum WarningMessageType {
@@ -757,12 +758,14 @@ class WarningMessageVM extends ChangeNotifier {
     required PlaylistType movedFromPlaylistType,
     required String movedToPlaylistTitle,
     required PlaylistType movedToPlaylistType,
+    required CopyOrMoveFileResult moveFileResult,
   }) {
     _movedAudioValidVideoTitle = movedAudioValidVideoTitle;
     _movedFromPlaylistTitle = movedFromPlaylistTitle;
     _movedFromPlaylistType = movedFromPlaylistType;
     _movedToPlaylistType = movedToPlaylistType;
     _movedToPlaylistTitle = movedToPlaylistTitle;
+    _copyOrMoveFileResult = moveFileResult;
 
     warningMessageType = WarningMessageType.audioNotMovedFromToPlaylist;
 
@@ -805,18 +808,22 @@ class WarningMessageVM extends ChangeNotifier {
   PlaylistType get copiedFromPlaylistType => _copiedFromPlaylistType;
   late PlaylistType _copiedToPlaylistType;
   PlaylistType get copiedToPlaylistType => _copiedToPlaylistType;
+  late CopyOrMoveFileResult _copyOrMoveFileResult = CopyOrMoveFileResult.sourceFileNotExist;
+  CopyOrMoveFileResult get copyOrMoveFileResult => _copyOrMoveFileResult;
   void setAudioNotCopiedFromToPlaylistTitles({
     required String copiedAudioValidVideoTitle,
     required String copiedFromPlaylistTitle,
     required PlaylistType copiedFromPlaylistType,
     required String copiedToPlaylistTitle,
     required PlaylistType copiedToPlaylistType,
+    required CopyOrMoveFileResult copyFileResult,
   }) {
     _copiedAudioValidVideoTitle = copiedAudioValidVideoTitle;
     _copiedFromPlaylistTitle = copiedFromPlaylistTitle;
     _copiedFromPlaylistType = copiedFromPlaylistType;
     _copiedToPlaylistTitle = copiedToPlaylistTitle;
     _copiedToPlaylistType = copiedToPlaylistType;
+    _copyOrMoveFileResult = copyFileResult;
 
     warningMessageType = WarningMessageType.audioNotCopiedFromToPlaylist;
 
