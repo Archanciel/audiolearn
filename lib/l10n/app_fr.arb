@@ -289,13 +289,149 @@
   "sinceAbsentFromSourcePlaylist": "car il n'est pas présent dans la playlist source",
   "sinceAlreadyPresentInTargetPlaylist": "car il est déjà présent dans cette playlist",
   "audioNotMovedFromLocalPlaylistToLocalPlaylist": "L'audio \"{audioTitle}\" N'A PAS été déplacé de la playlist locale \"{fromPlaylistTitle}\" vers la playlist locale \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.",
+  "@audioNotMovedFromLocalPlaylistToLocalPlaylist": {
+    "description": "Not moved warning",
+    "placeholders": {
+      "audioTitle": {
+        "type": "Object"
+      },
+      "fromPlaylistTitle": {
+        "type": "Object"
+      },
+      "notCopiedOrMovedReason": {
+        "type": "Object"
+      },
+      "toPlaylistTitle": {
+        "type": "Object"
+      }
+    }
+  },
   "audioNotMovedFromLocalPlaylistToYoutubePlaylist": "L'audio \"{audioTitle}\" N'A PAS été déplacé de la playlist locale \"{fromPlaylistTitle}\" vers la playlist Youtube \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.",
+  "@audioNotMovedFromLocalPlaylistToYoutubePlaylist": {
+    "description": "Not moved warning",
+    "placeholders": {
+      "audioTitle": {
+        "type": "Object"
+      },
+      "fromPlaylistTitle": {
+        "type": "Object"
+      },
+      "notCopiedOrMovedReason": {
+        "type": "Object"
+      },
+      "toPlaylistTitle": {
+        "type": "Object"
+      }
+    }
+  },
   "audioNotMovedFromYoutubePlaylistToLocalPlaylist": "L'audio \"{audioTitle}\" N'A PAS été déplacé de la playlist Youtube \"{fromPlaylistTitle}\" vers la playlist locale \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.",
+  "@audioNotMovedFromYoutubePlaylistToLocalPlaylist": {
+    "description": "Not moved warning",
+    "placeholders": {
+      "audioTitle": {
+        "type": "Object"
+      },
+      "fromPlaylistTitle": {
+        "type": "Object"
+      },
+      "notCopiedOrMovedReason": {
+        "type": "Object"
+      },
+      "toPlaylistTitle": {
+        "type": "Object"
+      }
+    }
+  },
   "audioNotMovedFromYoutubePlaylistToYoutubePlaylist": "L'audio \"{audioTitle}\" N'A PAS été déplacé de la playlist Youtube \"{fromPlaylistTitle}\" vers la playlist Youtube \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.",
+  "@audioNotMovedFromYoutubePlaylistToYoutubePlaylist": {
+    "description": "Not moved warning",
+    "placeholders": {
+      "audioTitle": {
+        "type": "Object"
+      },
+      "fromPlaylistTitle": {
+        "type": "Object"
+      },
+      "notCopiedOrMovedReason": {
+        "type": "Object"
+      },
+      "toPlaylistTitle": {
+        "type": "Object"
+      }
+    }
+  },
   "audioNotCopiedFromLocalPlaylistToLocalPlaylist": "L'audio \"{audioTitle}\" N'A PAS été copié de la playlist locale \"{fromPlaylistTitle}\" vers la playlist locale \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.",
+  "@audioNotCopiedFromLocalPlaylistToLocalPlaylist": {
+    "description": "Not moved warning",
+    "placeholders": {
+      "audioTitle": {
+        "type": "Object"
+      },
+      "fromPlaylistTitle": {
+        "type": "Object"
+      },
+      "notCopiedOrMovedReason": {
+        "type": "Object"
+      },
+      "toPlaylistTitle": {
+        "type": "Object"
+      }
+    }
+  },
   "audioNotCopiedFromLocalPlaylistToYoutubePlaylist": "L'audio \"{audioTitle}\" N'A PAS été copié de la playlist locale \"{fromPlaylistTitle}\" vers la playlist Youtube \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.",
+  "@audioNotCopiedFromLocalPlaylistToYoutubePlaylist": {
+    "description": "Not moved warning",
+    "placeholders": {
+      "audioTitle": {
+        "type": "Object"
+      },
+      "fromPlaylistTitle": {
+        "type": "Object"
+      },
+      "notCopiedOrMovedReason": {
+        "type": "Object"
+      },
+      "toPlaylistTitle": {
+        "type": "Object"
+      }
+    }
+  },
   "audioNotCopiedFromYoutubePlaylistToLocalPlaylist": "L'audio \"{audioTitle}\" N'A PAS été copié de la playlist Youtube \"{fromPlaylistTitle}\" vers la playlist locale \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.",
+  "@audioNotCopiedFromYoutubePlaylistToLocalPlaylist": {
+    "description": "Not moved warning",
+    "placeholders": {
+      "audioTitle": {
+        "type": "Object"
+      },
+      "fromPlaylistTitle": {
+        "type": "Object"
+      },
+      "notCopiedOrMovedReason": {
+        "type": "Object"
+      },
+      "toPlaylistTitle": {
+        "type": "Object"
+      }
+    }
+  },
   "audioNotCopiedFromYoutubePlaylistToYoutubePlaylist": "L'audio \"{audioTitle}\" N'A PAS été copié de la playlist Youtube \"{fromPlaylistTitle}\" vers la playlist Youtube \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.",
+  "@audioNotCopiedFromYoutubePlaylistToYoutubePlaylist": {
+    "description": "Not moved warning",
+    "placeholders": {
+      "audioTitle": {
+        "type": "Object"
+      },
+      "fromPlaylistTitle": {
+        "type": "Object"
+      },
+      "notCopiedOrMovedReason": {
+        "type": "Object"
+      },
+      "toPlaylistTitle": {
+        "type": "Object"
+      }
+    }
+  },
   "audioMovedFromLocalPlaylistToLocalPlaylist": "Audio \"{audioTitle}\" déplacé de la playlist locale \"{fromPlaylistTitle}\" vers la playlist locale \"{toPlaylistTitle}\".",
   "audioMovedFromLocalPlaylistToYoutubePlaylist": "Audio \"{audioTitle}\" déplacé de la playlist locale \"{fromPlaylistTitle}\" vers la playlist Youtube \"{toPlaylistTitle}\".",
   "audioMovedFromYoutubePlaylistToLocalPlaylist": "Audio \"{audioTitle}\" déplacé de la playlist Youtube \"{fromPlaylistTitle}\" vers la playlist locale \"{toPlaylistTitle}\".",
