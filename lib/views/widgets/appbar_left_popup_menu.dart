@@ -117,7 +117,12 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
           listen: false,
         );
 
+        // Why is the obtained audio the audio of the Jésus-Christ playlist ?
+        // When clicking on local playlist 'Cette soeur ...', why is the 
+        // audioPlayerVMlistenFalse.currentAudio! not updated ??
         Audio audio = audioPlayerVMlistenFalse.currentAudio!;
+
+        // Audio audio = playlistListVMlistenFalse.getSelectedPlaylists()[0].getCurrentOrLastlyPlayedAudioContainedInPlayableAudioLst()!;
 
         // Current audio is set, return a full menu
         return PopupMenuButton<AudioPopupMenuAction>(

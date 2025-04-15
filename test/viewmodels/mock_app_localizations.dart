@@ -1844,9 +1844,10 @@ class MockAppLocalizations extends AppLocalizations {
   String restoredAppDataFromZip(
     Object playlistsNumber,
     Object commentsNumber,
+    Object picturesNumber,
     Object filePathName,
   ) =>
-      "Restored $playlistsNumber playlist and $commentsNumber comment json files as well as application settings from \"$filePathName\".";
+      "Restored $playlistsNumber playlist, $commentsNumber comment and $picturesNumber picture json files as well as application settings from \"$filePathName\".";
 
   @override
   String get playable => "Playable";

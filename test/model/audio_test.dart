@@ -153,10 +153,56 @@ void main() {
 
       playlist.addDownloadedAudio(audio);
 
-      String expectedFilePathName = "download_path\\230317-123406-C 23-04-12.mp3";
+      String expectedFilePathName =
+          "download_path\\230317-123406-C 23-04-12.mp3";
       String actualFilePathName = audio.filePathName;
 
       expect(actualFilePathName, expectedFilePathName);
+    });
+  });
+  group('Audio == test', () {
+    test('Audio copied to other playlist equality.', () {
+      Playlist playlist_one = Playlist(
+        url: 'https://www.youtube.com/playlist?list=test_playlist_id',
+        id: 'playlist_one',
+        title: 'playlist_one',
+        playlistType: PlaylistType.youtube,
+        playlistQuality: PlaylistQuality.voice,
+      );
+
+      playlist_one.downloadPath = 'playlist_one_path';
+
+      Playlist playlist_two = Playlist(
+        url: 'https://www.youtube.com/playlist?list=test_playlist_id',
+        id: 'playlist_two',
+        title: 'playlist_two',
+        playlistType: PlaylistType.youtube,
+        playlistQuality: PlaylistQuality.voice,
+      );
+
+      playlist_two.downloadPath = 'playlist_two_path';
+
+      Audio audio = Audio(
+          enclosingPlaylist: playlist_one,
+          originalVideoTitle: 'C',
+          compactVideoDescription: '',
+          videoUrl: 'https://example.com/video1',
+          audioDownloadDateTime: DateTime(2023, 3, 17, 12, 34, 6),
+          videoUploadDate: DateTime(2023, 4, 12),
+          audioDuration: Duration.zero,
+          audioPlaySpeed: 1.25);
+
+      audio.audioDownloadSpeed = 150000;
+
+      playlist_one.addDownloadedAudio(audio);
+      playlist_two.addCopiedAudioToDownloadAndPlayableLst(
+        audioToCopy: audio,
+        copiedFromPlaylistTitle: playlist_one.title,
+      );
+
+      Audio copiedAudio = playlist_two.downloadedAudioLst[0];
+
+      expect(audio == copiedAudio, false);
     });
   });
 }

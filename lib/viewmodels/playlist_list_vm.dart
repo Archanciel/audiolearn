@@ -2640,13 +2640,13 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Method called when the user clicks on the 'Save Playlist and Comments to
-  /// Zip File' menu item located in the appbar leading popup menu.
+  /// Method called when the user clicks on the 'Save Playlist, Comments, Pictures
+  /// and Settings to Zip File' menu item located in the appbar leading popup menu.
   ///
   /// Returns the saved zip file path name, '' if the playlists source dir or the
   /// zip save to target dir do not exist. The returned value is only used in
   /// the playlistListVM unit test.
-  Future<String> savePlaylistsCommentsAndSettingsJsonFilesToZip({
+  Future<String> savePlaylistsCommentsPicturesAndSettingsJsonFilesToZip({
     required String targetDirectoryPath,
   }) async {
     String savedZipFilePathName = await _saveToZip(
@@ -2710,6 +2710,19 @@ class PlaylistListVM extends ChangeNotifier {
       }
     }
 
+    // Now, adding the pictures/pictureAudioMap.json file to the archive
+    File pictureAudioMapFile = File(
+        path.join(applicationPath, kPictureDirName, 'pictureAudioMap.json'));
+    if (pictureAudioMapFile.existsSync()) {
+      String pictureAudioMapRelativePath =
+          path.join('pictures', 'pictureAudioMap.json');
+
+      // Read the file and add it to the archive
+      List<int> pictureAudioMapBytes = await pictureAudioMapFile.readAsBytes();
+      archive.addFile(ArchiveFile(pictureAudioMapRelativePath,
+          pictureAudioMapBytes.length, pictureAudioMapBytes));
+    }
+
     // Save the archive to a zip file in the target directory
     String zipFileName =
         "audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip";
@@ -2771,6 +2784,7 @@ class PlaylistListVM extends ChangeNotifier {
       zipFilePathName: zipFilePathName,
       playlistsNumber: restoredInfoLst[0].length,
       commentsNumber: restoredInfoLst[1],
+      picturesNumber: restoredInfoLst[2],
     );
 
     // Return the zip file path name used for restoration.
@@ -2872,6 +2886,7 @@ class PlaylistListVM extends ChangeNotifier {
     List<dynamic> restoredInfoLst = [];
     List<String> restoredPlaylistTitlesLst = [];
     int restoredCommentsNumber = 0;
+    int restoredPicturesNumber = 0;
 
     // Check if the provided zip file exists.
     final File zipFile = File(zipFilePathName);
@@ -2881,6 +2896,7 @@ class PlaylistListVM extends ChangeNotifier {
       // with the file picker and so the file must exist.
       restoredInfoLst.add(restoredPlaylistTitlesLst);
       restoredInfoLst.add(restoredCommentsNumber);
+      restoredInfoLst.add(restoredPicturesNumber);
 
       return restoredInfoLst;
     }
@@ -2929,11 +2945,19 @@ class PlaylistListVM extends ChangeNotifier {
 
       if (destinationPathFileName.contains(kCommentDirName) &&
           outputFile.existsSync()) {
-        // If the comment file already exists, skip it. This useful
+        // If the comment file already exists, skip it. This is useful
         // if a new comment was added before the restoration from the
         // zip file.
         continue;
       }
+
+      // if (destinationPathFileName.contains(kPictureDirName) &&
+      //     outputFile.existsSync()) {
+      //   // If the comment file already exists, skip it. This useful
+      //   // if a new comment was added before the restoration from the
+      //   // zip file.
+      //   continue;
+      // }
 
       await outputFile.writeAsBytes(
         archiveFile.content as List<int>,
@@ -2943,6 +2967,8 @@ class PlaylistListVM extends ChangeNotifier {
       if (!destinationPathFileName.contains(kSettingsFileName)) {
         if (destinationPathFileName.contains(kCommentDirName)) {
           restoredCommentsNumber++;
+        } else if (destinationPathFileName.contains(kPictureDirName)) {
+          restoredPicturesNumber++;
         } else {
           restoredPlaylistTitlesLst.add(
             path.basenameWithoutExtension(destinationPathFileName),
@@ -2953,6 +2979,11 @@ class PlaylistListVM extends ChangeNotifier {
 
     restoredInfoLst.add(restoredPlaylistTitlesLst);
     restoredInfoLst.add(restoredCommentsNumber);
+
+    // Minus 1 since the pictureAudioMap.json file is also
+    // counted in the number of restored pictures since it is
+    // located in a 'pictures' directory.
+    restoredInfoLst.add(restoredPicturesNumber - 1);
 
     return restoredInfoLst;
   }

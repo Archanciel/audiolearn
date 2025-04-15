@@ -1534,7 +1534,7 @@ class AudioDownloadVM extends ChangeNotifier {
     }
 
     targetPlaylist.addCopiedAudioToDownloadAndPlayableLst(
-      copiedAudio: audioToCopy,
+      audioToCopy: audioToCopy,
       copiedFromPlaylistTitle: fromPlaylistTitle,
     );
 

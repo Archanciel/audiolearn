@@ -230,7 +230,7 @@ void main() {
       audioDownloadVM.loadExistingPlaylists();
 
       Playlist sourcePlaylist = audioDownloadVM.listOfPlaylist[1];
-      Audio copiedAudio = sourcePlaylist.downloadedAudioLst[0];
+      Audio audioToCopy = sourcePlaylist.downloadedAudioLst[0];
       Playlist targetPlaylist = audioDownloadVM.listOfPlaylist[2];
 
       expect(sourcePlaylist.downloadedAudioLst.length, 2);
@@ -240,11 +240,17 @@ void main() {
 
       // Copying the audio to the target playlist
       bool wasCopied = audioDownloadVM.copyAudioToPlaylist(
-        audioToCopy: copiedAudio,
+        audioToCopy: audioToCopy,
         targetPlaylist: targetPlaylist,
       );
 
       expect(wasCopied, true);
+
+      expect(audioToCopy.audioFileName == targetPlaylist.downloadedAudioLst[5].audioFileName, true);
+      expect(audioToCopy == targetPlaylist.downloadedAudioLst[5], false);
+
+      expect(audioToCopy.audioFileName == targetPlaylist.playableAudioLst[0].audioFileName, true);
+      expect(audioToCopy == targetPlaylist.playableAudioLst[0], false);
 
       // Now verifying source and target playlists data
 
@@ -310,7 +316,7 @@ void main() {
 
       // Copying again the same the audio to the target playlist
       wasCopied = audioDownloadVM.copyAudioToPlaylist(
-        audioToCopy: copiedAudio,
+        audioToCopy: audioToCopy,
         targetPlaylist: targetPlaylist,
       );
 
@@ -318,7 +324,7 @@ void main() {
 
       // Copying again the same the audio to the target playlist
       wasCopied = audioDownloadVM.copyAudioToPlaylist(
-        audioToCopy: copiedAudio,
+        audioToCopy: audioToCopy,
         targetPlaylist: targetPlaylist,
         displayWarningIfAudioAlreadyExists: false,
         displayWarningWhenAudioWasCopied: false,
