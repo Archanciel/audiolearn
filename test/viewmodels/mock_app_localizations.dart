@@ -562,30 +562,6 @@ class MockAppLocalizations extends AppLocalizations {
   String get audioPlayVolumeLabel => 'Play volume';
 
   @override
-  String audioCopiedFromLocalPlaylistToLocalPlaylist(
-      Object audioTitle, Object fromPlaylistTitle, Object toPlaylistTitle) {
-    return 'Audio "$audioTitle" copied from local playlist "$fromPlaylistTitle" to local playlist "$toPlaylistTitle".';
-  }
-
-  @override
-  String audioCopiedFromLocalPlaylistToYoutubePlaylist(
-      Object audioTitle, Object fromPlaylistTitle, Object toPlaylistTitle) {
-    return 'Audio "$audioTitle" copied from local playlist "$fromPlaylistTitle" to Youtube playlist "$toPlaylistTitle".';
-  }
-
-  @override
-  String audioCopiedFromYoutubePlaylistToLocalPlaylist(
-      Object audioTitle, Object fromPlaylistTitle, Object toPlaylistTitle) {
-    return 'Audio "$audioTitle" copied from Youtube playlist "$fromPlaylistTitle" to local playlist "$toPlaylistTitle".';
-  }
-
-  @override
-  String audioCopiedFromYoutubePlaylistToYoutubePlaylist(
-      Object audioTitle, Object fromPlaylistTitle, Object toPlaylistTitle) {
-    return 'Audio "$audioTitle" copied from Youtube playlist "$fromPlaylistTitle" to Youtube playlist "$toPlaylistTitle".';
-  }
-
-  @override
   String get copiedFromPlaylistLabel => 'Copied from playlist';
 
   @override
@@ -1920,12 +1896,17 @@ class MockAppLocalizations extends AppLocalizations {
       "since it is already present in the destination playlist";
 
   @override
-  String audioCopiedFromLocalPlaylistToLocalPlaylist(
+  String audioCopiedOrMovedFromPlaylistToPlaylist(
     Object audioTitle,
+    Object yesOrNo,
+    Object operationType,
+    Object fromPlaylistType,
     Object fromPlaylistTitle,
+    Object toPlaylistType,
     Object toPlaylistTitle,
+    Object notCopiedOrMovedReason,
   ) =>
-      "Audio \"$audioTitle\" copied from local playlist \"$fromPlaylistTitle\" to local playlist \"$toPlaylistTitle\".";
+      "Audio \"$audioTitle\"$yesOrNo$operationType from $fromPlaylistType playlist \"$fromPlaylistTitle\" to $toPlaylistType playlist \"$toPlaylistTitle\"$notCopiedOrMovedReason";
 
   @override
   String get noOperation => " NOT ";
