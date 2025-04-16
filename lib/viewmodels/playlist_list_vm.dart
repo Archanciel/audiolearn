@@ -2735,12 +2735,14 @@ class PlaylistListVM extends ChangeNotifier {
     return zipFilePathName;
   }
 
-  /// Method called when the user clicks on the 'Restore Playlist, Comments and
-  /// Settings from Zip File' menu item located in the appbar leading popup menu.
+  /// Method called when the user clicks on the 'Restore Playlist, Comments,
+  /// Pictures and Settings from Zip File' menu item located in the appbar
+  /// leading popup menu.
   ///
-  /// Returns the zip file path name from which the playlist, comments and the
-  /// application settings will be restored, '' if the zip file does not exist.
-  /// The returned value is only used in the playlistListVM unit test.
+  /// Returns the zip file path name from which the playlist, comments, pictures
+  /// and the application settings will be restored. Returns empty String if the
+  /// zip file does not exist. The returned value is only used in the playlistListVM
+  /// unit test.
   Future<String> restorePlaylistsCommentsAndSettingsJsonFilesFromZip({
     required String zipFilePathName,
   }) async {
@@ -2983,7 +2985,7 @@ class PlaylistListVM extends ChangeNotifier {
     // Minus 1 since the pictureAudioMap.json file is also
     // counted in the number of restored pictures since it is
     // located in a 'pictures' directory.
-    restoredInfoLst.add(restoredPicturesNumber - 1);
+    restoredInfoLst.add((restoredPicturesNumber > 0) ? restoredPicturesNumber - 1 : 0);
 
     return restoredInfoLst;
   }
