@@ -162,7 +162,7 @@ void main() {
   });
   group('Audio == test', () {
     test('Audio copied to other playlist equality.', () {
-      Playlist playlist_one = Playlist(
+      Playlist playlistOne = Playlist(
         url: 'https://www.youtube.com/playlist?list=test_playlist_id',
         id: 'playlist_one',
         title: 'playlist_one',
@@ -170,9 +170,9 @@ void main() {
         playlistQuality: PlaylistQuality.voice,
       );
 
-      playlist_one.downloadPath = 'playlist_one_path';
+      playlistOne.downloadPath = 'playlist_one_path';
 
-      Playlist playlist_two = Playlist(
+      Playlist playlistTwo = Playlist(
         url: 'https://www.youtube.com/playlist?list=test_playlist_id',
         id: 'playlist_two',
         title: 'playlist_two',
@@ -180,10 +180,10 @@ void main() {
         playlistQuality: PlaylistQuality.voice,
       );
 
-      playlist_two.downloadPath = 'playlist_two_path';
+      playlistTwo.downloadPath = 'playlist_two_path';
 
       Audio audio = Audio(
-          enclosingPlaylist: playlist_one,
+          enclosingPlaylist: playlistOne,
           originalVideoTitle: 'C',
           compactVideoDescription: '',
           videoUrl: 'https://example.com/video1',
@@ -194,13 +194,13 @@ void main() {
 
       audio.audioDownloadSpeed = 150000;
 
-      playlist_one.addDownloadedAudio(audio);
-      playlist_two.addCopiedAudioToDownloadAndPlayableLst(
+      playlistOne.addDownloadedAudio(audio);
+      playlistTwo.addCopiedAudioToDownloadAndPlayableLst(
         audioToCopy: audio,
-        copiedFromPlaylistTitle: playlist_one.title,
+        copiedFromPlaylistTitle: playlistOne.title,
       );
 
-      Audio copiedAudio = playlist_two.downloadedAudioLst[0];
+      Audio copiedAudio = playlistTwo.downloadedAudioLst[0];
 
       expect(audio == copiedAudio, false);
     });

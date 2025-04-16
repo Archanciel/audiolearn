@@ -166,21 +166,8 @@ enum WarningMessageType {
   confirmSingleVideoDownload, // The case if the user clicks on the
   // single video download button after selecting a target playlist.
 
-  audioNotMovedFromToPlaylist, // The case if the user clicks on
-  // the move audio to playlist menu item but the audio was not moved
-  // from the source playlist to the target playlist since the
-  // target playlist already contains the audio.
-
   audioCopiedOrMovedFromPlaylistToPlaylist, // The case if the user clicks on
   // the copy/move audio to playlist menu item.
-
-  audioMovedFromToPlaylist, // The case if the user clicks on
-  // the move audio to playlist menu item and the audio was moved
-  // from the source playlist to the target playlist.
-
-  audioCopiedFromToPlaylist, // The case if the user clicks on
-  // the copy audio to playlist menu item and the audio was copied
-  // from the source playlist to the target playlist.
 
   savedAppDataToZip, // The case if the user clicks on the 'Save
   // Playlist and Comments to Zip File' menu item located in the
@@ -742,60 +729,6 @@ class WarningMessageVM extends ChangeNotifier {
     }
   }
 
-  String _movedAudioValidVideoTitle = '';
-  String get movedAudioValidVideoTitle => _movedAudioValidVideoTitle;
-  String _movedFromPlaylistTitle = '';
-  String get movedFromPlaylistTitle => _movedFromPlaylistTitle;
-  bool _keepAudioDataInSourcePlaylist = true;
-  bool get keepAudioDataInSourcePlaylist => _keepAudioDataInSourcePlaylist;
-  String _movedToPlaylistTitle = '';
-  String get movedToPlaylistTitle => _movedToPlaylistTitle;
-  void setAudioNotMovedFromToPlaylistTitles({
-    required String movedAudioValidVideoTitle,
-    required String movedFromPlaylistTitle,
-    required PlaylistType movedFromPlaylistType,
-    required String movedToPlaylistTitle,
-    required PlaylistType movedToPlaylistType,
-    required CopyOrMoveFileResult moveFileResult,
-  }) {
-    _movedAudioValidVideoTitle = movedAudioValidVideoTitle;
-    _movedFromPlaylistTitle = movedFromPlaylistTitle;
-    _movedFromPlaylistType = movedFromPlaylistType;
-    _movedToPlaylistType = movedToPlaylistType;
-    _movedToPlaylistTitle = movedToPlaylistTitle;
-    _copyOrMoveFileResult = moveFileResult;
-
-    warningMessageType = WarningMessageType.audioNotMovedFromToPlaylist;
-
-    // Causes the display warning message widget to be displayed.
-    notifyListeners();
-  }
-
-  late PlaylistType _movedFromPlaylistType;
-  PlaylistType get movedFromPlaylistType => _movedFromPlaylistType;
-  late PlaylistType _movedToPlaylistType;
-  PlaylistType get movedToPlaylistType => _movedToPlaylistType;
-  void setAudioMovedFromToPlaylistTitles({
-    required String movedAudioValidVideoTitle,
-    required String movedFromPlaylistTitle,
-    required PlaylistType movedFromPlaylistType,
-    required String movedToPlaylistTitle,
-    required PlaylistType movedToPlaylistType,
-    required bool keepAudioDataInSourcePlaylist,
-  }) {
-    _movedAudioValidVideoTitle = movedAudioValidVideoTitle;
-    _movedFromPlaylistTitle = movedFromPlaylistTitle;
-    _keepAudioDataInSourcePlaylist = keepAudioDataInSourcePlaylist;
-    _movedFromPlaylistType = movedFromPlaylistType;
-    _movedToPlaylistType = movedToPlaylistType;
-    _movedToPlaylistTitle = movedToPlaylistTitle;
-
-    warningMessageType = WarningMessageType.audioMovedFromToPlaylist;
-
-    // Causes the display warning message widget to be displayed.
-    notifyListeners();
-  }
-
   String _audioValidVideoTitle = '';
   String get audioValidVideoTitle => _audioValidVideoTitle;
   bool _wasOperationSuccessful = true;
@@ -832,25 +765,6 @@ class WarningMessageVM extends ChangeNotifier {
     _copyOrMoveFileResult = copyOrMoveFileResult;
 
     warningMessageType = WarningMessageType.audioCopiedOrMovedFromPlaylistToPlaylist;
-
-    // Causes the display warning message widget to be displayed.
-    notifyListeners();
-  }
-
-  void setAudioCopiedFromToPlaylistTitles({
-    required String copiedAudioValidVideoTitle,
-    required String copiedFromPlaylistTitle,
-    required PlaylistType copiedFromPlaylistType,
-    required String copiedToPlaylistTitle,
-    required PlaylistType copiedToPlaylistType,
-  }) {
-    _audioValidVideoTitle = copiedAudioValidVideoTitle;
-    _fromPlaylistTitle = copiedFromPlaylistTitle;
-    _toPlaylistTitle = copiedToPlaylistTitle;
-    _fromPlaylistType = copiedFromPlaylistType;
-    _toPlaylistType = copiedToPlaylistType;
-
-    warningMessageType = WarningMessageType.audioCopiedFromToPlaylist;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();

@@ -372,10 +372,6 @@
   "audioPlaySpeedLabel": "Play speed",
   "playlistAudioPlaySpeedLabel": "Audio play speed",
   "audioPlayVolumeLabel": "Sound volume",
-  "audioCopiedFromLocalPlaylistToLocalPlaylist": "Audio \"{audioTitle}\" copied from local playlist \"{fromPlaylistTitle}\" to local playlist \"{toPlaylistTitle}\".",
-  "audioCopiedFromLocalPlaylistToYoutubePlaylist": "Audio \"{audioTitle}\" copied from local playlist \"{fromPlaylistTitle}\" to Youtube playlist \"{toPlaylistTitle}\".",
-  "audioCopiedFromYoutubePlaylistToLocalPlaylist": "Audio \"{audioTitle}\" copied from Youtube playlist \"{fromPlaylistTitle}\" to local playlist \"{toPlaylistTitle}\".",
-  "audioCopiedFromYoutubePlaylistToYoutubePlaylist": "Audio \"{audioTitle}\" copied from Youtube playlist \"{fromPlaylistTitle}\" to Youtube playlist \"{toPlaylistTitle}\".",
   "copiedFromPlaylistLabel": "Copied from playlist",
   "copiedToPlaylistLabel": "Copied to playlist",
   "audioPlayerViewNoCurrentAudio": "No audio selected",
@@ -905,7 +901,6 @@
   "setPlaylistAudioQualityTooltip": "The selected audio quality will be applied to the next downloaded audio's. If the audio quality must be applied to the already downloaded audio's, those audio's must be deleted \"from playlist as well\" so that they will be redownloadable in the modified audio quality.",
   "setPlaylistAudioQualityDialogTitle": "Playlist Audio Quality",
   "selectAudioQuality": "Select audio quality",
-  "audioCopiedFromLocalPlaylistToLocalPlaylist": "Audio \"{audioTitle}\" copied from local playlist \"{fromPlaylistTitle}\" to local playlist \"{toPlaylistTitle}\".",
   "audioCopiedOrMovedFromPlaylistToPlaylist": "Audio \"{audioTitle}\"{yesOrNo}{operationType} from {fromPlaylistType} playlist \"{fromPlaylistTitle}\" to {toPlaylistType} playlist \"{toPlaylistTitle}\"{notCopiedOrMovedReason}",
   "@audioCopiedOrMovedFromPlaylistToPlaylist": {
     "description": "Not moved warning",
