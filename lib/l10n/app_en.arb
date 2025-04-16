@@ -262,8 +262,6 @@
   "playlistOneSelectedDialogTitle": "Select a Playlist",
   "confirmButton": "Confirm",
   "enclosingPlaylistLabel": "Enclosing playlist",
-  "sinceAbsentFromSourcePlaylist": "since it is not present in the source playlist",
-  "sinceAlreadyPresentInTargetPlaylist": "since it is already present in the destination playlist",
   "audioNotMovedFromLocalPlaylistToLocalPlaylist": "Audio \"{audioTitle}\" NOT moved from local playlist \"{fromPlaylistTitle}\" to local playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.",
   "@audioNotMovedFromLocalPlaylistToLocalPlaylist": {
     "description": "Not moved warning",
@@ -906,5 +904,26 @@
   "setPlaylistAudioQuality": "Set Audio Quality ...",
   "setPlaylistAudioQualityTooltip": "The selected audio quality will be applied to the next downloaded audio's. If the audio quality must be applied to the already downloaded audio's, those audio's must be deleted \"from playlist as well\" so that they will be redownloadable in the modified audio quality.",
   "setPlaylistAudioQualityDialogTitle": "Playlist Audio Quality",
-  "selectAudioQuality": "Select audio quality"
+  "selectAudioQuality": "Select audio quality",
+  "audioCopiedFromLocalPlaylistToLocalPlaylist": "Audio \"{audioTitle}\" copied from local playlist \"{fromPlaylistTitle}\" to local playlist \"{toPlaylistTitle}\".",
+  "audioCopiedOrMovedFromPlaylistToPlaylist": "Audio \"{audioTitle}\"{yesOrNo}{operationType} from {fromPlaylistType} playlist \"{fromPlaylistTitle}\" to {toPlaylistType} playlist \"{toPlaylistTitle}\"{notCopiedOrMovedReason}",
+  "@audioCopiedOrMovedFromPlaylistToPlaylist": {
+    "description": "Not moved warning",
+    "placeholders": {
+      "audioTitle": {},
+      "yesOrNo": {},
+      "operationType": {},
+      "fromPlaylistType": {},
+      "fromPlaylistTitle": {},
+      "toPlaylistTitle": {},
+      "toPlaylistType": {},
+      "notCopiedOrMovedReason": {}
+    }
+  },
+  "sinceAbsentFromSourcePlaylist": " since it is not present in the source playlist.",
+  "sinceAlreadyPresentInTargetPlaylist": " since it is already present in the destination playlist.",
+  "noOperation": " NOT ",
+  "yesOperation": "",
+  "localPlaylistType": "local",
+  "youtubePlaylistType": "Youtube"
 }

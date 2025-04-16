@@ -1918,4 +1918,24 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get sinceAlreadyPresentInTargetPlaylist =>
       "since it is already present in the destination playlist";
+
+  @override
+  String audioCopiedFromLocalPlaylistToLocalPlaylist(
+    Object audioTitle,
+    Object fromPlaylistTitle,
+    Object toPlaylistTitle,
+  ) =>
+      "Audio \"$audioTitle\" copied from local playlist \"$fromPlaylistTitle\" to local playlist \"$toPlaylistTitle\".";
+
+  @override
+  String get noOperation => " NOT ";
+
+  @override
+  String get yesOperation => "";
+
+  @override
+  String get localPlaylistType => "local";
+
+  @override
+  String get youtubePlaylistType => "Youtube";
 }

@@ -286,8 +286,6 @@
   "playlistOneSelectedDialogTitle": "Sélectionnez une playlist",
   "confirmButton": "Confirmer",
   "enclosingPlaylistLabel": "Playlist englobante",
-  "sinceAbsentFromSourcePlaylist": "car il n'est pas présent dans la playlist source",
-  "sinceAlreadyPresentInTargetPlaylist": "car il est déjà présent dans cette playlist",
   "audioNotMovedFromLocalPlaylistToLocalPlaylist": "L'audio \"{audioTitle}\" N'A PAS été déplacé de la playlist locale \"{fromPlaylistTitle}\" vers la playlist locale \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.",
   "@audioNotMovedFromLocalPlaylistToLocalPlaylist": {
     "description": "Not moved warning",
@@ -1213,5 +1211,41 @@
   "setPlaylistAudioQuality": "Définir la qualité audio ...",
   "setPlaylistAudioQualityTooltip": "La qualité audio sélectionnée sera appliquée aux prochains fichiers audio téléchargés. Si la qualité audio doit être appliquée aux fichiers audio déjà téléchargés, ces fichiers doivent être supprimés \"de la playlist également\" afin qu'ils puissent être retéléchargés avec la qualité audio modifiée.",
   "setPlaylistAudioQualityDialogTitle": "Qualité audio de la playlist",
-  "selectAudioQuality": "Sélectionnez la qualité audio"
+  "selectAudioQuality": "Sélectionnez la qualité audio",
+  "audioCopiedOrMovedFromPlaylistToPlaylist": "L'audio \"{audioTitle}\"{yesOrNo}{operationType} de la playlist {fromPlaylistType} \"{fromPlaylistTitle}\" vers la playlist {toPlaylistType} \"{toPlaylistTitle}\"{notCopiedOrMovedReason}",
+  "@audioCopiedOrMovedFromPlaylistToPlaylist": {
+    "description": "Not moved warning",
+    "placeholders": {
+      "audioTitle": {
+        "type": "Object"
+      },
+      "yesOrNo": {
+        "type": "Object"
+      },
+      "operationType": {
+        "type": "Object"
+      },
+      "fromPlaylistType": {
+        "type": "Object"
+      },
+      "fromPlaylistTitle": {
+        "type": "Object"
+      },
+      "toPlaylistTitle": {
+        "type": "Object"
+      },
+      "toPlaylistType": {
+        "type": "Object"
+      },
+      "notCopiedOrMovedReason": {
+        "type": "Object"
+      }
+    }
+  },
+  "sinceAbsentFromSourcePlaylist": " car il n'est pas présent dans la playlist source.",
+  "sinceAlreadyPresentInTargetPlaylist": " car il est déjà présent dans cette playlist.",
+  "noOperation": " N'A PAS ",
+  "yesOperation": "",
+  "localPlaylistType": "locale",
+  "youtubePlaylistType": "Youtube"
 }
