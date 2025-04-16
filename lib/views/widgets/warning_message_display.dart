@@ -988,7 +988,9 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                 .sinceAlreadyPresentInTargetPlaylist;
           }
 
-          String yesOrNo = (_warningMessageVM.wasOperationSuccessful)
+          bool wasOperationSuccessful = _warningMessageVM.wasOperationSuccessful;
+
+          String yesOrNo = (wasOperationSuccessful)
               ? AppLocalizations.of(context)!.yesOperation
               : AppLocalizations.of(context)!.noOperation;
           String operationType = (_warningMessageVM.isAudioCopied)
@@ -1021,7 +1023,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
             message: audioCopiedOrMMovedFromToPlaylistMessage,
             warningMessageVM: _warningMessageVM,
             themeProviderVM: themeProviderVM,
-            warningMode: WarningMode.warning,
+            warningMode: (wasOperationSuccessful) ? WarningMode.confirm : WarningMode.warning,
           );
         });
 
