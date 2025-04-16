@@ -1938,4 +1938,10 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get youtubePlaylistType => "Youtube";
+
+  @override
+  String get movedOperationType => "moved";
+
+  @override
+  String get copiedOperationType => "copied";
 }

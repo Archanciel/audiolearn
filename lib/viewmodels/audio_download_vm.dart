@@ -1409,7 +1409,8 @@ class AudioDownloadVM extends ChangeNotifier {
     String fromPlaylistTitle = fromPlaylist.title;
     String targetPlaylistTitle = targetPlaylist.title;
 
-    CopyOrMoveFileResult moveFileResult = DirUtil.moveFileToDirectoryIfNotExistSync(
+    CopyOrMoveFileResult moveFileResult =
+        DirUtil.moveFileToDirectoryIfNotExistSync(
       sourceFilePathName: audioToMove.filePathName,
       targetDirectoryPath: targetPlaylist.downloadPath,
     );
@@ -1418,14 +1419,15 @@ class AudioDownloadVM extends ChangeNotifier {
       if (displayWarningIfAudioAlreadyExists) {
         // the case if the moved audio file already exist in the target
         // playlist directory or not exist in the source playlist directory
-        warningMessageVM.setAudioNotMovedFromToPlaylistTitles(
-          movedAudioValidVideoTitle: audioToMove.validVideoTitle,
-          movedFromPlaylistTitle: fromPlaylistTitle,
-          movedFromPlaylistType: fromPlaylist.playlistType,
-          movedToPlaylistTitle: targetPlaylistTitle,
-          movedToPlaylistType: targetPlaylist.playlistType,
-          moveFileResult: moveFileResult
-        );
+        warningMessageVM.audioCopiedOrMovedFromToPlaylist(
+            audioValidVideoTitle: audioToMove.validVideoTitle,
+            wasOperationSuccessful: false,
+            isAudioCopied: false,
+            fromPlaylistTitle: fromPlaylistTitle,
+            fromPlaylistType: fromPlaylist.playlistType,
+            toPlaylistTitle: targetPlaylistTitle,
+            toPlaylistType: targetPlaylist.playlistType,
+            copyOrMoveFileResult: moveFileResult);
 
         return false;
       }
@@ -1434,17 +1436,18 @@ class AudioDownloadVM extends ChangeNotifier {
     } else if (moveFileResult == CopyOrMoveFileResult.sourceFileNotExist) {
       // the case if the moved audio file does not exist in the source
       // playlist directory
-        warningMessageVM.setAudioNotMovedFromToPlaylistTitles(
-          movedAudioValidVideoTitle: audioToMove.validVideoTitle,
-          movedFromPlaylistTitle: fromPlaylistTitle,
-          movedFromPlaylistType: fromPlaylist.playlistType,
-          movedToPlaylistTitle: targetPlaylistTitle,
-          movedToPlaylistType: targetPlaylist.playlistType,
-          moveFileResult: moveFileResult
-        );
+        warningMessageVM.audioCopiedOrMovedFromToPlaylist(
+            audioValidVideoTitle: audioToMove.validVideoTitle,
+            wasOperationSuccessful: false,
+            isAudioCopied: false,
+            fromPlaylistTitle: fromPlaylistTitle,
+            fromPlaylistType: fromPlaylist.playlistType,
+            toPlaylistTitle: targetPlaylistTitle,
+            toPlaylistType: targetPlaylist.playlistType,
+            copyOrMoveFileResult: moveFileResult);
 
-        return false;
-      }
+      return false;
+    }
 
     if (keepAudioInSourcePlaylistDownloadedAudioLst) {
       // Keeping audio data in source playlist downloadedAudioLst
@@ -1486,15 +1489,15 @@ class AudioDownloadVM extends ChangeNotifier {
     );
 
     if (displayWarningWhenAudioWasMoved) {
-      warningMessageVM.setAudioMovedFromToPlaylistTitles(
-        movedAudioValidVideoTitle: audioToMove.validVideoTitle,
-        movedFromPlaylistTitle: fromPlaylistTitle,
-        movedFromPlaylistType: fromPlaylist.playlistType,
-        movedToPlaylistTitle: targetPlaylistTitle,
-        movedToPlaylistType: targetPlaylist.playlistType,
-        keepAudioDataInSourcePlaylist:
-            keepAudioInSourcePlaylistDownloadedAudioLst,
-      );
+        warningMessageVM.audioCopiedOrMovedFromToPlaylist(
+            audioValidVideoTitle: audioToMove.validVideoTitle,
+            wasOperationSuccessful: true,
+            isAudioCopied: false,
+            fromPlaylistTitle: fromPlaylistTitle,
+            fromPlaylistType: fromPlaylist.playlistType,
+            toPlaylistTitle: targetPlaylistTitle,
+            toPlaylistType: targetPlaylist.playlistType,
+            copyOrMoveFileResult: CopyOrMoveFileResult.copiedOrMoved,);
     }
 
     return true;
@@ -1532,15 +1535,17 @@ class AudioDownloadVM extends ChangeNotifier {
 
     if (copyFileResult == CopyOrMoveFileResult.targetFileAlreadyExists) {
       if (displayWarningIfAudioAlreadyExists) {
-        // the case if the moved audio file already exist in the target
+        // the case if the copied audio file already exist in the target
         // playlist directory
-        warningMessageVM.setAudioNotCopiedFromToPlaylistTitles(
-            copiedAudioValidVideoTitle: audioToCopy.validVideoTitle,
-            copiedFromPlaylistTitle: fromPlaylistTitle,
-            copiedFromPlaylistType: fromPlaylist.playlistType,
-            copiedToPlaylistTitle: targetPlaylistTitle,
-            copiedToPlaylistType: targetPlaylist.playlistType,
-            copyFileResult: copyFileResult);
+        warningMessageVM.audioCopiedOrMovedFromToPlaylist(
+            audioValidVideoTitle: audioToCopy.validVideoTitle,
+            wasOperationSuccessful: false,
+            isAudioCopied: true,
+            fromPlaylistTitle: fromPlaylistTitle,
+            fromPlaylistType: fromPlaylist.playlistType,
+            toPlaylistTitle: targetPlaylistTitle,
+            toPlaylistType: targetPlaylist.playlistType,
+            copyOrMoveFileResult: copyFileResult);
 
         return false;
       }
@@ -1549,13 +1554,15 @@ class AudioDownloadVM extends ChangeNotifier {
     } else if (copyFileResult == CopyOrMoveFileResult.sourceFileNotExist) {
       // the case if the copied audio file does not exist in the source
       // playlist directory
-      warningMessageVM.setAudioNotCopiedFromToPlaylistTitles(
-          copiedAudioValidVideoTitle: audioToCopy.validVideoTitle,
-          copiedFromPlaylistTitle: fromPlaylistTitle,
-          copiedFromPlaylistType: fromPlaylist.playlistType,
-          copiedToPlaylistTitle: targetPlaylistTitle,
-          copiedToPlaylistType: targetPlaylist.playlistType,
-          copyFileResult: copyFileResult);
+      warningMessageVM.audioCopiedOrMovedFromToPlaylist(
+          audioValidVideoTitle: audioToCopy.validVideoTitle,
+          wasOperationSuccessful: false,
+          isAudioCopied: true,
+          fromPlaylistTitle: fromPlaylistTitle,
+          fromPlaylistType: fromPlaylist.playlistType,
+          toPlaylistTitle: targetPlaylistTitle,
+          toPlaylistType: targetPlaylist.playlistType,
+          copyOrMoveFileResult: copyFileResult);
 
       return false;
     }
@@ -1583,12 +1590,16 @@ class AudioDownloadVM extends ChangeNotifier {
     );
 
     if (displayWarningWhenAudioWasCopied) {
-      warningMessageVM.setAudioCopiedFromToPlaylistTitles(
-          copiedAudioValidVideoTitle: audioToCopy.validVideoTitle,
-          copiedFromPlaylistTitle: fromPlaylistTitle,
-          copiedFromPlaylistType: fromPlaylist.playlistType,
-          copiedToPlaylistTitle: targetPlaylistTitle,
-          copiedToPlaylistType: targetPlaylist.playlistType);
+      warningMessageVM.audioCopiedOrMovedFromToPlaylist(
+        audioValidVideoTitle: audioToCopy.validVideoTitle,
+        wasOperationSuccessful: true,
+        isAudioCopied: true,
+        fromPlaylistTitle: fromPlaylistTitle,
+        fromPlaylistType: fromPlaylist.playlistType,
+        toPlaylistTitle: targetPlaylistTitle,
+        toPlaylistType: targetPlaylist.playlistType,
+        copyOrMoveFileResult: CopyOrMoveFileResult.copiedOrMoved,
+      );
     }
 
     return true;

@@ -1244,8 +1244,12 @@
   },
   "sinceAbsentFromSourcePlaylist": " car il n'est pas présent dans la playlist source.",
   "sinceAlreadyPresentInTargetPlaylist": " car il est déjà présent dans cette playlist.",
-  "noOperation": " N'A PAS ",
+  "noOperation": " N'A PAS été ",
   "yesOperation": "",
   "localPlaylistType": "locale",
-  "youtubePlaylistType": "Youtube"
+  "youtubePlaylistType": "Youtube",
+  "movedOperationType": "moved",
+  "copiedOperationType": "copied",
+  "movedOperationType": "déplacé",
+  "copiedOperationType": "copié"
 }
