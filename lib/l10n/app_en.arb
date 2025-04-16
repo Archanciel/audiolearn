@@ -923,7 +923,9 @@
   "sinceAbsentFromSourcePlaylist": " since it is not present in the source playlist.",
   "sinceAlreadyPresentInTargetPlaylist": " since it is already present in the destination playlist.",
   "noOperation": " NOT ",
-  "yesOperation": "",
+  "yesOperation": " ",
   "localPlaylistType": "local",
-  "youtubePlaylistType": "Youtube"
+  "youtubePlaylistType": "Youtube",
+  "movedOperationType": "moved",
+  "copiedOperationType": "copied"
 }

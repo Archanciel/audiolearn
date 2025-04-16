@@ -1057,9 +1057,9 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
-      case WarningMessageType.audioNotCopiedFromToPlaylist:
+      case WarningMessageType.audioCopiedOrMovedFromPlaylistToPlaylist:
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          String notCopiedOrMovedReasonStr = '';
+          String notCopiedOrMovedReasonStr = '.';
 
           if (_warningMessageVM.copyOrMoveFileResult ==
               CopyOrMoveFileResult.sourceFileNotExist) {
@@ -1071,48 +1071,37 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                 .sinceAlreadyPresentInTargetPlaylist;
           }
 
-          String audioCopiedFromToPlaylistMessage;
+          String yesOrNo = (_warningMessageVM.wasOperationSuccessful)
+              ? AppLocalizations.of(context)!.yesOperation
+              : AppLocalizations.of(context)!.noOperation;
+          String operationType = (_warningMessageVM.isAudioCopied)
+              ? AppLocalizations.of(context)!.copiedOperationType
+              : AppLocalizations.of(context)!.movedOperationType;
+          String fromPlaylistTypeStr = (_warningMessageVM.fromPlaylistType ==
+                  PlaylistType.local)
+              ? AppLocalizations.of(context)!.localPlaylistType
+              : AppLocalizations.of(context)!.youtubePlaylistType;
+          String toPlaylistTypeStr = (_warningMessageVM.toPlaylistType ==
+                  PlaylistType.local)
+              ? AppLocalizations.of(context)!.localPlaylistType
+              : AppLocalizations.of(context)!.youtubePlaylistType;
 
-          if (_warningMessageVM.copiedFromPlaylistType == PlaylistType.local) {
-            if (_warningMessageVM.copiedToPlaylistType == PlaylistType.local) {
-              audioCopiedFromToPlaylistMessage = AppLocalizations.of(context)!
-                  .audioNotCopiedFromLocalPlaylistToLocalPlaylist(
-                _warningMessageVM.copiedAudioValidVideoTitle,
-                _warningMessageVM.copiedFromPlaylistTitle,
-                notCopiedOrMovedReasonStr,
-                _warningMessageVM.copiedToPlaylistTitle,
-              );
-            } else {
-              audioCopiedFromToPlaylistMessage = AppLocalizations.of(context)!
-                  .audioNotCopiedFromLocalPlaylistToYoutubePlaylist(
-                _warningMessageVM.copiedAudioValidVideoTitle,
-                _warningMessageVM.copiedFromPlaylistTitle,
-                notCopiedOrMovedReasonStr,
-                _warningMessageVM.copiedToPlaylistTitle,
-              );
-            }
-          } else {
-            if (_warningMessageVM.copiedToPlaylistType == PlaylistType.local) {
-              audioCopiedFromToPlaylistMessage = AppLocalizations.of(context)!
-                  .audioNotCopiedFromYoutubePlaylistToLocalPlaylist(
-                _warningMessageVM.copiedAudioValidVideoTitle,
-                _warningMessageVM.copiedFromPlaylistTitle,
-                notCopiedOrMovedReasonStr,
-                _warningMessageVM.copiedToPlaylistTitle,
-              );
-            } else {
-              audioCopiedFromToPlaylistMessage = AppLocalizations.of(context)!
-                  .audioNotCopiedFromYoutubePlaylistToYoutubePlaylist(
-                _warningMessageVM.copiedAudioValidVideoTitle,
-                _warningMessageVM.copiedFromPlaylistTitle,
-                notCopiedOrMovedReasonStr,
-                _warningMessageVM.copiedToPlaylistTitle,
-              );
-            }
-          }
+          String audioCopiedOrMMovedFromToPlaylistMessage =
+              AppLocalizations.of(context)!
+                  .audioCopiedOrMovedFromPlaylistToPlaylist(
+            _warningMessageVM.audioValidVideoTitle,
+            yesOrNo,
+            operationType,
+            fromPlaylistTypeStr,
+            _warningMessageVM.fromPlaylistTitle,
+            _warningMessageVM.toPlaylistTitle,
+            toPlaylistTypeStr,
+            notCopiedOrMovedReasonStr,
+          );
+
           _displayWarningDialog(
             context: _context,
-            message: audioCopiedFromToPlaylistMessage,
+            message: audioCopiedOrMMovedFromToPlaylistMessage,
             warningMessageVM: _warningMessageVM,
             themeProviderVM: themeProviderVM,
             warningMode: WarningMode.warning,
@@ -1191,36 +1180,36 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           String audioCopiedFromToPlaylistMessage;
 
-          if (_warningMessageVM.copiedFromPlaylistType == PlaylistType.local) {
-            if (_warningMessageVM.copiedToPlaylistType == PlaylistType.local) {
+          if (_warningMessageVM.fromPlaylistType == PlaylistType.local) {
+            if (_warningMessageVM.toPlaylistType == PlaylistType.local) {
               audioCopiedFromToPlaylistMessage = AppLocalizations.of(context)!
                   .audioCopiedFromLocalPlaylistToLocalPlaylist(
-                _warningMessageVM.copiedAudioValidVideoTitle,
-                _warningMessageVM.copiedFromPlaylistTitle,
-                _warningMessageVM.copiedToPlaylistTitle,
+                _warningMessageVM.audioValidVideoTitle,
+                _warningMessageVM.fromPlaylistTitle,
+                _warningMessageVM.toPlaylistTitle,
               );
             } else {
               audioCopiedFromToPlaylistMessage = AppLocalizations.of(context)!
                   .audioCopiedFromLocalPlaylistToYoutubePlaylist(
-                _warningMessageVM.copiedAudioValidVideoTitle,
-                _warningMessageVM.copiedFromPlaylistTitle,
-                _warningMessageVM.copiedToPlaylistTitle,
+                _warningMessageVM.audioValidVideoTitle,
+                _warningMessageVM.fromPlaylistTitle,
+                _warningMessageVM.toPlaylistTitle,
               );
             }
           } else {
-            if (_warningMessageVM.copiedToPlaylistType == PlaylistType.local) {
+            if (_warningMessageVM.toPlaylistType == PlaylistType.local) {
               audioCopiedFromToPlaylistMessage = AppLocalizations.of(context)!
                   .audioCopiedFromYoutubePlaylistToLocalPlaylist(
-                _warningMessageVM.copiedAudioValidVideoTitle,
-                _warningMessageVM.copiedFromPlaylistTitle,
-                _warningMessageVM.copiedToPlaylistTitle,
+                _warningMessageVM.audioValidVideoTitle,
+                _warningMessageVM.fromPlaylistTitle,
+                _warningMessageVM.toPlaylistTitle,
               );
             } else {
               audioCopiedFromToPlaylistMessage = AppLocalizations.of(context)!
                   .audioCopiedFromYoutubePlaylistToYoutubePlaylist(
-                _warningMessageVM.copiedAudioValidVideoTitle,
-                _warningMessageVM.copiedFromPlaylistTitle,
-                _warningMessageVM.copiedToPlaylistTitle,
+                _warningMessageVM.audioValidVideoTitle,
+                _warningMessageVM.fromPlaylistTitle,
+                _warningMessageVM.toPlaylistTitle,
               );
             }
           }
