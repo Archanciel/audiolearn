@@ -311,6 +311,18 @@ Future<void> main() async {
             "Youtube playlist \"$globalTestPlaylistTitle\" of musical quality added to the end of the playlist list.",
       );
 
+      // Now tap on the delete button to empty the search text
+      // field. The reason is due to using debounce in the
+      // YoutubeUrlOrSearchTextField widget. If the text field is not
+      // emptied, it avoids that the Youtube playlist addition warning
+      // dialog is shown twice when the 'Add playlist button' button is
+      // tapped.
+      await tester.tap(
+        find.byKey(
+          const Key('clearPlaylistUrlOrSearchButtonKey'),
+        ),
+      );
+
       expect(
         tester
             .widget<TextField>(find.byKey(
@@ -1167,6 +1179,18 @@ Future<void> main() async {
         tester: tester,
         warningDialogMessage:
             "Youtube playlist \"${playlistBeforeRecreatedCopy.title}\" URL was updated. The playlist can be downloaded with its new URL.",
+      );
+
+      // Now tap on the delete button to empty the search text
+      // field. The reason is due to using debounce in the
+      // YoutubeUrlOrSearchTextField widget. If the text field is not
+      // emptied, it avoids that the Youtube playlist addition warning
+      // dialog is shown twice when the 'Add playlist button' button is
+      // tapped.
+      await tester.tap(
+        find.byKey(
+          const Key('clearPlaylistUrlOrSearchButtonKey'),
+        ),
       );
 
       Playlist recreatedPlaylist = audioDownloadVM.listOfPlaylist[0];
