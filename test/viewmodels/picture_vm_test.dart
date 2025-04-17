@@ -54,6 +54,10 @@ void main() {
       "250412-125202-Chapitre 0 préface de l'auteur Chemin Saint Josémaria 25-02-09.mp3";
   final String playlistOneAudioOnePictureJsonFilePathName =
       "$testPlaylistOnePicturePath${path.separator}250412-125202-Chapitre 0 préface de l'auteur Chemin Saint Josémaria 25-02-09.json";
+  final String playlistOneAudioTwoFileName =
+      "250417-152110-German Shepherd's Heartwarming Reaction When First Meeting Abandoned Kitten 25-04-09.mp3";
+  final String playlistOneAudioTwoPictureJsonFilePathName =
+      "$testPlaylistOnePicturePath${path.separator}250417-152110-German Shepherd's Heartwarming Reaction When First Meeting Abandoned Kitten 25-04-09.json";
 
   // Create test objects
   late Playlist playlistOne;
@@ -145,7 +149,8 @@ void main() {
 
       // Verify picture JSON file creation and content
 
-      expect(File(playlistOneAudioOnePictureJsonFilePathName).existsSync(), true);
+      expect(
+          File(playlistOneAudioOnePictureJsonFilePathName).existsSync(), true);
 
       final List<Picture> pictureLstAfterAdd = JsonDataService.loadListFromFile(
         jsonPathFileName: playlistOneAudioOnePictureJsonFilePathName,
@@ -213,8 +218,15 @@ void main() {
       // the test
       expect(pictureAudioMapFile.existsSync(), false);
 
+      // Add picture to the playlist one first audio
       pictureVM.addPictureToAudio(
         audio: playlistOneAudioOne,
+        pictureFilePathName: testAvailablePictureOneFilePathName,
+      );
+
+      // Add same picture to the playlist one second audio
+      pictureVM.addPictureToAudio(
+        audio: playlistOneAudioTwo,
         pictureFilePathName: testAvailablePictureOneFilePathName,
       );
 
@@ -223,16 +235,41 @@ void main() {
 
       // Verify picture JSON file creation and content
 
-      expect(File(playlistOneAudioOnePictureJsonFilePathName).existsSync(), true);
+      expect(
+          File(playlistOneAudioOnePictureJsonFilePathName).existsSync(), true);
+      expect(
+          File(playlistOneAudioTwoPictureJsonFilePathName).existsSync(), true);
 
-      final List<Picture> pictureLstAfterAdd = JsonDataService.loadListFromFile(
+      final List<Picture> pictureLstOneAfterAdd =
+          JsonDataService.loadListFromFile(
         jsonPathFileName: playlistOneAudioOnePictureJsonFilePathName,
         type: Picture,
       );
 
-      expect(pictureLstAfterAdd.length, 1);
+      expect(pictureLstOneAfterAdd.length, 1);
 
-      Picture firstPictureAfterAdd = pictureLstAfterAdd.first;
+      Picture firstPictureAfterAdd = pictureLstOneAfterAdd.first;
+
+      expect(firstPictureAfterAdd.fileName, testPictureOneFileName);
+      expect(firstPictureAfterAdd.isDisplayable, true);
+      expect(
+          DateTimeUtil.getDateTimeLimitedToSeconds(
+              firstPictureAfterAdd.additionToAudioDateTime),
+          nowLimitedToSeconds);
+      expect(
+          DateTimeUtil.getDateTimeLimitedToSeconds(
+              firstPictureAfterAdd.lastDisplayDateTime),
+          nowLimitedToSeconds);
+
+      final List<Picture> pictureLstTwoAfterAdd =
+          JsonDataService.loadListFromFile(
+        jsonPathFileName: playlistOneAudioTwoPictureJsonFilePathName,
+        type: Picture,
+      );
+
+      expect(pictureLstTwoAfterAdd.length, 1);
+
+      firstPictureAfterAdd = pictureLstTwoAfterAdd.first;
 
       expect(firstPictureAfterAdd.fileName, testPictureOneFileName);
       expect(firstPictureAfterAdd.isDisplayable, true);
@@ -253,36 +290,17 @@ void main() {
           jsonDecode(pictureAudioMapFile.readAsStringSync());
       expect(pictureAudioMap.length, 1);
       expect(pictureAudioMap.containsKey(testPictureOneFileName), true);
+      List pictureAudioMapLst =
+          (pictureAudioMap[testPictureOneFileName] as List);
+      expect(pictureAudioMapLst.length, 2);
       expect(
-          (pictureAudioMap[testPictureOneFileName] as List).contains(
-              '$testPlaylistOneTitle|${playlistOneAudioOne.audioFileName.replaceAll('.mp3', '')}'),
-          true);
-
-      // Re-add the same picture and verify that nothing was changed
-
-      pictureVM.addPictureToAudio(
-        audio: playlistOneAudioOne,
-        pictureFilePathName: testPictureOneFilePathName,
+        pictureAudioMapLst[0],
+        '$testPlaylistOneTitle|${playlistOneAudioOne.audioFileName.replaceAll('.mp3', '')}',
       );
-
-      // Verify picture JSON file content remains unchanged
-      final List<Picture> pictureLstAfterReAdd =
-          JsonDataService.loadListFromFile(
-        jsonPathFileName: playlistOneAudioOnePictureJsonFilePathName,
-        type: Picture,
-      );
-      expect(pictureLstAfterReAdd, pictureLstAfterAdd);
-      Picture firstPictureAfterReAdd = pictureLstAfterReAdd.first;
-      expect(firstPictureAfterReAdd, firstPictureAfterAdd);
-
-      // Verify picture-audio map after re-add remains unchanged
-      final Map<String, dynamic> pictureAudioMapAfterReAdd =
-          jsonDecode(pictureAudioMapFile.readAsStringSync());
-      expect(pictureAudioMapAfterReAdd, pictureAudioMap);
       expect(
-          (pictureAudioMapAfterReAdd[testPictureOneFileName] as List).contains(
-              '$testPlaylistOneTitle|${playlistOneAudioOne.audioFileName.replaceAll('.mp3', '')}'),
-          true);
+        pictureAudioMapLst[1],
+        '$testPlaylistOneTitle|${playlistOneAudioTwo.audioFileName.replaceAll('.mp3', '')}',
+      );
     });
   });
   group('Next picture tests', () {
@@ -294,7 +312,8 @@ void main() {
           [Picture(fileName: 'pic1.jpg'), Picture(fileName: 'pic2.jpg')]);
 
       // Act
-      final count = pictureVM.getAudioPicturesNumber(audio: playlistOneAudioOne);
+      final count =
+          pictureVM.getAudioPicturesNumber(audio: playlistOneAudioOne);
 
       // Assert
       expect(count, 2);
@@ -302,7 +321,8 @@ void main() {
 
     test('getAudioPicturesNumber - returns 0 when no pictures', () {
       // Act
-      final count = pictureVM.getAudioPicturesNumber(audio: playlistOneAudioOne);
+      final count =
+          pictureVM.getAudioPicturesNumber(audio: playlistOneAudioOne);
 
       // Assert
       expect(count, 0);
