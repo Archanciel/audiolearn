@@ -1397,7 +1397,8 @@ class AudioDownloadVM extends ChangeNotifier {
   /// True is returned if the audio file was moved to the target
   /// playlist directory, false otherwise. If the audio file already
   /// exist in the target playlist directory, the move operation does
-  /// not happen and false is returned.
+  /// not happen and false is returned. Same happens if the audio file
+  /// does not exist in the source playlist directory.
   bool moveAudioToPlaylist({
     required Audio audioToMove,
     required Playlist targetPlaylist,
@@ -1436,15 +1437,15 @@ class AudioDownloadVM extends ChangeNotifier {
     } else if (moveFileResult == CopyOrMoveFileResult.sourceFileNotExist) {
       // the case if the moved audio file does not exist in the source
       // playlist directory
-        warningMessageVM.audioCopiedOrMovedFromToPlaylist(
-            audioValidVideoTitle: audioToMove.validVideoTitle,
-            wasOperationSuccessful: false,
-            isAudioCopied: false,
-            fromPlaylistTitle: fromPlaylistTitle,
-            fromPlaylistType: fromPlaylist.playlistType,
-            toPlaylistTitle: targetPlaylistTitle,
-            toPlaylistType: targetPlaylist.playlistType,
-            copyOrMoveFileResult: moveFileResult);
+      warningMessageVM.audioCopiedOrMovedFromToPlaylist(
+          audioValidVideoTitle: audioToMove.validVideoTitle,
+          wasOperationSuccessful: false,
+          isAudioCopied: false,
+          fromPlaylistTitle: fromPlaylistTitle,
+          fromPlaylistType: fromPlaylist.playlistType,
+          toPlaylistTitle: targetPlaylistTitle,
+          toPlaylistType: targetPlaylist.playlistType,
+          copyOrMoveFileResult: moveFileResult);
 
       return false;
     }
@@ -1489,15 +1490,31 @@ class AudioDownloadVM extends ChangeNotifier {
     );
 
     if (displayWarningWhenAudioWasMoved) {
+      if (!keepAudioInSourcePlaylistDownloadedAudioLst &&
+          fromPlaylist.playlistType == PlaylistType.youtube) {
         warningMessageVM.audioCopiedOrMovedFromToPlaylist(
-            audioValidVideoTitle: audioToMove.validVideoTitle,
-            wasOperationSuccessful: true,
-            isAudioCopied: false,
-            fromPlaylistTitle: fromPlaylistTitle,
-            fromPlaylistType: fromPlaylist.playlistType,
-            toPlaylistTitle: targetPlaylistTitle,
-            toPlaylistType: targetPlaylist.playlistType,
-            copyOrMoveFileResult: CopyOrMoveFileResult.copiedOrMoved,);
+          audioValidVideoTitle: audioToMove.validVideoTitle,
+          wasOperationSuccessful: true,
+          isAudioCopied: false,
+          fromPlaylistTitle: fromPlaylistTitle,
+          fromPlaylistType: fromPlaylist.playlistType,
+          toPlaylistTitle: targetPlaylistTitle,
+          toPlaylistType: targetPlaylist.playlistType,
+          copyOrMoveFileResult:
+              CopyOrMoveFileResult.audioNotKeptInSourcePlaylist,
+        );
+      } else {
+        warningMessageVM.audioCopiedOrMovedFromToPlaylist(
+          audioValidVideoTitle: audioToMove.validVideoTitle,
+          wasOperationSuccessful: true,
+          isAudioCopied: false,
+          fromPlaylistTitle: fromPlaylistTitle,
+          fromPlaylistType: fromPlaylist.playlistType,
+          toPlaylistTitle: targetPlaylistTitle,
+          toPlaylistType: targetPlaylist.playlistType,
+          copyOrMoveFileResult: CopyOrMoveFileResult.copiedOrMoved,
+        );
+      }
     }
 
     return true;

@@ -12588,7 +12588,7 @@ void main() {
            select the local playlist and restart the application.''',
         (tester) async {
       const String youtubePlaylistToModifyTitle = 'MaValTest';
-      const String localPlaylistTitle = 'local_audio';
+      const String localSpokenPlaylistTitle = 'local_audio';
 
       await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
         tester: tester,
@@ -12597,7 +12597,7 @@ void main() {
 
       await _verifyPlaylistAudioQuality(
         tester: tester,
-        playlistTitle: localPlaylistTitle,
+        playlistTitle: localSpokenPlaylistTitle,
         isPlaylistLocal: true,
         playlistQuality: PlaylistQuality.voice,
       );
@@ -12605,13 +12605,13 @@ void main() {
       // Set playlist audio quality to musical.
       await _tapOnSetAudioQualityMenu(
         tester: tester,
-        playlistToModifyTitle: localPlaylistTitle,
+        playlistToModifyTitle: localSpokenPlaylistTitle,
         setMusicQuality: true,
       );
 
       await _verifyPlaylistAudioQuality(
         tester: tester,
-        playlistTitle: localPlaylistTitle,
+        playlistTitle: localSpokenPlaylistTitle,
         isPlaylistLocal: true,
         playlistQuality: PlaylistQuality.music,
       );
@@ -12640,7 +12640,7 @@ void main() {
         (Widget widget) =>
             widget is RadioListTile &&
             widget.title is Text &&
-            (widget.title as Text).data == localPlaylistTitle,
+            (widget.title as Text).data == localSpokenPlaylistTitle,
       );
 
       // Tap the target playlist RadioListTile to select it
@@ -12655,7 +12655,7 @@ void main() {
       await IntegrationTestUtil.verifyAlertDisplayAndCloseIt(
         tester: tester,
         alertDialogMessage:
-            "Confirm target playlist \"$localPlaylistTitle\" for downloading single video audio in high-quality music format.",
+            "Confirm target playlist \"$localSpokenPlaylistTitle\" for downloading single video audio in high-quality music format.",
       );
 
       // Add a delay to allow the download to finish.
@@ -12664,7 +12664,7 @@ void main() {
 
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
-        audioEnclosingPlaylistTitle: localPlaylistTitle,
+        audioEnclosingPlaylistTitle: localSpokenPlaylistTitle,
         movedOrCopiedAudioTitle: 'audio learn test short video two',
         movedFromPlaylistTitle: '',
         movedToPlaylistTitle: '',
@@ -12689,7 +12689,7 @@ void main() {
       // audio quality checkbox.
       await _resetUnselectedPlaylistAudioQualityAndThenSelectPlaylist(
         tester: tester,
-        playlistTitle: localPlaylistTitle,
+        playlistTitle: localSpokenPlaylistTitle,
         isPlaylistLocal: true,
         playlistQuality: PlaylistQuality.voice,
       );

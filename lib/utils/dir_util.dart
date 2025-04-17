@@ -10,6 +10,7 @@ enum CopyOrMoveFileResult {
   copiedOrMoved,
   targetFileAlreadyExists,
   sourceFileNotExist,
+  audioNotKeptInSourcePlaylist,
 }
 
 class DirUtil {
@@ -509,9 +510,11 @@ class DirUtil {
   /// If [targetFileName] is not provided, the moved file will
   /// have the same name than the source file name.
   ///
-  /// Returns true if the file has been moved, false otherwise
-  /// which happens if the moved file already exist in the
-  /// target directory.
+  /// Returns CopyOrMoveFileResult.copiedOrMoved if the file has
+  /// been moved, targetFileAlreadyExists or sourceFileNotExist
+  /// otherwise, which happens if the moved file already exist in
+  /// the target directory or if the file does not exist in the
+  /// source directory.
   static CopyOrMoveFileResult  moveFileToDirectoryIfNotExistSync({
     required String sourceFilePathName,
     required String targetDirectoryPath,
@@ -548,9 +551,11 @@ class DirUtil {
   /// If [targetFileName] is not provided, the copied file will
   /// have the same name than the source file name.
   ///
-  /// Returns true if the file has been copied, false
-  /// otherwise in case the copied file already exists in
-  /// the target dir and {overwriteFileIfExist} is false.
+  /// Returns CopyOrMoveFileResult.copiedOrMoved if the file has
+  /// been copied, targetFileAlreadyExists or sourceFileNotExist
+  /// otherwise, which happens if the moved file already exist in
+  /// the target directory or if the file does not exist in the
+  /// source directory.
   static CopyOrMoveFileResult copyFileToDirectorySync({
     required String sourceFilePathName,
     required String targetDirectoryPath,

@@ -986,24 +986,45 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
               CopyOrMoveFileResult.targetFileAlreadyExists) {
             notCopiedOrMovedReasonStr = AppLocalizations.of(context)!
                 .sinceAlreadyPresentInTargetPlaylist;
+          } else if (_warningMessageVM.copyOrMoveFileResult ==
+              CopyOrMoveFileResult.audioNotKeptInSourcePlaylist) {
+            notCopiedOrMovedReasonStr =
+                AppLocalizations.of(context)!.audioNotKeptInSourcePlaylist(
+              _warningMessageVM.audioValidVideoTitle,
+              _warningMessageVM.fromPlaylistTitle,
+            );
           }
 
-          bool wasOperationSuccessful = _warningMessageVM.wasOperationSuccessful;
+          bool wasOperationSuccessful =
+              _warningMessageVM.wasOperationSuccessful;
 
-          String yesOrNo = (wasOperationSuccessful)
-              ? AppLocalizations.of(context)!.yesOperation
-              : AppLocalizations.of(context)!.noOperation;
-          String operationType = (_warningMessageVM.isAudioCopied)
-              ? AppLocalizations.of(context)!.copiedOperationType
-              : AppLocalizations.of(context)!.movedOperationType;
-          String fromPlaylistTypeStr = (_warningMessageVM.fromPlaylistType ==
-                  PlaylistType.local)
-              ? AppLocalizations.of(context)!.localPlaylistType
-              : AppLocalizations.of(context)!.youtubePlaylistType;
-          String toPlaylistTypeStr = (_warningMessageVM.toPlaylistType ==
-                  PlaylistType.local)
-              ? AppLocalizations.of(context)!.localPlaylistType
-              : AppLocalizations.of(context)!.youtubePlaylistType;
+          String yesOrNo;
+          String operationType;
+
+          if ((wasOperationSuccessful)) {
+            yesOrNo = AppLocalizations.of(context)!.yesOperation;
+            if ((_warningMessageVM.isAudioCopied)) {
+              operationType = AppLocalizations.of(context)!.copiedOperationType;
+            } else {
+              operationType = AppLocalizations.of(context)!.movedOperationType;
+            }
+          } else {
+            yesOrNo = AppLocalizations.of(context)!.noOperation;
+            if ((_warningMessageVM.isAudioCopied)) {
+              operationType = AppLocalizations.of(context)!.noOperationCopiedOperationType;
+            } else {
+              operationType = AppLocalizations.of(context)!.noOperationMovedOperationType;
+            }
+          }
+
+          String fromPlaylistTypeStr =
+              (_warningMessageVM.fromPlaylistType == PlaylistType.local)
+                  ? AppLocalizations.of(context)!.localPlaylistType
+                  : AppLocalizations.of(context)!.youtubePlaylistType;
+          String toPlaylistTypeStr =
+              (_warningMessageVM.toPlaylistType == PlaylistType.local)
+                  ? AppLocalizations.of(context)!.localPlaylistType
+                  : AppLocalizations.of(context)!.youtubePlaylistType;
 
           String audioCopiedOrMMovedFromToPlaylistMessage =
               AppLocalizations.of(context)!
@@ -1023,7 +1044,9 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
             message: audioCopiedOrMMovedFromToPlaylistMessage,
             warningMessageVM: _warningMessageVM,
             themeProviderVM: themeProviderVM,
-            warningMode: (wasOperationSuccessful) ? WarningMode.confirm : WarningMode.warning,
+            warningMode: (wasOperationSuccessful)
+                ? WarningMode.confirm
+                : WarningMode.warning,
           );
         });
 
