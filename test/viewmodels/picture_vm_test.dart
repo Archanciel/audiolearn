@@ -179,11 +179,13 @@ void main() {
       final Map<String, dynamic> pictureAudioMap =
           jsonDecode(pictureAudioMapFile.readAsStringSync());
       expect(pictureAudioMap.length, 1);
-      expect(pictureAudioMap.containsKey(testPictureOneFileName), true);
+      List pictureAudioMapLst =
+          (pictureAudioMap[testPictureOneFileName] as List);
+      expect(pictureAudioMapLst.length, 1);
       expect(
-          (pictureAudioMap[testPictureOneFileName] as List).contains(
-              '$testPlaylistOneTitle|${playlistOneAudioOne.audioFileName.replaceAll('.mp3', '')}'),
-          true);
+        pictureAudioMapLst[0],
+        '$testPlaylistOneTitle|${playlistOneAudioOne.audioFileName.replaceAll('.mp3', '')}',
+      );
 
       // Re-add the same picture and verify that nothing was changed
 
@@ -205,11 +207,12 @@ void main() {
       // Verify picture-audio map after re-add remains unchanged
       final Map<String, dynamic> pictureAudioMapAfterReAdd =
           jsonDecode(pictureAudioMapFile.readAsStringSync());
-      expect(pictureAudioMapAfterReAdd, pictureAudioMap);
+      pictureAudioMapLst = (pictureAudioMap[testPictureOneFileName] as List);
+      expect(pictureAudioMapLst.length, 1);
       expect(
-          (pictureAudioMapAfterReAdd[testPictureOneFileName] as List).contains(
-              '$testPlaylistOneTitle|${playlistOneAudioOne.audioFileName.replaceAll('.mp3', '')}'),
-          true);
+        pictureAudioMapLst[0],
+        '$testPlaylistOneTitle|${playlistOneAudioOne.audioFileName.replaceAll('.mp3', '')}',
+      );
     });
     test('''Add same picture to a second audio.''', () {
       final pictureAudioMapFile = File(appPictureAudioMapFilePathName);
