@@ -342,12 +342,6 @@
       "toPlaylistTitle": {}
     }
   },
-  "audioMovedFromLocalPlaylistToLocalPlaylist": "Audio \"{audioTitle}\" moved from local playlist \"{fromPlaylistTitle}\" to local playlist \"{toPlaylistTitle}\".",
-  "audioMovedFromLocalPlaylistToYoutubePlaylist": "Audio \"{audioTitle}\" moved from local playlist \"{fromPlaylistTitle}\" to Youtube playlist \"{toPlaylistTitle}\".",
-  "audioMovedFromYoutubePlaylistToLocalPlaylist": "Audio \"{audioTitle}\" moved from Youtube playlist \"{fromPlaylistTitle}\" to local playlist \"{toPlaylistTitle}\".",
-  "audioMovedFromYoutubePlaylistToYoutubePlaylist": "Audio \"{audioTitle}\" moved from Youtube playlist \"{fromPlaylistTitle}\" to Youtube playlist \"{toPlaylistTitle}\".",
-  "audioMovedFromYoutubePlaylistToLocalPlaylistPlaylistWarning": "Audio \"{audioTitle}\" moved from Youtube playlist \"{fromPlaylistTitle}\" to local playlist \"{toPlaylistTitle}\".\n\nIF THE DELETED AUDIO VIDEO \"{audioTitle}\" REMAINS IN THE \"{fromPlaylistTitle}\" YOUTUBE PLAYLIST, IT WILL BE DOWNLOADED AGAIN THE NEXT TIME YOU DOWNLOAD THE PLAYLIST !",
-  "audioMovedFromYoutubePlaylistToYoutubePlaylistPlaylistWarning": "Audio \"{audioTitle}\" moved from Youtube playlist \"{fromPlaylistTitle}\" to Youtube playlist \"{toPlaylistTitle}\".\n\nIF THE DELETED AUDIO VIDEO \"{audioTitle}\" REMAINS IN THE \"{fromPlaylistTitle}\" YOUTUBE PLAYLIST, IT WILL BE DOWNLOADED AGAIN THE NEXT TIME YOU DOWNLOAD THE PLAYLIST !",
   "author": "Author:",
   "authorName": "Jean-Pierre Schnyder / Switzerland",
   "aboutAppDescription": "AudioLearn allows you to download audio from videos included in Youtube playlists whose links are added to the application, or from individual Youtube videos using their URL's.\n\nYou can also import audio files, such as audiobooks, directly into the application.\n\nIn addition to listening the audio files, AudioLearn offers the ability to add timestamped comments to each file, making it easier to replay their most interesting parts.\n\nFinally, the app allows you to sort and filter audio files based on various criteria.\n\nIn the next version, you will be able to extract commented audio segments to share them via email or WhatsApp, or combine them to create a new summarized audio file.",
@@ -917,10 +911,20 @@
   },
   "sinceAbsentFromSourcePlaylist": " since it is not present in the source playlist.",
   "sinceAlreadyPresentInTargetPlaylist": " since it is already present in the destination playlist.",
+  "audioNotKeptInSourcePlaylist": ".\n\nIF THE DELETED AUDIO VIDEO \"{audioTitle}\" REMAINS IN THE \"{fromPlaylistTitle}\" YOUTUBE PLAYLIST, IT WILL BE DOWNLOADED AGAIN THE NEXT TIME YOU DOWNLOAD THE PLAYLIST !",
+  "@audioNotKeptInSourcePlaylist": {
+    "description": "Warning title for not redownloading audio",
+    "placeholders": {
+      "audioTitle": {},
+      "fromPlaylistTitle": {}
+    }
+  },
   "noOperation": " NOT ",
   "yesOperation": " ",
   "localPlaylistType": "local",
   "youtubePlaylistType": "Youtube",
   "movedOperationType": "moved",
-  "copiedOperationType": "copied"
+  "copiedOperationType": "copied",
+  "noOperationMovedOperationType": "moved",
+  "noOperationCopiedOperationType": "copied"
 }

@@ -456,42 +456,6 @@ class MockAppLocalizations extends AppLocalizations {
   String get enclosingPlaylistLabel => 'Enclosing playlist';
 
   @override
-  String audioMovedFromLocalPlaylistToLocalPlaylist(
-      Object audioTitle, Object fromPlaylistTitle, Object toPlaylistTitle) {
-    return 'Audio "$audioTitle" moved from local playlist "$fromPlaylistTitle" to local playlist "$toPlaylistTitle".';
-  }
-
-  @override
-  String audioMovedFromLocalPlaylistToYoutubePlaylist(
-      Object audioTitle, Object fromPlaylistTitle, Object toPlaylistTitle) {
-    return 'Audio "$audioTitle" moved from local playlist "$fromPlaylistTitle" to Youtube playlist "$toPlaylistTitle".';
-  }
-
-  @override
-  String audioMovedFromYoutubePlaylistToLocalPlaylistPlaylistWarning(
-      Object audioTitle, Object fromPlaylistTitle, Object toPlaylistTitle) {
-    return 'Audio "$audioTitle" moved from Youtube playlist "$fromPlaylistTitle" to local playlist "$toPlaylistTitle".\n\nIF THE DELETED AUDIO VIDEO "$audioTitle" REMAINS IN THE "$fromPlaylistTitle" YOUTUBE PLAYLIST, IT WILL BE DOWNLOADED AGAIN THE NEXT TIME YOU DOWNLOAD THE PLAYLIST !';
-  }
-
-  @override
-  String audioMovedFromYoutubePlaylistToYoutubePlaylistPlaylistWarning(
-      Object audioTitle, Object fromPlaylistTitle, Object toPlaylistTitle) {
-    return 'Audio "$audioTitle" moved from Youtube playlist "$fromPlaylistTitle" to Youtube playlist "$toPlaylistTitle".\n\nIF THE DELETED AUDIO VIDEO "$audioTitle" REMAINS IN THE "$fromPlaylistTitle" YOUTUBE PLAYLIST, IT WILL BE DOWNLOADED AGAIN THE NEXT TIME YOU DOWNLOAD THE PLAYLIST !';
-  }
-
-  @override
-  String audioMovedFromYoutubePlaylistToLocalPlaylist(
-      Object audioTitle, Object fromPlaylistTitle, Object toPlaylistTitle) {
-    return 'Audio "$audioTitle" moved from Youtube playlist "$fromPlaylistTitle" to local playlist "$toPlaylistTitle".';
-  }
-
-  @override
-  String audioMovedFromYoutubePlaylistToYoutubePlaylist(
-      Object audioTitle, Object fromPlaylistTitle, Object toPlaylistTitle) {
-    return 'Audio "$audioTitle" moved from Youtube playlist "$fromPlaylistTitle" to Youtube playlist "$toPlaylistTitle".';
-  }
-
-  @override
   String get author => 'Author:';
 
   @override
@@ -1925,4 +1889,17 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get copiedOperationType => "copied";
+
+  @override
+  String audioNotKeptInSourcePlaylist(
+    Object audioTitle,
+    Object fromPlaylistTitle,
+  ) =>
+      "IF THE DELETED AUDIO VIDEO \"$audioTitle\" REMAINS IN THE \"$fromPlaylistTitle\" YOUTUBE PLAYLIST, IT WILL BE DOWNLOADED AGAIN THE NEXT TIME YOU DOWNLOAD THE PLAYLIST !";
+
+  @override
+  String get noOperationMovedOperationType => "moved";
+
+  @override
+  String get noOperationCopiedOperationType => "copied";
 }

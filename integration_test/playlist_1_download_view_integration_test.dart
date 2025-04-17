@@ -4113,7 +4113,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
+            "L'audio \"audio learn test short video one\" a été copié de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\".",
         isWarningConfirming: true,
       );
 
@@ -4426,7 +4426,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "L'audio \"audio learn test short video one\" n'a pas été copié de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\" car il est déjà présent dans cette playlist.",
+            "L'audio \"audio learn test short video one\" N'A PAS été copié de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\" car il est déjà présent dans cette playlist.",
         isWarningConfirming: false,
         warningTitle: 'AVERTISSEMENT',
       );
@@ -4732,7 +4732,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
+            "L'audio \"audio learn test short video one\" a été copié de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\".",
         isWarningConfirming: true,
       );
 
@@ -4911,7 +4911,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "L'audio \"audio learn test short video one\" n'a pas été déplacé de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\" car il est déjà présent dans cette playlist.",
+            "L'audio \"audio learn test short video one\" N'A PAS été déplacé de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\" car il est déjà présent dans cette playlist.",
         isWarningConfirming: false,
         warningTitle: 'AVERTISSEMENT',
       );
@@ -5114,7 +5114,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
+            "L'audio \"audio learn test short video one\" a été copié de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\".",
         isWarningConfirming: true,
       );
 
@@ -5343,7 +5343,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Audio "audio learn test short video one" déplacé de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
+            "L'audio \"audio learn test short video one\" a été déplacé de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\".",
         isWarningConfirming: true,
       );
 
@@ -5464,7 +5464,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
+            "L'audio \"audio learn test short video one\" a été copié de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\".",
         isWarningConfirming: true,
       );
 
@@ -5649,7 +5649,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".',
+            "L'audio \"audio learn test short video one\" a été copié de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\".",
         isWarningConfirming: true,
       );
 
@@ -5776,7 +5776,7 @@ void main() {
           tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
 
       expect(warningDialogMessageTextWidget.data,
-          'Audio "audio learn test short video one" copié de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".');
+          "L'audio \"audio learn test short video one\" a été copié de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\".");
 
       // Now find the ok button of the confirm warning dialog
       // and tap on it
@@ -6097,7 +6097,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "L'audio \"audio learn test short video one\" n'a pas été copié de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_3\" car il est déjà présent dans cette playlist.",
+            "L'audio \"audio learn test short video one\" N'A PAS été copié de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_3\" car il est déjà présent dans cette playlist.",
         isWarningConfirming: false,
         warningTitle: 'AVERTISSEMENT',
       );
@@ -6405,7 +6405,7 @@ void main() {
           tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
 
       expect(warningDialogMessageTextWidget.data,
-          'Audio "audio learn test short video one" déplacé de la playlist Youtube "audio_learn_test_download_2_small_videos" vers la playlist locale "local_audio_playlist_2".');
+          "L'audio \"audio learn test short video one\" a été déplacé de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\".");
 
       // Now find the ok button of the confirm warning dialog
       // and tap on it
@@ -6857,7 +6857,7 @@ void main() {
           tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
 
       expect(warningDialogMessageTextWidget.data,
-          "Audio \"audio learn test short video one\" déplacé de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\".\n\nSUPPRIMEZ L'AUDIO \"audio learn test short video one\" DE LA PLAYLIST YOUTUBE \"audio_learn_test_download_2_small_videos\", SINON L'AUDIO SERA TÉLÉCHARGÉ À NOUVEAU LORS DU PROCHAIN TÉLÉCHARGEMENT DE LA PLAYLIST.");
+          "L'audio \"audio learn test short video one\" a été déplacé de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\".\n\nSUPPRIMEZ L'AUDIO \"audio learn test short video one\" DE LA PLAYLIST YOUTUBE \"audio_learn_test_download_2_small_videos\", SINON L'AUDIO SERA TÉLÉCHARGÉ À NOUVEAU LORS DU PROCHAIN TÉLÉCHARGEMENT DE LA PLAYLIST.");
 
       // Now find the ok button of the confirm warning dialog
       // and tap on it
@@ -6992,7 +6992,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "L'audio \"audio learn test short video one\" n'a pas été déplacé de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_3\" car il est déjà présent dans cette playlist.",
+            "L'audio \"audio learn test short video one\" N'A PAS été déplacé de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_3\" car il est déjà présent dans cette playlist.",
         isWarningConfirming: false,
         warningTitle: 'AVERTISSEMENT',
       );
@@ -7316,7 +7316,7 @@ void main() {
           tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
 
       expect(warningDialogMessageTextWidget.data,
-          'Audio "$copiedAudioTitle" copié de la playlist Youtube "$youtubeAudioSourcePlaylistTitle" vers la playlist locale "$localAudioTargetSourcePlaylistTitle".');
+          "L'audio \"$copiedAudioTitle\" a été copié de la playlist Youtube \"$youtubeAudioSourcePlaylistTitle\" vers la playlist locale \"$localAudioTargetSourcePlaylistTitle\".");
 
       // Now find the ok button of the confirm warning dialog
       // and tap on it
@@ -7447,7 +7447,7 @@ void main() {
           tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
 
       expect(warningDialogMessageTextWidget.data,
-          'Audio "$copiedAudioTitle" copié de la playlist locale "$localAudioTargetSourcePlaylistTitle" vers la playlist Youtube "$youtubeAudioTargetPlaylistTitle".');
+          "L'audio \"$copiedAudioTitle\" a été copié de la playlist locale \"$localAudioTargetSourcePlaylistTitle\" vers la playlist Youtube \"$youtubeAudioTargetPlaylistTitle\".");
 
       // Now find the ok button of the confirm warning dialog
       // and tap on it
@@ -7728,7 +7728,7 @@ void main() {
           tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
 
       expect(warningDialogMessageTextWidget.data,
-          'Audio "$copiedAudioTitle" déplacé de la playlist Youtube "$youtubeAudioSourcePlaylistTitle" vers la playlist locale "$localAudioTargetSourcePlaylistTitle".');
+          "L'audio \"$copiedAudioTitle\" a été déplacé de la playlist Youtube \"$youtubeAudioSourcePlaylistTitle\" vers la playlist locale \"$localAudioTargetSourcePlaylistTitle\".");
 
       // Now find the ok button of the confirm warning dialog
       // and tap on it
@@ -7846,7 +7846,7 @@ void main() {
           tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
 
       expect(warningDialogMessageTextWidget.data,
-          'Audio "$copiedAudioTitle" déplacé de la playlist locale "$localAudioTargetSourcePlaylistTitle" vers la playlist Youtube "$youtubeAudioTargetPlaylistTitle".');
+          "L'audio \"$copiedAudioTitle\" a été déplacé de la playlist locale \"$localAudioTargetSourcePlaylistTitle\" vers la playlist Youtube \"$youtubeAudioTargetPlaylistTitle\".");
 
       // Now find the ok button of the confirm warning dialog
       // and tap on it

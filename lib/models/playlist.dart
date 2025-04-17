@@ -279,7 +279,8 @@ class Playlist {
 
     try {
       existingDownloadedAudio = downloadedAudioLst.firstWhere(
-        (audio) => audio == movedAudio,
+        //        This is the old version of the audio == operator
+        (audio) => audio.audioFileName == movedAudio.audioFileName,
       );
     } catch (e) {
       existingDownloadedAudio = null;
@@ -299,13 +300,14 @@ class Playlist {
 
       existingDownloadedAudioCopy.movedFromPlaylistTitle =
           movedFromPlaylistTitle;
-      existingDownloadedAudioCopy.movedToPlaylistTitle = title;
+      existingDownloadedAudioCopy.movedToPlaylistTitle = title; // this.title
       existingDownloadedAudioCopy.enclosingPlaylist = this;
-      existingDownloadedAudioCopy.audioPlaySpeed = audioPlaySpeed;
+      existingDownloadedAudioCopy.audioPlaySpeed = audioPlaySpeed; // this.audioPlaySpeed
 
       // Step 2: Find the index of the audio in downloadedAudioLst that
       // matches movedAudio
-      int index = downloadedAudioLst.indexWhere((audio) => audio == movedAudio);
+      //                                                   This is the old version of the audio == operator
+      int index = downloadedAudioLst.indexWhere((audio) => audio.audioFileName == movedAudio.audioFileName);
 
       // Step 3: Replace the audio at the found index in
       // downloadedAudioLst with the updated movedAudioCopy
