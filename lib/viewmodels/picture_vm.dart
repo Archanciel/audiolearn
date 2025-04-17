@@ -49,6 +49,7 @@ class PictureVM extends ChangeNotifier {
     // Copy the picture file to the application picture directory.
     // If the picture file already exists in the application picture
     // directory, it is not copied again.
+    //
     // Add as well the association between the picture file name and the
     // audio file name in the pictureAudio.json file.
     _copyPictureFileToAppPictureDir(

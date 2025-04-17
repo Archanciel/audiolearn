@@ -47,7 +47,7 @@ class Picture {
       return true;
     }
 
-    return other is Picture && other.additionToAudioDateTime == additionToAudioDateTime;
+    return other is Picture && other.fileName == fileName && other.additionToAudioDateTime == additionToAudioDateTime;
   }
 
   @override
