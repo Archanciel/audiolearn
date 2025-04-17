@@ -5145,9 +5145,6 @@ void main() {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      const String youtubeAudioSourcePlaylistTitle =
-          'audio_learn_test_download_2_small_videos';
-      const String localAudioTargetPlaylistTitleTwo = 'local_audio_playlist_2';
       const String copiedAudioTitle = 'audio learn test short video one';
 
       final SettingsDataService settingsDataService = SettingsDataService(
