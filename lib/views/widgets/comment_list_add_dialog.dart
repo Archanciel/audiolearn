@@ -350,7 +350,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
           children: [
             Text(AppLocalizations.of(context)!.commentsDialogTitle),
             const SizedBox(width: 15),
-            (pictureVMlistenFalse.getAudioPictureFile(
+            (pictureVMlistenFalse.getLastAddedAudioPictureFile(
                           audio: currentAudio,
                         ) !=
                         null &&
