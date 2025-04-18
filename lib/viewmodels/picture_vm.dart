@@ -122,9 +122,10 @@ class PictureVM extends ChangeNotifier {
     _savePictureAudioMap(pictureAudioMap);
   }
 
-  /// Reads the pictureAudio.json file if it exists, otherwise returns an empty map
+  /// Reads the application picture audio map json file if it exists, otherwise returns
+  /// an empty map.
   Map<String, List<String>> _readPictureAudioMap() {
-    final File jsonFile = _createJsonFile();
+    final File jsonFile = _createApplicationPictureAudioMapJsonFile();
 
     if (!jsonFile.existsSync()) {
       return {};
@@ -150,12 +151,12 @@ class PictureVM extends ChangeNotifier {
     }
   }
 
-  File _createJsonFile() => File(
+  File _createApplicationPictureAudioMapJsonFile() => File(
       "$_applicationPicturePath${path.separator}$kPictureAudioMapFileName");
 
   /// Saves the pictureAudio map to the JSON file
   void _savePictureAudioMap(Map<String, List<String>> pictureAudioMap) {
-    final File jsonFile = _createJsonFile();
+    final File jsonFile = _createApplicationPictureAudioMapJsonFile();
 
     final String jsonContent = json.encode(pictureAudioMap);
     jsonFile.writeAsStringSync(jsonContent);
@@ -242,7 +243,10 @@ class PictureVM extends ChangeNotifier {
 
   /// Method called when the user clicks on the audio item 'Remove Audio Picture'
   /// menu or on audio player view left appbar 'Remove Audio Picture' menu.
-  void removeAudioPicture({
+  /// 
+  /// The method removes the last added picture to the audio. If there is no
+  /// picture associated to the audio, nothing happens.
+  void removeLastAddedAudioPicture({
     required Audio audio,
   }) {
     List<Picture> pictureLst = _getAudioPicturesLstInAudioPictureJsonFile(
@@ -269,11 +273,16 @@ class PictureVM extends ChangeNotifier {
       audioFileName: audioFileName,
     );
 
-    _removePictureAudioAssociation(
+    if (!_removePictureAudioAssociationInApplicationPictureAudioMap(
       pictureFileName: pictureToRemove.fileName,
       audioFileName: audioFileName,
       audioPlaylistTitle: audio.enclosingPlaylist!.title,
-    );
+    )) {
+      // The picture was not associated with the audio file name,
+      // so the applicationn of the rest of the method is not
+      // necessary.
+      return;
+    }
 
     pictureLst.remove(pictureToRemove);
 
@@ -292,12 +301,14 @@ class PictureVM extends ChangeNotifier {
     );
   }
 
-  /// Returns the audio picture file if it exists, null otherwise.
+  /// Returns the picture file last added to the audio if it exists,
+  /// null otherwise. This picture will be displayed in the audio
+  /// player view.
   ///
-  /// This method is used to determine if the 'Remove audio picture'
+  /// This method is also used to determine if the 'Remove audio picture'
   /// menu item is displayed or not for the audio item and the audio
   /// player view left appbar.
-  File? getAudioPictureFile({
+  File? getLastAddedAudioPictureFile({
     required Audio audio,
   }) {
     List<Picture> pictureLst = _getAudioPicturesLstInAudioPictureJsonFile(
@@ -371,7 +382,7 @@ class PictureVM extends ChangeNotifier {
     return audioPictureFileNamesLst;
   }
 
-  /// Method called by PlaylistListVM.
+  /// Method called by PlaylistListVM when the audio is deleted.
   void deleteAudioPictureJsonFileIfExist({
     required Audio audio,
   }) {
@@ -389,7 +400,7 @@ class PictureVM extends ChangeNotifier {
     );
 
     for (Picture picture in audioPictureLst) {
-      _removePictureAudioAssociation(
+      _removePictureAudioAssociationInApplicationPictureAudioMap(
         pictureFileName: picture.fileName,
         audioFileName: audio.audioFileName,
         audioPlaylistTitle: audio.enclosingPlaylist!.title,
@@ -397,31 +408,41 @@ class PictureVM extends ChangeNotifier {
     }
   }
 
-  /// Removes an association between a picture and an audio file
-  void _removePictureAudioAssociation({
+  /// Removes an association between a picture and an audio in the application
+  /// picture audio map json file.
+  /// 
+  /// Returns true if the picture audio association was removed,
+  /// false otherwise.
+  bool _removePictureAudioAssociationInApplicationPictureAudioMap({
     required String pictureFileName,
     required String audioFileName,
     required String audioPlaylistTitle,
   }) {
     final String playListTitleAndAudioFileNameWithoutExtension =
         "$audioPlaylistTitle|${DirUtil.getFileNameWithoutMp3Extension(mp3FileName: audioFileName)}";
+    final Map<String, List<String>> applicationPictureAudioMap = _readPictureAudioMap();
+    bool wasPictureRemoved = false;
 
-    final Map<String, List<String>> pictureAudioMap = _readPictureAudioMap();
+    if (applicationPictureAudioMap.containsKey(pictureFileName)) {
+      final List<String> audioList = applicationPictureAudioMap[pictureFileName]!;
 
-    if (pictureAudioMap.containsKey(pictureFileName)) {
-      final List<String> audioList = pictureAudioMap[pictureFileName]!;
+      wasPictureRemoved = audioList.remove(playListTitleAndAudioFileNameWithoutExtension);
 
-      audioList.remove(playListTitleAndAudioFileNameWithoutExtension);
+      if (!wasPictureRemoved) {
+        return wasPictureRemoved;
+      }
 
       // If no more audios are associated with this picture, remove the picture entry
       if (audioList.isEmpty) {
-        pictureAudioMap.remove(pictureFileName);
+        applicationPictureAudioMap.remove(pictureFileName);
       } else {
-        pictureAudioMap[pictureFileName] = audioList;
+        applicationPictureAudioMap[pictureFileName] = audioList;
       }
 
-      _savePictureAudioMap(pictureAudioMap);
+      _savePictureAudioMap(applicationPictureAudioMap);
     }
+
+    return wasPictureRemoved;
   }
 
   /// Method called by PlaylistListVM.
@@ -463,7 +484,7 @@ class PictureVM extends ChangeNotifier {
       String pictureFileName = picture.fileName;
       String audioFileName = audio.audioFileName;
 
-      _removePictureAudioAssociation(
+      _removePictureAudioAssociationInApplicationPictureAudioMap(
         pictureFileName: pictureFileName,
         audioFileName: audioFileName,
         audioPlaylistTitle: sourcePlaylist.title,

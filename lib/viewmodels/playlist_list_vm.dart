@@ -975,7 +975,7 @@ class PlaylistListVM extends ChangeNotifier {
     for (Audio audio in filteredAudioToDelete) {
       _commentVM.deleteAllAudioComments(commentedAudio: audio);
 
-      // deleting the audio picture file if it exists
+      // deleting the audio picture json file if it exists
       _pictureVM.deleteAudioPictureJsonFileIfExist(
         audio: audio,
       );
@@ -2115,7 +2115,7 @@ class PlaylistListVM extends ChangeNotifier {
       commentedAudio: audio,
     );
 
-    // deleting the audio picture file if it exists
+    // deleting the audio picture json file if it exists
     _pictureVM.deleteAudioPictureJsonFileIfExist(
       audio: audio,
     );

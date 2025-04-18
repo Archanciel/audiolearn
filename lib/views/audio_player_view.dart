@@ -190,7 +190,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       _audioPlaySpeed = 1.0;
     } else {
       _audioPlaySpeed = audioPlayerVMlistenFalse.currentAudio!.audioPlaySpeed;
-      audioPictureFile = pictureVMlistenTrue.getAudioPictureFile(
+      audioPictureFile = pictureVMlistenTrue.getLastAddedAudioPictureFile(
         audio: audioPlayerVMlistenFalse.currentAudio!);
     }
 
