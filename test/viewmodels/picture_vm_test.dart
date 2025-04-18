@@ -126,13 +126,15 @@ void main() {
 
   // Helper method to create a test picture JSON file
   void createTestPictureJsonFile(String jsonPath, List<Picture> pictures) {
-    final dir = Directory(path.dirname(jsonPath));
+    final Directory dir = Directory(path.dirname(jsonPath));
+
     if (!dir.existsSync()) {
       dir.createSync(recursive: true);
     }
 
-    final file = File(jsonPath);
-    final jsonContent = jsonEncode(pictures.map((p) => p.toJson()).toList());
+    final File file = File(jsonPath);
+    final String jsonContent =
+        jsonEncode(pictures.map((p) => p.toJson()).toList());
     file.writeAsStringSync(jsonContent);
   }
 
@@ -877,6 +879,80 @@ void main() {
       expect(pictureAudioMap.containsKey(testPictureOneFileName), false);
     });
   });
+    group('getPlaylistAudioPicturedFileNamesNoExtLst', () {
+    test('getPlaylistAudioPicturedFileNamesNoExtLst - returns correct list',
+        () {
+      // Arrange
+      final String picture1JsonPath =
+          '$testPlaylistOnePicturePath${path.separator}audio1.json';
+      final String picture2JsonPath =
+          '$testPlaylistOnePicturePath${path.separator}audio2.json';
+
+      // Create picture JSON files
+      createTestPictureJsonFile(
+          picture1JsonPath, [Picture(fileName: 'pic1.jpg')]);
+      createTestPictureJsonFile(
+          picture2JsonPath, [Picture(fileName: 'pic2.jpg')]);
+
+      // Act
+      final List<String> result =
+          pictureVM.getPlaylistAudioPicturedFileNamesNoExtLst(
+        playlist: playlistOne,
+      );
+
+      // Assert
+      expect(result.length, 2);
+      expect(result.contains('audio1'), true);
+      expect(result.contains('audio2'), true);
+
+      // Clean up
+      File(picture1JsonPath).deleteSync();
+      File(picture2JsonPath).deleteSync();
+    });
+
+    test(
+        'getPlaylistAudioPicturedFileNamesNoExtLst - returns empty list when directory does not exist',
+        () {
+      // Arrange - Delete the picture directory
+      if (Directory(testPlaylistOnePicturePath).existsSync()) {
+        Directory(testPlaylistOnePicturePath).deleteSync(recursive: true);
+      }
+
+      // Act
+      final result = pictureVM.getPlaylistAudioPicturedFileNamesNoExtLst(
+        playlist: playlistOne,
+      );
+
+      // Assert
+      expect(result.length, 0);
+
+      // Recreate directory for other tests
+      Directory(testPlaylistOnePicturePath).createSync(recursive: true);
+    });
+    test(
+        '''getPlaylistAudioPicturedFileNamesNoExtLst - returns empty list when directory exists but
+           contains no JSON files.''', () {
+      // Arrange - Delete the picture directory
+      if (Directory(testPlaylistOnePicturePath).existsSync()) {
+        Directory(testPlaylistOnePicturePath).deleteSync(recursive: true);
+      }
+
+      // Create the picture directory
+      Directory(testPlaylistOnePicturePath).createSync(recursive: true);
+
+      // Act
+      final result = pictureVM.getPlaylistAudioPicturedFileNamesNoExtLst(
+        playlist: playlistOne,
+      );
+
+      // Assert
+      expect(result.length, 0);
+
+      // Recreate directory for other tests
+      Directory(testPlaylistOnePicturePath).createSync(recursive: true);
+    });
+  });
+
   group('Next picture tests', () {
     test('getAudioPictureFile - returns file when picture exists', () {
       // Arrange
@@ -924,55 +1000,6 @@ void main() {
 
       // Assert
       expect(result, isNull);
-    });
-
-    test('getPlaylistAudioPicturedFileNamesNoExtLst - returns correct list',
-        () {
-      // Arrange
-      final picture1JsonPath =
-          '$testPlaylistOnePicturePath${path.separator}audio1.json';
-      final picture2JsonPath =
-          '$testPlaylistOnePicturePath${path.separator}audio2.json';
-
-      // Create picture JSON files
-      createTestPictureJsonFile(
-          picture1JsonPath, [Picture(fileName: 'pic1.jpg')]);
-      createTestPictureJsonFile(
-          picture2JsonPath, [Picture(fileName: 'pic2.jpg')]);
-
-      // Act
-      final result = pictureVM.getPlaylistAudioPicturedFileNamesNoExtLst(
-        playlist: playlistOne,
-      );
-
-      // Assert
-      expect(result.length, 2);
-      expect(result.contains('audio1'), true);
-      expect(result.contains('audio2'), true);
-
-      // Clean up
-      File(picture1JsonPath).deleteSync();
-      File(picture2JsonPath).deleteSync();
-    });
-
-    test(
-        'getPlaylistAudioPicturedFileNamesNoExtLst - returns empty list when directory does not exist',
-        () {
-      // Arrange - Delete the picture directory
-      if (Directory(testPlaylistOnePicturePath).existsSync()) {
-        Directory(testPlaylistOnePicturePath).deleteSync(recursive: true);
-      }
-
-      // Act
-      final result = pictureVM.getPlaylistAudioPicturedFileNamesNoExtLst(
-        playlist: playlistOne,
-      );
-
-      // Assert
-      expect(result.length, 0);
-
-      // Recreate directory for other tests
-      Directory(testPlaylistOnePicturePath).createSync(recursive: true);
     });
 
     test('deleteAudioPictureIfExist - deletes picture and associations', () {
