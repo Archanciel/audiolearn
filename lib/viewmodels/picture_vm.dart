@@ -351,7 +351,7 @@ class PictureVM extends ChangeNotifier {
     return pictureLst;
   }
 
-  /// Method called by SortFilterSService
+  /// Method called by SortFilterService
   List<String> getPlaylistAudioPicturedFileNamesNoExtLst({
     required Playlist playlist,
   }) {
@@ -375,7 +375,7 @@ class PictureVM extends ChangeNotifier {
         String fileName =
             DirUtil.getFileNameFromPathFileName(pathFileName: file.path);
         audioPictureFileNamesLst
-            .add(fileName.substring(0, fileName.length - 5));
+            .add(fileName.substring(0, fileName.length - 5)); // Remove .json extension
       }
     }
 
