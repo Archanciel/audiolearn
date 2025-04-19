@@ -9476,7 +9476,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 1 playlist and 1 comment json files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+                'Restored 1 playlist, 1 comment and 0 picture json files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -9654,7 +9654,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 1 playlist and 1 comment json files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+                'Restored 1 playlist, 1 comment and 0 picture json files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );

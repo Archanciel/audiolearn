@@ -510,8 +510,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '9:22',
-        maxPositionTimeStr: '9:27',
+        minPositionTimeStr: '9:20',
+        maxPositionTimeStr: '9:25',
       );
 
       // Purge the test playlist directory so that the created test
@@ -642,8 +642,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '8:50',
-        maxPositionTimeStr: '8:54',
+        minPositionTimeStr: '8:49',
+        maxPositionTimeStr: '8:53',
       );
 
       // Purge the test playlist directory so that the created test

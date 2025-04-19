@@ -151,13 +151,14 @@ void main() {
   ];
 
   group('filter test: ignoring case, filter audio list on validVideoTitle only',
-      () async {
+      () {
     late AudioSortFilterService audioSortFilterService;
 
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+    SettingsDataService settingsDataService = SettingsDataService(
+      sharedPreferences: MockSharedPreferences(),
+    );
 
+    setUp(() async {
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -165,8 +166,6 @@ void main() {
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-
-    setUp(() {
       audioSortFilterService = AudioSortFilterService(
         settingsDataService: settingsDataService,
       );
@@ -360,13 +359,14 @@ void main() {
   });
   group(
       'filter test: not ignoring case, filter audio list on validVideoTitle only',
-      () async {
+      () {
     late AudioSortFilterService audioSortFilterService;
 
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+    SettingsDataService settingsDataService = SettingsDataService(
+      sharedPreferences: MockSharedPreferences(),
+    );
 
+    setUp(() async {
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -375,7 +375,6 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-    setUp(() {
       audioSortFilterService = AudioSortFilterService(
         settingsDataService: settingsDataService,
       );
@@ -566,13 +565,14 @@ void main() {
   });
   group(
       'filter test: ignoring case, filter audio list on validVideoTitle or compactVideoDescription test',
-      () async {
+      () {
     late AudioSortFilterService audioSortFilterService;
 
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+    SettingsDataService settingsDataService = SettingsDataService(
+      sharedPreferences: MockSharedPreferences(),
+    );
 
+    setUp(() async {
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -581,7 +581,6 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-    setUp(() {
       audioSortFilterService = AudioSortFilterService(
         settingsDataService: settingsDataService,
       );
@@ -665,13 +664,14 @@ void main() {
   });
   group(
       'filter test: not ignoring case, filter audio list on validVideoTitle or compactVideoDescription',
-      () async {
+      () {
     late AudioSortFilterService audioSortFilterService;
 
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+    SettingsDataService settingsDataService = SettingsDataService(
+      sharedPreferences: MockSharedPreferences(),
+    );
 
+    setUp(() async {
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -680,7 +680,6 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-    setUp(() {
       audioSortFilterService = AudioSortFilterService(
         settingsDataService: settingsDataService,
       );
@@ -779,13 +778,14 @@ void main() {
   });
   group(
       '''filter test: by start/end download date or/and start/end video upload date.''',
-      () async {
+      () {
     late AudioSortFilterService audioSortFilterService;
 
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+    SettingsDataService settingsDataService = SettingsDataService(
+      sharedPreferences: MockSharedPreferences(),
+    );
 
+    setUp(() async {
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -794,7 +794,6 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-    setUp(() {
       audioSortFilterService = AudioSortFilterService(
         settingsDataService: settingsDataService,
       );
@@ -873,13 +872,14 @@ void main() {
       expect(filteredAudioLst, expectedFilteredAudios);
     });
   });
-  group('''filter test: by file size range or/and audio duration range.''', () async {
+  group('''filter test: by file size range or/and audio duration range.''', () {
     late AudioSortFilterService audioSortFilterService;
 
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+    SettingsDataService settingsDataService = SettingsDataService(
+      sharedPreferences: MockSharedPreferences(),
+    );
 
+    setUp(() async {
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -888,7 +888,6 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-    setUp(() {
       audioSortFilterService = AudioSortFilterService(
         settingsDataService: settingsDataService,
       );
@@ -1004,13 +1003,14 @@ void main() {
       expect(filteredAudioLst, expectedFilteredAudios);
     });
   });
-  group('sort audio lst by one SortingOption', () async {
+  group('sort audio lst by one SortingOption', () {
     late AudioSortFilterService audioSortFilterService;
 
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+    SettingsDataService settingsDataService = SettingsDataService(
+      sharedPreferences: MockSharedPreferences(),
+    );
 
+    setUp(() async {
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -1019,7 +1019,6 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-    setUp(() {
       audioSortFilterService = AudioSortFilterService(
         settingsDataService: settingsDataService,
       );
@@ -2515,6 +2514,11 @@ void main() {
           selectedSortItemLst: selectedSortItemLstAsc,
         );
 
+        List<String> actualAudioSortedByTitleAscStrLst =
+            actualAudioSortedByTitleAscLst
+                .map((audio) => audio.validVideoTitle)
+                .toList();
+
         // Load the expected sorted audio list from the file
         List<Audio> expectedAudioSortedByTitleAscLst =
             JsonDataService.loadListFromFile(
@@ -2523,9 +2527,14 @@ void main() {
           type: Audio,
         );
 
+        List<String> expectedAudioSortedByTitleAscStrLst =
+            expectedAudioSortedByTitleAscLst
+                .map((audio) => audio.validVideoTitle)
+                .toList();
+
         expect(
-          actualAudioSortedByTitleAscLst,
-          expectedAudioSortedByTitleAscLst,
+          actualAudioSortedByTitleAscStrLst,
+          expectedAudioSortedByTitleAscStrLst,
         );
 
         final List<SortingItem> selectedSortItemLstDesc = [
@@ -2541,12 +2550,10 @@ void main() {
           selectedSortItemLst: selectedSortItemLstDesc,
         );
 
-        // Save the list to a file
-        // JsonDataService.saveListToFile(
-        //   data: actualAudioSortedByTitleDescLst,
-        //   jsonPathFileName:
-        //       "$kPlaylistDownloadRootPathWindows${path.separator}expected audio list desc Et l'univers disparaîtra.json",
-        // );
+        List<String> actualAudioSortedByTitleDescStrLst =
+            actualAudioSortedByTitleDescLst
+                .map((audio) => audio.validVideoTitle)
+                .toList();
 
         // Load the expected sorted audio list from the file
         List<Audio> expectedAudioSortedByTitleDescLst =
@@ -2556,9 +2563,14 @@ void main() {
           type: Audio,
         );
 
+        List<String> expectedAudioSortedByTitleDescStrLst =
+            expectedAudioSortedByTitleDescLst
+                .map((audio) => audio.validVideoTitle)
+                .toList();
+
         expect(
-          actualAudioSortedByTitleDescLst,
-          expectedAudioSortedByTitleDescLst,
+          actualAudioSortedByTitleDescStrLst,
+          expectedAudioSortedByTitleDescStrLst,
         );
 
         // Purge the test playlist directory so that the created test
@@ -8934,6 +8946,11 @@ void main() {
           selectedSortItemLst: selectedSortItemLstAsc,
         );
 
+        List<String> actualAudioSortedByTitleAscStrLst =
+            actualAudioSortedByTitleAscLst
+                .map((audio) => audio.validVideoTitle)
+                .toList();
+
         // Load the expected sorted audio list from the file
         List<Audio> expectedAudioSortedByTitleAscLst =
             JsonDataService.loadListFromFile(
@@ -8942,9 +8959,14 @@ void main() {
           type: Audio,
         );
 
+        List<String> expectedAudioSortedByTitleAscStrLst =
+            expectedAudioSortedByTitleAscLst
+                .map((audio) => audio.validVideoTitle)
+                .toList();
+
         expect(
-          actualAudioSortedByTitleAscLst,
-          expectedAudioSortedByTitleAscLst,
+          actualAudioSortedByTitleAscStrLst,
+          expectedAudioSortedByTitleAscStrLst,
         );
 
         final List<SortingItem> selectedSortItemLstDesc = [
@@ -8960,12 +8982,10 @@ void main() {
           selectedSortItemLst: selectedSortItemLstDesc,
         );
 
-        // Save the list to a file
-        // JsonDataService.saveListToFile(
-        //   data: actualAudioSortedByTitleDescLst,
-        //   jsonPathFileName:
-        //       "$kPlaylistDownloadRootPathWindows${path.separator}expected audio list desc Et l'univers disparaîtra imported.json",
-        // );
+        List<String> actualAudioSortedByTitleDescStrLst =
+            actualAudioSortedByTitleDescLst
+                .map((audio) => audio.validVideoTitle)
+                .toList();
 
         // Load the expected sorted audio list from the file
         List<Audio> expectedAudioSortedByTitleDescLst =
@@ -8975,9 +8995,14 @@ void main() {
           type: Audio,
         );
 
+        List<String> expectedAudioSortedByTitleDescStrLst =
+            expectedAudioSortedByTitleDescLst
+                .map((audio) => audio.validVideoTitle)
+                .toList();
+
         expect(
-          actualAudioSortedByTitleDescLst,
-          expectedAudioSortedByTitleDescLst,
+          actualAudioSortedByTitleDescStrLst,
+          expectedAudioSortedByTitleDescStrLst,
         );
 
         // Purge the test playlist directory so that the created test
@@ -8994,13 +9019,14 @@ void main() {
       );
     });
   });
-  group("sort audio lst by multiple SortingOption's", () async {
+  group("sort audio lst by multiple SortingOption's", () {
     late AudioSortFilterService audioSortFilterService;
 
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+    SettingsDataService settingsDataService = SettingsDataService(
+      sharedPreferences: MockSharedPreferences(),
+    );
 
+    setUp(() async {
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -9009,7 +9035,6 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-    setUp(() {
       audioSortFilterService = AudioSortFilterService(
         settingsDataService: settingsDataService,
       );
@@ -9198,13 +9223,14 @@ void main() {
       );
     });
   });
-  group('filterAndSortAudioLst by title and description', () async {
+  group('filterAndSortAudioLst by title and description', () {
     late AudioSortFilterService audioSortFilterService;
 
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+    SettingsDataService settingsDataService = SettingsDataService(
+      sharedPreferences: MockSharedPreferences(),
+    );
 
+    setUp(() async {
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -9213,7 +9239,6 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-    setUp(() {
       audioSortFilterService = AudioSortFilterService(
         settingsDataService: settingsDataService,
       );
@@ -9941,13 +9966,14 @@ void main() {
       );
     });
   });
-  group('filterAndSortAudioLst by title only', () async {
+  group('filterAndSortAudioLst by title only', () {
     late AudioSortFilterService audioSortFilterService;
 
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+    SettingsDataService settingsDataService = SettingsDataService(
+      sharedPreferences: MockSharedPreferences(),
+    );
 
+    setUp(() async {
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -9956,7 +9982,6 @@ void main() {
           settingsJsonPathFileName:
               "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
 
-    setUp(() {
       audioSortFilterService = AudioSortFilterService(
         settingsDataService: settingsDataService,
       );
