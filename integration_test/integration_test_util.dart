@@ -1537,6 +1537,11 @@ class IntegrationTestUtil {
     ); // Size in bytes
   }
 
+  /// Verify that the picture was added to the playlist and that the
+  /// corresponding json file was created in the playlist picture directory.
+  /// 
+  /// {audioForPictureTitleDurationStr} is the audio duration string which is
+  /// used to create the audioTitleWithDuration.
   static Future<void> verifyPictureAddition({
     required WidgetTester tester,
     required String applicationPictureDir,
