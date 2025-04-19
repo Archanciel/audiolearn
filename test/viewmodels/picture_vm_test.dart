@@ -493,7 +493,8 @@ void main() {
     test(
         '''Removes the second picture added to an audio. Then remove the remaining picture
             of this audio. Check the audio json picture content as well as the application
-            picture-audio map content.''', () {
+            picture-audio map content. Finally, verify that after removing the last audio
+            picture the playlist picture dir was deleted since no other audio has a picture.''', () {
       // Add a first picture to the playlist two second audio
       pictureVM.addPictureToAudio(
         audio: playlistTwoAudioTwo,
@@ -614,10 +615,8 @@ void main() {
       // Verify that the playlist two audio two has no more pictures
       expect(pictureVM.getAudioPicturesNumber(audio: playlistTwoAudioTwo), 0);
 
-      // Verify that the playlist two audio two empty JSON file was
-      // deleted
-      expect(
-          File(playlistTwoAudioTwoPictureJsonFilePathName).existsSync(), false);
+      // Verify that the playlist two audio picture dir was deleted
+      expect(Directory(testPlaylistTwoPicturePath).existsSync(), false);
 
       // Verify now the application picture-audio map content
 
@@ -650,6 +649,45 @@ void main() {
       expect(appPictureJpgFileLst.length, 2);
       expect(appPictureJpgFileLst.contains(testPictureOneFileName), true);
       expect(appPictureJpgFileLst.contains(testPictureTwoFileName), true);
+    });
+    test(
+        '''Remove all pictures of the second audio after adding picture to a first audio as
+            well as to the second audio. Finally, verify that after removing the last audio
+            picture of the second audio, the playlist picture dir was not deleted since the
+            first audio has a picture.''', () {
+      // Add a first picture to the playlist two first audio
+      pictureVM.addPictureToAudio(
+        audio: playlistTwoAudioOne,
+        pictureFilePathName: testAvailablePictureOneFilePathName,
+      );
+
+      // Add a first picture to the playlist two second audio
+      pictureVM.addPictureToAudio(
+        audio: playlistTwoAudioTwo,
+        pictureFilePathName: testAvailablePictureOneFilePathName,
+      );
+
+      // Add a new picture to the playlist two second audio
+      pictureVM.addPictureToAudio(
+        audio: playlistTwoAudioTwo,
+        pictureFilePathName: testAvailablePictureTwoFilePathName,
+      );
+
+      // Now, remove the last added picture from the playlist two
+      // second audio
+      pictureVM.removeLastAddedAudioPicture(audio: playlistTwoAudioTwo);
+
+      // Verify that the playlist two audio two JSON file contains
+      // now one picture
+      expect(pictureVM.getAudioPicturesNumber(audio: playlistTwoAudioTwo), 1);
+
+      // Now, remove the remaining picture from the playlist two
+      // second audio
+      pictureVM.removeLastAddedAudioPicture(audio: playlistTwoAudioTwo);
+
+      // Verify that the playlist two audio picture dir was not
+      // deleted since the first audio has a picture
+      expect(Directory(testPlaylistTwoPicturePath).existsSync(), true);
     });
     test(
         '''Remove pictures from several audio's. Before, pictures were added to those audio's
@@ -869,9 +907,8 @@ void main() {
       // Act
       pictureVM.removeLastAddedAudioPicture(audio: playlistOneAudioOne);
 
-      // Assert
-      file = File(pictureJsonPath);
-      expect(file.existsSync(), false);
+      // Verify that the playlist one audio picture dir was deleted
+      expect(Directory(testPlaylistOnePicturePath).existsSync(), false);
 
       // Verify application picture-audio map
       pictureAudioMapFile = File(appPictureAudioMapFilePathName);
@@ -1145,7 +1182,8 @@ void main() {
   });
 
   group('Next picture tests', () {
-    test('deleteAudioPictureJsonFileIfExist - deletes picture and associations', () async {
+    test('deleteAudioPictureJsonFileIfExist - deletes picture and associations',
+        () async {
       // Arrange
       final pictureJsonPath =
           '$testPlaylistOnePicturePath${path.separator}${playlistOneAudioOneFileName.replaceAll('.mp3', '.json')}';
@@ -1156,7 +1194,8 @@ void main() {
       );
 
       // Create picture-audio map
-      final String playlistOneAudioOneAssociation = '$testPlaylistOneTitle|${playlistOneAudioOneFileName.replaceAll('.mp3', '')}';
+      final String playlistOneAudioOneAssociation =
+          '$testPlaylistOneTitle|${playlistOneAudioOneFileName.replaceAll('.mp3', '')}';
       await createTestPictureAudioMapFile({
         testPictureOneFileName: [playlistOneAudioOneAssociation],
       });
@@ -1185,8 +1224,7 @@ void main() {
       // Verify application picture-audio map after the audio
       // picture deletion
       pictureAudioMapFile = File(appPictureAudioMapFilePathName);
-      pictureAudioMap =
-          jsonDecode(pictureAudioMapFile.readAsStringSync());
+      pictureAudioMap = jsonDecode(pictureAudioMapFile.readAsStringSync());
       expect(pictureAudioMap.containsKey(testPictureOneFileName), false);
       expect(pictureAudioMap.length, 0);
     });
@@ -1205,7 +1243,9 @@ void main() {
 
       // Create picture-audio map
       await createTestPictureAudioMapFile({
-        testPictureOneFileName: ['$testPlaylistOneTitle|${playlistOneAudioOneFileName.replaceAll('.mp3', '')}'],
+        testPictureOneFileName: [
+          '$testPlaylistOneTitle|${playlistOneAudioOneFileName.replaceAll('.mp3', '')}'
+        ],
       });
 
       // Act
@@ -1232,14 +1272,15 @@ void main() {
       bool hasOldAssociation = false;
       if (pictureAudioMap.containsKey(testPictureOneFileName)) {
         hasOldAssociation = (pictureAudioMap[testPictureOneFileName] as List)
-            .contains('$testPlaylistOneTitle|${playlistOneAudioOneFileName.replaceAll('.mp3', '')}');
+            .contains(
+                '$testPlaylistOneTitle|${playlistOneAudioOneFileName.replaceAll('.mp3', '')}');
       }
       expect(hasOldAssociation, false);
 
       // Check that the new association has been added
       expect(
-          (pictureAudioMap[testPictureOneFileName] as List)
-              .contains('$testPlaylistTwoTitle|${playlistOneAudioOneFileName.replaceAll('.mp3', '')}'),
+          (pictureAudioMap[testPictureOneFileName] as List).contains(
+              '$testPlaylistTwoTitle|${playlistOneAudioOneFileName.replaceAll('.mp3', '')}'),
           true);
 
       // Clean up

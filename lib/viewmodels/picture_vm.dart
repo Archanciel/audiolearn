@@ -243,7 +243,7 @@ class PictureVM extends ChangeNotifier {
 
   /// Method called when the user clicks on the audio item 'Remove Audio Picture'
   /// menu or on audio player view left appbar 'Remove Audio Picture' menu.
-  /// 
+  ///
   /// The method removes the last added picture to the audio. If there is no
   /// picture associated to the audio, nothing happens.
   void removeLastAddedAudioPicture({
@@ -290,6 +290,15 @@ class PictureVM extends ChangeNotifier {
       // If the json file is empty, it is deleted.
       DirUtil.deleteFileIfExist(
         pathFileName: pictureJsonFilePathName,
+      );
+
+      // Delete the picture directory if it is empty
+
+      final String playlistPicturePath =
+          "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kPictureDirName";
+
+      DirUtil.deleteDirIfEmpty(
+        pathStr: playlistPicturePath,
       );
 
       return;
@@ -374,8 +383,8 @@ class PictureVM extends ChangeNotifier {
       if (file is File && file.path.endsWith('.json')) {
         String fileName =
             DirUtil.getFileNameFromPathFileName(pathFileName: file.path);
-        audioPictureFileNamesLst
-            .add(fileName.substring(0, fileName.length - 5)); // Remove .json extension
+        audioPictureFileNamesLst.add(fileName.substring(
+            0, fileName.length - 5)); // Remove .json extension
       }
     }
 
@@ -389,14 +398,21 @@ class PictureVM extends ChangeNotifier {
     final String playlistDownloadPath = audio.enclosingPlaylist!.downloadPath;
     final String audioPictureJsonFileName =
         audio.audioFileName.replaceAll('.mp3', '.json');
+    final String playlistPicturePath =
+        '$playlistDownloadPath${path.separator}$kPictureDirName';
     final String audioPictureJsonPathFileName =
-        "$playlistDownloadPath${path.separator}$kPictureDirName${path.separator}$audioPictureJsonFileName";
+        "$playlistPicturePath${path.separator}$audioPictureJsonFileName";
 
     List<Picture> audioPictureLst =
         _getAudioPicturesLstInAudioPictureJsonFile(audio: audio);
 
     DirUtil.deleteFileIfExist(
       pathFileName: audioPictureJsonPathFileName,
+    );
+
+    // Delete the picture directory if it is empty
+    DirUtil.deleteDirIfEmpty(
+      pathStr: playlistPicturePath,
     );
 
     for (Picture picture in audioPictureLst) {
@@ -410,7 +426,7 @@ class PictureVM extends ChangeNotifier {
 
   /// Removes an association between a picture and an audio in the application
   /// picture audio map json file.
-  /// 
+  ///
   /// Returns true if the picture audio association was removed,
   /// false otherwise.
   bool _removePictureAudioAssociationInApplicationPictureAudioMap({
@@ -420,13 +436,16 @@ class PictureVM extends ChangeNotifier {
   }) {
     final String playListTitleAndAudioFileNameWithoutExtension =
         "$audioPlaylistTitle|${DirUtil.getFileNameWithoutMp3Extension(mp3FileName: audioFileName)}";
-    final Map<String, List<String>> applicationPictureAudioMap = _readPictureAudioMap();
+    final Map<String, List<String>> applicationPictureAudioMap =
+        _readPictureAudioMap();
     bool wasPictureRemoved = false;
 
     if (applicationPictureAudioMap.containsKey(pictureFileName)) {
-      final List<String> audioList = applicationPictureAudioMap[pictureFileName]!;
+      final List<String> audioList =
+          applicationPictureAudioMap[pictureFileName]!;
 
-      wasPictureRemoved = audioList.remove(playListTitleAndAudioFileNameWithoutExtension);
+      wasPictureRemoved =
+          audioList.remove(playListTitleAndAudioFileNameWithoutExtension);
 
       if (!wasPictureRemoved) {
         return wasPictureRemoved;
