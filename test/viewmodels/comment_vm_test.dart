@@ -391,8 +391,10 @@ void main() {
 
       // Verify that the comment file exists
 
-      String playlistCommentFilePathName =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localPlaylistTitle${path.separator}$kCommentDirName${path.separator}240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json";
+      final String playlistCommentPath =
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localPlaylistTitle${path.separator}$kCommentDirName';
+      final String playlistCommentFilePathName =
+          "$playlistCommentPath${path.separator}240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json";
 
       expect(
         File(playlistCommentFilePathName).existsSync(),
@@ -446,11 +448,8 @@ void main() {
       // the returned Commentlist should have zero element
       expect(commentLst.length, 0);
 
-      // Verify that the comment file no longer exist
-      expect(
-        File(playlistCommentFilePathName).existsSync(),
-        false,
-      );
+      // Verify that the comment dir was deleted
+      expect(Directory(playlistCommentPath).existsSync(), false);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -500,10 +499,17 @@ void main() {
       expect(commentLst.length, 0);
 
       expect(
-          commentVM.getCommentNumber(
-            audio: audio,
-          ),
-          0);
+        commentVM.getCommentNumber(
+          audio: audio,
+        ),
+        0,
+      );
+
+      final String playlistCommentPath =
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}local_delete_comment${path.separator}$kCommentDirName';
+
+      // Verify that the comment dir was deleted
+      expect(Directory(playlistCommentPath).existsSync(), false);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -555,10 +561,18 @@ void main() {
       expect(commentLst.length, 0);
 
       expect(
-          commentVM.getCommentNumber(
-            audio: audio,
-          ),
-          0);
+        commentVM.getCommentNumber(
+          audio: audio,
+        ),
+        0,
+      );
+
+      final String playlistCommentPath =
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName';
+
+      // Verify that the comment dir was not deleted since another audio
+      // has a comment file in it
+      expect(Directory(playlistCommentPath).existsSync(), true);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub

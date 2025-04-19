@@ -181,6 +181,27 @@ class DirUtil {
     }
   }
 
+  static void deleteDirIfEmpty({
+    required String pathStr,
+  }) {
+    final Directory directory = Directory(pathStr);
+
+    if (directory.existsSync()) {
+      try {
+        // Check if the directory is empty
+        if (directory.listSync().isEmpty) {
+          directory.deleteSync();
+        } else {
+          print("Directory is not empty.");
+        }
+      } catch (e) {
+        print("Error occurred while deleting directory: $e");
+      }
+    } else {
+      print("Directory does not exist.");
+    }
+  }
+  
   static String getPathFromPathFileName({
     required String pathFileName,
   }) {

@@ -165,6 +165,8 @@ class CommentVM extends ChangeNotifier {
     );
 
     if (commentLst.isEmpty) {
+      // If the comment list is empty, delete the comment file
+      // and the comment directory if it is empty.
       deleteAllAudioComments(
         commentedAudio: commentedAudio,
       );
@@ -194,6 +196,13 @@ class CommentVM extends ChangeNotifier {
       ),
     );
 
+    // Delete the comment directory if it is empty
+    String commentDirPath =
+        "${commentedAudio.enclosingPlaylist!.downloadPath}${path.separator}$kCommentDirName";
+    DirUtil.deleteDirIfEmpty(
+      pathStr: commentDirPath,
+    );
+    
     notifyListeners();
   }
 

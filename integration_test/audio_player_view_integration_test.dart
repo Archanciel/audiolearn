@@ -6434,7 +6434,8 @@ void main() {
     });
     testWidgets(
         '''With appbar comment menu, manage comments in initially empty playlist. Copy audio
-           to the empty playlist, add a comment and then delete it.''', (WidgetTester tester) async {
+           to the empty playlist, add a comment and then delete it.''',
+        (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String emptyPlaylistTitle = 'Empty'; // Local empty playlist
       const String uncommentedAudioTitle =
@@ -7495,7 +7496,9 @@ void main() {
       );
     });
     testWidgets('''Delete all comments and check that the comment icon button is
-           enabled but no longer highlighted''', (WidgetTester tester) async {
+                  enabled but no longer highlighted. Check as well that the comment
+                  file and directory was deleted.''',
+        (WidgetTester tester) async {
       const String localPlaylistTitle =
           'local_delete_comment'; // Youtube playlist
       const String alreadyCommentedAudioTitle =
@@ -7509,8 +7512,10 @@ void main() {
 
       // Verify that the comment file exists
 
-      String playlistCommentFilePathName =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$localPlaylistTitle${path.separator}$kCommentDirName${path.separator}240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json";
+      final String playlistCommentPath =
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}$localPlaylistTitle${path.separator}$kCommentDirName';
+      final String playlistCommentFilePathName =
+          "$playlistCommentPath${path.separator}240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json";
 
       expect(
         File(playlistCommentFilePathName).existsSync(),
@@ -7610,6 +7615,9 @@ void main() {
         File(playlistCommentFilePathName).existsSync(),
         false,
       );
+
+      // Verify that the comment dir was deleted
+      expect(Directory(playlistCommentPath).existsSync(), false);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -7778,7 +7786,8 @@ void main() {
     testWidgets(
         '''Reducing 0:00 or increasing end comment position already at audio duration.
            Verifying that setting negative start position as well as increasing the end
-           position after the audio duration is not possible.''', (WidgetTester tester) async {
+           position after the audio duration is not possible.''',
+        (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String alreadyCommentedAudioTitle =
           "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
