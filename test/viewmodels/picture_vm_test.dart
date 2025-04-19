@@ -139,7 +139,7 @@ void main() {
   }
 
   // Helper method to create a test pictureAudio.json file
-  Future<void> createTestPictureAudioMapFile(
+  Future<void> createTestAppPictureAudioMapFile(
       Map<String, List<String>> pictureAudioMap) async {
     await DirUtil.createDirIfNotExist(
       pathStr: applicationPicturePath,
@@ -889,7 +889,7 @@ void main() {
           pictureJsonPath, [Picture(fileName: testPictureOneFileName)]);
 
       // Create picture-audio map
-      await createTestPictureAudioMapFile({
+      await createTestAppPictureAudioMapFile({
         testPictureOneFileName: [
           "$testPlaylistOneTitle|250412-125202-Chapitre 0 préface de l'auteur Chemin Saint Josémaria 25-02-09"
         ],
@@ -1196,7 +1196,7 @@ void main() {
       // Create picture-audio map
       final String playlistOneAudioOneAssociation =
           '$testPlaylistOneTitle|${playlistOneAudioOneFileName.replaceAll('.mp3', '')}';
-      await createTestPictureAudioMapFile({
+      await createTestAppPictureAudioMapFile({
         testPictureOneFileName: [playlistOneAudioOneAssociation],
       });
 
@@ -1242,7 +1242,7 @@ void main() {
       // Directory(testPlaylistTwoPicturePath).createSync(recursive: true);
 
       // Create picture-audio map
-      await createTestPictureAudioMapFile({
+      await createTestAppPictureAudioMapFile({
         testPictureOneFileName: [
           '$testPlaylistOneTitle|${playlistOneAudioOneFileName.replaceAll('.mp3', '')}'
         ],
@@ -1293,43 +1293,30 @@ void main() {
         'copyAudioPictureJsonFileToTargetPlaylist - copies file and adds associations',
         () async {
       // Arrange
-      final sourcePictureJsonPath =
-          '$testPlaylistOnePicturePath${path.separator}${playlistOneAudioOneFileName.replaceAll('.mp3', '.json')}';
+      final String playlistOneAudioOnePictureJsonFileName = playlistOneAudioOneFileName.replaceAll('.mp3', '.json');
+      final String playlistOneAudioOneTitle = playlistOneAudioOneFileName.replaceAll('.mp3', '');
+      final String sourcePictureJsonPath =
+          '$testPlaylistOnePicturePath${path.separator}$playlistOneAudioOnePictureJsonFileName';
       createTestPictureJsonFile(
           sourcePictureJsonPath, [Picture(fileName: testPictureOneFileName)]);
 
-      final targetPlaylistPath = 'test_target_playlist_path';
-      final targetPicturePath =
-          '$targetPlaylistPath${path.separator}$kPictureDirName';
-
-      // Create target directory
-      Directory(targetPicturePath).createSync(recursive: true);
-
-      final targetPlaylist = Playlist(
-        title: 'TargetPlaylist',
-        playlistType: PlaylistType.local,
-        playlistQuality: PlaylistQuality.voice,
-      );
-
-      playlistOne.downloadPath = targetPlaylistPath;
-
       // Create picture-audio map
-      await createTestPictureAudioMapFile({
-        testPictureOneFileName: ['$testPlaylistOneTitle|test_audio'],
+      await createTestAppPictureAudioMapFile({
+        testPictureOneFileName: ['$testPlaylistOneTitle|$playlistOneAudioOneTitle'],
       });
 
       // Act
       pictureVM.copyAudioPictureJsonFileToTargetPlaylist(
         audio: playlistOneAudioOne,
-        targetPlaylist: targetPlaylist,
+        targetPlaylist: playlistTwo,
       );
 
       // Assert
-      final sourceFile = File(sourcePictureJsonPath);
+      final File sourceFile = File(sourcePictureJsonPath);
       expect(sourceFile.existsSync(), true);
 
-      final targetFile = File(
-          '$targetPicturePath${path.separator}${playlistOneAudioOneFileName.replaceAll('.mp3', '.json')}');
+      final File targetFile = File(
+          '$testPlaylistTwoPicturePath${path.separator}$playlistOneAudioOnePictureJsonFileName');
       expect(targetFile.existsSync(), true);
 
       // Verify application picture-audio map
@@ -1340,18 +1327,18 @@ void main() {
       // Check that the original association is preserved
       expect(
           (pictureAudioMap[testPictureOneFileName] as List)
-              .contains('$testPlaylistOneTitle|test_audio'),
+              .contains('$testPlaylistOneTitle|$playlistOneAudioOneTitle'),
           true);
 
       // Check that the new association has been added
       expect(
           (pictureAudioMap[testPictureOneFileName] as List)
-              .contains('TargetPlaylist|test_audio'),
+              .contains('$testPlaylistTwoTitle|$playlistOneAudioOneTitle'),
           true);
 
       // Clean up
-      if (Directory(targetPlaylistPath).existsSync()) {
-        Directory(targetPlaylistPath).deleteSync(recursive: true);
+      if (Directory(testPlaylistTwoPicturePath).existsSync()) {
+        Directory(testPlaylistTwoPicturePath).deleteSync(recursive: true);
       }
     });
   });
