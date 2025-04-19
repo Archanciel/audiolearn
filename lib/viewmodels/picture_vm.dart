@@ -86,7 +86,7 @@ class PictureVM extends ChangeNotifier {
       targetDirectoryPath: _applicationPicturePath,
     );
 
-    _addPictureAudioAssociation(
+    _addPictureAudioAssociationToAppPictureAudioMap(
       pictureFileName: pictureFileName,
       audioFileName: forAudioFileName,
       audioPlaylistTitle: audioPlaylistTitle,
@@ -96,7 +96,7 @@ class PictureVM extends ChangeNotifier {
   /// Associates a picture with an audio file name. If the picture is not in the map, adds it with
   /// the audio file name. If the picture is already in the map, adds the audio file name to its list
   /// if it isn't already present.
-  void _addPictureAudioAssociation({
+  void _addPictureAudioAssociationToAppPictureAudioMap({
     required String pictureFileName,
     required String audioFileName,
     required String audioPlaylistTitle,
@@ -105,7 +105,7 @@ class PictureVM extends ChangeNotifier {
     final String playListTitleAndAudioFileNameWithoutExtension =
         "$audioPlaylistTitle|${DirUtil.getFileNameWithoutMp3Extension(mp3FileName: audioFileName)}";
 
-    final Map<String, List<String>> pictureAudioMap = _readPictureAudioMap();
+    final Map<String, List<String>> pictureAudioMap = _readAppPictureAudioMap();
 
     if (pictureAudioMap.containsKey(pictureFileName)) {
       final List<String> audioList = pictureAudioMap[pictureFileName]!;
@@ -124,8 +124,8 @@ class PictureVM extends ChangeNotifier {
 
   /// Reads the application picture audio map json file if it exists, otherwise returns
   /// an empty map.
-  Map<String, List<String>> _readPictureAudioMap() {
-    final File jsonFile = _createApplicationPictureAudioMapJsonFile();
+  Map<String, List<String>> _readAppPictureAudioMap() {
+    final File jsonFile = _createAppPictureAudioMapJsonFile();
 
     if (!jsonFile.existsSync()) {
       return {};
@@ -151,12 +151,12 @@ class PictureVM extends ChangeNotifier {
     }
   }
 
-  File _createApplicationPictureAudioMapJsonFile() => File(
+  File _createAppPictureAudioMapJsonFile() => File(
       "$_applicationPicturePath${path.separator}$kPictureAudioMapFileName");
 
   /// Saves the pictureAudio map to the JSON file
   void _savePictureAudioMap(Map<String, List<String>> pictureAudioMap) {
-    final File jsonFile = _createApplicationPictureAudioMapJsonFile();
+    final File jsonFile = _createAppPictureAudioMapJsonFile();
 
     final String jsonContent = json.encode(pictureAudioMap);
     jsonFile.writeAsStringSync(jsonContent);
@@ -437,7 +437,7 @@ class PictureVM extends ChangeNotifier {
     final String playListTitleAndAudioFileNameWithoutExtension =
         "$audioPlaylistTitle|${DirUtil.getFileNameWithoutMp3Extension(mp3FileName: audioFileName)}";
     final Map<String, List<String>> applicationPictureAudioMap =
-        _readPictureAudioMap();
+        _readAppPictureAudioMap();
     bool wasPictureRemoved = false;
 
     if (applicationPictureAudioMap.containsKey(pictureFileName)) {
@@ -508,7 +508,7 @@ class PictureVM extends ChangeNotifier {
         audioFileName: audioFileName,
         audioPlaylistTitle: sourcePlaylist.title,
       );
-      _addPictureAudioAssociation(
+      _addPictureAudioAssociationToAppPictureAudioMap(
         pictureFileName: pictureFileName,
         audioFileName: audioFileName,
         audioPlaylistTitle: targetPlaylist.title,
@@ -538,7 +538,7 @@ class PictureVM extends ChangeNotifier {
     );
 
     // All pictures of the source audio are added in the application
-    // pictureAudioMap.json file for the audio copy.
+    // picture audio map json file for the audio copy.
     //
     // Example: the first line references the source audio file name,
     //          the second line references the target audio file name.
@@ -553,7 +553,7 @@ class PictureVM extends ChangeNotifier {
     //    "a_local|250407-150507-morning _ cinematic video 23-07-01"
     // ]
     for (Picture picture in pictureLst) {
-      _addPictureAudioAssociation(
+      _addPictureAudioAssociationToAppPictureAudioMap(
         pictureFileName: picture.fileName,
         audioFileName: audio.audioFileName,
         audioPlaylistTitle: targetPlaylist.title,
