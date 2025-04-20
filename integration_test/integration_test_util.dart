@@ -2445,4 +2445,19 @@ class IntegrationTestUtil {
     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
     await tester.pumpAndSettle();
   }
+
+  static void verifyTextFieldContent({
+    required WidgetTester tester,
+    required String textFieldKeyStr,
+    required String expectedTextFieldContent,
+  }) {
+    // Find the TextField using the Key
+    final Finder textFieldFinder = find.byKey(Key(textFieldKeyStr));
+
+    // Retrieve the TextField widget
+    final TextField textField = tester.widget<TextField>(textFieldFinder);
+
+    // Check the content of the TextField
+    expect(textField.controller?.text, expectedTextFieldContent);
+  }
 }
