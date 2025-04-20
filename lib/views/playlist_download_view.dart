@@ -870,8 +870,25 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     onTap: (currentUrlOrSearchSentence != null &&
                             currentUrlOrSearchSentence.isNotEmpty)
                         ? () {
-                            playlistListVMlistenFalse.wasSearchButtonClicked =
-                                true;
+                            // This if statement is used enables to click on the
+                            // search icon button in order to disable the search
+                            // sentence without clearing the text field.
+                            //
+                            // This enables to use the search sentence on another
+                            // playlist without having to retype the search
+                            // sentence in the text field.
+                            if (playlistListVMlistenFalse.wasSearchButtonClicked) {
+                              playlistListVMlistenFalse.wasSearchButtonClicked =
+                                  false; // the search button is set not clicked
+                              playlistListVMlistenFalse
+                                  .isSearchSentenceApplied = false;
+
+                              return;
+                            } else {
+                              playlistListVMlistenFalse.wasSearchButtonClicked =
+                                  true; // the search button was clicked
+                            }
+
                             if (!playlistListVMlistenTrue
                                 .isPlaylistListExpanded) {
                               // the list of playlists is collapsed
