@@ -1547,10 +1547,9 @@ class IntegrationTestUtil {
     required String applicationPictureDir,
     required String playlistPictureJsonFilesDir,
     required String pictureFileNameOne,
-    required int pictureFileSize,
     required String audioForPictureTitle,
     required String audioForPictureTitleDurationStr,
-    required List<String> audioPictureJsonFileNamesLst,
+    required List<String> audioPictureLstJsonFileName,
     bool goToAudioPlayerView = true,
     required bool mustPlayableAudioListBeUsed,
     List<String> audioForPictureTitleLstOne = const [],
@@ -1567,7 +1566,7 @@ class IntegrationTestUtil {
       fileExtension: 'json',
     );
 
-    expect(playlistPicturesLst, audioPictureJsonFileNamesLst);
+    expect(playlistPicturesLst, audioPictureLstJsonFileName);
 
     // Read the application picture json file and verify its
     // content
