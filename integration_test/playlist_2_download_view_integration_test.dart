@@ -2979,6 +2979,219 @@ void main() {
         );
       });
     });
+    group(
+        '''Click and un-click on search icon button. This added functionality enables to
+            use the search sentence on other playlists.''', () {
+      testWidgets(
+          '''First, enter the search word 'mo' in the 'Youtube Link or Search' text
+            field.''', (WidgetTester tester) async {
+        // After entering 'al', verify that the search icon button is now enabled.
+        // Then, click on the enabled search icon button and verify the reduced
+        // displayed audio list. After that, click on the "Playlists" button in
+        // order to display playlists and verify that the list of displayed
+        // playlists corresponds to the search tet field. Then modify the search
+        // word and finally empty it.
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName:
+              'sort_and_filter_audio_dialog_widget_three_playlists_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        // Enter the two letters of the 'no' search word.
+
+        // Select the text field
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        // Enter the 2 letters of the 'al' search word
+        await tester.enterText(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+          'mo',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Verify that the search icon button is enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+        // Now tap on the search icon button
+        await tester.tap(find.byKey(const Key('search_icon_button')));
+        await tester.pumpAndSettle();
+
+        // Now verify the order of the reduced playlist audio titles
+
+        List<String> playlistDisplayedAudioTitles = [
+          "La surpopulation mondiale par Jancovici et Barrau",
+        ];
+
+        // Ensure that since the search icon button was now pressed,
+        // the displayed audio list is modified.
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistDisplayedAudioTitles,
+        );
+
+        // Now tap on the search icon button to deactivate it
+        await tester.tap(find.byKey(const Key('search_icon_button')));
+        await tester.pumpAndSettle();
+
+        // Now verify the order of the reduced playlist audio titles
+
+        playlistDisplayedAudioTitles = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "La résilience insulaire par Fiona Roche",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+          "Les besoins artificiels par R.Keucheyan",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        ];
+
+        // Ensure that since the search icon button was now pressed,
+        // the displayed audio list is modified.
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistDisplayedAudioTitles,
+        );
+
+        // Verify the order of the reduced playlist titles
+
+        List<String> playlistsTitles = [
+          "local",
+          "local_2",
+        ];
+
+        // Ensure that since the search icon button was now pressed,
+        // the displayed playlist list is modified.
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
+        );
+
+        // Now add the third letter of the 'al_' search word
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await tester.enterText(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+          '_',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Verify that the search icon button is still enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+        // And verify the order of the playlist titles. Since
+        // the search icon button was used, modifying the search text
+        // is applied at each search text change
+
+        playlistsTitles = [
+          "local_2",
+        ];
+
+        // Ensure that since the search icon button was used,
+        // the displayed playlist list is modified.
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
+        );
+
+        // Now remove the third and second letter of the 'al_' search word
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await tester.enterText(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+          'a',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Verify that the search icon button is still enabled
+        IntegrationTestUtil.verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+        // Then erase the second search word letter
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await tester.enterText(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+          'a',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Now verify the order of the augmented playlist titles
+
+        playlistsTitles = [
+          "S8 audio",
+          "local",
+          "local_2",
+        ];
+
+        // Ensure that since the search icon button was now pressed,
+        // the displayed audio list is modified.
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
+        );
+
+        // Now emptying the search text word
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await tester.enterText(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+          '',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Verify that the search icon button is now disabled
+        await IntegrationTestUtil.verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr: 'search_icon_button',
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+    });
   });
   group('Rewind all playlist audio to start position test', () {
     testWidgets('''Rewind playlist audio for selected playlist''',
@@ -11001,8 +11214,7 @@ void main() {
           'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien';
       const String localAudioOneDurationStr = '40:53';
 
-      const String jesusChristPlaylistTitle =
-          'Jésus-Christ';
+      const String jesusChristPlaylistTitle = 'Jésus-Christ';
       final String jesusChristPlaylistPictureDir =
           "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$jesusChristPlaylistTitle${path.separator}$kPictureDirName";
       final String jesusChristPlaylistPictureJsonFilesDir =
@@ -11029,8 +11241,7 @@ void main() {
       );
 
       // Verify that the appPictureAudioMap dir is not present
-      Directory appPictureAudioMapDirectory =
-          Directory(appPictureAudioMapDir);
+      Directory appPictureAudioMapDirectory = Directory(appPictureAudioMapDir);
       expect(appPictureAudioMapDirectory.existsSync(), false);
 
       // Verify that the local playlist picture dir is not present
@@ -11081,7 +11292,8 @@ void main() {
         pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
         audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
         audioForPictureTitleDurationStr: localAudioOneDurationStr,
-        audioPictureLstJsonFileName: playlistLocalAudioOnePictureLstJsonFileName,
+        audioPictureLstJsonFileName:
+            playlistLocalAudioOnePictureLstJsonFileName,
         audioForPictureTitleLstOne: audioForPictureTitleLstJesusMonAmour,
         mustPlayableAudioListBeUsed: false,
       );
@@ -11109,7 +11321,8 @@ void main() {
         pictureFileName: pictureOneFileName, // "Jésus, mon amour.jpg"
         pictureSourcePath: availablePicturesDir,
         pictureFileSize: pictureOneFileSize,
-        audioForPictureTitle: jesusChristAudioOneTitle, // NE VOUS METTEZ PLUS JAMAIS EN COLÈRE ...
+        audioForPictureTitle:
+            jesusChristAudioOneTitle, // NE VOUS METTEZ PLUS JAMAIS EN COLÈRE ...
       );
 
       // Now verifying the second audio picture addition result
@@ -11118,9 +11331,11 @@ void main() {
         applicationPictureDir: appPictureAudioMapDir,
         playlistPictureJsonFilesDir: jesusChristPlaylistPictureJsonFilesDir,
         pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
-        audioForPictureTitle: jesusChristAudioOneTitle, // NE VOUS METTEZ PLUS JAMAIS EN COLÈRE ...
+        audioForPictureTitle:
+            jesusChristAudioOneTitle, // NE VOUS METTEZ PLUS JAMAIS EN COLÈRE ...
         audioForPictureTitleDurationStr: jesusChristAudioOneDurationStr,
-        audioPictureLstJsonFileName: playlistLocalAudioOnePictureLstJsonFileName,
+        audioPictureLstJsonFileName:
+            playlistLocalAudioOnePictureLstJsonFileName,
         audioForPictureTitleLstOne: audioForPictureTitleLstJesusMonAmour,
         mustPlayableAudioListBeUsed: false,
       );
@@ -11172,7 +11387,8 @@ void main() {
         pictureFileNameOne: pictureFilePathName,
         audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
         audioForPictureTitleDurationStr: localAudioOneDurationStr,
-        audioPictureLstJsonFileName: playlistLocalAudioOnePictureLstJsonFileName,
+        audioPictureLstJsonFileName:
+            playlistLocalAudioOnePictureLstJsonFileName,
         mustPlayableAudioListBeUsed: false,
       );
 
