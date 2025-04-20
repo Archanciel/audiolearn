@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:audiolearn/models/audio.dart';
@@ -2995,6 +2994,15 @@ void main() {
           tapOnPlaylistToggleButton: false,
         );
 
+        // Verify that the search icon button is now disabled
+        IntegrationTestUtil.validateInkWellButton(
+          tester: tester,
+          inkWellButtonKey: 'search_icon_button',
+          expectedIcon: Icons.search,
+          expectedIconColor:Color.fromRGBO(117, 117, 117, 1.0), // RGBA with alpha as a double,
+          expectedIconBackgroundColor: Color.fromRGBO(0, 0, 0, 1.0),
+        );
+
         // Enter the two letters of the 'mo' search word.
 
         // Select the text field
@@ -3024,6 +3032,16 @@ void main() {
         await tester.tap(find.byKey(const Key('search_icon_button')));
         await tester.pumpAndSettle();
 
+        // Verify that the search icon button is now active
+        IntegrationTestUtil.validateInkWellButton(
+          tester: tester,
+          inkWellButtonKey: 'search_icon_button',
+          expectedIcon: Icons.search,
+          expectedIconColor:
+              Colors.white,
+          expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
+        );
+
         // Now verify the order of the reduced playlist audio titles
 
         List<String> playlistDisplayedAudioTitles = [
@@ -3041,7 +3059,7 @@ void main() {
         await tester.tap(find.byKey(const Key('search_icon_button')));
         await tester.pumpAndSettle();
 
-        // Verify that the search icon button is now disabled
+        // Verify that the search icon button is now inactive
         await IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button',
