@@ -99,6 +99,40 @@
             "sentencesCombination": 0,
             "uploadDateEndRange": null,
             "uploadDateStartRange": null
+        },
+        "asc fil listened": {
+            "selectedSortItemLst": [
+                {
+                    "sortingOption": "lastListenedDateTime",
+                    "isAscending": true
+                }
+            ],
+            "filterSentenceLst": [
+                "Janco",
+                "Boris"
+            ],
+            "sentencesCombination": 1,
+            "ignoreCase": true,
+            "searchAsWellInYoutubeChannelName": true,
+            "searchAsWellInVideoCompactDescription": true,
+            "filterMusicQuality": false,
+            "filterFullyListened": true,
+            "filterPartiallyListened": true,
+            "filterNotListened": true,
+            "filterCommented": true,
+            "filterNotCommented": true,
+            "filterPictured": true,
+            "filterNotPictured": true,
+            "filterPlayable": true,
+            "filterNotPlayable": true,
+            "downloadDateStartRange": null,
+            "downloadDateEndRange": null,
+            "uploadDateStartRange": null,
+            "uploadDateEndRange": null,
+            "fileSizeStartRangeMB": 0.0,
+            "fileSizeEndRangeMB": 0.0,
+            "durationStartRangeSec": 0,
+            "durationEndRangeSec": 0
         }
     },
     "searchHistoryOfAudioSortFilterSettings": "[]",
