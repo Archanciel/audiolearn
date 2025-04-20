@@ -2995,12 +2995,9 @@ void main() {
         );
 
         // Verify that the search icon button is now disabled
-        IntegrationTestUtil.validateInkWellButton(
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          inkWellButtonKey: 'search_icon_button',
-          expectedIcon: Icons.search,
-          expectedIconColor:Color.fromRGBO(117, 117, 117, 1.0), // RGBA with alpha as a double,
-          expectedIconBackgroundColor: Color.fromRGBO(0, 0, 0, 1.0),
+          searchIconButtonState: SearchIconButtonState.disabled
         );
 
         // Enter the two letters of the 'mo' search word.
@@ -3022,7 +3019,13 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Verify that the search icon button is enabled
+        // Verify that the search icon button is enabled, but inactive
+        IntegrationTestUtil.validateSearchIconButton(
+          tester: tester,
+          searchIconButtonState: SearchIconButtonState.enabledInactive
+        );
+
+       /// REMOVE THIS METHOD !!!!!!!!!!
         IntegrationTestUtil.verifyWidgetIsEnabled(
           tester: tester,
           widgetKeyStr: 'search_icon_button',
@@ -3033,13 +3036,9 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify that the search icon button is now active
-        IntegrationTestUtil.validateInkWellButton(
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          inkWellButtonKey: 'search_icon_button',
-          expectedIcon: Icons.search,
-          expectedIconColor:
-              Colors.white,
-          expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
+          searchIconButtonState: SearchIconButtonState.enabledActive
         );
 
         // Now verify the order of the reduced playlist audio titles

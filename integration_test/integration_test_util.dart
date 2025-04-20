@@ -35,6 +35,12 @@ import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/utils/dir_util.dart';
 import 'package:audiolearn/main.dart' as app;
 
+enum SearchIconButtonState {
+  disabled,
+  enabledInactive,
+  enabledActive,
+}
+
 class IntegrationTestUtil {
   static const Color fullyPlayedAudioTitleColor = kSliderThumbColorInDarkMode;
   static const Color currentlyPlayingAudioTitleTextColor = Colors.white;
@@ -1539,7 +1545,7 @@ class IntegrationTestUtil {
 
   /// Verify that the picture was added to the playlist and that the
   /// corresponding json file was created in the playlist picture directory.
-  /// 
+  ///
   /// {audioForPictureTitleDurationStr} is the audio duration string which is
   /// used to create the audioTitleWithDuration.
   static Future<void> verifyPictureAddition({
@@ -2459,5 +2465,37 @@ class IntegrationTestUtil {
 
     // Check the content of the TextField
     expect(textField.controller?.text, expectedTextFieldContent);
+  }
+
+  static void validateSearchIconButton({
+    required WidgetTester tester,
+    required SearchIconButtonState searchIconButtonState,
+  }) {
+    if (searchIconButtonState == SearchIconButtonState.disabled) {
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        inkWellButtonKey: 'search_icon_button',
+        expectedIcon: Icons.search,
+        expectedIconColor:
+            Color.fromRGBO(117, 117, 117, 1.0), // RGBA with alpha as a double,
+        expectedIconBackgroundColor: Color.fromRGBO(0, 0, 0, 1.0),
+      );
+    } else if (searchIconButtonState == SearchIconButtonState.enabledInactive) {
+        IntegrationTestUtil.validateInkWellButton(
+          tester: tester,
+          inkWellButtonKey: 'search_icon_button',
+          expectedIcon: Icons.search,
+          expectedIconColor: kDarkAndLightEnabledIconColor,
+          expectedIconBackgroundColor: Color.fromRGBO(0, 0, 0, 1.0),
+        );
+    } else { // searchIconButtonState == SearchIconButtonState.enabledActive
+        IntegrationTestUtil.validateInkWellButton(
+          tester: tester,
+          inkWellButtonKey: 'search_icon_button',
+          expectedIcon: Icons.search,
+          expectedIconColor: Colors.white,
+          expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
+        );
+    }
   }
 }
