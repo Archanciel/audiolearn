@@ -112,11 +112,9 @@ void main() {
         );
 
         // Verify the disabled state of the search icon button
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button', // this button is disabled if the
-          //                                     'Youtube Link or Search' dosn't
-          //                                     contain a search word or sentence
+          searchIconButtonState: SearchIconButtonState.disabled,
         );
 
         // Verify the presence of the disabled stop button
@@ -143,10 +141,10 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Verify that the search icon button is now enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
+        // Verify that the search icon button is now enabled but inactive
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.enabledInactive,
         );
 
         // Verify the presence of the delete button
@@ -188,10 +186,10 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Verify that the search icon button is still enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
+        // Verify that the search icon button is now enabled but inactive
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.enabledInactive,
         );
 
         // Ensure that since the search icon button was not yet pressed,
@@ -207,10 +205,10 @@ void main() {
         await tester.tap(find.byKey(const Key('search_icon_button')));
         await tester.pumpAndSettle();
 
-        // Verify that the search icon button is still enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
+        // Verify that the search icon button is now enabled and active
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.enabledActive,
         );
 
         // Now verify the order of the reduced playlist audio titles
@@ -242,10 +240,10 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Verify that the search icon button is still enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
+        // Verify that the search icon button is now enabled and active
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.enabledActive,
         );
 
         // And verify the order of the playlist audio titles. Since
@@ -265,10 +263,10 @@ void main() {
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
-        // Verify that the search icon button is still enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
+        // Verify that the search icon button is now enabled and active
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.enabledActive,
         );
 
         // Then reenter the second search word letter
@@ -326,12 +324,10 @@ void main() {
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
-        // Verify the enabled state of the search icon button
-        IntegrationTestUtil.verifyWidgetIsEnabled(
+        // Verify that the search icon button is now enabled and active
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button', // this button is disabled if the
-          //                                     'Youtube Link or Search' dosn't
-          //                                     contain a search word or sentence
+          searchIconButtonState: SearchIconButtonState.enabledActive,
         );
 
         // Now entering a URL in the search text word
@@ -351,9 +347,9 @@ void main() {
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Verify that the search icon button is now disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.disabled,
         );
 
         // Verify that the download single video button is
@@ -490,11 +486,9 @@ void main() {
         );
 
         // Verify the disabled state of the search icon button
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button', // this button is disabled if the
-          //                                     'Youtube Link or Search' dosn't
-          //                                     contain a search word or sentence
+          searchIconButtonState: SearchIconButtonState.disabled,
         );
 
         // Now enter the 2 letters of the search word
@@ -512,10 +506,10 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Verify that the search icon button is now enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
+        // Verify that the search icon button is now enabled but inactive
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.enabledInactive,
         );
 
         // Now tap on the search icon button
@@ -621,12 +615,10 @@ void main() {
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
-        // Verify the enabled state of the search icon button
-        IntegrationTestUtil.verifyWidgetIsEnabled(
+        // Verify that the search icon button is now enabled and active
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button', // this button is disabled if the
-          //                                     'Youtube Link or Search' dosn't
-          //                                     contain a search word or sentence
+          searchIconButtonState: SearchIconButtonState.enabledActive,
         );
 
         // Now emptying the search text word
@@ -646,9 +638,9 @@ void main() {
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Verify that the search icon button is now disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.disabled,
         );
 
         // And verify the order of the playlist audio titles
@@ -730,11 +722,9 @@ void main() {
         );
 
         // Verify the disabled state of the search icon button
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button', // this button is disabled if the
-          //                                     'Youtube Link or Search' dosn't
-          //                                     contain a search word or sentence
+          searchIconButtonState: SearchIconButtonState.disabled,
         );
 
         // Now enter the first letter of the search word
@@ -752,10 +742,10 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Verify that the search icon button is now enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
+        // Verify that the search icon button is now enabled but inactive
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.enabledInactive,
         );
 
         // Now tap on the search icon button
@@ -802,12 +792,10 @@ void main() {
               audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
         );
 
-        // Verify the enabled state of the search icon button
-        IntegrationTestUtil.verifyWidgetIsEnabled(
+        // Verify that the search icon button is now enabled and active
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button', // this button is disabled if the
-          //                                     'Youtube Link or Search' dosn't
-          //                                     contain a search word or sentence
+          searchIconButtonState: SearchIconButtonState.enabledActive,
         );
 
         // Now emptying the search text word
@@ -827,9 +815,9 @@ void main() {
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Verify that the search icon button is now disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.disabled,
         );
 
         // And verify the order of the playlist audio titles
@@ -882,11 +870,9 @@ void main() {
         );
 
         // Verify the disabled state of the search icon button
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button', // this button is disabled if the
-          //                                     'Youtube Link or Search' dosn't
-          //                                     contain a search word or sentence
+          searchIconButtonState: SearchIconButtonState.disabled,
         );
 
         // Verify the presence of the disabled stop button
@@ -898,16 +884,12 @@ void main() {
           //                                     contain a search word or sentence
         );
 
-        // Now add the first 2 letters of the 'al' search word
+        // Now add the first 2 letters of the 'al' search word and tap
+        // on the search icon button. Then verify that the search icon
+        // button is now enabled and active
         List<String> playlistsTitles =
             await _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
           tester: tester,
-        );
-
-        // Verify that the search icon button is enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
-          tester: tester,
-          widgetKeyStr: 'search_icon_button',
         );
 
         // Verify the presence of the delete button
@@ -934,15 +916,13 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Verify that the search icon button is still enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
+        // Verify that the search icon button is now enabled and active
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.enabledActive,
         );
 
-        // And verify the order of the playlist titles. Since
-        // the search icon button was used, modifying the search text
-        // is applied at each search text change
+        // And verify the order of the playlist titles.
 
         playlistsTitles = [
           "local_2",
@@ -955,10 +935,10 @@ void main() {
           audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
-        // Verify that the search icon button is still enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
+        // Verify that the search icon button is now enabled and active
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.enabledActive,
         );
 
         // Then erase the third search word letter
@@ -1036,12 +1016,14 @@ void main() {
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Verify that the search icon button is now disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.disabled,
         );
 
-        // Re-enter the 2 first letters of the 'al' search word
+        // Now re-enter the first 2 letters of the 'al' search word and tap
+        // on the search icon button. Then verify that the search icon
+        // button is now enabled and active
         await _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
           tester: tester,
         );
@@ -1114,13 +1096,14 @@ void main() {
         );
 
         // Verify the disabled state of the search icon button
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button', // this button is disabled if the
-          //                                     'Youtube Link or Search' dosn't
-          //                                     contain a search word or sentence
+          searchIconButtonState: SearchIconButtonState.disabled,
         );
 
+        // Now add the first 2 letters of the 'al' search word and tap
+        // on the search icon button. Then verify that the search icon
+        // button is now enabled and active
         List<String> playlistsTitles =
             await _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
           tester: tester,
@@ -1141,10 +1124,10 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Verify that the search icon button is still enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
+        // Verify that the search icon button is now enabled and active
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.enabledActive,
         );
 
         // And verify the order of the playlist titles. Since
@@ -1162,10 +1145,10 @@ void main() {
           audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
-        // Verify that the search icon button is still enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
+        // Verify that the search icon button is now enabled and active
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.enabledActive,
         );
 
         // Then erase the third search word letter
@@ -1243,9 +1226,9 @@ void main() {
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Verify that the search icon button is now disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.disabled,
         );
 
         // Verify that the delete button is now enabled
@@ -1264,9 +1247,9 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify that the search icon button is disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.disabled,
         );
 
         // Verify that the stop text button replaced the
@@ -1297,10 +1280,10 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Verify that the search icon button is enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
+        // Verify that the search icon button is now enabled but inactive
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.enabledInactive,
         );
 
         // Verify that the delete button is enabled
@@ -1347,11 +1330,9 @@ void main() {
         );
 
         // Verify the disabled state of the search icon button
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button', // this button is disabled if the
-          //                                     'Youtube Link or Search' dosn't
-          //                                     contain a search word or sentence
+          searchIconButtonState: SearchIconButtonState.disabled,
         );
 
         // Now add the 'http' search word
@@ -1369,10 +1350,10 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Verify that the search icon button is enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
+        // Verify that the search icon button is now enabled but inactive
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.enabledInactive,
         );
 
         // Verify that the delete icon button is enabled
@@ -1432,10 +1413,10 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Verify that the search icon button is enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
+        // Verify that the search icon button is now enabled and active
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.enabledActive,
         );
 
         // Verify that the delete icon button is enabled
@@ -1461,7 +1442,7 @@ void main() {
           audioOrPlaylistTitlesOrderedLst: playlistsTitles,
         );
 
-        // Now add the '/' to the search word
+        // Now add the second '/' to the search word
         await tester.tap(
           find.byKey(
             const Key('youtubeUrlOrSearchTextField'),
@@ -1477,9 +1458,9 @@ void main() {
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Verify that the search icon button is disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.disabled,
         );
 
         // Verify that the delete icon button is enabled
@@ -1517,10 +1498,10 @@ void main() {
         );
         await tester.pumpAndSettle();
 
-        // Verify that the search icon button is disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        // Verify that the search icon button is now disabled
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.disabled,
         );
 
         // Verify that the stop text button replaced the
@@ -1559,6 +1540,9 @@ void main() {
           tapOnPlaylistToggleButton: true,
         );
 
+        // Now add the first 2 letters of the 'al' search word and tap
+        // on the search icon button. Then verify that the search icon
+        // button is now enabled and active
         List<String> playlistsTitles =
             await _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
           tester: tester,
@@ -1825,6 +1809,9 @@ void main() {
           tapOnPlaylistToggleButton: true,
         );
 
+        // Now add the first 2 letters of the 'al' search word and tap
+        // on the search icon button. Then verify that the search icon
+        // button is now enabled and active
         List<String> playlistsTitles =
             await _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord(
           tester: tester,
@@ -1995,15 +1982,19 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Verify that the search icon button is enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
-          tester: tester,
-          widgetKeyStr: 'search_icon_button',
-        );
+        // Verify that the search icon button is enabled but inactive
+        IntegrationTestUtil.validateSearchIconButton(
+            tester: tester,
+            searchIconButtonState: SearchIconButtonState.enabledInactive);
 
         // Now tap on the search icon button
         await tester.tap(find.byKey(const Key('search_icon_button')));
         await tester.pumpAndSettle();
+
+        // Verify that the search icon button is enabled and active
+        IntegrationTestUtil.validateSearchIconButton(
+            tester: tester,
+            searchIconButtonState: SearchIconButtonState.enabledActive);
 
         // Now verify the order of the reduced playlist audio titles
 
@@ -2054,10 +2045,9 @@ void main() {
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Verify that the search icon button is still enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
-          tester: tester,
-          widgetKeyStr: 'search_icon_button',
-        );
+        IntegrationTestUtil.validateSearchIconButton(
+            tester: tester,
+            searchIconButtonState: SearchIconButtonState.enabledActive);
 
         // And verify the order of the playlist titles. Since
         // the search icon button was used, modifying the search text
@@ -2090,10 +2080,9 @@ void main() {
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Verify that the search icon button is still enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
-          tester: tester,
-          widgetKeyStr: 'search_icon_button',
-        );
+        IntegrationTestUtil.validateSearchIconButton(
+            tester: tester,
+            searchIconButtonState: SearchIconButtonState.enabledActive);
 
         // Then erase the second search word letter
         await tester.tap(
@@ -2141,9 +2130,9 @@ void main() {
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Verify that the search icon button is now disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.disabled,
         );
 
         // Purge the test playlist directory so that the created test
@@ -2190,11 +2179,10 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Verify that the search icon button is enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
-          tester: tester,
-          widgetKeyStr: 'search_icon_button',
-        );
+        // Verify that the search icon button is enabled butb inactive
+        IntegrationTestUtil.validateSearchIconButton(
+            tester: tester,
+            searchIconButtonState: SearchIconButtonState.enabledInactive);
 
         // Now tap on the search icon button
         await tester.tap(find.byKey(const Key('search_icon_button')));
@@ -2250,10 +2238,9 @@ void main() {
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Verify that the search icon button is still enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
-          tester: tester,
-          widgetKeyStr: 'search_icon_button',
-        );
+        IntegrationTestUtil.validateSearchIconButton(
+            tester: tester,
+            searchIconButtonState: SearchIconButtonState.enabledActive);
 
         // And verify the order of the playlist titles. Since
         // the search icon button was used, modifying the search text
@@ -2290,9 +2277,9 @@ void main() {
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         // Verify that the search icon button is now disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.disabled,
         );
 
         audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms = [
@@ -2358,11 +2345,10 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Verify that the search icon button is enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
-          tester: tester,
-          widgetKeyStr: 'search_icon_button',
-        );
+        // Verify that the search icon button is enabled but inactive
+        IntegrationTestUtil.validateSearchIconButton(
+            tester: tester,
+            searchIconButtonState: SearchIconButtonState.enabledInactive);
 
         // Now tap on the search icon button
         await tester.tap(find.byKey(const Key('search_icon_button')));
@@ -2399,10 +2385,10 @@ void main() {
         await tester.tap(playlistDownloadViewNavButton);
         await tester.pumpAndSettle();
 
-        // Verify that the search icon button is disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        // Verify that the search icon button is now disabled
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.disabled,
         );
 
         // Now verify the order of the playlist audio titles
@@ -2467,11 +2453,10 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Verify that the search icon button is enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
-          tester: tester,
-          widgetKeyStr: 'search_icon_button',
-        );
+        // Verify that the search icon button is enabled but inactive
+        IntegrationTestUtil.validateSearchIconButton(
+            tester: tester,
+            searchIconButtonState: SearchIconButtonState.enabledInactive);
 
         // Now tap on the search icon button
         await tester.tap(find.byKey(const Key('search_icon_button')));
@@ -2513,10 +2498,10 @@ void main() {
         await tester.tap(playlistDownloadViewNavButton);
         await tester.pumpAndSettle();
 
-        // Verify that the search icon button is disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        // Verify that the search icon button is now disabled
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.disabled,
         );
 
         // Now verify the order of the reduced playlist audio titles
@@ -2581,11 +2566,10 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Verify that the search icon button is enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
-          tester: tester,
-          widgetKeyStr: 'search_icon_button',
-        );
+        // Verify that the search icon button is enabled but inactive
+        IntegrationTestUtil.validateSearchIconButton(
+            tester: tester,
+            searchIconButtonState: SearchIconButtonState.enabledInactive);
 
         // Now tap on the search icon button
         await tester.tap(find.byKey(const Key('search_icon_button')));
@@ -2626,10 +2610,10 @@ void main() {
         await tester.tap(playlistDownloadViewNavButton);
         await tester.pumpAndSettle();
 
-        // Verify that the search icon button is disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        // Verify that the search icon button is now disabled
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.disabled,
         );
 
         // Now verify the order of the reduced playlist audio titles
@@ -2697,15 +2681,19 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Verify that the search icon button is enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
-          tester: tester,
-          widgetKeyStr: 'search_icon_button',
-        );
+        // Verify that the search icon button is enabled but inactive
+        IntegrationTestUtil.validateSearchIconButton(
+            tester: tester,
+            searchIconButtonState: SearchIconButtonState.enabledInactive);
 
         // Now tap on the search icon button
         await tester.tap(find.byKey(const Key('search_icon_button')));
         await tester.pumpAndSettle();
+
+        // Verify that the search icon button is enabled and active
+        IntegrationTestUtil.validateSearchIconButton(
+            tester: tester,
+            searchIconButtonState: SearchIconButtonState.enabledActive);
 
         // Now verify the order of the reduced playlist audio titles
 
@@ -2737,10 +2725,10 @@ void main() {
         await tester.tap(playlistDownloadViewNavButton);
         await tester.pumpAndSettle();
 
-        // Verify that the search icon button is disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        // Verify that the search icon button is now disabled
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.disabled,
         );
 
         // Now verify the order of the reduced playlist audio titles
@@ -2800,11 +2788,10 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Verify that the search icon button is enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
-          tester: tester,
-          widgetKeyStr: 'search_icon_button',
-        );
+        // Verify that the search icon button is enabled but inactive
+        IntegrationTestUtil.validateSearchIconButton(
+            tester: tester,
+            searchIconButtonState: SearchIconButtonState.enabledInactive);
 
         // Now tap on the search icon button
         await tester.tap(find.byKey(const Key('search_icon_button')));
@@ -2845,10 +2832,10 @@ void main() {
         await tester.tap(playlistDownloadViewNavButton);
         await tester.pumpAndSettle();
 
-        // Verify that the search icon button is disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        // Verify that the search icon button is now disabled
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.disabled,
         );
 
         // Now verify the order of the reduced playlist audio titles
@@ -2908,11 +2895,10 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Verify that the search icon button is enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
-          tester: tester,
-          widgetKeyStr: 'search_icon_button',
-        );
+        // Verify that the search icon button is enabled but inactive
+        IntegrationTestUtil.validateSearchIconButton(
+            tester: tester,
+            searchIconButtonState: SearchIconButtonState.enabledInactive);
 
         // Now tap on the search icon button
         await tester.tap(find.byKey(const Key('search_icon_button')));
@@ -2951,10 +2937,10 @@ void main() {
         await tester.tap(playlistDownloadViewNavButton);
         await tester.pumpAndSettle();
 
-        // Verify that the search icon button is disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        // Verify that the search icon button is now disabled
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.disabled,
         );
 
         // Now verify the order of the reduced playlist audio titles
@@ -2996,9 +2982,8 @@ void main() {
 
         // Verify that the search icon button is now disabled
         IntegrationTestUtil.validateSearchIconButton(
-          tester: tester,
-          searchIconButtonState: SearchIconButtonState.disabled
-        );
+            tester: tester,
+            searchIconButtonState: SearchIconButtonState.disabled);
 
         // Enter the two letters of the 'mo' search word.
 
@@ -3021,15 +3006,8 @@ void main() {
 
         // Verify that the search icon button is enabled, but inactive
         IntegrationTestUtil.validateSearchIconButton(
-          tester: tester,
-          searchIconButtonState: SearchIconButtonState.enabledInactive
-        );
-
-       /// REMOVE THIS METHOD !!!!!!!!!!
-        IntegrationTestUtil.verifyWidgetIsEnabled(
-          tester: tester,
-          widgetKeyStr: 'search_icon_button',
-        );
+            tester: tester,
+            searchIconButtonState: SearchIconButtonState.enabledInactive);
 
         // Now tap on the search icon button
         await tester.tap(find.byKey(const Key('search_icon_button')));
@@ -3037,9 +3015,8 @@ void main() {
 
         // Verify that the search icon button is now active
         IntegrationTestUtil.validateSearchIconButton(
-          tester: tester,
-          searchIconButtonState: SearchIconButtonState.enabledActive
-        );
+            tester: tester,
+            searchIconButtonState: SearchIconButtonState.enabledActive);
 
         // Now verify the order of the reduced playlist audio titles
 
@@ -3058,11 +3035,10 @@ void main() {
         await tester.tap(find.byKey(const Key('search_icon_button')));
         await tester.pumpAndSettle();
 
-        // Verify that the search icon button is now inactive
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
-          tester: tester,
-          widgetKeyStr: 'search_icon_button',
-        );
+        // Verify that the search icon button is enabled but inactive
+        IntegrationTestUtil.validateSearchIconButton(
+            tester: tester,
+            searchIconButtonState: SearchIconButtonState.enabledInactive);
 
         // Verify that the search text field content was not changed
         IntegrationTestUtil.verifyTextFieldContent(
@@ -3277,11 +3253,10 @@ void main() {
           expectedTextFieldContent: 'mo',
         );
 
-        // Verify that the search icon button is enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
-          tester: tester,
-          widgetKeyStr: 'search_icon_button',
-        );
+        // Verify that the search icon button is enabled and active
+        IntegrationTestUtil.validateSearchIconButton(
+            tester: tester,
+            searchIconButtonState: SearchIconButtonState.enabledActive);
 
         // Verify that the list of playlists is empty since the search
         // text field is applied to the playlist list.
@@ -3416,11 +3391,10 @@ void main() {
         );
         await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-        // Verify that the search icon button is enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
-          tester: tester,
-          widgetKeyStr: 'search_icon_button',
-        );
+        // Verify that the search icon button is enabled but inactive
+        IntegrationTestUtil.validateSearchIconButton(
+            tester: tester,
+            searchIconButtonState: SearchIconButtonState.enabledInactive);
 
         // Now tap on the search icon button
         await tester.tap(find.byKey(const Key('search_icon_button')));
@@ -3444,9 +3418,9 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify that the search icon button is now disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.validateSearchIconButton(
           tester: tester,
-          widgetKeyStr: 'search_icon_button',
+          searchIconButtonState: SearchIconButtonState.disabled,
         );
 
         // Verify that the search text field content was not changed
@@ -3662,11 +3636,10 @@ void main() {
           expectedTextFieldContent: 'mo',
         );
 
-        // Verify that the search icon button is enabled
-        IntegrationTestUtil.verifyWidgetIsEnabled(
-          tester: tester,
-          widgetKeyStr: 'search_icon_button',
-        );
+        // Verify that the search icon button is enabled and active
+        IntegrationTestUtil.validateSearchIconButton(
+            tester: tester,
+            searchIconButtonState: SearchIconButtonState.enabledActive);
 
         // Verify that the list of playlists is empty since the search
         // text field is applied to the playlist list.
@@ -14973,10 +14946,10 @@ Future<List<String>> _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord({
   );
   await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-  // Verify that the search icon button is now enabled
-  IntegrationTestUtil.verifyWidgetIsEnabled(
+  // Verify that the search icon button is now enabled but inactive
+  IntegrationTestUtil.validateSearchIconButton(
     tester: tester,
-    widgetKeyStr: 'search_icon_button',
+    searchIconButtonState: SearchIconButtonState.enabledInactive,
   );
 
   // Ensure that since the search icon button was not yet pressed,
@@ -15023,10 +14996,10 @@ Future<List<String>> _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord({
   );
   await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-  // Verify that the search icon button is still enabled
-  IntegrationTestUtil.verifyWidgetIsEnabled(
+  // Verify that the search icon button is now enabled but inactive
+  IntegrationTestUtil.validateSearchIconButton(
     tester: tester,
-    widgetKeyStr: 'search_icon_button',
+    searchIconButtonState: SearchIconButtonState.enabledInactive,
   );
 
   // Ensure that since the search icon button was not yet pressed,
@@ -15042,10 +15015,10 @@ Future<List<String>> _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord({
   await tester.tap(find.byKey(const Key('search_icon_button')));
   await tester.pumpAndSettle();
 
-  // Verify that the search icon button is still enabled
-  IntegrationTestUtil.verifyWidgetIsEnabled(
+  // Verify that the search icon button is now enabled and active
+  IntegrationTestUtil.validateSearchIconButton(
     tester: tester,
-    widgetKeyStr: 'search_icon_button',
+    searchIconButtonState: SearchIconButtonState.enabledActive,
   );
 
   // Now verify the order of the reduced playlist titles
@@ -15082,10 +15055,10 @@ Future<List<String>> enteringFirstAndSecondLetterOfYoutubePlaylistSearchWord({
   );
   await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-  // Verify that the search icon button is now enabled
-  IntegrationTestUtil.verifyWidgetIsEnabled(
+  // Verify that the search icon button is now enabled but inactive
+  IntegrationTestUtil.validateSearchIconButton(
     tester: tester,
-    widgetKeyStr: 'search_icon_button',
+    searchIconButtonState: SearchIconButtonState.enabledInactive,
   );
 
   // Ensure that since the search icon button was not yet pressed,
@@ -15132,10 +15105,10 @@ Future<List<String>> enteringFirstAndSecondLetterOfYoutubePlaylistSearchWord({
   );
   await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-  // Verify that the search icon button is still enabled
-  IntegrationTestUtil.verifyWidgetIsEnabled(
+  // Verify that the search icon button is now enabled but inactive
+  IntegrationTestUtil.validateSearchIconButton(
     tester: tester,
-    widgetKeyStr: 'search_icon_button',
+    searchIconButtonState: SearchIconButtonState.enabledInactive,
   );
 
   // Ensure that since the search icon button was not yet pressed,
@@ -15151,10 +15124,10 @@ Future<List<String>> enteringFirstAndSecondLetterOfYoutubePlaylistSearchWord({
   await tester.tap(find.byKey(const Key('search_icon_button')));
   await tester.pumpAndSettle();
 
-  // Verify that the search icon button is still enabled
-  IntegrationTestUtil.verifyWidgetIsEnabled(
+  // Verify that the search icon button is now enabled and active
+  IntegrationTestUtil.validateSearchIconButton(
     tester: tester,
-    widgetKeyStr: 'search_icon_button',
+    searchIconButtonState: SearchIconButtonState.enabledActive,
   );
 
   // Now verify the order of the reduced playlist titles
@@ -15237,11 +15210,10 @@ Future<void> verifyYoutubeSelectedPlaylistButtonsAndCheckbox({
   required WidgetTester tester,
   required bool isPlaylistListDisplayed,
 }) async {
-  await IntegrationTestUtil.verifyWidgetIsDisabled(
+  // Verify that the search icon button is now disabled
+  IntegrationTestUtil.validateSearchIconButton(
     tester: tester,
-    widgetKeyStr: 'search_icon_button', // this button is disabled if the
-    //                                     'Youtube Link or Search' dosn't
-    //                                     contain a search word or sentence
+    searchIconButtonState: SearchIconButtonState.disabled,
   );
 
   if (isPlaylistListDisplayed) {
@@ -15283,11 +15255,10 @@ Future<void> verifyLocalSelectedPlaylistButtonsAndCheckbox({
   required WidgetTester tester,
   required bool isPlaylistListDisplayed,
 }) async {
-  await IntegrationTestUtil.verifyWidgetIsDisabled(
+  // Verify that the search icon button is now disabled
+  IntegrationTestUtil.validateSearchIconButton(
     tester: tester,
-    widgetKeyStr: 'search_icon_button', // this button is disabled if the
-    //                                     'Youtube Link or Search' dosn't
-    //                                     contain a search word or sentence
+    searchIconButtonState: SearchIconButtonState.disabled,
   );
 
   if (isPlaylistListDisplayed) {

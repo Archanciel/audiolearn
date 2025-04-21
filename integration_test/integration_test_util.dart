@@ -681,55 +681,8 @@ class IntegrationTestUtil {
       expect(widget.enabled, isFalse,
           reason: 'PopupMenuItem should be disabled');
     } else if (widget is InkWell) {
-      // For the specific search button, check the state of its dependencies
-      if (widgetKeyStr == 'search_icon_button') {
-        // load settings from file which does not exist. This
-        // will ensure that the default playlist root path is set
-        SettingsDataService settingsDataService;
-
-        settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-          isTest: true,
-        );
-
-        await settingsDataService.loadSettingsFromFile(
-            settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}settings.json");
-
-        final WarningMessageVM warningMessageVM = WarningMessageVM();
-
-        final AudioDownloadVM audioDownloadVM = AudioDownloadVM(
-          warningMessageVM: warningMessageVM,
-          settingsDataService: settingsDataService,
-        );
-
-        final PlaylistListVM playlistListVM = PlaylistListVM(
-          warningMessageVM: warningMessageVM,
-          audioDownloadVM: audioDownloadVM,
-          commentVM: CommentVM(),
-          pictureVM: PictureVM(
-            settingsDataService: settingsDataService,
-          ),
-          settingsDataService: settingsDataService,
-        );
-
-        // Get the PlaylistListVM through the widget tree or use a global reference
-        // and check the conditions that would make it disabled
-        final ValueNotifier<String?> searchTextNotifier =
-            playlistListVM.youtubeLinkOrSearchSentenceNotifier;
-        final ValueNotifier<bool> urlContainedNotifier =
-            playlistListVM.urlContainedInYoutubeLinkNotifier;
-
-        final bool isDisabled = searchTextNotifier.value == null ||
-            searchTextNotifier.value!.isEmpty ||
-            urlContainedNotifier.value;
-
-        expect(isDisabled, isTrue, reason: 'Search InkWell should be disabled');
-      } else {
-        // Fall back to the original check for other InkWell widgets
-        expect(widget.onTap, isNull,
-            reason: 'InkWell button should be disabled');
-      }
+      // Fall back to the original check for other InkWell widgets
+      expect(widget.onTap, isNull, reason: 'InkWell button should be disabled');
     } else {
       fail(
           'The widget with key $widgetKeyStr is not a recognized type for this test');
@@ -2481,21 +2434,22 @@ class IntegrationTestUtil {
         expectedIconBackgroundColor: Color.fromRGBO(0, 0, 0, 1.0),
       );
     } else if (searchIconButtonState == SearchIconButtonState.enabledInactive) {
-        IntegrationTestUtil.validateInkWellButton(
-          tester: tester,
-          inkWellButtonKey: 'search_icon_button',
-          expectedIcon: Icons.search,
-          expectedIconColor: kDarkAndLightEnabledIconColor,
-          expectedIconBackgroundColor: Color.fromRGBO(0, 0, 0, 1.0),
-        );
-    } else { // searchIconButtonState == SearchIconButtonState.enabledActive
-        IntegrationTestUtil.validateInkWellButton(
-          tester: tester,
-          inkWellButtonKey: 'search_icon_button',
-          expectedIcon: Icons.search,
-          expectedIconColor: Colors.white,
-          expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
-        );
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        inkWellButtonKey: 'search_icon_button',
+        expectedIcon: Icons.search,
+        expectedIconColor: kDarkAndLightEnabledIconColor,
+        expectedIconBackgroundColor: Color.fromRGBO(0, 0, 0, 1.0),
+      );
+    } else {
+      // searchIconButtonState == SearchIconButtonState.enabledActive
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        inkWellButtonKey: 'search_icon_button',
+        expectedIcon: Icons.search,
+        expectedIconColor: Colors.white,
+        expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
+      );
     }
   }
 }
