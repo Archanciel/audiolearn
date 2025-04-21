@@ -3409,23 +3409,96 @@ void main() {
         );
 
         // Now tap the 'Toggle List' button to show the list of playlist's.
+        // Since the search icon button was pressed, the displayed playlist
+        // list is empty since no playlist title contains the 'mo' search
+        // word.
         await tester.tap(find.byKey(const Key('playlist_toggle_button')));
         await tester.pumpAndSettle();
 
         // Verify the order of the normal playlist titles
 
-        List<String> playlistsTitles = [
+        List<String> playlistsTitles = [];
+
+        // Ensure that since the search icon button was now pressed,
+        // the displayed playlist list is empty.
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
+          firstAudioListTileIndex: 5,
+        );
+
+        // And verify the displayd audio titles list
+        playlistDisplayedAudioTitlesLst = [
+          "La résilience insulaire par Fiona Roche",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+          "Les besoins artificiels par R.Keucheyan",
+        ];
+
+        // Since the displayed playlist list is empty due to the applied search
+        // word, the displayed audio titles list is not filtered.
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistDisplayedAudioTitlesLst,
+        );
+
+        // Now tap on the search icon button to deactivate it
+        await tester.tap(find.byKey(const Key('search_icon_button')));
+        await tester.pumpAndSettle();
+
+        // Verify the displayed playlist titles list
+        playlistsTitles = [
           "S8 audio",
           "local",
           "local_2",
         ];
 
-        // Ensure that since the search icon button was now pressed,
-        // the displayed playlist list is modified.
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst: playlistsTitles,
+        );      
+
+        // And verify the displayd audio titles list
+        playlistDisplayedAudioTitlesLst = [
+          "La résilience insulaire par Fiona Roche",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+          "Les besoins artificiels par R.Keucheyan",
+        ];
+
+        // Since the displayed playlist list is not filtered due to the
+        // fact that the search icon button was un-pressed, the displayed
+        // audio titles list start at index 3.
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistDisplayedAudioTitlesLst,
+          firstAudioListTileIndex: 3,
         );
+
+        // Now re-tap on the search icon button to re-activate it
+        await tester.tap(find.byKey(const Key('search_icon_button')));
+        await tester.pumpAndSettle();
+
+        // And tap on the 'Toggle List' button to reduce the list of
+        // playlist's.
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+
+        // Verify the filtered audio titles list
+        playlistDisplayedAudioTitles = [
+          "La surpopulation mondiale par Jancovici et Barrau",
+        ];
+
+        // Now re-tap on the search icon button to de-activate it
+        await tester.tap(find.byKey(const Key('search_icon_button')));
+        await tester.pumpAndSettle();
+
+        // And tap on the 'Toggle List' button to redisplay the list of
+        // playlist's.
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
 
         // Now select the 'local' playlist
         await IntegrationTestUtil.selectPlaylist(
@@ -3604,7 +3677,7 @@ void main() {
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst: [],
-          firstAudioListTileIndex: 1,
+          firstAudioListTileIndex: 6,
         );
 
         // Now tap on the search icon button to deactivate it
