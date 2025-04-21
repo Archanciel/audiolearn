@@ -3132,8 +3132,8 @@ void main() {
           "morning _ cinematic video",
         ];
 
-        // Ensure that since the search icon button was un-pressed,
-        // the displayed audio list returned to the default list.
+        // Ensure that since the search icon button was pressed,
+        // the displayed audio is filtered.
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst: playlistDisplayedAudioTitles,
@@ -3183,12 +3183,6 @@ void main() {
           "Les besoins artificiels par R.Keucheyan",
         ];
 
-        // Now select the 'asc listened' sort/filter item in the dropdown
-        // button items list
-
-        // Tap on the current dropdown button item to open the dropdown
-        // button items list
-
         await _selectAndApplySortFilterParms(
           tester: tester,
           playlistDisplayedAudioTitlesLst: playlistDisplayedAudioTitlesLst,
@@ -3231,7 +3225,8 @@ void main() {
         ];
 
         // Ensure that since the search icon button was un-pressed,
-        // the displayed audio list returned to the default list.
+        // the displayed audio list returned to the 'asc listened'
+        // list.
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst: playlistDisplayedAudioTitles,
@@ -3263,7 +3258,7 @@ void main() {
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst: [],
-          firstAudioListTileIndex: 1,
+          firstAudioListTileIndex: 6,
         );
 
         // Now tap on the search icon button to deactivate it

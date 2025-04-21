@@ -1034,7 +1034,11 @@ class IntegrationTestUtil {
   /// playlist titles or the listed audio titles in the playlist download
   /// view or the audio player view. If the audio list is verifyed, the
   /// [firstAudioListTileIndex] is equal to the number of playlist titles
-  /// in the list of playlist in case this list is expanded.
+  /// in the list of playlist in case this list is expanded. If the playlist
+  /// list is verifyed, the [firstAudioListTileIndex] is equal to 0. But
+  /// if the playlist list is empty, the [firstAudioListTileIndex] must
+  /// be equal to the number of displayed audio list items due to the test
+  /// at the end of the method.
   static void checkAudioOrPlaylistTitlesOrderInListTile({
     required WidgetTester tester,
     required List<String> audioOrPlaylistTitlesOrderedLst,
@@ -1057,8 +1061,9 @@ class IntegrationTestUtil {
       );
     }
 
-    // If the audioOrPlaylistTitlesOrderedLst is empty, check that no audio
-    // ListTile is present
+    // If the audioOrPlaylistTitlesOrderedLst is empty, check that the
+    // number of ListTile widgets is equal to the passed
+    // firstAudioListTileIndex
     if (audioOrPlaylistTitlesOrderedLst.isEmpty) {
       expect(
         tester.widgetList(listTilesFinder).length,

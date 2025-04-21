@@ -1370,7 +1370,7 @@ class PlaylistListVM extends ChangeNotifier {
       return [];
     }
 
-    if (_isSearchSentenceApplied) {
+    if (!_isPlaylistListExpanded && _isSearchSentenceApplied) {
       // This test fixes a bug which made impossible to search an
       // audio in the audio list displayed in the situation where
       // the playlist list was collapsed.
