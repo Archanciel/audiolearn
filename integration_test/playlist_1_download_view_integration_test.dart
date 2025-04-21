@@ -19490,12 +19490,10 @@ Future<void> _verifyYoutubeSelectedPlaylistButtonsAndCheckbox({
   required WidgetTester tester,
   required bool isPlaylistListDisplayed,
 }) async {
-  await IntegrationTestUtil.verifyWidgetIsDisabled(
-    tester: tester,
-    widgetKeyStr: 'search_icon_button', // this button is disabled if the
-    //                                     'Youtube Link or Search' dosn't
-    //                                     contain a search word or sentence
-  );
+        IntegrationTestUtil.validateSearchIconButton(
+          tester: tester,
+          searchIconButtonState: SearchIconButtonState.disabled,
+        );
 
   if (isPlaylistListDisplayed) {
     IntegrationTestUtil.verifyWidgetIsEnabled(
@@ -19536,12 +19534,10 @@ Future<void> _verifyLocalSelectedPlaylistButtonsAndCheckbox({
   required WidgetTester tester,
   required bool isPlaylistListDisplayed,
 }) async {
-  await IntegrationTestUtil.verifyWidgetIsDisabled(
-    tester: tester,
-    widgetKeyStr: 'search_icon_button', // this button is disabled if the
-    //                                     'Youtube Link or Search' dosn't
-    //                                     contain a search word or sentence
-  );
+        IntegrationTestUtil.validateSearchIconButton(
+          tester: tester,
+          searchIconButtonState: SearchIconButtonState.disabled,
+        );
 
   if (isPlaylistListDisplayed) {
     IntegrationTestUtil.verifyWidgetIsEnabled(
