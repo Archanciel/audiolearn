@@ -163,6 +163,16 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  // This field is used to store the title of the selected playlist
+  // before applying the search sentence. This title is used to
+  // avoid that the default sort filtered parameters is displayed
+  // instead of tha applied one when the user clicks on the playlist
+  // button to display the list of playlists. Since this list will be
+  // empty if the search sentence is not empty and the search button
+  // is applied, the sort filtered parameters would be empty an so set
+  // to the default one if this field was not available.
+  String _selectedPlaylistTitleBeforeApplyingSearchSentence = '';
+
   // This notifier is used to update the list of playlists
   // or the list of audio's in the playlist download view.
   final ValueNotifier<String?> youtubeLinkOrSearchSentenceNotifier =
@@ -480,7 +490,18 @@ class PlaylistListVM extends ChangeNotifier {
       _disableAllButtonsIfNoPlaylistIsSelected();
     }
 
+    // Must be performed even if no playlist is selected since the
+    // displayed playlists can all be unselected.
     if (_wasSearchButtonClicked && _searchSentence.isNotEmpty) {
+      if (selectedPlaylistIndex != -1) {
+        _selectedPlaylistTitleBeforeApplyingSearchSentence =
+            _listOfSelectablePlaylists[selectedPlaylistIndex].title;
+      } else {
+        _selectedPlaylistTitleBeforeApplyingSearchSentence = '';
+      }
+
+      // If the search sentence is not empty, we filter the list of
+      // selectable playlists according to the search sentence.
       return _listOfSelectablePlaylists
           .where((playlist) => playlist.title
               .toLowerCase()
@@ -619,7 +640,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// PlaylistDownloadView screen. This method display or hide the list
   /// of playlists.
   ///
-  /// The method isalso called when the user add a playlist.
+  /// The method is also called when the user add a playlist.
   void togglePlaylistsList() {
     _isPlaylistListExpanded = !_isPlaylistListExpanded;
 
@@ -1737,6 +1758,19 @@ class PlaylistListVM extends ChangeNotifier {
     List<Playlist> selectedPlaylists = getSelectedPlaylists();
 
     if (selectedPlaylists.isEmpty) {
+      if (_isSearchSentenceApplied && _wasSearchButtonClicked) {
+        // This test fixes a bug which made impossible to search an
+        // audio in the audio list displayed in the situation where
+        // the playlist list was collapsed.
+
+        String audioSortFilterParmsName =
+            _playlistAudioSFparmsNamesForPlaylistDownloadViewMap[
+                    _selectedPlaylistTitleBeforeApplyingSearchSentence] ??
+                '';
+
+        return audioSortFilterParmsName;
+      }
+
       return '';
     }
 
@@ -2986,7 +3020,8 @@ class PlaylistListVM extends ChangeNotifier {
     // Minus 1 since the pictureAudioMap.json file is also
     // counted in the number of restored pictures since it is
     // located in a 'pictures' directory.
-    restoredInfoLst.add((restoredPicturesNumber > 0) ? restoredPicturesNumber - 1 : 0);
+    restoredInfoLst
+        .add((restoredPicturesNumber > 0) ? restoredPicturesNumber - 1 : 0);
 
     return restoredInfoLst;
   }

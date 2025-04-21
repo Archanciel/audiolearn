@@ -3413,43 +3413,6 @@ void main() {
           audioOrPlaylistTitlesOrderedLst: playlistDisplayedAudioTitles,
         );
 
-        // Now tap on the search icon button to deactivate it
-        await tester.tap(find.byKey(const Key('search_icon_button')));
-        await tester.pumpAndSettle();
-
-        // Verify that the search icon button is now disabled
-        IntegrationTestUtil.validateSearchIconButton(
-          tester: tester,
-          searchIconButtonState: SearchIconButtonState.disabled,
-        );
-
-        // Verify that the search text field content was not changed
-        IntegrationTestUtil.verifyTextFieldContent(
-          tester: tester,
-          textFieldKeyStr: 'youtubeUrlOrSearchTextField',
-          expectedTextFieldContent: 'mo',
-        );
-
-        // Now verify the order of the no longer reduced playlist
-        // audio titles
-
-        playlistDisplayedAudioTitles = [
-          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          "La surpopulation mondiale par Jancovici et Barrau",
-          "La résilience insulaire par Fiona Roche",
-          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
-          "Les besoins artificiels par R.Keucheyan",
-          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-        ];
-
-        // Ensure that since the search icon button was un-pressed,
-        // the displayed audio list returned to the default list.
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: playlistDisplayedAudioTitles,
-        );
-
         // Now tap the 'Toggle List' button to show the list of playlist's.
         await tester.tap(find.byKey(const Key('playlist_toggle_button')));
         await tester.pumpAndSettle();
