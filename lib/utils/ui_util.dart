@@ -122,7 +122,8 @@ class UiUtil {
       type: FileType.custom,
       allowedExtensions: ['zip'],
       allowMultiple: false,
-      initialDirectory: DirUtil.getApplicationPath(),
+      withData: false,
+      initialDirectory: Platform.isAndroid ? '/storage/emulated/0' : null,
     );
 
     if (result != null && result.files.isNotEmpty) {
