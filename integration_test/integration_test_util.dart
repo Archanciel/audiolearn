@@ -1510,17 +1510,17 @@ class IntegrationTestUtil {
     required WidgetTester tester,
     required String applicationPictureDir,
     required String playlistPictureJsonFilesDir,
-    required String pictureFileNameOne,
     required String audioForPictureTitle,
     required String audioForPictureTitleDurationStr,
-    required List<String> audioPictureLstJsonFileName,
+    required List<String> audioPictureJsonFileNameLst,
     bool goToAudioPlayerView = true,
     required bool mustPlayableAudioListBeUsed,
-    List<String> audioForPictureTitleLstOne = const [],
+    required String pictureFileNameOne,
+    List<String> audioForPictureTitleOneLst = const [],
     String pictureFileNameTwo = '',
-    List<String> audioForPictureTitleLstTwo = const [],
+    List<String> audioForPictureTitleTwoLst = const [],
     String pictureFileNameThree = '',
-    List<String> audioForPictureTitleLstThree = const [],
+    List<String> audioForPictureTitleThreeLst = const [],
     bool mustAudioBePaused = false,
   }) async {
     // Now verifying that the playlist picture directory contains
@@ -1530,7 +1530,7 @@ class IntegrationTestUtil {
       fileExtension: 'json',
     );
 
-    expect(playlistPicturesLst, audioPictureLstJsonFileName);
+    expect(playlistPicturesLst, audioPictureJsonFileNameLst);
 
     // Read the application picture json file and verify its
     // content
@@ -1542,36 +1542,43 @@ class IntegrationTestUtil {
     List<String> pictureAudioLst =
         applicationPictureJsonMap[pictureFileNameOne] ?? [];
 
-    if (audioForPictureTitleLstOne.isNotEmpty) {
+    if (audioForPictureTitleOneLst.isNotEmpty) {
       // Verify that the picture audio list contains the audio title
       // and the audio duration
       expect(
         pictureAudioLst,
-        audioForPictureTitleLstOne,
+        audioForPictureTitleOneLst,
       );
     }
 
     pictureAudioLst = applicationPictureJsonMap[pictureFileNameTwo] ?? [];
 
-    if (audioForPictureTitleLstTwo.isNotEmpty) {
+    if (audioForPictureTitleTwoLst.isNotEmpty) {
       // Verify that the picture audio list contains the audio title
       // and the audio duration
       expect(
         pictureAudioLst,
-        audioForPictureTitleLstTwo,
+        audioForPictureTitleTwoLst,
       );
     }
 
     pictureAudioLst = applicationPictureJsonMap[pictureFileNameThree] ?? [];
 
-    if (audioForPictureTitleLstThree.isNotEmpty) {
+    if (audioForPictureTitleThreeLst.isNotEmpty) {
       // Verify that the picture audio list contains the audio title
       // and the audio duration
       expect(
         pictureAudioLst,
-        audioForPictureTitleLstThree,
+        audioForPictureTitleThreeLst,
       );
     }
+
+    final List<Picture> pictureLstTwoAfterAdd =
+        JsonDataService.loadListFromFile(
+      jsonPathFileName:
+          "$playlistPictureJsonFilesDir${path.separator}${audioPictureJsonFileNameLst[0]}",
+      type: Picture,
+    );
 
     if (goToAudioPlayerView) {
       // Now go to the audio player view
