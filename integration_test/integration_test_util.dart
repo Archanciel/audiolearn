@@ -1772,6 +1772,7 @@ class IntegrationTestUtil {
   }
 
   static void verifyPictureSuppression({
+    required String applicationPictureDir,
     required String playlistPictureDir,
     required String audioPictureJsonFileName,
     required String deletedPictureFileName,
@@ -1797,13 +1798,16 @@ class IntegrationTestUtil {
       return;
     }
 
+    // Verifying the picture json file content of the audio from which
+    // the picture was deleted.
+
     List<Picture> pictureLst = JsonDataService.loadListFromFile(
       jsonPathFileName: pictureJsonFilePathName,
       type: Picture,
     ).map((dynamic item) => item as Picture).toList();
 
-    // Now verifying that the pictureLst directory does not contains
-    // the deletedPictureFileName.
+    // Now verifying that the pictureLst does not contains the
+    // deletedPictureFileName.
     for (Picture picture in pictureLst) {
       expect(
         picture.fileName,
@@ -1811,6 +1815,19 @@ class IntegrationTestUtil {
         reason: 'The picture file name should not be $deletedPictureFileName',
       );
     }
+
+    // Now read the application picture json file and verify its
+    // content
+
+    _verifyApplicationPictureJsonMap(
+      applicationPictureDir: applicationPictureDir,
+      pictureFileNameOne: pictureFileNameOne,
+      audioForPictureTitleOneLst: audioForPictureTitleOneLst,
+      pictureFileNameTwo: pictureFileNameTwo,
+      audioForPictureTitleTwoLst: audioForPictureTitleTwoLst,
+      pictureFileNameThree: pictureFileNameThree,
+      audioForPictureTitleThreeLst: audioForPictureTitleThreeLst,
+    );
   }
 
   /// This method is used as an alternative to calling app.main(). It enables
