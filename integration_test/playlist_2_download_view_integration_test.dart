@@ -12423,18 +12423,17 @@ void main() {
           ),
         ],
       ];
-              
+
       // Now verifying the second audio picture addition result
       await IntegrationTestUtil.verifyPictureAddition(
         tester: tester,
         applicationPictureDir: appPictureAudioMapDir,
         playlistPictureJsonFilesDir: localPlaylistPictureJsonFilesDir,
-        audioForPictureTitle:
-            localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
+        audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
         audioForPictureTitleDurationStr: localAudioOneDurationStr,
         playlistAudioPictureJsonFileNameLst:
             playlistLocalAudioOnePictureLstJsonFileName,
-        audioPictureJsonFileContentLst: expectedPlaylistAudioPictureLst,    
+        audioPictureJsonFileContentLst: expectedPlaylistAudioPictureLst,
         pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
         audioForPictureTitleOneLst: audioForPictureTitleLstJesusMonAmour,
         pictureFileNameTwo: pictureTwoFileName, // "Jésus je T'adore.jpg"
@@ -12457,9 +12456,11 @@ void main() {
       );
 
       IntegrationTestUtil.verifyPictureSuppression(
+        applicationPictureDir: appPictureAudioMapDir,
         playlistPictureDir: localPlaylistPictureDir,
-        audioPictureJsonFileName: playlistLocalAudioOnePictureLstJsonFileName[0],
-        deletedPictureFileName: pictureTwoFileName,
+        audioPictureJsonFileName:
+            playlistLocalAudioOnePictureLstJsonFileName[0],
+        deletedPictureFileName: pictureTwoFileName, // "Jésus je T'adore.jpg"
         pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
         audioForPictureTitleOneLst: audioForPictureTitleLstJesusMonAmour,
       );
@@ -13103,6 +13104,7 @@ void main() {
         );
 
         IntegrationTestUtil.verifyPictureSuppression(
+          applicationPictureDir: applicationPictureDir,
           playlistPictureDir: playlistPictureDir,
           audioPictureJsonFileName:
               "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
@@ -13232,6 +13234,7 @@ void main() {
         ];
 
         IntegrationTestUtil.verifyPictureSuppression(
+            applicationPictureDir: applicationPictureDir,
             playlistPictureDir: playlistPictureDir,
             audioPictureJsonFileName:
                 "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
@@ -13412,6 +13415,7 @@ void main() {
         );
 
         IntegrationTestUtil.verifyPictureSuppression(
+            applicationPictureDir: applicationPictureDir,
             playlistPictureDir: playlistPictureDir,
             audioPictureJsonFileName:
                 "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
@@ -13543,6 +13547,7 @@ void main() {
         ];
 
         IntegrationTestUtil.verifyPictureSuppression(
+            applicationPictureDir: applicationPictureDir,
             playlistPictureDir: playlistPictureDir,
             audioPictureJsonFileName:
                 "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
