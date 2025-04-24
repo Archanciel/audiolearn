@@ -1504,15 +1504,39 @@ class IntegrationTestUtil {
   /// Verify that the picture was added to the playlist and that the
   /// corresponding json file was created in the playlist picture directory.
   ///
-  /// {audioForPictureTitleDurationStr} is the audio duration string which is
-  /// used to create the audioTitleWithDuration.
+  /// [audioForPictureTitleDurationStr] is the audio duration string which is
+  /// used to create the audioTitleWithDuration used if [goToAudioPlayerView]
+  /// is true.
+  ///
+  /// [playlistAudioPictureJsonFileNameLst] is the list of json files names
+  /// created in the playlist picture directory [playlistPictureJsonFilesDir].
+  /// Example: if the playlist has 3 audio's of which 2 were modified with one
+  /// or more pictures, the [playlistAudioPictureJsonFileNameLst] has 2 json
+  /// files names.
+  ///
+  /// [audioPictureJsonFileContentLst] is the list of Picture list which are
+  /// contained in json files located in the passed playlist picture directory
+  /// [playlistPictureJsonFilesDir].
+  ///
+  /// The [audioForPictureTitleOneLst] is the list of audio titles which are
+  /// associated to the picture file name [pictureFileNameOne] in the
+  /// application picture json file.
+  ///
+  /// The [audioForPictureTitleTwoLst] is the list of audio titles which are
+  /// associated to the picture file name [pictureFileNameTwo] in the
+  /// application picture json file.
+  ///
+  /// The [audioForPictureTitleThreeLst] is the list of audio titles which are
+  /// associated to the picture file name [pictureFileNameThree] in the
+  /// application picture json file.
   static Future<void> verifyPictureAddition({
     required WidgetTester tester,
     required String applicationPictureDir,
     required String playlistPictureJsonFilesDir,
     required String audioForPictureTitle,
     required String audioForPictureTitleDurationStr,
-    required List<String> audioPictureJsonFileNameLst,
+    required List<String> playlistAudioPictureJsonFileNameLst,
+    List<List<Picture>> audioPictureJsonFileContentLst = const [],
     bool goToAudioPlayerView = true,
     required bool mustPlayableAudioListBeUsed,
     required String pictureFileNameOne,
@@ -1530,54 +1554,27 @@ class IntegrationTestUtil {
       fileExtension: 'json',
     );
 
-    expect(playlistPicturesLst, audioPictureJsonFileNameLst);
+    expect(playlistPicturesLst, playlistAudioPictureJsonFileNameLst);
 
     // Read the application picture json file and verify its
     // content
 
-    Map<String, List<String>> applicationPictureJsonMap = readPictureAudioMap(
-      applicationPicturePath: applicationPictureDir,
+    _verifyApplicationPictureJsonMap(
+      applicationPictureDir: applicationPictureDir,
+      pictureFileNameOne: pictureFileNameOne,
+      audioForPictureTitleOneLst: audioForPictureTitleOneLst,
+      pictureFileNameTwo: pictureFileNameTwo,
+      audioForPictureTitleTwoLst: audioForPictureTitleTwoLst,
+      pictureFileNameThree: pictureFileNameThree,
+      audioForPictureTitleThreeLst: audioForPictureTitleThreeLst,
     );
 
-    List<String> pictureAudioLst =
-        applicationPictureJsonMap[pictureFileNameOne] ?? [];
-
-    if (audioForPictureTitleOneLst.isNotEmpty) {
-      // Verify that the picture audio list contains the audio title
-      // and the audio duration
-      expect(
-        pictureAudioLst,
-        audioForPictureTitleOneLst,
-      );
-    }
-
-    pictureAudioLst = applicationPictureJsonMap[pictureFileNameTwo] ?? [];
-
-    if (audioForPictureTitleTwoLst.isNotEmpty) {
-      // Verify that the picture audio list contains the audio title
-      // and the audio duration
-      expect(
-        pictureAudioLst,
-        audioForPictureTitleTwoLst,
-      );
-    }
-
-    pictureAudioLst = applicationPictureJsonMap[pictureFileNameThree] ?? [];
-
-    if (audioForPictureTitleThreeLst.isNotEmpty) {
-      // Verify that the picture audio list contains the audio title
-      // and the audio duration
-      expect(
-        pictureAudioLst,
-        audioForPictureTitleThreeLst,
-      );
-    }
-
-    final List<Picture> pictureLstTwoAfterAdd =
-        JsonDataService.loadListFromFile(
-      jsonPathFileName:
-          "$playlistPictureJsonFilesDir${path.separator}${audioPictureJsonFileNameLst[0]}",
-      type: Picture,
+    // Verify that the json files created in the playlist picture
+    // directory contain the expected content
+    _verifyAudioPictureJsonFileContent(
+      playlistPictureJsonFilesDir: playlistPictureJsonFilesDir,
+      playlistAudioPictureJsonFileNameLst: playlistAudioPictureJsonFileNameLst,
+      audioPictureJsonFileContentLst: audioPictureJsonFileContentLst,
     );
 
     if (goToAudioPlayerView) {
@@ -1639,7 +1636,116 @@ class IntegrationTestUtil {
     );
   }
 
-  static Map<String, List<String>> readPictureAudioMap({
+  static void _verifyApplicationPictureJsonMap({
+    required String applicationPictureDir,
+    required String pictureFileNameOne,
+    List<String> audioForPictureTitleOneLst = const [],
+    String pictureFileNameTwo = '',
+    List<String> audioForPictureTitleTwoLst = const [],
+    String pictureFileNameThree = '',
+    List<String> audioForPictureTitleThreeLst = const [],
+  }) {
+    Map<String, List<String>> applicationPictureJsonMap = _readPictureAudioMap(
+      applicationPicturePath: applicationPictureDir,
+    );
+
+    List<String> pictureAudioLst =
+        applicationPictureJsonMap[pictureFileNameOne] ?? [];
+
+    if (audioForPictureTitleOneLst.isNotEmpty) {
+      // Verify that the picture audio list contains the audio title
+      // and the audio duration
+      expect(
+        pictureAudioLst,
+        audioForPictureTitleOneLst,
+      );
+    }
+
+    pictureAudioLst = applicationPictureJsonMap[pictureFileNameTwo] ?? [];
+
+    if (audioForPictureTitleTwoLst.isNotEmpty) {
+      // Verify that the picture audio list contains the audio title
+      // and the audio duration
+      expect(
+        pictureAudioLst,
+        audioForPictureTitleTwoLst,
+      );
+    }
+
+    pictureAudioLst = applicationPictureJsonMap[pictureFileNameThree] ?? [];
+
+    if (audioForPictureTitleThreeLst.isNotEmpty) {
+      // Verify that the picture audio list contains the audio title
+      // and the audio duration
+      expect(
+        pictureAudioLst,
+        audioForPictureTitleThreeLst,
+      );
+    }
+  }
+
+  static void _verifyAudioPictureJsonFileContent({
+    required String playlistPictureJsonFilesDir,
+    required List<String> playlistAudioPictureJsonFileNameLst,
+    required List<List<Picture>> audioPictureJsonFileContentLst,
+  }) {
+    for (String audioPictureJsonFileName
+        in playlistAudioPictureJsonFileNameLst) {
+      List<Picture> audioPictureJsonFileContent =
+          JsonDataService.loadListFromFile(
+        jsonPathFileName:
+            "$playlistPictureJsonFilesDir${path.separator}$audioPictureJsonFileName",
+        type: Picture,
+      ).map((dynamic item) => item as Picture).toList();
+
+      if (audioPictureJsonFileContentLst.isNotEmpty) {
+        List<Picture> audioPictureJsonFileContentExpected =
+            audioPictureJsonFileContentLst.elementAt(
+                playlistAudioPictureJsonFileNameLst
+                    .indexOf(audioPictureJsonFileName));
+
+        for (int i = 0; i < audioPictureJsonFileContent.length; i++) {
+          expect(
+            audioPictureJsonFileContent[i].fileName,
+            audioPictureJsonFileContentExpected[i].fileName,
+          );
+          expect(
+            audioPictureJsonFileContent[i].additionToAudioDateTime,
+            _isDateTimeWithinRange(
+              expectedDateTime: audioPictureJsonFileContentExpected[i]
+                  .additionToAudioDateTime,
+              secondsRange: 8,
+            ),
+          );
+          expect(
+            audioPictureJsonFileContent[i].lastDisplayDateTime,
+            _isDateTimeWithinRange(
+              expectedDateTime:
+                  audioPictureJsonFileContentExpected[i].lastDisplayDateTime,
+              secondsRange: 8,
+            ),
+          );
+          expect(
+            audioPictureJsonFileContent[i].isDisplayable,
+            audioPictureJsonFileContentExpected[i].isDisplayable,
+          );
+        }
+      }
+    }
+  }
+
+  static Matcher _isDateTimeWithinRange({
+    required DateTime expectedDateTime,
+    required int secondsRange,
+  }) {
+    return predicate((DateTime actual) {
+      final int difference =
+          actual.difference(expectedDateTime).inSeconds.abs();
+      return difference <= secondsRange;
+    }, 'DateTime within $secondsRange seconds of $expectedDateTime');
+  }
+
+  static Map<String, List<String>> _readPictureAudioMap({
     required String applicationPicturePath,
   }) {
     final File jsonFile = File(
@@ -1670,6 +1776,12 @@ class IntegrationTestUtil {
     required String audioPictureJsonFileName,
     required String deletedPictureFileName,
     bool isPictureFileNameDeleted = false,
+    String pictureFileNameOne = '',
+    List<String> audioForPictureTitleOneLst = const [],
+    String pictureFileNameTwo = '',
+    List<String> audioForPictureTitleTwoLst = const [],
+    String pictureFileNameThree = '',
+    List<String> audioForPictureTitleThreeLst = const [],
   }) {
     String pictureJsonFilePathName =
         "$playlistPictureDir${path.separator}$audioPictureJsonFileName";
