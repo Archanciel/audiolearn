@@ -1200,7 +1200,6 @@ void main() {
       // Act
       pictureVM.moveAudioPictureJsonFileToTargetPlaylist(
         audio: playlistOneAudioOne,
-        sourcePlaylist: playlistOne,
         targetPlaylist: playlistTwo,
       );
 
@@ -1237,7 +1236,7 @@ void main() {
         Directory(testPlaylistTwoPicturePath).deleteSync(recursive: true);
       }
     });
-    test('move empty picture for audio - moves file and updates associations',
+    test('move empty picture for audio - move empty picture list not happens.',
         () async {
       // Arrange
       final String sourcePictureJsonPath =
@@ -1250,7 +1249,6 @@ void main() {
       // Act
       pictureVM.moveAudioPictureJsonFileToTargetPlaylist(
         audio: playlistOneAudioOne,
-        sourcePlaylist: playlistOne,
         targetPlaylist: playlistTwo,
       );
 
@@ -1260,27 +1258,12 @@ void main() {
 
       final targetFile = File(
           '$testPlaylistTwoPicturePath${path.separator}${playlistOneAudioOneFileName.replaceAll('.mp3', '.json')}');
-      expect(targetFile.existsSync(), true);
+      expect(targetFile.existsSync(), false);
 
       // Verify application picture-audio map
       final File pictureAudioMapFile = File(appPictureAudioMapFilePathName);
-      final Map<String, dynamic> pictureAudioMap =
-          jsonDecode(pictureAudioMapFile.readAsStringSync());
 
-      // Check that the old association has been removed
-      bool hasOldAssociation = false;
-      if (pictureAudioMap.containsKey(testPictureOneFileName)) {
-        hasOldAssociation = (pictureAudioMap[testPictureOneFileName] as List)
-            .contains(
-                '$testPlaylistOneTitle|${playlistOneAudioOneFileName.replaceAll('.mp3', '')}');
-      }
-      expect(hasOldAssociation, false);
-
-      // Check that the new association has been added
-      expect(
-          (pictureAudioMap[testPictureOneFileName] as List).contains(
-              '$testPlaylistTwoTitle|${playlistOneAudioOneFileName.replaceAll('.mp3', '')}'),
-          true);
+      expect(pictureAudioMapFile.existsSync(), false);
 
       // Clean up
       if (Directory(testPlaylistTwoPicturePath).existsSync()) {
@@ -1288,57 +1271,7 @@ void main() {
       }
     });
   });
-  group('Next picture tests', () {
-    test('deleteAudioPictureJsonFileIfExist - deletes picture and associations',
-        () async {
-      // Arrange
-      final pictureJsonPath =
-          '$testPlaylistOnePicturePath${path.separator}${playlistOneAudioOneFileName.replaceAll('.mp3', '.json')}';
-
-      _createTestPictureJsonFile(
-        jsonPath: pictureJsonPath,
-        pictures: [Picture(fileName: testPictureOneFileName)],
-      );
-
-      // Create picture-audio map
-      final String playlistOneAudioOneAssociation =
-          '$testPlaylistOneTitle|${playlistOneAudioOneFileName.replaceAll('.mp3', '')}';
-      Map<String, List<String>> createdPictureAudioMap = {
-        testPictureOneFileName: [playlistOneAudioOneAssociation]
-      };
-      await _createTestAppPictureAudioMapFile(
-        applicationPicturePath: applicationPicturePath,
-        pictureAudioMap: createdPictureAudioMap,
-      );
-
-      // Verify application picture-audio map before the audio
-      // picture deletion
-      File pictureAudioMapFile = File(appPictureAudioMapFilePathName);
-      Map<String, dynamic> pictureAudioMap =
-          jsonDecode(pictureAudioMapFile.readAsStringSync());
-      expect(pictureAudioMap.length, 1);
-      expect(pictureAudioMap.containsKey(testPictureOneFileName), true);
-      expect(
-        pictureAudioMap[testPictureOneFileName],
-        [playlistOneAudioOneAssociation],
-      );
-
-      // Act
-      pictureVM.deleteAudioPictureJsonFileIfExist(
-        audio: playlistOneAudioOne,
-      );
-
-      // Verify that the audio picture JSON file was deleted
-      final file = File(pictureJsonPath);
-      expect(file.existsSync(), false);
-
-      // Verify application picture-audio map after the audio
-      // picture deletion
-      pictureAudioMapFile = File(appPictureAudioMapFilePathName);
-      pictureAudioMap = jsonDecode(pictureAudioMapFile.readAsStringSync());
-      expect(pictureAudioMap.containsKey(testPictureOneFileName), false);
-      expect(pictureAudioMap.length, 0);
-    });
+  group('Copy picture tests', () {
     test(
         'copyAudioPictureJsonFileToTargetPlaylist - copies file and adds associations',
         () async {
@@ -1400,6 +1333,92 @@ void main() {
       if (Directory(testPlaylistTwoPicturePath).existsSync()) {
         Directory(testPlaylistTwoPicturePath).deleteSync(recursive: true);
       }
+    });
+    test('copy empty picture for audio - copy empty picture list not happens.',
+        () async {
+      // Arrange
+      final String sourcePictureJsonPath =
+          '$testPlaylistOnePicturePath${path.separator}${playlistOneAudioOneFileName.replaceAll('.mp3', '.json')}';
+      _createTestPictureJsonFile(
+        jsonPath: sourcePictureJsonPath,
+        pictures: [],
+      );
+
+      // Act
+      pictureVM.copyAudioPictureJsonFileToTargetPlaylist(
+        audio: playlistOneAudioOne,
+        targetPlaylist: playlistTwo,
+      );
+
+      // Assert
+      final sourceFile = File(sourcePictureJsonPath);
+      expect(sourceFile.existsSync(), false);
+
+      final targetFile = File(
+          '$testPlaylistTwoPicturePath${path.separator}${playlistOneAudioOneFileName.replaceAll('.mp3', '.json')}');
+      expect(targetFile.existsSync(), false);
+
+      // Verify application picture-audio map
+      final File pictureAudioMapFile = File(appPictureAudioMapFilePathName);
+
+      expect(pictureAudioMapFile.existsSync(), false);
+
+      // Clean up
+      if (Directory(testPlaylistTwoPicturePath).existsSync()) {
+        Directory(testPlaylistTwoPicturePath).deleteSync(recursive: true);
+      }
+    });
+  });
+  group('Delete picture tests', () {
+    test('deleteAudioPictureJsonFileIfExist - deletes picture and associations',
+        () async {
+      // Arrange
+      final pictureJsonPath =
+          '$testPlaylistOnePicturePath${path.separator}${playlistOneAudioOneFileName.replaceAll('.mp3', '.json')}';
+
+      _createTestPictureJsonFile(
+        jsonPath: pictureJsonPath,
+        pictures: [Picture(fileName: testPictureOneFileName)],
+      );
+
+      // Create picture-audio map
+      final String playlistOneAudioOneAssociation =
+          '$testPlaylistOneTitle|${playlistOneAudioOneFileName.replaceAll('.mp3', '')}';
+      Map<String, List<String>> createdPictureAudioMap = {
+        testPictureOneFileName: [playlistOneAudioOneAssociation]
+      };
+      await _createTestAppPictureAudioMapFile(
+        applicationPicturePath: applicationPicturePath,
+        pictureAudioMap: createdPictureAudioMap,
+      );
+
+      // Verify application picture-audio map before the audio
+      // picture deletion
+      File pictureAudioMapFile = File(appPictureAudioMapFilePathName);
+      Map<String, dynamic> pictureAudioMap =
+          jsonDecode(pictureAudioMapFile.readAsStringSync());
+      expect(pictureAudioMap.length, 1);
+      expect(pictureAudioMap.containsKey(testPictureOneFileName), true);
+      expect(
+        pictureAudioMap[testPictureOneFileName],
+        [playlistOneAudioOneAssociation],
+      );
+
+      // Act
+      pictureVM.deleteAudioPictureJsonFileIfExist(
+        audio: playlistOneAudioOne,
+      );
+
+      // Verify that the audio picture JSON file was deleted
+      final file = File(pictureJsonPath);
+      expect(file.existsSync(), false);
+
+      // Verify application picture-audio map after the audio
+      // picture deletion
+      pictureAudioMapFile = File(appPictureAudioMapFilePathName);
+      pictureAudioMap = jsonDecode(pictureAudioMapFile.readAsStringSync());
+      expect(pictureAudioMap.containsKey(testPictureOneFileName), false);
+      expect(pictureAudioMap.length, 0);
     });
   });
   // Helper method to create a test picture JSON file
