@@ -13515,7 +13515,8 @@ void main() {
             audioForPictureTitle: audioForPictureTitle,
             audioPictureJsonFileName:
                 "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
-            deletedPictureFileName: "Jésus je T'aime.jpg");
+            deletedPictureFileName: "Jésus je T'aime.jpg",
+            goToAudioPlayerView: false,);
 
         // Third picture addition
         await _addPictureToAudioExecutingAudioPlayerViewLeftAppbarMenu(
