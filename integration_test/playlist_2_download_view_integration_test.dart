@@ -9648,8 +9648,6 @@ void main() {
             "$tempPlaylistPictureDir${path.separator}$pictureFileNameOne";
         final String pictureFilePathNameTwo =
             "$tempPlaylistPictureDir${path.separator}$pictureFileNameTwo";
-        const int pictureFileSizeOne = 46295;
-        const int pictureFileSizeTwo = 454899;
         const String audioTitleOneDurationStr = '7:38';
         const String audioTitleTwoDurationStr = '13:39';
 
@@ -11444,8 +11442,6 @@ void main() {
             "$tempPlaylistPictureDir${path.separator}$pictureFileNameOne";
         final String pictureFilePathNameTwo =
             "$tempPlaylistPictureDir${path.separator}$pictureFileNameTwo";
-        const int pictureFileSizeOne = 46295;
-        const int pictureFileSizeTwo = 454899;
         const String audioTitleOneDurationStr = '7:38';
         const String audioTitleTwoDurationStr = '13:39';
 
