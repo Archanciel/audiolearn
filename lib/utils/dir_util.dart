@@ -369,7 +369,9 @@ class DirUtil {
     }
   }
 
-  static void copyFileToDirectoryIfNotExistSync({
+  /// Copies a file to a target directory if the file does not already exist in the
+  /// target directory. True is returned if the file was copied, false otherwise.
+  static bool copyFileToDirectoryIfNotExistSync({
     required String sourceFilePathName,
     required String targetDirectoryPath,
     String? targetFileName,
@@ -377,16 +379,16 @@ class DirUtil {
     File sourceFile = File(sourceFilePathName);
 
     if (!sourceFile.existsSync()) {
-      return;
+      return false;
     }
 
     String copiedFileName = targetFileName ?? sourceFile.uri.pathSegments.last;
     String targetPathFileName =
         '$targetDirectoryPath${path.separator}$copiedFileName';
 
-    // If the target file already exists, do not copy
+    // If the target file already exists, do not copy it again
     if (File(targetPathFileName).existsSync()) {
-      return;
+      return false;
     }
 
     // Create the target directory if it does not exist
@@ -397,6 +399,8 @@ class DirUtil {
     }
 
     sourceFile.copySync(targetPathFileName);
+
+    return true;
   }
 
   static List<String> getPlaylistPathFileNamesLst({
