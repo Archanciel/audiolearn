@@ -2686,6 +2686,12 @@ class PlaylistListVM extends ChangeNotifier {
       targetDir: targetDirectoryPath,
     );
 
+    // Saving the picture jpg files to the 'pictures' directory
+    // located in the target directory where the zip file is saved.
+    int savedPictureNumber = _pictureVM.savePictureJpgFilesToTargetDirectory(
+      targetDirectoryPath: targetDirectoryPath,
+    );
+
     _warningMessageVM.confirmSavingToZip(
       zipFilePathName: savedZipFilePathName,
     );
