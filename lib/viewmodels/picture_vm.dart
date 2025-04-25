@@ -343,7 +343,7 @@ class PictureVM extends ChangeNotifier {
 
   /// Returns the list of Picture objects associated to the passed audio and
   /// listed in the json file whose name is the audio file name with the
-  /// extension .json.
+  /// extension .json. If the json file does not exist, an empty list is returned.
   List<Picture> _getAudioPicturesLstInAudioPictureJsonFile({
     required Audio audio,
   }) {
