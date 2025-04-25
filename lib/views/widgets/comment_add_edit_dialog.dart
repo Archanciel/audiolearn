@@ -496,7 +496,6 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                 commentVMlistenFalse: commentVMlistenFalse,
                 millisecondsChange:
                     _commentEndPositionChangedInTenthOfSeconds ? -100 : -1000,
-                audioDuration: widget.commentableAudio.audioDuration,
               );
             },
             iconSize: _commentEndPositionChangedInTenthOfSeconds
@@ -541,7 +540,6 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                 commentVMlistenFalse: commentVMlistenFalse,
                 millisecondsChange:
                     _commentEndPositionChangedInTenthOfSeconds ? 100 : 1000,
-                audioDuration: widget.commentableAudio.audioDuration,
               );
             },
             iconSize: _commentEndPositionChangedInTenthOfSeconds
@@ -577,19 +575,19 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
           valueListenable:
               audioPlayerVMlistenFalse.currentAudioPositionNotifier,
           builder: (context, currentAudioPosition, child) {
-            bool wasAudioDurationReduced = false;
-
             // When the current comment end position is reached,
-            // schedule a pause. For a reason I don't
-            // know, without testing if currentAudioPosition >=
-            // widget.commentableAudio.audioDuration - Duration(milliseconds: 1400), playing such a
-            // comment on the Android smartphone does not call
-            // the audioPlayerVMlistenFalse.pause() method !
-            Duration audioDuration = widget.commentableAudio.audioDuration;
-
+            // schedule a pause.
             if (currentAudioPosition >=
-                audioDuration - Duration(milliseconds: 1400)) {
-              wasAudioDurationReduced = true;
+                    commentVMlistenFalse.currentCommentEndPosition ||
+                // The 'or' test below is necessary to enable the
+                // pause of a comment whose end position is the same
+                // as the audio end position. For a reason I don't
+                // know, without this condition, playing such a
+                // comment on the Android smartphone does not call
+                // the audioPlayerVMlistenFalse.pause() method !
+                currentAudioPosition >=
+                    widget.commentableAudio.audioDuration -
+                        const Duration(milliseconds: 1400)) {
               // You cannot await here, but you can trigger an
               // action which will not block the widget tree
               // rendering.
@@ -598,18 +596,9 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
               });
             }
 
-            // Format the current audio position using your custom
-            // extension function.
-            String currentAudioPositionStr;
-
-            if (wasAudioDurationReduced) {
-              currentAudioPositionStr = audioDuration
-                  .HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true);
-            } else {
-              currentAudioPositionStr = currentAudioPosition.HHmmssZeroHH(
-                addRemainingOneDigitTenthOfSecond: true,
-              );
-            }
+            // Format the current audio position using your custom extension function.
+            String currentAudioPositionStr = currentAudioPosition.HHmmssZeroHH(
+                addRemainingOneDigitTenthOfSecond: true);
             return Tooltip(
               message: AppLocalizations.of(context)!
                   .updateCommentStartEndPositionTooltip,
@@ -798,10 +787,6 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
         commentVMlistenFalse.currentCommentStartPosition +
             Duration(milliseconds: millisecondsChange);
 
-    if (commentVMlistenFalse.currentCommentStartPosition.isNegative) {
-      commentVMlistenFalse.currentCommentStartPosition = Duration.zero;
-    }
-
     await audioPlayerVM.modifyAudioPlayerPosition(
       durationPosition: commentVMlistenFalse.currentCommentStartPosition,
       isUndoCommandToAdd: true,
@@ -817,15 +802,10 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
     required AudioPlayerVM audioPlayerVM,
     required CommentVM commentVMlistenFalse,
     required int millisecondsChange,
-    required Duration audioDuration,
   }) async {
     commentVMlistenFalse.currentCommentEndPosition =
         commentVMlistenFalse.currentCommentEndPosition +
             Duration(milliseconds: millisecondsChange);
-
-    if (commentVMlistenFalse.currentCommentEndPosition > audioDuration) {
-      commentVMlistenFalse.currentCommentEndPosition = audioDuration;
-    }
 
     await audioPlayerVM.modifyAudioPlayerPosition(
         durationPosition: commentVMlistenFalse.currentCommentEndPosition -
