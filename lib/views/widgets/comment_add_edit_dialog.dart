@@ -783,12 +783,25 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
     required CommentVM commentVMlistenFalse,
     required int millisecondsChange,
   }) async {
-    commentVMlistenFalse.currentCommentStartPosition =
+    Duration modifiedCommentStartPosition =
         commentVMlistenFalse.currentCommentStartPosition +
             Duration(milliseconds: millisecondsChange);
 
+    Duration audioDuration = widget.commentableAudio.audioDuration;
+
+    if (modifiedCommentStartPosition < const Duration(milliseconds: 0)) {
+      modifiedCommentStartPosition = const Duration(milliseconds: 0);
+    } else if (modifiedCommentStartPosition > audioDuration) {
+      modifiedCommentStartPosition = audioDuration  -
+            const Duration(milliseconds: 4000); // will play comment starting
+        //                                         4 sec before new start position
+    }
+
+    commentVMlistenFalse.currentCommentStartPosition =
+        modifiedCommentStartPosition;
+
     await audioPlayerVM.modifyAudioPlayerPosition(
-      durationPosition: commentVMlistenFalse.currentCommentStartPosition,
+      durationPosition: modifiedCommentStartPosition,
       isUndoCommandToAdd: true,
     );
 
@@ -803,12 +816,22 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
     required CommentVM commentVMlistenFalse,
     required int millisecondsChange,
   }) async {
-    commentVMlistenFalse.currentCommentEndPosition =
+    Duration modifiedCommentEndPosition =
         commentVMlistenFalse.currentCommentEndPosition +
             Duration(milliseconds: millisecondsChange);
 
+    Duration audioDuration = widget.commentableAudio.audioDuration;
+
+    if (modifiedCommentEndPosition > audioDuration) {
+      modifiedCommentEndPosition = audioDuration;
+    } else if (modifiedCommentEndPosition < const Duration(milliseconds: 0)) {
+      modifiedCommentEndPosition = const Duration(milliseconds: 0);
+    }
+
+    commentVMlistenFalse.currentCommentEndPosition = modifiedCommentEndPosition;
+
     await audioPlayerVM.modifyAudioPlayerPosition(
-        durationPosition: commentVMlistenFalse.currentCommentEndPosition -
+        durationPosition: modifiedCommentEndPosition -
             const Duration(milliseconds: 4000), // will play comment starting
         //                                      4 sec before new end position
         isUndoCommandToAdd: true);
