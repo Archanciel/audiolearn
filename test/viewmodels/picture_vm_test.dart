@@ -1241,6 +1241,9 @@ void main() {
       // Arrange
       final String sourcePictureJsonPath =
           '$testPlaylistOnePicturePath${path.separator}${playlistOneAudioOneFileName.replaceAll('.mp3', '.json')}';
+
+      // Create picture JSON file for an empty picture list. Result: no
+      // json file created.
       _createTestPictureJsonFile(
         jsonPath: sourcePictureJsonPath,
         pictures: [],
@@ -1339,6 +1342,9 @@ void main() {
       // Arrange
       final String sourcePictureJsonPath =
           '$testPlaylistOnePicturePath${path.separator}${playlistOneAudioOneFileName.replaceAll('.mp3', '.json')}';
+
+      // Create picture JSON file for an empty picture list. Result: no
+      // json file created.
       _createTestPictureJsonFile(
         jsonPath: sourcePictureJsonPath,
         pictures: [],
