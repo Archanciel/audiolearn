@@ -479,6 +479,12 @@ class PictureVM extends ChangeNotifier {
       audio: audio,
     );
 
+    if (pictureLst.isEmpty) {
+      // The moved audio has no picture associated with it, so the
+      // application picture audio map json file is not modified.
+      return;
+    }
+
     DirUtil.moveFileToDirectoryIfNotExistSync(
       sourceFilePathName: playlistPictureJsonSourcePathFileName,
       targetDirectoryPath: playlistPicturesTargetPath,
@@ -528,13 +534,19 @@ class PictureVM extends ChangeNotifier {
     final String playlistPicturesTargetPath =
         "${targetPlaylist.downloadPath}${path.separator}$kPictureDirName";
 
+    List<Picture> pictureLst = _getAudioPicturesLstInAudioPictureJsonFile(
+      audio: audio,
+    );
+
+    if (pictureLst.isEmpty) {
+      // The copied audio has no picture associated with it, so the
+      // application picture audio map json file is not modified.
+      return;
+    }
+
     DirUtil.copyFileToDirectoryIfNotExistSync(
       sourceFilePathName: audioPictureJsonSourcePathFileName,
       targetDirectoryPath: playlistPicturesTargetPath,
-    );
-
-    List<Picture> pictureLst = _getAudioPicturesLstInAudioPictureJsonFile(
-      audio: audio,
     );
 
     // All pictures of the source audio are added in the application
