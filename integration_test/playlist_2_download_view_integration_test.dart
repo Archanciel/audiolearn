@@ -12285,9 +12285,8 @@ void main() {
           Directory(localPlaylistPictureDir);
       expect(localPlaylistPictureDirDirectory.existsSync(), false);
 
-      // First picture addition
-      String pictureFilePathName =
-          await _addPictureToAudioExecutingAudioListItemMenu(
+      // First picture addition (to a local playlist audio)
+      await _addPictureToAudioExecutingAudioListItemMenu(
         tester: tester,
         mockFilePicker: mockFilePicker,
         pictureFileName: pictureOneFileName, // "Jésus, mon amour.jpg"
@@ -12342,8 +12341,8 @@ void main() {
         playlistToSelectTitle: jesusChristPlaylistTitle,
       );
 
-      // Second picture addition
-      pictureFilePathName = await _addPictureToAudioExecutingAudioListItemMenu(
+      // Second picture addition (to a jésus-christ playlist audio)
+      await _addPictureToAudioExecutingAudioListItemMenu(
         tester: tester,
         mockFilePicker: mockFilePicker,
         pictureFileName: pictureOneFileName, // "Jésus, mon amour.jpg"
@@ -12388,9 +12387,9 @@ void main() {
         playlistToSelectTitle: localPlaylistTitle,
       );
 
-      // Third picture addition, for the audio which already has a
-      // picture
-      pictureFilePathName = await _addPictureToAudioExecutingAudioListItemMenu(
+      // Third picture addition, to the local playlist audio which
+      // already has a picture
+      await _addPictureToAudioExecutingAudioListItemMenu(
         tester: tester,
         mockFilePicker: mockFilePicker,
         pictureFileName: pictureTwoFileName, // "Jésus je T'adore.jpg"
@@ -12437,28 +12436,98 @@ void main() {
         mustPlayableAudioListBeUsed: false,
       );
 
-      // Now go back to the playlist download view and remove the
-      // audio picture
+      // Return to the playlist download view and add another picture
+      // to a the audio which already has two pictures.
 
       appScreenNavigationButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
       await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
-      // Deleting the added audio picture
+      // Fourth picture addition, to the local playlist audio which
+      // already has two pictures
+      await _addPictureToAudioExecutingAudioListItemMenu(
+        tester: tester,
+        mockFilePicker: mockFilePicker,
+        pictureFileName: pictureThreeFileName, // "Jésus je T'aime.jpg"
+        pictureSourcePath: availablePicturesDir,
+        pictureFileSize: pictureThreeFileSize,
+        audioForPictureTitle:
+            localAudioOneTitle, // NE VOUS METTEZ PLUS JAMAIS EN COLÈRE ...
+      );
+
+      audioForPictureTitleLstJesusMonAmour = [
+        "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+        "Jésus-Christ|241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12",
+      ];
+
+      audioForPictureTitleLstJesusJeTadore = [
+        "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+      ];
+
+      audioForPictureTitleLstJesusJeTaime = [
+        "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+      ];
+
+      expectedPlaylistAudioPictureLst = [
+        [
+          Picture(
+            fileName: pictureOneFileName, // "Jésus mon amour.jpg"
+          ),
+          Picture(
+            fileName: pictureTwoFileName, // "Jésus je T'adore.jpg"
+          ),
+          Picture(
+            fileName: pictureThreeFileName, // "Jésus je T'aime.jpg"
+          ),
+        ],
+      ];
+
+      // Now verifying the third audio picture addition result
+      await IntegrationTestUtil.verifyPictureAddition(
+        tester: tester,
+        applicationPictureDir: appPictureAudioMapDir,
+        playlistPictureJsonFilesDir: localPlaylistPictureJsonFilesDir,
+        audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
+        audioForPictureTitleDurationStr: localAudioOneDurationStr,
+        playlistAudioPictureJsonFileNameLst:
+            playlistLocalAudioOnePictureLstJsonFileName,
+        audioPictureJsonFileContentLst: expectedPlaylistAudioPictureLst,
+        pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
+        audioForPictureTitleOneLst: audioForPictureTitleLstJesusMonAmour,
+        pictureFileNameTwo: pictureTwoFileName, // "Jésus je T'adore.jpg"
+        audioForPictureTitleTwoLst: audioForPictureTitleLstJesusJeTadore,
+        pictureFileNameThree: pictureThreeFileName, // "Jésus je T'aime.jpg"
+        audioForPictureTitleThreeLst: audioForPictureTitleLstJesusJeTaime,
+        mustPlayableAudioListBeUsed: false,
+      );
+
+      // Now go back to the playlist download view and remove the
+      // last added audio picture
+
+      appScreenNavigationButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Deleting the last added audio picture
       await _removeAudioPictureExecutingAudioListItemMenu(
         tester: tester,
         picturedAudioTitle: localAudioOneTitle,
       );
 
-      IntegrationTestUtil.verifyPictureSuppression(
+      await IntegrationTestUtil.verifyPictureSuppression(
+        tester: tester,
         applicationPictureDir: appPictureAudioMapDir,
         playlistPictureDir: localPlaylistPictureDir,
+        audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
         audioPictureJsonFileName:
             playlistLocalAudioOnePictureLstJsonFileName[0],
-        deletedPictureFileName: pictureTwoFileName, // "Jésus je T'adore.jpg"
+        deletedPictureFileName: pictureThreeFileName, // "Jésus je T'adore.jpg"
         pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
         audioForPictureTitleOneLst: audioForPictureTitleLstJesusMonAmour,
+        pictureFileNameTwo: pictureTwoFileName, // "Jésus je T'adore.jpg"
+        audioForPictureTitleTwoLst: audioForPictureTitleLstJesusJeTadore,
       );
 
       // Now go back to the playlist download view and add again a
@@ -12470,26 +12539,51 @@ void main() {
       await tester.pumpAndSettle();
 
       // Third picture addition
-      pictureFilePathName = await _addPictureToAudioExecutingAudioListItemMenu(
+      await _addPictureToAudioExecutingAudioListItemMenu(
         tester: tester,
         mockFilePicker: mockFilePicker,
         pictureFileName: pictureFourFileName, // "Jésus l'Amour de ma vie.jpg"
-        pictureSourcePath: appPictureAudioMapFilePathName,
+        pictureSourcePath: availablePicturesDir,
         pictureFileSize: pictureFourFileSize,
         audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
       );
+
+      List<String> audioForPictureTitleLstJesusLamourDeMaVie = [
+        "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+      ];
+
+      expectedPlaylistAudioPictureLst = [
+        [
+          Picture(
+            fileName: pictureOneFileName, // "Jésus mon amour.jpg"
+          ),
+          Picture(
+            fileName: pictureTwoFileName, // "Jésus je T'adore.jpg"
+          ),
+          Picture(
+            fileName: pictureFourFileName, // "Jésus l'Amour de ma vie.jpg"
+          ),
+        ],
+      ];
 
       // Now verifying the third audio picture addition result
       await IntegrationTestUtil.verifyPictureAddition(
         tester: tester,
         applicationPictureDir: appPictureAudioMapDir,
-        playlistPictureJsonFilesDir: localPlaylistPictureDir,
-        pictureFileNameOne: pictureFilePathName,
+        playlistPictureJsonFilesDir: localPlaylistPictureJsonFilesDir,
         audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
         audioForPictureTitleDurationStr: localAudioOneDurationStr,
         playlistAudioPictureJsonFileNameLst:
             playlistLocalAudioOnePictureLstJsonFileName,
-        mustPlayableAudioListBeUsed: false,
+        audioPictureJsonFileContentLst: expectedPlaylistAudioPictureLst,
+        pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
+        audioForPictureTitleOneLst: audioForPictureTitleLstJesusMonAmour,
+        pictureFileNameTwo: pictureTwoFileName, // "Jésus je T'adore.jpg"
+        audioForPictureTitleTwoLst: audioForPictureTitleLstJesusJeTadore,
+        pictureFileNameThree:
+            pictureFourFileName, // "Jésus l'Amour de ma vie.jpg"
+        audioForPictureTitleThreeLst: audioForPictureTitleLstJesusLamourDeMaVie,
+        mustPlayableAudioListBeUsed: true,
       );
 
       // Purge the test playlist directory so that the created test
@@ -13099,9 +13193,11 @@ void main() {
           picturedAudioTitle: audioForPictureTitle,
         );
 
-        IntegrationTestUtil.verifyPictureSuppression(
+        await IntegrationTestUtil.verifyPictureSuppression(
+          tester: tester,
           applicationPictureDir: applicationPictureDir,
           playlistPictureDir: playlistPictureDir,
+          audioForPictureTitle: audioForPictureTitle,
           audioPictureJsonFileName:
               "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
           deletedPictureFileName: secondPictureFileName,
@@ -13229,9 +13325,11 @@ void main() {
           '241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.json',
         ];
 
-        IntegrationTestUtil.verifyPictureSuppression(
+        await IntegrationTestUtil.verifyPictureSuppression(
+            tester: tester,
             applicationPictureDir: applicationPictureDir,
             playlistPictureDir: playlistPictureDir,
+            audioForPictureTitle: audioForPictureTitle,
             audioPictureJsonFileName:
                 "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
             deletedPictureFileName: "Jésus, mon amour.jpg",
@@ -13410,9 +13508,11 @@ void main() {
           picturedAudioTitle: audioForPictureTitle,
         );
 
-        IntegrationTestUtil.verifyPictureSuppression(
+        await IntegrationTestUtil.verifyPictureSuppression(
+            tester: tester,
             applicationPictureDir: applicationPictureDir,
             playlistPictureDir: playlistPictureDir,
+            audioForPictureTitle: audioForPictureTitle,
             audioPictureJsonFileName:
                 "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
             deletedPictureFileName: "Jésus je T'aime.jpg");
@@ -13542,9 +13642,11 @@ void main() {
           '241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.json',
         ];
 
-        IntegrationTestUtil.verifyPictureSuppression(
+        await IntegrationTestUtil.verifyPictureSuppression(
+            tester: tester,
             applicationPictureDir: applicationPictureDir,
             playlistPictureDir: playlistPictureDir,
+            audioForPictureTitle: audioForPictureTitle,
             audioPictureJsonFileName:
                 "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
             deletedPictureFileName: "Jésus, mon amour.jpg",
