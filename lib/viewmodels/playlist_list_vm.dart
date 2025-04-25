@@ -2136,7 +2136,7 @@ class PlaylistListVM extends ChangeNotifier {
     return nextAudio;
   }
 
-  /// MMethod called by deleteAudioFile() and deleteAudioFromPlaylistAsWell().
+  /// Method called by deleteAudioFile() and deleteAudioFromPlaylistAsWell().
   void _remainingAudioDeletionExecution({
     required Audio audio,
     required AudioLearnAppViewType audioLearnAppViewType,
