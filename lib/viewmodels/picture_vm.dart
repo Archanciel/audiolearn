@@ -467,11 +467,11 @@ class PictureVM extends ChangeNotifier {
   /// Method called by PlaylistListVM.
   void moveAudioPictureJsonFileToTargetPlaylist({
     required Audio audio,
-    required Playlist sourcePlaylist,
     required Playlist targetPlaylist,
   }) {
+    Playlist sourcePlaylist = audio.enclosingPlaylist!;
     final String playlistPictureJsonSourcePathFileName =
-        "${audio.enclosingPlaylist!.downloadPath}${path.separator}$kPictureDirName${path.separator}${audio.audioFileName.replaceAll('.mp3', '.json')}";
+        "${sourcePlaylist.downloadPath}${path.separator}$kPictureDirName${path.separator}${audio.audioFileName.replaceAll('.mp3', '.json')}";
     final String playlistPicturesTargetPath =
         "${targetPlaylist.downloadPath}${path.separator}$kPictureDirName";
 

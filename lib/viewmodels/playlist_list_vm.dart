@@ -1228,7 +1228,6 @@ class PlaylistListVM extends ChangeNotifier {
         // Moving the audio picture file if it exists
         _pictureVM.moveAudioPictureJsonFileToTargetPlaylist(
           audio: audio,
-          sourcePlaylist: sourcePlaylist,
           targetPlaylist: targetPlaylist,
         );
       } else {
@@ -1863,7 +1862,6 @@ class PlaylistListVM extends ChangeNotifier {
     // Moving the audio picture file if it exists
     _pictureVM.moveAudioPictureJsonFileToTargetPlaylist(
       audio: audio,
-      sourcePlaylist: sourcePlaylist,
       targetPlaylist: targetPlaylist,
     );
 
