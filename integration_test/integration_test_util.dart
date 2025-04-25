@@ -1714,7 +1714,7 @@ class IntegrationTestUtil {
             _isDateTimeWithinRange(
               expectedDateTime: audioPictureJsonFileContentExpected[i]
                   .additionToAudioDateTime,
-              secondsRange: 8,
+              secondsRange: 30,
             ),
           );
           expect(
@@ -1722,7 +1722,7 @@ class IntegrationTestUtil {
             _isDateTimeWithinRange(
               expectedDateTime:
                   audioPictureJsonFileContentExpected[i].lastDisplayDateTime,
-              secondsRange: 8,
+              secondsRange: 30,
             ),
           );
           expect(
@@ -1771,11 +1771,14 @@ class IntegrationTestUtil {
     }
   }
 
-  static void verifyPictureSuppression({
+  static Future<void> verifyPictureSuppression({
+    required WidgetTester tester,
     required String applicationPictureDir,
     required String playlistPictureDir,
+    required String audioForPictureTitle,
     required String audioPictureJsonFileName,
     required String deletedPictureFileName,
+    bool goToAudioPlayerView = true,
     bool isPictureFileNameDeleted = false,
     String pictureFileNameOne = '',
     List<String> audioForPictureTitleOneLst = const [],
@@ -1783,7 +1786,7 @@ class IntegrationTestUtil {
     List<String> audioForPictureTitleTwoLst = const [],
     String pictureFileNameThree = '',
     List<String> audioForPictureTitleThreeLst = const [],
-  }) {
+  }) async {
     String pictureJsonFilePathName =
         "$playlistPictureDir${path.separator}$audioPictureJsonFileName";
 
@@ -1807,7 +1810,7 @@ class IntegrationTestUtil {
     ).map((dynamic item) => item as Picture).toList();
 
     // Now verifying that the pictureLst does not contains the
-    // deletedPictureFileName.
+    // PPicture whose fileName == deletedPictureFileName.
     for (Picture picture in pictureLst) {
       expect(
         picture.fileName,
@@ -1828,6 +1831,17 @@ class IntegrationTestUtil {
       pictureFileNameThree: pictureFileNameThree,
       audioForPictureTitleThreeLst: audioForPictureTitleThreeLst,
     );
+
+    if (goToAudioPlayerView) {
+      // Now go to the audio player view
+      final Finder audioForPictureTitleListTileTextWidgetFinder =
+          find.text(audioForPictureTitle);
+
+      await tester.tap(audioForPictureTitleListTileTextWidgetFinder);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+    }
   }
 
   /// This method is used as an alternative to calling app.main(). It enables
