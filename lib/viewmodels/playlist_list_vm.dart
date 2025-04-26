@@ -209,9 +209,11 @@ class PlaylistListVM extends ChangeNotifier {
 
   List<Playlist> getUpToDateSelectablePlaylistsExceptExcludedPlaylist({
     required Playlist excludedPlaylist,
+    bool ignoreSearchSentence = false,
   }) {
-    List<Playlist> upToDateSelectablePlaylists =
-        getUpToDateSelectablePlaylists();
+    List<Playlist> upToDateSelectablePlaylists = getUpToDateSelectablePlaylists(
+      ignoreSearchSentence: ignoreSearchSentence,
+    );
 
     List<Playlist> listOfSelectablePlaylistsCopy =
         List.from(upToDateSelectablePlaylists);
@@ -427,7 +429,9 @@ class PlaylistListVM extends ChangeNotifier {
   /// Due to this method, when restarting the app, the playlists
   /// are displayed in the same order as when the app was closed. This
   /// is done by saving the playlist order in the settings file.
-  List<Playlist> getUpToDateSelectablePlaylists() {
+  List<Playlist> getUpToDateSelectablePlaylists({
+    bool ignoreSearchSentence = false,
+  }) {
     List<Playlist> audioDownloadVMlistOfPlaylist =
         _audioDownloadVM.listOfPlaylist;
     List<dynamic>? orderedPlaylistTitleLst = _settingsDataService.get(
@@ -486,7 +490,9 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Must be performed even if no playlist is selected since the
     // displayed playlists can all be unselected.
-    if (_wasSearchButtonClicked && _searchSentence.isNotEmpty) {
+    if (!ignoreSearchSentence &&
+        _wasSearchButtonClicked &&
+        _searchSentence.isNotEmpty) {
       if (selectedPlaylistIndex != -1) {
         _selectedPlaylistTitleBeforeApplyingSearchSentence =
             _listOfSelectablePlaylists[selectedPlaylistIndex].title;
