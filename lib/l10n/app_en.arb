@@ -927,5 +927,6 @@
   "copiedOperationType": "copied",
   "noOperationMovedOperationType": "moved",
   "noOperationCopiedOperationType": "copied",
-  "savedPictureNumberMessage": "\n\nSaved also {pictureNumber} picture jpg file(s) in same directory."
+  "savedPictureNumberMessage": "\n\nSaved also {pictureNumber} picture jpg file(s) in same directory.",
+  "restoredPictureNumberMessage": "\n\nRestored also {pictureNumber} picture jpg file(s)."
 }
