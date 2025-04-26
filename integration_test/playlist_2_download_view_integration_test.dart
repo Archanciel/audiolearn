@@ -3335,371 +3335,6 @@ void main() {
         );
       });
       testWidgets(
-          '''First, enter the search word 'mo' in the 'Youtube Link or Search' text
-            field. Then click and un-click on the search icon button, select another
-            playlist and select a sort filter item ...''',
-          (WidgetTester tester) async {
-        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-          tester: tester,
-          savedTestDataDirName:
-              'sort_and_filter_audio_dialog_widget_three_playlists_test',
-          tapOnPlaylistToggleButton: false,
-        );
-
-        // Verify that the search icon button is now disabled
-        IntegrationTestUtil.validateSearchIconButton(
-            tester: tester,
-            searchIconButtonState: SearchIconButtonState.disabled);
-
-        // Enter the two letters of the 'mo' search word.
-
-        // Select the text field
-        await tester.tap(
-          find.byKey(
-            const Key('youtubeUrlOrSearchTextField'),
-          ),
-        );
-        await tester.pumpAndSettle();
-
-        // Enter the 2 letters of the 'mo' search word
-        await tester.enterText(
-          find.byKey(
-            const Key('youtubeUrlOrSearchTextField'),
-          ),
-          'mo',
-        );
-        await tester.pumpAndSettle(const Duration(milliseconds: 200));
-
-        // Verify that the search icon button is enabled, but inactive
-        IntegrationTestUtil.validateSearchIconButton(
-            tester: tester,
-            searchIconButtonState: SearchIconButtonState.enabledInactive);
-
-        // Now tap on the search icon button
-        await tester.tap(find.byKey(const Key('search_icon_button')));
-        await tester.pumpAndSettle();
-
-        // Verify that the search icon button is now active
-        IntegrationTestUtil.validateSearchIconButton(
-            tester: tester,
-            searchIconButtonState: SearchIconButtonState.enabledActive);
-
-        // Now verify the order of the reduced playlist audio titles
-
-        List<String> playlistDisplayedAudioTitles = [
-          "La surpopulation mondiale par Jancovici et Barrau",
-        ];
-
-        // Ensure that since the search icon button was now pressed,
-        // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: playlistDisplayedAudioTitles,
-        );
-
-        // Now tap on the search icon button to deactivate it
-        await tester.tap(find.byKey(const Key('search_icon_button')));
-        await tester.pumpAndSettle();
-
-        // Verify that the search icon button is enabled but inactive
-        IntegrationTestUtil.validateSearchIconButton(
-            tester: tester,
-            searchIconButtonState: SearchIconButtonState.enabledInactive);
-
-        // Verify that the search text field content was not changed
-        IntegrationTestUtil.verifyTextFieldContent(
-          tester: tester,
-          textFieldKeyStr: 'youtubeUrlOrSearchTextField',
-          expectedTextFieldContent: 'mo',
-        );
-
-        // Now verify the order of the no longer reduced playlist
-        // audio titles
-
-        playlistDisplayedAudioTitles = [
-          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          "La surpopulation mondiale par Jancovici et Barrau",
-          "La résilience insulaire par Fiona Roche",
-          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
-          "Les besoins artificiels par R.Keucheyan",
-          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-        ];
-
-        // Ensure that since the search icon button was un-pressed,
-        // the displayed audio list returned to the default list.
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: playlistDisplayedAudioTitles,
-        );
-
-        // Now tap the 'Toggle List' button to show the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
-
-        // Verify the order of the normal playlist titles
-
-        List<String> playlistsTitles = [
-          "S8 audio",
-          "local",
-          "local_2",
-        ];
-
-        // Ensure that since the search icon button was now pressed,
-        // the displayed playlist list is modified.
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
-        );
-
-        // Now select the 'local' playlist
-        await IntegrationTestUtil.selectPlaylist(
-          tester: tester,
-          playlistToSelectTitle: 'local',
-        );
-
-        // Verify that the search text field content was conserved
-        IntegrationTestUtil.verifyTextFieldContent(
-          tester: tester,
-          textFieldKeyStr: 'youtubeUrlOrSearchTextField',
-          expectedTextFieldContent: 'mo',
-        );
-
-        // Now tap the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
-
-        // And verify the order of the default playlist audio titles
-
-        playlistDisplayedAudioTitles = [
-          "morning _ cinematic video",
-          "Really short video",
-          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          "La résilience insulaire par Fiona Roche",
-          "Les besoins artificiels par R.Keucheyan",
-          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-        ];
-
-        // Ensure that since the search icon button was un-pressed,
-        // the displayed audio list returned to the default list.
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: playlistDisplayedAudioTitles,
-        );
-
-        // Tap on the search icon button to activate it on the 'local'
-        // playlist
-        await tester.tap(find.byKey(const Key('search_icon_button')));
-        await tester.pumpAndSettle();
-
-        // And verify the order of the filtered playlist audio titles
-
-        playlistDisplayedAudioTitles = [
-          "morning _ cinematic video",
-        ];
-
-        // Ensure that since the search icon button was pressed,
-        // the displayed audio is filtered.
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: playlistDisplayedAudioTitles,
-        );
-
-        // Then, tap on the search icon button to deactivate it
-        await tester.tap(find.byKey(const Key('search_icon_button')));
-        await tester.pumpAndSettle();
-
-        // Verify that the search text field content was not changed
-        IntegrationTestUtil.verifyTextFieldContent(
-          tester: tester,
-          textFieldKeyStr: 'youtubeUrlOrSearchTextField',
-          expectedTextFieldContent: 'mo',
-        );
-
-        // And verify the order of the default playlist audio titles
-
-        playlistDisplayedAudioTitles = [
-          "morning _ cinematic video",
-          "Really short video",
-          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          "La résilience insulaire par Fiona Roche",
-          "Les besoins artificiels par R.Keucheyan",
-          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-        ];
-
-        // Ensure that since the search icon button was un-pressed,
-        // the displayed audio list returned to the default list.
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: playlistDisplayedAudioTitles,
-        );
-
-        // Now select the 'asc listened' sort/filter item in the dropdown
-        // button items list
-
-        // Tap on the current dropdown button item to open the dropdown
-        // button items list
-
-        List<String> playlistDisplayedAudioTitlesLst = [
-          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          "Really short video",
-          "morning _ cinematic video",
-          "La résilience insulaire par Fiona Roche",
-          "Les besoins artificiels par R.Keucheyan",
-        ];
-
-        await _selectAndApplySortFilterParms(
-          tester: tester,
-          playlistDisplayedAudioTitlesLst: playlistDisplayedAudioTitlesLst,
-          sfParmsName: 'asc listened',
-          textFieldContentStr: 'mo',
-        );
-
-        // Now tap on the search icon button to activate it on the 'local'
-        // playlist
-        await tester.tap(find.byKey(const Key('search_icon_button')));
-        await tester.pumpAndSettle();
-
-        // And verify the order of the filtered playlist audio titles
-
-        playlistDisplayedAudioTitles = [
-          "morning _ cinematic video",
-        ];
-
-        // Then, re-tap on the search icon button to deactivate it
-        await tester.tap(find.byKey(const Key('search_icon_button')));
-        await tester.pumpAndSettle();
-
-        // Verify that the search text field content was not changed
-        IntegrationTestUtil.verifyTextFieldContent(
-          tester: tester,
-          textFieldKeyStr: 'youtubeUrlOrSearchTextField',
-          expectedTextFieldContent: 'mo',
-        );
-
-        // And verify the order of the 'asc listened' playlist audio
-        // titles
-
-        playlistDisplayedAudioTitles = [
-          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          "Really short video",
-          "morning _ cinematic video",
-          "La résilience insulaire par Fiona Roche",
-          "Les besoins artificiels par R.Keucheyan",
-        ];
-
-        // Ensure that since the search icon button was un-pressed,
-        // the displayed audio list returned to the 'asc listened'
-        // list.
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: playlistDisplayedAudioTitles,
-        );
-
-        // Re-tap on the search icon button to re-activate it
-        await tester.tap(find.byKey(const Key('search_icon_button')));
-        await tester.pumpAndSettle();
-
-        // And tap on the 'Toggle List' button to display the list
-        // of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
-
-        // Verify that the search text field content was not changed
-        IntegrationTestUtil.verifyTextFieldContent(
-          tester: tester,
-          textFieldKeyStr: 'youtubeUrlOrSearchTextField',
-          expectedTextFieldContent: 'mo',
-        );
-
-        // Verify that the search icon button is enabled and active
-        IntegrationTestUtil.validateSearchIconButton(
-            tester: tester,
-            searchIconButtonState: SearchIconButtonState.enabledActive);
-
-        // Verify that the list of playlists is empty since the search
-        // text field is applied to the playlist list.
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: [],
-          firstAudioListTileIndex: 6,
-        );
-
-        // Now tap on the search icon button to deactivate it
-        await tester.tap(find.byKey(const Key('search_icon_button')));
-        await tester.pumpAndSettle();
-
-        // Verify the displayed playlist titles order
-        playlistsTitles = [
-          "S8 audio",
-          "local",
-          "local_2",
-        ];
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
-        );
-
-        // And select the 'S8 audio' playlist
-        await IntegrationTestUtil.selectPlaylist(
-          tester: tester,
-          playlistToSelectTitle: 'S8 audio',
-        );
-
-        // Tap on the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
-
-        playlistDisplayedAudioTitlesLst = [
-          "La surpopulation mondiale par Jancovici et Barrau",
-          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          "La résilience insulaire par Fiona Roche",
-          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
-          "Les besoins artificiels par R.Keucheyan",
-        ];
-
-        // Now select the 'asc listened' sort/filter item in the dropdown
-        // button items list
-
-        // Tap on the current dropdown button item to open the dropdown
-        // button items list
-
-        await _selectAndApplySortFilterParms(
-          tester: tester,
-          playlistDisplayedAudioTitlesLst: playlistDisplayedAudioTitlesLst,
-          sfParmsName: 'asc listened',
-          textFieldContentStr: 'mo',
-        );
-
-        // Re-tap on the search icon button to re-activate it
-        await tester.tap(find.byKey(const Key('search_icon_button')));
-        await tester.pumpAndSettle();
-
-        // And verify the order of the reduced playlist audio titles
-
-        playlistDisplayedAudioTitles = [
-          "La surpopulation mondiale par Jancovici et Barrau",
-        ];
-
-        // Ensure that since the search icon button was now pressed,
-        // the displayed audio list is modified.
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: playlistDisplayedAudioTitles,
-        );
-
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
-        );
-      });
-      testWidgets(
           '''First, select a sort filter item. Then, enter the search word 'mo' in the
            'Youtube Link or Search' text field. Then click and un-click on the search icon
            button, select another playlist ...''', (WidgetTester tester) async {
@@ -4225,6 +3860,405 @@ void main() {
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst: playlistDisplayedAudioTitlesLst,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kPlaylistDownloadRootPathWindowsTest,
+        );
+      });
+    });
+    group(
+        '''Use a search word to select audio's and start moving or copying one audio
+          verifying the displayed target playlists is not filtered by the search
+          sentence.''', () {
+      testWidgets(
+          '''First, enter the search word 'mo' in the 'Youtube Link or Search' text
+            field. Then click and un-click on the search icon button, select another
+            playlist and select a sort filter item ...''',
+          (WidgetTester tester) async {
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'copy_move_audio_integr_test_data',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        // Change the app language to English
+
+        // Open the appbar right menu
+        await tester.tap(find.byKey(const Key('appBarRightPopupMenu')));
+        await tester.pumpAndSettle();
+
+        // And tap on 'Select English' to change the language
+        await tester.tap(find.text('Anglais'));
+        await tester.pumpAndSettle();
+
+        // Tap on the 'Toggle List' button to display the list of playlist's.
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+
+        // Open the add playlist dialog by tapping the add playlist
+        // button
+        await tester.tap(find.byKey(const Key('addPlaylistButton')));
+        await tester.pumpAndSettle();
+
+        const String localTwoPlaylistTitle = 'local_two';
+
+        // Enter the title of the local playlist
+        await tester.enterText(
+          find.byKey(const Key('playlistLocalTitleConfirmDialogTextField')),
+          localTwoPlaylistTitle,
+        );
+        await tester.pumpAndSettle();
+
+        // Confirm the addition by tapping the confirmation button in
+        // the AlertDialog
+        await tester
+            .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
+        await tester.pumpAndSettle();
+
+        // Close the warning dialog by tapping the ok button
+        await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+        await tester.pumpAndSettle();
+
+        // Enter the 'two' search word.
+
+        // Select the text field
+        await tester.tap(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        // Enter the 'two' search word
+        await tester.enterText(
+          find.byKey(
+            const Key('youtubeUrlOrSearchTextField'),
+          ),
+          'two',
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Now tap on the search icon button
+        await tester.tap(find.byKey(const Key('search_icon_button')));
+        await tester.pumpAndSettle();
+
+        List<String> playlistsTitles = [
+          "local_two",
+        ];
+
+        List<String> audioTitles = [
+          "audio learn test short video two",
+          "audio learn test short video one",
+        ];
+
+        IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
+          tester: tester,
+          playlistTitlesOrderedLst: playlistsTitles,
+          audioTitlesOrderedLst: audioTitles,
+        );
+
+        // Now tap on the 'Toggle List' button to hide the list of playlist's.
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+
+
+        // Now tap on the search icon button to deactivate it
+        await tester.tap(find.byKey(const Key('search_icon_button')));
+        await tester.pumpAndSettle();
+
+        // Verify that the search icon button is enabled but inactive
+        IntegrationTestUtil.validateSearchIconButton(
+            tester: tester,
+            searchIconButtonState: SearchIconButtonState.enabledInactive);
+
+        // Verify that the search text field content was not changed
+        IntegrationTestUtil.verifyTextFieldContent(
+          tester: tester,
+          textFieldKeyStr: 'youtubeUrlOrSearchTextField',
+          expectedTextFieldContent: 'mo',
+        );
+
+        // Now verify the order of the no longer reduced playlist
+        // audio titles
+
+        List<String> playlistDisplayedAudioTitles = [
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "La résilience insulaire par Fiona Roche",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+          "Les besoins artificiels par R.Keucheyan",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        ];
+
+        // Ensure that since the search icon button was un-pressed,
+        // the displayed audio list returned to the default list.
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistDisplayedAudioTitles,
+        );
+
+        // Now tap the 'Toggle List' button to show the list of playlist's.
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+
+        // Verify the order of the normal playlist titles
+
+        playlistsTitles = [
+          "S8 audio",
+          "local",
+          "local_2",
+        ];
+
+        // Ensure that since the search icon button was now pressed,
+        // the displayed playlist list is modified.
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
+        );
+
+        // Now select the 'local' playlist
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: 'local',
+        );
+
+        // Verify that the search text field content was conserved
+        IntegrationTestUtil.verifyTextFieldContent(
+          tester: tester,
+          textFieldKeyStr: 'youtubeUrlOrSearchTextField',
+          expectedTextFieldContent: 'mo',
+        );
+
+        // Now tap the 'Toggle List' button to hide the list of playlist's.
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+
+        // And verify the order of the default playlist audio titles
+
+        playlistDisplayedAudioTitles = [
+          "morning _ cinematic video",
+          "Really short video",
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La résilience insulaire par Fiona Roche",
+          "Les besoins artificiels par R.Keucheyan",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        ];
+
+        // Ensure that since the search icon button was un-pressed,
+        // the displayed audio list returned to the default list.
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistDisplayedAudioTitles,
+        );
+
+        // Tap on the search icon button to activate it on the 'local'
+        // playlist
+        await tester.tap(find.byKey(const Key('search_icon_button')));
+        await tester.pumpAndSettle();
+
+        // And verify the order of the filtered playlist audio titles
+
+        playlistDisplayedAudioTitles = [
+          "morning _ cinematic video",
+        ];
+
+        // Ensure that since the search icon button was pressed,
+        // the displayed audio is filtered.
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistDisplayedAudioTitles,
+        );
+
+        // Then, tap on the search icon button to deactivate it
+        await tester.tap(find.byKey(const Key('search_icon_button')));
+        await tester.pumpAndSettle();
+
+        // Verify that the search text field content was not changed
+        IntegrationTestUtil.verifyTextFieldContent(
+          tester: tester,
+          textFieldKeyStr: 'youtubeUrlOrSearchTextField',
+          expectedTextFieldContent: 'mo',
+        );
+
+        // And verify the order of the default playlist audio titles
+
+        playlistDisplayedAudioTitles = [
+          "morning _ cinematic video",
+          "Really short video",
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La résilience insulaire par Fiona Roche",
+          "Les besoins artificiels par R.Keucheyan",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        ];
+
+        // Ensure that since the search icon button was un-pressed,
+        // the displayed audio list returned to the default list.
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistDisplayedAudioTitles,
+        );
+
+        // Now select the 'asc listened' sort/filter item in the dropdown
+        // button items list
+
+        // Tap on the current dropdown button item to open the dropdown
+        // button items list
+
+        List<String> playlistDisplayedAudioTitlesLst = [
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "Really short video",
+          "morning _ cinematic video",
+          "La résilience insulaire par Fiona Roche",
+          "Les besoins artificiels par R.Keucheyan",
+        ];
+
+        await _selectAndApplySortFilterParms(
+          tester: tester,
+          playlistDisplayedAudioTitlesLst: playlistDisplayedAudioTitlesLst,
+          sfParmsName: 'asc listened',
+          textFieldContentStr: 'mo',
+        );
+
+        // Now tap on the search icon button to activate it on the 'local'
+        // playlist
+        await tester.tap(find.byKey(const Key('search_icon_button')));
+        await tester.pumpAndSettle();
+
+        // And verify the order of the filtered playlist audio titles
+
+        playlistDisplayedAudioTitles = [
+          "morning _ cinematic video",
+        ];
+
+        // Then, re-tap on the search icon button to deactivate it
+        await tester.tap(find.byKey(const Key('search_icon_button')));
+        await tester.pumpAndSettle();
+
+        // Verify that the search text field content was not changed
+        IntegrationTestUtil.verifyTextFieldContent(
+          tester: tester,
+          textFieldKeyStr: 'youtubeUrlOrSearchTextField',
+          expectedTextFieldContent: 'mo',
+        );
+
+        // And verify the order of the 'asc listened' playlist audio
+        // titles
+
+        playlistDisplayedAudioTitles = [
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "Really short video",
+          "morning _ cinematic video",
+          "La résilience insulaire par Fiona Roche",
+          "Les besoins artificiels par R.Keucheyan",
+        ];
+
+        // Ensure that since the search icon button was un-pressed,
+        // the displayed audio list returned to the 'asc listened'
+        // list.
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistDisplayedAudioTitles,
+        );
+
+        // Re-tap on the search icon button to re-activate it
+        await tester.tap(find.byKey(const Key('search_icon_button')));
+        await tester.pumpAndSettle();
+
+        // And tap on the 'Toggle List' button to display the list
+        // of playlist's.
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+
+        // Verify that the search text field content was not changed
+        IntegrationTestUtil.verifyTextFieldContent(
+          tester: tester,
+          textFieldKeyStr: 'youtubeUrlOrSearchTextField',
+          expectedTextFieldContent: 'mo',
+        );
+
+        // Verify that the search icon button is enabled and active
+        IntegrationTestUtil.validateSearchIconButton(
+            tester: tester,
+            searchIconButtonState: SearchIconButtonState.enabledActive);
+
+        // Verify that the list of playlists is empty since the search
+        // text field is applied to the playlist list.
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: [],
+          firstAudioListTileIndex: 6,
+        );
+
+        // Now tap on the search icon button to deactivate it
+        await tester.tap(find.byKey(const Key('search_icon_button')));
+        await tester.pumpAndSettle();
+
+        // Verify the displayed playlist titles order
+        playlistsTitles = [
+          "S8 audio",
+          "local",
+          "local_2",
+        ];
+
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
+        );
+
+        // And select the 'S8 audio' playlist
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: 'S8 audio',
+        );
+
+        // Tap on the 'Toggle List' button to hide the list of playlist's.
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+
+        playlistDisplayedAudioTitlesLst = [
+          "La surpopulation mondiale par Jancovici et Barrau",
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La résilience insulaire par Fiona Roche",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+          "Les besoins artificiels par R.Keucheyan",
+        ];
+
+        // Now select the 'asc listened' sort/filter item in the dropdown
+        // button items list
+
+        // Tap on the current dropdown button item to open the dropdown
+        // button items list
+
+        await _selectAndApplySortFilterParms(
+          tester: tester,
+          playlistDisplayedAudioTitlesLst: playlistDisplayedAudioTitlesLst,
+          sfParmsName: 'asc listened',
+          textFieldContentStr: 'mo',
+        );
+
+        // Re-tap on the search icon button to re-activate it
+        await tester.tap(find.byKey(const Key('search_icon_button')));
+        await tester.pumpAndSettle();
+
+        // And verify the order of the reduced playlist audio titles
+
+        playlistDisplayedAudioTitles = [
+          "La surpopulation mondiale par Jancovici et Barrau",
+        ];
+
+        // Ensure that since the search icon button was now pressed,
+        // the displayed audio list is modified.
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistDisplayedAudioTitles,
         );
 
         // Purge the test playlist directory so that the created test
@@ -13507,14 +13541,15 @@ void main() {
         );
 
         await IntegrationTestUtil.verifyPictureSuppression(
-            tester: tester,
-            applicationPictureDir: applicationPictureDir,
-            playlistPictureDir: playlistPictureDir,
-            audioForPictureTitle: audioForPictureTitle,
-            audioPictureJsonFileName:
-                "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
-            deletedPictureFileName: "Jésus je T'aime.jpg",
-            goToAudioPlayerView: false,);
+          tester: tester,
+          applicationPictureDir: applicationPictureDir,
+          playlistPictureDir: playlistPictureDir,
+          audioForPictureTitle: audioForPictureTitle,
+          audioPictureJsonFileName:
+              "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
+          deletedPictureFileName: "Jésus je T'aime.jpg",
+          goToAudioPlayerView: false,
+        );
 
         // Third picture addition
         await _addPictureToAudioExecutingAudioPlayerViewLeftAppbarMenu(
