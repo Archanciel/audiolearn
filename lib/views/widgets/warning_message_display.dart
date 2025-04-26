@@ -1061,10 +1061,10 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
               _warningMessageVM.zipFilePathName,
             );
 
-            if (_warningMessageVM.savedPictureNumber > 0) {
+            if (_warningMessageVM.savedOrRestoredPictureJpgNumber > 0) {
               savedAppDataToZipMessage +=
                   AppLocalizations.of(context)!.savedPictureNumberMessage(
-                _warningMessageVM.savedPictureNumber,
+                _warningMessageVM.savedOrRestoredPictureJpgNumber,
               );
             }
 
@@ -1101,6 +1101,13 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
               _warningMessageVM.picturesNumber,
               _warningMessageVM.zipFilePathName,
             );
+
+            if (_warningMessageVM.savedOrRestoredPictureJpgNumber > 0) {
+              restoredAppDataFromZipMessage +=
+                  AppLocalizations.of(context)!.restoredPictureNumberMessage(
+                _warningMessageVM.savedOrRestoredPictureJpgNumber,
+              );
+            }
 
             _displayWarningDialog(
               context: _context,

@@ -1905,7 +1905,9 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String savedPictureNumberMessage(Object pictureNumber,) =>
-      "
+      "Saved also $pictureNumber picture jpg file(s) in same directory.";
 
-Saved also $pictureNumber picture jpg file(s) in same directory.";
+  @override
+  String restoredPictureNumberMessage(Object pictureNumber,) =>
+      "Restored also $pictureNumber picture jpg file(s).";
 }

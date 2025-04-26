@@ -772,15 +772,14 @@ class WarningMessageVM extends ChangeNotifier {
 
   String _zipFilePathName = '';
   String get zipFilePathName => _zipFilePathName;
-  int _savedPictureNumber = 0;
-  int get savedPictureNumber => _savedPictureNumber;
-
+  int _savedOrRestoredPictureJpgNumber = 0;
+  int get savedOrRestoredPictureJpgNumber => _savedOrRestoredPictureJpgNumber;
   void confirmSavingToZip({
     required String zipFilePathName,
-    required int savedPictureNumber
+    required int savedPictureNumber,
   }) {
     _zipFilePathName = zipFilePathName;
-    _savedPictureNumber = savedPictureNumber;
+    _savedOrRestoredPictureJpgNumber = savedPictureNumber;
 
     warningMessageType = WarningMessageType.savedAppDataToZip;
 
@@ -799,11 +798,13 @@ class WarningMessageVM extends ChangeNotifier {
     required int playlistsNumber,
     required int commentsNumber,
     required int picturesNumber,
+    required int restoredPictureJpgNumber,
   }) {
     _zipFilePathName = zipFilePathName;
     _playlistsNumber = playlistsNumber;
     _commentsNumber = commentsNumber;
     _picturesNumber = picturesNumber;
+    _savedOrRestoredPictureJpgNumber = restoredPictureJpgNumber;
 
     warningMessageType = WarningMessageType.restoreAppDataFromZip;
 

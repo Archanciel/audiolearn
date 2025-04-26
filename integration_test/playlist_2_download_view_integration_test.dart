@@ -12239,8 +12239,6 @@ void main() {
 
       final String appPictureAudioMapDir =
           "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kPictureDirName";
-      final String appPictureAudioMapFilePathName =
-          "$appPictureAudioMapDir${path.separator}pictureAudioMap.json";
 
       const String localPlaylistTitle = 'local';
       final String localPlaylistPictureDir =

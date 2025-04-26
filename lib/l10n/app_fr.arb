@@ -1254,5 +1254,6 @@
   "copiedOperationType": "a été copié",
   "noOperationMovedOperationType": "déplacé",
   "noOperationCopiedOperationType": "copié",
-  "savedPictureNumberMessage": "\n\nEgalement {pictureNumber} fichier(s) de photo jpg sauvegardé(s) dans le même répertoire."
+  "savedPictureNumberMessage": "\n\nEgalement {pictureNumber} fichier(s) de photo jpg sauvegardé(s) dans le même répertoire.",
+  "restoredPictureNumberMessage": "\n\nEgalement {pictureNumber} fichier(s) de photo jpg restauré(s)."
 }

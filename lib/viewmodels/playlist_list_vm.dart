@@ -100,13 +100,7 @@ class PlaylistListVM extends ChangeNotifier {
   // by the user in the 'Youtube URL or search sentence' field of the
   // PlaylistDownloadView screen.
 
-  bool _isSearchButtonEnabled = false;
-  bool get isSearchButtonEnabled => _isSearchButtonEnabled;
-  set isSearchButtonEnabled(bool isSearchButtonEnabled) {
-    _isSearchButtonEnabled = isSearchButtonEnabled;
-
-    // notifyListeners();
-  }
+  bool isSearchButtonEnabled = false;
 
   String _searchSentence = '';
   String get searchSentence => _searchSentence;
@@ -1203,7 +1197,6 @@ class PlaylistListVM extends ChangeNotifier {
     int movedAudioNumber = 0;
     int movedCommentedAudioNumber = 0;
     int unmovedAudioNumber = 0;
-    Playlist sourcePlaylist = filteredAudioToMove[0].enclosingPlaylist!;
 
     for (Audio audio in filteredAudioToMove) {
       if (_audioDownloadVM.moveAudioToPlaylist(
@@ -1683,7 +1676,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// Method used to disable the search button as well as to clear the search
   /// sentence.
   void disableSearchSentence() {
-    _isSearchButtonEnabled = false;
+    isSearchButtonEnabled = false;
     _isSearchSentenceApplied = false;
     _wasSearchButtonClicked = false;
 
@@ -1841,8 +1834,6 @@ class PlaylistListVM extends ChangeNotifier {
       audioLearnAppViewType: audioLearnAppViewType,
       currentAudio: audio,
     );
-
-    Playlist sourcePlaylist = audio.enclosingPlaylist!;
 
     bool wasAudioMoved = _audioDownloadVM.moveAudioToPlaylist(
         audioToMove: audio,
@@ -2693,9 +2684,8 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     _warningMessageVM.confirmSavingToZip(
-      zipFilePathName: savedZipFilePathName,
-      savedPictureNumber: savedPictureNumber
-    );
+        zipFilePathName: savedZipFilePathName,
+        savedPictureNumber: savedPictureNumber);
 
     return savedZipFilePathName;
   }
@@ -2796,6 +2786,15 @@ class PlaylistListVM extends ChangeNotifier {
       zipFilePathName: zipFilePathName,
     );
 
+    // Saving the picture jpg files to the 'pictures' directory
+    // located in the target directory where the zip file is saved.
+    int restoredPictureNumber =
+        _pictureVM.restorePictureJpgFilesFromSourceDirectory(
+      sourceDirectoryPath: DirUtil.getPathFromPathFileName(
+        pathFileName: zipFilePathName,
+      ),
+    );
+
     await _mergeRestoredFromZipSettingsWithCurrentAppSettings();
 
     updateSettingsAndPlaylistJsonFiles(
@@ -2827,6 +2826,7 @@ class PlaylistListVM extends ChangeNotifier {
       playlistsNumber: restoredInfoLst[0].length,
       commentsNumber: restoredInfoLst[1],
       picturesNumber: restoredInfoLst[2],
+      restoredPictureJpgNumber: restoredPictureNumber,
     );
 
     // Return the zip file path name used for restoration.
