@@ -19,6 +19,9 @@ import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 import '../services/mock_shared_preferences.dart';
 import 'audio_player_vm_test_version.dart';
 
+/// This unit test does not pass in the Main branch due to the AudioPlayerVM Main branch
+/// version which uses the latest version of the audio_player package which cannot be used
+/// in integration tests.
 void main() {
   group('AudioPlayerVM changeAudioPlayPosition undo/redo', () {
     test('Test single undo/redo of forward position change', () async {
