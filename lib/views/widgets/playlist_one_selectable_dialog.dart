@@ -80,11 +80,14 @@ class _PlaylistOneSelectableDialogState
 
     if (widget.excludedPlaylist == null) {
       upToDateSelectablePlaylists =
-          playlistVMlistenFalse.getUpToDateSelectablePlaylists();
+          playlistVMlistenFalse.getUpToDateSelectablePlaylists(
+            ignoreSearchSentence: true,
+          );
     } else {
       upToDateSelectablePlaylists = playlistVMlistenFalse
           .getUpToDateSelectablePlaylistsExceptExcludedPlaylist(
-              excludedPlaylist: widget.excludedPlaylist!);
+              excludedPlaylist: widget.excludedPlaylist!,
+              ignoreSearchSentence: true);
     }
 
     // Required so that clicking on Enter closes the dialog
