@@ -772,11 +772,15 @@ class WarningMessageVM extends ChangeNotifier {
 
   String _zipFilePathName = '';
   String get zipFilePathName => _zipFilePathName;
+  int _savedPictureNumber = 0;
+  int get savedPictureNumber => _savedPictureNumber;
 
   void confirmSavingToZip({
     required String zipFilePathName,
+    required int savedPictureNumber
   }) {
     _zipFilePathName = zipFilePathName;
+    _savedPictureNumber = savedPictureNumber;
 
     warningMessageType = WarningMessageType.savedAppDataToZip;
 
