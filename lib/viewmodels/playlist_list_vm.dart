@@ -2694,6 +2694,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     _warningMessageVM.confirmSavingToZip(
       zipFilePathName: savedZipFilePathName,
+      savedPictureNumber: savedPictureNumber
     );
 
     return savedZipFilePathName;

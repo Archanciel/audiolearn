@@ -1902,4 +1902,10 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get noOperationCopiedOperationType => "copied";
+
+  @override
+  String savedPictureNumberMessage(Object pictureNumber,) =>
+      "
+
+Saved also $pictureNumber picture jpg file(s) in same directory.";
 }

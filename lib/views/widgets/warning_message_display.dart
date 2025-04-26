@@ -1061,6 +1061,13 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
               _warningMessageVM.zipFilePathName,
             );
 
+            if (_warningMessageVM.savedPictureNumber > 0) {
+              savedAppDataToZipMessage +=
+                  AppLocalizations.of(context)!.savedPictureNumberMessage(
+                _warningMessageVM.savedPictureNumber,
+              );
+            }
+
             _displayWarningDialog(
               context: _context,
               message: savedAppDataToZipMessage,
