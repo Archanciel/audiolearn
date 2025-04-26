@@ -2683,6 +2683,16 @@ class PlaylistListVM extends ChangeNotifier {
       targetDir: targetDirectoryPath,
     );
 
+    if (savedZipFilePathName.isEmpty) {
+      // The case if the target directory does not exist or is invalid.
+      // In this situation, a warning message is displayed instead of
+      // confirmation message.
+      _warningMessageVM.confirmSavingToZip(
+          zipFilePathName: savedZipFilePathName, savedPictureNumber: 0);
+
+      return savedZipFilePathName;
+    }
+
     // Saving the picture jpg files to the 'pictures' directory
     // located in the target directory where the zip file is saved.
     int savedPictureNumber = _pictureVM.savePictureJpgFilesToTargetDirectory(
