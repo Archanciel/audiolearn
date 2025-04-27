@@ -23,6 +23,7 @@ import 'audio_info_dialog.dart';
 import 'audio_modification_dialog.dart';
 import 'comment_list_add_dialog.dart';
 import 'playlist_one_selectable_dialog.dart';
+import 'set_value_to_target_dialog.dart';
 
 enum AppBarPopupMenu {
   openSettingsDialog,
@@ -118,7 +119,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
         );
 
         // Why is the obtained audio the audio of the Jésus-Christ playlist ?
-        // When clicking on local playlist 'Cette soeur ...', why is the 
+        // When clicking on local playlist 'Cette soeur ...', why is the
         // audioPlayerVMlistenFalse.currentAudio! not updated ??
         Audio audio = audioPlayerVMlistenFalse.currentAudio!;
 
@@ -735,10 +736,44 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             );
             break;
           case AppBarPopupMenu.restorePlaylistAndCommentsFromZip:
-            await UiUtil.restorePlaylistsCommentsAndAppSettingsFromZip(
+            void validateEnteredValueFunction() {}
+
+            showDialog<List<String>>(
+              barrierDismissible:
+                  false, // Prevents the dialog from closing when tapping outside.
               context: context,
-              doReplaceExistingPlaylists: false,
-            );
+              builder: (BuildContext context) {
+                return SetValueToTargetDialog(
+                  dialogTitle: AppLocalizations.of(context)!
+                      .playlistRestorationDialogTitle,
+                  dialogCommentStr:
+                      AppLocalizations.of(context)!.playlistRestorationExplanation,
+                  targetNamesLst: [
+                    AppLocalizations.of(context)!.replaceExistingPlaylists,
+                  ],
+                  validationFunction: validateEnteredValueFunction,
+                  validationFunctionArgs: [],
+                  canUniqueCheckBoxBeUnchecked: true,
+                );
+              },
+            ).then((resultStringLst) async {
+              if (resultStringLst == null) {
+                // The case if the Cancel button was pressed.
+                return;
+              }
+
+              bool doReplaceExistingPlaylists = false;
+
+              if (resultStringLst.isNotEmpty) {
+                // The case when the audio quality is set to audio.
+                doReplaceExistingPlaylists = true;
+              }
+
+              await UiUtil.restorePlaylistsCommentsAndAppSettingsFromZip(
+                context: context,
+                doReplaceExistingPlaylists: doReplaceExistingPlaylists,
+              );
+            });
             break;
         }
       },

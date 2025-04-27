@@ -928,5 +928,8 @@
   "noOperationMovedOperationType": "moved",
   "noOperationCopiedOperationType": "copied",
   "savedPictureNumberMessage": "\n\nSaved also {pictureNumber} picture jpg file(s) in same directory.",
-  "restoredPictureNumberMessage": "\n\nRestored also {pictureNumber} picture jpg file(s)."
+  "restoredPictureNumberMessage": "\n\nRestored also {pictureNumber} picture jpg file(s).",
+  "replaceExistingPlaylists": "Replace existing playlists",
+  "playlistRestorationDialogTitle": "Playlists Restoration",
+  "playlistRestorationExplanation": "In situation where existing playlists have been modified (audio's, comments or pictures addition) in comparison with the corresponding playlists contained in the restoring zip file, it makes sence to avoid setting the checkbox to true !"
 }

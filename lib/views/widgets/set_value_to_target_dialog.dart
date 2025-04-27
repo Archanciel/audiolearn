@@ -36,6 +36,7 @@ class SetValueToTargetDialog extends StatefulWidget {
       validationFunction; // The action to execute to validate the entered value
   final List<dynamic>
       validationFunctionArgs; // Arguments for the validation function
+  final bool canUniqueCheckBoxBeUnchecked ;
 
   /// If the [passedValueFieldLabel] and the [passedValueStr] are not passed and so
   /// remains both empty, the dialog will not display the passed value field.
@@ -60,6 +61,7 @@ class SetValueToTargetDialog extends StatefulWidget {
     this.isTargetExclusive = true,
     this.checkboxIndexSetToTrue = -1,
     this.isPassedValueEditable = true,
+    this.canUniqueCheckBoxBeUnchecked = false,
   });
 
   @override
@@ -117,7 +119,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
               event.logicalKey == LogicalKeyboardKey.numpadEnter) {
             List<String> resultLst = _createResultList();
 
-            if (resultLst.isEmpty) {
+            if (resultLst.isEmpty && !widget.canUniqueCheckBoxBeUnchecked) {
               return;
             }
 
@@ -170,7 +172,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
             onPressed: () {
               List<String> resultLst = _createResultList();
 
-              if (resultLst.isEmpty) {
+              if (resultLst.isEmpty && !widget.canUniqueCheckBoxBeUnchecked) {
                 return;
               }
 
