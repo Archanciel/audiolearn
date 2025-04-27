@@ -1904,10 +1904,24 @@ class MockAppLocalizations extends AppLocalizations {
   String get noOperationCopiedOperationType => "copied";
 
   @override
-  String savedPictureNumberMessage(Object pictureNumber,) =>
+  String savedPictureNumberMessage(
+    Object pictureNumber,
+  ) =>
       "Saved also $pictureNumber picture jpg file(s) in same directory.";
 
   @override
-  String restoredPictureNumberMessage(Object pictureNumber,) =>
+  String restoredPictureNumberMessage(
+    Object pictureNumber,
+  ) =>
       "Restored also $pictureNumber picture jpg file(s).";
+
+  @override
+  String get replaceExistingPlaylists => "Replace existing playlists";
+
+  @override
+  String get playlistRestorationDialogTitle => "Playlists Restoration";
+
+  @override
+  String get playlistRestorationExplanation =>
+      "In situation where existing playlists have been modified in comparison of the corresponding playlists contained in the restoring zip file, it makes sence to avoid setting the checkbox to true !";
 }
