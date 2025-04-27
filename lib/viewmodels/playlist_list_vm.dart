@@ -2791,6 +2791,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// unit test.
   Future<String> restorePlaylistsCommentsAndSettingsJsonFilesFromZip({
     required String zipFilePathName,
+    required bool doReplaceExistingPlaylists,
   }) async {
     bool isAnExistingPlaylistSelected = getSelectedPlaylists().isNotEmpty;
 
@@ -2800,6 +2801,7 @@ class PlaylistListVM extends ChangeNotifier {
     // of restored comments.
     List<dynamic> restoredInfoLst = await _restoreFilesFromZip(
       zipFilePathName: zipFilePathName,
+      doReplaceExistingPlaylists: doReplaceExistingPlaylists,
     );
 
     // Saving the picture jpg files to the 'pictures' directory
@@ -2940,6 +2942,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// of restored comments.
   Future<List<dynamic>> _restoreFilesFromZip({
     required String zipFilePathName,
+    required bool doReplaceExistingPlaylists,
   }) async {
     List<dynamic> restoredInfoLst = [];
     List<String> restoredPlaylistTitlesLst = [];
@@ -2989,6 +2992,16 @@ class PlaylistListVM extends ChangeNotifier {
       final String destinationPathFileName = path.normalize(
         path.join(applicationPath, sanitizedArchiveFileName),
       );
+
+      if (!doReplaceExistingPlaylists && 
+          !destinationPathFileName.contains(kSettingsFileName)) {
+        // Check if the file already exists in the destination path.
+        final File existingFile = File(destinationPathFileName);
+        if (existingFile.existsSync()) {
+          // Skip the file if it already exists and do not replace it.
+          continue;
+        }
+      }
 
       final Directory destinationDir = Directory(
         path.dirname(destinationPathFileName),

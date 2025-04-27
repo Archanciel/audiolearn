@@ -737,6 +737,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
           case AppBarPopupMenu.restorePlaylistAndCommentsFromZip:
             await UiUtil.restorePlaylistsCommentsAndAppSettingsFromZip(
               context: context,
+              doReplaceExistingPlaylists: false,
             );
             break;
         }
