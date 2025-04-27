@@ -3023,7 +3023,7 @@ void main() {
       );
     });
   });
-  group('Display of audio playable list.', () {
+  group('Displaying the audio playable list.', () {
     testWidgets('All, then only no played or partially played, audio displayed',
         (WidgetTester tester) async {
       const String audioPlayerSelectedPlaylistTitle =
