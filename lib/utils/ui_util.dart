@@ -83,6 +83,7 @@ class UiUtil {
 
   static Future<void> restorePlaylistsCommentsAndAppSettingsFromZip({
     required BuildContext context,
+    required bool doReplaceExistingPlaylists,
   }) async {
     String selectedZipFilePathName = await filePickerSelectZipFilePathName();
 
@@ -95,6 +96,7 @@ class UiUtil {
       listen: false,
     ).restorePlaylistsCommentsAndSettingsJsonFilesFromZip(
       zipFilePathName: selectedZipFilePathName,
+      doReplaceExistingPlaylists: doReplaceExistingPlaylists,
     );
   }
 
