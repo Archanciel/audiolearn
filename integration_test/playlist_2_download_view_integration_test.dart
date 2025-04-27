@@ -3875,10 +3875,8 @@ void main() {
           verifying the displayed target playlists is not filtered by the search
           sentence.''', () {
       testWidgets(
-          '''First, enter the search word 'mo' in the 'Youtube Link or Search' text
-            field. Then click and un-click on the search icon button, select another
-            playlist and select a sort filter item ...''',
-          (WidgetTester tester) async {
+          '''Verifying the displayed target playlists is not filtered by the search
+            sentence.''', (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'copy_move_audio_integr_test_data',
@@ -3981,55 +3979,23 @@ void main() {
           audioTitlesOrderedLst: audioTitles,
         );
 
-        // Now we want to tap the popup menu of the Audio ListTile
-        // "audio learn test short video two"
+        // Verify that the target playlist list is not filtered
+        // by the search sentence after tapping on the audio
+        // item  move menu
 
-        const String movedAudioTitle = "audio learn test short video two";
-
-        // First, find the Audio sublist ListTile Text widget
-        final Finder sourceAudioListTileTextWidgetFinder =
-            find.text(movedAudioTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        final Finder sourceAudioListTileWidgetFinder = find.ancestor(
-          of: sourceAudioListTileTextWidgetFinder,
-          matching: find.byType(ListTile),
+        await _verifyTargetListTitles(
+          tester: tester,
+          moveOrCopyMenuKeyStr: 'popup_menu_move_audio_to_playlist',
         );
-
-        // Now find the leading menu icon button of the Audio ListTile and tap
-        // on it
-        final Finder sourceAudioListTileLeadingMenuIconButton = find.descendant(
-          of: sourceAudioListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(sourceAudioListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        final Finder popupMoveMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_playlist"));
-
-        await tester.tap(popupMoveMenuItem);
-        await tester.pumpAndSettle();
 
         // Verify that the target playlist list is not filtered
-        // by the search sentence
+        // by the search sentence after tapping on the audio
+        // item copy menu
 
-        // Find the ListView by its key
-        final listView = find.byKey(const Key('selectable_playlist_list'));
-        expect(listView, findsOneWidget);
-
-        // Verify the playlist titles are displayed
-        expect(find.text('local_3'), findsOneWidget);
-        expect(find.text('local_audio_playlist_2'), findsOneWidget);
-        expect(find.text('local_two'), findsOneWidget);
-
-        // Now find the confirm button and tap on it
-        await tester.tap(find.byKey(const Key('cancelButton')));
-        await tester.pumpAndSettle();
+        await _verifyTargetListTitles(
+          tester: tester,
+          moveOrCopyMenuKeyStr: 'popup_menu_copy_audio_to_playlist',
+        );
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
@@ -14156,6 +14122,62 @@ void main() {
       );
     });
   });
+}
+
+Future<void> _verifyTargetListTitles({
+  required WidgetTester tester,
+  required String moveOrCopyMenuKeyStr,
+}) async {
+  // Now we want to tap the popup menu of the Audio ListTile
+  // "audio learn test short video two"
+
+  const String movedAudioTitle = "audio learn test short video two";
+
+  // First, find the Audio sublist ListTile Text widget
+  final Finder sourceAudioListTileTextWidgetFinder = find.text(movedAudioTitle);
+
+  // Then obtain the Audio ListTile widget enclosing the Text widget by
+  // finding its ancestor
+  final Finder sourceAudioListTileWidgetFinder = find.ancestor(
+    of: sourceAudioListTileTextWidgetFinder,
+    matching: find.byType(ListTile),
+  );
+
+  // Now find the leading menu icon button of the Audio ListTile and tap
+  // on it
+  final Finder sourceAudioListTileLeadingMenuIconButton = find.descendant(
+    of: sourceAudioListTileWidgetFinder,
+    matching: find.byIcon(Icons.menu),
+  );
+
+  // Tap the leading menu icon button to open the popup menu
+  await tester.tap(sourceAudioListTileLeadingMenuIconButton);
+  await tester.pumpAndSettle();
+
+  // Now find the move or copy audio popup menu item and tap on it
+  final Finder popupMoveMenuItem = find.byKey(Key(moveOrCopyMenuKeyStr));
+
+  await tester.tap(popupMoveMenuItem);
+  await tester.pumpAndSettle();
+
+  // Verify that the target playlist list is not filtered
+  // by the search sentence
+
+  final playlistTitles = IntegrationTestUtil.getPlaylistTitlesFromDialog(
+    tester: tester,
+  );
+
+  expect(
+      playlistTitles,
+      equals([
+        'local_3',
+        'local_audio_playlist_2',
+        'local_two',
+      ]));
+
+  // Now find the confirm button and tap on it
+  await tester.tap(find.byKey(const Key('cancelButton')));
+  await tester.pumpAndSettle();
 }
 
 Future<void> _selectAndApplySortFilterParms({

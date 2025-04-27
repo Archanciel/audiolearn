@@ -2607,4 +2607,16 @@ class IntegrationTestUtil {
       );
     }
   }
+
+  static List<String> getPlaylistTitlesFromDialog({
+    required WidgetTester tester,
+  }) {
+    final Iterable<RadioListTile<Playlist>> radioListTiles = tester.widgetList<RadioListTile<Playlist>>(
+        find.byType(RadioListTile<Playlist>));
+
+    return radioListTiles.map((tile) {
+      final Text titleText = tile.title as Text;
+      return titleText.data!;
+    }).toList();
+  }
 }
