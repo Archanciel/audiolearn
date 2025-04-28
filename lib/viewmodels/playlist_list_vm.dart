@@ -244,7 +244,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// in the method _mergeRestoredFromZipSettingsWithCurrentAppSettings().
   void updateSettingsAndPlaylistJsonFiles({
     bool unselectAddedPlaylist = true,
-    bool updatePlaylistPlayableAudioList = true,
+    required bool updatePlaylistPlayableAudioList,
     bool restoringPlaylistsCommentsAndSettingsJsonFilesFromZip = false,
   }) {
     _audioDownloadVM.updatePlaylistJsonFiles(
@@ -3118,6 +3118,7 @@ class PlaylistListVM extends ChangeNotifier {
     // Since the playlists root path was changed, the playlists managed
     // by the application must be updated
     updateSettingsAndPlaylistJsonFiles(
+      updatePlaylistPlayableAudioList: false,
       unselectAddedPlaylist: false,
     );
 
