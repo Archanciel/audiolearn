@@ -725,10 +725,46 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             );
             break;
           case AppBarPopupMenu.updatePlaylistJson:
-            Provider.of<PlaylistListVM>(
-              context,
-              listen: false,
-            ).updateSettingsAndPlaylistJsonFiles();
+            void validateEnteredValueFunction() {}
+
+            showDialog<List<String>>(
+              barrierDismissible:
+                  false, // Prevents the dialog from closing when tapping outside.
+              context: context,
+              builder: (BuildContext context) {
+                return SetValueToTargetDialog(
+                  dialogTitle: AppLocalizations.of(context)!
+                      .playlistJsonFilesUpdateDialogTitle,
+                  dialogCommentStr: AppLocalizations.of(context)!
+                      .playlistJsonFilesUpdateExplanation,
+                  targetNamesLst: [
+                    AppLocalizations.of(context)!.removeDeletedAudioFiles,
+                  ],
+                  validationFunction: validateEnteredValueFunction,
+                  validationFunctionArgs: [],
+                  canUniqueCheckBoxBeUnchecked: true,
+                );
+              },
+            ).then((resultStringLst) async {
+              if (resultStringLst == null) {
+                // The case if the Cancel button was pressed.
+                return;
+              }
+
+              bool removeFromPlayableAudioDeletedAudioFiles = false;
+
+              if (resultStringLst.isNotEmpty) {
+                // The case when the audio quality is set to audio.
+                removeFromPlayableAudioDeletedAudioFiles = true;
+              }
+
+              Provider.of<PlaylistListVM>(
+                context,
+                listen: false,
+              ).updateSettingsAndPlaylistJsonFiles(
+                updatePlaylistPlayableAudioList: removeFromPlayableAudioDeletedAudioFiles,
+              );
+            });
             break;
           case AppBarPopupMenu.savePlaylistAndCommentsToZip:
             await UiUtil.savePlaylistsCommentsAndAppSettingsToZip(
@@ -746,8 +782,8 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 return SetValueToTargetDialog(
                   dialogTitle: AppLocalizations.of(context)!
                       .playlistRestorationDialogTitle,
-                  dialogCommentStr:
-                      AppLocalizations.of(context)!.playlistRestorationExplanation,
+                  dialogCommentStr: AppLocalizations.of(context)!
+                      .playlistRestorationExplanation,
                   targetNamesLst: [
                     AppLocalizations.of(context)!.replaceExistingPlaylists,
                   ],

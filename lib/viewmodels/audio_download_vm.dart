@@ -1995,7 +1995,7 @@ class AudioDownloadVM extends ChangeNotifier {
   /// to true.
   void updatePlaylistJsonFiles({
     bool unselectAddedPlaylist = true,
-    bool updatePlaylistPlayableAudioList = true,
+    required updatePlaylistPlayableAudioList,
     bool restoringPlaylistsCommentsAndSettingsJsonFilesFromZip = false,
   }) {
     List<Playlist> initialListOfPlaylistCopy = [];

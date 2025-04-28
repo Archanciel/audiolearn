@@ -1924,4 +1924,13 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get playlistRestorationExplanation =>
       "In situation where existing playlists have been modified in comparison of the corresponding playlists contained in the restoring zip file, it makes sence to avoid setting the checkbox to true !";
+
+  @override
+  String get playlistJsonFilesUpdateDialogTitle => "Playlist Json Files Update";
+
+  @override
+  String get playlistJsonFilesUpdateExplanation => "In the situation where you restored a zip file and then you manually added a playlist, if you execute "Update Playlist JSON Files" in order to render the added playlist accessible in the application, then the restored audio which were not redownloaded will be removed from the playlist playable audio list and so won't be displayed in the audio list. In consequence, they won't be redownloadable ! To avoid that, the "Remove deleted audio files" checkbox must remain unchecked.";
+
+  @override
+  String get removeDeletedAudioFiles => "Remove deleted audio files";
 }

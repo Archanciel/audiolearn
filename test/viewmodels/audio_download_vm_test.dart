@@ -115,7 +115,9 @@ void main() {
     });
   });
   group('Update playlist json file', () {
-    test('Check that playlist download path is correctly updated', () async {
+    test(
+        '''Update playlist playable audio list. Check that playlist download path is correctly
+           updated.''', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -131,22 +133,22 @@ void main() {
 
       const String playListOneName = "audio_learn_test_download_2_small_videos";
 
-      // Load Playlist from the file
-      Playlist loadedPlaylistOne = loadPlaylist(playListOneName);
+      // Load first playlist from its json file
+      Playlist loadedPlaylistOne = _loadPlaylist(playListOneName);
       expect(loadedPlaylistOne.downloadPath,
           "C:\\development\\flutter\\audiolearn\\test\\data\\previous_audio\\playlist_downloaded\\audio_learn_test_download_2_small_videos");
 
       const String playListTwoName = "audio_player_view_2_shorts_test";
 
-      // Load Playlist from the file
-      Playlist loadedPlaylistTwo = loadPlaylist(playListTwoName);
+      // Load second playlist from its json file
+      Playlist loadedPlaylistTwo = _loadPlaylist(playListTwoName);
       expect(loadedPlaylistTwo.downloadPath,
           "C:\\development\\flutter\\audiolearn\\test\\data\\other_audio\\playlist_downloaded\\audio_player_view_2_shorts_test");
 
       const String playListThreeName = "local_3";
 
-      // Load Playlist from the file
-      Playlist loadedPlaylistThree = loadPlaylist(playListThreeName);
+      // Load third playlist from its json file
+      Playlist loadedPlaylistThree = _loadPlaylist(playListThreeName);
       expect(loadedPlaylistThree.downloadPath,
           "C:\\development\\flutter\\audiolearn\\test\\data\\previous_audio\\playlist_downloaded\\local_3");
 
@@ -155,7 +157,7 @@ void main() {
         sharedPreferences: MockSharedPreferences(),
       );
 
-      // necessary, otherwise audioDownloadVM won't be able to load
+      // Necessary, otherwise audioDownloadVM won't be able to load
       // the existing playlists and the test will fail
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
@@ -166,27 +168,164 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      // Update the playlist json files
-      audioDownloadVM.loadExistingPlaylists();
-      audioDownloadVM.updatePlaylistJsonFiles();
+      // Delete the first audio file from the first playlist
+      String audioFilePathName = "$kPlaylistDownloadRootPathWindowsTest${path.separator}$playListOneName${path.separator}${loadedPlaylistOne.downloadedAudioLst[0].audioFileName}";
+      
+      loadedPlaylistOne.downloadedAudioLst[0]
+          .filePathName;
+      DirUtil.deleteFileIfExist(pathFileName: audioFilePathName);
 
-      // reLoad Playlist from the file and check that the
-      // download path was updated correctly
-      loadedPlaylistOne = loadPlaylist(playListOneName);
+      // Delete the second audio file from the second playlist
+      audioFilePathName = audioFilePathName = "$kPlaylistDownloadRootPathWindowsTest${path.separator}$playListTwoName${path.separator}${loadedPlaylistTwo.downloadedAudioLst[1].audioFileName}";
+      DirUtil.deleteFileIfExist(pathFileName: audioFilePathName);
+
+      // Update the playlist json files with updating the playable
+      // audio list
+      audioDownloadVM.loadExistingPlaylists();
+      audioDownloadVM.updatePlaylistJsonFiles(
+        updatePlaylistPlayableAudioList: true,
+      );
+
+      // Reload the first playlist from its json file and check that
+      // the download path was updated correctly
+      loadedPlaylistOne = _loadPlaylist(playListOneName);
       expect(loadedPlaylistOne.downloadPath,
           "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\audio_learn_test_download_2_small_videos");
 
-      // reLoad Playlist from the file and check that the
+      // Reload the second playlist from its json file and check that
       // download path was updated correctly
-      loadedPlaylistTwo = loadPlaylist(playListTwoName);
+      loadedPlaylistTwo = _loadPlaylist(playListTwoName);
       expect(loadedPlaylistTwo.downloadPath,
           "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\audio_player_view_2_shorts_test");
 
-      // reLoad Playlist from the file and check that the
+      // Reload the third playlist from its json file and check that
       // download path was updated correctly
-      loadedPlaylistThree = loadPlaylist(playListThreeName);
+      loadedPlaylistThree = _loadPlaylist(playListThreeName);
       expect(loadedPlaylistThree.downloadPath,
           "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\local_3");
+
+      // Check that the first playlist has only one playable audio
+      // and that the second playlist has only one playable audio
+      expect(loadedPlaylistOne.playableAudioLst.length, 1);
+      expect(loadedPlaylistTwo.playableAudioLst.length, 1);
+
+      // Check that the playable audio list content of the first and
+      // the second playlist
+      expect(loadedPlaylistOne.playableAudioLst[0].validVideoTitle,
+          "audio learn test short video two");
+      expect(loadedPlaylistTwo.playableAudioLst[0].validVideoTitle,
+          "Really short video");
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    test(
+        '''Do not update playlist playable audio list. Check that playlist download path is correctly
+           updated.''', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_download_vm_update_playlists",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      const String playListOneName = "audio_learn_test_download_2_small_videos";
+
+      // Load first playlist from its json file
+      Playlist loadedPlaylistOne = _loadPlaylist(playListOneName);
+      expect(loadedPlaylistOne.downloadPath,
+          "C:\\development\\flutter\\audiolearn\\test\\data\\previous_audio\\playlist_downloaded\\audio_learn_test_download_2_small_videos");
+
+      const String playListTwoName = "audio_player_view_2_shorts_test";
+
+      // Load second playlist from its json file
+      Playlist loadedPlaylistTwo = _loadPlaylist(playListTwoName);
+      expect(loadedPlaylistTwo.downloadPath,
+          "C:\\development\\flutter\\audiolearn\\test\\data\\other_audio\\playlist_downloaded\\audio_player_view_2_shorts_test");
+
+      const String playListThreeName = "local_3";
+
+      // Load third playlist from its json file
+      Playlist loadedPlaylistThree = _loadPlaylist(playListThreeName);
+      expect(loadedPlaylistThree.downloadPath,
+          "C:\\development\\flutter\\audiolearn\\test\\data\\previous_audio\\playlist_downloaded\\local_3");
+
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+      );
+
+      // Necessary, otherwise audioDownloadVM won't be able to load
+      // the existing playlists and the test will fail
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+      );
+
+      // Delete the first audio file from the first playlist
+      String audioFilePathName = "$kPlaylistDownloadRootPathWindowsTest${path.separator}$playListOneName${path.separator}${loadedPlaylistOne.downloadedAudioLst[0].audioFileName}";
+      
+      loadedPlaylistOne.downloadedAudioLst[0]
+          .filePathName;
+      DirUtil.deleteFileIfExist(pathFileName: audioFilePathName);
+
+      // Delete the second audio file from the second playlist
+      audioFilePathName = audioFilePathName = "$kPlaylistDownloadRootPathWindowsTest${path.separator}$playListTwoName${path.separator}${loadedPlaylistTwo.downloadedAudioLst[1].audioFileName}";
+      DirUtil.deleteFileIfExist(pathFileName: audioFilePathName);
+
+      // Do notpdate the playlist json files with updating the playable
+      // audio list
+      audioDownloadVM.loadExistingPlaylists();
+      audioDownloadVM.updatePlaylistJsonFiles(
+        updatePlaylistPlayableAudioList: false,
+      );
+
+      // Reload the first playlist from its json file and check that
+      // the download path was updated correctly
+      loadedPlaylistOne = _loadPlaylist(playListOneName);
+      expect(loadedPlaylistOne.downloadPath,
+          "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\audio_learn_test_download_2_small_videos");
+
+      // Reload the second playlist from its json file and check that
+      // download path was updated correctly
+      loadedPlaylistTwo = _loadPlaylist(playListTwoName);
+      expect(loadedPlaylistTwo.downloadPath,
+          "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\audio_player_view_2_shorts_test");
+
+      // Reload the third playlist from its json file and check that
+      // download path was updated correctly
+      loadedPlaylistThree = _loadPlaylist(playListThreeName);
+      expect(loadedPlaylistThree.downloadPath,
+          "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\local_3");
+
+      // Check that the first playlist has only one playable audio
+      // and that the second playlist has only one playable audio
+      expect(loadedPlaylistOne.playableAudioLst.length, 2);
+      expect(loadedPlaylistTwo.playableAudioLst.length, 2);
+
+      // Check that the playable audio list content of the first and
+      // the second playlist
+      expect(loadedPlaylistOne.playableAudioLst[0].validVideoTitle,
+          "audio learn test short video two");
+      expect(loadedPlaylistOne.playableAudioLst[1].validVideoTitle,
+          "audio learn test short video one");
+      expect(loadedPlaylistTwo.playableAudioLst[0].validVideoTitle,
+          "morning _ cinematic video");
+      expect(loadedPlaylistTwo.playableAudioLst[1].validVideoTitle,
+          "Really short video");
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -246,16 +385,22 @@ void main() {
 
       expect(wasCopied, true);
 
-      expect(audioToCopy.audioFileName == targetPlaylist.downloadedAudioLst[5].audioFileName, true);
+      expect(
+          audioToCopy.audioFileName ==
+              targetPlaylist.downloadedAudioLst[5].audioFileName,
+          true);
       expect(audioToCopy == targetPlaylist.downloadedAudioLst[5], false);
 
-      expect(audioToCopy.audioFileName == targetPlaylist.playableAudioLst[0].audioFileName, true);
+      expect(
+          audioToCopy.audioFileName ==
+              targetPlaylist.playableAudioLst[0].audioFileName,
+          true);
       expect(audioToCopy == targetPlaylist.playableAudioLst[0], false);
 
       // Now verifying source and target playlists data
 
       // Loading playlists from the json file
-      Playlist loadedSourcePlaylist = loadPlaylist(sourcePlaylist.title);
+      Playlist loadedSourcePlaylist = _loadPlaylist(sourcePlaylist.title);
       List<Audio> loadedSourcePlaylistDownloadedAudioLst =
           loadedSourcePlaylist.downloadedAudioLst;
       List<Audio> loadedSourcePlaylistPlayableAudioLst =
@@ -266,7 +411,7 @@ void main() {
           loadedSourcePlaylistPlayableAudioLst[1];
 
       String targetPlaylistTitle = targetPlaylist.title;
-      Playlist loadedTargetPlaylist = loadPlaylist(targetPlaylistTitle);
+      Playlist loadedTargetPlaylist = _loadPlaylist(targetPlaylistTitle);
       List<Audio> downloadedAudioLst = loadedTargetPlaylist.downloadedAudioLst;
       Audio loadedTargetPlaylistCopiedDownloadAudio = downloadedAudioLst[5];
       List<Audio> loadedTargetPlaylistPlayableAudioLst =
@@ -453,13 +598,13 @@ void main() {
       // Now verifying source and target playlists data
 
       // Loading playlists from the json file
-      Playlist loadedSourcePlaylist = loadPlaylist(sourcePlaylist.title);
+      Playlist loadedSourcePlaylist = _loadPlaylist(sourcePlaylist.title);
       List<Audio> loadedSourcePlaylistDownloadedAudioLst =
           loadedSourcePlaylist.downloadedAudioLst;
       Audio loadedSourcePlaylistMovedDownloadedAudio =
           loadedSourcePlaylistDownloadedAudioLst[0];
       String targetPlaylistTitle = targetPlaylist.title;
-      Playlist loadedTargetPlaylist = loadPlaylist(targetPlaylistTitle);
+      Playlist loadedTargetPlaylist = _loadPlaylist(targetPlaylistTitle);
       List<Audio> loadedTargetPlaylistPlayableAudioLst =
           loadedTargetPlaylist.playableAudioLst;
       Audio loadedTargetPlaylistMovedPlayableAudio =
@@ -566,11 +711,11 @@ void main() {
       // Now verifying source and target playlists data
 
       // Loading playlists from the json file
-      Playlist loadedSourcePlaylist = loadPlaylist(sourcePlaylist.title);
+      Playlist loadedSourcePlaylist = _loadPlaylist(sourcePlaylist.title);
       List<Audio> loadedSourcePlaylistDownloadedAudioLst =
           loadedSourcePlaylist.downloadedAudioLst;
       String targetPlaylistTitle = targetPlaylist.title;
-      Playlist loadedTargetPlaylist = loadPlaylist(targetPlaylistTitle);
+      Playlist loadedTargetPlaylist = _loadPlaylist(targetPlaylistTitle);
       List<Audio> loadedTargetPlaylistPlayableAudioLst =
           loadedTargetPlaylist.playableAudioLst;
       Audio loadedTargetPlaylistMovedPlayableAudio =
@@ -659,13 +804,13 @@ void main() {
       // Now verifying source and target playlists data
 
       // Loading playlists from the json file
-      Playlist loadedSourcePlaylist = loadPlaylist(sourcePlaylist.title);
+      Playlist loadedSourcePlaylist = _loadPlaylist(sourcePlaylist.title);
       List<Audio> loadedSourcePlaylistDownloadedAudioLst =
           loadedSourcePlaylist.downloadedAudioLst;
       Audio loadedSourcePlaylistMovedDownloadedAudio =
           loadedSourcePlaylistDownloadedAudioLst[0];
       String targetPlaylistTitle = targetPlaylist.title;
-      Playlist loadedTargetPlaylist = loadPlaylist(targetPlaylistTitle);
+      Playlist loadedTargetPlaylist = _loadPlaylist(targetPlaylistTitle);
       List<Audio> loadedTargetPlaylistPlayableAudioLst =
           loadedTargetPlaylist.playableAudioLst;
       Audio loadedTargetPlaylistMovedPlayableAudio =
@@ -761,13 +906,13 @@ void main() {
       // Now verifying source and target playlists data
 
       // Loading playlists from the json file
-      Playlist loadedSourcePlaylist = loadPlaylist(sourcePlaylist.title);
+      Playlist loadedSourcePlaylist = _loadPlaylist(sourcePlaylist.title);
       List<Audio> loadedSourcePlaylistDownloadedAudioLst =
           loadedSourcePlaylist.downloadedAudioLst;
       Audio loadedSourcePlaylistMovedDownloadedAudio =
           loadedSourcePlaylistDownloadedAudioLst[0];
       String targetPlaylistTitle = targetPlaylist.title;
-      Playlist loadedTargetPlaylist = loadPlaylist(targetPlaylistTitle);
+      Playlist loadedTargetPlaylist = _loadPlaylist(targetPlaylistTitle);
       List<Audio> loadedTargetPlaylistPlayableAudioLst =
           loadedTargetPlaylist.playableAudioLst;
       Audio loadedTargetPlaylistMovedPlayableAudio =
@@ -858,7 +1003,7 @@ void main() {
       expect(File(renamedAudioFilePath).existsSync(), true);
 
       // Load Playlist from the file
-      Playlist loadedPlaylist = loadPlaylist(playListName);
+      Playlist loadedPlaylist = _loadPlaylist(playListName);
 
       // Verify that the audio file name was changed
       // (playabeAudioLst and downloadedAudioLst contain the
@@ -920,7 +1065,7 @@ void main() {
       expect(File(renamedAudioFilePath).existsSync(), true);
 
       // Load Playlist from the file
-      Playlist loadedPlaylist = loadPlaylist(playListName);
+      Playlist loadedPlaylist = _loadPlaylist(playListName);
 
       // Verify that the audio file name was not changed
       // (playabeAudioLst and downloadedAudioLst contain the
@@ -981,7 +1126,7 @@ void main() {
 
       // Load Playlist from the file
       const String playListName = "audio_player_view_2_shorts_test";
-      Playlist loadedPlaylist = loadPlaylist(playListName);
+      Playlist loadedPlaylist = _loadPlaylist(playListName);
 
       // Verify that the audio title was changed in the playable
       // audio list only (playabeAudioLst and downloadedAudioLst
@@ -1039,7 +1184,7 @@ void main() {
       // Load Playlist from the json file. The play speed of this playlist is
       // defined.
       const String targetPlayListName = "Empty";
-      Playlist targetPlaylistEmpty = loadPlaylist(targetPlayListName);
+      Playlist targetPlaylistEmpty = _loadPlaylist(targetPlayListName);
 
       expect(targetPlaylistEmpty.downloadedAudioLst.length, 0);
       expect(targetPlaylistEmpty.playableAudioLst.length, 0);
@@ -1175,7 +1320,7 @@ void main() {
       // Load Playlist from the json file. The play speed of this playlist is
       // not defined.
       const String targetPlayListName = "S8 audio";
-      Playlist targetPlaylistEmpty = loadPlaylist(targetPlayListName);
+      Playlist targetPlaylistEmpty = _loadPlaylist(targetPlayListName);
 
       expect(targetPlaylistEmpty.downloadedAudioLst.length, 10);
       expect(targetPlaylistEmpty.playableAudioLst.length, 2);
@@ -1307,7 +1452,7 @@ void main() {
 
       // Load Playlist from the json file
       const String targerPlayListName = "Empty";
-      Playlist targetPlaylistEmpty = loadPlaylist(targerPlayListName);
+      Playlist targetPlaylistEmpty = _loadPlaylist(targerPlayListName);
 
       expect(targetPlaylistEmpty.downloadedAudioLst.length, 0);
       expect(targetPlaylistEmpty.playableAudioLst.length, 0);
@@ -1412,7 +1557,7 @@ void main() {
 
       // Load Playlist from the json file
       const String targerPlayListName = "Empty";
-      Playlist targetPlaylistEmpty = loadPlaylist(targerPlayListName);
+      Playlist targetPlaylistEmpty = _loadPlaylist(targerPlayListName);
 
       expect(targetPlaylistEmpty.downloadedAudioLst.length, 0);
       expect(targetPlaylistEmpty.playableAudioLst.length, 0);
@@ -1576,7 +1721,7 @@ void main() {
       // Now verifying playlist data
 
       // Loading playlists from the json file
-      Playlist loadedPlaylist = loadPlaylist(playlist.title);
+      Playlist loadedPlaylist = _loadPlaylist(playlist.title);
 
       expect(loadedPlaylist.downloadedAudioLst.length, 18);
       expect(
@@ -1684,7 +1829,7 @@ void main() {
       // Now verifying playlist data
 
       // Loading playlists from the json file
-      Playlist loadedPlaylist = loadPlaylist(playlist.title);
+      Playlist loadedPlaylist = _loadPlaylist(playlist.title);
 
       expect(loadedPlaylist.downloadedAudioLst.length, 17);
       expect(
@@ -1841,7 +1986,7 @@ void main() {
       // Now verifying playlist data
 
       // Loading playlists from the json file
-      Playlist loadedPlaylist = loadPlaylist(playlist.title);
+      Playlist loadedPlaylist = _loadPlaylist(playlist.title);
 
       expect(loadedPlaylist.downloadedAudioLst.length, 18);
 
@@ -2016,7 +2161,7 @@ void main() {
       // Now verifying playlist data
 
       // Loading playlists from the json file
-      Playlist loadedPlaylist = loadPlaylist(playlist.title);
+      Playlist loadedPlaylist = _loadPlaylist(playlist.title);
 
       expect(loadedPlaylist.downloadedAudioLst.length, 15);
 
@@ -2133,7 +2278,7 @@ void _verifyImportedFilesPresence({
         "$targetPlaylistDownloadPath${path.separator}$importedFileName";
 
     // Reloadoad Playlist from the file
-    targetPlaylist = loadPlaylist(targetPlaylist.title);
+    targetPlaylist = _loadPlaylist(targetPlaylist.title);
 
     // Verify that the imported file physically exists in the target
     // playlist directory
@@ -2168,9 +2313,9 @@ void _verifyImportedFilesPresence({
   );
 }
 
-Playlist loadPlaylist(String playListOneName) {
+Playlist _loadPlaylist(String playListName) {
   return JsonDataService.loadFromFile(
       jsonPathFileName:
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$playListOneName${path.separator}$playListOneName.json",
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$playListName${path.separator}$playListName.json",
       type: Playlist);
 }
