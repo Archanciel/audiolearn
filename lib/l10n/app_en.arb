@@ -403,7 +403,7 @@
   "saveSortFilterOptionsToPlaylist": "To playlist \"{title}\"",
   "saveButton": "Save",
   "errorInPlaylistJsonFile": "File \"{filePathName}\" contains an invalid data definition. Try finding the problem in order to correct it before executing again the operation.",
-  "updatePlaylistJsonFilesMenuTooltip": "If one or several playlist directories containing or not audio's were manually added or deleted in the application data root directory or if audio's were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files as well as the application settings JSON file in order to reflect the changes in the application screens. Playlist directories located on PC can be copied in the application data root directory ...",
+  "updatePlaylistJsonFilesMenuTooltip": "If one or several playlist directories containing or not audio's were manually added or deleted in the application directory containing the playlists or if audio's were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files as well as the JSON file containing the application settings in order to reflect the changes in the application screens. Playlist directories located on PC can as well be copied in the application directory containing the playlists ...",
   "updatePlaylistPlayableAudioListTooltip": "If audio's were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files to reflect the changes in the application screens.",
   "audioPlayedInThisOrderTooltip": "Audio are played in this order. By default, the last downloaded audio's are at bottom of the list.",
   "playableAudioDialogSortDescriptionTooltipBottomDownloadBefore": "Audio at bottom were downloaded before those at top.",
@@ -934,5 +934,8 @@
   "playlistRestorationExplanation": "Important: if you've made changes to your existing playlists (added audio files, comments, or pictures) since creating the backup ZIP, keep this checkbox UNCHECKED. Otherwise, your recent modifications could be overwritten by the older versions of the backup.",
   "playlistJsonFilesUpdateDialogTitle": "Playlist JSON Files Update",
   "playlistJsonFilesUpdateExplanation": "Important: if you've restored from a ZIP backup AND manually added playlists afterward, please use caution when updating. When you run \"Update Playlist JSON Files\", any restored audio files that haven't been redownloaded will disappear from your playlists. To preserve these files and conserve the possibility of redownloading them, make sure the \"Remove deleted audio files\" checkbox remains UNCHECKED before updating.",
-  "removeDeletedAudioFiles": "Remove deleted audio files"
+  "removeDeletedAudioFiles": "Remove deleted audio files",
+  "updatePlaylistJsonFilesHelpTitle": "Update Playlist JSON Files function",
+  "updatePlaylistJsonFilesHelpContent": "Important note: This function is only necessary for changes made OUTSIDE the application. Changes made directly within the application (adding/removing playlists, adding/importing/deleting audio files) are automatically processed and do not require using this update function.",
+  "updatePlaylistJsonFilesFirstHelpTitle": "Using the Update Playlist JSON Files function"
 }

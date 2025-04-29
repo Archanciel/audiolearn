@@ -6,6 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/audio.dart';
+import '../../models/help_item.dart';
 import '../../models/playlist.dart';
 import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/picture_vm.dart';
@@ -726,6 +727,22 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             break;
           case AppBarPopupMenu.updatePlaylistJson:
             void validateEnteredValueFunction() {}
+            final List<HelpItem> updatePlaylistsHelpItemsLst = [
+              HelpItem(
+                helpTitle: AppLocalizations.of(context)!
+                    .updatePlaylistJsonFilesHelpTitle,
+                helpContent: AppLocalizations.of(context)!
+                    .updatePlaylistJsonFilesHelpContent,
+                displayHelpItemNumber: false,
+              ),
+              HelpItem(
+                helpTitle: AppLocalizations.of(context)!
+                    .updatePlaylistJsonFilesFirstHelpTitle,
+                helpContent: AppLocalizations.of(context)!
+                    .updatePlaylistJsonFilesMenuTooltip,
+                displayHelpItemNumber: true,
+              ),
+            ];
 
             showDialog<List<String>>(
               barrierDismissible:
@@ -743,6 +760,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   validationFunction: validateEnteredValueFunction,
                   validationFunctionArgs: [],
                   canUniqueCheckBoxBeUnchecked: true,
+                  helpItemsLst: updatePlaylistsHelpItemsLst,
                 );
               },
             ).then((resultStringLst) async {
@@ -762,7 +780,8 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 context,
                 listen: false,
               ).updateSettingsAndPlaylistJsonFiles(
-                updatePlaylistPlayableAudioList: removeFromPlayableAudioDeletedAudioFiles,
+                updatePlaylistPlayableAudioList:
+                    removeFromPlayableAudioDeletedAudioFiles,
               );
             });
             break;
@@ -773,6 +792,22 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             break;
           case AppBarPopupMenu.restorePlaylistAndCommentsFromZip:
             void validateEnteredValueFunction() {}
+            final List<HelpItem> restorePlaylistsHelpItemsLst = [
+              // HelpItem(
+              //   helpTitle: AppLocalizations.of(context)!
+              //       .commentedAudioDeletionHelpTitle,
+              //   helpContent: AppLocalizations.of(context)!
+              //       .commentedAudioDeletionHelpContent,
+              //   displayHelpItemNumber: false,
+              // ),
+              // HelpItem(
+              //   helpTitle: AppLocalizations.of(context)!
+              //       .commentedAudioDeletionSolutionHelpTitle,
+              //   helpContent: AppLocalizations.of(context)!
+              //       .commentedAudioDeletionSolutionHelpContent,
+              //   displayHelpItemNumber: true,
+              // ),
+            ];
 
             showDialog<List<String>>(
               barrierDismissible:
@@ -790,6 +825,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   validationFunction: validateEnteredValueFunction,
                   validationFunctionArgs: [],
                   canUniqueCheckBoxBeUnchecked: true,
+                  helpItemsLst: restorePlaylistsHelpItemsLst,
                 );
               },
             ).then((resultStringLst) async {
