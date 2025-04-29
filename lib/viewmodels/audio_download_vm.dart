@@ -335,7 +335,8 @@ class AudioDownloadVM extends ChangeNotifier {
     }
   }
 
-  // This method is only called in the situation of restoring from a zip file.
+  // This method is only called in the situation of restoring from
+  // a zip file.
   void _updatePlaylistRootPathIfNecessary({
     required Playlist playlist,
     required bool isPlaylistsRestoredFromAndroidToWindows,
