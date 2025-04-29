@@ -1946,4 +1946,19 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get updatePlaylistJsonFilesHelpContent =>
       "Les actions manuelles d‚crites ci-dessous d‚signent des actions acconplies en-dehors de l'application. En effet, si l'on supprime ou ajoute des playlists en utilisant les fonctionnalit‚ correspondantes de l'application, eh bien l'‚tat de l'application est totalement mis … jour et l'utilisation de la fonction de mise … jour des fichiers playlist JSON n'est pas du tout n‚cessaire. Mˆme remarque pour l'ajout ou la suppression des audio's.";
+
+  @override
+  String get playlistRestorationHelpTitle => "";
+
+  @override
+  String get playlistRestorationHelpContent => "";
+
+  @override
+  String get playlistRestorationFirstHelpTitle => "";
+
+  @override
+  String get playlistRestorationFirstHelpContent => "";
+
+  @override
+  String get playlistRestorationSecondHelpTitle => "";
 }

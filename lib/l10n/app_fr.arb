@@ -193,7 +193,7 @@
       }
     }
   },
-  "downloadAudioFileAlreadyOnAudioDirectory": "L'audio \"{audioValidVideoTitle}\" est contenu dans le fichier \"{fileName}\" se trouvant dans le répertoire de la playlist cible \"{playlistTitle}\" et ne sera donc pas retéléchargé.",
+  "downloadAudioFileAlreadyOnAudioDirectory": "L'audio \"{audioValidVideoTitle}\" est contenu dans le fichier \"{fileName}\" se trouvant dans le répertoire de la playlist cible \"{playlistTitle}\" et ne sera donc pas re-téléchargé.",
   "noInternet": "Pas d'Internet. Connectez votre appareil et rééssayez.",
   "invalidSingleVideoUUrl": "L'URL \"{url}\" censée pointer sur une vidéo unique est invalide. Aucune vidéo n'a donc été téléchargée.",
   "@invalidSingleVideoUUrl": {
@@ -617,7 +617,7 @@
   "downloadVideoUrlsFromTextFileInPlaylistTooltip": "Téléchargez les audio's dans la playlist à partir des URL vidéo répertoriées dans un fichier texte à sélectionner. Le fichier texte doit contenir une URL par ligne.",
   "downloadAudioFromVideoUrlsInPlaylistTitle": "Télécharger les audio's des videos dans la playlist \"{title}\"",
   "downloadAudioFromVideoUrlsInPlaylist": "Téléchargement de {number} audio.",
-  "notRedownloadAudioFilesInPlaylistDirectory": "{number} audio's sont déjà contenus dans le répertoire de la playlist cible \"{playlistTitle}\" et n'ont donc pas été retéléchargés.",
+  "notRedownloadAudioFilesInPlaylistDirectory": "{number} audio's sont déjà contenus dans le répertoire de la playlist cible \"{playlistTitle}\" et n'ont donc pas été re-téléchargés.",
   "clickToSetAscendingOrDescendingPlayingOrderTooltip": "Cliquez pour définir l'ordre de lecture croissant ou décroissant.",
   "removeSortFilterAudiosOptionsFromPlaylistMenu": "Eliminer les paramètres tri/filtre de la playlist ...",
   "removeSortFilterOptionsFromPlaylist": "De la playlist \"{title}\"",
@@ -1141,7 +1141,7 @@
   },
   "appDataCouldNotBeRestoredFromZip": "Les fichiers json des playlists et des commentaires ainsi que les paramètres de l'application n'ont pu être restaurés à partir d'un zip !",
   "deleteFilteredAudioFromPlaylistAsWell": "Supprimer les audio's filtrés de la playlist également ...",
-  "deleteFilteredAudioFromPlaylistAsWellConfirmationTitle": "Supprimer les audio's filtrés par le paramètre \"{sortFilterParmsName}\" de la playlist \"{playlistTitle}\" également (pourront être retéléchargés)",
+  "deleteFilteredAudioFromPlaylistAsWellConfirmationTitle": "Supprimer les audio's filtrés par le paramètre \"{sortFilterParmsName}\" de la playlist \"{playlistTitle}\" également (pourront être re-téléchargés)",
   "@deleteFilteredAudioFromPlaylistAsWellConfirmationTitle": {
     "description": "Confirmation title for deleting filtered audio",
     "placeholders": {
@@ -1154,8 +1154,8 @@
     }
   },
   "redownloadFilteredAudio": "Retélécharger les audio's filtrés",
-  "redownloadFilteredAudioTooltip": "Les audio's filtrés sont retéléchargés sous leurs noms de fichiers d'origine.",
-  "redownloadedAudioNumbersConfirmation": "\"{redownloadedAudioNumber}\" audio's ont été retéléchargés dans la playlist \"{playlistTitle}\". \"{notRedownloadedAudioNumber}\" audio's n'ont pas été retéléchargés du fait qu'ils sont déjà presents dans le répertoire de la playlist.",
+  "redownloadFilteredAudioTooltip": "Les audio's filtrés sont re-téléchargés sous leurs noms de fichiers d'origine.",
+  "redownloadedAudioNumbersConfirmation": "\"{redownloadedAudioNumber}\" audio's ont été re-téléchargés dans la playlist \"{playlistTitle}\". \"{notRedownloadedAudioNumber}\" audio's n'ont pas été re-téléchargés du fait qu'ils sont déjà presents dans le répertoire de la playlist.",
   "@redownloadedAudioNumbersConfirmation": {
     "description": "Confirmation title for redownloading filtered audio",
     "placeholders": {
@@ -1171,7 +1171,7 @@
     }
   },
   "redownloadDeletedAudio": "Retélécharger l'audio supprimé",
-  "redownloadedAudioConfirmation": "L'audio \"{redownloadedAudioTitle}\" a été retéléchargé dans la playlist \"{playlistTitle}\".",
+  "redownloadedAudioConfirmation": "L'audio \"{redownloadedAudioTitle}\" a été re-téléchargé dans la playlist \"{playlistTitle}\".",
   "@redownloadedAudioConfirmation": {
     "description": "Confirmation title for redownloading audio",
     "placeholders": {
@@ -1185,7 +1185,7 @@
   },
   "playable": "Jouable",
   "notPlayable": "Non jouable",
-  "audioNotRedownloadedWarning": "L'audio \"{redownloadedAudioTitle}\" N'A PAS été retéléchargé dans la playlist \"{playlistTitle}\" du fait que le fichier audio est déjà présent dans le répertoire de la playlist.",
+  "audioNotRedownloadedWarning": "L'audio \"{redownloadedAudioTitle}\" N'A PAS été re-téléchargé dans la playlist \"{playlistTitle}\" du fait que le fichier audio est déjà présent dans le répertoire de la playlist.",
   "@audioNotRedownloadedWarning": {
     "description": "Warning title for not redownloading audio",
     "placeholders": {
@@ -1199,7 +1199,7 @@
   },
   "isPlayableLabel": "Jouable",
   "setPlaylistAudioQuality": "Définir la qualité audio ...",
-  "setPlaylistAudioQualityTooltip": "La qualité audio sélectionnée sera appliquée aux prochains fichiers audio téléchargés. Si la qualité audio doit être appliquée aux fichiers audio déjà téléchargés, ces fichiers doivent être supprimés \"de la playlist également\" afin qu'ils puissent être retéléchargés avec la qualité audio modifiée.",
+  "setPlaylistAudioQualityTooltip": "La qualité audio sélectionnée sera appliquée aux prochains fichiers audio téléchargés. Si la qualité audio doit être appliquée aux fichiers audio déjà téléchargés, ces fichiers doivent être supprimés \"de la playlist également\" afin qu'ils puissent être re-téléchargés avec la qualité audio modifiée.",
   "setPlaylistAudioQualityDialogTitle": "Qualité audio de la playlist",
   "selectAudioQuality": "Sélectionnez la qualité audio",
   "audioCopiedOrMovedFromPlaylistToPlaylist": "L'audio \"{audioTitle}\"{yesOrNo}{operationType} de la playlist {fromPlaylistType} \"{fromPlaylistTitle}\" vers la playlist {toPlaylistType} \"{toPlaylistTitle}\"{notCopiedOrMovedReason}",
@@ -1259,8 +1259,13 @@
   "replaceExistingPlaylists": "Remplacer les playlists existantes",
   "playlistRestorationDialogTitle": "Restauration des playlists",
   "playlistRestorationExplanation": "Important: si vous avez apporté des modifications à vos playlists existantes (ajout de fichiers audio, de commentaires ou d'images) depuis la création de la sauvegarde ZIP, gardez cette case DÉCOCHÉE. Sinon, vos modifications récentes pourraient être écrasées par les versions plus anciennes de la sauvegarde.",
+  "playlistRestorationHelpTitle": "Fonction de restauration des playlists",
+  "playlistRestorationHelpContent": "",
+  "playlistRestorationFirstHelpTitle": "Situation particuliaire où après avoir restauré les playlists à partir d'un fichier ZIP, vous avez exécuté la fonction de mise à jour des fichiers playlist JSON en ayant activé la case à cocher \"Effacer les fichiers audio supprimés\". Comme lors de la restauration à partir d'un fichier ZIP les fichiers audio ne sont pas restaurés, en applicant la fonction de mise à jour avec l'effacement des fichiers audio activé, les audio's ne sont plus disponibles dans l'application pour être re-téléchargés.",
+  "playlistRestorationFirstHelpContent": "Pour résoudre ce problème, supprimez les playlists impactées par l'effacement de leurs audio's. Deux moyens de suppression peuvent être utilisés:\n\n1 - Suppression dans l'application\nChaque playlist dispose d'un menu. Son dernier élément \"Supprimer la playlist ...\" permet d'effectuer la suppression.\n\n2 - Suppression manuelle\nSi le nombre de playlists est élevé, il est plus productif de se rendre dans le répertoire de l'application qui contient les playlists, de sélectionner les playlists à effacer et de supprimer le groupe sélectionné.",
+  "playlistRestorationSecondHelpTitle": "Ensuite, appliquez la restauration des playlists SANS COCHER la case.",
   "playlistJsonFilesUpdateDialogTitle": "Mise à jour des fichiers playlist JSON",
-  "playlistJsonFilesUpdateExplanation": "Important: si vous avez restauré une sauvegarde ZIP ET ajouté manuellement des playlists par la suite, soyez prudent lors de la mise à jour. Lorsque vous exécutez \"Mettre à jour les fichiers playlist JSON\", les fichiers audio restaurés qui n'ont pas été retéléchargés disparaîtront de vos playlists. Pour préserver ces fichiers et conserver la possibilité de les retélécharger, assurez-vous que la case à cocher \"Effacer les fichiers audio supprimés\" reste DÉCOCHÉE avant la mise à jour.",
+  "playlistJsonFilesUpdateExplanation": "Important: si vous avez restauré une sauvegarde ZIP ET ajouté manuellement des playlists par la suite, soyez prudent lors de la mise à jour. Lorsque vous exécutez \"Mettre à jour les fichiers playlist JSON\", les fichiers audio restaurés qui n'ont pas été re-téléchargés disparaîtront de vos playlists. Pour préserver ces fichiers et conserver la possibilité de les retélécharger, assurez-vous que la case à cocher \"Effacer les fichiers audio supprimés\" reste DÉCOCHÉE avant la mise à jour.",
   "removeDeletedAudioFiles": "Effacer les fichiers audio supprimés",
   "updatePlaylistJsonFilesHelpTitle": "Fonction de mise à jour des fichiers playlist JSON",
   "updatePlaylistJsonFilesHelpContent": "Note importante: Cette fonction est uniquement nécessaire pour les modifications effectuées HORS application. Les modifications réalisées directement dans l'application (ajout/suppression de playlists, ajout/importation/suppression de fichiers audio) sont automatiquement prises en compte et ne nécessitent pas d'utiliser cette fonction de mise à jour.",
