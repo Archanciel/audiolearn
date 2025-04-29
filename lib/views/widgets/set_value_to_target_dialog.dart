@@ -3,11 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/help_item.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../../views/screen_mixin.dart';
 import '../../constants.dart';
 import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
+import 'help_dialog.dart';
 
 enum InvalidValueState {
   none,
@@ -24,6 +26,7 @@ class SetValueToTargetDialog extends StatefulWidget {
   final String passedValueFieldLabel;
   final String passedValueFieldTooltip;
   final List<String> targetNamesLst;
+  final List<HelpItem> helpItemsLst;
 
   // If isTargetExclusive is true, only one checkbox can be selected.
   // If isTargetExclusive is false, multiple checkboxes can be selected.
@@ -36,18 +39,22 @@ class SetValueToTargetDialog extends StatefulWidget {
       validationFunction; // The action to execute to validate the entered value
   final List<dynamic>
       validationFunctionArgs; // Arguments for the validation function
-  final bool canUniqueCheckBoxBeUnchecked ;
+  final bool canUniqueCheckBoxBeUnchecked;
 
   /// If the [passedValueFieldLabel] and the [passedValueStr] are not passed and so
   /// remains both empty, the dialog will not display the passed value field.
-  /// 
+  ///
   /// The [targetNamesLst] contains the names of the checkboxes that will be displayed.
-  /// 
+  ///
   /// If the [isTargetExclusive] is set to true, only one checkbox can be selected.
   /// If the [isTargetExclusive] is set to false, multiple checkboxes can be selected.
-  /// 
+  ///
   /// In order to pre-select a checkbox, the [checkboxIndexSetToTrue] must be set to the
-  /// index of the checkbox that should be selected. 
+  /// index of the checkbox that should be selected.
+  ///
+  /// If [helpItemsLst] is passed to the dialog constructor, a help icon is
+  /// displayed in the dialog title. Clicking on the help icon opens a dialog
+  /// witch displays the help content contained in the help items.
   const SetValueToTargetDialog({
     super.key,
     required this.dialogTitle,
@@ -62,6 +69,7 @@ class SetValueToTargetDialog extends StatefulWidget {
     this.checkboxIndexSetToTrue = -1,
     this.isPassedValueEditable = true,
     this.canUniqueCheckBoxBeUnchecked = false,
+    this.helpItemsLst = const [],
   });
 
   @override
@@ -117,20 +125,43 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
         if (event is KeyDownEvent) {
           if (event.logicalKey == LogicalKeyboardKey.enter ||
               event.logicalKey == LogicalKeyboardKey.numpadEnter) {
-            List<String> resultLst = _createResultList();
-
-            if (resultLst.isEmpty && !widget.canUniqueCheckBoxBeUnchecked) {
-              return;
-            }
-
-            Navigator.of(context).pop(resultLst);
+            executeFinalOperation(context);
           }
         }
       },
       child: AlertDialog(
-        title: Text(
-          key: const Key('setValueToTargetDialogTitleKey'),
-          widget.dialogTitle,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              child: Text(
+                key: const Key('setValueToTargetDialogTitleKey'),
+                widget.dialogTitle,
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+            ),
+            if (widget.helpItemsLst.isNotEmpty)
+              IconButton(
+                icon: IconTheme(
+                  data: (themeProviderVM.currentTheme == AppTheme.dark
+                          ? ScreenMixin.themeDataDark
+                          : ScreenMixin.themeDataLight)
+                      .iconTheme,
+                  child: const Icon(
+                    Icons.help_outline,
+                    size: 40.0,
+                  ),
+                ),
+                onPressed: () {
+                  showDialog<void>(
+                    context: context,
+                    builder: (context) => HelpDialog(
+                      helpItemsLst: widget.helpItemsLst,
+                    ),
+                  );
+                },
+              ),
+          ],
         ),
         actionsPadding: kDialogActionsPadding,
         content: SingleChildScrollView(
@@ -170,13 +201,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
           TextButton(
             key: const Key('setValueToTargetOkButton'),
             onPressed: () {
-              List<String> resultLst = _createResultList();
-
-              if (resultLst.isEmpty && !widget.canUniqueCheckBoxBeUnchecked) {
-                return;
-              }
-
-              Navigator.of(context).pop(resultLst);
+              executeFinalOperation(context);
             },
             child: Text(
               'Ok',
@@ -202,6 +227,16 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
     );
   }
 
+  void executeFinalOperation(BuildContext context) {
+    List<String> resultLst = _createResultList();
+
+    if (resultLst.isEmpty && !widget.canUniqueCheckBoxBeUnchecked) {
+      return;
+    }
+
+    Navigator.of(context).pop(resultLst);
+  }
+
   /// Validates the entered value and the selected checkboxes and creates
   /// the list of the entered value and the selected checkbox(es).
   List<String> _createResultList() {
@@ -214,7 +249,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
           .map((entry) => entry.key.toString())
           .toList();
     }
-    
+
     String enteredStr = _passedValueTextEditingController.text;
     String minValueLimitStr = widget.validationFunctionArgs[0].toString();
     String maxValueLimitStr = widget.validationFunctionArgs[1].toString();

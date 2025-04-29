@@ -122,8 +122,8 @@ class UiUtil {
   static Future<String> filePickerSelectZipFilePathName() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['zip'],
-      allowMultiple: false,
+      allowedExtensions: ['jpg'],
+      allowMultiple: true,
       withData: false,
       initialDirectory: Platform.isAndroid ? '/storage/emulated/0' : null,
     );
