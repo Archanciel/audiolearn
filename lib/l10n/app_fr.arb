@@ -1153,7 +1153,7 @@
       }
     }
   },
-  "redownloadFilteredAudio": "Retélécharger les audio's filtrés",
+  "redownloadFilteredAudio": "Re-télécharger les audio's filtrés",
   "redownloadFilteredAudioTooltip": "Les audio's filtrés sont re-téléchargés sous leurs noms de fichiers d'origine.",
   "redownloadedAudioNumbersConfirmation": "\"{redownloadedAudioNumber}\" audio's ont été re-téléchargés dans la playlist \"{playlistTitle}\". \"{notRedownloadedAudioNumber}\" audio's n'ont pas été re-téléchargés du fait qu'ils sont déjà presents dans le répertoire de la playlist.",
   "@redownloadedAudioNumbersConfirmation": {
@@ -1170,7 +1170,7 @@
       }
     }
   },
-  "redownloadDeletedAudio": "Retélécharger l'audio supprimé",
+  "redownloadDeletedAudio": "Re-télécharger l'audio supprimé",
   "redownloadedAudioConfirmation": "L'audio \"{redownloadedAudioTitle}\" a été re-téléchargé dans la playlist \"{playlistTitle}\".",
   "@redownloadedAudioConfirmation": {
     "description": "Confirmation title for redownloading audio",
@@ -1258,12 +1258,11 @@
   "restoredPictureNumberMessage": "\n\nEgalement {pictureNumber} fichier(s) de photo jpg restauré(s).",
   "replaceExistingPlaylists": "Remplacer les playlists existantes",
   "playlistRestorationDialogTitle": "Restauration des playlists",
-  "playlistRestorationExplanation": "Important: si vous avez apporté des modifications à vos playlists existantes (ajout de fichiers audio, de commentaires ou d'images) depuis la création de la sauvegarde ZIP, gardez cette case DÉCOCHÉE. Sinon, vos modifications récentes pourraient être écrasées par les versions plus anciennes de la sauvegarde.",
+  "playlistRestorationExplanation": "Important: si vous avez apporté des modifications à vos playlists existantes (ajout de fichiers audio, de commentaires ou d'images) depuis la création de la sauvegarde ZIP, gardez cette case DÉCOCHÉE. Sinon, vos modifications récentes seront remplacées par les versions antérieures contenues dans la sauvegarde.",
   "playlistRestorationHelpTitle": "Fonction de restauration des playlists",
-  "playlistRestorationHelpContent": "",
-  "playlistRestorationFirstHelpTitle": "Situation particuliaire où après avoir restauré les playlists à partir d'un fichier ZIP, vous avez exécuté la fonction de mise à jour des fichiers playlist JSON en ayant activé la case à cocher \"Effacer les fichiers audio supprimés\". Comme lors de la restauration à partir d'un fichier ZIP les fichiers audio ne sont pas restaurés, en applicant la fonction de mise à jour avec l'effacement des fichiers audio activé, les audio's ne sont plus disponibles dans l'application pour être re-téléchargés.",
+  "playlistRestorationFirstHelpTitle": "Situation particuliaire où, après avoir restauré les playlists à partir d'un fichier ZIP, vous avez exécuté la fonction de mise à jour des fichiers playlist JSON en ayant activé la case à cocher \"Effacer les fichiers audio supprimés\". Comme lors de la restauration à partir d'un fichier ZIP les fichiers audio ne sont pas restaurés, en applicant la fonction de mise à jour avec l'effacement des fichiers audio activé, les audio's ne sont plus disponibles dans l'application pour être re-téléchargés.",
   "playlistRestorationFirstHelpContent": "Pour résoudre ce problème, supprimez les playlists impactées par l'effacement de leurs audio's. Deux moyens de suppression peuvent être utilisés:\n\n1 - Suppression dans l'application\nChaque playlist dispose d'un menu. Son dernier élément \"Supprimer la playlist ...\" permet d'effectuer la suppression.\n\n2 - Suppression manuelle\nSi le nombre de playlists est élevé, il est plus productif de se rendre dans le répertoire de l'application qui contient les playlists, de sélectionner les playlists à effacer et de supprimer le groupe sélectionné.",
-  "playlistRestorationSecondHelpTitle": "Ensuite, appliquez la restauration des playlists SANS COCHER la case.",
+  "playlistRestorationSecondHelpTitle": "Une fois les playlists affectées supprimées, restaurez-les à nouveau à partir du fichier ZIP en vous assurant que la case \"Effacer les fichiers audio supprimés\" reste DÉCOCHÉE. Cette étape est cruciale car elle permettra aux fichiers audio de rester disponibles pour le téléchargement après la restauration.",
   "playlistJsonFilesUpdateDialogTitle": "Mise à jour des fichiers playlist JSON",
   "playlistJsonFilesUpdateExplanation": "Important: si vous avez restauré une sauvegarde ZIP ET ajouté manuellement des playlists par la suite, soyez prudent lors de la mise à jour. Lorsque vous exécutez \"Mettre à jour les fichiers playlist JSON\", les fichiers audio restaurés qui n'ont pas été re-téléchargés disparaîtront de vos playlists. Pour préserver ces fichiers et conserver la possibilité de les retélécharger, assurez-vous que la case à cocher \"Effacer les fichiers audio supprimés\" reste DÉCOCHÉE avant la mise à jour.",
   "removeDeletedAudioFiles": "Effacer les fichiers audio supprimés",

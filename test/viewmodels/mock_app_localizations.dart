@@ -1951,9 +1951,6 @@ class MockAppLocalizations extends AppLocalizations {
   String get playlistRestorationHelpTitle => "";
 
   @override
-  String get playlistRestorationHelpContent => "";
-
-  @override
   String get playlistRestorationFirstHelpTitle => "";
 
   @override
