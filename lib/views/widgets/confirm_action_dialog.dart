@@ -18,7 +18,7 @@ enum ConfirmAction { cancel, confirm }
 ///
 /// If [helpItemsLst] is passed to the dialog constructor, a help icon is
 /// displayed in the dialog title. Clicking on the help icon opens a dialog
-/// with displaying the help content contained in the help items.
+/// witch displays the help content contained in the help items.
 class ConfirmActionDialog extends StatefulWidget {
   final Function actionFunction; // The action to execute on confirmation
   final List<dynamic> actionFunctionArgs; // Arguments for the action function
@@ -92,13 +92,13 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
               children: [
                 Flexible(
                   child: Text(
+                    key: const Key('confirmDialogTitleOneKey'),
                     widget.dialogTitleOne,
                     style: (widget.dialogTitleOneReducedFontSize)
                         ? Theme.of(context).textTheme.headlineSmall?.copyWith(
                               fontSize: kConfirmActionDialogSmallerFontSize,
                             )
                         : Theme.of(context).textTheme.headlineSmall,
-                    key: const Key('confirmDialogTitleOneKey'),
                   ),
                 ),
                 if (widget.helpItemsLst.isNotEmpty)
