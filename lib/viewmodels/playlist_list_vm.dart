@@ -2993,7 +2993,7 @@ class PlaylistListVM extends ChangeNotifier {
         path.join(applicationPath, sanitizedArchiveFileName),
       );
 
-      if (!doReplaceExistingPlaylists && 
+      if (!doReplaceExistingPlaylists &&
           !destinationPathFileName.contains(kSettingsFileName)) {
         // Check if the file already exists in the destination path.
         final File existingFile = File(destinationPathFileName);

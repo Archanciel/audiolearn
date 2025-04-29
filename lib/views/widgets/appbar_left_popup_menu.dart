@@ -793,20 +793,26 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
           case AppBarPopupMenu.restorePlaylistAndCommentsFromZip:
             void validateEnteredValueFunction() {}
             final List<HelpItem> restorePlaylistsHelpItemsLst = [
-              // HelpItem(
-              //   helpTitle: AppLocalizations.of(context)!
-              //       .commentedAudioDeletionHelpTitle,
-              //   helpContent: AppLocalizations.of(context)!
-              //       .commentedAudioDeletionHelpContent,
-              //   displayHelpItemNumber: false,
-              // ),
-              // HelpItem(
-              //   helpTitle: AppLocalizations.of(context)!
-              //       .commentedAudioDeletionSolutionHelpTitle,
-              //   helpContent: AppLocalizations.of(context)!
-              //       .commentedAudioDeletionSolutionHelpContent,
-              //   displayHelpItemNumber: true,
-              // ),
+              HelpItem(
+                helpTitle: AppLocalizations.of(context)!
+                    .playlistRestorationHelpTitle,
+                helpContent: AppLocalizations.of(context)!
+                    .restorePlaylistAndCommentsFromZipTooltip,
+                displayHelpItemNumber: false,
+              ),
+              HelpItem(
+                helpTitle: AppLocalizations.of(context)!
+                    .playlistRestorationFirstHelpTitle,
+                helpContent: AppLocalizations.of(context)!
+                    .playlistRestorationFirstHelpContent,
+                displayHelpItemNumber: true,
+              ),
+              HelpItem(
+                helpTitle: AppLocalizations.of(context)!
+                    .playlistRestorationSecondHelpTitle,
+                helpContent: '',
+                displayHelpItemNumber: false,
+              ),
             ];
 
             showDialog<List<String>>(
