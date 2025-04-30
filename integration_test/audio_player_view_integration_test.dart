@@ -8340,7 +8340,9 @@ void main() {
     group('Modify audio volune tests', () {
       testWidgets(
           '''Change audio volume to max. Then select an other audio and verify its volume.
-          Then return to the previous audio and verify its volume.''', (
+            Then return to the previous audio and verify its volume. Then reduce its volume
+            to minumum and verify its volume. Then select an other audio and verify its volume.''',
+          (
         WidgetTester tester,
       ) async {
         const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
@@ -8375,6 +8377,27 @@ void main() {
           Key(volumeUpIconButtonKey),
         );
 
+        String volumeDownIconButtonKey = 'decreaseAudioVolumeIconButton';
+
+        final Finder volumeDownButtonFinder = find.byKey(
+          Key(volumeDownIconButtonKey),
+        );
+
+        // Verify that the initial audio volume is set to 50 %% in the audio
+        // info dialog
+        await _verifyAudioVolume(
+          tester: tester,
+          volumeUpButtonFinder: volumeUpButtonFinder,
+          volumeUpIconButtonKey: volumeUpIconButtonKey,
+          volumeDownButtonFinder: volumeDownButtonFinder,
+          volumeDownIconButtonKey: volumeDownIconButtonKey,
+          audioVolumeStr: '50.0 %',
+          isAudioVolumeUpButtonDisabled: false,
+          isAudioVolumeDownButtonDisabled: false,
+          volumeUpIconButtonTooltipMessage: "Increase the audio volume (currently 50.0 %). Disabled when maximum volume is reached.",
+          volumeDownIconButtonTooltipMessage: "Decrease the audio volume (currently 50.0 %). Disabled when minimum volume is reached.",
+        );
+
         for (int i = 0; i < 5; i++) {
           await tester.tap(volumeUpButtonFinder);
           await tester.pumpAndSettle();
@@ -8382,41 +8405,30 @@ void main() {
 
         // Verify that the audio volume is set to max in the audio
         // info dialog
-        await IntegrationTestUtil.verifyAudioInfoDialog(
+        await _verifyAudioVolume(
           tester: tester,
-          youtubeChannelValue: '',
-          copiedToPlaylistTitle: 'local_several_played_unplayed_audios',
-          inAudioPlayerView: true,
-          audioVolume: '100.0 %',
+          volumeUpButtonFinder: volumeUpButtonFinder,
+          volumeUpIconButtonKey: volumeUpIconButtonKey,
+          volumeDownButtonFinder: volumeDownButtonFinder,
+          volumeDownIconButtonKey: volumeDownIconButtonKey,
+          audioVolumeStr: '100.0 %',
+          isAudioVolumeUpButtonDisabled: true,
+          isAudioVolumeDownButtonDisabled: false,
+          volumeUpIconButtonTooltipMessage: "Increase the audio volume (currently 100.0 %). Disabled when maximum volume is reached.",
+          volumeDownIconButtonTooltipMessage: "Decrease the audio volume (currently 100.0 %). Disabled when minimum volume is reached.",
         );
 
-        // Verify that the volume up icon button state is disabled
-        // since the volume was set to max
+        // Now return to the playlist download page and select the second audio
+        // of the playlist to open the AudioPlayerView displaying this audio.
+        Finder applicationViewNavButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(applicationViewNavButton);
+        await tester.pumpAndSettle();
 
-        IntegrationTestUtil.verifyWidgetIsDisabled(
-          tester: tester,
-          widgetKeyStr: volumeUpIconButtonKey,
-        );
-
-        // Verify the tooltip message of the volume up icon button
-
-        // Method 1: Check tooltip through long press
-        // This triggers the tooltip to appear
-        // await tester.longPress(volumeUpButtonFinder);
-        // await tester.pump(const Duration(seconds: 1)); // Wait for tooltip to appear
-
-        // Now find the tooltip text
-        final String expectedTooltipText =
-            "Increase the audio volume (currently 100.0 %). Disabled when maximum volume is reached.";
-        // The format used in your code
-
-        final Finder tooltipFinder = find.ancestor(
-          of: volumeUpButtonFinder,
-          matching: find.byType(Tooltip),
-        );
-
-        final tooltipWidget = tester.widget<Tooltip>(tooltipFinder);
-        expect(tooltipWidget.message, expectedTooltipText);
+        final Finder secondModifiedAudioListTileTextWidgetFinder =
+            find.text(secondModifiedAudioTitle);
+        await tester.tap(secondModifiedAudioListTileTextWidgetFinder);
+        await tester.pumpAndSettle();
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
@@ -8606,6 +8618,84 @@ void main() {
     //   };
     // });
   });
+}
+
+Future<void> _verifyAudioVolume({
+  required WidgetTester tester,
+  required Finder volumeUpButtonFinder,
+  required String volumeUpIconButtonKey,
+  required Finder volumeDownButtonFinder,
+  required String volumeDownIconButtonKey,
+  required String audioVolumeStr,
+  required bool isAudioVolumeUpButtonDisabled,
+  required bool isAudioVolumeDownButtonDisabled,
+  required String volumeUpIconButtonTooltipMessage,
+  required String volumeDownIconButtonTooltipMessage,
+}) async {
+  // Verify the audio volume in the audio info dialog
+  await IntegrationTestUtil.verifyAudioInfoDialog(
+    tester: tester,
+    youtubeChannelValue: '',
+    copiedToPlaylistTitle: 'local_several_played_unplayed_audios',
+    inAudioPlayerView: true,
+    audioVolume: audioVolumeStr,
+  );
+
+  // Verify the volume up icon button state
+
+  if (isAudioVolumeUpButtonDisabled) {
+     // is disabled if the volume was set to min
+     // or to max
+     IntegrationTestUtil.verifyWidgetIsDisabled(
+      tester: tester,
+      widgetKeyStr: volumeUpIconButtonKey,
+    );
+  } else {
+    IntegrationTestUtil.verifyWidgetIsEnabled(
+      tester: tester,
+      widgetKeyStr: volumeUpIconButtonKey,
+    );
+  }
+
+  // Verify the volume down icon button state
+
+  if (isAudioVolumeDownButtonDisabled) {
+     // is disabled if the volume was set to min
+     // or to max
+     IntegrationTestUtil.verifyWidgetIsDisabled(
+      tester: tester,
+      widgetKeyStr: volumeDownIconButtonKey,
+    );
+  } else {
+    IntegrationTestUtil.verifyWidgetIsEnabled(
+      tester: tester,
+      widgetKeyStr: volumeDownIconButtonKey,
+    );
+  }
+
+  // Verify the tooltip message of the volume up icon
+  // button
+
+  // Find the tooltip text
+  final Finder buttonUpTooltipFinder = find.ancestor(
+    of: volumeUpButtonFinder,
+    matching: find.byType(Tooltip),
+  );
+  Tooltip tooltipWidget = tester.widget<Tooltip>(buttonUpTooltipFinder);
+
+  expect(tooltipWidget.message, volumeUpIconButtonTooltipMessage);
+
+  // Verify the tooltip message of the volume down icon
+  // button
+
+  // Find the tooltip text
+  final Finder buttonDownTooltipFinder = find.ancestor(
+    of: volumeDownButtonFinder,
+    matching: find.byType(Tooltip),
+  );
+  tooltipWidget = tester.widget<Tooltip>(buttonDownTooltipFinder);
+
+  expect(tooltipWidget.message, volumeDownIconButtonTooltipMessage);
 }
 
 void _verifyPlaylistIsSelectedInPlaylistDownloadView({
