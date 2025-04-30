@@ -557,12 +557,6 @@ class MockAppLocalizations extends AppLocalizations {
   String get setAudioPlaySpeedTooltip => 'Set audio play speed';
 
   @override
-  String get increaseAudioVolumeIconButtonTooltip => 'Increase audio volume';
-
-  @override
-  String get decreaseAudioVolumeIconButtonTooltip => 'Increase audio volume';
-
-  @override
   String get resetSortFilterOptionsTooltip => 'Reset sort and filter options';
 
   @override
@@ -1958,4 +1952,16 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get playlistRestorationSecondHelpTitle => "";
+
+  @override
+  String increaseAudioVolumeIconButtonTooltip(
+    Object percentValue,
+  ) =>
+      "Increase the audio volume (currently $percentValue). Disabled when maximum volume is reached.";
+
+  @override
+  String decreaseAudioVolumeIconButtonTooltip(
+    Object percentValue,
+  ) =>
+      "Decrease the audio volume (currently $percentValue). Disabled when minimum volume is reached.";
 }

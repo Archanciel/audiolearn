@@ -191,7 +191,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     } else {
       _audioPlaySpeed = audioPlayerVMlistenFalse.currentAudio!.audioPlaySpeed;
       audioPictureFile = pictureVMlistenTrue.getLastAddedAudioPictureFile(
-        audio: audioPlayerVMlistenFalse.currentAudio!);
+          audio: audioPlayerVMlistenFalse.currentAudio!);
     }
 
     Widget viewContent = Column(
@@ -461,20 +461,20 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             audioPlayerVMlistenFalse.currentAudio?.audioPlaySpeed ??
                 _audioPlaySpeed;
 
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Tooltip(
-              message: AppLocalizations.of(context)!
-                  .decreaseAudioVolumeIconButtonTooltip,
-              child: SizedBox(
-                width: kSmallButtonWidth,
-                child: ValueListenableBuilder<double>(
-                  valueListenable:
-                      audioPlayerVMlistenFalse.currentAudioPlayVolumeNotifier,
-                  builder: (context, currentVolume, child) {
-                    return IconButton(
+        return ValueListenableBuilder<double>(
+          valueListenable:
+              audioPlayerVMlistenFalse.currentAudioPlayVolumeNotifier,
+          builder: (context, currentVolume, child) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Tooltip(
+                  message:
+                      AppLocalizations.of(context)!.decreaseAudioVolumeIconButtonTooltip('${(currentVolume * 100).toStringAsFixed(1)} %'),
+                  child: SizedBox(
+                    width: kSmallButtonWidth,
+                    child: IconButton(
                       key: const Key('decreaseAudioVolumeIconButton'),
                       style: ButtonStyle(
                         // Highlight button when pressed
@@ -497,21 +497,15 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                                 volumeChangedValue: -0.1,
                               );
                             },
-                    );
-                  },
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            Tooltip(
-              message: AppLocalizations.of(context)!
-                  .increaseAudioVolumeIconButtonTooltip,
-              child: SizedBox(
-                width: kSmallButtonWidth,
-                child: ValueListenableBuilder<double>(
-                  valueListenable:
-                      audioPlayerVMlistenFalse.currentAudioPlayVolumeNotifier,
-                  builder: (context, currentVolume, child) {
-                    return IconButton(
+                Tooltip(
+                  message:
+                      AppLocalizations.of(context)!.increaseAudioVolumeIconButtonTooltip('${(currentVolume * 100).toStringAsFixed(1)} %'),
+                  child: SizedBox(
+                    width: kSmallButtonWidth,
+                    child: IconButton(
                       key: const Key('increaseAudioVolumeIconButton'),
                       style: ButtonStyle(
                         // Highlight button when pressed
@@ -534,12 +528,12 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                                 volumeChangedValue: 0.1,
                               );
                             },
-                    );
-                  },
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ],
+              ],
+            );
+          },
         );
       },
     );
