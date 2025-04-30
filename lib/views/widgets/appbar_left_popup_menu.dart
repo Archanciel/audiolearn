@@ -36,7 +36,8 @@ enum AppBarPopupMenu {
 
 /// The AppBarLeadingPopupMenuWidget is used to display the leading
 /// popup menu icon of the AppBar. The displayed items are specific
-/// to the currently displayed screen.
+/// to the currently displayed screen (playlist download view or audio
+/// player view).
 class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
   final ThemeProviderVM themeProvider;
   final SettingsDataService settingsDataService;
