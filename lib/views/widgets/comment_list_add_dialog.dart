@@ -348,8 +348,18 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(AppLocalizations.of(context)!.commentsDialogTitle),
-            const SizedBox(width: 15),
+            // The FittedBox will scale the text to fit the available space
+            Flexible(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  AppLocalizations.of(context)!.commentsDialogTitle,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
             (pictureVMlistenFalse.getLastAddedAudioPictureFile(
                           audio: currentAudio,
                         ) !=
@@ -370,7 +380,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                       });
                     },
                   )
-                : const Spacer(),
+                : const SizedBox(width: 0),
             Tooltip(
               message:
                   AppLocalizations.of(context)!.addPositionedCommentTooltip,
