@@ -493,7 +493,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                           ? null // Disable the button if no audio selected or
                           //        if the volume is min
                           : () async {
-                              await audioPlayerVMlistenFalse.changeAudioVolume(
+                              await audioPlayerVMlistenFalse.modifyAudioVolume(
                                 volumeChangedValue: -0.1,
                               );
                             },
@@ -530,7 +530,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                           ? null // Disable the button if no audio selected or
                           //        if the volume is max
                           : () async {
-                              await audioPlayerVMlistenFalse.changeAudioVolume(
+                              await audioPlayerVMlistenFalse.modifyAudioVolume(
                                 volumeChangedValue: 0.1,
                               );
                             },
