@@ -8375,7 +8375,7 @@ void main() {
           Key(volumeUpIconButtonKey),
         );
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 5; i++) {
           await tester.tap(volumeUpButtonFinder);
           await tester.pumpAndSettle();
         }

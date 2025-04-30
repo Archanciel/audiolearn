@@ -489,7 +489,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                       icon: const Icon(Icons.arrow_drop_down),
                       iconSize: kUpDownButtonSize,
                       onPressed: (!areAudioButtonsEnabled ||
-                              currentVolume == 0.1)
+                              currentVolume < 0.2)
                           ? null // Disable the button if no audio selected or
                           //        if the volume is min
                           : () async {
@@ -526,7 +526,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                       icon: const Icon(Icons.arrow_drop_up),
                       iconSize: kUpDownButtonSize,
                       onPressed: (!areAudioButtonsEnabled ||
-                              currentVolume == 1.0)
+                              currentVolume > 0.9)
                           ? null // Disable the button if no audio selected or
                           //        if the volume is max
                           : () async {
