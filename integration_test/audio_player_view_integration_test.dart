@@ -8339,10 +8339,10 @@ void main() {
     });
     group('Modify audio volune tests', () {
       testWidgets(
-          '''Change audio volume to max. Then select an other audio and verify its volume.
-            Then return to the previous audio and verify its volume. Then reduce its volume
-            to minumum and verify its volume. Then select an other audio and verify its volume.''',
-          (
+          '''Change first audio volume to max. Then select second audio, verify its volume
+            before reducing it to min. Then return to the first audio and verify its volume
+            set to max. Then reduce its volume to 90 %. Finally, select the second audio, verify
+            its volume set to min. Then increase it to 20 %.''', (
         WidgetTester tester,
       ) async {
         const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
@@ -8350,8 +8350,6 @@ void main() {
             "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet";
         const String secondModifiedAudioTitle =
             "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau";
-        const String notModifiedAudioTitle =
-            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
 
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
@@ -8431,7 +8429,7 @@ void main() {
         await tester.tap(applicationViewNavButton);
         await tester.pumpAndSettle();
 
-        final Finder secondModifiedAudioListTileTextWidgetFinder =
+        Finder secondModifiedAudioListTileTextWidgetFinder =
             find.text(secondModifiedAudioTitle);
         await tester.tap(secondModifiedAudioListTileTextWidgetFinder);
         await tester.pumpAndSettle();
@@ -8541,6 +8539,66 @@ void main() {
               "Increase the audio volume (currently 90.0 %). Disabled when maximum volume is reached.",
           volumeDownIconButtonTooltipMessage:
               "Decrease the audio volume (currently 90.0 %). Disabled when minimum volume is reached.",
+        );
+
+        // Now return to the playlist download page and re-select the second
+        // audio of the playlist to open the AudioPlayerView displaying this
+        // audio.
+
+        applicationViewNavButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(applicationViewNavButton);
+        await tester.pumpAndSettle();
+
+        secondModifiedAudioListTileTextWidgetFinder =
+            find.text(secondModifiedAudioTitle);
+        await tester.tap(secondModifiedAudioListTileTextWidgetFinder);
+        await tester.pumpAndSettle();
+
+        volumeUpButtonFinder = find.byKey(
+          Key(volumeUpIconButtonKey),
+        );
+
+        volumeDownButtonFinder = find.byKey(
+          Key(volumeDownIconButtonKey),
+        );
+
+        // Verify that the previously modified second audio volume is set to
+        // 100 % in the audio info dialog
+        await _verifyAudioVolume(
+          tester: tester,
+          volumeUpButtonFinder: volumeUpButtonFinder,
+          volumeUpIconButtonKey: volumeUpIconButtonKey,
+          volumeDownButtonFinder: volumeDownButtonFinder,
+          volumeDownIconButtonKey: volumeDownIconButtonKey,
+          audioVolumeStr: '10.0 %',
+          isAudioVolumeUpButtonDisabled: false,
+          isAudioVolumeDownButtonDisabled: true,
+          volumeUpIconButtonTooltipMessage:
+              "Increase the audio volume (currently 10.0 %). Disabled when maximum volume is reached.",
+          volumeDownIconButtonTooltipMessage:
+              "Decrease the audio volume (currently 10.0 %). Disabled when minimum volume is reached.",
+        );
+
+        // Tap once on the volume up button to set the audio volume to 20 %
+        await tester.tap(volumeUpButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Verify that the second audio volume is set to 20 % in the audio
+        // info dialog
+        await _verifyAudioVolume(
+          tester: tester,
+          volumeUpButtonFinder: volumeUpButtonFinder,
+          volumeUpIconButtonKey: volumeUpIconButtonKey,
+          volumeDownButtonFinder: volumeDownButtonFinder,
+          volumeDownIconButtonKey: volumeDownIconButtonKey,
+          audioVolumeStr: '20.0 %',
+          isAudioVolumeUpButtonDisabled: false,
+          isAudioVolumeDownButtonDisabled: false,
+          volumeUpIconButtonTooltipMessage:
+              "Increase the audio volume (currently 20.0 %). Disabled when maximum volume is reached.",
+          volumeDownIconButtonTooltipMessage:
+              "Decrease the audio volume (currently 20.0 %). Disabled when minimum volume is reached.",
         );
 
         // Purge the test playlist directory so that the created test
