@@ -185,7 +185,7 @@ class AudioPlayerVM extends ChangeNotifier {
   /// {volumeChangedValue} must be between -1.0 and 1.0. The
   /// initial audio volume is 0.5 and will be decreased or
   /// increased by this value.
-  Future<void> changeAudioVolume({
+  Future<void> modifyAudioVolume({
     required double volumeChangedValue,
   }) async {
     // It is important to limit the volume to 0.1 and not to 0.0
@@ -197,8 +197,10 @@ class AudioPlayerVM extends ChangeNotifier {
         newAudioPlayVolume; // Increase and clamp to max 1.0
     await _audioPlayer!.setVolume(newAudioPlayVolume);
 
-    // Enables the modified audio volume icob button appearance
-    // to be updated in the audio player view.
+    // Enables the modified audio volume icon button appearance
+    // to be updated in the audio player view if the volune was
+    // set to minimum or maximum, respectively for the reduce or 
+    // the increase volume icon button.
     currentAudioPlayVolumeNotifier.value = newAudioPlayVolume;
 
     updateAndSaveCurrentAudio();
@@ -336,6 +338,10 @@ class AudioPlayerVM extends ChangeNotifier {
     // is reduced according to the time elapsed since the audio was
     // paused, which is done in _setCurrentAudioPosition().
     _currentAudioPosition = Duration(seconds: audio.audioPositionSeconds);
+
+    // Without this instruction, the audio volume icon buttons are not
+    // updated when the user selects another audio.
+    currentAudioPlayVolumeNotifier.value = audio.audioPlayVolume;
 
     if (doClearUndoRedoLists) {
       _clearUndoRedoLists();
