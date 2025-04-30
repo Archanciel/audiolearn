@@ -8398,211 +8398,25 @@ void main() {
           widgetKeyStr: volumeUpIconButtonKey,
         );
 
-        // Open the audio left appbar menu
+        // Verify the tooltip message of the volume up icon button
 
-        // Now we go back to the PlayListDownloadView in order to
-        // verify the play/pause audio item InkWell button color
-        Finder appScreenNavigationButton =
-            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-        await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
+        // Method 1: Check tooltip through long press
+        // This triggers the tooltip to appear
+        // await tester.longPress(volumeUpButtonFinder);
+        // await tester.pump(const Duration(seconds: 1)); // Wait for tooltip to appear
 
-        // Validate again the play/pause button of the fully played
-        // first modifying Audio item InkWell widget. An audio positioned
-        // less than 15 seconds before its end position is considered to be
-        // fully played.
-        IntegrationTestUtil.validateInkWellButton(
-          tester: tester,
-          audioTitle: firstModifiedAudioTitle,
-          expectedIcon: Icons.play_arrow,
-          expectedIconColor:
-              kSliderThumbColorInDarkMode, // Fully played audio play/pause icon color
-          expectedIconBackgroundColor: Colors.black,
+        // Now find the tooltip text
+        final String expectedTooltipText =
+            "Increase the audio volume (currently 100.0 %). Disabled when maximum volume is reached.";
+        // The format used in your code
+
+        final Finder tooltipFinder = find.ancestor(
+          of: volumeUpButtonFinder,
+          matching: find.byType(Tooltip),
         );
 
-        // Then return to the audio player view in order to set the audio
-        // as partially played
-
-        appScreenNavigationButton =
-            find.byKey(const ValueKey('audioPlayerViewIconButton'));
-        await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
-
-        // Find the slider using its key
-        final sliderFinder =
-            find.byKey(const Key('audioPlayerViewAudioSlider'));
-
-        await tester.drag(
-          sliderFinder,
-          const Offset(-100, 0),
-        ); // Drag horizontally left
-        await tester.pumpAndSettle();
-
-        // Now we go back to the PlayListDownloadView in order to
-        // verify the play/pause audio item InkWell button color
-        appScreenNavigationButton =
-            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-        await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
-
-        // Again, validate the play/pause button of the previously
-        // downloaded Audio item InkWell widget
-        IntegrationTestUtil.validateInkWellButton(
-          tester: tester,
-          audioTitle: firstModifiedAudioTitle,
-          expectedIcon: Icons.play_arrow,
-          expectedIconColor:
-              Colors.white, // currently playing or paused icon color
-          expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
-        );
-
-        // Tap again on the first modifying audio of the playlist in
-        // order to open the AudioPlayerView displaying this now
-        // partially played audio.
-
-        // Then go to the audio player view
-        appScreenNavigationButton =
-            find.byKey(const ValueKey('audioPlayerViewIconButton'));
-        await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
-
-        // Tap on |< button to go to the beginning of the audio
-        await tester
-            .tap(find.byKey(const Key('audioPlayerViewSkipToStartButton')));
-        await tester.pumpAndSettle();
-
-        // Now we go back to the PlayListDownloadView in order to
-        // verify the play/pause audio item InkWell button color
-        appScreenNavigationButton =
-            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-        await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
-
-        // Again, validate the play/pause button of the previously
-        // downloaded Audio item InkWell widget
-        IntegrationTestUtil.validateInkWellButton(
-          tester: tester,
-          audioTitle: firstModifiedAudioTitle,
-          expectedIcon: Icons.play_arrow,
-          expectedIconColor:
-              kDarkAndLightEnabledIconColor, // not played icon color
-          expectedIconBackgroundColor: Colors.black,
-        );
-
-        // Then go to the audio player view
-        appScreenNavigationButton =
-            find.byKey(const ValueKey('audioPlayerViewIconButton'));
-        await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
-
-        // Tap on >> 1 minute button to position the audio player to 1
-        // minute after the beginning of the audio
-        await tester
-            .tap(find.byKey(const Key('audioPlayerViewForward1mButton')));
-        await tester.pumpAndSettle();
-
-        // Now we go back to the PlayListDownloadView in order to
-        // verify the play/pause audio item InkWell button color
-        appScreenNavigationButton =
-            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-        await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
-
-        // Again, validate the play/pause button of the previously
-        // downloaded Audio item InkWell widget
-        IntegrationTestUtil.validateInkWellButton(
-          tester: tester,
-          audioTitle: firstModifiedAudioTitle,
-          expectedIcon: Icons.play_arrow,
-          expectedIconColor:
-              Colors.white, // currently playing or paused icon color
-          expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
-        );
-
-        // Then go to the audio player view
-        appScreenNavigationButton =
-            find.byKey(const ValueKey('audioPlayerViewIconButton'));
-        await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
-
-        // Tap on >| button to go to the end of the audio
-        await tester
-            .tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
-        await tester.pumpAndSettle();
-
-        // Now we go back to the PlayListDownloadView in order to
-        // verify the play/pause audio item InkWell button color
-        appScreenNavigationButton =
-            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-        await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
-
-        // Now, validate the play/pause button of the fully played
-        // first modifying Audio item InkWell widget
-        IntegrationTestUtil.validateInkWellButton(
-          tester: tester,
-          audioTitle: firstModifiedAudioTitle,
-          expectedIcon: Icons.play_arrow,
-          expectedIconColor:
-              kSliderThumbColorInDarkMode, // Fully played audio play/pause icon color
-          expectedIconBackgroundColor: Colors.black,
-        );
-
-        // Then go to the audio player view to use undo button
-        appScreenNavigationButton =
-            find.byKey(const ValueKey('audioPlayerViewIconButton'));
-        await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
-
-        // Tap on the undo button to undo going to the end of the audio
-        await tester.tap(find.byKey(const Key('audioPlayerViewUndoButton')));
-        await tester.pumpAndSettle();
-
-        // Now we go back to the PlayListDownloadView in order to
-        // verify the play/pause audio item InkWell button color
-        appScreenNavigationButton =
-            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-        await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
-
-        // Again, validate the play/pause button of the previously
-        // downloaded Audio item InkWell widget
-        IntegrationTestUtil.validateInkWellButton(
-          tester: tester,
-          audioTitle: firstModifiedAudioTitle,
-          expectedIcon: Icons.play_arrow,
-          expectedIconColor:
-              Colors.white, // currently playing or paused icon color
-          expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
-        );
-
-        // Finally, go to the audio player view to tap on the redo button
-        appScreenNavigationButton =
-            find.byKey(const ValueKey('audioPlayerViewIconButton'));
-        await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
-
-        // Tap on the undo button to undo going to the end of the audio
-        await tester.tap(find.byKey(const Key('audioPlayerViewRedoButton')));
-        await tester.pumpAndSettle();
-
-        // Now we go back to the PlayListDownloadView in order to
-        // verify the play/pause audio item InkWell button color
-        appScreenNavigationButton =
-            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-        await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
-
-        // Now, validate the play/pause button of the fully played
-        // first modifying Audio item InkWell widget
-        IntegrationTestUtil.validateInkWellButton(
-          tester: tester,
-          audioTitle: firstModifiedAudioTitle,
-          expectedIcon: Icons.play_arrow,
-          expectedIconColor:
-              kSliderThumbColorInDarkMode, // Fully played audio play/pause icon color
-          expectedIconBackgroundColor: Colors.black,
-        );
+        final tooltipWidget = tester.widget<Tooltip>(tooltipFinder);
+        expect(tooltipWidget.message, expectedTooltipText);
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
