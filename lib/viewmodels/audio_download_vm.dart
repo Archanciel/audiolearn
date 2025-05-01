@@ -653,6 +653,11 @@ class AudioDownloadVM extends ChangeNotifier {
     if (downloadingPlaylistUrls.contains(playlistUrl)) {
       return;
     } else {
+      // If another playlist is being downloaded, then the
+      // the previously added playlist url is removed from the
+      // downloadingPlaylistUrls list. This will enable the user
+      // to restart downloading the previously added playlist.
+      downloadingPlaylistUrls = [];
       downloadingPlaylistUrls.add(playlistUrl);
     }
 
@@ -1103,6 +1108,10 @@ class AudioDownloadVM extends ChangeNotifier {
     _audioDownloadError = false;
     _stopDownloadPressed = false;
     _youtubeExplode ??= yt.YoutubeExplode();
+
+      // emptying the downloadingPlaylistUrls list will enable the
+      // user to download the previously downloaded playlist
+      downloadingPlaylistUrls = [];
 
     final yt.VideoId videoId;
 
@@ -2264,6 +2273,10 @@ class AudioDownloadVM extends ChangeNotifier {
         errorArgOne: e.toString(),
         errorArgTwo: audio.originalVideoTitle,
       );
+
+      // emptying the playlist url from the downloadingPlaylistUrls
+      // list since the playlist download has failed
+      downloadingPlaylistUrls = [];
 
       return false;
     }
