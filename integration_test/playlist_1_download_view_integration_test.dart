@@ -5012,8 +5012,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets(
-        '''Copy audio not present in the source playlist.''', (tester) async {
+    testWidgets('''Copy audio not present in the source playlist.''',
+        (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -5130,8 +5130,8 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets(
-        '''Copy audio without selecting the target playlist.''', (tester) async {
+    testWidgets('''Copy audio without selecting the target playlist.''',
+        (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -7198,8 +7198,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    testWidgets(
-        '''Move audio not present in source playlist without unchecking
+    testWidgets('''Move audio not present in source playlist without unchecking
            the 'keep audio in source playlist' checkbox.''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -9491,15 +9490,9 @@ void main() {
       );
 
       // *** Now execute Updating playlist JSON file menu item
-
-      // Tap the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // find the update playlist JSON file menu item and tap on it
-      await tester
-          .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.executeUpdatePlaylistJsonFiles(
+        tester: tester,
+      );
 
       // Test that the S8 Audio Youtube playlist is no longer showing the
       // deleted audio
@@ -9649,15 +9642,9 @@ void main() {
       );
 
       // *** Execute Updating playlist JSON file menu item
-
-      // Tap the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // find the update playlist JSON file menu item and tap on it
-      await tester
-          .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.executeUpdatePlaylistJsonFiles(
+        tester: tester,
+      );
 
       // Test that the manually added test local smartphone playlist is
       // displayed
@@ -9777,15 +9764,9 @@ void main() {
       );
 
       // *** Execute Updating playlist JSON file menu item
-
-      // Tap the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // find the update playlist JSON file menu item and tap on it
-      await tester
-          .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.executeUpdatePlaylistJsonFiles(
+        tester: tester,
+      );
 
       // Test that the manually added Youtube_test Youtube smartphone
       // playlist is displayed
@@ -9917,15 +9898,9 @@ void main() {
       );
 
       // *** Execute Updating playlist JSON file menu item
-
-      // Tap the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // find the update playlist JSON file menu item and tap on it
-      await tester
-          .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.executeUpdatePlaylistJsonFiles(
+        tester: tester,
+      );
 
       // Now verify that no more ListItem widget is displayed in the download
       // playlist view
@@ -9989,15 +9964,9 @@ void main() {
       );
 
       // *** Execute Updating playlist JSON file menu item
-
-      // Tap the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // find the update playlist JSON file menu item and tap on it
-      await tester
-          .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.executeUpdatePlaylistJsonFiles(
+        tester: tester,
+      );
 
       // Now test that the manually added urgent_actus Youtube playlist is
       // displayed
@@ -10060,15 +10029,9 @@ void main() {
       );
 
       // *** Execute Updating playlist JSON file menu item
-
-      // Tap the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // find the update playlist JSON file menu item and tap on it
-      await tester
-          .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.executeUpdatePlaylistJsonFiles(
+        tester: tester,
+      );
 
       // Now test that the manually deleted urgent_actus Youtube playlist is
       // no longer displayed
@@ -10120,15 +10083,9 @@ void main() {
       );
 
       // *** Execute Updating playlist JSON file menu item
-
-      // Tap the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // find the update playlist JSON file menu item and tap on it
-      await tester
-          .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.executeUpdatePlaylistJsonFiles(
+        tester: tester,
+      );
 
       // Now test that the manually added urgent_actus Youtube playlist is
       // displayed
@@ -10210,15 +10167,9 @@ void main() {
       );
 
       // *** Execute Updating playlist JSON file menu item
-
-      // Tap the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // find the update playlist JSON file menu item and tap on it
-      await tester
-          .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.executeUpdatePlaylistJsonFiles(
+        tester: tester,
+      );
 
       // Now test that no audio list is displayed in the AudioPlayerView
       // screen since the selected urgent_actus Youtube playlist directory was
@@ -10308,21 +10259,16 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      // *** Execute Updating playlist JSON file menu item
-
-      // Tap twice on the appbar leading popup menu button. First tap
+      // Tap once on the appbar leading popup menu button. First tap
       // closes the audio popup menu and the second tap opens the
       // leading popup menu
       await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // find the update playlist JSON file menu item and tap on it
-      await tester
-          .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
-      await tester.pumpAndSettle();
+      // *** Execute Updating playlist JSON file menu item
+      await IntegrationTestUtil.executeUpdatePlaylistJsonFiles(
+        tester: tester,
+      );
 
       // Verify that the audio menu button is disabled
       IntegrationTestUtil.verifyWidgetIsDisabled(
@@ -10337,17 +10283,10 @@ void main() {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      // *** Execute again Updating playlist JSON file menu item
-
-      // Tap on the appbar leading popup menu button to open
-      // the leading popup menu
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // find the update playlist JSON file menu item and tap on it
-      await tester
-          .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
-      await tester.pumpAndSettle();
+      // *** Execute Updating playlist JSON file menu item
+      await IntegrationTestUtil.executeUpdatePlaylistJsonFiles(
+        tester: tester,
+      );
 
       // Ensure that the audio menu button is disabled since the
       // re-added playlist were no longer in the app settings sorted
@@ -10449,21 +10388,16 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      // *** Execute Updating playlist JSON file menu item
-
-      // Tap twice on the appbar leading popup menu button. First tap
+      // Tap once on the appbar leading popup menu button. First tap
       // closes the audio popup menu and the second tap opens the
       // leading popup menu
       await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // find the update playlist JSON file menu item and tap on it
-      await tester
-          .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
-      await tester.pumpAndSettle();
+      // *** Execute Updating playlist JSON file menu item
+      await IntegrationTestUtil.executeUpdatePlaylistJsonFiles(
+        tester: tester,
+      );
 
       // Verify that the audio menu button is disabled
       IntegrationTestUtil.verifyWidgetIsDisabled(
@@ -10478,17 +10412,10 @@ void main() {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      // *** Execute again Updating playlist JSON file menu item
-
-      // Tap on the appbar leading popup menu button to open
-      // the leading popup menu
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // find the update playlist JSON file menu item and tap on it
-      await tester
-          .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
-      await tester.pumpAndSettle();
+      // *** Execute Updating playlist JSON file menu item
+      await IntegrationTestUtil.executeUpdatePlaylistJsonFiles(
+        tester: tester,
+      );
 
       // Ensure that the audio menu button is disabled since the
       // re-added playlist were no longer in the app settings sorted
@@ -10584,21 +10511,16 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      // *** Execute Updating playlist JSON file menu item
-
-      // Tap twice on the appbar leading popup menu button. First tap
+      // Tap once on the appbar leading popup menu button. First tap
       // closes the audio popup menu and the second tap opens the
       // leading popup menu
       await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // find the update playlist JSON file menu item and tap on it
-      await tester
-          .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
-      await tester.pumpAndSettle();
+      // *** Execute Updating playlist JSON file menu item
+      await IntegrationTestUtil.executeUpdatePlaylistJsonFiles(
+        tester: tester,
+      );
 
       // Verify that the audio menu button is disabled
       IntegrationTestUtil.verifyWidgetIsDisabled(
@@ -10613,17 +10535,10 @@ void main() {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      // *** Execute again Updating playlist JSON file menu item
-
-      // Tap on the appbar leading popup menu button to open
-      // the leading popup menu
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // find the update playlist JSON file menu item and tap on it
-      await tester
-          .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
-      await tester.pumpAndSettle();
+      // *** Execute Updating playlist JSON file menu item
+      await IntegrationTestUtil.executeUpdatePlaylistJsonFiles(
+        tester: tester,
+      );
 
       // First, find the S8 audio Youtube playlist ListTile Text widget
       youtubePlaylistListTileTextWidgetFinder =
@@ -10741,21 +10656,16 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      // *** Execute Updating playlist JSON file menu item
-
-      // Tap twice on the appbar leading popup menu button. First tap
+      // Tap once on the appbar leading popup menu button. First tap
       // closes the audio popup menu and the second tap opens the
       // leading popup menu
       await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // find the update playlist JSON file menu item and tap on it
-      await tester
-          .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
-      await tester.pumpAndSettle();
+      // *** Execute Updating playlist JSON file menu item
+      await IntegrationTestUtil.executeUpdatePlaylistJsonFiles(
+        tester: tester,
+      );
 
       // Verify that the audio menu button is disabled
       IntegrationTestUtil.verifyWidgetIsDisabled(
@@ -10770,17 +10680,10 @@ void main() {
         destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
       );
 
-      // *** Execute again Updating playlist JSON file menu item
-
-      // Tap on the appbar leading popup menu button to open
-      // the leading popup menu
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // find the update playlist JSON file menu item and tap on it
-      await tester
-          .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
-      await tester.pumpAndSettle();
+      // *** Execute Updating playlist JSON file menu item
+      await IntegrationTestUtil.executeUpdatePlaylistJsonFiles(
+        tester: tester,
+      );
 
       // Verify that the audio menu button is disabled
       IntegrationTestUtil.verifyWidgetIsDisabled(
@@ -10869,15 +10772,10 @@ void main() {
       await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
-      // Tap on the appbar leading popup menu button to open the leading
-      // popup menu
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // find the update playlist JSON file menu item and tap on it
-      await tester
-          .tap(find.byKey(const Key('update_playlist_json_dialog_item')));
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+      // *** Execute Updating playlist JSON file menu item
+      await IntegrationTestUtil.executeUpdatePlaylistJsonFiles(
+        tester: tester,
+      );
 
       // Go to audio player view in order to verify the current playable
       // audio of the selected Youtube playlist
@@ -19489,10 +19387,10 @@ Future<void> _verifyYoutubeSelectedPlaylistButtonsAndCheckbox({
   required WidgetTester tester,
   required bool isPlaylistListDisplayed,
 }) async {
-        IntegrationTestUtil.validateSearchIconButton(
-          tester: tester,
-          searchIconButtonState: SearchIconButtonState.disabled,
-        );
+  IntegrationTestUtil.validateSearchIconButton(
+    tester: tester,
+    searchIconButtonState: SearchIconButtonState.disabled,
+  );
 
   if (isPlaylistListDisplayed) {
     IntegrationTestUtil.verifyWidgetIsEnabled(
@@ -19533,10 +19431,10 @@ Future<void> _verifyLocalSelectedPlaylistButtonsAndCheckbox({
   required WidgetTester tester,
   required bool isPlaylistListDisplayed,
 }) async {
-        IntegrationTestUtil.validateSearchIconButton(
-          tester: tester,
-          searchIconButtonState: SearchIconButtonState.disabled,
-        );
+  IntegrationTestUtil.validateSearchIconButton(
+    tester: tester,
+    searchIconButtonState: SearchIconButtonState.disabled,
+  );
 
   if (isPlaylistListDisplayed) {
     IntegrationTestUtil.verifyWidgetIsEnabled(
