@@ -194,7 +194,8 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                 context: _context,
                 message: addedPlaylistMessage,
                 warningMessageVM: _warningMessageVM,
-                themeProviderVM: themeProviderVM);
+                themeProviderVM: themeProviderVM,
+                warningMode: WarningMode.confirm);
           });
         }
 
