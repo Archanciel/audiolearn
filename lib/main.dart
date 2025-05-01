@@ -88,6 +88,17 @@ Future<void> _setWindowsAppSizeAndPosition({
 }) async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // If in integration test execution we need to set the app size
+  // similar as on Android smartphone, we place a isAppSizeNotTest.txt
+  // file in the app directory.
+  File file = File(
+    '${DirUtil.getApplicationPath(isTest: isTest)}${Platform.pathSeparator}isAppSizeNotTest.txt',
+  );
+
+  if (file.existsSync()) {
+    isTest = false;
+  }
+
   if (!kIsWeb && ScreenMixin.isHardwarePc()) {
     await getScreenList().then((List<Screen> screens) {
       // Assumez que vous voulez utiliser le premier écran (principal)
