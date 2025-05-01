@@ -12511,15 +12511,11 @@ void main() {
             size: 12828),
       ]);
 
-      // Tap the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // Now type on the 'Restore Playlists, Comments and Settings
-      // from Zip File ...' menu
-      await tester.tap(find.byKey(
-          const Key('appBarMenuRestorePlaylistsCommentsAndSettingsFromZip')));
-      await tester.pumpAndSettle();
+      // Execute the 'Restore Playlists, Comments and Settings from Zip
+      // File ...' menu
+      await IntegrationTestUtil.executeRestorePlaylists(
+        tester: tester,
+      );
 
       // Verify the displayed warning confirmation dialog
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(

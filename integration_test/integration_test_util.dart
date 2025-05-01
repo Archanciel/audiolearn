@@ -438,6 +438,7 @@ class IntegrationTestUtil {
     required int playableAudioLstAudioIndex,
     DateTime? modifiedAudioPausedDateTime,
     int modifiedAudioPositionSeconds = 0,
+    bool doRemoveDeletedAudioFiles = true,
   }) async {
     final String selectedPlaylistPath = path.join(
       kPlaylistDownloadRootPathWindowsTest,
@@ -478,12 +479,59 @@ class IntegrationTestUtil {
     // including the playlist containing the modified audio paused date
     // time, are reloaded.
 
+    await executeUpdatePlaylistJsonFiles(
+      tester: tester,
+      doRemoveDeletedAudioFiles: doRemoveDeletedAudioFiles,
+    );
+  }
+
+  static Future<void> executeUpdatePlaylistJsonFiles({
+    required WidgetTester tester,
+    bool doRemoveDeletedAudioFiles = true,
+  }) async {
     // Tap the appbar leading popup menu button
     await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
     await tester.pumpAndSettle();
 
-    // find the update playlist JSON file menu item and tap on it
+    // Find the update playlist JSON file menu item and tap on it
     await tester.tap(find.byKey(const Key('update_playlist_json_dialog_item')));
+    await tester.pumpAndSettle();
+
+    if (doRemoveDeletedAudioFiles) {
+      // Find the 'Remove deleted audio files' checkbox and tap
+      // on it
+      await tester.tap(find.byKey(const Key('checkbox_0_key')));
+      await tester.pumpAndSettle();
+    }
+
+    // Tap on the Ok button to set the comment end position to the
+    // audio duration value in the comment previous dialog.
+    await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+    await tester.pumpAndSettle();
+  }
+
+  static Future<void> executeRestorePlaylists({
+    required WidgetTester tester,
+    bool doReplaceExistingPlaylists = true,
+  }) async {
+    // Tap the appbar leading popup menu button
+    await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+    await tester.pumpAndSettle();
+
+    // Find the update playlist JSON file menu item and tap on it
+    await tester.tap(find.byKey(const Key('appBarMenuRestorePlaylistsCommentsAndSettingsFromZip')));
+    await tester.pumpAndSettle();
+
+    if (doReplaceExistingPlaylists) {
+      // Find the 'Remove deleted audio files' checkbox and tap
+      // on it
+      await tester.tap(find.byKey(const Key('checkbox_0_key')));
+      await tester.pumpAndSettle();
+    }
+
+    // Tap on the Ok button to set the comment end position to the
+    // audio duration value in the comment previous dialog.
+    await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
     await tester.pumpAndSettle();
   }
 

@@ -9461,16 +9461,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 size: 1038533), // 1040384
           ]);
 
-          // Tap the appbar leading popup menu button
-          await tester
-              .tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-          await tester.pumpAndSettle();
-
-          // Now type on the 'Restore Playlists, Comments and Settings
-          // from Zip File ...' menu
-          await tester.tap(find.byKey(const Key(
-              'appBarMenuRestorePlaylistsCommentsAndSettingsFromZip')));
-          await tester.pumpAndSettle(const Duration(milliseconds: 500));
+          // Execute the 'Restore Playlists, Comments and Settings from Zip
+          // File ...' menu
+          await IntegrationTestUtil.executeRestorePlaylists(
+            tester: tester,
+          );
 
           // Verify the displayed warning confirmation dialog
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
@@ -9639,16 +9634,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 size: 1038533), // 1040384
           ]);
 
-          // Tap the appbar leading popup menu button
-          await tester
-              .tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-          await tester.pumpAndSettle();
-
-          // Now type on the 'Restore Playlists, Comments and Settings
-          // from Zip File ...' menu
-          await tester.tap(find.byKey(const Key(
-              'appBarMenuRestorePlaylistsCommentsAndSettingsFromZip')));
-          await tester.pumpAndSettle(const Duration(milliseconds: 500));
+          // Execute the 'Restore Playlists, Comments and Settings from Zip
+          // File ...' menu
+          await IntegrationTestUtil.executeRestorePlaylists(
+            tester: tester,
+          );
 
           // Verify the displayed warning confirmation dialog
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
@@ -13963,7 +13953,8 @@ Future<void> _verifyOrderOfPlaylistAudioComments({
   }
 
   // Tap on the Close button to close the playlist comment dialog
-  await tester.tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
+  await tester
+      .tap(find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
   await tester.pumpAndSettle();
 }
 

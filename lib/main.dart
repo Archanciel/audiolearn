@@ -60,6 +60,7 @@ Future<void> main() async {
   if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
     await _setWindowsAppSizeAndPosition(
       isTest: isTest,
+      // isTest: false,
     );
   }
 
@@ -95,7 +96,7 @@ Future<void> _setWindowsAppSizeAndPosition({
 
       // Définissez la largeur et la hauteur de votre fenêtre
       double windowWidth = (isTest) ? 900 : 730;
-      double windowHeight = (isTest) ? 1700 : 1355;
+      double windowHeight = (isTest) ? 1700 : 1480;
 
       // Calculez la position X pour placer la fenêtre sur le côté droit de l'écran
       final double posX = screenRect.right - windowWidth + 10;

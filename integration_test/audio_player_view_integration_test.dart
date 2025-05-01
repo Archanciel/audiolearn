@@ -1087,7 +1087,7 @@ void main() {
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
       );
 
-      await applyRewindExcludedTesting(
+      await _applyRewindExcludedTesting(
         tester: tester,
         audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         audioToListenTitle: previouslyPartiallyListenedAudioTitle,
@@ -1121,7 +1121,7 @@ void main() {
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
       );
 
-      await applyRewindExcludedTesting(
+      await _applyRewindExcludedTesting(
         tester: tester,
         audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         audioToListenTitle: previouslyPartiallyListenedAudioTitle,
@@ -1155,7 +1155,7 @@ void main() {
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
       );
 
-      await applyRewindExcludedTesting(
+      await _applyRewindExcludedTesting(
         tester: tester,
         audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         audioToListenTitle: previouslyPartiallyListenedAudioTitle,
@@ -1189,7 +1189,7 @@ void main() {
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
       );
 
-      await applyRewindExcludedTesting(
+      await _applyRewindExcludedTesting(
         tester: tester,
         audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         audioToListenTitle: previouslyPartiallyListenedAudioTitle,
@@ -9416,7 +9416,7 @@ Future<void> _applyRewindTesting({
 /// paused n seconds before now. This is useful to test the rewind
 /// feature of the audio player which depends on the time between
 /// now and the last time the audio was paused.
-Future<void> applyRewindExcludedTesting({
+Future<void> _applyRewindExcludedTesting({
   required WidgetTester tester,
   required String audioPlaylistTitle,
   required String audioToListenTitle,
