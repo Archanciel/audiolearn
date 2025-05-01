@@ -317,12 +317,21 @@ class IntegrationTestUtil {
     String? selectedPlaylistTitle,
     String? replacePlaylistJsonFileName,
     bool tapOnPlaylistToggleButton = true,
+    bool setAppSizeToAndroidSize = false,
   }) async {
     // Purge the test playlist directory if it exists so that the
     // playlist list is empty
     DirUtil.deleteFilesInDirAndSubDirs(
       rootPath: kPlaylistDownloadRootPathWindowsTest,
     );
+
+    if (setAppSizeToAndroidSize) {
+      // Create a 'isAppSizeNotTest.txt' file to indicate that the app is
+      // opened in Android similar size.
+      String isAppSizeNotTestFilePath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}isAppSizeNotTest.txt";
+      File(isAppSizeNotTestFilePath).createSync(recursive: true);
+    }
 
     if (savedTestDataDirName != null) {
       // Copy the test initial audio data to the app dir
@@ -519,7 +528,8 @@ class IntegrationTestUtil {
     await tester.pumpAndSettle();
 
     // Find the update playlist JSON file menu item and tap on it
-    await tester.tap(find.byKey(const Key('appBarMenuRestorePlaylistsCommentsAndSettingsFromZip')));
+    await tester.tap(find.byKey(
+        const Key('appBarMenuRestorePlaylistsCommentsAndSettingsFromZip')));
     await tester.pumpAndSettle();
 
     if (doReplaceExistingPlaylists) {
@@ -2696,5 +2706,102 @@ class IntegrationTestUtil {
       final Text titleText = tile.title as Text;
       return titleText.data!;
     }).toList();
+  }
+
+  static Finder verifyCommentsInCommentListDialog({
+    required WidgetTester tester,
+    required Finder commentListDialogFinder,
+    required int commentsNumber,
+    required List<String> expectedTitlesLst,
+    required List<String> expectedContentsLst,
+    required List<String> expectedStartPositionsLst,
+    required List<String> expectedEndPositionsLst,
+    required List<String> expectedCreationDatesLst,
+    required List<String> expectedUpdateDatesLst,
+  }) {
+    // Find the list body containing the comments
+    final Finder listFinder = find.descendant(
+        of: commentListDialogFinder, matching: find.byType(ListBody));
+
+    // Find all the list items
+    final Finder gestureDetectorsFinder = find.descendant(
+        // 3 GestureDetector per comment item
+        of: listFinder,
+        matching: find.byType(GestureDetector));
+
+    // Check the number of items
+    expect(
+        gestureDetectorsFinder,
+        findsNWidgets(commentsNumber *
+            3)); // commentsNumber items * 3 GestureDetector per item
+
+    Finder commentTitleFinder;
+    Finder commentContentFinder;
+    Finder commentStartPositionFinder;
+    Finder commentEndPositionFinder;
+    Finder commentCreationDateFinder;
+    Finder commentUpdateDateFinder;
+
+    int expectListIndex = 0;
+
+    for (var i = 0; i < commentsNumber; i += 3) {
+      commentTitleFinder = find.descendant(
+        of: gestureDetectorsFinder.at(i),
+        matching: find.byKey(const Key('commentTitleKey')),
+      );
+      commentContentFinder = find.descendant(
+        of: gestureDetectorsFinder.at(i),
+        matching: find.byKey(const Key('commentTextKey')),
+      );
+      commentStartPositionFinder = find.descendant(
+        of: gestureDetectorsFinder.at(i),
+        matching: find.byKey(const Key('commentStartPositionKey')),
+      );
+      commentEndPositionFinder = find.descendant(
+        of: gestureDetectorsFinder.at(i),
+        matching: find.byKey(const Key('commentEndPositionKey')),
+      );
+      commentCreationDateFinder = find.descendant(
+        of: gestureDetectorsFinder.at(i),
+        matching: find.byKey(const Key('creation_date_key')),
+      );
+      commentUpdateDateFinder = find.descendant(
+        of: gestureDetectorsFinder.at(i),
+        matching: find.byKey(const Key('last_update_date_key')),
+      );
+
+      // Verify the text in the title, content, and position of each comment
+      expect(
+        tester.widget<Text>(commentTitleFinder).data,
+        expectedTitlesLst[expectListIndex],
+      );
+      expect(
+        tester.widget<Text>(commentContentFinder).data,
+        expectedContentsLst[expectListIndex],
+      );
+      expect(
+        tester.widget<Text>(commentStartPositionFinder).data,
+        expectedStartPositionsLst[expectListIndex],
+      );
+      expect(
+        tester.widget<Text>(commentEndPositionFinder).data,
+        expectedEndPositionsLst[expectListIndex],
+      );
+      expect(tester.widget<Text>(commentCreationDateFinder).data,
+          expectedCreationDatesLst[expectListIndex],
+          reason: 'Failure at index $expectListIndex');
+
+      if (expectedUpdateDatesLst[expectListIndex].isNotEmpty) {
+        // if the update date equals the creation date, the Text widget
+        // is not displayed
+        expect(tester.widget<Text>(commentUpdateDateFinder).data,
+            expectedUpdateDatesLst[expectListIndex],
+            reason: 'Failure at index $expectListIndex');
+      }
+
+      expectListIndex++;
+    }
+
+    return gestureDetectorsFinder;
   }
 }

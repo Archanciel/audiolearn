@@ -11,6 +11,7 @@ import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 import 'package:audiolearn/views/widgets/audio_sort_filter_dialog.dart';
+import 'package:audiolearn/views/widgets/comment_list_add_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -13864,6 +13865,144 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
+    });
+    testWidgets(
+        '''Open the app in Android similar size and select the french language. Click on the comment icon button after
+           clicking on the pictured and commented audio title to open the audio player view. Then, the comment add list
+           dialog is opened. Verify that the create comment is usable to add a new comment. Since the french translation
+           of 'Comments' is 'Commentaires' which requests more space than the english one, the comment add button was
+           not clickable before this bug was fixed. This test is verify that the bug is fixed.''',
+        (WidgetTester tester) async {
+      const String youtubePlaylistTitle = 'Jésus-Christ';
+      const String audioAlreadyUsingPictureTitle =
+          'NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_player_picture_test',
+        selectedPlaylistTitle: youtubePlaylistTitle,
+        tapOnPlaylistToggleButton: false,
+        setAppSizeToAndroidSize: true,
+      );
+
+      // First, set the application language to French
+      await IntegrationTestUtil.setApplicationLanguage(
+        tester: tester,
+        language: Language.french,
+      );
+
+      // Go to the audio player view
+      final Finder audioForPictureTitleListTileTextWidgetFinder =
+          find.text(audioAlreadyUsingPictureTitle);
+
+      await tester.tap(audioForPictureTitleListTileTextWidgetFinder);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+
+      // Tap on the comment icon button to open the comment list add
+      // dialog
+
+      Finder commentInkWellButtonFinder = find.byKey(
+        const Key('commentsInkWellButton'),
+      );
+
+      await tester.tap(commentInkWellButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Tap on the Add comment icon button to open the add edit comment
+      // dialog
+      await tester
+          .tap(find.byKey(const Key('addPositionedCommentIconButtonKey')));
+      await tester.pumpAndSettle();
+
+      // Enter comment title text
+      String commentTitle = 'New comment';
+      final Finder textFieldFinder =
+          find.byKey(const Key('commentTitleTextField'));
+
+      await tester.enterText(
+        textFieldFinder,
+        commentTitle,
+      );
+      await tester.pumpAndSettle();
+
+      // Enter comment text
+      String commentText = 'New comment description';
+      final Finder commentContentTextFieldFinder =
+          find.byKey(const Key('commentContentTextField'));
+
+      await tester.enterText(
+        commentContentTextFieldFinder,
+        commentText,
+      );
+      await tester.pumpAndSettle();
+
+      // Tap on the add/edit comment button to save the comment
+
+      final Finder addOrUpdateCommentTextButton =
+          find.byKey(const Key('addOrUpdateCommentTextButton'));
+      await tester.tap(addOrUpdateCommentTextButton);
+      await tester.pumpAndSettle();
+
+      // Verify that the comment list dialog now displays the
+      // added comment
+
+      final Finder commentListDialogFinder = find.byType(CommentListAddDialog);
+
+      List<String> expectedTitles = [
+        'New comment',
+        '7ème leçon: rempli ton coeur de gratitude pour éteindre la colère',
+        'Till end', // created comment
+      ];
+
+      List<String> expectedContents = [
+        'New comment description', // created comment
+        "Jusqu'à la fin.",
+        '',
+      ];
+
+      List<String> expectedStartPositions = [
+        '14:16', // created comment
+        '23:42',
+        '24:04',
+      ];
+
+      List<String> expectedEndPositions = [
+        '14:16', // created comment
+        '23:46',
+        '24:08',
+      ];
+
+      List<String> expectedCreationDates = [
+        frenchDateFormatYy.format(DateTime.now()), // created comment
+        '13/12/24',
+        '01/04/25',
+      ];
+
+      List<String> expectedUpdateDates = [
+        '', // created comment
+        '01/04/25',
+        '',
+      ];
+
+      // Verify content of each list item
+      IntegrationTestUtil.verifyCommentsInCommentListDialog(
+          tester: tester,
+          commentListDialogFinder: commentListDialogFinder,
+          commentsNumber: 3,
+          expectedTitlesLst: expectedTitles,
+          expectedContentsLst: expectedContents,
+          expectedStartPositionsLst: expectedStartPositions,
+          expectedEndPositionsLst: expectedEndPositions,
+          expectedCreationDatesLst: expectedCreationDates,
+          expectedUpdateDatesLst: expectedUpdateDates);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
     });
   });
   group('Change playlist audio quality tests', () {
