@@ -605,7 +605,7 @@ class PictureVM extends ChangeNotifier {
     required String sourceDirectoryPath,
   }) {
     List<String> pictureJpgPathFileNamesLst = DirUtil.listPathFileNamesInDir(
-      directoryPath: "$sourceDirectoryPath${path.separator}$kPictureDirName",
+      directoryPath: sourceDirectoryPath,
       fileExtension: 'jpg',
     );
 

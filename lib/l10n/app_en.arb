@@ -553,7 +553,7 @@
   "searchInYoutubeChannelName": "Include Youtube channel",
   "searchInYoutubeChannelNameTooltip": "If set, search words or sentences are searched on Youtube channel name as well.",
   "savePlaylistAndCommentsToZipMenu": "Save Playlists, Comments, Pictures and Settings to Zip File ...",
-  "savePlaylistAndCommentsToZipTooltip": "Saving the playlists, their audio comments and pictures to a zip file. The zip file will contain the playlists JSON files as well as the comment and picture JSON files. Additionally, the application settings.json will be saved. The audio files will not be included.",
+  "savePlaylistAndCommentsToZipTooltip": "Saving the playlists, their audio comments and pictures to a zip file. The zip file will contain the playlists JSON files as well as the comment and picture JSON files. Additionally, the application settings.json will be saved. The MP3 and JPG files will not be included.",
   "setYoutubeChannelMenu": "Youtube channel setting",
   "confirmYoutubeChannelModifications": "The Youtube channel was set in {numberOfModifiedDownloadedAudio} downloaded audio's and in {numberOfModifiedPlayableAudio} playable audio.",
   "@confirmYoutubeChannelModifications": {
@@ -833,13 +833,13 @@
   "addPrivateYoutubePlaylist": "Trying to add a private Youtube playlist is not possible since the audio's of a private playlist can not be downloaded. To solve the problem, edit the playlist on Youtube and change its visibility from \"Private\" to \"Unlisted\" or to \"Public\" and then re-add it to the application.",
   "addAudioPicture": "Add Audio Picture ...",
   "removeAudioPicture": "Remove Audio Picture",
-  "savedAppDataToZip": "Saved playlist, comment and picture json files as well as application settings to \"{filePathName}\".",
-  "appDataCouldNotBeSavedToZip": "Playlist, comment and picture json files as well as application settings could not be saved to zip.",
+  "savedAppDataToZip": "Saved playlist, comment and picture JSON files as well as application settings to \"{filePathName}\".",
+  "appDataCouldNotBeSavedToZip": "Playlist, comment and picture JSON files as well as application settings could not be saved to zip.",
   "pictured": "Pictured",
   "notPictured": "Unpictured",
   "restorePlaylistAndCommentsFromZipMenu": "Restore Playlists, Comments, Pictures and Settings from Zip File ...",
   "restorePlaylistAndCommentsFromZipTooltip": "Restoring the playlists, their audio comments, pictures and the application settings from a saved zip file. The zip file contains the playlists, the comments, the pictures as well as the settings JSON files. The audio files are not included in it.",
-  "restoredAppDataFromZip": "Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture json files as well as the application settings from \"{filePathName}\".",
+  "restoredAppDataFromZip": "Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as the application settings from \"{filePathName}\".",
   "@restoredAppDataFromZip": {
     "description": "Warning message indicating that the default SF parms were not applied to move audio",
     "placeholders": {
@@ -849,7 +849,7 @@
       "filePathName": {}
     }
   },
-  "appDataCouldNotBeRestoredFromZip": "Playlist, comment and picture json files as well as application settings could not be restored from zip.",
+  "appDataCouldNotBeRestoredFromZip": "Playlist, comment and picture JSON files as well as application settings could not be restored from zip.",
   "deleteFilteredAudioFromPlaylistAsWell": "Delete filtered Audio's from Playlist as well ...",
   "deleteFilteredAudioFromPlaylistAsWellConfirmationTitle": "Delete audio's filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\" as well (will be re-downloadable)",
   "@deleteFilteredAudioFromPlaylistAsWellConfirmationTitle": {
@@ -941,5 +941,8 @@
   "removeDeletedAudioFiles": "Remove deleted audio files",
   "updatePlaylistJsonFilesHelpTitle": "Update Playlist JSON Files function",
   "updatePlaylistJsonFilesHelpContent": "Important note: This function is only necessary for changes made OUTSIDE the application. Changes made directly within the application (adding/removing playlists, adding/importing/deleting audio files) are automatically processed and do not require using this update function.",
-  "updatePlaylistJsonFilesFirstHelpTitle": "Using the Update Playlist JSON Files function"
+  "updatePlaylistJsonFilesFirstHelpTitle": "Using the Update Playlist JSON Files function",
+  "saveUniquePlaylistCommentsAndPicturesToZipMenu": "Save Playlist, Comments and Pictures to Zip File ...",
+  "saveUniquePlaylistCommentsAndPicturesToZipTooltip": "Saving the playlist, their audio comments and pictures to a zip file. Only the JSON and JPG files are copied. The MP3 files will not be included.",
+  "savedUniquePlaylistToZip": "Saved playlist, comment and picture JSON files to \"{filePathName}\"."
 }

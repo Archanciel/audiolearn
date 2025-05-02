@@ -30,7 +30,7 @@ enum AppBarPopupMenu {
   openSettingsDialog,
   enableNextAudioAutoPlay,
   updatePlaylistJson,
-  savePlaylistAndCommentsToZip,
+  savePlaylistsCommentsAndPicturesToZip,
   restorePlaylistAndCommentsFromZip,
 }
 
@@ -680,7 +680,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
           ),
           PopupMenuItem<AppBarPopupMenu>(
             key: const Key('appBarMenuCopyPlaylistsAndCommentsToZip'),
-            value: AppBarPopupMenu.savePlaylistAndCommentsToZip,
+            value: AppBarPopupMenu.savePlaylistsCommentsAndPicturesToZip,
             child: Tooltip(
               message: AppLocalizations.of(context)!
                   .savePlaylistAndCommentsToZipTooltip,
@@ -786,8 +786,8 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
               );
             });
             break;
-          case AppBarPopupMenu.savePlaylistAndCommentsToZip:
-            await UiUtil.savePlaylistsCommentsAndAppSettingsToZip(
+          case AppBarPopupMenu.savePlaylistsCommentsAndPicturesToZip:
+            await UiUtil.savePlaylistsCommentsPicturesAndAppSettingsToZip(
               context: context,
             );
             break;

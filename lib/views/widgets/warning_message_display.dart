@@ -1012,9 +1012,11 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
           } else {
             yesOrNo = AppLocalizations.of(context)!.noOperation;
             if ((_warningMessageVM.isAudioCopied)) {
-              operationType = AppLocalizations.of(context)!.noOperationCopiedOperationType;
+              operationType =
+                  AppLocalizations.of(context)!.noOperationCopiedOperationType;
             } else {
-              operationType = AppLocalizations.of(context)!.noOperationMovedOperationType;
+              operationType =
+                  AppLocalizations.of(context)!.noOperationMovedOperationType;
             }
           }
 
@@ -1052,21 +1054,28 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
-      case WarningMessageType.savedAppDataToZip:
+      case WarningMessageType.savedUniquePlaylistOrAllPlaylistsAndAppDataToZip:
         WidgetsBinding.instance.addPostFrameCallback((_) {
           String savedAppDataToZipMessage;
 
           if (_warningMessageVM.zipFilePathName != '') {
-            savedAppDataToZipMessage =
-                AppLocalizations.of(context)!.savedAppDataToZip(
-              _warningMessageVM.zipFilePathName,
-            );
-
-            if (_warningMessageVM.savedOrRestoredPictureJpgNumber > 0) {
-              savedAppDataToZipMessage +=
-                  AppLocalizations.of(context)!.savedPictureNumberMessage(
-                _warningMessageVM.savedOrRestoredPictureJpgNumber,
+            if (_warningMessageVM.uniquePlaylistIsSaved) {
+              savedAppDataToZipMessage =
+                  AppLocalizations.of(context)!.savedUniquePlaylistToZip(
+                _warningMessageVM.zipFilePathName,
               );
+            } else {
+              savedAppDataToZipMessage =
+                  AppLocalizations.of(context)!.savedAppDataToZip(
+                _warningMessageVM.zipFilePathName,
+              );
+
+              if (_warningMessageVM.savedOrRestoredPictureJpgNumber > 0) {
+                savedAppDataToZipMessage +=
+                    AppLocalizations.of(context)!.savedPictureNumberMessage(
+                  _warningMessageVM.savedOrRestoredPictureJpgNumber,
+                );
+              }
             }
 
             _displayWarningDialog(

@@ -166,12 +166,14 @@ enum WarningMessageType {
   confirmSingleVideoDownload, // The case if the user clicks on the
   // single video download button after selecting a target playlist.
 
-  audioCopiedOrMovedFromPlaylistToPlaylist, // The case if the user clicks on
-  // the copy/move audio to playlist menu item.
+  audioCopiedOrMovedFromPlaylistToPlaylist, // The case if the user clicks
+  // on the copy/move audio to playlist menu item.
 
-  savedAppDataToZip, // The case if the user clicks on the 'Save
-  // Playlist and Comments to Zip File' menu item located in the
-  // appbar leading popup menu.
+  savedUniquePlaylistOrAllPlaylistsAndAppDataToZip, // The case if the user
+  // clicks on the 'Save Playlists, Comments and Pictures to Zip File' menu
+  // item located in the appbar leading popup menu or on the 'Save Playlist,
+  // Comments and Pictures to Zip File' menu item located in the playlist
+  // popup menu.
 
   restoreAppDataFromZip, // The case if the user clicks on the
   // 'Restore Playlist, Comments and Settings from Zip File' menu
@@ -774,14 +776,18 @@ class WarningMessageVM extends ChangeNotifier {
   String get zipFilePathName => _zipFilePathName;
   int _savedOrRestoredPictureJpgNumber = 0;
   int get savedOrRestoredPictureJpgNumber => _savedOrRestoredPictureJpgNumber;
+  bool _uniquePlaylistIsSaved = false;
+  bool get uniquePlaylistIsSaved => _uniquePlaylistIsSaved;
   void confirmSavingToZip({
     required String zipFilePathName,
     required int savedPictureNumber,
+    bool uniquePlaylistIsSaved = false,
   }) {
     _zipFilePathName = zipFilePathName;
     _savedOrRestoredPictureJpgNumber = savedPictureNumber;
+    _uniquePlaylistIsSaved = uniquePlaylistIsSaved;
 
-    warningMessageType = WarningMessageType.savedAppDataToZip;
+    warningMessageType = WarningMessageType.savedUniquePlaylistOrAllPlaylistsAndAppDataToZip;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();

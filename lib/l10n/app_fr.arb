@@ -661,7 +661,7 @@
   "searchInYoutubeChannelName": "Inclure la chaîne Youtube",
   "searchInYoutubeChannelNameTooltip": "Inclure le nom de la chaîne Youtube dans la recherche.",
   "savePlaylistAndCommentsToZipMenu": "Sauver les playlists, commentaires, photos et settings dans un fichier zip ...",
-  "savePlaylistAndCommentsToZipTooltip": "Sauvegarde les playlists, des commentaires er des photos ainsi que le fichier settings.json contenant les paramètres de l'application dans un fichier zip. Seuls les fichiers json sont copiés. Les fichiers audio ne sont pas inclus.",
+  "savePlaylistAndCommentsToZipTooltip": "Sauvegarde les playlists, les commentaires et les photos ainsi que le fichier settings.json contenant les paramètres de l'application dans un fichier zip. Seuls les fichiers JSON sont copiés. Les fichiers MP3 et JPG ne sont pas inclus.",
   "setYoutubeChannelMenu": "Youtube channel définition",
   "confirmYoutubeChannelModifications": "La chaîne Youtube a été définie dans {numberOfModifiedDownloadedAudio} audio téléchargés ainsi que dans {numberOfModifiedPlayableAudio} audio écoutables.",
   "@confirmYoutubeChannelModifications": {
@@ -1115,13 +1115,13 @@
   "addPrivateYoutubePlaylist": "Ajouter une playlist YouTube privée n'est pas possible car les audio's d'une playlist privée ne peuvent pas être téléchargés. Pour résoudre le problème, éditez la playlist sur YouTube et changez sa confidentialité de \"Privée\" à \"Non répertoriée\" ou à \"Publique\", puis réajoutez-la à l'application.",
   "addAudioPicture": "Ajouter une photo à l'audio ...",
   "removeAudioPicture": "Eliminer la photo de l'audio ...",
-  "savedAppDataToZip": "Fichiers json des playlists, des commentaires et des photos ainsi que les paramètres de l'application sauvagardés dans \"{filePathName}\".",
-  "appDataCouldNotBeSavedToZip": "Les fichiers json des playlists, des commentaires et des photos ainsi que les paramètres de l'application n'ont pu être sauvagardés dans un zip !",
+  "savedAppDataToZip": "Fichiers JSON des playlists, des commentaires et des photos ainsi que les paramètres de l'application sauvagardés dans \"{filePathName}\".",
+  "appDataCouldNotBeSavedToZip": "Les fichiers JSON des playlists, des commentaires et des photos ainsi que les paramètres de l'application n'ont pu être sauvagardés dans un zip !",
   "pictured": "Avec photo",
   "notPictured": "Sans ph.",
   "restorePlaylistAndCommentsFromZipMenu": "Restaurer les playlists, commentaires, photos et settings depuis un fichier zip ...",
-  "restorePlaylistAndCommentsFromZipTooltip": "Restaure les playlists, les commentaires, les photos ainsi que les paramètres de l'application à partir d'un fichier zip préalablement sauvé. Seuls les fichiers json sont restaurés. Les fichiers audio n'étant pas inclus dans le fichier zip, ils ne sont pas restaurés.",
-  "restoredAppDataFromZip": "Les fichiers json de {playlistsNumber} playlists, de {commentsNumber} commentaires et de {picturesNumber} photos ainsi que les paramètres de l'application ont été restaurés depuis \"{filePathName}\".",
+  "restorePlaylistAndCommentsFromZipTooltip": "Restaure les playlists, les commentaires, les photos ainsi que les paramètres de l'application à partir d'un fichier zip préalablement sauvé. Seuls les fichiers JSON sont restaurés. Les fichiers audio n'étant pas inclus dans le fichier zip, ils ne sont pas restaurés.",
+  "restoredAppDataFromZip": "Les fichiers JSON de {playlistsNumber} playlists, de {commentsNumber} commentaires et de {picturesNumber} photos ainsi que les paramètres de l'application ont été restaurés depuis \"{filePathName}\".",
   "@restoredAppDataFromZip": {
     "description": "Warning message indicating that the default SF parms were not applied to move audio",
     "placeholders": {
@@ -1139,7 +1139,7 @@
       }
     }
   },
-  "appDataCouldNotBeRestoredFromZip": "Les fichiers json des playlists et des commentaires ainsi que les paramètres de l'application n'ont pu être restaurés à partir d'un zip !",
+  "appDataCouldNotBeRestoredFromZip": "Les fichiers JSON des playlists et des commentaires ainsi que les paramètres de l'application n'ont pu être restaurés à partir d'un zip !",
   "deleteFilteredAudioFromPlaylistAsWell": "Supprimer les audio's filtrés de la playlist également ...",
   "deleteFilteredAudioFromPlaylistAsWellConfirmationTitle": "Supprimer les audio's filtrés par le paramètre \"{sortFilterParmsName}\" de la playlist \"{playlistTitle}\" également (pourront être re-téléchargés)",
   "@deleteFilteredAudioFromPlaylistAsWellConfirmationTitle": {
@@ -1268,5 +1268,8 @@
   "removeDeletedAudioFiles": "Effacer les fichiers audio\nsupprimés",
   "updatePlaylistJsonFilesHelpTitle": "Fonction de mise à jour des fichiers playlist JSON",
   "updatePlaylistJsonFilesHelpContent": "Note importante: Cette fonction est uniquement nécessaire pour les modifications effectuées HORS application. Les modifications réalisées directement dans l'application (ajout/suppression de playlists, ajout/importation/suppression de fichiers audio) sont automatiquement prises en compte et ne nécessitent pas d'utiliser cette fonction de mise à jour.",
-  "updatePlaylistJsonFilesFirstHelpTitle": "Utilisation de la fonction de mise à jour des fichiers playlist JSON"  
+  "updatePlaylistJsonFilesFirstHelpTitle": "Utilisation de la fonction de mise à jour des fichiers playlist JSON",
+  "saveUniquePlaylistCommentsAndPicturesToZipMenu": "Sauver la playlist, ses commentaires et ses photos dans un fichier zip ...",
+  "saveUniquePlaylistCommentsAndPicturesToZipTooltip": "Sauvegarde la playlist, les commentaires et les photos de ses audio's dans un fichier zip. Seuls les fichiers JSON et JPG sont copiés. Les fichiers MP3 ne sont pas inclus.",
+  "savedUniquePlaylistToZip": "Fichiers JSON de la playlist, des commentaires et des photos dans \"{filePathName}\"."
 }

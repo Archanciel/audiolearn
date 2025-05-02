@@ -1964,4 +1964,18 @@ class MockAppLocalizations extends AppLocalizations {
     Object percentValue,
   ) =>
       "Decrease the audio volume (currently $percentValue). Disabled when minimum volume is reached.";
+
+  @override
+  String get saveUniquePlaylistCommentsAndPicturesToZipMenu =>
+      "Save Playlist, Comments and Pictures to Zip File ...";
+
+  @override
+  String get saveUniquePlaylistCommentsAndPicturesToZipTooltip =>
+      "Saving the playlist, their audio comments and pictures to a zip file. The zip file will contain the playlist JSON file as well as the comment and picture JSON files. The audio files will not be included.";
+
+  @override
+  String savedUniquePlaylistToZip(
+    Object filePathName,
+  ) =>
+      "Saved playlist, comment and picture JSON files to \"$filePathName\".";
 }
