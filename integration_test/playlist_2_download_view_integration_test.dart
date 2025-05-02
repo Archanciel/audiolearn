@@ -11975,7 +11975,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Playlist and comment json files as well as application settings could not be saved to zip.",
+            "Playlist, comment and picture json files as well as application settings could not be saved to zip.",
         isWarningConfirming: false,
       );
 
