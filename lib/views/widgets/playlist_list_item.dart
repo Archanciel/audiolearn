@@ -38,6 +38,7 @@ enum PlaylistPopupMenuAction {
   setPlaylistAudioPlaySpeed,
   setPlaylistAudioQuality,
   filteredAudioActions,
+  savePlaylistCommentsAndPicturesToZip,
   deletePlaylist,
 }
 
@@ -236,6 +237,16 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
           key: const Key('popup_menu_filtered_audio_actions'),
           value: PlaylistPopupMenuAction.filteredAudioActions,
           child: Text(AppLocalizations.of(context)!.filteredAudioActions),
+        ),
+        PopupMenuItem<PlaylistPopupMenuAction>(
+          key: const Key('popup_menu_save_playlist_comments_pictures_to_zip'),
+          value: PlaylistPopupMenuAction.savePlaylistCommentsAndPicturesToZip,
+          child: Tooltip(
+            message: AppLocalizations.of(context)!
+                .saveUniquePlaylistCommentsAndPicturesToZipTooltip,
+            child: Text(AppLocalizations.of(context)!
+                .saveUniquePlaylistCommentsAndPicturesToZipMenu),
+          ),
         ),
         PopupMenuItem<PlaylistPopupMenuAction>(
           key: const Key('popup_menu_delete_playlist'),
@@ -469,6 +480,12 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               context: context,
               playlistListVMlistenFalse: playlistListVMlistenFalse,
               warningMessageVMlistenFalse: warningMessageVMlistenFalse,
+            );
+            break;
+          case PlaylistPopupMenuAction.savePlaylistCommentsAndPicturesToZip:
+            await UiUtil.saveUniquePlaylistCommentsAAndPicturesToZip(
+              context: context,
+              playlist: playlist,
             );
             break;
           case PlaylistPopupMenuAction.deletePlaylist:

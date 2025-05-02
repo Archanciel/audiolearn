@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:audiolearn/models/playlist.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -64,7 +65,7 @@ class UiUtil {
     return [Colors.white, Colors.blue];
   }
 
-  static Future<void> savePlaylistsCommentsAndAppSettingsToZip({
+  static Future<void> savePlaylistsCommentsPicturesAndAppSettingsToZip({
     required BuildContext context,
   }) async {
     String? targetSaveDirectoryPath = await filePickerSelectTargetDir();
@@ -78,6 +79,25 @@ class UiUtil {
       listen: false,
     ).savePlaylistsCommentsPicturesAndSettingsJsonFilesToZip(
       targetDirectoryPath: targetSaveDirectoryPath,
+    );
+  }
+
+  static Future<void> saveUniquePlaylistCommentsAAndPicturesToZip({
+    required BuildContext context,
+    required Playlist playlist,
+  }) async {
+    String? targetSaveDirectoryPath = await filePickerSelectTargetDir();
+
+    if (targetSaveDirectoryPath == null) {
+      return;
+    }
+
+    await Provider.of<PlaylistListVM>(
+      context,
+      listen: false,
+    ).saveUniquePlaylistJsonFilesToZip(
+      playlist: playlist,
+      targetDir: targetSaveDirectoryPath,
     );
   }
 

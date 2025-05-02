@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:archive/archive.dart';
 import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:collection/collection.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -2679,16 +2680,18 @@ class PlaylistListVM extends ChangeNotifier {
   Future<String> savePlaylistsCommentsPicturesAndSettingsJsonFilesToZip({
     required String targetDirectoryPath,
   }) async {
-    String savedZipFilePathName = await _saveToZip(
+    String savedZipFilePathName = await _saveAllJsonFilesToZip(
       targetDir: targetDirectoryPath,
     );
 
     if (savedZipFilePathName.isEmpty) {
       // The case if the target directory does not exist or is invalid.
-      // In this situation, a warning message is displayed instead of
-      // confirmation message.
+      // In this situation, since the passed savedZipFilePathName is empty,
+      // a warning message is displayed instead of a confirmation message.
       _warningMessageVM.confirmSavingToZip(
-          zipFilePathName: savedZipFilePathName, savedPictureNumber: 0);
+        zipFilePathName: savedZipFilePathName,
+        savedPictureNumber: 0,
+      );
 
       return savedZipFilePathName;
     }
@@ -2706,9 +2709,9 @@ class PlaylistListVM extends ChangeNotifier {
     return savedZipFilePathName;
   }
 
-  // Returns the saved zip file path name, '' if the playlists source dir or the
-  // zip save to target dir do not exist.
-  Future<String> _saveToZip({
+  /// Returns the saved zip file path name, '' if the playlists source dir or the
+  /// target dir in which to save the zip does not exist.
+  Future<String> _saveAllJsonFilesToZip({
     required String targetDir,
   }) async {
     String playlistsRootPath = _settingsDataService.get(
@@ -2781,6 +2784,63 @@ class PlaylistListVM extends ChangeNotifier {
     return zipFilePathName;
   }
 
+  /// Method called when the user clicks on the 'Save Playlist, Comments, Pictures
+  /// Json files to Zip File' playlist menu item.
+  ///
+  /// Returns the saved zip file path name, '' if the  target dir in which to save
+  /// the zip does not exist.
+  Future<String> saveUniquePlaylistJsonFilesToZip({
+    required Playlist playlist,
+    required String targetDir,
+  }) async {
+    String applicationPath = _settingsDataService.get(
+      settingType: SettingType.dataLocation,
+      settingSubType: DataLocation.appSettingsPath,
+    );
+
+    Directory sourceDir = Directory(playlist.downloadPath);
+
+    if (!sourceDir.existsSync() || targetDir == '/') {
+      return '';
+    }
+
+    // Create a zip encoder
+    final archive = Archive();
+
+    // Traverse the source directory and find matching files
+    await for (FileSystemEntity entity
+        in sourceDir.list(recursive: true, followLinks: false)) {
+      if (entity is File && path.extension(entity.path) == '.json') {
+        String relativePath = path.relative(entity.path, from: applicationPath);
+
+        // Add the file to the archive, preserving the relative path
+        List<int> fileBytes = await entity.readAsBytes();
+        archive.addFile(ArchiveFile(relativePath, fileBytes.length, fileBytes));
+      }
+    }
+
+    // Save the archive to a zip file in the target directory
+    String zipFileName = "${playlist.title}.zip";
+    String savedZipFilePathName = path.join(targetDir, zipFileName);
+
+    File zipFile = File(savedZipFilePathName);
+    zipFile.writeAsBytesSync(ZipEncoder().encode(archive), flush: true);
+
+    // Saving the picture jpg files to the 'pictures' directory
+    // located in the target directory where the zip file is saved.
+    int savedPictureNumber = 0;
+    // int savedPictureNumber = _pictureVM.savePictureJpgFilesToTargetDirectory(
+    //   targetDirectoryPath: targetDirectoryPath,
+    // );
+
+    _warningMessageVM.confirmSavingToZip(
+        zipFilePathName: savedZipFilePathName,
+        savedPictureNumber: savedPictureNumber,
+        uniquePlaylistIsSaved: true);
+
+    return savedZipFilePathName;
+  }
+
   /// Method called when the user clicks on the 'Restore Playlist, Comments,
   /// Pictures and Settings from Zip File' menu item located in the appbar
   /// leading popup menu.
@@ -2802,15 +2862,6 @@ class PlaylistListVM extends ChangeNotifier {
     List<dynamic> restoredInfoLst = await _restoreFilesFromZip(
       zipFilePathName: zipFilePathName,
       doReplaceExistingPlaylists: doReplaceExistingPlaylists,
-    );
-
-    // Saving the picture jpg files to the 'pictures' directory
-    // located in the target directory where the zip file is saved.
-    int restoredPictureNumber =
-        _pictureVM.restorePictureJpgFilesFromSourceDirectory(
-      sourceDirectoryPath: DirUtil.getPathFromPathFileName(
-        pathFileName: zipFilePathName,
-      ),
     );
 
     await _mergeRestoredFromZipSettingsWithCurrentAppSettings();
@@ -2837,6 +2888,16 @@ class PlaylistListVM extends ChangeNotifier {
     if (!_isPlaylistListExpanded) {
       getUpToDateSelectablePlaylists();
     }
+
+    String? pictureSourceDirectoryPath =
+        await FilePicker.platform.getDirectoryPath();
+
+    // Saving the picture jpg files to the 'pictures' directory
+    // located in the target directory where the zip file is saved.
+    int restoredPictureNumber =
+        _pictureVM.restorePictureJpgFilesFromSourceDirectory(
+      sourceDirectoryPath: pictureSourceDirectoryPath ?? '',
+    );
 
     // Display a confirmation message to the user.
     _warningMessageVM.confirmRestorationFromZip(
