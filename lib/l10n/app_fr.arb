@@ -1116,7 +1116,7 @@
   "addAudioPicture": "Ajouter une photo à l'audio ...",
   "removeAudioPicture": "Eliminer la photo de l'audio ...",
   "savedAppDataToZip": "Fichiers json des playlists, des commentaires et des photos ainsi que les paramètres de l'application sauvagardés dans \"{filePathName}\".",
-  "appDataCouldNotBeSavedToZip": "Les fichiers json des playlists et des commentaires ainsi que les paramètres de l'application n'ont pu être sauvagardés dans un zip !",
+  "appDataCouldNotBeSavedToZip": "Les fichiers json des playlists, des commentaires et des photos ainsi que les paramètres de l'application n'ont pu être sauvagardés dans un zip !",
   "pictured": "Avec photo",
   "notPictured": "Sans ph.",
   "restorePlaylistAndCommentsFromZipMenu": "Restaurer les playlists, commentaires, photos et settings depuis un fichier zip ...",
