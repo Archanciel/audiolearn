@@ -184,14 +184,10 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       listen: true,
     );
 
-    File? audioPictureFile;
-
     if (audioPlayerVMlistenFalse.currentAudio == null) {
       _audioPlaySpeed = 1.0;
     } else {
       _audioPlaySpeed = audioPlayerVMlistenFalse.currentAudio!.audioPlaySpeed;
-      audioPictureFile = pictureVMlistenTrue.getLastAddedAudioPictureFile(
-          audio: audioPlayerVMlistenFalse.currentAudio!);
     }
 
     Widget viewContent = Column(
@@ -211,16 +207,15 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
           commentVMlistenTrue: commentVMlistenTrue,
           pictureVMlistenTrue: pictureVMlistenTrue,
-          audioPictureFile: audioPictureFile,
         ),
         (playlistListVMlistenFalse.isPlaylistListExpanded)
             ? _buildExpandedPlaylistList(
                 playlistListVMlistenFalse: playlistListVMlistenFalse)
             : const SizedBox.shrink(),
         _buildPlayButtonOrAudioPicture(
-            playlistListVMlistenTrue: playlistListVMlistenTrue,
-            audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-            audioPictureFile: audioPictureFile),
+          playlistListVMlistenTrue: playlistListVMlistenTrue,
+          audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+        ),
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -258,11 +253,27 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   Widget _buildPlayButtonOrAudioPicture({
     required PlaylistListVM playlistListVMlistenTrue,
     required AudioPlayerVM audioPlayerVMlistenFalse,
-    required File? audioPictureFile,
   }) {
     return ValueListenableBuilder<String?>(
       valueListenable: audioPlayerVMlistenFalse.currentAudioTitleNotifier,
       builder: (context, currentAudioTitle, child) {
+       // Obtaining the audio picture file when the current audio
+        // is title changed, which is the case when a new audio is
+        // selected in the audio playable list dialog ensures that
+        // the displayed audio picture is correct.
+        File? audioPictureFile;
+        Playlist? uniqueSelectedPlaylist =
+            playlistListVMlistenTrue.uniqueSelectedPlaylist;
+        if (uniqueSelectedPlaylist != null) {
+          Audio? currentAudio = uniqueSelectedPlaylist
+              .getCurrentOrLastlyPlayedAudioContainedInPlayableAudioLst();
+          if (currentAudio != null) {
+            audioPictureFile = Provider.of<PictureVM>(
+              context,
+              listen: true,
+            ).getLastAddedAudioPictureFile(audio: currentAudio);
+          }
+        }
         return (audioPictureFile != null)
             ? _buildAudioPictureOnScreenCenter(
                 audioPictureFile: audioPictureFile,
@@ -288,19 +299,30 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     required AudioPlayerVM audioPlayerVMlistenFalse,
     required CommentVM commentVMlistenTrue,
     required PictureVM pictureVMlistenTrue,
-    required File? audioPictureFile,
   }) {
     return ValueListenableBuilder<String?>(
       valueListenable: audioPlayerVMlistenFalse.currentAudioTitleNotifier,
       builder: (context, currentAudioTitle, child) {
         // Even though currentAudioTitle is not directly used,
         // this ensures that the second line part containing or
-        // not a play//pause button as well as the audio speed
+        // not a play/pause button as well as the audio speed
         // text button ate rebuilt whenever the audio title changes,
         // which is the case when a new audio is selected in the
         // audio playable list dialog.
-
+        //
+        // Same advantage for the audio picture file definition
+        // which is used to display or not the play/pause button
+        // on the second line.
+        File? audioPictureFile;
         Audio? currentAudio = audioPlayerVMlistenFalse.currentAudio;
+
+        if (currentAudio != null) {
+          audioPictureFile = Provider.of<PictureVM>(
+            context,
+            listen: true,
+          ).getLastAddedAudioPictureFile(audio: currentAudio);
+        }
+
         bool areAudioButtonsEnabled;
 
         if (currentAudio != null) {
@@ -470,8 +492,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Tooltip(
-                  message:
-                      AppLocalizations.of(context)!.decreaseAudioVolumeIconButtonTooltip('${(currentVolume * 100).toStringAsFixed(1)} %'),
+                  message: AppLocalizations.of(context)!
+                      .decreaseAudioVolumeIconButtonTooltip(
+                          '${(currentVolume * 100).toStringAsFixed(1)} %'),
                   child: SizedBox(
                     width: kSmallButtonWidth,
                     child: IconButton(
@@ -501,8 +524,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                   ),
                 ),
                 Tooltip(
-                  message:
-                      AppLocalizations.of(context)!.increaseAudioVolumeIconButtonTooltip('${(currentVolume * 100).toStringAsFixed(1)} %'),
+                  message: AppLocalizations.of(context)!
+                      .increaseAudioVolumeIconButtonTooltip(
+                          '${(currentVolume * 100).toStringAsFixed(1)} %'),
                   child: SizedBox(
                     width: kSmallButtonWidth,
                     child: IconButton(
