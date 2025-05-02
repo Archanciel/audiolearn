@@ -1428,6 +1428,21 @@ void main() {
     });
   });
   // Helper method to create a test picture JSON file
+  group('Restore picture JPG tests', () {
+    test('''restorePictureJpgFilesFromSourceDirectory - restore picture JPG files from source directory to
+        app pictures directory''', () async {
+      pictureVM.restorePictureJpgFilesFromSourceDirectory(
+        sourceDirectoryPath: availableTestPicturePath,
+      );
+
+      // Verify that the audio picture JPG files was restored
+      File file = File(testAvailablePictureOneFilePathName);
+      expect(file.existsSync(), true);
+
+      file = File(testAvailablePictureTwoFilePathName);
+      expect(file.existsSync(), true);
+    });
+  });
 }
 
 void _createTestPictureJsonFile({
