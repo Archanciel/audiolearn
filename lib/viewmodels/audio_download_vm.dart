@@ -118,6 +118,7 @@ class AudioDownloadVM extends ChangeNotifier {
     );
 
     bool arePlaylistsRestoredFromAndroidToWindows = false;
+    bool arePlaylistsRestoredFromWindowsToAndroid = false;
     String playlistWindowsDownloadRootPath = '';
 
     try {
@@ -137,6 +138,10 @@ class AudioDownloadVM extends ChangeNotifier {
             arePlaylistsRestoredFromAndroidToWindows = _playlistsRootPath
                     .contains('C:\\') &&
                 currentPlaylist.downloadPath.contains('/storage/emulated/0');
+
+            arePlaylistsRestoredFromWindowsToAndroid =
+                _playlistsRootPath.contains('/storage/emulated/0') &&
+                    currentPlaylist.downloadPath.contains('C:\\');
 
             if (arePlaylistsRestoredFromAndroidToWindows) {
               // This test avoids that the playlists root path is
@@ -167,8 +172,10 @@ class AudioDownloadVM extends ChangeNotifier {
 
           _updatePlaylistRootPathIfNecessary(
             playlist: currentPlaylist,
-            isPlaylistsRestoredFromAndroidToWindows:
+            isPlaylistRestoredFromAndroidToWindows:
                 arePlaylistsRestoredFromAndroidToWindows,
+            isPlaylistRestoredFromWindowsToAndroid:
+                arePlaylistsRestoredFromWindowsToAndroid,
             playlistWindowsDownloadRootPath: playlistWindowsDownloadRootPath,
           );
 
@@ -339,10 +346,11 @@ class AudioDownloadVM extends ChangeNotifier {
   // a zip file.
   void _updatePlaylistRootPathIfNecessary({
     required Playlist playlist,
-    required bool isPlaylistsRestoredFromAndroidToWindows,
+    required bool isPlaylistRestoredFromAndroidToWindows,
+    required bool isPlaylistRestoredFromWindowsToAndroid,
     required String playlistWindowsDownloadRootPath,
   }) {
-    if (isPlaylistsRestoredFromAndroidToWindows) {
+    if (isPlaylistRestoredFromAndroidToWindows) {
       if (playlist.downloadPath.contains(kPlaylistDownloadRootPath)) {
         playlist.downloadPath = playlist.downloadPath
             .replaceFirst(
@@ -354,12 +362,25 @@ class AudioDownloadVM extends ChangeNotifier {
         //              the path must not contain any trailing spaces
         //              on Windows or Android.
       }
-    } else {
-      playlist.downloadPath = playlist.downloadPath
-          .trim(); // trim() is necessary since the path is used in
-      //              the JsonDataService.saveToFile constructor and
-      //              the path must not contain any trailing spaces
-      //              on Windows or Android.
+    } else if (isPlaylistRestoredFromWindowsToAndroid) {
+      if (playlist.downloadPath.contains(kApplicationPathWindowsTest)) {
+        playlist.downloadPath = playlist.downloadPath
+            .replaceFirst(
+              kApplicationPathWindowsTest,
+              kApplicationPath,
+            )
+            .replaceAll('\\', '/')
+            .trim(); // trim() is necessary since the path is used in
+        //              the JsonDataService.saveToFile constructor and
+        //              the path must not contain any trailing spaces
+        //              on Windows or Android.
+      } else {
+        playlist.downloadPath = playlist.downloadPath
+            .trim(); // trim() is necessary since the path is used in
+        //              the JsonDataService.saveToFile constructor and
+        //              the path must not contain any trailing spaces
+        //              on Windows or Android.
+      }
     }
 
     JsonDataService.saveToFile(
@@ -1109,9 +1130,9 @@ class AudioDownloadVM extends ChangeNotifier {
     _stopDownloadPressed = false;
     _youtubeExplode ??= yt.YoutubeExplode();
 
-      // emptying the downloadingPlaylistUrls list will enable the
-      // user to download the previously downloaded playlist
-      downloadingPlaylistUrls = [];
+    // emptying the downloadingPlaylistUrls list will enable the
+    // user to download the previously downloaded playlist
+    downloadingPlaylistUrls = [];
 
     final yt.VideoId videoId;
 
