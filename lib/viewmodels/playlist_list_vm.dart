@@ -331,12 +331,12 @@ class PlaylistListVM extends ChangeNotifier {
     // true, the settings json file is not updated since it was
     // correctly adapted in the method
     // _mergeRestoredFromZipSettingsWithCurrentAppSettings().
-    // if (!restoringPlaylistsCommentsAndSettingsJsonFilesFromZip) {
+    if (!restoringPlaylistsCommentsAndSettingsJsonFilesFromZip) {
       _updateAndSavePlaylistOrder(
         addExistingSettingsAudioSortFilterData:
             restoringPlaylistsCommentsAndSettingsJsonFilesFromZip,
       );
-    // }
+    }
 
     notifyListeners();
   }
@@ -2871,7 +2871,7 @@ class PlaylistListVM extends ChangeNotifier {
     
     updateSettingsAndPlaylistJsonFiles(
       updatePlaylistPlayableAudioList: false,
-      restoringPlaylistsCommentsAndSettingsJsonFilesFromZip: false,
+      restoringPlaylistsCommentsAndSettingsJsonFilesFromZip: !isOnePlaylistRestored,
     );
 
     if (isAnExistingPlaylistSelected) {
