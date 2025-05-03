@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:archive/archive.dart';
 import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:collection/collection.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -332,12 +331,12 @@ class PlaylistListVM extends ChangeNotifier {
     // true, the settings json file is not updated since it was
     // correctly adapted in the method
     // _mergeRestoredFromZipSettingsWithCurrentAppSettings().
-    if (!restoringPlaylistsCommentsAndSettingsJsonFilesFromZip) {
+    // if (!restoringPlaylistsCommentsAndSettingsJsonFilesFromZip) {
       _updateAndSavePlaylistOrder(
         addExistingSettingsAudioSortFilterData:
             restoringPlaylistsCommentsAndSettingsJsonFilesFromZip,
       );
-    }
+    // }
 
     notifyListeners();
   }
@@ -543,7 +542,7 @@ class PlaylistListVM extends ChangeNotifier {
       }
     } else if (localPlaylistTitle.isNotEmpty) {
       localPlaylistTitle = localPlaylistTitle.trim();
-      
+
       if (localPlaylistTitle.contains(',')) {
         // A playlist title containing one or several commas can not
         // be handled by the application due to the fact that when
@@ -2868,9 +2867,11 @@ class PlaylistListVM extends ChangeNotifier {
 
     await _mergeRestoredFromZipSettingsWithCurrentAppSettings();
 
+    bool isOnePlaylistRestored = restoredInfoLst[0].length == 1;
+    
     updateSettingsAndPlaylistJsonFiles(
       updatePlaylistPlayableAudioList: false,
-      restoringPlaylistsCommentsAndSettingsJsonFilesFromZip: true,
+      restoringPlaylistsCommentsAndSettingsJsonFilesFromZip: false,
     );
 
     if (isAnExistingPlaylistSelected) {
@@ -2891,15 +2892,17 @@ class PlaylistListVM extends ChangeNotifier {
       getUpToDateSelectablePlaylists();
     }
 
-    String? pictureSourceDirectoryPath =
-        await FilePicker.platform.getDirectoryPath();
+    // Does not work, so is temporaryly commented out.
 
-    // Saving the picture jpg files to the 'pictures' directory
-    // located in the target directory where the zip file is saved.
-    int restoredPictureNumber =
-        _pictureVM.restorePictureJpgFilesFromSourceDirectory(
-      sourceDirectoryPath: pictureSourceDirectoryPath ?? '',
-    );
+    // String? pictureSourceDirectoryPath =
+    //     await FilePicker.platform.getDirectoryPath();
+
+    // // Saving the picture jpg files to the 'pictures' directory
+    // // located in the target directory where the zip file is saved.
+    // int restoredPictureNumber =
+    //     _pictureVM.restorePictureJpgFilesFromSourceDirectory(
+    //   sourceDirectoryPath: pictureSourceDirectoryPath ?? '',
+    // );
 
     // Display a confirmation message to the user.
     _warningMessageVM.confirmRestorationFromZip(
@@ -2907,7 +2910,7 @@ class PlaylistListVM extends ChangeNotifier {
       playlistsNumber: restoredInfoLst[0].length,
       commentsNumber: restoredInfoLst[1],
       picturesNumber: restoredInfoLst[2],
-      restoredPictureJpgNumber: restoredPictureNumber,
+      restoredPictureJpgNumber: 0,
     );
 
     // Return the zip file path name used for restoration.
