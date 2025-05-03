@@ -542,6 +542,8 @@ class PlaylistListVM extends ChangeNotifier {
         // {...} block.
       }
     } else if (localPlaylistTitle.isNotEmpty) {
+      localPlaylistTitle = localPlaylistTitle.trim();
+      
       if (localPlaylistTitle.contains(',')) {
         // A playlist title containing one or several commas can not
         // be handled by the application due to the fact that when
@@ -3067,6 +3069,7 @@ class PlaylistListVM extends ChangeNotifier {
       }
 
       final Directory destinationDir = Directory(
+        // Extracting the directory from the path file name
         path.dirname(destinationPathFileName),
       );
 
