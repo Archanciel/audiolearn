@@ -3046,6 +3046,8 @@ class PlaylistListVM extends ChangeNotifier {
       // normalized.
 
       final String sanitizedArchiveFileName = archiveFile.name
+          .replaceAll(
+              '\\', '/') // First convert all backslashes to forward slashes
           .split('/')
           .map((segment) => segment.trim())
           .join('/');
