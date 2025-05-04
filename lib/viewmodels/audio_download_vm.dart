@@ -2055,7 +2055,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
     // Obtaining the ordered list of playlist titles from the application
     // settings. The ordered list of playlist titles contains the playlists
-    // title of the playlists existing before the update.
+    // title of the playlists existing before the update or after the restore.
     List<dynamic> orderedPlaylistTitleLst = _settingsDataService.get(
           settingType: SettingType.playlists,
           settingSubType: Playlists.orderedTitleLst,
