@@ -942,7 +942,7 @@
   "updatePlaylistJsonFilesHelpTitle": "Update Playlist JSON Files function",
   "updatePlaylistJsonFilesHelpContent": "Important note: This function is only necessary for changes made OUTSIDE the application. Changes made directly within the application (adding/removing playlists, adding/importing/deleting audio files) are automatically processed and do not require using this update function.",
   "updatePlaylistJsonFilesFirstHelpTitle": "Using the Update Playlist JSON Files function",
-  "saveUniquePlaylistCommentsAndPicturesToZipMenu": "Save Playlist, Comments and Pictures to Zip File ...",
+  "saveUniquePlaylistCommentsAndPicturesToZipMenu": "Save the Playlist, its Comments and its Pictures to Zip File ...",
   "saveUniquePlaylistCommentsAndPicturesToZipTooltip": "Saving the playlist, their audio comments and pictures to a zip file. Only the JSON and JPG files are copied. The MP3 files will not be included.",
   "savedUniquePlaylistToZip": "Saved playlist, comment and picture JSON files to \"{filePathName}\"."
 }
