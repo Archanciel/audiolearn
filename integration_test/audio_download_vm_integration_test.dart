@@ -143,6 +143,7 @@ Future<void> main() async {
         tester: tester,
         warningDialogMessage:
             "Youtube playlist \"$globalTestPlaylistTitle\" of spoken quality added to the end of the playlist list.",
+        isWarningConfirming: true,
       );
 
       // Now tap on the delete button to empty the search text
@@ -309,6 +310,7 @@ Future<void> main() async {
         tester: tester,
         warningDialogMessage:
             "Youtube playlist \"$globalTestPlaylistTitle\" of musical quality added to the end of the playlist list.",
+        isWarningConfirming: true,
       );
 
       // Now tap on the delete button to empty the search text
