@@ -12354,6 +12354,56 @@ void main() {
         mustPlayableAudioListBeUsed: true,
       );
 
+      // Finally, go back to the playlist download view and save
+      // the playlists, comments, pictures and settings to a zip file
+
+      appScreenNavigationButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      String saveZipFilePath =
+          '$kPlaylistDownloadRootPathWindowsTest${path.separator}backupFolder';
+
+      // Setting the path value returned by the FilePicker mock.
+      mockFilePicker.setPathToSelect(
+        pathToSelectStr: saveZipFilePath,
+      );
+
+      // Tap the appbar leading popup menu button
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      // Now tap on the 'Save Playlists and Comments to zip File' menu
+      await tester.tap(
+          find.byKey(const Key('appBarMenuCopyPlaylistsAndCommentsToZip')));
+      await tester.pumpAndSettle();
+
+      // Verify the displayed warning dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip\".\n\nSaved also 4 picture JPG file(s) in same directory / pictures.",
+        isWarningConfirming: true,
+      );
+
+      List<String> pictureNamesLst = DirUtil.listFileNamesInDir(
+        directoryPath:
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}backupFolder${path.separator}$kPictureDirName",
+        fileExtension: 'jpg',
+      );
+
+      List<String> expectedPictureNamesLst = [
+        "Jésus je T'adore.jpg",
+        "Jésus je T'aime.jpg",
+        "Jésus l'Amour de ma vie.jpg",
+        "Jésus, mon amour.jpg",
+      ];
+      expect(
+        pictureNamesLst,
+        expectedPictureNamesLst,
+      );
+
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
