@@ -195,6 +195,7 @@ void main() {
         playlistTitle: youtubeNewPlaylistTitle,
         isMusicQuality: false,
         playlistType: PlaylistType.youtube,
+        isWarningConfirming: true,
       );
 
       // Now tap on the delete button to empty the search text
@@ -657,6 +658,7 @@ void main() {
         playlistTitle: youtubeNewPlaylistTitle,
         isMusicQuality: true,
         playlistType: PlaylistType.youtube,
+        isWarningConfirming: true,
       );
 
       // Now tap on the delete button to empty the search text
@@ -1025,6 +1027,7 @@ void main() {
         playlistTitle: localPlaylistTitle,
         isMusicQuality: true,
         playlistType: PlaylistType.local,
+        isWarningConfirming: true,
       );
 
       // The list of Playlist's should have one item now
@@ -1265,6 +1268,7 @@ void main() {
         playlistTitle: localPlaylistTitle,
         isMusicQuality: false,
         playlistType: PlaylistType.local,
+        isWarningConfirming: true,
       );
 
       // The list of Playlist's should have one item now
@@ -1570,12 +1574,67 @@ void main() {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle();
 
-      // Ensure the warning dialog is shown
-      await _checkWarningDialog(
+      // Ensure the confirm warning dialog is shown
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
-        playlistTitle: correctedLocalPlaylistTitle,
-        isMusicQuality: false,
-        playlistType: PlaylistType.local,
+        warningDialogMessage:
+            "Local playlist \"$correctedLocalPlaylistTitle\" of spoken quality added to the end of the playlist list.",
+        isWarningConfirming: true,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+    });
+    testWidgets('Add local playlist with title ended by space', (tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      const String localPlaylistTitleWithSpace = 'local with space ';
+      const String localPlaylistTitleWithoutSpace = 'local with space';
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to display the playlist list. If the list
+      // is not opened, checking that a ListTile with the title of
+      // the playlist was added to the list will fail
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // The playlist list and audio list should exist now but be
+      // empty (no ListTile widgets)
+      expect(find.byType(ListView), findsNWidgets(2));
+      expect(find.byType(ListTile), findsNothing);
+
+      // Open the add playlist dialog by tapping the add playlist
+      // button
+      await tester.tap(find.byKey(const Key('addPlaylistButton')));
+      await tester.pumpAndSettle();
+
+      // Enter the title of the local playlist
+      await tester.enterText(
+        find.byKey(const Key('playlistLocalTitleConfirmDialogTextField')),
+        localPlaylistTitleWithSpace,
+      );
+
+      // Confirm the addition by tapping the confirmation button in
+      // the AlertDialog
+      await tester
+          .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
+      await tester.pumpAndSettle();
+
+      // Ensure the confirm warning dialog is shown
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Local playlist \"$localPlaylistTitleWithoutSpace\" of spoken quality added to the end of the playlist list.",
+        isWarningConfirming: true,
       );
 
       // Purge the test playlist directory so that the created test
@@ -2616,7 +2675,7 @@ void main() {
         tester: tester,
         warningDialogMessage:
             'Youtube playlist "Essai" of spoken quality added to the end of the playlist list.',
-        isWarningConfirming: false,
+        isWarningConfirming: true,
       );
 
       // Tap the first ListTile checkbox to select it
@@ -2686,7 +2745,7 @@ void main() {
         tester: tester,
         warningDialogMessage:
             'Youtube playlist "audio_player_view_2_shorts_test" of spoken quality added to the end of the playlist list.',
-        isWarningConfirming: false,
+        isWarningConfirming: true,
       );
 
       // Tap the second ListTile checkbox to select it
@@ -19565,20 +19624,35 @@ Future<void> _checkWarningDialog({
   required bool isMusicQuality,
   required PlaylistType playlistType,
   bool findLast = false,
+  bool isWarningConfirming = false,
 }) async {
   // Ensure the warning dialog is shown
   expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
 
   // Check the value of the warning dialog title
-  if (!findLast) {
-    Text warningDialogTitle =
-        tester.widget(find.byKey(const Key('warningDialogTitle')));
-    expect(warningDialogTitle.data, 'WARNING');
+
+  if (isWarningConfirming) {
+    if (!findLast) {
+      Text warningDialogTitle =
+          tester.widget(find.byKey(const Key('warningDialogTitle')));
+      expect(warningDialogTitle.data, 'CONFIRMATION');
+    } else {
+      // If findLast is true, the warning dialog title should be empty
+      Text warningDialogTitle =
+          tester.widget(find.byKey(const Key('warningDialogTitle')).last);
+      expect(warningDialogTitle.data, 'CONFIRMATION');
+    }
   } else {
-    // If findLast is true, the warning dialog title should be empty
-    Text warningDialogTitle =
-        tester.widget(find.byKey(const Key('warningDialogTitle')).last);
-    expect(warningDialogTitle.data, 'WARNING');
+    if (!findLast) {
+      Text warningDialogTitle =
+          tester.widget(find.byKey(const Key('warningDialogTitle')));
+      expect(warningDialogTitle.data, 'WARNING');
+    } else {
+      // If findLast is true, the warning dialog title should be empty
+      Text warningDialogTitle =
+          tester.widget(find.byKey(const Key('warningDialogTitle')).last);
+      expect(warningDialogTitle.data, 'WARNING');
+    }
   }
 
   // Check the value of the warning dialog message
