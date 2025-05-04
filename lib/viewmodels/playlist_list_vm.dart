@@ -2867,11 +2867,17 @@ class PlaylistListVM extends ChangeNotifier {
 
     await _mergeRestoredFromZipSettingsWithCurrentAppSettings();
 
+    bool restoringPlaylistsCommentsAndSettingsJsonFilesFromZip = true;
     bool isOnePlaylistRestored = restoredInfoLst[0].length == 1;
-    
+    bool wasZipSavedOnWindows = restoredInfoLst[3];
+
+    if (isOnePlaylistRestored || wasZipSavedOnWindows) {
+      restoringPlaylistsCommentsAndSettingsJsonFilesFromZip = false;
+    }
+ 
     updateSettingsAndPlaylistJsonFiles(
       updatePlaylistPlayableAudioList: false,
-      restoringPlaylistsCommentsAndSettingsJsonFilesFromZip: !isOnePlaylistRestored,
+      restoringPlaylistsCommentsAndSettingsJsonFilesFromZip: restoringPlaylistsCommentsAndSettingsJsonFilesFromZip,
     );
 
     if (isAnExistingPlaylistSelected) {
@@ -3014,6 +3020,7 @@ class PlaylistListVM extends ChangeNotifier {
     List<String> restoredPlaylistTitlesLst = [];
     int restoredCommentsNumber = 0;
     int restoredPicturesNumber = 0;
+    bool isZipFromWindows = false;
 
     // Check if the provided zip file exists.
     final File zipFile = File(zipFilePathName);
@@ -3024,6 +3031,7 @@ class PlaylistListVM extends ChangeNotifier {
       restoredInfoLst.add(restoredPlaylistTitlesLst);
       restoredInfoLst.add(restoredCommentsNumber);
       restoredInfoLst.add(restoredPicturesNumber);
+      restoredInfoLst.add(isZipFromWindows);
 
       return restoredInfoLst;
     }
@@ -3039,9 +3047,10 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Decode the zip archive.
     final Archive archive = ZipDecoder().decodeBytes(zipBytes);
+ArchiveFile? archiveFile;
 
     // Iterate over each file in the archive.
-    for (final ArchiveFile archiveFile in archive) {
+    for (archiveFile in archive) {
       // Skip directories.
       if (!archiveFile.isFile) continue;
 
@@ -3125,6 +3134,9 @@ class PlaylistListVM extends ChangeNotifier {
     // located in a 'pictures' directory.
     restoredInfoLst
         .add((restoredPicturesNumber > 0) ? restoredPicturesNumber - 1 : 0);
+
+    isZipFromWindows = (archiveFile != null) ? archiveFile.name.contains('\\') : false;
+    restoredInfoLst.add(isZipFromWindows);
 
     return restoredInfoLst;
   }
