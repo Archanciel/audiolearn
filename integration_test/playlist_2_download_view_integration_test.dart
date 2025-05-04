@@ -11876,7 +11876,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Saved playlist, comment and picture json files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip\".",
+            "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip\".",
         isWarningConfirming: true,
       );
 
@@ -11975,7 +11975,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Playlist, comment and picture json files as well as application settings could not be saved to zip.",
+            "Playlist, comment and picture JSON files as well as application settings could not be saved to zip.",
         isWarningConfirming: false,
       );
 
@@ -12522,7 +12522,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Restored 5 playlist, 5 comment and 0 picture json files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+            'Restored 5 playlist, 5 comment and 0 picture JSON files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
         isWarningConfirming: true,
         warningTitle: 'CONFIRMATION',
       );
@@ -12607,14 +12607,15 @@ void main() {
         "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
       ];
 
+      const String youtubePlaylistTitle = 'S8 audio';
       await IntegrationTestUtil.selectPlaylist(
         tester: tester,
-        playlistToSelectTitle: 'S8 audio',
+        playlistToSelectTitle: youtubePlaylistTitle,
       );
 
       _verifyRestoredPlaylistAndAudio(
         tester: tester,
-        selectedPlaylistTitle: 'S8 audio',
+        selectedPlaylistTitle: youtubePlaylistTitle,
         playlistsTitles: playlistsTitles,
         audioTitles: audioTitles,
         audioSubTitles: audioSubTitles,
@@ -12663,7 +12664,7 @@ void main() {
       // Verify the content of the 'S8 audio' playlist dir
       // and comments and pictures dir after restoration.
       IntegrationTestUtil.verifyPlaylistDirectoryContents(
-        playlistTitle: 'S8 audio',
+        playlistTitle: youtubePlaylistTitle,
         expectedAudioFiles: [],
         expectedCommentFiles: [
           "New file name.json",
@@ -12673,8 +12674,6 @@ void main() {
         expectedPictureFiles: [],
         playlistRootDir: playlistRootDirName,
       );
-
-      const String playlistToRedownloadTitle = 'S8 audio';
 
       // Now, select a filter parms using the drop down button.
 
@@ -12710,7 +12709,7 @@ void main() {
       // on the 'Redownload Filtered Audio ...' sub-menu item.
       await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
         tester: tester,
-        playlistTitle: playlistToRedownloadTitle,
+        playlistTitle: youtubePlaylistTitle,
         playlistSubMenuKeyStr: 'popup_menu_redownload_filtered_audio',
       );
 
@@ -12760,8 +12759,9 @@ void main() {
       // "audio learn test short video one"
 
       // First, find the Audio sublist ListTile Text widget
-      final Finder targetAudioListTileTextWidgetFinder = find.text(
-          'Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...');
+      const String audioTitle =
+          'Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...';
+      final Finder targetAudioListTileTextWidgetFinder = find.text(audioTitle);
 
       // Then obtain the Audio ListTile widget enclosing the Text widget by
       // finding its ancestor
@@ -12787,6 +12787,13 @@ void main() {
 
       await tester.tap(popupDisplayAudioInfoMenuItemFinder);
       await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "The audio \"$audioTitle\" was redownloaded in the playlist \"$youtubePlaylistTitle\".",
+        isWarningConfirming: true,
+      );
 
       // Verify the content of the 'S8 audio' playlist dir
       // and comments and pictures dir after redownloading
