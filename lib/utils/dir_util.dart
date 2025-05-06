@@ -42,10 +42,18 @@ class DirUtil {
         return kApplicationPathWindows;
       }
     } else {
+      String applicationPath;
+      
+      if (isTest) {
+        applicationPath = kApplicationPathTest;
+      } else {
+        applicationPath = kApplicationPath;
+      }
+
       // On Android or mobile emulator
       // avoids that the application can not be run after it was
       // installed on the smartphone
-      Directory dir = Directory(kApplicationPath);
+      Directory dir = Directory(applicationPath);
 
       if (!dir.existsSync()) {
         try {
@@ -56,7 +64,7 @@ class DirUtil {
         }
       }
 
-      return kApplicationPath;
+      return applicationPath;
     }
   }
 
@@ -70,8 +78,16 @@ class DirUtil {
         return kPlaylistDownloadRootPathWindows;
       }
     } else {
+      String playlistDownloadRootPath;
+      
+      if (isTest) {
+        playlistDownloadRootPath = kPlaylistDownloadRootPathTest;
+      } else {
+        playlistDownloadRootPath = kPlaylistDownloadRootPath;
+      }
+
       // On Android or mobile emulator
-      Directory dir = Directory(kPlaylistDownloadRootPath);
+      Directory dir = Directory(playlistDownloadRootPath);
 
       if (!dir.existsSync()) {
         try {
@@ -83,7 +99,7 @@ class DirUtil {
         }
       }
 
-      return kPlaylistDownloadRootPath;
+      return playlistDownloadRootPath;
     }
   }
 
@@ -100,10 +116,18 @@ class DirUtil {
         return kApplicationPicturePathWindows;
       }
     } else {
+      String applicationPicturePath;
+      
+      if (isTest) {
+        applicationPicturePath = kApplicationPicturePathTest;
+      } else {
+        applicationPicturePath = kApplicationPicturePath;
+      }
+
       // On Android or mobile emulator
       // avoids that the application can not be run after it was
       // installed on the smartphone
-      Directory dir = Directory(kApplicationPicturePath);
+      Directory dir = Directory(applicationPicturePath);
 
       if (!dir.existsSync()) {
         try {
@@ -114,7 +138,7 @@ class DirUtil {
         }
       }
 
-      return kApplicationPicturePath;
+      return applicationPicturePath;
     }
   }
 

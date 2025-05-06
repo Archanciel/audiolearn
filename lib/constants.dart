@@ -32,25 +32,22 @@ enum AudioPopupMenuAction {
 
 const String kApplicationName = "Audio Learn";
 const String kApplicationVersion = '1.4.10';
+
+// Used for Android app version
 const String kApplicationPath = "/storage/emulated/0/Documents/audiolearn";
 const String kPlaylistDownloadRootPath =
     "/storage/emulated/0/Documents/audiolearn/playlists";
 const String kApplicationPicturePath =
     "/storage/emulated/0/Documents/audiolearn/pictures";
-const String kSettingsFileName = 'settings.json';
-const String kOrderedPlaylistTitlesFileName = 'savedOrderedPlaylistTitles.txt';
 
-// Used for testing and debugging
-const String kApplicationPathWindowsTest =
-    "C:\\development\\flutter\\audiolearn\\test\\data\\audio";
-const String kPlaylistDownloadRootPathWindowsTest =
-    "C:\\development\\flutter\\audiolearn\\test\\data\\audio";
-const String kApplicationPicturePathWindowsTest =
-    "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\pictures";
-const String kDownloadAppTestSavedDataDir =
-    "C:\\development\\flutter\\audiolearn\\test\\data\\saved";
+// Used for testing on Android
+const String kApplicationPathTest = "/storage/emulated/0/Documents/test/audiolearn";
+const String kPlaylistDownloadRootPathTest =
+    "/storage/emulated/0/Documents/test/audiolearn/playlists";
+const String kApplicationPicturePathTest =
+    "/storage/emulated/0/Documents/test/audiolearn/pictures";
 
-// Used for Windows installation
+// Used for Windows app version
 const String kApplicationPathWindows =
     "C:\\audiolearn";
 const String kPlaylistDownloadRootPathWindows =
@@ -58,9 +55,23 @@ const String kPlaylistDownloadRootPathWindows =
 const String kApplicationPicturePathWindows =
     "C:\\audiolearn\\pictures";
 
+// Used for testing and debugging on Windows
+const String kApplicationPathWindowsTest =
+    "C:\\development\\flutter\\audiolearn\\test\\data\\audio";
+const String kPlaylistDownloadRootPathWindowsTest =
+    "C:\\development\\flutter\\audiolearn\\test\\data\\audio";
+const String kApplicationPicturePathWindowsTest =
+    "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\pictures";
+
+const String kDownloadAppTestSavedDataDir =
+    "C:\\development\\flutter\\audiolearn\\test\\data\\saved";
+
+const String kSettingsFileName = 'settings.json';
 const String kCommentDirName = 'comments';
 const String kPictureDirName = 'pictures';
 const String kPictureAudioMapFileName = 'pictureAudioMap.json';
+
+const String kOrderedPlaylistTitlesFileName = 'savedOrderedPlaylistTitles.txt';
 
 // this constant enables to download a playlist in the emulator in which
 // pasting a URL is not possible. The constant is used in
