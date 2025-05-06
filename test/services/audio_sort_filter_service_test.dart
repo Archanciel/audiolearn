@@ -38,11 +38,11 @@ void main() {
         'On vous propose de découvrir les tendances crypto en progression en 2024. Découvrez lesquelles sont les plus prometteuses et lesquelles sont à éviter.',
     validVideoTitle: 'Sur quelle tendance crypto investir en 2024 ?',
     videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
-    audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+    audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 22),
     audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
     audioDownloadSpeed: 1000000,
     videoUploadDate: DateTime(2023, 3, 1),
-    audioDuration: const Duration(minutes: 5, seconds: 30),
+    audioDuration: const Duration(minutes: 8, seconds: 30),
     isAudioMusicQuality: false,
     audioPlaySpeed: kAudioDefaultPlaySpeed,
     audioPlayVolume: kAudioDefaultPlayVolume,
@@ -51,7 +51,7 @@ void main() {
     audioPausedDateTime: null,
     audioPositionSeconds: 0,
     audioFileName: 'Test Video Title.mp3',
-    audioFileSize: 330000000,
+    audioFileSize: 125000000,
     isAudioImported: false,
   );
 
@@ -70,8 +70,8 @@ void main() {
     audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
     audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
     audioDownloadSpeed: 1000000,
-    videoUploadDate: DateTime(2023, 3, 1),
-    audioDuration: const Duration(minutes: 5, seconds: 30),
+    videoUploadDate: DateTime(2023, 1, 1),
+    audioDuration: const Duration(minutes: 55, seconds: 30),
     isAudioMusicQuality: false,
     audioPlaySpeed: kAudioDefaultPlaySpeed,
     audioPlayVolume: kAudioDefaultPlayVolume,
@@ -80,7 +80,7 @@ void main() {
     audioPausedDateTime: null,
     audioPositionSeconds: 0,
     audioFileName: 'Test Video Title.mp3',
-    audioFileSize: 330000000,
+    audioFileSize: 70000000,
     isAudioImported: false,
   );
   final Audio audioThree = Audio.fullConstructor(
@@ -96,11 +96,11 @@ void main() {
     validVideoTitle:
         'Intelligence Artificielle: quelle menace ou opportunité en 2024 ?',
     videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
-    audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+    audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 42),
     audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
     audioDownloadSpeed: 1000000,
-    videoUploadDate: DateTime(2023, 3, 1),
-    audioDuration: const Duration(minutes: 5, seconds: 30),
+    videoUploadDate: DateTime(2023, 4, 1),
+    audioDuration: const Duration(minutes: 15, seconds: 30),
     isAudioMusicQuality: false,
     audioPlaySpeed: kAudioDefaultPlaySpeed,
     audioPlayVolume: kAudioDefaultPlayVolume,
@@ -109,7 +109,7 @@ void main() {
     audioPausedDateTime: null,
     audioPositionSeconds: 0,
     audioFileName: 'Test Video Title.mp3',
-    audioFileSize: 330000000,
+    audioFileSize: 130000000,
     isAudioImported: false,
   );
   final Audio audioFour = Audio.fullConstructor(
@@ -125,10 +125,10 @@ void main() {
     validVideoTitle:
         'Intelligence humaine ou artificielle, quelles différences ?',
     videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
-    audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
+    audioDownloadDateTime: DateTime(2023, 3, 28, 20, 5, 32),
     audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
     audioDownloadSpeed: 1000000,
-    videoUploadDate: DateTime(2023, 3, 1),
+    videoUploadDate: DateTime(2023, 2, 1),
     audioDuration: const Duration(minutes: 5, seconds: 30),
     isAudioMusicQuality: false,
     audioPlaySpeed: kAudioDefaultPlaySpeed,
@@ -138,7 +138,7 @@ void main() {
     audioPausedDateTime: null,
     audioPositionSeconds: 0,
     audioFileName: 'Test Video Title.mp3',
-    audioFileSize: 330000000,
+    audioFileSize: 110000000,
     isAudioImported: false,
   );
 
@@ -175,7 +175,7 @@ void main() {
         audioTwo,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -187,7 +187,7 @@ void main() {
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <tendance crypto> OR <en 2024>', () {
       List<Audio> expectedFilteredAudios = [
@@ -196,7 +196,7 @@ void main() {
         audioThree,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -208,7 +208,7 @@ void main() {
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <en 2024> AND <tendance crypto>', () {
       List<Audio> expectedFilteredAudios = [
@@ -216,7 +216,7 @@ void main() {
         audioTwo,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -228,7 +228,7 @@ void main() {
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <en 2024> OR <tendance crypto>', () {
       List<Audio> expectedFilteredAudios = [
@@ -237,7 +237,7 @@ void main() {
         audioThree,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -249,7 +249,7 @@ void main() {
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <quelle> AND <2024>', () {
       List<Audio> expectedFilteredAudios = [
@@ -257,7 +257,7 @@ void main() {
         audioThree,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -269,7 +269,7 @@ void main() {
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <quelle> OR <2024>', () {
       List<Audio> expectedFilteredAudios = [
@@ -279,7 +279,7 @@ void main() {
         audioFour,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -291,7 +291,7 @@ void main() {
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <2024> AND <quelle>', () {
       List<Audio> expectedFilteredAudios = [
@@ -299,7 +299,7 @@ void main() {
         audioThree,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -311,7 +311,7 @@ void main() {
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <2024> OR <quelle>', () {
       List<Audio> expectedFilteredAudios = [
@@ -321,7 +321,7 @@ void main() {
         audioFour,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -333,7 +333,7 @@ void main() {
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <intelligence> OR <artificielle>', () {
       List<Audio> expectedFilteredAudios = [
@@ -341,7 +341,7 @@ void main() {
         audioFour,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -353,7 +353,7 @@ void main() {
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
   });
   group(
@@ -383,7 +383,7 @@ void main() {
         audioOne,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -395,7 +395,7 @@ void main() {
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <tendance crypto> OR <en 2024>', () {
       List<Audio> expectedFilteredAudios = [
@@ -404,7 +404,7 @@ void main() {
         audioThree,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -416,14 +416,14 @@ void main() {
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <en 2024> AND <tendance crypto>', () {
       List<Audio> expectedFilteredAudios = [
         audioOne,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -435,7 +435,7 @@ void main() {
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <en 2024> OR <tendance crypto>', () {
       List<Audio> expectedFilteredAudios = [
@@ -444,7 +444,7 @@ void main() {
         audioThree,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -456,7 +456,7 @@ void main() {
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <quelle> AND <2024>', () {
       List<Audio> expectedFilteredAudios = [
@@ -464,7 +464,7 @@ void main() {
         audioThree,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -476,7 +476,7 @@ void main() {
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <quelle> OR <2024>', () {
       List<Audio> expectedFilteredAudios = [
@@ -486,7 +486,7 @@ void main() {
         audioFour,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -498,7 +498,7 @@ void main() {
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <2024> AND <quelle>', () {
       List<Audio> expectedFilteredAudios = [
@@ -506,7 +506,7 @@ void main() {
         audioThree,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -518,14 +518,14 @@ void main() {
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <intelligence> OR <artificielle>', () {
       List<Audio> expectedFilteredAudios = [
         audioFour,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -537,7 +537,7 @@ void main() {
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <2024> OR <quelle>', () {
       List<Audio> expectedFilteredAudios = [
@@ -547,7 +547,7 @@ void main() {
         audioFour,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -559,7 +559,7 @@ void main() {
               searchAsWellInVideoCompactDescription: false,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
   });
   group(
@@ -587,7 +587,7 @@ void main() {
     test('filter by <investir en 2024> AND <éthique et tac>', () {
       List<Audio> expectedFilteredAudios = [];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -599,14 +599,14 @@ void main() {
               searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <accélération> AND <éthique et tac>', () {
       List<Audio> expectedFilteredAudios = [
         audioTwo,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -618,7 +618,7 @@ void main() {
               searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <investir en 2024> OR <éthique et tac>', () {
       List<Audio> expectedFilteredAudios = [
@@ -626,7 +626,7 @@ void main() {
         audioTwo,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -638,7 +638,7 @@ void main() {
               searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <on vous propose> OR <en accélération>', () {
       List<Audio> expectedFilteredAudios = [
@@ -646,7 +646,7 @@ void main() {
         audioTwo,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -658,7 +658,7 @@ void main() {
               searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
   });
   group(
@@ -686,7 +686,7 @@ void main() {
     test('filter by <investir en 2024> AND <éthique et tac>', () {
       List<Audio> expectedFilteredAudios = [];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -698,14 +698,14 @@ void main() {
               searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <accélération> AND <Éthique et tac>', () {
       List<Audio> expectedFilteredAudios = [
         audioTwo,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -717,12 +717,12 @@ void main() {
               searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <investir en 2024> OR <Éthique et tac>', () {
       List<Audio> expectedFilteredAudios = [audioOne, audioTwo];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -734,14 +734,14 @@ void main() {
               searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <investir en 2024> OR <éthique et tac>', () {
       List<Audio> expectedFilteredAudios = [
         audioOne,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -753,14 +753,14 @@ void main() {
               searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <on vous propose> OR <en accélération>', () {
       List<Audio> expectedFilteredAudios = [
         audioTwo,
       ];
 
-      List<Audio> filteredAudios = audioSortFilterService
+      List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
               audioLst: audioLst,
               filterSentenceLst: [
@@ -772,7 +772,7 @@ void main() {
               searchAsWellInVideoCompactDescription: true,
               searchAsWellInYoutubeChannelName: false);
 
-      expect(filteredAudios, expectedFilteredAudios);
+      expect(filteredAudioLst, expectedFilteredAudios);
     });
   });
   group(
