@@ -2868,16 +2868,16 @@ class PlaylistListVM extends ChangeNotifier {
     await _mergeRestoredFromZipSettingsWithCurrentAppSettings();
 
     bool restoringPlaylistsCommentsAndSettingsJsonFilesFromZip = true;
-    bool isOnePlaylistRestored = restoredInfoLst[0].length == 1;
     bool wasZipSavedOnWindows = restoredInfoLst[3];
 
-    if (isOnePlaylistRestored || wasZipSavedOnWindows) {
+    if (restoredInfoLst[0].length == 1 || wasZipSavedOnWindows) {
       restoringPlaylistsCommentsAndSettingsJsonFilesFromZip = false;
     }
- 
+
     updateSettingsAndPlaylistJsonFiles(
       updatePlaylistPlayableAudioList: false,
-      restoringPlaylistsCommentsAndSettingsJsonFilesFromZip: restoringPlaylistsCommentsAndSettingsJsonFilesFromZip,
+      restoringPlaylistsCommentsAndSettingsJsonFilesFromZip:
+          restoringPlaylistsCommentsAndSettingsJsonFilesFromZip,
     );
 
     if (isAnExistingPlaylistSelected) {
@@ -2913,7 +2913,7 @@ class PlaylistListVM extends ChangeNotifier {
     // Display a confirmation message to the user.
     _warningMessageVM.confirmRestorationFromZip(
       zipFilePathName: zipFilePathName,
-      playlistsNumber: (isOnePlaylistRestored) ? restoredInfoLst[0].length : restoredInfoLst[0].length - 1,
+      playlistsNumber: restoredInfoLst[0].length,
       commentsNumber: restoredInfoLst[1],
       picturesNumber: restoredInfoLst[2],
       restoredPictureJpgNumber: 0,
@@ -3010,8 +3010,13 @@ class PlaylistListVM extends ChangeNotifier {
   /// as the commen json files of the playlists and writes them to the playlists
   /// root path.
   ///
-  /// The returned list contains the list of restored playlist titles and the number
-  /// of restored comments.
+  /// The returned list contains
+  /// [
+  ///  list of restored playlist titles,
+  ///  number of restored comments,
+  ///  number of restored pictures,
+  ///  is the zip file generated in Windows (true/false),
+  /// ]
   Future<List<dynamic>> _restoreFilesFromZip({
     required String zipFilePathName,
     required bool doReplaceExistingPlaylists,
@@ -3047,12 +3052,14 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Decode the zip archive.
     final Archive archive = ZipDecoder().decodeBytes(zipBytes);
-ArchiveFile? archiveFile;
+    ArchiveFile? archiveFile;
 
     // Iterate over each file in the archive.
     for (archiveFile in archive) {
       // Skip directories.
-      if (!archiveFile.isFile) continue;
+      if (!archiveFile.isFile) {
+        continue;
+      }
 
       // Compute the destination path by joining the application path
       // with the relative path stored in the archive.
@@ -3113,7 +3120,10 @@ ArchiveFile? archiveFile;
         flush: true,
       );
 
-      if (!destinationPathFileName.contains(kSettingsFileName)) {
+      if (!destinationPathFileName.contains(kSettingsFileName) &&
+          !destinationPathFileName.contains(kPictureAudioMapFileName)) {
+            // Second condition guarantees that the picture json files
+            // number is correctly calculated. 
         if (destinationPathFileName.contains(kCommentDirName)) {
           restoredCommentsNumber++;
         } else if (destinationPathFileName.contains(kPictureDirName)) {
@@ -3132,10 +3142,10 @@ ArchiveFile? archiveFile;
     // Minus 1 since the pictureAudioMap.json file is also
     // counted in the number of restored pictures since it is
     // located in a 'pictures' directory.
-    restoredInfoLst
-        .add((restoredPicturesNumber > 0) ? restoredPicturesNumber - 1 : 0);
+    restoredInfoLst.add(restoredPicturesNumber);
 
-    isZipFromWindows = (archiveFile != null) ? archiveFile.name.contains('\\') : false;
+    isZipFromWindows =
+        (archiveFile != null) ? archiveFile.name.contains('\\') : false;
     restoredInfoLst.add(isZipFromWindows);
 
     return restoredInfoLst;
