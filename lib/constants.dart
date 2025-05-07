@@ -41,10 +41,10 @@ const String kApplicationPicturePath =
     "/storage/emulated/0/Documents/audiolearn/pictures";
 
 // Used for testing on Android
-const String kApplicationPathTest = "/storage/emulated/0/Documents/test/audiolearn";
-const String kPlaylistDownloadRootPathTest =
+const String kApplicationPathAndroidTest = "/storage/emulated/0/Documents/test/audiolearn";
+const String kPlaylistDownloadRootPathAndroidTest =
     "/storage/emulated/0/Documents/test/audiolearn/playlists";
-const String kApplicationPicturePathTest =
+const String kApplicationPicturePathAndroidTest =
     "/storage/emulated/0/Documents/test/audiolearn/pictures";
 
 // Used for Windows app version
