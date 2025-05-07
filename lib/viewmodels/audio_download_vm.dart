@@ -123,6 +123,16 @@ class AudioDownloadVM extends ChangeNotifier {
 
     try {
       for (String playlistPathFileName in playlistPathFileNamesLst) {
+        if (playlistPathFileName.contains(kPictureAudioMapFileName)) {
+          // This file is not a playlist json file and so must be
+          // ignored.
+          // The second condition fix a problem happening in case the
+          // playlists are in dir audio or dir audiolearn ((not in
+          // playlists dir) and kPictureAudioMapFileName exist in
+          // audio\pictures dir or audiolearn/picture dir.
+          continue;
+        }
+
         Playlist currentPlaylist = JsonDataService.loadFromFile(
           jsonPathFileName: playlistPathFileName,
           type: Playlist,
