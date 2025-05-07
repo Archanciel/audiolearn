@@ -45,7 +45,7 @@ class DirUtil {
       String applicationPath;
       
       if (isTest) {
-        applicationPath = kApplicationPathTest;
+        applicationPath = kApplicationPathAndroidTest;
       } else {
         applicationPath = kApplicationPath;
       }
@@ -81,7 +81,7 @@ class DirUtil {
       String playlistDownloadRootPath;
       
       if (isTest) {
-        playlistDownloadRootPath = kPlaylistDownloadRootPathTest;
+        playlistDownloadRootPath = kPlaylistDownloadRootPathAndroidTest;
       } else {
         playlistDownloadRootPath = kPlaylistDownloadRootPath;
       }
@@ -119,7 +119,7 @@ class DirUtil {
       String applicationPicturePath;
       
       if (isTest) {
-        applicationPicturePath = kApplicationPicturePathTest;
+        applicationPicturePath = kApplicationPicturePathAndroidTest;
       } else {
         applicationPicturePath = kApplicationPicturePath;
       }
