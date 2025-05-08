@@ -2027,7 +2027,6 @@ class IntegrationTestUtil {
     // will ensure that the default playlist root path is set
     await settingsDataService.loadSettingsFromFile(
         settingsJsonPathFileName:
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}settings.json");
             "$kApplicationPathWindowsTest${path.separator}settings.json");
 
     final WarningMessageVM warningMessageVM = WarningMessageVM();
