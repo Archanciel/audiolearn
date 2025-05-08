@@ -13331,7 +13331,7 @@ void main() {
     });
     group('Restore Windows zip.', () {
       testWidgets(
-          '''Not replace existing playlist. Restore Windows zip to empty Windows
+          '''Not replace existing playlist. Restore multiple playlists Windows zip to empty Windows
            application''', (tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
@@ -13340,7 +13340,7 @@ void main() {
         );
 
         String restorableZipFilePathName =
-            '$kApplicationPathWindowsTest${path.separator}zip_files_for_restore_tests${path.separator}sort_and_filter_audio_dialog_widget_test_playlists.zip';
+            '$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}sort_and_filter_audio_dialog_widget_test_playlists.zip';
 
         // Since we have to use a mock AudioDownloadVM to add the
         // youtube playlist, we can not use app.main() to start the
@@ -13415,8 +13415,6 @@ void main() {
           dateFormatVM: dateFormatVM,
         );
 
-        const String playlistRootDirName = 'playlists';
-
         // Replace the platform instance with your mock
         MockFilePicker mockFilePicker = MockFilePicker();
         FilePicker.platform = mockFilePicker;
@@ -13445,7 +13443,7 @@ void main() {
         );
 
         // Verifying the existing and the restored playlists
-        // list as well as the selected playlist 'A restaurer'
+        // list as well as the selected playlist 'S8 audio'
         // displayed audio titles and subtitles.
 
         List<String> playlistsTitles = [
@@ -13454,276 +13452,500 @@ void main() {
         ];
 
         List<String> audioTitles = [
-          "Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage!",
-          "L'histoire secrète derrière la progression de l'IA",
-          "Le 21 juillet 1913 _ Prières et méditations, La Mère",
-          "Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...)",
+          'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik',
+          "Les besoins artificiels par R.Keucheyan",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         ];
 
         List<String> audioSubTitles = [
-          "0:24:21.7. 9.84 MB at 510 KB/sec on 24/02/2025 at 13:27.",
-          "0:22:57.8. 8.72 MB at 203 KB/sec on 24/02/2025 at 13:16.",
-          "0:00:58.7. 359 KB at 89 KB/sec on 13/02/2025 at 10:43.",
-          "0:22:57.8. 8.72 MB at 2.14 MB/sec on 13/02/2025 at 08:30.",
+          '0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.',
+          "0:19:05.0. 6.98 MB at 2.28 MB/sec on 07/01/2024 at 08:16.",
+          "0:20:32.0. 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45.",
+          "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45.",
         ];
 
         _verifyRestoredPlaylistAndAudio(
           tester: tester,
-          selectedPlaylistTitle: 'A restaurer',
+          selectedPlaylistTitle: 'S8 audio',
           playlistsTitles: playlistsTitles,
           audioTitles: audioTitles,
           audioSubTitles: audioSubTitles,
         );
 
-        // Now verify local playlist as well !
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Replace existing playlist. Restore multiple playlists Windows zip to empty Windows
+           application''', (tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-        audioTitles = [
-          "Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage!",
-        ];
+        String restorableZipFilePathName =
+            '$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}sort_and_filter_audio_dialog_widget_test_playlists.zip';
 
-        audioSubTitles = [
-          "0:24:21.8. 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30.",
-        ];
+        // Since we have to use a mock AudioDownloadVM to add the
+        // youtube playlist, we can not use app.main() to start the
+        // app because app.main() uses the real AudioDownloadVM
+        // and we don't want to make the main.dart file dependent
+        // of a mock class. So we have to start the app by hand,
+        // what IntegrationTestUtil.launchExpandablePlaylistListView
+        // does.
 
-        await IntegrationTestUtil.selectPlaylist(
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+        WarningMessageVM warningMessageVM = WarningMessageVM();
+
+        // The mockAudioDownloadVM will be later used to simulate
+        // redownloading not playable files after having restored
+        // the playlists, comments and settings from the zip file.
+        MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
+          warningMessageVM: warningMessageVM,
+          settingsDataService: settingsDataService,
+        );
+
+        AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+          warningMessageVM: warningMessageVM,
+          settingsDataService: settingsDataService,
+        );
+
+        PlaylistListVM playlistListVM = PlaylistListVM(
+          warningMessageVM: warningMessageVM,
+          audioDownloadVM: mockAudioDownloadVM,
+          commentVM: CommentVM(),
+          pictureVM: PictureVM(
+            settingsDataService: settingsDataService,
+          ),
+          settingsDataService: settingsDataService,
+        );
+
+        // calling getUpToDateSelectablePlaylists() loads all the
+        // playlist json files from the app dir and so enables
+        // playlistListVM to know which playlists are
+        // selected and which are not
+        playlistListVM.getUpToDateSelectablePlaylists();
+
+        AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+          settingsDataService: settingsDataService,
+          playlistListVM: playlistListVM,
+          commentVM: CommentVM(),
+        );
+
+        DateFormatVM dateFormatVM = DateFormatVM(
+          settingsDataService: settingsDataService,
+        );
+
+        await IntegrationTestUtil
+            .launchIntegrTestAppEnablingInternetAccessWithMock(
           tester: tester,
-          playlistToSelectTitle: 'local',
+          audioDownloadVM: audioDownloadVM,
+          settingsDataService: settingsDataService,
+          playlistListVM: playlistListVM,
+          warningMessageVM: warningMessageVM,
+          audioPlayerVM: audioPlayerVM,
+          dateFormatVM: dateFormatVM,
         );
 
-        _verifyRestoredPlaylistAndAudio(
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 7460),
+        ]);
+
+        // Execute the 'Restore Playlists, Comments and Settings from Zip
+        // File ...' menu
+        await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
-          selectedPlaylistTitle: 'local',
-          playlistsTitles: playlistsTitles,
-          audioTitles: audioTitles,
-          audioSubTitles: audioSubTitles,
+          doReplaceExistingPlaylists: true,
         );
 
-        // Now verify 'S8 audio' playlist as well !
-
-        audioTitles = [
-          "Quand Aurélien Barrau va dans une école de management",
-          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
-          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          "La surpopulation mondiale par Jancovici et Barrau",
-        ];
-
-        audioSubTitles = [
-          "0:17:59.0. 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11.",
-          "1:17:53.6. 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06.",
-          "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
-          "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
-        ];
-
-        const String youtubePlaylistTitle = 'S8 audio';
-        await IntegrationTestUtil.selectPlaylist(
-          tester: tester,
-          playlistToSelectTitle: youtubePlaylistTitle,
-        );
-
-        _verifyRestoredPlaylistAndAudio(
-          tester: tester,
-          selectedPlaylistTitle: youtubePlaylistTitle,
-          playlistsTitles: playlistsTitles,
-          audioTitles: audioTitles,
-          audioSubTitles: audioSubTitles,
-        );
-
-        // Verify the content of the 'A restaurer' playlist dir
-        // and comments and pictures dir after restoration.
-        IntegrationTestUtil.verifyPlaylistDirectoryContents(
-          playlistTitle: 'A restaurer',
-          expectedAudioFiles: [
-            "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.mp3",
-            "250213-104308-Le 21 juillet 1913 _ Prières et méditations, La Mère 25-02-13.mp3",
-            "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.mp3",
-            "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.mp3",
-          ],
-          expectedCommentFiles: [
-            "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.json",
-            "250213-104308-Le 21 juillet 1913 _ Prières et méditations, La Mère 25-02-13.json",
-            "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.json",
-            "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json",
-          ],
-          expectedPictureFiles: [
-            "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.jpg",
-            "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.jpg",
-            "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.jpg",
-          ],
-          playlistRootDir: playlistRootDirName,
-        );
-
-        // Verify the content of the 'local' playlist dir
-        // and comments and pictures dir after restoration.
-        IntegrationTestUtil.verifyPlaylistDirectoryContents(
-          playlistTitle: 'local',
-          expectedAudioFiles: [
-            "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.mp3"
-          ],
-          expectedCommentFiles: [
-            "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json"
-          ],
-          expectedPictureFiles: [
-            "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.jpg"
-          ],
-          playlistRootDir: playlistRootDirName,
-        );
-
-        // Verify the content of the 'S8 audio' playlist dir
-        // and comments and pictures dir after restoration.
-        IntegrationTestUtil.verifyPlaylistDirectoryContents(
-          playlistTitle: youtubePlaylistTitle,
-          expectedAudioFiles: [],
-          expectedCommentFiles: [
-            "New file name.json",
-            "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
-            "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.json",
-          ],
-          expectedPictureFiles: [],
-          playlistRootDir: playlistRootDirName,
-        );
-
-        // Now, select a filter parms using the drop down button.
-
-        // First, tap the 'Toggle List' button to hide the playlist list.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
-
-        // Now tap on the current dropdown button item to open the dropdown
-        // button items list
-
-        Finder dropDownButtonFinder =
-            find.byKey(const Key('sort_filter_parms_dropdown_button'));
-
-        Finder dropDownButtonTextFinder = find.descendant(
-          of: dropDownButtonFinder,
-          matching: find.byType(Text),
-        );
-
-        await tester.tap(dropDownButtonTextFinder);
-        await tester.pumpAndSettle();
-
-        // And find the 'commented_7MB' sort/filter item
-        Finder titleAscDropDownTextFinder = find.text('commented_7MB').last;
-        await tester.tap(titleAscDropDownTextFinder);
-        await tester.pumpAndSettle();
-
-        // Re-tap the 'Toggle List' button to display the playlist list.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
-
-        // Execute the redownload filtered audio menu by clicking first on
-        // the 'Filtered Audio Actions ...' playlist menu item and then
-        // on the 'Redownload Filtered Audio ...' sub-menu item.
-        await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-          playlistSubMenuKeyStr: 'popup_menu_redownload_filtered_audio',
-        );
-
-        // Add a delay to allow the download to finish.
-        for (int i = 0; i < 5; i++) {
-          await Future.delayed(const Duration(seconds: 2));
-          await tester.pumpAndSettle();
-        }
-
-        // Verifying and closing the confirm dialog
-
-        // await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
-        //   tester: tester,
-        //   confirmDialogTitleOne:
-        //       "Delete audio's filtered by \"\" parms from playlist \"\"",
-        //   confirmDialogMessage:
-        //       "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
-        //   confirmOrCancelAction: true, // Confirm button is tapped
-        // );
-
-        // Tap the 'Toggle List' button to hide the playlist list.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
-
-        // Now, select the 'default' filter parms using the drop down button.
-
-        // Now tap on the current dropdown button item to open the dropdown
-        // button items list
-
-        dropDownButtonFinder =
-            find.byKey(const Key('sort_filter_parms_dropdown_button'));
-
-        dropDownButtonTextFinder = find.descendant(
-          of: dropDownButtonFinder,
-          matching: find.byType(Text),
-        );
-
-        await tester.tap(dropDownButtonTextFinder);
-        await tester.pumpAndSettle();
-
-        // And find the 'default' sort/filter item
-        titleAscDropDownTextFinder = find.text('default').last;
-        await tester.tap(titleAscDropDownTextFinder);
-        await tester.pumpAndSettle();
-
-        // Now we want to tap the popup menu of the Audio ListTile
-        // "audio learn test short video one"
-
-        // First, find the Audio sublist ListTile Text widget
-        const String audioTitle =
-            'Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...';
-        final Finder targetAudioListTileTextWidgetFinder =
-            find.text(audioTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        final Finder targetAudioListTileWidgetFinder = find.ancestor(
-          of: targetAudioListTileTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile and tap
-        // on it
-        final Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
-          of: targetAudioListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(targetAudioListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the popup menu item and tap on it
-        final Finder popupDisplayAudioInfoMenuItemFinder =
-            find.byKey(const Key("popup_menu_redownload_delete_audio"));
-
-        await tester.tap(popupDisplayAudioInfoMenuItemFinder);
-        await tester.pumpAndSettle();
-
+        // Verify the displayed warning confirmation dialog
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              "The audio \"$audioTitle\" was redownloaded in the playlist \"$youtubePlaylistTitle\".",
+              'Restored 2 playlist, 0 comment and 0 picture JSON files as well as the application settings from "$restorableZipFilePathName".',
           isWarningConfirming: true,
+          warningTitle: 'CONFIRMATION',
         );
 
-        // Verify the content of the 'S8 audio' playlist dir
-        // and comments and pictures dir after redownloading
-        // filtered audio's by 'commented_7MB' SF parms as well
-        // as redownloading single audio 'Interview de Chat GPT
-        // - IA, intelligence, philosophie, géopolitique,
-        // post-vérité...'.
+        // Verifying the existing and the restored playlists
+        // list as well as the selected playlist 'S8 audio'
+        // displayed audio titles and subtitles.
+
+        List<String> playlistsTitles = [
+          "local",
+          "S8 audio",
+        ];
+
+        List<String> audioTitles = [
+          'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik',
+          "Les besoins artificiels par R.Keucheyan",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        ];
+
+        List<String> audioSubTitles = [
+          '0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.',
+          "0:19:05.0. 6.98 MB at 2.28 MB/sec on 07/01/2024 at 08:16.",
+          "0:20:32.0. 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45.",
+          "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45.",
+        ];
+
+        _verifyRestoredPlaylistAndAudio(
+          tester: tester,
+          selectedPlaylistTitle: 'S8 audio',
+          playlistsTitles: playlistsTitles,
+          audioTitles: audioTitles,
+          audioSubTitles: audioSubTitles,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Unique playlist restore, not replace existing playlist. Restore unique playlist Windows zip to empty Windows
+             application''', (tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        String restorableZipFilePathName =
+            '$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Windows Prières du Maître.zip';
+
+        // Since we have to use a mock AudioDownloadVM to add the
+        // youtube playlist, we can not use app.main() to start the
+        // app because app.main() uses the real AudioDownloadVM
+        // and we don't want to make the main.dart file dependent
+        // of a mock class. So we have to start the app by hand,
+        // what IntegrationTestUtil.launchExpandablePlaylistListView
+        // does.
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+        WarningMessageVM warningMessageVM = WarningMessageVM();
+
+        // The mockAudioDownloadVM will be later used to simulate
+        // redownloading not playable files after having restored
+        // the playlists, comments and settings from the zip file.
+        MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
+          warningMessageVM: warningMessageVM,
+          settingsDataService: settingsDataService,
+        );
+
+        AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+          warningMessageVM: warningMessageVM,
+          settingsDataService: settingsDataService,
+        );
+
+        PlaylistListVM playlistListVM = PlaylistListVM(
+          warningMessageVM: warningMessageVM,
+          audioDownloadVM: mockAudioDownloadVM,
+          commentVM: CommentVM(),
+          pictureVM: PictureVM(
+            settingsDataService: settingsDataService,
+          ),
+          settingsDataService: settingsDataService,
+        );
+
+        // calling getUpToDateSelectablePlaylists() loads all the
+        // playlist json files from the app dir and so enables
+        // playlistListVM to know which playlists are
+        // selected and which are not
+        playlistListVM.getUpToDateSelectablePlaylists();
+
+        AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+          settingsDataService: settingsDataService,
+          playlistListVM: playlistListVM,
+          commentVM: CommentVM(),
+        );
+
+        DateFormatVM dateFormatVM = DateFormatVM(
+          settingsDataService: settingsDataService,
+        );
+
+        await IntegrationTestUtil
+            .launchIntegrTestAppEnablingInternetAccessWithMock(
+          tester: tester,
+          audioDownloadVM: audioDownloadVM,
+          settingsDataService: settingsDataService,
+          playlistListVM: playlistListVM,
+          warningMessageVM: warningMessageVM,
+          audioPlayerVM: audioPlayerVM,
+          dateFormatVM: dateFormatVM,
+        );
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 7460),
+        ]);
+
+        // Execute the 'Restore Playlists, Comments and Settings from Zip
+        // File ...' menu
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: true,
+        );
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              'Restored 1 playlist, 1 comment and 1 picture JSON files as well as the application settings from "$restorableZipFilePathName".',
+          isWarningConfirming: true,
+          warningTitle: 'CONFIRMATION',
+        );
+
+        // Select the playlist 'Prières du Maître' to display its
+        // audio list.
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: 'Prières du Maître',
+        );
+
+        // Verifying the existing and the restored playlists
+        // list as well as the selected playlist 'Prières du
+        // Maître' displayed audio titles and subtitles.
+
+        List<String> playlistsTitles = [
+          "Prières du Maître",
+        ];
+
+        List<String> audioTitles = [
+          "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+        ];
+
+        List<String> audioSubTitles = [
+          '0:02:39.6. 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00.',
+        ];
+
+        _verifyRestoredPlaylistAndAudio(
+          tester: tester,
+          selectedPlaylistTitle: 'Prières du Maître',
+          playlistsTitles: playlistsTitles,
+          audioTitles: audioTitles,
+          audioSubTitles: audioSubTitles,
+        );
+
+        // Verify the content of the 'Prières du Maître'
+        // playlist dir and comments and pictures dir after
+        // restoration.
         IntegrationTestUtil.verifyPlaylistDirectoryContents(
-          playlistTitle: 'S8 audio',
-          expectedAudioFiles: [
-            "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.mp3",
-            "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
-            "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.mp3",
-          ],
+          playlistTitle: 'Prières du Maître',
+          expectedAudioFiles: [],
           expectedCommentFiles: [
-            "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.json",
-            "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
-            "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
-            "New file name.json",
+            "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'.json"
           ],
-          expectedPictureFiles: [],
-          playlistRootDir: playlistRootDirName,
+          expectedPictureFiles: [
+            "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'.json"
+          ],
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Unique playlist restore, replace existing playlist. Restore unique playlist Windows zip to empty Windows
+             application''', (tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        String restorableZipFilePathName =
+            '$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Windows Prières du Maître.zip';
+
+        // Since we have to use a mock AudioDownloadVM to add the
+        // youtube playlist, we can not use app.main() to start the
+        // app because app.main() uses the real AudioDownloadVM
+        // and we don't want to make the main.dart file dependent
+        // of a mock class. So we have to start the app by hand,
+        // what IntegrationTestUtil.launchExpandablePlaylistListView
+        // does.
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+        WarningMessageVM warningMessageVM = WarningMessageVM();
+
+        // The mockAudioDownloadVM will be later used to simulate
+        // redownloading not playable files after having restored
+        // the playlists, comments and settings from the zip file.
+        MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
+          warningMessageVM: warningMessageVM,
+          settingsDataService: settingsDataService,
+        );
+
+        AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+          warningMessageVM: warningMessageVM,
+          settingsDataService: settingsDataService,
+        );
+
+        PlaylistListVM playlistListVM = PlaylistListVM(
+          warningMessageVM: warningMessageVM,
+          audioDownloadVM: mockAudioDownloadVM,
+          commentVM: CommentVM(),
+          pictureVM: PictureVM(
+            settingsDataService: settingsDataService,
+          ),
+          settingsDataService: settingsDataService,
+        );
+
+        // calling getUpToDateSelectablePlaylists() loads all the
+        // playlist json files from the app dir and so enables
+        // playlistListVM to know which playlists are
+        // selected and which are not
+        playlistListVM.getUpToDateSelectablePlaylists();
+
+        AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+          settingsDataService: settingsDataService,
+          playlistListVM: playlistListVM,
+          commentVM: CommentVM(),
+        );
+
+        DateFormatVM dateFormatVM = DateFormatVM(
+          settingsDataService: settingsDataService,
+        );
+
+        await IntegrationTestUtil
+            .launchIntegrTestAppEnablingInternetAccessWithMock(
+          tester: tester,
+          audioDownloadVM: audioDownloadVM,
+          settingsDataService: settingsDataService,
+          playlistListVM: playlistListVM,
+          warningMessageVM: warningMessageVM,
+          audioPlayerVM: audioPlayerVM,
+          dateFormatVM: dateFormatVM,
+        );
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 7460),
+        ]);
+
+        // Execute the 'Restore Playlists, Comments and Settings from Zip
+        // File ...' menu
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+        );
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              'Restored 1 playlist, 1 comment and 1 picture JSON files as well as the application settings from "$restorableZipFilePathName".',
+          isWarningConfirming: true,
+          warningTitle: 'CONFIRMATION',
+        );
+
+        // Select the playlist 'Prières du Maître' to display its
+        // audio list.
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: 'Prières du Maître',
+        );
+
+        // Verifying the existing and the restored playlists
+        // list as well as the selected playlist 'Prières du
+        // Maître' displayed audio titles and subtitles.
+
+        List<String> playlistsTitles = [
+          "Prières du Maître",
+        ];
+
+        List<String> audioTitles = [
+          "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+        ];
+
+        List<String> audioSubTitles = [
+          '0:02:39.6. 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00.',
+        ];
+
+        _verifyRestoredPlaylistAndAudio(
+          tester: tester,
+          selectedPlaylistTitle: 'Prières du Maître',
+          playlistsTitles: playlistsTitles,
+          audioTitles: audioTitles,
+          audioSubTitles: audioSubTitles,
+        );
+
+        // Verify the content of the 'Prières du Maître'
+        // playlist dir and comments and pictures dir after
+        // restoration.
+        IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          playlistTitle: 'Prières du Maître',
+          expectedAudioFiles: [],
+          expectedCommentFiles: [
+            "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'.json"
+          ],
+          expectedPictureFiles: [
+            "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'.json"
+          ],
         );
 
         // Purge the test playlist directory so that the created test
