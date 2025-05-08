@@ -157,7 +157,7 @@ void main() {
       sharedPreferences: MockSharedPreferences(),
     );
 
-    setUp(() async {
+    setUpAll(() async {
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -169,7 +169,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
     });
-    test('filter by <tendance crypto> AND <en 2024>', () {
+    test('filter by <tendance crypto> AND <en 2024>', () async {
       List<Audio> expectedFilteredAudios = [
         audioOne,
         audioTwo,
@@ -189,7 +189,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by <tendance crypto> OR <en 2024>', () {
+    test('filter by <tendance crypto> OR <en 2024>', () async {
       List<Audio> expectedFilteredAudios = [
         audioOne,
         audioTwo,
@@ -210,7 +210,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by <en 2024> AND <tendance crypto>', () {
+    test('filter by <en 2024> AND <tendance crypto>', () async {
       List<Audio> expectedFilteredAudios = [
         audioOne,
         audioTwo,
@@ -230,7 +230,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by <en 2024> OR <tendance crypto>', () {
+    test('filter by <en 2024> OR <tendance crypto>', () async {
       List<Audio> expectedFilteredAudios = [
         audioOne,
         audioTwo,
@@ -251,7 +251,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by <quelle> AND <2024>', () {
+    test('filter by <quelle> AND <2024>', () async {
       List<Audio> expectedFilteredAudios = [
         audioOne,
         audioThree,
@@ -271,7 +271,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by <quelle> OR <2024>', () {
+    test('filter by <quelle> OR <2024>', () async {
       List<Audio> expectedFilteredAudios = [
         audioOne,
         audioTwo,
@@ -293,7 +293,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by <2024> AND <quelle>', () {
+    test('filter by <2024> AND <quelle>', () async {
       List<Audio> expectedFilteredAudios = [
         audioOne,
         audioThree,
@@ -313,7 +313,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by <2024> OR <quelle>', () {
+    test('filter by <2024> OR <quelle>', () async {
       List<Audio> expectedFilteredAudios = [
         audioOne,
         audioTwo,
@@ -335,7 +335,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by <intelligence> OR <artificielle>', () {
+    test('filter by <intelligence> OR <artificielle>', () async {
       List<Audio> expectedFilteredAudios = [
         audioThree,
         audioFour,
@@ -365,7 +365,7 @@ void main() {
       sharedPreferences: MockSharedPreferences(),
     );
 
-    setUp(() async {
+    setUpAll(() async {
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -378,7 +378,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
     });
-    test('filter by <tendance crypto> AND <en 2024>', () {
+    test('filter by <tendance crypto> AND <en 2024>', () async {
       List<Audio> expectedFilteredAudios = [
         audioOne,
       ];
@@ -397,7 +397,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by <tendance crypto> OR <en 2024>', () {
+    test('filter by <tendance crypto> OR <en 2024>', () async {
       List<Audio> expectedFilteredAudios = [
         audioOne,
         audioTwo,
@@ -418,7 +418,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by <en 2024> AND <tendance crypto>', () {
+    test('filter by <en 2024> AND <tendance crypto>', () async {
       List<Audio> expectedFilteredAudios = [
         audioOne,
       ];
@@ -437,7 +437,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by <en 2024> OR <tendance crypto>', () {
+    test('filter by <en 2024> OR <tendance crypto>', () async {
       List<Audio> expectedFilteredAudios = [
         audioOne,
         audioTwo,
@@ -458,7 +458,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by <quelle> AND <2024>', () {
+    test('filter by <quelle> AND <2024>', () async {
       List<Audio> expectedFilteredAudios = [
         audioOne,
         audioThree,
@@ -478,7 +478,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by <quelle> OR <2024>', () {
+    test('filter by <quelle> OR <2024>', () async {
       List<Audio> expectedFilteredAudios = [
         audioOne,
         audioTwo,
@@ -500,7 +500,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by <2024> AND <quelle>', () {
+    test('filter by <2024> AND <quelle>', () async {
       List<Audio> expectedFilteredAudios = [
         audioOne,
         audioThree,
@@ -520,7 +520,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by <intelligence> OR <artificielle>', () {
+    test('filter by <intelligence> OR <artificielle>', () async {
       List<Audio> expectedFilteredAudios = [
         audioFour,
       ];
@@ -539,7 +539,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by <2024> OR <quelle>', () {
+    test('filter by <2024> OR <quelle>', () async {
       List<Audio> expectedFilteredAudios = [
         audioOne,
         audioTwo,
@@ -571,7 +571,7 @@ void main() {
       sharedPreferences: MockSharedPreferences(),
     );
 
-    setUp(() async {
+    setUpAll(() async {
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -584,7 +584,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
     });
-    test('filter by <investir en 2024> AND <éthique et tac>', () {
+    test('filter by <investir en 2024> AND <éthique et tac>', () async {
       List<Audio> expectedFilteredAudios = [];
 
       List<Audio> filteredAudioLst = audioSortFilterService
@@ -601,7 +601,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by <accélération> AND <éthique et tac>', () {
+    test('filter by <accélération> AND <éthique et tac>', () async {
       List<Audio> expectedFilteredAudios = [
         audioTwo,
       ];
@@ -620,7 +620,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by <investir en 2024> OR <éthique et tac>', () {
+    test('filter by <investir en 2024> OR <éthique et tac>', () async {
       List<Audio> expectedFilteredAudios = [
         audioOne,
         audioTwo,
@@ -640,7 +640,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by <on vous propose> OR <en accélération>', () {
+    test('filter by <on vous propose> OR <en accélération>', () async {
       List<Audio> expectedFilteredAudios = [
         audioOne,
         audioTwo,
@@ -670,7 +670,7 @@ void main() {
       sharedPreferences: MockSharedPreferences(),
     );
 
-    setUp(() async {
+    setUpAll(() async {
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -683,7 +683,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
     });
-    test('filter by <investir en 2024> AND <éthique et tac>', () {
+    test('filter by <investir en 2024> AND <éthique et tac>', () async {
       List<Audio> expectedFilteredAudios = [];
 
       List<Audio> filteredAudioLst = audioSortFilterService
@@ -700,7 +700,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by <accélération> AND <Éthique et tac>', () {
+    test('filter by <accélération> AND <Éthique et tac>', () async {
       List<Audio> expectedFilteredAudios = [
         audioTwo,
       ];
@@ -719,7 +719,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by <investir en 2024> OR <Éthique et tac>', () {
+    test('filter by <investir en 2024> OR <Éthique et tac>', () async {
       List<Audio> expectedFilteredAudios = [audioOne, audioTwo];
 
       List<Audio> filteredAudioLst = audioSortFilterService
@@ -736,7 +736,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by <investir en 2024> OR <éthique et tac>', () {
+    test('filter by <investir en 2024> OR <éthique et tac>', () async {
       List<Audio> expectedFilteredAudios = [
         audioOne,
       ];
@@ -755,7 +755,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by <on vous propose> OR <en accélération>', () {
+    test('filter by <on vous propose> OR <en accélération>', () async {
       List<Audio> expectedFilteredAudios = [
         audioTwo,
       ];
@@ -784,7 +784,7 @@ void main() {
       sharedPreferences: MockSharedPreferences(),
     );
 
-    setUp(() async {
+    setUpAll(() async {
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -797,7 +797,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
     });
-    test('filter by start/end download date', () {
+    test('filter by start/end download date', () async {
       List<Audio> expectedFilteredAudios = [
         audioOne,
         audioTwo,
@@ -821,7 +821,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by start/end video upload date', () {
+    test('filter by start/end video upload date', () async {
       List<Audio> expectedFilteredAudios = [
         audioOne,
         audioThree,
@@ -871,14 +871,14 @@ void main() {
       expect(filteredAudioLst, expectedFilteredAudios);
     });
   });
-  group('''filter test: by file size range or/and audio duration range.''', () {
+  group('''filter test: by file size range or/and audio duration range.''', () async {
     late AudioSortFilterService audioSortFilterService;
 
     SettingsDataService settingsDataService = SettingsDataService(
       sharedPreferences: MockSharedPreferences(),
     );
 
-    setUp(() async {
+    setUpAll(() async {
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -891,7 +891,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
     });
-    test('filter by 110 MB to 130 MB file size range', () {
+    test('filter by 110 MB to 130 MB file size range', () async {
       List<Audio> expectedFilteredAudios = [audioOne, audioThree, audioFour];
 
       List<Audio> filteredAudioLst =
@@ -932,7 +932,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by 300 sec to 900 sec audio duration range', () {
+    test('filter by 300 sec to 900 sec audio duration range', () async {
       List<Audio> expectedFilteredAudios = [audioOne, audioFour];
 
       List<Audio> filteredAudioLst =
@@ -978,7 +978,7 @@ void main() {
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
-    test('filter by file size range and audio duration range', () {
+    test('filter by file size range and audio duration range', () async {
       List<Audio> expectedFilteredAudios = [
         audioOne,
         audioFour,
@@ -1002,14 +1002,14 @@ void main() {
       expect(filteredAudioLst, expectedFilteredAudios);
     });
   });
-  group('sort audio lst by one SortingOption', () {
+  group('sort audio lst by one SortingOption', () async {
     late AudioSortFilterService audioSortFilterService;
 
     SettingsDataService settingsDataService = SettingsDataService(
       sharedPreferences: MockSharedPreferences(),
     );
 
-    setUp(() async {
+    setUpAll(() async {
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -1022,8 +1022,8 @@ void main() {
         settingsDataService: settingsDataService,
       );
     });
-    group('sort audio lst by title SortingOption', () {
-      test('sort by title', () {
+    group('sort audio lst by title SortingOption', () async {
+      test('sort by title', () async {
         final Audio zebra = Audio.fullConstructor(
           youtubeVideoChannel: 'three',
           enclosingPlaylist: audioPlaylist,
@@ -1168,7 +1168,7 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      test('sort by title containing _ number reference', () {
+      test('sort by title containing _ number reference', () async {
         final Audio thirdAudioOneOfTwo = Audio.fullConstructor(
           youtubeVideoChannel: 'one',
           enclosingPlaylist: audioPlaylist,
@@ -1494,7 +1494,7 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      test('sort by title containing - number reference', () {
+      test('sort by title containing - number reference', () async {
         final Audio thirdAudioOneOfTwo = Audio.fullConstructor(
           youtubeVideoChannel: 'one',
           enclosingPlaylist: audioPlaylist,
@@ -1820,7 +1820,7 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      test('sort by title containing / number reference', () {
+      test('sort by title containing / number reference', () async {
         final Audio thirdAudioOneOfTwo = Audio.fullConstructor(
           youtubeVideoChannel: 'one',
           enclosingPlaylist: audioPlaylist,
@@ -2146,7 +2146,7 @@ void main() {
           rootPath: kPlaylistDownloadRootPathWindowsTest,
         );
       });
-      test('sort by title containing : number reference', () {
+      test('sort by title containing : number reference', () async {
         final Audio thirdAudioOneOfTwo = Audio.fullConstructor(
           youtubeVideoChannel: 'one',
           enclosingPlaylist: audioPlaylist,
@@ -2579,7 +2579,7 @@ void main() {
         );
       });
 
-      test('sort by title starting with non language chars', () {
+      test('sort by title starting with non language chars', () async {
         Audio title = Audio.fullConstructor(
           youtubeVideoChannel: 'one',
           enclosingPlaylist: audioPlaylist,
@@ -3100,9 +3100,9 @@ void main() {
       });
     });
 
-    group('sort audio lst by chapter SortingOption', () {
+    group('sort audio lst by chapter SortingOption', () async {
       test('''sort by _ chapter title number. Example: ... 1_1 ..., ... 1_2 ...,
-            ... 2_1 ...''', () {
+            ... 2_1 ...''', () async {
         final Audio avantPropos = Audio.fullConstructor(
           youtubeVideoChannel: 'one',
           enclosingPlaylist: audioPlaylist,
@@ -3803,7 +3803,7 @@ void main() {
         );
       });
       test('''sort by - chapter title number. Example: ... 1-1 ..., ... 1-2 ...,
-            ... 2-1 ...''', () {
+            ... 2-1 ...''', () async {
         final Audio avantPropos = Audio.fullConstructor(
           youtubeVideoChannel: 'one',
           enclosingPlaylist: audioPlaylist,
@@ -4504,7 +4504,7 @@ void main() {
         );
       });
       test('''sort by / chapter title number. Example: ... 1/1 ..., ... 1/2 ...,
-            ... 2/1 ...''', () {
+            ... 2/1 ...''', () async {
         final Audio avantPropos = Audio.fullConstructor(
           youtubeVideoChannel: 'one',
           enclosingPlaylist: audioPlaylist,
@@ -5205,7 +5205,7 @@ void main() {
         );
       });
       test('''sort by : chapter title number. Example: ... 1:1 ..., ... 1:2 ...,
-            ... 2:1 ...''', () {
+            ... 2:1 ...''', () async {
         final Audio avantPropos = Audio.fullConstructor(
           youtubeVideoChannel: 'one',
           enclosingPlaylist: audioPlaylist,
@@ -7311,7 +7311,7 @@ void main() {
       });
       test('''sort by / chapter title number. Example: ... 1/1 ..., ... 1/2 ...,
             ... 2/1 ... . The order of the list of audio to sort (included in the
-            variable audioList below) was modified.''', () {
+            variable audioList below) was modified.''', () async {
         final Audio avantPropos = Audio.fullConstructor(
           youtubeVideoChannel: 'one',
           enclosingPlaylist: audioPlaylist,
@@ -8013,7 +8013,7 @@ void main() {
       });
       test('''sort by : chapter title number. Example: ... 1:1 ..., ... 1:2 ...,
             ... 2:1 ... . The order of the list of audio to sort (included in the
-            variable audioList below) was modified.''', () {
+            variable audioList below) was modified.''', () async {
         final Audio avantPropos = Audio.fullConstructor(
           youtubeVideoChannel: 'one',
           enclosingPlaylist: audioPlaylist,
@@ -8714,7 +8714,7 @@ void main() {
         );
       });
       test('''sort by ' à ' chapter title number. Example: chapitre 1 à 5,
-            Chapitre 6 à 10, chapitre 11 à 15''', () {
+            Chapitre 6 à 10, chapitre 11 à 15''', () async {
         final Audio one = Audio.fullConstructor(
             enclosingPlaylist: audioPlaylist,
             audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
@@ -8909,7 +8909,7 @@ void main() {
       });
       test('''sort by chapter title number. The valid video title of the audio
             contained in the 'Gary Renard - Et l'univers disparaîtra imported'
-            json file are original and so not modified.''', () {
+            json file are original and so not modified.''', () async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -9018,14 +9018,14 @@ void main() {
       );
     });
   });
-  group("sort audio lst by multiple SortingOption's", () {
+  group("sort audio lst by multiple SortingOption's", () async {
     late AudioSortFilterService audioSortFilterService;
 
     SettingsDataService settingsDataService = SettingsDataService(
       sharedPreferences: MockSharedPreferences(),
     );
 
-    setUp(() async {
+    setUpAll(() async {
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -9038,7 +9038,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
     });
-    test('sort by duration and title', () {
+    test('sort by duration and title', () async {
       final Audio zebra = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
         enclosingPlaylist: audioPlaylist,
@@ -9222,14 +9222,14 @@ void main() {
       );
     });
   });
-  group('filterAndSortAudioLst by title and description', () {
+  group('filterAndSortAudioLst by title and description', () async {
     late AudioSortFilterService audioSortFilterService;
 
     SettingsDataService settingsDataService = SettingsDataService(
       sharedPreferences: MockSharedPreferences(),
     );
 
-    setUp(() async {
+    setUpAll(() async {
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -9243,7 +9243,7 @@ void main() {
       );
     });
 
-    test('with search word present in in title only', () {
+    test('with search word present in in title only', () async {
       final Audio zebra1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
         enclosingPlaylist: audioPlaylist,
@@ -9509,7 +9509,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test('with search word present in compact description only', () {
+    test('with search word present in compact description only', () async {
       final Audio zebra1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
         enclosingPlaylist: audioPlaylist,
@@ -9735,7 +9735,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test('with search word in title and in compact description', () {
+    test('with search word in title and in compact description', () async {
       final Audio zebra1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
         enclosingPlaylist: audioPlaylist,
@@ -9965,14 +9965,14 @@ void main() {
       );
     });
   });
-  group('filterAndSortAudioLst by title only', () {
+  group('filterAndSortAudioLst by title only', () async {
     late AudioSortFilterService audioSortFilterService;
 
     SettingsDataService settingsDataService = SettingsDataService(
       sharedPreferences: MockSharedPreferences(),
     );
 
-    setUp(() async {
+    setUpAll(() async {
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -9986,7 +9986,7 @@ void main() {
       );
     });
 
-    test('with search word in title and in compact description', () {
+    test('with search word in title and in compact description', () async {
       final Audio zebra1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
         enclosingPlaylist: audioPlaylist,
@@ -10216,7 +10216,7 @@ void main() {
     late AudioSortFilterService audioSortFilterService;
     late PlaylistListVM playlistListVM;
 
-    setUp(() async {
+    setUpAll(() async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -10291,7 +10291,7 @@ void main() {
     test(
         '''filter by one word in audio title and sort by download date descending
            and duration ascending and then sort by download date ascending and
-           duration descending''', () {
+           duration descending''', () async {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -10394,7 +10394,7 @@ void main() {
     });
     test(
         '''filter by multiple words in audio title or in audio compact description
-           and sort by download date descending and duration ascending''', () {
+           and sort by download date descending and duration ascending''', () async {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -10496,7 +10496,7 @@ void main() {
     test(
         '''filter by one sentence present in audio compact description only with
            searchInVideoCompactDescription = false and sort by download date
-           descending and duration ascending. Result list will be empty''', () {
+           descending and duration ascending. Result list will be empty''', () async {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -10579,7 +10579,7 @@ void main() {
     test(
         '''filter in 'and' mode by multiple sentences present in audio title and
            compact description only with searchInVideoCompactDescription = false
-           and sort by download date descending and duration ascending''', () {
+           and sort by download date descending and duration ascending''', () async {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -10668,7 +10668,7 @@ void main() {
     test(
         '''filter in 'and' mode by multiple sentences present in audio title and
            compact description only with searchInVideoCompactDescription = true
-           and sort by download date descending and duration ascending''', () {
+           and sort by download date descending and duration ascending''', () async {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -10764,7 +10764,7 @@ void main() {
     test(
         '''filter in 'or' mode by multiple sentences present in audio title and compact
          description only with searchInVideoCompactDescription = false and sort by
-         download date descending and duration ascending''', () {
+         download date descending and duration ascending''', () async {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -10863,7 +10863,7 @@ void main() {
     });
     test('''filter in 'or' mode by multiple sentences present in audio title and
            compact description only with searchInVideoCompactDescription = true
-           and sort by download date descending and duration ascending''', () {
+           and sort by download date descending and duration ascending''', () async {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -10967,7 +10967,7 @@ void main() {
     test('''filter by one word in audio title, by download start/end date and by
            upload start/end date and sort by download date descending and duration
            ascending and then sort by download date ascending and duration
-           descending.''', () {
+           descending.''', () async {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -11076,7 +11076,7 @@ void main() {
     test('''filter by one word in audio title, by audio file size range and by
            audio duration range and sort by download date descending and duration
            ascending and then sort by download date ascending and duration
-           descending.''', () {
+           descending.''', () async {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -11181,11 +11181,11 @@ void main() {
       );
     });
   });
-  group("filter audio by fully, partially and not listened options", () {
+  group("filter audio by fully, partially and not listened options", () async {
     late AudioSortFilterService audioSortFilterService;
     late PlaylistListVM playlistListVM;
 
-    setUp(() async {
+    setUpAll(() async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -11257,7 +11257,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test('filter not listened audio only', () {
+    test('filter not listened audio only', () async {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -11326,7 +11326,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test('filter audio avoiding fully listened audio', () {
+    test('filter audio avoiding fully listened audio', () async {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -11367,7 +11367,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test('filter audio getting only fully listened audio', () {
+    test('filter audio getting only fully listened audio', () async {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -11404,11 +11404,11 @@ void main() {
       );
     });
   });
-  group("filter audio by commented or not commented options", () {
+  group("filter audio by commented or not commented options", () async {
     late AudioSortFilterService audioSortFilterService;
     late PlaylistListVM playlistListVM;
 
-    setUp(() async {
+    setUpAll(() async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -11474,7 +11474,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
     });
-    test('filter commented or not commented audio', () {
+    test('filter commented or not commented audio', () async {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -11515,7 +11515,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test('filter commented audio', () {
+    test('filter commented audio', () async {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -11584,7 +11584,7 @@ void main() {
         rootPath: kPlaylistDownloadRootPathWindowsTest,
       );
     });
-    test('filter not commented audio', () {
+    test('filter not commented audio', () async {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -11653,11 +11653,11 @@ void main() {
       );
     });
   });
-  group('bug fix', () {
+  group('bug fix', () async {
     late AudioSortFilterService audioSortFilterService;
     late PlaylistListVM playlistListVM;
 
-    setUp(() async {
+    setUpAll(() async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -11828,7 +11828,7 @@ void main() {
       );
     });
   });
-  group('Comments order tests', () {
+  group('Comments order tests', () async {
     test('''sort playlist audio comments so that they are displayed in the same
             order than the audio in the audio playable list dialog available in
             the audio player view.''', () async {
@@ -12108,10 +12108,10 @@ void main() {
       );
     });
   });
-  group('Remaining options test', () {
+  group('Remaining options test', () async {
     late PlaylistListVM playlistListVM;
 
-    setUp(() async {
+    setUpAll(() async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -12180,11 +12180,11 @@ void main() {
       );
     });
     group('''By audio downl or vid upl date filter tests
-        test''', () {
+        test''', () async {
       late AudioSortFilterService audioSortFilterService;
       late PlaylistListVM playlistListVM;
 
-      setUp(() async {
+      setUpAll(() async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -12759,11 +12759,11 @@ void main() {
       });
     });
     group('''By audio file size or duration filter tests
-        test''', () {
+        test''', () async {
       late AudioSortFilterService audioSortFilterService;
       late PlaylistListVM playlistListVM;
 
-      setUp(() async {
+      setUpAll(() async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -13023,7 +13023,7 @@ void main() {
       test('''Set start == end audio file size and verify filtered audio list.
               In this test, 2 files have those file size: 2373715 bytes and
               2370022 bytes. Setting start and end filter file size to 2.37 MB
-              returns those files.''', () {
+              returns those files.''', () async {
         List<Audio> audioNotFilteredLst = playlistListVM
             .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
           audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -13337,7 +13337,7 @@ void main() {
       test('''Set start == end audio duration and verify filtered audio list.
            Since the audio duration contain are defined in hour, minute and seconds,
            trying to filter audio based on start hour minute == end hour minute
-           has no sence and an empty list is returned as result.''', () {
+           has no sence and an empty list is returned as result.''', () async {
         List<Audio> audioNotFilteredLst = playlistListVM
             .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
           audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
