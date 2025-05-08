@@ -2252,7 +2252,7 @@ class IntegrationTestUtil {
 
     if (playlistRootDir.isEmpty) {
       playlistDir =
-          "$kApplicationPathWindowsTest${path.separator}$playlistTitle";
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$playlistTitle";
     } else {
       playlistDir =
           "$kApplicationPathWindowsTest${path.separator}$playlistRootDir${path.separator}$playlistTitle";
@@ -2284,7 +2284,7 @@ class IntegrationTestUtil {
     // Verify image files in pictures directory
     List<String> actualPictureFiles = DirUtil.listFileNamesInDir(
       directoryPath: picturesDir,
-      fileExtension: 'jpg',
+      fileExtension: 'json',
     );
     assert(
       actualPictureFiles.toSet().containsAll(expectedPictureFiles.toSet()),
