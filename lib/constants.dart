@@ -59,7 +59,7 @@ const String kApplicationPicturePathWindows =
 const String kApplicationPathWindowsTest =
     "C:\\development\\flutter\\audiolearn\\test\\data\\audio";
 const String kPlaylistDownloadRootPathWindowsTest =
-    "C:\\development\\flutter\\audiolearn\\test\\data\\audio";
+    "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists";
 const String kApplicationPicturePathWindowsTest =
     "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\pictures";
 

@@ -28,14 +28,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}playlist_list_vm_copy_move_audio_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
@@ -49,7 +49,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -79,7 +79,7 @@ void main() {
       const String sourcePlaylistTitle = 'S8 audio';
 
       final sourcePlaylistPath = path.join(
-        kPlaylistDownloadRootPathWindowsTest,
+        kApplicationPathWindowsTest,
         sourcePlaylistTitle,
       );
 
@@ -97,7 +97,7 @@ void main() {
       const String targetPlaylistTitle = 'local_target';
 
       final targetPlaylistPath = path.join(
-        kPlaylistDownloadRootPathWindowsTest,
+        kApplicationPathWindowsTest,
         targetPlaylistTitle,
       );
 
@@ -152,14 +152,14 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
     test('moveAudioToPlaylist moves audio and its comments to playlist', () async {
       const String sourcePlaylistTitle = 'S8 audio';
 
       final sourcePlaylistPath = path.join(
-        kPlaylistDownloadRootPathWindowsTest,
+        kApplicationPathWindowsTest,
         sourcePlaylistTitle,
       );
 
@@ -177,7 +177,7 @@ void main() {
       const String targetPlaylistTitle = 'local_target';
 
       final targetPlaylistPath = path.join(
-        kPlaylistDownloadRootPathWindowsTest,
+        kApplicationPathWindowsTest,
         targetPlaylistTitle,
       );
 
@@ -232,7 +232,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
   });
@@ -243,14 +243,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_play_skip_to_next_not_last_unread_audio_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
@@ -264,7 +264,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -307,7 +307,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
     test(
@@ -316,14 +316,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_play_skip_to_next_not_last_unread_audio_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
@@ -337,7 +337,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -383,7 +383,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
     test(
@@ -392,14 +392,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_play_skip_to_next_not_last_unread_audio_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
@@ -413,7 +413,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -458,21 +458,21 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
     test('Next playable audio is last downloaded audio', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_play_skip_to_next_not_last_unread_audio_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
@@ -486,7 +486,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -532,7 +532,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
   });
@@ -545,14 +545,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_play_skip_to_next_not_last_unread_audio_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
@@ -566,7 +566,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -607,7 +607,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
     test(
@@ -616,14 +616,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_play_skip_to_next_not_last_unread_audio_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
@@ -637,7 +637,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -685,21 +685,21 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
     test('Playlist has no not fully played audio', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_play_skip_to_next_not_last_unread_audio_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
@@ -713,7 +713,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -754,7 +754,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
   });
@@ -765,14 +765,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}playlist_list_vm_add_playlist_to_empty_app_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
@@ -786,7 +786,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -828,7 +828,7 @@ void main() {
       );
 
       final settingsPathFileName = path.join(
-        kPlaylistDownloadRootPathWindowsTest,
+        kApplicationPathWindowsTest,
         'settings.json',
       );
 
@@ -853,7 +853,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
     test('Add local playlist', () async {
@@ -871,7 +871,7 @@ void main() {
       );
 
       final settingsPathFileName = path.join(
-        kPlaylistDownloadRootPathWindowsTest,
+        kApplicationPathWindowsTest,
         'settings.json',
       );
 
@@ -896,7 +896,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
   });
@@ -907,14 +907,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}playlist_list_vm_copy_move_audio_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
@@ -928,7 +928,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -969,7 +969,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
   });
@@ -978,14 +978,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
@@ -999,7 +999,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -1020,7 +1020,7 @@ void main() {
 
       String savedZipFilePathName =
           await playlistListVM.savePlaylistsCommentsPicturesAndSettingsJsonFilesToZip(
-        targetDirectoryPath: kPlaylistDownloadRootPathWindowsTest,
+        targetDirectoryPath: kApplicationPathWindowsTest,
       );
 
       expect(
@@ -1060,21 +1060,21 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
     test('settings in app dir and playlists in playlists root path', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_json_only_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
@@ -1088,7 +1088,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -1108,7 +1108,7 @@ void main() {
       );
 
       await playlistListVM.savePlaylistsCommentsPicturesAndSettingsJsonFilesToZip(
-        targetDirectoryPath: kPlaylistDownloadRootPathWindowsTest,
+        targetDirectoryPath: kApplicationPathWindowsTest,
       );
 
       List<String> zipLst = DirUtil.listFileNamesInDir(
@@ -1143,7 +1143,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
   });
@@ -1156,14 +1156,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}delete_filtered_audio_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
@@ -1177,7 +1177,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -1237,7 +1237,7 @@ void main() {
 
       List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
         directoryPath:
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+            "$kApplicationPathWindowsTest${path.separator}S8 audio",
         fileExtension: 'mp3',
       );
 
@@ -1327,7 +1327,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
   });
@@ -1341,14 +1341,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}delete_filtered_audio_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
@@ -1362,7 +1362,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -1452,7 +1452,7 @@ void main() {
 
       List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
         directoryPath:
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+            "$kApplicationPathWindowsTest${path.separator}S8 audio",
         fileExtension: 'mp3',
       );
 
@@ -1528,7 +1528,7 @@ void main() {
 
       List<String> commentFileNameLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
+            "$kApplicationPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
         fileExtension: 'json',
       );
 
@@ -1538,7 +1538,7 @@ void main() {
 
       List<String> pictureFileNameLst = DirUtil.listFileNamesInDir(
         directoryPath:
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}$kPictureDirName",
+            "$kApplicationPathWindowsTest${path.separator}S8 audio${path.separator}$kPictureDirName",
         fileExtension: 'json',
       );
 
@@ -1547,7 +1547,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
   });
@@ -1556,14 +1556,14 @@ void main() {
     // Purge the test playlist directory if it exists so that the
     // playlist list is empty
     DirUtil.deleteFilesInDirAndSubDirs(
-      rootPath: kPlaylistDownloadRootPathWindowsTest,
+      rootPath: kApplicationPathWindowsTest,
     );
 
     // Copy the test initial audio data to the app dir
     DirUtil.copyFilesFromDirAndSubDirsToDirectory(
       sourceRootPath:
           "$kDownloadAppTestSavedDataDir${path.separator}playlist_list_vm_copy_move_audio_test_data",
-      destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      destinationRootPath: kApplicationPathWindowsTest,
     );
 
     SettingsDataService settingsDataService = SettingsDataService(
@@ -1577,7 +1577,7 @@ void main() {
     // playlists available in the download app test dir
     await settingsDataService.loadSettingsFromFile(
         settingsJsonPathFileName:
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+            "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
     WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -1605,7 +1605,7 @@ void main() {
     const String sourcePlaylistTitle = 'S8 audio';
 
     final sourcePlaylistPath = path.join(
-      kPlaylistDownloadRootPathWindowsTest,
+      kApplicationPathWindowsTest,
       sourcePlaylistTitle,
     );
 
@@ -1623,7 +1623,7 @@ void main() {
     const String targetPlaylistTitle = 'local_target';
 
     final targetPlaylistPath = path.join(
-      kPlaylistDownloadRootPathWindowsTest,
+      kApplicationPathWindowsTest,
       targetPlaylistTitle,
     );
 
@@ -1678,7 +1678,7 @@ void main() {
     // Purge the test playlist directory so that the created test
     // files are not uploaded to GitHub
     DirUtil.deleteFilesInDirAndSubDirs(
-      rootPath: kPlaylistDownloadRootPathWindowsTest,
+      rootPath: kApplicationPathWindowsTest,
     );
   });
   group('''Obtain list of playlists using sort/filter parms name.''', () {
@@ -1686,14 +1686,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
@@ -1707,7 +1707,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -1775,21 +1775,21 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
     test('''Test if SF parms name exist.''', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
@@ -1803,7 +1803,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -1852,7 +1852,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
   });
@@ -1864,21 +1864,21 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       // Create a new directory containing playlists to which the playlist
       // root path will be modified
 
       String modifiedPlaylistRootPath =
-          '$kPlaylistDownloadRootPathWindowsTest${path.separator}newPlaylistRootDirectory';
+          '$kApplicationPathWindowsTest${path.separator}newPlaylistRootDirectory';
 
       DirUtil.createDirIfNotExistSync(
         pathStr: modifiedPlaylistRootPath,
@@ -1902,7 +1902,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
         settingsJsonPathFileName:
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName",
+            "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName",
       );
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
@@ -1931,7 +1931,7 @@ void main() {
       ];
 
       String initialPlaylistRootPath =
-          kPlaylistDownloadRootPathWindowsTest;
+          kApplicationPathWindowsTest;
       const String initialRootSelectedPlaylistTitle = 'S8 audio';
 
       // Verify the initial playlist data
@@ -1987,7 +1987,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
   });
@@ -2053,7 +2053,7 @@ void _testGetPlaylistsUsingSortFilterParmsName(
 Playlist loadPlaylist(String playListOneName) {
   return JsonDataService.loadFromFile(
       jsonPathFileName:
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$playListOneName${path.separator}$playListOneName.json",
+          "$kApplicationPathWindowsTest${path.separator}$playListOneName${path.separator}$playListOneName.json",
       type: Playlist);
 }
 
@@ -2155,7 +2155,7 @@ Future<void> testMoveAudioAndCommentToPlaylist({
 
   await settingsDataService.loadSettingsFromFile(
       settingsJsonPathFileName:
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}settings.json");
+          "$kApplicationPathWindowsTest${path.separator}settings.json");
 
   final WarningMessageVM warningMessageVM = WarningMessageVM();
 

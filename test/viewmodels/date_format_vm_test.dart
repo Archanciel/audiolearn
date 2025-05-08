@@ -17,14 +17,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}date_format_vm_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
@@ -34,7 +34,7 @@ void main() {
 
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${Platform.pathSeparator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${Platform.pathSeparator}$kSettingsFileName");
 
       DateFormatVM dateFormatVM = DateFormatVM(
         settingsDataService: settingsDataService,
@@ -124,7 +124,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
     test('''Check application of initial format, then change format and create a
@@ -133,14 +133,14 @@ void main() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}date_format_vm_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
@@ -150,7 +150,7 @@ void main() {
 
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${Platform.pathSeparator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${Platform.pathSeparator}$kSettingsFileName");
 
       DateFormatVM dateFormatVM = DateFormatVM(
         settingsDataService: settingsDataService,
@@ -220,7 +220,7 @@ void main() {
 
       await reloadedSettingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${Platform.pathSeparator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${Platform.pathSeparator}$kSettingsFileName");
 
       DateFormatVM reloadedDateFormatVM = DateFormatVM(
         settingsDataService: reloadedSettingsDataService,
@@ -289,7 +289,7 @@ void main() {
 
       await secondReloadedSettingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${Platform.pathSeparator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${Platform.pathSeparator}$kSettingsFileName");
 
       DateFormatVM secondReloadedDateFormatVM = DateFormatVM(
         settingsDataService: secondReloadedSettingsDataService,
@@ -323,7 +323,7 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
   });
