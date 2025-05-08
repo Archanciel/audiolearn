@@ -35,72 +35,72 @@ class DirUtil {
   static String getApplicationPath({
     bool isTest = false,
   }) {
+    String applicationPath = '';
+
     if (Platform.isWindows) {
       if (isTest) {
-        return kApplicationPathWindowsTest;
+        applicationPath = kApplicationPathWindowsTest;
       } else {
-        return kApplicationPathWindows;
+        applicationPath = kApplicationPathWindows;
       }
     } else {
-      String applicationPath;
-      
       if (isTest) {
         applicationPath = kApplicationPathAndroidTest;
       } else {
         applicationPath = kApplicationPath;
       }
-
-      // On Android or mobile emulator
-      // avoids that the application can not be run after it was
-      // installed on the smartphone
-      Directory dir = Directory(applicationPath);
-
-      if (!dir.existsSync()) {
-        try {
-          dir.createSync();
-        } catch (e) {
-          // Handle the exception, e.g., directory not created
-          print('Directory could not be created: $e');
-        }
-      }
-
-      return applicationPath;
     }
+
+    // On Android or mobile emulator,/ avoids that the application
+    // can not be run after it was installed on the smartphone
+    Directory dir = Directory(applicationPath);
+
+    if (!dir.existsSync()) {
+      try {
+        dir.createSync();
+      } catch (e) {
+        // Handle the exception, e.g., directory not created
+        print('Directory could not be created: $e');
+      }
+    }
+
+    return applicationPath;
   }
 
   static String getPlaylistDownloadRootPath({
     bool isTest = false,
   }) {
+    String playlistDownloadRootPath = '';
+
     if (Platform.isWindows) {
       if (isTest) {
-        return kPlaylistDownloadRootPathWindowsTest;
+        playlistDownloadRootPath = kPlaylistDownloadRootPathWindowsTest;
       } else {
-        return kPlaylistDownloadRootPathWindows;
+        playlistDownloadRootPath = kPlaylistDownloadRootPathWindows;
       }
     } else {
-      String playlistDownloadRootPath;
-      
       if (isTest) {
         playlistDownloadRootPath = kPlaylistDownloadRootPathAndroidTest;
       } else {
         playlistDownloadRootPath = kPlaylistDownloadRootPath;
       }
-
-      // On Android or mobile emulator
-      Directory dir = Directory(playlistDownloadRootPath);
-
-      if (!dir.existsSync()) {
-        try {
-          // now create the playlist dir
-          dir.createSync();
-        } catch (e) {
-          // Handle the exception, e.g., directory not created
-          print('Directory could not be created: $e');
-        }
-      }
-
-      return playlistDownloadRootPath;
     }
+
+    // On Android or mobile emulator,/ avoids that the application
+    // can not be run after it was installed on the smartphone
+    Directory dir = Directory(playlistDownloadRootPath);
+
+    if (!dir.existsSync()) {
+      try {
+        // now create the playlist dir
+        dir.createSync();
+      } catch (e) {
+        // Handle the exception, e.g., directory not created
+        print('Directory could not be created: $e');
+      }
+    }
+
+    return playlistDownloadRootPath;
   }
 
   /// Returns the path of the application picture directory. If the application
@@ -109,37 +109,36 @@ class DirUtil {
   static String getApplicationPicturePath({
     bool isTest = false,
   }) {
+    String applicationPicturePath = '';
+
     if (Platform.isWindows) {
       if (isTest) {
-        return kApplicationPicturePathWindowsTest;
+        applicationPicturePath = kApplicationPicturePathWindowsTest;
       } else {
-        return kApplicationPicturePathWindows;
+        applicationPicturePath = kApplicationPicturePathWindows;
       }
     } else {
-      String applicationPicturePath;
-      
       if (isTest) {
         applicationPicturePath = kApplicationPicturePathAndroidTest;
       } else {
         applicationPicturePath = kApplicationPicturePath;
       }
-
-      // On Android or mobile emulator
-      // avoids that the application can not be run after it was
-      // installed on the smartphone
-      Directory dir = Directory(applicationPicturePath);
-
-      if (!dir.existsSync()) {
-        try {
-          dir.createSync();
-        } catch (e) {
-          // Handle the exception, e.g., directory not created
-          print('Directory could not be created: $e');
-        }
-      }
-
-      return applicationPicturePath;
     }
+
+    // On Android or mobile emulator,/ avoids that the application
+    // can not be run after it was installed on the smartphone
+    Directory dir = Directory(applicationPicturePath);
+
+    if (!dir.existsSync()) {
+      try {
+        dir.createSync();
+      } catch (e) {
+        // Handle the exception, e.g., directory not created
+        print('Directory could not be created: $e');
+      }
+    }
+
+    return applicationPicturePath;
   }
 
   static String removeAudioDownloadHomePathFromPathFileName({
@@ -225,7 +224,7 @@ class DirUtil {
       print("Directory does not exist.");
     }
   }
-  
+
   static String getPathFromPathFileName({
     required String pathFileName,
   }) {
@@ -564,7 +563,7 @@ class DirUtil {
   /// otherwise, which happens if the moved file already exist in
   /// the target directory or if the file does not exist in the
   /// source directory.
-  static CopyOrMoveFileResult  moveFileToDirectoryIfNotExistSync({
+  static CopyOrMoveFileResult moveFileToDirectoryIfNotExistSync({
     required String sourceFilePathName,
     required String targetDirectoryPath,
     String? targetFileName,
@@ -583,7 +582,7 @@ class DirUtil {
 
     // If the source file does not exist or the target file already exist and
     // move is not performed and a CopyOrMoveFileResult is returned.
-    
+
     if (!sourceFile.existsSync()) {
       return CopyOrMoveFileResult.sourceFileNotExist;
     }

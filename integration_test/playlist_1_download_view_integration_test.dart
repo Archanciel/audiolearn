@@ -140,12 +140,6 @@ void main() {
         dateFormatVM: dateFormatVM,
       );
 
-      // Tap the 'Toggle List' button to display the playlist list. If the list
-      // is not opened, checking that a ListTile with the title of
-      // the playlist was added to the list will fail
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
       // The playlist list and audio list should exist now but be
       // empty (no ListTile widgets)
       expect(find.byType(ListView), findsNWidgets(2));
@@ -443,12 +437,6 @@ void main() {
         dateFormatVM: dateFormatVM,
       );
 
-      // Tap the 'Toggle List' button to display the playlist list. If the list
-      // is not opened, checking that a ListTile with the title of
-      // the playlist was added to the list will fail
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
       // The playlist list and audio list should exist now but be
       // empty (no ListTile widgets)
       expect(find.byType(ListView), findsNWidgets(2));
@@ -598,12 +586,6 @@ void main() {
         audioPlayerVM: audioPlayerVM,
         dateFormatVM: dateFormatVM,
       );
-
-      // Tap the 'Toggle List' button to display the playlist list. If the list
-      // is not opened, checking that a ListTile with the title of
-      // the playlist was added to the list will fail
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
 
       // The playlist list and audio list should exist now but be
       // empty (no ListTile widgets)
@@ -876,12 +858,6 @@ void main() {
         dateFormatVM: dateFormatVM,
       );
 
-      // Tap the 'Toggle List' button to display the playlist list. If the list
-      // is not opened, checking that a ListTile with the title of
-      // the playlist was added to the list will fail
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
       // The playlist list and audio list should exist now but be
       // empty (no ListTile widgets)
       expect(find.byType(ListView), findsNWidgets(2));
@@ -955,12 +931,6 @@ void main() {
       const String localPlaylistTitle = 'audio_learn_local_playlist_test';
 
       await app.main();
-      await tester.pumpAndSettle();
-
-      // Tap the 'Toggle List' button to display the playlist list. If the list
-      // is not opened, checking that a ListTile with the title of
-      // the playlist was added to the list will fail
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
       // The playlist list and audio list should exist now but be
@@ -1209,12 +1179,6 @@ void main() {
       await app.main();
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to display the playlist list. If the list
-      // is not opened, checking that a ListTile with the title of
-      // the playlist was added to the list will fail
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
       // The playlist list and audio list should exist now but be
       // empty (no ListTile widgets)
       expect(find.byType(ListView), findsNWidgets(2));
@@ -1439,12 +1403,6 @@ void main() {
       await app.main();
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to display the playlist list. If the list
-      // is not opened, checking that a ListTile with the title of
-      // the playlist was added to the list will fail
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
       // The playlist list and audio list should exist now but be
       // empty (no ListTile widgets)
       expect(find.byType(ListView), findsNWidgets(2));
@@ -1525,12 +1483,6 @@ void main() {
       await app.main();
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to display the playlist list. If the list
-      // is not opened, checking that a ListTile with the title of
-      // the playlist was added to the list will fail
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
       // The playlist list and audio list should exist now but be
       // empty (no ListTile widgets)
       expect(find.byType(ListView), findsNWidgets(2));
@@ -1599,12 +1551,6 @@ void main() {
       const String localPlaylistTitleWithoutSpace = 'local with space';
 
       await app.main();
-      await tester.pumpAndSettle();
-
-      // Tap the 'Toggle List' button to display the playlist list. If the list
-      // is not opened, checking that a ListTile with the title of
-      // the playlist was added to the list will fail
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
       // The playlist list and audio list should exist now but be
@@ -1727,12 +1673,6 @@ void main() {
         dateFormatVM: dateFormatVM,
       );
 
-      // Tap the 'Toggle List' button to display the playlist list. If the list
-      // is not opened, checking that a ListTile with the title of
-      // the playlist was added to the list will fail
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
       // The playlist list and audio list should exist now but be
       // empty (no ListTile widgets)
       expect(find.byType(ListView), findsNWidgets(2));
@@ -1817,12 +1757,6 @@ void main() {
       const String localPlaylistTitle = 'audio_learn_local_playlist_test';
 
       await app.main();
-      await tester.pumpAndSettle();
-
-      // Tap the 'Toggle List' button to display the playlist list. If the list
-      // is not opened, checking that a ListTile with the title of
-      // the playlist was added to the list will fail
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
       // The playlist list and audio list should exist now but be
@@ -1973,12 +1907,6 @@ void main() {
         audioPlayerVM: audioPlayerVM,
         dateFormatVM: dateFormatVM,
       );
-
-      // Tap the 'Toggle List' button to display the playlist list. If the list
-      // is not opened, checking that a ListTile with the title of
-      // the playlist was added to the list will fail
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
 
       // The playlist list and audio list should exist now but be
       // empty (no ListTile widgets)
@@ -2183,12 +2111,6 @@ void main() {
         dateFormatVM: dateFormatVM,
       );
 
-      // Tap the 'Toggle List' button to display the playlist list. If the list
-      // is not opened, checking that a ListTile with the title of
-      // the playlist was added to the list will fail
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
       // The playlist list and audio list should exist now but be
       // empty (no ListTile widgets)
       expect(find.byType(ListView), findsNWidgets(2));
@@ -2338,12 +2260,6 @@ void main() {
         dateFormatVM: dateFormatVM,
       );
 
-      // Tap the 'Toggle List' button to display the playlist list. If the list
-      // is not opened, checking that a ListTile with the title of
-      // the playlist was added to the list will fail
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
       const String invalidYoutubePlaylistUrl = 'invalid';
 
       // Enter the invalid Youtube playlist URL into the url text
@@ -2489,12 +2405,6 @@ void main() {
         dateFormatVM: dateFormatVM,
       );
 
-      // Tap the 'Toggle List' button to display the playlist list. If the list
-      // is not opened, checking that a ListTile with the title of
-      // the playlist was added to the list will fail
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
       const String privateYoutubePlaylistUrl =
           'https://www.youtube.com/playlist?list=PLzwWSJNcZTMRw_Gl0qL60O7TQgYq8DuCu';
 
@@ -2639,10 +2549,6 @@ void main() {
         audioPlayerVM: audioPlayerVM,
         dateFormatVM: dateFormatVM,
       );
-
-      // Tap the 'Toggle List' button to display the empty playlist list.
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
 
       // The playlist list and audio list should exist now but be
       // empty (no ListTile widgets)
@@ -2828,10 +2734,6 @@ void main() {
       await app.main();
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to show the list of playlist's.
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
       // The playlist list and audio list should exist now but be
       // empty (no ListTile widgets)
       expect(find.byType(ListView), findsNWidgets(2));
@@ -2912,10 +2814,6 @@ void main() {
       const String localPlaylistTitle = 'audio_learn_local_playlist_test';
 
       await app.main();
-      await tester.pumpAndSettle();
-
-      // Tap the 'Toggle List' button to show the list of playlist's.
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
       // Open the add playlist dialog by tapping the add playlist
