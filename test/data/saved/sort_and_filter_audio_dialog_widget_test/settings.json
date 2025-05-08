@@ -1,1 +1,89 @@
-{"SettingType.appTheme":{"SettingType.appTheme":"AppTheme.dark"},"SettingType.language":{"SettingType.language":"Language.english"},"SettingType.playlists":{"Playlists.arePlaylistsDisplayedInPlaylistDownloadView":"false","Playlists.isMusicQualityByDefault":"false","Playlists.orderedTitleLst":"[S8 audio, local]","Playlists.playSpeed":"1.25"},"SettingType.dataLocation":{"DataLocation.appSettingsPath":"C:\\development\\flutter\\audiolearn\\test\\data\\audio","DataLocation.playlistRootPath":"C:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists"},"SettingType.formatOfDate":{"FormatOfDate.formatOfDate":"dd/MM/yyyy"},"namedAudioSortFilterSettings":{"default":{"selectedSortItemLst":[{"sortingOption":"audioDownloadDate","isAscending":false}],"filterSentenceLst":[],"sentencesCombination":0,"ignoreCase":true,"searchAsWellInYoutubeChannelName":true,"searchAsWellInVideoCompactDescription":true,"filterMusicQuality":false,"filterFullyListened":true,"filterPartiallyListened":true,"filterNotListened":true,"filterCommented":true,"filterNotCommented":true,"filterPictured":true,"filterNotPictured":true,"filterPlayable":true,"filterNotPlayable":true,"downloadDateStartRange":null,"downloadDateEndRange":null,"uploadDateStartRange":null,"uploadDateEndRange":null,"fileSizeStartRangeMB":0.0,"fileSizeEndRangeMB":0.0,"durationStartRangeSec":0,"durationEndRangeSec":0},"janco":{"selectedSortItemLst":[{"sortingOption":"audioDownloadDate","isAscending":false}],"filterSentenceLst":["janco"],"sentencesCombination":0,"ignoreCase":true,"searchAsWellInYoutubeChannelName":true,"searchAsWellInVideoCompactDescription":true,"filterMusicQuality":false,"filterFullyListened":true,"filterPartiallyListened":true,"filterNotListened":true,"filterCommented":true,"filterNotCommented":true,"filterPictured":true,"filterNotPictured":true,"filterPlayable":true,"filterNotPlayable":true,"downloadDateStartRange":null,"downloadDateEndRange":null,"uploadDateStartRange":null,"uploadDateEndRange":null,"fileSizeStartRangeMB":0.0,"fileSizeEndRangeMB":0.0,"durationStartRangeSec":0,"durationEndRangeSec":0}},"searchHistoryOfAudioSortFilterSettings":"[]"}
+{
+    "SettingType.appTheme": {
+        "SettingType.appTheme": "AppTheme.dark"
+    },
+    "SettingType.language": {
+        "SettingType.language": "Language.english"
+    },
+    "SettingType.playlists": {
+        "Playlists.arePlaylistsDisplayedInPlaylistDownloadView": "false",
+        "Playlists.isMusicQualityByDefault": "false",
+        "Playlists.orderedTitleLst": "[S8 audio, local]",
+        "Playlists.playSpeed": "1.25"
+    },
+    "SettingType.dataLocation": {
+        "DataLocation.appSettingsPath": "C:\\development\\flutter\\audiolearn\\test\\data\\audio",
+        "DataLocation.playlistRootPath": "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists"
+    },
+    "SettingType.formatOfDate": {
+        "FormatOfDate.formatOfDate": "dd/MM/yyyy"
+    },
+    "namedAudioSortFilterSettings": {
+        "default": {
+            "selectedSortItemLst": [
+                {
+                    "sortingOption": "audioDownloadDate",
+                    "isAscending": false
+                }
+            ],
+            "filterSentenceLst": [
+            ],
+            "sentencesCombination": 0,
+            "ignoreCase": true,
+            "searchAsWellInYoutubeChannelName": true,
+            "searchAsWellInVideoCompactDescription": true,
+            "filterMusicQuality": false,
+            "filterFullyListened": true,
+            "filterPartiallyListened": true,
+            "filterNotListened": true,
+            "filterCommented": true,
+            "filterNotCommented": true,
+            "filterPictured": true,
+            "filterNotPictured": true,
+            "filterPlayable": true,
+            "filterNotPlayable": true,
+            "downloadDateStartRange": null,
+            "downloadDateEndRange": null,
+            "uploadDateStartRange": null,
+            "uploadDateEndRange": null,
+            "fileSizeStartRangeMB": 0.0,
+            "fileSizeEndRangeMB": 0.0,
+            "durationStartRangeSec": 0,
+            "durationEndRangeSec": 0
+        },
+        "janco": {
+            "selectedSortItemLst": [
+                {
+                    "sortingOption": "audioDownloadDate",
+                    "isAscending": false
+                }
+            ],
+            "filterSentenceLst": [
+                "janco"
+            ],
+            "sentencesCombination": 0,
+            "ignoreCase": true,
+            "searchAsWellInYoutubeChannelName": true,
+            "searchAsWellInVideoCompactDescription": true,
+            "filterMusicQuality": false,
+            "filterFullyListened": true,
+            "filterPartiallyListened": true,
+            "filterNotListened": true,
+            "filterCommented": true,
+            "filterNotCommented": true,
+            "filterPictured": true,
+            "filterNotPictured": true,
+            "filterPlayable": true,
+            "filterNotPlayable": true,
+            "downloadDateStartRange": null,
+            "downloadDateEndRange": null,
+            "uploadDateStartRange": null,
+            "uploadDateEndRange": null,
+            "fileSizeStartRangeMB": 0.0,
+            "fileSizeEndRangeMB": 0.0,
+            "durationStartRangeSec": 0,
+            "durationEndRangeSec": 0
+        }
+    },
+    "searchHistoryOfAudioSortFilterSettings": "[]"
+}
