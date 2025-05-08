@@ -79,7 +79,7 @@ void main() {
     DirUtil.copyFilesFromDirAndSubDirsToDirectory(
       sourceRootPath:
           "$kDownloadAppTestSavedDataDir${path.separator}picture_vm_unit_test_data",
-      destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      destinationRootPath: kApplicationPathWindowsTest,
     );
 
     // Setup shared preferences
@@ -120,7 +120,7 @@ void main() {
   tearDown(() {
     // Clean up any files created during tests
     DirUtil.deleteFilesInDirAndSubDirs(
-      rootPath: kPlaylistDownloadRootPathWindowsTest,
+      rootPath: kApplicationPathWindowsTest,
     );
   });
 

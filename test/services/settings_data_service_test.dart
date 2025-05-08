@@ -13,7 +13,7 @@ enum UnsupportedSettingsEnum { unsupported }
 
 void main() {
   const String testSettingsDir =
-      '$kPlaylistDownloadRootPathWindowsTest\\audiolearn_test_settings';
+      '$kApplicationPathWindowsTest\\audiolearn_test_settings';
 
   group('Settings', () {
     test('Test initial, modified, saved and loaded values', () async {
@@ -86,7 +86,7 @@ void main() {
           settingsDataService.get(
               settingType: SettingType.dataLocation,
               settingSubType: DataLocation.playlistRootPath),
-          "C:\\development\\flutter\\audiolearn\\test\\data\\audio");
+          "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists");
       expect(
           settingsDataService.get(
               settingType: SettingType.formatOfDate,
@@ -580,7 +580,7 @@ void main() {
           settingsJsonPathFileName: 'not_exist/settings.json');
 
       final String testSettingsPathFileName =
-          path.join(kPlaylistDownloadRootPathWindowsTest, 'settings.json');
+          path.join(kApplicationPathWindowsTest, 'settings.json');
 
       // Setting the playlist root path to the initial playlist root path
       settingsDataService.set(
@@ -720,7 +720,7 @@ void main() {
           settingsJsonPathFileName: 'not_exist/settings.json');
 
       final String testSettingsPathFileName =
-          path.join(kPlaylistDownloadRootPathWindowsTest, 'settings.json');
+          path.join(kApplicationPathWindowsTest, 'settings.json');
 
       // Setting the playlist root path to the initial playlist root path
       settingsDataService.set(
