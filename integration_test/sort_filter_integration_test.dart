@@ -13985,7 +13985,7 @@ void _verifyAudioSortFilterParmsNameStoredInPlaylistJsonFile({
   required AudioPlayingOrder audioPlayingOrder,
 }) {
   final String selectedPlaylistPath = path.join(
-    kPlaylistDownloadRootPathWindowsTest,
+    "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists",
     selectedPlaylistTitle,
   );
 
