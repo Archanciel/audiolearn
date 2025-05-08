@@ -76,7 +76,7 @@ void main() {
               settingType: SettingType.playlists,
               settingSubType:
                   Playlists.arePlaylistsDisplayedInPlaylistDownloadView),
-          false);
+          true);
       expect(
           settingsDataService.get(
               settingType: SettingType.dataLocation,

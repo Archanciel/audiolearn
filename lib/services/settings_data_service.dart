@@ -51,8 +51,8 @@ enum FormatOfDate {
 /// process. This will also help you avoid writing manual string
 /// parsing code.
 class SettingsDataService {
-  // default settings are set in the constructor, namely default language,
-  // default format of date and default theme
+  // default settings are set in the constructor, namely default
+  // language, default format of date and default theme
   final Map<SettingType, Map<dynamic, dynamic>> _settings = {
     SettingType.appTheme: {SettingType.appTheme: AppTheme.dark},
     SettingType.language: {SettingType.language: Language.english},
@@ -67,7 +67,7 @@ class SettingsDataService {
       // playlists are not displayed in the playlist download view.
       //
       // This changes when the user clicks on the playlist toggle button.
-      Playlists.arePlaylistsDisplayedInPlaylistDownloadView: false,
+      Playlists.arePlaylistsDisplayedInPlaylistDownloadView: true,
     },
     SettingType.dataLocation: {
       DataLocation.appSettingsPath: '',
