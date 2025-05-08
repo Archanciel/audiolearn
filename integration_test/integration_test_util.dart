@@ -1496,7 +1496,7 @@ class IntegrationTestUtil {
     final String selectedPlaylistPath;
 
     if (playlistDownloadPath.isEmpty) {
-      playlistDownloadPath = kApplicationPathWindowsTest;
+      playlistDownloadPath = kPlaylistDownloadRootPathWindowsTest;
       selectedPlaylistPath = path.join(
         playlistDownloadPath,
         selectedPlaylistTitle,

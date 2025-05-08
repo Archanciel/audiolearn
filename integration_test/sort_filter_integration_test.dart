@@ -36,9 +36,9 @@ const String globalTestPlaylistTitle =
 const String globalTestPlaylistOneAudioTitle =
     'audio_learn_test_download_2_small_vid_1a';
 final String globalTestPlaylistDir =
-    '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$globalTestPlaylistTitle';
+    '$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$globalTestPlaylistTitle';
 final String globalTestPlaylistOneAudioDir =
-    '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$globalTestPlaylistOneAudioTitle';
+    '$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$globalTestPlaylistOneAudioTitle';
 
 /// This integration test contains the integration tests groups for the
 /// sort/filter parms testing. The groups are included in the plalist download
@@ -205,7 +205,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
     testWidgets(
@@ -232,14 +232,14 @@ void audioPlayerViewSortFilterIntegrationTest() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_three_playlists_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -252,7 +252,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main();
       await tester.pumpAndSettle(const Duration(milliseconds: 200));
@@ -504,7 +504,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
     testWidgets(
@@ -523,14 +523,14 @@ void audioPlayerViewSortFilterIntegrationTest() {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_three_playlists_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
@@ -543,7 +543,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       await app.main();
       await tester.pumpAndSettle(const Duration(milliseconds: 200));
@@ -668,7 +668,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
   });
@@ -685,14 +685,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_filter_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -705,7 +705,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -762,7 +762,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(
@@ -772,14 +772,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -792,7 +792,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -960,7 +960,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(
@@ -970,14 +970,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -990,7 +990,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -1055,7 +1055,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(
@@ -1065,14 +1065,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -1085,7 +1085,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -1150,7 +1150,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
       });
@@ -1168,14 +1168,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -1188,7 +1188,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -1302,7 +1302,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(
@@ -1321,14 +1321,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -1341,7 +1341,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -1530,7 +1530,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets('''Audio file size sort/filter.''',
@@ -1544,14 +1544,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -1564,7 +1564,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -1640,7 +1640,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets('''Audio duration sort/filter.''',
@@ -1654,14 +1654,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -1674,7 +1674,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -1750,7 +1750,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
       });
@@ -1772,14 +1772,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -1792,7 +1792,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -2038,7 +2038,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
           testWidgets(
@@ -2048,14 +2048,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -2068,7 +2068,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -2123,7 +2123,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
           testWidgets(
@@ -2134,14 +2134,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -2154,7 +2154,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -2213,7 +2213,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
           testWidgets(
@@ -2225,14 +2225,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -2245,7 +2245,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -2305,7 +2305,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
           testWidgets(
@@ -2317,14 +2317,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -2337,7 +2337,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -2437,7 +2437,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
           testWidgets(
@@ -2449,14 +2449,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -2469,7 +2469,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -2571,7 +2571,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
           testWidgets(
@@ -2583,14 +2583,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -2603,7 +2603,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -2700,7 +2700,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
           testWidgets(
@@ -2712,14 +2712,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -2732,7 +2732,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -2829,7 +2829,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
           testWidgets(
@@ -2839,14 +2839,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -2859,7 +2859,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -2959,7 +2959,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
           testWidgets(
@@ -2969,14 +2969,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -2989,7 +2989,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -3049,7 +3049,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
         });
@@ -3066,14 +3066,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -3086,7 +3086,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -3338,14 +3338,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
 
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
           testWidgets(
               '''In 'Title asc' click on 'or' only after adding two filter
@@ -3355,14 +3355,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -3375,7 +3375,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -3440,7 +3440,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
           testWidgets(
@@ -3452,14 +3452,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -3472,7 +3472,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -3538,7 +3538,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
           testWidgets(
@@ -3548,14 +3548,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -3568,7 +3568,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -3675,7 +3675,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
           testWidgets(
@@ -3685,14 +3685,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -3705,7 +3705,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -3812,7 +3812,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
           testWidgets(
@@ -3824,14 +3824,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -3844,7 +3844,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -3946,7 +3946,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
           testWidgets(
@@ -3958,14 +3958,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -3978,7 +3978,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -4080,7 +4080,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
           testWidgets(
@@ -4090,14 +4090,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -4110,7 +4110,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -4216,7 +4216,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
           testWidgets(
@@ -4226,14 +4226,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -4246,7 +4246,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -4312,7 +4312,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
         });
@@ -4336,14 +4336,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
 
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kApplicationPathWindowsTest,
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
@@ -4356,7 +4356,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // playlists available in the download app test dir
         await settingsDataService.loadSettingsFromFile(
             settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
         await app.main();
         await tester.pumpAndSettle();
@@ -4615,7 +4615,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
       });
       testWidgets('''Click on 'default' dropdown button item edit icon button to
@@ -4630,14 +4630,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
 
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kApplicationPathWindowsTest,
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
@@ -4650,7 +4650,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // playlists available in the download app test dir
         await settingsDataService.loadSettingsFromFile(
             settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
         await app.main();
         await tester.pumpAndSettle();
@@ -4788,7 +4788,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
       });
       testWidgets('''Change language and verify impact on sort/filter dropdown
@@ -4796,14 +4796,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
 
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kApplicationPathWindowsTest,
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
@@ -4816,7 +4816,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // playlists available in the download app test dir
         await settingsDataService.loadSettingsFromFile(
             settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
         await app.main();
         await tester.pumpAndSettle();
@@ -4901,7 +4901,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
       });
       testWidgets(
@@ -4912,14 +4912,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
 
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kApplicationPathWindowsTest,
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
@@ -4932,7 +4932,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // playlists available in the download app test dir
         await settingsDataService.loadSettingsFromFile(
             settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
         await app.main();
         await tester.pumpAndSettle();
@@ -5149,7 +5149,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
       });
       testWidgets(
@@ -5160,14 +5160,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
 
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}sort_filter_title_bug_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kApplicationPathWindowsTest,
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
@@ -5180,7 +5180,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // playlists available in the download app test dir
         await settingsDataService.loadSettingsFromFile(
             settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
         await app.main();
         await tester.pumpAndSettle();
@@ -5275,7 +5275,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
       });
     });
@@ -5290,14 +5290,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
 
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_three_playlists_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kApplicationPathWindowsTest,
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
@@ -5310,7 +5310,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // playlists available in the download app test dir
         await settingsDataService.loadSettingsFromFile(
             settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
         await app.main();
         await tester.pumpAndSettle();
@@ -5544,7 +5544,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
       });
       testWidgets(
@@ -5562,14 +5562,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
 
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kApplicationPathWindowsTest,
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
@@ -5582,7 +5582,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // playlists available in the download app test dir
         await settingsDataService.loadSettingsFromFile(
             settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
         await app.main();
         await tester.pumpAndSettle();
@@ -5844,7 +5844,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
       });
     });
@@ -5870,14 +5870,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -5890,7 +5890,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -6156,7 +6156,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(
@@ -6175,14 +6175,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -6195,7 +6195,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -6548,7 +6548,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(
@@ -6564,14 +6564,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -6584,7 +6584,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -6716,7 +6716,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets('''Change language and verify impact on sort/filter dropdown
@@ -6724,14 +6724,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -6744,7 +6744,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -6829,7 +6829,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(
@@ -6839,14 +6839,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -6859,7 +6859,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -7144,7 +7144,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         group('''Bug fix tests''', () {
@@ -7156,14 +7156,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -7177,7 +7177,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -7220,7 +7220,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
           testWidgets(
@@ -7231,14 +7231,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -7252,7 +7252,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -7295,7 +7295,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
           testWidgets(
@@ -7306,14 +7306,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -7327,7 +7327,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -7376,7 +7376,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
           testWidgets(
@@ -7387,14 +7387,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -7408,7 +7408,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -7457,7 +7457,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
           testWidgets(
@@ -7469,14 +7469,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}restore_Android_zip_on_Windows_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -7490,7 +7490,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -7599,7 +7599,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
           testWidgets(
@@ -7611,14 +7611,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}restore_Android_zip_on_Windows_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -7632,7 +7632,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -7749,7 +7749,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
         });
@@ -7765,14 +7765,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
 
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
                   "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-              destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+              destinationRootPath: kApplicationPathWindowsTest,
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -7785,7 +7785,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             await app.main();
             await tester.pumpAndSettle();
@@ -7861,7 +7861,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // playlists available in the download app test dir
             await settingsDataService.loadSettingsFromFile(
                 settingsJsonPathFileName:
-                    "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
             // Restarting the app
             await app.main();
@@ -7919,7 +7919,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
             DirUtil.deleteFilesInDirAndSubDirs(
-              rootPath: kPlaylistDownloadRootPathWindowsTest,
+              rootPath: kApplicationPathWindowsTest,
             );
           });
         });
@@ -7943,14 +7943,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -7963,7 +7963,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -8222,7 +8222,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(
@@ -8241,14 +8241,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -8261,7 +8261,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -8620,7 +8620,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(
@@ -8636,14 +8636,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -8656,7 +8656,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -8797,7 +8797,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
       });
@@ -8814,14 +8814,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
 
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_three_playlists_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kApplicationPathWindowsTest,
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
@@ -8834,7 +8834,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // playlists available in the download app test dir
         await settingsDataService.loadSettingsFromFile(
             settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
         await app.main();
         await tester.pumpAndSettle();
@@ -8936,7 +8936,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
       });
     });
@@ -8963,14 +8963,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_three_playlists_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -8983,7 +8983,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -9120,7 +9120,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -9214,7 +9214,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
       });
@@ -9232,14 +9232,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_newly_downloaded_playlist_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           AudioDownloadVM audioDownloadVM = await IntegrationTestUtil
@@ -9314,7 +9314,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(
@@ -9325,14 +9325,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_newly_downloaded_playlist_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           AudioDownloadVM audioDownloadVM = await IntegrationTestUtil
@@ -9409,7 +9409,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
       });
@@ -9433,14 +9433,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}restore_Android_short_zip_on_Windows_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           AudioDownloadVM audioDownloadVM = await IntegrationTestUtil
@@ -9592,7 +9592,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(
@@ -9606,14 +9606,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}restore_Android_short_zip_on_Windows_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           AudioDownloadVM audioDownloadVM = await IntegrationTestUtil
@@ -9754,7 +9754,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
       });
@@ -9771,14 +9771,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_three_playlists_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -9791,7 +9791,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -9940,7 +9940,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(
@@ -9957,14 +9957,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_three_playlists_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -9977,7 +9977,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -10302,7 +10302,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
       });
@@ -10318,14 +10318,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_three_playlists_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -10338,7 +10338,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -10480,7 +10480,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(
@@ -10492,14 +10492,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_three_playlists_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -10512,7 +10512,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -10629,7 +10629,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(
@@ -10643,14 +10643,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_three_playlists_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -10663,7 +10663,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -10737,7 +10737,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
       });
@@ -10749,14 +10749,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}playlist_audio_comments_sort_integr_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -10769,7 +10769,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -10928,7 +10928,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(''''Title asc' only to audio player view.
@@ -10939,14 +10939,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}playlist_audio_comments_sort_integr_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -10959,7 +10959,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -11068,7 +11068,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(''''Title asc' only to playlist download view.
@@ -11080,14 +11080,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           // Copy the test initial audio data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
             sourceRootPath:
                 "$kDownloadAppTestSavedDataDir${path.separator}playlist_audio_comments_sort_integr_test",
-            destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+            destinationRootPath: kApplicationPathWindowsTest,
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
@@ -11100,7 +11100,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // playlists available in the download app test dir
           await settingsDataService.loadSettingsFromFile(
               settingsJsonPathFileName:
-                  "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
           await app.main();
           await tester.pumpAndSettle();
@@ -11210,7 +11210,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
       });
@@ -11229,14 +11229,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
 
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kApplicationPathWindowsTest,
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
@@ -11249,7 +11249,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // playlists available in the download app test dir
         await settingsDataService.loadSettingsFromFile(
             settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
         await app.main();
         await tester.pumpAndSettle();
@@ -11364,7 +11364,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
       });
       testWidgets('''Audio duration sort.''', (WidgetTester tester) async {
@@ -11378,14 +11378,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
 
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kApplicationPathWindowsTest,
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
@@ -11398,7 +11398,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // playlists available in the download app test dir
         await settingsDataService.loadSettingsFromFile(
             settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
         await app.main();
         await tester.pumpAndSettle();
@@ -11497,7 +11497,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
       });
       testWidgets(
@@ -11515,14 +11515,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
 
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kApplicationPathWindowsTest,
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
@@ -11535,7 +11535,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // playlists available in the download app test dir
         await settingsDataService.loadSettingsFromFile(
             settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
         await app.main();
         await tester.pumpAndSettle();
@@ -11651,7 +11651,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
       });
       testWidgets(
@@ -11669,14 +11669,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
 
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kApplicationPathWindowsTest,
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
@@ -11689,7 +11689,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // playlists available in the download app test dir
         await settingsDataService.loadSettingsFromFile(
             settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
         await app.main();
         await tester.pumpAndSettle();
@@ -11805,7 +11805,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
       });
       testWidgets('''Audio file size sort.''', (WidgetTester tester) async {
@@ -11819,14 +11819,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
 
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kApplicationPathWindowsTest,
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
@@ -11839,7 +11839,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // playlists available in the download app test dir
         await settingsDataService.loadSettingsFromFile(
             settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
         await app.main();
         await tester.pumpAndSettle();
@@ -11938,7 +11938,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
       });
       testWidgets('''Audio download speed sort.''',
@@ -11953,14 +11953,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
 
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kApplicationPathWindowsTest,
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
@@ -11973,7 +11973,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // playlists available in the download app test dir
         await settingsDataService.loadSettingsFromFile(
             settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
         await app.main();
         await tester.pumpAndSettle();
@@ -12072,7 +12072,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
       });
       testWidgets('''Audio download duration sort. Audio list item subtitle
@@ -12089,14 +12089,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
 
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kApplicationPathWindowsTest,
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
@@ -12109,7 +12109,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // playlists available in the download app test dir
         await settingsDataService.loadSettingsFromFile(
             settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
         await app.main();
         await tester.pumpAndSettle();
@@ -12224,7 +12224,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kPlaylistDownloadRootPathWindowsTest,
+          rootPath: kApplicationPathWindowsTest,
         );
       });
     });
@@ -12239,7 +12239,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
@@ -12388,7 +12388,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(
@@ -12400,7 +12400,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
@@ -12547,7 +12547,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(
@@ -12559,7 +12559,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
@@ -12702,7 +12702,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(
@@ -12714,7 +12714,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
@@ -12875,7 +12875,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(
@@ -12887,7 +12887,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
@@ -13046,7 +13046,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
       });
@@ -13060,7 +13060,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           const String youtubePlaylistTitle =
@@ -13208,7 +13208,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(
@@ -13220,7 +13220,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           const String youtubePlaylistTitle =
@@ -13368,7 +13368,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(
@@ -13380,7 +13380,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           const String youtubePlaylistTitle =
@@ -13522,7 +13522,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(
@@ -13534,7 +13534,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           const String youtubePlaylistTitle =
@@ -13694,7 +13694,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
         testWidgets(
@@ -13706,7 +13706,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
 
           const String youtubePlaylistTitle =
@@ -13866,7 +13866,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kPlaylistDownloadRootPathWindowsTest,
+            rootPath: kApplicationPathWindowsTest,
           );
         });
       });
@@ -13985,7 +13985,7 @@ void _verifyAudioSortFilterParmsNameStoredInPlaylistJsonFile({
   required AudioPlayingOrder audioPlayingOrder,
 }) {
   final String selectedPlaylistPath = path.join(
-    "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists",
+    "$kApplicationPathWindowsTest${path.separator}playlists",
     selectedPlaylistTitle,
   );
 
