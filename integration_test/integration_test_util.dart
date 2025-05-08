@@ -546,7 +546,7 @@ class IntegrationTestUtil {
     bool doRemoveDeletedAudioFiles = true,
   }) async {
     final String selectedPlaylistPath = path.join(
-      kPlaylistDownloadRootPathWindowsTest,
+      kApplicationPathWindowsTest,
       playlistTitle,
     );
 
@@ -1163,7 +1163,7 @@ class IntegrationTestUtil {
     required double expectedAudioPlaySpeed,
   }) {
     final String selectedPlaylistPath = path.join(
-      kPlaylistDownloadRootPathWindowsTest,
+      kApplicationPathWindowsTest,
       selectedPlaylistTitle,
     );
 
@@ -1429,7 +1429,7 @@ class IntegrationTestUtil {
     required DateTime? audioPausedDateTime,
   }) {
     final String selectedPlaylistPath = path.join(
-      kPlaylistDownloadRootPathWindowsTest,
+      kApplicationPathWindowsTest,
       audioPlayerSelectedPlaylistTitle,
     );
 
@@ -1496,7 +1496,7 @@ class IntegrationTestUtil {
     final String selectedPlaylistPath;
 
     if (playlistDownloadPath.isEmpty) {
-      playlistDownloadPath = kPlaylistDownloadRootPathWindowsTest;
+      playlistDownloadPath = kApplicationPathWindowsTest;
       selectedPlaylistPath = path.join(
         playlistDownloadPath,
         selectedPlaylistTitle,
@@ -2028,6 +2028,7 @@ class IntegrationTestUtil {
     await settingsDataService.loadSettingsFromFile(
         settingsJsonPathFileName:
             "$kPlaylistDownloadRootPathWindowsTest${path.separator}settings.json");
+            "$kApplicationPathWindowsTest${path.separator}settings.json");
 
     final WarningMessageVM warningMessageVM = WarningMessageVM();
 
