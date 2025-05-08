@@ -33,9 +33,9 @@ const String globalTestPlaylistTitle =
 const String globalTestPlaylistOneAudioTitle =
     'audio_learn_test_download_2_small_vid_1a';
 final String globalTestPlaylistDir =
-    '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$globalTestPlaylistTitle';
+    '$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$globalTestPlaylistTitle';
 final String globalTestPlaylistOneAudioDir =
-    '$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$globalTestPlaylistOneAudioTitle';
+    '$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$globalTestPlaylistOneAudioTitle';
 
 Future<void> main() async {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +43,7 @@ Future<void> main() async {
   group('Download 1 playlist with short audio', () {
     test('Check initial values', () async {
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       final WarningMessageVM warningMessageVM = WarningMessageVM();
@@ -75,7 +75,7 @@ Future<void> main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
 
@@ -85,14 +85,14 @@ Future<void> main() async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copying the initial local playlist json file with no audio
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_download_2_small_videos_empty_dir_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       AudioDownloadVM audioDownloadVM =
@@ -238,7 +238,7 @@ Future<void> main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
     testWidgets(
@@ -247,14 +247,14 @@ Future<void> main() async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copying the initial local playlist json file with no audio
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_download_2_small_videos_empty_dir_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       AudioDownloadVM audioDownloadVM =
@@ -407,7 +407,7 @@ Future<void> main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
     testWidgets(
@@ -416,14 +416,14 @@ Future<void> main() async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copying the initial local playlist json file with no audio
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_download_2_small_videos_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       AudioDownloadVM audioDownloadVM =
@@ -534,7 +534,7 @@ Future<void> main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
   });
@@ -544,21 +544,21 @@ Future<void> main() async {
            Using integr test application.''', (WidgetTester tester) async {
       String emptyLocalTestPlaylistTitle = 'audio_learn_download_single_video';
       String localTestPlaylistDir =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$emptyLocalTestPlaylistTitle";
+          "$kApplicationPathWindowsTest${path.separator}$emptyLocalTestPlaylistTitle";
 
       final Directory directory = Directory(localTestPlaylistDir);
 
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copying the initial local playlist json file with no audio
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_download_single_video_to_empty_local_playlist_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       AudioDownloadVM audioDownloadVM =
@@ -677,7 +677,7 @@ Future<void> main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
     testWidgets(
@@ -685,21 +685,21 @@ Future<void> main() async {
            Using integr test application.''', (WidgetTester tester) async {
       String emptyLocalTestPlaylistTitle = 'audio_learn_download_single_video';
       String localTestPlaylistDir =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$emptyLocalTestPlaylistTitle";
+          "$kApplicationPathWindowsTest${path.separator}$emptyLocalTestPlaylistTitle";
 
       final Directory directory = Directory(localTestPlaylistDir);
 
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copying the initial local playlist json file with no audio
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_download_single_video_to_empty_local_playlist_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       AudioDownloadVM audioDownloadVM =
@@ -824,7 +824,7 @@ Future<void> main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
     testWidgets(
@@ -833,21 +833,21 @@ Future<void> main() async {
       String localTestPlaylistTitle =
           'audio_learn_download_single_video_to_not_empty_local_playlist_test';
       String localTestPlaylistsPlaylistDir =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}playlists${path.separator}$localTestPlaylistTitle";
+          "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$localTestPlaylistTitle";
 
       final Directory directory = Directory(localTestPlaylistsPlaylistDir);
 
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copying the initial local playlist json file with no audio
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_download_single_video_to_not_empty_local_pl_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       AudioDownloadVM audioDownloadVM =
@@ -972,7 +972,7 @@ Future<void> main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
   });
@@ -990,13 +990,13 @@ Future<void> main() async {
       // Necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_download_recreate_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       AudioDownloadVM audioDownloadVM =
@@ -1112,7 +1112,7 @@ Future<void> main() async {
 
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
     testWidgets(
@@ -1123,13 +1123,13 @@ Future<void> main() async {
       // Necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_download_recreate_audio_deleted_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       AudioDownloadVM audioDownloadVM =
@@ -1242,7 +1242,7 @@ Future<void> main() async {
 
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
   });
@@ -1255,14 +1255,14 @@ Future<void> main() async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copying the initial local playlist json file with no audio
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_newly_downloaded_playlist_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
@@ -1320,7 +1320,7 @@ Future<void> main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
     testWidgets('Adding playlist in music quality with invalid title.',
@@ -1328,14 +1328,14 @@ Future<void> main() async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
 
       // Copying the initial local playlist json file with no audio
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_newly_downloaded_playlist_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
@@ -1398,7 +1398,7 @@ Future<void> main() async {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
+        rootPath: kApplicationPathWindowsTest,
       );
     });
   });
