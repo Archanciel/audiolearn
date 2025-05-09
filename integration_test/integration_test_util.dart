@@ -355,7 +355,7 @@ class IntegrationTestUtil {
           fileToRenameFilePathName: "$playlistPath$replacePlaylistJsonFileName",
           newFileName: playlistJsonFileName);
     }
-    
+
     final SettingsDataService settingsDataService = SettingsDataService(
       sharedPreferences: await SharedPreferences.getInstance(),
       isTest: true,
@@ -2247,6 +2247,14 @@ class IntegrationTestUtil {
     required List<String> expectedCommentFiles,
     required List<String> expectedPictureFiles,
     String playlistRootDir = '',
+    bool doesPictureAudioMapFileNameExist = false,
+    String applicationPictureDir = '',
+    String pictureFileNameOne = '',
+    List<String> audioForPictureTitleOneLst = const [],
+    String pictureFileNameTwo = '',
+    List<String> audioForPictureTitleTwoLst = const [],
+    String pictureFileNameThree = '',
+    List<String> audioForPictureTitleThreeLst = const [],
   }) {
     String playlistDir;
 
@@ -2290,6 +2298,34 @@ class IntegrationTestUtil {
       actualPictureFiles.toSet().containsAll(expectedPictureFiles.toSet()),
       "Mismatch in expected and actual picture files in '$picturesDir'.\nExpected: $expectedPictureFiles\nActual: $actualPictureFiles",
     );
+
+    // Verify pictureAudioMap.json file existence
+
+    String pictureAudioMapFileName =
+        "$kApplicationPathWindowsTest${path.separator}$kPictureDirName${path.separator}$kPictureAudioMapFileName";
+
+    if (doesPictureAudioMapFileNameExist) {
+      assert(
+        File(pictureAudioMapFileName).existsSync(),
+        "The file '$pictureAudioMapFileName' should exist.",
+      );
+
+    _verifyApplicationPictureJsonMap(
+      applicationPictureDir: applicationPictureDir,
+      pictureFileNameOne: pictureFileNameOne,
+      audioForPictureTitleOneLst: audioForPictureTitleOneLst,
+      pictureFileNameTwo: pictureFileNameTwo,
+      audioForPictureTitleTwoLst: audioForPictureTitleTwoLst,
+      pictureFileNameThree: pictureFileNameThree,
+      audioForPictureTitleThreeLst: audioForPictureTitleThreeLst,
+    );
+
+    } else {
+      assert(
+        !File(pictureAudioMapFileName).existsSync(),
+        "The file '$pictureAudioMapFileName' should not exist.",
+      );
+    }
   }
 
   static Future<void> verifyPlaylistDataDialogContent({
