@@ -13340,7 +13340,7 @@ void main() {
         );
 
         String restorableZipFilePathName =
-            '$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}sort_and_filter_audio_dialog_widget_test_playlists.zip';
+            '$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Windows sort_and_filter_audio_dialog_widget_test_playlists.zip';
 
         // Since we have to use a mock AudioDownloadVM to add the
         // youtube playlist, we can not use app.main() to start the
@@ -13437,7 +13437,7 @@ void main() {
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              'Restored 2 playlist, 0 comment and 0 picture JSON files as well as the application settings from "$restorableZipFilePathName".',
+              'Restored 2 playlist, 1 comment and 1 picture JSON files as well as the application settings from "$restorableZipFilePathName".',
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );
@@ -13473,6 +13473,31 @@ void main() {
           audioSubTitles: audioSubTitles,
         );
 
+        // Verify the content of the 'S8 audio' playlist dir
+        // + comments + pictures dir after restoration.
+        IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          playlistTitle: 'S8 audio',
+          expectedAudioFiles: [],
+          expectedCommentFiles: [
+            "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.json"
+          ],
+          expectedPictureFiles: [
+            "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.json"
+          ],
+          doesPictureAudioMapFileNameExist: true,
+          applicationPictureDir:
+              '$kApplicationPathWindowsTest${path.separator}$kPictureDirName',
+          pictureFileNameOne: 'wallpaper.jpg',
+          audioForPictureTitleOneLst: [
+            'S8 audio|231226-094534-3 fois où un économiste m\'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01',
+          ],
+          pictureFileNameTwo:
+              'Liguria_Italy_Coast_Houses_Riomaggiore_Crag_513222_3840x2400.jpg',
+          audioForPictureTitleTwoLst: [
+            'S8 audio|231226-094534-3 fois où un économiste m\'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01',
+          ],
+        );
+
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -13489,7 +13514,7 @@ void main() {
         );
 
         String restorableZipFilePathName =
-            '$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}sort_and_filter_audio_dialog_widget_test_playlists.zip';
+            '$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Windows sort_and_filter_audio_dialog_widget_test_playlists.zip';
 
         // Since we have to use a mock AudioDownloadVM to add the
         // youtube playlist, we can not use app.main() to start the
@@ -13586,7 +13611,7 @@ void main() {
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              'Restored 2 playlist, 0 comment and 0 picture JSON files as well as the application settings from "$restorableZipFilePathName".',
+              'Restored 2 playlist, 1 comment and 1 picture JSON files as well as the application settings from "$restorableZipFilePathName".',
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );
@@ -13620,6 +13645,31 @@ void main() {
           playlistsTitles: playlistsTitles,
           audioTitles: audioTitles,
           audioSubTitles: audioSubTitles,
+        );
+
+        // Verify the content of the 'S8 audio' playlist dir
+        // + comments + pictures dir after restoration.
+        IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          playlistTitle: 'S8 audio',
+          expectedAudioFiles: [],
+          expectedCommentFiles: [
+            "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.json"
+          ],
+          expectedPictureFiles: [
+            "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.json"
+          ],
+          doesPictureAudioMapFileNameExist: true,
+          applicationPictureDir:
+              '$kApplicationPathWindowsTest${path.separator}$kPictureDirName',
+          pictureFileNameOne: 'wallpaper.jpg',
+          audioForPictureTitleOneLst: [
+            'S8 audio|231226-094534-3 fois où un économiste m\'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01',
+          ],
+          pictureFileNameTwo:
+              'Liguria_Italy_Coast_Houses_Riomaggiore_Crag_513222_3840x2400.jpg',
+          audioForPictureTitleTwoLst: [
+            'S8 audio|231226-094534-3 fois où un économiste m\'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01',
+          ],
         );
 
         // Purge the test playlist directory so that the created test
@@ -13740,13 +13790,6 @@ void main() {
           warningTitle: 'CONFIRMATION',
         );
 
-        // Select the playlist 'Prières du Maître' to display its
-        // audio list.
-        await IntegrationTestUtil.selectPlaylist(
-          tester: tester,
-          playlistToSelectTitle: 'Prières du Maître',
-        );
-
         // Verifying the existing and the restored playlists
         // list as well as the selected playlist 'Prières du
         // Maître' displayed audio titles and subtitles.
@@ -13771,9 +13814,8 @@ void main() {
           audioSubTitles: audioSubTitles,
         );
 
-        // Verify the content of the 'Prières du Maître'
-        // playlist dir and comments and pictures dir after
-        // restoration.
+        // Verify the content of the 'Prières du Maître' playlist dir
+        // + comments + pictures dir after restoration.
         IntegrationTestUtil.verifyPlaylistDirectoryContents(
           playlistTitle: 'Prières du Maître',
           expectedAudioFiles: [],
@@ -13782,6 +13824,13 @@ void main() {
           ],
           expectedPictureFiles: [
             "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'.json"
+          ],
+          doesPictureAudioMapFileNameExist: true,
+          applicationPictureDir:
+              '$kApplicationPathWindowsTest${path.separator}$kPictureDirName',
+          pictureFileNameOne: 'Jésus le Dieu vivant.jpg',
+          audioForPictureTitleOneLst: [
+            "Prières du Maître|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'"
           ],
         );
 
@@ -13903,13 +13952,6 @@ void main() {
           warningTitle: 'CONFIRMATION',
         );
 
-        // Select the playlist 'Prières du Maître' to display its
-        // audio list.
-        await IntegrationTestUtil.selectPlaylist(
-          tester: tester,
-          playlistToSelectTitle: 'Prières du Maître',
-        );
-
         // Verifying the existing and the restored playlists
         // list as well as the selected playlist 'Prières du
         // Maître' displayed audio titles and subtitles.
@@ -13934,9 +13976,8 @@ void main() {
           audioSubTitles: audioSubTitles,
         );
 
-        // Verify the content of the 'Prières du Maître'
-        // playlist dir and comments and pictures dir after
-        // restoration.
+        // Verify the content of the 'Prières du Maître' playlist dir
+        // + comments + pictures dir after restoration.
         IntegrationTestUtil.verifyPlaylistDirectoryContents(
           playlistTitle: 'Prières du Maître',
           expectedAudioFiles: [],
@@ -13945,6 +13986,13 @@ void main() {
           ],
           expectedPictureFiles: [
             "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'.json"
+          ],
+          doesPictureAudioMapFileNameExist: true,
+          applicationPictureDir:
+              '$kApplicationPathWindowsTest${path.separator}$kPictureDirName',
+          pictureFileNameOne: 'Jésus le Dieu vivant.jpg',
+          audioForPictureTitleOneLst: [
+            "Prières du Maître|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'"
           ],
         );
 
