@@ -2854,8 +2854,6 @@ class PlaylistListVM extends ChangeNotifier {
     required String zipFilePathName,
     required bool doReplaceExistingPlaylists,
   }) async {
-    bool isAnExistingPlaylistSelected = getSelectedPlaylists().isNotEmpty;
-
     // Restoring the playlists, comments and settings json files
     // from the zip file. The dynamic list restoredInfoLst list
     // contains the list of restored playlist titles and the number
@@ -2879,17 +2877,6 @@ class PlaylistListVM extends ChangeNotifier {
       restoringPlaylistsCommentsAndSettingsJsonFilesFromZip:
           restoringPlaylistsCommentsAndSettingsJsonFilesFromZip,
     );
-
-    if (isAnExistingPlaylistSelected) {
-      List<String> restoredPlaylistTitlesLst = restoredInfoLst[0];
-      List<Playlist> selectedPlaylists = getSelectedPlaylists();
-
-      for (Playlist playlist in selectedPlaylists) {
-        if (restoredPlaylistTitlesLst.contains(playlist.title)) {
-          playlist.isSelected = false;
-        }
-      }
-    }
 
     // Necessary so that in the playlist download view in situation
     // where the playlists are not expanded the selected playlist SF
