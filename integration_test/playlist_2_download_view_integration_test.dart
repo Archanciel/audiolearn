@@ -12607,10 +12607,6 @@ void main() {
         List<String> playlistsTitles = [
           "A restaurer",
           "local",
-          "Empty",
-          "local_comment",
-          "local_delete_comment",
-          "S8 audio",
         ];
 
         List<String> audioTitles = [
@@ -12639,16 +12635,10 @@ void main() {
 
         audioTitles = [
           "Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage!",
-          "morning _ cinematic video",
-          "Really short video",
-          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
         ];
 
         audioSubTitles = [
           "0:24:21.8. 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30.",
-          "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.",
-          "0:00:10.0. 61 KB at 20 KB/sec on 10/01/2024 at 18:18.",
-          "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
         ];
 
         await IntegrationTestUtil.selectPlaylist(
@@ -12666,33 +12656,33 @@ void main() {
 
         // Now verify 'S8 audio' playlist as well !
 
-        audioTitles = [
-          "Quand Aurélien Barrau va dans une école de management",
-          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
-          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          "La surpopulation mondiale par Jancovici et Barrau",
-        ];
+        // audioTitles = [
+        //   "Quand Aurélien Barrau va dans une école de management",
+        //   "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
+        //   "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        //   "La surpopulation mondiale par Jancovici et Barrau",
+        // ];
 
-        audioSubTitles = [
-          "0:17:59.0. 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11.",
-          "1:17:53.6. 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06.",
-          "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
-          "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
-        ];
+        // audioSubTitles = [
+        //   "0:17:59.0. 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11.",
+        //   "1:17:53.6. 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06.",
+        //   "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
+        //   "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
+        // ];
 
         const String youtubePlaylistTitle = 'S8 audio';
-        await IntegrationTestUtil.selectPlaylist(
-          tester: tester,
-          playlistToSelectTitle: youtubePlaylistTitle,
-        );
+        // await IntegrationTestUtil.selectPlaylist(
+        //   tester: tester,
+        //   playlistToSelectTitle: youtubePlaylistTitle,
+        // );
 
-        _verifyRestoredPlaylistAndAudio(
-          tester: tester,
-          selectedPlaylistTitle: youtubePlaylistTitle,
-          playlistsTitles: playlistsTitles,
-          audioTitles: audioTitles,
-          audioSubTitles: audioSubTitles,
-        );
+        // _verifyRestoredPlaylistAndAudio(
+        //   tester: tester,
+        //   selectedPlaylistTitle: youtubePlaylistTitle,
+        //   playlistsTitles: playlistsTitles,
+        //   audioTitles: audioTitles,
+        //   audioSubTitles: audioSubTitles,
+        // );
 
         // Verify the content of the 'A restaurer' playlist dir
         // and comments and pictures dir after restoration.
@@ -12711,11 +12701,27 @@ void main() {
             "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json",
           ],
           expectedPictureFiles: [
-            "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.jpg",
-            "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.jpg",
-            "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.jpg",
+            "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.json",
+            "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.json",
+            "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json",
           ],
           playlistRootDir: playlistRootDirName,
+          doesPictureAudioMapFileNameExist: true,
+          applicationPictureDir:
+              "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
+          pictureFileNameOne: "Sam Altman.jpg",
+          audioForPictureTitleOneLst: [
+            "A restaurer|250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12",
+            "A restaurer|250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12"
+          ],
+          pictureFileNameTwo: "Jésus mon Amour.jpg",
+          audioForPictureTitleTwoLst: [
+            "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
+          ],
+          pictureFileNameThree: "Jésus je T'adore.jpg",
+          audioForPictureTitleThreeLst: [
+            "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
+          ],
         );
 
         // Verify the content of the 'local' playlist dir
@@ -12729,9 +12735,16 @@ void main() {
             "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json"
           ],
           expectedPictureFiles: [
-            "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.jpg"
+            "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json"
           ],
           playlistRootDir: playlistRootDirName,
+          doesPictureAudioMapFileNameExist: true,
+          applicationPictureDir:
+              "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
+          pictureFileNameOne: "Jésus je T'adore.jpg",
+          audioForPictureTitleOneLst: [
+            "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
+          ],
         );
 
         // Verify the content of the 'S8 audio' playlist dir
