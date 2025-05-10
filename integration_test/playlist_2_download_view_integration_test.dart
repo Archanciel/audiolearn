@@ -13638,55 +13638,54 @@ void main() {
             isSelected: false,
           );
 
-          // Verifying the existing and the restored playlists
-          // list as well as the selected playlist 'A restaurer'
-          // displayed audio titles and subtitles.
-
           List<String> playlistsTitles = [
             "A restaurer",
             "local",
           ];
+          // Now verify local playlist as well !
 
           List<String> audioTitles = [
+            "Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage!",
+          ];
+
+          List<String> audioSubTitles = [
+            "0:24:21.8. 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30.",
+          ];
+
+          _verifyRestoredPlaylistAndAudio(
+            tester: tester,
+            selectedPlaylistTitle: 'local',
+            playlistsTitles: playlistsTitles,
+            audioTitles: audioTitles,
+            audioSubTitles: audioSubTitles,
+          );
+
+          // Verifying the existing and the restored playlists
+          // list as well as the selected playlist 'local'
+          // displayed audio titles and subtitles.
+
+          audioTitles = [
             "Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage!",
             "L'histoire secrète derrière la progression de l'IA",
             "Le 21 juillet 1913 _ Prières et méditations, La Mère",
             "Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...)",
           ];
 
-          List<String> audioSubTitles = [
+          audioSubTitles = [
             "0:24:21.7. 9.84 MB at 510 KB/sec on 24/02/2025 at 13:27.",
             "0:22:57.8. 8.72 MB at 203 KB/sec on 24/02/2025 at 13:16.",
             "0:00:58.7. 359 KB at 89 KB/sec on 13/02/2025 at 10:43.",
             "0:22:57.8. 8.72 MB at 2.14 MB/sec on 13/02/2025 at 08:30.",
           ];
 
+          await IntegrationTestUtil.selectPlaylist(
+            tester: tester,
+            playlistToSelectTitle: 'A restaurer',
+          );
+
           _verifyRestoredPlaylistAndAudio(
             tester: tester,
             selectedPlaylistTitle: 'A restaurer',
-            playlistsTitles: playlistsTitles,
-            audioTitles: audioTitles,
-            audioSubTitles: audioSubTitles,
-          );
-
-          // Now verify local playlist as well !
-
-          audioTitles = [
-            "Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage!",
-          ];
-
-          audioSubTitles = [
-            "0:24:21.8. 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30.",
-          ];
-
-          await IntegrationTestUtil.selectPlaylist(
-            tester: tester,
-            playlistToSelectTitle: 'local',
-          );
-
-          _verifyRestoredPlaylistAndAudio(
-            tester: tester,
-            selectedPlaylistTitle: 'local',
             playlistsTitles: playlistsTitles,
             audioTitles: audioTitles,
             audioSubTitles: audioSubTitles,
