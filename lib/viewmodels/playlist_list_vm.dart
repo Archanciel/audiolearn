@@ -691,6 +691,16 @@ class PlaylistListVM extends ChangeNotifier {
   /// Method called by PlaylistItemWidget when the user clicks on
   /// the playlist item checkbox to select or unselect the playlist.
   ///
+  /// The method is although called when the user restores the playlists
+  /// from a zip file. In this case, the playlist title of the playlist
+  /// which was selected before the restoration is passed in order to be
+  /// selected again.
+  /// 
+  /// Passing the playlist itself was causing a bug in the situation
+  /// where the'Replace existing playlists' checkbox was set to true
+  /// since in this case, the old playlist was replaced by the restored
+  /// one.
+  ///
   /// Since currently only one playlist can be selected at a time,
   /// this method unselects all other playlists if the passed playlist
   /// is selected, i.e. if {isPlaylistSelected} is true.
@@ -2923,7 +2933,13 @@ class PlaylistListVM extends ChangeNotifier {
       restoredPictureJpgNumber: 0,
     );
 
-    if (selectedPlaylistBeforeRestoreTitle != '') {
+    // Selecting the playlist which was selected before the
+    // restoration from the zip file is useful in case the
+    // 'Replace existing playlists' checkbox was set to true.
+    // Otherwise, the selected playlist is set to the playlist
+    // selected in the zip file.
+    if (doReplaceExistingPlaylists &&
+        selectedPlaylistBeforeRestoreTitle != '') {
       setPlaylistSelection(
         playlistTitle: selectedPlaylistBeforeRestoreTitle,
         isPlaylistSelected: true,
