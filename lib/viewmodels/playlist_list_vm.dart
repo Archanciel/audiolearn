@@ -691,15 +691,17 @@ class PlaylistListVM extends ChangeNotifier {
   /// Method called by PlaylistItemWidget when the user clicks on
   /// the playlist item checkbox to select or unselect the playlist.
   ///
-  /// The method is although called when the user restores the playlists
+  /// The method is also called when the user restores the playlists
   /// from a zip file. In this case, the playlist title of the playlist
   /// which was selected before the restoration is passed in order to be
   /// selected again.
-  /// 
+  ///
   /// Passing the playlist itself was causing a bug in the situation
   /// where the'Replace existing playlists' checkbox was set to true
   /// since in this case, the old playlist was replaced by the restored
-  /// one.
+  /// one and asking _audioDownloadVM.updatePlaylistSelection() to update
+  /// the playlist selection state was modifying the old playlist instead
+  /// of modifying the restored playlist.
   ///
   /// Since currently only one playlist can be selected at a time,
   /// this method unselects all other playlists if the passed playlist
@@ -2938,8 +2940,15 @@ class PlaylistListVM extends ChangeNotifier {
     // 'Replace existing playlists' checkbox was set to true.
     // Otherwise, the selected playlist is set to the playlist
     // selected in the zip file.
+    //
+    // getSelectedPlaylists().length > 1 is true in the
+    // situation where a zip file containing a selected
+    // playlist is restored with the 'Replace existing
+    // playlists' checkbox set to false in the app whose
+    // one existing playlist is selected.
     if (doReplaceExistingPlaylists &&
-        selectedPlaylistBeforeRestoreTitle != '') {
+            selectedPlaylistBeforeRestoreTitle != '' ||
+        getSelectedPlaylists().length > 1) {
       setPlaylistSelection(
         playlistTitle: selectedPlaylistBeforeRestoreTitle,
         isPlaylistSelected: true,
