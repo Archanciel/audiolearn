@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:audiolearn/models/audio.dart';
@@ -12677,7 +12676,7 @@ void main() {
           //   "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
           // ];
 
-          const String youtubePlaylistTitle = 'S8 audio';
+          // const String youtubePlaylistTitle = 'S8 audio';
           // await IntegrationTestUtil.selectPlaylist(
           //   tester: tester,
           //   playlistToSelectTitle: youtubePlaylistTitle,
@@ -13174,7 +13173,7 @@ void main() {
           //   "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
           // ];
 
-          const String youtubePlaylistTitle = 'S8 audio';
+          // const String youtubePlaylistTitle = 'S8 audio';
           // await IntegrationTestUtil.selectPlaylist(
           //   tester: tester,
           //   playlistToSelectTitle: youtubePlaylistTitle,
@@ -13611,6 +13610,8 @@ void main() {
             doReplaceExistingPlaylists: true,
           );
 
+          await tester.pumpAndSettle(const Duration(seconds: 1));
+
           // Verify the displayed warning confirmation dialog
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
@@ -13707,7 +13708,7 @@ void main() {
           //   "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
           // ];
 
-          const String youtubePlaylistTitle = 'S8 audio';
+          // const String youtubePlaylistTitle = 'S8 audio';
           // await IntegrationTestUtil.selectPlaylist(
           //   tester: tester,
           //   playlistToSelectTitle: youtubePlaylistTitle,
@@ -14207,7 +14208,7 @@ void main() {
           //   "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
           // ];
 
-          const String youtubePlaylistTitle = 'S8 audio';
+          // const String youtubePlaylistTitle = 'S8 audio';
           // await IntegrationTestUtil.selectPlaylist(
           //   tester: tester,
           //   playlistToSelectTitle: youtubePlaylistTitle,
