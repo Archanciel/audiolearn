@@ -695,9 +695,20 @@ class PlaylistListVM extends ChangeNotifier {
   /// this method unselects all other playlists if the passed playlist
   /// is selected, i.e. if {isPlaylistSelected} is true.
   void setPlaylistSelection({
-    required Playlist playlistSelectedOrUnselected,
+    Playlist? playlistSelectedOrUnselected,
+    String playlistTitle = '',
     required bool isPlaylistSelected,
   }) {
+    playlistSelectedOrUnselected ??= _listOfSelectablePlaylists
+        .firstWhereOrNull((playlist) => playlist.title == playlistTitle);
+
+    if (playlistSelectedOrUnselected == null) {
+      // The playlist was not found in the list of selectable playlists.
+      // This should not happen since the playlist is passed as a parameter
+      // of the method. So, we do nothing and return.
+      return;
+    }
+
     // selecting another playlist or unselecting the currently
     // selected playlist nullifies the filtered and sorted audio list
     _sortedFilteredSelectedPlaylistPlayableAudioLst = null;
@@ -2854,6 +2865,12 @@ class PlaylistListVM extends ChangeNotifier {
     required String zipFilePathName,
     required bool doReplaceExistingPlaylists,
   }) async {
+    String selectedPlaylistBeforeRestoreTitle = '';
+
+    if (_uniqueSelectedPlaylist != null) {
+      selectedPlaylistBeforeRestoreTitle = _uniqueSelectedPlaylist!.title;
+    }
+
     // Restoring the playlists, comments and settings json files
     // from the zip file. The dynamic list restoredInfoLst list
     // contains the list of restored playlist titles and the number
@@ -2905,6 +2922,13 @@ class PlaylistListVM extends ChangeNotifier {
       picturesNumber: restoredInfoLst[2],
       restoredPictureJpgNumber: 0,
     );
+
+    if (selectedPlaylistBeforeRestoreTitle != '') {
+      setPlaylistSelection(
+        playlistTitle: selectedPlaylistBeforeRestoreTitle,
+        isPlaylistSelected: true,
+      );
+    }
 
     // Return the zip file path name used for restoration.
     return zipFilePathName;
@@ -3109,8 +3133,8 @@ class PlaylistListVM extends ChangeNotifier {
 
       if (!destinationPathFileName.contains(kSettingsFileName) &&
           !destinationPathFileName.contains(kPictureAudioMapFileName)) {
-            // Second condition guarantees that the picture json files
-            // number is correctly calculated. 
+        // Second condition guarantees that the picture json files
+        // number is correctly calculated.
         if (destinationPathFileName.contains(kCommentDirName)) {
           restoredCommentsNumber++;
         } else if (destinationPathFileName.contains(kPictureDirName)) {
