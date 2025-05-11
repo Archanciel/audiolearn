@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:archive/archive.dart';
@@ -2892,6 +2893,8 @@ class PlaylistListVM extends ChangeNotifier {
       doReplaceExistingPlaylists: doReplaceExistingPlaylists,
     );
 
+    // Combining the restored app settings with the current app
+    // settings
     await _mergeRestoredFromZipSettingsWithCurrentAppSettings();
 
     bool restoringPlaylistsCommentsAndSettingsJsonFilesFromZip = true;
@@ -2907,8 +2910,8 @@ class PlaylistListVM extends ChangeNotifier {
           restoringPlaylistsCommentsAndSettingsJsonFilesFromZip,
     );
 
-    // Necessary so that in the playlist download view in situation
-    // where the playlists are not expanded the selected playlist SF
+    // Necessary so that, in the playlist download view in the situation
+    // where the playlists are not expanded, the selected playlist SF
     // parms name is displayed in the SF parms dropdown button.
     if (!_isPlaylistListExpanded) {
       getUpToDateSelectablePlaylists();
@@ -3114,7 +3117,17 @@ class PlaylistListVM extends ChangeNotifier {
       );
 
       if (!doReplaceExistingPlaylists &&
-          !destinationPathFileName.contains(kSettingsFileName)) {
+          !destinationPathFileName.contains(kSettingsFileName) &&
+          !destinationPathFileName.contains(kPictureAudioMapFileName)) {
+        // The second condition guarantees that the settings file
+        // is never replaced, but instead will be merged with the
+        // current settings file by executing the method
+        // _mergeRestoredFromZipSettingsWithCurrentAppSettings.
+
+        // The third condition guarantees that the pictureAudioMap.json
+        // file is never replaced, but instead will be merged with the
+        // current pictureAudioMap.json file.
+        //
         // Check if the file already exists in the destination path.
         final File existingFile = File(destinationPathFileName);
         if (existingFile.existsSync()) {
@@ -3137,19 +3150,48 @@ class PlaylistListVM extends ChangeNotifier {
 
       if (destinationPathFileName.contains(kCommentDirName) &&
           outputFile.existsSync()) {
-        // If the comment file already exists, skip it. This is useful
-        // if a new comment was added before the restoration from the
-        // zip file.
+        // If the comment json file already exists, skip it. This is
+        // useful if a new comment was added before the restoration
+        // from the zip file.
         continue;
       }
 
       // if (destinationPathFileName.contains(kPictureDirName) &&
       //     outputFile.existsSync()) {
-      //   // If the comment file already exists, skip it. This useful
-      //   // if a new comment was added before the restoration from the
-      //   // zip file.
+      //   // If the picture json file already exists, skip it. This
+      //   // useful if a new picture was added before the restoration
+      //   // from the zip file.
       //   continue;
       // }
+
+      if (destinationPathFileName.contains(kPictureAudioMapFileName) &&
+          outputFile.existsSync()) {
+        // If the pictureAudioMap.json file already exists, it is merged
+        // with the pictureAudioMap.json file contained in the restoration
+        // zip file.
+
+        // Convert the byte content to a string
+        final String jsonContent =
+            utf8.decode(archiveFile.content as List<int>);
+
+        // Parse the string as JSON to get the Map
+        final Map<String, dynamic> jsonMap = jsonDecode(jsonContent);
+
+        // Convert to the required type
+        final Map<String, List<String>> pictureAudioMap = {};
+        jsonMap.forEach((key, value) {
+          if (value is List) {
+            pictureAudioMap[key] = List<String>.from(value);
+          }
+        });
+
+        // Now call the merge method with the correctly parsed map
+        _pictureVM.mergeRestoredPictureAudioMapJsonFile(
+          restoredPictureAudioMap: pictureAudioMap,
+        );
+        
+        continue;
+      }
 
       await outputFile.writeAsBytes(
         archiveFile.content as List<int>,
