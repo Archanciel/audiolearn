@@ -590,7 +590,8 @@ class PictureVM extends ChangeNotifier {
     for (String pictureJpgPathFileName in pictureJpgPathFileNamesLst) {
       if (DirUtil.copyFileToDirectoryIfNotExistSync(
         sourceFilePathName: pictureJpgPathFileName,
-        targetDirectoryPath: "$targetDirectoryPath${path.separator}$kPictureDirName",
+        targetDirectoryPath:
+            "$targetDirectoryPath${path.separator}$kPictureDirName",
       )) {
         savedPictureNumber++;
       }
@@ -621,5 +622,32 @@ class PictureVM extends ChangeNotifier {
     }
 
     return restoredPictureNumber;
+  }
+
+  void mergeRestoredPictureAudioMapJsonFile({
+    required Map<String, List<String>> restoredPictureAudioMap,
+  }) {
+    final Map<String, List<String>> applicationPictureAudioMap =
+        _readAppPictureAudioMap();
+
+    for (String pictureFileName in restoredPictureAudioMap.keys) {
+      if (applicationPictureAudioMap.containsKey(pictureFileName)) {
+        final List<String> audioList =
+            applicationPictureAudioMap[pictureFileName]!;
+        final List<String> restoredAudioList =
+            restoredPictureAudioMap[pictureFileName]!;
+
+        for (String restoredAudio in restoredAudioList) {
+          if (!audioList.contains(restoredAudio)) {
+            audioList.add(restoredAudio);
+          }
+        }
+      } else {
+        applicationPictureAudioMap[pictureFileName] =
+            restoredPictureAudioMap[pictureFileName]!;
+      }
+    }
+
+    _savePictureAudioMap(applicationPictureAudioMap);
   }
 }

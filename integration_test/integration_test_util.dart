@@ -1798,6 +1798,8 @@ class IntegrationTestUtil {
     List<String> audioForPictureTitleTwoLst = const [],
     String pictureFileNameThree = '',
     List<String> audioForPictureTitleThreeLst = const [],
+    String pictureFileNameFour = '',
+    List<String> audioForPictureTitleFourLst = const [],
   }) {
     Map<String, List<String>> applicationPictureJsonMap = _readPictureAudioMap(
       applicationPicturePath: applicationPictureDir,
@@ -1834,6 +1836,17 @@ class IntegrationTestUtil {
       expect(
         pictureAudioLst,
         audioForPictureTitleThreeLst,
+      );
+    }
+
+    pictureAudioLst = applicationPictureJsonMap[pictureFileNameFour] ?? [];
+
+    if (audioForPictureTitleThreeLst.isNotEmpty) {
+      // Verify that the picture audio list contains the audio title
+      // and the audio duration
+      expect(
+        pictureAudioLst,
+        audioForPictureTitleFourLst,
       );
     }
   }
@@ -2255,6 +2268,8 @@ class IntegrationTestUtil {
     List<String> audioForPictureTitleTwoLst = const [],
     String pictureFileNameThree = '',
     List<String> audioForPictureTitleThreeLst = const [],
+    String pictureFileNameFour = '',
+    List<String> audioForPictureTitleFourLst = const [],
   }) {
     String playlistDir;
 
@@ -2310,16 +2325,17 @@ class IntegrationTestUtil {
         "The file '$pictureAudioMapFileName' should exist.",
       );
 
-    _verifyApplicationPictureJsonMap(
-      applicationPictureDir: applicationPictureDir,
-      pictureFileNameOne: pictureFileNameOne,
-      audioForPictureTitleOneLst: audioForPictureTitleOneLst,
-      pictureFileNameTwo: pictureFileNameTwo,
-      audioForPictureTitleTwoLst: audioForPictureTitleTwoLst,
-      pictureFileNameThree: pictureFileNameThree,
-      audioForPictureTitleThreeLst: audioForPictureTitleThreeLst,
-    );
-
+      _verifyApplicationPictureJsonMap(
+        applicationPictureDir: applicationPictureDir,
+        pictureFileNameOne: pictureFileNameOne,
+        audioForPictureTitleOneLst: audioForPictureTitleOneLst,
+        pictureFileNameTwo: pictureFileNameTwo,
+        audioForPictureTitleTwoLst: audioForPictureTitleTwoLst,
+        pictureFileNameThree: pictureFileNameThree,
+        audioForPictureTitleThreeLst: audioForPictureTitleThreeLst,
+        pictureFileNameFour: pictureFileNameFour,
+        audioForPictureTitleFourLst: audioForPictureTitleFourLst,
+      );
     } else {
       assert(
         !File(pictureAudioMapFileName).existsSync(),

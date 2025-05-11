@@ -14448,20 +14448,15 @@ void main() {
           );
         });
         testWidgets(
-            '''Not replace existing playlist. After first restoration where playlist
+            '''Not replace existing playlist. After first restoration where a playlist
            was selected, restore Windows zip in which a playlist is also selected. The
-           result will be that the first restored selected playlist will remain to be
+           result will be that the first restored selected playlist will remain being
            selected.''', (tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
             rootPath: kApplicationPathWindowsTest,
           );
-
-          const String firstRestorableZipFileName =
-              'Windows Prières du Maître.zip';
-          const String secondRestorableZipFileName =
-              'Windows audioLearn_2025-05-09_12_53.zip';
 
           // Since we have to use a mock AudioDownloadVM to add the
           // youtube playlist, we can not use app.main() to start the
@@ -14540,14 +14535,17 @@ void main() {
           MockFilePicker mockFilePicker = MockFilePicker();
           FilePicker.platform = mockFilePicker;
 
-          final String zipTestDirectory = '$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}';
-          final String firstRestorableZipFilePathName = '$zipTestDirectory${path.separator}$firstRestorableZipFileName';
+          const String firstRestorableZipFileName =
+              'Windows Prières du Maître.zip';
+          final String zipTestDirectory =
+              '$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}';
+          final String firstRestorableZipFilePathName =
+              '$zipTestDirectory${path.separator}$firstRestorableZipFileName';
 
           mockFilePicker.setSelectedFiles([
             PlatformFile(
                 name: firstRestorableZipFileName,
-                path:
-                    firstRestorableZipFilePathName,
+                path: firstRestorableZipFilePathName,
                 size: 7460),
           ]);
 
@@ -14567,21 +14565,23 @@ void main() {
             warningTitle: 'CONFIRMATION',
           );
 
-          // Verify that after first restoration selected playlist
-          // is 'Prières du Maître'.
+          // Verify that after the first restoration the selected
+          // playlist is 'Prières du Maître'.
           IntegrationTestUtil.verifyPlaylistIsSelected(
             tester: tester,
             playlistTitle: 'Prières du Maître',
             isSelected: true,
           );
 
-          final String secondRestorableZipFilePathName = '$zipTestDirectory$secondRestorableZipFileName';
+          const String secondRestorableZipFileName =
+              'Windows audioLearn_2025-05-09_12_53.zip';
+          final String secondRestorableZipFilePathName =
+              '$zipTestDirectory$secondRestorableZipFileName';
 
           mockFilePicker.setSelectedFiles([
             PlatformFile(
                 name: secondRestorableZipFileName,
-                path:
-                    secondRestorableZipFilePathName,
+                path: secondRestorableZipFilePathName,
                 size: 12288),
           ]);
 
@@ -14601,26 +14601,25 @@ void main() {
             warningTitle: 'CONFIRMATION',
           );
 
-          // Verify that the after restoration selected playlist is still
-          // 'Prières du Maître'.
+          // Verify that after the second restoration the selected
+          // playlist is still 'Prières du Maître'.
           IntegrationTestUtil.verifyPlaylistIsSelected(
             tester: tester,
             playlistTitle: 'Prières du Maître',
             isSelected: true,
           );
 
-          // Verify that the after restoration selected playlist is not
-          // 'A restaurer'. The 'A restaurer' playlist was selected in the
-          // restoration zip file.
+          // Verify that the after the second restoration the selected
+          // is not 'A restaurer'. The 'A restaurer' playlist was selected
+          // in the restoration zip file.
           IntegrationTestUtil.verifyPlaylistIsSelected(
             tester: tester,
             playlistTitle: 'A restaurer',
             isSelected: false,
           );
 
-          // Verifying the existing and the restored playlists
-          // list as well as the selected playlist 'Prières du
-          // Maître' displayed audio titles and subtitles.
+          // Verifying the restored playlists list as well as their
+          // displayed audio titles and subtitles.
 
           List<String> playlistsTitles = [
             "Prières du Maître",
@@ -14628,7 +14627,7 @@ void main() {
             "local",
           ];
 
-          // Now verify local playlist as well !
+          // Verify 'Prières du Maître' playlist
 
           List<String> audioTitles = [
             "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
@@ -14646,7 +14645,7 @@ void main() {
             audioSubTitles: audioSubTitles,
           );
 
-          // Now verify the 'local' playlist as well !
+          // Now verify 'local' playlist
 
           // Select the 'local' playlist which was restored.
           await IntegrationTestUtil.selectPlaylist(
@@ -14674,7 +14673,7 @@ void main() {
 
           // And verify the 'A restaurer' playlist
 
-          // Select the 'A restaurer' playlist which was restored.
+          // Select the 'A restaurer' playlist
           await IntegrationTestUtil.selectPlaylist(
             tester: tester,
             playlistToSelectTitle: 'A restaurer',
@@ -14682,8 +14681,7 @@ void main() {
 
           IntegrationTestUtil.verifyPlaylistDirectoryContents(
             playlistTitle: 'A restaurer',
-            expectedAudioFiles: [
-            ],
+            expectedAudioFiles: [],
             expectedCommentFiles: [
               "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.json",
               "250213-104308-Le 21 juillet 1913 _ Prières et méditations, La Mère 25-02-13.json",
@@ -14699,17 +14697,21 @@ void main() {
             doesPictureAudioMapFileNameExist: true,
             applicationPictureDir:
                 "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
-            pictureFileNameOne: "Sam Altman.jpg",
+            pictureFileNameOne: 'Jésus le Dieu vivant.jpg',
             audioForPictureTitleOneLst: [
+              "Prières du Maître|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'"
+            ],
+            pictureFileNameTwo: "Sam Altman.jpg",
+            audioForPictureTitleTwoLst: [
               "A restaurer|250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12",
               "A restaurer|250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12"
             ],
-            pictureFileNameTwo: "Jésus mon Amour.jpg",
-            audioForPictureTitleTwoLst: [
+            pictureFileNameThree: "Jésus mon Amour.jpg",
+            audioForPictureTitleThreeLst: [
               "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
             ],
-            pictureFileNameThree: "Jésus je T'adore.jpg",
-            audioForPictureTitleThreeLst: [
+            pictureFileNameFour: "Jésus je T'adore.jpg",
+            audioForPictureTitleFourLst: [
               "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
             ],
           );
