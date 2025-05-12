@@ -38,13 +38,6 @@
       "type": "dart",
       "program": "integration_test/android_emul_restore_integr_test.dart",
       "deviceId": "emulator-5554"
-    },
-    {
-      "name": "Executing copy_test_files.ps1",
-      "request": "launch",
-      "type": "dart",
-      "program": "integration_test/android_emul_claude.dart",
-      "deviceId": "emulator-5554"
     }
   ]
 }
