@@ -31,6 +31,13 @@
       "type": "dart",
       "program": "integration_test/android_emulator_integration_test.dart",
       "deviceId": "emulator-5554"
+    },
+    {
+      "name": "Restore Integr Tests (Android)",
+      "request": "launch",
+      "type": "dart",
+      "program": "integration_test/android_emul_restore_integr_test.dart",
+      "deviceId": "emulator-5554"
     }
   ]
 }
