@@ -34,6 +34,26 @@ void main() {
   // If this issue persists, please report it on the project's GitHub page.
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
+  // setUp(() async {
+  //   // Set up test files on emulator
+  //   await setupTestFiles();
+
+  //   // Your existing setup code...
+  // });
+
+  group('Group one.', () {
+    testWidgets('Restore zip existing playlist selected test',
+        (WidgetTester tester) async {
+
+      await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+        tester: tester,
+        tapOnPlaylistToggleButton: false,
+      );
+
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+    });
+  });
   group(
       'Restore playlist, comments, pictures and settings from zip file menu test',
       () {
