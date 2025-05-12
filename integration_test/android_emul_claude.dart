@@ -21,7 +21,7 @@ void main() {
       (WidgetTester tester) async {
     print(
         '***** After executing copy_test_files.ps1, running integr test *****');
-        
+
     await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
       tester: tester,
       tapOnPlaylistToggleButton: false,
@@ -37,12 +37,28 @@ Future<void> setupTestFiles() async {
       'C:\\development\\flutter\\audiolearn\\test\\data\\saved\\restore_zip_existing_playlist_selected_test_android';
   final String destPath = '/storage/emulated/0/Documents/test/audiolearn';
 
+  // Correctly format the script path
+  final String scriptPath =
+      '$kDownloadAppTestSavedDataDir\\ps1_directory\\copy_test_files.ps1';
+
+  // Debug: print the exact path
+  print('***** Script path: $scriptPath');
+
+  // Verify file exists
+  final scriptFile = File(scriptPath);
+  if (!scriptFile.existsSync()) {
+    print('***** ERROR: Script file does not exist at path: $scriptPath');
+    throw Exception('Script file not found');
+  } else {
+    print('***** Script file found at: $scriptPath');
+  }
+
   // Run PowerShell script
   final result = await Process.run('powershell', [
     '-ExecutionPolicy',
     'Bypass',
     '-File',
-    '$kDownloadAppTestSavedDataDir\\ps1_directory\\copy_test_files.ps1',
+    scriptPath,
     '-SourcePath',
     sourcePath,
     '-DestPath',
