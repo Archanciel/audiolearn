@@ -70,11 +70,14 @@ void main() {
         doReplaceExistingPlaylists: false,
       );
 
+      await Future.delayed(const Duration(seconds: 1));
+      await tester.pumpAndSettle(); // must be used !
+
       // Verify the displayed warning confirmation dialog
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Restored 0 playlist, 0 comment and 0 picture JSON files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+            'Restored 2 playlist, 5 comment and 4 picture JSON files as well as the application settings from "$kApplicationPathAndroidTest/$restorableZipFileName".',
         isWarningConfirming: true,
         warningTitle: 'CONFIRMATION',
       );
