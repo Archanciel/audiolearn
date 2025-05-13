@@ -635,8 +635,7 @@ class IntegrationTestUtil {
       await tester.pumpAndSettle();
     }
 
-    // Tap on the Ok button to set the comment end position to the
-    // audio duration value in the comment previous dialog.
+    // Tap on the Ok button to launch the restoration.
     await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
     await tester.pumpAndSettle();
   }
