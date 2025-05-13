@@ -70,8 +70,8 @@ void main() {
         doReplaceExistingPlaylists: false,
       );
 
-      await Future.delayed(const Duration(seconds: 1));
-      await tester.pumpAndSettle(); // must be used !
+      await Future.delayed(const Duration(milliseconds: 500));
+      await tester.pumpAndSettle(); // must be used on Android emulator !
 
       // Verify the displayed warning confirmation dialog
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
