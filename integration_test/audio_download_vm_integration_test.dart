@@ -142,7 +142,7 @@ Future<void> main() async {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Youtube playlist \"$globalTestPlaylistTitle\" of spoken quality added to the end of the playlist list.",
+            "Youtube playlist \"$globalTestPlaylistTitle\" of spoken quality added at the end of the playlist list.",
         isWarningConfirming: true,
       );
 
@@ -309,7 +309,7 @@ Future<void> main() async {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Youtube playlist \"$globalTestPlaylistTitle\" of musical quality added to the end of the playlist list.",
+            "Youtube playlist \"$globalTestPlaylistTitle\" of musical quality added at the end of the playlist list.",
         isWarningConfirming: true,
       );
 

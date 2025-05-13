@@ -1530,7 +1530,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Local playlist \"$correctedLocalPlaylistTitle\" of spoken quality added to the end of the playlist list.",
+            "Local playlist \"$correctedLocalPlaylistTitle\" of spoken quality added at the end of the playlist list.",
         isWarningConfirming: true,
       );
 
@@ -1579,7 +1579,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Local playlist \"$localPlaylistTitleWithoutSpace\" of spoken quality added to the end of the playlist list.",
+            "Local playlist \"$localPlaylistTitleWithoutSpace\" of spoken quality added at the end of the playlist list.",
         isWarningConfirming: true,
       );
 
@@ -2580,7 +2580,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Youtube playlist "Essai" of spoken quality added to the end of the playlist list.',
+            'Youtube playlist "Essai" of spoken quality added at the end of the playlist list.',
         isWarningConfirming: true,
       );
 
@@ -2650,7 +2650,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Youtube playlist "audio_player_view_2_shorts_test" of spoken quality added to the end of the playlist list.',
+            'Youtube playlist "audio_player_view_2_shorts_test" of spoken quality added at the end of the playlist list.',
         isWarningConfirming: true,
       );
 
@@ -3857,7 +3857,7 @@ void main() {
       Text warningDialogMessage =
           tester.widget(find.byKey(const Key('warningDialogMessage')));
       expect(warningDialogMessage.data,
-          'Local playlist "$localAudioPlaylistTitle" of spoken quality added to the end of the playlist list.');
+          'Local playlist "$localAudioPlaylistTitle" of spoken quality added at the end of the playlist list.');
 
       // Close the warning dialog by tapping on the Ok button
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));
@@ -19567,10 +19567,10 @@ Future<void> _checkWarningDialog({
 
   if (playlistType == PlaylistType.youtube) {
     expect(warningDialogMessage.data,
-        'Youtube playlist "$playlistTitle" of ${isMusicQuality ? 'musical' : 'spoken'} quality added to the end of the playlist list.');
+        'Youtube playlist "$playlistTitle" of ${isMusicQuality ? 'musical' : 'spoken'} quality added at the end of the playlist list.');
   } else {
     expect(warningDialogMessage.data,
-        'Local playlist "$playlistTitle" of ${isMusicQuality ? 'musical' : 'spoken'} quality added to the end of the playlist list.');
+        'Local playlist "$playlistTitle" of ${isMusicQuality ? 'musical' : 'spoken'} quality added at the end of the playlist list.');
   }
 
   // Close the warning dialog by tapping on the Ok button
