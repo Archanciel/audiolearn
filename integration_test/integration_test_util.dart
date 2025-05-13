@@ -2280,8 +2280,8 @@ class IntegrationTestUtil {
           "$kApplicationPathWindowsTest${path.separator}$playlistRootDir${path.separator}$playlistTitle";
     }
 
-    String commentsDir = "$playlistDir${path.separator}comments";
-    String picturesDir = "$playlistDir${path.separator}pictures";
+    String commentsDir = "$playlistDir${path.separator}$kCommentDirName";
+    String picturesDir = "$playlistDir${path.separator}$kPictureDirName";
 
     // Verify audio files in playlist directory
     List<String> actualAudioFiles = DirUtil.listFileNamesInDir(
@@ -2326,6 +2326,89 @@ class IntegrationTestUtil {
 
       _verifyApplicationPictureJsonMap(
         applicationPictureDir: applicationPictureDir,
+        pictureFileNameOne: pictureFileNameOne,
+        audioForPictureTitleOneLst: audioForPictureTitleOneLst,
+        pictureFileNameTwo: pictureFileNameTwo,
+        audioForPictureTitleTwoLst: audioForPictureTitleTwoLst,
+        pictureFileNameThree: pictureFileNameThree,
+        audioForPictureTitleThreeLst: audioForPictureTitleThreeLst,
+        pictureFileNameFour: pictureFileNameFour,
+        audioForPictureTitleFourLst: audioForPictureTitleFourLst,
+      );
+    } else {
+      assert(
+        !File(pictureAudioMapFileName).existsSync(),
+        "The file '$pictureAudioMapFileName' should not exist.",
+      );
+    }
+  }
+
+  static void verifyPlaylistDirectoryContentsOnAndroid({
+    required String playlistTitle,
+    required List<String> expectedAudioFiles,
+    required List<String> expectedCommentFiles,
+    required List<String> expectedPictureFiles,
+    bool doesPictureAudioMapFileNameExist = false,
+    String pictureFileNameOne = '',
+    List<String> audioForPictureTitleOneLst = const [],
+    String pictureFileNameTwo = '',
+    List<String> audioForPictureTitleTwoLst = const [],
+    String pictureFileNameThree = '',
+    List<String> audioForPictureTitleThreeLst = const [],
+    String pictureFileNameFour = '',
+    List<String> audioForPictureTitleFourLst = const [],
+  }) {
+    String playlistDir;
+
+      playlistDir =
+          "$kPlaylistDownloadRootPathAndroidTest${path.separator}$playlistTitle";
+
+    String commentsDir = "$playlistDir${path.separator}$kCommentDirName";
+    String picturesDir = "$playlistDir${path.separator}$kPictureDirName";
+
+    // Verify audio files in playlist directory
+    List<String> actualAudioFiles = DirUtil.listFileNamesInDir(
+      directoryPath: playlistDir,
+      fileExtension: 'mp3',
+    );
+    assert(
+      actualAudioFiles.toSet().containsAll(expectedAudioFiles.toSet()),
+      "Mismatch in expected and actual audio files in '$playlistDir'.\nExpected: $expectedAudioFiles\nActual: $actualAudioFiles",
+    );
+
+    // Verify JSON comment files in comments directory
+    List<String> actualCommentFiles = DirUtil.listFileNamesInDir(
+      directoryPath: commentsDir,
+      fileExtension: 'json',
+    );
+    assert(
+      actualCommentFiles.toSet().containsAll(expectedCommentFiles.toSet()),
+      "Mismatch in expected and actual comment files in '$commentsDir'.\nExpected: $expectedCommentFiles\nActual: $actualCommentFiles",
+    );
+
+    // Verify image files in pictures directory
+    List<String> actualPictureFiles = DirUtil.listFileNamesInDir(
+      directoryPath: picturesDir,
+      fileExtension: 'json',
+    );
+    assert(
+      actualPictureFiles.toSet().containsAll(expectedPictureFiles.toSet()),
+      "Mismatch in expected and actual picture files in '$picturesDir'.\nExpected: $expectedPictureFiles\nActual: $actualPictureFiles",
+    );
+
+    // Verify pictureAudioMap.json file existence
+
+    String pictureAudioMapFileName =
+        "$kApplicationPathAndroidTest${path.separator}$kPictureDirName${path.separator}$kPictureAudioMapFileName";
+
+    if (doesPictureAudioMapFileNameExist) {
+      assert(
+        File(pictureAudioMapFileName).existsSync(),
+        "The file '$pictureAudioMapFileName' should exist.",
+      );
+
+      _verifyApplicationPictureJsonMap(
+        applicationPictureDir: "$kApplicationPathAndroidTest${path.separator}$kPictureDirName",
         pictureFileNameOne: pictureFileNameOne,
         audioForPictureTitleOneLst: audioForPictureTitleOneLst,
         pictureFileNameTwo: pictureFileNameTwo,

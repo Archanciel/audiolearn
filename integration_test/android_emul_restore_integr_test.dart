@@ -34,15 +34,10 @@ void main() {
   // If this issue persists, please report it on the project's GitHub page.
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  // setUp(() async {
-  //   // Set up test files on emulator
-  //   await setupTestFiles();
-
-  //   // Your existing setup code...
-  // });
-
   group('Group one.', () {
-    testWidgets('Restore zip existing playlist selected test',
+    testWidgets('''Restore zip existing playlist selected test. Before running
+    the integration test, C:\\development\\flutter\\audiolearn\\test\\data\\
+    saved\\Android_emulator_bat\\setup_test.bat must be executed !''',
         (WidgetTester tester) async {
       await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
         tester: tester,
@@ -70,8 +65,10 @@ void main() {
         doReplaceExistingPlaylists: false,
       );
 
+      // Must be used on Android emulator, otherwise the confirmation
+      // dialog is not displayed and can not be verifyed !
       await Future.delayed(const Duration(milliseconds: 500));
-      await tester.pumpAndSettle(); // must be used on Android emulator !
+      await tester.pumpAndSettle();
 
       // Verify the displayed warning confirmation dialog
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
@@ -93,7 +90,10 @@ void main() {
         testWidgets(
             '''Replace existing playlist. Restore Windows zip to Windows application in which
            an existing playlist is selected. Then, select a SF parm and redownload the
-           filtered audio. Finally, redownload an individual not playable audio.''',
+           filtered audio. Finally, redownload an individual not playable audio.
+           
+           Before running the integration test, C:\\development\\flutter\\audiolearn\\test\\
+           data\\saved\\Android_emulator_bat\\setup_test.bat must be executed !''',
             (tester) async {
           await IntegrationTestUtil
               .initializeAndroidApplicationAndSelectPlaylist(
@@ -101,100 +101,48 @@ void main() {
             tapOnPlaylistToggleButton: false,
           );
 
-          const String restorableZipFileName =
-              'Windows audioLearn_2025-05-11_13_16.zip';
+          // Replace the platform instance with your mock
+          MockFilePicker mockFilePicker = MockFilePicker();
+          FilePicker.platform = mockFilePicker;
 
-          // Copy the integration test data to the app dir
-          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-            sourceRootPath:
-                "$kDownloadAppTestSavedDataDir\\restore_zip_existing_playlist_selected_test",
-            destinationRootPath: kApplicationPathAndroidTest,
-          );
+          String restorableZipFileName = 'toCopyOnAndroidEmulator.zip';
 
-          // Since we have to use a mock AudioDownloadVM to add the
-          // youtube playlist, we can not use app.main() to start the
-          // app because app.main() uses the real AudioDownloadVM
-          // and we don't want to make the main.dart file dependent
-          // of a mock class. So we have to start the app by hand,
-          // what IntegrationTestUtil.launchExpandablePlaylistListView
-          // does.
+          mockFilePicker.setSelectedFiles([
+            PlatformFile(
+                name: restorableZipFileName,
+                path:
+                    '$kApplicationPathAndroidTest${path.separator}$restorableZipFileName',
+                size: 8770),
+          ]);
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-            isTest: true,
-          );
-
-          // Load the settings from the json file. This is necessary
-          // otherwise the ordered playlist titles will remain empty
-          // and the playlist list will not be filled with the
-          // playlists available in the download app test dir
-          await settingsDataService.loadSettingsFromFile(
-              settingsJsonPathFileName:
-                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
-
-          WarningMessageVM warningMessageVM = WarningMessageVM();
-
-          // The mockAudioDownloadVM will be later used to simulate
-          // redownloading not playable files after having restored
-          // the playlists, comments and settings from the zip file.
-          MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
-            warningMessageVM: warningMessageVM,
-            settingsDataService: settingsDataService,
-          );
-
-          AudioDownloadVM audioDownloadVM = AudioDownloadVM(
-            warningMessageVM: warningMessageVM,
-            settingsDataService: settingsDataService,
-          );
-
-          PlaylistListVM playlistListVM = PlaylistListVM(
-            warningMessageVM: warningMessageVM,
-            audioDownloadVM: mockAudioDownloadVM,
-            commentVM: CommentVM(),
-            pictureVM: PictureVM(
-              settingsDataService: settingsDataService,
-            ),
-            settingsDataService: settingsDataService,
-          );
-
-          // calling getUpToDateSelectablePlaylists() loads all the
-          // playlist json files from the app dir and so enables
-          // playlistListVM to know which playlists are
-          // selected and which are not
-          playlistListVM.getUpToDateSelectablePlaylists();
-
-          AudioPlayerVM audioPlayerVM = AudioPlayerVM(
-            settingsDataService: settingsDataService,
-            playlistListVM: playlistListVM,
-            commentVM: CommentVM(),
-          );
-
-          DateFormatVM dateFormatVM = DateFormatVM(
-            settingsDataService: settingsDataService,
-          );
-
-          await IntegrationTestUtil
-              .launchIntegrTestAppEnablingInternetAccessWithMock(
+          // Execute the 'Restore Playlists, Comments and Settings from Zip
+          // File ...' menu without replacing the existing playlists.
+          await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
-            audioDownloadVM: audioDownloadVM,
-            settingsDataService: settingsDataService,
-            playlistListVM: playlistListVM,
-            warningMessageVM: warningMessageVM,
-            audioPlayerVM: audioPlayerVM,
-            dateFormatVM: dateFormatVM,
+            doReplaceExistingPlaylists: false,
           );
 
-          const String playlistRootDirName = 'playlists';
+          await Future.delayed(const Duration(milliseconds: 500));
+          await tester.pumpAndSettle(); // must be used on Android emulator !
+
+          // Verify the displayed warning confirmation dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                'Restored 2 playlist, 5 comment and 4 picture JSON files as well as the application settings from "$kApplicationPathAndroidTest/$restorableZipFileName".',
+            isWarningConfirming: true,
+            warningTitle: 'CONFIRMATION',
+          );
 
           // Verify the content of the 'A restaurer' playlist dir
           // and comments and pictures dir before restoring.
-          IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
             playlistTitle: 'A restaurer',
             expectedAudioFiles: [
-              "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.mp3",
-              "250213-104308-Le 21 juillet 1913 _ Prières et méditations, La Mère 25-02-13.mp3",
-              "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.mp3",
-              "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.mp3",
+              // Since the 'A restaurer' as well as the 'local' playlists
+              // were not copied in the Android emulator but were restored
+              // from the toCopyOnAndroidEmulator.zip file, the mp3 files
+              // aren't available.
             ],
             expectedCommentFiles: [
               "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.json",
@@ -207,10 +155,7 @@ void main() {
               "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.json",
               "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json",
             ],
-            playlistRootDir: playlistRootDirName,
             doesPictureAudioMapFileNameExist: true,
-            applicationPictureDir:
-                "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
             pictureFileNameOne: "Sam Altman.jpg",
             audioForPictureTitleOneLst: [
               "A restaurer|250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12",
@@ -228,10 +173,13 @@ void main() {
 
           // Verify the content of the 'local' playlist dir
           // and comments and pictures dir before restoring.
-          IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
             playlistTitle: 'local',
             expectedAudioFiles: [
-              "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.mp3"
+              // Since the 'A restaurer' as well as the 'local' playlists
+              // were not copied in the Android emulator but were restored
+              // from the toCopyOnAndroidEmulator.zip file, the mp3 files
+              // aren't available.
             ],
             expectedCommentFiles: [
               "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json"
@@ -239,25 +187,20 @@ void main() {
             expectedPictureFiles: [
               "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json"
             ],
-            playlistRootDir: playlistRootDirName,
             doesPictureAudioMapFileNameExist: true,
-            applicationPictureDir:
-                "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
             pictureFileNameOne: "Jésus je T'adore.jpg",
             audioForPictureTitleOneLst: [
               "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
             ],
           );
 
-          // Replace the platform instance with your mock
-          MockFilePicker mockFilePicker = MockFilePicker();
-          FilePicker.platform = mockFilePicker;
+          restorableZipFileName = 'Windows audioLearn_2025-05-11_13_16.zip';
 
           mockFilePicker.setSelectedFiles([
             PlatformFile(
                 name: restorableZipFileName,
                 path:
-                    '$kApplicationPathWindowsTest${path.separator}$restorableZipFileName',
+                    '$kApplicationPathAndroidTest${path.separator}$restorableZipFileName',
                 size: 12828),
           ]);
 
@@ -269,11 +212,16 @@ void main() {
             doReplaceExistingPlaylists: true,
           );
 
+          // Must be used on Android emulator, otherwise the confirmation
+          // dialog is not displayed and can not be verifyed !
+          await Future.delayed(const Duration(milliseconds: 500));
+          await tester.pumpAndSettle();
+
           // Verify the displayed warning confirmation dialog
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 2 playlist, 0 comment and 4 picture JSON files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+                'Restored 2 playlist, 0 comment and 4 picture JSON files as well as the application settings from "$kApplicationPathAndroidTest/$restorableZipFileName".',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -364,13 +312,13 @@ void main() {
 
           // Verify the content of the 'A restaurer' playlist dir
           // and comments and pictures dir after restoration.
-          IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
             playlistTitle: 'A restaurer',
             expectedAudioFiles: [
-              "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.mp3",
-              "250213-104308-Le 21 juillet 1913 _ Prières et méditations, La Mère 25-02-13.mp3",
-              "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.mp3",
-              "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.mp3",
+              // Since the 'A restaurer' as well as the 'local' playlists
+              // were not copied in the Android emulator but were restored
+              // from the toCopyOnAndroidEmulator.zip file, the mp3 files
+              // aren't available.
             ],
             expectedCommentFiles: [
               "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.json",
@@ -383,10 +331,7 @@ void main() {
               "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.json",
               "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json",
             ],
-            playlistRootDir: playlistRootDirName,
             doesPictureAudioMapFileNameExist: true,
-            applicationPictureDir:
-                "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
             pictureFileNameOne: "Sam Altman.jpg",
             audioForPictureTitleOneLst: [
               "A restaurer|250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12",
@@ -404,10 +349,13 @@ void main() {
 
           // Verify the content of the 'local' playlist dir
           // and comments and pictures dir after restoration.
-          IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
             playlistTitle: 'local',
             expectedAudioFiles: [
-              "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.mp3"
+              // Since the 'A restaurer' as well as the 'local' playlists
+              // were not copied in the Android emulator but were restored
+              // from the toCopyOnAndroidEmulator.zip file, the mp3 files
+              // aren't available.
             ],
             expectedCommentFiles: [
               "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json"
@@ -415,10 +363,7 @@ void main() {
             expectedPictureFiles: [
               "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json"
             ],
-            playlistRootDir: playlistRootDirName,
             doesPictureAudioMapFileNameExist: true,
-            applicationPictureDir:
-                "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
             pictureFileNameOne: "Jésus je T'adore.jpg",
             audioForPictureTitleOneLst: [
               "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
@@ -427,7 +372,7 @@ void main() {
 
           // Verify the content of the 'S8 audio' playlist dir
           // and comments and pictures dir after restoration.
-          // IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          // IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
           //   playlistTitle: youtubePlaylistTitle,
           //   expectedAudioFiles: [],
           //   expectedCommentFiles: [
@@ -565,7 +510,7 @@ void main() {
           // // as redownloading single audio 'Interview de Chat GPT
           // // - IA, intelligence, philosophie, géopolitique,
           // // post-vérité...'.
-          // IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          // IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
           //   playlistTitle: 'S8 audio',
           //   expectedAudioFiles: [
           //     "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.mp3",
@@ -581,12 +526,6 @@ void main() {
           //   expectedPictureFiles: [],
           //   playlistRootDir: playlistRootDirName,
           // );
-
-          // Purge the test playlist directory so that the created test
-          // files are not uploaded to GitHub
-          DirUtil.deleteFilesInDirAndSubDirs(
-            rootPath: kApplicationPathWindowsTest,
-          );
         });
         testWidgets(
             '''Not replace existing playlist. Restore Windows zip to Windows application in which
@@ -682,11 +621,9 @@ void main() {
             dateFormatVM: dateFormatVM,
           );
 
-          const String playlistRootDirName = 'playlists';
-
           // Verify the content of the 'A restaurer' playlist dir
           // and comments and pictures dir before restoring.
-          IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
             playlistTitle: 'A restaurer',
             expectedAudioFiles: [
               "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.mp3",
@@ -705,10 +642,7 @@ void main() {
               "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.json",
               "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json",
             ],
-            playlistRootDir: playlistRootDirName,
             doesPictureAudioMapFileNameExist: true,
-            applicationPictureDir:
-                "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
             pictureFileNameOne: "Sam Altman.jpg",
             audioForPictureTitleOneLst: [
               "A restaurer|250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12",
@@ -726,7 +660,7 @@ void main() {
 
           // Verify the content of the 'local' playlist dir
           // and comments and pictures dir before restoring.
-          IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
             playlistTitle: 'local',
             expectedAudioFiles: [
               "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.mp3"
@@ -737,10 +671,7 @@ void main() {
             expectedPictureFiles: [
               "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json"
             ],
-            playlistRootDir: playlistRootDirName,
             doesPictureAudioMapFileNameExist: true,
-            applicationPictureDir:
-                "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
             pictureFileNameOne: "Jésus je T'adore.jpg",
             audioForPictureTitleOneLst: [
               "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
@@ -861,7 +792,7 @@ void main() {
 
           // Verify the content of the 'A restaurer' playlist dir
           // and comments and pictures dir after restoration.
-          IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
             playlistTitle: 'A restaurer',
             expectedAudioFiles: [
               "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.mp3",
@@ -880,10 +811,7 @@ void main() {
               "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.json",
               "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json",
             ],
-            playlistRootDir: playlistRootDirName,
             doesPictureAudioMapFileNameExist: true,
-            applicationPictureDir:
-                "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
             pictureFileNameOne: "Sam Altman.jpg",
             audioForPictureTitleOneLst: [
               "A restaurer|250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12",
@@ -901,7 +829,7 @@ void main() {
 
           // Verify the content of the 'local' playlist dir
           // and comments and pictures dir after restoration.
-          IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
             playlistTitle: 'local',
             expectedAudioFiles: [
               "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.mp3"
@@ -912,10 +840,7 @@ void main() {
             expectedPictureFiles: [
               "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json"
             ],
-            playlistRootDir: playlistRootDirName,
             doesPictureAudioMapFileNameExist: true,
-            applicationPictureDir:
-                "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
             pictureFileNameOne: "Jésus je T'adore.jpg",
             audioForPictureTitleOneLst: [
               "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
@@ -924,7 +849,7 @@ void main() {
 
           // Verify the content of the 'S8 audio' playlist dir
           // and comments and pictures dir after restoration.
-          // IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          // IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
           //   playlistTitle: youtubePlaylistTitle,
           //   expectedAudioFiles: [],
           //   expectedCommentFiles: [
@@ -1062,7 +987,7 @@ void main() {
           // // as redownloading single audio 'Interview de Chat GPT
           // // - IA, intelligence, philosophie, géopolitique,
           // // post-vérité...'.
-          // IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          // IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
           //   playlistTitle: 'S8 audio',
           //   expectedAudioFiles: [
           //     "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.mp3",
@@ -1190,11 +1115,9 @@ void main() {
             playlistToSelectTitle: 'local',
           );
 
-          const String playlistRootDirName = 'playlists';
-
           // Verify the content of the 'A restaurer' playlist dir
           // and comments and pictures dir before restoring.
-          IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
             playlistTitle: 'A restaurer',
             expectedAudioFiles: [
               "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.mp3",
@@ -1213,10 +1136,7 @@ void main() {
               "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.json",
               "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json",
             ],
-            playlistRootDir: playlistRootDirName,
             doesPictureAudioMapFileNameExist: true,
-            applicationPictureDir:
-                "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
             pictureFileNameOne: "Sam Altman.jpg",
             audioForPictureTitleOneLst: [
               "A restaurer|250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12",
@@ -1234,7 +1154,7 @@ void main() {
 
           // Verify the content of the 'local' playlist dir
           // and comments and pictures dir before restoring.
-          IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
             playlistTitle: 'local',
             expectedAudioFiles: [
               "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.mp3"
@@ -1245,10 +1165,7 @@ void main() {
             expectedPictureFiles: [
               "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json"
             ],
-            playlistRootDir: playlistRootDirName,
             doesPictureAudioMapFileNameExist: true,
-            applicationPictureDir:
-                "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
             pictureFileNameOne: "Jésus je T'adore.jpg",
             audioForPictureTitleOneLst: [
               "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
@@ -1395,7 +1312,7 @@ void main() {
 
           // Verify the content of the 'A restaurer' playlist dir
           // and comments and pictures dir after restoration.
-          IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
             playlistTitle: 'A restaurer',
             expectedAudioFiles: [
               "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.mp3",
@@ -1414,10 +1331,7 @@ void main() {
               "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.json",
               "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json",
             ],
-            playlistRootDir: playlistRootDirName,
             doesPictureAudioMapFileNameExist: true,
-            applicationPictureDir:
-                "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
             pictureFileNameOne: "Sam Altman.jpg",
             audioForPictureTitleOneLst: [
               "A restaurer|250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12",
@@ -1435,7 +1349,7 @@ void main() {
 
           // Verify the content of the 'local' playlist dir
           // and comments and pictures dir after restoration.
-          IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
             playlistTitle: 'local',
             expectedAudioFiles: [
               "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.mp3"
@@ -1446,10 +1360,7 @@ void main() {
             expectedPictureFiles: [
               "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json"
             ],
-            playlistRootDir: playlistRootDirName,
             doesPictureAudioMapFileNameExist: true,
-            applicationPictureDir:
-                "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
             pictureFileNameOne: "Jésus je T'adore.jpg",
             audioForPictureTitleOneLst: [
               "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
@@ -1458,7 +1369,7 @@ void main() {
 
           // Verify the content of the 'S8 audio' playlist dir
           // and comments and pictures dir after restoration.
-          // IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          // IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
           //   playlistTitle: youtubePlaylistTitle,
           //   expectedAudioFiles: [],
           //   expectedCommentFiles: [
@@ -1596,7 +1507,7 @@ void main() {
           // // as redownloading single audio 'Interview de Chat GPT
           // // - IA, intelligence, philosophie, géopolitique,
           // // post-vérité...'.
-          // IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          // IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
           //   playlistTitle: 'S8 audio',
           //   expectedAudioFiles: [
           //     "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.mp3",
@@ -1720,11 +1631,9 @@ void main() {
             playlistToSelectTitle: 'local',
           );
 
-          const String playlistRootDirName = 'playlists';
-
           // Verify the content of the 'A restaurer' playlist dir
           // and comments and pictures dir before restoring.
-          IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
             playlistTitle: 'A restaurer',
             expectedAudioFiles: [
               "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.mp3",
@@ -1743,10 +1652,7 @@ void main() {
               "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.json",
               "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json",
             ],
-            playlistRootDir: playlistRootDirName,
             doesPictureAudioMapFileNameExist: true,
-            applicationPictureDir:
-                "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
             pictureFileNameOne: "Sam Altman.jpg",
             audioForPictureTitleOneLst: [
               "A restaurer|250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12",
@@ -1764,7 +1670,7 @@ void main() {
 
           // Verify the content of the 'local' playlist dir
           // and comments and pictures dir before restoring.
-          IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
             playlistTitle: 'local',
             expectedAudioFiles: [
               "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.mp3"
@@ -1775,10 +1681,7 @@ void main() {
             expectedPictureFiles: [
               "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json"
             ],
-            playlistRootDir: playlistRootDirName,
             doesPictureAudioMapFileNameExist: true,
-            applicationPictureDir:
-                "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
             pictureFileNameOne: "Jésus je T'adore.jpg",
             audioForPictureTitleOneLst: [
               "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
@@ -1895,7 +1798,7 @@ void main() {
 
           // Verify the content of the 'A restaurer' playlist dir
           // and comments and pictures dir after restoration.
-          IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
             playlistTitle: 'A restaurer',
             expectedAudioFiles: [
               "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.mp3",
@@ -1914,10 +1817,7 @@ void main() {
               "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.json",
               "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json",
             ],
-            playlistRootDir: playlistRootDirName,
             doesPictureAudioMapFileNameExist: true,
-            applicationPictureDir:
-                "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
             pictureFileNameOne: "Sam Altman.jpg",
             audioForPictureTitleOneLst: [
               "A restaurer|250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12",
@@ -1935,7 +1835,7 @@ void main() {
 
           // Verify the content of the 'local' playlist dir
           // and comments and pictures dir after restoration.
-          IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
             playlistTitle: 'local',
             expectedAudioFiles: [
               "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.mp3"
@@ -1946,10 +1846,7 @@ void main() {
             expectedPictureFiles: [
               "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json"
             ],
-            playlistRootDir: playlistRootDirName,
             doesPictureAudioMapFileNameExist: true,
-            applicationPictureDir:
-                "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
             pictureFileNameOne: "Jésus je T'adore.jpg",
             audioForPictureTitleOneLst: [
               "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
@@ -1958,7 +1855,7 @@ void main() {
 
           // Verify the content of the 'S8 audio' playlist dir
           // and comments and pictures dir after restoration.
-          // IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          // IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
           //   playlistTitle: youtubePlaylistTitle,
           //   expectedAudioFiles: [],
           //   expectedCommentFiles: [
@@ -2096,7 +1993,7 @@ void main() {
           // // as redownloading single audio 'Interview de Chat GPT
           // // - IA, intelligence, philosophie, géopolitique,
           // // post-vérité...'.
-          // IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          // IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
           //   playlistTitle: 'S8 audio',
           //   expectedAudioFiles: [
           //     "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.mp3",
@@ -2341,8 +2238,6 @@ void main() {
             audioSubTitles: audioSubTitles,
           );
 
-          const String playlistRootDirName = 'playlists';
-
           // And verify the 'A restaurer' playlist
 
           // Select the 'A restaurer' playlist
@@ -2351,7 +2246,7 @@ void main() {
             playlistToSelectTitle: 'A restaurer',
           );
 
-          IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
             playlistTitle: 'A restaurer',
             expectedAudioFiles: [],
             expectedCommentFiles: [
@@ -2365,10 +2260,7 @@ void main() {
               "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.json",
               "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json",
             ],
-            playlistRootDir: playlistRootDirName,
             doesPictureAudioMapFileNameExist: true,
-            applicationPictureDir:
-                "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
             pictureFileNameOne: 'Jésus le Dieu vivant.jpg',
             audioForPictureTitleOneLst: [
               "Prières du Maître|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
@@ -2618,8 +2510,6 @@ void main() {
             audioSubTitles: audioSubTitles,
           );
 
-          const String playlistRootDirName = 'playlists';
-
           // And verify the 'A restaurer' playlist
 
           // Select the 'A restaurer' playlist
@@ -2628,7 +2518,7 @@ void main() {
             playlistToSelectTitle: 'A restaurer',
           );
 
-          IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
             playlistTitle: 'A restaurer',
             expectedAudioFiles: [],
             expectedCommentFiles: [
@@ -2642,10 +2532,7 @@ void main() {
               "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.json",
               "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json",
             ],
-            playlistRootDir: playlistRootDirName,
             doesPictureAudioMapFileNameExist: true,
-            applicationPictureDir:
-                "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
             pictureFileNameOne: 'Jésus le Dieu vivant.jpg',
             audioForPictureTitleOneLst: [
               "Prières du Maître|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
@@ -2821,7 +2708,7 @@ void main() {
 
         // Verify the content of the 'S8 audio' playlist dir
         // + comments + pictures dir after restoration.
-        IntegrationTestUtil.verifyPlaylistDirectoryContents(
+        IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
           playlistTitle: 'S8 audio',
           expectedAudioFiles: [],
           expectedCommentFiles: [
@@ -2831,8 +2718,6 @@ void main() {
             "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.json"
           ],
           doesPictureAudioMapFileNameExist: true,
-          applicationPictureDir:
-              '$kApplicationPathWindowsTest${path.separator}$kPictureDirName',
           pictureFileNameOne: 'wallpaper.jpg',
           audioForPictureTitleOneLst: [
             'S8 audio|231226-094534-3 fois où un économiste m\'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01',
@@ -2995,7 +2880,7 @@ void main() {
 
         // Verify the content of the 'S8 audio' playlist dir
         // + comments + pictures dir after restoration.
-        IntegrationTestUtil.verifyPlaylistDirectoryContents(
+        IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
           playlistTitle: 'S8 audio',
           expectedAudioFiles: [],
           expectedCommentFiles: [
@@ -3005,8 +2890,6 @@ void main() {
             "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.json"
           ],
           doesPictureAudioMapFileNameExist: true,
-          applicationPictureDir:
-              '$kApplicationPathWindowsTest${path.separator}$kPictureDirName',
           pictureFileNameOne: 'wallpaper.jpg',
           audioForPictureTitleOneLst: [
             'S8 audio|231226-094534-3 fois où un économiste m\'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01',
@@ -3162,7 +3045,7 @@ void main() {
 
         // Verify the content of the 'Prières du Maître' playlist dir
         // + comments + pictures dir after restoration.
-        IntegrationTestUtil.verifyPlaylistDirectoryContents(
+        IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
           playlistTitle: 'Prières du Maître',
           expectedAudioFiles: [],
           expectedCommentFiles: [
@@ -3172,8 +3055,6 @@ void main() {
             "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'.json"
           ],
           doesPictureAudioMapFileNameExist: true,
-          applicationPictureDir:
-              '$kApplicationPathWindowsTest${path.separator}$kPictureDirName',
           pictureFileNameOne: 'Jésus le Dieu vivant.jpg',
           audioForPictureTitleOneLst: [
             "Prières du Maître|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'"
@@ -3324,7 +3205,7 @@ void main() {
 
         // Verify the content of the 'Prières du Maître' playlist dir
         // + comments + pictures dir after restoration.
-        IntegrationTestUtil.verifyPlaylistDirectoryContents(
+        IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
           playlistTitle: 'Prières du Maître',
           expectedAudioFiles: [],
           expectedCommentFiles: [
@@ -3334,8 +3215,6 @@ void main() {
             "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'.json"
           ],
           doesPictureAudioMapFileNameExist: true,
-          applicationPictureDir:
-              '$kApplicationPathWindowsTest${path.separator}$kPictureDirName',
           pictureFileNameOne: 'Jésus le Dieu vivant.jpg',
           audioForPictureTitleOneLst: [
             "Prières du Maître|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'"
