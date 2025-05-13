@@ -44,14 +44,40 @@ void main() {
   group('Group one.', () {
     testWidgets('Restore zip existing playlist selected test',
         (WidgetTester tester) async {
-
       await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
         tester: tester,
         tapOnPlaylistToggleButton: false,
       );
 
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      final String restorableZipFileName = 'toCopyOnAndroidEmulator.zip';
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: restorableZipFileName,
+            path:
+                '$kApplicationPathAndroidTest${path.separator}$restorableZipFileName',
+            size: 8770),
+      ]);
+
+      // Execute the 'Restore Playlists, Comments and Settings from Zip
+      // File ...' menu without replacing the existing playlists.
+      await IntegrationTestUtil.executeRestorePlaylists(
+        tester: tester,
+        doReplaceExistingPlaylists: false,
+      );
+
+      // Verify the displayed warning confirmation dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Restored 0 playlist, 0 comment and 0 picture JSON files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+        isWarningConfirming: true,
+        warningTitle: 'CONFIRMATION',
+      );
     });
   });
   group(
