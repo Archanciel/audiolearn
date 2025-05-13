@@ -40,7 +40,7 @@ dependencies:
   audioplayers: ^5.2.1
   provider: ^6.1.5
   youtube_explode_dart: ^2.4.0
-  http: ^1.1.0
+  http: ^1.4.0 # fixed audio download difficulties
   googleapis: ^14.0.0
   googleapis_auth: ^2.0.0
   audio_video_progress_bar: ^2.0.0
@@ -58,7 +58,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   
   connectivity_plus: ^6.0.3
-  file_picker: ^9.2.2 # newer version was INFECT (till 10.1.2 !)
+  file_picker: ^10.1.9 # newer version was INFECT (till 10.1.2 !). Version 9.2.2 works !
   matcher: ^0.12.16+1
   yaml: ^3.1.2
   archive: ^4.0.2
