@@ -147,21 +147,6 @@ void main() {
 
   group('group', () {
     test('filter by <tendance crypto> AND <en 2024>', () async {
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
-
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the download app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-      AudioSortFilterService audioSortFilterService = AudioSortFilterService(
-        settingsDataService: settingsDataService,
-      );
-
       List<Audio> expectedFilteredAudios = [
         audioOne,
         audioTwo,
@@ -182,21 +167,6 @@ void main() {
       expect(filteredAudioLst, expectedFilteredAudios);
     });
     test('filter by <tendance crypto> OR <en 2024>', () async {
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
-
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the download app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-      AudioSortFilterService audioSortFilterService = AudioSortFilterService(
-        settingsDataService: settingsDataService,
-      );
-
       List<Audio> expectedFilteredAudios = [
         audioOne,
         audioTwo,
