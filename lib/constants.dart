@@ -73,23 +73,9 @@ const String kPictureAudioMapFileName = 'pictureAudioMap.json';
 
 const String kOrderedPlaylistTitlesFileName = 'savedOrderedPlaylistTitles.txt';
 
-// this constant enables to download a playlist in the emulator in which
-// pasting a URL is not possible. The constant is used in
-// _ExpandablePlaylistListViewState.initState().
-// const String kPastedPlaylistUrl =
-//     'https://youtube.com/playlist?list=PLzwWSJNcZTMSOMooR_y9PtJlJLpEKWbAv&si=LJ7w9Ms_ymqwJdT';
-
-// usefull to delete all files in the audio dir of the emulator
-const bool kDeleteAppDirOnEmulator = false;
-
 const double kAudioDefaultPlaySpeed = 1.0;
 
 const String kGoogleApiKey = 'AIzaSyDhywmh5EKopsNsaszzMkLJ719aQa2NHBw';
-
-/// A constant that is true if the application was compiled to run on
-/// the web. Its value determines if requesting storage permission must
-/// be performed.
-const bool kIsWeb = bool.fromEnvironment('dart.library.js_util');
 
 const String kStartAtZeroPosition = '0Pos';
 

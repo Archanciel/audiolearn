@@ -2231,7 +2231,7 @@ class IntegrationTestUtil {
   }) async {
     WidgetsFlutterBinding.ensureInitialized();
 
-    if (!kIsWeb && ScreenMixin.isHardwarePc()) {
+    if (ScreenMixin.isHardwarePc()) {
       await getScreenList().then((List<Screen> screens) {
         // Assumez que vous voulez utiliser le premier écran (principal)
         final Screen screen = screens.first;

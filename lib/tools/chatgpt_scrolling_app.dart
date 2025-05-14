@@ -3,8 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:window_size/window_size.dart';
 
-import '../constants.dart';
-
 // https://chatgpt.com/share/67304f80-ce4c-8004-85d2-4d090d195a31
 //
 // The value of const double itemHeight = 120.0; was an approximation based on
@@ -57,7 +55,7 @@ Future<void> setWindowsAppSizeAndPosition({
 }) async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
     await getScreenList().then((List<Screen> screens) {
       final Screen screen = screens.first;
       final Rect screenRect = screen.visibleFrame;
