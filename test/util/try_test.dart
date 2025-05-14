@@ -145,7 +145,8 @@ void main() {
     sharedPreferences: MockSharedPreferences(),
   ));
 
-  group('filter test: ignoring case, filter audio list on validVideoTitle only', () {
+  group('filter test: ignoring case, filter audio list on validVideoTitle only',
+      () {
     test('filter by <tendance crypto> AND <en 2024>', () async {
       List<Audio> expectedFilteredAudios = [
         audioOne,
@@ -770,6 +771,119 @@ void main() {
               ));
 
       expect(filteredAudioLst, expectedFilteredAudios);
+    });
+    group('''filter test: by file size range or/and audio duration range.''', () {
+      test('filter by 110 MB to 130 MB file size range', () async {
+        List<Audio> expectedFilteredAudios = [audioOne, audioThree, audioFour];
+
+        List<Audio> filteredAudioLst =
+            audioSortFilterService.filterOnOtherOptions(
+                selectedPlaylist: audioPlaylist,
+                audioLst: audioLst,
+                audioSortFilterParameters: AudioSortFilterParameters(
+                  selectedSortItemLst: [],
+                  filterSentenceLst: [],
+                  sentencesCombination: SentencesCombination.and,
+                  ignoreCase: true,
+                  searchAsWellInVideoCompactDescription: true,
+                  searchAsWellInYoutubeChannelName: false,
+                  fileSizeStartRangeMB: 110,
+                  fileSizeEndRangeMB: 130,
+                ));
+
+        expect(filteredAudioLst, expectedFilteredAudios);
+      });
+      test(
+          '''filter by 0 MB to 110 MB file size range. This tests a bug fix.''',
+          () {
+        List<Audio> expectedFilteredAudios = [audioTwo, audioFour];
+
+        List<Audio> filteredAudioLst =
+            audioSortFilterService.filterOnOtherOptions(
+                selectedPlaylist: audioPlaylist,
+                audioLst: audioLst,
+                audioSortFilterParameters: AudioSortFilterParameters(
+                  selectedSortItemLst: [],
+                  filterSentenceLst: [],
+                  sentencesCombination: SentencesCombination.and,
+                  ignoreCase: true,
+                  searchAsWellInVideoCompactDescription: true,
+                  searchAsWellInYoutubeChannelName: false,
+                  fileSizeStartRangeMB: 0,
+                  fileSizeEndRangeMB: 110,
+                ));
+
+        expect(filteredAudioLst, expectedFilteredAudios);
+      });
+      test('filter by 300 sec to 900 sec audio duration range', () async {
+        List<Audio> expectedFilteredAudios = [audioOne, audioFour];
+
+        List<Audio> filteredAudioLst =
+            audioSortFilterService.filterOnOtherOptions(
+                selectedPlaylist: audioPlaylist,
+                audioLst: audioLst,
+                audioSortFilterParameters: AudioSortFilterParameters(
+                  selectedSortItemLst: [],
+                  filterSentenceLst: [],
+                  sentencesCombination: SentencesCombination.and,
+                  ignoreCase: true,
+                  searchAsWellInVideoCompactDescription: true,
+                  searchAsWellInYoutubeChannelName: false,
+                  fileSizeStartRangeMB: 110,
+                  fileSizeEndRangeMB: 130,
+                  durationStartRangeSec: 300,
+                  durationEndRangeSec: 900,
+                ));
+
+        expect(filteredAudioLst, expectedFilteredAudios);
+      });
+      test(
+          '''filter by 0 sec to 540 sec audio duration range. This tests a bug fix.''',
+          () {
+        List<Audio> expectedFilteredAudios = [audioOne, audioFour];
+
+        List<Audio> filteredAudioLst =
+            audioSortFilterService.filterOnOtherOptions(
+                selectedPlaylist: audioPlaylist,
+                audioLst: audioLst,
+                audioSortFilterParameters: AudioSortFilterParameters(
+                  selectedSortItemLst: [],
+                  filterSentenceLst: [],
+                  sentencesCombination: SentencesCombination.and,
+                  ignoreCase: true,
+                  searchAsWellInVideoCompactDescription: true,
+                  searchAsWellInYoutubeChannelName: false,
+                  fileSizeStartRangeMB: 110,
+                  fileSizeEndRangeMB: 130,
+                  durationStartRangeSec: 0,
+                  durationEndRangeSec: 540,
+                ));
+
+        expect(filteredAudioLst, expectedFilteredAudios);
+      });
+      test('filter by file size range and audio duration range', () async {
+        List<Audio> expectedFilteredAudios = [
+          audioOne,
+          audioFour,
+        ];
+
+        List<Audio> filteredAudioLst =
+            audioSortFilterService.filterOnOtherOptions(
+                selectedPlaylist: audioPlaylist,
+                audioLst: audioLst,
+                audioSortFilterParameters: AudioSortFilterParameters(
+                  selectedSortItemLst: [],
+                  filterSentenceLst: [],
+                  sentencesCombination: SentencesCombination.and,
+                  ignoreCase: true,
+                  searchAsWellInVideoCompactDescription: true,
+                  searchAsWellInYoutubeChannelName: false,
+                  durationStartRangeSec: 300,
+                  durationEndRangeSec: 900,
+                ));
+
+        expect(filteredAudioLst, expectedFilteredAudios);
+      });
     });
   });
 }
