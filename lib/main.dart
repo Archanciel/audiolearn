@@ -31,20 +31,6 @@ Future<void> main() async {
   //                     of the app so that the app accesses the correct
   //                     application directory and not the test directory.
 
-  // bool deleteAppDir = kDeleteAppDirOnEmulator;
-
-  // Parse command line arguments in integration tests
-  // if (!deleteAppDir) {
-  //   deleteAppDir = myArgs.contains("delAppDir");
-  // }
-
-  // Handle deletion of application directory if required
-  // if (deleteAppDir) {
-  //   DirUtil.deleteAppDirOnEmulatorIfExist();
-  //   // ignore: avoid_print
-  //   print('***** $kPlaylistDownloadRootPath mp3 files deleted *****');
-  // }
-
   String applicationPath = '';
 
   // Request permissions and then create/get the application directory
@@ -57,7 +43,7 @@ Future<void> main() async {
   );
 
   // Now proceed with setting up the app window size and position if needed
-  if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
     await _setWindowsAppSizeAndPosition(
       isTest: isTest,
       // isTest: false,
@@ -99,7 +85,7 @@ Future<void> _setWindowsAppSizeAndPosition({
     isTest = false;
   }
 
-  if (!kIsWeb && ScreenMixin.isHardwarePc()) {
+  if (ScreenMixin.isHardwarePc()) {
     await getScreenList().then((List<Screen> screens) {
       // Assumez que vous voulez utiliser le premier écran (principal)
       final Screen screen = screens.first;

@@ -111,8 +111,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   }) async {
     WidgetsFlutterBinding.ensureInitialized();
 
-    if (!kIsWeb &&
-        (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
+    if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
       await getScreenList().then((List<Screen> screens) {
         // Assumez que vous voulez utiliser le premier écran (principal)
         final Screen screen = screens.first;
@@ -877,7 +876,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                             // This enables to use the search sentence on another
                             // playlist without having to retype the search
                             // sentence in the text field.
-                            if (playlistListVMlistenFalse.wasSearchButtonClicked) {
+                            if (playlistListVMlistenFalse
+                                .wasSearchButtonClicked) {
                               playlistListVMlistenFalse.wasSearchButtonClicked =
                                   false; // the search button is set not clicked
                               playlistListVMlistenFalse

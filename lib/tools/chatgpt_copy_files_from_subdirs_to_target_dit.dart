@@ -7,8 +7,6 @@ import 'package:path/path.dart' as path;
 import 'package:archive/archive.dart';
 import 'package:window_size/window_size.dart';
 
-import '../constants.dart';
-
 void main() {
   setWindowsAppSizeAndPosition(isTest: true);
   runApp(MyApp());
@@ -21,7 +19,7 @@ Future<void> setWindowsAppSizeAndPosition({
 }) async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
     await getScreenList().then((List<Screen> screens) {
       // Assumez que vous voulez utiliser le premier écran (principal)
       final Screen screen = screens.first;
