@@ -600,4 +600,176 @@ void main() {
       expect(filteredAudioLst, expectedFilteredAudios);
     });
   });
+  group(
+      'filter test: not ignoring case, filter audio list on validVideoTitle or compactVideoDescription',
+      () {
+    test('filter by <investir en 2024> AND <éthique et tac>', () async {
+      List<Audio> expectedFilteredAudios = [];
+
+      List<Audio> filteredAudioLst = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
+              audioLst: audioLst,
+              filterSentenceLst: [
+                'investir en 2024',
+                'éthique et tac',
+              ],
+              sentencesCombination: SentencesCombination.and,
+              ignoreCase: false,
+              searchAsWellInVideoCompactDescription: true,
+              searchAsWellInYoutubeChannelName: false);
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+    test('filter by <accélération> AND <Éthique et tac>', () async {
+      List<Audio> expectedFilteredAudios = [
+        audioTwo,
+      ];
+
+      List<Audio> filteredAudioLst = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
+              audioLst: audioLst,
+              filterSentenceLst: [
+                'accélération',
+                'Éthique et tac',
+              ],
+              sentencesCombination: SentencesCombination.and,
+              ignoreCase: false,
+              searchAsWellInVideoCompactDescription: true,
+              searchAsWellInYoutubeChannelName: false);
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+    test('filter by <investir en 2024> OR <Éthique et tac>', () async {
+      List<Audio> expectedFilteredAudios = [audioOne, audioTwo];
+
+      List<Audio> filteredAudioLst = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
+              audioLst: audioLst,
+              filterSentenceLst: [
+                'investir en 2024',
+                'Éthique et tac',
+              ],
+              sentencesCombination: SentencesCombination.or,
+              ignoreCase: false,
+              searchAsWellInVideoCompactDescription: true,
+              searchAsWellInYoutubeChannelName: false);
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+    test('filter by <investir en 2024> OR <éthique et tac>', () async {
+      List<Audio> expectedFilteredAudios = [
+        audioOne,
+      ];
+
+      List<Audio> filteredAudioLst = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
+              audioLst: audioLst,
+              filterSentenceLst: [
+                'investir en 2024',
+                'éthique et tac',
+              ],
+              sentencesCombination: SentencesCombination.or,
+              ignoreCase: false,
+              searchAsWellInVideoCompactDescription: true,
+              searchAsWellInYoutubeChannelName: false);
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+    test('filter by <on vous propose> OR <en accélération>', () async {
+      List<Audio> expectedFilteredAudios = [
+        audioTwo,
+      ];
+
+      List<Audio> filteredAudioLst = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
+              audioLst: audioLst,
+              filterSentenceLst: [
+                'on vous propose',
+                'en accélération',
+              ],
+              sentencesCombination: SentencesCombination.or,
+              ignoreCase: false,
+              searchAsWellInVideoCompactDescription: true,
+              searchAsWellInYoutubeChannelName: false);
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+  });
+  group(
+      '''filter test: by start/end download date or/and start/end video upload date.''',
+      () {
+    test('filter by start/end download date', () async {
+      List<Audio> expectedFilteredAudios = [
+        audioOne,
+        audioTwo,
+        audioThree,
+      ];
+
+      List<Audio> filteredAudioLst =
+          audioSortFilterService.filterOnOtherOptions(
+              selectedPlaylist: audioPlaylist,
+              audioLst: audioLst,
+              audioSortFilterParameters: AudioSortFilterParameters(
+                selectedSortItemLst: [],
+                filterSentenceLst: [],
+                sentencesCombination: SentencesCombination.and,
+                ignoreCase: true,
+                searchAsWellInVideoCompactDescription: true,
+                searchAsWellInYoutubeChannelName: false,
+                downloadDateStartRange: DateTime(2023, 3, 24, 20, 5, 22),
+                downloadDateEndRange: DateTime(2023, 3, 24, 20, 5, 32),
+              ));
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+    test('filter by start/end video upload date', () async {
+      List<Audio> expectedFilteredAudios = [
+        audioOne,
+        audioThree,
+      ];
+
+      List<Audio> filteredAudioLst =
+          audioSortFilterService.filterOnOtherOptions(
+              selectedPlaylist: audioPlaylist,
+              audioLst: audioLst,
+              audioSortFilterParameters: AudioSortFilterParameters(
+                selectedSortItemLst: [],
+                filterSentenceLst: [],
+                sentencesCombination: SentencesCombination.and,
+                ignoreCase: true,
+                searchAsWellInVideoCompactDescription: true,
+                searchAsWellInYoutubeChannelName: false,
+                uploadDateStartRange: DateTime(2023, 3, 1),
+                uploadDateEndRange: DateTime(2023, 4, 1),
+              ));
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+    test('filter by start/end download date and start/end video upload date',
+        () {
+      List<Audio> expectedFilteredAudios = [
+        audioOne,
+        audioThree,
+      ];
+
+      List<Audio> filteredAudioLst =
+          audioSortFilterService.filterOnOtherOptions(
+              selectedPlaylist: audioPlaylist,
+              audioLst: audioLst,
+              audioSortFilterParameters: AudioSortFilterParameters(
+                selectedSortItemLst: [],
+                filterSentenceLst: [],
+                sentencesCombination: SentencesCombination.and,
+                ignoreCase: true,
+                searchAsWellInVideoCompactDescription: true,
+                searchAsWellInYoutubeChannelName: false,
+                downloadDateStartRange: DateTime(2023, 3, 24, 20, 5, 22),
+                downloadDateEndRange: DateTime(2023, 3, 24, 20, 5, 32),
+                uploadDateStartRange: DateTime(2023, 3, 1),
+                uploadDateEndRange: DateTime(2023, 4, 1),
+              ));
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+  });
 }
