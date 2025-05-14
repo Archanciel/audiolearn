@@ -18,7 +18,7 @@ import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/services/audio_sort_filter_service.dart';
 import 'mock_shared_preferences.dart';
 
-void main() {
+Future<void> main() async {
   Playlist audioPlaylist = Playlist(
     id: '1',
     title: 'Audio Playlist',
@@ -149,748 +149,13 @@ void main() {
     audioFour,
   ];
 
-  group('filter test: ignoring case, filter audio list on validVideoTitle only',
-      () {
-    late AudioSortFilterService audioSortFilterService;
-
-    SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: MockSharedPreferences(),
-    );
-
-    setUpAll(() async {
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the download app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-      audioSortFilterService = AudioSortFilterService(
-        settingsDataService: settingsDataService,
-      );
-    });
-    test('filter by <tendance crypto> AND <en 2024>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioOne,
-        audioTwo,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'tendance crypto',
-                'en 2024',
-              ],
-              sentencesCombination: SentencesCombination.and,
-              ignoreCase: true,
-              searchAsWellInVideoCompactDescription: false,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by <tendance crypto> OR <en 2024>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioOne,
-        audioTwo,
-        audioThree,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'tendance crypto',
-                'en 2024',
-              ],
-              sentencesCombination: SentencesCombination.or,
-              ignoreCase: true,
-              searchAsWellInVideoCompactDescription: false,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by <en 2024> AND <tendance crypto>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioOne,
-        audioTwo,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'en 2024',
-                'tendance crypto',
-              ],
-              sentencesCombination: SentencesCombination.and,
-              ignoreCase: true,
-              searchAsWellInVideoCompactDescription: false,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by <en 2024> OR <tendance crypto>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioOne,
-        audioTwo,
-        audioThree,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'en 2024',
-                'tendance crypto',
-              ],
-              sentencesCombination: SentencesCombination.or,
-              ignoreCase: true,
-              searchAsWellInVideoCompactDescription: false,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by <quelle> AND <2024>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioOne,
-        audioThree,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'quelle',
-                '2024',
-              ],
-              sentencesCombination: SentencesCombination.and,
-              ignoreCase: true,
-              searchAsWellInVideoCompactDescription: false,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by <quelle> OR <2024>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioOne,
-        audioTwo,
-        audioThree,
-        audioFour,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'quelle',
-                '2024',
-              ],
-              sentencesCombination: SentencesCombination.or,
-              ignoreCase: true,
-              searchAsWellInVideoCompactDescription: false,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by <2024> AND <quelle>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioOne,
-        audioThree,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                '2024',
-                'quelle',
-              ],
-              sentencesCombination: SentencesCombination.and,
-              ignoreCase: true,
-              searchAsWellInVideoCompactDescription: false,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by <2024> OR <quelle>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioOne,
-        audioTwo,
-        audioThree,
-        audioFour,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                '2024',
-                'quelle',
-              ],
-              sentencesCombination: SentencesCombination.or,
-              ignoreCase: true,
-              searchAsWellInVideoCompactDescription: false,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by <intelligence> OR <artificielle>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioThree,
-        audioFour,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'intelligence',
-                'artificielle',
-              ],
-              sentencesCombination: SentencesCombination.or,
-              ignoreCase: true,
-              searchAsWellInVideoCompactDescription: false,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-  });
-  group(
-      'filter test: not ignoring case, filter audio list on validVideoTitle only',
-      () {
-    late AudioSortFilterService audioSortFilterService;
-
-    SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: MockSharedPreferences(),
-    );
-
-    setUpAll(() async {
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the download app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-
-      audioSortFilterService = AudioSortFilterService(
-        settingsDataService: settingsDataService,
-      );
-    });
-    test('filter by <tendance crypto> AND <en 2024>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioOne,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'tendance crypto',
-                'en 2024',
-              ],
-              sentencesCombination: SentencesCombination.and,
-              ignoreCase: false,
-              searchAsWellInVideoCompactDescription: false,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by <tendance crypto> OR <en 2024>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioOne,
-        audioTwo,
-        audioThree,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'tendance crypto',
-                'en 2024',
-              ],
-              sentencesCombination: SentencesCombination.or,
-              ignoreCase: false,
-              searchAsWellInVideoCompactDescription: false,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by <en 2024> AND <tendance crypto>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioOne,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'en 2024',
-                'tendance crypto',
-              ],
-              sentencesCombination: SentencesCombination.and,
-              ignoreCase: false,
-              searchAsWellInVideoCompactDescription: false,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by <en 2024> OR <tendance crypto>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioOne,
-        audioTwo,
-        audioThree,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'en 2024',
-                'tendance crypto',
-              ],
-              sentencesCombination: SentencesCombination.or,
-              ignoreCase: false,
-              searchAsWellInVideoCompactDescription: false,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by <quelle> AND <2024>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioOne,
-        audioThree,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'quelle',
-                '2024',
-              ],
-              sentencesCombination: SentencesCombination.and,
-              ignoreCase: false,
-              searchAsWellInVideoCompactDescription: false,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by <quelle> OR <2024>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioOne,
-        audioTwo,
-        audioThree,
-        audioFour,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'quelle',
-                '2024',
-              ],
-              sentencesCombination: SentencesCombination.or,
-              ignoreCase: false,
-              searchAsWellInVideoCompactDescription: false,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by <2024> AND <quelle>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioOne,
-        audioThree,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                '2024',
-                'quelle',
-              ],
-              sentencesCombination: SentencesCombination.and,
-              ignoreCase: false,
-              searchAsWellInVideoCompactDescription: false,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by <intelligence> OR <artificielle>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioFour,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'intelligence',
-                'artificielle',
-              ],
-              sentencesCombination: SentencesCombination.or,
-              ignoreCase: false,
-              searchAsWellInVideoCompactDescription: false,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by <2024> OR <quelle>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioOne,
-        audioTwo,
-        audioThree,
-        audioFour,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                '2024',
-                'quelle',
-              ],
-              sentencesCombination: SentencesCombination.or,
-              ignoreCase: false,
-              searchAsWellInVideoCompactDescription: false,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-  });
-  group(
-      'filter test: ignoring case, filter audio list on validVideoTitle or compactVideoDescription test',
-      () {
-    late AudioSortFilterService audioSortFilterService;
-
-    SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: MockSharedPreferences(),
-    );
-
-    setUpAll(() async {
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the download app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-
-      audioSortFilterService = AudioSortFilterService(
-        settingsDataService: settingsDataService,
-      );
-    });
-    test('filter by <investir en 2024> AND <éthique et tac>', () async {
-      List<Audio> expectedFilteredAudios = [];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'investir en 2024',
-                'éthique et tac',
-              ],
-              sentencesCombination: SentencesCombination.and,
-              ignoreCase: true,
-              searchAsWellInVideoCompactDescription: true,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by <accélération> AND <éthique et tac>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioTwo,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'accélération',
-                'éthique et tac',
-              ],
-              sentencesCombination: SentencesCombination.and,
-              ignoreCase: true,
-              searchAsWellInVideoCompactDescription: true,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by <investir en 2024> OR <éthique et tac>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioOne,
-        audioTwo,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'investir en 2024',
-                'éthique et tac',
-              ],
-              sentencesCombination: SentencesCombination.or,
-              ignoreCase: true,
-              searchAsWellInVideoCompactDescription: true,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by <on vous propose> OR <en accélération>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioOne,
-        audioTwo,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'on vous propose',
-                'en accélération',
-              ],
-              sentencesCombination: SentencesCombination.or,
-              ignoreCase: true,
-              searchAsWellInVideoCompactDescription: true,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-  });
-  group(
-      'filter test: not ignoring case, filter audio list on validVideoTitle or compactVideoDescription',
-      () {
-    late AudioSortFilterService audioSortFilterService;
-
-    SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: MockSharedPreferences(),
-    );
-
-    setUpAll(() async {
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the download app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-
-      audioSortFilterService = AudioSortFilterService(
-        settingsDataService: settingsDataService,
-      );
-    });
-    test('filter by <investir en 2024> AND <éthique et tac>', () async {
-      List<Audio> expectedFilteredAudios = [];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'investir en 2024',
-                'éthique et tac',
-              ],
-              sentencesCombination: SentencesCombination.and,
-              ignoreCase: false,
-              searchAsWellInVideoCompactDescription: true,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by <accélération> AND <Éthique et tac>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioTwo,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'accélération',
-                'Éthique et tac',
-              ],
-              sentencesCombination: SentencesCombination.and,
-              ignoreCase: false,
-              searchAsWellInVideoCompactDescription: true,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by <investir en 2024> OR <Éthique et tac>', () async {
-      List<Audio> expectedFilteredAudios = [audioOne, audioTwo];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'investir en 2024',
-                'Éthique et tac',
-              ],
-              sentencesCombination: SentencesCombination.or,
-              ignoreCase: false,
-              searchAsWellInVideoCompactDescription: true,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by <investir en 2024> OR <éthique et tac>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioOne,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'investir en 2024',
-                'éthique et tac',
-              ],
-              sentencesCombination: SentencesCombination.or,
-              ignoreCase: false,
-              searchAsWellInVideoCompactDescription: true,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by <on vous propose> OR <en accélération>', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioTwo,
-      ];
-
-      List<Audio> filteredAudioLst = audioSortFilterService
-          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'on vous propose',
-                'en accélération',
-              ],
-              sentencesCombination: SentencesCombination.or,
-              ignoreCase: false,
-              searchAsWellInVideoCompactDescription: true,
-              searchAsWellInYoutubeChannelName: false);
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-  });
-  group(
-      '''filter test: by start/end download date or/and start/end video upload date.''',
-      () {
-    late AudioSortFilterService audioSortFilterService;
-
-    SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: MockSharedPreferences(),
-    );
-
-    setUpAll(() async {
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the download app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-
-      audioSortFilterService = AudioSortFilterService(
-        settingsDataService: settingsDataService,
-      );
-    });
-    test('filter by start/end download date', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioOne,
-        audioTwo,
-        audioThree,
-      ];
-
-      List<Audio> filteredAudioLst =
-          audioSortFilterService.filterOnOtherOptions(
-              selectedPlaylist: audioPlaylist,
-              audioLst: audioLst,
-              audioSortFilterParameters: AudioSortFilterParameters(
-                selectedSortItemLst: [],
-                filterSentenceLst: [],
-                sentencesCombination: SentencesCombination.and,
-                ignoreCase: true,
-                searchAsWellInVideoCompactDescription: true,
-                searchAsWellInYoutubeChannelName: false,
-                downloadDateStartRange: DateTime(2023, 3, 24, 20, 5, 22),
-                downloadDateEndRange: DateTime(2023, 3, 24, 20, 5, 32),
-              ));
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by start/end video upload date', () async {
-      List<Audio> expectedFilteredAudios = [
-        audioOne,
-        audioThree,
-      ];
-
-      List<Audio> filteredAudioLst =
-          audioSortFilterService.filterOnOtherOptions(
-              selectedPlaylist: audioPlaylist,
-              audioLst: audioLst,
-              audioSortFilterParameters: AudioSortFilterParameters(
-                selectedSortItemLst: [],
-                filterSentenceLst: [],
-                sentencesCombination: SentencesCombination.and,
-                ignoreCase: true,
-                searchAsWellInVideoCompactDescription: true,
-                searchAsWellInYoutubeChannelName: false,
-                uploadDateStartRange: DateTime(2023, 3, 1),
-                uploadDateEndRange: DateTime(2023, 4, 1),
-              ));
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-    test('filter by start/end download date and start/end video upload date',
-        () {
-      List<Audio> expectedFilteredAudios = [
-        audioOne,
-        audioThree,
-      ];
-
-      List<Audio> filteredAudioLst =
-          audioSortFilterService.filterOnOtherOptions(
-              selectedPlaylist: audioPlaylist,
-              audioLst: audioLst,
-              audioSortFilterParameters: AudioSortFilterParameters(
-                selectedSortItemLst: [],
-                filterSentenceLst: [],
-                sentencesCombination: SentencesCombination.and,
-                ignoreCase: true,
-                searchAsWellInVideoCompactDescription: true,
-                searchAsWellInYoutubeChannelName: false,
-                downloadDateStartRange: DateTime(2023, 3, 24, 20, 5, 22),
-                downloadDateEndRange: DateTime(2023, 3, 24, 20, 5, 32),
-                uploadDateStartRange: DateTime(2023, 3, 1),
-                uploadDateEndRange: DateTime(2023, 4, 1),
-              ));
-
-      expect(filteredAudioLst, expectedFilteredAudios);
-    });
-  });
-  group('''filter test: by file size range or/and audio duration range.''', () async {
-    late AudioSortFilterService audioSortFilterService;
-
-    SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: MockSharedPreferences(),
-    );
-
-    setUpAll(() async {
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the download app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-
-      audioSortFilterService = AudioSortFilterService(
-        settingsDataService: settingsDataService,
-      );
-    });
+  AudioSortFilterService audioSortFilterService = AudioSortFilterService(
+      settingsDataService: SettingsDataService(
+    sharedPreferences: MockSharedPreferences(),
+  ));
+
+  group('''filter test: by file size range or/and audio duration range.''',
+      () async {
     test('filter by 110 MB to 130 MB file size range', () async {
       List<Audio> expectedFilteredAudios = [audioOne, audioThree, audioFour];
 
@@ -1003,25 +268,6 @@ void main() {
     });
   });
   group('sort audio lst by one SortingOption', () async {
-    late AudioSortFilterService audioSortFilterService;
-
-    SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: MockSharedPreferences(),
-    );
-
-    setUpAll(() async {
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the download app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-
-      audioSortFilterService = AudioSortFilterService(
-        settingsDataService: settingsDataService,
-      );
-    });
     group('sort audio lst by title SortingOption', () async {
       test('sort by title', () async {
         final Audio zebra = Audio.fullConstructor(
@@ -9019,25 +8265,6 @@ void main() {
     });
   });
   group("sort audio lst by multiple SortingOption's", () async {
-    late AudioSortFilterService audioSortFilterService;
-
-    SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: MockSharedPreferences(),
-    );
-
-    setUpAll(() async {
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the download app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-
-      audioSortFilterService = AudioSortFilterService(
-        settingsDataService: settingsDataService,
-      );
-    });
     test('sort by duration and title', () async {
       final Audio zebra = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
@@ -9223,26 +8450,6 @@ void main() {
     });
   });
   group('filterAndSortAudioLst by title and description', () async {
-    late AudioSortFilterService audioSortFilterService;
-
-    SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: MockSharedPreferences(),
-    );
-
-    setUpAll(() async {
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the download app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-
-      audioSortFilterService = AudioSortFilterService(
-        settingsDataService: settingsDataService,
-      );
-    });
-
     test('with search word present in in title only', () async {
       final Audio zebra1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
@@ -9966,26 +9173,6 @@ void main() {
     });
   });
   group('filterAndSortAudioLst by title only', () async {
-    late AudioSortFilterService audioSortFilterService;
-
-    SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: MockSharedPreferences(),
-    );
-
-    setUpAll(() async {
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the download app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
-
-      audioSortFilterService = AudioSortFilterService(
-        settingsDataService: settingsDataService,
-      );
-    });
-
     test('with search word in title and in compact description', () async {
       final Audio zebra1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
@@ -10394,7 +9581,8 @@ void main() {
     });
     test(
         '''filter by multiple words in audio title or in audio compact description
-           and sort by download date descending and duration ascending''', () async {
+           and sort by download date descending and duration ascending''',
+        () async {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -10496,7 +9684,8 @@ void main() {
     test(
         '''filter by one sentence present in audio compact description only with
            searchInVideoCompactDescription = false and sort by download date
-           descending and duration ascending. Result list will be empty''', () async {
+           descending and duration ascending. Result list will be empty''',
+        () async {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -10579,7 +9768,8 @@ void main() {
     test(
         '''filter in 'and' mode by multiple sentences present in audio title and
            compact description only with searchInVideoCompactDescription = false
-           and sort by download date descending and duration ascending''', () async {
+           and sort by download date descending and duration ascending''',
+        () async {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -10668,7 +9858,8 @@ void main() {
     test(
         '''filter in 'and' mode by multiple sentences present in audio title and
            compact description only with searchInVideoCompactDescription = true
-           and sort by download date descending and duration ascending''', () async {
+           and sort by download date descending and duration ascending''',
+        () async {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -10863,7 +10054,8 @@ void main() {
     });
     test('''filter in 'or' mode by multiple sentences present in audio title and
            compact description only with searchInVideoCompactDescription = true
-           and sort by download date descending and duration ascending''', () async {
+           and sort by download date descending and duration ascending''',
+        () async {
       List<Audio> audioList = playlistListVM
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
