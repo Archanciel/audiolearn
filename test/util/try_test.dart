@@ -140,6 +140,11 @@ void main() {
     audioThree,
     audioFour,
   ];
+  AudioSortFilterService audioSortFilterService = AudioSortFilterService(
+      settingsDataService: SettingsDataService(
+    sharedPreferences: MockSharedPreferences(),
+  ));
+
   group('group', () {
     test('filter by <tendance crypto> AND <en 2024>', () async {
       SettingsDataService settingsDataService = SettingsDataService(
