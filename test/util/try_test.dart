@@ -333,4 +333,271 @@ void main() {
       expect(filteredAudioLst, expectedFilteredAudios);
     });
   });
+  group(
+      'filter test: not ignoring case, filter audio list on validVideoTitle only',
+      () {
+    test('filter by <tendance crypto> AND <en 2024>', () async {
+      List<Audio> expectedFilteredAudios = [
+        audioOne,
+      ];
+
+      List<Audio> filteredAudioLst = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
+              audioLst: audioLst,
+              filterSentenceLst: [
+                'tendance crypto',
+                'en 2024',
+              ],
+              sentencesCombination: SentencesCombination.and,
+              ignoreCase: false,
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+    test('filter by <tendance crypto> OR <en 2024>', () async {
+      List<Audio> expectedFilteredAudios = [
+        audioOne,
+        audioTwo,
+        audioThree,
+      ];
+
+      List<Audio> filteredAudioLst = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
+              audioLst: audioLst,
+              filterSentenceLst: [
+                'tendance crypto',
+                'en 2024',
+              ],
+              sentencesCombination: SentencesCombination.or,
+              ignoreCase: false,
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+    test('filter by <en 2024> AND <tendance crypto>', () async {
+      List<Audio> expectedFilteredAudios = [
+        audioOne,
+      ];
+
+      List<Audio> filteredAudioLst = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
+              audioLst: audioLst,
+              filterSentenceLst: [
+                'en 2024',
+                'tendance crypto',
+              ],
+              sentencesCombination: SentencesCombination.and,
+              ignoreCase: false,
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+    test('filter by <en 2024> OR <tendance crypto>', () async {
+      List<Audio> expectedFilteredAudios = [
+        audioOne,
+        audioTwo,
+        audioThree,
+      ];
+
+      List<Audio> filteredAudioLst = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
+              audioLst: audioLst,
+              filterSentenceLst: [
+                'en 2024',
+                'tendance crypto',
+              ],
+              sentencesCombination: SentencesCombination.or,
+              ignoreCase: false,
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+    test('filter by <quelle> AND <2024>', () async {
+      List<Audio> expectedFilteredAudios = [
+        audioOne,
+        audioThree,
+      ];
+
+      List<Audio> filteredAudioLst = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
+              audioLst: audioLst,
+              filterSentenceLst: [
+                'quelle',
+                '2024',
+              ],
+              sentencesCombination: SentencesCombination.and,
+              ignoreCase: false,
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+    test('filter by <quelle> OR <2024>', () async {
+      List<Audio> expectedFilteredAudios = [
+        audioOne,
+        audioTwo,
+        audioThree,
+        audioFour,
+      ];
+
+      List<Audio> filteredAudioLst = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
+              audioLst: audioLst,
+              filterSentenceLst: [
+                'quelle',
+                '2024',
+              ],
+              sentencesCombination: SentencesCombination.or,
+              ignoreCase: false,
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+    test('filter by <2024> AND <quelle>', () async {
+      List<Audio> expectedFilteredAudios = [
+        audioOne,
+        audioThree,
+      ];
+
+      List<Audio> filteredAudioLst = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
+              audioLst: audioLst,
+              filterSentenceLst: [
+                '2024',
+                'quelle',
+              ],
+              sentencesCombination: SentencesCombination.and,
+              ignoreCase: false,
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+    test('filter by <intelligence> OR <artificielle>', () async {
+      List<Audio> expectedFilteredAudios = [
+        audioFour,
+      ];
+
+      List<Audio> filteredAudioLst = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
+              audioLst: audioLst,
+              filterSentenceLst: [
+                'intelligence',
+                'artificielle',
+              ],
+              sentencesCombination: SentencesCombination.or,
+              ignoreCase: false,
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+    test('filter by <2024> OR <quelle>', () async {
+      List<Audio> expectedFilteredAudios = [
+        audioOne,
+        audioTwo,
+        audioThree,
+        audioFour,
+      ];
+
+      List<Audio> filteredAudioLst = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
+              audioLst: audioLst,
+              filterSentenceLst: [
+                '2024',
+                'quelle',
+              ],
+              sentencesCombination: SentencesCombination.or,
+              ignoreCase: false,
+              searchAsWellInVideoCompactDescription: false,
+              searchAsWellInYoutubeChannelName: false);
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+  });
+  group(
+      'filter test: ignoring case, filter audio list on validVideoTitle or compactVideoDescription test',
+      () {
+    test('filter by <investir en 2024> AND <éthique et tac>', () async {
+      List<Audio> expectedFilteredAudios = [];
+
+      List<Audio> filteredAudioLst = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
+              audioLst: audioLst,
+              filterSentenceLst: [
+                'investir en 2024',
+                'éthique et tac',
+              ],
+              sentencesCombination: SentencesCombination.and,
+              ignoreCase: true,
+              searchAsWellInVideoCompactDescription: true,
+              searchAsWellInYoutubeChannelName: false);
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+    test('filter by <accélération> AND <éthique et tac>', () async {
+      List<Audio> expectedFilteredAudios = [
+        audioTwo,
+      ];
+
+      List<Audio> filteredAudioLst = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
+              audioLst: audioLst,
+              filterSentenceLst: [
+                'accélération',
+                'éthique et tac',
+              ],
+              sentencesCombination: SentencesCombination.and,
+              ignoreCase: true,
+              searchAsWellInVideoCompactDescription: true,
+              searchAsWellInYoutubeChannelName: false);
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+    test('filter by <investir en 2024> OR <éthique et tac>', () async {
+      List<Audio> expectedFilteredAudios = [
+        audioOne,
+        audioTwo,
+      ];
+
+      List<Audio> filteredAudioLst = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
+              audioLst: audioLst,
+              filterSentenceLst: [
+                'investir en 2024',
+                'éthique et tac',
+              ],
+              sentencesCombination: SentencesCombination.or,
+              ignoreCase: true,
+              searchAsWellInVideoCompactDescription: true,
+              searchAsWellInYoutubeChannelName: false);
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+    test('filter by <on vous propose> OR <en accélération>', () async {
+      List<Audio> expectedFilteredAudios = [
+        audioOne,
+        audioTwo,
+      ];
+
+      List<Audio> filteredAudioLst = audioSortFilterService
+          .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
+              audioLst: audioLst,
+              filterSentenceLst: [
+                'on vous propose',
+                'en accélération',
+              ],
+              sentencesCombination: SentencesCombination.or,
+              ignoreCase: true,
+              searchAsWellInVideoCompactDescription: true,
+              searchAsWellInYoutubeChannelName: false);
+
+      expect(filteredAudioLst, expectedFilteredAudios);
+    });
+  });
 }
