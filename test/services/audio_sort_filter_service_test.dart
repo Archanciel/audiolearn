@@ -2494,7 +2494,7 @@ void main() {
         // Load Playlist from the file
         Playlist loadedPlaylist = JsonDataService.loadFromFile(
           jsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}Gary Renard - Et l'univers disparaîtra.json",
+              "$kApplicationPathWindowsTest${path.separator}Gary Renard - Et l'univers disparaîtra.json",
           type: Playlist,
         );
 
@@ -2522,7 +2522,7 @@ void main() {
         List<Audio> expectedAudioSortedByTitleAscLst =
             JsonDataService.loadListFromFile(
           jsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}expected audio list asc Et l'univers disparaîtra.json",
+              "$kApplicationPathWindowsTest${path.separator}expected audio list asc Et l'univers disparaîtra.json",
           type: Audio,
         );
 
@@ -2558,7 +2558,7 @@ void main() {
         List<Audio> expectedAudioSortedByTitleDescLst =
             JsonDataService.loadListFromFile(
           jsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}expected audio list desc Et l'univers disparaîtra.json",
+              "$kApplicationPathWindowsTest${path.separator}expected audio list desc Et l'univers disparaîtra.json",
           type: Audio,
         );
 
@@ -8926,7 +8926,7 @@ void main() {
         // Load Playlist from the file
         Playlist loadedPlaylist = JsonDataService.loadFromFile(
           jsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}Et l'univers disparaîtra imported.json",
+              "$kApplicationPathWindowsTest${path.separator}Et l'univers disparaîtra imported.json",
           type: Playlist,
         );
 
@@ -8954,7 +8954,7 @@ void main() {
         List<Audio> expectedAudioSortedByTitleAscLst =
             JsonDataService.loadListFromFile(
           jsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}expected audio list asc Et l'univers disparaîtra imported.json",
+              "$kApplicationPathWindowsTest${path.separator}expected audio list asc Et l'univers disparaîtra imported.json",
           type: Audio,
         );
 
@@ -8990,7 +8990,7 @@ void main() {
         List<Audio> expectedAudioSortedByTitleDescLst =
             JsonDataService.loadListFromFile(
           jsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}expected audio list desc Et l'univers disparaîtra imported.json",
+              "$kApplicationPathWindowsTest${path.separator}expected audio list desc Et l'univers disparaîtra imported.json",
           type: Audio,
         );
 
@@ -11830,7 +11830,7 @@ void main() {
       // Load Playlist from the file
       Playlist loadedPlaylist = JsonDataService.loadFromFile(
         jsonPathFileName:
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}Conversation avec Dieu${path.separator}Conversation avec Dieu.json",
+            "$kApplicationPathWindowsTest${path.separator}Conversation avec Dieu${path.separator}Conversation avec Dieu.json",
         type: Playlist,
       );
 
@@ -11918,7 +11918,7 @@ void main() {
       // Load Playlist from the file
       Playlist loadedPlaylist = JsonDataService.loadFromFile(
         jsonPathFileName:
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}Conversation avec Dieu${path.separator}Conversation avec Dieu.json",
+            "$kApplicationPathWindowsTest${path.separator}Conversation avec Dieu${path.separator}Conversation avec Dieu.json",
         type: Playlist,
       );
 
@@ -12015,7 +12015,7 @@ void main() {
       // Load Playlist from the file
       Playlist loadedPlaylist = JsonDataService.loadFromFile(
         jsonPathFileName:
-            "$kPlaylistDownloadRootPathWindowsTest${path.separator}Conversation avec Dieu${path.separator}Conversation avec Dieu.json",
+            "$kApplicationPathWindowsTest${path.separator}Conversation avec Dieu${path.separator}Conversation avec Dieu.json",
         type: Playlist,
       );
 
