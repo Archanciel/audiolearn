@@ -12430,7 +12430,7 @@ void main() {
           );
 
           const String restorableZipFileName =
-              'Windows audioLearn_2025-05-11_13_16.zip';
+              'Windows audioLearn_2025-05-16_17_23.zip';
 
           // Copy the integration test data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
@@ -12601,7 +12601,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 2 playlist, 0 comment and 4 picture JSON files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+                'Restored 5 playlist, 5 comment and 1 picture JSON files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -12613,6 +12613,10 @@ void main() {
           List<String> playlistsTitles = [
             "A restaurer",
             "local",
+            "Empty",
+            "local_comment",
+            "local_delete_comment",
+            "S8 audio",
           ];
 
           List<String> audioTitles = [
@@ -12928,7 +12932,7 @@ void main() {
           );
 
           const String restorableZipFileName =
-              'Windows audioLearn_2025-05-11_13_16.zip';
+              'Windows audioLearn_2025-05-16_17_23.zip';
 
           // Copy the integration test data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
@@ -13098,7 +13102,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 0 playlist, 0 comment and 0 picture JSON files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+                'Restored 4 playlist, 5 comment and 1 picture JSON files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -13110,6 +13114,10 @@ void main() {
           List<String> playlistsTitles = [
             "A restaurer",
             "local",
+            "Empty",
+            "local_comment",
+            "local_delete_comment",
+            "S8 audio",
           ];
 
           List<String> audioTitles = [
