@@ -10281,12 +10281,6 @@ void main() {
       audioSortFilterService = AudioSortFilterService(
         settingsDataService: settingsDataService,
       );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
     });
     test(
         '''filter by one word in audio title and sort by download date descending
@@ -11250,12 +11244,6 @@ void main() {
       audioSortFilterService = AudioSortFilterService(
         settingsDataService: settingsDataService,
       );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
     });
     test('filter not listened audio only', () {
       List<Audio> audioList = playlistListVM
@@ -11722,12 +11710,6 @@ void main() {
       audioSortFilterService = AudioSortFilterService(
         settingsDataService: settingsDataService,
       );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
     });
     test(
         'filter by no word in audio title or video compact description and sort by download date descending',
@@ -11912,12 +11894,6 @@ void main() {
       expect(
         sortedCommentFileNamesLst,
         expectedSortedCommentFileNameLst,
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
       );
     });
     test(
@@ -12172,12 +12148,6 @@ void main() {
       // playlistListVM to know which playlists are
       // selected and which are not
       playlistListVM.getUpToDateSelectablePlaylists();
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
     });
     group('''By audio downl or vid upl date filter tests
         test''', () {
@@ -12248,12 +12218,6 @@ void main() {
 
         audioSortFilterService = AudioSortFilterService(
           settingsDataService: settingsDataService,
-        );
-
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kApplicationPathWindowsTest,
         );
       });
       test(
@@ -12827,12 +12791,6 @@ void main() {
 
         audioSortFilterService = AudioSortFilterService(
           settingsDataService: settingsDataService,
-        );
-
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kApplicationPathWindowsTest,
         );
       });
       test('''Set start + end audio filesize and verify filtered audio list''',
