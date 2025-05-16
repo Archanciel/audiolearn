@@ -164,7 +164,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
       audioSortFilterService = AudioSortFilterService(
         settingsDataService: settingsDataService,
       );
@@ -372,7 +372,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       audioSortFilterService = AudioSortFilterService(
         settingsDataService: settingsDataService,
@@ -578,7 +578,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       audioSortFilterService = AudioSortFilterService(
         settingsDataService: settingsDataService,
@@ -677,7 +677,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       audioSortFilterService = AudioSortFilterService(
         settingsDataService: settingsDataService,
@@ -791,7 +791,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       audioSortFilterService = AudioSortFilterService(
         settingsDataService: settingsDataService,
@@ -885,7 +885,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       audioSortFilterService = AudioSortFilterService(
         settingsDataService: settingsDataService,
@@ -1016,7 +1016,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       audioSortFilterService = AudioSortFilterService(
         settingsDataService: settingsDataService,
@@ -9032,7 +9032,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       audioSortFilterService = AudioSortFilterService(
         settingsDataService: settingsDataService,
@@ -9236,7 +9236,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       audioSortFilterService = AudioSortFilterService(
         settingsDataService: settingsDataService,
@@ -9979,7 +9979,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       audioSortFilterService = AudioSortFilterService(
         settingsDataService: settingsDataService,
@@ -10227,7 +10227,7 @@ void main() {
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_sort_filter_service_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
@@ -10240,7 +10240,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       // Since we have to use a mock AudioDownloadVM to add the
       // youtube playlist, we can not use app.main() to start the
@@ -11209,7 +11209,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       // Since we have to use a mock AudioDownloadVM to add the
       // youtube playlist, we can not use app.main() to start the
@@ -11432,7 +11432,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       // Since we have to use a mock AudioDownloadVM to add the
       // youtube playlist, we can not use app.main() to start the
@@ -11681,7 +11681,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       // Since we have to use a mock AudioDownloadVM to add the
       // youtube playlist, we can not use app.main() to start the
@@ -11872,7 +11872,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -11974,7 +11974,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -12063,7 +12063,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -12135,7 +12135,7 @@ void main() {
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
           settingsJsonPathFileName:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       // Since we have to use a mock AudioDownloadVM to add the
       // youtube playlist, we can not use app.main() to start the
@@ -12208,7 +12208,7 @@ void main() {
         // playlists available in the download app test dir
         await settingsDataService.loadSettingsFromFile(
             settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
         // Since we have to use a mock AudioDownloadVM to add the
         // youtube playlist, we can not use app.main() to start the
@@ -12787,7 +12787,7 @@ void main() {
         // playlists available in the download app test dir
         await settingsDataService.loadSettingsFromFile(
             settingsJsonPathFileName:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName");
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
         // Since we have to use a mock AudioDownloadVM to add the
         // youtube playlist, we can not use app.main() to start the
