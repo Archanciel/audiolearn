@@ -13182,33 +13182,31 @@ void main() {
 
           // Now verify 'S8 audio' playlist as well !
 
-          // audioTitles = [
-          //   "Quand Aurélien Barrau va dans une école de management",
-          //   "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
-          //   "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          //   "La surpopulation mondiale par Jancovici et Barrau",
-          // ];
+          audioTitles = [
+            "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
+            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+            "La surpopulation mondiale par Jancovici et Barrau",
+          ];
 
-          // audioSubTitles = [
-          //   "0:17:59.0. 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11.",
-          //   "1:17:53.6. 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06.",
-          //   "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
-          //   "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
-          // ];
+          audioSubTitles = [
+            "1:17:53.6. 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06.",
+            "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
+            "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
+          ];
 
-          // const String youtubePlaylistTitle = 'S8 audio';
-          // await IntegrationTestUtil.selectPlaylist(
-          //   tester: tester,
-          //   playlistToSelectTitle: youtubePlaylistTitle,
-          // );
+          const String youtubePlaylistTitle = 'S8 audio';
+          await IntegrationTestUtil.selectPlaylist(
+            tester: tester,
+            playlistToSelectTitle: youtubePlaylistTitle,
+          );
 
-          // _verifyRestoredPlaylistAndAudio(
-          //   tester: tester,
-          //   selectedPlaylistTitle: youtubePlaylistTitle,
-          //   playlistsTitles: playlistsTitles,
-          //   audioTitles: audioTitles,
-          //   audioSubTitles: audioSubTitles,
-          // );
+          _verifyRestoredPlaylistAndAudio(
+            tester: tester,
+            selectedPlaylistTitle: youtubePlaylistTitle,
+            playlistsTitles: playlistsTitles,
+            audioTitles: audioTitles,
+            audioSubTitles: audioSubTitles,
+          );
 
           // Verify the content of the 'A restaurer' playlist dir
           // and comments and pictures dir after restoration.
@@ -13275,160 +13273,177 @@ void main() {
 
           // Verify the content of the 'S8 audio' playlist dir
           // and comments and pictures dir after restoration.
-          // IntegrationTestUtil.verifyPlaylistDirectoryContents(
-          //   playlistTitle: youtubePlaylistTitle,
-          //   expectedAudioFiles: [],
-          //   expectedCommentFiles: [
-          //     "New file name.json",
-          //     "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
-          //     "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.json",
-          //   ],
-          //   expectedPictureFiles: [],
-          //   playlistRootDir: playlistRootDirName,
-          // );
+          IntegrationTestUtil.verifyPlaylistDirectoryContents(
+            playlistTitle: youtubePlaylistTitle,
+            expectedAudioFiles: [],
+            expectedCommentFiles: [
+              "New file name.json",
+              "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
+              "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.json",
+            ],
+            expectedPictureFiles: [],
+            playlistRootDir: playlistRootDirName,
+            doesPictureAudioMapFileNameExist: true,
+            applicationPictureDir:
+                "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
+            pictureFileNameOne: "Sam Altman.jpg",
+            audioForPictureTitleOneLst: [
+              "A restaurer|250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12",
+              "A restaurer|250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12"
+            ],
+            pictureFileNameTwo: "Jésus mon Amour.jpg",
+            audioForPictureTitleTwoLst: [
+              "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
+            ],
+            pictureFileNameThree: "Jésus je T'adore.jpg",
+            audioForPictureTitleThreeLst: [
+              "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
+            ],
+          );
 
           // Now, select a filter parms using the drop down button.
 
           // First, tap the 'Toggle List' button to hide the playlist list.
-          // await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-          // await tester.pumpAndSettle();
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
 
-          // // Now tap on the current dropdown button item to open the dropdown
-          // // button items list
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
 
-          // Finder dropDownButtonFinder =
-          //     find.byKey(const Key('sort_filter_parms_dropdown_button'));
+          Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
 
-          // Finder dropDownButtonTextFinder = find.descendant(
-          //   of: dropDownButtonFinder,
-          //   matching: find.byType(Text),
-          // );
+          Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
 
-          // await tester.tap(dropDownButtonTextFinder);
-          // await tester.pumpAndSettle();
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
 
-          // // And find the 'commented_7MB' sort/filter item
-          // Finder commentedMinus7MbDropDownTextFinder = find.text('commented_7MB').last;
-          // await tester.tap(commentedMinus7MbDropDownTextFinder);
-          // await tester.pumpAndSettle();
+          // And find the 'commented_7MB' sort/filter item
+          Finder commentedMinus7MbDropDownTextFinder = find.text('commented_7MB').last;
+          await tester.tap(commentedMinus7MbDropDownTextFinder);
+          await tester.pumpAndSettle();
 
-          // // Re-tap the 'Toggle List' button to display the playlist list.
-          // await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-          // await tester.pumpAndSettle();
+          // Re-tap the 'Toggle List' button to display the playlist list.
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
 
-          // // Execute the redownload filtered audio menu by clicking first on
-          // // the 'Filtered Audio Actions ...' playlist menu item and then
-          // // on the 'Redownload Filtered Audio ...' sub-menu item.
-          // await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
+          // Execute the redownload filtered audio menu by clicking first on
+          // the 'Filtered Audio Actions ...' playlist menu item and then
+          // on the 'Redownload Filtered Audio ...' sub-menu item.
+          await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
+            tester: tester,
+            playlistTitle: youtubePlaylistTitle,
+            playlistSubMenuKeyStr: 'popup_menu_redownload_filtered_audio',
+          );
+
+          // Add a delay to allow the download to finish.
+          for (int i = 0; i < 5; i++) {
+            await Future.delayed(const Duration(seconds: 2));
+            await tester.pumpAndSettle();
+          }
+
+          // Verifying and closing the confirm dialog
+
+          // await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
           //   tester: tester,
-          //   playlistTitle: youtubePlaylistTitle,
-          //   playlistSubMenuKeyStr: 'popup_menu_redownload_filtered_audio',
+          //   confirmDialogTitleOne:
+          //       "Delete audio's filtered by \"\" parms from playlist \"\"",
+          //   confirmDialogMessage:
+          //       "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
+          //   confirmOrCancelAction: true, // Confirm button is tapped
           // );
 
-          // // Add a delay to allow the download to finish.
-          // for (int i = 0; i < 5; i++) {
-          //   await Future.delayed(const Duration(seconds: 2));
-          //   await tester.pumpAndSettle();
-          // }
+          // Tap the 'Toggle List' button to hide the playlist list.
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
 
-          // // Verifying and closing the confirm dialog
+          // Now, select the 'default' filter parms using the drop down button.
 
-          // // await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
-          // //   tester: tester,
-          // //   confirmDialogTitleOne:
-          // //       "Delete audio's filtered by \"\" parms from playlist \"\"",
-          // //   confirmDialogMessage:
-          // //       "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
-          // //   confirmOrCancelAction: true, // Confirm button is tapped
-          // // );
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
 
-          // // Tap the 'Toggle List' button to hide the playlist list.
-          // await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-          // await tester.pumpAndSettle();
+          dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
 
-          // // Now, select the 'default' filter parms using the drop down button.
+          dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
 
-          // // Now tap on the current dropdown button item to open the dropdown
-          // // button items list
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
 
-          // dropDownButtonFinder =
-          //     find.byKey(const Key('sort_filter_parms_dropdown_button'));
+          // And find the 'default' sort/filter item
+          Finder defaultDropDownTextFinder = find.text('default').last;
+          await tester.tap(defaultDropDownTextFinder);
+          await tester.pumpAndSettle();
 
-          // dropDownButtonTextFinder = find.descendant(
-          //   of: dropDownButtonFinder,
-          //   matching: find.byType(Text),
-          // );
+          // Now we want to tap the popup menu of the Audio ListTile
+          // "audio learn test short video one"
 
-          // await tester.tap(dropDownButtonTextFinder);
-          // await tester.pumpAndSettle();
+          // First, find the Audio sublist ListTile Text widget
+          const String audioTitle =
+              'Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...';
+          final Finder targetAudioListTileTextWidgetFinder = find.text(audioTitle);
 
-          // // And find the 'default' sort/filter item
-          // Finder defaultDropDownTextFinder = find.text('default').last;
-          // await tester.tap(defaultDropDownTextFinder);
-          // await tester.pumpAndSettle();
+          // Then obtain the Audio ListTile widget enclosing the Text widget by
+          // finding its ancestor
+          final Finder targetAudioListTileWidgetFinder = find.ancestor(
+            of: targetAudioListTileTextWidgetFinder,
+            matching: find.byType(ListTile),
+          );
 
-          // // Now we want to tap the popup menu of the Audio ListTile
-          // // "audio learn test short video one"
+          // Now find the leading menu icon button of the Audio ListTile and tap
+          // on it
+          final Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
+            of: targetAudioListTileWidgetFinder,
+            matching: find.byIcon(Icons.menu),
+          );
 
-          // // First, find the Audio sublist ListTile Text widget
-          // const String audioTitle =
-          //     'Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...';
-          // final Finder targetAudioListTileTextWidgetFinder = find.text(audioTitle);
+          // Tap the leading menu icon button to open the popup menu
+          await tester.tap(targetAudioListTileLeadingMenuIconButton);
+          await tester.pumpAndSettle();
 
-          // // Then obtain the Audio ListTile widget enclosing the Text widget by
-          // // finding its ancestor
-          // final Finder targetAudioListTileWidgetFinder = find.ancestor(
-          //   of: targetAudioListTileTextWidgetFinder,
-          //   matching: find.byType(ListTile),
-          // );
+          // Now find the popup menu item and tap on it
+          final Finder popupDisplayAudioInfoMenuItemFinder =
+              find.byKey(const Key("popup_menu_redownload_delete_audio"));
 
-          // // Now find the leading menu icon button of the Audio ListTile and tap
-          // // on it
-          // final Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
-          //   of: targetAudioListTileWidgetFinder,
-          //   matching: find.byIcon(Icons.menu),
-          // );
+          await tester.tap(popupDisplayAudioInfoMenuItemFinder);
+          await tester.pumpAndSettle();
 
-          // // Tap the leading menu icon button to open the popup menu
-          // await tester.tap(targetAudioListTileLeadingMenuIconButton);
-          // await tester.pumpAndSettle();
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                "The audio \"$audioTitle\" was redownloaded in the playlist \"$youtubePlaylistTitle\".",
+            isWarningConfirming: true,
+          );
 
-          // // Now find the popup menu item and tap on it
-          // final Finder popupDisplayAudioInfoMenuItemFinder =
-          //     find.byKey(const Key("popup_menu_redownload_delete_audio"));
-
-          // await tester.tap(popupDisplayAudioInfoMenuItemFinder);
-          // await tester.pumpAndSettle();
-
-          // await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-          //   tester: tester,
-          //   warningDialogMessage:
-          //       "The audio \"$audioTitle\" was redownloaded in the playlist \"$youtubePlaylistTitle\".",
-          //   isWarningConfirming: true,
-          // );
-
-          // // Verify the content of the 'S8 audio' playlist dir
-          // // and comments and pictures dir after redownloading
-          // // filtered audio's by 'commented_7MB' SF parms as well
-          // // as redownloading single audio 'Interview de Chat GPT
-          // // - IA, intelligence, philosophie, géopolitique,
-          // // post-vérité...'.
-          // IntegrationTestUtil.verifyPlaylistDirectoryContents(
-          //   playlistTitle: 'S8 audio',
-          //   expectedAudioFiles: [
-          //     "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.mp3",
-          //     "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
-          //     "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.mp3",
-          //   ],
-          //   expectedCommentFiles: [
-          //     "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.json",
-          //     "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
-          //     "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
-          //     "New file name.json",
-          //   ],
-          //   expectedPictureFiles: [],
-          //   playlistRootDir: playlistRootDirName,
-          // );
+          // Verify the content of the 'S8 audio' playlist dir
+          // and comments and pictures dir after redownloading
+          // filtered audio's by 'commented_7MB' SF parms as well
+          // as redownloading single audio 'Interview de Chat GPT
+          // - IA, intelligence, philosophie, géopolitique,
+          // post-vérité...'.
+          IntegrationTestUtil.verifyPlaylistDirectoryContents(
+            playlistTitle: 'S8 audio',
+            expectedAudioFiles: [
+              "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.mp3",
+              "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
+              "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.mp3",
+            ],
+            expectedCommentFiles: [
+              "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.json",
+              "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
+              "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
+              "New file name.json",
+            ],
+            expectedPictureFiles: [],
+            playlistRootDir: playlistRootDirName,
+            doesPictureAudioMapFileNameExist: true,
+          );
 
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
