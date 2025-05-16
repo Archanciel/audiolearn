@@ -154,8 +154,8 @@ Future<void> main() async {
     sharedPreferences: MockSharedPreferences(),
   ));
 
-  group('sort audio lst by one SortingOption', () async {
-    group('sort audio lst by title SortingOption', () async {
+  group('sort audio lst by one SortingOption', () {
+    group('sort audio lst by title SortingOption', () {
       test('sort by title', () async {
         final Audio zebra = Audio.fullConstructor(
           youtubeVideoChannel: 'three',
@@ -2233,7 +2233,7 @@ Future<void> main() async {
       });
     });
 
-    group('sort audio lst by chapter SortingOption', () async {
+    group('sort audio lst by chapter SortingOption', () {
       test('''sort by _ chapter title number. Example: ... 1_1 ..., ... 1_2 ...,
             ... 2_1 ...''', () async {
         final Audio avantPropos = Audio.fullConstructor(
@@ -8151,7 +8151,7 @@ Future<void> main() async {
       );
     });
   });
-  group('filterAndSortAudioLst by title and description', () async {
+  group('filterAndSortAudioLst by title and description', () {
     test('with search word present in in title only', () async {
       final Audio zebra1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
@@ -8874,7 +8874,7 @@ Future<void> main() async {
       );
     });
   });
-  group('filterAndSortAudioLst by title only', () async {
+  group('filterAndSortAudioLst by title only', () {
     test('with search word in title and in compact description', () async {
       final Audio zebra1 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
@@ -10075,7 +10075,7 @@ Future<void> main() async {
       );
     });
   });
-  group("filter audio by fully, partially and not listened options", () async {
+  group("filter audio by fully, partially and not listened options", () {
     late AudioSortFilterService audioSortFilterService;
     late PlaylistListVM playlistListVM;
 
@@ -10298,7 +10298,7 @@ Future<void> main() async {
       );
     });
   });
-  group("filter audio by commented or not commented options", () async {
+  group("filter audio by commented or not commented options", () {
     late AudioSortFilterService audioSortFilterService;
     late PlaylistListVM playlistListVM;
 
@@ -10547,7 +10547,7 @@ Future<void> main() async {
       );
     });
   });
-  group('bug fix', () async {
+  group('bug fix', () {
     late AudioSortFilterService audioSortFilterService;
     late PlaylistListVM playlistListVM;
 
@@ -10722,7 +10722,7 @@ Future<void> main() async {
       );
     });
   });
-  group('Comments order tests', () async {
+  group('Comments order tests', () {
     test('''sort playlist audio comments so that they are displayed in the same
             order than the audio in the audio playable list dialog available in
             the audio player view.''', () async {
@@ -11002,7 +11002,7 @@ Future<void> main() async {
       );
     });
   });
-  group('Remaining options test', () async {
+  group('Remaining options test', () {
     late PlaylistListVM playlistListVM;
 
     setUpAll(() async {
@@ -11074,7 +11074,7 @@ Future<void> main() async {
       );
     });
     group('''By audio downl or vid upl date filter tests
-        test''', () async {
+        test''', () {
       late AudioSortFilterService audioSortFilterService;
       late PlaylistListVM playlistListVM;
 
@@ -11653,7 +11653,7 @@ Future<void> main() async {
       });
     });
     group('''By audio file size or duration filter tests
-        test''', () async {
+        test''', () {
       late AudioSortFilterService audioSortFilterService;
       late PlaylistListVM playlistListVM;
 
