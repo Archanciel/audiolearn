@@ -2488,7 +2488,7 @@ void main() {
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}sort_filter_unit_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kApplicationPathWindowsTest,
         );
 
         // Load Playlist from the file
@@ -8920,7 +8920,7 @@ void main() {
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}sort_filter_unit_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kApplicationPathWindowsTest,
         );
 
         // Load Playlist from the file
@@ -11190,7 +11190,7 @@ void main() {
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_sort_filter_service_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
@@ -11407,7 +11407,7 @@ void main() {
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_sort_filter_service_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
@@ -11656,7 +11656,7 @@ void main() {
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_sort_filter_service_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
@@ -11824,7 +11824,7 @@ void main() {
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}playlist_audio_comments_sort_unit_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       // Load Playlist from the file
@@ -11912,7 +11912,7 @@ void main() {
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}playlist_audio_comments_sort_unit_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       // Load Playlist from the file
@@ -12009,7 +12009,7 @@ void main() {
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}playlist_audio_comments_sort_unit_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       // Load Playlist from the file
@@ -12098,7 +12098,7 @@ void main() {
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
             "$kDownloadAppTestSavedDataDir${path.separator}audio_sort_filter_service_test_data",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
@@ -12165,7 +12165,7 @@ void main() {
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kApplicationPathWindowsTest,
         );
 
         SettingsDataService settingsDataService = SettingsDataService(
@@ -12738,7 +12738,7 @@ void main() {
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
-          destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+          destinationRootPath: kApplicationPathWindowsTest,
         );
 
         SettingsDataService settingsDataService = SettingsDataService(
