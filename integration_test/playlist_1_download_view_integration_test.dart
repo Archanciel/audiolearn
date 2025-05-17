@@ -92,6 +92,7 @@ void main() {
         warningMessageVM: warningMessageVM,
         settingsDataService: settingsDataService,
       );
+      
       mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
 
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
