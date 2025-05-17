@@ -2248,12 +2248,7 @@ class AudioDownloadVM extends ChangeNotifier {
     required String playlistTitle,
     required Playlist playlist,
   }) async {
-    // The playlist download path is set to the app playlist root dir
-    // + playlist title. IIf the playlist title contains ':'. the ':'
-    // character is replaced by '_' since it is not allowed in a directory
-    // name on Windows or Android.
-    String playlistTitle = playlist.title.replaceAll(':', '_');
-    String playlistDownloadPath =
+    final String playlistDownloadPath =
         '$_playlistsRootPath${Platform.pathSeparator}$playlistTitle';
 
     // ensure playlist audio download dir exists
