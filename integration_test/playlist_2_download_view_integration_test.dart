@@ -12420,8 +12420,8 @@ void main() {
           () {
         testWidgets(
             '''Replace existing playlist. Restore Windows zip to Windows application in which
-           an existing playlist is selected. Then, select a SF parm and redownload the
-           filtered audio. Finally, redownload an individual not playable audio.''',
+              an existing playlist is selected. Then, select a SF parm and redownload the
+              filtered audio. Finally, redownload an individual not playable audio.''',
             (tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
@@ -12806,7 +12806,8 @@ void main() {
           await tester.pumpAndSettle();
 
           // And find the 'commented_7MB' sort/filter item
-          Finder commentedMinus7MbDropDownTextFinder = find.text('commented_7MB').last;
+          Finder commentedMinus7MbDropDownTextFinder =
+              find.text('commented_7MB').last;
           await tester.tap(commentedMinus7MbDropDownTextFinder);
           await tester.pumpAndSettle();
 
@@ -12823,11 +12824,13 @@ void main() {
             playlistSubMenuKeyStr: 'popup_menu_redownload_filtered_audio',
           );
 
-          // Add a delay to allow the download to finish.
-          for (int i = 0; i < 5; i++) {
-            await Future.delayed(const Duration(seconds: 2));
-            await tester.pumpAndSettle();
-          }
+          // Add a delay to allow the download to finish. Since a mock
+          // AudioDownloadVM is used, the download will be simulated and
+          // will not take time.
+          // for (int i = 0; i < 5; i++) {
+          //   await Future.delayed(const Duration(seconds: 2));
+          //   await tester.pumpAndSettle();
+          // }
 
           // Verifying and closing the confirm dialog
 
@@ -12871,7 +12874,8 @@ void main() {
           // First, find the Audio sublist ListTile Text widget
           const String audioTitle =
               'Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...';
-          final Finder targetAudioListTileTextWidgetFinder = find.text(audioTitle);
+          final Finder targetAudioListTileTextWidgetFinder =
+              find.text(audioTitle);
 
           // Then obtain the Audio ListTile widget enclosing the Text widget by
           // finding its ancestor
@@ -12882,7 +12886,8 @@ void main() {
 
           // Now find the leading menu icon button of the Audio ListTile and tap
           // on it
-          final Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
+          final Finder targetAudioListTileLeadingMenuIconButton =
+              find.descendant(
             of: targetAudioListTileWidgetFinder,
             matching: find.byIcon(Icons.menu),
           );
@@ -12936,10 +12941,10 @@ void main() {
           );
         });
         testWidgets(
-            '''Not replace existing playlist. Restore Windows zip to Windows application in which
-           an existing playlist is selected. Then, select a SF parm and redownload
-           the filtered audio. Finally, redownload an individual not playable
-           audio.''', (tester) async {
+            '''Not replace existing playlist. Restore Windows zip to Windows application in
+              which an existing playlist is selected. Then, select a SF parm and redownload
+              the filtered audio. Finally, redownload an individual not playable audio.''',
+            (tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -13322,7 +13327,8 @@ void main() {
           await tester.pumpAndSettle();
 
           // And find the 'commented_7MB' sort/filter item
-          Finder commentedMinus7MbDropDownTextFinder = find.text('commented_7MB').last;
+          Finder commentedMinus7MbDropDownTextFinder =
+              find.text('commented_7MB').last;
           await tester.tap(commentedMinus7MbDropDownTextFinder);
           await tester.pumpAndSettle();
 
@@ -13339,11 +13345,13 @@ void main() {
             playlistSubMenuKeyStr: 'popup_menu_redownload_filtered_audio',
           );
 
-          // Add a delay to allow the download to finish.
-          for (int i = 0; i < 5; i++) {
-            await Future.delayed(const Duration(seconds: 2));
-            await tester.pumpAndSettle();
-          }
+          // Add a delay to allow the download to finish. Since a mock
+          // AudioDownloadVM is used, the download will be simulated and
+          // will not take time.
+          // for (int i = 0; i < 5; i++) {
+          //   await Future.delayed(const Duration(seconds: 2));
+          //   await tester.pumpAndSettle();
+          // }
 
           // Verifying and closing the confirm dialog
 
@@ -13387,7 +13395,8 @@ void main() {
           // First, find the Audio sublist ListTile Text widget
           const String audioTitle =
               'Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...';
-          final Finder targetAudioListTileTextWidgetFinder = find.text(audioTitle);
+          final Finder targetAudioListTileTextWidgetFinder =
+              find.text(audioTitle);
 
           // Then obtain the Audio ListTile widget enclosing the Text widget by
           // finding its ancestor
@@ -13398,7 +13407,8 @@ void main() {
 
           // Now find the leading menu icon button of the Audio ListTile and tap
           // on it
-          final Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
+          final Finder targetAudioListTileLeadingMenuIconButton =
+              find.descendant(
             of: targetAudioListTileWidgetFinder,
             matching: find.byIcon(Icons.menu),
           );
@@ -13457,8 +13467,8 @@ void main() {
           () {
         testWidgets(
             '''Replace existing playlist. Restore Windows zip to Windows application in which
-           an existing playlist is selected. Then, select a SF parm and redownload the
-           filtered audio. Finally, redownload an individual not playable audio.''',
+              an existing playlist is selected. Then, select a SF parm and redownload the
+              filtered audio. Finally, redownload an individual not playable audio.''',
             (tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
@@ -13876,7 +13886,8 @@ void main() {
           await tester.pumpAndSettle();
 
           // And find the 'commented_7MB' sort/filter item
-          Finder commentedMinus7MbDropDownTextFinder = find.text('commented_7MB').last;
+          Finder commentedMinus7MbDropDownTextFinder =
+              find.text('commented_7MB').last;
           await tester.tap(commentedMinus7MbDropDownTextFinder);
           await tester.pumpAndSettle();
 
@@ -13893,11 +13904,13 @@ void main() {
             playlistSubMenuKeyStr: 'popup_menu_redownload_filtered_audio',
           );
 
-          // Add a delay to allow the download to finish.
-          for (int i = 0; i < 5; i++) {
-            await Future.delayed(const Duration(seconds: 2));
-            await tester.pumpAndSettle();
-          }
+          // Add a delay to allow the download to finish. Since a mock
+          // AudioDownloadVM is used, the download will be simulated and
+          // will not take time.
+          // for (int i = 0; i < 5; i++) {
+          //   await Future.delayed(const Duration(seconds: 2));
+          //   await tester.pumpAndSettle();
+          // }
 
           // Verifying and closing the confirm dialog
 
@@ -13941,7 +13954,8 @@ void main() {
           // First, find the Audio sublist ListTile Text widget
           const String audioTitle =
               'Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...';
-          final Finder targetAudioListTileTextWidgetFinder = find.text(audioTitle);
+          final Finder targetAudioListTileTextWidgetFinder =
+              find.text(audioTitle);
 
           // Then obtain the Audio ListTile widget enclosing the Text widget by
           // finding its ancestor
@@ -13952,7 +13966,8 @@ void main() {
 
           // Now find the leading menu icon button of the Audio ListTile and tap
           // on it
-          final Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
+          final Finder targetAudioListTileLeadingMenuIconButton =
+              find.descendant(
             of: targetAudioListTileWidgetFinder,
             matching: find.byIcon(Icons.menu),
           );
@@ -14006,10 +14021,10 @@ void main() {
           );
         });
         testWidgets(
-            '''Not replace existing playlist. Restore Windows zip to Windows application in which
-           an existing playlist is selected. Then, select a SF parm and redownload
-           the filtered audio. Finally, redownload an individual not playable
-           audio.''', (tester) async {
+            '''Not replace existing playlist. Restore Windows zip to Windows application in
+              which an existing playlist is selected. Then, select a SF parm and redownload
+              the filtered audio. Finally, redownload an individual not playable
+              audio.''', (tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -14394,11 +14409,13 @@ void main() {
           //   playlistSubMenuKeyStr: 'popup_menu_redownload_filtered_audio',
           // );
 
-          // // Add a delay to allow the download to finish.
-          // for (int i = 0; i < 5; i++) {
-          //   await Future.delayed(const Duration(seconds: 2));
-          //   await tester.pumpAndSettle();
-          // }
+          // // Add a delay to allow the download to finish. Since a mock
+          // // AudioDownloadVM is used, the download will be simulated and
+          // // will not take time.
+          // // for (int i = 0; i < 5; i++) {
+          // //   await Future.delayed(const Duration(seconds: 2));
+          // //   await tester.pumpAndSettle();
+          // // }
 
           // // Verifying and closing the confirm dialog
 
