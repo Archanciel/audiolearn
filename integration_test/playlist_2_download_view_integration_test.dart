@@ -13478,9 +13478,13 @@ void main() {
           'Restored selected playlist is different from the before restoration selected playlist.',
           () {
         testWidgets(
-            '''Replace existing playlist. Restore Windows zip to Windows application in which
-              an existing playlist is selected. Then, select a SF parm and redownload the
-              filtered audio. Finally, redownload an individual not playable audio.''',
+            '''Replace existing playlist. Restore Windows zip containing 'Empty', 'local',
+              'local_comment', 'local_delete_comment' and 'S8 audio' playlists in which 'S8 audio'
+              is selected to Windows application containing 'A restorer' and 'local' playlists
+              in which 'local' is selected.
+              
+              Then, select a SF parm and redownload the filtered audio's. Finally, redownload an
+              individual not playable audio.''',
             (tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
@@ -13489,7 +13493,7 @@ void main() {
           );
 
           const String restorableZipFileName =
-              'Windows audioLearn_2025-05-16_17_23.zip';
+              'Windows audioLearn S8 audio selected.zip';
 
           // Copy the integration test data to the app dir
           DirUtil.copyFilesFromDirAndSubDirsToDirectory(
@@ -13569,13 +13573,6 @@ void main() {
             warningMessageVM: warningMessageVM,
             audioPlayerVM: audioPlayerVM,
             dateFormatVM: dateFormatVM,
-          );
-
-          // Select the 'local' playlist which will be restored from a
-          // zip in which the 'A restaurer' playlist is selected.
-          await IntegrationTestUtil.selectPlaylist(
-            tester: tester,
-            playlistToSelectTitle: 'local',
           );
 
           const String playlistRootDirName = 'playlists';
@@ -13690,11 +13687,11 @@ void main() {
           );
 
           // Verify that the after restoration selected playlist is not
-          // 'A restaurer'. The 'A restaurer' playlist was selected in the
+          // 'S8 audio'. The 'S8 audio' playlist was selected in the
           // restoration zip file.
           IntegrationTestUtil.verifyPlaylistIsSelected(
             tester: tester,
-            playlistTitle: 'A restaurer',
+            playlistTitle: 'S8 audio',
             isSelected: false,
           );
 
@@ -13707,7 +13704,11 @@ void main() {
             "S8 audio",
           ];
 
-          // Now verify local playlist as well !
+          // Verifying the existing and the restored playlists
+          // list as well as the selected playlist 'local'
+          // displayed audio titles and subtitles.
+
+          // Verify local playlist
 
           List<String> audioTitles = [
             "Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage!",
@@ -13725,9 +13726,7 @@ void main() {
             audioSubTitles: audioSubTitles,
           );
 
-          // Verifying the existing and the restored playlists
-          // list as well as the selected playlist 'local'
-          // displayed audio titles and subtitles.
+          // Verify 'A restaurer' playlist
 
           audioTitles = [
             "Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage!",
@@ -13756,7 +13755,7 @@ void main() {
             audioSubTitles: audioSubTitles,
           );
 
-          // Now verify 'S8 audio' playlist as well !
+          // Now verify 'S8 audio' playlist as well
 
           audioTitles = [
             "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
