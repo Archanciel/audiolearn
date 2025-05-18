@@ -15128,6 +15128,9 @@ void main() {
           doReplaceExistingPlaylists: true,
         );
 
+        await Future.delayed(const Duration(milliseconds: 500));
+        await tester.pumpAndSettle(); // must be used !
+
         // Verify the displayed warning confirmation dialog
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
@@ -15186,10 +15189,173 @@ void main() {
           audioForPictureTitleOneLst: [
             "Restore- short - test - playlist|250518-164035-Really short video 23-07-01"
           ],
-          pictureFileNameTwo: "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg",
+          pictureFileNameTwo:
+              "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg",
           audioForPictureTitleTwoLst: [
             "Restore- short - test - playlist|250518-164039-morning _ cinematic video 23-07-01"
           ],
+        );
+
+        // Now, select a filter parms using the drop down button.
+
+        // First, tap the 'Toggle List' button to hide the playlist list.
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+
+        // Now tap on the current dropdown button item to open the dropdown
+        // button items list
+
+        Finder dropDownButtonFinder =
+            find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+        Finder dropDownButtonTextFinder = find.descendant(
+          of: dropDownButtonFinder,
+          matching: find.byType(Text),
+        );
+
+        await tester.tap(dropDownButtonTextFinder);
+        await tester.pumpAndSettle();
+
+        // And find the 'less 70 KB' sort/filter item
+        Finder commentedMinus7MbDropDownTextFinder =
+            find.text('less 70 KB').last;
+        await tester.tap(commentedMinus7MbDropDownTextFinder);
+        await tester.pumpAndSettle();
+
+        // Re-tap the 'Toggle List' button to display the playlist list.
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+
+        // Execute the redownload filtered audio menu by clicking first on
+        // the 'Filtered Audio Actions ...' playlist menu item and then
+        // on the 'Redownload Filtered Audio ...' sub-menu item.
+        await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
+          tester: tester,
+          playlistTitle: uniquePlaylistTitle,
+          playlistSubMenuKeyStr: 'popup_menu_redownload_filtered_audio',
+        );
+
+        // Add a delay to allow the download to finish. Since a mock
+        // AudioDownloadVM is used, the download will be simulated and
+        // will not take time.
+        for (int i = 0; i < 4; i++) {
+          await Future.delayed(const Duration(seconds: 2));
+          await tester.pumpAndSettle();
+        }
+
+        // Verify the content of the 'Restore- short - test - playlist'
+        // playlist dir + comments + pictures dir after filtered
+        // redownload.
+        IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          playlistTitle: uniquePlaylistTitle,
+          expectedAudioFiles: [
+            "250518-164035-Really short video 23-07-01.mp3",
+            "250518-164043-People Talking at The Table _ Free Video Loop 19-09-28.mp3",
+          ],
+          expectedCommentFiles: [
+            "250518-164039-morning _ cinematic video 23-07-01.json",
+            "250518-164043-People Talking at The Table _ Free Video Loop 19-09-28.json",
+          ],
+          expectedPictureFiles: [
+            "250518-164035-Really short video 23-07-01.json",
+            "250518-164039-morning _ cinematic video 23-07-01.json",
+          ],
+          doesPictureAudioMapFileNameExist: true,
+        );
+
+        // Tap the 'Toggle List' button to hide the playlist list.
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+
+        // Now, select the 'default' filter parms using the drop down button.
+
+        // Now tap on the current dropdown button item to open the dropdown
+        // button items list
+
+        dropDownButtonFinder =
+            find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+        dropDownButtonTextFinder = find.descendant(
+          of: dropDownButtonFinder,
+          matching: find.byType(Text),
+        );
+
+        await tester.tap(dropDownButtonTextFinder);
+        await tester.pumpAndSettle();
+
+        // And find the 'default' sort/filter item
+        Finder defaultDropDownTextFinder = find.text('default').last;
+        await tester.tap(defaultDropDownTextFinder);
+        await tester.pumpAndSettle();
+
+        // Now we want to tap the popup menu of the Audio ListTile
+        // "audio learn test short video one"
+
+        // First, find the Audio sublist ListTile Text widget
+        const String audioTitle =
+            "morning _ cinematic video";
+        final Finder targetAudioListTileTextWidgetFinder =
+            find.text(audioTitle);
+
+        // Then obtain the Audio ListTile widget enclosing the Text widget by
+        // finding its ancestor
+        final Finder targetAudioListTileWidgetFinder = find.ancestor(
+          of: targetAudioListTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now find the leading menu icon button of the Audio ListTile and tap
+        // on it
+        final Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
+          of: targetAudioListTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(targetAudioListTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
+
+        // Now find the popup menu item and tap on it
+        final Finder popupDisplayAudioInfoMenuItemFinder =
+            find.byKey(const Key("popup_menu_redownload_delete_audio"));
+
+        await tester.tap(popupDisplayAudioInfoMenuItemFinder);
+        await tester.pumpAndSettle();
+
+        // Add a delay to allow the download to finish. Since a mock
+        // AudioDownloadVM is used, the download will be simulated and
+        // will not take time.
+        for (int i = 0; i < 3; i++) {
+          await Future.delayed(const Duration(seconds: 2));
+          await tester.pumpAndSettle();
+        }
+
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "The audio \"$audioTitle\" was redownloaded in the playlist \"$uniquePlaylistTitle\".",
+          isWarningConfirming: true,
+        );
+
+        // Verify the content of the 'Restore- short - test - playlist'
+        // playlist dir + comments + pictures dir after filtered
+        // redownload.
+        IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          playlistTitle: uniquePlaylistTitle,
+          expectedAudioFiles: [
+            "250518-164035-Really short video 23-07-01.mp3",
+            "250518-164043-People Talking at The Table _ Free Video Loop 19-09-28.mp3",
+            "250518-164039-morning _ cinematic video 23-07-01.mp3",
+          ],
+          expectedCommentFiles: [
+            "250518-164039-morning _ cinematic video 23-07-01.json",
+            "250518-164043-People Talking at The Table _ Free Video Loop 19-09-28.json",
+          ],
+          expectedPictureFiles: [
+            "250518-164035-Really short video 23-07-01.json",
+            "250518-164039-morning _ cinematic video 23-07-01.json",
+          ],
+          doesPictureAudioMapFileNameExist: true,
         );
 
         // Purge the test playlist directory so that the created test
