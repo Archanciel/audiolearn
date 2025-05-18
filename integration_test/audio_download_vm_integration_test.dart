@@ -1248,9 +1248,9 @@ Future<void> main() async {
   });
   group(
       '''Add Youtube playlist with corrected title. If the added playlist contains
-        invalid characters like '/' or ':', the playlist is added to the application with a
+        invalid characters like '/' or ':' or '\', the playlist is added to the application with a
         corrected title.''', () {
-    testWidgets('''Adding playlist in spoken quality with invalid title containing '/'.''',
+    testWidgets('''Adding playlist in spoken quality with '/' invalid title.''',
         (WidgetTester tester) async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
@@ -1323,7 +1323,7 @@ Future<void> main() async {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('''Adding playlist in music quality with invalid title containing '/'.''',
+    testWidgets('''Adding playlist in music quality with '/' invalid title.''',
         (WidgetTester tester) async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
@@ -1401,80 +1401,7 @@ Future<void> main() async {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('''Adding playlist in spoken quality with two invalid chars ':' and '/'.''',
-        (WidgetTester tester) async {
-      // necessary in case the previous test failed and so did not
-      // delete the its playlist dir
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-
-      // Copying the initial local playlist json file with no audio
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_newly_downloaded_playlist_test",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
-
-      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
-        tester: tester,
-        forcedLocale: const Locale('en'),
-      );
-
-      // Entering the created playlist URL in the Youtube URL or search
-      // text field of the app
-      var incorrectlyTitledPlaylistUrl =
-          'https://youtube.com/playlist?list=PLzwWSJNcZTMQmmmdj-ia-TTk0OynuRFXL&si=-UJfTojBi0HbYkbC';
-
-      await tester.enterText(
-        find.byKey(
-          const Key('youtubeUrlOrSearchTextField'),
-        ),
-        incorrectlyTitledPlaylistUrl,
-      );
-      await tester.pumpAndSettle();
-
-      // Open the add playlist dialog by tapping the add playlist
-      // button
-      await tester.tap(find.byKey(const Key('addPlaylistButton')));
-      await tester.pumpAndSettle();
-
-      // Check the value of the AlertDialog dialog title
-      Text alertDialogTitle =
-          tester.widget(find.byKey(const Key('playlistConfirmDialogTitleKey')));
-      expect(alertDialogTitle.data, 'Add Youtube Playlist');
-
-      // Check the value of the AlertDialog url Text
-      Text confirmUrlText =
-          tester.widget(find.byKey(const Key('playlistUrlConfirmDialogText')));
-      expect(confirmUrlText.data, incorrectlyTitledPlaylistUrl);
-
-      // Confirm the addition by tapping the 'Add' button in
-      // the AlertDialog and then on the 'OK' button of the
-      // confirm dialog
-      await tester
-          .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
-      await tester.pumpAndSettle();
-
-      // Add a delay to allow the update playlist URL to finish. 1
-      // second is ok
-      await Future.delayed(const Duration(seconds: 1));
-      await tester.pumpAndSettle();
-
-      // Verify the displayed warning dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Youtube playlist \"testing : invalid / playlist title with two invalid characters\" of spoken quality added with corrected title \"testing - invalid - playlist title with two invalid characters\" at the end of the playlist list.",
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets('''Adding playlist in spoken quality with invalid title containing ':'.''',
+    testWidgets('''Adding playlist in spoken quality with ':' invalid title.''',
         (WidgetTester tester) async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
@@ -1539,6 +1466,152 @@ Future<void> main() async {
         tester: tester,
         warningDialogMessage:
             "Youtube playlist \"testing : invalid playlist title with double point\" of spoken quality added with corrected title \"testing - invalid playlist title with double point\" at the end of the playlist list.",
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets('''Adding playlist in spoken quality with backward invalid char.''',
+        (WidgetTester tester) async {
+      // necessary in case the previous test failed and so did not
+      // delete the its playlist dir
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copying the initial local playlist json file with no audio
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_newly_downloaded_playlist_test",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
+        tester: tester,
+        forcedLocale: const Locale('en'),
+      );
+
+      // Entering the created playlist URL in the Youtube URL or search
+      // text field of the app
+      var incorrectlyTitledPlaylistUrl =
+          'https://youtube.com/playlist?list=PLzwWSJNcZTMQmmmdj-ia-TTk0OynuRFXL&si=-UJfTojBi0HbYkbC';
+
+      await tester.enterText(
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
+        incorrectlyTitledPlaylistUrl,
+      );
+      await tester.pumpAndSettle();
+
+      // Open the add playlist dialog by tapping the add playlist
+      // button
+      await tester.tap(find.byKey(const Key('addPlaylistButton')));
+      await tester.pumpAndSettle();
+
+      // Check the value of the AlertDialog dialog title
+      Text alertDialogTitle =
+          tester.widget(find.byKey(const Key('playlistConfirmDialogTitleKey')));
+      expect(alertDialogTitle.data, 'Add Youtube Playlist');
+
+      // Check the value of the AlertDialog url Text
+      Text confirmUrlText =
+          tester.widget(find.byKey(const Key('playlistUrlConfirmDialogText')));
+      expect(confirmUrlText.data, incorrectlyTitledPlaylistUrl);
+
+      // Confirm the addition by tapping the 'Add' button in
+      // the AlertDialog and then on the 'OK' button of the
+      // confirm dialog
+      await tester
+          .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
+      await tester.pumpAndSettle();
+
+      // Add a delay to allow the update playlist URL to finish. 1
+      // second is ok
+      await Future.delayed(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      // Verify the displayed warning dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Youtube playlist \"testing invalid \\ playlist title with backward invalid character\" of spoken quality added with corrected title \"testing invalid - playlist title with backward invalid character\" at the end of the playlist list.",
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets('''Adding playlist in spoken quality with three invalid chars ':', '/' and "\".''',
+        (WidgetTester tester) async {
+      // necessary in case the previous test failed and so did not
+      // delete the its playlist dir
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copying the initial local playlist json file with no audio
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_newly_downloaded_playlist_test",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
+        tester: tester,
+        forcedLocale: const Locale('en'),
+      );
+
+      // Entering the created playlist URL in the Youtube URL or search
+      // text field of the app
+      var incorrectlyTitledPlaylistUrl =
+          'https://youtube.com/playlist?list=PLzwWSJNcZTMT8bvRagR7WnfAWejWEvYkJ&si=wKpVonHg_PJKJWyY';
+
+      await tester.enterText(
+        find.byKey(
+          const Key('youtubeUrlOrSearchTextField'),
+        ),
+        incorrectlyTitledPlaylistUrl,
+      );
+      await tester.pumpAndSettle();
+
+      // Open the add playlist dialog by tapping the add playlist
+      // button
+      await tester.tap(find.byKey(const Key('addPlaylistButton')));
+      await tester.pumpAndSettle();
+
+      // Check the value of the AlertDialog dialog title
+      Text alertDialogTitle =
+          tester.widget(find.byKey(const Key('playlistConfirmDialogTitleKey')));
+      expect(alertDialogTitle.data, 'Add Youtube Playlist');
+
+      // Check the value of the AlertDialog url Text
+      Text confirmUrlText =
+          tester.widget(find.byKey(const Key('playlistUrlConfirmDialogText')));
+      expect(confirmUrlText.data, incorrectlyTitledPlaylistUrl);
+
+      // Confirm the addition by tapping the 'Add' button in
+      // the AlertDialog and then on the 'OK' button of the
+      // confirm dialog
+      await tester
+          .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
+      await tester.pumpAndSettle();
+
+      // Add a delay to allow the update playlist URL to finish. 1
+      // second is ok
+      await Future.delayed(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      // Verify the displayed warning dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Youtube playlist \"Restore: short / test \\ playlist\" of spoken quality added with corrected title \"Restore- short - test - playlist\" at the end of the playlist list.",
       );
 
       // Purge the test playlist directory so that the created test

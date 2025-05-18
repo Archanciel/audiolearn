@@ -570,7 +570,9 @@ class AudioDownloadVM extends ChangeNotifier {
         return null;
       }
 
-      if (playlistTitle.contains('/') || playlistTitle.contains(':')) {
+      if (playlistTitle.contains('/') ||
+          playlistTitle.contains(':') ||
+          playlistTitle.contains('\\')) {
         // The case if the Youtube playlist title contains a '/'
         // character. This character is used to separate the
         // directories in a path and so can not be used in a
@@ -580,7 +582,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
         playlistTitle = playlistTitle.replaceAll('/', '-');
         playlistTitle = playlistTitle.replaceAll(':', '-');
-      }
+        playlistTitle = playlistTitle.replaceAll('\\', '-');}
 
       int playlistIndex = _listOfPlaylist
           .indexWhere((playlist) => playlist.title == playlistTitle);
