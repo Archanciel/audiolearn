@@ -13572,8 +13572,6 @@ void main() {
             dateFormatVM: dateFormatVM,
           );
 
-          const String playlistRootDirName = 'playlists';
-
           // Replace the platform instance with your mock
           MockFilePicker mockFilePicker = MockFilePicker();
           FilePicker.platform = mockFilePicker;
@@ -13762,8 +13760,6 @@ void main() {
             audioPlayerVM: audioPlayerVM,
             dateFormatVM: dateFormatVM,
           );
-
-          const String playlistRootDirName = 'playlists';
 
           // Replace the platform instance with your mock
           MockFilePicker mockFilePicker = MockFilePicker();
@@ -15052,6 +15048,147 @@ void main() {
           pictureFileNameFour: "Jésus je T'adore.jpg",
           audioForPictureTitleFourLst: [
             "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
+          ],
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''To redownload from internet, restore unique playlist, not replace existing playlist. Restore
+            unique playlist Windows zip containing 'Restore- short - test - playlist' playlist with 3
+            short audio's to empty Windows application''', (tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        String restorableZipFilePathName =
+            "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Windows audioLearn one playlist short audio's.zip";
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+        WarningMessageVM warningMessageVM = WarningMessageVM();
+
+        AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+          warningMessageVM: warningMessageVM,
+          settingsDataService: settingsDataService,
+        );
+
+        PlaylistListVM playlistListVM = PlaylistListVM(
+          warningMessageVM: warningMessageVM,
+          audioDownloadVM: audioDownloadVM,
+          commentVM: CommentVM(),
+          pictureVM: PictureVM(
+            settingsDataService: settingsDataService,
+          ),
+          settingsDataService: settingsDataService,
+        );
+
+        // calling getUpToDateSelectablePlaylists() loads all the
+        // playlist json files from the app dir and so enables
+        // playlistListVM to know which playlists are
+        // selected and which are not
+        playlistListVM.getUpToDateSelectablePlaylists();
+
+        await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
+          tester: tester,
+        );
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 3138),
+        ]);
+
+        // Execute the 'Restore Playlists, Comments and Settings from Zip
+        // File ...' menu
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: true,
+        );
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              'Restored 1 playlist, 2 comment and 2 picture JSON files as well as the application settings from "$restorableZipFilePathName".',
+          isWarningConfirming: true,
+          warningTitle: 'CONFIRMATION',
+        );
+
+        // Verifying the existing and the restored playlists
+        // list as well as the selected playlist 'Prières du
+        // Maître' displayed audio titles and subtitles.
+
+        const String uniquePlaylistTitle = 'Restore- short - test - playlist';
+        List<String> playlistsTitles = [
+          "${uniquePlaylistTitle}",
+        ];
+
+        List<String> audioTitles = [
+          "People Talking at The Table _ Free Video Loop",
+          "morning _ cinematic video",
+          "Really short video",
+        ];
+
+        List<String> audioSubTitles = [
+          '0:00:24.1. 11 KB at 7 KB/sec on 18/05/2025 at 16:40.',
+          "0:00:58.9. 360 KB at 175 KB/sec on 18/05/2025 at 16:40.",
+          "0:00:09.8. 61 KB at 30 KB/sec on 18/05/2025 at 16:40.",
+        ];
+
+        _verifyRestoredPlaylistAndAudio(
+          tester: tester,
+          selectedPlaylistTitle: uniquePlaylistTitle,
+          playlistsTitles: playlistsTitles,
+          audioTitles: audioTitles,
+          audioSubTitles: audioSubTitles,
+        );
+
+        // Verify the content of the 'Restore- short - test - playlist'
+        // playlist dir + comments + pictures dir after restoration.
+        IntegrationTestUtil.verifyPlaylistDirectoryContents(
+          playlistTitle: uniquePlaylistTitle,
+          expectedAudioFiles: [],
+          expectedCommentFiles: [
+            "250518-164039-morning _ cinematic video 23-07-01.json",
+            "250518-164043-People Talking at The Table _ Free Video Loop 19-09-28.json",
+          ],
+          expectedPictureFiles: [
+            "250518-164035-Really short video 23-07-01.json",
+            "250518-164039-morning _ cinematic video 23-07-01.json",
+          ],
+          doesPictureAudioMapFileNameExist: true,
+          applicationPictureDir:
+              '$kApplicationPathWindowsTest${path.separator}$kPictureDirName',
+          pictureFileNameOne: 'Jean-Pierre.jpg',
+          audioForPictureTitleOneLst: [
+            "Restore- short - test - playlist|250518-164035-Really short video 23-07-01"
+          ],
+          pictureFileNameTwo: "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg",
+          audioForPictureTitleTwoLst: [
+            "Restore- short - test - playlist|250518-164039-morning _ cinematic video 23-07-01"
           ],
         );
 

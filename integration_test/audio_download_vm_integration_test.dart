@@ -1248,7 +1248,7 @@ Future<void> main() async {
   });
   group(
       '''Add Youtube playlist with corrected title. If the added playlist contains
-        invalid characters like '/' or ':' or '\', the playlist is added to the application with a
+        invalid characters like '/' or ':' or '\\', the playlist is added to the application with a
         corrected title.''', () {
     testWidgets('''Adding playlist in spoken quality with '/' invalid title.''',
         (WidgetTester tester) async {
@@ -1547,7 +1547,7 @@ Future<void> main() async {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('''Adding playlist in spoken quality with three invalid chars ':', '/' and "\".''',
+    testWidgets('''Adding playlist in spoken quality with three invalid chars ':', '/' and "\\".''',
         (WidgetTester tester) async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
