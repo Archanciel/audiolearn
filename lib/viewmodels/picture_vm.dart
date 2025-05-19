@@ -464,6 +464,17 @@ class PictureVM extends ChangeNotifier {
     return wasPictureRemoved;
   }
 
+  /// Extract the passed playlist picture audio map from the application
+  /// picture audio map json file.
+  Map<String, List<String>> createPictureAudioMapForPlaylistFromApplicationPictureAudioMap({
+    required String audioPlaylistTitle,
+  }) {
+    final Map<String, List<String>> applicationPictureAudioMap =
+        _readAppPictureAudioMap();
+
+    return applicationPictureAudioMap;
+  }
+
   /// Method called by PlaylistListVM.
   void moveAudioPictureJsonFileToTargetPlaylist({
     required Audio audio,
