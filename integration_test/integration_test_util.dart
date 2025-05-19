@@ -169,6 +169,41 @@ class IntegrationTestUtil {
     );
   }
 
+  static Future<void> typeOnPlaylistMenuItem({
+    required WidgetTester tester,
+    required String playlistTitle,
+    required String playlistMenuKeyStr,
+  }) async {
+    // Now find the leading menu icon button of the Playlist ListTile
+    // and tap on it
+
+    // First, find the playlist ListTile Text widget
+    final Finder playlistListTileTextWidgetFinder = find.text(playlistTitle);
+
+    // Then obtain the source playlist ListTile widget enclosing the
+    // Text widget by finding its ancestor
+    final Finder playlistListTileWidgetFinder = find.ancestor(
+      of: playlistListTileTextWidgetFinder,
+      matching: find.byType(ListTile),
+    );
+
+    final Finder firstPlaylistListTileLeadingMenuIconButton = find.descendant(
+      of: playlistListTileWidgetFinder,
+      matching: find.byIcon(Icons.menu),
+    );
+
+    // Tap the leading menu icon button to open the popup menu
+    await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
+    await tester.pumpAndSettle();
+
+    // Now find the playlist popup menu item and tap on it
+    final Finder popupFilteredAudioActionPlaylistMenuItem =
+        find.byKey(Key(playlistMenuKeyStr));
+
+    await tester.tap(popupFilteredAudioActionPlaylistMenuItem);
+    await tester.pumpAndSettle();
+  }
+
   static Future<void> typeOnPlaylistSubMenuItem({
     required WidgetTester tester,
     required String playlistTitle,
@@ -181,11 +216,11 @@ class IntegrationTestUtil {
     // Now find the leading menu icon button of the Playlist ListTile
     // and tap on it
 
-    // First, find the Youtube playlist ListTile Text widget
+    // First, find the playlist ListTile Text widget
     final Finder playlistListTileTextWidgetFinder = find.text(playlistTitle);
 
-    // Then obtain the Youtube source playlist ListTile widget
-    // enclosing the Text widget by finding its ancestor
+    // Then obtain the source playlist ListTile widget enclosing the
+    // Text widget by finding its ancestor
     final Finder playlistListTileWidgetFinder = find.ancestor(
       of: playlistListTileTextWidgetFinder,
       matching: find.byType(ListTile),
