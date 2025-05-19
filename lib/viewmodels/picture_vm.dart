@@ -465,14 +465,31 @@ class PictureVM extends ChangeNotifier {
   }
 
   /// Extract the passed playlist picture audio map from the application
-  /// picture audio map json file.
-  Map<String, List<String>> createPictureAudioMapForPlaylistFromApplicationPictureAudioMap({
+  /// picture audio map json file. This method enables to add a application
+  /// picture audio map json file to the zip file created for the individual
+  /// playlist.
+  Map<String, List<String>>
+      createPictureAudioMapForPlaylistFromApplicationPictureAudioMap({
     required String audioPlaylistTitle,
   }) {
     final Map<String, List<String>> applicationPictureAudioMap =
         _readAppPictureAudioMap();
 
-    return applicationPictureAudioMap;
+    final Map<String, List<String>> playlistPictureAudioMap = {};
+
+    applicationPictureAudioMap.forEach((pictureFileName, audioInfoList) {
+      // Filter the audio info list to only include entries for the specified playlist
+      final List<String> filteredAudioInfoList = audioInfoList
+          .where((audioInfo) => audioInfo.startsWith('$audioPlaylistTitle|'))
+          .toList();
+
+      // Add to result map only if there are matching entries for this playlist
+      if (filteredAudioInfoList.isNotEmpty) {
+        playlistPictureAudioMap[pictureFileName] = filteredAudioInfoList;
+      }
+    });
+
+    return playlistPictureAudioMap;
   }
 
   /// Method called by PlaylistListVM.

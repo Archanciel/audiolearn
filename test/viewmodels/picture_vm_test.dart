@@ -1429,7 +1429,8 @@ void main() {
   });
   // Helper method to create a test picture JSON file
   group('Restore picture JPG tests', () {
-    test('''restorePictureJpgFilesFromSourceDirectory - restore picture JPG files from source directory to
+    test(
+        '''restorePictureJpgFilesFromSourceDirectory - restore picture JPG files from source directory to
         app pictures directory''', () async {
       pictureVM.restorePictureJpgFilesFromSourceDirectory(
         sourceDirectoryPath: availableTestPicturePath,
@@ -1441,6 +1442,88 @@ void main() {
 
       file = File(testAvailablePictureTwoFilePathName);
       expect(file.existsSync(), true);
+    });
+  });
+  group(
+      'Create picture audio map for playlist from the application picture audio map',
+      () {
+    test(
+        '''First, copy the application picture audio map file in the application picture directory.''',
+        () {
+      // Copy the application picture-audio map file in the
+      // application picture directory.
+
+      final String appPictureAudioMapFilePathName =
+          '$kApplicationPathWindowsTest${path.separator}pictureAudioMap.json';
+
+      DirUtil.copyFileToDirectoryIfNotExistSync(
+          sourceFilePathName: appPictureAudioMapFilePathName,
+          targetDirectoryPath: applicationPicturePath);
+
+      // Add picture to the playlist one first audio
+      pictureVM.addPictureToAudio(
+        audio: playlistOneAudioOne,
+        pictureFilePathName: testAvailablePictureOneFilePathName,
+      );
+
+      // Verify application picture-audio map
+
+      final Map<String, dynamic> pictureAudioMap = pictureVM
+          .createPictureAudioMapForPlaylistFromApplicationPictureAudioMap(
+        audioPlaylistTitle: 'Restore- short - test - playlist',
+      );
+
+      expect(pictureAudioMap.length, 3);
+      expect(
+        pictureAudioMap.containsKey("Jean-Pierre.jpg"),
+        true,
+      );
+      expect(
+        pictureAudioMap.containsKey(
+            "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg"),
+        true,
+      );
+      expect(
+        pictureAudioMap.containsKey("Jésus le Dieu vivant.jpg"),
+        true,
+      );
+      expect(
+        pictureAudioMap.containsKey("Sam Altman.jpg"),
+        false,
+      );
+      expect(
+        pictureAudioMap.containsKey("Jésus mon Amour.jpg"),
+        false,
+      );
+      expect(
+        pictureAudioMap.containsKey("Jésus je T'adore.jpg"),
+        false,
+      );
+
+      List pictureAudioMapLst = (pictureAudioMap["Jean-Pierre.jpg"] as List);
+      expect(pictureAudioMapLst.length, 1);
+      expect(
+        pictureAudioMapLst[0],
+        "Restore- short - test - playlist|250518-164035-Really short video 23-07-01",
+      );
+
+      pictureAudioMapLst = (pictureAudioMap["Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg"] as List);
+      expect(pictureAudioMapLst.length, 2);
+      expect(
+        pictureAudioMapLst[0],
+        "Restore- short - test - playlist|250518-164039-morning _ cinematic video 23-07-01",
+      );
+      expect(
+        pictureAudioMapLst[1],
+        "Restore- short - test - playlist|250518-164035-Really short video 23-07-01",
+      );
+
+      pictureAudioMapLst = (pictureAudioMap["Jésus le Dieu vivant.jpg"] as List);
+      expect(pictureAudioMapLst.length, 1);
+      expect(
+        pictureAudioMapLst[0],
+        "Restore- short - test - playlist|250518-164043-People Talking at The Table _ Free Video Loop 19-09-28"
+      );
     });
   });
 }
