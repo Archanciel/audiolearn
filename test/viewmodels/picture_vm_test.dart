@@ -1522,8 +1522,10 @@ void main() {
       pictureAudioMapLst =
           (playlistPictureAudioMap["Jésus le Dieu vivant.jpg"] as List);
       expect(pictureAudioMapLst.length, 1);
-      expect(pictureAudioMapLst[0],
-          "Restore- short - test - playlist|250518-164043-People Talking at The Table _ Free Video Loop 19-09-28");
+      expect(
+        pictureAudioMapLst[0],
+        "Restore- short - test - playlist|250518-164043-People Talking at The Table _ Free Video Loop 19-09-28",
+      );
     });
   });
   group(
@@ -1557,7 +1559,7 @@ void main() {
       final Map<String, List<String>> applicationPictureAudioMap =
           pictureVM.readAppPictureAudioMap();
 
-      // Verify application picture-audio map
+      // Verify application picture audio map
 
       expect(applicationPictureAudioMap.length, 4);
       expect(

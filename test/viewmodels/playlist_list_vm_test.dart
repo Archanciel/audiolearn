@@ -155,7 +155,8 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    test('moveAudioToPlaylist moves audio and its comments to playlist', () async {
+    test('moveAudioToPlaylist moves audio and its comments to playlist',
+        () async {
       const String sourcePlaylistTitle = 'S8 audio';
 
       final sourcePlaylistPath = path.join(
@@ -201,7 +202,7 @@ void main() {
 
       // Testing move 'La résilience insulaire par Fiona Roche' with
       // play position at start of audio, no comments
-     await testMoveAudioAndCommentToPlaylist(
+      await testMoveAudioAndCommentToPlaylist(
         playlistListVM: playlistListVM,
         sourcePlaylist: sourcePlaylist,
         sourceAudioIndex: 0,
@@ -1018,8 +1019,8 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      String savedZipFilePathName =
-          await playlistListVM.savePlaylistsCommentsPicturesAndSettingsJsonFilesToZip(
+      String savedZipFilePathName = await playlistListVM
+          .savePlaylistsCommentsPicturesAndSettingsJsonFilesToZip(
         targetDirectoryPath: kApplicationPathWindowsTest,
       );
 
@@ -1107,7 +1108,8 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      await playlistListVM.savePlaylistsCommentsPicturesAndSettingsJsonFilesToZip(
+      await playlistListVM
+          .savePlaylistsCommentsPicturesAndSettingsJsonFilesToZip(
         targetDirectoryPath: kApplicationPathWindowsTest,
       );
 
@@ -1236,8 +1238,7 @@ void main() {
       ];
 
       List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
-        directoryPath:
-            "$kApplicationPathWindowsTest${path.separator}S8 audio",
+        directoryPath: "$kApplicationPathWindowsTest${path.separator}S8 audio",
         fileExtension: 'mp3',
       );
 
@@ -1451,8 +1452,7 @@ void main() {
       ];
 
       List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
-        directoryPath:
-            "$kApplicationPathWindowsTest${path.separator}S8 audio",
+        directoryPath: "$kApplicationPathWindowsTest${path.separator}S8 audio",
         fileExtension: 'mp3',
       );
 
@@ -1930,12 +1930,11 @@ void main() {
         "S8 audio",
       ];
 
-      String initialPlaylistRootPath =
-          kApplicationPathWindowsTest;
+      String initialPlaylistRootPath = kApplicationPathWindowsTest;
       const String initialRootSelectedPlaylistTitle = 'S8 audio';
 
       // Verify the initial playlist data
-      _verifyPlaylistRelatedData(
+      _verifyOrderedTitlesAndPlaylistSelection(
           settingsDataService: settingsDataService,
           playlistListVM: playlistListVM,
           playlistDownloadRootPath: initialPlaylistRootPath,
@@ -1963,7 +1962,7 @@ void main() {
       );
 
       // Verify the modified playlist data
-      _verifyPlaylistRelatedData(
+      _verifyOrderedTitlesAndPlaylistSelection(
           settingsDataService: settingsDataService,
           playlistListVM: playlistListVM,
           playlistDownloadRootPath: modifiedPlaylistRootPath,
@@ -1977,7 +1976,7 @@ void main() {
       );
 
       // Verify the resetted initial playlist data
-      _verifyPlaylistRelatedData(
+      _verifyOrderedTitlesAndPlaylistSelection(
           settingsDataService: settingsDataService,
           playlistListVM: playlistListVM,
           playlistDownloadRootPath: initialPlaylistRootPath,
@@ -1991,9 +1990,301 @@ void main() {
       );
     });
   });
+  group('''Delete playlist with pictured audio's''', () {
+    test(
+        '''First copy test data. Then verify ordered playlist titles and playlist
+          selection as well as pictureAudioMap json content. Then delete playlist
+          and verify that its dir no longer exist as well as the reduced pictureAudioMap
+          json content.''', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}save_or_delete_playlist_wit_pictures",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+        settingsJsonPathFileName:
+            "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName",
+      );
+
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+      );
+
+      PictureVM pictureVM = PictureVM(
+        settingsDataService: settingsDataService,
+      );
+
+      PlaylistListVM playlistListVM = PlaylistListVM(
+        warningMessageVM: warningMessageVM,
+        audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
+        pictureVM: pictureVM,
+        settingsDataService: settingsDataService,
+      );
+
+      const List<String> orderedPlaylistTitles = [
+        "Restore- short - test - playlist",
+        "A restaurer",
+        "local",
+      ];
+
+      // Verify the initial playlist data
+      _verifyOrderedTitlesAndPlaylistSelection(
+          settingsDataService: settingsDataService,
+          playlistListVM: playlistListVM,
+          playlistDownloadRootPath: kPlaylistDownloadRootPathWindowsTest,
+          orderedPlaylistTitles: orderedPlaylistTitles,
+          selectedPlaylistTitle: "A restaurer");
+
+      // Verify the pictureAudioMap json content before playlist
+      // deletion
+
+      // Load the application picture audio map from the
+      // application picture audio map json file.
+      Map<String, List<String>> applicationPictureAudioMap =
+          pictureVM.readAppPictureAudioMap();
+
+      // Verify application picture audio map
+
+      expect(applicationPictureAudioMap.length, 6);
+      expect(
+        applicationPictureAudioMap.containsKey("Jean-Pierre.jpg"),
+        true,
+      );
+      expect(
+        applicationPictureAudioMap.containsKey(
+            "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg"),
+        true,
+      );
+      expect(
+        applicationPictureAudioMap.containsKey("Sam Altman.jpg"),
+        true,
+      );
+      expect(
+        applicationPictureAudioMap.containsKey("Jésus mon Amour.jpg"),
+        true,
+      );
+      expect(
+        applicationPictureAudioMap.containsKey("Jésus le Dieu vivant.jpg"),
+        true,
+      );
+      expect(
+        applicationPictureAudioMap.containsKey("Jésus je T'adore.jpg"),
+        true,
+      );
+
+      List pictureAudioMapLst =
+          (applicationPictureAudioMap["Jean-Pierre.jpg"] as List);
+      expect(pictureAudioMapLst.length, 1);
+      expect(
+        pictureAudioMapLst[0],
+        "Restore- short - test - playlist|250518-164035-Really short video 23-07-01",
+      );
+
+      pictureAudioMapLst = (applicationPictureAudioMap[
+              "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg"]
+          as List);
+      expect(pictureAudioMapLst.length, 2);
+      expect(
+        pictureAudioMapLst[0],
+        "Restore- short - test - playlist|250518-164039-morning _ cinematic video 23-07-01",
+      );
+      expect(
+        pictureAudioMapLst[1],
+        "Restore- short - test - playlist|250518-164035-Really short video 23-07-01",
+      );
+
+      pictureAudioMapLst =
+          (applicationPictureAudioMap["Sam Altman.jpg"] as List);
+      expect(pictureAudioMapLst.length, 2);
+      expect(
+        pictureAudioMapLst[0],
+        "A restaurer|250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12",
+      );
+      expect(
+        pictureAudioMapLst[1],
+        "A restaurer|250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12",
+      );
+
+      pictureAudioMapLst =
+          (applicationPictureAudioMap["Jésus mon Amour.jpg"] as List);
+      expect(pictureAudioMapLst.length, 1);
+      expect(
+        pictureAudioMapLst[0],
+        "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+      );
+
+      pictureAudioMapLst =
+          (applicationPictureAudioMap["Jésus le Dieu vivant.jpg"] as List);
+      expect(pictureAudioMapLst.length, 3);
+      expect(
+        pictureAudioMapLst[0],
+        "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+      );
+      expect(
+        pictureAudioMapLst[1],
+        "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+      );
+      expect(
+        pictureAudioMapLst[2],
+        "Restore- short - test - playlist|250518-164043-People Talking at The Table _ Free Video Loop 19-09-28",
+      );
+
+      pictureAudioMapLst =
+          (applicationPictureAudioMap["Jésus je T'adore.jpg"] as List);
+      expect(pictureAudioMapLst.length, 1);
+      expect(
+        pictureAudioMapLst[0],
+        "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+      );
+
+      // Verify that the playlist directory before playlist
+      // deletion exist
+      final String playlistToDeleteFilePathNName = "$kPlaylistDownloadRootPathWindowsTest${path.separator}Restore- short - test - playlist";
+      expect(
+        Directory(
+          playlistToDeleteFilePathNName,
+        ).existsSync(),
+        true,
+      );
+
+      // Delete the 'Restore- short - test - playlist' playlist
+      playlistListVM.deletePlaylist(
+        playlistToDelete: playlistListVM
+            .getUpToDateSelectablePlaylists()
+            .firstWhere((Playlist playlist) => playlist.title == "Restore- short - test - playlist"),
+      );
+
+      // Check the ordered playlist titles list in the settings
+      // data service after playlist deletion
+
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+      expect(
+          settingsDataService.get(
+            settingType: SettingType.playlists,
+            settingSubType: Playlists.orderedTitleLst,
+          ),
+          [
+            'A restaurer',
+            'local',
+          ]);
+
+      // Verify that the playlist directory after playlist
+      // deletion no longer exist
+      expect(
+        Directory(playlistToDeleteFilePathNName).existsSync(),
+        false,
+      );
+
+      // Verify the pictureAudioMap json content after playlist
+      // deletion
+
+      // Load the application picture audio map from the
+      // application picture audio map json file.
+      applicationPictureAudioMap =
+          pictureVM.readAppPictureAudioMap();
+
+      // Verify application picture audio map
+
+      expect(applicationPictureAudioMap.length, 4);
+      expect(
+        applicationPictureAudioMap.containsKey("Jean-Pierre.jpg"),
+        false,
+      );
+      expect(
+        applicationPictureAudioMap.containsKey(
+            "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg"),
+        false,
+      );
+      expect(
+        applicationPictureAudioMap.containsKey("Sam Altman.jpg"),
+        true,
+      );
+      expect(
+        applicationPictureAudioMap.containsKey("Jésus mon Amour.jpg"),
+        true,
+      );
+      expect(
+        applicationPictureAudioMap.containsKey("Jésus le Dieu vivant.jpg"),
+        true,
+      );
+      expect(
+        applicationPictureAudioMap.containsKey("Jésus je T'adore.jpg"),
+        true,
+      );
+
+      pictureAudioMapLst =
+          (applicationPictureAudioMap["Sam Altman.jpg"] as List);
+      expect(pictureAudioMapLst.length, 2);
+      expect(
+        pictureAudioMapLst[0],
+        "A restaurer|250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12",
+      );
+      expect(
+        pictureAudioMapLst[1],
+        "A restaurer|250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12",
+      );
+
+      pictureAudioMapLst =
+          (applicationPictureAudioMap["Jésus mon Amour.jpg"] as List);
+      expect(pictureAudioMapLst.length, 1);
+      expect(
+        pictureAudioMapLst[0],
+        "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+      );
+
+      pictureAudioMapLst =
+          (applicationPictureAudioMap["Jésus le Dieu vivant.jpg"] as List);
+      expect(pictureAudioMapLst.length, 2);
+      expect(
+        pictureAudioMapLst[0],
+        "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+      );
+      expect(
+        pictureAudioMapLst[1],
+        "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+      );
+
+      pictureAudioMapLst =
+          (applicationPictureAudioMap["Jésus je T'adore.jpg"] as List);
+      expect(pictureAudioMapLst.length, 1);
+      expect(
+        pictureAudioMapLst[0],
+        "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+  });
 }
 
-void _verifyPlaylistRelatedData({
+void _verifyOrderedTitlesAndPlaylistSelection({
   required SettingsDataService settingsDataService,
   required PlaylistListVM playlistListVM,
   required String playlistDownloadRootPath,

@@ -806,6 +806,13 @@ class PlaylistListVM extends ChangeNotifier {
         _setUniqueSelectedPlaylistToFalse();
       }
 
+      // When deleting the playlist, its related entries in the
+      // application picture audio map are deleted as well.
+      _pictureVM
+          .removePlaylistRelatedAudioPictureEntriesFromApplicationPictureAudioMap(
+        playlistTitle: playlistToDelete.title,
+      );
+
       _audioDownloadVM.deletePlaylist(
         playlistToDelete: playlistToDelete,
       );
