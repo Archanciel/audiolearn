@@ -2764,37 +2764,47 @@ class PlaylistListVM extends ChangeNotifier {
 
         // Add the file to the archive, preserving the relative path
         List<int> fileBytes = await entity.readAsBytes();
-        archive.addFile(ArchiveFile(relativePath, fileBytes.length, fileBytes));
+        archive.addFile(ArchiveFile(
+          relativePath,
+          fileBytes.length,
+          fileBytes,
+        ));
       }
     }
 
     if (applicationPath != playlistsRootPath) {
       // Path to the settings.json file
-      File settingsFile = File(path.join(applicationPath, 'settings.json'));
+      File settingsFile = File(path.join(applicationPath, kSettingsFileName));
 
       // Check if settings.json exists before attempting to add it
       if (settingsFile.existsSync()) {
         // Get the relative path of the settings.json file
-        String settingsRelativePath = 'settings.json';
+        String settingsRelativePath = kSettingsFileName;
 
         // Read the file and add it to the archive
         List<int> settingsBytes = await settingsFile.readAsBytes();
         archive.addFile(ArchiveFile(
-            settingsRelativePath, settingsBytes.length, settingsBytes));
+          settingsRelativePath,
+          settingsBytes.length,
+          settingsBytes,
+        ));
       }
     }
 
     // Now, adding the pictures/pictureAudioMap.json file to the archive
     File pictureAudioMapFile = File(
-        path.join(applicationPath, kPictureDirName, 'pictureAudioMap.json'));
+        path.join(applicationPath, kPictureDirName, kPictureAudioMapFileName));
     if (pictureAudioMapFile.existsSync()) {
       String pictureAudioMapRelativePath =
-          path.join('pictures', 'pictureAudioMap.json');
+          path.join(kPictureDirName, kPictureAudioMapFileName);
 
       // Read the file and add it to the archive
       List<int> pictureAudioMapBytes = await pictureAudioMapFile.readAsBytes();
-      archive.addFile(ArchiveFile(pictureAudioMapRelativePath,
-          pictureAudioMapBytes.length, pictureAudioMapBytes));
+      archive.addFile(ArchiveFile(
+        pictureAudioMapRelativePath,
+        pictureAudioMapBytes.length,
+        pictureAudioMapBytes,
+      ));
     }
 
     // Save the archive to a zip file in the target directory
@@ -2840,12 +2850,42 @@ class PlaylistListVM extends ChangeNotifier {
 
         // Add the file to the archive, preserving the relative path
         List<int> fileBytes = await entity.readAsBytes();
-        archive.addFile(ArchiveFile(relativePath, fileBytes.length, fileBytes));
+        archive.addFile(ArchiveFile(
+          relativePath,
+          fileBytes.length,
+          fileBytes,
+        ));
       }
     }
 
+    final String playlistTitle = playlist.title;
+
+    // Obtain the playlist picture audio map from the
+    // application picture audio map json file.
+    Map<String, List<String>> playlistPictureAudioMap = _pictureVM
+        .createPictureAudioMapForPlaylistFromApplicationPictureAudioMap(
+      audioPlaylistTitle: playlistTitle,
+    );
+
+    // Convert the map to JSON string
+    String jsonString = json.encode(playlistPictureAudioMap);
+
+    // Convert the JSON string to bytes (List<int>)
+    List<int> pictureAudioMapBytes = utf8.encode(jsonString);
+
+    // Create the relative path for the pictureAudioMap file within the archive
+    String pictureAudioMapRelativePath =
+        path.join(kPictureDirName, kPictureAudioMapFileName);
+
+    // Add the file to the archive
+    archive.addFile(ArchiveFile(
+      pictureAudioMapRelativePath,
+      pictureAudioMapBytes.length,
+      pictureAudioMapBytes,
+    ));
+
     // Save the archive to a zip file in the target directory
-    String zipFileName = "${playlist.title}.zip";
+    String zipFileName = "$playlistTitle.zip";
     String savedZipFilePathName = path.join(targetDir, zipFileName);
 
     File zipFile = File(savedZipFilePathName);
@@ -3189,7 +3229,7 @@ class PlaylistListVM extends ChangeNotifier {
         _pictureVM.mergeRestoredPictureAudioMapJsonFile(
           restoredPictureAudioMap: pictureAudioMap,
         );
-        
+
         continue;
       }
 
