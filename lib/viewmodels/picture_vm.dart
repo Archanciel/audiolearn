@@ -51,7 +51,7 @@ class PictureVM extends ChangeNotifier {
     // directory, it is not copied again.
     //
     // Add as well the association between the picture file name and the
-    // audio file name in the pictureAudio.json file.
+    // audio file name in the pictureAudioMap.json file.
     _copyPictureFileToAppPictureDir(
       pictureFilePathName: pictureFilePathName,
       pictureFileName: pictureFileName,
@@ -74,7 +74,7 @@ class PictureVM extends ChangeNotifier {
   /// directory, it is not copied again.
   ///
   /// Add as well the association between the picture file name and the
-  /// audio file name in the pictureAudio.json file.
+  /// audio file name in the pictureAudioMap.json file.
   void _copyPictureFileToAppPictureDir({
     required String pictureFilePathName,
     required String pictureFileName,
@@ -105,7 +105,7 @@ class PictureVM extends ChangeNotifier {
     final String playListTitleAndAudioFileNameWithoutExtension =
         "$audioPlaylistTitle|${DirUtil.getFileNameWithoutMp3Extension(mp3FileName: audioFileName)}";
 
-    final Map<String, List<String>> pictureAudioMap = _readAppPictureAudioMap();
+    final Map<String, List<String>> pictureAudioMap = readAppPictureAudioMap();
 
     if (pictureAudioMap.containsKey(pictureFileName)) {
       final List<String> audioList = pictureAudioMap[pictureFileName]!;
@@ -123,8 +123,9 @@ class PictureVM extends ChangeNotifier {
   }
 
   /// Reads the application picture audio map json file if it exists, otherwise returns
-  /// an empty map.
-  Map<String, List<String>> _readAppPictureAudioMap() {
+  /// an empty map. The method is not private since it is used in the picture_vm_test.dart
+  /// test file.
+  Map<String, List<String>> readAppPictureAudioMap() {
     final File jsonFile = _createAppPictureAudioMapJsonFile();
 
     if (!jsonFile.existsSync()) {
@@ -262,6 +263,44 @@ class PictureVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Removes all audio entries related to a specific playlist from the application
+  /// picture audio map. This is useful when you want to remove or clean up associations
+  /// for a playlist that is being deleted.
+  void removePlaylistRelatedAudioPictureEntriesFromApplicationPictureAudioMap({
+    required String playlistTitle,
+  }) {
+
+      // Obain the 'Restore- short - test - playlist' playlist related picture
+      // audio map from the application picture-audio map.
+      final Map<String, List<String>> playlistPictureAudioMap = createPictureAudioMapForPlaylistFromApplicationPictureAudioMap(
+        audioPlaylistTitle: playlistTitle,
+      );
+
+    final Map<String, List<String>> applicationPictureAudioMap = readAppPictureAudioMap();
+
+    // For each picture in the playlist's picture-audio map
+    for (String pictureFileName in playlistPictureAudioMap.keys) {
+      if (applicationPictureAudioMap.containsKey(pictureFileName)) {
+        // Get the list of audios associated with this picture in the application map
+        List<String> audioList = applicationPictureAudioMap[pictureFileName]!;
+        
+        // Remove all entries starting with the playlist title followed by pipe
+        audioList.removeWhere((audioInfo) => audioInfo.startsWith('$playlistTitle|'));
+        
+        // If there are no more audios associated with this picture, remove the picture entry
+        if (audioList.isEmpty) {
+          applicationPictureAudioMap.remove(pictureFileName);
+        } else {
+          // Otherwise update the audio list
+          applicationPictureAudioMap[pictureFileName] = audioList;
+        }
+      }
+    }
+
+    // Save the updated map
+    _savePictureAudioMap(applicationPictureAudioMap);
+  }
+
   void _removeAudioPictureFromAudioPictureJsonFile({
     required Audio audio,
     required List<Picture> pictureLst,
@@ -279,7 +318,7 @@ class PictureVM extends ChangeNotifier {
       audioPlaylistTitle: audio.enclosingPlaylist!.title,
     )) {
       // The picture was not associated with the audio file name,
-      // so the applicationn of the rest of the method is not
+      // so the application of the rest of the method is not
       // necessary.
       return;
     }
@@ -437,7 +476,7 @@ class PictureVM extends ChangeNotifier {
     final String playListTitleAndAudioFileNameWithoutExtension =
         "$audioPlaylistTitle|${DirUtil.getFileNameWithoutMp3Extension(mp3FileName: audioFileName)}";
     final Map<String, List<String>> applicationPictureAudioMap =
-        _readAppPictureAudioMap();
+        readAppPictureAudioMap();
     bool wasPictureRemoved = false;
 
     if (applicationPictureAudioMap.containsKey(pictureFileName)) {
@@ -465,7 +504,7 @@ class PictureVM extends ChangeNotifier {
   }
 
   /// Extract the passed playlist picture audio map from the application
-  /// picture audio map json file. This method enables to add a application
+  /// picture audio map json file. This method enables to add an application
   /// picture audio map json file to the zip file created for the individual
   /// playlist.
   Map<String, List<String>>
@@ -473,7 +512,7 @@ class PictureVM extends ChangeNotifier {
     required String audioPlaylistTitle,
   }) {
     final Map<String, List<String>> applicationPictureAudioMap =
-        _readAppPictureAudioMap();
+        readAppPictureAudioMap();
 
     final Map<String, List<String>> playlistPictureAudioMap = {};
 
@@ -656,7 +695,7 @@ class PictureVM extends ChangeNotifier {
     required Map<String, List<String>> restoredPictureAudioMap,
   }) {
     final Map<String, List<String>> applicationPictureAudioMap =
-        _readAppPictureAudioMap();
+        readAppPictureAudioMap();
 
     for (String pictureFileName in restoredPictureAudioMap.keys) {
       if (applicationPictureAudioMap.containsKey(pictureFileName)) {
