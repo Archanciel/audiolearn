@@ -2764,8 +2764,21 @@ void main() {
             'local',
           ]);
 
+      PictureVM pictureVM = PictureVM(
+        settingsDataService: settingsDataService,
+      );
+
+      // Verify the pictureAudioMap json content before playlist
+      // deletion
+      IntegrationTestUtil.verifyPictureAudioMapBeforePlaylistDeletion(
+        pictureVM: pictureVM,
+      );
+
       // Now test deleting the playlist
+
       const String playlistToDeleteTitle = 'Restore- short - test - playlist';
+
+      // Tap on the playlist item menu to delete this playlist
       await IntegrationTestUtil.typeOnPlaylistMenuItem(
         tester: tester,
         playlistTitle: playlistToDeleteTitle,
@@ -2784,7 +2797,7 @@ void main() {
           .widget<Text>(find.byKey(const Key('confirmationDialogMessageKey')));
 
       expect(deletePlaylistDialogMesageWidget.data,
-          "Deleting the playlist and its 3 audio's, 2 audio comment(s) as well as its JSON file and its directory.");
+          "Deleting the playlist and its 3 audio's, 2 audio comment(s), 4 audio picture(s) as well as its JSON file and its directory.");
 
       // Now find the confirm button of the delete playlist confirm
       // dialog and tap on it
@@ -2813,6 +2826,12 @@ void main() {
                 '$kPlaylistDownloadRootPathWindowsTest${path.separator}$playlistToDeleteTitle')
             .existsSync(),
         false,
+      );
+
+      // Verify the pictureAudioMap json content after playlist
+      // deletion
+      IntegrationTestUtil.verifyPictureAudioMapAfterPlaylistDeletion(
+        pictureVM: pictureVM,
       );
 
       // Purge the test playlist directory so that the created test

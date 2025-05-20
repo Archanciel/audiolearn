@@ -372,12 +372,13 @@
   "deletePlaylist": "Delete Playlist ...",
   "deleteYoutubePlaylistDialogTitle": "Delete Youtube Playlist \"{title}\"",
   "deleteLocalPlaylistDialogTitle": "Delete Local Playlist \"{title}\"",
-  "deletePlaylistDialogComment": "Deleting the playlist and its {audioNumber} audio's, {audioCommentsNumber} audio comment(s) as well as its JSON file and its directory.",
+  "deletePlaylistDialogComment": "Deleting the playlist and its {audioNumber} audio's, {audioCommentsNumber} audio comment(s), {audioPicturesNumber} audio picture(s) as well as its JSON file and its directory.",
   "@deletePlaylistDialogComment": {
     "description": "Confirm message for deleting the playlist",
     "placeholders": {
       "audioNumber": {},
-      "audioCommentsNumber": {}
+      "audioCommentsNumber": {},
+      "audioPicturesNumber": {}
     }
   },
   "appBarTitleAudioExtractor": "Extract Audio",

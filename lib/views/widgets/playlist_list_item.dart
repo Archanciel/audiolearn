@@ -3,6 +3,7 @@ import 'package:audiolearn/utils/dir_util.dart';
 import 'package:audiolearn/utils/ui_util.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/audio_player_vm.dart';
+import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -505,7 +506,11 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                       AppLocalizations.of(context)!.deletePlaylistDialogComment(
                     playlist.downloadedAudioLst.length,
                     commentVMlistenFalse.getPlaylistAudioCommentNumber(
-                        playlist: playlist),
+                      playlist: playlist,
+                    ),
+                    playlistListVMlistenFalse.getPlaylistAudioPictureNumber(
+                      playlist: playlist,
+                    ),
                   ),
                 );
               },
