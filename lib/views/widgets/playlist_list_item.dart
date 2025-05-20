@@ -484,7 +484,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             );
             break;
           case PlaylistPopupMenuAction.savePlaylistCommentsAndPicturesToZip:
-            await UiUtil.saveUniquePlaylistCommentsAAndPicturesToZip(
+            await UiUtil.saveUniquePlaylistCommentsAndPicturesToZip(
               context: context,
               playlist: playlist,
             );

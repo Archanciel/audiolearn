@@ -2709,7 +2709,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// Returns the saved zip file path name, '' if the playlists source dir or the
   /// zip save to target dir do not exist. The returned value is only used in
   /// the playlistListVM unit test.
-  Future<String> savePlaylistsCommentsPicturesAndSettingsJsonFilesToZip({
+  Future<String> savePlaylistsCommentPictureAndSettingsJsonFilesToZip({
     required String targetDirectoryPath,
   }) async {
     String savedZipFilePathName = await _saveAllJsonFilesToZip(
@@ -2829,9 +2829,12 @@ class PlaylistListVM extends ChangeNotifier {
   /// Method called when the user clicks on the 'Save Playlist, Comments, Pictures
   /// Json files to Zip File' playlist menu item.
   ///
+  /// Contrary to the savePlaylistsCommentPictureAndSettingsJsonFilesToZip()
+  /// method, this method add as well to the zip file the playlist picture JPG files.
+  /// 
   /// Returns the saved zip file path name, '' if the  target dir in which to save
   /// the zip does not exist.
-  Future<String> saveUniquePlaylistJsonFilesToZip({
+  Future<String> saveUniquePlaylistCommentAndPictureJsonFilesToZip({
     required Playlist playlist,
     required String targetDir,
   }) async {
@@ -2890,6 +2893,12 @@ class PlaylistListVM extends ChangeNotifier {
       pictureAudioMapBytes.length,
       pictureAudioMapBytes,
     ));
+
+    List<String> pictureJpgPathFileNamesLst = DirUtil.listPathFileNamesInDir(
+      directoryPath: DirUtil.getApplicationPicturePath(),
+      fileExtension: 'jpg',
+    );
+
 
     // Save the archive to a zip file in the target directory
     String zipFileName = "$playlistTitle.zip";
