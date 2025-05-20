@@ -2006,7 +2006,7 @@ void main() {
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}save_or_delete_playlist_wit_pictures",
+            "$kDownloadAppTestSavedDataDir${path.separator}save_or_delete_playlist_with_pictures",
         destinationRootPath: kApplicationPathWindowsTest,
       );
 

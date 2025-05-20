@@ -1979,4 +1979,8 @@ class MockAppLocalizations extends AppLocalizations {
     Object filePathName,
   ) =>
       "Saved playlist, comment and picture JSON files to \"$filePathName\".";
+
+  @override
+  String addedToZipPictureNumberMessage(Object pictureNumber,) =>
+      "Saved also $pictureNumber picture JPG file(s) in the ZIP file.";
 }
