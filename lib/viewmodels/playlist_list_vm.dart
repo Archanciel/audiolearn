@@ -2831,7 +2831,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///
   /// Contrary to the savePlaylistsCommentPictureAndSettingsJsonFilesToZip()
   /// method, this method add as well to the zip file the playlist picture JPG files.
-  /// 
+  ///
   /// Returns the saved zip file path name, '' if the  target dir in which to save
   /// the zip does not exist.
   Future<String> saveUniquePlaylistCommentAndPictureJsonFilesToZip({
@@ -2857,7 +2857,6 @@ class PlaylistListVM extends ChangeNotifier {
         in sourceDir.list(recursive: true, followLinks: false)) {
       if (entity is File && path.extension(entity.path) == '.json') {
         String relativePath = path.relative(entity.path, from: applicationPath);
-
         // Add the file to the archive, preserving the relative path
         List<int> fileBytes = await entity.readAsBytes();
         archive.addFile(ArchiveFile(
@@ -2883,7 +2882,8 @@ class PlaylistListVM extends ChangeNotifier {
     // Convert the JSON string to bytes (List<int>)
     List<int> pictureAudioMapBytes = utf8.encode(jsonString);
 
-    // Create the relative path for the pictureAudioMap file within the archive
+    // Create the relative path for the pictureAudioMap file
+    // within the archive
     String pictureAudioMapRelativePath =
         path.join(kPictureDirName, kPictureAudioMapFileName);
 
@@ -2894,31 +2894,60 @@ class PlaylistListVM extends ChangeNotifier {
       pictureAudioMapBytes,
     ));
 
+    // Get the list of JPG files in the application pictures
+    // directory
+    String applicationPicturePath = DirUtil.getApplicationPicturePath(
+      isTest: _settingsDataService.isTest,
+    );
+
     List<String> pictureJpgPathFileNamesLst = DirUtil.listPathFileNamesInDir(
-      directoryPath: DirUtil.getApplicationPicturePath(),
+      directoryPath: applicationPicturePath,
       fileExtension: 'jpg',
     );
 
+    // Only add to the archive the JPG files that are associated with
+    // this playlist
+    int savedPictureNumber = 0;
+
+    for (String pictureJpgPathFileName in pictureJpgPathFileNamesLst) {
+      // Extract the filename from the full path
+      String pictureFileName = DirUtil.getFileNameFromPathFileName(
+        pathFileName: pictureJpgPathFileName,
+      );
+
+      // Check if this picture is associated with the playlist in
+      // its picture-audio map
+      if (playlistPictureAudioMap.containsKey(pictureFileName)) {
+        // Read the JPG file
+        File pictureFile = File(pictureJpgPathFileName);
+        
+        if (pictureFile.existsSync()) {
+          List<int> pictureBytes = await pictureFile.readAsBytes();
+
+          // Add the JPG file to the archive in the pictures directory
+          String pictureRelativePath =
+              path.join(kPictureDirName, pictureFileName);
+          archive.addFile(ArchiveFile(
+            pictureRelativePath,
+            pictureBytes.length,
+            pictureBytes,
+          ));
+
+          savedPictureNumber++;
+        }
+      }
+    }
 
     // Save the archive to a zip file in the target directory
     String zipFileName = "$playlistTitle.zip";
     String savedZipFilePathName = path.join(targetDir, zipFileName);
-
     File zipFile = File(savedZipFilePathName);
     zipFile.writeAsBytesSync(ZipEncoder().encode(archive), flush: true);
-
-    // Saving the picture jpg files to the 'pictures' directory
-    // located in the target directory where the zip file is saved.
-    int savedPictureNumber = 0;
-    // int savedPictureNumber = _pictureVM.savePictureJpgFilesToTargetDirectory(
-    //   targetDirectoryPath: targetDirectoryPath,
-    // );
 
     _warningMessageVM.confirmSavingToZip(
         zipFilePathName: savedZipFilePathName,
         savedPictureNumber: savedPictureNumber,
         uniquePlaylistIsSaved: true);
-
     return savedZipFilePathName;
   }
 
@@ -3464,8 +3493,9 @@ class PlaylistListVM extends ChangeNotifier {
     List<Audio> playlistAudioLst = playlist.playableAudioLst;
 
     for (Audio audio in playlistAudioLst) {
-      playlistAudioPictureNumber +=
-          _pictureVM.getAudioPicturesNumber(audio: audio,);
+      playlistAudioPictureNumber += _pictureVM.getAudioPicturesNumber(
+        audio: audio,
+      );
     }
 
     return playlistAudioPictureNumber;
