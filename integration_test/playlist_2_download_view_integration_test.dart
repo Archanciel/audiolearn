@@ -12410,6 +12410,82 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
+    testWidgets('''Save unique Youtube playlist containing pictures to zip file.''',
+        (WidgetTester tester) async {
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'save_or_delete_playlist_with_pictures',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      const String playlistToSaveTitle = 'Restore- short - test - playlist';
+
+      // Verify the zip files before saving the playlist.
+      // Those zip files were copied from the integration test
+      // data directory to the app test directory.
+      
+      List<String> zipLst = DirUtil.listFileNamesInDir(
+        directoryPath: kApplicationPathWindowsTest,
+        fileExtension: 'zip',
+      );
+
+      expect(
+        zipLst,
+        [
+          'Windows audioLearn_2025-05-11_13_16.zip',
+          'Windows Local restore- short - test - playlist.zip',
+          'Windows Restore- short - test - playlist.zip'
+        ],
+      );
+
+      // Save the playlist and its comments and pictures to a zip file
+
+      // Setting the path value returned by the FilePicker mock.
+      mockFilePicker.setPathToSelect(
+        pathToSelectStr: kApplicationPathWindowsTest,
+      );
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: playlistToSaveTitle,
+        playlistMenuKeyStr: 'popup_menu_save_playlist_comments_pictures_to_zip',
+      );
+
+      // Verify the displayed warning dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Saved playlist, comment and picture JSON files to \"$kApplicationPathWindowsTest${path.separator}$playlistToSaveTitle.zip\".\n\nSaved also 3 picture JPG file(s) in the ZIP file.",
+        isWarningConfirming: true,
+      );
+
+      // Verify that the zip file has been created
+
+      zipLst = DirUtil.listFileNamesInDir(
+        directoryPath: kApplicationPathWindowsTest,
+        fileExtension: 'zip',
+      );
+
+      expect(
+        zipLst,
+        [
+          '$playlistToSaveTitle.zip',
+          'Windows audioLearn_2025-05-11_13_16.zip',
+          'Windows Local restore- short - test - playlist.zip',
+          'Windows Restore- short - test - playlist.zip'
+        ],
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
   });
   group(
       'Restore playlist, comments, pictures and settings from zip file menu test',
@@ -15292,8 +15368,7 @@ void main() {
         // "audio learn test short video one"
 
         // First, find the Audio sublist ListTile Text widget
-        const String audioTitle =
-            "morning _ cinematic video";
+        const String audioTitle = "morning _ cinematic video";
         final Finder targetAudioListTileTextWidgetFinder =
             find.text(audioTitle);
 
