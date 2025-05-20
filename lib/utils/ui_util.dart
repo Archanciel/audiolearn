@@ -77,12 +77,12 @@ class UiUtil {
     await Provider.of<PlaylistListVM>(
       context,
       listen: false,
-    ).savePlaylistsCommentsPicturesAndSettingsJsonFilesToZip(
+    ).savePlaylistsCommentPictureAndSettingsJsonFilesToZip(
       targetDirectoryPath: targetSaveDirectoryPath,
     );
   }
 
-  static Future<void> saveUniquePlaylistCommentsAAndPicturesToZip({
+  static Future<void> saveUniquePlaylistCommentsAndPicturesToZip({
     required BuildContext context,
     required Playlist playlist,
   }) async {
@@ -95,7 +95,7 @@ class UiUtil {
     await Provider.of<PlaylistListVM>(
       context,
       listen: false,
-    ).saveUniquePlaylistJsonFilesToZip(
+    ).saveUniquePlaylistCommentAndPictureJsonFilesToZip(
       playlist: playlist,
       targetDir: targetSaveDirectoryPath,
     );

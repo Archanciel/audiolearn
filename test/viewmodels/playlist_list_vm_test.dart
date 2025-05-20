@@ -1021,7 +1021,7 @@ void main() {
       );
 
       String savedZipFilePathName = await playlistListVM
-          .savePlaylistsCommentsPicturesAndSettingsJsonFilesToZip(
+          .savePlaylistsCommentPictureAndSettingsJsonFilesToZip(
         targetDirectoryPath: kApplicationPathWindowsTest,
       );
 
@@ -1110,7 +1110,7 @@ void main() {
       );
 
       await playlistListVM
-          .savePlaylistsCommentsPicturesAndSettingsJsonFilesToZip(
+          .savePlaylistsCommentPictureAndSettingsJsonFilesToZip(
         targetDirectoryPath: kApplicationPathWindowsTest,
       );
 
