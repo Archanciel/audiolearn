@@ -3446,4 +3446,19 @@ class PlaylistListVM extends ChangeNotifier {
       playlist: playlist,
     );
   }
+
+  int getPlaylistAudioPictureNumber({
+    required Playlist playlist,
+  }) {
+    int playlistAudioPictureNumber = 0;
+
+    List<Audio> playlistAudioLst = playlist.playableAudioLst;
+
+    for (Audio audio in playlistAudioLst) {
+      playlistAudioPictureNumber +=
+          _pictureVM.getAudioPicturesNumber(audio: audio,);
+    }
+
+    return playlistAudioPictureNumber;
+  }
 }

@@ -2395,8 +2395,8 @@ class IntegrationTestUtil {
   }) {
     String playlistDir;
 
-      playlistDir =
-          "$kPlaylistDownloadRootPathAndroidTest${path.separator}$playlistTitle";
+    playlistDir =
+        "$kPlaylistDownloadRootPathAndroidTest${path.separator}$playlistTitle";
 
     String commentsDir = "$playlistDir${path.separator}$kCommentDirName";
     String picturesDir = "$playlistDir${path.separator}$kPictureDirName";
@@ -2443,7 +2443,8 @@ class IntegrationTestUtil {
       );
 
       _verifyApplicationPictureJsonMap(
-        applicationPictureDir: "$kApplicationPathAndroidTest${path.separator}$kPictureDirName",
+        applicationPictureDir:
+            "$kApplicationPathAndroidTest${path.separator}$kPictureDirName",
         pictureFileNameOne: pictureFileNameOne,
         audioForPictureTitleOneLst: audioForPictureTitleOneLst,
         pictureFileNameTwo: pictureFileNameTwo,
@@ -3068,5 +3069,185 @@ class IntegrationTestUtil {
     }
 
     return gestureDetectorsFinder;
+  }
+
+  static void verifyPictureAudioMapBeforePlaylistDeletion({
+    required PictureVM pictureVM,
+  }) {
+    // Load the application picture audio map from the
+    // application picture audio map json file.
+    Map<String, List<String>> applicationPictureAudioMap =
+        pictureVM.readAppPictureAudioMap();
+
+    // Verify application picture audio map
+
+    expect(applicationPictureAudioMap.length, 6);
+    expect(
+      applicationPictureAudioMap.containsKey("Jean-Pierre.jpg"),
+      true,
+    );
+    expect(
+      applicationPictureAudioMap.containsKey(
+          "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg"),
+      true,
+    );
+    expect(
+      applicationPictureAudioMap.containsKey("Sam Altman.jpg"),
+      true,
+    );
+    expect(
+      applicationPictureAudioMap.containsKey("Jésus mon Amour.jpg"),
+      true,
+    );
+    expect(
+      applicationPictureAudioMap.containsKey("Jésus le Dieu vivant.jpg"),
+      true,
+    );
+    expect(
+      applicationPictureAudioMap.containsKey("Jésus je T'adore.jpg"),
+      true,
+    );
+
+    List pictureAudioMapLst =
+        (applicationPictureAudioMap["Jean-Pierre.jpg"] as List);
+    expect(pictureAudioMapLst.length, 1);
+    expect(
+      pictureAudioMapLst[0],
+      "Restore- short - test - playlist|250518-164035-Really short video 23-07-01",
+    );
+
+    pictureAudioMapLst = (applicationPictureAudioMap[
+            "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg"]
+        as List);
+    expect(pictureAudioMapLst.length, 2);
+    expect(
+      pictureAudioMapLst[0],
+      "Restore- short - test - playlist|250518-164039-morning _ cinematic video 23-07-01",
+    );
+    expect(
+      pictureAudioMapLst[1],
+      "Restore- short - test - playlist|250518-164035-Really short video 23-07-01",
+    );
+
+    pictureAudioMapLst = (applicationPictureAudioMap["Sam Altman.jpg"] as List);
+    expect(pictureAudioMapLst.length, 2);
+    expect(
+      pictureAudioMapLst[0],
+      "A restaurer|250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12",
+    );
+    expect(
+      pictureAudioMapLst[1],
+      "A restaurer|250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12",
+    );
+
+    pictureAudioMapLst =
+        (applicationPictureAudioMap["Jésus mon Amour.jpg"] as List);
+    expect(pictureAudioMapLst.length, 1);
+    expect(
+      pictureAudioMapLst[0],
+      "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+    );
+
+    pictureAudioMapLst =
+        (applicationPictureAudioMap["Jésus le Dieu vivant.jpg"] as List);
+    expect(pictureAudioMapLst.length, 3);
+    expect(
+      pictureAudioMapLst[0],
+      "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+    );
+    expect(
+      pictureAudioMapLst[1],
+      "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+    );
+    expect(
+      pictureAudioMapLst[2],
+      "Restore- short - test - playlist|250518-164043-People Talking at The Table _ Free Video Loop 19-09-28",
+    );
+
+    pictureAudioMapLst =
+        (applicationPictureAudioMap["Jésus je T'adore.jpg"] as List);
+    expect(pictureAudioMapLst.length, 1);
+    expect(
+      pictureAudioMapLst[0],
+      "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+    );
+  }
+
+  static void verifyPictureAudioMapAfterPlaylistDeletion({
+    required PictureVM pictureVM,
+  }) {
+    // Load the application picture audio map from the
+    // application picture audio map json file.
+    Map<String, List<String>> applicationPictureAudioMap =
+        pictureVM.readAppPictureAudioMap();
+
+    // Verify application picture audio map
+
+    expect(applicationPictureAudioMap.length, 4);
+    expect(
+      applicationPictureAudioMap.containsKey("Jean-Pierre.jpg"),
+      false,
+    );
+    expect(
+      applicationPictureAudioMap.containsKey(
+          "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg"),
+      false,
+    );
+    expect(
+      applicationPictureAudioMap.containsKey("Sam Altman.jpg"),
+      true,
+    );
+    expect(
+      applicationPictureAudioMap.containsKey("Jésus mon Amour.jpg"),
+      true,
+    );
+    expect(
+      applicationPictureAudioMap.containsKey("Jésus le Dieu vivant.jpg"),
+      true,
+    );
+    expect(
+      applicationPictureAudioMap.containsKey("Jésus je T'adore.jpg"),
+      true,
+    );
+
+    List pictureAudioMapLst =
+        (applicationPictureAudioMap["Sam Altman.jpg"] as List);
+    expect(pictureAudioMapLst.length, 2);
+    expect(
+      pictureAudioMapLst[0],
+      "A restaurer|250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12",
+    );
+    expect(
+      pictureAudioMapLst[1],
+      "A restaurer|250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12",
+    );
+
+    pictureAudioMapLst =
+        (applicationPictureAudioMap["Jésus mon Amour.jpg"] as List);
+    expect(pictureAudioMapLst.length, 1);
+    expect(
+      pictureAudioMapLst[0],
+      "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+    );
+
+    pictureAudioMapLst =
+        (applicationPictureAudioMap["Jésus le Dieu vivant.jpg"] as List);
+    expect(pictureAudioMapLst.length, 2);
+    expect(
+      pictureAudioMapLst[0],
+      "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+    );
+    expect(
+      pictureAudioMapLst[1],
+      "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+    );
+
+    pictureAudioMapLst =
+        (applicationPictureAudioMap["Jésus je T'adore.jpg"] as List);
+    expect(pictureAudioMapLst.length, 1);
+    expect(
+      pictureAudioMapLst[0],
+      "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+    );
   }
 }

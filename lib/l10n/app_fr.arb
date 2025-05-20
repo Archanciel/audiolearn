@@ -460,7 +460,7 @@
   "deletePlaylist": "Supprimer la playlist ...",
   "deleteYoutubePlaylistDialogTitle": "Supprimer la playlist Youtube \"{title}\"",
   "deleteLocalPlaylistDialogTitle": "Supprimer la playlist locale \"{title}\"",
-  "deletePlaylistDialogComment": "Suppression de la playlist, de ses {audioNumber} fichiers audio, de ses {audioCommentsNumber} commentaire(s) audio ainsi que de son fichier JSON et de son répertoire.",
+  "deletePlaylistDialogComment": "Suppression de la playlist, de ses {audioNumber} fichiers audio, de ses {audioCommentsNumber} commentaire(s) audio, de ses {audioPicturesNumber} photo(s) audio ainsi que de son fichier JSON et de son répertoire.",
   "@deletePlaylistDialogComment": {
     "description": "Confirm message for deleting the playlist",
     "placeholders": {
@@ -468,6 +468,9 @@
         "type": "Object"
       },
       "audioCommentsNumber": {
+        "type": "Object"
+      },
+      "audioPicturesNumber": {
         "type": "Object"
       }
     }

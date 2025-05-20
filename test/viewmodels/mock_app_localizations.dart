@@ -1696,6 +1696,7 @@ class MockAppLocalizations extends AppLocalizations {
   String deletePlaylistDialogComment(
     Object audioNumber,
     Object audioCommentsNumber,
+    Object audioPicturesNumber,
   ) =>
       "Deleting the playlist and its $audioNumber audio's, $audioCommentsNumber audio comments as well as its JSON file and its directory.";
 
