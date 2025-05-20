@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:archive/archive.dart';
 import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/models/picture.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
@@ -12410,7 +12411,8 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('''Save unique Youtube playlist containing pictures to zip file.''',
+    testWidgets(
+        '''Save unique Youtube playlist containing pictures to zip file.''',
         (WidgetTester tester) async {
       // Replace the platform instance with your mock
       MockFilePicker mockFilePicker = MockFilePicker();
@@ -12427,7 +12429,7 @@ void main() {
       // Verify the zip files before saving the playlist.
       // Those zip files were copied from the integration test
       // data directory to the app test directory.
-      
+
       List<String> zipLst = DirUtil.listFileNamesInDir(
         directoryPath: kApplicationPathWindowsTest,
         fileExtension: 'zip',
@@ -12478,6 +12480,209 @@ void main() {
           'Windows Local restore- short - test - playlist.zip',
           'Windows Restore- short - test - playlist.zip'
         ],
+      );
+
+      // Verify the content of the created ZIP file
+
+      final zipFilePath =
+          path.join(kApplicationPathWindowsTest, '$playlistToSaveTitle.zip');
+      final zipFile = File(zipFilePath);
+
+      // Read the ZIP file as bytes
+      final List<int> bytes = await zipFile.readAsBytes();
+
+      // Decode the ZIP
+      final archive = ZipDecoder().decodeBytes(bytes);
+
+      // Extract file names for verification
+      final List<String> zipFileEntries = archive.files
+          .where((file) => !file.isFile)
+          .map((file) => file.name)
+          .toList();
+
+      // Extract content types (Json and JPG files)
+      final List<String> jsonFileNames = archive.files
+          .where((file) => file.isFile && file.name.endsWith('.json'))
+          .map((file) => file.name)
+          .toList();
+
+      final List<String> jpgFiles = archive.files
+          .where((file) => file.isFile && file.name.endsWith('.jpg'))
+          .map((file) => file.name)
+          .toList();
+
+      // Verify ZIP content
+      final List<String> expectedJsonFileNames = [
+        'playlists\\Restore- short - test - playlist\\comments\\250518-164039-morning _ cinematic video 23-07-01.json',
+        'playlists\\Restore- short - test - playlist\\comments\\250518-164043-People Talking at The Table _ Free Video Loop 19-09-28.json',
+        'playlists\\Restore- short - test - playlist\\pictures\\250518-164035-Really short video 23-07-01.json',
+        'playlists\\Restore- short - test - playlist\\pictures\\250518-164039-morning _ cinematic video 23-07-01.json',
+        'playlists\\Restore- short - test - playlist\\pictures\\250518-164043-People Talking at The Table _ Free Video Loop 19-09-28.json',
+        'playlists\\Restore- short - test - playlist\\Restore- short - test - playlist.json',
+        'pictures\\pictureAudioMap.json',
+      ];
+
+      int i = 0;
+      for (String jsonFileName in jsonFileNames) {
+        expect(jsonFileName, expectedJsonFileNames[i++]);
+      }
+
+      // Verify picture files are included
+      expect(jpgFiles.length, 3); // Should have 3 JPG files
+
+      // Check for specific expected pictures if you know their names
+      expect(
+        jpgFiles,
+        contains('pictures\\Jean-Pierre.jpg'),
+      );
+      expect(
+        jpgFiles,
+        contains(
+            'pictures\\Bora_Bora_2560_1440_Youtube_2 - Voyage vers l\'Inde intérieure.jpg'),
+      );
+      expect(
+        jpgFiles,
+        contains('pictures\\Jésus le Dieu vivant.jpg'),
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Save unique local playlist containing pictures to zip file.''',
+        (WidgetTester tester) async {
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'save_or_delete_local_playlist_with_pictures',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      const String playlistToSaveTitle = 'Local restore- short - test - playlist';
+
+      // Verify the zip files before saving the playlist.
+      // Those zip files were copied from the integration test
+      // data directory to the app test directory.
+
+      List<String> zipLst = DirUtil.listFileNamesInDir(
+        directoryPath: kApplicationPathWindowsTest,
+        fileExtension: 'zip',
+      );
+
+      expect(
+        zipLst,
+        [
+          'Windows audioLearn_2025-05-11_13_16.zip',
+          'Windows Local restore- short - test - playlist.zip',
+          'Windows Restore- short - test - playlist.zip'
+        ],
+      );
+
+      // Save the playlist and its comments and pictures to a zip file
+
+      // Setting the path value returned by the FilePicker mock.
+      mockFilePicker.setPathToSelect(
+        pathToSelectStr: kApplicationPathWindowsTest,
+      );
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: playlistToSaveTitle,
+        playlistMenuKeyStr: 'popup_menu_save_playlist_comments_pictures_to_zip',
+      );
+
+      // Verify the displayed warning dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Saved playlist, comment and picture JSON files to \"$kApplicationPathWindowsTest${path.separator}$playlistToSaveTitle.zip\".\n\nSaved also 3 picture JPG file(s) in the ZIP file.",
+        isWarningConfirming: true,
+      );
+
+      // Verify that the zip file has been created
+
+      zipLst = DirUtil.listFileNamesInDir(
+        directoryPath: kApplicationPathWindowsTest,
+        fileExtension: 'zip',
+      );
+
+      expect(
+        zipLst,
+        [
+          '$playlistToSaveTitle.zip',
+          'Windows audioLearn_2025-05-11_13_16.zip',
+          'Windows Local restore- short - test - playlist.zip',
+          'Windows Restore- short - test - playlist.zip'
+        ],
+      );
+
+      // Verify the content of the created ZIP file
+
+      final zipFilePath =
+          path.join(kApplicationPathWindowsTest, '$playlistToSaveTitle.zip');
+      final zipFile = File(zipFilePath);
+
+      // Read the ZIP file as bytes
+      final List<int> bytes = await zipFile.readAsBytes();
+
+      // Decode the ZIP
+      final archive = ZipDecoder().decodeBytes(bytes);
+
+      // Extract file names for verification
+      final List<String> zipFileEntries = archive.files
+          .where((file) => !file.isFile)
+          .map((file) => file.name)
+          .toList();
+
+      // Extract content types (Json and JPG files)
+      final List<String> jsonFileNames = archive.files
+          .where((file) => file.isFile && file.name.endsWith('.json'))
+          .map((file) => file.name)
+          .toList();
+
+      final List<String> jpgFiles = archive.files
+          .where((file) => file.isFile && file.name.endsWith('.jpg'))
+          .map((file) => file.name)
+          .toList();
+
+      // Verify ZIP content
+      final List<String> expectedJsonFileNames = [
+        'playlists\\Local restore- short - test - playlist\\comments\\250518-164039-morning _ cinematic video 23-07-01.json',
+        'playlists\\Local restore- short - test - playlist\\comments\\250518-164043-People Talking at The Table _ Free Video Loop 19-09-28.json',
+        'playlists\\Local restore- short - test - playlist\\Local restore- short - test - playlist.json',
+        'playlists\\Local restore- short - test - playlist\\pictures\\250518-164035-Really short video 23-07-01.json',
+        'playlists\\Local restore- short - test - playlist\\pictures\\250518-164039-morning _ cinematic video 23-07-01.json',
+        'playlists\\Local restore- short - test - playlist\\pictures\\250518-164043-People Talking at The Table _ Free Video Loop 19-09-28.json',
+        'pictures\\pictureAudioMap.json',
+      ];
+
+      int i = 0;
+      for (String jsonFileName in jsonFileNames) {
+        expect(jsonFileName, expectedJsonFileNames[i++]);
+      }
+
+      // Verify picture files are included
+      expect(jpgFiles.length, 3); // Should have 3 JPG files
+
+      // Check for specific expected pictures if you know their names
+      expect(
+        jpgFiles,
+        contains('pictures\\Jean-Pierre.jpg'),
+      );
+      expect(
+        jpgFiles,
+        contains(
+            'pictures\\Bora_Bora_2560_1440_Youtube_2 - Voyage vers l\'Inde intérieure.jpg'),
+      );
+      expect(
+        jpgFiles,
+        contains('pictures\\Jésus le Dieu vivant.jpg'),
       );
 
       // Purge the test playlist directory so that the created test
