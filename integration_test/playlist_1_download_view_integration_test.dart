@@ -13974,7 +13974,7 @@ void main() {
         confirmDialogTitleOne:
             'Supprimer la playlist Youtube "$youtubePlaylistToDeleteTitle"',
         confirmDialogMessage:
-            'Suppression de la playlist, de ses 2 fichiers audio, de ses 3 commentaire(s) audio ainsi que de son fichier JSON et de son répertoire.',
+            'Suppression de la playlist, de ses 2 fichiers audio, de ses 3 commentaire(s) audio, de ses 0 photo(s) audio ainsi que de son fichier JSON et de son répertoire.',
         confirmOrCancelAction: true, // Confirm button is tapped
       );
 
@@ -14299,7 +14299,7 @@ void main() {
         confirmDialogTitleOne:
             'Supprimer la playlist locale "$localPlaylistToDeleteTitle"',
         confirmDialogMessage:
-            'Suppression de la playlist, de ses 0 fichiers audio, de ses 0 commentaire(s) audio ainsi que de son fichier JSON et de son répertoire.',
+            'Suppression de la playlist, de ses 0 fichiers audio, de ses 0 commentaire(s) audio, de ses 0 photo(s) audio ainsi que de son fichier JSON et de son répertoire.',
         confirmOrCancelAction: true, // Confirm button is tapped
       );
 
