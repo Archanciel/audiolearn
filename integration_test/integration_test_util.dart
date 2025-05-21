@@ -750,6 +750,15 @@ class IntegrationTestUtil {
       tester.widget<Checkbox>(checkboxFinder).value,
       isSelected,
     );
+
+    // Verifying that the playlist selection value in the
+    // playlist json file is the same as the one wich is
+    // expected
+    String playlistPathFileName =
+        '${DirUtil.getPlaylistDownloadRootPath(isTest: true)}${path.separator}$playlistTitle${path.separator}$playlistTitle.json';
+    Playlist loadedPlaylist = JsonDataService.loadFromFile(
+        jsonPathFileName: playlistPathFileName, type: Playlist);
+    expect(loadedPlaylist.isSelected, isSelected);
   }
 
   /// In this version, the second audio menu item is disabled.
