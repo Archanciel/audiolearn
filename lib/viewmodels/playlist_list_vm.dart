@@ -2956,8 +2956,8 @@ class PlaylistListVM extends ChangeNotifier {
   /// leading popup menu.
   ///
   /// Returns the zip file path name from which the playlist, comments, pictures
-  /// and the application settings will be restored. Returns empty String if the
-  /// zip file does not exist. The returned value is only used in the playlistListVM
+  /// and the application settings is restored. Returns empty String if the zip
+  /// file does not exist. The returned value is only used in the playlistListVM
   /// unit test.
   Future<String> restorePlaylistsCommentsAndSettingsJsonFilesFromZip({
     required String zipFilePathName,
