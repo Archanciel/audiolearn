@@ -3259,4 +3259,35 @@ class IntegrationTestUtil {
       "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
     );
   }
+  static Future<void> verifyNoPlaylistSelected() async {
+    final SettingsDataService settingsDataService = SettingsDataService(
+      sharedPreferences: await SharedPreferences.getInstance(),
+      isTest: true,
+    );
+    
+    // load settings from file which does not exist. This
+    // will ensure that the default playlist root path is set
+    await settingsDataService.loadSettingsFromFile(
+        settingsJsonPathFileName:
+            "$kApplicationPathWindowsTest${path.separator}settings.json");
+
+    final WarningMessageVM warningMessageVM = WarningMessageVM();
+
+    final AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+      warningMessageVM: warningMessageVM,
+      settingsDataService: settingsDataService,
+    );
+
+    final PlaylistListVM playlistListVM = PlaylistListVM(
+      warningMessageVM: warningMessageVM,
+      audioDownloadVM: audioDownloadVM,
+      commentVM: CommentVM(),
+      pictureVM: PictureVM(
+        settingsDataService: settingsDataService,
+      ),
+      settingsDataService: settingsDataService,
+    );
+
+    expect(playlistListVM.getSelectedPlaylists().length, 0);
+  }
 }
