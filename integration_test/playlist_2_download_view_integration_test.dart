@@ -12695,7 +12695,7 @@ void main() {
   group(
       'Restore playlist, comments, pictures and settings from zip file menu test',
       () {
-    group('On not empty app dir, restore Windows zip.', () {
+    group('On not empty app dir where a playlist is selected, restore Windows zip.', () {
       group(
           'Restored selected playlist is identical to the before restoration selected playlist.',
           () {
@@ -13760,7 +13760,8 @@ void main() {
             '''Replace existing playlist. Restore Windows zip containing 'Empty', 'local',
               'local_comment', 'local_delete_comment' and 'S8 audio' playlists in which 'S8 audio'
               is selected to Windows application containing 'A restorer' and 'local' playlists
-              in which 'local' is selected.
+              in which 'local' is selected. After restoration, 'local' remains selected and 'S8 audio'
+              is not selected anymore.
               
               Then, select a SF parm and redownload the filtered audio's. Finally, redownload an
               individual not playable audio.''', (tester) async {
@@ -13949,7 +13950,8 @@ void main() {
             '''Not replace existing playlist. Restore Windows zip containing 'Empty', 'local',
               'local_comment', 'local_delete_comment' and 'S8 audio' playlists in which 'S8 audio'
               is selected to Windows application containing 'A restorer' and 'local' playlists
-              in which 'local' is selected.
+              in which 'local' is selected. After restoration, 'local' remains selected and 'S8 audio'
+              is not selected anymore.
               
               Then, select a SF parm and redownload the filtered audio's. Finally, redownload an
               individual not playable audio.''', (tester) async {
@@ -15349,7 +15351,7 @@ void main() {
         );
 
         String restorableZipFilePathName =
-            "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Windows audioLearn one playlist short audio's.zip";
+            "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Windows Restore- short - test - playlist.zip";
 
         final SettingsDataService settingsDataService = SettingsDataService(
           sharedPreferences: await SharedPreferences.getInstance(),
@@ -15416,7 +15418,7 @@ void main() {
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              'Restored 1 playlist, 2 comment and 2 picture JSON files as well as the application settings from "$restorableZipFilePathName".',
+              'Restored 1 playlist, 2 comment and 3 picture JSON files as well as the application settings from "$restorableZipFilePathName".',
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );

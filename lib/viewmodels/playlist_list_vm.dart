@@ -3026,8 +3026,8 @@ class PlaylistListVM extends ChangeNotifier {
     // Selecting the playlist which was selected before the
     // restoration from the zip file is useful in case the
     // 'Replace existing playlists' checkbox was set to true.
-    // Otherwise, the selected playlist is set to the playlist
-    // selected in the zip file.
+    // Otherwise, the selected playlist would be set to the
+    // playlist selected in the zip file.
     //
     // getSelectedPlaylists().length > 1 is true in the
     // situation where a zip file containing a selected
