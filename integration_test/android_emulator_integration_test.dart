@@ -6386,7 +6386,7 @@ void _verifyRestoredPlaylistAndAudio({
   required List<String> audioSubTitles,
 }) {
   // Verify the selected playlist
-  IntegrationTestUtil.verifyPlaylistIsSelected(
+  IntegrationTestUtil.verifyPlaylistSelection(
     tester: tester,
     playlistTitle: selectedPlaylistTitle,
   );
