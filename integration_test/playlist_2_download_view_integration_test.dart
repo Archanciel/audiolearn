@@ -12564,7 +12564,8 @@ void main() {
         tapOnPlaylistToggleButton: false,
       );
 
-      const String playlistToSaveTitle = 'Local restore- short - test - playlist';
+      const String playlistToSaveTitle =
+          'Local restore- short - test - playlist';
 
       // Verify the zip files before saving the playlist.
       // Those zip files were copied from the integration test
@@ -12695,7 +12696,9 @@ void main() {
   group(
       'Restore playlist, comments, pictures and settings from zip file menu test',
       () {
-    group('On not empty app dir where a playlist is selected, restore Windows zip.', () {
+    group(
+        'On not empty app dir where a playlist is selected, restore Windows zip.',
+        () {
       group(
           'Restored selected playlist is identical to the before restoration selected playlist.',
           () {
@@ -14104,7 +14107,9 @@ void main() {
         });
       });
     });
-    group('On not empty app dir where no playlist is selected, restore Windows zip.', () {
+    group(
+        'On not empty app dir where no playlist is selected, restore Windows zip.',
+        () {
       group(
           'Restored selected playlist is identical to the before restoration selected playlist.',
           () {
@@ -14864,8 +14869,7 @@ void main() {
           ];
 
           // Verify that no playlist is selected
-          await IntegrationTestUtil.verifyNoPlaylistSelected(
-          );
+          await IntegrationTestUtil.verifyNoPlaylistSelected();
 
           // Select the 'local' playlist
           await IntegrationTestUtil.selectPlaylist(
@@ -16896,7 +16900,12 @@ void main() {
           pictureFileNameTwo:
               "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg",
           audioForPictureTitleTwoLst: [
-            "Restore- short - test - playlist|250518-164039-morning _ cinematic video 23-07-01"
+            "Restore- short - test - playlist|250518-164039-morning _ cinematic video 23-07-01",
+            'Restore- short - test - playlist|250518-164035-Really short video 23-07-01',
+          ],
+          pictureFileNameThree: 'Jésus le Dieu vivant.jpg',
+          audioForPictureTitleThreeLst: [
+            "Restore- short - test - playlist|250518-164043-People Talking at The Table _ Free Video Loop 19-09-28",
           ],
         );
 

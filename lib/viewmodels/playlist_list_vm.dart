@@ -2920,7 +2920,7 @@ class PlaylistListVM extends ChangeNotifier {
       if (playlistPictureAudioMap.containsKey(pictureFileName)) {
         // Read the JPG file
         File pictureFile = File(pictureJpgPathFileName);
-        
+
         if (pictureFile.existsSync()) {
           List<int> pictureBytes = await pictureFile.readAsBytes();
 
@@ -3023,11 +3023,16 @@ class PlaylistListVM extends ChangeNotifier {
       restoredPictureJpgNumber: 0,
     );
 
+    // Will be set to false if the zip file was created from the
+    // appbar 'Save Playlist, Comments, Pictures and Settings to Zip
+    // File' menu item.
+    bool wasIndividualPlaylistRestored = restoredInfoLst[4];
+
     // Selecting the playlist which was selected before the
     // restoration from the zip file is useful in case the
     // 'Replace existing playlists' checkbox was set to true.
-    // Otherwise, the selected playlist would be set to the
-    // playlist selected in the zip file.
+    // Without this code, the selected playlist would be set
+    // to the playlist selected in the zip file.
     //
     // getSelectedPlaylists().length > 1 is true in the
     // situation where a zip file containing a selected
@@ -3041,6 +3046,30 @@ class PlaylistListVM extends ChangeNotifier {
         playlistTitle: selectedPlaylistBeforeRestoreTitle,
         isPlaylistSelected: true,
       );
+    } else if (wasIndividualPlaylistRestored) {
+      // Executing the updateSettingsAndPlaylistJsonFiles()
+      // method is necessary, otherwise if the restored
+      // individual playlist was selected in the zip file
+      // and no before vrestoration playlist is selected,
+      // the restored playlist won't be selected.
+      updateSettingsAndPlaylistJsonFiles(
+        updatePlaylistPlayableAudioList: false,
+      );
+      if (selectedPlaylistBeforeRestoreTitle != '') {
+        // In this case, the playlist which was selected
+        // before the restoration is selected. The advantage is
+        // that if the User executes the 'Update Playlist JSON
+        // Files' menu of the appbar, only one playlist is
+        // displayed as selected.
+        setPlaylistSelection(
+          playlistTitle: selectedPlaylistBeforeRestoreTitle,
+          isPlaylistSelected: true,
+        );
+        // setPlaylistSelection(
+        //   playlistTitle: restoredInfoLst[0][0].title,
+        //   isPlaylistSelected: false,
+        // );
+      }
     }
 
     // Return the zip file path name used for restoration.
@@ -3140,6 +3169,8 @@ class PlaylistListVM extends ChangeNotifier {
   ///  number of restored comments,
   ///  number of restored pictures,
   ///  is the zip file generated in Windows (true/false),
+  ///  was the zip file created from the playlist item 'Save Playlist, Comments,
+  ///  Pictures and Settings to Zip File' menu item (true/false),
   /// ]
   Future<List<dynamic>> _restoreFilesFromZip({
     required String zipFilePathName,
@@ -3178,6 +3209,11 @@ class PlaylistListVM extends ChangeNotifier {
     final Archive archive = ZipDecoder().decodeBytes(zipBytes);
     ArchiveFile? archiveFile;
 
+    // Will be set to false if the zip file was created from the
+    // appbar 'Save Playlist, Comments, Pictures and Settings to Zip
+    // File' menu item.
+    bool wasIndividualPlaylistRestored = true;
+
     // Iterate over each file in the archive.
     for (archiveFile in archive) {
       // Skip directories.
@@ -3200,6 +3236,15 @@ class PlaylistListVM extends ChangeNotifier {
       final String destinationPathFileName = path.normalize(
         path.join(applicationPath, sanitizedArchiveFileName),
       );
+
+      if (destinationPathFileName.contains(kSettingsFileName)) {
+        // In this case, the zip file was created from the/ appbar
+        // 'Save Playlist, Comments, Pictures and Settings to Zip
+        // File' menu item. If the similar menu was selected from
+        // the playlist item menu, the settings file does not
+        // exist in the zip file.
+        wasIndividualPlaylistRestored = false;
+      }
 
       if (!doReplaceExistingPlaylists &&
           !destinationPathFileName.contains(kSettingsFileName) &&
@@ -3310,6 +3355,8 @@ class PlaylistListVM extends ChangeNotifier {
     isZipFromWindows =
         (archiveFile != null) ? archiveFile.name.contains('\\') : false;
     restoredInfoLst.add(isZipFromWindows);
+
+    restoredInfoLst.add(wasIndividualPlaylistRestored);
 
     return restoredInfoLst;
   }
