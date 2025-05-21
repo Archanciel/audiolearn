@@ -732,7 +732,7 @@ class IntegrationTestUtil {
     await tester.pumpAndSettle(const Duration(milliseconds: 500));
   }
 
-  static void verifyPlaylistIsSelected({
+  static void verifyPlaylistSelection({
     required WidgetTester tester,
     required String playlistTitle,
     bool isSelected = true,

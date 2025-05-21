@@ -1185,7 +1185,7 @@ void main() {
           ]);
 
           // Verify that the before restoration selected playlist is 'local'.
-          IntegrationTestUtil.verifyPlaylistIsSelected(
+          IntegrationTestUtil.verifyPlaylistSelection(
             tester: tester,
             playlistTitle: 'local',
             isSelected: true,
@@ -1212,7 +1212,7 @@ void main() {
 
           // Verify that the after restoration selected playlist is still
           // 'local'.
-          IntegrationTestUtil.verifyPlaylistIsSelected(
+          IntegrationTestUtil.verifyPlaylistSelection(
             tester: tester,
             playlistTitle: 'local',
             isSelected: true,
@@ -1221,7 +1221,7 @@ void main() {
           // Verify that the after restoration selected playlist is not
           // 'A restaurer'. The 'A restaurer' playlist was selected in the
           // restoration zip file.
-          IntegrationTestUtil.verifyPlaylistIsSelected(
+          IntegrationTestUtil.verifyPlaylistSelection(
             tester: tester,
             playlistTitle: 'A restaurer',
             isSelected: false,
@@ -1701,7 +1701,7 @@ void main() {
           ]);
 
           // Verify that the before restoration selected playlist is 'local'.
-          IntegrationTestUtil.verifyPlaylistIsSelected(
+          IntegrationTestUtil.verifyPlaylistSelection(
             tester: tester,
             playlistTitle: 'local',
             isSelected: true,
@@ -1725,7 +1725,7 @@ void main() {
 
           // Verify that the after restoration selected playlist is still
           // 'local'.
-          IntegrationTestUtil.verifyPlaylistIsSelected(
+          IntegrationTestUtil.verifyPlaylistSelection(
             tester: tester,
             playlistTitle: 'local',
             isSelected: true,
@@ -1734,7 +1734,7 @@ void main() {
           // Verify that the after restoration selected playlist is not
           // 'A restaurer'. The 'A restaurer' playlist was selected in the
           // restoration zip file.
-          IntegrationTestUtil.verifyPlaylistIsSelected(
+          IntegrationTestUtil.verifyPlaylistSelection(
             tester: tester,
             playlistTitle: 'A restaurer',
             isSelected: false,
@@ -2136,7 +2136,7 @@ void main() {
 
           // Verify that after the first restoration the selected
           // playlist is 'Prières du Maître'.
-          IntegrationTestUtil.verifyPlaylistIsSelected(
+          IntegrationTestUtil.verifyPlaylistSelection(
             tester: tester,
             playlistTitle: 'Prières du Maître',
             isSelected: true,
@@ -2172,7 +2172,7 @@ void main() {
 
           // Verify that after the second restoration the selected
           // playlist is still 'Prières du Maître'.
-          IntegrationTestUtil.verifyPlaylistIsSelected(
+          IntegrationTestUtil.verifyPlaylistSelection(
             tester: tester,
             playlistTitle: 'Prières du Maître',
             isSelected: true,
@@ -2181,7 +2181,7 @@ void main() {
           // Verify that the after the second restoration the selected
           // is not 'A restaurer'. The 'A restaurer' playlist was selected
           // in the restoration zip file.
-          IntegrationTestUtil.verifyPlaylistIsSelected(
+          IntegrationTestUtil.verifyPlaylistSelection(
             tester: tester,
             playlistTitle: 'A restaurer',
             isSelected: false,
@@ -2408,7 +2408,7 @@ void main() {
 
           // Verify that after the first restoration the selected
           // playlist is 'Prières du Maître'.
-          IntegrationTestUtil.verifyPlaylistIsSelected(
+          IntegrationTestUtil.verifyPlaylistSelection(
             tester: tester,
             playlistTitle: 'Prières du Maître',
             isSelected: true,
@@ -2444,7 +2444,7 @@ void main() {
 
           // Verify that after the second restoration the selected
           // playlist is still 'Prières du Maître'.
-          IntegrationTestUtil.verifyPlaylistIsSelected(
+          IntegrationTestUtil.verifyPlaylistSelection(
             tester: tester,
             playlistTitle: 'Prières du Maître',
             isSelected: true,
@@ -2453,7 +2453,7 @@ void main() {
           // Verify that the after the second restoration the selected
           // is not 'A restaurer'. The 'A restaurer' playlist was selected
           // in the restoration zip file.
-          IntegrationTestUtil.verifyPlaylistIsSelected(
+          IntegrationTestUtil.verifyPlaylistSelection(
             tester: tester,
             playlistTitle: 'A restaurer',
             isSelected: false,
@@ -3239,7 +3239,7 @@ void _verifyRestoredPlaylistAndAudio({
   required List<String> audioSubTitles,
 }) {
   // Verify the selected playlist
-  IntegrationTestUtil.verifyPlaylistIsSelected(
+  IntegrationTestUtil.verifyPlaylistSelection(
     tester: tester,
     playlistTitle: selectedPlaylistTitle,
   );
