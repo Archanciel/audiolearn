@@ -3039,6 +3039,37 @@ class PlaylistListVM extends ChangeNotifier {
     // playlist is restored with the 'Replace existing
     // playlists' checkbox set to false in the app whose
     // one existing playlist is selected.
+
+    // Executing the updateSettingsAndPlaylistJsonFiles()
+    // method is necessary, otherwise if the restored
+    // individual playlist was selected in the zip file
+    // and no before restoration playlist is selected,
+    // the restored playlist won't be selected.
+    //
+    // Executing this method ensures that the playlists
+    // contained in the PlaylistListVM._listOfSelectablePlaylists
+    // do correspond so to the application playlist(s) and that
+    // the playlist restored from the zip file does correspond
+    // to its restored playlist json file. For example, if the
+    // application contains a selected playlist and the user
+    // restores a zip file created from the playlistb item menu
+    // 'Save the Playlist, its Commentsand its Pictures to a Zip
+    // File' and that this restored playlist is selected in the
+    // zip file, the restored playlist will not be selected in
+    // the _listOfSelectablePlaylists before the 
+    // updateSettingsAndPlaylistJsonFiles() method is executed.
+    //
+    // Then, in the next if statement, the playlist which was
+    // selected before the restoration is selected, whith the
+    // advantage of updating the other playlist json files to
+    // isSeelected = false. Otherwise, if the user executes
+    // the 'Update Playlist JSON Files' menu of the appbar,
+    // two playlists will be displayed as selected, the before
+    // restoration playlist and the restored playlist.
+    updateSettingsAndPlaylistJsonFiles(
+      updatePlaylistPlayableAudioList: false,
+    );
+
     if (doReplaceExistingPlaylists &&
             selectedPlaylistBeforeRestoreTitle != '' ||
         getSelectedPlaylists().length > 1) {
@@ -3047,14 +3078,6 @@ class PlaylistListVM extends ChangeNotifier {
         isPlaylistSelected: true,
       );
     } else if (wasIndividualPlaylistRestored) {
-      // Executing the updateSettingsAndPlaylistJsonFiles()
-      // method is necessary, otherwise if the restored
-      // individual playlist was selected in the zip file
-      // and no before vrestoration playlist is selected,
-      // the restored playlist won't be selected.
-      updateSettingsAndPlaylistJsonFiles(
-        updatePlaylistPlayableAudioList: false,
-      );
       if (selectedPlaylistBeforeRestoreTitle != '') {
         // In this case, the playlist which was selected
         // before the restoration is selected. The advantage is
