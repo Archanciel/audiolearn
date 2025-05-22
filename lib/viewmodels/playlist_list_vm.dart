@@ -3067,9 +3067,14 @@ class PlaylistListVM extends ChangeNotifier {
     // the 'Update Playlist JSON Files' menu of the appbar,
     // two playlists will be displayed as selected, the before
     // restoration playlist and the restored playlist.
-    updateSettingsAndPlaylistJsonFiles(
-      updatePlaylistPlayableAudioList: false,
-    );
+    // THIS IS NO LONGER NECESSARY SINCE in its first call
+    // in this method the parm unselectAddedPlaylist is set
+    // to false // fix bug when restoring unique selected
+    // playlist from Windows zip on android.
+
+    // updateSettingsAndPlaylistJsonFiles(
+    //   updatePlaylistPlayableAudioList: false,
+    // );
 
     if (doReplaceExistingPlaylists &&
             selectedPlaylistBeforeRestoreTitle != '' ||
