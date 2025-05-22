@@ -16838,7 +16838,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 1 playlist, 2 comment and 6 picture JSON files as well as the application settings from "$restorableZipFilePathName".',
+                'Restored 1 playlist, 2 comment and 3 picture JSON files as well as the application settings from "$restorableZipFilePathName".\n\nRestored also 3 picture JPG file(s) in the application pictures directory.',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -17185,7 +17185,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 1 playlist, 2 comment and 6 picture JSON files as well as the application settings from "$restorableZipFilePathName".',
+                'Restored 1 playlist, 2 comment and 3 picture JSON files as well as the application settings from "$restorableZipFilePathName".\n\nRestored also 3 picture JPG file(s) in the application pictures directory.',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -17534,7 +17534,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 1 playlist, 2 comment and 6 picture JSON files as well as the application settings from "$restorableZipFilePathName".',
+                'Restored 1 playlist, 2 comment and 3 picture JSON files as well as the application settings from "$restorableZipFilePathName".\n\nRestored also 3 picture JPG file(s) in the application pictures directory.',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -17882,7 +17882,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 1 playlist, 2 comment and 6 picture JSON files as well as the application settings from "$restorableZipFilePathName".',
+                'Restored 1 playlist, 2 comment and 3 picture JSON files as well as the application settings from "$restorableZipFilePathName".\n\nRestored also 3 picture JPG file(s) in the application pictures directory.',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -18198,7 +18198,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 1 playlist, 2 comment and 6 picture JSON files as well as the application settings from "$restorableZipFilePathName".',
+                'Restored 1 playlist, 2 comment and 3 picture JSON files as well as the application settings from "$restorableZipFilePathName".\n\nRestored also 3 picture JPG file(s) in the application pictures directory.',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -18334,7 +18334,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 1 playlist, 2 comment and 6 picture JSON files as well as the application settings from "$restorableZipFilePathName".',
+                'Restored 1 playlist, 2 comment and 3 picture JSON files as well as the application settings from "$restorableZipFilePathName".\n\nRestored also 3 picture JPG file(s) in the application pictures directory.',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -18376,7 +18376,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 1 playlist, 2 comment and 6 picture JSON files as well as the application settings from "$restorableZipFilePathName".',
+                'Restored 1 playlist, 2 comment and 3 picture JSON files as well as the application settings from "$restorableZipFilePathName".\n\nRestored also 3 picture JPG file(s) in the application pictures directory.',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
