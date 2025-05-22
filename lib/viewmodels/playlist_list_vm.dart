@@ -2990,6 +2990,7 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     updateSettingsAndPlaylistJsonFiles(
+      unselectAddedPlaylist: false, // fix bug when restoring unique selected playlist from Windows zip on android
       updatePlaylistPlayableAudioList: false,
       restoringPlaylistsCommentsAndSettingsJsonFilesFromZip:
           restoringPlaylistsCommentsAndSettingsJsonFilesFromZip,
@@ -3237,7 +3238,8 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Will be set to false if the zip file was created from the
     // appbar 'Save Playlist, Comments, Pictures and Settings to Zip
-    // File' menu item.
+    // File' menu item. In this case, the settings file is included
+    // in the zip file.
     bool wasIndividualPlaylistRestored = true;
 
     // Iterate over each file in the archive.
