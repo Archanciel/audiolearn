@@ -1259,7 +1259,7 @@
   "noOperationCopiedOperationType": "copié",
   "savedPictureNumberMessage": "\n\nEgalement {pictureNumber} fichier(s) de photo JPG sauvegardé(s) dans le même répertoire / pictures.",
   "addedToZipPictureNumberMessage": "\n\nEgalement {pictureNumber} fichier(s) de photo JPG sauvegardé(s) dans le fichier ZIP.",
-  "restoredPictureNumberMessage": "\n\nEgalement {pictureNumber} fichier(s) de photo JPG restauré(s).",
+  "restoredPictureNumberMessage": "\n\nEgalement {pictureNumber} fichier(s) de photo JPG restauré(s) dans le répertoire \"pictures\" de l'application.",
   "replaceExistingPlaylists": "Remplacer les playlists\nexistantes",
   "playlistRestorationDialogTitle": "Restauration des playlists",
   "playlistRestorationExplanation": "Important: si vous avez apporté des modifications à vos playlists existantes (ajout de fichiers audio, de commentaires ou d'images) depuis la création de la sauvegarde ZIP, gardez cette case DÉCOCHÉE. Sinon, vos modifications récentes seront remplacées par les versions antérieures contenues dans la sauvegarde.",

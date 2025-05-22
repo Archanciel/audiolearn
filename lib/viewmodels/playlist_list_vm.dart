@@ -2983,7 +2983,7 @@ class PlaylistListVM extends ChangeNotifier {
     await _mergeRestoredFromZipSettingsWithCurrentAppSettings();
 
     bool restoringPlaylistsCommentsAndSettingsJsonFilesFromZip = true;
-    bool wasZipSavedOnWindows = restoredInfoLst[3];
+    bool wasZipSavedOnWindows = restoredInfoLst[4];
 
     if (restoredInfoLst[0].length == 1 || wasZipSavedOnWindows) {
       restoringPlaylistsCommentsAndSettingsJsonFilesFromZip = false;
@@ -3018,15 +3018,15 @@ class PlaylistListVM extends ChangeNotifier {
     _warningMessageVM.confirmRestorationFromZip(
       zipFilePathName: zipFilePathName,
       playlistsNumber: restoredInfoLst[0].length,
-      commentsNumber: restoredInfoLst[1],
-      picturesNumber: restoredInfoLst[2],
-      restoredPictureJpgNumber: 0,
+      commentJsonFilesNumber: restoredInfoLst[1],
+      pictureJsonFilesNumber: restoredInfoLst[2],
+      pictureJpgFilesNumber: restoredInfoLst[3],
     );
 
     // Will be set to false if the zip file was created from the
     // appbar 'Save Playlist, Comments, Pictures and Settings to Zip
     // File' menu item.
-    bool wasIndividualPlaylistRestored = restoredInfoLst[4];
+    bool wasIndividualPlaylistRestored = restoredInfoLst[5];
 
     // Selecting the playlist which was selected before the
     // restoration from the zip file is useful in case the
@@ -3166,8 +3166,9 @@ class PlaylistListVM extends ChangeNotifier {
   /// The returned list contains
   /// [
   ///  list of restored playlist titles,
-  ///  number of restored comments,
-  ///  number of restored pictures,
+  ///  number of restored comments JSON files,
+  ///  number of restored pictures JSON files,
+  ///  number of restored pictures JPG files,
   ///  is the zip file generated in Windows (true/false),
   ///  was the zip file created from the playlist item 'Save Playlist, Comments,
   ///  Pictures and Settings to Zip File' menu item (true/false),
@@ -3179,7 +3180,8 @@ class PlaylistListVM extends ChangeNotifier {
     List<dynamic> restoredInfoLst = [];
     List<String> restoredPlaylistTitlesLst = [];
     int restoredCommentsNumber = 0;
-    int restoredPicturesNumber = 0;
+    int restoredPicturesJsonNumber = 0;
+    int restoredPicturesJpgNumber = 0;
     bool isZipFromWindows = false;
 
     // Check if the provided zip file exists.
@@ -3190,7 +3192,8 @@ class PlaylistListVM extends ChangeNotifier {
       // with the file picker and so the file must exist.
       restoredInfoLst.add(restoredPlaylistTitlesLst);
       restoredInfoLst.add(restoredCommentsNumber);
-      restoredInfoLst.add(restoredPicturesNumber);
+      restoredInfoLst.add(restoredPicturesJsonNumber);
+      restoredInfoLst.add(restoredPicturesJpgNumber);
       restoredInfoLst.add(isZipFromWindows);
 
       return restoredInfoLst;
@@ -3335,8 +3338,16 @@ class PlaylistListVM extends ChangeNotifier {
         if (destinationPathFileName.contains(kCommentDirName)) {
           restoredCommentsNumber++;
         } else if (destinationPathFileName.contains(kPictureDirName)) {
-          restoredPicturesNumber++;
+          if (destinationPathFileName.endsWith('.jpg')) {
+            // The jpg file is a picture file.
+            restoredPicturesJpgNumber++;
+          } else {
+            // The json file is a picture file.
+            restoredPicturesJsonNumber++;
+          }
         } else {
+          // Adding the ristored playlist title to the list
+          // of restored playlist titles.
           restoredPlaylistTitlesLst.add(
             path.basenameWithoutExtension(destinationPathFileName),
           );
@@ -3346,11 +3357,8 @@ class PlaylistListVM extends ChangeNotifier {
 
     restoredInfoLst.add(restoredPlaylistTitlesLst);
     restoredInfoLst.add(restoredCommentsNumber);
-
-    // Minus 1 since the pictureAudioMap.json file is also
-    // counted in the number of restored pictures since it is
-    // located in a 'pictures' directory.
-    restoredInfoLst.add(restoredPicturesNumber);
+    restoredInfoLst.add(restoredPicturesJsonNumber);
+    restoredInfoLst.add(restoredPicturesJpgNumber);
 
     isZipFromWindows =
         (archiveFile != null) ? archiveFile.name.contains('\\') : false;

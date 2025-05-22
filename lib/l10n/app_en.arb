@@ -930,7 +930,7 @@
   "noOperationCopiedOperationType": "copied",
   "savedPictureNumberMessage": "\n\nSaved also {pictureNumber} picture JPG file(s) in same directory / pictures.",
   "addedToZipPictureNumberMessage": "\n\nSaved also {pictureNumber} picture JPG file(s) in the ZIP file.",
-  "restoredPictureNumberMessage": "\n\nRestored also {pictureNumber} JPG picture file(s).",
+  "restoredPictureNumberMessage": "\n\nRestored also {pictureNumber} picture JPG file(s) in the application pictures directory.",
   "replaceExistingPlaylists": "Replace existing playlists",
   "playlistRestorationDialogTitle": "Playlists Restoration",
   "playlistRestorationExplanation": "Important: if you've modified your existing playlists (added audio files, comments, or pictures) since creating the ZIP backup, keep this checkbox UNCHECKED. Otherwise, your recent changes will be replaced by the older versions contained in the backup.",
