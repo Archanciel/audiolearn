@@ -799,18 +799,22 @@ class WarningMessageVM extends ChangeNotifier {
   int get commentJsonFilesNumber => _commentJsonFilesNumber;
   int _pictureJsonFilesNumber = 0;
   int get pictureJsonFilesNumber => _pictureJsonFilesNumber;
+  bool _wasIndividualPlaylistRestored = false;
+  bool get wasIndividualPlaylistRestored => _wasIndividualPlaylistRestored;
   void confirmRestorationFromZip({
     required String zipFilePathName,
     required int playlistsNumber,
     required int commentJsonFilesNumber,
     required int pictureJsonFilesNumber,
     required int pictureJpgFilesNumber,
+    required bool wasIndividualPlaylistRestored,
   }) {
     _zipFilePathName = zipFilePathName;
     _playlistsNumber = playlistsNumber;
     _commentJsonFilesNumber = commentJsonFilesNumber;
     _pictureJsonFilesNumber = pictureJsonFilesNumber;
     _savedOrRestoredPictureJpgNumber= pictureJpgFilesNumber;
+    _wasIndividualPlaylistRestored = wasIndividualPlaylistRestored;
 
     warningMessageType = WarningMessageType.restoreAppDataFromZip;
 
