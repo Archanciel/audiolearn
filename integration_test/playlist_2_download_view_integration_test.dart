@@ -18162,10 +18162,10 @@ void main() {
             '''Restore 2 selected unique playlist. Each playlist contained in its zip file is
             selected.''', () {
           testWidgets(
-              '''Restore not replace 2 selected unique playlists. First restore Youtube 'Restore-
-            short - test - playlist'. Then restore the local 'Local restore- short - test - playlist'
-            playlist. Verify the correct playlist selection. Finally, execute the 'Update Playlist
-            JSON Files' appbar menu and verify that the playlist selection is correct.''',
+              '''Restore not replace 2 selected unique playlists. First restore the Youtube 'Restore-
+            short - test - playlist'. Then restore the local 'Local restore- short - test - playlist'.
+            Verify the correct playlist selection. Finally, execute the 'Update Playlist JSON Files'
+            appbar menu and verify that the playlist selection remains correct.''',
               (tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
@@ -18298,10 +18298,10 @@ void main() {
             );
           });
           testWidgets(
-              '''Restore replace 2 selected unique playlists. First restore Youtube 'Restore-
-            short - test - playlist'. Then restore the local 'Local restore- short - test - playlist'
-            playlist. Verify the correct playlist selection. Finally, execute the 'Update Playlist
-            JSON Files' appbar menu and verify that the playlist selection is correct.''',
+              '''Restore replace 2 selected unique playlists. First restore the Youtube 'Restore-
+            short - test - playlist'. Then restore the local 'Local restore- short - test - playlist'.
+            Verify the correct playlist selection. Finally, execute the 'Update Playlist JSON Files'
+            appbar menu and verify that the playlist selection remains correct.''',
               (tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
@@ -18437,15 +18437,15 @@ void main() {
       });
     });
     group('Restore Android zip files', () {
-      group('On empty app dir, restore Windows zip.', () {
+      group('On empty app dir, restore Android zip.', () {
         group(
             '''Restore 2 selected unique playlist. Each playlist contained in its zip file is
             selected.''', () {
           testWidgets(
-              '''Restore not replace 2 selected unique playlists. First restore Youtube 'Restore-
-            short - test - playlist'. Then restore the local 'Local restore- short - test - playlist'
-            playlist. Verify the correct playlist selection. Finally, execute the 'Update Playlist
-            JSON Files' appbar menu and verify that the playlist selection is correct.''',
+              '''Restore not replace 2 selected unique playlists. First restore the Youtube 'Restore-
+            short - test - playlist'. Then restore the local 'Local restore- short - test - playlist'.
+            Verify the correct playlist selection. Finally, execute the 'Update Playlist JSON Files'
+            appbar menu and verify that the playlist selection remains correct.''',
               (tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
@@ -18454,7 +18454,7 @@ void main() {
             );
 
             String restorableZipFilePathName =
-                "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Windows Restore- short - test - playlist.zip";
+                "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Android Restore- short - test - playlist.zip";
 
             await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
               tester: tester,
@@ -18504,7 +18504,7 @@ void main() {
                 'Local restore- short - test - playlist';
 
             restorableZipFilePathName =
-                "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Windows Local restore- short - test - playlist.zip";
+                "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Android Local restore- short - test - playlist.zip";
 
             mockFilePicker.setSelectedFiles([
               PlatformFile(
@@ -18578,10 +18578,10 @@ void main() {
             );
           });
           testWidgets(
-              '''Restore replace 2 selected unique playlists. First restore Youtube 'Restore-
-            short - test - playlist'. Then restore the local 'Local restore- short - test - playlist'
-            playlist. Verify the correct playlist selection. Finally, execute the 'Update Playlist
-            JSON Files' appbar menu and verify that the playlist selection is correct.''',
+              '''Restore replace 2 selected unique playlists. First restore the Youtube 'Restore-
+            short - test - playlist'. Then restore the local 'Local restore- short - test - playlist'.
+            Verify the correct playlist selection. Finally, execute the 'Update Playlist JSON Files'
+            appbar menu and verify that the playlist selection remains correct.''',
               (tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
@@ -18590,7 +18590,7 @@ void main() {
             );
 
             String restorableZipFilePathName =
-                "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Windows Restore- short - test - playlist.zip";
+                "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Android Restore- short - test - playlist.zip";
 
             await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
               tester: tester,
@@ -18640,7 +18640,7 @@ void main() {
                 'Local restore- short - test - playlist';
 
             restorableZipFilePathName =
-                "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Windows Local restore- short - test - playlist.zip";
+                "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Android Local restore- short - test - playlist.zip";
 
             mockFilePicker.setSelectedFiles([
               PlatformFile(
