@@ -74,37 +74,24 @@ Future<void> _setWindowsAppSizeAndPosition({
 }) async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // If in integration test execution we need to set the app size
-  // similar as on Android smartphone, we place a isAppSizeNotTest.txt
-  // file in the app directory.
-  File file = File(
-    '${DirUtil.getApplicationPath(isTest: isTest)}${Platform.pathSeparator}isAppSizeNotTest.txt',
-  );
+  await getScreenList().then((List<Screen> screens) {
+    // Assumez que vous voulez utiliser le premier écran (principal)
+    final Screen screen = screens.first;
+    final Rect screenRect = screen.visibleFrame;
 
-  if (file.existsSync()) {
-    isTest = false;
-  }
+    // Définissez la largeur et la hauteur de votre fenêtre
+    double windowWidth = (isTest) ? 900 : 730;
+    double windowHeight = (isTest) ? 1700 : 1480;
 
-  if (ScreenMixin.isHardwarePc()) {
-    await getScreenList().then((List<Screen> screens) {
-      // Assumez que vous voulez utiliser le premier écran (principal)
-      final Screen screen = screens.first;
-      final Rect screenRect = screen.visibleFrame;
+    // Calculez la position X pour placer la fenêtre sur le côté droit de l'écran
+    final double posX = screenRect.right - windowWidth + 10;
+    // Optionnellement, ajustez la position Y selon vos préférences
+    final double posY = (screenRect.height - windowHeight) / 2;
 
-      // Définissez la largeur et la hauteur de votre fenêtre
-      double windowWidth = (isTest) ? 900 : 730;
-      double windowHeight = (isTest) ? 1700 : 1480;
-
-      // Calculez la position X pour placer la fenêtre sur le côté droit de l'écran
-      final double posX = screenRect.right - windowWidth + 10;
-      // Optionnellement, ajustez la position Y selon vos préférences
-      final double posY = (screenRect.height - windowHeight) / 2;
-
-      final Rect windowRect =
-          Rect.fromLTWH(posX, posY, windowWidth, windowHeight);
-      setWindowFrame(windowRect);
-    });
-  }
+    final Rect windowRect =
+        Rect.fromLTWH(posX, posY, windowWidth, windowHeight);
+    setWindowFrame(windowRect);
+  });
 }
 
 class MainApp extends StatelessWidget with ScreenMixin {
