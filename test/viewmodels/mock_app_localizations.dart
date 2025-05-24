@@ -1981,6 +1981,17 @@ class MockAppLocalizations extends AppLocalizations {
       "Saved playlist, comment and picture JSON files to \"$filePathName\".";
 
   @override
-  String addedToZipPictureNumberMessage(Object pictureNumber,) =>
+  String addedToZipPictureNumberMessage(
+    Object pictureNumber,
+  ) =>
       "Saved also $pictureNumber picture JPG file(s) in the ZIP file.";
+
+  @override
+  String restoredUniquePlaylistFromZip(
+    Object playlistsNumber,
+    Object commentsNumber,
+    Object picturesNumber,
+    Object filePathName,
+  ) =>
+      "Restored $playlistsNumber playlist, $commentsNumber comment and $picturesNumber picture JSON files from \"$filePathName\".";
 }

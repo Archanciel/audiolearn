@@ -842,7 +842,17 @@
   "restorePlaylistAndCommentsFromZipTooltip": "Restoring the playlists, their audio comments, pictures and the application settings from a saved zip file. The zip file contains the playlists, the comments, the pictures as well as the settings JSON files. The audio files are not included in it.",
   "restoredAppDataFromZip": "Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as the application settings from \"{filePathName}\".",
   "@restoredAppDataFromZip": {
-    "description": "Warning message indicating that the default SF parms were not applied to move audio",
+    "description": "Warning message indicating that one or several playlists were restored from zip created from appbar menu",
+    "placeholders": {
+      "playlistsNumber": {},
+      "commentsNumber": {},
+      "picturesNumber": {},
+      "filePathName": {}
+    }
+  },
+  "restoredUniquePlaylistFromZip": "Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files from \"{filePathName}\".",
+  "@restoredUniquePlaylistFromZip": {
+    "description": "Warning message indicating that the a unique playlist was restored from zip created from playlist item menu",
     "placeholders": {
       "playlistsNumber": {},
       "commentsNumber": {},

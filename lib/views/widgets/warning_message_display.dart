@@ -1066,8 +1066,8 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
               );
 
               if (_warningMessageVM.savedOrRestoredPictureJpgNumber > 0) {
-                savedAppDataToZipMessage +=
-                    AppLocalizations.of(context)!.addedToZipPictureNumberMessage(
+                savedAppDataToZipMessage += AppLocalizations.of(context)!
+                    .addedToZipPictureNumberMessage(
                   _warningMessageVM.savedOrRestoredPictureJpgNumber,
                 );
               }
@@ -1111,14 +1111,23 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
           String restoredAppDataFromZipMessage;
 
           if (_warningMessageVM.zipFilePathName != '') {
-            restoredAppDataFromZipMessage =
-                AppLocalizations.of(context)!.restoredAppDataFromZip(
-              _warningMessageVM.playlistsNumber,
-              _warningMessageVM.commentJsonFilesNumber,
-              _warningMessageVM.pictureJsonFilesNumber,
-              _warningMessageVM.zipFilePathName,
-            );
-
+            if (!_warningMessageVM.wasIndividualPlaylistRestored) {
+              restoredAppDataFromZipMessage =
+                  AppLocalizations.of(context)!.restoredAppDataFromZip(
+                _warningMessageVM.playlistsNumber,
+                _warningMessageVM.commentJsonFilesNumber,
+                _warningMessageVM.pictureJsonFilesNumber,
+                _warningMessageVM.zipFilePathName,
+              );
+            } else {
+              restoredAppDataFromZipMessage =
+                  AppLocalizations.of(context)!.restoredUniquePlaylistFromZip(
+                _warningMessageVM.playlistsNumber,
+                _warningMessageVM.commentJsonFilesNumber,
+                _warningMessageVM.pictureJsonFilesNumber,
+                _warningMessageVM.zipFilePathName,
+              );
+            }
             if (_warningMessageVM.savedOrRestoredPictureJpgNumber > 0) {
               restoredAppDataFromZipMessage +=
                   AppLocalizations.of(context)!.restoredPictureNumberMessage(

@@ -3015,6 +3015,11 @@ class PlaylistListVM extends ChangeNotifier {
     //   sourceDirectoryPath: pictureSourceDirectoryPath ?? '',
     // );
 
+    // Will be set to false if the zip file was created from the
+    // appbar 'Save Playlist, Comments, Pictures and Settings to Zip
+    // File' menu item.
+    bool wasIndividualPlaylistRestored = restoredInfoLst[5];
+
     // Display a confirmation message to the user.
     _warningMessageVM.confirmRestorationFromZip(
       zipFilePathName: zipFilePathName,
@@ -3022,12 +3027,8 @@ class PlaylistListVM extends ChangeNotifier {
       commentJsonFilesNumber: restoredInfoLst[1],
       pictureJsonFilesNumber: restoredInfoLst[2],
       pictureJpgFilesNumber: restoredInfoLst[3],
+      wasIndividualPlaylistRestored: wasIndividualPlaylistRestored,
     );
-
-    // Will be set to false if the zip file was created from the
-    // appbar 'Save Playlist, Comments, Pictures and Settings to Zip
-    // File' menu item.
-    bool wasIndividualPlaylistRestored = restoredInfoLst[5];
 
     // Selecting the playlist which was selected before the
     // restoration from the zip file is useful in case the
