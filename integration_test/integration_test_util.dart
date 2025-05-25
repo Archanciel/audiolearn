@@ -2313,6 +2313,10 @@ class IntegrationTestUtil {
     List<String> audioForPictureTitleThreeLst = const [],
     String pictureFileNameFour = '',
     List<String> audioForPictureTitleFourLst = const [],
+    String pictureFileNameFive = '',
+    List<String> audioForPictureTitleFiveLst = const [],
+    String pictureFileNameSix = '',
+    List<String> audioForPictureTitleSixLst = const [],
   }) {
     String playlistDir;
 

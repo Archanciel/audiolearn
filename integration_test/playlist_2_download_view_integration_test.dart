@@ -12900,11 +12900,14 @@ void main() {
             // Verify local playlist
 
             List<String> audioTitles = [
-              "Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage!",
+              "morning _ cinematic video",
+              "Really short video",
+              "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             ];
-
             List<String> audioSubTitles = [
-              "0:24:21.8. 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30.",
+              "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.",
+              "0:00:10.0. 61 KB at 20 KB/sec on 10/01/2024 at 18:18.",
+              "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -13921,11 +13924,14 @@ void main() {
             // Verify local playlist
 
             List<String> audioTitles = [
-              "Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage!",
+              "morning _ cinematic video",
+              "Really short video",
+              "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             ];
-
             List<String> audioSubTitles = [
-              "0:24:21.8. 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30.",
+              "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.",
+              "0:00:10.0. 61 KB at 20 KB/sec on 10/01/2024 at 18:18.",
+              "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -14320,11 +14326,14 @@ void main() {
             // Verify local playlist
 
             List<String> audioTitles = [
-              "Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage!",
+              "morning _ cinematic video",
+              "Really short video",
+              "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             ];
-
             List<String> audioSubTitles = [
-              "0:24:21.8. 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30.",
+              "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.",
+              "0:00:10.0. 61 KB at 20 KB/sec on 10/01/2024 at 18:18.",
+              "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -15352,11 +15361,14 @@ void main() {
             );
 
             List<String> audioTitles = [
-              "Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage!",
+              "morning _ cinematic video",
+              "Really short video",
+              "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             ];
-
             List<String> audioSubTitles = [
-              "0:24:21.8. 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30.",
+              "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.",
+              "0:00:10.0. 61 KB at 20 KB/sec on 10/01/2024 at 18:18.",
+              "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -19831,6 +19843,402 @@ void main() {
               pictureVM: PictureVM(
                 settingsDataService: settingsDataService,
               ),
+            );
+
+            // Purge the test playlist directory so that the created test
+            // files are not uploaded to GitHub
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+          });
+        });
+        group(
+            '''Restore multiple saved playlists, 2 saved individually and 1 saved as app saving from appbar
+            menu. Each playlist contained in its zip file is selected.''', () {
+          testWidgets(
+              '''Multiple playlists restore, not replace existing playlist. Restore multiple playlists
+              Android zip containing "A restaurer", "local" and "Restore- short - test - playlist" playlists
+              to empty Windows application.''',
+              (tester) async {
+            // Purge the test playlist directory if it exists so that the
+            // playlist list is empty
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+
+            String restorableZipFilePathName =
+                '$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Android audioLearn_multiple_playlists.zip';
+
+            // Since we have to use a mock AudioDownloadVM to add the
+            // youtube playlist, we can not use app.main() to start the
+            // app because app.main() uses the real AudioDownloadVM
+            // and we don't want to make the main.dart file dependent
+            // of a mock class. So we have to start the app by hand,
+            // what IntegrationTestUtil.launchExpandablePlaylistListView
+            // does.
+
+            final SettingsDataService settingsDataService = SettingsDataService(
+              sharedPreferences: await SharedPreferences.getInstance(),
+              isTest: true,
+            );
+
+            // Load the settings from the json file. This is necessary
+            // otherwise the ordered playlist titles will remain empty
+            // and the playlist list will not be filled with the
+            // playlists available in the app test dir
+            await settingsDataService.loadSettingsFromFile(
+                settingsJsonPathFileName:
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+            WarningMessageVM warningMessageVM = WarningMessageVM();
+
+            // The mockAudioDownloadVM will be later used to simulate
+            // redownloading not playable files after having restored
+            // the playlists, comments and settings from the zip file.
+            MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
+              warningMessageVM: warningMessageVM,
+              settingsDataService: settingsDataService,
+            );
+
+            AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+              warningMessageVM: warningMessageVM,
+              settingsDataService: settingsDataService,
+            );
+
+            PlaylistListVM playlistListVM = PlaylistListVM(
+              warningMessageVM: warningMessageVM,
+              audioDownloadVM: mockAudioDownloadVM,
+              commentVM: CommentVM(),
+              pictureVM: PictureVM(
+                settingsDataService: settingsDataService,
+              ),
+              settingsDataService: settingsDataService,
+            );
+
+            // calling getUpToDateSelectablePlaylists() loads all the
+            // playlist json files from the app dir and so enables
+            // playlistListVM to know which playlists are
+            // selected and which are not
+            playlistListVM.getUpToDateSelectablePlaylists();
+
+            AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+              settingsDataService: settingsDataService,
+              playlistListVM: playlistListVM,
+              commentVM: CommentVM(),
+            );
+
+            DateFormatVM dateFormatVM = DateFormatVM(
+              settingsDataService: settingsDataService,
+            );
+
+            await IntegrationTestUtil
+                .launchIntegrTestAppEnablingInternetAccessWithMock(
+              tester: tester,
+              audioDownloadVM: audioDownloadVM,
+              settingsDataService: settingsDataService,
+              playlistListVM: playlistListVM,
+              warningMessageVM: warningMessageVM,
+              audioPlayerVM: audioPlayerVM,
+              dateFormatVM: dateFormatVM,
+            );
+
+            // Replace the platform instance with your mock
+            MockFilePicker mockFilePicker = MockFilePicker();
+            FilePicker.platform = mockFilePicker;
+
+            mockFilePicker.setSelectedFiles([
+              PlatformFile(
+                  name: restorableZipFilePathName,
+                  path: restorableZipFilePathName,
+                  size: 7460),
+            ]);
+
+            // Execute the 'Restore Playlists, Comments and Settings from Zip
+            // File ...' menu
+            await IntegrationTestUtil.executeRestorePlaylists(
+              tester: tester,
+              doReplaceExistingPlaylists: false,
+            );
+
+            // Verify the displayed warning confirmation dialog
+            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+              tester: tester,
+              warningDialogMessage:
+                  'Restored 3 playlist, 7 comment and 7 picture JSON files as well as the application settings from "$restorableZipFilePathName".',
+              isWarningConfirming: true,
+              warningTitle: 'CONFIRMATION',
+            );
+
+            // Verifying the existing and the restored playlists
+            // list as well as the selected playlist 'S8 audio'
+            // displayed audio titles and subtitles.
+
+            List<String> playlistsTitles = [
+              "A restaurer",
+              "local",
+              "Restore- short - test - playlist"
+            ];
+
+            List<String> audioTitles = [
+              "People Talking at The Table _ Free Video Loop",
+              "morning _ cinematic video",
+              "Really short video",
+            ];
+
+            List<String> audioSubTitles = [
+              '0:00:24.1. 11 KB at 7 KB/sec on 18/05/2025 at 16:40.',
+              "0:00:58.9. 360 KB at 175 KB/sec on 18/05/2025 at 16:40.",
+              "0:00:09.8. 61 KB at 30 KB/sec on 18/05/2025 at 16:40.",
+            ];
+
+            _verifyRestoredPlaylistAndAudio(
+              tester: tester,
+              selectedPlaylistTitle: 'Restore- short - test - playlist',
+              playlistsTitles: playlistsTitles,
+              audioTitles: audioTitles,
+              audioSubTitles: audioSubTitles,
+            );
+
+            // Verify the content of the 'Restore- short - test - playlist'
+            // playlist dir + comments + pictures dir after restoration.
+            IntegrationTestUtil.verifyPlaylistDirectoryContents(
+              playlistTitle: 'Restore- short - test - playlist',
+              expectedAudioFiles: [],
+              expectedCommentFiles: [
+                "250518-164039-morning _ cinematic video 23-07-01.json",
+                "250518-164043-People Talking at The Table _ Free Video Loop 19-09-28.json",
+              ],
+              expectedPictureFiles: [
+                "250518-164035-Really short video 23-07-01.json",
+                "250518-164039-morning _ cinematic video 23-07-01.json",
+              ],
+              doesPictureAudioMapFileNameExist: true,
+              applicationPictureDir:
+                  '$kApplicationPathWindowsTest${path.separator}$kPictureDirName',
+              pictureFileNameOne: 'Jean-Pierre.jpg',
+              audioForPictureTitleOneLst: [
+                "Restore- short - test - playlist|250518-164035-Really short video 23-07-01",
+              ],
+              pictureFileNameTwo:
+                  "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg",
+              audioForPictureTitleTwoLst: [
+                "Restore- short - test - playlist|250518-164039-morning _ cinematic video 23-07-01",
+              ],
+              pictureFileNameThree: 'Jésus le Dieu vivant.jpg',
+              audioForPictureTitleThreeLst: [
+                "Restore- short - test - playlist|250518-164043-People Talking at The Table _ Free Video Loop 19-09-28",
+                "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+                "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+              ],
+              pictureFileNameFour: 'Sam Altman.jpg',
+              audioForPictureTitleFourLst: [
+                "A restaurer|250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12",
+                "A restaurer|250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12",
+              ],
+              pictureFileNameFive: 'Jésus mon Amour.jpg',
+              audioForPictureTitleFiveLst: [
+        "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+              ],
+              pictureFileNameSix: "Jésus je T'adore.jpg",
+              audioForPictureTitleSixLst: [
+        "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
+              ],
+            );
+
+            // Purge the test playlist directory so that the created test
+            // files are not uploaded to GitHub
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+          });
+          testWidgets(
+              '''Multiple playlists restore, replace existing playlist. Restore multiple playlists
+              Android zip containing "A restaurer", "local" and "Restore- short - test - playlist" playlists
+              to empty Windows application.''',
+              (tester) async {
+            // Purge the test playlist directory if it exists so that the
+            // playlist list is empty
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+
+            String restorableZipFilePathName =
+                '$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Android audioLearn_multiple_playlists.zip';
+
+            // Since we have to use a mock AudioDownloadVM to add the
+            // youtube playlist, we can not use app.main() to start the
+            // app because app.main() uses the real AudioDownloadVM
+            // and we don't want to make the main.dart file dependent
+            // of a mock class. So we have to start the app by hand,
+            // what IntegrationTestUtil.launchExpandablePlaylistListView
+            // does.
+
+            final SettingsDataService settingsDataService = SettingsDataService(
+              sharedPreferences: await SharedPreferences.getInstance(),
+              isTest: true,
+            );
+
+            // Load the settings from the json file. This is necessary
+            // otherwise the ordered playlist titles will remain empty
+            // and the playlist list will not be filled with the
+            // playlists available in the app test dir
+            await settingsDataService.loadSettingsFromFile(
+                settingsJsonPathFileName:
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+            WarningMessageVM warningMessageVM = WarningMessageVM();
+
+            // The mockAudioDownloadVM will be later used to simulate
+            // redownloading not playable files after having restored
+            // the playlists, comments and settings from the zip file.
+            MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
+              warningMessageVM: warningMessageVM,
+              settingsDataService: settingsDataService,
+            );
+
+            AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+              warningMessageVM: warningMessageVM,
+              settingsDataService: settingsDataService,
+            );
+
+            PlaylistListVM playlistListVM = PlaylistListVM(
+              warningMessageVM: warningMessageVM,
+              audioDownloadVM: mockAudioDownloadVM,
+              commentVM: CommentVM(),
+              pictureVM: PictureVM(
+                settingsDataService: settingsDataService,
+              ),
+              settingsDataService: settingsDataService,
+            );
+
+            // calling getUpToDateSelectablePlaylists() loads all the
+            // playlist json files from the app dir and so enables
+            // playlistListVM to know which playlists are
+            // selected and which are not
+            playlistListVM.getUpToDateSelectablePlaylists();
+
+            AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+              settingsDataService: settingsDataService,
+              playlistListVM: playlistListVM,
+              commentVM: CommentVM(),
+            );
+
+            DateFormatVM dateFormatVM = DateFormatVM(
+              settingsDataService: settingsDataService,
+            );
+
+            await IntegrationTestUtil
+                .launchIntegrTestAppEnablingInternetAccessWithMock(
+              tester: tester,
+              audioDownloadVM: audioDownloadVM,
+              settingsDataService: settingsDataService,
+              playlistListVM: playlistListVM,
+              warningMessageVM: warningMessageVM,
+              audioPlayerVM: audioPlayerVM,
+              dateFormatVM: dateFormatVM,
+            );
+
+            // Replace the platform instance with your mock
+            MockFilePicker mockFilePicker = MockFilePicker();
+            FilePicker.platform = mockFilePicker;
+
+            mockFilePicker.setSelectedFiles([
+              PlatformFile(
+                  name: restorableZipFilePathName,
+                  path: restorableZipFilePathName,
+                  size: 7460),
+            ]);
+
+            // Execute the 'Restore Playlists, Comments and Settings from Zip
+            // File ...' menu
+            await IntegrationTestUtil.executeRestorePlaylists(
+              tester: tester,
+              doReplaceExistingPlaylists: true,
+            );
+
+            // Verify the displayed warning confirmation dialog
+            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+              tester: tester,
+              warningDialogMessage:
+                  'Restored 3 playlist, 7 comment and 7 picture JSON files as well as the application settings from "$restorableZipFilePathName".',
+              isWarningConfirming: true,
+              warningTitle: 'CONFIRMATION',
+            );
+
+            // Verifying the existing and the restored playlists
+            // list as well as the selected playlist 'S8 audio'
+            // displayed audio titles and subtitles.
+
+            List<String> playlistsTitles = [
+              "A restaurer",
+              "local",
+              "Restore- short - test - playlist"
+            ];
+
+            List<String> audioTitles = [
+              "People Talking at The Table _ Free Video Loop",
+              "morning _ cinematic video",
+              "Really short video",
+            ];
+
+            List<String> audioSubTitles = [
+              '0:00:24.1. 11 KB at 7 KB/sec on 18/05/2025 at 16:40.',
+              "0:00:58.9. 360 KB at 175 KB/sec on 18/05/2025 at 16:40.",
+              "0:00:09.8. 61 KB at 30 KB/sec on 18/05/2025 at 16:40.",
+            ];
+
+            _verifyRestoredPlaylistAndAudio(
+              tester: tester,
+              selectedPlaylistTitle: 'Restore- short - test - playlist',
+              playlistsTitles: playlistsTitles,
+              audioTitles: audioTitles,
+              audioSubTitles: audioSubTitles,
+            );
+
+            // Verify the content of the 'Restore- short - test - playlist'
+            // playlist dir + comments + pictures dir after restoration.
+            IntegrationTestUtil.verifyPlaylistDirectoryContents(
+              playlistTitle: 'Restore- short - test - playlist',
+              expectedAudioFiles: [],
+              expectedCommentFiles: [
+                "250518-164039-morning _ cinematic video 23-07-01.json",
+                "250518-164043-People Talking at The Table _ Free Video Loop 19-09-28.json",
+              ],
+              expectedPictureFiles: [
+                "250518-164035-Really short video 23-07-01.json",
+                "250518-164039-morning _ cinematic video 23-07-01.json",
+              ],
+              doesPictureAudioMapFileNameExist: true,
+              applicationPictureDir:
+                  '$kApplicationPathWindowsTest${path.separator}$kPictureDirName',
+              pictureFileNameOne: 'Jean-Pierre.jpg',
+              audioForPictureTitleOneLst: [
+                "Restore- short - test - playlist|250518-164035-Really short video 23-07-01",
+              ],
+              pictureFileNameTwo:
+                  "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg",
+              audioForPictureTitleTwoLst: [
+                "Restore- short - test - playlist|250518-164039-morning _ cinematic video 23-07-01",
+              ],
+              pictureFileNameThree: 'Jésus le Dieu vivant.jpg',
+              audioForPictureTitleThreeLst: [
+                "Restore- short - test - playlist|250518-164043-People Talking at The Table _ Free Video Loop 19-09-28",
+                "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+                "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+              ],
+              pictureFileNameFour: 'Sam Altman.jpg',
+              audioForPictureTitleFourLst: [
+                "A restaurer|250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12",
+                "A restaurer|250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12",
+              ],
+              pictureFileNameFive: 'Jésus mon Amour.jpg',
+              audioForPictureTitleFiveLst: [
+        "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+              ],
+              pictureFileNameSix: "Jésus je T'adore.jpg",
+              audioForPictureTitleSixLst: [
+        "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
+              ],
             );
 
             // Purge the test playlist directory so that the created test
