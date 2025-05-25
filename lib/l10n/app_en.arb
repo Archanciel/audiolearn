@@ -850,7 +850,7 @@
       "filePathName": {}
     }
   },
-  "restoredUniquePlaylistFromZip": "Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files from \"{filePathName}\".",
+  "restoredUniquePlaylistFromZip": "Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files from \"{filePathName}\".",
   "@restoredUniquePlaylistFromZip": {
     "description": "Warning message indicating that the a unique playlist was restored from zip created from playlist item menu",
     "placeholders": {
