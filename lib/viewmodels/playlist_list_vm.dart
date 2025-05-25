@@ -2982,12 +2982,7 @@ class PlaylistListVM extends ChangeNotifier {
     // settings
     await _mergeRestoredFromZipSettingsWithCurrentAppSettings();
 
-    bool restoringPlaylistsCommentsAndSettingsJsonFilesFromZip = true;
-    bool wasZipSavedOnWindows = restoredInfoLst[4];
-
-    if (restoredInfoLst[0].length == 1 || wasZipSavedOnWindows) {
-      restoringPlaylistsCommentsAndSettingsJsonFilesFromZip = false;
-    }
+    bool restoringPlaylistsCommentsAndSettingsJsonFilesFromZip = false;
 
     updateSettingsAndPlaylistJsonFiles(
       unselectAddedPlaylist: false, // fix bug when restoring unique selected playlist from Windows zip on android
@@ -3018,7 +3013,7 @@ class PlaylistListVM extends ChangeNotifier {
     // Will be set to false if the zip file was created from the
     // appbar 'Save Playlist, Comments, Pictures and Settings to Zip
     // File' menu item.
-    bool wasIndividualPlaylistRestored = restoredInfoLst[5];
+    bool wasIndividualPlaylistRestored = restoredInfoLst[4];
 
     // Display a confirmation message to the user.
     _warningMessageVM.confirmRestorationFromZip(
@@ -3029,53 +3024,6 @@ class PlaylistListVM extends ChangeNotifier {
       pictureJpgFilesNumber: restoredInfoLst[3],
       wasIndividualPlaylistRestored: wasIndividualPlaylistRestored,
     );
-
-    // Selecting the playlist which was selected before the
-    // restoration from the zip file is useful in case the
-    // 'Replace existing playlists' checkbox was set to true.
-    // Without this code, the selected playlist would be set
-    // to the playlist selected in the zip file.
-    //
-    // getSelectedPlaylists().length > 1 is true in the
-    // situation where a zip file containing a selected
-    // playlist is restored with the 'Replace existing
-    // playlists' checkbox set to false in the app whose
-    // one existing playlist is selected.
-
-    // Executing the updateSettingsAndPlaylistJsonFiles()
-    // method is necessary, otherwise if the restored
-    // individual playlist was selected in the zip file
-    // and no before restoration playlist is selected,
-    // the restored playlist won't be selected.
-    //
-    // Executing this method ensures that the playlists
-    // contained in the PlaylistListVM._listOfSelectablePlaylists
-    // do correspond so to the application playlist(s) and that
-    // the playlist restored from the zip file does correspond
-    // to its restored playlist json file. For example, if the
-    // application contains a selected playlist and the user
-    // restores a zip file created from the playlistb item menu
-    // 'Save the Playlist, its Commentsand its Pictures to a Zip
-    // File' and that this restored playlist is selected in the
-    // zip file, the restored playlist will not be selected in
-    // the _listOfSelectablePlaylists before the 
-    // updateSettingsAndPlaylistJsonFiles() method is executed.
-    //
-    // Then, in the next if statement, the playlist which was
-    // selected before the restoration is selected, whith the
-    // advantage of updating the other playlist json files to
-    // isSeelected = false. Otherwise, if the user executes
-    // the 'Update Playlist JSON Files' menu of the appbar,
-    // two playlists will be displayed as selected, the before
-    // restoration playlist and the restored playlist.
-    // THIS IS NO LONGER NECESSARY SINCE in its first call
-    // in this method the parm unselectAddedPlaylist is set
-    // to false // fix bug when restoring unique selected
-    // playlist from Windows zip on android.
-
-    // updateSettingsAndPlaylistJsonFiles(
-    //   updatePlaylistPlayableAudioList: false,
-    // );
 
     if (doReplaceExistingPlaylists &&
             selectedPlaylistBeforeRestoreTitle != '' ||
@@ -3199,7 +3147,6 @@ class PlaylistListVM extends ChangeNotifier {
   ///  number of restored comments JSON files,
   ///  number of restored pictures JSON files,
   ///  number of restored pictures JPG files,
-  ///  is the zip file generated in Windows (true/false),
   ///  was the zip file created from the playlist item 'Save Playlist, Comments,
   ///  Pictures and Settings to Zip File' menu item (true/false),
   /// ]
@@ -3212,7 +3159,6 @@ class PlaylistListVM extends ChangeNotifier {
     int restoredCommentsNumber = 0;
     int restoredPicturesJsonNumber = 0;
     int restoredPicturesJpgNumber = 0;
-    bool isZipFromWindows = false;
 
     // Check if the provided zip file exists.
     final File zipFile = File(zipFilePathName);
@@ -3224,7 +3170,6 @@ class PlaylistListVM extends ChangeNotifier {
       restoredInfoLst.add(restoredCommentsNumber);
       restoredInfoLst.add(restoredPicturesJsonNumber);
       restoredInfoLst.add(restoredPicturesJpgNumber);
-      restoredInfoLst.add(isZipFromWindows);
 
       return restoredInfoLst;
     }
@@ -3391,11 +3336,6 @@ class PlaylistListVM extends ChangeNotifier {
     restoredInfoLst.add(restoredCommentsNumber);
     restoredInfoLst.add(restoredPicturesJsonNumber);
     restoredInfoLst.add(restoredPicturesJpgNumber);
-
-    isZipFromWindows =
-        (archiveFile != null) ? archiveFile.name.contains('\\') : false;
-    restoredInfoLst.add(isZipFromWindows);
-
     restoredInfoLst.add(wasIndividualPlaylistRestored);
 
     return restoredInfoLst;
