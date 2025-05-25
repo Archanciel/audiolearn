@@ -3259,12 +3259,13 @@ class IntegrationTestUtil {
       "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
     );
   }
+
   static Future<void> verifyNoPlaylistSelected() async {
     final SettingsDataService settingsDataService = SettingsDataService(
       sharedPreferences: await SharedPreferences.getInstance(),
       isTest: true,
     );
-    
+
     // load settings from file which does not exist. This
     // will ensure that the default playlist root path is set
     await settingsDataService.loadSettingsFromFile(
@@ -3289,5 +3290,80 @@ class IntegrationTestUtil {
     );
 
     expect(playlistListVM.getSelectedPlaylists().length, 0);
+  }
+
+  static void verifyPictureAudioMapAfterPlaylistRestoration({
+    required PictureVM pictureVM,
+  }) {
+    // Load the application picture audio map from the
+    // application picture audio map json file.
+    Map<String, List<String>> applicationPictureAudioMap =
+        pictureVM.readAppPictureAudioMap();
+
+    // Verify application picture audio map
+
+    expect(applicationPictureAudioMap.length, 3);
+    expect(
+      applicationPictureAudioMap.containsKey("Jean-Pierre.jpg"),
+      true,
+    );
+    expect(
+      applicationPictureAudioMap.containsKey(
+          "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg"),
+      true,
+    );
+    expect(
+      applicationPictureAudioMap.containsKey("Jésus le Dieu vivant.jpg"),
+      true,
+    );
+
+    List pictureAudioMapLst =
+        (applicationPictureAudioMap["Jean-Pierre.jpg"] as List);
+    expect(pictureAudioMapLst.length, 2);
+    expect(
+      pictureAudioMapLst[0],
+      "Restore- short - test - playlist|250518-164035-Really short video 23-07-01",
+    );
+    expect(
+      pictureAudioMapLst[1],
+      "Local restore- short - test - playlist|250518-164035-Really short video 23-07-01",
+    );
+
+    pictureAudioMapLst = (applicationPictureAudioMap[
+            "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg"]
+        as List);
+    expect(pictureAudioMapLst.length, 4);
+    expect(
+      pictureAudioMapLst[0],
+      "Restore- short - test - playlist|250518-164039-morning _ cinematic video 23-07-01",
+    );
+    expect(
+      pictureAudioMapLst[1],
+      "Restore- short - test - playlist|250518-164035-Really short video 23-07-01",
+    );
+    expect(
+      pictureAudioMapLst[2],
+        "Local restore- short - test - playlist|250518-164039-morning _ cinematic video 23-07-01",
+    );
+    expect(
+      pictureAudioMapLst[3],
+        "Local restore- short - test - playlist|250518-164035-Really short video 23-07-01"
+    );
+
+    pictureAudioMapLst =
+        (applicationPictureAudioMap["Jésus le Dieu vivant.jpg"] as List);
+    expect(pictureAudioMapLst.length, 3);
+    expect(
+      pictureAudioMapLst[0],
+        "Restore- short - test - playlist|250518-164043-People Talking at The Table _ Free Video Loop 19-09-28",
+    );
+    expect(
+      pictureAudioMapLst[1],
+        "Local restore- short - test - playlist|250518-164043-People Talking at The Table _ Free Video Loop 19-09-28",
+    );
+    expect(
+      pictureAudioMapLst[2],
+        "Prières du Maître|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'"
+    );
   }
 }

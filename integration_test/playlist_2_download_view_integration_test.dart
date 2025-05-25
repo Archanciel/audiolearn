@@ -18159,7 +18159,7 @@ void main() {
           });
         });
         group(
-            '''Restore 2 selected unique playlist. Each playlist contained in its zip file is
+            '''Restore 2 selected unique playlists. Each playlist contained in its zip file is
             selected.''', () {
           testWidgets(
               '''Restore not replace 2 selected unique playlists. First restore the Youtube 'Restore-
@@ -18439,7 +18439,7 @@ void main() {
     group('Restore Android zip files', () {
       group('On empty app dir, restore Android zip.', () {
         group(
-            '''Restore 2 selected unique playlist. Each playlist contained in its zip file is
+            '''Restore 2 selected unique playlists. Each playlist contained in its zip file is
             selected.''', () {
           testWidgets(
               '''Restore not replace 2 selected unique playlists. First restore the Youtube 'Restore-
@@ -19405,6 +19405,432 @@ void main() {
                 "250518-164039-morning _ cinematic video 23-07-01.json",
               ],
               doesPictureAudioMapFileNameExist: true,
+            );
+
+            // Purge the test playlist directory so that the created test
+            // files are not uploaded to GitHub
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+          });
+        });
+        group(
+            '''Restore 3 selected playlists, 2 saved individually and 1 saved as app saving from appbar
+            menu. Each playlist contained in its zip file is selected.''', () {
+          testWidgets(
+              '''Restore not replace 3 selected unique playlists. First restore the individually saved
+              Youtube 'Restore- short - test - playlist'. Then restore the individually saved local
+              'Local restore- short - test - playlist'. Finally, restore the not individually saved
+              'Prières du Maître' playlist. After each each restore, verify the correct playlist selection.
+              Finally, execute the 'Update Playlist JSON Files' appbar menu and verify that the playlist
+              selection remains correct. Verify also the application pictureAudioMap.json file content.''',
+              (tester) async {
+            // Purge the test playlist directory if it exists so that the
+            // playlist list is empty
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+
+            String restorableZipFilePathName =
+                "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Android Restore- short - test - playlist.zip";
+
+            await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
+              tester: tester,
+            );
+
+            // Replace the platform instance with your mock
+            MockFilePicker mockFilePicker = MockFilePicker();
+            FilePicker.platform = mockFilePicker;
+
+            mockFilePicker.setSelectedFiles([
+              PlatformFile(
+                  name: restorableZipFilePathName,
+                  path: restorableZipFilePathName,
+                  size: 3138),
+            ]);
+
+            // Execute the 'Restore Playlists, Comments and Settings from Zip
+            // File ...' menu
+            await IntegrationTestUtil.executeRestorePlaylists(
+              tester: tester,
+              doReplaceExistingPlaylists: false,
+            );
+
+            await Future.delayed(const Duration(milliseconds: 500));
+            await tester.pumpAndSettle(); // must be used !
+
+            // Verify the displayed warning confirmation dialog
+            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+              tester: tester,
+              warningDialogMessage:
+                  'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files from "$restorableZipFilePathName".\n\nRestored also 3 picture JPG file(s) in the application pictures directory.',
+              isWarningConfirming: true,
+              warningTitle: 'CONFIRMATION',
+            );
+
+            const String uniqueYoutubePlaylistTitle =
+                'Restore- short - test - playlist';
+
+            // Verifying the restored playlist selection
+            IntegrationTestUtil.verifyPlaylistSelection(
+              tester: tester,
+              playlistTitle: uniqueYoutubePlaylistTitle,
+              isSelected: true,
+            );
+
+            const String uniqueLocalPlaylistTitle =
+                'Local restore- short - test - playlist';
+
+            restorableZipFilePathName =
+                "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Android Local restore- short - test - playlist.zip";
+
+            mockFilePicker.setSelectedFiles([
+              PlatformFile(
+                  name: restorableZipFilePathName,
+                  path: restorableZipFilePathName,
+                  size: 3138),
+            ]);
+
+            // Execute the 'Restore Playlists, Comments and Settings from Zip
+            // File ...' menu
+            await IntegrationTestUtil.executeRestorePlaylists(
+              tester: tester,
+              doReplaceExistingPlaylists: false,
+            );
+
+            await Future.delayed(const Duration(milliseconds: 500));
+            await tester.pumpAndSettle(); // must be used !
+
+            // Verify the displayed warning confirmation dialog
+            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+              tester: tester,
+              warningDialogMessage:
+                  'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files from "$restorableZipFilePathName".',
+              isWarningConfirming: true,
+              warningTitle: 'CONFIRMATION',
+            );
+
+            // Verifying that the first restored playlist is
+            // still selected
+            IntegrationTestUtil.verifyPlaylistSelection(
+              tester: tester,
+              playlistTitle: uniqueYoutubePlaylistTitle,
+              isSelected: true,
+            );
+
+            // Ensure that the restored playlist is not
+            // selected, although it is selected in the
+            // playlist zip file
+            IntegrationTestUtil.verifyPlaylistSelection(
+                tester: tester,
+                playlistTitle: uniqueLocalPlaylistTitle,
+                isSelected: false);
+
+            const String notIndividuallySavedPlaylistTitle =
+                'Prières du Maître';
+
+            restorableZipFilePathName =
+                "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Android Prières du Maître.zip";
+
+            mockFilePicker.setSelectedFiles([
+              PlatformFile(
+                  name: restorableZipFilePathName,
+                  path: restorableZipFilePathName,
+                  size: 3262),
+            ]);
+
+            // Execute the 'Restore Playlists, Comments and Settings from Zip
+            // File ...' menu
+            await IntegrationTestUtil.executeRestorePlaylists(
+              tester: tester,
+              doReplaceExistingPlaylists: false,
+            );
+
+            await Future.delayed(const Duration(milliseconds: 500));
+            await tester.pumpAndSettle(); // must be used !
+
+            // Verify the displayed warning confirmation dialog
+            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+              tester: tester,
+              warningDialogMessage:
+                  'Restored 1 playlist, 1 comment and 1 picture JSON files as well as the application settings from "$restorableZipFilePathName".',
+              isWarningConfirming: true,
+              warningTitle: 'CONFIRMATION',
+            );
+
+            // Verifying that the first restored playlist is
+            // still selected
+            IntegrationTestUtil.verifyPlaylistSelection(
+              tester: tester,
+              playlistTitle: uniqueYoutubePlaylistTitle,
+              isSelected: true,
+            );
+
+            // Ensure that the restored playlist is not
+            // selected, although it is selected in the
+            // playlist zip file
+            IntegrationTestUtil.verifyPlaylistSelection(
+                tester: tester,
+                playlistTitle: notIndividuallySavedPlaylistTitle,
+                isSelected: false);
+
+            // Now execute the 'Update Playlist JSON Files'
+            // appbar menu
+            await IntegrationTestUtil.executeUpdatePlaylistJsonFiles(
+              tester: tester,
+              doRemoveDeletedAudioFiles: false,
+            );
+
+            // Verifying that the first restored playlist is
+            // still selected
+            IntegrationTestUtil.verifyPlaylistSelection(
+              tester: tester,
+              playlistTitle: uniqueYoutubePlaylistTitle,
+              isSelected: true,
+            );
+
+            // Ensure that the restored playlist is not
+            // selected, although it is selected in the
+            // playlist zip file
+            IntegrationTestUtil.verifyPlaylistSelection(
+                tester: tester,
+                playlistTitle: notIndividuallySavedPlaylistTitle,
+                isSelected: false);
+
+            final SettingsDataService settingsDataService = SettingsDataService(
+              sharedPreferences: await SharedPreferences.getInstance(),
+              isTest: true,
+            );
+
+            // Load the settings from the json file. This is necessary
+            // otherwise the ordered playlist titles will remain empty
+            // and the playlist list will not be filled with the
+            // playlists available in the download app test dir
+            await settingsDataService.loadSettingsFromFile(
+                settingsJsonPathFileName:
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+            // Verify the pictureAudioMap json content after playlist
+            // deletion
+            IntegrationTestUtil.verifyPictureAudioMapAfterPlaylistRestoration(
+              pictureVM: PictureVM(
+                settingsDataService: settingsDataService,
+              ),
+            );
+
+            // Purge the test playlist directory so that the created test
+            // files are not uploaded to GitHub
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+          });
+          testWidgets(
+              '''Restore replace 3 selected unique playlists. First restore the individually saved
+              Youtube 'Restore- short - test - playlist'. Then restore the individually saved local
+              'Local restore- short - test - playlist'. Since the 'doReplaceExistingPlaylists' parameter
+              is set to true, the existing picture JPG files restored by the first restore execution
+              will be replaced by the restored picture JPG files. Finally, restore the not individually
+              saved 'Prières du Maître' playlist (its ZIP file does not contain any JPG file). After
+              each each restore, verify the correct playlist selection.
+              
+              Finally, execute the 'Update Playlist JSON Files' appbar menu and verify that the playlist
+              selection remains correct. Verify also the application pictureAudioMap.json file content.''',
+              (tester) async {
+            // Purge the test playlist directory if it exists so that the
+            // playlist list is empty
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+
+            String restorableZipFilePathName =
+                "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Android Restore- short - test - playlist.zip";
+
+            await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
+              tester: tester,
+            );
+
+            // Replace the platform instance with your mock
+            MockFilePicker mockFilePicker = MockFilePicker();
+            FilePicker.platform = mockFilePicker;
+
+            mockFilePicker.setSelectedFiles([
+              PlatformFile(
+                  name: restorableZipFilePathName,
+                  path: restorableZipFilePathName,
+                  size: 3138),
+            ]);
+
+            // Execute the 'Restore Playlists, Comments and Settings from Zip
+            // File ...' menu
+            await IntegrationTestUtil.executeRestorePlaylists(
+              tester: tester,
+              doReplaceExistingPlaylists: true,
+            );
+
+            await Future.delayed(const Duration(milliseconds: 500));
+            await tester.pumpAndSettle(); // must be used !
+
+            // Verify the displayed warning confirmation dialog
+            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+              tester: tester,
+              warningDialogMessage:
+                  'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files from "$restorableZipFilePathName".\n\nRestored also 3 picture JPG file(s) in the application pictures directory.',
+              isWarningConfirming: true,
+              warningTitle: 'CONFIRMATION',
+            );
+
+            const String uniqueYoutubePlaylistTitle =
+                'Restore- short - test - playlist';
+
+            // Verifying the restored playlist selection
+            IntegrationTestUtil.verifyPlaylistSelection(
+              tester: tester,
+              playlistTitle: uniqueYoutubePlaylistTitle,
+              isSelected: true,
+            );
+
+            const String uniqueLocalPlaylistTitle =
+                'Local restore- short - test - playlist';
+
+            restorableZipFilePathName =
+                "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Android Local restore- short - test - playlist.zip";
+
+            mockFilePicker.setSelectedFiles([
+              PlatformFile(
+                  name: restorableZipFilePathName,
+                  path: restorableZipFilePathName,
+                  size: 3138),
+            ]);
+
+            // Execute the 'Restore Playlists, Comments and Settings from Zip
+            // File ...' menu
+            await IntegrationTestUtil.executeRestorePlaylists(
+              tester: tester,
+              doReplaceExistingPlaylists: true,
+            );
+
+            await Future.delayed(const Duration(milliseconds: 500));
+            await tester.pumpAndSettle(); // must be used !
+
+            // Verify the displayed warning confirmation dialog. Since the
+            // 'doReplaceExistingPlaylists' parameter is set to true, the
+            // existing picture JPG files were replaced by the restored
+            // picture JPG files.
+
+            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+              tester: tester,
+              warningDialogMessage:
+                  'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files from "$restorableZipFilePathName".\n\nRestored also 3 picture JPG file(s) in the application pictures directory.',
+              isWarningConfirming: true,
+              warningTitle: 'CONFIRMATION',
+            );
+
+            // Verifying that the first restored playlist is
+            // still selected
+            IntegrationTestUtil.verifyPlaylistSelection(
+              tester: tester,
+              playlistTitle: uniqueYoutubePlaylistTitle,
+              isSelected: true,
+            );
+
+            // Ensure that the restored playlist is not
+            // selected, although it is selected in the
+            // playlist zip file
+            IntegrationTestUtil.verifyPlaylistSelection(
+                tester: tester,
+                playlistTitle: uniqueLocalPlaylistTitle,
+                isSelected: false);
+
+            const String notIndividuallySavedPlaylistTitle =
+                'Prières du Maître';
+
+            restorableZipFilePathName =
+                "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Android Prières du Maître.zip";
+
+            mockFilePicker.setSelectedFiles([
+              PlatformFile(
+                  name: restorableZipFilePathName,
+                  path: restorableZipFilePathName,
+                  size: 3262),
+            ]);
+
+            // Execute the 'Restore Playlists, Comments and Settings from Zip
+            // File ...' menu
+            await IntegrationTestUtil.executeRestorePlaylists(
+              tester: tester,
+              doReplaceExistingPlaylists: true,
+            );
+
+            await Future.delayed(const Duration(milliseconds: 500));
+            await tester.pumpAndSettle(); // must be used !
+
+            // Verify the displayed warning confirmation dialog
+            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+              tester: tester,
+              warningDialogMessage:
+                  'Restored 1 playlist, 1 comment and 1 picture JSON files as well as the application settings from "$restorableZipFilePathName".',
+              isWarningConfirming: true,
+              warningTitle: 'CONFIRMATION',
+            );
+
+            // Verifying that the first restored playlist is
+            // still selected
+            IntegrationTestUtil.verifyPlaylistSelection(
+              tester: tester,
+              playlistTitle: uniqueYoutubePlaylistTitle,
+              isSelected: true,
+            );
+
+            // Ensure that the restored playlist is not
+            // selected, although it is selected in the
+            // playlist zip file
+            IntegrationTestUtil.verifyPlaylistSelection(
+                tester: tester,
+                playlistTitle: notIndividuallySavedPlaylistTitle,
+                isSelected: false);
+
+            // Now execute the 'Update Playlist JSON Files'
+            // appbar menu
+            await IntegrationTestUtil.executeUpdatePlaylistJsonFiles(
+              tester: tester,
+              doRemoveDeletedAudioFiles: false,
+            );
+
+            // Verifying that the first restored playlist is
+            // still selected
+            IntegrationTestUtil.verifyPlaylistSelection(
+              tester: tester,
+              playlistTitle: uniqueYoutubePlaylistTitle,
+              isSelected: true,
+            );
+
+            // Ensure that the restored playlist is not
+            // selected, although it is selected in the
+            // playlist zip file
+            IntegrationTestUtil.verifyPlaylistSelection(
+                tester: tester,
+                playlistTitle: notIndividuallySavedPlaylistTitle,
+                isSelected: false);
+
+            final SettingsDataService settingsDataService = SettingsDataService(
+              sharedPreferences: await SharedPreferences.getInstance(),
+              isTest: true,
+            );
+
+            // Load the settings from the json file. This is necessary
+            // otherwise the ordered playlist titles will remain empty
+            // and the playlist list will not be filled with the
+            // playlists available in the download app test dir
+            await settingsDataService.loadSettingsFromFile(
+                settingsJsonPathFileName:
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+            // Verify the pictureAudioMap json content after playlist
+            // deletion
+            IntegrationTestUtil.verifyPictureAudioMapAfterPlaylistRestoration(
+              pictureVM: PictureVM(
+                settingsDataService: settingsDataService,
+              ),
             );
 
             // Purge the test playlist directory so that the created test
