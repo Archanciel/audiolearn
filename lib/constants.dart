@@ -31,7 +31,7 @@ enum AudioPopupMenuAction {
 }
 
 const String kApplicationName = "Audio Learn";
-const String kApplicationVersion = '1.4.18';
+const String kApplicationVersion = '1.4.19';
 
 // Used for Android app version
 const String kApplicationPath = "/storage/emulated/0/Documents/audiolearn";
@@ -75,7 +75,8 @@ const String kOrderedPlaylistTitlesFileName = 'savedOrderedPlaylistTitles.txt';
 
 const double kAudioDefaultPlaySpeed = 1.0;
 
-const String kGoogleApiKey = 'AIzaSyDhywmh5EKopsNsaszzMkLJ719aQa2NHBw';
+// Google Cloud Platform API key
+const String kGoogleApiKey = 'AIzaSyCSxCyWPgRo9n_B2quFPkq-0u0CuFGA74s';
 
 const String kStartAtZeroPosition = '0Pos';
 
