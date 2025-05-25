@@ -18714,6 +18714,706 @@ void main() {
             );
           });
         });
+        group('Redownload Youtube unique playlist from internet.', () {
+          testWidgets(
+              '''Restore not replace unique playlist. Not replacing existing playlist. Restore
+            unique playlist Android zip containing 'Restore- short - test - playlist' playlist with
+            3 short audio's to empty Windows application. Then redownload the restored audio in
+            2 ways: redownload sort/filtered audio and redownload single audio.''',
+              (tester) async {
+            // Purge the test playlist directory if it exists so that the
+            // playlist list is empty
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+
+            String restorableZipFilePathName =
+                "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Android Restore- short - test - playlist.zip";
+
+            final SettingsDataService settingsDataService = SettingsDataService(
+              sharedPreferences: await SharedPreferences.getInstance(),
+              isTest: true,
+            );
+
+            // Load the settings from the json file. This is necessary
+            // otherwise the ordered playlist titles will remain empty
+            // and the playlist list will not be filled with the
+            // playlists available in the app test dir
+            await settingsDataService.loadSettingsFromFile(
+                settingsJsonPathFileName:
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+            WarningMessageVM warningMessageVM = WarningMessageVM();
+
+            AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+              warningMessageVM: warningMessageVM,
+              settingsDataService: settingsDataService,
+            );
+
+            PlaylistListVM playlistListVM = PlaylistListVM(
+              warningMessageVM: warningMessageVM,
+              audioDownloadVM: audioDownloadVM,
+              commentVM: CommentVM(),
+              pictureVM: PictureVM(
+                settingsDataService: settingsDataService,
+              ),
+              settingsDataService: settingsDataService,
+            );
+
+            // calling getUpToDateSelectablePlaylists() loads all the
+            // playlist json files from the app dir and so enables
+            // playlistListVM to know which playlists are
+            // selected and which are not
+            playlistListVM.getUpToDateSelectablePlaylists();
+
+            await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
+              tester: tester,
+            );
+
+            // Replace the platform instance with your mock
+            MockFilePicker mockFilePicker = MockFilePicker();
+            FilePicker.platform = mockFilePicker;
+
+            mockFilePicker.setSelectedFiles([
+              PlatformFile(
+                  name: restorableZipFilePathName,
+                  path: restorableZipFilePathName,
+                  size: 3138),
+            ]);
+
+            // Execute the 'Restore Playlists, Comments and Settings from Zip
+            // File ...' menu
+            await IntegrationTestUtil.executeRestorePlaylists(
+              tester: tester,
+              doReplaceExistingPlaylists: false,
+            );
+
+            await Future.delayed(const Duration(milliseconds: 500));
+            await tester.pumpAndSettle(); // must be used !
+
+            // Verify the displayed warning confirmation dialog
+            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+              tester: tester,
+              warningDialogMessage:
+                  'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files from "$restorableZipFilePathName".\n\nRestored also 3 picture JPG file(s) in the application pictures directory.',
+              isWarningConfirming: true,
+              warningTitle: 'CONFIRMATION',
+            );
+
+            // Verifying the restored playlist.
+
+            const String uniquePlaylistTitle =
+                'Restore- short - test - playlist';
+            List<String> playlistsTitles = [
+              uniquePlaylistTitle,
+            ];
+
+            List<String> audioTitles = [
+              "People Talking at The Table _ Free Video Loop",
+              "morning _ cinematic video",
+              "Really short video",
+            ];
+
+            List<String> audioSubTitles = [
+              '0:00:24.1. 11 KB at 7 KB/sec on 18/05/2025 at 16:40.',
+              "0:00:58.9. 360 KB at 175 KB/sec on 18/05/2025 at 16:40.",
+              "0:00:09.8. 61 KB at 30 KB/sec on 18/05/2025 at 16:40.",
+            ];
+
+            _verifyRestoredPlaylistAndAudio(
+              tester: tester,
+              selectedPlaylistTitle: uniquePlaylistTitle,
+              playlistsTitles: playlistsTitles,
+              audioTitles: audioTitles,
+              audioSubTitles: audioSubTitles,
+            );
+
+            // Verify the content of the 'Restore- short - test - playlist'
+            // playlist dir + comments + pictures dir after restoration.
+            IntegrationTestUtil.verifyPlaylistDirectoryContents(
+              playlistTitle: uniquePlaylistTitle,
+              expectedAudioFiles: [],
+              expectedCommentFiles: [
+                "250518-164039-morning _ cinematic video 23-07-01.json",
+                "250518-164043-People Talking at The Table _ Free Video Loop 19-09-28.json",
+              ],
+              expectedPictureFiles: [
+                "250518-164035-Really short video 23-07-01.json",
+                "250518-164039-morning _ cinematic video 23-07-01.json",
+              ],
+              doesPictureAudioMapFileNameExist: true,
+              applicationPictureDir:
+                  '$kApplicationPathWindowsTest${path.separator}$kPictureDirName',
+              pictureFileNameOne: 'Jean-Pierre.jpg',
+              audioForPictureTitleOneLst: [
+                "Restore- short - test - playlist|250518-164035-Really short video 23-07-01"
+              ],
+              pictureFileNameTwo:
+                  "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg",
+              audioForPictureTitleTwoLst: [
+                "Restore- short - test - playlist|250518-164039-morning _ cinematic video 23-07-01",
+                'Restore- short - test - playlist|250518-164035-Really short video 23-07-01',
+              ],
+              pictureFileNameThree: 'Jésus le Dieu vivant.jpg',
+              audioForPictureTitleThreeLst: [
+                "Restore- short - test - playlist|250518-164043-People Talking at The Table _ Free Video Loop 19-09-28",
+              ],
+            );
+
+            // Now, select a filter parms using the drop down button.
+
+            // First, tap the 'Toggle List' button to hide the playlist list.
+            await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+            await tester.pumpAndSettle();
+
+            // Now tap on the current dropdown button item to open the dropdown
+            // button items list
+
+            Finder dropDownButtonFinder =
+                find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+            Finder dropDownButtonTextFinder = find.descendant(
+              of: dropDownButtonFinder,
+              matching: find.byType(Text),
+            );
+
+            // Define a sort/filter parms in order to be able to select the
+            // audio's which will be redoenloaded
+
+            // Open the audio popup menu
+            await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+            await tester.pumpAndSettle();
+
+            // Find the sort/filter audio menu item and tap on it to
+            // open the audio sort filter dialog
+            await tester.tap(find
+                .byKey(const Key('define_sort_and_filter_audio_menu_item')));
+            await tester.pumpAndSettle();
+
+            // Type "less 70 KB" in the 'Save as' TextField
+
+            String saveAsTitle = 'less 70 KB';
+
+            await tester.enterText(
+                find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+                saveAsTitle);
+            await tester.pumpAndSettle();
+
+            // Enter the end file size KB in the corresponding field, but first
+            // scroll down the dialog so that the date file size fields are
+            // visible.
+
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -350), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
+            await tester.enterText(
+                find.byKey(const Key('endFileSizeTextField')),
+                '0.07'); // 70 KB in MB
+            await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+            // Click on the "Save" button. This closes the sort/filter dialog
+            // and updates the sort/filter playlist download view dropdown
+            // button with the newly created sort/filter parms
+            await tester
+                .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+            await tester.pumpAndSettle();
+
+            // Re-tap the 'Toggle List' button to display the playlist list.
+            await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+            await tester.pumpAndSettle();
+
+            // Execute the redownload filtered audio menu by clicking first on
+            // the 'Filtered Audio Actions ...' playlist menu item and then
+            // on the 'Redownload Filtered Audio ...' sub-menu item.
+            await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
+              tester: tester,
+              playlistTitle: uniquePlaylistTitle,
+              playlistSubMenuKeyStr: 'popup_menu_redownload_filtered_audio',
+            );
+
+            // Add a delay to allow the download to finish. Since a mock
+            // AudioDownloadVM is used, the download will be simulated and
+            // will not take time.
+            for (int i = 0; i < 4; i++) {
+              await Future.delayed(const Duration(seconds: 2));
+              await tester.pumpAndSettle();
+            }
+
+            // Verify the content of the 'Restore- short - test - playlist'
+            // playlist dir + comments + pictures dir after filtered
+            // redownload.
+            IntegrationTestUtil.verifyPlaylistDirectoryContents(
+              playlistTitle: uniquePlaylistTitle,
+              expectedAudioFiles: [
+                "250518-164035-Really short video 23-07-01.mp3",
+                "250518-164043-People Talking at The Table _ Free Video Loop 19-09-28.mp3",
+              ],
+              expectedCommentFiles: [
+                "250518-164039-morning _ cinematic video 23-07-01.json",
+                "250518-164043-People Talking at The Table _ Free Video Loop 19-09-28.json",
+              ],
+              expectedPictureFiles: [
+                "250518-164035-Really short video 23-07-01.json",
+                "250518-164039-morning _ cinematic video 23-07-01.json",
+              ],
+              doesPictureAudioMapFileNameExist: true,
+            );
+
+            // Tap the 'Toggle List' button to hide the playlist list.
+            await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+            await tester.pumpAndSettle();
+
+            // Now, select the 'default' filter parms using the drop down button.
+
+            // Now tap on the current dropdown button item to open the dropdown
+            // button items list
+
+            dropDownButtonFinder =
+                find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+            dropDownButtonTextFinder = find.descendant(
+              of: dropDownButtonFinder,
+              matching: find.byType(Text),
+            );
+
+            await tester.tap(dropDownButtonTextFinder);
+            await tester.pumpAndSettle();
+
+            // And find the 'default' sort/filter item
+            Finder defaultDropDownTextFinder = find.text('default').last;
+            await tester.tap(defaultDropDownTextFinder);
+            await tester.pumpAndSettle();
+
+            // Now we want to tap the popup menu of the Audio ListTile
+            // "audio learn test short video one"
+
+            // First, find the Audio sublist ListTile Text widget
+            const String audioTitle = "morning _ cinematic video";
+            final Finder targetAudioListTileTextWidgetFinder =
+                find.text(audioTitle);
+
+            // Then obtain the Audio ListTile widget enclosing the Text widget by
+            // finding its ancestor
+            final Finder targetAudioListTileWidgetFinder = find.ancestor(
+              of: targetAudioListTileTextWidgetFinder,
+              matching: find.byType(ListTile),
+            );
+
+            // Now find the leading menu icon button of the Audio ListTile and tap
+            // on it
+            final Finder targetAudioListTileLeadingMenuIconButton =
+                find.descendant(
+              of: targetAudioListTileWidgetFinder,
+              matching: find.byIcon(Icons.menu),
+            );
+
+            // Tap the leading menu icon button to open the popup menu
+            await tester.tap(targetAudioListTileLeadingMenuIconButton);
+            await tester.pumpAndSettle();
+
+            // Now find the popup menu item and tap on it
+            final Finder popupDisplayAudioInfoMenuItemFinder =
+                find.byKey(const Key("popup_menu_redownload_delete_audio"));
+
+            await tester.tap(popupDisplayAudioInfoMenuItemFinder);
+            await tester.pumpAndSettle();
+
+            // Add a delay to allow the download to finish. Since a mock
+            // AudioDownloadVM is used, the download will be simulated and
+            // will not take time.
+            for (int i = 0; i < 3; i++) {
+              await Future.delayed(const Duration(seconds: 2));
+              await tester.pumpAndSettle();
+            }
+
+            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+              tester: tester,
+              warningDialogMessage:
+                  "The audio \"$audioTitle\" was redownloaded in the playlist \"$uniquePlaylistTitle\".",
+              isWarningConfirming: true,
+            );
+
+            // Verify the content of the 'Restore- short - test - playlist'
+            // playlist dir + comments + pictures dir after filtered
+            // redownload.
+            IntegrationTestUtil.verifyPlaylistDirectoryContents(
+              playlistTitle: uniquePlaylistTitle,
+              expectedAudioFiles: [
+                "250518-164035-Really short video 23-07-01.mp3",
+                "250518-164043-People Talking at The Table _ Free Video Loop 19-09-28.mp3",
+                "250518-164039-morning _ cinematic video 23-07-01.mp3",
+              ],
+              expectedCommentFiles: [
+                "250518-164039-morning _ cinematic video 23-07-01.json",
+                "250518-164043-People Talking at The Table _ Free Video Loop 19-09-28.json",
+              ],
+              expectedPictureFiles: [
+                "250518-164035-Really short video 23-07-01.json",
+                "250518-164039-morning _ cinematic video 23-07-01.json",
+              ],
+              doesPictureAudioMapFileNameExist: true,
+            );
+
+            // Purge the test playlist directory so that the created test
+            // files are not uploaded to GitHub
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+          });
+          testWidgets(
+              '''Restore replace unique playlist. Replacing existing playlist. Restore unique
+            playlist Android zip containing 'Restore- short - test - playlist' playlist with 3
+            short audio's to empty Windows application. Then redownload the restored audio in
+            2 ways: redownload sort/filtered audio and redownload single audio.''',
+              (tester) async {
+            // Purge the test playlist directory if it exists so that the
+            // playlist list is empty
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+
+            String restorableZipFilePathName =
+                "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Android Restore- short - test - playlist.zip";
+
+            final SettingsDataService settingsDataService = SettingsDataService(
+              sharedPreferences: await SharedPreferences.getInstance(),
+              isTest: true,
+            );
+
+            // Load the settings from the json file. This is necessary
+            // otherwise the ordered playlist titles will remain empty
+            // and the playlist list will not be filled with the
+            // playlists available in the app test dir
+            await settingsDataService.loadSettingsFromFile(
+                settingsJsonPathFileName:
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+            WarningMessageVM warningMessageVM = WarningMessageVM();
+
+            AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+              warningMessageVM: warningMessageVM,
+              settingsDataService: settingsDataService,
+            );
+
+            PlaylistListVM playlistListVM = PlaylistListVM(
+              warningMessageVM: warningMessageVM,
+              audioDownloadVM: audioDownloadVM,
+              commentVM: CommentVM(),
+              pictureVM: PictureVM(
+                settingsDataService: settingsDataService,
+              ),
+              settingsDataService: settingsDataService,
+            );
+
+            // calling getUpToDateSelectablePlaylists() loads all the
+            // playlist json files from the app dir and so enables
+            // playlistListVM to know which playlists are
+            // selected and which are not
+            playlistListVM.getUpToDateSelectablePlaylists();
+
+            await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
+              tester: tester,
+            );
+
+            // Replace the platform instance with your mock
+            MockFilePicker mockFilePicker = MockFilePicker();
+            FilePicker.platform = mockFilePicker;
+
+            mockFilePicker.setSelectedFiles([
+              PlatformFile(
+                  name: restorableZipFilePathName,
+                  path: restorableZipFilePathName,
+                  size: 3138),
+            ]);
+
+            // Execute the 'Restore Playlists, Comments and Settings from Zip
+            // File ...' menu
+            await IntegrationTestUtil.executeRestorePlaylists(
+              tester: tester,
+              doReplaceExistingPlaylists: true,
+            );
+
+            await Future.delayed(const Duration(milliseconds: 500));
+            await tester.pumpAndSettle(); // must be used !
+
+            // Verify the displayed warning confirmation dialog
+            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+              tester: tester,
+              warningDialogMessage:
+                  'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files from "$restorableZipFilePathName".\n\nRestored also 3 picture JPG file(s) in the application pictures directory.',
+              isWarningConfirming: true,
+              warningTitle: 'CONFIRMATION',
+            );
+
+            // Verifying the restored playlist.
+
+            const String uniquePlaylistTitle =
+                'Restore- short - test - playlist';
+            List<String> playlistsTitles = [
+              uniquePlaylistTitle,
+            ];
+
+            List<String> audioTitles = [
+              "People Talking at The Table _ Free Video Loop",
+              "morning _ cinematic video",
+              "Really short video",
+            ];
+
+            List<String> audioSubTitles = [
+              '0:00:24.1. 11 KB at 7 KB/sec on 18/05/2025 at 16:40.',
+              "0:00:58.9. 360 KB at 175 KB/sec on 18/05/2025 at 16:40.",
+              "0:00:09.8. 61 KB at 30 KB/sec on 18/05/2025 at 16:40.",
+            ];
+
+            _verifyRestoredPlaylistAndAudio(
+              tester: tester,
+              selectedPlaylistTitle: uniquePlaylistTitle,
+              playlistsTitles: playlistsTitles,
+              audioTitles: audioTitles,
+              audioSubTitles: audioSubTitles,
+            );
+
+            // Verify the content of the 'Restore- short - test - playlist'
+            // playlist dir + comments + pictures dir after restoration.
+            IntegrationTestUtil.verifyPlaylistDirectoryContents(
+              playlistTitle: uniquePlaylistTitle,
+              expectedAudioFiles: [],
+              expectedCommentFiles: [
+                "250518-164039-morning _ cinematic video 23-07-01.json",
+                "250518-164043-People Talking at The Table _ Free Video Loop 19-09-28.json",
+              ],
+              expectedPictureFiles: [
+                "250518-164035-Really short video 23-07-01.json",
+                "250518-164039-morning _ cinematic video 23-07-01.json",
+              ],
+              doesPictureAudioMapFileNameExist: true,
+              applicationPictureDir:
+                  '$kApplicationPathWindowsTest${path.separator}$kPictureDirName',
+              pictureFileNameOne: 'Jean-Pierre.jpg',
+              audioForPictureTitleOneLst: [
+                "Restore- short - test - playlist|250518-164035-Really short video 23-07-01"
+              ],
+              pictureFileNameTwo:
+                  "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg",
+              audioForPictureTitleTwoLst: [
+                "Restore- short - test - playlist|250518-164039-morning _ cinematic video 23-07-01",
+                'Restore- short - test - playlist|250518-164035-Really short video 23-07-01',
+              ],
+              pictureFileNameThree: 'Jésus le Dieu vivant.jpg',
+              audioForPictureTitleThreeLst: [
+                "Restore- short - test - playlist|250518-164043-People Talking at The Table _ Free Video Loop 19-09-28",
+              ],
+            );
+
+            // Now, select a filter parms using the drop down button.
+
+            // First, tap the 'Toggle List' button to hide the playlist list.
+            await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+            await tester.pumpAndSettle();
+
+            // Now tap on the current dropdown button item to open the dropdown
+            // button items list
+
+            Finder dropDownButtonFinder =
+                find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+            Finder dropDownButtonTextFinder = find.descendant(
+              of: dropDownButtonFinder,
+              matching: find.byType(Text),
+            );
+
+            // Define a sort/filter parms in order to be able to select the
+            // audio's which will be redoenloaded
+
+            // Open the audio popup menu
+            await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+            await tester.pumpAndSettle();
+
+            // Find the sort/filter audio menu item and tap on it to
+            // open the audio sort filter dialog
+            await tester.tap(find
+                .byKey(const Key('define_sort_and_filter_audio_menu_item')));
+            await tester.pumpAndSettle();
+
+            // Type "less 70 KB" in the 'Save as' TextField
+
+            String saveAsTitle = 'less 70 KB';
+
+            await tester.enterText(
+                find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+                saveAsTitle);
+            await tester.pumpAndSettle();
+
+            // Enter the end file size KB in the corresponding field, but first
+            // scroll down the dialog so that the date file size fields are
+            // visible.
+
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -350), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
+            await tester.enterText(
+                find.byKey(const Key('endFileSizeTextField')),
+                '0.07'); // 70 KB in MB
+            await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+            // Click on the "Save" button. This closes the sort/filter dialog
+            // and updates the sort/filter playlist download view dropdown
+            // button with the newly created sort/filter parms
+            await tester
+                .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+            await tester.pumpAndSettle();
+
+            // Re-tap the 'Toggle List' button to display the playlist list.
+            await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+            await tester.pumpAndSettle();
+
+            // Execute the redownload filtered audio menu by clicking first on
+            // the 'Filtered Audio Actions ...' playlist menu item and then
+            // on the 'Redownload Filtered Audio ...' sub-menu item.
+            await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
+              tester: tester,
+              playlistTitle: uniquePlaylistTitle,
+              playlistSubMenuKeyStr: 'popup_menu_redownload_filtered_audio',
+            );
+
+            // Add a delay to allow the download to finish. Since a mock
+            // AudioDownloadVM is used, the download will be simulated and
+            // will not take time.
+            for (int i = 0; i < 4; i++) {
+              await Future.delayed(const Duration(seconds: 2));
+              await tester.pumpAndSettle();
+            }
+
+            // Verify the content of the 'Restore- short - test - playlist'
+            // playlist dir + comments + pictures dir after filtered
+            // redownload.
+            IntegrationTestUtil.verifyPlaylistDirectoryContents(
+              playlistTitle: uniquePlaylistTitle,
+              expectedAudioFiles: [
+                "250518-164035-Really short video 23-07-01.mp3",
+                "250518-164043-People Talking at The Table _ Free Video Loop 19-09-28.mp3",
+              ],
+              expectedCommentFiles: [
+                "250518-164039-morning _ cinematic video 23-07-01.json",
+                "250518-164043-People Talking at The Table _ Free Video Loop 19-09-28.json",
+              ],
+              expectedPictureFiles: [
+                "250518-164035-Really short video 23-07-01.json",
+                "250518-164039-morning _ cinematic video 23-07-01.json",
+              ],
+              doesPictureAudioMapFileNameExist: true,
+            );
+
+            // Tap the 'Toggle List' button to hide the playlist list.
+            await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+            await tester.pumpAndSettle();
+
+            // Now, select the 'default' filter parms using the drop down button.
+
+            // Now tap on the current dropdown button item to open the dropdown
+            // button items list
+
+            dropDownButtonFinder =
+                find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+            dropDownButtonTextFinder = find.descendant(
+              of: dropDownButtonFinder,
+              matching: find.byType(Text),
+            );
+
+            await tester.tap(dropDownButtonTextFinder);
+            await tester.pumpAndSettle();
+
+            // And find the 'default' sort/filter item
+            Finder defaultDropDownTextFinder = find.text('default').last;
+            await tester.tap(defaultDropDownTextFinder);
+            await tester.pumpAndSettle();
+
+            // Now we want to tap the popup menu of the Audio ListTile
+            // "audio learn test short video one"
+
+            // First, find the Audio sublist ListTile Text widget
+            const String audioTitle = "morning _ cinematic video";
+            final Finder targetAudioListTileTextWidgetFinder =
+                find.text(audioTitle);
+
+            // Then obtain the Audio ListTile widget enclosing the Text widget by
+            // finding its ancestor
+            final Finder targetAudioListTileWidgetFinder = find.ancestor(
+              of: targetAudioListTileTextWidgetFinder,
+              matching: find.byType(ListTile),
+            );
+
+            // Now find the leading menu icon button of the Audio ListTile and tap
+            // on it
+            final Finder targetAudioListTileLeadingMenuIconButton =
+                find.descendant(
+              of: targetAudioListTileWidgetFinder,
+              matching: find.byIcon(Icons.menu),
+            );
+
+            // Tap the leading menu icon button to open the popup menu
+            await tester.tap(targetAudioListTileLeadingMenuIconButton);
+            await tester.pumpAndSettle();
+
+            // Now find the popup menu item and tap on it
+            final Finder popupDisplayAudioInfoMenuItemFinder =
+                find.byKey(const Key("popup_menu_redownload_delete_audio"));
+
+            await tester.tap(popupDisplayAudioInfoMenuItemFinder);
+            await tester.pumpAndSettle();
+
+            // Add a delay to allow the download to finish. Since a mock
+            // AudioDownloadVM is used, the download will be simulated and
+            // will not take time.
+            for (int i = 0; i < 3; i++) {
+              await Future.delayed(const Duration(seconds: 2));
+              await tester.pumpAndSettle();
+            }
+
+            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+              tester: tester,
+              warningDialogMessage:
+                  "The audio \"$audioTitle\" was redownloaded in the playlist \"$uniquePlaylistTitle\".",
+              isWarningConfirming: true,
+            );
+
+            // Verify the content of the 'Restore- short - test - playlist'
+            // playlist dir + comments + pictures dir after filtered
+            // redownload.
+            IntegrationTestUtil.verifyPlaylistDirectoryContents(
+              playlistTitle: uniquePlaylistTitle,
+              expectedAudioFiles: [
+                "250518-164035-Really short video 23-07-01.mp3",
+                "250518-164043-People Talking at The Table _ Free Video Loop 19-09-28.mp3",
+                "250518-164039-morning _ cinematic video 23-07-01.mp3",
+              ],
+              expectedCommentFiles: [
+                "250518-164039-morning _ cinematic video 23-07-01.json",
+                "250518-164043-People Talking at The Table _ Free Video Loop 19-09-28.json",
+              ],
+              expectedPictureFiles: [
+                "250518-164035-Really short video 23-07-01.json",
+                "250518-164039-morning _ cinematic video 23-07-01.json",
+              ],
+              doesPictureAudioMapFileNameExist: true,
+            );
+
+            // Purge the test playlist directory so that the created test
+            // files are not uploaded to GitHub
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+          });
+        });
       });
     });
   });
