@@ -3295,7 +3295,8 @@ class PlaylistListVM extends ChangeNotifier {
         // Check if the file already exists in the destination path.
         final File existingFile = File(destinationPathFileName);
         if (existingFile.existsSync()) {
-          // Skip the file if it already exists and do not replace it.
+          // In mode 'not replace', skip the file if it already exists
+          // and do not replace it.
           continue;
         }
       }
@@ -3377,7 +3378,7 @@ class PlaylistListVM extends ChangeNotifier {
             restoredPicturesJsonNumber++;
           }
         } else {
-          // Adding the ristored playlist title to the list
+          // Adding the restored playlist title to the list
           // of restored playlist titles.
           restoredPlaylistTitlesLst.add(
             path.basenameWithoutExtension(destinationPathFileName),
