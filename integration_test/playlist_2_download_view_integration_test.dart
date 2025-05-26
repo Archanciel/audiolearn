@@ -12694,7 +12694,7 @@ void main() {
           testWidgets(
               '''Replace existing playlist. Restore Windows zip containing 'Empty', 'local',
               'local_comment', 'local_delete_comment' and 'S8 audio' playlists in which 'local'
-              is selected to Windows application containing 'A restorer' and 'local' playlists
+              is selected to Windows application containing 'A restaurer' and 'local' playlists
               in which 'local' is selected.
               
               Then, select a SF parm and redownload the filtered audio's. Finally, redownload an
@@ -13226,7 +13226,7 @@ void main() {
           testWidgets(
               '''Not replace existing playlist. Restore Windows zip containing 'Empty', 'local',
               'local_comment', 'local_delete_comment' and 'S8 audio' playlists in which 'local'
-              is selected to Windows application containing 'A restorer' and 'local' playlists
+              is selected to Windows application containing 'A restaurer' and 'local' playlists
               in which 'local' is selected.
               
               Then, select a SF parm and redownload the filtered audio's. Finally, redownload an
@@ -13758,7 +13758,7 @@ void main() {
           testWidgets(
               '''Replace existing playlist. Restore Windows zip containing 'Empty', 'local',
               'local_comment', 'local_delete_comment' and 'S8 audio' playlists in which 'S8 audio'
-              is selected to Windows application containing 'A restorer' and 'local' playlists
+              is selected to Windows application containing 'A restaurer' and 'local' playlists
               in which 'local' is selected. After restoration, 'local' remains selected and 'S8 audio'
               is not selected anymore.
               
@@ -13951,7 +13951,7 @@ void main() {
           testWidgets(
               '''Not replace existing playlist. Restore Windows zip containing 'Empty', 'local',
               'local_comment', 'local_delete_comment' and 'S8 audio' playlists in which 'S8 audio'
-              is selected to Windows application containing 'A restorer' and 'local' playlists
+              is selected to Windows application containing 'A restaurer' and 'local' playlists
               in which 'local' is selected. After restoration, 'local' remains selected and 'S8 audio'
               is not selected anymore.
               
@@ -14115,7 +14115,7 @@ void main() {
           testWidgets(
               '''Replace existing playlist. Restore Windows zip containing 'Empty', 'local',
               'local_comment', 'local_delete_comment' and 'S8 audio' playlists in which 'local'
-              is selected to Windows application containing 'A restorer' and 'local' playlists
+              is selected to Windows application containing 'A restaurer' and 'local' playlists
               in which the 'local' playlist was unselected. After restoration, since 'local' was
               selected in the zip file, it will be reselected.
               
@@ -14652,7 +14652,7 @@ void main() {
           testWidgets(
               '''Not replace existing playlist. Restore Windows zip containing 'Empty', 'local',
               'local_comment', 'local_delete_comment' and 'S8 audio' playlists in which 'local'
-              is selected to Windows application containing 'A restorer' and 'local' playlists
+              is selected to Windows application containing 'A restaurer' and 'local' playlists
               in which the 'local' playlist was unselected. After restoration, although 'local'
               was selected in the zip file, since the existing playlists are not replaced, no
               playlist will be selected.
@@ -15199,7 +15199,7 @@ void main() {
           testWidgets(
               '''Replace existing playlist. Restore Windows zip containing 'Empty', 'local',
               'local_comment', 'local_delete_comment' and 'S8 audio' playlists in which 'S8 audio'
-              is selected to Windows application containing 'A restorer' and 'local' playlists in
+              is selected to Windows application containing 'A restaurer' and 'local' playlists in
               which 'local' was unselected. After restoration, 'S8 audio' will be selected since it
               was selected in the zip file.
               
@@ -15388,7 +15388,7 @@ void main() {
           testWidgets(
               '''Not replace existing playlist. Restore Windows zip containing 'Empty', 'local',
               'local_comment', 'local_delete_comment' and 'S8 audio' playlists in which 'S8 audio'
-              is selected to Windows application containing 'A restorer' and 'local' playlists
+              is selected to Windows application containing 'A restaurer' and 'local' playlists
               in which 'local' was unselected. After restoration, 'S8 audio' will be selected since
               it was selected in the zip file.
               
