@@ -12879,7 +12879,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 5 playlist, 5 comment and 1 picture JSON files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+                  'Restored 5 playlist, 5 comment and 6 picture JSON files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -12950,12 +12950,14 @@ void main() {
             // Now verify 'S8 audio' playlist as well !
 
             audioTitles = [
+              "Quand Aurélien Barrau va dans une école de management",
               "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
               "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
               "La surpopulation mondiale par Jancovici et Barrau",
             ];
 
             audioSubTitles = [
+              "0:17:59.0. 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11.",
               "1:17:53.6. 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06.",
               "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
               "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
@@ -13478,12 +13480,14 @@ void main() {
             // Now verify 'S8 audio' playlist as well !
 
             audioTitles = [
+              "Quand Aurélien Barrau va dans une école de management",
               "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
               "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
               "La surpopulation mondiale par Jancovici et Barrau",
             ];
 
             audioSubTitles = [
+              "0:17:59.0. 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11.",
               "1:17:53.6. 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06.",
               "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
               "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
@@ -14305,7 +14309,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 5 playlist, 5 comment and 1 picture JSON files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+                  'Restored 5 playlist, 5 comment and 6 picture JSON files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -14376,12 +14380,14 @@ void main() {
             // Now verify 'S8 audio' playlist as well !
 
             audioTitles = [
+              "Quand Aurélien Barrau va dans une école de management",
               "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
               "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
               "La surpopulation mondiale par Jancovici et Barrau",
             ];
 
             audioSubTitles = [
+              "0:17:59.0. 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11.",
               "1:17:53.6. 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06.",
               "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
               "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
@@ -14919,12 +14925,14 @@ void main() {
             // Now verify 'S8 audio' playlist as well !
 
             audioTitles = [
+              "Quand Aurélien Barrau va dans une école de management",
               "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
               "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
               "La surpopulation mondiale par Jancovici et Barrau",
             ];
 
             audioSubTitles = [
+              "0:17:59.0. 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11.",
               "1:17:53.6. 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06.",
               "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
               "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
@@ -15326,7 +15334,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 5 playlist, 5 comment and 1 picture JSON files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+                  'Restored 5 playlist, 5 comment and 6 picture JSON files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
