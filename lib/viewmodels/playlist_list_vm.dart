@@ -2985,7 +2985,8 @@ class PlaylistListVM extends ChangeNotifier {
     bool restoringPlaylistsCommentsAndSettingsJsonFilesFromZip = false;
 
     updateSettingsAndPlaylistJsonFiles(
-      unselectAddedPlaylist: false, // fix bug when restoring unique selected playlist from Windows zip on android
+      unselectAddedPlaylist:
+          false, // fix bug when restoring unique selected playlist from Windows zip on android
       updatePlaylistPlayableAudioList: false,
       restoringPlaylistsCommentsAndSettingsJsonFilesFromZip:
           restoringPlaylistsCommentsAndSettingsJsonFilesFromZip,
@@ -3154,6 +3155,8 @@ class PlaylistListVM extends ChangeNotifier {
     required String zipFilePathName,
     required bool doReplaceExistingPlaylists,
   }) async {
+    List<String> existingPlaylistTitles =
+        _listOfSelectablePlaylists.map((playlist) => playlist.title).toList();
     List<dynamic> restoredInfoLst = [];
     List<String> restoredPlaylistTitlesLst = [];
     int restoredCommentsNumber = 0;
@@ -3238,10 +3241,21 @@ class PlaylistListVM extends ChangeNotifier {
         // current pictureAudioMap.json file.
         //
         // Check if the file already exists in the destination path.
-        final File existingFile = File(destinationPathFileName);
-        if (existingFile.existsSync()) {
-          // In mode 'not replace', skip the file if it already exists
-          // and do not replace it.
+        for (String existingPlaylistTitle in existingPlaylistTitles) {
+          // If the destination path file name contains the existing
+          // playlist title, then the file is not replaced.
+          if (destinationPathFileName.contains(existingPlaylistTitle)) {
+            // In mode 'not replace', skip the file if it already exists
+            // and do not replace it.
+            continue;
+          }
+        }
+        if (existingPlaylistTitles.any((title) =>
+            RegExp(r'\b' + RegExp.escape(title) + r'\b')
+                .hasMatch(destinationPathFileName))) {
+          // In mode 'not replace playlist', skip the file if its about
+          // the existing playlist and so do not replace it or do not
+          // add it it is not already in the playlist.
           continue;
         }
       }
