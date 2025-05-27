@@ -11703,6 +11703,12 @@ void main() {
         destinationRootPath: modifiedPlaylistRootPath,
       );
 
+      // Delete the settings.json file from the copied data
+      DirUtil.deleteFileIfExist(
+        pathFileName:
+            "$modifiedPlaylistRootPath${path.separator}$kSettingsFileName",
+      );
+
       // Tap the 'Toggle List' button to show the list of playlists in the
       // initial playlist root directory.
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -22122,6 +22128,7 @@ Future<void> _changePlaylistRootPath({
   IntegrationTestUtil.verifyPlaylistSelection(
     tester: tester,
     playlistTitle: selectedPlaylistTitle,
+    modifiedPlaylistRootPath: pathToSelectStr,
   );
 
   // Ensure settings json file has been modified
