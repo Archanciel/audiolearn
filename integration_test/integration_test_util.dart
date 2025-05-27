@@ -736,6 +736,7 @@ class IntegrationTestUtil {
     required WidgetTester tester,
     required String playlistTitle,
     bool isSelected = true,
+    String? modifiedPlaylistRootPath,
   }) async {
     Finder listItemTileFinder = find.widgetWithText(ListTile, playlistTitle);
 
@@ -745,7 +746,7 @@ class IntegrationTestUtil {
       matching: find.byType(Checkbox),
     );
 
-    // Assert that the checkbox is not selected
+    // Assert that the checkbox is selected or not
     expect(
       tester.widget<Checkbox>(checkboxFinder).value,
       isSelected,
@@ -754,8 +755,18 @@ class IntegrationTestUtil {
     // Verifying that the playlist selection value in the
     // playlist json file is the same as the one wich is
     // expected
-    String playlistPathFileName =
-        '${DirUtil.getPlaylistDownloadRootPath(isTest: true)}${path.separator}$playlistTitle${path.separator}$playlistTitle.json';
+
+    String playlistPathFileName;
+
+    if (modifiedPlaylistRootPath != null) {
+      // If the modified playlist root path is specified, use it
+      playlistPathFileName = '$modifiedPlaylistRootPath${path.separator}$playlistTitle${path.separator}$playlistTitle.json';
+    } else {
+      // Otherwise, use the default playlist download root path
+      playlistPathFileName =
+          '${DirUtil.getPlaylistDownloadRootPath(isTest: true)}${path.separator}$playlistTitle${path.separator}$playlistTitle.json';
+    }
+
     Playlist loadedPlaylist = JsonDataService.loadFromFile(
         jsonPathFileName: playlistPathFileName, type: Playlist);
     expect(loadedPlaylist.isSelected, isSelected);
@@ -3347,27 +3358,23 @@ class IntegrationTestUtil {
     );
     expect(
       pictureAudioMapLst[2],
-        "Local restore- short - test - playlist|250518-164039-morning _ cinematic video 23-07-01",
+      "Local restore- short - test - playlist|250518-164039-morning _ cinematic video 23-07-01",
     );
-    expect(
-      pictureAudioMapLst[3],
-        "Local restore- short - test - playlist|250518-164035-Really short video 23-07-01"
-    );
+    expect(pictureAudioMapLst[3],
+        "Local restore- short - test - playlist|250518-164035-Really short video 23-07-01");
 
     pictureAudioMapLst =
         (applicationPictureAudioMap["Jésus le Dieu vivant.jpg"] as List);
     expect(pictureAudioMapLst.length, 3);
     expect(
       pictureAudioMapLst[0],
-        "Restore- short - test - playlist|250518-164043-People Talking at The Table _ Free Video Loop 19-09-28",
+      "Restore- short - test - playlist|250518-164043-People Talking at The Table _ Free Video Loop 19-09-28",
     );
     expect(
       pictureAudioMapLst[1],
-        "Local restore- short - test - playlist|250518-164043-People Talking at The Table _ Free Video Loop 19-09-28",
+      "Local restore- short - test - playlist|250518-164043-People Talking at The Table _ Free Video Loop 19-09-28",
     );
-    expect(
-      pictureAudioMapLst[2],
-        "Prières du Maître|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'"
-    );
+    expect(pictureAudioMapLst[2],
+        "Prières du Maître|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'");
   }
 }
