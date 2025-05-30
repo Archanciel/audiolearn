@@ -1,0 +1,3021 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart' as intl;
+
+import 'app_localizations_en.dart';
+import 'app_localizations_fr.dart';
+
+// ignore_for_file: type=lint
+
+/// Callers can lookup localized strings with an instance of AppLocalizations
+/// returned by `AppLocalizations.of(context)`.
+///
+/// Applications need to include `AppLocalizations.delegate()` in their app's
+/// `localizationDelegates` list, and the locales they support in the app's
+/// `supportedLocales` list. For example:
+///
+/// ```dart
+/// import '../../l10n/app_localizations.dart';
+///
+/// return MaterialApp(
+///   localizationsDelegates: AppLocalizations.localizationsDelegates,
+///   supportedLocales: AppLocalizations.supportedLocales,
+///   home: MyApplicationHome(),
+/// );
+/// ```
+///
+/// ## Update pubspec.yaml
+///
+/// Please make sure to update your pubspec.yaml to include the following
+/// packages:
+///
+/// ```yaml
+/// dependencies:
+///   # Internationalization support.
+///   flutter_localizations:
+///     sdk: flutter
+///   intl: any # Use the pinned version from flutter_localizations
+///
+///   # Rest of dependencies
+/// ```
+///
+/// ## iOS Applications
+///
+/// iOS applications define key application metadata, including supported
+/// locales, in an Info.plist file that is built into the application bundle.
+/// To configure the locales supported by your app, you’ll need to edit this
+/// file.
+///
+/// First, open your project’s ios/Runner.xcworkspace Xcode workspace file.
+/// Then, in the Project Navigator, open the Info.plist file under the Runner
+/// project’s Runner folder.
+///
+/// Next, select the Information Property List item, select Add Item from the
+/// Editor menu, then select Localizations from the pop-up menu.
+///
+/// Select and expand the newly-created Localizations item then, for each
+/// locale your application supports, add a new item and select the locale
+/// you wish to add from the pop-up menu in the Value field. This list should
+/// be consistent with the languages listed in the AppLocalizations.supportedLocales
+/// property.
+abstract class AppLocalizations {
+  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+
+  final String localeName;
+
+  static AppLocalizations? of(BuildContext context) {
+    return Localizations.of<AppLocalizations>(context, AppLocalizations);
+  }
+
+  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
+
+  /// A list of this localizations delegate along with the default localizations
+  /// delegates.
+  ///
+  /// Returns a list of localizations delegates containing this delegate along with
+  /// GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate,
+  /// and GlobalWidgetsLocalizations.delegate.
+  ///
+  /// Additional delegates can be added by appending to this list in
+  /// MaterialApp. This list does not have to be used at all if a custom list
+  /// of delegates is preferred or required.
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+    delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+  ];
+
+  /// A list of this localizations delegate's supported locales.
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('en'),
+    Locale('fr')
+  ];
+
+  /// The page title displayed in the appbar.
+  ///
+  /// In en, this message translates to:
+  /// **'Download Audio'**
+  String get appBarTitleDownloadAudio;
+
+  /// No description provided for @downloadAudioScreen.
+  ///
+  /// In en, this message translates to:
+  /// **'Download Audio screen'**
+  String get downloadAudioScreen;
+
+  /// No description provided for @appBarTitleAudioPlayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Play Audio'**
+  String get appBarTitleAudioPlayer;
+
+  /// No description provided for @audioPlayerScreen.
+  ///
+  /// In en, this message translates to:
+  /// **'Play Audio screen'**
+  String get audioPlayerScreen;
+
+  /// No description provided for @toggleList.
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle List'**
+  String get toggleList;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @moveItemUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Move item up'**
+  String get moveItemUp;
+
+  /// No description provided for @moveItemDown.
+  ///
+  /// In en, this message translates to:
+  /// **'Move item down'**
+  String get moveItemDown;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @english.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// No description provided for @french.
+  ///
+  /// In en, this message translates to:
+  /// **'French'**
+  String get french;
+
+  /// No description provided for @downloadAudio.
+  ///
+  /// In en, this message translates to:
+  /// **'Download Audio Youtube'**
+  String get downloadAudio;
+
+  /// Appbar language selection menu item.
+  ///
+  /// In en, this message translates to:
+  /// **'Select {language}'**
+  String translate(String language);
+
+  /// No description provided for @musicalQualityTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'For Youtube playlist, if set, downloads at musical quality. For local playlist, if set, indicates that the playlist is at music quality.'**
+  String get musicalQualityTooltip;
+
+  /// No description provided for @ofPreposition.
+  ///
+  /// In en, this message translates to:
+  /// **'of'**
+  String get ofPreposition;
+
+  /// No description provided for @atPreposition.
+  ///
+  /// In en, this message translates to:
+  /// **'at'**
+  String get atPreposition;
+
+  /// No description provided for @ytPlaylistLinkLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Youtube Link or Search'**
+  String get ytPlaylistLinkLabel;
+
+  /// No description provided for @ytPlaylistLinkHintText.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Youtube link or sentence'**
+  String get ytPlaylistLinkHintText;
+
+  /// No description provided for @addPlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get addPlaylist;
+
+  /// No description provided for @downloadSingleVideoAudio.
+  ///
+  /// In en, this message translates to:
+  /// **'One'**
+  String get downloadSingleVideoAudio;
+
+  /// No description provided for @downloadSelectedPlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist'**
+  String get downloadSelectedPlaylist;
+
+  /// No description provided for @stopDownload.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get stopDownload;
+
+  /// No description provided for @audioDownloadingStopping.
+  ///
+  /// In en, this message translates to:
+  /// **'Stopping download ...'**
+  String get audioDownloadingStopping;
+
+  /// No description provided for @audioDownloadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error downloading audio: {error}'**
+  String audioDownloadError(Object error);
+
+  /// No description provided for @about.
+  ///
+  /// In en, this message translates to:
+  /// **'About ...'**
+  String get about;
+
+  /// No description provided for @help.
+  ///
+  /// In en, this message translates to:
+  /// **'Help ...'**
+  String get help;
+
+  /// No description provided for @defineSortFilterAudiosMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort/Filter Audio ...'**
+  String get defineSortFilterAudiosMenu;
+
+  /// No description provided for @clearSortFilterAudiosParmsHistoryMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Sort/Filter Parameters History'**
+  String get clearSortFilterAudiosParmsHistoryMenu;
+
+  /// No description provided for @saveSortFilterAudiosOptionsToPlaylistMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Sort/Filter Parameters to Playlist ...'**
+  String get saveSortFilterAudiosOptionsToPlaylistMenu;
+
+  /// No description provided for @sortFilterDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort and Filter Parameters'**
+  String get sortFilterDialogTitle;
+
+  /// No description provided for @sortBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort by:'**
+  String get sortBy;
+
+  /// No description provided for @audioDownloadDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio downl date'**
+  String get audioDownloadDate;
+
+  /// No description provided for @videoUploadDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Video upload date'**
+  String get videoUploadDate;
+
+  /// No description provided for @audioEnclosingPlaylistTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio playlist title'**
+  String get audioEnclosingPlaylistTitle;
+
+  /// No description provided for @audioDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio duration'**
+  String get audioDuration;
+
+  /// No description provided for @audioRemainingDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio listenable remaining duration'**
+  String get audioRemainingDuration;
+
+  /// No description provided for @audioFileSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio file size'**
+  String get audioFileSize;
+
+  /// No description provided for @audioMusicQuality.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio music quality'**
+  String get audioMusicQuality;
+
+  /// No description provided for @audioDownloadSpeed.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio downl speed'**
+  String get audioDownloadSpeed;
+
+  /// No description provided for @audioDownloadDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio downl duration'**
+  String get audioDownloadDuration;
+
+  /// No description provided for @sortAscending.
+  ///
+  /// In en, this message translates to:
+  /// **'Asc'**
+  String get sortAscending;
+
+  /// No description provided for @sortDescending.
+  ///
+  /// In en, this message translates to:
+  /// **'Desc'**
+  String get sortDescending;
+
+  /// No description provided for @filterSentences.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter words:'**
+  String get filterSentences;
+
+  /// No description provided for @filterOptions.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter options:'**
+  String get filterOptions;
+
+  /// No description provided for @videoTitleOrDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Video title (word or sentence)'**
+  String get videoTitleOrDescription;
+
+  /// No description provided for @startDownloadDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Start downl date'**
+  String get startDownloadDate;
+
+  /// No description provided for @endDownloadDate.
+  ///
+  /// In en, this message translates to:
+  /// **'End downl date'**
+  String get endDownloadDate;
+
+  /// No description provided for @startUploadDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Start upl date'**
+  String get startUploadDate;
+
+  /// No description provided for @endUploadDate.
+  ///
+  /// In en, this message translates to:
+  /// **'End upl date'**
+  String get endUploadDate;
+
+  /// No description provided for @fileSizeRange.
+  ///
+  /// In en, this message translates to:
+  /// **'File size range (MB)'**
+  String get fileSizeRange;
+
+  /// No description provided for @start.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get start;
+
+  /// No description provided for @end.
+  ///
+  /// In en, this message translates to:
+  /// **'End'**
+  String get end;
+
+  /// No description provided for @audioDurationRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio duration range (hh:mm)'**
+  String get audioDurationRange;
+
+  /// No description provided for @openYoutubeVideo.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Youtube Video'**
+  String get openYoutubeVideo;
+
+  /// No description provided for @openYoutubePlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Youtube Playlist'**
+  String get openYoutubePlaylist;
+
+  /// No description provided for @apply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get apply;
+
+  /// No description provided for @cancelButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancelButton;
+
+  /// No description provided for @deleteAudio.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Audio ...'**
+  String get deleteAudio;
+
+  /// No description provided for @deleteAudioFromPlaylistAswell.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Audio from Playlist as well ...'**
+  String get deleteAudioFromPlaylistAswell;
+
+  /// No description provided for @deleteAudioFromPlaylistAswellWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'If the deleted audio video \"{audioTitle}\" remains in the \"{playlistTitle}\" Youtube playlist, it will be downloaded again the next time you download the playlist !'**
+  String deleteAudioFromPlaylistAswellWarning(Object audioTitle, Object playlistTitle);
+
+  /// No description provided for @warningDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'WARNING'**
+  String get warningDialogTitle;
+
+  /// Warning announcing that the playlist url was updated.
+  ///
+  /// In en, this message translates to:
+  /// **'Youtube playlist \"{title}\" URL was updated. The playlist can be downloaded with its new URL.'**
+  String updatedPlaylistUrlTitle(Object title);
+
+  /// Warning announcing that the playlist was added at the end of the playlist list
+  ///
+  /// In en, this message translates to:
+  /// **'Youtube playlist \"{title}\" of {quality} quality added at the end of the playlist list.'**
+  String addYoutubePlaylistTitle(Object title, Object quality);
+
+  /// Warning announcing that the playlist was added with a corrected title at the end of the playlist list
+  ///
+  /// In en, this message translates to:
+  /// **'Youtube playlist \"{originalTitle}\" of {quality} quality added with corrected title \"{correctedTitle}\" at the end of the playlist list.'**
+  String addCorrectedYoutubePlaylistTitle(Object originalTitle, Object quality, Object correctedTitle);
+
+  /// Warning announcing that the playlist was added at the end of the playlist list.
+  ///
+  /// In en, this message translates to:
+  /// **'Local playlist \"{title}\" of {quality} quality added at the end of the playlist list.'**
+  String addLocalPlaylistTitle(Object title, Object quality);
+
+  /// Warning announcing that the playlist with invalid URL was not added.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist with invalid URL \"{url}\" neither added nor modified.'**
+  String invalidPlaylistUrl(Object url);
+
+  /// Warning announcing that the playlist with invalid URL was not added.
+  ///
+  /// In en, this message translates to:
+  /// **'The file name \"{fileName}\" already exists in the same directory and cannot be used.'**
+  String renameFileNameAlreadyUsed(Object fileName);
+
+  /// Warning announcing that the playlist with the URL is already in the list of playlists.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist \"{title}\" with this URL \"{url}\" is already in the list of playlists and so won\'t be recreated.'**
+  String playlistWithUrlAlreadyInListOfPlaylists(Object url, Object title);
+
+  /// Warning announcing that the local playlist with the title is already in the list of playlists and so will not be created.
+  ///
+  /// In en, this message translates to:
+  /// **'Local playlist \"{title}\" already exists in the list of playlists. Therefore, the local playlist with this title won\'t be created.'**
+  String localPlaylistWithTitleAlreadyInListOfPlaylists(Object title);
+
+  /// Warning announcing that the Youtube playlist with the title is already in the list of playlists and so will not be created.
+  ///
+  /// In en, this message translates to:
+  /// **'Youtube playlist \"{title}\" already exists in the list of playlists. Therefore, the local playlist with this title won\'t be created.'**
+  String youtubePlaylistWithTitleAlreadyInListOfPlaylists(Object title);
+
+  /// Warning announcing that downloading the audio's from Youtube failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading the audio of the video \"{videoTitle}\" from Youtube FAILED: \"{exceptionMessage}\"'**
+  String downloadAudioYoutubeError(Object videoTitle, Object exceptionMessage);
+
+  /// Warning announcing that downloading the audio's from Youtube failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Error downloading audio from Youtube: \"{exceptionMessage}\"'**
+  String downloadAudioYoutubeErrorExceptionMessageOnly(Object exceptionMessage);
+
+  /// Warning announcing that downloading the audio from Youtube failed due to presence of this audio in the playlist.
+  ///
+  /// In en, this message translates to:
+  /// **'Error downloading audio from Youtube. The playlist \"{playlistTitle}\" contains a live video which causes the playlist audio downloading failure. To solve the problem, after having downloaded the audio of the live video as explained below, remove the live video from the playlist, then restart the application and retry.\n\nThe live video URL contains the following string: \"{liveVideoString}\". In order to add the live video audio to the playlist \"{playlistTitle}\", download it separately as single video download adding it to the playlist \"{playlistTitle}\".'**
+  String downloadAudioYoutubeErrorDueToLiveVideoInPlaylist(Object playlistTitle, Object liveVideoString);
+
+  /// Warning announcing that the audio file is already in the target playlist directory.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio \"{audioValidVideoTitle}\" is contained in file \"{fileName}\" present in the target playlist \"{playlistTitle}\" directory and so won\'t be redownloaded.'**
+  String downloadAudioFileAlreadyOnAudioDirectory(Object audioValidVideoTitle, Object fileName, Object playlistTitle);
+
+  /// No description provided for @noInternet.
+  ///
+  /// In en, this message translates to:
+  /// **'No Internet. Please connect your device and retry.'**
+  String get noInternet;
+
+  /// Warning announcing that the single video with invalid URL was not downloaded.
+  ///
+  /// In en, this message translates to:
+  /// **'The URL \"{url}\" supposed to point to a unique video is invalid. Therefore, no video has been downloaded.'**
+  String invalidSingleVideoUUrl(Object url);
+
+  /// No description provided for @copyYoutubeVideoUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy Youtube Video URL'**
+  String get copyYoutubeVideoUrl;
+
+  /// No description provided for @displayAudioInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio Information ...'**
+  String get displayAudioInfo;
+
+  /// No description provided for @renameAudioFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename Audio File ...'**
+  String get renameAudioFile;
+
+  /// No description provided for @moveAudioToPlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'Move Audio to Playlist ...'**
+  String get moveAudioToPlaylist;
+
+  /// No description provided for @copyAudioToPlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy Audio to Playlist ...'**
+  String get copyAudioToPlaylist;
+
+  /// No description provided for @audioInfoDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio Info'**
+  String get audioInfoDialogTitle;
+
+  /// No description provided for @youtubeChannelLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Youtube channel'**
+  String get youtubeChannelLabel;
+
+  /// No description provided for @originalVideoTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Original video title'**
+  String get originalVideoTitleLabel;
+
+  /// No description provided for @validVideoTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid video title'**
+  String get validVideoTitleLabel;
+
+  /// No description provided for @videoUrlLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Video URL'**
+  String get videoUrlLabel;
+
+  /// No description provided for @audioDownloadDateTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio downl date time'**
+  String get audioDownloadDateTimeLabel;
+
+  /// No description provided for @audioDownloadDurationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio downl duration'**
+  String get audioDownloadDurationLabel;
+
+  /// No description provided for @audioDownloadSpeedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio downl speed'**
+  String get audioDownloadSpeedLabel;
+
+  /// No description provided for @videoUploadDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Video upload date'**
+  String get videoUploadDateLabel;
+
+  /// No description provided for @audioDurationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio duration'**
+  String get audioDurationLabel;
+
+  /// No description provided for @audioFileNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio file name'**
+  String get audioFileNameLabel;
+
+  /// No description provided for @audioFileSizeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio file size'**
+  String get audioFileSizeLabel;
+
+  /// No description provided for @isMusicQualityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Is music quality'**
+  String get isMusicQualityLabel;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No description provided for @no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get no;
+
+  /// No description provided for @octetShort.
+  ///
+  /// In en, this message translates to:
+  /// **'B'**
+  String get octetShort;
+
+  /// No description provided for @infiniteBytesPerSecond.
+  ///
+  /// In en, this message translates to:
+  /// **'infinite B/sec'**
+  String get infiniteBytesPerSecond;
+
+  /// No description provided for @updatePlaylistJsonFilesMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Playlist JSON Files'**
+  String get updatePlaylistJsonFilesMenu;
+
+  /// No description provided for @compactVideoDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Compact video description'**
+  String get compactVideoDescription;
+
+  /// No description provided for @ignoreCase.
+  ///
+  /// In en, this message translates to:
+  /// **'Ignore case'**
+  String get ignoreCase;
+
+  /// No description provided for @searchInVideoCompactDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Include description'**
+  String get searchInVideoCompactDescription;
+
+  /// No description provided for @on.
+  ///
+  /// In en, this message translates to:
+  /// **'on'**
+  String get on;
+
+  /// No description provided for @copyYoutubePlaylistUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy Youtube Playlist URL'**
+  String get copyYoutubePlaylistUrl;
+
+  /// No description provided for @displayPlaylistInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist Data ...'**
+  String get displayPlaylistInfo;
+
+  /// No description provided for @playlistInfoDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist Info'**
+  String get playlistInfoDialogTitle;
+
+  /// No description provided for @playlistTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist title'**
+  String get playlistTitleLabel;
+
+  /// No description provided for @playlistIdLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist ID'**
+  String get playlistIdLabel;
+
+  /// No description provided for @playlistUrlLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist URL'**
+  String get playlistUrlLabel;
+
+  /// No description provided for @playlistDownloadPathLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist path'**
+  String get playlistDownloadPathLabel;
+
+  /// No description provided for @playlistLastDownloadDateTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist last downl date time'**
+  String get playlistLastDownloadDateTimeLabel;
+
+  /// No description provided for @playlistIsSelectedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist is selected'**
+  String get playlistIsSelectedLabel;
+
+  /// No description provided for @playlistTotalAudioNumberLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist total audio\'s'**
+  String get playlistTotalAudioNumberLabel;
+
+  /// No description provided for @playlistPlayableAudioNumberLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Playable audio\'s'**
+  String get playlistPlayableAudioNumberLabel;
+
+  /// No description provided for @playlistPlayableAudioTotalDurationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Playable audio\'s total duration'**
+  String get playlistPlayableAudioTotalDurationLabel;
+
+  /// No description provided for @playlistPlayableAudioTotalRemainingDurationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Playable audio\'s total remaining duration'**
+  String get playlistPlayableAudioTotalRemainingDurationLabel;
+
+  /// No description provided for @playlistPlayableAudioTotalSizeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Playable audio\'s total file size'**
+  String get playlistPlayableAudioTotalSizeLabel;
+
+  /// No description provided for @updatePlaylistPlayableAudioList.
+  ///
+  /// In en, this message translates to:
+  /// **'Update playable Audio\'s List'**
+  String get updatePlaylistPlayableAudioList;
+
+  /// No description provided for @updatedPlayableAudioLst.
+  ///
+  /// In en, this message translates to:
+  /// **'Playable audio list for playlist \"{title}\" was updated. {number} audio(s) were removed.'**
+  String updatedPlayableAudioLst(Object number, Object title);
+
+  /// No description provided for @addYoutubePlaylistDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Youtube Playlist'**
+  String get addYoutubePlaylistDialogTitle;
+
+  /// No description provided for @addLocalPlaylistDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Local Playlist'**
+  String get addLocalPlaylistDialogTitle;
+
+  /// No description provided for @renameAudioFileDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename Audio File'**
+  String get renameAudioFileDialogTitle;
+
+  /// No description provided for @renameAudioFileDialogComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Renaming audio file in order to improve their playing order.'**
+  String get renameAudioFileDialogComment;
+
+  /// No description provided for @renameAudioFileLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get renameAudioFileLabel;
+
+  /// No description provided for @renameAudioFileButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get renameAudioFileButton;
+
+  /// No description provided for @modifyAudioTitleDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Modify Audio Title'**
+  String get modifyAudioTitleDialogTitle;
+
+  /// No description provided for @modifyAudioTitleDialogComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Modify the audio title to identify it more easily during listening.'**
+  String get modifyAudioTitleDialogComment;
+
+  /// No description provided for @modifyAudioTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get modifyAudioTitleLabel;
+
+  /// No description provided for @modifyAudioTitleButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Modify'**
+  String get modifyAudioTitleButton;
+
+  /// No description provided for @youtubePlaylistUrlLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Youtube playlist URL'**
+  String get youtubePlaylistUrlLabel;
+
+  /// No description provided for @localPlaylistTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Local playlist title'**
+  String get localPlaylistTitleLabel;
+
+  /// No description provided for @playlistTypeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist type'**
+  String get playlistTypeLabel;
+
+  /// No description provided for @playlistTypeYoutube.
+  ///
+  /// In en, this message translates to:
+  /// **'Youtube'**
+  String get playlistTypeYoutube;
+
+  /// No description provided for @playlistTypeLocal.
+  ///
+  /// In en, this message translates to:
+  /// **'Local'**
+  String get playlistTypeLocal;
+
+  /// No description provided for @playlistQualityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist quality'**
+  String get playlistQualityLabel;
+
+  /// No description provided for @playlistQualityMusic.
+  ///
+  /// In en, this message translates to:
+  /// **'musical'**
+  String get playlistQualityMusic;
+
+  /// No description provided for @playlistQualityAudio.
+  ///
+  /// In en, this message translates to:
+  /// **'spoken'**
+  String get playlistQualityAudio;
+
+  /// No description provided for @audioQualityHighSnackBarMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Download at music quality'**
+  String get audioQualityHighSnackBarMessage;
+
+  /// No description provided for @audioQualityLowSnackBarMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Download at audio quality'**
+  String get audioQualityLowSnackBarMessage;
+
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
+  /// No description provided for @noSortFilterSaveAsNameWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'No sort/filter save as name defined. Please enter a name and retry ...'**
+  String get noSortFilterSaveAsNameWarning;
+
+  /// No description provided for @noPlaylistSelectedForSingleVideoDownloadWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'No playlist selected for single video download. Select one playlist and retry ...'**
+  String get noPlaylistSelectedForSingleVideoDownloadWarning;
+
+  /// No description provided for @noPlaylistSelectedForAudioCopyWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'No playlist selected for copying audio. Select one playlist and retry ...'**
+  String get noPlaylistSelectedForAudioCopyWarning;
+
+  /// No description provided for @noPlaylistSelectedForAudioMoveWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'No playlist selected for moving audio. Select one playlist and retry ...'**
+  String get noPlaylistSelectedForAudioMoveWarning;
+
+  /// No description provided for @tooManyPlaylistSelectedForSingleVideoDownloadWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'More than one playlist selected for single video download. Select only one playlist and retry ...'**
+  String get tooManyPlaylistSelectedForSingleVideoDownloadWarning;
+
+  /// No description provided for @noSortFilterParameterWasModifiedWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'No sort/filter parameter was modified. Please set a sort/filter parameter and retry ...'**
+  String get noSortFilterParameterWasModifiedWarning;
+
+  /// No description provided for @deletedSortFilterParameterNotExistWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'The sort/filter parameter you try to delete does not exist. Please define an existing sort/filter parameter and retry ...'**
+  String get deletedSortFilterParameterNotExistWarning;
+
+  /// No description provided for @historicalSortFilterParameterWasDeletedWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'The historical sort/filter parameter was deleted.'**
+  String get historicalSortFilterParameterWasDeletedWarning;
+
+  /// No description provided for @allHistoricalSortFilterParameterWereDeletedWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'All historical sort/filter parameters were deleted.'**
+  String get allHistoricalSortFilterParameterWereDeletedWarning;
+
+  /// No description provided for @allHistoricalSortFilterParametersDeleteConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting all historical sort/filter parameters.'**
+  String get allHistoricalSortFilterParametersDeleteConfirmation;
+
+  /// No description provided for @playlistRootPathNotExistWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'The defined path \"{playlistRootPath}\" does not exist. Please enter a valid playlist root path and retry ...'**
+  String playlistRootPathNotExistWarning(Object playlistRootPath);
+
+  /// No description provided for @confirmDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'CONFIRMATION'**
+  String get confirmDialogTitle;
+
+  /// No description provided for @confirmSingleVideoAudioPlaylistTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm target playlist \"{title}\" for downloading single video audio in spoken quality.'**
+  String confirmSingleVideoAudioPlaylistTitle(Object title);
+
+  /// No description provided for @confirmSingleVideoAudioAtMusicQualityPlaylistTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm target playlist \"{title}\" for downloading single video audio in high-quality music format.'**
+  String confirmSingleVideoAudioAtMusicQualityPlaylistTitle(Object title);
+
+  /// No description provided for @playlistJsonFileSizeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'JSON file size'**
+  String get playlistJsonFileSizeLabel;
+
+  /// No description provided for @playlistOneSelectedDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a Playlist'**
+  String get playlistOneSelectedDialogTitle;
+
+  /// No description provided for @confirmButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirmButton;
+
+  /// No description provided for @enclosingPlaylistLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Enclosing playlist'**
+  String get enclosingPlaylistLabel;
+
+  /// Not moved warning
+  ///
+  /// In en, this message translates to:
+  /// **'Audio \"{audioTitle}\" NOT moved from local playlist \"{fromPlaylistTitle}\" to local playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.'**
+  String audioNotMovedFromLocalPlaylistToLocalPlaylist(Object audioTitle, Object fromPlaylistTitle, Object notCopiedOrMovedReason, Object toPlaylistTitle);
+
+  /// Not moved warning
+  ///
+  /// In en, this message translates to:
+  /// **'Audio \"{audioTitle}\" NOT moved from local playlist \"{fromPlaylistTitle}\" to Youtube playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.'**
+  String audioNotMovedFromLocalPlaylistToYoutubePlaylist(Object audioTitle, Object fromPlaylistTitle, Object notCopiedOrMovedReason, Object toPlaylistTitle);
+
+  /// Not moved warning
+  ///
+  /// In en, this message translates to:
+  /// **'Audio \"{audioTitle}\" NOT moved from Youtube playlist \"{fromPlaylistTitle}\" to local playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.'**
+  String audioNotMovedFromYoutubePlaylistToLocalPlaylist(Object audioTitle, Object fromPlaylistTitle, Object notCopiedOrMovedReason, Object toPlaylistTitle);
+
+  /// Not moved warning
+  ///
+  /// In en, this message translates to:
+  /// **'Audio \"{audioTitle}\" NOT moved from Youtube playlist \"{fromPlaylistTitle}\" to Youtube playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.'**
+  String audioNotMovedFromYoutubePlaylistToYoutubePlaylist(Object audioTitle, Object fromPlaylistTitle, Object notCopiedOrMovedReason, Object toPlaylistTitle);
+
+  /// Not moved warning
+  ///
+  /// In en, this message translates to:
+  /// **'Audio \"{audioTitle}\" NOT copied from local playlist \"{fromPlaylistTitle}\" to local playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.'**
+  String audioNotCopiedFromLocalPlaylistToLocalPlaylist(Object audioTitle, Object fromPlaylistTitle, Object notCopiedOrMovedReason, Object toPlaylistTitle);
+
+  /// Not moved warning
+  ///
+  /// In en, this message translates to:
+  /// **'Audio \"{audioTitle}\" NOT copied from local playlist \"{fromPlaylistTitle}\" to Youtube playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.'**
+  String audioNotCopiedFromLocalPlaylistToYoutubePlaylist(Object audioTitle, Object fromPlaylistTitle, Object notCopiedOrMovedReason, Object toPlaylistTitle);
+
+  /// Not moved warning
+  ///
+  /// In en, this message translates to:
+  /// **'Audio \"{audioTitle}\" NOT copied from Youtube playlist \"{fromPlaylistTitle}\" to local playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.'**
+  String audioNotCopiedFromYoutubePlaylistToLocalPlaylist(Object audioTitle, Object fromPlaylistTitle, Object notCopiedOrMovedReason, Object toPlaylistTitle);
+
+  /// Not moved warning
+  ///
+  /// In en, this message translates to:
+  /// **'Audio \"{audioTitle}\" NOT copied from Youtube playlist \"{fromPlaylistTitle}\" to Youtube playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.'**
+  String audioNotCopiedFromYoutubePlaylistToYoutubePlaylist(Object audioTitle, Object fromPlaylistTitle, Object notCopiedOrMovedReason, Object toPlaylistTitle);
+
+  /// No description provided for @author.
+  ///
+  /// In en, this message translates to:
+  /// **'Author:'**
+  String get author;
+
+  /// No description provided for @authorName.
+  ///
+  /// In en, this message translates to:
+  /// **'Jean-Pierre Schnyder / Switzerland'**
+  String get authorName;
+
+  /// No description provided for @aboutAppDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'AudioLearn allows you to download audio from videos included in Youtube playlists whose links are added to the application, or from individual Youtube videos using their URL\'s.\n\nYou can also import audio files, such as audiobooks, directly into the application.\n\nIn addition to listening the audio files, AudioLearn offers the ability to add timestamped comments to each file, making it easier to replay their most interesting parts.\n\nFinally, the app allows you to sort and filter audio files based on various criteria.\n\nIn the next version, you will be able to extract commented audio segments to share them via email or WhatsApp, or combine them to create a new summarized audio file.'**
+  String get aboutAppDescription;
+
+  /// No description provided for @keepAudioEntryInSourcePlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep audio data in source playlist'**
+  String get keepAudioEntryInSourcePlaylist;
+
+  /// No description provided for @keepAudioEntryInSourcePlaylistTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep audio data in the original playlist\'s JSON file even after transferring the audio file to another playlist. This prevents re-downloading the audio file if it no longer exists in its original directory.'**
+  String get keepAudioEntryInSourcePlaylistTooltip;
+
+  /// No description provided for @movedFromPlaylistLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Moved from playlist'**
+  String get movedFromPlaylistLabel;
+
+  /// No description provided for @movedToPlaylistLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Moved to playlist'**
+  String get movedToPlaylistLabel;
+
+  /// No description provided for @downloadSingleVideoButtonTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Download single video audio.\n\nTo download a single video audio, enter its URL in the \"Youtube Link\" field and click the One button. You then have to select the playlist to which the audio will be added.'**
+  String get downloadSingleVideoButtonTooltip;
+
+  /// No description provided for @addPlaylistButtonTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a Youtube or local playlist.\n\nTo add a Youtube playlist, enter its URL in the \"Youtube Link\" field and click the Add button. IMPORTANT: for a Youtube playlist to be downloaded by the app, its privacy setting must not be \"Private\" but \"Unlisted\" or \"Public\".\n\nTo set up a local playlist, click the Add button while the \"Youtube Link\" field is empty.'**
+  String get addPlaylistButtonTooltip;
+
+  /// No description provided for @stopDownloadingButtonTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop downloading ...'**
+  String get stopDownloadingButtonTooltip;
+
+  /// No description provided for @clearPlaylistUrlOrSearchButtonTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear \"Youtube link or sentence\" field.'**
+  String get clearPlaylistUrlOrSearchButtonTooltip;
+
+  /// No description provided for @playlistToggleButtonInPlaylistDownloadViewTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Show/hide playlists.'**
+  String get playlistToggleButtonInPlaylistDownloadViewTooltip;
+
+  /// No description provided for @downloadSelPlaylistsButtonTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Download audio\'s of the selected playlist.'**
+  String get downloadSelPlaylistsButtonTooltip;
+
+  /// No description provided for @audioOneSelectedDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select an Audio'**
+  String get audioOneSelectedDialogTitle;
+
+  /// No description provided for @audioPositionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio position'**
+  String get audioPositionLabel;
+
+  /// No description provided for @audioStateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio state'**
+  String get audioStateLabel;
+
+  /// No description provided for @audioStatePaused.
+  ///
+  /// In en, this message translates to:
+  /// **'Paused'**
+  String get audioStatePaused;
+
+  /// No description provided for @audioStatePlaying.
+  ///
+  /// In en, this message translates to:
+  /// **'Playing'**
+  String get audioStatePlaying;
+
+  /// No description provided for @audioStateTerminated.
+  ///
+  /// In en, this message translates to:
+  /// **'Terminated'**
+  String get audioStateTerminated;
+
+  /// No description provided for @audioStateNotListened.
+  ///
+  /// In en, this message translates to:
+  /// **'Not listened'**
+  String get audioStateNotListened;
+
+  /// No description provided for @audioPausedDateTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Last listened date/time'**
+  String get audioPausedDateTimeLabel;
+
+  /// No description provided for @audioPlaySpeedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Play speed'**
+  String get audioPlaySpeedLabel;
+
+  /// No description provided for @playlistAudioPlaySpeedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio play speed'**
+  String get playlistAudioPlaySpeedLabel;
+
+  /// No description provided for @audioPlayVolumeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Sound volume'**
+  String get audioPlayVolumeLabel;
+
+  /// No description provided for @copiedFromPlaylistLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied from playlist'**
+  String get copiedFromPlaylistLabel;
+
+  /// No description provided for @copiedToPlaylistLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied to playlist'**
+  String get copiedToPlaylistLabel;
+
+  /// No description provided for @audioPlayerViewNoCurrentAudio.
+  ///
+  /// In en, this message translates to:
+  /// **'No audio selected'**
+  String get audioPlayerViewNoCurrentAudio;
+
+  /// No description provided for @deletePlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Playlist ...'**
+  String get deletePlaylist;
+
+  /// No description provided for @deleteYoutubePlaylistDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Youtube Playlist \"{title}\"'**
+  String deleteYoutubePlaylistDialogTitle(Object title);
+
+  /// No description provided for @deleteLocalPlaylistDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Local Playlist \"{title}\"'**
+  String deleteLocalPlaylistDialogTitle(Object title);
+
+  /// Confirm message for deleting the playlist
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting the playlist and its {audioNumber} audio\'s, {audioCommentsNumber} audio comment(s), {audioPicturesNumber} audio picture(s) as well as its JSON file and its directory.'**
+  String deletePlaylistDialogComment(Object audioNumber, Object audioCommentsNumber, Object audioPicturesNumber);
+
+  /// No description provided for @appBarTitleAudioExtractor.
+  ///
+  /// In en, this message translates to:
+  /// **'Extract Audio'**
+  String get appBarTitleAudioExtractor;
+
+  /// No description provided for @setAudioPlaySpeedDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Playback Speed'**
+  String get setAudioPlaySpeedDialogTitle;
+
+  /// No description provided for @setAudioPlaySpeedTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Audio\'s Play Speed.'**
+  String get setAudioPlaySpeedTooltip;
+
+  /// No description provided for @exclude.
+  ///
+  /// In en, this message translates to:
+  /// **'Exclude '**
+  String get exclude;
+
+  /// No description provided for @fullyPlayed.
+  ///
+  /// In en, this message translates to:
+  /// **'fully played '**
+  String get fullyPlayed;
+
+  /// No description provided for @audio.
+  ///
+  /// In en, this message translates to:
+  /// **'audio'**
+  String get audio;
+
+  /// No description provided for @increaseAudioVolumeIconButtonTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Increase the audio volume (currently {percentValue}). Disabled when maximum volume is reached.'**
+  String increaseAudioVolumeIconButtonTooltip(Object percentValue);
+
+  /// No description provided for @decreaseAudioVolumeIconButtonTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Decrease the audio volume (currently {percentValue}). Disabled when minimum volume is reached.'**
+  String decreaseAudioVolumeIconButtonTooltip(Object percentValue);
+
+  /// No description provided for @resetSortFilterOptionsTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset the sort and filter parameters.'**
+  String get resetSortFilterOptionsTooltip;
+
+  /// No description provided for @clickToSetAscendingOrDescendingTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Click to set ascending or descending sort order.'**
+  String get clickToSetAscendingOrDescendingTooltip;
+
+  /// No description provided for @and.
+  ///
+  /// In en, this message translates to:
+  /// **'and'**
+  String get and;
+
+  /// No description provided for @or.
+  ///
+  /// In en, this message translates to:
+  /// **'or'**
+  String get or;
+
+  /// No description provided for @videoTitleSearchSentenceTextFieldTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a word or a sentence to be selected in the video title and in the Youtube channel if \'înclude Youtube channel\' is checked and in the video description if \'Include description\' is checked. THEN, CLICK ON THE \'+\' BUTTON.'**
+  String get videoTitleSearchSentenceTextFieldTooltip;
+
+  /// No description provided for @andSentencesTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'If set, only audio containing all the listed words or sentences are selected.'**
+  String get andSentencesTooltip;
+
+  /// No description provided for @orSentencesTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'If set, audio containing one of the listed words or sentences are selected.'**
+  String get orSentencesTooltip;
+
+  /// No description provided for @searchInVideoCompactDescriptionTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'If set, search words or sentences are searched on video description as well.'**
+  String get searchInVideoCompactDescriptionTooltip;
+
+  /// No description provided for @fullyListened.
+  ///
+  /// In en, this message translates to:
+  /// **'Fully listened'**
+  String get fullyListened;
+
+  /// No description provided for @partiallyListened.
+  ///
+  /// In en, this message translates to:
+  /// **'Partially listened'**
+  String get partiallyListened;
+
+  /// No description provided for @notListened.
+  ///
+  /// In en, this message translates to:
+  /// **'Not listened'**
+  String get notListened;
+
+  /// No description provided for @saveSortFilterOptionsToPlaylistDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Sort/Filter \"{sortFilterParmsName}\"'**
+  String saveSortFilterOptionsToPlaylistDialogTitle(Object sortFilterParmsName);
+
+  /// No description provided for @saveSortFilterOptionsToPlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'To playlist \"{title}\"'**
+  String saveSortFilterOptionsToPlaylist(Object title);
+
+  /// No description provided for @saveButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get saveButton;
+
+  /// No description provided for @errorInPlaylistJsonFile.
+  ///
+  /// In en, this message translates to:
+  /// **'File \"{filePathName}\" contains an invalid data definition. Try finding the problem in order to correct it before executing again the operation.'**
+  String errorInPlaylistJsonFile(Object filePathName);
+
+  /// No description provided for @updatePlaylistJsonFilesMenuTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'If one or several playlist directories containing or not audio\'s were manually added or deleted in the application directory containing the playlists or if audio\'s were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files as well as the JSON file containing the application settings in order to reflect the changes in the application screens. Playlist directories located on PC can as well be copied in the application directory containing the playlists ...'**
+  String get updatePlaylistJsonFilesMenuTooltip;
+
+  /// No description provided for @updatePlaylistPlayableAudioListTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'If audio\'s were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files to reflect the changes in the application screens.'**
+  String get updatePlaylistPlayableAudioListTooltip;
+
+  /// No description provided for @audioPlayedInThisOrderTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio are played in this order. By default, the last downloaded audio\'s are at bottom of the list.'**
+  String get audioPlayedInThisOrderTooltip;
+
+  /// No description provided for @playableAudioDialogSortDescriptionTooltipBottomDownloadBefore.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio at bottom were downloaded before those at top.'**
+  String get playableAudioDialogSortDescriptionTooltipBottomDownloadBefore;
+
+  /// No description provided for @playableAudioDialogSortDescriptionTooltipBottomDownloadAfter.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio at the bottom were downloaded after those at the top.'**
+  String get playableAudioDialogSortDescriptionTooltipBottomDownloadAfter;
+
+  /// No description provided for @playableAudioDialogSortDescriptionTooltipBottomUploadBefore.
+  ///
+  /// In en, this message translates to:
+  /// **'Videos at the bottom were uploaded before those at the top.'**
+  String get playableAudioDialogSortDescriptionTooltipBottomUploadBefore;
+
+  /// No description provided for @playableAudioDialogSortDescriptionTooltipBottomUploadAfter.
+  ///
+  /// In en, this message translates to:
+  /// **'Videos at the bottom were uploaded after those at the top.'**
+  String get playableAudioDialogSortDescriptionTooltipBottomUploadAfter;
+
+  /// No description provided for @playableAudioDialogSortDescriptionTooltipTopDurationBigger.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio at the top have a longer duration than those at the bottom.'**
+  String get playableAudioDialogSortDescriptionTooltipTopDurationBigger;
+
+  /// No description provided for @playableAudioDialogSortDescriptionTooltipTopDurationSmaller.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio at the top have a shorter duration than those at the bottom.'**
+  String get playableAudioDialogSortDescriptionTooltipTopDurationSmaller;
+
+  /// No description provided for @playableAudioDialogSortDescriptionTooltipTopRemainingDurationBigger.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio at the top have more remaining listenable duration than those at the bottom.'**
+  String get playableAudioDialogSortDescriptionTooltipTopRemainingDurationBigger;
+
+  /// No description provided for @playableAudioDialogSortDescriptionTooltipTopRemainingDurationSmaller.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio at the top have less remaining listenable duration than those at the bottom.'**
+  String get playableAudioDialogSortDescriptionTooltipTopRemainingDurationSmaller;
+
+  /// No description provided for @playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeBigger.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio at the top were listened more recently than those at the bottom.'**
+  String get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeBigger;
+
+  /// No description provided for @playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio at the top were listened less recently than those at the bottom.'**
+  String get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller;
+
+  /// No description provided for @saveAs.
+  ///
+  /// In en, this message translates to:
+  /// **'Save as:'**
+  String get saveAs;
+
+  /// No description provided for @sortFilterSaveAsTextFieldTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Save the sort/filter settings with the specified name. Existing settings with the same name will be updated.'**
+  String get sortFilterSaveAsTextFieldTooltip;
+
+  /// No description provided for @applySortFilterToView.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply sort/filter to:'**
+  String get applySortFilterToView;
+
+  /// No description provided for @applySortFilterToViewTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Selecting sort/filter application to one or two audio views. This will be applied to the playlists to which this sort/filter is associated.'**
+  String get applySortFilterToViewTooltip;
+
+  /// No description provided for @saveSortFilterOptionsTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Update existing sort/filter parameters with modified parameters if the name already exists.'**
+  String get saveSortFilterOptionsTooltip;
+
+  /// No description provided for @applyButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get applyButton;
+
+  /// No description provided for @applySortFilterOptionsTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply the sort/filter parameters and add them to the sort/filter history if the name is empty.'**
+  String get applySortFilterOptionsTooltip;
+
+  /// No description provided for @deleteSortFilterOptionsTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'After deletion, the Default sort/filter parameters will be applied if these settings are in use.'**
+  String get deleteSortFilterOptionsTooltip;
+
+  /// No description provided for @deleteShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deleteShort;
+
+  /// No description provided for @sortFilterParametersDefaultName.
+  ///
+  /// In en, this message translates to:
+  /// **'default'**
+  String get sortFilterParametersDefaultName;
+
+  /// No description provided for @sortFilterParametersDownloadButtonHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Sel sort/filter'**
+  String get sortFilterParametersDownloadButtonHint;
+
+  /// No description provided for @appBarMenuOpenSettingsDialog.
+  ///
+  /// In en, this message translates to:
+  /// **'Application Settings ...'**
+  String get appBarMenuOpenSettingsDialog;
+
+  /// No description provided for @appSettingsDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Application Settings'**
+  String get appSettingsDialogTitle;
+
+  /// No description provided for @setAudioPlaySpeed.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Audio\'s Play Speed ...'**
+  String get setAudioPlaySpeed;
+
+  /// No description provided for @applyToAlreadyDownloadedAudio.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply to already\ndownloaded audio'**
+  String get applyToAlreadyDownloadedAudio;
+
+  /// No description provided for @applyToAlreadyDownloadedAudioTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply the playback speed to audio\'s in all existing playlists. If not set, apply it only to newly added playlists.'**
+  String get applyToAlreadyDownloadedAudioTooltip;
+
+  /// No description provided for @applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply the playback speed to audio\'s in the current playlist. If not set, apply it only to newly downloaded audio.'**
+  String get applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip;
+
+  /// No description provided for @applyToExistingPlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply to existing\nplaylists'**
+  String get applyToExistingPlaylist;
+
+  /// No description provided for @applyToExistingPlaylistTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply the playback speed to all existing playlists. If not set, apply it only to newly added playlists.'**
+  String get applyToExistingPlaylistTooltip;
+
+  /// No description provided for @playlistRootpathLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlists root path'**
+  String get playlistRootpathLabel;
+
+  /// No description provided for @closeTextButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get closeTextButton;
+
+  /// No description provided for @helpDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get helpDialogTitle;
+
+  /// No description provided for @defaultApplicationHelpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Default Application'**
+  String get defaultApplicationHelpTitle;
+
+  /// No description provided for @defaultApplicationHelpContent.
+  ///
+  /// In en, this message translates to:
+  /// **'If no option is selected, the defined playback speed will only apply to newly created playlists.'**
+  String get defaultApplicationHelpContent;
+
+  /// No description provided for @modifyingExistingPlaylistsHelpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Modifying Existing Playlists'**
+  String get modifyingExistingPlaylistsHelpTitle;
+
+  /// No description provided for @modifyingExistingPlaylistsHelpContent.
+  ///
+  /// In en, this message translates to:
+  /// **'By selecting the first checkbox, all existing playlists will be set to use the new playback speed. However, this change will only affect audio files that are downloaded after this option is enabled.'**
+  String get modifyingExistingPlaylistsHelpContent;
+
+  /// No description provided for @alreadyDownloadedAudiosHelpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Already Downloaded Audio'**
+  String get alreadyDownloadedAudiosHelpTitle;
+
+  /// No description provided for @alreadyDownloadedAudiosHelpContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Selecting the second checkbox allows you to change the playback speed for audio files already present on the device.'**
+  String get alreadyDownloadedAudiosHelpContent;
+
+  /// No description provided for @excludingFutureDownloadsHelpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Excluding Future Downloads'**
+  String get excludingFutureDownloadsHelpTitle;
+
+  /// No description provided for @excludingFutureDownloadsHelpContent.
+  ///
+  /// In en, this message translates to:
+  /// **'If only the second checkbox is checked, the playback speed will not be modified for audio\'s that will be downloaded later in existing playlists. However, as mentioned previously, new playlists will use the newly defined playback speed for all downloaded audio.'**
+  String get excludingFutureDownloadsHelpContent;
+
+  /// No description provided for @alreadyDownloadedAudiosPlaylistHelpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply to already downloaded Audio'**
+  String get alreadyDownloadedAudiosPlaylistHelpTitle;
+
+  /// No description provided for @alreadyDownloadedAudiosPlaylistHelpContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Selecting this checkbox allows you to change the playback speed for the playlist audio files already present on the device.'**
+  String get alreadyDownloadedAudiosPlaylistHelpContent;
+
+  /// No description provided for @commentsIconButtonTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Show or insert comments at specific points in the audio.'**
+  String get commentsIconButtonTooltip;
+
+  /// No description provided for @commentsDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Comments'**
+  String get commentsDialogTitle;
+
+  /// No description provided for @playlistCommentsDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist Audio Comments'**
+  String get playlistCommentsDialogTitle;
+
+  /// No description provided for @addPositionedCommentTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a comment at the current audio position.'**
+  String get addPositionedCommentTooltip;
+
+  /// No description provided for @commentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get commentTitle;
+
+  /// No description provided for @commentText.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment'**
+  String get commentText;
+
+  /// No description provided for @commentDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment'**
+  String get commentDialogTitle;
+
+  /// No description provided for @update.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get update;
+
+  /// No description provided for @deleteCommentConfirnTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Comment'**
+  String get deleteCommentConfirnTitle;
+
+  /// No description provided for @deleteCommentConfirnBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting comment \"{title}\".'**
+  String deleteCommentConfirnBody(Object title);
+
+  /// No description provided for @commentMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio Comments ...'**
+  String get commentMenu;
+
+  /// No description provided for @tenthOfSecondsCheckboxTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable this checkbox to specify the comment position with precision up to a tenth of second.'**
+  String get tenthOfSecondsCheckboxTooltip;
+
+  /// No description provided for @setCommentPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Set comment position'**
+  String get setCommentPosition;
+
+  /// No description provided for @commentPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Position (hh:)mm:ss(.t)'**
+  String get commentPosition;
+
+  /// No description provided for @commentPositionTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Clearing the position field and selecting the \"Start\" checkbox will set the comment\'s start position to 0:00. Selecting the \"End\" checkbox will set the comment\'s end position to the total duration of the audio.'**
+  String get commentPositionTooltip;
+
+  /// No description provided for @commentPositionExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'The proposed comment position corresponds to the current audio position. Modify it if needed and select to which position it must be applied.'**
+  String get commentPositionExplanation;
+
+  /// No description provided for @commentStartPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get commentStartPosition;
+
+  /// No description provided for @commentEndPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'End'**
+  String get commentEndPosition;
+
+  /// No description provided for @updateCommentStartEndPositionTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Update comment start or end position.'**
+  String get updateCommentStartEndPositionTooltip;
+
+  /// No description provided for @noCheckboxSelectedWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'No checkbox selected. Please select {atLeast}one checkbox before clicking \'Ok\', or click \'Cancel\' to exit.'**
+  String noCheckboxSelectedWarning(Object atLeast);
+
+  /// No description provided for @atLeast.
+  ///
+  /// In en, this message translates to:
+  /// **'at least '**
+  String get atLeast;
+
+  /// No description provided for @commentCreationDateTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment creation date'**
+  String get commentCreationDateTooltip;
+
+  /// No description provided for @commentUpdateDateTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment last update date'**
+  String get commentUpdateDateTooltip;
+
+  /// No description provided for @playlistCommentMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio Comments ...'**
+  String get playlistCommentMenu;
+
+  /// No description provided for @modifyAudioTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Modify Audio Title ...'**
+  String get modifyAudioTitle;
+
+  /// No description provided for @invalidLocalPlaylistTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The local playlist title \"{playlistTitle}\" can not contain any comma. Please correct the title and retry ...'**
+  String invalidLocalPlaylistTitle(Object playlistTitle);
+
+  /// No description provided for @invalidYoutubePlaylistTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The Youtube playlist title \"{playlistTitle}\" can not contain any comma. Please correct the title and retry ...'**
+  String invalidYoutubePlaylistTitle(Object playlistTitle);
+
+  /// No description provided for @setValueToTargetWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'The entered value {invalidValueWarningParam} ({maxMinPossibleValue}). Please correct it and retry ...'**
+  String setValueToTargetWarning(Object invalidValueWarningParam, Object maxMinPossibleValue);
+
+  /// No description provided for @invalidValueTooBig.
+  ///
+  /// In en, this message translates to:
+  /// **'exceeds the maximal value'**
+  String get invalidValueTooBig;
+
+  /// No description provided for @invalidValueTooSmall.
+  ///
+  /// In en, this message translates to:
+  /// **'is below the minimal value'**
+  String get invalidValueTooSmall;
+
+  /// No description provided for @confirmCommentedAudioDeletionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm deletion of the commented audio \"{audioTitle}\"'**
+  String confirmCommentedAudioDeletionTitle(Object audioTitle);
+
+  /// No description provided for @confirmCommentedAudioDeletionComment.
+  ///
+  /// In en, this message translates to:
+  /// **'The audio contains {commentNumber} comment(s) which will be deleted as well. Confirm deletion ?'**
+  String confirmCommentedAudioDeletionComment(Object commentNumber);
+
+  /// No description provided for @commentStartPositionTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment start position in audio'**
+  String get commentStartPositionTooltip;
+
+  /// No description provided for @commentEndPositionTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment end position in audio'**
+  String get commentEndPositionTooltip;
+
+  /// No description provided for @playlistToggleButtonInAudioPlayerViewTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Show/hide playlists. Then check a playlist to select its current listened audio.'**
+  String get playlistToggleButtonInAudioPlayerViewTooltip;
+
+  /// No description provided for @playlistSelectedSnackBarMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist \"{title}\" selected'**
+  String playlistSelectedSnackBarMessage(Object title);
+
+  /// No description provided for @playlistImportAudioMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Audio File(s) ...'**
+  String get playlistImportAudioMenu;
+
+  /// No description provided for @playlistImportAudioMenuTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Import audio file(s) into the playlist in order to be able to listen them and add positionned comments to them.'**
+  String get playlistImportAudioMenuTooltip;
+
+  /// No description provided for @setPlaylistAudioPlaySpeedTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Set audio play speed for the playlist existing and next downloaded audio.'**
+  String get setPlaylistAudioPlaySpeedTooltip;
+
+  /// No description provided for @audioNotImportedToLocalPlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio(s)\n\n{rejectedImportedAudioFileNames}\n\nNOT imported to local playlist \"{toPlaylistTitle}\" since the playlist directory already contains the audio(s).'**
+  String audioNotImportedToLocalPlaylist(Object rejectedImportedAudioFileNames, Object toPlaylistTitle);
+
+  /// No description provided for @audioNotImportedToYoutubePlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio(s)\n\n{rejectedImportedAudioFileNames}\n\nNOT imported to Youtube playlist \"{toPlaylistTitle}\" since the playlist directory already contains the audio(s).'**
+  String audioNotImportedToYoutubePlaylist(Object rejectedImportedAudioFileNames, Object toPlaylistTitle);
+
+  /// No description provided for @audioImportedToLocalPlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio(s)\n\n{importedAudioFileNames}\n\nimported to local playlist \"{toPlaylistTitle}\".'**
+  String audioImportedToLocalPlaylist(Object importedAudioFileNames, Object toPlaylistTitle);
+
+  /// No description provided for @audioImportedToYoutubePlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio(s)\n\n{importedAudioFileNames}\n\nimported to Youtube playlist \"{toPlaylistTitle}\".'**
+  String audioImportedToYoutubePlaylist(Object importedAudioFileNames, Object toPlaylistTitle);
+
+  /// No description provided for @imported.
+  ///
+  /// In en, this message translates to:
+  /// **'imported'**
+  String get imported;
+
+  /// No description provided for @audioImportedInfoDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Imported Audio Info'**
+  String get audioImportedInfoDialogTitle;
+
+  /// No description provided for @audioTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio title'**
+  String get audioTitleLabel;
+
+  /// No description provided for @chapterAudioTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio chapter'**
+  String get chapterAudioTitleLabel;
+
+  /// No description provided for @importedAudioDateTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Imported audio date time'**
+  String get importedAudioDateTimeLabel;
+
+  /// No description provided for @importedAudioUrlLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Imported audio URL'**
+  String get importedAudioUrlLabel;
+
+  /// No description provided for @importedAudioDescriptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio description'**
+  String get importedAudioDescriptionLabel;
+
+  /// No description provided for @sortFilterParametersAppliedName.
+  ///
+  /// In en, this message translates to:
+  /// **'applied'**
+  String get sortFilterParametersAppliedName;
+
+  /// No description provided for @lastListenedDateTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Last listened date/time'**
+  String get lastListenedDateTime;
+
+  /// No description provided for @downloadSingleVideoAudioAtMusicQuality.
+  ///
+  /// In en, this message translates to:
+  /// **'Download single video audio at music quality'**
+  String get downloadSingleVideoAudioAtMusicQuality;
+
+  /// No description provided for @videoTitleNotWrittenInOccidentalLettersWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Since the original video title is not written in occidental letters, the audio title is empty. You can use the \'Modify audio title ...\' audio menu in order to define a valid title. Same remark for improving the audio file name ...'**
+  String get videoTitleNotWrittenInOccidentalLettersWarning;
+
+  /// No description provided for @renameCommentFileNameAlreadyUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'The comment file name \"{fileName}.json\" already exists in the comment directory and so renaming the audio file with the name \"{fileName}.mp3\" is not possible.'**
+  String renameCommentFileNameAlreadyUsed(Object fileName);
+
+  /// No description provided for @renameFileNameInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'The audio file name \"{fileName}\" has no mp3 extension and so is invalid.'**
+  String renameFileNameInvalid(Object fileName);
+
+  /// No description provided for @renameAudioFileConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio file \"{oldFileIame}.mp3\" renamed to \"{newFileName}.mp3\".'**
+  String renameAudioFileConfirmation(Object newFileName, Object oldFileIame);
+
+  /// No description provided for @renameAudioAndCommentFileConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio file \"{oldFileIame}.mp3\" renamed to \"{newFileName}.mp3\" as well as comment file \"{oldFileIame}.json\" renamed to \"{newFileName}.json\".'**
+  String renameAudioAndCommentFileConfirmation(Object newFileName, Object oldFileIame);
+
+  /// No description provided for @forScreen.
+  ///
+  /// In en, this message translates to:
+  /// **'For \"{screenName}\" screen'**
+  String forScreen(Object screenName);
+
+  /// No description provided for @downloadVideoUrlsFromTextFileInPlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'Download URLs from Text File ...'**
+  String get downloadVideoUrlsFromTextFileInPlaylist;
+
+  /// No description provided for @downloadVideoUrlsFromTextFileInPlaylistTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Download audio\'s to the playlist from video URLs listed in a text file to select. The text file must contain one video URL per line.'**
+  String get downloadVideoUrlsFromTextFileInPlaylistTooltip;
+
+  /// No description provided for @downloadAudioFromVideoUrlsInPlaylistTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Download video audio to playlist \"{title}\"'**
+  String downloadAudioFromVideoUrlsInPlaylistTitle(Object title);
+
+  /// No description provided for @downloadAudioFromVideoUrlsInPlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading {number} audio.'**
+  String downloadAudioFromVideoUrlsInPlaylist(Object number);
+
+  /// No description provided for @notRedownloadAudioFilesInPlaylistDirectory.
+  ///
+  /// In en, this message translates to:
+  /// **'{number} audio\'s are already contained in the target playlist \"{playlistTitle}\" directory and so were not redownloaded.'**
+  String notRedownloadAudioFilesInPlaylistDirectory(Object number, Object playlistTitle);
+
+  /// No description provided for @clickToSetAscendingOrDescendingPlayingOrderTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Click to set ascending or descending playing order.'**
+  String get clickToSetAscendingOrDescendingPlayingOrderTooltip;
+
+  /// No description provided for @removeSortFilterAudiosOptionsFromPlaylistMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Sort/Filter Parameters from Playlist ...'**
+  String get removeSortFilterAudiosOptionsFromPlaylistMenu;
+
+  /// No description provided for @removeSortFilterOptionsFromPlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'From playlist \"{title}\"'**
+  String removeSortFilterOptionsFromPlaylist(Object title);
+
+  /// No description provided for @removeSortFilterOptionsFromPlaylistDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Sort/Filter Parameters \"{sortFilterParmsName}\"'**
+  String removeSortFilterOptionsFromPlaylistDialogTitle(Object sortFilterParmsName);
+
+  /// No description provided for @fromScreen.
+  ///
+  /// In en, this message translates to:
+  /// **'On \"{screenName}\" screen'**
+  String fromScreen(Object screenName);
+
+  /// No description provided for @removeButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get removeButton;
+
+  /// Confirmation message for saving sort/filter parameters
+  ///
+  /// In en, this message translates to:
+  /// **'Sort/filter parameters \"{sortFilterParmsName}\" were saved to playlist \"{playlistTitle}\" for screen(s) \"{forViewMessage}\".'**
+  String saveSortFilterParmsConfirmation(Object sortFilterParmsName, Object playlistTitle, Object forViewMessage);
+
+  /// Confirmation message for removing sort/filter parameters
+  ///
+  /// In en, this message translates to:
+  /// **'Sort/filter parameters \"{sortFilterParmsName}\" were removed from playlist \"{playlistTitle}\" on screen(s) \"{forViewMessage}\".'**
+  String removeSortFilterParmsConfirmation(Object sortFilterParmsName, Object playlistTitle, Object forViewMessage);
+
+  /// No description provided for @playlistSortFilterLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{screenName} sort/filter'**
+  String playlistSortFilterLabel(Object screenName);
+
+  /// No description provided for @playlistAudioCommentsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio comments'**
+  String get playlistAudioCommentsLabel;
+
+  /// No description provided for @listenedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Listened on'**
+  String get listenedOn;
+
+  /// No description provided for @remaining.
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining'**
+  String get remaining;
+
+  /// No description provided for @searchInYoutubeChannelName.
+  ///
+  /// In en, this message translates to:
+  /// **'Include Youtube channel'**
+  String get searchInYoutubeChannelName;
+
+  /// No description provided for @searchInYoutubeChannelNameTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'If set, search words or sentences are searched on Youtube channel name as well.'**
+  String get searchInYoutubeChannelNameTooltip;
+
+  /// No description provided for @savePlaylistAndCommentsToZipMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Playlists, Comments, Pictures and Settings to Zip File ...'**
+  String get savePlaylistAndCommentsToZipMenu;
+
+  /// No description provided for @savePlaylistAndCommentsToZipTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving the playlists, their audio comments and pictures to a zip file. The zip file will contain the playlists JSON files as well as the comment and picture JSON files. Additionally, the application settings.json will be saved. The MP3 and JPG files will not be included.'**
+  String get savePlaylistAndCommentsToZipTooltip;
+
+  /// No description provided for @setYoutubeChannelMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Youtube channel setting'**
+  String get setYoutubeChannelMenu;
+
+  /// Confirmation message indicating how many downloaded audio's and playable audio's were modified
+  ///
+  /// In en, this message translates to:
+  /// **'The Youtube channel was set in {numberOfModifiedDownloadedAudio} downloaded audio\'s and in {numberOfModifiedPlayableAudio} playable audio.'**
+  String confirmYoutubeChannelModifications(Object numberOfModifiedDownloadedAudio, Object numberOfModifiedPlayableAudio);
+
+  /// No description provided for @rewindAudioToStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Rewind all Audio\'s to Start'**
+  String get rewindAudioToStart;
+
+  /// No description provided for @rewindAudioToStartTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Rewind all playlist audio\'s to start position. This is useful if you wish to replay all the audio\'s.'**
+  String get rewindAudioToStartTooltip;
+
+  /// No description provided for @rewindedPlayableAudioNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'{number} playlist audio\'s were repositioned to start.'**
+  String rewindedPlayableAudioNumber(Object number);
+
+  /// No description provided for @dateFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Date Format ...'**
+  String get dateFormat;
+
+  /// No description provided for @dateFormatSelectionDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the Application Date Format'**
+  String get dateFormatSelectionDialogTitle;
+
+  /// No description provided for @commented.
+  ///
+  /// In en, this message translates to:
+  /// **'Commented'**
+  String get commented;
+
+  /// No description provided for @notCommented.
+  ///
+  /// In en, this message translates to:
+  /// **'Uncom.'**
+  String get notCommented;
+
+  /// Confirmation title for deleting filtered audio
+  ///
+  /// In en, this message translates to:
+  /// **'Delete audio\'s filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\"'**
+  String deleteFilteredAudioConfirmationTitle(Object sortFilterParmsName, Object playlistTitle);
+
+  /// Confirmation message for deleting filtered audio
+  ///
+  /// In en, this message translates to:
+  /// **'Audio\'s to delete number: {deleteAudioNumber},\nCorresponding total file size: {deleteAudioTotalFileSize},\nCorresponding total duration: {deleteAudioTotalDuration}.'**
+  String deleteFilteredAudioConfirmation(Object deleteAudioNumber, Object deleteAudioTotalFileSize, Object deleteAudioTotalDuration);
+
+  /// No description provided for @deleteFilteredCommentedAudioWarningTitleOne.
+  ///
+  /// In en, this message translates to:
+  /// **'WARNING: you are going to'**
+  String get deleteFilteredCommentedAudioWarningTitleOne;
+
+  /// Warning title for deleting commented and uncommented filtered audio
+  ///
+  /// In en, this message translates to:
+  /// **'delete COMMENTED and uncommented audio\'s filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\". Watch the help to solve the problem ...'**
+  String deleteFilteredCommentedAudioWarningTitleTwo(Object sortFilterParmsName, Object playlistTitle);
+
+  /// Warning message for deleting commented and uncommented filtered audio
+  ///
+  /// In en, this message translates to:
+  /// **'Total audio\'s to delete number: {deleteAudioNumber},\nCOMMENTED audio\'s to delete number: {deleteCommentedAudioNumber},\nCorresponding total file size: {deleteAudioTotalFileSize},\nCorresponding total duration: {deleteAudioTotalDuration}.'**
+  String deleteFilteredCommentedAudioWarning(Object deleteAudioNumber, Object deleteCommentedAudioNumber, Object deleteAudioTotalFileSize, Object deleteAudioTotalDuration);
+
+  /// No description provided for @commentedAudioDeletionHelpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How to create and use a Sort/Filter parameter to prevent deleting commented audio\'s ?'**
+  String get commentedAudioDeletionHelpTitle;
+
+  /// No description provided for @commentedAudioDeletionHelpContent.
+  ///
+  /// In en, this message translates to:
+  /// **'This guide explains how to delete fully listened audio\'s that are not commented.'**
+  String get commentedAudioDeletionHelpContent;
+
+  /// No description provided for @commentedAudioDeletionSolutionHelpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The solution is to create a Sort/Filter parameter to select only fully played uncommented audio'**
+  String get commentedAudioDeletionSolutionHelpTitle;
+
+  /// No description provided for @commentedAudioDeletionSolutionHelpContent.
+  ///
+  /// In en, this message translates to:
+  /// **'In the Sort/Filter definition dialog, the selection parameters are represented by checkboxes ...'**
+  String get commentedAudioDeletionSolutionHelpContent;
+
+  /// No description provided for @commentedAudioDeletionOpenSFDialogHelpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the Sort/Filter definition dialog'**
+  String get commentedAudioDeletionOpenSFDialogHelpTitle;
+
+  /// No description provided for @commentedAudioDeletionOpenSFDialogHelpContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Click the right menu icon in the download audio view, then select \"Sort/Filter Audio ...\"'**
+  String get commentedAudioDeletionOpenSFDialogHelpContent;
+
+  /// No description provided for @commentedAudioDeletionCreateSFParmHelpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a valid Sort/Filter parameter'**
+  String get commentedAudioDeletionCreateSFParmHelpTitle;
+
+  /// No description provided for @commentedAudioDeletionCreateSFParmHelpContent.
+  ///
+  /// In en, this message translates to:
+  /// **'In the \"Save as\" field, enter a name for the Sort/Filter parameter (e.g., FullyListenedUncom). Uncheck the checkboxes for \"Partially listened\", \"Not listened\" and \"Commented\". Then click on \"Save\".'**
+  String get commentedAudioDeletionCreateSFParmHelpContent;
+
+  /// No description provided for @commentedAudioDeletionSelectSFParmHelpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Once saved, the Sort/Filter parameter is applied to the playlist, reducing the displayed audio\'s list.'**
+  String get commentedAudioDeletionSelectSFParmHelpTitle;
+
+  /// No description provided for @commentedAudioDeletionSelectSFParmHelpContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Click on the \"Playlists\" button to hide the list of playlists. You’ll see your newly created SF parameter selected in the dropdown menu. You can apply this parameter or another one to any playlist ...'**
+  String get commentedAudioDeletionSelectSFParmHelpContent;
+
+  /// No description provided for @commentedAudioDeletionApplyingNewSFParmHelpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Finally, reclick on the \"Playlists\" button to display the list of playlists, open the source playlist menu and click on \"Filtered Audio\'s Actions ...\" and then on \"Delete filtered Audio\'s ...\"'**
+  String get commentedAudioDeletionApplyingNewSFParmHelpTitle;
+
+  /// No description provided for @commentedAudioDeletionApplyingNewSFParmHelpContent.
+  ///
+  /// In en, this message translates to:
+  /// **'This time, since a correct SF parameter is applied, no warning will be displayed when deleting the selected uncommented audio.'**
+  String get commentedAudioDeletionApplyingNewSFParmHelpContent;
+
+  /// No description provided for @filteredAudioActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Filtered Audio\'s Actions ...'**
+  String get filteredAudioActions;
+
+  /// No description provided for @moveFilteredAudio.
+  ///
+  /// In en, this message translates to:
+  /// **'Move filtered Audio\'s to Playlist ...'**
+  String get moveFilteredAudio;
+
+  /// No description provided for @copyFilteredAudio.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy filtered Audio\'s to Playlist ...'**
+  String get copyFilteredAudio;
+
+  /// No description provided for @deleteFilteredAudio.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete filtered Audio\'s ...'**
+  String get deleteFilteredAudio;
+
+  /// Confirmation message indicating how many audio's were moved and unmoved
+  ///
+  /// In en, this message translates to:
+  /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from Youtube playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) were moved from which {movedCommentedAudioNumber} were commented, and {unmovedAudioNumber} audio(s) were unmoved.'**
+  String confirmMovedUnmovedAudioNumberFromYoutubeToYoutubePlaylist(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName, Object movedAudioNumber, Object movedCommentedAudioNumber, Object unmovedAudioNumber);
+
+  /// Confirmation message indicating how many audio's were moved and unmoved
+  ///
+  /// In en, this message translates to:
+  /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from Youtube playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) were moved from which {movedCommentedAudioNumber} were commented, and {unmovedAudioNumber} audio(s) were unmoved.'**
+  String confirmMovedUnmovedAudioNumberFromYoutubeToLocalPlaylist(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName, Object movedAudioNumber, Object movedCommentedAudioNumber, Object unmovedAudioNumber);
+
+  /// Confirmation message indicating how many audio's were moved and unmoved
+  ///
+  /// In en, this message translates to:
+  /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from local playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) were moved from which {movedCommentedAudioNumber} were commented, and {unmovedAudioNumber} audio(s) were unmoved.'**
+  String confirmMovedUnmovedAudioNumberFromLocalToYoutubePlaylist(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName, Object movedAudioNumber, Object movedCommentedAudioNumber, Object unmovedAudioNumber);
+
+  /// Confirmation message indicating how many audio's were moved and unmoved
+  ///
+  /// In en, this message translates to:
+  /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from local playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) were moved from which {movedCommentedAudioNumber} were commented, and {unmovedAudioNumber} audio(s) were unmoved.'**
+  String confirmMovedUnmovedAudioNumberFromLocalToLocalPlaylist(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName, Object movedAudioNumber, Object movedCommentedAudioNumber, Object unmovedAudioNumber);
+
+  /// Confirmation message indicating how many audio's were copied and not copied
+  ///
+  /// In en, this message translates to:
+  /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from Youtube playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) were copied from which {copiedCommentedAudioNumber} were commented, and {notCopiedAudioNumber} audio(s) were not copied.'**
+  String confirmCopiedNotCopiedAudioNumberFromYoutubeToYoutubePlaylist(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName, Object copiedAudioNumber, Object copiedCommentedAudioNumber, Object notCopiedAudioNumber);
+
+  /// Confirmation message indicating how many audio's were copied and not copied
+  ///
+  /// In en, this message translates to:
+  /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from Youtube playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) were copied from which {copiedCommentedAudioNumber} were commented, and {notCopiedAudioNumber} audio(s) were not copied.'**
+  String confirmCopiedNotCopiedAudioNumberFromYoutubeToLocalPlaylist(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName, Object copiedAudioNumber, Object copiedCommentedAudioNumber, Object notCopiedAudioNumber);
+
+  /// Confirmation message indicating how many audio's were copied and not copied
+  ///
+  /// In en, this message translates to:
+  /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from local playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) were copied from which {copiedCommentedAudioNumber} were commented, and {notCopiedAudioNumber} audio(s) were not copied.'**
+  String confirmCopiedNotCopiedAudioNumberFromLocalToYoutubePlaylist(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName, Object copiedAudioNumber, Object copiedCommentedAudioNumber, Object notCopiedAudioNumber);
+
+  /// Confirmation message indicating how many audio's were copied and not copied
+  ///
+  /// In en, this message translates to:
+  /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from local playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) were copied from which {copiedCommentedAudioNumber} were commented, and {notCopiedAudioNumber} audio(s) were not copied.'**
+  String confirmCopiedNotCopiedAudioNumberFromLocalToLocalPlaylist(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName, Object copiedAudioNumber, Object copiedCommentedAudioNumber, Object notCopiedAudioNumber);
+
+  /// Warning message indicating that the default SF parms were not applied to move audio
+  ///
+  /// In en, this message translates to:
+  /// **'Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be moved from Youtube playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...'**
+  String defaultSFPNotApplyedToMoveAudioFromYoutubeToYoutubePlaylistWarning(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName);
+
+  /// Warning message indicating that the default SF parms were not applied to move audio
+  ///
+  /// In en, this message translates to:
+  /// **'Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be moved from Youtube playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...'**
+  String defaultSFPNotApplyedToMoveAudioFromYoutubeToLocalPlaylistWarning(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName);
+
+  /// Warning message indicating that the default SF parms were not applied to move audio
+  ///
+  /// In en, this message translates to:
+  /// **'Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be moved from local playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...'**
+  String defaultSFPNotApplyedToMoveAudioFromLocalToYoutubePlaylistWarning(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName);
+
+  /// Warning message indicating that the default SF parms were not applied to move audio
+  ///
+  /// In en, this message translates to:
+  /// **'Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be moved from local playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...'**
+  String defaultSFPNotApplyedToMoveAudioFromLocalToLocalPlaylistWarning(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName);
+
+  /// Warning message indicating that the default SF parms were not applied to move audio
+  ///
+  /// In en, this message translates to:
+  /// **'Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be copied from Youtube playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...'**
+  String defaultSFPNotApplyedToCopyAudioFromYoutubeToYoutubePlaylistWarning(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName);
+
+  /// Warning message indicating that the default SF parms were not applied to move audio
+  ///
+  /// In en, this message translates to:
+  /// **'Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be copied from Youtube playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...'**
+  String defaultSFPNotApplyedToCopyAudioFromYoutubeToLocalPlaylistWarning(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName);
+
+  /// Warning message indicating that the default SF parms were not applied to move audio
+  ///
+  /// In en, this message translates to:
+  /// **'Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be copied from local playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...'**
+  String defaultSFPNotApplyedToCopyAudioFromLocalToYoutubePlaylistWarning(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName);
+
+  /// Warning message indicating that the default SF parms were not applied to move audio
+  ///
+  /// In en, this message translates to:
+  /// **'Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be copied from local playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...'**
+  String defaultSFPNotApplyedToCopyAudioFromLocalToLocalPlaylistWarning(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName);
+
+  /// No description provided for @appBarMenuEnableNextAudioAutoPlay.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable playing next audio automatically ...'**
+  String get appBarMenuEnableNextAudioAutoPlay;
+
+  /// No description provided for @batteryParameters.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery Parameter Change'**
+  String get batteryParameters;
+
+  /// No description provided for @disableBatteryOptimisation.
+  ///
+  /// In en, this message translates to:
+  /// **'Display the battery settings in order to disable its optimization. The result is that it allows the application to automatically play the next audio in the current playlist.\n\nClick on the button below, then select the \"Battery\" option at the bottom of the list. Next, choose \"Unrestricted\" and quit the settings.'**
+  String get disableBatteryOptimisation;
+
+  /// No description provided for @openBatteryOptimisationButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Display the battery settings'**
+  String get openBatteryOptimisationButton;
+
+  /// Warning message for deleting a used SF parms
+  ///
+  /// In en, this message translates to:
+  /// **'WARNING: you are going to delete the Sort/Filter parms \"{sortFilterParmsName}\" which is used in {playlistNumber} playlist(s) listed below'**
+  String deleteSortFilterParmsWarningTitle(Object sortFilterParmsName, Object playlistNumber);
+
+  /// No description provided for @updatingSortFilterParmsWarningTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'WARNING: the sort/filter parameters \"{sortFilterParmsName}\" were modified. Do you want to update the existing sort/filter parms by clicking on \"Confirm\", or to save it with a different name or cancel the Save operation, this by clicking on \"Cancel\" ?'**
+  String updatingSortFilterParmsWarningTitle(Object sortFilterParmsName);
+
+  /// No description provided for @presentOnlyInFirstTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Present only in initial version'**
+  String get presentOnlyInFirstTitle;
+
+  /// No description provided for @presentOnlyInSecondTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Present only in modified version'**
+  String get presentOnlyInSecondTitle;
+
+  /// No description provided for @ascendingShort.
+  ///
+  /// In en, this message translates to:
+  /// **'asc'**
+  String get ascendingShort;
+
+  /// No description provided for @descendingShort.
+  ///
+  /// In en, this message translates to:
+  /// **'desc'**
+  String get descendingShort;
+
+  /// No description provided for @startAudioDownloadDateSortFilterTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Lists all audio\'s downloaded on or after the specified start date if set.'**
+  String get startAudioDownloadDateSortFilterTooltip;
+
+  /// No description provided for @endAudioDownloadDateSortFilterTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Lists all audio\'s downloaded on or before the specified end date if set.'**
+  String get endAudioDownloadDateSortFilterTooltip;
+
+  /// No description provided for @startVideoUploadDateSortFilterTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Lists all videos uploaded on or after the specified start date if set.'**
+  String get startVideoUploadDateSortFilterTooltip;
+
+  /// No description provided for @endVideoUploadDateSortFilterTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Lists all videos uploaded on or before the specified end date if set.'**
+  String get endVideoUploadDateSortFilterTooltip;
+
+  /// No description provided for @startAudioDurationSortFilterTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Lists all audio\'s with a duration equal to or greater than the specified minimum duration if set.'**
+  String get startAudioDurationSortFilterTooltip;
+
+  /// No description provided for @endAudioDurationSortFilterTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Lists all audio\'s with a duration equal to or less than the specified maximum duration if set.'**
+  String get endAudioDurationSortFilterTooltip;
+
+  /// No description provided for @startAudioFileSizeSortFilterTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Lists all audio\'s with a file size equal to or greater than the specified minimum size if set.'**
+  String get startAudioFileSizeSortFilterTooltip;
+
+  /// No description provided for @endAudioFileSizeSortFilterTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Lists all audio\'s with a file size equal to or less than the specified maximum size if set.'**
+  String get endAudioFileSizeSortFilterTooltip;
+
+  /// No description provided for @valueInInitialVersionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'In initial version'**
+  String get valueInInitialVersionTitle;
+
+  /// No description provided for @valueInModifiedVersionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'In modified version'**
+  String get valueInModifiedVersionTitle;
+
+  /// No description provided for @checked.
+  ///
+  /// In en, this message translates to:
+  /// **'checked'**
+  String get checked;
+
+  /// No description provided for @unchecked.
+  ///
+  /// In en, this message translates to:
+  /// **'unchecked'**
+  String get unchecked;
+
+  /// No description provided for @emptyDate.
+  ///
+  /// In en, this message translates to:
+  /// **'empty'**
+  String get emptyDate;
+
+  /// No description provided for @helpMainTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio Learn Help'**
+  String get helpMainTitle;
+
+  /// No description provided for @helpMainIntroduction.
+  ///
+  /// In en, this message translates to:
+  /// **'Consult the Audio Learn Introduction Help the first time you use the application in order to initialize it correctly !'**
+  String get helpMainIntroduction;
+
+  /// No description provided for @helpAudioLearnIntroductionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio Learn Introduction'**
+  String get helpAudioLearnIntroductionTitle;
+
+  /// No description provided for @helpAudioLearnIntroductionSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Defining, adding and downloading a Youtube playlist'**
+  String get helpAudioLearnIntroductionSubTitle;
+
+  /// No description provided for @helpLocalPlaylistTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Local Playlist'**
+  String get helpLocalPlaylistTitle;
+
+  /// No description provided for @helpLocalPlaylistSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Defining and using a local playlist'**
+  String get helpLocalPlaylistSubTitle;
+
+  /// No description provided for @helpPlaylistMenuTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist Menu'**
+  String get helpPlaylistMenuTitle;
+
+  /// No description provided for @helpPlaylistMenuSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist menu functionalities'**
+  String get helpPlaylistMenuSubTitle;
+
+  /// No description provided for @helpAudioMenuTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio Menu'**
+  String get helpAudioMenuTitle;
+
+  /// No description provided for @helpAudioMenuSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio menu functionalities'**
+  String get helpAudioMenuSubTitle;
+
+  /// No description provided for @addPrivateYoutubePlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'Trying to add a private Youtube playlist is not possible since the audio\'s of a private playlist can not be downloaded. To solve the problem, edit the playlist on Youtube and change its visibility from \"Private\" to \"Unlisted\" or to \"Public\" and then re-add it to the application.'**
+  String get addPrivateYoutubePlaylist;
+
+  /// No description provided for @addAudioPicture.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Audio Picture ...'**
+  String get addAudioPicture;
+
+  /// No description provided for @removeAudioPicture.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Audio Picture'**
+  String get removeAudioPicture;
+
+  /// No description provided for @savedAppDataToZip.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved playlist, comment and picture JSON files as well as application settings to \"{filePathName}\".'**
+  String savedAppDataToZip(Object filePathName);
+
+  /// No description provided for @appDataCouldNotBeSavedToZip.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist, comment and picture JSON files as well as application settings could not be saved to zip.'**
+  String get appDataCouldNotBeSavedToZip;
+
+  /// No description provided for @pictured.
+  ///
+  /// In en, this message translates to:
+  /// **'Pictured'**
+  String get pictured;
+
+  /// No description provided for @notPictured.
+  ///
+  /// In en, this message translates to:
+  /// **'Unpictured'**
+  String get notPictured;
+
+  /// No description provided for @restorePlaylistAndCommentsFromZipMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore Playlists, Comments, Pictures and Settings from Zip File ...'**
+  String get restorePlaylistAndCommentsFromZipMenu;
+
+  /// No description provided for @restorePlaylistAndCommentsFromZipTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Restoring the playlists, their audio comments, pictures and the application settings from a saved zip file. The zip file contains the playlists, the comments, the pictures as well as the settings JSON files. The audio files are not included in it.'**
+  String get restorePlaylistAndCommentsFromZipTooltip;
+
+  /// Warning message indicating that one or several playlists were restored from zip created from appbar menu
+  ///
+  /// In en, this message translates to:
+  /// **'Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as the application settings from \"{filePathName}\".'**
+  String restoredAppDataFromZip(Object playlistsNumber, Object commentsNumber, Object picturesNumber, Object filePathName);
+
+  /// Warning message indicating that the a unique playlist was restored from zip created from playlist item menu
+  ///
+  /// In en, this message translates to:
+  /// **'Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files from \"{filePathName}\".'**
+  String restoredUniquePlaylistFromZip(Object playlistsNumber, Object commentsNumber, Object picturesNumber, Object filePathName);
+
+  /// No description provided for @appDataCouldNotBeRestoredFromZip.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist, comment and picture JSON files as well as application settings could not be restored from zip.'**
+  String get appDataCouldNotBeRestoredFromZip;
+
+  /// No description provided for @deleteFilteredAudioFromPlaylistAsWell.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete filtered Audio\'s from Playlist as well ...'**
+  String get deleteFilteredAudioFromPlaylistAsWell;
+
+  /// Confirmation title for deleting filtered audio
+  ///
+  /// In en, this message translates to:
+  /// **'Delete audio\'s filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\" as well (will be re-downloadable)'**
+  String deleteFilteredAudioFromPlaylistAsWellConfirmationTitle(Object sortFilterParmsName, Object playlistTitle);
+
+  /// No description provided for @redownloadFilteredAudio.
+  ///
+  /// In en, this message translates to:
+  /// **'Redownload filtered Audio\'s'**
+  String get redownloadFilteredAudio;
+
+  /// No description provided for @redownloadFilteredAudioTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Filtered audio files are re-downloaded using their original file names.'**
+  String get redownloadFilteredAudioTooltip;
+
+  /// Confirmation title for redownloading filtered audio
+  ///
+  /// In en, this message translates to:
+  /// **'\"{redownloadedAudioNumber}\" audio\'s were redownloaded to the playlist \"{playlistTitle}\". \"{notRedownloadedAudioNumber}\" audio\'s were not redownloaded since they are already present in the playlist directory.'**
+  String redownloadedAudioNumbersConfirmation(Object playlistTitle, Object redownloadedAudioNumber, Object notRedownloadedAudioNumber);
+
+  /// No description provided for @redownloadDeletedAudio.
+  ///
+  /// In en, this message translates to:
+  /// **'Redownload deleted Audio'**
+  String get redownloadDeletedAudio;
+
+  /// Confirmation title for redownloading audio
+  ///
+  /// In en, this message translates to:
+  /// **'The audio \"{redownloadedAudioTitle}\" was redownloaded in the playlist \"{playlistTitle}\".'**
+  String redownloadedAudioConfirmation(Object playlistTitle, Object redownloadedAudioTitle);
+
+  /// No description provided for @playable.
+  ///
+  /// In en, this message translates to:
+  /// **'Playable'**
+  String get playable;
+
+  /// No description provided for @notPlayable.
+  ///
+  /// In en, this message translates to:
+  /// **'Not playable'**
+  String get notPlayable;
+
+  /// Warning title for not redownloading audio
+  ///
+  /// In en, this message translates to:
+  /// **'The audio \"{redownloadedAudioTitle}\" was NOT redownloaded in the playlist \"{playlistTitle}\" because it already exists in the playlist directory.'**
+  String audioNotRedownloadedWarning(Object playlistTitle, Object redownloadedAudioTitle);
+
+  /// No description provided for @isPlayableLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Playable'**
+  String get isPlayableLabel;
+
+  /// No description provided for @setPlaylistAudioQuality.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Audio Quality ...'**
+  String get setPlaylistAudioQuality;
+
+  /// No description provided for @setPlaylistAudioQualityTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'The selected audio quality will be applied to the next downloaded audio\'s. If the audio quality must be applied to the already downloaded audio\'s, those audio\'s must be deleted \"from playlist as well\" so that they will be redownloadable in the modified audio quality.'**
+  String get setPlaylistAudioQualityTooltip;
+
+  /// No description provided for @setPlaylistAudioQualityDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist Audio Quality'**
+  String get setPlaylistAudioQualityDialogTitle;
+
+  /// No description provided for @selectAudioQuality.
+  ///
+  /// In en, this message translates to:
+  /// **'Select audio quality'**
+  String get selectAudioQuality;
+
+  /// Not moved warning
+  ///
+  /// In en, this message translates to:
+  /// **'Audio \"{audioTitle}\"{yesOrNo}{operationType} from {fromPlaylistType} playlist \"{fromPlaylistTitle}\" to {toPlaylistType} playlist \"{toPlaylistTitle}\"{notCopiedOrMovedReason}'**
+  String audioCopiedOrMovedFromPlaylistToPlaylist(Object audioTitle, Object yesOrNo, Object operationType, Object fromPlaylistType, Object fromPlaylistTitle, Object toPlaylistTitle, Object toPlaylistType, Object notCopiedOrMovedReason);
+
+  /// No description provided for @sinceAbsentFromSourcePlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **' since it is not present in the source playlist.'**
+  String get sinceAbsentFromSourcePlaylist;
+
+  /// No description provided for @sinceAlreadyPresentInTargetPlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **' since it is already present in the destination playlist.'**
+  String get sinceAlreadyPresentInTargetPlaylist;
+
+  /// Warning title for not redownloading audio
+  ///
+  /// In en, this message translates to:
+  /// **'.\n\nIF THE DELETED AUDIO VIDEO \"{audioTitle}\" REMAINS IN THE \"{fromPlaylistTitle}\" YOUTUBE PLAYLIST, IT WILL BE DOWNLOADED AGAIN THE NEXT TIME YOU DOWNLOAD THE PLAYLIST !'**
+  String audioNotKeptInSourcePlaylist(Object audioTitle, Object fromPlaylistTitle);
+
+  /// No description provided for @noOperation.
+  ///
+  /// In en, this message translates to:
+  /// **' NOT '**
+  String get noOperation;
+
+  /// No description provided for @yesOperation.
+  ///
+  /// In en, this message translates to:
+  /// **' '**
+  String get yesOperation;
+
+  /// No description provided for @localPlaylistType.
+  ///
+  /// In en, this message translates to:
+  /// **'local'**
+  String get localPlaylistType;
+
+  /// No description provided for @youtubePlaylistType.
+  ///
+  /// In en, this message translates to:
+  /// **'Youtube'**
+  String get youtubePlaylistType;
+
+  /// No description provided for @movedOperationType.
+  ///
+  /// In en, this message translates to:
+  /// **'moved'**
+  String get movedOperationType;
+
+  /// No description provided for @copiedOperationType.
+  ///
+  /// In en, this message translates to:
+  /// **'copied'**
+  String get copiedOperationType;
+
+  /// No description provided for @noOperationMovedOperationType.
+  ///
+  /// In en, this message translates to:
+  /// **'moved'**
+  String get noOperationMovedOperationType;
+
+  /// No description provided for @noOperationCopiedOperationType.
+  ///
+  /// In en, this message translates to:
+  /// **'copied'**
+  String get noOperationCopiedOperationType;
+
+  /// No description provided for @savedPictureNumberMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'\n\nSaved also {pictureNumber} picture JPG file(s) in same directory / pictures.'**
+  String savedPictureNumberMessage(Object pictureNumber);
+
+  /// No description provided for @addedToZipPictureNumberMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'\n\nSaved also {pictureNumber} picture JPG file(s) in the ZIP file.'**
+  String addedToZipPictureNumberMessage(Object pictureNumber);
+
+  /// No description provided for @restoredPictureNumberMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'\n\nRestored also {pictureNumber} picture JPG file(s) in the application pictures directory.'**
+  String restoredPictureNumberMessage(Object pictureNumber);
+
+  /// No description provided for @replaceExistingPlaylists.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace existing playlists'**
+  String get replaceExistingPlaylists;
+
+  /// No description provided for @playlistRestorationDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlists Restoration'**
+  String get playlistRestorationDialogTitle;
+
+  /// No description provided for @playlistRestorationExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'Important: if you\'ve modified your existing playlists (added audio files, comments, or pictures) since creating the ZIP backup, keep this checkbox UNCHECKED. Otherwise, your recent changes will be replaced by the older versions contained in the backup.'**
+  String get playlistRestorationExplanation;
+
+  /// No description provided for @playlistRestorationHelpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist Restoration Function'**
+  String get playlistRestorationHelpTitle;
+
+  /// No description provided for @playlistRestorationFirstHelpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Problematic scenario: you restored playlists from a ZIP file, then ran the \"Update playlist JSON files\" function with the \"Remove deleted audio files\" checkbox enabled. Since restoration from a ZIP doesn\'t reinstall the audio files, enabling this option removed these files from the application. As a result, they are no longer available for re-downloading.'**
+  String get playlistRestorationFirstHelpTitle;
+
+  /// No description provided for @playlistRestorationFirstHelpContent.
+  ///
+  /// In en, this message translates to:
+  /// **'To resolve this issue, you need to delete the playlists affected by the loss of their audio files. Here are two methods for deleting these playlists:\n\n1 - Deletion through the application\nEach  playlist has a menu. Use its last element \"Delete Playlist ...\".\n\n2 - Manual deletion (recommended if multiple playlists must be deleted)\nNavigate to the application\'s storage directory in which the playlist directories are present. Select the folders to be removed and delete the selected group.'**
+  String get playlistRestorationFirstHelpContent;
+
+  /// No description provided for @playlistRestorationSecondHelpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'After deleting the affected playlists, restore them again from the ZIP file while ensuring the \"Remove deleted audio files\" checkbox remains UNCHECKED. This step is crucial as it will allow audio files to remain available for downloading after restoration.'**
+  String get playlistRestorationSecondHelpTitle;
+
+  /// No description provided for @playlistJsonFilesUpdateDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist JSON Files Update'**
+  String get playlistJsonFilesUpdateDialogTitle;
+
+  /// No description provided for @playlistJsonFilesUpdateExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'Important: if you\'ve restored from a ZIP backup AND manually added playlists afterward, please use caution when updating. When you run \"Update Playlist JSON Files\", any restored audio files that haven\'t been redownloaded will disappear from your playlists. To preserve these files and conserve the possibility of redownloading them, make sure the \"Remove deleted audio files\" checkbox remains UNCHECKED before updating.'**
+  String get playlistJsonFilesUpdateExplanation;
+
+  /// No description provided for @removeDeletedAudioFiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove deleted audio files'**
+  String get removeDeletedAudioFiles;
+
+  /// No description provided for @updatePlaylistJsonFilesHelpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Playlist JSON Files function'**
+  String get updatePlaylistJsonFilesHelpTitle;
+
+  /// No description provided for @updatePlaylistJsonFilesHelpContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Important note: This function is only necessary for changes made OUTSIDE the application. Changes made directly within the application (adding/removing playlists, adding/importing/deleting audio files) are automatically processed and do not require using this update function.'**
+  String get updatePlaylistJsonFilesHelpContent;
+
+  /// No description provided for @updatePlaylistJsonFilesFirstHelpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Using the Update Playlist JSON Files function'**
+  String get updatePlaylistJsonFilesFirstHelpTitle;
+
+  /// No description provided for @saveUniquePlaylistCommentsAndPicturesToZipMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Save the Playlist, its Comments and its Pictures to Zip File ...'**
+  String get saveUniquePlaylistCommentsAndPicturesToZipMenu;
+
+  /// No description provided for @saveUniquePlaylistCommentsAndPicturesToZipTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving the playlist, their audio comments and pictures to a zip file. Only the JSON and JPG files are copied. The MP3 files will not be included.'**
+  String get saveUniquePlaylistCommentsAndPicturesToZipTooltip;
+
+  /// No description provided for @savedUniquePlaylistToZip.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved playlist, comment and picture JSON files to \"{filePathName}\".'**
+  String savedUniquePlaylistToZip(Object filePathName);
+}
+
+class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+  const _AppLocalizationsDelegate();
+
+  @override
+  Future<AppLocalizations> load(Locale locale) {
+    return SynchronousFuture<AppLocalizations>(lookupAppLocalizations(locale));
+  }
+
+  @override
+  bool isSupported(Locale locale) => <String>['en', 'fr'].contains(locale.languageCode);
+
+  @override
+  bool shouldReload(_AppLocalizationsDelegate old) => false;
+}
+
+AppLocalizations lookupAppLocalizations(Locale locale) {
+
+
+  // Lookup logic when only language code is specified.
+  switch (locale.languageCode) {
+    case 'en': return AppLocalizationsEn();
+    case 'fr': return AppLocalizationsFr();
+  }
+
+  throw FlutterError(
+    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.'
+  );
+}
