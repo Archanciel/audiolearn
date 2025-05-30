@@ -4,7 +4,7 @@ import 'package:audiolearn/views/widgets/comment_list_add_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../l10n/app_localizations.dart';
 
 import '../constants.dart';
 import '../models/audio.dart';

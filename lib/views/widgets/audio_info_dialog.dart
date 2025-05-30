@@ -2,7 +2,7 @@ import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../l10n/app_localizations.dart';
 
 import '../../services/settings_data_service.dart';
 import '../../utils/duration_expansion.dart';
