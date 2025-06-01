@@ -1,4 +1,5 @@
-import '../../l10n/app_localizations.dart';
+
+import 'package:audiolearn/l10n/app_localizations.dart';
 
 /// This mock class is necessary in order to define two getters
 /// which return an empty string. This is necessary to avoid the
