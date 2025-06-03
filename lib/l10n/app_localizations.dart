@@ -1580,7 +1580,7 @@ abstract class AppLocalizations {
   /// No description provided for @applyToAlreadyDownloadedAudio.
   ///
   /// In en, this message translates to:
-  /// **'Apply to already\ndownloaded audio'**
+  /// **'Apply to already downloaded\nor imported audio'**
   String get applyToAlreadyDownloadedAudio;
 
   /// No description provided for @applyToAlreadyDownloadedAudioTooltip.
@@ -1592,7 +1592,7 @@ abstract class AppLocalizations {
   /// No description provided for @applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Apply the playback speed to audio\'s in the current playlist. If not set, apply it only to newly downloaded audio.'**
+  /// **'Apply the playback speed to audio\'s in the current playlist. If not set, apply it only to newly downloaded or imported audio.'**
   String get applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip;
 
   /// No description provided for @applyToExistingPlaylist.
@@ -1652,7 +1652,7 @@ abstract class AppLocalizations {
   /// No description provided for @alreadyDownloadedAudiosHelpTitle.
   ///
   /// In en, this message translates to:
-  /// **'Already Downloaded Audio'**
+  /// **'Already Downloaded or Imported Audio'**
   String get alreadyDownloadedAudiosHelpTitle;
 
   /// No description provided for @alreadyDownloadedAudiosHelpContent.
@@ -1676,7 +1676,7 @@ abstract class AppLocalizations {
   /// No description provided for @alreadyDownloadedAudiosPlaylistHelpTitle.
   ///
   /// In en, this message translates to:
-  /// **'Apply to already downloaded Audio'**
+  /// **'Apply to already downloaded or imported audio'**
   String get alreadyDownloadedAudiosPlaylistHelpTitle;
 
   /// No description provided for @alreadyDownloadedAudiosPlaylistHelpContent.

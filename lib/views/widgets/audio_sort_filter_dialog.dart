@@ -2518,10 +2518,10 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
 
 class FilterAndSortAudioParameters {
   final List<SortingOption> _sortingOptionLst;
-  get sortingOptionLst => _sortingOptionLst;
+  List<SortingOption> get sortingOptionLst => _sortingOptionLst;
 
   final String _videoTitleAndDescriptionSearchWords;
-  get videoTitleAndDescriptionSearchWords =>
+  String get videoTitleAndDescriptionSearchWords =>
       _videoTitleAndDescriptionSearchWords;
 
   bool ignoreCase;

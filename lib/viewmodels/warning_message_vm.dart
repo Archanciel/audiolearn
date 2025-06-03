@@ -1081,7 +1081,8 @@ class WarningMessageVM extends ChangeNotifier {
 
   String _playlistInexistingRootPath = '';
   String get playlistInexistingRootPath => _playlistInexistingRootPath;
-  setPlaylistInexistingRootPath({
+  
+  void setPlaylistInexistingRootPath({
     required String playlistInexistingRootPath,
   }) {
     _playlistInexistingRootPath = playlistInexistingRootPath;
