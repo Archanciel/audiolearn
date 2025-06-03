@@ -9462,121 +9462,470 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
-      testWidgets(
-          '''SF parms 'default' is applied. Then, click on the 'Move Filtered
-           Audio' playlist menu and verify the displayed warning indicating
-           that the move operation can not be done when 'default' is applyed.''',
-          (tester) async {
-        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-          tester: tester,
-          savedTestDataDirName: 'delete_filtered_audio_test',
-          tapOnPlaylistToggleButton: true,
-        );
+      group('Move default filtered commented audio from playlist test', () {
+        testWidgets(
+            '''SF parms 'default'. Move Youtube->local. Then, click on the
+           'Move Filtered Audio' playlist menu and verify the displayed warning
+           indicating that the move operation can not be done when 'default'
+           is applyed.''', (tester) async {
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'delete_filtered_audio_test',
+            tapOnPlaylistToggleButton: true,
+          );
 
-        const String sourcePlaylistTitle = 'S8 audio';
-        const String targetPlaylistTitle = 'temp';
+          const String sourcePlaylistTitle = 'S8 audio';
+          const String targetPlaylistTitle = 'temp';
 
-        // Tap the 'Toggle List' button to show the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
+          // Tap the 'Toggle List' button to show the list of playlist's.
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
 
-        // Verify that the applyed Sort/Filter parms name is displayed
-        // after the selected playlist title
+          // Verify that the applyed Sort/Filter parms name is displayed
+          // after the selected playlist title
 
-        Text selectedSortFilterParmsName = tester
-            .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+          Text selectedSortFilterParmsName = tester
+              .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
 
-        expect(
-          selectedSortFilterParmsName.data,
-          'default',
-        );
+          expect(
+            selectedSortFilterParmsName.data,
+            'default',
+          );
 
-        // Now test moving the filtered audio
+          // Now test moving the filtered audio
 
-        // Open the move filtered audio dialog by clicking first on
-        // the 'Filtered Audio Actions ...' playlist menu item and then
-        // on the 'Move Filtered Audio to Playlist ...' sub-menu item
-        await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
-          tester: tester,
-          playlistTitle: sourcePlaylistTitle,
-          playlistSubMenuKeyStr: 'popup_menu_move_filtered_audio',
-        );
+          // Open the move filtered audio dialog by clicking first on
+          // the 'Filtered Audio Actions ...' playlist menu item and then
+          // on the 'Move Filtered Audio to Playlist ...' sub-menu item
+          await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
+            tester: tester,
+            playlistTitle: sourcePlaylistTitle,
+            playlistSubMenuKeyStr: 'popup_menu_move_filtered_audio',
+          );
 
-        // Select the target 'temp' playlist
+          // Select the target 'temp' playlist
 
-        // Check the value of the select one playlist AlertDialog
-        // dialog title
-        Text alertDialogTitle = tester.widget(
-            find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
-        expect(alertDialogTitle.data, 'Select a Playlist');
+          // Check the value of the select one playlist AlertDialog
+          // dialog title
+          Text alertDialogTitle = tester.widget(
+              find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
+          expect(alertDialogTitle.data, 'Select a Playlist');
 
-        // Find the RadioListTile target playlist to which the audio
-        // will be moved
+          // Find the RadioListTile target playlist to which the audio
+          // will be moved
 
-        Finder radioListTile = find.byWidgetPredicate(
-          (Widget widget) {
-            return widget is RadioListTile &&
-                widget.title is Text &&
-                (widget.title as Text).data == targetPlaylistTitle;
-          },
-        );
+          Finder radioListTile = find.byWidgetPredicate(
+            (Widget widget) {
+              return widget is RadioListTile &&
+                  widget.title is Text &&
+                  (widget.title as Text).data == targetPlaylistTitle;
+            },
+          );
 
-        // Tap the target playlist RadioListTile to select it
-        await tester.tap(radioListTile);
-        await tester.pumpAndSettle();
+          // Tap the target playlist RadioListTile to select it
+          await tester.tap(radioListTile);
+          await tester.pumpAndSettle();
 
-        // Now find the confirm button and tap on it
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
+          // Now find the confirm button and tap on it
+          await tester.tap(find.byKey(const Key('confirmButton')));
+          await tester.pumpAndSettle();
 
-        // Now verifying the warning dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-          tester: tester,
-          warningDialogMessage:
-              'Since "default" Sort/Filter parms is selected, no audio can be moved from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
-          isWarningConfirming: false,
-        );
+          // Now verifying the warning dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                'Since "default" Sort/Filter parms is selected, no audio can be moved from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
+            isWarningConfirming: false,
+          );
 
-        // Verifying the 'temp' target playlist
+          // Verifying the 'temp' target playlist
 
-        // Select the 'temp' playlist
+          // Select the 'temp' playlist
 
-        await IntegrationTestUtil.selectPlaylist(
-          tester: tester,
-          playlistToSelectTitle: targetPlaylistTitle,
-        );
+          await IntegrationTestUtil.selectPlaylist(
+            tester: tester,
+            playlistToSelectTitle: targetPlaylistTitle,
+          );
 
-        // Tap the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
+          // Tap the 'Toggle List' button to hide the list of playlist's.
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
 
-        // Verify the audioTitles with no moved audio displayed by applying
-        // the 'default' SF parms
+          // Verify the audioTitles with no moved audio displayed by applying
+          // the 'default' SF parms
 
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: ["morning _ cinematic video"],
-        );
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: ["morning _ cinematic video"],
+          );
 
-        // Setting to this variables the currently selected audio title/subTitle
-        // of the 'S8 audio' playlist
-        String currentAudioTitle = "morning _ cinematic video";
-        String currentAudioSubTitle =
-            "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.";
+          // Setting to this variables the currently selected audio title/subTitle
+          // of the 'S8 audio' playlist
+          String currentAudioTitle = "morning _ cinematic video";
+          String currentAudioSubTitle =
+              "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.";
 
-        // Verify that the current audio is displayed with the correct
-        // title and subtitle color
-        await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
-          tester: tester,
-          currentAudioTitle: currentAudioTitle,
-          currentAudioSubTitle: currentAudioSubTitle,
-        );
+          // Verify that the current audio is displayed with the correct
+          // title and subtitle color
+          await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+            tester: tester,
+            currentAudioTitle: currentAudioTitle,
+            currentAudioSubTitle: currentAudioSubTitle,
+          );
 
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kApplicationPathWindowsTest,
-        );
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''SF parms 'default'. Move Youtube->Youtube. Then, click on the
+           'Move Filtered Audio' playlist menu and verify the displayed warning
+           indicating that the move operation can not be done when 'default'
+           is applyed.''', (tester) async {
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'delete_filtered_audio_test',
+            tapOnPlaylistToggleButton: true,
+          );
+
+          const String sourcePlaylistTitle = 'S8 audio';
+          const String targetPlaylistTitle = 'Maria Valtorta';
+
+          // Tap the 'Toggle List' button to show the list of playlist's.
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Verify that the applyed Sort/Filter parms name is displayed
+          // after the selected playlist title
+
+          Text selectedSortFilterParmsName = tester
+              .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+          expect(
+            selectedSortFilterParmsName.data,
+            'default',
+          );
+
+          // Now test moving the filtered audio
+
+          // Open the move filtered audio dialog by clicking first on
+          // the 'Filtered Audio Actions ...' playlist menu item and then
+          // on the 'Move Filtered Audio to Playlist ...' sub-menu item
+          await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
+            tester: tester,
+            playlistTitle: sourcePlaylistTitle,
+            playlistSubMenuKeyStr: 'popup_menu_move_filtered_audio',
+          );
+
+          // Select the target 'temp' playlist
+
+          // Check the value of the select one playlist AlertDialog
+          // dialog title
+          Text alertDialogTitle = tester.widget(
+              find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
+          expect(alertDialogTitle.data, 'Select a Playlist');
+
+          // Find the RadioListTile target playlist to which the audio
+          // will be moved
+
+          Finder radioListTile = find.byWidgetPredicate(
+            (Widget widget) {
+              return widget is RadioListTile &&
+                  widget.title is Text &&
+                  (widget.title as Text).data == targetPlaylistTitle;
+            },
+          );
+
+          // Tap the target playlist RadioListTile to select it
+          await tester.tap(radioListTile);
+          await tester.pumpAndSettle();
+
+          // Now find the confirm button and tap on it
+          await tester.tap(find.byKey(const Key('confirmButton')));
+          await tester.pumpAndSettle();
+
+          // Now verifying the warning dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                'Since "default" Sort/Filter parms is selected, no audio can be moved from Youtube playlist "$sourcePlaylistTitle" to Youtube playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
+            isWarningConfirming: false,
+          );
+
+          // Verifying the 'temp' target playlist
+
+          // Select the 'temp' playlist
+
+          await IntegrationTestUtil.selectPlaylist(
+            tester: tester,
+            playlistToSelectTitle: targetPlaylistTitle,
+          );
+
+          // Tap the 'Toggle List' button to hide the list of playlist's.
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Verify the audioTitles with no moved audio displayed by applying
+          // the 'default' SF parms
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: ["morning _ cinematic video"],
+          );
+
+          // Setting to this variables the currently selected audio title/subTitle
+          // of the 'S8 audio' playlist
+          String currentAudioTitle = "morning _ cinematic video";
+          String currentAudioSubTitle =
+              "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.";
+
+          // Verify that the current audio is displayed with the correct
+          // title and subtitle color
+          await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+            tester: tester,
+            currentAudioTitle: currentAudioTitle,
+            currentAudioSubTitle: currentAudioSubTitle,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''SF parms 'default'. Move local->Youtube. Then, click on the
+           'Move Filtered Audio' playlist menu and verify the displayed warning
+           indicating that the move operation can not be done when 'default'
+           is applyed.''', (tester) async {
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'delete_filtered_audio_test',
+            tapOnPlaylistToggleButton: true,
+          );
+
+          const String sourcePlaylistTitle = 'temp';
+          const String targetPlaylistTitle = 'S8 audio';
+
+          // Tap the 'Toggle List' button to show the list of playlist's.
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Verify that the applyed Sort/Filter parms name is displayed
+          // after the selected playlist title
+
+          Text selectedSortFilterParmsName = tester
+              .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+          expect(
+            selectedSortFilterParmsName.data,
+            'default',
+          );
+
+          // Now test moving the filtered audio
+
+          // Open the move filtered audio dialog by clicking first on
+          // the 'Filtered Audio Actions ...' playlist menu item and then
+          // on the 'Move Filtered Audio to Playlist ...' sub-menu item
+          await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
+            tester: tester,
+            playlistTitle: sourcePlaylistTitle,
+            playlistSubMenuKeyStr: 'popup_menu_move_filtered_audio',
+          );
+
+          // Select the target 'temp' playlist
+
+          // Check the value of the select one playlist AlertDialog
+          // dialog title
+          Text alertDialogTitle = tester.widget(
+              find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
+          expect(alertDialogTitle.data, 'Select a Playlist');
+
+          // Find the RadioListTile target playlist to which the audio
+          // will be moved
+
+          Finder radioListTile = find.byWidgetPredicate(
+            (Widget widget) {
+              return widget is RadioListTile &&
+                  widget.title is Text &&
+                  (widget.title as Text).data == targetPlaylistTitle;
+            },
+          );
+
+          // Tap the target playlist RadioListTile to select it
+          await tester.tap(radioListTile);
+          await tester.pumpAndSettle();
+
+          // Now find the confirm button and tap on it
+          await tester.tap(find.byKey(const Key('confirmButton')));
+          await tester.pumpAndSettle();
+
+          // Now verifying the warning dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                'Since "default" Sort/Filter parms is selected, no audio can be moved from local playlist "$sourcePlaylistTitle" to Youtube playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
+            isWarningConfirming: false,
+          );
+
+          // Verifying the 'temp' target playlist
+
+          // Select the 'temp' playlist
+
+          await IntegrationTestUtil.selectPlaylist(
+            tester: tester,
+            playlistToSelectTitle: targetPlaylistTitle,
+          );
+
+          // Tap the 'Toggle List' button to hide the list of playlist's.
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Verify the audioTitles with no moved audio displayed by applying
+          // the 'default' SF parms
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: ["morning _ cinematic video"],
+          );
+
+          // Setting to this variables the currently selected audio title/subTitle
+          // of the 'S8 audio' playlist
+          String currentAudioTitle = "morning _ cinematic video";
+          String currentAudioSubTitle =
+              "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.";
+
+          // Verify that the current audio is displayed with the correct
+          // title and subtitle color
+          await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+            tester: tester,
+            currentAudioTitle: currentAudioTitle,
+            currentAudioSubTitle: currentAudioSubTitle,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets('''SF parms 'default'. Move local->local. Then, click on the
+           'Move Filtered Audio' playlist menu and verify the displayed warning
+           indicating that the move operation can not be done when 'default'
+           is applyed.''', (tester) async {
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'delete_filtered_audio_test',
+            tapOnPlaylistToggleButton: true,
+          );
+
+          const String sourcePlaylistTitle = 'temp';
+          const String targetPlaylistTitle = 'local';
+
+          // Tap the 'Toggle List' button to show the list of playlist's.
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Verify that the applyed Sort/Filter parms name is displayed
+          // after the selected playlist title
+
+          Text selectedSortFilterParmsName = tester
+              .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+          expect(
+            selectedSortFilterParmsName.data,
+            'default',
+          );
+
+          // Now test moving the filtered audio
+
+          // Open the move filtered audio dialog by clicking first on
+          // the 'Filtered Audio Actions ...' playlist menu item and then
+          // on the 'Move Filtered Audio to Playlist ...' sub-menu item
+          await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
+            tester: tester,
+            playlistTitle: sourcePlaylistTitle,
+            playlistSubMenuKeyStr: 'popup_menu_move_filtered_audio',
+          );
+
+          // Select the target 'temp' playlist
+
+          // Check the value of the select one playlist AlertDialog
+          // dialog title
+          Text alertDialogTitle = tester.widget(
+              find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
+          expect(alertDialogTitle.data, 'Select a Playlist');
+
+          // Find the RadioListTile target playlist to which the audio
+          // will be moved
+
+          Finder radioListTile = find.byWidgetPredicate(
+            (Widget widget) {
+              return widget is RadioListTile &&
+                  widget.title is Text &&
+                  (widget.title as Text).data == targetPlaylistTitle;
+            },
+          );
+
+          // Tap the target playlist RadioListTile to select it
+          await tester.tap(radioListTile);
+          await tester.pumpAndSettle();
+
+          // Now find the confirm button and tap on it
+          await tester.tap(find.byKey(const Key('confirmButton')));
+          await tester.pumpAndSettle();
+
+          // Now verifying the warning dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                'Since "default" Sort/Filter parms is selected, no audio can be moved from local playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
+            isWarningConfirming: false,
+          );
+
+          // Verifying the 'temp' target playlist
+
+          // Select the 'temp' playlist
+
+          await IntegrationTestUtil.selectPlaylist(
+            tester: tester,
+            playlistToSelectTitle: targetPlaylistTitle,
+          );
+
+          // Tap the 'Toggle List' button to hide the list of playlist's.
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Verify the audioTitles with no moved audio displayed by applying
+          // the 'default' SF parms
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: ["morning _ cinematic video"],
+          );
+
+          // Setting to this variables the currently selected audio title/subTitle
+          // of the 'S8 audio' playlist
+          String currentAudioTitle = "morning _ cinematic video";
+          String currentAudioSubTitle =
+              "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.";
+
+          // Verify that the current audio is displayed with the correct
+          // title and subtitle color
+          await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+            tester: tester,
+            currentAudioTitle: currentAudioTitle,
+            currentAudioSubTitle: currentAudioSubTitle,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
       });
     });
   });
@@ -11256,121 +11605,475 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
-      testWidgets(
-          '''SF parms 'default' is applied. Then, click on the 'Copy Filtered
+      group('''Copy 'default' filtered commented audio from playlist test''',
+          () {
+        testWidgets(
+            '''SF parms 'default'. Copy Youtube->local. Then, click on the 'Copy Filtered
            Audio' playlist menu and verify the displayed warning indicating
            that the copy operation can not be done when 'default' is applyed.''',
-          (tester) async {
-        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-          tester: tester,
-          savedTestDataDirName: 'delete_filtered_audio_test',
-          tapOnPlaylistToggleButton: true,
-        );
+            (tester) async {
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'delete_filtered_audio_test',
+            tapOnPlaylistToggleButton: true,
+          );
 
-        const String sourcePlaylistTitle = 'S8 audio';
-        const String targetPlaylistTitle = 'temp';
+          const String sourcePlaylistTitle = 'S8 audio';
+          const String targetPlaylistTitle = 'temp';
 
-        // Tap the 'Toggle List' button to show the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
+          // Tap the 'Toggle List' button to show the list of playlist's.
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
 
-        // Verify that the applyed Sort/Filter parms name is displayed
-        // after the selected playlist title
+          // Verify that the applyed Sort/Filter parms name is displayed
+          // after the selected playlist title
 
-        Text selectedSortFilterParmsName = tester
-            .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+          Text selectedSortFilterParmsName = tester
+              .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
 
-        expect(
-          selectedSortFilterParmsName.data,
-          'default',
-        );
+          expect(
+            selectedSortFilterParmsName.data,
+            'default',
+          );
 
-        // Now test copying the filtered audio
+          // Now test copying the filtered audio
 
-        // Open the copy filtered audio dialog by clicking first on
-        // the 'Filtered Audio Actions ...' playlist menu item and then
-        // on the 'Copy Filtered Audio to Playlist ...' sub-menu item
-        await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
-          tester: tester,
-          playlistTitle: sourcePlaylistTitle,
-          playlistSubMenuKeyStr: 'popup_menu_copy_filtered_audio',
-        );
+          // Open the copy filtered audio dialog by clicking first on
+          // the 'Filtered Audio Actions ...' playlist menu item and then
+          // on the 'Copy Filtered Audio to Playlist ...' sub-menu item
+          await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
+            tester: tester,
+            playlistTitle: sourcePlaylistTitle,
+            playlistSubMenuKeyStr: 'popup_menu_copy_filtered_audio',
+          );
 
-        // Select the target 'temp' playlist
+          // Select the target 'temp' playlist
 
-        // Check the value of the select one playlist AlertDialog
-        // dialog title
-        Text alertDialogTitle = tester.widget(
-            find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
-        expect(alertDialogTitle.data, 'Select a Playlist');
+          // Check the value of the select one playlist AlertDialog
+          // dialog title
+          Text alertDialogTitle = tester.widget(
+              find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
+          expect(alertDialogTitle.data, 'Select a Playlist');
 
-        // Find the RadioListTile target playlist to which the audio
-        // will be copied
+          // Find the RadioListTile target playlist to which the audio
+          // will be copied
 
-        Finder radioListTile = find.byWidgetPredicate(
-          (Widget widget) {
-            return widget is RadioListTile &&
-                widget.title is Text &&
-                (widget.title as Text).data == targetPlaylistTitle;
-          },
-        );
+          Finder radioListTile = find.byWidgetPredicate(
+            (Widget widget) {
+              return widget is RadioListTile &&
+                  widget.title is Text &&
+                  (widget.title as Text).data == targetPlaylistTitle;
+            },
+          );
 
-        // Tap the target playlist RadioListTile to select it
-        await tester.tap(radioListTile);
-        await tester.pumpAndSettle();
+          // Tap the target playlist RadioListTile to select it
+          await tester.tap(radioListTile);
+          await tester.pumpAndSettle();
 
-        // Now find the confirm button and tap on it
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
+          // Now find the confirm button and tap on it
+          await tester.tap(find.byKey(const Key('confirmButton')));
+          await tester.pumpAndSettle();
 
-        // Now verifying the warning dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-          tester: tester,
-          warningDialogMessage:
-              'Since "default" Sort/Filter parms is selected, no audio can be copied from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
-          isWarningConfirming: false,
-        );
+          // Now verifying the warning dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                'Since "default" Sort/Filter parms is selected, no audio can be copied from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
+            isWarningConfirming: false,
+          );
 
-        // Verifying the 'temp' target playlist
+          // Verifying the 'temp' target playlist
 
-        // Select the 'temp' playlist
+          // Select the 'temp' playlist
 
-        await IntegrationTestUtil.selectPlaylist(
-          tester: tester,
-          playlistToSelectTitle: targetPlaylistTitle,
-        );
+          await IntegrationTestUtil.selectPlaylist(
+            tester: tester,
+            playlistToSelectTitle: targetPlaylistTitle,
+          );
 
-        // Tap the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester.pumpAndSettle();
+          // Tap the 'Toggle List' button to hide the list of playlist's.
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
 
-        // Verify the audioTitles with no movcopieded audio displayed by applying
-        // the 'default' SF parms
+          // Verify the audioTitles with no movcopieded audio displayed by applying
+          // the 'default' SF parms
 
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: ["morning _ cinematic video"],
-        );
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: ["morning _ cinematic video"],
+          );
 
-        // Setting to this variables the currently selected audio title/subTitle
-        // of the 'S8 audio' playlist
-        String currentAudioTitle = "morning _ cinematic video";
-        String currentAudioSubTitle =
-            "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.";
+          // Setting to this variables the currently selected audio title/subTitle
+          // of the 'S8 audio' playlist
+          String currentAudioTitle = "morning _ cinematic video";
+          String currentAudioSubTitle =
+              "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.";
 
-        // Verify that the current audio is displayed with the correct
-        // title and subtitle color
-        await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
-          tester: tester,
-          currentAudioTitle: currentAudioTitle,
-          currentAudioSubTitle: currentAudioSubTitle,
-        );
+          // Verify that the current audio is displayed with the correct
+          // title and subtitle color
+          await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+            tester: tester,
+            currentAudioTitle: currentAudioTitle,
+            currentAudioSubTitle: currentAudioSubTitle,
+          );
 
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kApplicationPathWindowsTest,
-        );
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''SF parms 'default'. Copy Youtube->Youtube. Then, click on the 'Copy Filtered
+           Audio' playlist menu and verify the displayed warning indicating
+           that the copy operation can not be done when 'default' is applyed.''',
+            (tester) async {
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'delete_filtered_audio_test',
+            tapOnPlaylistToggleButton: true,
+          );
+
+          const String sourcePlaylistTitle = 'S8 audio';
+          const String targetPlaylistTitle = 'Maria Valtorta';
+
+          // Tap the 'Toggle List' button to show the list of playlist's.
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Verify that the applyed Sort/Filter parms name is displayed
+          // after the selected playlist title
+
+          Text selectedSortFilterParmsName = tester
+              .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+          expect(
+            selectedSortFilterParmsName.data,
+            'default',
+          );
+
+          // Now test copying the filtered audio
+
+          // Open the copy filtered audio dialog by clicking first on
+          // the 'Filtered Audio Actions ...' playlist menu item and then
+          // on the 'Copy Filtered Audio to Playlist ...' sub-menu item
+          await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
+            tester: tester,
+            playlistTitle: sourcePlaylistTitle,
+            playlistSubMenuKeyStr: 'popup_menu_copy_filtered_audio',
+          );
+
+          // Select the target 'Maria Valtorta' playlist
+
+          // Check the value of the select one playlist AlertDialog
+          // dialog title
+          Text alertDialogTitle = tester.widget(
+              find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
+          expect(alertDialogTitle.data, 'Select a Playlist');
+
+          // Find the RadioListTile target playlist to which the audio
+          // will be copied
+
+          Finder radioListTile = find.byWidgetPredicate(
+            (Widget widget) {
+              return widget is RadioListTile &&
+                  widget.title is Text &&
+                  (widget.title as Text).data == targetPlaylistTitle;
+            },
+          );
+
+          // Tap the target playlist RadioListTile to select it
+          await tester.tap(radioListTile);
+          await tester.pumpAndSettle();
+
+          // Now find the confirm button and tap on it
+          await tester.tap(find.byKey(const Key('confirmButton')));
+          await tester.pumpAndSettle();
+
+          // Now verifying the warning dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                'Since "default" Sort/Filter parms is selected, no audio can be copied from Youtube playlist "$sourcePlaylistTitle" to Youtube playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
+            isWarningConfirming: false,
+          );
+
+          // Verifying the 'Maria Valtorta' target playlist
+
+          // Select the 'Maria Valtorta' playlist
+
+          await IntegrationTestUtil.selectPlaylist(
+            tester: tester,
+            playlistToSelectTitle: targetPlaylistTitle,
+          );
+
+          // Tap the 'Toggle List' button to hide the list of playlist's.
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Verify the audioTitles with no movcopieded audio displayed by applying
+          // the 'default' SF parms
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: [
+              "What place Maria Valtorta takes in your spiritual journey"
+            ],
+          );
+
+          // Setting to this variables the currently selected audio title/subTitle
+          // of the 'Maria Valtorta' playlist
+          String currentAudioTitle =
+              "What place Maria Valtorta takes in your spiritual journey";
+          String currentAudioSubTitle =
+              "0:06:01.3. 2.20 MB at 595 KB/sec on 03/06/2025 at 16:48.";
+
+          // Verify that the current audio is displayed with the correct
+          // title and subtitle color
+          await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+            tester: tester,
+            currentAudioTitle: currentAudioTitle,
+            currentAudioSubTitle: currentAudioSubTitle,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''SF parms 'default'. Copy local->Youtube. Then, click on the 'Copy Filtered
+           Audio' playlist menu and verify the displayed warning indicating
+           that the copy operation can not be done when 'default' is applyed.''',
+            (tester) async {
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'delete_filtered_audio_test',
+            tapOnPlaylistToggleButton: true,
+          );
+
+          const String sourcePlaylistTitle = 'temp';
+          const String targetPlaylistTitle = 'S8 audio';
+
+          // Tap the 'Toggle List' button to show the list of playlist's.
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Verify that the applyed Sort/Filter parms name is displayed
+          // after the selected playlist title
+
+          Text selectedSortFilterParmsName = tester
+              .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+          expect(
+            selectedSortFilterParmsName.data,
+            'default',
+          );
+
+          // Now test copying the filtered audio
+
+          // Open the copy filtered audio dialog by clicking first on
+          // the 'Filtered Audio Actions ...' playlist menu item and then
+          // on the 'Copy Filtered Audio to Playlist ...' sub-menu item
+          await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
+            tester: tester,
+            playlistTitle: sourcePlaylistTitle,
+            playlistSubMenuKeyStr: 'popup_menu_copy_filtered_audio',
+          );
+
+          // Select the target 'Youtube' playlist
+
+          // Check the value of the select one playlist AlertDialog
+          // dialog title
+          Text alertDialogTitle = tester.widget(
+              find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
+          expect(alertDialogTitle.data, 'Select a Playlist');
+
+          // Find the RadioListTile target playlist to which the audio
+          // will be copied
+
+          Finder radioListTile = find.byWidgetPredicate(
+            (Widget widget) {
+              return widget is RadioListTile &&
+                  widget.title is Text &&
+                  (widget.title as Text).data == targetPlaylistTitle;
+            },
+          );
+
+          // Tap the target playlist RadioListTile to select it
+          await tester.tap(radioListTile);
+          await tester.pumpAndSettle();
+
+          // Now find the confirm button and tap on it
+          await tester.tap(find.byKey(const Key('confirmButton')));
+          await tester.pumpAndSettle();
+
+          // Now verifying the warning dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                'Since "default" Sort/Filter parms is selected, no audio can be copied from local playlist "$sourcePlaylistTitle" to Youtube playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
+            isWarningConfirming: false,
+          );
+
+          // Verifying the 'S8 audio' target playlist
+
+          // Select the 'S8 audio' playlist
+
+          // Tap the 'Toggle List' button to hide the list of playlist's.
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Verify the audioTitles with no movcopieded audio displayed by applying
+          // the 'default' SF parms
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: [
+              "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+            ],
+            firstAudioListTileIndex: 3,
+          );
+
+          // Setting to this variables the currently selected audio title/subTitle
+          // of the 'S8 audio' playlist
+          String currentAudioTitle =
+              'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik';
+          String currentAudioSubTitle =
+              '0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.';
+
+          // Verify that the current audio is displayed with the correct
+          // title and subtitle color
+          await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+            tester: tester,
+            currentAudioTitle: currentAudioTitle,
+            currentAudioSubTitle: currentAudioSubTitle,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''SF parms 'default'. Copy local->local. Then, click on the 'Copy Filtered
+           Audio' playlist menu and verify the displayed warning indicating
+           that the copy operation can not be done when 'default' is applyed.''',
+            (tester) async {
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'delete_filtered_audio_test',
+            tapOnPlaylistToggleButton: true,
+          );
+
+          const String sourcePlaylistTitle = 'temp';
+          const String targetPlaylistTitle = 'local';
+
+          // Tap the 'Toggle List' button to show the list of playlist's.
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Verify that the applyed Sort/Filter parms name is displayed
+          // after the selected playlist title
+
+          Text selectedSortFilterParmsName = tester
+              .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+          expect(
+            selectedSortFilterParmsName.data,
+            'default',
+          );
+
+          // Now test copying the filtered audio
+
+          // Open the copy filtered audio dialog by clicking first on
+          // the 'Filtered Audio Actions ...' playlist menu item and then
+          // on the 'Copy Filtered Audio to Playlist ...' sub-menu item
+          await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
+            tester: tester,
+            playlistTitle: sourcePlaylistTitle,
+            playlistSubMenuKeyStr: 'popup_menu_copy_filtered_audio',
+          );
+
+          // Select the target 'local' playlist
+
+          // Check the value of the select one playlist AlertDialog
+          // dialog title
+          Text alertDialogTitle = tester.widget(
+              find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
+          expect(alertDialogTitle.data, 'Select a Playlist');
+
+          // Find the RadioListTile target playlist to which the audio
+          // will be copied
+
+          Finder radioListTile = find.byWidgetPredicate(
+            (Widget widget) {
+              return widget is RadioListTile &&
+                  widget.title is Text &&
+                  (widget.title as Text).data == targetPlaylistTitle;
+            },
+          );
+
+          // Tap the target playlist RadioListTile to select it
+          await tester.tap(radioListTile);
+          await tester.pumpAndSettle();
+
+          // Now find the confirm button and tap on it
+          await tester.tap(find.byKey(const Key('confirmButton')));
+          await tester.pumpAndSettle();
+
+          // Now verifying the warning dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                'Since "default" Sort/Filter parms is selected, no audio can be copied from local playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
+            isWarningConfirming: false,
+          );
+
+          // Verifying the 'local' target playlist
+
+          // Select the 'local' playlist
+
+          await IntegrationTestUtil.selectPlaylist(
+            tester: tester,
+            playlistToSelectTitle: targetPlaylistTitle,
+          );
+
+          // Tap the 'Toggle List' button to hide the list of playlist's.
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Verify the audioTitles with no movcopieded audio displayed by applying
+          // the 'default' SF parms
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: ["morning _ cinematic video"],
+          );
+
+          // Setting to this variables the currently selected audio title/subTitle
+          // of the 'local' playlist
+          String currentAudioTitle =
+              "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
+          String currentAudioSubTitle =
+              "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.";
+
+          // Verify that the current audio is displayed with the correct
+          // title and subtitle color
+          await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+            tester: tester,
+            currentAudioTitle: currentAudioTitle,
+            currentAudioSubTitle: currentAudioSubTitle,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
       });
     });
   });
@@ -19872,8 +20575,7 @@ void main() {
           testWidgets(
               '''Multiple playlists restore, not replace existing playlist. Restore multiple playlists
               Android zip containing "A restaurer", "local" and "Restore- short - test - playlist" playlists
-              to empty Windows application.''',
-              (tester) async {
+              to empty Windows application.''', (tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -20051,11 +20753,11 @@ void main() {
               ],
               pictureFileNameFive: 'Jésus mon Amour.jpg',
               audioForPictureTitleFiveLst: [
-        "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+                "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
               ],
               pictureFileNameSix: "Jésus je T'adore.jpg",
               audioForPictureTitleSixLst: [
-        "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
+                "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
               ],
             );
 
@@ -20068,8 +20770,7 @@ void main() {
           testWidgets(
               '''Multiple playlists restore, replace existing playlist. Restore multiple playlists
               Android zip containing "A restaurer", "local" and "Restore- short - test - playlist" playlists
-              to empty Windows application.''',
-              (tester) async {
+              to empty Windows application.''', (tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -20247,11 +20948,11 @@ void main() {
               ],
               pictureFileNameFive: 'Jésus mon Amour.jpg',
               audioForPictureTitleFiveLst: [
-        "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
+                "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
               ],
               pictureFileNameSix: "Jésus je T'adore.jpg",
               audioForPictureTitleSixLst: [
-        "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
+                "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
               ],
             );
 
