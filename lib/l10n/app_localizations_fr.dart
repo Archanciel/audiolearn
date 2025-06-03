@@ -824,13 +824,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setAudioPlaySpeed => 'Définir la vitesse de lecture ...';
 
   @override
-  String get applyToAlreadyDownloadedAudio => 'Appliquer aux audio déjà\ntéléchargés';
+  String get applyToAlreadyDownloadedAudio => 'Appliquer aux audio déjà\ntéléchargés ou importés';
 
   @override
   String get applyToAlreadyDownloadedAudioTooltip => 'Appliquer la vitesse de lecture aux audio dans toutes les playlists existantes. Si non défini, l\'appliquer uniquement aux nouvelles playlists ajoutées.';
 
   @override
-  String get applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip => 'Appliquer la vitesse de lecture aux audio de la playlist actuelle. Si non défini, l\'appliquer uniquement aux audio nouvellement téléchargés.';
+  String get applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip => 'Appliquer la vitesse de lecture aux audio\'s de la playlist actuelle. Si non défini, l\'appliquer uniquement aux audio nouvellement téléchargés ou importés.';
 
   @override
   String get applyToExistingPlaylist => 'Appliquer aux playlists\nexistantes';
@@ -860,7 +860,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get modifyingExistingPlaylistsHelpContent => 'En sélectionnant la première case à cocher, toutes les playlists existantes seront configurées pour utiliser la nouvelle vitesse de lecture. Cependant, cette modification affectera uniquement les fichiers audio qui seront téléchargés après l\'activation de cette option.';
 
   @override
-  String get alreadyDownloadedAudiosHelpTitle => 'Audio déjà téléchargés';
+  String get alreadyDownloadedAudiosHelpTitle => 'Audio déjà téléchargés ou importés';
 
   @override
   String get alreadyDownloadedAudiosHelpContent => 'La sélection de la deuxième case à cocher permet de modifier la vitesse de lecture pour les fichiers audio déjà présents sur l\'appareil.';
@@ -872,7 +872,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get excludingFutureDownloadsHelpContent => 'Si seule la deuxième case est cochée, la vitesse de lecture des audio\'s qui seront téléchargés ultérieurement ne sera pas modifiée dans les playlists existantes. Toutefois, comme mentionné précédemment, les nouvelles playlists utiliseront la vitesse de lecture nouvellement définie pour tous les audio\'s téléchargés.';
 
   @override
-  String get alreadyDownloadedAudiosPlaylistHelpTitle => 'Appliquer aux audio déjà téléchargés';
+  String get alreadyDownloadedAudiosPlaylistHelpTitle => 'Appliquer aux audio déjà téléchargés ou importés';
 
   @override
   String get alreadyDownloadedAudiosPlaylistHelpContent => 'La sélection de cette case à cocher permet de modifier la vitesse de lecture pour les fichiers audio de la playlist déjà présents sur l\'appareil.';

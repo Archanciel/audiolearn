@@ -824,13 +824,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setAudioPlaySpeed => 'Set Audio\'s Play Speed ...';
 
   @override
-  String get applyToAlreadyDownloadedAudio => 'Apply to already\ndownloaded audio';
+  String get applyToAlreadyDownloadedAudio => 'Apply to already downloaded\nor imported audio';
 
   @override
   String get applyToAlreadyDownloadedAudioTooltip => 'Apply the playback speed to audio\'s in all existing playlists. If not set, apply it only to newly added playlists.';
 
   @override
-  String get applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip => 'Apply the playback speed to audio\'s in the current playlist. If not set, apply it only to newly downloaded audio.';
+  String get applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip => 'Apply the playback speed to audio\'s in the current playlist. If not set, apply it only to newly downloaded or imported audio.';
 
   @override
   String get applyToExistingPlaylist => 'Apply to existing\nplaylists';
@@ -860,7 +860,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get modifyingExistingPlaylistsHelpContent => 'By selecting the first checkbox, all existing playlists will be set to use the new playback speed. However, this change will only affect audio files that are downloaded after this option is enabled.';
 
   @override
-  String get alreadyDownloadedAudiosHelpTitle => 'Already Downloaded Audio';
+  String get alreadyDownloadedAudiosHelpTitle => 'Already Downloaded or Imported Audio';
 
   @override
   String get alreadyDownloadedAudiosHelpContent => 'Selecting the second checkbox allows you to change the playback speed for audio files already present on the device.';
@@ -872,7 +872,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get excludingFutureDownloadsHelpContent => 'If only the second checkbox is checked, the playback speed will not be modified for audio\'s that will be downloaded later in existing playlists. However, as mentioned previously, new playlists will use the newly defined playback speed for all downloaded audio.';
 
   @override
-  String get alreadyDownloadedAudiosPlaylistHelpTitle => 'Apply to already downloaded Audio';
+  String get alreadyDownloadedAudiosPlaylistHelpTitle => 'Apply to already downloaded or imported audio';
 
   @override
   String get alreadyDownloadedAudiosPlaylistHelpContent => 'Selecting this checkbox allows you to change the playback speed for the playlist audio files already present on the device.';

@@ -1667,7 +1667,6 @@ void _checkPlaylistDownloadedAudios({
   );
 }
 
-// TODO: function notused ! Verify the values of the Audio's extracted from a playlist
 void _compareNewRecreatedPlaylistToPreviouslyExistingPlaylist({
   required Playlist newRecreatedPlaylistWithSameTitle,
   required Playlist previouslyExistingPlaylist,

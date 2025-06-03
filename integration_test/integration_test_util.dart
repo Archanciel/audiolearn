@@ -2072,7 +2072,7 @@ class IntegrationTestUtil {
   /// [forcedLocale] is null, the language defined in settings.json will be used.
   /// [forcedLocale] can be const Locale('en') or const Locale('fr').
   static Future<AudioDownloadVM> launchIntegrTestAppEnablingInternetAccess({
-    required tester,
+    required WidgetTester tester,
     Locale? forcedLocale,
     SharedPreferences? mockSharedPreferences,
   }) async {
@@ -2191,7 +2191,7 @@ class IntegrationTestUtil {
   /// [forcedLocale] is null, the language defined in settings.json will be used.
   /// [forcedLocale] can be const Locale('en') or const Locale('fr').
   static Future<void> launchIntegrTestAppEnablingInternetAccessWithMock({
-    required tester,
+    required WidgetTester tester,
     required AudioDownloadVM audioDownloadVM,
     required SettingsDataService settingsDataService,
     required PlaylistListVM playlistListVM,
