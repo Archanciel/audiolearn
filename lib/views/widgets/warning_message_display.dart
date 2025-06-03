@@ -694,7 +694,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
               );
             }
           } else {
-            if (_warningMessageVM.movedToTargetPlaylistType ==
+            if (_warningMessageVM.copiedToTargetPlaylistType ==
                 PlaylistType.youtube) {
               warningMessage = AppLocalizations.of(context)!
                   .defaultSFPNotApplyedToCopyAudioFromLocalToYoutubePlaylistWarning(
