@@ -9471,15 +9471,11 @@ void main() {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName: 'delete_filtered_audio_test',
-            tapOnPlaylistToggleButton: true,
+            tapOnPlaylistToggleButton: false,
           );
 
           const String sourcePlaylistTitle = 'S8 audio';
           const String targetPlaylistTitle = 'temp';
-
-          // Tap the 'Toggle List' button to show the list of playlist's.
-          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-          await tester.pumpAndSettle();
 
           // Verify that the applyed Sort/Filter parms name is displayed
           // after the selected playlist title
@@ -9619,7 +9615,7 @@ void main() {
             playlistSubMenuKeyStr: 'popup_menu_move_filtered_audio',
           );
 
-          // Select the target 'temp' playlist
+          // Select the target 'Maria Valtorta' playlist
 
           // Check the value of the select one playlist AlertDialog
           // dialog title
@@ -9654,9 +9650,9 @@ void main() {
             isWarningConfirming: false,
           );
 
-          // Verifying the 'temp' target playlist
+          // Verifying the 'Maria Valtorta' target playlist
 
-          // Select the 'temp' playlist
+          // Select the 'Maria Valtorta' playlist
 
           await IntegrationTestUtil.selectPlaylist(
             tester: tester,
@@ -9672,14 +9668,17 @@ void main() {
 
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioOrPlaylistTitlesOrderedLst: ["morning _ cinematic video"],
+            audioOrPlaylistTitlesOrderedLst: [
+              "What place Maria Valtorta takes in your spiritual journey",
+            ],
           );
 
           // Setting to this variables the currently selected audio title/subTitle
-          // of the 'S8 audio' playlist
-          String currentAudioTitle = "morning _ cinematic video";
+          // of the 'Maria Valtorta' playlist
+          String currentAudioTitle =
+              "What place Maria Valtorta takes in your spiritual journey";
           String currentAudioSubTitle =
-              "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.";
+              "0:06:01.3. 2.20 MB at 595 KB/sec on 03/06/2025 at 16:48.";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -9703,15 +9702,11 @@ void main() {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName: 'delete_filtered_audio_test',
-            tapOnPlaylistToggleButton: true,
+            tapOnPlaylistToggleButton: false,
           );
 
           const String sourcePlaylistTitle = 'temp';
           const String targetPlaylistTitle = 'S8 audio';
-
-          // Tap the 'Toggle List' button to show the list of playlist's.
-          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-          await tester.pumpAndSettle();
 
           // Verify that the applyed Sort/Filter parms name is displayed
           // after the selected playlist title
@@ -9772,13 +9767,6 @@ void main() {
 
           // Verifying the 'temp' target playlist
 
-          // Select the 'temp' playlist
-
-          await IntegrationTestUtil.selectPlaylist(
-            tester: tester,
-            playlistToSelectTitle: targetPlaylistTitle,
-          );
-
           // Tap the 'Toggle List' button to hide the list of playlist's.
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle();
@@ -9788,14 +9776,18 @@ void main() {
 
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioOrPlaylistTitlesOrderedLst: ["morning _ cinematic video"],
+            audioOrPlaylistTitlesOrderedLst: [
+              "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+            ],
+            firstAudioListTileIndex: 3,
           );
 
           // Setting to this variables the currently selected audio title/subTitle
           // of the 'S8 audio' playlist
-          String currentAudioTitle = "morning _ cinematic video";
+          String currentAudioTitle =
+              "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik";
           String currentAudioSubTitle =
-              "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.";
+              '0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.';
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -9818,15 +9810,11 @@ void main() {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName: 'delete_filtered_audio_test',
-            tapOnPlaylistToggleButton: true,
+            tapOnPlaylistToggleButton: false,
           );
 
           const String sourcePlaylistTitle = 'temp';
           const String targetPlaylistTitle = 'local';
-
-          // Tap the 'Toggle List' button to show the list of playlist's.
-          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-          await tester.pumpAndSettle();
 
           // Verify that the applyed Sort/Filter parms name is displayed
           // after the selected playlist title
@@ -9885,9 +9873,9 @@ void main() {
             isWarningConfirming: false,
           );
 
-          // Verifying the 'temp' target playlist
+          // Verifying the 'local' target playlist
 
-          // Select the 'temp' playlist
+          // Select the 'local' playlist
 
           await IntegrationTestUtil.selectPlaylist(
             tester: tester,
@@ -9903,14 +9891,19 @@ void main() {
 
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
-            audioOrPlaylistTitlesOrderedLst: ["morning _ cinematic video"],
+            audioOrPlaylistTitlesOrderedLst: [
+              "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique"
+            ],
+            firstAudioListTileIndex: 1,
           );
 
           // Setting to this variables the currently selected audio title/subTitle
-          // of the 'S8 audio' playlist
-          String currentAudioTitle = "morning _ cinematic video";
+          // of the 'local' playlist
+          String currentAudioTitle =
+              "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
+
           String currentAudioSubTitle =
-              "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.";
+              "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -11615,15 +11608,11 @@ void main() {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName: 'delete_filtered_audio_test',
-            tapOnPlaylistToggleButton: true,
+            tapOnPlaylistToggleButton: false,
           );
 
           const String sourcePlaylistTitle = 'S8 audio';
           const String targetPlaylistTitle = 'temp';
-
-          // Tap the 'Toggle List' button to show the list of playlist's.
-          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-          await tester.pumpAndSettle();
 
           // Verify that the applyed Sort/Filter parms name is displayed
           // after the selected playlist title
@@ -11731,15 +11720,11 @@ void main() {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName: 'delete_filtered_audio_test',
-            tapOnPlaylistToggleButton: true,
+            tapOnPlaylistToggleButton: false,
           );
 
           const String sourcePlaylistTitle = 'S8 audio';
           const String targetPlaylistTitle = 'Maria Valtorta';
-
-          // Tap the 'Toggle List' button to show the list of playlist's.
-          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-          await tester.pumpAndSettle();
 
           // Verify that the applyed Sort/Filter parms name is displayed
           // after the selected playlist title
@@ -11850,15 +11835,11 @@ void main() {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName: 'delete_filtered_audio_test',
-            tapOnPlaylistToggleButton: true,
+            tapOnPlaylistToggleButton: false,
           );
 
           const String sourcePlaylistTitle = 'temp';
           const String targetPlaylistTitle = 'S8 audio';
-
-          // Tap the 'Toggle List' button to show the list of playlist's.
-          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-          await tester.pumpAndSettle();
 
           // Verify that the applyed Sort/Filter parms name is displayed
           // after the selected playlist title
@@ -11965,15 +11946,11 @@ void main() {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName: 'delete_filtered_audio_test',
-            tapOnPlaylistToggleButton: true,
+            tapOnPlaylistToggleButton: false,
           );
 
           const String sourcePlaylistTitle = 'temp';
           const String targetPlaylistTitle = 'local';
-
-          // Tap the 'Toggle List' button to show the list of playlist's.
-          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-          await tester.pumpAndSettle();
 
           // Verify that the applyed Sort/Filter parms name is displayed
           // after the selected playlist title
