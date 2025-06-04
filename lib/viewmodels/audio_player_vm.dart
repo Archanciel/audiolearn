@@ -1231,6 +1231,15 @@ class AudioPlayerVM extends ChangeNotifier {
   }
 
   void _setCurrentAudioToEndPosition() {
+
+    // Solves the problem that once the audio reached its end,
+    // clicking on the audio position buttons or on the audio
+    // slider did not change the audio position.
+    //
+    // THIS PROBLEM ONLY HAPPENED ON MAIN BRANCH VERSION, NOT
+    // ON audioplayers_5_2_1_ALL_TESTS_PASS BRANCH VERSION.
+    _wasAudioPlayersStopped = true;
+
     // since the current audio is no longer playing, the isPaused
     // attribute is set to true
     _currentAudio!.isPaused = true;
