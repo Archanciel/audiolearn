@@ -199,7 +199,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
     // Enables the modified audio volume icon button appearance
     // to be updated in the audio player view if the volune was
-    // set to minimum or maximum, respectively for the reduce or 
+    // set to minimum or maximum, respectively for the reduce or
     // the increase volume icon button.
     currentAudioPlayVolumeNotifier.value = newAudioPlayVolume;
 
@@ -818,7 +818,8 @@ class AudioPlayerVM extends ChangeNotifier {
     // is necessary since after the audio is stopped, the audio
     // position is set to 0 in the AudioPlayer.onPositionChanged
     // listener.
-    int currentAudioPositionSecondsBeforeAudioPlayerStop = _currentAudioPosition.inSeconds;
+    int currentAudioPositionSecondsBeforeAudioPlayerStop =
+        _currentAudioPosition.inSeconds;
 
     try {
       // avoid ridiculous error in integration tests
@@ -833,7 +834,8 @@ class AudioPlayerVM extends ChangeNotifier {
             null && // necessary to avoid the error when deleting a playing audio
         _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd) {
       _currentAudio!.isPaused = true;
-      _currentAudio!.audioPositionSeconds = currentAudioPositionSecondsBeforeAudioPlayerStop;
+      _currentAudio!.audioPositionSeconds =
+          currentAudioPositionSecondsBeforeAudioPlayerStop;
       _currentAudio!.audioPausedDateTime = DateTime.now();
     }
 
@@ -1050,7 +1052,7 @@ class AudioPlayerVM extends ChangeNotifier {
       // executes the 'Restore Playlists, Comments and Settings' menu.
       // In this situation, the displayed playlist audio's are not
       // playable (no mp3 file available).
-      
+
       return;
     }
 
@@ -1115,7 +1117,6 @@ class AudioPlayerVM extends ChangeNotifier {
       // on the audio slider.
       _wasAudioPlayersStopped = false;
     }
-
 
     if (!isAfterRewindingAudioPosition && // in rewinding situation, setting
         // the current audio to the previous audio is an error
@@ -1242,6 +1243,12 @@ class AudioPlayerVM extends ChangeNotifier {
   }
 
   void _setCurrentAudioToEndPosition() {
+
+    // Solves the problem that once the audio reached its end,
+    // clicking on the audio position buttons or on the audio
+    // slider did not change the audio position.
+    _wasAudioPlayersStopped = true;
+
     // since the current audio is no longer playing, the isPaused
     // attribute is set to true
 
