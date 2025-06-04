@@ -1669,7 +1669,7 @@ void main() {
       audioDownloadVM.loadExistingPlaylists();
 
       Playlist playlist =
-          audioDownloadVM.listOfPlaylist[1]; // S8 audio playlist
+          audioDownloadVM.listOfPlaylist[2]; // S8 audio playlist
       Audio audioToDelete = playlist.downloadedAudioLst[1];
       String audioToDeleteTitle = audioToDelete.validVideoTitle;
 
@@ -1777,7 +1777,7 @@ void main() {
       audioDownloadVM.loadExistingPlaylists();
 
       Playlist playlist =
-          audioDownloadVM.listOfPlaylist[1]; // S8 audio playlist
+          audioDownloadVM.listOfPlaylist[2]; // S8 audio playlist
       Audio audioToDelete = playlist.downloadedAudioLst[1];
       String audioToDeleteTitle = audioToDelete.validVideoTitle;
 
@@ -1887,7 +1887,7 @@ void main() {
       audioDownloadVM.loadExistingPlaylists();
 
       Playlist playlist =
-          audioDownloadVM.listOfPlaylist[1]; // S8 audio playlist
+          audioDownloadVM.listOfPlaylist[2]; // S8 audio playlist
       Audio audioToDeleteOne = playlist.downloadedAudioLst[1];
       String audioToDeleteOneTitle = audioToDeleteOne.validVideoTitle;
       Audio audioToDeleteTwo = playlist.downloadedAudioLst[3];
@@ -2062,7 +2062,7 @@ void main() {
       audioDownloadVM.loadExistingPlaylists();
 
       Playlist playlist =
-          audioDownloadVM.listOfPlaylist[1]; // S8 audio playlist
+          audioDownloadVM.listOfPlaylist[2]; // S8 audio playlist
       Audio audioToDeleteOne = playlist.downloadedAudioLst[1];
       String audioToDeleteOneTitle = audioToDeleteOne.validVideoTitle;
       Audio audioToDeleteTwo = playlist.downloadedAudioLst[3];
