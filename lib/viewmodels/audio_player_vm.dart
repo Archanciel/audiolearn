@@ -1238,7 +1238,11 @@ class AudioPlayerVM extends ChangeNotifier {
     //
     // THIS PROBLEM ONLY HAPPENED ON MAIN BRANCH VERSION, NOT
     // ON audioplayers_5_2_1_ALL_TESTS_PASS BRANCH VERSION.
-    _wasAudioPlayersStopped = true;
+    //
+    // This code must be commented out in the
+    // audioplayers_5_2_1_ALL_TESTS_PASS branch version otherwise
+    // the integration tests fail !
+    // _wasAudioPlayersStopped = true;
 
     // since the current audio is no longer playing, the isPaused
     // attribute is set to true
