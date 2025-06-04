@@ -8519,7 +8519,7 @@ void main() {
     //   };
     // });
   });
-  group('Modify audio volune tests', () {
+  group('Modify audio volume tests', () {
     testWidgets(
         '''Change first audio volume to max. Then select second audio, verify its volume
             before reducing it to min. Then return to the first audio and verify its volume
