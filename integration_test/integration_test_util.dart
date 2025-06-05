@@ -1621,6 +1621,7 @@ class IntegrationTestUtil {
     required bool typeOnPauseAfterPlay,
     double maxPlayDurationSeconds = 1,
   }) async {
+    print('**** item index $itemIndex ****');
     final Finder playIconButtonFinder = find.descendant(
       of: gestureDetectorsFinder.at(itemIndex),
       matching: find.byKey(const Key('playPauseIconButton')),
