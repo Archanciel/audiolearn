@@ -19541,7 +19541,7 @@ void main() {
       // First, find the Youtube playlist audio ListTile Text widget
       Finder audioTitleTileTextWidgetFinder = find.text(audioTitle);
 
-      // Then obtain the playlist ListTile widget enclosing the Text widget
+      // Then obtain the audio ListTile widget enclosing the Text widget
       // by finding its ancestor
       Finder audioTitleTileWidgetFinder = find.ancestor(
         of: audioTitleTileTextWidgetFinder,
@@ -19620,6 +19620,284 @@ void main() {
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Partially playing several single audio comments and verifying the update of the play/pause
+          comment button. The index of the first comment is 0, the index of the second comment is 3,
+          and index of the last (4th) comment is 9.''',
+        (WidgetTester tester) async {
+      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'audio_comment_test',
+        selectedPlaylistTitle: youtubePlaylistTitle,
+      );
+
+      const String audioTitle =
+          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité..."; // Youtube playlist
+
+      // First, find the Youtube playlist audio ListTile Text widget
+      Finder audioTitleTileTextWidgetFinder = find.text(audioTitle);
+
+      // Then obtain the audio ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      Finder audioTitleTileWidgetFinder = find.ancestor(
+        of: audioTitleTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now we want to tap the popup menu of the audioTitle ListTile
+
+      // Find the leading menu icon button of the audioTitle ListTile
+      // and tap on it
+      Finder audioTitleTileLeadingMenuIconButton = find.descendant(
+        of: audioTitleTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(audioTitleTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the 'Audio Comments ...' popup menu item and
+      // tap on it
+      final Finder audioCommentsPopupMenuItem =
+          find.byKey(const Key("popup_menu_audio_comment"));
+
+      await tester.tap(audioCommentsPopupMenuItem);
+      await tester.pumpAndSettle();
+
+      // Verify that the audio comment dialog is displayed
+      expect(find.byType(CommentListAddDialog), findsOneWidget);
+
+      // Verify that the audio comments list of the dialog has 4 comment
+      // item
+
+      Finder audioCommentsLstFinder = find.byKey(const Key(
+        'audioCommentsListKey',
+      ));
+
+      // Ensure the list has one child widgets
+      expect(
+        tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+        4,
+      );
+
+      // Find all the list items GestureDetector's
+      final Finder gestureDetectorsFinder = find.descendant(
+          // 3 GestureDetector per comment item
+          of: audioCommentsLstFinder,
+          matching: find.byType(GestureDetector));
+
+      // Now tap on the play icon button of the third audio comment
+      // in order to start playing it
+      await IntegrationTestUtil.playComment(
+        tester: tester,
+        gestureDetectorsFinder: gestureDetectorsFinder,
+        itemIndex: 6, // Third comment of the audio on IA
+        typeOnPauseAfterPlay: false,
+        maxPlayDurationSeconds: 3,
+      );
+
+      await tester.pumpAndSettle();
+
+      // Checking the currently played comment icon button
+
+      Finder playIconButtonFinder = find.descendant(
+        of: gestureDetectorsFinder.at(6),
+        matching: find.byKey(const Key('playPauseIconButton')),
+      );
+
+      // Find the Icon widget inside the IconButton
+      Finder iconFinder = find.descendant(
+        of: playIconButtonFinder,
+        matching: find.byType(Icon),
+      );
+
+      // Now get the Icon widget and check its type
+      Icon iconWidget = tester.widget<Icon>(iconFinder);
+      expect(iconWidget.icon, Icons.pause);
+
+      // Let the comment be played during 1.5 seconds and then click
+      // on the play button of the fourth comment
+      await Future.delayed(const Duration(milliseconds: 1500));
+      await tester.pumpAndSettle();
+
+      await tester.pumpAndSettle();
+      
+      // Now tap on the play icon button of the fourth audio comment
+      // in order to start playing it
+      await IntegrationTestUtil.playComment(
+        tester: tester,
+        gestureDetectorsFinder: gestureDetectorsFinder,
+        itemIndex: 9, // Third comment of the second audio on IA
+        typeOnPauseAfterPlay: false,
+        maxPlayDurationSeconds: 3,
+      );
+
+      // Checking the previously played comment icon button
+
+      await tester.pumpAndSettle();
+
+      playIconButtonFinder = find.descendant(
+        of: gestureDetectorsFinder.at(6),
+        matching: find.byKey(const Key('playPauseIconButton')),
+      );
+
+      // Find the Icon widget inside the IconButton
+      iconFinder = find.descendant(
+        of: playIconButtonFinder,
+        matching: find.byType(Icon),
+      );
+
+      // Now get the Icon widget and check its type
+      iconWidget = tester.widget<Icon>(iconFinder);
+      expect(iconWidget.icon, Icons.play_arrow);
+
+      // Checking the currently played comment icon button
+
+      playIconButtonFinder = find.descendant(
+        of: gestureDetectorsFinder.at(9),
+        matching: find.byKey(const Key('playPauseIconButton')),
+      );
+
+      // Find the Icon widget inside the IconButton
+      iconFinder = find.descendant(
+        of: playIconButtonFinder,
+        matching: find.byType(Icon),
+      );
+
+      // Now get the Icon widget and check its type
+      iconWidget = tester.widget<Icon>(iconFinder);
+      expect(iconWidget.icon, Icons.pause);
+
+      // Let the comment be played during 1.5 seconds and then click
+      // on the play button of the first comment
+      await Future.delayed(const Duration(milliseconds: 1500));
+      await tester.pumpAndSettle();
+
+      await tester.drag(
+        find.byType(PlaylistCommentListDialog),
+        const Offset(0, 800), // Negative value for vertical drag to scroll down
+      );
+
+      // Now tap on the play icon button of the first audio comment
+      // in order to start playing it
+      await IntegrationTestUtil.playComment(
+        tester: tester,
+        gestureDetectorsFinder: gestureDetectorsFinder,
+        itemIndex: 0, // FFirst comment of the audio on IA
+        typeOnPauseAfterPlay: false,
+        maxPlayDurationSeconds: 3,
+      );
+
+      // Checking the previously played comment icon button
+
+      await tester.drag(
+        find.byType(PlaylistCommentListDialog),
+        const Offset(0, -800), // Negative value for vertical drag to scroll down
+      );
+
+      await tester.pumpAndSettle();
+
+      playIconButtonFinder = find.descendant(
+        of: gestureDetectorsFinder.at(9),
+        matching: find.byKey(const Key('playPauseIconButton')),
+      );
+
+      // Find the Icon widget inside the IconButton
+      iconFinder = find.descendant(
+        of: playIconButtonFinder,
+        matching: find.byType(Icon),
+      );
+
+      // Now get the Icon widget and check its type
+      iconWidget = tester.widget<Icon>(iconFinder);
+      expect(iconWidget.icon, Icons.play_arrow);
+
+      // Checking the currently played comment icon button
+
+      await tester.drag(
+        find.byType(PlaylistCommentListDialog),
+        const Offset(0, 800), // Negative value for vertical drag to scroll down
+      );
+
+      playIconButtonFinder = find.descendant(
+        of: gestureDetectorsFinder.at(0),
+        matching: find.byKey(const Key('playPauseIconButton')),
+      );
+
+      // Find the Icon widget inside the IconButton
+      iconFinder = find.descendant(
+        of: playIconButtonFinder,
+        matching: find.byType(Icon),
+      );
+
+      // Now get the Icon widget and check its type
+      iconWidget = tester.widget<Icon>(iconFinder);
+      expect(iconWidget.icon, Icons.pause);
+
+      // Let the comment be played during 1.5 seconds and then click
+      // on the play button of the second comment
+      await Future.delayed(const Duration(milliseconds: 1500));
+      await tester.pumpAndSettle();
+
+      // Now tap on the play icon button of the second audio comment
+      // in order to start playing it
+      await IntegrationTestUtil.playComment(
+        tester: tester,
+        gestureDetectorsFinder: gestureDetectorsFinder,
+        itemIndex: 3, // first comment of the first audio
+        typeOnPauseAfterPlay: false,
+        maxPlayDurationSeconds: 3,
+      );
+
+      // Checking the previously played comment icon button
+
+      await tester.pumpAndSettle();
+
+      playIconButtonFinder = find.descendant(
+        of: gestureDetectorsFinder.at(0),
+        matching: find.byKey(const Key('playPauseIconButton')),
+      );
+
+      // Find the Icon widget inside the IconButton
+      iconFinder = find.descendant(
+        of: playIconButtonFinder,
+        matching: find.byType(Icon),
+      );
+
+      // Now get the Icon widget and check its type
+      iconWidget = tester.widget<Icon>(iconFinder);
+      expect(iconWidget.icon, Icons.play_arrow);
+
+      // Checking the currently played comment icon button
+
+      playIconButtonFinder = find.descendant(
+        of: gestureDetectorsFinder.at(3),
+        matching: find.byKey(const Key('playPauseIconButton')),
+      );
+
+      // Find the Icon widget inside the IconButton
+      iconFinder = find.descendant(
+        of: playIconButtonFinder,
+        matching: find.byType(Icon),
+      );
+
+      // Now get the Icon widget and check its type
+      iconWidget = tester.widget<Icon>(iconFinder);
+      expect(iconWidget.icon, Icons.pause);
+
+      // Let the comment be played during 0.5 seconds
+      await Future.delayed(const Duration(milliseconds: 500));
       await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
