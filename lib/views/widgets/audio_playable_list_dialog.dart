@@ -94,8 +94,10 @@ class _AudioPlayableListDialogState extends State<AudioPlayableListDialog>
         if (event is KeyDownEvent) {
           if (event.logicalKey == LogicalKeyboardKey.enter ||
               event.logicalKey == LogicalKeyboardKey.numpadEnter) {
-            // executing the same code as in the 'Cancel' TextButton
-            Navigator.of(context).pop();
+            // Checking if you can pop first. Avoid rare pop() error.
+            if (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            }
           }
         }
       },
@@ -194,7 +196,10 @@ class _AudioPlayableListDialogState extends State<AudioPlayableListDialog>
                             await audioPlayerVMlistenFalse.setCurrentAudio(
                               audio: audio,
                             );
-                            Navigator.of(context).pop();
+                            // Checking if you can pop first. Avoid rare pop() error.
+                            if (Navigator.of(context).canPop()) {
+                              Navigator.of(context).pop();
+                            }
                           },
                           child: _buildAudioTitleTextWidget(
                             audio: audio,
