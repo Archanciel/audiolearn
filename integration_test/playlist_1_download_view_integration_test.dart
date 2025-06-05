@@ -18512,7 +18512,7 @@ void main() {
           typeOnPauseAfterPlay: false,
         );
 
-        // Let the comment be played during 1.5 seconds and then clixk on the
+        // Let the comment be played during 1.5 seconds and then click on the
         // playlist comment dialog close button
         await Future.delayed(const Duration(milliseconds: 1500));
         await tester.pumpAndSettle();
@@ -18791,7 +18791,7 @@ void main() {
           typeOnPauseAfterPlay: false,
         );
 
-        // Let the comment be played during 1.5 seconds and then clixk on the
+        // Let the comment be played during 1.5 seconds and then click on the
         // playlist comment dialog close button
         await Future.delayed(const Duration(milliseconds: 1500));
         await tester.pumpAndSettle();
@@ -19078,7 +19078,7 @@ void main() {
           typeOnPauseAfterPlay: false,
         );
 
-        // Let the comment be played during 1.5 seconds and then clixk on the
+        // Let the comment be played during 1.5 seconds and then click on the
         // playlist comment dialog close button
         await Future.delayed(const Duration(milliseconds: 1500));
         await tester.pumpAndSettle();
@@ -19164,7 +19164,7 @@ void main() {
             of: listFinder,
             matching: find.byType(GestureDetector));
 
-        // Now tap on the play icon button of the unique comment of the second
+        // Now tap on the play icon button of the first comment of the second
         // audio in order to start playing it
         await IntegrationTestUtil.playComment(
           tester: tester,
@@ -19175,6 +19175,8 @@ void main() {
         );
 
         await tester.pumpAndSettle();
+
+        // Checking the currently played comment icon button
 
         Finder playIconButtonFinder = find.descendant(
           of: gestureDetectorsFinder.at(9),
@@ -19190,8 +19192,8 @@ void main() {
         // Now get the Icon widget and check its type
         Icon iconWidget = tester.widget<Icon>(iconFinder);
         expect(iconWidget.icon, Icons.pause);
-        
-        // Let the second comment be played during 1.5 seconds and then clixk
+
+        // Let the comment be played during 1.5 seconds and then click
         // on the play button of the third comment
         await Future.delayed(const Duration(milliseconds: 1500));
         await tester.pumpAndSettle();
@@ -19203,7 +19205,7 @@ void main() {
         );
 
         await tester.pumpAndSettle();
-        // Now tap on the play icon button of the unique comment of the third
+        // Now tap on the play icon button of the third comment of the second
         // audio in order to start playing it
         await IntegrationTestUtil.playComment(
           tester: tester,
@@ -19213,7 +19215,43 @@ void main() {
           maxPlayDurationSeconds: 3,
         );
 
-        // Let the third comment be played during 1.5 seconds and then clixk
+        // Checking the previously played comment icon button
+
+        await tester.pumpAndSettle();
+
+        playIconButtonFinder = find.descendant(
+          of: gestureDetectorsFinder.at(9),
+          matching: find.byKey(const Key('playPauseIconButton')),
+        );
+
+        // Find the Icon widget inside the IconButton
+        iconFinder = find.descendant(
+          of: playIconButtonFinder,
+          matching: find.byType(Icon),
+        );
+
+        // Now get the Icon widget and check its type
+        iconWidget = tester.widget<Icon>(iconFinder);
+        expect(iconWidget.icon, Icons.play_arrow);
+
+        // Checking the currently played comment icon button
+
+        playIconButtonFinder = find.descendant(
+          of: gestureDetectorsFinder.at(15),
+          matching: find.byKey(const Key('playPauseIconButton')),
+        );
+
+        // Find the Icon widget inside the IconButton
+        iconFinder = find.descendant(
+          of: playIconButtonFinder,
+          matching: find.byType(Icon),
+        );
+
+        // Now get the Icon widget and check its type
+        iconWidget = tester.widget<Icon>(iconFinder);
+        expect(iconWidget.icon, Icons.pause);
+
+        // Let the comment be played during 1.5 seconds and then click
         // on the play button of the fourth comment
         await Future.delayed(const Duration(milliseconds: 1500));
         await tester.pumpAndSettle();
@@ -19227,6 +19265,47 @@ void main() {
           typeOnPauseAfterPlay: false,
           maxPlayDurationSeconds: 3,
         );
+
+        // Checking the previously played comment icon button
+
+        await tester.pumpAndSettle();
+
+        playIconButtonFinder = find.descendant(
+          of: gestureDetectorsFinder.at(15),
+          matching: find.byKey(const Key('playPauseIconButton')),
+        );
+
+        // Find the Icon widget inside the IconButton
+        iconFinder = find.descendant(
+          of: playIconButtonFinder,
+          matching: find.byType(Icon),
+        );
+
+        // Now get the Icon widget and check its type
+        iconWidget = tester.widget<Icon>(iconFinder);
+        expect(iconWidget.icon, Icons.play_arrow);
+
+        // Checking the currently played comment icon button
+
+        playIconButtonFinder = find.descendant(
+          of: gestureDetectorsFinder.at(12),
+          matching: find.byKey(const Key('playPauseIconButton')),
+        );
+
+        // Find the Icon widget inside the IconButton
+        iconFinder = find.descendant(
+          of: playIconButtonFinder,
+          matching: find.byType(Icon),
+        );
+
+        // Now get the Icon widget and check its type
+        iconWidget = tester.widget<Icon>(iconFinder);
+        expect(iconWidget.icon, Icons.pause);
+
+        // Let the comment be played during 1.5 seconds and then click
+        // on the play button of the fourth comment
+        await Future.delayed(const Duration(milliseconds: 1500));
+        await tester.pumpAndSettle();
 
         await tester.drag(
           find.byType(PlaylistCommentListDialog),
@@ -19244,6 +19323,59 @@ void main() {
           maxPlayDurationSeconds: 3,
         );
 
+        // Checking the previously played comment icon button
+
+        await tester.pumpAndSettle();
+
+        await tester.drag(
+          find.byType(PlaylistCommentListDialog),
+          const Offset(
+              0, -800), // Negative value for vertical drag to scroll down
+        );
+
+        playIconButtonFinder = find.descendant(
+          of: gestureDetectorsFinder.at(12),
+          matching: find.byKey(const Key('playPauseIconButton')),
+        );
+
+        // Find the Icon widget inside the IconButton
+        iconFinder = find.descendant(
+          of: playIconButtonFinder,
+          matching: find.byType(Icon),
+        );
+
+        // Now get the Icon widget and check its type
+        iconWidget = tester.widget<Icon>(iconFinder);
+        expect(iconWidget.icon, Icons.play_arrow);
+
+        await tester.drag(
+          find.byType(PlaylistCommentListDialog),
+          const Offset(
+              0, 800), // Negative value for vertical drag to scroll down
+        );
+
+        // Checking the currently played comment icon button
+
+        playIconButtonFinder = find.descendant(
+          of: gestureDetectorsFinder.at(0),
+          matching: find.byKey(const Key('playPauseIconButton')),
+        );
+
+        // Find the Icon widget inside the IconButton
+        iconFinder = find.descendant(
+          of: playIconButtonFinder,
+          matching: find.byType(Icon),
+        );
+
+        // Now get the Icon widget and check its type
+        iconWidget = tester.widget<Icon>(iconFinder);
+        expect(iconWidget.icon, Icons.pause);
+
+        // Let the comment be played during 1.5 seconds and then click
+        // on the play button of the fourth comment
+        await Future.delayed(const Duration(milliseconds: 1500));
+        await tester.pumpAndSettle();
+
         await tester.drag(
           find.byType(PlaylistCommentListDialog),
           const Offset(
@@ -19260,7 +19392,55 @@ void main() {
           maxPlayDurationSeconds: 3,
         );
 
-        // Let the third comment be played during 1.5 seconds and then clixk
+        // Checking the previously played comment icon button
+
+        await tester.pumpAndSettle();
+
+        await tester.drag(
+          find.byType(PlaylistCommentListDialog),
+          const Offset(
+              0, 1500), // Negative value for vertical drag to scroll down
+        );
+
+        playIconButtonFinder = find.descendant(
+          of: gestureDetectorsFinder.at(0),
+          matching: find.byKey(const Key('playPauseIconButton')),
+        );
+
+        // Find the Icon widget inside the IconButton
+        iconFinder = find.descendant(
+          of: playIconButtonFinder,
+          matching: find.byType(Icon),
+        );
+
+        // Now get the Icon widget and check its type
+        iconWidget = tester.widget<Icon>(iconFinder);
+        expect(iconWidget.icon, Icons.play_arrow);
+
+        await tester.drag(
+          find.byType(PlaylistCommentListDialog),
+          const Offset(
+              0, -1500), // Negative value for vertical drag to scroll down
+        );
+
+        // Checking the currently played comment icon button
+
+        playIconButtonFinder = find.descendant(
+          of: gestureDetectorsFinder.at(21),
+          matching: find.byKey(const Key('playPauseIconButton')),
+        );
+
+        // Find the Icon widget inside the IconButton
+        iconFinder = find.descendant(
+          of: playIconButtonFinder,
+          matching: find.byType(Icon),
+        );
+
+        // Now get the Icon widget and check its type
+        iconWidget = tester.widget<Icon>(iconFinder);
+        expect(iconWidget.icon, Icons.pause);
+
+        // Let the third comment be played during 1.5 seconds and then click
         // on the play button of the fourth comment
         await Future.delayed(const Duration(milliseconds: 1500));
         await tester.pumpAndSettle();
