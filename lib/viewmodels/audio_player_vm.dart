@@ -149,7 +149,7 @@ class AudioPlayerVM extends ChangeNotifier {
   // smartphone. The value is re-set to false when the user clicks on the
   // play icon in the audio player view or on the slider or on the start/end
   // or the other position buttons.
-  bool _wasAudioPlayersStopped = false;
+  // bool _wasAudioPlayersStopped = false;
 
   AudioPlayerVM({
     required SettingsDataService settingsDataService,
@@ -354,10 +354,10 @@ class AudioPlayerVM extends ChangeNotifier {
 
       await audioPlayerSetSource(audioFilePathName);
 
-      // Setting the value to false avoid that the audioplayers source
+      // Setting the value to false avoids that the audioplayers source
       // is set again when the user clicks on another position button or
       // on the audio slider.
-      _wasAudioPlayersStopped = false;
+      // _wasAudioPlayersStopped = false;
 
       await _audioPlayer.setVolume(
         audio.audioPlayVolume,
@@ -743,19 +743,18 @@ class AudioPlayerVM extends ChangeNotifier {
       // The protection again the alarm or phone call is deactivated
       // in order to enable position button and slider usage after
       // the audio was paused.
-      //
-      if ((isFromAudioPlayerView || isCommentPlaying) &&
-          _wasAudioPlayersStopped) {
-        // Set the source again since clicking on the pause icon
-        // stopped the audio player.
-        await _audioPlayer
-            .setSource(DeviceFileSource(_currentAudio!.filePathName));
+      // if ((isFromAudioPlayerView || isCommentPlaying) &&
+      //     _wasAudioPlayersStopped) {
+      //   // Set the source again since clicking on the pause icon
+      //   // stopped the audio player.
+      //   await _audioPlayer
+      //       .setSource(DeviceFileSource(_currentAudio!.filePathName));
 
-        // Setting the value to false avoid that the audioplayers source
-        // is set again when the user clicks on another position button or
-        // on the audio slider.
-        _wasAudioPlayersStopped = false;
-      }
+      //   // Setting the value to false avoids that the audioplayers source
+      //   // is set again when the user clicks on another position button or
+      //   // on the audio slider.
+      //   _wasAudioPlayersStopped = false;
+      // }
 
       if (rewindAudioPositionBasedOnPauseDuration) {
         await _rewindAudioPositionBasedOnPauseDuration();
@@ -779,18 +778,14 @@ class AudioPlayerVM extends ChangeNotifier {
   }
 
   Future<void> pause() async {
-    if (_wasAudioPlayersStopped) {
-      // Avoid executing _audioPlayer.stop() several times, which
-      // causes an error due to an audioplayers is disposed exception
-      // in the integration tests.
-      return;
-    }
+    // if (_wasAudioPlayersStopped) {
+    //   // Avoid executing _audioPlayer.stop() several times, which
+    //   // causes an error due to an audioplayers is disposed exception
+    //   // in the integration tests.
+    //   return;
+    // }
 
-    // Calling _audioPlayer.stop() instead of _audioPlayer.pause()
-    // avoids that the paused audio starts when an alarm or a call
-    // happens on the smartphone. This requires to call _audioPlayer.
-    // setSource() in the playCurrentAudio() method ...
-    _wasAudioPlayersStopped = true;
+    // _wasAudioPlayersStopped = true;
 
     // Storing the current audio position before stopping the audio
     // is necessary since after the audio is stopped, the audio
@@ -799,8 +794,12 @@ class AudioPlayerVM extends ChangeNotifier {
     int currentAudioPositionSecondsBeforeAudioPlayerStop =
         _currentAudioPosition.inSeconds;
 
+    // Calling _audioPlayer.stop() instead of _audioPlayer.pause()
+    // avoids that the paused audio starts when an alarm or a call
+    // happens on the smartphone. This requires to call _audioPlayer.
+    // setSource() in the playCurrentAudio() method ...
     try {
-      // avoid ridiculous error in integration tests
+      // Avoid also error in integration tests.
       await _audioPlayer.stop();
     } catch (e) {
       // ignore: avoid_print
@@ -854,17 +853,17 @@ class AudioPlayerVM extends ChangeNotifier {
     required Duration posOrNegPositionDurationChange,
     bool isUndoRedo = false,
   }) async {
-    if (_wasAudioPlayersStopped) {
-      // Set the source again since clicking on the pause icon
-      // stopped the audio player.
-      await _audioPlayer
-          .setSource(DeviceFileSource(_currentAudio!.filePathName));
+    // if (_wasAudioPlayersStopped) {
+    //   // Set the source again since clicking on the pause icon
+    //   // or reaching the audio end stopped the audio player.
+    //   await _audioPlayer
+    //       .setSource(DeviceFileSource(_currentAudio!.filePathName));
 
-      // Setting the value to false avoid that the audioplayers source
-      // is set again when the user clicks on another position button or
-      // on the audio slider.
-      _wasAudioPlayersStopped = false;
-    }
+    //   // Setting the value to false avoids that the audioplayers source
+    //   // is set again when the user clicks on another position button or
+    //   // on the audio slider.
+    //   _wasAudioPlayersStopped = false;
+    // }
 
     Duration newAudioPosition =
         _currentAudioPosition + posOrNegPositionDurationChange;
@@ -943,17 +942,17 @@ class AudioPlayerVM extends ChangeNotifier {
     required Duration durationPosition,
     bool isUndoRedo = false,
   }) async {
-    if (_wasAudioPlayersStopped) {
-      // Set the source again since clicking on the pause icon
-      // stopped the audio player.
-      await _audioPlayer
-          .setSource(DeviceFileSource(_currentAudio!.filePathName));
+    // if (_wasAudioPlayersStopped) {
+    //   // Set the source again since clicking on the pause icon
+    //   // stopped the audio player.
+    //   await _audioPlayer
+    //       .setSource(DeviceFileSource(_currentAudio!.filePathName));
 
-      // Setting the value to false avoid that the audioplayers source
-      // is set again when the user clicks on another position button or
-      // on the audio slider.
-      _wasAudioPlayersStopped = false;
-    }
+    //   // Setting the value to false avoids that the audioplayers source
+    //   // is set again when the user clicks on another position button or
+    //   // on the audio slider.
+    //   _wasAudioPlayersStopped = false;
+    // }
 
     // setting the audio paused date time to now avoid that if you play the
     // audio after having changed the position clicking on the slider, the
@@ -1034,16 +1033,16 @@ class AudioPlayerVM extends ChangeNotifier {
       return;
     }
 
-    if (_wasAudioPlayersStopped) {
-      // Set the source again since clicking on the pause icon
-      // stopped the audio player.
-      await _audioPlayer
-          .setSource(DeviceFileSource(_currentAudio!.filePathName));
+    // if (_wasAudioPlayersStopped) {
+    //   // Set the source again since clicking on the pause icon
+    //   // stopped the audio player.
+    //   await _audioPlayer
+    //       .setSource(DeviceFileSource(_currentAudio!.filePathName));
 
-      // Setting the value to false avoid that the audioplayers source
-      // is set again after it was re-set.
-      _wasAudioPlayersStopped = false;
-    }
+    //   // Setting the value to false avoids that the audioplayers source
+    //   // is set again after it was re-set.
+    //   _wasAudioPlayersStopped = false;
+    // }
 
     _currentAudioPosition = durationPosition;
 
@@ -1084,17 +1083,17 @@ class AudioPlayerVM extends ChangeNotifier {
     bool isFromAudioPlayerView = false,
     bool isAfterRewindingAudioPosition = false,
   }) async {
-    if (isFromAudioPlayerView && _wasAudioPlayersStopped) {
-      // Set the source again since clicking on the pause icon
-      // stopped the audio player.
-      await _audioPlayer
-          .setSource(DeviceFileSource(_currentAudio!.filePathName));
+    // if (isFromAudioPlayerView && _wasAudioPlayersStopped) {
+    //   // Set the source again since clicking on the pause icon
+    //   // stopped the audio player.
+    //   await _audioPlayer
+    //       .setSource(DeviceFileSource(_currentAudio!.filePathName));
 
-      // Setting the value to false avoid that the audioplayers source
-      // is set again when the user clicks on another position button or
-      // on the audio slider.
-      _wasAudioPlayersStopped = false;
-    }
+    //   // Setting the value to false avoids that the audioplayers source
+    //   // is set again when the user clicks on another position button or
+    //   // on the audio slider.
+    //   _wasAudioPlayersStopped = false;
+    // }
 
     if (!isAfterRewindingAudioPosition && // in rewinding situation, setting
         // the current audio to the previous audio is an error
@@ -1144,17 +1143,17 @@ class AudioPlayerVM extends ChangeNotifier {
       return;
     }
 
-    if (_wasAudioPlayersStopped) {
-      // Set the source again since clicking on the pause icon
-      // stopped the audio player.
-      await _audioPlayer
-          .setSource(DeviceFileSource(_currentAudio!.filePathName));
+    // if (_wasAudioPlayersStopped) {
+    //   // Set the source again since clicking on the pause icon
+    //   // stopped the audio player.
+    //   await _audioPlayer
+    //       .setSource(DeviceFileSource(_currentAudio!.filePathName));
 
-      // Setting the value to false avoid that the audioplayers source
-      // is set again when the user clicks on another position button or
-      // on the audio slider.
-      _wasAudioPlayersStopped = false;
-    }
+    //   // Setting the value to false avoids that the audioplayers source
+    //   // is set again when the user clicks on another position button or
+    //   // on the audio slider.
+    //   _wasAudioPlayersStopped = false;
+    // }
 
     if (_currentAudioPosition == _currentAudioTotalDuration) {
       // Situation when the user clicks on >| when the audio
@@ -1225,7 +1224,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // Solves the problem that once the audio reached its end,
     // clicking on the audio position buttons or on the audio
     // slider did not change the audio position.
-    _wasAudioPlayersStopped = true;
+    // _wasAudioPlayersStopped = true;
 
     // since the current audio is no longer playing, the isPaused
     // attribute is set to true
