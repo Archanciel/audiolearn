@@ -696,6 +696,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                               // clicked on other comment play button
                               audioPlayerVMlistenFalse:
                                   audioPlayerVMlistenFalse,
+                              currentAudio: currentAudio,
                               comment: comment,
                             );
                     },
@@ -998,34 +999,24 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
 
   Future<void> _playFromCommentPosition({
     required AudioPlayerVM audioPlayerVMlistenFalse,
+    required Audio currentAudio,
     required Comment comment,
   }) async {
     _playingComment = comment;
-
-    // if (!audioPlayerVMlistenFalse.isPlaying) {
-    // This fixes a problem when a playing comment was paused and
-    // then the user clicked on the play button of an other comment.
-    // In such a situation, the user had to click twice or three
-    // times on the other comment play button to play it if the other
-    // comment was positioned before the previously played comment.
-    // If the other comment was positioned after the previously played
-    // comment, then the user had to click only once on the play button
-    // of the other comment to play it.
-    //   await audioPlayerVMlistenFalse.playCurrentAudio(
-    //     rewindAudioPositionBasedOnPauseDuration: false,
-    //     isCommentPlaying: true,
-    //   );
-    // }
-    //
-    // What fixed the problem is adding
-    // _currentAudioPosition = durationPosition; in
-    // AudioPlayerVM.modifyAudioPlayerPosition() method.
 
     await audioPlayerVMlistenFalse.modifyAudioPlayerPosition(
       durationPosition: Duration(
           milliseconds: comment.commentStartPositionInTenthOfSeconds * 100),
       isUndoCommandToAdd: true,
     );
+
+    if (audioPlayerVMlistenFalse.currentAudio != currentAudio) {
+      // Adding the test fixes the problem of playing audio comments
+      // from the comment list add dialog.
+      await audioPlayerVMlistenFalse.setCurrentAudio(
+        audio: currentAudio,
+      );
+    }
 
     await audioPlayerVMlistenFalse.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
