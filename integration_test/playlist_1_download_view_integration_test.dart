@@ -18512,7 +18512,7 @@ void main() {
           typeOnPauseAfterPlay: false,
         );
 
-        // Let the comment be played during 1.5 seconds and then click on the
+        // Let the comment be played during 0.25 seconds and then click on the
         // playlist comment dialog close button
         await Future.delayed(const Duration(milliseconds: 1500));
         await tester.pumpAndSettle();
@@ -18791,7 +18791,7 @@ void main() {
           typeOnPauseAfterPlay: false,
         );
 
-        // Let the comment be played during 1.5 seconds and then click on the
+        // Let the comment be played during 0.25 seconds and then click on the
         // playlist comment dialog close button
         await Future.delayed(const Duration(milliseconds: 1500));
         await tester.pumpAndSettle();
@@ -19078,7 +19078,7 @@ void main() {
           typeOnPauseAfterPlay: false,
         );
 
-        // Let the comment be played during 1.5 seconds and then click on the
+        // Let the comment be played during 0.25 seconds and then click on the
         // playlist comment dialog close button
         await Future.delayed(const Duration(milliseconds: 1500));
         await tester.pumpAndSettle();
@@ -19193,9 +19193,9 @@ void main() {
         Icon iconWidget = tester.widget<Icon>(iconFinder);
         expect(iconWidget.icon, Icons.pause);
 
-        // Let the comment be played during 1.5 seconds and then click
+        // Let the comment be played during 0.25 seconds and then click
         // on the play button of the third comment
-        await Future.delayed(const Duration(milliseconds: 1500));
+        await Future.delayed(const Duration(milliseconds: 250));
         await tester.pumpAndSettle();
 
         await tester.drag(
@@ -19251,9 +19251,9 @@ void main() {
         iconWidget = tester.widget<Icon>(iconFinder);
         expect(iconWidget.icon, Icons.pause);
 
-        // Let the comment be played during 1.5 seconds and then click
+        // Let the comment be played during 0.25 seconds and then click
         // on the play button of the fourth comment
-        await Future.delayed(const Duration(milliseconds: 1500));
+        await Future.delayed(const Duration(milliseconds: 250));
         await tester.pumpAndSettle();
 
         // Now tap on the play icon button of the second comment of the second
@@ -19302,9 +19302,9 @@ void main() {
         iconWidget = tester.widget<Icon>(iconFinder);
         expect(iconWidget.icon, Icons.pause);
 
-        // Let the comment be played during 1.5 seconds and then click
+        // Let the comment be played during 0.25 seconds and then click
         // on the play button of the fourth comment
-        await Future.delayed(const Duration(milliseconds: 1500));
+        await Future.delayed(const Duration(milliseconds: 250));
         await tester.pumpAndSettle();
 
         await tester.drag(
@@ -19377,15 +19377,15 @@ void main() {
         iconWidget = tester.widget<Icon>(iconFinder);
         expect(iconWidget.icon, Icons.pause);
 
-        // Let the comment be played during 1.5 seconds and then click
+        // Let the comment be played during 0.25 seconds and then click
         // on the play button of the fourth comment
-        await Future.delayed(const Duration(milliseconds: 1500));
+        await Future.delayed(const Duration(milliseconds: 250));
         await tester.pumpAndSettle();
 
         await tester.drag(
           find.byType(PlaylistCommentListDialog),
           const Offset(
-              0, -1500), // Negative value for vertical drag to scroll down
+              0, -1700), // Negative value for vertical drag to scroll down
         );
 
         await tester.pumpAndSettle();
@@ -19407,8 +19407,10 @@ void main() {
         await tester.drag(
           find.byType(PlaylistCommentListDialog),
           const Offset(
-              0, 1500), // Negative value for vertical drag to scroll down
+              0, 1700), // Negative value for vertical drag to scroll down
         );
+
+        await tester.pumpAndSettle();
 
         playIconButtonFinder = find.descendant(
           of: gestureDetectorsFinder.at(0),
@@ -19428,7 +19430,7 @@ void main() {
         await tester.drag(
           find.byType(PlaylistCommentListDialog),
           const Offset(
-              0, -1500), // Negative value for vertical drag to scroll down
+              0, -1700), // Negative value for vertical drag to scroll down
         );
 
         await tester.pumpAndSettle();
@@ -19452,7 +19454,7 @@ void main() {
 
         // Let the unique comment of the fourth audio be played during 1.5 seconds
         // and then click on the play button of the fourth comment
-        await Future.delayed(const Duration(milliseconds: 1500));
+        await Future.delayed(const Duration(milliseconds: 250));
         await tester.pumpAndSettle();
 
         // // Tap on Close text button
@@ -19736,9 +19738,9 @@ void main() {
       Icon iconWidget = tester.widget<Icon>(iconFinder);
       expect(iconWidget.icon, Icons.pause);
 
-      // Let the comment be played during 1.5 seconds and then click
+      // Let the comment be played during 0.25 seconds and then click
       // on the play button of the fourth comment
-      await Future.delayed(const Duration(milliseconds: 1500));
+      await Future.delayed(const Duration(milliseconds: 250));
       await tester.pumpAndSettle();
 
       await tester.pumpAndSettle();
@@ -19789,9 +19791,9 @@ void main() {
       iconWidget = tester.widget<Icon>(iconFinder);
       expect(iconWidget.icon, Icons.pause);
 
-      // Let the comment be played during 1.5 seconds and then click
+      // Let the comment be played during 0.25 seconds and then click
       // on the play button of the first comment
-      await Future.delayed(const Duration(milliseconds: 1500));
+      await Future.delayed(const Duration(milliseconds: 250));
       await tester.pumpAndSettle();
 
       await tester.drag(
@@ -19862,9 +19864,9 @@ void main() {
       iconWidget = tester.widget<Icon>(iconFinder);
       expect(iconWidget.icon, Icons.pause);
 
-      // Let the comment be played during 1.5 seconds and then click
+      // Let the comment be played during 0.25 seconds and then click
       // on the play button of the second comment
-      await Future.delayed(const Duration(milliseconds: 1500));
+      await Future.delayed(const Duration(milliseconds: 250));
       await tester.pumpAndSettle();
 
       // Now tap on the play icon button of the second audio comment
@@ -19914,7 +19916,7 @@ void main() {
       expect(iconWidget.icon, Icons.pause);
 
       // Let the comment be played during 0.5 seconds
-      await Future.delayed(const Duration(milliseconds: 500));
+      await Future.delayed(const Duration(milliseconds: 250));
       await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
