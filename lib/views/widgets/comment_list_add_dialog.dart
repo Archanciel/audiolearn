@@ -19,28 +19,28 @@ import '../screen_mixin.dart';
 import 'comment_add_edit_dialog.dart';
 
 /// A global manager class for handling comment dialog overlays throughout the application.
-/// 
+///
 /// This utility class manages display, replacement, and dismissal of comment dialogs
 /// that are presented as overlays. It ensures only one comment dialog overlay exists
 /// at any given time, preventing unintended UI stacking and providing centralized
 /// overlay control.
-/// 
+///
 /// The class uses static members to maintain a singleton-like pattern, allowing
 /// any part of the application to access the same overlay state.
 class CommentDialogManager {
   // Stores the currently active overlay entry.
-  // 
+  //
   // This static variable holds a reference to the currently
   // displayed comment dialog overlay. When null, no comment
   // dialog overlay is currently displayed.
   static OverlayEntry? _currentOverlay;
 
   /// Closes and removes the currently active overlay if one exists.
-  /// 
+  ///
   /// This method safely removes any active overlay from the widget tree and
   /// resets the reference to null. If no overlay is currently active,
   /// this method has no effect.
-  /// 
+  ///
   /// Usage example:
   /// ```dart
   /// // When needing to dismiss the comment dialog
@@ -54,16 +54,16 @@ class CommentDialogManager {
   }
 
   /// Sets a new overlay as the current active overlay.
-  /// 
+  ///
   /// This method first closes any existing overlay using [closeCurrentOverlay],
   /// then assigns the provided [entry] as the new current overlay.
-  /// 
+  ///
   /// This ensures that only one comment dialog overlay is displayed at a time,
   /// preventing UI clutter and potential memory leaks.
   ///
   /// Parameters:
   ///   * [entry] - The new OverlayEntry to be set as the current overlay.
-  /// 
+  ///
   /// Usage example:
   /// ```dart
   /// final overlayEntry = OverlayEntry(
@@ -79,14 +79,14 @@ class CommentDialogManager {
   }
 
   // Indicates whether there is currently an active overlay.
-  // 
+  //
   // Returns true if there is an active comment dialog overlay,
   // false otherwise.
-  // 
+  //
   // This getter can be used to check if a comment dialog is
   // currently being displayed before attempting to show a
   // new one or to determine which UI behavior to use.
-  // 
+  //
   // Usage example:
   // ```dart
   // if (CommentDialogManager.hasActiveOverlay) {
@@ -709,24 +709,60 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
                           iconButtonTapModification, // Tap feedback color
                     ),
                     // Use a simpler ValueListenableBuilder just for the icon state
-                    icon: ValueListenableBuilder<bool>(
-                      valueListenable: audioPlayerVMlistenFalse
-                          .currentAudioPlayPauseNotifier,
-                      builder: (context, isPlaying, child) {
-                        return IconTheme(
-                          data: (isDarkTheme
-                                  ? ScreenMixin.themeDataDark
-                                  : ScreenMixin.themeDataLight)
-                              .iconTheme,
-                          child: Icon(
-                            // Display pause if this comment is playing and the audio is playing;
-                            // otherwise, display the play_arrow icon.
-                            (_playingComment != null &&
-                                    _playingComment == comment &&
-                                    isPlaying)
-                                ? Icons.pause
-                                : Icons.play_arrow,
-                          ),
+                    icon: ValueListenableBuilder<Duration>(
+                      valueListenable:
+                          audioPlayerVMlistenFalse.currentAudioPositionNotifier,
+                      builder: (context, currentAudioPosition, child) {
+                        if (_playingComment != null &&
+                            _playingComment == comment &&
+                            audioPlayerVMlistenFalse.currentAudio!
+                                .isPlayingOrPausedWithPositionBetweenAudioStartAndEnd &&
+                            (currentAudioPosition >=
+                                    Duration(
+                                        milliseconds: comment
+                                                .commentEndPositionInTenthOfSeconds *
+                                            100) ||
+                                // This 'or' addition is necessary to enable
+                                // replaying a comment whose end position
+                                // is the same as the audio end position. For
+                                // a reason I don't know, without this
+                                // condition, re-playing such a comment on the
+                                // Android smartphone does not work !
+                                currentAudioPosition >=
+                                    currentAudio.audioDuration -
+                                        const Duration(milliseconds: 1400))) {
+                          // You cannot await here, but you can trigger an
+                          // action which will not block the widget tree
+                          // rendering.
+                          WidgetsBinding.instance
+                              .addPostFrameCallback((_) async {
+                            await audioPlayerVMlistenFalse.pause();
+                          });
+                        }
+
+                        // This logic avoids that when the user clicks on
+                        // the play button of a comment, the play button
+                        // of the other comment is updated to 'pause'.
+                        return ValueListenableBuilder<bool>(
+                          valueListenable: audioPlayerVMlistenFalse
+                              .currentAudioPlayPauseNotifier,
+                          builder: (context, isPlaying, child) {
+                            return IconTheme(
+                              data: (isDarkTheme
+                                      ? ScreenMixin.themeDataDark
+                                      : ScreenMixin.themeDataLight)
+                                  .iconTheme,
+                              child: Icon(
+                                // Display pause if this comment is playing and the audio is playing;
+                                // otherwise, display the play_arrow icon.
+                                (_playingComment != null &&
+                                        _playingComment == comment &&
+                                        isPlaying)
+                                    ? Icons.pause
+                                    : Icons.play_arrow,
+                              ),
+                            );
+                          },
                         );
                       },
                     ),
