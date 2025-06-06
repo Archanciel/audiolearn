@@ -17549,7 +17549,7 @@ void main() {
       );
     });
   });
-  group('Playlist Audio Comments dialog test', () {
+  group('Playlist PlaylistCommentListDialog dialog test', () {
     testWidgets(
         '''On empty playlist, opening the playlist audio comments dialog.''',
         (WidgetTester tester) async {
@@ -19378,7 +19378,7 @@ void main() {
         expect(iconWidget.icon, Icons.pause);
 
         // Let the comment be played during 0.25 seconds and then click
-        // on the play button of the fourth comment
+        // on the play button of the first comment of the fourth audio
         await Future.delayed(const Duration(milliseconds: 250));
         await tester.pumpAndSettle();
 
@@ -19390,12 +19390,12 @@ void main() {
 
         await tester.pumpAndSettle();
 
-        // Now tap on the play icon button of the unique comment of the fourth
+        // Now tap on the play icon button of the first comment of the fourth
         // audio in order to start playing it
         await IntegrationTestUtil.playComment(
           tester: tester,
           gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 24, // unique comment of the fourth audio
+          itemIndex: 24, // first comment of the fourth audio
           typeOnPauseAfterPlay: false,
           maxPlayDurationSeconds: 3,
         );
@@ -19452,10 +19452,80 @@ void main() {
         iconWidget = tester.widget<Icon>(iconFinder);
         expect(iconWidget.icon, Icons.pause);
 
-        // Let the unique comment of the fourth audio be played during 1.5 seconds
-        // and then click on the play button of the fourth comment
+        // Let the first comment of the fourth audio be played during 0.25 seconds
+        // and then click on the play button of the second comment of the fourth audio
         await Future.delayed(const Duration(milliseconds: 250));
         await tester.pumpAndSettle();
+
+        // Now tap on the play icon button of the second comment of the fourth
+        // audio (end to end command) in order to start playing it
+        await IntegrationTestUtil.playComment(
+          tester: tester,
+          gestureDetectorsFinder: gestureDetectorsFinder,
+          itemIndex: 27, // second comment of the fourth audio
+          typeOnPauseAfterPlay: false,
+          maxPlayDurationSeconds: 3,
+        );
+
+        // Checking the previously played comment icon button
+
+        await tester.pumpAndSettle();
+
+        playIconButtonFinder = find.descendant(
+          of: gestureDetectorsFinder.at(24),
+          matching: find.byKey(const Key('playPauseIconButton')),
+        );
+
+        // Find the Icon widget inside the IconButton
+        iconFinder = find.descendant(
+          of: playIconButtonFinder,
+          matching: find.byType(Icon),
+        );
+
+        // Now get the Icon widget and check its type
+        iconWidget = tester.widget<Icon>(iconFinder);
+        expect(iconWidget.icon, Icons.play_arrow);
+
+        await tester.pumpAndSettle();
+
+        // Checking the currently played comment icon button
+
+        playIconButtonFinder = find.descendant(
+          of: gestureDetectorsFinder.at(27),
+          matching: find.byKey(const Key('playPauseIconButton')),
+        );
+
+        // Find the Icon widget inside the IconButton
+        iconFinder = find.descendant(
+          of: playIconButtonFinder,
+          matching: find.byType(Icon),
+        );
+
+        // Now get the Icon widget and check its type
+        iconWidget = tester.widget<Icon>(iconFinder);
+        expect(iconWidget.icon, Icons.pause);
+
+        // Let the second comment of the fourth audio be played during
+        // 0.6 seconds since it arrives to the audio end after 0.5 seconds.
+        await Future.delayed(const Duration(milliseconds: 5000));
+        await tester.pumpAndSettle();
+
+        // Checking the last played comment icon button
+
+        playIconButtonFinder = find.descendant(
+          of: gestureDetectorsFinder.at(27),
+          matching: find.byKey(const Key('playPauseIconButton')),
+        );
+
+        // Find the Icon widget inside the IconButton
+        iconFinder = find.descendant(
+          of: playIconButtonFinder,
+          matching: find.byType(Icon),
+        );
+
+        // Now get the Icon widget and check its type
+        iconWidget = tester.widget<Icon>(iconFinder);
+        expect(iconWidget.icon, Icons.play_arrow);
 
         // // Tap on Close text button
         // await tester.tap(
@@ -19538,7 +19608,7 @@ void main() {
       });
     });
   });
-  group('Audio item Comments dialog test', () {
+  group('Audio CommentListAddDialog dialog test', () {
     testWidgets('''Delete comment.''', (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String audioTitle =
@@ -19643,7 +19713,7 @@ void main() {
     testWidgets(
         '''Partially playing several single audio comments and verifying the update of the play/pause
           comment button. The index of the first comment is 0, the index of the second comment is 3,
-          and index of the last (4th) comment is 9.''',
+          and index of the last (5th) comment is 12.''',
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
 
@@ -19700,7 +19770,7 @@ void main() {
       // Ensure the list has one child widgets
       expect(
         tester.widget<ListBody>(audioCommentsLstFinder).children.length,
-        4,
+        5,
       );
 
       // Find all the list items GestureDetector's
@@ -19743,14 +19813,12 @@ void main() {
       await Future.delayed(const Duration(milliseconds: 250));
       await tester.pumpAndSettle();
 
-      await tester.pumpAndSettle();
-
       // Now tap on the play icon button of the fourth audio comment
       // in order to start playing it
       await IntegrationTestUtil.playComment(
         tester: tester,
         gestureDetectorsFinder: gestureDetectorsFinder,
-        itemIndex: 9, // Third comment of the second audio on IA
+        itemIndex: 9, // Fourth comment of the audio on IA
         typeOnPauseAfterPlay: false,
         maxPlayDurationSeconds: 3,
       );
@@ -19797,7 +19865,7 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.drag(
-        find.byType(PlaylistCommentListDialog),
+        find.byType(CommentListAddDialog),
         const Offset(0, 800), // Negative value for vertical drag to scroll down
       );
 
@@ -19808,7 +19876,7 @@ void main() {
       await IntegrationTestUtil.playComment(
         tester: tester,
         gestureDetectorsFinder: gestureDetectorsFinder,
-        itemIndex: 0, // FFirst comment of the audio on IA
+        itemIndex: 0, // First comment of the audio on IA
         typeOnPauseAfterPlay: false,
         maxPlayDurationSeconds: 3,
       );
@@ -19816,12 +19884,10 @@ void main() {
       // Checking the previously played comment icon button
 
       await tester.drag(
-        find.byType(PlaylistCommentListDialog),
+        find.byType(CommentListAddDialog),
         const Offset(
             0, -800), // Negative value for vertical drag to scroll down
       );
-
-      await tester.pumpAndSettle();
 
       await tester.pumpAndSettle();
 
@@ -19843,7 +19909,7 @@ void main() {
       // Checking the currently played comment icon button
 
       await tester.drag(
-        find.byType(PlaylistCommentListDialog),
+        find.byType(CommentListAddDialog),
         const Offset(0, 800), // Negative value for vertical drag to scroll down
       );
 
@@ -19874,7 +19940,7 @@ void main() {
       await IntegrationTestUtil.playComment(
         tester: tester,
         gestureDetectorsFinder: gestureDetectorsFinder,
-        itemIndex: 3, // first comment of the first audio
+        itemIndex: 3, // second comment of the IA audio
         typeOnPauseAfterPlay: false,
         maxPlayDurationSeconds: 3,
       );
@@ -19915,9 +19981,11 @@ void main() {
       iconWidget = tester.widget<Icon>(iconFinder);
       expect(iconWidget.icon, Icons.pause);
 
-      // Let the comment be played during 0.5 seconds
+      // Let the comment be played during 0.25 seconds
       await Future.delayed(const Duration(milliseconds: 250));
       await tester.pumpAndSettle();
+
+      // TODO: play the last comment to end of the audio
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
