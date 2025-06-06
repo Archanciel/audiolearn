@@ -704,25 +704,6 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
       );
     }
 
-    // if (!audioPlayerVM.isPlaying) {
-    // This fixes a problem when a playing comment was paused and
-    // then the user clicked on the play button of an other comment.
-    // In such a situation, the user had to click twice or three
-    // times on the other comment play button to play it if the other
-    // comment was positioned before the previously played comment.
-    // If the other comment was positioned after the previously played
-    // comment, then the user had to click only once on the play button
-    // of the other comment to play it.
-    //   await audioPlayerVM.playCurrentAudio(
-    //     rewindAudioPositionBasedOnPauseDuration: false,
-    //     isCommentPlaying: true,
-    //   );
-    // }
-    //
-    // What fixed the problem is adding
-    // _currentAudioPosition = durationPosition; in
-    // AudioPlayerVM.modifyAudioPlayerPosition() method.
-
     await audioPlayerVM.modifyAudioPlayerPosition(
       durationPosition: Duration(
           milliseconds: comment.commentStartPositionInTenthOfSeconds * 100),
