@@ -19256,7 +19256,7 @@ void main() {
         await Future.delayed(const Duration(milliseconds: 1500));
         await tester.pumpAndSettle();
 
-        // Now tap on the play icon button of the unique comment of the fourth
+        // Now tap on the play icon button of the second comment of the second
         // audio in order to start playing it
         await IntegrationTestUtil.playComment(
           tester: tester,
@@ -19387,7 +19387,7 @@ void main() {
         await IntegrationTestUtil.playComment(
           tester: tester,
           gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 21, // first comment of the third audio
+          itemIndex: 21, // unique comment of the fourth audio
           typeOnPauseAfterPlay: false,
           maxPlayDurationSeconds: 3,
         );
@@ -19440,8 +19440,8 @@ void main() {
         iconWidget = tester.widget<Icon>(iconFinder);
         expect(iconWidget.icon, Icons.pause);
 
-        // Let the third comment be played during 1.5 seconds and then click
-        // on the play button of the fourth comment
+        // Let the unique comment of the fourth audio be played during 1.5 seconds
+        // and then click on the play button of the fourth comment
         await Future.delayed(const Duration(milliseconds: 1500));
         await tester.pumpAndSettle();
 
@@ -19732,7 +19732,7 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.pumpAndSettle();
-      
+
       // Now tap on the play icon button of the fourth audio comment
       // in order to start playing it
       await IntegrationTestUtil.playComment(
