@@ -196,14 +196,14 @@ void main() {
           .expand((element) => element)
           .toList();
 
-      // the returned Commentlist has 3 comments
-      expect(commentsLst.length, 8);
+      // the returned Commentlist has 10 comments
+      expect(commentsLst.length, 10);
 
       expect(
           commentVM.getPlaylistAudioCommentNumber(
             playlist: playlistS8,
           ),
-          8);
+          10);
 
       Comment expectedCommentOne = Comment.fullConstructor(
         id: 'One_6473',
@@ -216,14 +216,14 @@ void main() {
         lastUpdateDateTime: DateTime.parse('2024-05-29T13:30:03.000'),
       );
       Comment expectedCommentFive = Comment.fullConstructor(
-        id: 'Comment Jancovici_430',
-        title: 'Comment Jancovici',
+        id: 'To end_46727',
+        title: 'To end',
         content:
-            "Economic growth will become more and more an exception in Europe, starting from now\r\nBefore any attribution of causes, it is possible to note that the growth rate of the GDP per capita (world average) has been slowly – and constantly – decreasing since the 1960’s (I don’t have any data for the years before, that’s why I start in 1960!):",
-        commentStartPositionInTenthOfSeconds: 430,
-        commentEndPositionInTenthOfSeconds: 1030,
-        creationDateTime: DateTime.parse('2024-07-21T16:32:42.000'),
-        lastUpdateDateTime: DateTime.parse('2024-07-21T16:32:42.000'),
+            "",
+        commentStartPositionInTenthOfSeconds: 46717,
+        commentEndPositionInTenthOfSeconds: 46737,
+        creationDateTime: DateTime.parse('2025-06-06 12:48:25.000'),
+        lastUpdateDateTime: DateTime.parse('2025-06-06 12:48:25.000'),
       );
 
       validateComment(commentsLst[0], expectedCommentOne);
