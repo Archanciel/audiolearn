@@ -406,7 +406,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                               .pause() // clicked on currently playing comment pause button
                           : await _playFromCommentPosition(
                               // clicked on other comment play button
-                              audioPlayerVM: audioPlayerVMlistenFalse,
+                              audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                               commentVMlistenTrue: commentVMlistenTrue,
                               currentPlaylist: currentPlaylist,
                               currentAudio: currentAudio,
@@ -677,7 +677,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
   }
 
   Future<void> _playFromCommentPosition({
-    required AudioPlayerVM audioPlayerVM,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required CommentVM commentVMlistenTrue,
     required Playlist currentPlaylist,
     required Audio currentAudio,
@@ -685,8 +685,8 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
   }) async {
     // Fixes the bug of playing comments in playlist comment list
     // dialog on Windows and Android.
-    if (audioPlayerVM.isPlaying) {
-      await audioPlayerVM.pause();
+    if (audioPlayerVMlistenFalse.isPlaying) {
+      await audioPlayerVMlistenFalse.pause();
     }
 
     _playingComment = comment;
@@ -696,21 +696,21 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
       previousAudioIndex: currentPlaylist.currentOrPastPlayableAudioIndex,
     );
 
-    if (audioPlayerVM.currentAudio != currentAudio) {
+    if (audioPlayerVMlistenFalse.currentAudio != currentAudio) {
       // Adding the test fixes the problem of playing audio comments
       // from the playlist comment list dialog.
-      await audioPlayerVM.setCurrentAudio(
+      await audioPlayerVMlistenFalse.setCurrentAudio(
         audio: currentAudio,
       );
     }
 
-    await audioPlayerVM.modifyAudioPlayerPosition(
+    await audioPlayerVMlistenFalse.modifyAudioPlayerPosition(
       durationPosition: Duration(
           milliseconds: comment.commentStartPositionInTenthOfSeconds * 100),
       isUndoCommandToAdd: true,
     );
 
-    await audioPlayerVM.playCurrentAudio(
+    await audioPlayerVMlistenFalse.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
       isCommentPlaying: true,
     );
