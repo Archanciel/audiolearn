@@ -19313,6 +19313,8 @@ void main() {
               0, 800), // Negative value for vertical drag to scroll down
         );
 
+        await tester.pumpAndSettle();
+
         // Now tap on the play icon button of the unique comment of the fourth
         // audio in order to start playing it
         await IntegrationTestUtil.playComment(
@@ -19332,6 +19334,8 @@ void main() {
           const Offset(
               0, -800), // Negative value for vertical drag to scroll down
         );
+
+        await tester.pumpAndSettle();
 
         playIconButtonFinder = find.descendant(
           of: gestureDetectorsFinder.at(12),
@@ -19353,6 +19357,8 @@ void main() {
           const Offset(
               0, 800), // Negative value for vertical drag to scroll down
         );
+
+        await tester.pumpAndSettle();
 
         // Checking the currently played comment icon button
 
@@ -19382,12 +19388,14 @@ void main() {
               0, -1500), // Negative value for vertical drag to scroll down
         );
 
+        await tester.pumpAndSettle();
+
         // Now tap on the play icon button of the unique comment of the fourth
         // audio in order to start playing it
         await IntegrationTestUtil.playComment(
           tester: tester,
           gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 21, // unique comment of the fourth audio
+          itemIndex: 24, // unique comment of the fourth audio
           typeOnPauseAfterPlay: false,
           maxPlayDurationSeconds: 3,
         );
@@ -19423,10 +19431,12 @@ void main() {
               0, -1500), // Negative value for vertical drag to scroll down
         );
 
+        await tester.pumpAndSettle();
+
         // Checking the currently played comment icon button
 
         playIconButtonFinder = find.descendant(
-          of: gestureDetectorsFinder.at(21),
+          of: gestureDetectorsFinder.at(24),
           matching: find.byKey(const Key('playPauseIconButton')),
         );
 
@@ -19789,6 +19799,8 @@ void main() {
         const Offset(0, 800), // Negative value for vertical drag to scroll down
       );
 
+      await tester.pumpAndSettle();
+
       // Now tap on the play icon button of the first audio comment
       // in order to start playing it
       await IntegrationTestUtil.playComment(
@@ -19803,8 +19815,11 @@ void main() {
 
       await tester.drag(
         find.byType(PlaylistCommentListDialog),
-        const Offset(0, -800), // Negative value for vertical drag to scroll down
+        const Offset(
+            0, -800), // Negative value for vertical drag to scroll down
       );
+
+      await tester.pumpAndSettle();
 
       await tester.pumpAndSettle();
 
@@ -19829,6 +19844,8 @@ void main() {
         find.byType(PlaylistCommentListDialog),
         const Offset(0, 800), // Negative value for vertical drag to scroll down
       );
+
+      await tester.pumpAndSettle();
 
       playIconButtonFinder = find.descendant(
         of: gestureDetectorsFinder.at(0),
