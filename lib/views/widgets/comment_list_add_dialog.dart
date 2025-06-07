@@ -535,7 +535,12 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
     // Since playing a comment changes the audio player
     // position, avoiding to clear the undo/redo lists
     // enables the user to undo the audio position change.
-    if (audioPlayerVMlistenFalse.isPlaying) {
+    //
+    // Checking if _playingComment is not null avoids to
+    // stop playing the audio in case the user opened the
+    // comment list dialog and then closed it without having
+    // played a comment.
+    if (_playingComment != null && audioPlayerVMlistenFalse.isPlaying) {
       await audioPlayerVMlistenFalse.pause();
     }
 
