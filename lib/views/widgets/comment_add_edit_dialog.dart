@@ -643,6 +643,11 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                           // This duration string is used if the user empties the position field.
                           '0:00.0',
                           // Uses the total duration from audioPlayerVM.
+                          (audioPlayerVMlistenFalse.currentAudioTotalDuration -
+                                  const Duration(milliseconds: 2000)) 
+                              .HHmmssZeroHH(
+                            addRemainingOneDigitTenthOfSecond: true,
+                          ),
                           audioPlayerVMlistenFalse.currentAudioTotalDuration
                               .HHmmssZeroHH(
                             addRemainingOneDigitTenthOfSecond: true,
@@ -716,13 +721,25 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
   ///                   );
   InvalidValueState validateEnteredValueFunction(
     String minDurationStr,
-    String maxDurationStr,
+    String maxStartDurationStr,
+    String maxEndDurationStr,
     String enteredTimeStr,
+    bool isStartCheckBoxChecked,
   ) {
     int minDurationInTenthsOfSeconds =
         DateTimeUtil.convertToTenthsOfSeconds(timeString: minDurationStr);
-    int maxDurationInTenthsOfSeconds =
-        DateTimeUtil.convertToTenthsOfSeconds(timeString: maxDurationStr);
+
+    int maxDurationInTenthsOfSeconds;
+    
+    if (isStartCheckBoxChecked) {
+      maxDurationInTenthsOfSeconds =
+        DateTimeUtil.convertToTenthsOfSeconds(timeString: maxStartDurationStr);
+    } else {
+      // If the end position checkbox is checked, we use the max end duration.
+      maxDurationInTenthsOfSeconds =
+        DateTimeUtil.convertToTenthsOfSeconds(timeString: maxEndDurationStr);
+    }
+
     int enteredTimeInTenthsOfSeconds =
         DateTimeUtil.convertToTenthsOfSeconds(timeString: enteredTimeStr);
 

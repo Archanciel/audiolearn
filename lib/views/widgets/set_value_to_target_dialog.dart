@@ -252,7 +252,13 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
 
     String enteredStr = _passedValueTextEditingController.text;
     String minValueLimitStr = widget.validationFunctionArgs[0].toString();
-    String maxValueLimitStr = widget.validationFunctionArgs[1].toString();
+    String maxValueLimitStr;
+
+    if (_isCheckboxChecked[0]) {
+      maxValueLimitStr = widget.validationFunctionArgs[1].toString();
+    } else {
+      maxValueLimitStr = widget.validationFunctionArgs[2].toString();
+    }
 
     // The code below simplifies setting the comment start position
     // to 0 or the comment end position to audio duration.
@@ -268,6 +274,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
     }
 
     widget.validationFunctionArgs.add(enteredStr);
+    widget.validationFunctionArgs.add(_isCheckboxChecked[0]);
 
     // Example of applied validation function:
     // InvalidValueState validateEnteredValueFunction(
@@ -284,10 +291,10 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
       widget.validationFunctionArgs,
     );
 
-    // Once the validation function has been applied, the entered value
+    // Once the validation function has been applied, the 2 entered values
     // must be removed from the list of arguments, otherwise, the next
     // time the validation function will be applied, it will fail.
-    widget.validationFunctionArgs.removeLast();
+    widget.validationFunctionArgs.length -= 2;
 
     if (invalidValueState != InvalidValueState.none) {
       WarningMessageVM warningMessageVM = Provider.of<WarningMessageVM>(
