@@ -791,10 +791,13 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
 
     if (modifiedCommentStartPosition < const Duration(milliseconds: 0)) {
       modifiedCommentStartPosition = const Duration(milliseconds: 0);
-    } else if (modifiedCommentStartPosition > audioDuration) {
+    } else if (modifiedCommentStartPosition > audioDuration - const Duration(milliseconds: 2000)) {
       modifiedCommentStartPosition = audioDuration  -
-            const Duration(milliseconds: 4000); // will play comment starting
-        //                                         4 sec before new start position
+            const Duration(milliseconds: 2000); // will play comment starting
+        //                                         2 sec before audio end position.
+        //                                         This will avoid a problem caused
+        //                                         by playing a comment whose position
+        //                                         is almost at the audio end position.
     }
 
     commentVMlistenFalse.currentCommentStartPosition =

@@ -19458,7 +19458,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now tap on the play icon button of the second comment of the fourth
-        // audio (end to end command) in order to start playing it
+        // audio (end to end comment) in order to start playing it
         await IntegrationTestUtil.playComment(
           tester: tester,
           gestureDetectorsFinder: gestureDetectorsFinder,
@@ -19501,13 +19501,9 @@ void main() {
           matching: find.byType(Icon),
         );
 
-        // Now get the Icon widget and check its type
-        iconWidget = tester.widget<Icon>(iconFinder);
-        expect(iconWidget.icon, Icons.pause);
-
         // Let the second comment of the fourth audio be played during
-        // 0.6 seconds since it arrives to the audio end after 0.5 seconds.
-        await Future.delayed(const Duration(milliseconds: 5000));
+        // 2.1 seconds since it arrives to the audio end after 2 seconds.
+        await Future.delayed(const Duration(milliseconds: 2100));
         await tester.pumpAndSettle();
 
         // Checking the last played comment icon button
@@ -19985,7 +19981,80 @@ void main() {
       await Future.delayed(const Duration(milliseconds: 250));
       await tester.pumpAndSettle();
 
-      // TODO: play the last comment to end of the audio
+      await tester.drag(
+        find.byType(CommentListAddDialog),
+        const Offset(
+            0, -800), // Negative value for vertical drag to scroll down
+      );
+
+      await tester.pumpAndSettle();
+
+      // Now tap on the play icon button of the last audio comment
+      // (end to end comment) in order to start playing it
+      await IntegrationTestUtil.playComment(
+        tester: tester,
+        gestureDetectorsFinder: gestureDetectorsFinder,
+        itemIndex: 12, // last comment of the IA audio
+        typeOnPauseAfterPlay: false,
+        maxPlayDurationSeconds: 3,
+      );
+
+      // Checking the previously played comment icon button
+
+      await tester.pumpAndSettle();
+
+      await tester.drag(
+        find.byType(CommentListAddDialog),
+        const Offset(
+            0, 800), // Negative value for vertical drag to scroll down
+      );
+
+      await tester.pumpAndSettle();
+
+      playIconButtonFinder = find.descendant(
+        of: gestureDetectorsFinder.at(3),
+        matching: find.byKey(const Key('playPauseIconButton')),
+      );
+
+      // Find the Icon widget inside the IconButton
+      iconFinder = find.descendant(
+        of: playIconButtonFinder,
+        matching: find.byType(Icon),
+      );
+
+      // Now get the Icon widget and check its type
+      iconWidget = tester.widget<Icon>(iconFinder);
+      expect(iconWidget.icon, Icons.play_arrow);
+
+        // Let the last comment of the fourth audio be played during
+        // 2.1 seconds since it arrives to the audio end after 2 seconds.
+        await Future.delayed(const Duration(milliseconds: 2100));
+        await tester.pumpAndSettle();
+
+      // Checking the currently played comment icon button
+
+      await tester.drag(
+        find.byType(CommentListAddDialog),
+        const Offset(
+            0, -800), // Negative value for vertical drag to scroll down
+      );
+
+      await tester.pumpAndSettle();
+
+      playIconButtonFinder = find.descendant(
+        of: gestureDetectorsFinder.at(12),
+        matching: find.byKey(const Key('playPauseIconButton')),
+      );
+
+      // Find the Icon widget inside the IconButton
+      iconFinder = find.descendant(
+        of: playIconButtonFinder,
+        matching: find.byType(Icon),
+      );
+
+      // Now get the Icon widget and check its type
+      iconWidget = tester.widget<Icon>(iconFinder);
+      expect(iconWidget.icon, Icons.play_arrow);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
