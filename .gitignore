@@ -65,3 +65,4 @@ macos/Flutter/GeneratedPluginRegistrant.swift
 *.cmake
 *.swift
 *.cc
+linux/flutter/generated_plugin_registrant.cc
