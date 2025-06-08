@@ -20,7 +20,7 @@ class Audio {
   // If its current position is greater or equal to its total duration
   // minus fullyListenedBufferSeconds seconds, then the audio is considered
   // as being fully listened.
-  static int fullyListenedBufferSeconds = 15;
+  static int fullyListenedBufferSeconds = 5;
 
   // Youtube video author
   String youtubeVideoChannel;
