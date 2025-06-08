@@ -31,7 +31,7 @@ enum AudioPopupMenuAction {
 }
 
 const String kApplicationName = "Audio Learn";
-const String kApplicationVersion = '1.4.26';
+const String kApplicationVersion = '1.4.27';
 
 // Used for Android app version
 const String kApplicationPath = "/storage/emulated/0/Documents/audiolearn";
@@ -70,6 +70,7 @@ const String kSettingsFileName = 'settings.json';
 const String kCommentDirName = 'comments';
 const String kPictureDirName = 'pictures';
 const String kPictureAudioMapFileName = 'pictureAudioMap.json';
+const double kWindowsSystemVolume = 0.86;
 
 const String kOrderedPlaylistTitlesFileName = 'savedOrderedPlaylistTitles.txt';
 
