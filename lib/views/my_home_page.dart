@@ -119,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
     // ..add(const AudioExtractorView());
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if (Platform.isWindows) {
+      if (Platform.isWindows && !widget.settingsDataService.isTest) {
         _volumeController = VolumeController.instance;
         _originalVolume = await _volumeController!.getVolume();
         _volumeController!.setVolume(kWindowsSystemVolume);
