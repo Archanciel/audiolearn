@@ -361,20 +361,20 @@ void main() {
         selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
       );
 
-      // First, we modify the audio position of the last downloaded audio
-      // of the playlist. First, get the last downloaded audio ListTile Text
+      // First, we modify the audio position of the first downloaded audio
+      // of the playlist. First, get the first downloaded audio ListTile Text
       // widget finder and tap on it
       final Finder
-          playlistDownloadViewLastDownloadedAudioListTileTextWidgetFinder =
+          playlistDownloadViewFirstDownloadedAudioListTileTextWidgetFinder =
           find.text(firstDownloadedAudioTitle);
 
       await tester
-          .tap(playlistDownloadViewLastDownloadedAudioListTileTextWidgetFinder);
+          .tap(playlistDownloadViewFirstDownloadedAudioListTileTextWidgetFinder);
       await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
         tester: tester,
       );
 
-      // Tapping 5 times on the forward 1 minute icon button. Now, the last
+      // Tapping 5 times on the forward 1 minute icon button. Now, the first
       // downloaded audio of the playlist is partially listened.
       for (int i = 0; i < 5; i++) {
         await tester
@@ -382,17 +382,17 @@ void main() {
         await tester.pumpAndSettle();
       }
 
-      // Playing the last downloaded audio during 1 second.
+      // Playing the first downloaded audio during 1 second.
 
       await tester.tap(find.byIcon(Icons.play_arrow));
       Future.delayed(const Duration(seconds: 1));
       await tester.pumpAndSettle(const Duration(milliseconds: 1500));
 
-      // Click on the pause button to stop the last downloaded audio
+      // Click on the pause button to stop the first downloaded audio
       await tester.tap(find.byIcon(Icons.pause));
       await tester.pumpAndSettle();
 
-      // Now we want to tap on the audio downloaded before the last
+      // Now we want to tap on the audio downloaded after the first
       // downloaded audio of the playlist in order to start playing
       // it.
 
@@ -402,8 +402,8 @@ void main() {
       await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
 
-      // Then, get the previous end downloaded audio ListTile Text
-      // widget finder and tap on it
+      // Then, get the second downloaded audio ListTile Text widget
+      // finder and tap on it
       final Finder secondDownloadedAudioListTileTextWidgetFinder =
           find.text(secondDownloadedAudioTitle);
 
@@ -411,15 +411,15 @@ void main() {
       await tester.pumpAndSettle(const Duration(milliseconds: 500));
 
       // Now we tap on the play button in order to finish
-      // playing the audio downloaded before the last downloaded
-      // audio and start playing the last downloaded audio of the
+      // playing the audio downloaded after the first downloaded
+      // audio and start playing the first downloaded audio of the
       // playlist.
 
       await tester.tap(find.byIcon(Icons.play_arrow));
       await Future.delayed(const Duration(seconds: 5));
       await tester.pumpAndSettle();
 
-      // Click on the pause button to stop the last downloaded audio
+      // Click on the pause button to stop the first downloaded audio
       await tester.tap(find.byIcon(Icons.pause));
       await tester.pumpAndSettle();
 
@@ -8331,6 +8331,90 @@ void main() {
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
       await tester.pumpAndSettle();
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Verify that while the commented audio is playing, after opening the
+           comment list add dialog and closing it without having played a comment,
+           the audio remains playing and after its end is reached, the partially
+           listened last downloaded audio start playing.''', (
+      WidgetTester tester,
+    ) async {
+      const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
+      const String secondDownloadedAudioTitle =
+          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau';
+      const String lastDownloadedAudioTitleWithDuration =
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n20:32";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName:
+            'audio_player_view_first_to_last_audio_corrected_test',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      // Now we want to tap on the secondlsy downloaded audio of the
+      // playlist in order to start playing it.
+      //
+      // Get the second downloaded audio ListTile Text widget
+      // finder and tap on it
+      final Finder secondDownloadedAudioListTileTextWidgetFinder =
+          find.text(secondDownloadedAudioTitle);
+
+      await tester.tap(secondDownloadedAudioListTileTextWidgetFinder);
+      await tester.pumpAndSettle(const Duration(milliseconds: 500));
+
+      // Now we tap on the play button in order to finish
+      // playing the audio downloaded after the first downloaded
+      // audio and start playing the first downloaded audio of the
+      // playlist.
+
+      await tester.tap(find.byIcon(Icons.play_arrow));
+      await tester.pumpAndSettle();
+
+      // Tap on the comment icon button to open the comment add list
+      // dialog
+      final Finder commentInkWellButtonFinder = find.byKey(
+        const Key('commentsInkWellButton'),
+      );
+
+      await tester.tap(commentInkWellButtonFinder);
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(milliseconds: 500));
+      await tester.pumpAndSettle();
+
+      // Now close the comment list dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
+
+      // Click on the pause button to stop the first downloaded audio
+      await tester.tap(find.byIcon(Icons.pause));
+      await tester.pumpAndSettle();
+
+      // Verify the last downloaded played audio title
+      expect(find.text(lastDownloadedAudioTitleWithDuration), findsOneWidget);
+
+      // Ensure that the bug corrected on AudioPlayerVM on 06-06-2024
+      // no longer happens. This bug impacted the application during
+      // 3 weeks before it was discovered !!!!
+      final Finder audioPlayerViewAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPosition'));
+
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: audioPlayerViewAudioPositionFinder,
+        minPositionTimeStr: '20:11',
+        maxPositionTimeStr: '20:16',
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
