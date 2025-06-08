@@ -1,6 +1,10 @@
+import 'dart:io';
+import 'dart:ui';
+
 import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:volume_controller/volume_controller.dart';
 import '../l10n/app_localizations.dart';
 
 import '../constants.dart';
@@ -85,6 +89,12 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
   // page. This list is filled in the initState() method.
   final List<StatefulWidget> _screenWidgetLst = [];
 
+  // Windows volume management instance variables
+
+  AppLifecycleListener? _lifecycleListener;
+  double _originalVolume = 0.06;
+  VolumeController? _volumeController;
+
   @override
   void initState() {
     super.initState();
@@ -107,6 +117,38 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
         settingsDataService: widget.settingsDataService,
       ));
     // ..add(const AudioExtractorView());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (Platform.isWindows) {
+        _volumeController = VolumeController.instance;
+        _originalVolume = await _volumeController!.getVolume();
+        _volumeController!.setVolume(kWindowsSystemVolume);
+
+        _lifecycleListener = AppLifecycleListener(
+          onExitRequested: () async {
+            await _restoreOriginalVolume();
+            return AppExitResponse.exit;
+          },
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    if (_lifecycleListener != null) {
+      // If the lifecycle listener is not null, dispose it
+      // to avoid memory leaks.
+      _lifecycleListener!.dispose();
+    }
+
+    super.dispose();
+  }
+
+  Future<void> _restoreOriginalVolume() async {
+    if (Platform.isWindows && _volumeController != null) {
+      await _volumeController!.setVolume(_originalVolume);
+    }
   }
 
   @override
