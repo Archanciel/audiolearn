@@ -1025,7 +1025,7 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
 
     await audioPlayerVMlistenFalse.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
-      isCommentPlaying: true,
+      commentEndPositionInTenthOfSeconds: comment.commentEndPositionInTenthOfSeconds,
     );
   }
 

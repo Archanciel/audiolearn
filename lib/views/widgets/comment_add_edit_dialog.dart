@@ -791,7 +791,8 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
 
     await audioPlayerVM.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
-      isCommentPlaying: true,
+      // data used by the AudioPlayerVM Timer
+      commentEndPositionInTenthOfSeconds: commentVMlistenFalse.currentCommentEndPosition.inMilliseconds ~/ 100,
     );
   }
 
@@ -827,7 +828,8 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
 
     await audioPlayerVM.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
-      isCommentPlaying: true,
+      // data used by the AudioPlayerVM Timer
+      commentEndPositionInTenthOfSeconds: commentVMlistenFalse.currentCommentEndPosition.inMilliseconds ~/ 100,
     );
   }
 
@@ -858,7 +860,8 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
 
     await audioPlayerVM.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
-      isCommentPlaying: true,
+      // data used by the AudioPlayerVM Timer
+      commentEndPositionInTenthOfSeconds: commentVMlistenFalse.currentCommentEndPosition.inMilliseconds ~/ 100,
     );
   }
 }
