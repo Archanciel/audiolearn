@@ -3073,10 +3073,14 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Load the restored settings whose corresponding list or map will
     // be merged with the current app settings.
+
     String applicationPath = _settingsDataService.get(
       settingType: SettingType.dataLocation,
       settingSubType: DataLocation.appSettingsPath,
     );
+
+    // Loading settingsDataServiceZipVersion from settings.json file
+    // which was extracted from the restored zip file.
     await settingsDataServiceZipVersion.loadSettingsFromFile(
       settingsJsonPathFileName:
           '$applicationPath${Platform.pathSeparator}$kSettingsFileName',
