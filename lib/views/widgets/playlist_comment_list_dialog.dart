@@ -712,7 +712,8 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
 
     await audioPlayerVMlistenFalse.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
-      isCommentPlaying: true,
+      // data used by the AudioPlayerVM Timer
+      commentEndPositionInTenthOfSeconds: comment.commentEndPositionInTenthOfSeconds,
     );
   }
 

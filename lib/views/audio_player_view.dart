@@ -731,7 +731,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                     currentAudio: currentAudio!,
                   );
 
-                  // Hides the second line play/pause button after opening
+                  // Hides the second line play/pause button (present
+                  // after the 'Playlists' button) after opening
                   // the comment dialog if a picture is displayed.
                   commentVMlistenTrue.wasCommentDialogOpened = true;
                 },
