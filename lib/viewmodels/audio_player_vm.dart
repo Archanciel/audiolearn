@@ -98,8 +98,6 @@ class AudioPlayerVM extends ChangeNotifier {
   final List<Command> _undoList = [];
   final List<Command> _redoList = [];
 
-  bool _isCommentPlaying = false;
-
   // Stream subscriptions
   StreamSubscription? _durationSubscription;
   StreamSubscription? _positionSubscription;
@@ -151,6 +149,9 @@ class AudioPlayerVM extends ChangeNotifier {
   // or the other position buttons.
   bool _wasAudioPlayersStopped = false;
 
+  Timer? _commentEndTimer;
+  int _commentEndPositionInTenthOfSeconds = -1;
+
   AudioPlayerVM({
     required SettingsDataService settingsDataService,
     required PlaylistListVM playlistListVM,
@@ -163,6 +164,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
   @override
   Future<void> dispose() async {
+    _cancelCommentEndTimer(); // Clean up timer
     await _audioPlayer.dispose(); // on main project
 
     _durationSubscription?.cancel();
@@ -605,8 +607,8 @@ class AudioPlayerVM extends ChangeNotifier {
       updateAndSaveCurrentAudio();
 
       // If a comment was playing, reset the state and stop processing
-      if (_isCommentPlaying) {
-        _isCommentPlaying = false;
+      if (_commentEndPositionInTenthOfSeconds != -1) {
+        _commentEndPositionInTenthOfSeconds = -1;
         currentAudioPlayPauseNotifier.value = false; // Update UI state
         return;
       }
@@ -706,12 +708,19 @@ class AudioPlayerVM extends ChangeNotifier {
   /// or on the play icon in the CommentAddEditDialog or on the play
   /// icon in the second audio player line which exist if a picture is
   /// displayed instead the regular play/pause icon.
+  /// 
+  /// {commentEndPositionInTenthOfSeconds} is used by the AudioPlayerVM
+  /// Timer to determine when the comment to play will end. If no value
+  /// is provided, the AudioPlayerVM Timer will not be started. Using a
+  /// Timer is the only way to enable a playing comment to be ended if
+  /// the Audio Learn application is in the background or if the
+  /// smartphone is turned off.
   Future<void> playCurrentAudio({
     bool rewindAudioPositionBasedOnPauseDuration = true,
-    bool isCommentPlaying = false,
     bool isFromAudioPlayerView = false,
+    int commentEndPositionInTenthOfSeconds = -1,
   }) async {
-    _isCommentPlaying = isCommentPlaying;
+    _commentEndPositionInTenthOfSeconds = commentEndPositionInTenthOfSeconds;
 
     List<Playlist> selectedPlaylistsLst =
         _playlistListVM.getSelectedPlaylists();
@@ -741,7 +750,8 @@ class AudioPlayerVM extends ChangeNotifier {
       // The protection again the alarm or phone call is deactivated
       // in order to enable position button and slider usage after
       // the audio was paused.
-      if ((isFromAudioPlayerView || isCommentPlaying) &&
+      if ((isFromAudioPlayerView ||
+              _commentEndPositionInTenthOfSeconds != -1) &&
           _wasAudioPlayersStopped) {
         // Set the source again since clicking on the pause icon
         // stopped the audio player.
@@ -761,6 +771,13 @@ class AudioPlayerVM extends ChangeNotifier {
       await _audioPlayer.play(DeviceFileSource(audioFilePathName));
       await _audioPlayer.setPlaybackRate(_currentAudio!.audioPlaySpeed);
 
+      // Starting a Timer if this is a comment in order to enable
+      // the comment to be ended if the Audio Learn application is in
+      // the background or if the smartphone is turned off.
+      if (_commentEndPositionInTenthOfSeconds != -1) {
+        _startCommentEndTimer();
+      }
+
       _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd =
           true;
       _currentAudio!.isPaused = false;
@@ -776,6 +793,10 @@ class AudioPlayerVM extends ChangeNotifier {
   }
 
   Future<void> pause() async {
+    // Cancel comment timer when pausing
+    _cancelCommentEndTimer();
+    _commentEndPositionInTenthOfSeconds = -1;
+
     if (_wasAudioPlayersStopped) {
       // Avoid executing _audioPlayer.stop() several times, which
       // causes an error due to an audioplayers is disposed exception
@@ -823,19 +844,33 @@ class AudioPlayerVM extends ChangeNotifier {
     // clicking on it
     currentAudioPlayPauseNotifier.value = false; // false means the play/pause
     //                                              button will be set to play
+  }
 
-    // Required so that the audio item in the playlist download view
-    // play/pause button is correctly updated when clicking on it in
-    // order to pause the playing audio. Otherwise, the audio is paused,
-    // but the button is not converted to play button.
+  /// This method is useful when the playing comment reach its end and the application
+  /// is in the background or the smartphone is turned off.
+  void _startCommentEndTimer() {
+    _cancelCommentEndTimer(); // Cancel any existing timer
 
-    // Usefull for PlaylistDownloadView only. Without this instruction,
-    // the play/pause button of the audio item in the playlist download
-    // view is not updated when clicking on pause button in the audio
-    // player view. Since audio list item no longer uses audio player VM
-    // listen true, the notifyListeners() instruction is no longer
-    // necessary.
-    // notifyListeners();
+    // Calculate the end position in tenths of seconds based on the audio speed
+    int timeUntilEndInTenthsOfSeconds = _commentEndPositionInTenthOfSeconds - (_currentAudio!.audioPositionSeconds * 10);
+    timeUntilEndInTenthsOfSeconds = (timeUntilEndInTenthsOfSeconds / _currentAudio!.audioPlaySpeed).round();
+
+    Duration timeUntilEnd = Duration(
+      milliseconds: timeUntilEndInTenthsOfSeconds * 100,
+    );
+
+    if (timeUntilEnd.inMilliseconds > 0) {
+      _commentEndTimer = Timer(timeUntilEnd, () {
+        pause();
+      });
+    }
+  }
+
+  void _cancelCommentEndTimer() {
+    if (_commentEndTimer != null) {
+      _commentEndTimer!.cancel();
+      _commentEndTimer = null;
+    }
   }
 
   /// Method called when the user clicks on the '<<' or '>>'
@@ -1192,7 +1227,7 @@ class AudioPlayerVM extends ChangeNotifier {
     _setCurrentAudioToEndPosition();
     updateAndSaveCurrentAudio();
 
-    if (_isCommentPlaying) {
+    if (_commentEndPositionInTenthOfSeconds != -1) {
       // In this situation, if a comment is playing and arrives to the
       // audio end, the next audio is not played.
 
@@ -1218,7 +1253,6 @@ class AudioPlayerVM extends ChangeNotifier {
   }
 
   void _setCurrentAudioToEndPosition() {
-
     // Solves the problem that once the audio reached its end,
     // clicking on the audio position buttons or on the audio
     // slider did not change the audio position.
