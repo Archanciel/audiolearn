@@ -20667,9 +20667,9 @@ void main() {
             // displayed audio titles and subtitles.
 
             List<String> playlistsTitles = [
+              "Restore- short - test - playlist",
               "A restaurer",
               "local",
-              "Restore- short - test - playlist"
             ];
 
             List<String> audioTitles = [
@@ -20862,9 +20862,9 @@ void main() {
             // displayed audio titles and subtitles.
 
             List<String> playlistsTitles = [
+              "Restore- short - test - playlist",
               "A restaurer",
               "local",
-              "Restore- short - test - playlist"
             ];
 
             List<String> audioTitles = [

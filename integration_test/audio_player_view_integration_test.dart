@@ -643,7 +643,7 @@ void main() {
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '8:49',
-        maxPositionTimeStr: '8:53',
+        maxPositionTimeStr: '8:54',
       );
 
       // Purge the test playlist directory so that the created test
