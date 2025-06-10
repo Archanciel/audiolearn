@@ -247,6 +247,7 @@ class PlaylistListVM extends ChangeNotifier {
     bool unselectAddedPlaylist = true,
     required bool updatePlaylistPlayableAudioList,
     bool restoringPlaylistsCommentsAndSettingsJsonFilesFromZip = false,
+    bool managePlaylistOrder = false,
   }) {
     _audioDownloadVM.updatePlaylistJsonFiles(
         unselectAddedPlaylist: unselectAddedPlaylist,
@@ -334,9 +335,9 @@ class PlaylistListVM extends ChangeNotifier {
     // _mergeRestoredFromZipSettingsWithCurrentAppSettings().
     if (!restoringPlaylistsCommentsAndSettingsJsonFilesFromZip) {
       _updateAndSavePlaylistOrder(
-        addExistingSettingsAudioSortFilterData:
-            restoringPlaylistsCommentsAndSettingsJsonFilesFromZip,
-      );
+          addExistingSettingsAudioSortFilterData:
+              restoringPlaylistsCommentsAndSettingsJsonFilesFromZip,
+          managePlaylistOrder: managePlaylistOrder);
     }
 
     notifyListeners();
@@ -960,6 +961,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// settings file and added to the corresponding settings map.
   void _updateAndSavePlaylistOrder({
     bool addExistingSettingsAudioSortFilterData = false,
+    bool managePlaylistOrder = false,
   }) {
     List<String> playlistOrderFromListOfSelectablePlaylists =
         _listOfSelectablePlaylists.map((playlist) => playlist.title).toList();
@@ -981,9 +983,15 @@ class PlaylistListVM extends ChangeNotifier {
     // If restoring an individual playlist zip file in a not
     // empty application, the playlistOrder must be updated
     // by playlistOrderFromListOfSelectablePlaylists.
-    if (playlistOrder[0] == '' ||
-        playlistOrderFromListOfSelectablePlaylists.length >
-            playlistOrder.length) {
+    if (managePlaylistOrder) {
+      if (playlistOrder[0] == '' ||
+          playlistOrderFromListOfSelectablePlaylists.length >
+              playlistOrder.length) {
+        playlistOrder = playlistOrderFromListOfSelectablePlaylists;
+      }
+    } else {
+      // If not managing playlist order, we can simply use the
+      // existing order
       playlistOrder = playlistOrderFromListOfSelectablePlaylists;
     }
 
@@ -3005,14 +3013,11 @@ class PlaylistListVM extends ChangeNotifier {
     // settings
     await _mergeRestoredFromZipSettingsWithCurrentAppSettings();
 
-    bool restoringPlaylistsCommentsAndSettingsJsonFilesFromZip = false;
-
     updateSettingsAndPlaylistJsonFiles(
       unselectAddedPlaylist:
           false, // fix bug when restoring unique selected playlist from Windows zip on android
       updatePlaylistPlayableAudioList: false,
-      restoringPlaylistsCommentsAndSettingsJsonFilesFromZip:
-          restoringPlaylistsCommentsAndSettingsJsonFilesFromZip,
+      managePlaylistOrder: true,
     );
 
     // Necessary so that, in the playlist download view in the situation
