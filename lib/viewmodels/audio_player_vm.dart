@@ -742,6 +742,7 @@ class AudioPlayerVM extends ChangeNotifier {
     bool rewindAudioPositionBasedOnPauseDuration = true,
     bool isCommentPlaying = false,
     bool isFromAudioPlayerView = false,
+    int commentEndPositionInTenthOfSeconds = -1,
   }) async {
     _isCommentPlaying = isCommentPlaying;
 
