@@ -963,10 +963,11 @@ class PlaylistListVM extends ChangeNotifier {
   }) {
     List<String> playlistOrderFromListOfSelectablePlaylists =
         _listOfSelectablePlaylists.map((playlist) => playlist.title).toList();
-    List<String> playlistOrder = _settingsDataService.get(
+    List<String> playlistOrder = (_settingsDataService.get(
       settingType: SettingType.playlists,
       settingSubType: Playlists.orderedTitleLst,
-    );
+    ) as List<dynamic>)
+        .cast<String>();
 
     // playlistOrder[0] == '' in situation of restoring an
     // individual playlist zip file in an empty application.
