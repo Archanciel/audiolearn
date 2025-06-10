@@ -961,8 +961,30 @@ class PlaylistListVM extends ChangeNotifier {
   void _updateAndSavePlaylistOrder({
     bool addExistingSettingsAudioSortFilterData = false,
   }) {
-    List<String> playlistOrder =
+    List<String> playlistOrderFromListOfSelectablePlaylists =
         _listOfSelectablePlaylists.map((playlist) => playlist.title).toList();
+    List<String> playlistOrder = _settingsDataService.get(
+      settingType: SettingType.playlists,
+      settingSubType: Playlists.orderedTitleLst,
+    );
+
+    // playlistOrder[0] == '' in situation of restoring an
+    // individual playlist zip file in an empty application.
+    //
+    // If restoring a multiple playlists zip file in an empty
+    // or not empty application, the playlistOrder must not
+    // be updated since its content is correctly ordered and
+    // the playlistOrderFromListOfSelectablePlaylists is not
+    // correctly ordered.
+    //
+    // If restoring an individual playlist zip file in a not
+    // empty application, the playlistOrder must be updated
+    // by playlistOrderFromListOfSelectablePlaylists.
+    if (playlistOrder[0] == '' ||
+        playlistOrderFromListOfSelectablePlaylists.length >
+            playlistOrder.length) {
+      playlistOrder = playlistOrderFromListOfSelectablePlaylists;
+    }
 
     if (addExistingSettingsAudioSortFilterData) {
       _settingsDataService
