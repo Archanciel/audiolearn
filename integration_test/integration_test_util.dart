@@ -760,7 +760,8 @@ class IntegrationTestUtil {
 
     if (modifiedPlaylistRootPath != null) {
       // If the modified playlist root path is specified, use it
-      playlistPathFileName = '$modifiedPlaylistRootPath${path.separator}$playlistTitle${path.separator}$playlistTitle.json';
+      playlistPathFileName =
+          '$modifiedPlaylistRootPath${path.separator}$playlistTitle${path.separator}$playlistTitle.json';
     } else {
       // Otherwise, use the default playlist download root path
       playlistPathFileName =
@@ -3376,5 +3377,46 @@ class IntegrationTestUtil {
     );
     expect(pictureAudioMapLst[2],
         "Prières du Maître|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'");
+  }
+
+  /// {audioSpeed} can only be one of the following values: 0.7, 1.0, 1.25, 1.5.
+  static Future<void> setAudioSpeed({
+    required WidgetTester tester,
+    double audioSpeed = 0.0,
+    int minusTapNumber = 0,
+    int plusTapNumber = 0,
+  }) async {
+    // Now open the audio play speed dialog
+    await tester.tap(find.byKey(const Key('setAudioSpeedTextButton')));
+    await tester.pumpAndSettle();
+
+    if (audioSpeed == 0.7 ||
+        audioSpeed == 1.0 ||
+        audioSpeed == 1.25 ||
+        audioSpeed == 1.5) {
+      // Now select the ...x play speed
+      await tester.tap(find.text('${audioSpeed}x'));
+      await tester.pumpAndSettle();
+    } else if (minusTapNumber != 0) {
+      // Now select the custom play speed
+      for (int i = 0; i < minusTapNumber; i++) {
+        // Tap on the minus button to decrease the speed
+        await tester.tap(find.byKey(const Key('minusButtonKey')));
+        await tester.pumpAndSettle();
+      }
+    } else if (plusTapNumber != 0) {
+      // Now select the custom play speed
+      for (int i = 0; i < plusTapNumber; i++) {
+        // Tap on the plus button to increase the speed
+        await tester.tap(find.byKey(const Key('plusButtonKey')));
+        await tester.pumpAndSettle();
+      }
+    } else {
+      return;
+    }
+
+    // And click on the Ok button
+    await tester.tap(find.text('Ok'));
+    await tester.pumpAndSettle();
   }
 }

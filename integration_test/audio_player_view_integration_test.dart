@@ -8687,6 +8687,111 @@ void main() {
     //     // );
     //   };
     // });
+    group('Playing audio comment in audio whose play speed is modified', () {
+      testWidgets(
+          '''Audio speed 0.5. Playing comment from CommentAddEditDialog.''',
+          (WidgetTester tester) async {
+        const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+        const String alreadyCommentedAudioTitle =
+            "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
+
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'audio_comment_test',
+          selectedPlaylistTitle: youtubePlaylistTitle,
+        );
+
+        // Then, get the ListTile Text widget finder of the already commented
+        // audio and tap on it to open the AudioPlayerView
+        final Finder alreadyCommentedAudioFinder =
+            find.text(alreadyCommentedAudioTitle);
+        await tester.tap(alreadyCommentedAudioFinder);
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Set the audio speed to 0.5
+        await IntegrationTestUtil.setAudioSpeed(
+          tester: tester,
+          minusTapNumber: 5, // to reduce the speed from 1.0 0.5
+        );
+
+        // Tap on the comment icon button to open the comment add list
+        // dialog
+        final Finder commentInkWellButtonFinder = find.byKey(
+          const Key('commentsInkWellButton'),
+        );
+
+        await tester.tap(commentInkWellButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Tap on the comment title text to edit the comment
+        String commentTitle = 'I did not thank ChatGPT';
+
+        await tester.tap(find.text(commentTitle));
+        await tester.pumpAndSettle();
+
+        // Now type 4 times on the reduce end position button to
+        // set the end position to 1:17:15.
+        final Finder reduceEndPositionButtonFinder = find.byKey(
+          const Key('backwardCommentEndIconButton'),
+        );
+
+        for (int i = 0; i < 4; i++) {
+          await tester.tap(reduceEndPositionButtonFinder);
+          await tester.pumpAndSettle();
+        }
+
+        await Future.delayed(const Duration(milliseconds: 4000));
+
+        // Tap on the play/pause icon button to play the audio from the
+        // comment
+        await tester.tap(find.byKey(const Key('playPauseIconButton')));
+        await tester.pumpAndSettle();
+
+        // await Future.delayed(const Duration(milliseconds: 500));
+        // await tester.pumpAndSettle();
+
+        // Tap on the play/pause icon button to pause the audio
+        // await tester.tap(find.byKey(const Key('playPauseIconButton')));
+        // await tester.pumpAndSettle(const Duration(milliseconds: 500));
+
+        // Find the Text child of the selectCommentPosition TextButton
+
+        final Finder selectCommentPositionTextButtonFinder =
+            find.byKey(const Key('selectCommentPositionTextButton'));
+
+        final Finder selectCommentPositionTextOfButtonFinder = find.descendant(
+          of: selectCommentPositionTextButtonFinder,
+          matching: find.byType(Text),
+        );
+
+        // Verify that the Text widget contains the expected content
+
+        String selectCommentPositionTextOfButton =
+            tester.widget<Text>(selectCommentPositionTextOfButtonFinder).data!;
+
+        // Ensure the audio position was not rewinded
+        expect(
+          selectCommentPositionTextOfButton.contains('1:17:12'),
+          true,
+          reason:
+              'Real comment position button text value is $selectCommentPositionTextOfButton',
+        );
+
+        // Tap on the cancel comment button to close the comment
+        await tester.tap(find.byKey(const Key('cancelTextButton')));
+        await tester.pumpAndSettle();
+
+        // Now close the comment list dialog
+        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.pumpAndSettle();
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+    });
   });
   group('Modify audio volume tests', () {
     testWidgets(
