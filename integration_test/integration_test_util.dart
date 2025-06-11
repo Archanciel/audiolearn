@@ -60,7 +60,7 @@ class IntegrationTestUtil {
       audioplayersVersion = await getAudioplayersVersion();
     }
 
-    if (audioplayersVersion == '^6.1.0') {
+    if (audioplayersVersion != '^5.2.1') {
       await tester.pumpAndSettle(
         Duration(
           milliseconds: 1200 + additionalMilliseconds,

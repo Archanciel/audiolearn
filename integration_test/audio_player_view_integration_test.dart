@@ -8507,229 +8507,284 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets(
-        '''THIS INTEGRATION TEST DOES NOT WORK. THIS IS TOTALLY INACCEPTABLE. VERIFICATION CODE AT
-           END IS COMMENTED OUT.
-           Verify that after typing once on the end position comment button in very short comment
-           (0:00 to 0:02) plays the comment till 0:03 seconds,and not later. This bug was introduced
-           in a previous comment edition dialog modification and was not signaled by the execution
-           of an integration test !''', (WidgetTester tester) async {
-      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
-      const String alreadyCommentedAudioTitle =
-          "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
+    group('Tests executable only with audioplayers 6.4.0 or higher', () {
+      testWidgets(
+          '''Verify that after typing once on the decreaseend position comment button in very short
+           comment (0:00 to 0:04) the comment plays till 0:03 seconds and not later.''',
+          (WidgetTester tester) async {
+        final String audioplayersVersion =
+            await IntegrationTestUtil.getAudioplayersVersion();
 
-      bool isTestUsable = true;
+        if (audioplayersVersion == '^5.2.1') {
+          // This test is not executable with audioplayers 5.2.1
+          return;
+        }
 
-      if (isTestUsable) {
-        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-          tester: tester,
-          savedTestDataDirName: 'audio_comment_test',
-          selectedPlaylistTitle: youtubePlaylistTitle,
-        );
+        const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+        const String alreadyCommentedAudioTitle =
+            "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...";
 
-        // Then, get the ListTile Text widget finder of the already commented
-        // audio and tap on it to open the AudioPlayerView
-        final Finder alreadyCommentedAudioFinder =
-            find.text(alreadyCommentedAudioTitle);
-        await tester.tap(alreadyCommentedAudioFinder);
-        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
-          tester: tester,
-        );
+        bool isTestUsable = true;
 
-        // Tap on the comment icon button to open the comment add list
-        // dialog
-        final Finder commentInkWellButtonFinder = find.byKey(
-          const Key('commentsInkWellButton'),
-        );
+        if (isTestUsable) {
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_comment_test',
+            selectedPlaylistTitle: youtubePlaylistTitle,
+          );
 
-        await tester.tap(commentInkWellButtonFinder);
-        await tester.pumpAndSettle();
+          // Then, get the ListTile Text widget finder of the already commented
+          // audio and tap on it to open the AudioPlayerView
+          final Finder alreadyCommentedAudioFinder =
+              find.text(alreadyCommentedAudioTitle);
+          await tester.tap(alreadyCommentedAudioFinder);
+          await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+            tester: tester,
+          );
 
-        // Trying to avoid unregular integration test failure
-        await Future.delayed(const Duration(milliseconds: 100));
+          // Tap on the comment icon button to open the comment add list
+          // dialog
+          final Finder commentInkWellButtonFinder = find.byKey(
+            const Key('commentsInkWellButton'),
+          );
 
-        // Tap on the comment title text to edit the comment
-        String commentTitle = 'I did not thank ChatGPT';
+          await tester.tap(commentInkWellButtonFinder);
+          await tester.pumpAndSettle();
 
-        await tester.tap(find.text(commentTitle));
-        await tester.pumpAndSettle();
+          // Trying to avoid unregular integration test failure
+          await Future.delayed(const Duration(milliseconds: 100));
 
-        // Now tap on select position text button to open the set
-        // value to target dialog enabling to modify the comment
-        // start position to 0:00
+          // Tap on the comment title text to edit the comment
+          String commentTitle = 'I did not thank ChatGPT';
 
-        final Finder openDefinePositionDialogTextButtonFinder =
-            find.byKey(const Key('selectCommentPositionTextButton'));
+          await tester.tap(find.text(commentTitle));
+          await tester.pumpAndSettle();
 
-        await tester.tap(openDefinePositionDialogTextButtonFinder);
-        await tester.pumpAndSettle();
+          // Now tap on select position text button to open the set
+          // value to target dialog enabling to modify the comment
+          // start position to 0:00
 
-        Finder setValueToTargetDialogFinder =
-            find.byType(SetValueToTargetDialog);
+          final Finder openDefinePositionDialogTextButtonFinder =
+              find.byKey(const Key('selectCommentPositionTextButton'));
 
-        // This finder obtained as descendant of its enclosing dialog does
-        // able to change the value of the TextField
-        Finder setValueToTargetDialogEditTextFinder = find.descendant(
-          of: setValueToTargetDialogFinder,
-          matching: find.byType(TextField),
-        );
+          await tester.tap(openDefinePositionDialogTextButtonFinder);
+          await tester.pumpAndSettle();
 
-        // Now empty the position in the dialog
-        String positionTextToEnterWithTenthOfSeconds = '';
-        tester
-            .widget<TextField>(setValueToTargetDialogEditTextFinder)
-            .controller!
-            .text = positionTextToEnterWithTenthOfSeconds;
-        await tester.pumpAndSettle();
+          Finder setValueToTargetDialogFinder =
+              find.byType(SetValueToTargetDialog);
 
-        // Select the first checkbox (Start position)
-        await tester.tap(find.byKey(const Key('checkbox_0_key')));
-        await tester.pumpAndSettle();
+          // This finder obtained as descendant of its enclosing dialog does
+          // able to change the value of the TextField
+          Finder setValueToTargetDialogEditTextFinder = find.descendant(
+            of: setValueToTargetDialogFinder,
+            matching: find.byType(TextField),
+          );
 
-        // Tap on the Ok button to set the new position in the comment
-        // previous dialog
+          // Now empty the position in the dialog
+          String positionTextToEnterWithTenthOfSeconds = '';
+          tester
+              .widget<TextField>(setValueToTargetDialogEditTextFinder)
+              .controller!
+              .text = positionTextToEnterWithTenthOfSeconds;
+          await tester.pumpAndSettle();
 
-        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-        await tester.pumpAndSettle();
+          // Select the first checkbox (Start position)
+          await tester.tap(find.byKey(const Key('checkbox_0_key')));
+          await tester.pumpAndSettle();
 
-        // Check the modified comment start position in the comment dialog.
+          // Tap on the Ok button to set the new position in the comment
+          // previous dialog
 
-        Finder commentStartTextWidgetFinder =
-            find.byKey(const Key('commentStartPositionText'));
-        expect(
-          tester.widget<Text>(commentStartTextWidgetFinder).data,
-          '0:00',
-        );
+          await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+          await tester.pumpAndSettle();
 
-        // Now reopen the set value to target dialog to set the comment
-        // end position to 0:04 position.
+          // Check the modified comment start position in the comment dialog.
 
-        await tester.tap(openDefinePositionDialogTextButtonFinder);
-        await tester.pumpAndSettle();
+          Finder commentStartTextWidgetFinder =
+              find.byKey(const Key('commentStartPositionText'));
+          expect(
+            tester.widget<Text>(commentStartTextWidgetFinder).data,
+            '0:00',
+          );
 
-        // This finder obtained as descendant of its enclosing dialog does
-        // able to change the value of the TextField
-        setValueToTargetDialogFinder = find.byType(SetValueToTargetDialog);
-        setValueToTargetDialogEditTextFinder = find.descendant(
-          of: setValueToTargetDialogFinder,
-          matching: find.byType(TextField),
-        );
+          // Now reopen the set value to target dialog to set the comment
+          // end position to 0:04 position.
 
-        // Now set the position field in the dialog
-        String positionTextToEnterInSeconds = '0:04';
-        tester
-            .widget<TextField>(setValueToTargetDialogEditTextFinder)
-            .controller!
-            .text = positionTextToEnterInSeconds;
-        await tester.pumpAndSettle();
+          await tester.tap(openDefinePositionDialogTextButtonFinder);
+          await tester.pumpAndSettle();
 
-        // Select the second checkbox (End position)
-        await tester.tap(find.byKey(const Key('checkbox_1_key')));
-        await tester.pumpAndSettle();
+          // This finder obtained as descendant of its enclosing dialog does
+          // able to change the value of the TextField
+          setValueToTargetDialogFinder = find.byType(SetValueToTargetDialog);
+          setValueToTargetDialogEditTextFinder = find.descendant(
+            of: setValueToTargetDialogFinder,
+            matching: find.byType(TextField),
+          );
 
-        // Tap on the Ok button to set the comment end position to
-        // 0:04
+          // Now set the position field in the dialog
+          String positionTextToEnterInSeconds = '0:04';
+          tester
+              .widget<TextField>(setValueToTargetDialogEditTextFinder)
+              .controller!
+              .text = positionTextToEnterInSeconds;
+          await tester.pumpAndSettle();
 
-        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-        await tester.pumpAndSettle();
+          // Select the second checkbox (End position)
+          await tester.tap(find.byKey(const Key('checkbox_1_key')));
+          await tester.pumpAndSettle();
 
-        // Check the modified comment end position in the comment dialog
+          // Tap on the Ok button to set the comment end position to
+          // 0:04
 
-        Finder commentEndTextWidgetFinder =
-            find.byKey(const Key('commentEndPositionText'));
+          await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+          await tester.pumpAndSettle();
 
-        expect(
-          tester.widget<Text>(commentEndTextWidgetFinder).data,
-          positionTextToEnterInSeconds, // '0:04'
-        );
+          // Check the modified comment end position in the comment dialog
 
-        // Verify the value of the position text button which
-        // corresponds to the current audio position
+          Finder commentEndTextWidgetFinder =
+              find.byKey(const Key('commentEndPositionText'));
 
-        // Find the Text child of the selectCommentPosition TextButton
-        Finder selectCommentPositionTextButtonFinder =
-            find.byKey(const Key('selectCommentPositionTextButton'));
-        Finder selectCommentPositionTextOfButtonFinder = find.descendant(
-          of: selectCommentPositionTextButtonFinder,
-          matching: find.byType(Text),
-        );
+          expect(
+            tester.widget<Text>(commentEndTextWidgetFinder).data,
+            positionTextToEnterInSeconds, // '0:04'
+          );
 
-        // Verify that the Text widget contains the expected content
+          // Verify the value of the position text button which
+          // corresponds to the current audio position
 
-        String selectCommentPositionTextOfButton =
-            tester.widget<Text>(selectCommentPositionTextOfButtonFinder).data!;
-        expect(selectCommentPositionTextOfButton, '1:12:48.0');
+          // Find the Text child of the selectCommentPosition TextButton
+          Finder selectCommentPositionTextButtonFinder =
+              find.byKey(const Key('selectCommentPositionTextButton'));
+          Finder selectCommentPositionTextOfButtonFinder = find.descendant(
+            of: selectCommentPositionTextButtonFinder,
+            matching: find.byType(Text),
+          );
 
-        // Verify that the audio position is '1:12:48'
-        Finder audioPositionTextWidgetFinder =
-            find.byKey(const Key('audioPlayerViewAudioPosition'));
-        expect(
-            tester.widget<Text>(audioPositionTextWidgetFinder).data, '1:12:48');
+          // Verify that the Text widget contains the expected content
 
-        // Now type one time on the reduce end position button to
-        // set the end position to 0:03. This will start the audio
-        // playback at 0:00 and stop it at 0:03.
-        final Finder reduceEndPositionButtonFinder = find.byKey(
-          const Key('backwardCommentEndIconButton'),
-        );
+          String selectCommentPositionTextOfButton = tester
+              .widget<Text>(selectCommentPositionTextOfButtonFinder)
+              .data!;
+          expect(selectCommentPositionTextOfButton, '1:12:48.0');
 
-        await tester.tap(reduceEndPositionButtonFinder);
-        await tester.pumpAndSettle(const Duration(milliseconds: 1000));
+          // Verify that the audio position is '1:12:48'
+          Finder audioPositionTextWidgetFinder =
+              find.byKey(const Key('audioPlayerViewAudioPosition'));
+          expect(tester.widget<Text>(audioPositionTextWidgetFinder).data,
+              '1:12:48');
 
-        // Check the modified comment end position in the comment dialog
+          // Now type one time on the reduce end position button to
+          // set the end position to 0:03. This will start the audio
+          // playback at 0:00 and stop it at 0:03.
+          final Finder reduceEndPositionButtonFinder = find.byKey(
+            const Key('backwardCommentEndIconButton'),
+          );
 
-        commentEndTextWidgetFinder =
-            find.byKey(const Key('commentEndPositionText'));
+          await tester.tap(reduceEndPositionButtonFinder);
+          await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
-        expect(
-          tester.widget<Text>(commentEndTextWidgetFinder).data,
-          '0:03',
-        );
+          // Check the modified comment end position in the comment dialog
 
-        // Now wait during 4 seconds to verify that the audio is not
-        // playing after the end position of the comment which was
-        // set to 0:03.
-        await Future.delayed(const Duration(seconds: 4));
-        await tester.pumpAndSettle(const Duration(milliseconds: 1000));
+          commentEndTextWidgetFinder =
+              find.byKey(const Key('commentEndPositionText'));
 
-        // Verify also the value of the position text button
+          expect(
+            tester.widget<Text>(commentEndTextWidgetFinder).data,
+            '0:03',
+          );
+          // Now wait during 3 seconds to verify that the audio is not
+          // playing after the end position of the comment which was
+          // set to 0:03.
+          await Future.delayed(const Duration(seconds: 3));
+          await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
-        // Find the Text child of the selectCommentPosition TextButton
-        _verifyPositionValueAfterCommentWasPlayed(
-          tester: tester,
-          commentPositionTextButtonInTenthSecondsMin: 20,
-          commentPositionTextButtonInTenthSecondsMax: 30,
-          audioPlayerViewAudioPositionMin: '0:02',
-          audioPlayerViewAudioPositionMax: '0:03',
-        );
+          // Verify also the value of the position text button
 
-        // Now click on the play button to play the comment
-        await tester.tap(find.byKey(const Key('playPauseIconButton')));
-        await tester.pumpAndSettle(const Duration(milliseconds: 1000));
+          // Find the Text child of the selectCommentPosition TextButton
+          _verifyPositionValueAfterCommentWasPlayed(
+            tester: tester,
+            commentPositionTextButtonInTenthSecondsMin: 20,
+            commentPositionTextButtonInTenthSecondsMax: 30,
+            audioPlayerViewAudioPositionMin: '0:02',
+            audioPlayerViewAudioPositionMax: '0:03',
+          );
 
-        // Wait during 4 seconds to verify that the audio is not
-        // playing after the end position of the comment which was
-        // set to 0:03.
-        await Future.delayed(const Duration(seconds: 4));
-        await tester.pumpAndSettle(const Duration(milliseconds: 1000));
+          // Now click on the play button to play the comment
+          await tester.tap(find.byKey(const Key('playPauseIconButton')));
+          await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
-        // Find the Text child of the selectCommentPosition TextButton
-        _verifyPositionValueAfterCommentWasPlayed(
-          tester: tester,
-          commentPositionTextButtonInTenthSecondsMin: 20,
-          commentPositionTextButtonInTenthSecondsMax: 30,
-          audioPlayerViewAudioPositionMin: '0:02',
-          audioPlayerViewAudioPositionMax: '0:03',
-        );
+          // Wait during 3 seconds to verify that the audio is not
+          // playing after the end position of the comment which was
+          // set to 0:03.
+          await Future.delayed(const Duration(seconds: 3));
+          await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kApplicationPathWindowsTest,
-        );
-      }
-    });
-    group('Playing audio comment in audio whose play speed is modified', () {
+          // Find the Text child of the selectCommentPosition TextButton
+          _verifyPositionValueAfterCommentWasPlayed(
+            tester: tester,
+            commentPositionTextButtonInTenthSecondsMin: 20,
+            commentPositionTextButtonInTenthSecondsMax: 30,
+            audioPlayerViewAudioPositionMin: '0:02',
+            audioPlayerViewAudioPositionMax: '0:03',
+          );
+
+          // Now update the comment
+
+          final Finder addOrUpdateCommentTextButton =
+              find.byKey(const Key('addOrUpdateCommentTextButton'));
+
+          // Tap on the add/update comment button to save the comment
+          await tester.tap(addOrUpdateCommentTextButton);
+          await tester.pumpAndSettle();
+
+          await tester.drag(
+            find.byType(CommentListAddDialog),
+            const Offset(
+                0, 600), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          Finder audioCommentsLstFinder = find.byKey(const Key(
+            'audioCommentsListKey',
+          ));
+
+          // Find all the list items GestureDetector's
+          final Finder gestureDetectorsFinder = find.descendant(
+              // 3 GestureDetector per comment item
+              of: audioCommentsLstFinder,
+              matching: find.byType(GestureDetector));
+
+          // Now tap on the play icon button of the first audio comment
+          // in order to start playing it
+          await IntegrationTestUtil.playComment(
+            tester: tester,
+            gestureDetectorsFinder: gestureDetectorsFinder,
+            itemIndex: 0, // Third comment of the audio on IA
+            typeOnPauseAfterPlay: false,
+            maxPlayDurationSeconds: 3,
+          );
+
+          await tester.pumpAndSettle();
+
+          // Now tap a second timeon the play icon button of the first audio comment
+          // in order to start playing it
+          await IntegrationTestUtil.playComment(
+            tester: tester,
+            gestureDetectorsFinder: gestureDetectorsFinder,
+            itemIndex: 0, // Third comment of the audio on IA
+            typeOnPauseAfterPlay: false,
+            maxPlayDurationSeconds: 3,
+          );
+
+          await tester.pumpAndSettle();
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        }
+      });
       testWidgets(
           '''Audio speed 0.5. Playing comment from CommentAddEditDialog.''',
           (WidgetTester tester) async {
