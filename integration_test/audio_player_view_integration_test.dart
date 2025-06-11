@@ -8674,7 +8674,7 @@ void main() {
         );
 
         await tester.tap(reduceEndPositionButtonFinder);
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
         // Check the modified comment end position in the comment dialog
 
@@ -8690,7 +8690,7 @@ void main() {
         // playing after the end position of the comment which was
         // set to 0:03.
         await Future.delayed(const Duration(seconds: 4));
-        await tester.pumpAndSettle(); // must be used !
+        await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
         // Verify also the value of the position text button
 
@@ -8705,13 +8705,13 @@ void main() {
 
         // Now click on the play button to play the comment
         await tester.tap(find.byKey(const Key('playPauseIconButton')));
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
         // Wait during 4 seconds to verify that the audio is not
         // playing after the end position of the comment which was
         // set to 0:03.
         await Future.delayed(const Duration(seconds: 4));
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
         // Find the Text child of the selectCommentPosition TextButton
         _verifyPositionValueAfterCommentWasPlayed(
