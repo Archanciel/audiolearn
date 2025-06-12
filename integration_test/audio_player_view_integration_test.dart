@@ -8759,6 +8759,15 @@ void main() {
 
         await tester.pumpAndSettle();
 
+        // Without dragging the comment list dialog, the audio
+        // won't play !
+        await tester.drag(
+          find.byType(CommentListAddDialog),
+          const Offset(
+              0, 600), // Negative value for vertical drag to scroll down
+        );
+        await tester.pumpAndSettle();
+
         // Now tap a second time on the play icon button of the first audio comment
         // in order to start playing it
         await IntegrationTestUtil.playComment(
