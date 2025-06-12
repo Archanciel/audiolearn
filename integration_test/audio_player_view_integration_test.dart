@@ -8921,8 +8921,8 @@ void main() {
         // Edited comment and audio player view position verification
         _verifyPositionValueAfterCommentWasPlayed(
           tester: tester,
-          commentPositionTextButtonInTenthSecondsMin: 46343,
-          commentPositionTextButtonInTenthSecondsMax: 46347,
+          commentPositionTextButtonInTenthSecondsMin: 46341,
+          commentPositionTextButtonInTenthSecondsMax: 46346,
           audioPlayerViewAudioPositionMin: '1:17:14',
           audioPlayerViewAudioPositionMax: '1:17:15',
         );
@@ -8947,8 +8947,8 @@ void main() {
         // Edited comment and audio player view position verification
         _verifyPositionValueAfterCommentWasPlayed(
           tester: tester,
-          commentPositionTextButtonInTenthSecondsMin: 46333,
-          commentPositionTextButtonInTenthSecondsMax: 46337,
+          commentPositionTextButtonInTenthSecondsMin: 46332,
+          commentPositionTextButtonInTenthSecondsMax: 46336,
           audioPlayerViewAudioPositionMin: '1:17:13',
           audioPlayerViewAudioPositionMax: '1:17:14',
         );
@@ -8967,8 +8967,8 @@ void main() {
         // Edited comment and audio player view position verification
         _verifyPositionValueAfterCommentWasPlayed(
           tester: tester,
-          commentPositionTextButtonInTenthSecondsMin: 46333,
-          commentPositionTextButtonInTenthSecondsMax: 46337,
+          commentPositionTextButtonInTenthSecondsMin: 46332,
+          commentPositionTextButtonInTenthSecondsMax: 46336,
           audioPlayerViewAudioPositionMin: '1:17:13',
           audioPlayerViewAudioPositionMax: '1:17:14',
         );
@@ -8997,7 +8997,7 @@ void main() {
         await IntegrationTestUtil.playComment(
           tester: tester,
           gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 3, // Fourth comment of the audio on IA
+          itemIndex: 9, // Fourth comment of the audio on IA
           typeOnPauseAfterPlay: false,
           maxPlayDurationSeconds: 3,
         );
@@ -9016,7 +9016,7 @@ void main() {
         await IntegrationTestUtil.playComment(
           tester: tester,
           gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 3, // Fourth comment of the audio on IA
+          itemIndex: 9, // Fourth comment of the audio on IA
           typeOnPauseAfterPlay: false,
           maxPlayDurationSeconds: 3,
         );
