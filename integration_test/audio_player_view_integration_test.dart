@@ -8902,7 +8902,7 @@ void main() {
         await tester.tap(find.byKey(const Key('playPauseIconButton')));
         await tester.pumpAndSettle(const Duration(milliseconds: 500));
 
-        // Wait during 2 seconds to verify that the audio is not
+        // Wait during 3 seconds to verify that the audio is not
         // playing after the end position of the comment which was 1:17:15
         await Future.delayed(const Duration(seconds: 3));
         await tester.pumpAndSettle(const Duration(milliseconds: 1000));
@@ -8930,7 +8930,7 @@ void main() {
         
         // Wait during 2 seconds to verify that the audio is not
         // playing after the end position of the comment which was 1:17:15
-        await Future.delayed(const Duration(seconds: 3));
+        await Future.delayed(const Duration(seconds: 2));
         await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
         print('****** Second question: is the audio stopped ? ');
