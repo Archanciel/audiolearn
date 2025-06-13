@@ -855,15 +855,10 @@ class AudioPlayerVM extends ChangeNotifier {
     int timeUntilEndInTenthsOfSeconds = _commentEndPositionInTenthOfSeconds -
         (_currentAudio!.audioPositionSeconds * 10);
 
-    // If the audio speed is less than 1.0, the time until end must be
-    // adjusted, otherwise the comment is not played until its real end.
-    // Adding 3 tenths of seconds ensures that the comment is played
-    // completely even if the audio speed is less than 1.0.
-    if (_currentAudio!.audioPlaySpeed < 1.0) {
-      timeUntilEndInTenthsOfSeconds =
-          ((timeUntilEndInTenthsOfSeconds / _currentAudio!.audioPlaySpeed)
-              .ceil()) + 3;
-    }
+    timeUntilEndInTenthsOfSeconds =
+        ((timeUntilEndInTenthsOfSeconds / _currentAudio!.audioPlaySpeed)
+                .ceil()) +
+            3;
 
     Duration timeUntilEnd = Duration(
       milliseconds: timeUntilEndInTenthsOfSeconds * 100,
