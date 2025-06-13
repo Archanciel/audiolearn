@@ -708,7 +708,7 @@ class AudioPlayerVM extends ChangeNotifier {
   /// or on the play icon in the CommentAddEditDialog or on the play
   /// icon in the second audio player line which exist if a picture is
   /// displayed instead the regular play/pause icon.
-  /// 
+  ///
   /// {commentEndPositionInTenthOfSeconds} is used by the AudioPlayerVM
   /// Timer to determine when the comment to play will end. If no value
   /// is provided, the AudioPlayerVM Timer will not be started. Using a
@@ -852,8 +852,18 @@ class AudioPlayerVM extends ChangeNotifier {
     _cancelCommentEndTimer(); // Cancel any existing timer
 
     // Calculate the end position in tenths of seconds based on the audio speed
-    int timeUntilEndInTenthsOfSeconds = _commentEndPositionInTenthOfSeconds - (_currentAudio!.audioPositionSeconds * 10);
-    timeUntilEndInTenthsOfSeconds = (timeUntilEndInTenthsOfSeconds / _currentAudio!.audioPlaySpeed).round();
+    int timeUntilEndInTenthsOfSeconds = _commentEndPositionInTenthOfSeconds -
+        (_currentAudio!.audioPositionSeconds * 10);
+
+    // If the audio speed is less than 1.0, the time until end must be
+    // adjusted, otherwise the comment is not played until its real end.
+    // Adding 3 tenths of seconds ensures that the comment is played
+    // completely even if the audio speed is less than 1.0.
+    if (_currentAudio!.audioPlaySpeed < 1.0) {
+      timeUntilEndInTenthsOfSeconds =
+          ((timeUntilEndInTenthsOfSeconds / _currentAudio!.audioPlaySpeed)
+              .ceil()) + 3;
+    }
 
     Duration timeUntilEnd = Duration(
       milliseconds: timeUntilEndInTenthsOfSeconds * 100,
