@@ -14051,6 +14051,180 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
+    testWidgets('From playlists root dir, delete selected Youtube playlist', (tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_integr_test_data",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      const String youtubePlaylistToDeleteTitle =
+          'audio_learn_test_download_2_small_videos';
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Select the playlist to delete ListTile
+
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: youtubePlaylistToDeleteTitle,
+      );
+
+      // First, find the Playlist ListTile Text widget
+      final Finder youtubePlaylistToDeleteListTileTextWidgetFinder =
+          find.text(youtubePlaylistToDeleteTitle);
+
+      // Then obtain the Playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      final Finder youtubePlaylistToDeleteListTileWidgetFinder = find.ancestor(
+        of: youtubePlaylistToDeleteListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the Playlist ListTile
+      // and tap on it to select the playlist
+      final Finder youtubePlaylistToDeleteListTileCheckboxWidgetFinder =
+          find.descendant(
+        of: youtubePlaylistToDeleteListTileWidgetFinder,
+        matching: find.byType(Checkbox),
+      );
+
+      // Tap the ListTile Playlist checkbox to select it
+      await tester.tap(youtubePlaylistToDeleteListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Now test deleting the playlist
+
+      // Open the delete playlist dialog by clicking on the 'Delete
+      // playlist ...' playlist menu item
+
+      // Now find the leading menu icon button of the Playlist to
+      // delete ListTile and tap on it
+      final Finder firstPlaylistListTileLeadingMenuIconButton = find.descendant(
+        of: youtubePlaylistToDeleteListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the delete playlist popup menu item and tap on it
+      final Finder popupDeletePlaylistMenuItem =
+          find.byKey(const Key("popup_menu_delete_playlist"));
+
+      await tester.tap(popupDeletePlaylistMenuItem);
+      await tester.pumpAndSettle();
+
+      // Simulate a tap outside the delete dialog to verify that the
+      // dialog can not be closed by error if the user type outside it
+      await tester.tapAt(const Offset(0, 0));
+      await tester.pumpAndSettle();
+
+      // Verify that the dialog is not closed
+      expect(find.byType(ConfirmActionDialog), findsOneWidget);
+
+      // Now verifying and closing the confirm dialog
+
+      await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+        tester: tester,
+        confirmDialogTitleOne:
+            'Delete Youtube Playlist "$youtubePlaylistToDeleteTitle"',
+        confirmDialogMessage:
+            "Deleting the playlist and its 2 audio's, 0 audio comment(s), 1 audio picture(s) as well as its JSON file and its directory.",
+        confirmOrCancelAction: true, // Confirm button is tapped
+      );
+
+      // Reload the settings from the json file.
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      // Check that the deleted playlist title is no longer in the
+      // playlist titles list of the settings data service
+      expect(
+          settingsDataService.get(
+            settingType: SettingType.playlists,
+            settingSubType: Playlists.orderedTitleLst,
+          ),
+          [
+            'audio_player_view_2_shorts_test',
+            'local_3',
+            'local_audio_playlist_2',
+          ]);
+
+      final String youtubePlaylistToDeletePath = path.join(
+        kApplicationPathWindowsTest,
+        youtubePlaylistToDeleteTitle,
+      );
+
+      // Check that the deleted playlist directory no longer exist
+      expect(Directory(youtubePlaylistToDeletePath).existsSync(), false);
+
+      // Since the deleted playlist was selected, there is no longer
+      // a selected playlist. So, the selected playlist widgets
+      // are disabled. Checking this now:
+
+      IntegrationTestUtil.verifyWidgetIsDisabled(
+        tester: tester,
+        widgetKeyStr: 'move_up_playlist_button',
+      );
+
+      IntegrationTestUtil.verifyWidgetIsDisabled(
+        tester: tester,
+        widgetKeyStr: 'move_down_playlist_button',
+      );
+
+      IntegrationTestUtil.verifyWidgetIsDisabled(
+        tester: tester,
+        widgetKeyStr: 'download_sel_playlists_button',
+      );
+
+      IntegrationTestUtil.verifyWidgetIsDisabled(
+        tester: tester,
+        widgetKeyStr: 'audio_popup_menu_button',
+      );
+
+      // Verifying that the selected playlist text field is empty
+      expect(
+        tester
+            .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')))
+            .data,
+        '',
+        reason: 'Selected playlist text field is not empty',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
     testWidgets('Cancel delete selected Youtube playlist', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -14334,6 +14508,173 @@ void main() {
           [
             'audio_player_view_2_shorts_test',
             'audio_learn_test_download_2_small_videos',
+            'local_3'
+          ]);
+
+      final String localPlaylistToDeletePath = path.join(
+        kApplicationPathWindowsTest,
+        localPlaylistToDeleteTitle,
+      );
+
+      // Check that the deleted playlist directory no longer exist
+      expect(Directory(localPlaylistToDeletePath).existsSync(), false);
+
+      // Since the deleted playlist was selected, there is no longer
+      // a selected playlist. So, the selected playlist widgets
+      // are disabled. Checking this now:
+
+      IntegrationTestUtil.verifyWidgetIsDisabled(
+        tester: tester,
+        widgetKeyStr: 'move_up_playlist_button',
+      );
+
+      IntegrationTestUtil.verifyWidgetIsDisabled(
+        tester: tester,
+        widgetKeyStr: 'move_down_playlist_button',
+      );
+
+      IntegrationTestUtil.verifyWidgetIsDisabled(
+        tester: tester,
+        widgetKeyStr: 'download_sel_playlists_button',
+      );
+
+      IntegrationTestUtil.verifyWidgetIsDisabled(
+        tester: tester,
+        widgetKeyStr: 'audio_popup_menu_button',
+      );
+
+      // Verifying that the selected playlist text field is empty
+      expect(
+        tester
+            .widget<Text>(find.byKey(const Key('selectedPlaylistTitleText')))
+            .data,
+        '',
+        reason: 'Selected playlist text field is not empty',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets('From playlists root dir, delete selected local playlist', (tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_integr_test_data",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      const String localPlaylistToDeleteTitle = 'local_audio_playlist_2';
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Find the playlist to delete ListTile
+
+      // First, find the Playlist ListTile Text widget
+      final Finder localPlaylistToDeleteListTileTextWidgetFinder =
+          find.text(localPlaylistToDeleteTitle);
+
+      // Then obtain the Playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      final Finder localPlaylistToDeleteListTileWidgetFinder = find.ancestor(
+        of: localPlaylistToDeleteListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the Playlist ListTile
+      // and tap on it to select the playlist
+      final Finder localPlaylistToDeleteListTileCheckboxWidgetFinder =
+          find.descendant(
+        of: localPlaylistToDeleteListTileWidgetFinder,
+        matching: find.byType(Checkbox),
+      );
+
+      // Tap the ListTile Playlist checkbox to select it
+      await tester.tap(localPlaylistToDeleteListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Now test deleting the playlist
+
+      // Open the delete playlist dialog by clicking on the 'Delete
+      // playlist ...' playlist menu item
+
+      // Now find the leading menu icon button of the Playlist to
+      // delete ListTile and tap on it
+      final Finder firstPlaylistListTileLeadingMenuIconButton = find.descendant(
+        of: localPlaylistToDeleteListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the delete playlist popup menu item and tap on it
+      final Finder popupDeletePlaylistMenuItem =
+          find.byKey(const Key("popup_menu_delete_playlist"));
+
+      await tester.tap(popupDeletePlaylistMenuItem);
+      await tester.pumpAndSettle();
+
+      // Simulate a tap outside the delete dialog to verify that the
+      // dialog can not be closed by error if the user type outside it
+      await tester.tapAt(const Offset(0, 0));
+      await tester.pumpAndSettle();
+
+      // Verify that the dialog is not closed
+      expect(find.byType(ConfirmActionDialog), findsOneWidget);
+
+      // Now verifying and closing the confirm dialog
+      await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+        tester: tester,
+        confirmDialogTitleOne:
+            'Delete Local Playlist "$localPlaylistToDeleteTitle"',
+        confirmDialogMessage:
+            "Deleting the playlist and its 0 audio's, 0 audio comment(s), 0 audio picture(s) as well as its JSON file and its directory.",
+        confirmOrCancelAction: true, // Confirm button is tapped
+      );
+
+      // Reload the settings from the json file.
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      // Check that the deleted playlist title is no longer in the
+      // playlist titles list of the settings data service
+      expect(
+          settingsDataService.get(
+            settingType: SettingType.playlists,
+            settingSubType: Playlists.orderedTitleLst,
+          ),
+          [
+            'audio_learn_test_download_2_small_videos',
+            'audio_player_view_2_shorts_test',
             'local_3'
           ]);
 
