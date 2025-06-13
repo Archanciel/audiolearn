@@ -1204,6 +1204,9 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
 
     showDialog<void>(
       context: context,
+      barrierDismissible:
+          false, // This line prevents the dialog from closing when
+      //            tapping outside the dialog
       builder: (context) => KeyboardListener(
         // Using FocusNode to enable clicking on Enter to close
         // the dialog
