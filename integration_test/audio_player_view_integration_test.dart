@@ -8921,8 +8921,8 @@ void main() {
         // Edited comment and audio player view position verification
         _verifyPositionValueAfterCommentWasPlayed(
           tester: tester,
-          commentPositionTextButtonInTenthSecondsMin: 46341,
-          commentPositionTextButtonInTenthSecondsMax: 46346,
+          commentPositionTextButtonInTenthSecondsMin: 46344,
+          commentPositionTextButtonInTenthSecondsMax: 46349,
           audioPlayerViewAudioPositionMin: '1:17:14',
           audioPlayerViewAudioPositionMax: '1:17:15',
         );
@@ -8947,8 +8947,8 @@ void main() {
         // Edited comment and audio player view position verification
         _verifyPositionValueAfterCommentWasPlayed(
           tester: tester,
-          commentPositionTextButtonInTenthSecondsMin: 46332,
-          commentPositionTextButtonInTenthSecondsMax: 46336,
+          commentPositionTextButtonInTenthSecondsMin: 46335,
+          commentPositionTextButtonInTenthSecondsMax: 46339,
           audioPlayerViewAudioPositionMin: '1:17:13',
           audioPlayerViewAudioPositionMax: '1:17:14',
         );
@@ -8967,8 +8967,8 @@ void main() {
         // Edited comment and audio player view position verification
         _verifyPositionValueAfterCommentWasPlayed(
           tester: tester,
-          commentPositionTextButtonInTenthSecondsMin: 46332,
-          commentPositionTextButtonInTenthSecondsMax: 46336,
+          commentPositionTextButtonInTenthSecondsMin: 46335,
+          commentPositionTextButtonInTenthSecondsMax: 46339,
           audioPlayerViewAudioPositionMin: '1:17:13',
           audioPlayerViewAudioPositionMax: '1:17:14',
         );
