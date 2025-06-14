@@ -3397,7 +3397,9 @@ class IntegrationTestUtil {
       // Now select the ...x play speed
       await tester.tap(find.text('${audioSpeed}x'));
       await tester.pumpAndSettle();
-    } else if (minusTapNumber != 0) {
+    } 
+    
+    if (minusTapNumber != 0) {
       // Now select the custom play speed
       for (int i = 0; i < minusTapNumber; i++) {
         // Tap on the minus button to decrease the speed
