@@ -864,7 +864,7 @@ class AudioPlayerVM extends ChangeNotifier {
       milliseconds: timeUntilEndInTenthsOfSeconds * 100,
     );
 
-    if (timeUntilEnd.inMilliseconds > 0) {
+    if (timeUntilEndInTenthsOfSeconds > 0) {
       _commentEndTimer = Timer(timeUntilEnd, () {
         pause();
       });
