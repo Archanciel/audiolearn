@@ -500,7 +500,7 @@ void main() {
     });
     testWidgets(
         '''Youtube playlist music quality addition and then add it again with same
-           URL''', (tester) async {
+           URL to verify the displayed warning message.''', (tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
