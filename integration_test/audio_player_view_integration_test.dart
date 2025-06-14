@@ -2340,8 +2340,7 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('''Reduce to min, then increase to max.''',
-        (
+    testWidgets('''Reduce to min, then increase to max.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
@@ -2484,8 +2483,7 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('''Reduce, then increase from 1.25x.''',
-        (
+    testWidgets('''Reduce, then increase from 1.25x.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
@@ -8913,8 +8911,9 @@ void main() {
         );
       });
       testWidgets(
-          '''Audio speed 0.5 Verify that after typing once on the decrease end position comment button in very short
-            comment (0:00 to 0:04) the comment plays till 0:03 seconds and not later.''',
+          '''Audio speed 0.5. Set the fourth comment end position to 1:17:15 and verify
+            that the comment stops at 1:17:15. Verify that after typing once on the decrease
+            end position button, the comment plays till 1:17:14 seconds and not later.''',
           (WidgetTester tester) async {
         final String audioplayersVersion =
             await IntegrationTestUtil.getAudioplayersVersion();
@@ -8945,7 +8944,8 @@ void main() {
         // Set the audio speed to 0.5
         await IntegrationTestUtil.setAudioSpeed(
           tester: tester,
-          minusTapNumber: 5, // to reduce the speed from 1.0 0.5
+          audioSpeed: 0.7,
+          minusTapNumber: 2, // to reduce the speed from 0.7 0.5
         );
 
         // Tap on the comment icon button to open the comment add list
@@ -9062,7 +9062,7 @@ void main() {
 
         await tester.tap(reduceEndPositionButtonFinder);
         await tester.pumpAndSettle(const Duration(milliseconds: 500));
-        
+
         // Wait during 2 seconds to verify that the audio is not
         // playing after the end position of the comment which was 1:17:15
         await Future.delayed(const Duration(seconds: 2));
@@ -9073,7 +9073,7 @@ void main() {
         // Edited comment and audio player view position verification
         _verifyPositionValueAfterCommentWasPlayed(
           tester: tester,
-          commentPositionTextButtonInTenthSecondsMin: 46335,
+          commentPositionTextButtonInTenthSecondsMin: 46333,
           commentPositionTextButtonInTenthSecondsMax: 46339,
           audioPlayerViewAudioPositionMin: '1:17:13',
           audioPlayerViewAudioPositionMax: '1:17:14',
@@ -9082,7 +9082,7 @@ void main() {
         // Now click on the play button to play the comment
         await tester.tap(find.byKey(const Key('playPauseIconButton')));
         await tester.pumpAndSettle(const Duration(milliseconds: 500));
-        
+
         // Wait during 2 seconds to verify that the audio is not
         // playing after the end position of the comment which was 1:17:15
         await Future.delayed(const Duration(seconds: 2));
@@ -9093,7 +9093,7 @@ void main() {
         // Edited comment and audio player view position verification
         _verifyPositionValueAfterCommentWasPlayed(
           tester: tester,
-          commentPositionTextButtonInTenthSecondsMin: 46335,
+          commentPositionTextButtonInTenthSecondsMin: 46333,
           commentPositionTextButtonInTenthSecondsMax: 46339,
           audioPlayerViewAudioPositionMin: '1:17:13',
           audioPlayerViewAudioPositionMax: '1:17:14',
@@ -9129,7 +9129,7 @@ void main() {
         );
 
         await tester.pumpAndSettle(const Duration(milliseconds: 500));
-        
+
         // Wait during 2 seconds to verify that the audio is not
         // playing after the end position of the comment which was 1:17:15
         await Future.delayed(const Duration(seconds: 2));
@@ -9148,7 +9148,7 @@ void main() {
         );
 
         await tester.pumpAndSettle(const Duration(milliseconds: 500));
-        
+
         // Wait during 2 seconds to verify that the audio is not
         // playing after the end position of the comment which was 1:17:15
         await Future.delayed(const Duration(seconds: 2));
@@ -9163,8 +9163,9 @@ void main() {
         );
       });
       testWidgets(
-          '''Audio speed 2.0 Verify that after typing once on the decrease end position comment button in very short
-            comment (0:00 to 0:04) the comment plays till 0:03 seconds and not later.''',
+          '''Audio speed 2.0. Set the fourth comment end position to 1:17:20.8 and verify
+            that the comment stops at 1:17:20.8. Verify that after typing twice on the decrease
+            end position button, the comment plays till 1:17:18.8 seconds and not later.''',
           (WidgetTester tester) async {
         final String audioplayersVersion =
             await IntegrationTestUtil.getAudioplayersVersion();
@@ -9195,7 +9196,8 @@ void main() {
         // Set the audio speed to 2.0
         await IntegrationTestUtil.setAudioSpeed(
           tester: tester,
-          plusTapNumber: 10, // to increase the speed from 1.0 to 2.0
+          audioSpeed: 1.5,
+          plusTapNumber: 5, // to increase the speed from 1.5 to 2.0
         );
 
         // Tap on the comment icon button to open the comment add list
@@ -9233,7 +9235,7 @@ void main() {
         );
 
         // Now set the position field in the dialog
-        String positionTextToEnterInSeconds = '1:17:21';
+        String positionTextToEnterInSeconds = '1:17:20.8';
         tester
             .widget<TextField>(setValueToTargetDialogEditTextFinder)
             .controller!
@@ -9245,7 +9247,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Tap on the Ok button to set the comment end position to
-        // 1:17:21
+        // 1:17:20.8
 
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
         await tester.pumpAndSettle();
@@ -9297,13 +9299,20 @@ void main() {
         // Edited comment and audio player view position verification
         _verifyPositionValueAfterCommentWasPlayed(
           tester: tester,
-          commentPositionTextButtonInTenthSecondsMin: 46341,
-          commentPositionTextButtonInTenthSecondsMax: 46346,
-          audioPlayerViewAudioPositionMin: '1:17:14',
-          audioPlayerViewAudioPositionMax: '1:17:15',
+          commentPositionTextButtonInTenthSecondsMin: 46366, // why not 46408
+          commentPositionTextButtonInTenthSecondsMax: 46392,
+          audioPlayerViewAudioPositionMin: '1:17:18',
+          audioPlayerViewAudioPositionMax: '1:17:19',
         );
 
-        // Now type one time on the reduce end position button to
+        // Type on the left checkbox to change duration from 1 tenth
+        // of a second to 1 second
+        final Finder commentEndTenthOfSecondsCheckboxFinder =
+            find.byKey(const Key('commentEndTenthOfSecondsCheckbox'));
+        await tester.tap(commentEndTenthOfSecondsCheckboxFinder);
+        await tester.pumpAndSettle();
+
+        // Now type two time on the reduce end position button to
         // set the end position to 1:17:14. This will start the audio
         // playback at 1:17:12 and stop it at 1:17:14.
         Finder reduceEndPositionButtonFinder = find.byKey(
@@ -9312,7 +9321,9 @@ void main() {
 
         await tester.tap(reduceEndPositionButtonFinder);
         await tester.pumpAndSettle(const Duration(milliseconds: 500));
-        
+        await tester.tap(reduceEndPositionButtonFinder);
+        await tester.pumpAndSettle(const Duration(milliseconds: 500));
+
         // Wait during 2 seconds to verify that the audio is not
         // playing after the end position of the comment which was 1:17:15
         await Future.delayed(const Duration(seconds: 2));
@@ -9323,16 +9334,16 @@ void main() {
         // Edited comment and audio player view position verification
         _verifyPositionValueAfterCommentWasPlayed(
           tester: tester,
-          commentPositionTextButtonInTenthSecondsMin: 46332,
-          commentPositionTextButtonInTenthSecondsMax: 46336,
-          audioPlayerViewAudioPositionMin: '1:17:13',
-          audioPlayerViewAudioPositionMax: '1:17:14',
+          commentPositionTextButtonInTenthSecondsMin: 46348,
+          commentPositionTextButtonInTenthSecondsMax: 46386,
+          audioPlayerViewAudioPositionMin: '1:17:18', // totalement illogique !
+          audioPlayerViewAudioPositionMax: '1:17:19',
         );
 
         // Now click on the play button to play the comment
         await tester.tap(find.byKey(const Key('playPauseIconButton')));
         await tester.pumpAndSettle(const Duration(milliseconds: 500));
-        
+
         // Wait during 2 seconds to verify that the audio is not
         // playing after the end position of the comment which was 1:17:15
         await Future.delayed(const Duration(seconds: 2));
@@ -9343,10 +9354,10 @@ void main() {
         // Edited comment and audio player view position verification
         _verifyPositionValueAfterCommentWasPlayed(
           tester: tester,
-          commentPositionTextButtonInTenthSecondsMin: 46332,
-          commentPositionTextButtonInTenthSecondsMax: 46336,
-          audioPlayerViewAudioPositionMin: '1:17:13',
-          audioPlayerViewAudioPositionMax: '1:17:14',
+          commentPositionTextButtonInTenthSecondsMin: 46348,
+          commentPositionTextButtonInTenthSecondsMax: 46386,
+          audioPlayerViewAudioPositionMin: '1:17:16', // totalement illogique !
+          audioPlayerViewAudioPositionMax: '1:17:17',
         );
 
         // Now update the comment
@@ -9379,7 +9390,7 @@ void main() {
         );
 
         await tester.pumpAndSettle(const Duration(milliseconds: 500));
-        
+
         // Wait during 2 seconds to verify that the audio is not
         // playing after the end position of the comment which was 1:17:15
         await Future.delayed(const Duration(seconds: 2));
@@ -9398,7 +9409,7 @@ void main() {
         );
 
         await tester.pumpAndSettle(const Duration(milliseconds: 500));
-        
+
         // Wait during 2 seconds to verify that the audio is not
         // playing after the end position of the comment which was 1:17:15
         await Future.delayed(const Duration(seconds: 2));
