@@ -98,6 +98,12 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _passedValueTextEditingController.text = widget.passedValueStr;
+      
+      // Ensure focus after dialog is fully built
+      if (widget.passedValueFieldLabel.isNotEmpty &&
+          widget.passedValueStr.isNotEmpty) {
+        _focusNodePassedValueTextField.requestFocus();
+      }
     });
   }
 
@@ -115,6 +121,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
     final ThemeProviderVM themeProviderVM =
         Provider.of<ThemeProviderVM>(context); // by default, listen is true
 
+    // Immediate focus request during build
     FocusScope.of(context).requestFocus(
       _focusNodePassedValueTextField,
     );
