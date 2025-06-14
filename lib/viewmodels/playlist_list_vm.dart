@@ -3209,7 +3209,8 @@ class PlaylistListVM extends ChangeNotifier {
       return restoredInfoLst;
     }
 
-    // Retrieve the playlist root path.
+    // Retrieve the playlist root path. Normally, this value contains
+    // /playlists or \playlists depending on the platform.
     final String playlistRootPath = _settingsDataService.get(
       settingType: SettingType.dataLocation,
       settingSubType: DataLocation.playlistRootPath,
@@ -3247,8 +3248,13 @@ class PlaylistListVM extends ChangeNotifier {
           .map((segment) => segment.trim())
           .join('/');
 
+      // Applyig sanitizedArchiveFileName.replaceFirst('playlists/', '')
+      // enables to restore unique or multiple playlists located
+      // in the audio/playlists directory and saved to the zip file
+      // to an app whose playlists root path is contains /playlists
+      // or not.
       final String destinationPathFileName = path.normalize(
-        path.join(playlistRootPath, sanitizedArchiveFileName),
+        path.join(playlistRootPath, sanitizedArchiveFileName.replaceFirst('playlists/', '')),
       );
 
       if (destinationPathFileName.contains(kSettingsFileName)) {
