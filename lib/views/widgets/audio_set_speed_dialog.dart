@@ -302,7 +302,7 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
           key: const Key('minusButtonKey'),
           icon: const Icon(Icons.remove),
           onPressed: () async {
-            double newSpeed = _audioPlaySpeed - 0.1;
+            double newSpeed = (_audioPlaySpeed == 1.25) ? 1.2 : _audioPlaySpeed - 0.1;
             if (newSpeed >= 0.5) {
               await _setPlaybackSpeed(
                 audioPlayerVMlistenedFalse: audioPlayerVMlistenFalse,
@@ -314,6 +314,10 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
                 // 0.6. 0.6 is displayed and clicking on
                 // '-' button could not change the speed
                 // to 0.5, the bottom limit !
+                //
+                // Without this test, the app crashes when
+                // clicking on '-' button when the speed
+                // is 0.6.
                 newSpeed = 0.5;
                 await _setPlaybackSpeed(
                   audioPlayerVMlistenedFalse: audioPlayerVMlistenFalse,
@@ -327,7 +331,6 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
           child: Slider(
             min: 0.5,
             max: 2.0,
-            divisions: 6,
             label: "${_audioPlaySpeed.toStringAsFixed(1)}x",
             value: _audioPlaySpeed,
             onChanged: (value) async {
@@ -342,7 +345,7 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
           key: const Key('plusButtonKey'),
           icon: const Icon(Icons.add),
           onPressed: () async {
-            double newSpeed = _audioPlaySpeed + 0.1;
+            double newSpeed = (_audioPlaySpeed == 1.25) ? 1.3 : _audioPlaySpeed + 0.1;
             if (newSpeed <= 2.0) {
               await _setPlaybackSpeed(
                 audioPlayerVMlistenedFalse: audioPlayerVMlistenFalse,
