@@ -3209,10 +3209,10 @@ class PlaylistListVM extends ChangeNotifier {
       return restoredInfoLst;
     }
 
-    // Retrieve the application path.
-    final String applicationPath = _settingsDataService.get(
+    // Retrieve the playlist root path.
+    final String playlistRootPath = _settingsDataService.get(
       settingType: SettingType.dataLocation,
-      settingSubType: DataLocation.appSettingsPath,
+      settingSubType: DataLocation.playlistRootPath,
     );
 
     // Read the entire zip file as bytes.
@@ -3248,7 +3248,7 @@ class PlaylistListVM extends ChangeNotifier {
           .join('/');
 
       final String destinationPathFileName = path.normalize(
-        path.join(applicationPath, sanitizedArchiveFileName),
+        path.join(playlistRootPath, sanitizedArchiveFileName),
       );
 
       if (destinationPathFileName.contains(kSettingsFileName)) {
