@@ -7830,12 +7830,14 @@ void main() {
         matching: find.byType(TextField),
       );
 
+      // Verify the TextField is focused using its focus node
+      TextField textField = tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
+      expect(textField.focusNode?.hasFocus, isTrue, 
+            reason: 'TextField should be focused when dialog opens');
+
       // Now empty the position in the dialog
       String positionTextToEnterWithTenthOfSeconds = '';
-      tester
-          .widget<TextField>(setValueToTargetDialogEditTextFinder)
-          .controller!
-          .text = positionTextToEnterWithTenthOfSeconds;
+      textField.controller!.text = positionTextToEnterWithTenthOfSeconds;
       await tester.pumpAndSettle();
 
       // Select the first checkbox (Start position)
@@ -7871,12 +7873,13 @@ void main() {
         matching: find.byType(TextField),
       );
 
-      // Now empty the position field in the dialog
-      String positionTextToEnterInSeconds = '';
-      tester
-          .widget<TextField>(setValueToTargetDialogEditTextFinder)
-          .controller!
-          .text = positionTextToEnterInSeconds;
+      // Verify the TextField is focused using its focus node
+      textField = tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
+      expect(textField.focusNode?.hasFocus, isTrue, 
+            reason: 'TextField should be focused when dialog opens');
+
+      // Now empty the position in the dialog
+      textField.controller!.text = positionTextToEnterWithTenthOfSeconds;
       await tester.pumpAndSettle();
 
       // Select the second checkbox (End position)
