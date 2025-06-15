@@ -857,8 +857,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
     timeUntilEndInTenthsOfSeconds =
         ((timeUntilEndInTenthsOfSeconds / _currentAudio!.audioPlaySpeed)
-                .ceil()) +
-            3;
+                .ceil());
 
     Duration timeUntilEnd = Duration(
       milliseconds: timeUntilEndInTenthsOfSeconds * 100,
