@@ -3221,6 +3221,9 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Decode the zip archive.
     final Archive archive = ZipDecoder().decodeBytes(zipBytes);
+    final String zipFilePlaylistDir = _getPlaylistZipRootDir(
+      archive: archive,
+    );
     ArchiveFile? archiveFile;
 
     // Will be set to false if the zip file was created from the
@@ -3254,7 +3257,8 @@ class PlaylistListVM extends ChangeNotifier {
       // to an app whose playlists root path is contains /playlists
       // or not.
       final String destinationPathFileName = path.normalize(
-        path.join(playlistRootPath, sanitizedArchiveFileName.replaceFirst('playlists/', '')),
+        path.join(playlistRootPath,
+            sanitizedArchiveFileName.replaceFirst(zipFilePlaylistDir, '')),
       );
 
       if (destinationPathFileName.contains(kSettingsFileName)) {
@@ -3391,6 +3395,43 @@ class PlaylistListVM extends ChangeNotifier {
     restoredInfoLst.add(wasIndividualPlaylistRestored);
 
     return restoredInfoLst;
+  }
+
+  /// This method returns the playlist root directory of the playlist(s) included in the
+  /// playlist zip file.
+  String _getPlaylistZipRootDir({
+    required Archive archive,
+  }) {
+    for (ArchiveFile archiveFile in archive) {
+      if (!archiveFile.isFile || !archiveFile.name.endsWith('.json')) {
+        continue;
+      }
+
+      String sanitizedPath = archiveFile.name.replaceAll('\\', '/');
+      List<String> pathParts = sanitizedPath.split('/');
+
+      if (pathParts.length >= 2) {
+        String fileName = path.basenameWithoutExtension(sanitizedPath);
+        String directoryName = pathParts[pathParts.length - 2];
+
+        // Check if this is a playlist file (JSON name matches directory name)
+        if (fileName == directoryName) {
+          // Found a matching playlist file, determine the root directory
+          if (pathParts.length == 2) {
+            // Example "S8 audio.json". Playlist root directory is ''
+            return '';
+          } else if (pathParts.length >= 3) {
+            // Example: "playlists/S8 audio/S8 audio.json" or
+            // "myChooseName/S8 audio/S8 audio.json". Playlist root directory
+            // is 'playlists/' or 'myChooseName/'
+            return '${pathParts[0]}/';
+          }
+        }
+      }
+    }
+
+    // Default fallback if no matching playlist file is found
+    return '';
   }
 
   /// Method called when the user clicks on the 'Rewind audio to start' playlist
