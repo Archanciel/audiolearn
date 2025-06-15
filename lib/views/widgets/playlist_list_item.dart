@@ -304,9 +304,6 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               barrierDismissible:
                   false, // This line prevents the dialog from closing when
               //            tapping outside the dialog
-              // passing the current audio to the dialog instead
-              // of initializing a private _currentAudio variable
-              // in the dialog avoid integr test problems
               builder: (context) => PlaylistCommentListDialog(
                 currentPlaylist: playlist,
               ),
