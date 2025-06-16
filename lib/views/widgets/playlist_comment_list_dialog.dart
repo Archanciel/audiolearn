@@ -73,6 +73,19 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
       _focusNodeDialog,
     );
 
+    final PlaylistListVM playlistListVMlistenFalse =
+        Provider.of<PlaylistListVM>(
+      context,
+      listen: false,
+    );
+    final Playlist currentPlaylist = widget.currentPlaylist;
+    final String audioSFparmsName = playlistListVMlistenFalse
+        .getSelectedPlaylistAudioSortFilterParmsNameForView(
+      audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+      translatedAppliedSortFilterParmsName:
+          AppLocalizations.of(context)!.sortFilterParametersAppliedName,
+    );
+
     return KeyboardListener(
       // Using FocusNode to enable clicking on Enter to close
       // the dialog
@@ -92,7 +105,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
           children: [
             Flexible(
               child: Text(
-                AppLocalizations.of(context)!.playlistCommentsDialogTitle,
+                '${AppLocalizations.of(context)!.playlistCommentsDialogTitle} ($audioSFparmsName)',
                 maxLines: 2,
                 softWrap: true,
               ),
@@ -103,7 +116,6 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
         content: Consumer<CommentVM>(
           builder: (context, commentVMlistenTrue, child) {
             // Map with the audio file name without extension as key
-            Playlist currentPlaylist = widget.currentPlaylist;
             final Map<String, List<Comment>> playlistAudioCommentsMap =
                 commentVMlistenTrue.getPlaylistAudioComments(
               playlist: currentPlaylist,
@@ -116,19 +128,14 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
             final List<String> commentFileNameNoExtLst =
                 playlistAudioCommentsMap.keys.toList();
 
-            final PlaylistListVM playlistListVMlistenFalse =
-                Provider.of<PlaylistListVM>(
-              context,
-              listen: false,
-            );
-
             final List<String> sortedAudioFileNameNoExtLst =
                 playlistListVMlistenFalse
                     .getSortedPlaylistAudioCommentFileNamesApplyingSortFilterParameters(
-              selectedPlaylist: currentPlaylist,
-              audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
-              commentFileNameNoExtLst: commentFileNameNoExtLst,
-            );
+                        selectedPlaylist: currentPlaylist,
+                        audioLearnAppViewType:
+                            AudioLearnAppViewType.playlistDownloadView,
+                        commentFileNameNoExtLst: commentFileNameNoExtLst,
+                        audioSortFilterParametersName: audioSFparmsName);
 
             return SingleChildScrollView(
               controller: _scrollController,
@@ -406,7 +413,8 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                               .pause() // clicked on currently playing comment pause button
                           : await _playFromCommentPosition(
                               // clicked on other comment play button
-                              audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+                              audioPlayerVMlistenFalse:
+                                  audioPlayerVMlistenFalse,
                               commentVMlistenTrue: commentVMlistenTrue,
                               currentPlaylist: currentPlaylist,
                               currentAudio: currentAudio,
@@ -713,7 +721,8 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
     await audioPlayerVMlistenFalse.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
       // data used by the AudioPlayerVM Timer
-      commentEndPositionInTenthOfSeconds: comment.commentEndPositionInTenthOfSeconds,
+      commentEndPositionInTenthOfSeconds:
+          comment.commentEndPositionInTenthOfSeconds,
     );
   }
 

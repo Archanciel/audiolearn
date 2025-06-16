@@ -1538,7 +1538,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     selectedPlaylistAudioLst: playlistListVMlistenFalse
                         .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
                       audioLearnAppViewType:
-                          AudioLearnAppViewType.audioPlayerView,
+                          AudioLearnAppViewType.playlistDownloadView,
                     ),
                     audioSortFilterParametersName: '',
                     audioSortFilterParameters: AudioSortFilterParameters
