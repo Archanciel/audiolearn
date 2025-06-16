@@ -510,8 +510,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '9:20',
-        maxPositionTimeStr: '9:25',
+        minPositionTimeStr: '9:21',
+        maxPositionTimeStr: '9:26',
       );
 
       // Purge the test playlist directory so that the created test
@@ -642,8 +642,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '8:49',
-        maxPositionTimeStr: '8:54',
+        minPositionTimeStr: '8:53',
+        maxPositionTimeStr: '8:58',
       );
 
       // Purge the test playlist directory so that the created test
@@ -2680,8 +2680,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '0:02',
-        maxPositionTimeStr: '0:05',
+        minPositionTimeStr: '0:03',
+        maxPositionTimeStr: '0:06',
       );
 
       // Verify if the last downloaded audio title is displayed
@@ -3001,8 +3001,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '0:02',
-        maxPositionTimeStr: '0:05',
+        minPositionTimeStr: '0:03',
+        maxPositionTimeStr: '0:06',
       );
 
       // Verify if the third downloaded audio title is displayed
@@ -4603,8 +4603,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '1:23',
-        maxPositionTimeStr: '1:25',
+        minPositionTimeStr: '1:24',
+        maxPositionTimeStr: '1:26',
       );
 
       // undo the change
