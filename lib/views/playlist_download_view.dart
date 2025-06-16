@@ -1395,8 +1395,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
   /// Builds the first line of the playlist download view. This line
   /// contains the playlist URL text field under which is added the
-  /// selected playlist title, the add playlist button, the download
-  /// single video button and the stop download button.
+  /// selected playlist title and the applied SF parms name, the add
+  /// playlist button, the download single video button and the stop
+  /// download or delete playlist URL text field button.
   Widget _buildFirstLine({
     required BuildContext context,
     required AudioDownloadVM audioDownloadVMlistenFalse,
@@ -1674,7 +1675,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                       playlistListVMlistenFalse
                           .getSortFilterParmsNameApplicationValuesToCurrentPlaylist(
                     selectedSortFilterParmsName:
-                        _selectedSortFilterParametersName!,
+                        _selectedPlaylistAudioSortFilterParmsName,
                   );
                   return PlaylistAddRemoveSortFilterOptionsDialog(
                     playlistTitle:
