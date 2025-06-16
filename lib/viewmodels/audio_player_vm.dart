@@ -875,6 +875,12 @@ class AudioPlayerVM extends ChangeNotifier {
       _commentEndTimer!.cancel();
       _commentEndTimer = null;
     }
+
+    // In debuged windows app, not necessary. And if required,
+    // add a test if_currentAudioPosition >= _currentAudioTotalDuration !
+
+    // _setCurrentAudioToEndPosition();
+    // _currentAudioPosition == _currentAudioTotalDuration;
   }
 
   /// Method called when the user clicks on the '<<' or '>>'
