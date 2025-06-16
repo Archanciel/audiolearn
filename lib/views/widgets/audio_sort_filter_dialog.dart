@@ -1006,7 +1006,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
             );
 
             playlistListVMlistenFalse.saveAudioSortFilterParameters(
-              audioSortFilterParametersName: _sortFilterSaveAsUniqueName,
+              audioSortFilterParametersName: _sortFilterSaveAsUniqueName.trim(),
               audioSortFilterParameters: filterSortAudioAndParmLst[1],
             );
 
