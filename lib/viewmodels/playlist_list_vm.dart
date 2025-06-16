@@ -1412,14 +1412,14 @@ class PlaylistListVM extends ChangeNotifier {
   /// Returns the selected playlist audio list. If the user clicked
   /// on a sort filter item in the sort filter dropdown button located
   /// in the playlist download view or if the user taped on the Apply
-  /// button in the SortAndFilterAudioDialog, then the filtered
+  /// button in the AudioSortFilterDialog, then the filtered
   /// and sorted audio list is returned.
   ///
   /// As well, if the selected playlist has a sort filter parameters name
   /// saved in its json file, then this sort filter parameters obtained
   /// from the settings data service are applied to the returned audio list,
   /// unless the user has changed the sort filter parameters in the
-  /// SortAndFilterAudioDialog or in the playlist download view sort filter
+  /// AudioSortFilterDialog or in the playlist download view sort filter
   /// dropdown menu.
   List<Audio> getSelectedPlaylistPlayableAudioApplyingSortFilterParameters({
     required AudioLearnAppViewType audioLearnAppViewType,
@@ -1547,12 +1547,13 @@ class PlaylistListVM extends ChangeNotifier {
     required Playlist selectedPlaylist,
     required AudioLearnAppViewType audioLearnAppViewType,
     required List<String> commentFileNameNoExtLst,
-    AudioSortFilterParameters? audioSortFilterParameters,
+    required String audioSortFilterParametersName,
   }) {
     List<Audio> selectedPlaylistSortedAudioLst =
         getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
       audioLearnAppViewType: audioLearnAppViewType,
-      passedAudioSortFilterParameters: audioSortFilterParameters,
+      passedAudioSortFilterParametersName:
+          audioSortFilterParametersName,
     );
 
     // First step: create a map associating each comment file name to

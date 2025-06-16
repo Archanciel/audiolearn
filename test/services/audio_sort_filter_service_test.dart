@@ -11883,6 +11883,11 @@ void main() {
         selectedPlaylist: loadedPlaylist,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         commentFileNameNoExtLst: commentFileNamesNoExtLst,
+        audioSortFilterParametersName:
+            playlistListVM.getSelectedPlaylistAudioSortFilterParmsNameForView(
+          audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+          translatedAppliedSortFilterParmsName: '',
+        ),
       );
 
       List<String> expectedSortedCommentFileNameLst = [
@@ -11979,6 +11984,11 @@ void main() {
         selectedPlaylist: loadedPlaylist,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         commentFileNameNoExtLst: commentFileNamesNoExtLst,
+        audioSortFilterParametersName:
+            playlistListVM.getSelectedPlaylistAudioSortFilterParmsNameForView(
+          audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+          translatedAppliedSortFilterParmsName: '',
+        ),
       );
 
       List<String> expectedSortedCommentFileNameLst = [
@@ -12068,6 +12078,11 @@ void main() {
         selectedPlaylist: loadedPlaylist,
         audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
         commentFileNameNoExtLst: commentFileNamesNoExtLst,
+        audioSortFilterParametersName:
+            playlistListVM.getSelectedPlaylistAudioSortFilterParmsNameForView(
+          audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+          translatedAppliedSortFilterParmsName: '',
+        ),
       );
 
       List<String> expectedSortedCommentFileNameLst = [];
