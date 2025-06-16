@@ -1674,8 +1674,14 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   List<dynamic> sortFilterParmsNameAppliedToCurrentPlaylist =
                       playlistListVMlistenFalse
                           .getSortFilterParmsNameApplicationValuesToCurrentPlaylist(
-                    selectedSortFilterParmsName:
-                        _selectedPlaylistAudioSortFilterParmsName,
+                    selectedSortFilterParmsName: playlistListVMlistenFalse
+                        .getSelectedPlaylistAudioSortFilterParmsNameForView(
+                      audioLearnAppViewType:
+                          AudioLearnAppViewType.playlistDownloadView,
+                      translatedAppliedSortFilterParmsName:
+                          AppLocalizations.of(context)!
+                              .sortFilterParametersAppliedName,
+                    ),
                   );
                   return PlaylistAddRemoveSortFilterOptionsDialog(
                     playlistTitle:
