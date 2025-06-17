@@ -1552,8 +1552,7 @@ class PlaylistListVM extends ChangeNotifier {
     List<Audio> selectedPlaylistSortedAudioLst =
         getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
       audioLearnAppViewType: audioLearnAppViewType,
-      passedAudioSortFilterParametersName:
-          audioSortFilterParametersName,
+      passedAudioSortFilterParametersName: audioSortFilterParametersName,
     );
 
     // First step: create a map associating each comment file name to
@@ -3217,6 +3216,13 @@ class PlaylistListVM extends ChangeNotifier {
       settingSubType: DataLocation.playlistRootPath,
     );
 
+    // Retrieve the playlist root path. Normally, this value contains
+    // /playlists or \playlists depending on the platform.
+    final String applicationPath = _settingsDataService.get(
+      settingType: SettingType.dataLocation,
+      settingSubType: DataLocation.appSettingsPath,
+    );
+
     // Read the entire zip file as bytes.
     final List<int> zipBytes = await zipFile.readAsBytes();
 
@@ -3252,18 +3258,26 @@ class PlaylistListVM extends ChangeNotifier {
           .map((segment) => segment.trim())
           .join('/');
 
-      // Applyig sanitizedArchiveFileName.replaceFirst('playlists/', '')
+      // Applying sanitizedArchiveFileName.replaceFirst('playlists/', '')
       // enables to restore unique or multiple playlists located
-      // in the audio/playlists directory and saved to the zip file
-      // to an app whose playlists root path is contains /playlists
+      // in the audio/playlists directory and saved to the zip file,
+      // to an app whose playlists root path contains /playlists
       // or not.
-      final String destinationPathFileName = path.normalize(
-        path.join(playlistRootPath,
-            sanitizedArchiveFileName.replaceFirst(zipFilePlaylistDir, '')),
-      );
+      String destinationPathFileName;
+
+      if (sanitizedArchiveFileName.startsWith(kPictureDirName)) {
+        destinationPathFileName = path.normalize(
+          path.join(applicationPath, sanitizedArchiveFileName),
+        );
+      } else {
+        destinationPathFileName = path.normalize(
+          path.join(playlistRootPath,
+              sanitizedArchiveFileName.replaceFirst(zipFilePlaylistDir, '')),
+        );
+      }
 
       if (destinationPathFileName.contains(kSettingsFileName)) {
-        // In this case, the zip file was created from the/ appbar
+        // In this case, the zip file was created from the appbar
         // 'Save Playlist, Comments, Pictures and Settings to Zip
         // File' menu item. If the similar menu was selected from
         // the playlist item menu, the settings file does not
