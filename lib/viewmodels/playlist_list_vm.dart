@@ -3333,7 +3333,8 @@ class PlaylistListVM extends ChangeNotifier {
           outputFile.existsSync()) {
         // If the comment json file already exists, skip it. This is
         // useful if a new comment was added before the restoration
-        // from the zip file.
+        // from the zip file. Otherwise, the new comment would be
+        // lost.
         continue;
       }
 
@@ -3387,10 +3388,10 @@ class PlaylistListVM extends ChangeNotifier {
           restoredCommentsNumber++;
         } else if (destinationPathFileName.contains(kPictureDirName)) {
           if (destinationPathFileName.endsWith('.jpg')) {
-            // The jpg file is a picture file.
+            // The jpg file is a physical picture file.
             restoredPicturesJpgNumber++;
           } else {
-            // The json file is a picture file.
+            // The json file is an audio picture reference file.
             restoredPicturesJsonNumber++;
           }
         } else {
