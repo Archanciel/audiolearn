@@ -857,7 +857,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
     timeUntilEndInTenthsOfSeconds =
         ((timeUntilEndInTenthsOfSeconds / _currentAudio!.audioPlaySpeed)
-                .ceil());
+            .ceil());
 
     Duration timeUntilEnd = Duration(
       milliseconds: timeUntilEndInTenthsOfSeconds * 100,
@@ -876,11 +876,13 @@ class AudioPlayerVM extends ChangeNotifier {
       _commentEndTimer = null;
     }
 
-    // In debuged windows app, not necessary. And if required,
-    // add a test if_currentAudioPosition >= _currentAudioTotalDuration !
-
-    // _setCurrentAudioToEndPosition();
-    // _currentAudioPosition == _currentAudioTotalDuration;
+    // Usefull in order to ensure thai in this situation,
+    // the audio position is correctly displayed in the
+    // as vended in the PlaylistDownloadView screen.
+    if (_currentAudioPosition >=
+        _currentAudioTotalDuration - Duration(seconds: 2)) {
+      _setCurrentAudioToEndPosition();
+    }
   }
 
   /// Method called when the user clicks on the '<<' or '>>'
