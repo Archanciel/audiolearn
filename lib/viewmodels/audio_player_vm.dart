@@ -893,7 +893,7 @@ class AudioPlayerVM extends ChangeNotifier {
 
     timeUntilEndInTenthsOfSeconds =
         ((timeUntilEndInTenthsOfSeconds / _currentAudio!.audioPlaySpeed)
-                .ceil());
+            .ceil());
 
     Duration timeUntilEnd = Duration(
       milliseconds: timeUntilEndInTenthsOfSeconds * 100,
@@ -915,8 +915,9 @@ class AudioPlayerVM extends ChangeNotifier {
     // Usefull in order to ensure that in this situation,
     // the audio position is correctly displayed as ended
     // in the in the PlaylistDownloadView screen.
-    if (_currentAudioPosition >=
-        _currentAudioTotalDuration - Duration(seconds: 2)) {
+    if (_currentAudio != null &&
+        _currentAudioPosition >=
+            _currentAudioTotalDuration - Duration(seconds: 2)) {
       _setCurrentAudioToEndPosition();
     }
   }
