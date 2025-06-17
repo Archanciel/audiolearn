@@ -3265,7 +3265,16 @@ class PlaylistListVM extends ChangeNotifier {
       // or not.
       String destinationPathFileName;
 
-      if (sanitizedArchiveFileName.startsWith(kPictureDirName)) {
+      if (sanitizedArchiveFileName.startsWith(kPictureDirName) ||
+          sanitizedArchiveFileName.contains(kSettingsFileName)) {
+        // The first condition guarantees that the zip verion of
+        // the pictureAudioMap.json file is restored. It will then
+        // be combined with the current pictureAudioMap.json file.
+        //
+        // The second condition guarantees that the zip settings
+        // file is restored. It will then be combined with the
+        // current settings file in the method
+        // _mergeRestoredFromZipSettingsWithCurrentAppSettings.
         destinationPathFileName = path.normalize(
           path.join(applicationPath, sanitizedArchiveFileName),
         );
