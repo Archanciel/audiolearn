@@ -911,6 +911,14 @@ class AudioPlayerVM extends ChangeNotifier {
       _commentEndTimer!.cancel();
       _commentEndTimer = null;
     }
+
+    // Usefull in order to ensure that in this situation,
+    // the audio position is correctly displayed as ended
+    // in the in the PlaylistDownloadView screen.
+    if (_currentAudioPosition >=
+        _currentAudioTotalDuration - Duration(seconds: 2)) {
+      _setCurrentAudioToEndPosition();
+    }
   }
 
   /// Method called when the user clicks on the '<<' or '>>'
