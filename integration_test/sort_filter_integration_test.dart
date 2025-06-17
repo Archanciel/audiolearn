@@ -11187,17 +11187,17 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Verify the order of the playlist audio comments
 
           final List<String> expectedDefaultCommentTitles = [
-            "Mais comment tout cela est-il vrai ?",
-            "L'amérique était un pays qui ne se détournait pas des affamés",
             "Début de Conversation avec Dieu",
             "Chapitre 3, les questions",
+            "L'amérique était un pays qui ne se détournait pas des affamés",
+            "Mais comment tout cela est-il vrai ?",
           ];
 
           final List<String> expectedDefaultCommentTimes = [
-            "5:36:36",
-            "2:55:00",
             "0:00",
             "2:36:27",
+            "2:55:00",
+            "5:36:36",
           ];
 
           // Verify the order of the playlist audio comments
