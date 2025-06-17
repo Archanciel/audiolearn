@@ -105,7 +105,9 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
           children: [
             Flexible(
               child: Text(
-                '${AppLocalizations.of(context)!.playlistCommentsDialogTitle} ($audioSFparmsName)',
+                (audioSFparmsName.isNotEmpty)
+                    ? '${AppLocalizations.of(context)!.playlistCommentsDialogTitle} ($audioSFparmsName)'
+                    : AppLocalizations.of(context)!.playlistCommentsDialogTitle,
                 maxLines: 2,
                 softWrap: true,
               ),
