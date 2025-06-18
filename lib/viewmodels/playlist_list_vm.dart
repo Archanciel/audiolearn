@@ -2029,6 +2029,14 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     if (forAudioPlayerView) {
+      // If a SF parms was created in the audio player view, and so
+      // was added to _playlistAudioSFparmsNamesForAudioPlayerViewMap,
+      // when the user clicks on the 'Save sort/filter options to
+      // playlist' menu item, then the previously applied SF parms name
+      // is replaced in _playlistAudioSFparmsNamesForAudioPlayerViewMap.
+      _playlistAudioSFparmsNamesForAudioPlayerViewMap[playlist.title] =
+          sortFilterParmsNameToSave;
+
       playlist.audioSortFilterParmsNameForAudioPlayerView =
           sortFilterParmsNameToSave;
 
@@ -2618,34 +2626,6 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     notifyListeners();
-  }
-
-  /// Method called when the user opens the audio playable list dialog.
-  /// This method returns the name of the sort and filter parameters
-  /// which has been saved in the playlist json file.
-  ///
-  /// If no sort filter parameters were saved in the playlist json file,
-  /// then the translated name of the default sort filter parameter
-  /// is returned.
-  String getAudioPlayerViewSortFilterName({
-    required String translatedDefaultSFparmsName,
-  }) {
-    Playlist selectedPlaylist = getSelectedPlaylists()[0];
-    String audioSortFilterParmsName =
-        selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView;
-
-    if (audioSortFilterParmsName.isEmpty) {
-      audioSortFilterParmsName = translatedDefaultSFparmsName;
-    } else {
-      if (_settingsDataService.namedAudioSortFilterParametersMap
-          .containsKey(audioSortFilterParmsName)) {
-        return audioSortFilterParmsName;
-      } else {
-        audioSortFilterParmsName = translatedDefaultSFparmsName;
-      }
-    }
-
-    return audioSortFilterParmsName;
   }
 
   /// Method called when the user opens PlaylistAddRemoveSortFilterOptionsDialog.
