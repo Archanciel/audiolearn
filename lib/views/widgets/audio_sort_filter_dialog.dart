@@ -86,6 +86,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   late bool _filterNotPictured;
   late bool _filterPlayable;
   late bool _filterNotPlayable;
+  late bool _filterDownloaded;
+  late bool _filterImported;
 
   final TextEditingController _startFileSizeController =
       TextEditingController();
@@ -257,6 +259,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _filterNotPictured = audioSortDefaultFilterParameters.filterNotPictured;
     _filterPlayable = audioSortDefaultFilterParameters.filterPlayable;
     _filterNotPlayable = audioSortDefaultFilterParameters.filterNotPlayable;
+    _filterDownloaded = audioSortDefaultFilterParameters.filterDownloaded;
+    _filterImported = audioSortDefaultFilterParameters.filterImported;
     _startDownloadDateTime =
         audioSortDefaultFilterParameters.downloadDateStartRange;
     _endDownloadDateTime =
@@ -328,6 +332,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _filterNotPictured = true;
     _filterPlayable = true;
     _filterNotPlayable = true;
+    _filterDownloaded = true;
+    _filterImported = true;
     _startDownloadDateTimeController.clear();
     _endDownloadDateTimeController.clear();
     _startUploadDateTimeController.clear();
@@ -373,6 +379,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _filterNotPictured = audioSortFilterParameters.filterNotPictured;
     _filterPlayable = audioSortFilterParameters.filterPlayable;
     _filterNotPlayable = audioSortFilterParameters.filterNotPlayable;
+    _filterDownloaded = audioSortFilterParameters.filterDownloaded;
+    _filterImported = audioSortFilterParameters.filterImported;
     _startDownloadDateTimeController.clear();
     _endDownloadDateTimeController.clear();
     _startUploadDateTimeController.clear();
@@ -623,6 +631,9 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                           ),
                         ],
                       ),
+                    ),
+                    _buildDownloadedImportedCheckboxes(
+                      context: context,
                     ),
                     _buildAudioStateCheckboxes(
                       context: context,
@@ -1552,6 +1563,57 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                 // playable checkbox must be checked since it makes
                 // no sense to have both unchecked
                 _filterPlayable = true;
+              }
+            });
+
+            // now clicking on Enter works since the
+            // Checkbox is not focused anymore
+            _audioTitleSearchSentenceFocusNode.requestFocus();
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDownloadedImportedCheckboxes({
+    required BuildContext context,
+  }) {
+    return Row(
+      children: [
+        Text(AppLocalizations.of(context)!.downloadedCheckbox),
+        Checkbox(
+          key: const Key('filterDownloadedCheckbox'),
+          value: _filterDownloaded,
+          onChanged: (bool? newValue) {
+            setState(() {
+              _filterDownloaded = newValue!;
+
+              if (!_filterDownloaded) {
+                // If the downloaded checkbox is unchecked, the
+                // imported checkbox must be checked since it makes
+                // no sense to have both unchecked
+                _filterImported = true;
+              }
+            });
+
+            // now clicking on Enter works since the
+            // Checkbox is not focused anymore
+            _audioTitleSearchSentenceFocusNode.requestFocus();
+          },
+        ),
+        Text(AppLocalizations.of(context)!.importedCheckbox),
+        Checkbox(
+          key: const Key('filterImportedCheckbox'),
+          value: _filterImported,
+          onChanged: (bool? newValue) {
+            setState(() {
+              _filterImported = newValue!;
+
+              if (!_filterImported) {
+                // If the imported checkbox is unchecked, the
+                // downloaded checkbox must be checked since it
+                // makesno sense to have both unchecked
+                _filterDownloaded = true;
               }
             });
 

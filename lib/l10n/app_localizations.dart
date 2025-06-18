@@ -2986,6 +2986,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Saved playlist, comment and picture JSON files to \"{filePathName}\".'**
   String savedUniquePlaylistToZip(Object filePathName);
+
+  /// No description provided for @downloadedCheckbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloaded'**
+  String get downloadedCheckbox;
+
+  /// No description provided for @importedCheckbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Imported'**
+  String get importedCheckbox;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

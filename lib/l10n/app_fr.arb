@@ -1293,5 +1293,7 @@
   "updatePlaylistJsonFilesFirstHelpTitle": "Utilisation de la fonction de mise à jour des fichiers playlist JSON",
   "saveUniquePlaylistCommentsAndPicturesToZipMenu": "Sauver la playlist, ses commentaires et ses photos dans un fichier zip ...",
   "saveUniquePlaylistCommentsAndPicturesToZipTooltip": "Sauvegarde la playlist, les commentaires et les photos de ses audio's dans un fichier zip. Seuls les fichiers JSON et JPG sont copiés. Les fichiers MP3 ne sont pas inclus.",
-  "savedUniquePlaylistToZip": "Fichiers JSON de la playlist, des commentaires et des photos sauvegardés dans \"{filePathName}\"."
+  "savedUniquePlaylistToZip": "Fichiers JSON de la playlist, des commentaires et des photos sauvegardés dans \"{filePathName}\".",
+  "downloadedCheckbox": "Téléchargé",
+  "importedCheckbox": "Importé"
 }
