@@ -130,10 +130,8 @@ class _AudioPlayableListDialogState extends State<AudioPlayableListDialog>
                         ),
                         TextSpan(
                           text:
-                              "(${playlistListVMlistenTrue.getSelectedPlaylistAudioSortFilterParmsNameForView(
-                            audioLearnAppViewType:
-                                AudioLearnAppViewType.audioPlayerView,    
-                            translatedAppliedSortFilterParmsName:
+                              "(${playlistListVMlistenTrue.getAudioPlayerViewSortFilterName(
+                            translatedDefaultSFparmsName:
                                 AppLocalizations.of(context)!
                                     .sortFilterParametersDefaultName,
                           )})",
