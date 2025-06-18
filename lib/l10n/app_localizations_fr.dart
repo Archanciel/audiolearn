@@ -1653,4 +1653,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String savedUniquePlaylistToZip(Object filePathName) {
     return 'Fichiers JSON de la playlist, des commentaires et des photos sauvegardés dans \"$filePathName\".';
   }
+
+  @override
+  String get downloadedCheckbox => 'Téléchargé';
+
+  @override
+  String get importedCheckbox => 'Importé';
 }

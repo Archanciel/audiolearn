@@ -1653,4 +1653,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String savedUniquePlaylistToZip(Object filePathName) {
     return 'Saved playlist, comment and picture JSON files to \"$filePathName\".';
   }
+
+  @override
+  String get downloadedCheckbox => 'Downloaded';
+
+  @override
+  String get importedCheckbox => 'Imported';
 }

@@ -956,5 +956,7 @@
   "updatePlaylistJsonFilesFirstHelpTitle": "Using the Update Playlist JSON Files function",
   "saveUniquePlaylistCommentsAndPicturesToZipMenu": "Save the Playlist, its Comments and its Pictures to Zip File ...",
   "saveUniquePlaylistCommentsAndPicturesToZipTooltip": "Saving the playlist, their audio comments and pictures to a zip file. Only the JSON and JPG files are copied. The MP3 files will not be included.",
-  "savedUniquePlaylistToZip": "Saved playlist, comment and picture JSON files to \"{filePathName}\"."
+  "savedUniquePlaylistToZip": "Saved playlist, comment and picture JSON files to \"{filePathName}\".",
+  "downloadedCheckbox": "Downloaded",
+  "importedCheckbox": "Imported"
 }
