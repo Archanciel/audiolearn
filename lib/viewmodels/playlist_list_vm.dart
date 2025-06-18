@@ -2029,6 +2029,15 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     if (forAudioPlayerView) {
+      // If a SF parms was created in the audio player view, and so
+      // was added to _playlistAudioSFparmsNamesForAudioPlayerViewMap,
+      // when the user clicks on the 'Save sort/filter options to
+      // playlist' menu item in the playlist download dialog, then
+      // the previously applied SF parms name is replaced in
+      // _playlistAudioSFparmsNamesForAudioPlayerViewMap.
+      _playlistAudioSFparmsNamesForAudioPlayerViewMap[playlist.title] =
+          sortFilterParmsNameToSave;
+
       playlist.audioSortFilterParmsNameForAudioPlayerView =
           sortFilterParmsNameToSave;
 
@@ -2631,8 +2640,24 @@ class PlaylistListVM extends ChangeNotifier {
     required String translatedDefaultSFparmsName,
   }) {
     Playlist selectedPlaylist = getSelectedPlaylists()[0];
+
+    // Necessary for displaying the SF parms name of the SF parms
+    // created in the audio player view.
+    //
+    // When the user clicked on the 'Save sort/filter options to
+    // playlist' menu item available in the playlist download
+    // dialog, then the previously applied SF parms name is replaced
+    // in _playlistAudioSFparmsNamesForAudioPlayerViewMap by the
+    // selected SF parms name.
     String audioSortFilterParmsName =
-        selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView;
+        _playlistAudioSFparmsNamesForAudioPlayerViewMap[
+                selectedPlaylist.title] ??
+            '';
+
+    if (audioSortFilterParmsName.isEmpty) {
+      audioSortFilterParmsName =
+          selectedPlaylist.audioSortFilterParmsNameForAudioPlayerView;
+    }
 
     if (audioSortFilterParmsName.isEmpty) {
       audioSortFilterParmsName = translatedDefaultSFparmsName;
