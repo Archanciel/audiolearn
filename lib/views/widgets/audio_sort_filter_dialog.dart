@@ -1919,7 +1919,10 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                     controller: _audioTitleSearchSentenceController,
                     keyboardType: TextInputType.text,
                     onChanged: (value) {
-                      _audioTitleSearchSentence = value.trim();
+                      _audioTitleSearchSentence = value; // the value must not be trimed
+                      //                                    since the user may want to search
+                      //                                    for 'with ' for example !
+                      
                       // setting the Add button color according to the
                       // TextField content ...
                       _audioTitleSearchSentenceAddButtonIconColor =
