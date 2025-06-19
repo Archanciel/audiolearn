@@ -725,7 +725,7 @@ void main() {
       // This will pause the audio and convert the pause button to
       // play button
       await tester.tap(previouslyDownloadedAudioListTileInkWellFinder);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // Verify if the pause icon button was changed to play icon
       // as well as its color and its enclosing CircleAvatar background

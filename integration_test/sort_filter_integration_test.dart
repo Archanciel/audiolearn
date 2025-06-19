@@ -1830,7 +1830,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
-                  'Sort by:\n Present only in initial version:\n   Audio title asc\n Present only in modified version:\n   Audio title desc\nFilter words:\n Present only in modified version:\n   Jancovici',
+                  "Sort by:\n Present only in initial version:\n   Audio title asc\n Present only in modified version:\n   Audio title desc\nFilter words:\n Present only in modified version:\n   'Jancovici'",
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -2031,7 +2031,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
-                  'Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Audio chapter asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Audio downl speed desc,\n   Audio downl duration desc\nFilter words:\n Present only in modified version:\n   Marine Le Pen,\n   Emmanuel Macron\nFilter options:\n In initial version:\n   Ignore case: checked\n In modified version:\n   Ignore case: unchecked\n In initial version:\n   Include Youtube channel: checked\n In modified version:\n   Include Youtube\n   channel: unchecked\n In initial version:\n   Audio music quality: unchecked\n In modified version:\n   Audio music quality: checked\n In initial version:\n   Uncom.: checked\n In modified version:\n   Uncom.: unchecked\n In initial version:\n   Unpictured: checked\n In modified version:\n   Unpictured: unchecked\n In initial version:\n   Not playable: checked\n In modified version:\n   Not playable: unchecked\n In modified version:\n   Start downl date: 26/12/2023\n In modified version:\n   End downl date: 06/01/2024\n In modified version:\n   Start upl date: 12/06/2022\n In modified version:\n   End upl date: 19/09/2023\n In modified version:\n   File size range (MB) Start: 2.37\n In modified version:\n   File size range (MB) End: 2.8\n In modified version:\n   Audio duration range (hh:mm)\n   Start: 00:06\n In modified version:\n   Audio duration range (hh:mm)\n   End: 00:08',
+                  "Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Audio chapter asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Audio downl speed desc,\n   Audio downl duration desc\nFilter words:\n Present only in modified version:\n   'Marine Le Pen',\n   'Emmanuel Macron'\nFilter options:\n In initial version:\n   Ignore case: checked\n In modified version:\n   Ignore case: unchecked\n In initial version:\n   Include Youtube channel: checked\n In modified version:\n   Include Youtube\n   channel: unchecked\n In initial version:\n   Audio music quality: unchecked\n In modified version:\n   Audio music quality: checked\n In initial version:\n   Uncom.: checked\n In modified version:\n   Uncom.: unchecked\n In initial version:\n   Unpictured: checked\n In modified version:\n   Unpictured: unchecked\n In initial version:\n   Not playable: checked\n In modified version:\n   Not playable: unchecked\n In modified version:\n   Start downl date: 26/12/2023\n In modified version:\n   End downl date: 06/01/2024\n In modified version:\n   Start upl date: 12/06/2022\n In modified version:\n   End upl date: 19/09/2023\n In modified version:\n   File size range (MB) Start: 2.37\n In modified version:\n   File size range (MB) End: 2.8\n In modified version:\n   Audio duration range (hh:mm)\n   Start: 00:06\n In modified version:\n   Audio duration range (hh:mm)\n   End: 00:08",
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -2116,7 +2116,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
-                  'Filter words:\n Present only in modified version:\n   Jancovici,\n   Marine Le Pen',
+                  "Filter words:\n Present only in modified version:\n   'Jancovici',\n   'Marine Le Pen'",
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -2181,13 +2181,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Type "Jancovici" in the audio title search sentence TextField
             await _addAudioFilterStrAndClickOnPlusIconButton(
               tester: tester,
-              audioFilterString: 'Jancovici',
+              audioFilterString: 'Jancovici ',
             );
 
             // Type "Marine Le Pen" in the audio title search sentence TextField
             await _addAudioFilterStrAndClickOnPlusIconButton(
               tester: tester,
-              audioFilterString: 'Marine Le Pen',
+              audioFilterString: 'Marine Le Pen ',
             );
 
             // Tap on the 'or' checkbox set sentence combination
@@ -2206,7 +2206,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
-                  'Filter words:\n Present only in modified version:\n   Jancovici,\n   Marine Le Pen\nFilter options:\n In initial version:\n   and / or: and\n In modified version:\n   and / or: or',
+                  "Filter words:\n Present only in modified version:\n   'Jancovici ',\n   'Marine Le Pen '\nFilter options:\n In initial version:\n   and / or: and\n In modified version:\n   and / or: or",
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -2298,7 +2298,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
-                  'Filter words:\n Present only in modified version:\n   Jancovici,\n   Marine Le Pen\nFilter options:\n In initial version:\n   and / or: and\n In modified version:\n   and / or: or',
+                  "Filter words:\n Present only in modified version:\n   'Jancovici',\n   'Marine Le Pen'\nFilter options:\n In initial version:\n   and / or: and\n In modified version:\n   and / or: or",
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -3131,7 +3131,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
-                  'Trier par:\n Uniquement en version initiale:\n   Titre audio asc\n Uniquement en version modifiée:\n   Titre audio desc\nMots filtre:\n Uniquement en version modifiée:\n   Jancovici',
+                  "Trier par:\n Uniquement en version initiale:\n   Titre audio asc\n Uniquement en version modifiée:\n   Titre audio desc\nMots filtre:\n Uniquement en version modifiée:\n   'Jancovici'",
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -3331,7 +3331,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
-                  'Trier par:\n Uniquement en version initiale:\n   Titre audio desc\n Uniquement en version modifiée:\n   Titre audio asc,\n   Chapitre audio asc,\n   Date mise en ligne vidéo desc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Vitesse téléch audio desc,\n   Durée téléch audio desc\nMots filtre:\n Uniquement en version modifiée:\n   Marine Le Pen,\n   Emmanuel Macron\nOptions filtre:\n En version initiale:\n   Ignorer la casse: coché\n En version modifiée:\n   Ignorer la casse: décoché\n En version initiale:\n   Inclure la chaîne Youtube: coché\n En version modifiée:\n   Inclure la chaîne\n   Youtube: décoché\n En version initiale:\n   Qualité musicale: décoché\n En version modifiée:\n   Qualité musicale: coché\n En version initiale:\n   Non com.: coché\n En version modifiée:\n   Non com.: décoché\n En version initiale:\n   Sans ph.: coché\n En version modifiée:\n   Sans ph.: décoché\n En version initiale:\n   Jouable: coché\n En version modifiée:\n   Jouable: décoché\n En version modifiée:\n   Date début téléch: 26/12/2023\n En version modifiée:\n   Date fin téléch: 06/01/2024\n En version modifiée:\n   Date début mise en\n   ligne: 12/06/2022\n En version modifiée:\n   Date fin mise en\n   ligne: 19/09/2023\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Début: 2.37\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Fin: 2.8\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Début: 00:06\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Fin: 00:08',
+                  "Trier par:\n Uniquement en version initiale:\n   Titre audio desc\n Uniquement en version modifiée:\n   Titre audio asc,\n   Chapitre audio asc,\n   Date mise en ligne vidéo desc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Vitesse téléch audio desc,\n   Durée téléch audio desc\nMots filtre:\n Uniquement en version modifiée:\n   'Marine Le Pen',\n   'Emmanuel Macron'\nOptions filtre:\n En version initiale:\n   Ignorer la casse: coché\n En version modifiée:\n   Ignorer la casse: décoché\n En version initiale:\n   Inclure la chaîne Youtube: coché\n En version modifiée:\n   Inclure la chaîne\n   Youtube: décoché\n En version initiale:\n   Qualité musicale: décoché\n En version modifiée:\n   Qualité musicale: coché\n En version initiale:\n   Non com.: coché\n En version modifiée:\n   Non com.: décoché\n En version initiale:\n   Sans ph.: coché\n En version modifiée:\n   Sans ph.: décoché\n En version initiale:\n   Jouable: coché\n En version modifiée:\n   Jouable: décoché\n En version modifiée:\n   Date début téléch: 26/12/2023\n En version modifiée:\n   Date fin téléch: 06/01/2024\n En version modifiée:\n   Date début mise en\n   ligne: 12/06/2022\n En version modifiée:\n   Date fin mise en\n   ligne: 19/09/2023\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Début: 2.37\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Fin: 2.8\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Début: 00:06\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Fin: 00:08",
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -3433,7 +3433,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
-                  'Mots filtre:\n Uniquement en version modifiée:\n   Jancovici,\n   Marine Le Pen\nOptions filtre:\n En version initiale:\n   et / ou: et\n En version modifiée:\n   et / ou: ou',
+                  "Mots filtre:\n Uniquement en version modifiée:\n   'Jancovici',\n   'Marine Le Pen'\nOptions filtre:\n En version initiale:\n   et / ou: et\n En version modifiée:\n   et / ou: ou",
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -3531,7 +3531,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
-                  'Mots filtre:\n Uniquement en version modifiée:\n   Jancovici,\n   Marine Le Pen\nOptions filtre:\n En version initiale:\n   et / ou: et\n En version modifiée:\n   et / ou: ou',
+                  "Mots filtre:\n Uniquement en version modifiée:\n   'Jancovici',\n   'Marine Le Pen'\nOptions filtre:\n En version initiale:\n   et / ou: et\n En version modifiée:\n   et / ou: ou",
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -5089,7 +5089,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           confirmDialogTitleOne:
               'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
           confirmDialogMessage:
-              'Sort by:\n Present only in initial version:\n   Audio title asc\n Present only in modified version:\n   Audio title desc\nFilter words:\n Present only in modified version:\n   Jancovici',
+              "Sort by:\n Present only in initial version:\n   Audio title asc\n Present only in modified version:\n   Audio title desc\nFilter words:\n Present only in modified version:\n   'Jancovici'",
           confirmOrCancelAction: true, // Confirm button is tapped
         );
 

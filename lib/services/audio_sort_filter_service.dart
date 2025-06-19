@@ -313,8 +313,7 @@ class AudioSortFilterService {
                 'presentOnlyInFirstTitle';
         differencesLst.add(presentOnlyInFirstTitle);
         differencesLst.add(
-            "'${sentenceDifferencesMap[SortFilterParmsVersion.versionOne]!
-                .join(', ')}'");
+            sentenceDifferencesMap[SortFilterParmsVersion.versionOne]!.map((item) => "'$item'").join(', '));
       }
 
       if (sentenceDifferencesMap[SortFilterParmsVersion.versionTwo]!
@@ -324,8 +323,7 @@ class AudioSortFilterService {
                 'presentOnlyInSecondTitle';
         differencesLst.add(presentOnlyInSecondTitle);
         differencesLst.add(
-            "'${sentenceDifferencesMap[SortFilterParmsVersion.versionTwo]!
-                .join(', ')}'");
+            sentenceDifferencesMap[SortFilterParmsVersion.versionTwo]!.map((item) => "'$item'").join(', '));
       }
     }
 
@@ -537,7 +535,8 @@ class AudioSortFilterService {
         newOrModifiedaudioSortFilterParms.filterDownloaded) {
       wasFilterOptionsTitleAddedToDifferencesLst =
           _addToDifferencesLstOtherOptionCheckboxValueStr(
-              initialCheckBoxState: existingAudioSortFilterParms.filterDownloaded,
+              initialCheckBoxState:
+                  existingAudioSortFilterParms.filterDownloaded,
               modifiedCheckBoxState:
                   newOrModifiedaudioSortFilterParms.filterDownloaded,
               sortFilterParmsNameTranslationMap:
@@ -551,8 +550,7 @@ class AudioSortFilterService {
         newOrModifiedaudioSortFilterParms.filterImported) {
       wasFilterOptionsTitleAddedToDifferencesLst =
           _addToDifferencesLstOtherOptionCheckboxValueStr(
-              initialCheckBoxState:
-                  existingAudioSortFilterParms.filterImported,
+              initialCheckBoxState: existingAudioSortFilterParms.filterImported,
               modifiedCheckBoxState:
                   newOrModifiedaudioSortFilterParms.filterImported,
               sortFilterParmsNameTranslationMap:
