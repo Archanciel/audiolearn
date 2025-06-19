@@ -1,4 +1,3 @@
-
 import 'package:audiolearn/l10n/app_localizations.dart';
 
 /// This mock class is necessary in order to define two getters
@@ -1995,4 +1994,10 @@ class MockAppLocalizations extends AppLocalizations {
     Object filePathName,
   ) =>
       "Restored $playlistsNumber playlist, $commentsNumber comment and $picturesNumber picture JSON files from \"$filePathName\".";
+
+  @override
+  String get downloadedCheckbox => "Downloaded";
+
+  @override
+  String get importedCheckbox => "Imported";
 }
