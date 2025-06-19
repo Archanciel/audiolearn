@@ -11641,6 +11641,190 @@ void main() {
       );
     });
   });
+  group("filter audio by downloaded or imported options", () {
+    late AudioSortFilterService audioSortFilterService;
+    late PlaylistListVM playlistListVM;
+
+    setUp(() async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_sort_filter_service_test_data",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      // Since we have to use a mock AudioDownloadVM to add the
+      // youtube playlist, we can not use app.main() to start the
+      // app because app.main() uses the real AudioDownloadVM
+      // and we don't want to make the main.dart file dependent
+      // of a mock class. So we have to start the app by hand.
+
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+      // MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
+      //   warningMessageVM: warningMessageVM,
+      //
+      // );
+      // mockAudioDownloadVM.youtubePlaylistTitle = youtubeNewPlaylistTitle;
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+      );
+
+      // audioDownloadVM.youtubeExplode = mockYoutubeExplode;
+
+      playlistListVM = PlaylistListVM(
+        warningMessageVM: warningMessageVM,
+        audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
+        pictureVM: PictureVM(
+          settingsDataService: settingsDataService,
+        ),
+        settingsDataService: settingsDataService,
+      );
+
+      // calling getUpToDateSelectablePlaylists() loads all the
+      // playlist json files from the app dir and so enables
+      // playlistListVM to know which playlists are
+      // selected and which are not
+      playlistListVM.getUpToDateSelectablePlaylists();
+
+      audioSortFilterService = AudioSortFilterService(
+        settingsDataService: settingsDataService,
+      );
+
+      playlistListVM.setPlaylistSelection(
+        playlistTitle: 'local',
+        isPlaylistSelected: true,
+      );
+    });
+    test('filter downloaded or imported audio', () {
+      List<Audio> audioList = playlistListVM
+          .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+        audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+      );
+
+      List<String> expectedFilteredAudioTitles = [
+        "Marie-France",
+        "morning _ cinematic video",
+        "Really short video",
+      ];
+
+      AudioSortFilterParameters audioSortFilterParameters =
+          AudioSortFilterParameters(
+        selectedSortItemLst: [],
+        sentencesCombination: SentencesCombination.and,
+        filterDownloaded: true, // is true by default
+        filterImported: true, // is true by default
+      );
+
+      List<Audio> actualFilteredAudioLst =
+          audioSortFilterService.filterOnOtherOptions(
+        selectedPlaylist: playlistListVM.getSelectedPlaylists().first,
+        audioLst: audioList,
+        audioSortFilterParameters: audioSortFilterParameters,
+      );
+
+      expect(
+          actualFilteredAudioLst.map((audio) => audio.validVideoTitle).toList(),
+          expectedFilteredAudioTitles);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    test('filter downloaded audio', () {
+      List<Audio> audioList = playlistListVM
+          .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+        audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+      );
+
+      List<String> expectedFilteredAudioTitles = [
+        "morning _ cinematic video",
+        "Really short video",
+      ];
+
+      AudioSortFilterParameters audioSortFilterParameters =
+          AudioSortFilterParameters(
+        selectedSortItemLst: [],
+        sentencesCombination: SentencesCombination.and,
+        filterDownloaded: true, // is true by default
+        filterImported: false, // is true by default
+      );
+
+      List<Audio> actualFilteredAudioLst =
+          audioSortFilterService.filterOnOtherOptions(
+        selectedPlaylist: playlistListVM.getSelectedPlaylists().first,
+        audioLst: audioList,
+        audioSortFilterParameters: audioSortFilterParameters,
+      );
+
+      expect(
+          actualFilteredAudioLst.map((audio) => audio.validVideoTitle).toList(),
+          expectedFilteredAudioTitles);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    test('filter imported audio', () {
+      List<Audio> audioList = playlistListVM
+          .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+        audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+      );
+
+      List<String> expectedFilteredAudioTitles = [
+        "Marie-France",
+      ];
+
+      AudioSortFilterParameters audioSortFilterParameters =
+          AudioSortFilterParameters(
+        selectedSortItemLst: [],
+        sentencesCombination: SentencesCombination.and,
+        filterDownloaded: false, // is true by default
+        filterImported: true, // is true by default
+      );
+
+      List<Audio> actualFilteredAudioLst =
+          audioSortFilterService.filterOnOtherOptions(
+        selectedPlaylist: playlistListVM.getSelectedPlaylists().first,
+        audioLst: audioList,
+        audioSortFilterParameters: audioSortFilterParameters,
+      );
+
+      expect(
+          actualFilteredAudioLst.map((audio) => audio.validVideoTitle).toList(),
+          expectedFilteredAudioTitles);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+  });
   group('bug fix', () {
     late AudioSortFilterService audioSortFilterService;
     late PlaylistListVM playlistListVM;
