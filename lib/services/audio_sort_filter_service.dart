@@ -313,8 +313,8 @@ class AudioSortFilterService {
                 'presentOnlyInFirstTitle';
         differencesLst.add(presentOnlyInFirstTitle);
         differencesLst.add(
-            sentenceDifferencesMap[SortFilterParmsVersion.versionOne]!
-                .join(', '));
+            "'${sentenceDifferencesMap[SortFilterParmsVersion.versionOne]!
+                .join(', ')}'");
       }
 
       if (sentenceDifferencesMap[SortFilterParmsVersion.versionTwo]!
@@ -324,8 +324,8 @@ class AudioSortFilterService {
                 'presentOnlyInSecondTitle';
         differencesLst.add(presentOnlyInSecondTitle);
         differencesLst.add(
-            sentenceDifferencesMap[SortFilterParmsVersion.versionTwo]!
-                .join(', '));
+            "'${sentenceDifferencesMap[SortFilterParmsVersion.versionTwo]!
+                .join(', ')}'");
       }
     }
 
