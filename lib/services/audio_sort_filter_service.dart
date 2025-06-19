@@ -533,6 +533,36 @@ class AudioSortFilterService {
                   wasFilterOptionsTitleAddedToDifferencesLst);
     }
 
+    if (existingAudioSortFilterParms.filterDownloaded !=
+        newOrModifiedaudioSortFilterParms.filterDownloaded) {
+      wasFilterOptionsTitleAddedToDifferencesLst =
+          _addToDifferencesLstOtherOptionCheckboxValueStr(
+              initialCheckBoxState: existingAudioSortFilterParms.filterDownloaded,
+              modifiedCheckBoxState:
+                  newOrModifiedaudioSortFilterParms.filterDownloaded,
+              sortFilterParmsNameTranslationMap:
+                  sortFilterParmsNameTranslationMap,
+              optionNameTranslationKey: 'filterDownloaded',
+              differencesLst: differencesLst,
+              wasFilterOptionsTitleAddedToDifferencesLst:
+                  wasFilterOptionsTitleAddedToDifferencesLst);
+    }
+    if (existingAudioSortFilterParms.filterImported !=
+        newOrModifiedaudioSortFilterParms.filterImported) {
+      wasFilterOptionsTitleAddedToDifferencesLst =
+          _addToDifferencesLstOtherOptionCheckboxValueStr(
+              initialCheckBoxState:
+                  existingAudioSortFilterParms.filterImported,
+              modifiedCheckBoxState:
+                  newOrModifiedaudioSortFilterParms.filterImported,
+              sortFilterParmsNameTranslationMap:
+                  sortFilterParmsNameTranslationMap,
+              optionNameTranslationKey: 'filterImported',
+              differencesLst: differencesLst,
+              wasFilterOptionsTitleAddedToDifferencesLst:
+                  wasFilterOptionsTitleAddedToDifferencesLst);
+    }
+
     if (existingAudioSortFilterParms.downloadDateStartRange !=
         newOrModifiedaudioSortFilterParms.downloadDateStartRange) {
       wasFilterOptionsTitleAddedToDifferencesLst =
@@ -1247,6 +1277,24 @@ class AudioSortFilterService {
         audioLst: filteredAudios,
         playlistPlayableAudioNamesLst: playlistPlayableAudioNamesLst,
       );
+    }
+
+    // If the 'Downloaded' checkbox was set to false (by
+    // default it is set to true), the returned audio list
+    // does not contain audio that were downloaded.
+    if (!audioSortFilterParameters.filterDownloaded) {
+      filteredAudios = filteredAudios.where((audio) {
+        return audio.isAudioImported;
+      }).toList();
+    }
+
+    // If the 'Imported' checkbox was set to false (by
+    // default it is set to true), the returned audio list
+    // only contain audio which were downloaded.
+    if (!audioSortFilterParameters.filterImported) {
+      filteredAudios = filteredAudios.where((audio) {
+        return !audio.isAudioImported;
+      }).toList();
     }
 
     if (filteredAudios.isEmpty) {
