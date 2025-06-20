@@ -632,9 +632,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                         ],
                       ),
                     ),
-                    _buildDownloadedImportedCheckboxes(
-                      context: context,
-                    ),
                     _buildAudioStateCheckboxes(
                       context: context,
                     ),
@@ -645,6 +642,9 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                       context: context,
                     ),
                     _buildPlayableSelectionCheckboxes(
+                      context: context,
+                    ),
+                    _buildDownloadedImportedCheckboxes(
                       context: context,
                     ),
                     _buildAudioDateFields(
