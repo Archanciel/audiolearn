@@ -114,7 +114,7 @@
             "isAudioImported": false
         }
     ],
-    "isSelected": true,
+    "isSelected": false,
     "currentOrPastPlayableAudioIndex": 0,
     "audioSortFilterParmsNamePlaylistDownloadView": "",
     "audioSortFilterParmsNameAudioPlayerView": "",
