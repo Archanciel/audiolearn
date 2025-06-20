@@ -836,18 +836,16 @@ class WarningMessageVM extends ChangeNotifier {
     required String importedToPlaylistTitle,
     required PlaylistType importedToPlaylistType,
   }) {
+    _isDisplaying = false; // Reset the display state for the next warning.
     _rejectedImportedAudioFileNames = rejectedImportedAudioFileNames;
     _importedToPlaylistTitle = importedToPlaylistTitle;
     _importedToPlaylistType = importedToPlaylistType;
 
+    warningMessageType = WarningMessageType.audioNotImportedToPlaylist;
+
     _addWarningMessageElements(
       warningMessageElements: _rejectedImportedAudioFileNames,
     );
-
-    warningMessageType = WarningMessageType.audioNotImportedToPlaylist;
-
-    // Causes the display warning message widget to be displayed.
-    notifyListeners();
   }
 
   String _importedAudioFileNames = '';
@@ -857,18 +855,16 @@ class WarningMessageVM extends ChangeNotifier {
     required String importedToPlaylistTitle,
     required PlaylistType importedToPlaylistType,
   }) {
+    _isDisplaying = false; // Reset the display state for the next warning.
     _importedAudioFileNames = importedAudioFileNames;
     _importedToPlaylistTitle = importedToPlaylistTitle;
     _importedToPlaylistType = importedToPlaylistType;
 
+    warningMessageType = WarningMessageType.audioImportedToPlaylist;
+
     _addWarningMessageElements(
       warningMessageElements: _importedAudioFileNames,
     );
-
-    warningMessageType = WarningMessageType.audioImportedToPlaylist;
-
-    // Causes the display warning message widget to be displayed.
-    notifyListeners();
   }
 
   String _updatedPlayableAudioLstPlaylistTitle = '';
