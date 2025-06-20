@@ -745,7 +745,8 @@ class WarningMessageVM extends ChangeNotifier {
   PlaylistType get fromPlaylistType => _fromPlaylistType;
   late PlaylistType _toPlaylistType;
   PlaylistType get toPlaylistType => _toPlaylistType;
-  late CopyOrMoveFileResult _copyOrMoveFileResult = CopyOrMoveFileResult.sourceFileNotExist;
+  late CopyOrMoveFileResult _copyOrMoveFileResult =
+      CopyOrMoveFileResult.sourceFileNotExist;
   CopyOrMoveFileResult get copyOrMoveFileResult => _copyOrMoveFileResult;
   void audioCopiedOrMovedFromToPlaylist({
     required String audioValidVideoTitle,
@@ -766,7 +767,8 @@ class WarningMessageVM extends ChangeNotifier {
     _toPlaylistType = toPlaylistType;
     _copyOrMoveFileResult = copyOrMoveFileResult;
 
-    warningMessageType = WarningMessageType.audioCopiedOrMovedFromPlaylistToPlaylist;
+    warningMessageType =
+        WarningMessageType.audioCopiedOrMovedFromPlaylistToPlaylist;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();
@@ -787,7 +789,8 @@ class WarningMessageVM extends ChangeNotifier {
     _savedOrRestoredPictureJpgNumber = savedPictureNumber;
     _uniquePlaylistIsSaved = uniquePlaylistIsSaved;
 
-    warningMessageType = WarningMessageType.savedUniquePlaylistOrAllPlaylistsAndAppDataToZip;
+    warningMessageType =
+        WarningMessageType.savedUniquePlaylistOrAllPlaylistsAndAppDataToZip;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();
@@ -813,7 +816,7 @@ class WarningMessageVM extends ChangeNotifier {
     _playlistsNumber = playlistsNumber;
     _commentJsonFilesNumber = commentJsonFilesNumber;
     _pictureJsonFilesNumber = pictureJsonFilesNumber;
-    _savedOrRestoredPictureJpgNumber= pictureJpgFilesNumber;
+    _savedOrRestoredPictureJpgNumber = pictureJpgFilesNumber;
     _wasIndividualPlaylistRestored = wasIndividualPlaylistRestored;
 
     warningMessageType = WarningMessageType.restoreAppDataFromZip;
@@ -837,11 +840,14 @@ class WarningMessageVM extends ChangeNotifier {
     _importedToPlaylistTitle = importedToPlaylistTitle;
     _importedToPlaylistType = importedToPlaylistType;
 
-    warningMessageType = WarningMessageType.audioNotImportedToPlaylist;
-
     _addWarningMessageElements(
       warningMessageElements: _rejectedImportedAudioFileNames,
     );
+
+    warningMessageType = WarningMessageType.audioNotImportedToPlaylist;
+
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
   }
 
   String _importedAudioFileNames = '';
@@ -855,11 +861,14 @@ class WarningMessageVM extends ChangeNotifier {
     _importedToPlaylistTitle = importedToPlaylistTitle;
     _importedToPlaylistType = importedToPlaylistType;
 
-    warningMessageType = WarningMessageType.audioImportedToPlaylist;
-
     _addWarningMessageElements(
       warningMessageElements: _importedAudioFileNames,
     );
+
+    warningMessageType = WarningMessageType.audioImportedToPlaylist;
+
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
   }
 
   String _updatedPlayableAudioLstPlaylistTitle = '';
@@ -1081,7 +1090,7 @@ class WarningMessageVM extends ChangeNotifier {
 
   String _playlistInexistingRootPath = '';
   String get playlistInexistingRootPath => _playlistInexistingRootPath;
-  
+
   void setPlaylistInexistingRootPath({
     required String playlistInexistingRootPath,
   }) {
