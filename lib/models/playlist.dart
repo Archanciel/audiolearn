@@ -208,6 +208,38 @@ class Playlist {
     _insertAudioInPlayableAudioList(downloadedAudio);
   }
 
+  /// Adds the imported audio to the downloadedAudioLst and to
+  /// the playableAudioLst. The imported audio is added to the
+  /// lists only if it is not already in the lists.
+  /// 
+  /// The imported audio is in the downloadedAudioLst if it was
+  /// previously imported or downloaded and was deleted (not
+  /// deleted from playlist as well)).
+  ///
+  /// The imported audio is in the playableAudioLst if it was
+  /// previously imported or downloaded and was only physically
+  /// deleted (not deleted using one of the two audio item delete
+  /// menu).
+  ///
+  /// downloadedAudioLst order: [first downloaded audio, ...,
+  ///                            last downloaded audio]
+  /// playableAudioLst order: [available audio last downloaded, ...,
+  ///                          available audio first downloaded]
+  void addImportedAudio(Audio importedAudio) {
+    importedAudio.enclosingPlaylist = this;
+    String importedAAudioTitle = importedAudio.validVideoTitle;
+
+    if (!downloadedAudioLst
+        .any((audio) => audio.validVideoTitle == importedAAudioTitle)) {
+      downloadedAudioLst.add(importedAudio);
+    }
+
+    if (!playableAudioLst
+        .any((audio) => audio.validVideoTitle == importedAAudioTitle)) {
+      _insertAudioInPlayableAudioList(importedAudio);
+    }
+  }
+
   /// Adds the copied audio to the playableAudioLst. The audio
   /// mp3 file was copied to the download path of this playlist
   /// by the AudioDownloadVM.
@@ -302,12 +334,14 @@ class Playlist {
           movedFromPlaylistTitle;
       existingDownloadedAudioCopy.movedToPlaylistTitle = title; // this.title
       existingDownloadedAudioCopy.enclosingPlaylist = this;
-      existingDownloadedAudioCopy.audioPlaySpeed = audioPlaySpeed; // this.audioPlaySpeed
+      existingDownloadedAudioCopy.audioPlaySpeed =
+          audioPlaySpeed; // this.audioPlaySpeed
 
       // Step 2: Find the index of the audio in downloadedAudioLst that
       // matches movedAudio
       //                                                   This is the old version of the audio == operator
-      int index = downloadedAudioLst.indexWhere((audio) => audio.audioFileName == movedAudio.audioFileName);
+      int index = downloadedAudioLst.indexWhere(
+          (audio) => audio.audioFileName == movedAudio.audioFileName);
 
       // Step 3: Replace the audio at the found index in
       // downloadedAudioLst with the updated movedAudioCopy
