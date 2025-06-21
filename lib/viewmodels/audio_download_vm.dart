@@ -1792,17 +1792,19 @@ class AudioDownloadVM extends ChangeNotifier {
     if (rejectedImportedFileNames.isNotEmpty) {
       warningMessageVM.setAudioNotImportedToPlaylistTitles(
           rejectedImportedAudioFileNames: rejectedImportedFileNames.substring(
-              0, rejectedImportedFileNames.length - 2),
+              0, rejectedImportedFileNames.length - 2), // removing the last comma
+          //                                               and the last line break
           importedToPlaylistTitle: targetPlaylist.title,
           importedToPlaylistType: targetPlaylist.playlistType);
     }
 
-    // Displaying a warning which lists the audio files which will be
+    // Displaying a confirmation which lists the audio files which will be
     // imported to the playlist.
     if (acceptableImportedFileNames.isNotEmpty) {
       warningMessageVM.setAudioImportedToPlaylistTitles(
           importedAudioFileNames: acceptableImportedFileNames.substring(
-              0, acceptableImportedFileNames.length - 2),
+              0, acceptableImportedFileNames.length - 2), // removing the last comma
+          //                                                 and the last line break
           importedToPlaylistTitle: targetPlaylist.title,
           importedToPlaylistType: targetPlaylist.playlistType);
     }
@@ -1812,6 +1814,8 @@ class AudioDownloadVM extends ChangeNotifier {
     final AudioPlayer? audioPlayer = instanciateAudioPlayer();
 
     for (String filePathName in filePathNameToImportLst) {
+      // Now, the filePathNameToImportLst does not contain the audio
+      // files which already exist in the target playlist directory !
       String fileName = filePathName.split(path.separator).last;
       File sourceFile = File(filePathName);
       String targetFilePathName =
@@ -1830,7 +1834,7 @@ class AudioDownloadVM extends ChangeNotifier {
         importedFileName: fileName,
       );
 
-      targetPlaylist.addDownloadedAudio(
+      targetPlaylist.addImportedAudio(
         importedAudio,
       );
 
