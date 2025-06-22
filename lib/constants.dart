@@ -31,7 +31,7 @@ enum AudioPopupMenuAction {
 }
 
 const String kApplicationName = "Audio Learn";
-const String kApplicationVersion = '1.4.36';
+const String kApplicationVersion = '1.4.37';
 
 // Used for Android app version
 const String kApplicationPath = "/storage/emulated/0/Documents/audiolearn";
