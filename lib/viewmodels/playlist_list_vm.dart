@@ -3276,7 +3276,7 @@ class PlaylistListVM extends ChangeNotifier {
       // Note: The relative path may include '..' segments which will be
       // normalized.
 
-      final String sanitizedArchiveFileName = archiveFile.name
+      final String sanitizedArchiveFilePathName = archiveFile.name
           .replaceAll(
               '\\', '/') // First convert all backslashes to forward slashes
           .split('/')
@@ -3290,8 +3290,8 @@ class PlaylistListVM extends ChangeNotifier {
       // or not.
       String destinationPathFileName;
 
-      if (sanitizedArchiveFileName.startsWith(kPictureDirName) ||
-          sanitizedArchiveFileName.contains(kSettingsFileName)) {
+      if (sanitizedArchiveFilePathName.startsWith(kPictureDirName) ||
+          sanitizedArchiveFilePathName.contains(kSettingsFileName)) {
         // The first condition guarantees that the zip verion of
         // the pictureAudioMap.json file is restored. It will then
         // be combined with the current pictureAudioMap.json file.
@@ -3301,12 +3301,14 @@ class PlaylistListVM extends ChangeNotifier {
         // current settings file in the method
         // _mergeRestoredFromZipSettingsWithCurrentAppSettings.
         destinationPathFileName = path.normalize(
-          path.join(applicationPath, sanitizedArchiveFileName),
+          path.join(applicationPath, sanitizedArchiveFilePathName),
         );
       } else {
         destinationPathFileName = path.normalize(
-          path.join(playlistRootPath,
-              sanitizedArchiveFileName.replaceFirst(zipFilePlaylistDir, '')),
+          path.join(
+              playlistRootPath,
+              sanitizedArchiveFilePathName.replaceFirst(
+                  zipFilePlaylistDir, '')),
         );
       }
 
@@ -3330,23 +3332,33 @@ class PlaylistListVM extends ChangeNotifier {
         // The third condition guarantees that the pictureAudioMap.json
         // file is never replaced, but instead will be merged with the
         // current pictureAudioMap.json file.
-        //
+
         // Check if the file already exists in the destination path.
+
         for (String existingPlaylistTitle in existingPlaylistTitles) {
           // If the destination path file name contains the existing
-          // playlist title, then the file is not replaced.
+          // playlist title, the file is not replaced if it exists in
+          // the destination playlist downloaded audio's list.
+          //
+          // Otherwise, the file is added to the playlist downloaded
+          // audio's list as well as the to playable audio's list.
+          // This situation occurs when the user restores a playlist
+          // to which a new audio was downloaded or imported before the
+          // restoration.
           if (destinationPathFileName.contains(existingPlaylistTitle)) {
-            // In mode 'not replace', skip the file if it already exists
-            // and do not replace it.
-            continue;
+            break;
           }
         }
+
         if (existingPlaylistTitles.any((title) =>
             RegExp(r'\b' + RegExp.escape(title) + r'\b')
                 .hasMatch(destinationPathFileName))) {
+            // In mode 'not replace', skip the file if it already exists
+            // and do not replace it.
+
           // In mode 'not replace playlist', skip the file if its about
           // the existing playlist and so do not replace it or do not
-          // add it it is not already in the playlist.
+          // add it if it is not in the playlist.
           continue;
         }
       }
