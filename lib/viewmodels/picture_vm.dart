@@ -119,7 +119,9 @@ class PictureVM extends ChangeNotifier {
       ];
     }
 
-    _savePictureAudioMap(pictureAudioMap);
+    _savePictureAudioMap(
+      pictureAudioMap: pictureAudioMap,
+    );
   }
 
   /// Reads the application picture audio map json file if it exists, otherwise returns
@@ -156,7 +158,9 @@ class PictureVM extends ChangeNotifier {
       "$_applicationPicturePath${path.separator}$kPictureAudioMapFileName");
 
   /// Saves the pictureAudio map to the JSON file
-  void _savePictureAudioMap(Map<String, List<String>> pictureAudioMap) {
+  void _savePictureAudioMap({
+    required Map<String, List<String>> pictureAudioMap,
+  }) {
     final File jsonFile = _createAppPictureAudioMapJsonFile();
 
     final String jsonContent = json.encode(pictureAudioMap);
@@ -269,24 +273,26 @@ class PictureVM extends ChangeNotifier {
   void removePlaylistRelatedAudioPictureEntriesFromApplicationPictureAudioMap({
     required String playlistTitle,
   }) {
+    // Obain the 'Restore- short - test - playlist' playlist related picture
+    // audio map from the application picture-audio map.
+    final Map<String, List<String>> playlistPictureAudioMap =
+        createPictureAudioMapForPlaylistFromApplicationPictureAudioMap(
+      audioPlaylistTitle: playlistTitle,
+    );
 
-      // Obain the 'Restore- short - test - playlist' playlist related picture
-      // audio map from the application picture-audio map.
-      final Map<String, List<String>> playlistPictureAudioMap = createPictureAudioMapForPlaylistFromApplicationPictureAudioMap(
-        audioPlaylistTitle: playlistTitle,
-      );
-
-    final Map<String, List<String>> applicationPictureAudioMap = readAppPictureAudioMap();
+    final Map<String, List<String>> applicationPictureAudioMap =
+        readAppPictureAudioMap();
 
     // For each picture in the playlist's picture-audio map
     for (String pictureFileName in playlistPictureAudioMap.keys) {
       if (applicationPictureAudioMap.containsKey(pictureFileName)) {
         // Get the list of audios associated with this picture in the application map
         List<String> audioList = applicationPictureAudioMap[pictureFileName]!;
-        
+
         // Remove all entries starting with the playlist title followed by pipe
-        audioList.removeWhere((audioInfo) => audioInfo.startsWith('$playlistTitle|'));
-        
+        audioList.removeWhere(
+            (audioInfo) => audioInfo.startsWith('$playlistTitle|'));
+
         // If there are no more audios associated with this picture, remove the picture entry
         if (audioList.isEmpty) {
           applicationPictureAudioMap.remove(pictureFileName);
@@ -298,7 +304,9 @@ class PictureVM extends ChangeNotifier {
     }
 
     // Save the updated map
-    _savePictureAudioMap(applicationPictureAudioMap);
+    _savePictureAudioMap(
+      pictureAudioMap: applicationPictureAudioMap,
+    );
   }
 
   void _removeAudioPictureFromAudioPictureJsonFile({
@@ -497,7 +505,9 @@ class PictureVM extends ChangeNotifier {
         applicationPictureAudioMap[pictureFileName] = audioList;
       }
 
-      _savePictureAudioMap(applicationPictureAudioMap);
+      _savePictureAudioMap(
+        pictureAudioMap: applicationPictureAudioMap,
+      );
     }
 
     return wasPictureRemoved;
@@ -715,6 +725,8 @@ class PictureVM extends ChangeNotifier {
       }
     }
 
-    _savePictureAudioMap(applicationPictureAudioMap);
+    _savePictureAudioMap(
+      pictureAudioMap: applicationPictureAudioMap,
+    );
   }
 }
