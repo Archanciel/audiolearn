@@ -3212,7 +3212,6 @@ class PlaylistListVM extends ChangeNotifier {
     required String zipFilePathName,
     required bool doReplaceExistingPlaylists,
   }) async {
-    Map<String, Playlist> zipPlaylistsToMerge = {};
     Map<String, String> zipPlaylistJsonContents = {};
 
     List<String> existingPlaylistTitles =
@@ -3466,13 +3465,16 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Merge missing audios from zip playlists with existing
     // playlists.
-    await _mergeZipPlaylistsWithExistingPlaylists(zipPlaylistJsonContents);
+    await _mergeZipPlaylistsWithExistingPlaylists(
+      zipPlaylistJsonContents: zipPlaylistJsonContents,
+    );
 
     return restoredInfoLst;
   }
 
-  Future<void> _mergeZipPlaylistsWithExistingPlaylists(
-      Map<String, String> zipPlaylistJsonContents) async {
+  Future<void> _mergeZipPlaylistsWithExistingPlaylists({
+    required Map<String, String> zipPlaylistJsonContents,
+  }) async {
     for (String playlistTitle in zipPlaylistJsonContents.keys) {
       // Find the existing playlist in the application.
       Playlist? existingPlaylist;
@@ -3491,15 +3493,17 @@ class PlaylistListVM extends ChangeNotifier {
       Playlist zipPlaylist = Playlist.fromJson(zipPlaylistJson);
 
       // Merge missing audios.
-      await _mergeAudiosFromZipPlaylist(existingPlaylist, zipPlaylist);
+      await _mergeAudiosFromZipPlaylist(
+        existingPlaylist: existingPlaylist,
+        zipPlaylist: zipPlaylist,
+      );
     }
-
-    // Save modified playlists.
-    await _saveModifiedPlaylists();
   }
 
-  Future<void> _mergeAudiosFromZipPlaylist(
-      Playlist existingPlaylist, Playlist zipPlaylist) async {
+  Future<void> _mergeAudiosFromZipPlaylist({
+    required Playlist existingPlaylist,
+    required Playlist zipPlaylist,
+  }) async {
     int addedAudiosCount = 0;
 
     // Iterate through audios from the zip playlist.
@@ -3543,6 +3547,10 @@ class PlaylistListVM extends ChangeNotifier {
     if (addedAudiosCount > 0) {
       print(
           'Added $addedAudiosCount missing audio(s) to playlist "${existingPlaylist.title}"');
+
+      await _writePlaylistToFile(
+        playlist: existingPlaylist,
+      );
     }
   }
 
@@ -3583,20 +3591,13 @@ class PlaylistListVM extends ChangeNotifier {
     return '';
   }
 
-  Future<void> _saveModifiedPlaylists() async {
-    // Save all playlists that have been modified
-    for (Playlist playlist in _listOfSelectablePlaylists) {
-      if (playlist.isSelected) {
-        String playlistJsonFilePathName =
-            playlist.getPlaylistDownloadFilePathName();
-        await _writePlaylistToFile(playlist, playlistJsonFilePathName);
-      }
-    }
-  }
-
-  Future<void> _writePlaylistToFile(Playlist playlist, String filePath) async {
+  /// Save modified playlists.
+  Future<void> _writePlaylistToFile({
+    required Playlist playlist,
+  }) async {
     try {
-      final File playlistFile = File(filePath);
+      final File playlistFile =
+          File(playlist.getPlaylistDownloadFilePathName());
       final String playlistJson = jsonEncode(playlist.toJson());
       await playlistFile.writeAsString(playlistJson, flush: true);
     } catch (e) {
