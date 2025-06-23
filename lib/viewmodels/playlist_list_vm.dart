@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 import '../models/audio.dart';
 import '../models/comment.dart';
+import '../models/picture.dart';
 import '../models/playlist.dart';
 import '../services/audio_sort_filter_service.dart';
 import '../services/json_data_service.dart';
@@ -3467,6 +3468,7 @@ class PlaylistListVM extends ChangeNotifier {
     // playlists.
     await _mergeZipPlaylistsWithExistingPlaylists(
       zipPlaylistJsonContents: zipPlaylistJsonContents,
+      archive: archive,
     );
 
     return restoredInfoLst;
@@ -3474,6 +3476,7 @@ class PlaylistListVM extends ChangeNotifier {
 
   Future<void> _mergeZipPlaylistsWithExistingPlaylists({
     required Map<String, String> zipPlaylistJsonContents,
+    required Archive archive,
   }) async {
     for (String playlistTitle in zipPlaylistJsonContents.keys) {
       // Find the existing playlist in the application.
@@ -3496,6 +3499,7 @@ class PlaylistListVM extends ChangeNotifier {
       await _mergeAudiosFromZipPlaylist(
         existingPlaylist: existingPlaylist,
         zipPlaylist: zipPlaylist,
+        zipArchive: archive,
       );
     }
   }
@@ -3503,8 +3507,11 @@ class PlaylistListVM extends ChangeNotifier {
   Future<void> _mergeAudiosFromZipPlaylist({
     required Playlist existingPlaylist,
     required Playlist zipPlaylist,
+    required Archive zipArchive,
   }) async {
     int addedAudiosCount = 0;
+    int addedCommentsCount = 0;
+    int addedPicturesCount = 0;
 
     // Iterate through audios from the zip playlist.
     for (Audio zipAudio in zipPlaylist.downloadedAudioLst) {
@@ -3541,16 +3548,34 @@ class PlaylistListVM extends ChangeNotifier {
         }
 
         addedAudiosCount++;
+
+        // Restore comment file for this audio if it exists in the zip
+        if (await _restoreAudioCommentFileFromZip(
+          zipArchive: zipArchive,
+          audioToAdd: audioToAdd,
+          existingPlaylist: existingPlaylist,
+        )) {
+          addedCommentsCount++;
+        }
+
+        // Restore picture files for this audio if they exist in the zip
+        int restoredPicturesForAudio = await _restoreAudioPictureFilesFromZip(
+          zipArchive: zipArchive,
+          audioToAdd: audioToAdd,
+          existingPlaylist: existingPlaylist,
+        );
+
+        addedPicturesCount += restoredPicturesForAudio;
+
+        if (addedAudiosCount > 0) {
+          print(
+              'Added $addedAudiosCount missing audio(s) to playlist "${existingPlaylist.title}"');
+
+          await _writePlaylistToFile(
+            playlist: existingPlaylist,
+          );
+        }
       }
-    }
-
-    if (addedAudiosCount > 0) {
-      print(
-          'Added $addedAudiosCount missing audio(s) to playlist "${existingPlaylist.title}"');
-
-      await _writePlaylistToFile(
-        playlist: existingPlaylist,
-      );
     }
   }
 
@@ -3603,6 +3628,147 @@ class PlaylistListVM extends ChangeNotifier {
     } catch (e) {
       print('Error saving playlist ${playlist.title}: $e');
     }
+  }
+
+  /// Restores the comment file for a specific audio from the zip if it exists.
+  /// Returns true if a comment file was restored, false otherwise.
+  Future<bool> _restoreAudioCommentFileFromZip({
+    required Archive zipArchive,
+    required Audio audioToAdd,
+    required Playlist existingPlaylist,
+  }) async {
+    // Build the expected comment file name in the zip
+    String commentFileName =
+        audioToAdd.audioFileName.replaceAll('.mp3', '.json');
+    String zipCommentFilePath = path.join(
+      kCommentDirName,
+      commentFileName,
+    );
+
+    // Search for the comment file in the zip archive
+    for (ArchiveFile archiveFile in zipArchive) {
+      if (archiveFile.isFile && archiveFile.name.endsWith(zipCommentFilePath)) {
+        // Create target comment directory if it doesn't exist
+        String targetCommentDirPath = path.join(
+          existingPlaylist.downloadPath,
+          kCommentDirName,
+        );
+
+        Directory targetCommentDir = Directory(targetCommentDirPath);
+        if (!targetCommentDir.existsSync()) {
+          await targetCommentDir.create(recursive: true);
+        }
+
+        // Write the comment file to the target playlist
+        String targetCommentFilePath = path.join(
+          targetCommentDirPath,
+          commentFileName,
+        );
+
+        File targetCommentFile = File(targetCommentFilePath);
+
+        // Only restore if the comment file doesn't already exist
+        if (!targetCommentFile.existsSync()) {
+          await targetCommentFile.writeAsBytes(
+            archiveFile.content as List<int>,
+            flush: true,
+          );
+          return true;
+        }
+        break;
+      }
+    }
+
+    return false;
+  }
+
+  /// Restores picture files for a specific audio from the zip if they exist.
+  /// Returns the number of picture files restored.
+  Future<int> _restoreAudioPictureFilesFromZip({
+    required Archive zipArchive,
+    required Audio audioToAdd,
+    required Playlist existingPlaylist,
+  }) async {
+    int restoredPicturesCount = 0;
+
+    // Build the expected picture JSON file name in the zip
+    String pictureJsonFileName =
+        audioToAdd.audioFileName.replaceAll('.mp3', '.json');
+    String zipPictureJsonFilePath = path.join(
+      kPictureDirName,
+      pictureJsonFileName,
+    );
+
+    // Search for the picture JSON file in the zip archive
+    for (ArchiveFile archiveFile in zipArchive) {
+      if (archiveFile.isFile &&
+          archiveFile.name.endsWith(zipPictureJsonFilePath)) {
+        // Parse the picture JSON file to get the list of pictures
+        String jsonContent = utf8.decode(archiveFile.content as List<int>);
+        List<dynamic> pictureJsonList = jsonDecode(jsonContent);
+
+        List<Picture> pictureLst =
+            pictureJsonList.map((json) => Picture.fromJson(json)).toList();
+
+        if (pictureLst.isNotEmpty) {
+          // Create target picture directory if it doesn't exist
+          String targetPictureDirPath = path.join(
+            existingPlaylist.downloadPath,
+            kPictureDirName,
+          );
+
+          Directory targetPictureDir = Directory(targetPictureDirPath);
+          if (!targetPictureDir.existsSync()) {
+            await targetPictureDir.create(recursive: true);
+          }
+
+          // Write the picture JSON file to the target playlist
+          String targetPictureJsonFilePath = path.join(
+            targetPictureDirPath,
+            pictureJsonFileName,
+          );
+
+          File targetPictureJsonFile = File(targetPictureJsonFilePath);
+
+          // Only restore if the picture JSON file doesn't already exist
+          if (!targetPictureJsonFile.existsSync()) {
+            await targetPictureJsonFile.writeAsBytes(
+              archiveFile.content as List<int>,
+              flush: true,
+            );
+
+            // Update the pictureAudioMap.json file for each picture
+            for (Picture picture in pictureLst) {
+              _addPictureAudioAssociationToAppPictureAudioMap(
+                pictureFileName: picture.fileName,
+                audioFileName: audioToAdd.audioFileName,
+                audioPlaylistTitle: existingPlaylist.title,
+              );
+            }
+
+            restoredPicturesCount = pictureLst.length;
+          }
+        }
+        break;
+      }
+    }
+
+    return restoredPicturesCount;
+  }
+
+  /// Associates a picture with an audio file name in the application picture audio map.
+  /// This method should be accessible from the existing PictureVM instance.
+  void _addPictureAudioAssociationToAppPictureAudioMap({
+    required String pictureFileName,
+    required String audioFileName,
+    required String audioPlaylistTitle,
+  }) {
+    // Delegate to the existing PictureVM method
+    _pictureVM.addPictureAudioAssociationToAppPictureAudioMap(
+      pictureFileName: pictureFileName,
+      audioFileName: audioFileName,
+      audioPlaylistTitle: audioPlaylistTitle,
+    );
   }
 
   /// Method called when the user clicks on the 'Rewind audio to start' playlist
