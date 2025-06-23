@@ -167,6 +167,20 @@ class PictureVM extends ChangeNotifier {
     jsonFile.writeAsStringSync(jsonContent);
   }
 
+  /// Public method to add picture-audio association to application picture audio map.
+  /// This method is called from PlaylistListVM when restoring missing audios from zip.
+  void addPictureAudioAssociationToAppPictureAudioMap({
+    required String pictureFileName,
+    required String audioFileName,
+    required String audioPlaylistTitle,
+  }) {
+    _addPictureAudioAssociationToAppPictureAudioMap(
+      pictureFileName: pictureFileName,
+      audioFileName: audioFileName,
+      audioPlaylistTitle: audioPlaylistTitle,
+    );
+  }
+
   void _addPictureToAudioPictureJsonFile({
     required String pictureFileName,
     required Audio audio,
