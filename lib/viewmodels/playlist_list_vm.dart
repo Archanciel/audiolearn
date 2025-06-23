@@ -3212,6 +3212,9 @@ class PlaylistListVM extends ChangeNotifier {
     required String zipFilePathName,
     required bool doReplaceExistingPlaylists,
   }) async {
+    Map<String, Playlist> zipPlaylistsToMerge = {};
+    Map<String, String> zipPlaylistJsonContents = {};
+
     List<String> existingPlaylistTitles =
         _listOfSelectablePlaylists.map((playlist) => playlist.title).toList();
     List<dynamic> restoredInfoLst = [];
@@ -3234,18 +3237,17 @@ class PlaylistListVM extends ChangeNotifier {
       return restoredInfoLst;
     }
 
+    // Retrieve the application path.
+    final String applicationPath = _settingsDataService.get(
+      settingType: SettingType.dataLocation,
+      settingSubType: DataLocation.appSettingsPath,
+    );
+
     // Retrieve the playlist root path. Normally, this value contains
     // /playlists or \playlists depending on the platform.
     final String playlistRootPath = _settingsDataService.get(
       settingType: SettingType.dataLocation,
       settingSubType: DataLocation.playlistRootPath,
-    );
-
-    // Retrieve the playlist root path. Normally, this value contains
-    // /playlists or \playlists depending on the platform.
-    final String applicationPath = _settingsDataService.get(
-      settingType: SettingType.dataLocation,
-      settingSubType: DataLocation.appSettingsPath,
     );
 
     // Read the entire zip file as bytes.
@@ -3294,11 +3296,11 @@ class PlaylistListVM extends ChangeNotifier {
           sanitizedArchiveFilePathName.contains(kSettingsFileName)) {
         // The first condition guarantees that the zip verion of
         // the pictureAudioMap.json file is restored. It will then
-        // be combined with the current pictureAudioMap.json file.
+        // be combined with the app current pictureAudioMap.json file.
         //
         // The second condition guarantees that the zip settings
         // file is restored. It will then be combined with the
-        // current settings file in the method
+        // current settings file in the method below
         // _mergeRestoredFromZipSettingsWithCurrentAppSettings.
         destinationPathFileName = path.normalize(
           path.join(applicationPath, sanitizedArchiveFilePathName),
@@ -3321,40 +3323,46 @@ class PlaylistListVM extends ChangeNotifier {
         wasIndividualPlaylistRestored = false;
       }
 
+      // Capturing the playlists contained in the zip.
+      if (path.extension(destinationPathFileName) == '.json' &&
+          !destinationPathFileName.contains(kSettingsFileName) &&
+          !destinationPathFileName.contains(kPictureAudioMapFileName) &&
+          !destinationPathFileName.contains(kCommentDirName)) {
+        // This is a playlist JSON file.
+        String playlistTitle =
+            path.basenameWithoutExtension(destinationPathFileName);
+
+        if (existingPlaylistTitles.contains(playlistTitle)) {
+          // This playlist already exists in the application. As
+          // consequence, store JSON content for later processing.
+          final String jsonContent =
+              utf8.decode(archiveFile.content as List<int>);
+          zipPlaylistJsonContents[playlistTitle] = jsonContent;
+        }
+      }
+
       if (!doReplaceExistingPlaylists &&
           !destinationPathFileName.contains(kSettingsFileName) &&
           !destinationPathFileName.contains(kPictureAudioMapFileName)) {
-        // The second condition guarantees that the settings file
-        // is never replaced, but instead will be merged with the
-        // current settings file by executing the method
-        // _mergeRestoredFromZipSettingsWithCurrentAppSettings.
+        // Check if this is a playlist JSON file to merge.
+        if (path.extension(destinationPathFileName) == '.json' &&
+            !destinationPathFileName.contains(kCommentDirName)) {
+          String playlistTitle =
+              path.basenameWithoutExtension(destinationPathFileName);
 
-        // The third condition guarantees that the pictureAudioMap.json
-        // file is never replaced, but instead will be merged with the
-        // current pictureAudioMap.json file.
-
-        // Check if the file already exists in the destination path.
-
-        for (String existingPlaylistTitle in existingPlaylistTitles) {
-          // If the destination path file name contains the existing
-          // playlist title, the file is not replaced if it exists in
-          // the destination playlist downloaded audio's list.
-          //
-          // Otherwise, the file is added to the playlist downloaded
-          // audio's list as well as the to playable audio's list.
-          // This situation occurs when the user restores a playlist
-          // to which a new audio was downloaded or imported before the
-          // restoration.
-          if (destinationPathFileName.contains(existingPlaylistTitle)) {
-            break;
+          if (existingPlaylistTitles.contains(playlistTitle)) {
+            // This playlist already exists - we will merge missing audios
+            // instead of replacing the file.
+            continue; // Skip writing the JSON file.
           }
         }
 
+        // For other files (audio .mp3, etc.).
         if (existingPlaylistTitles.any((title) =>
             RegExp(r'\b' + RegExp.escape(title) + r'\b')
                 .hasMatch(destinationPathFileName))) {
-            // In mode 'not replace', skip the file if it already exists
-            // and do not replace it.
+          // In mode 'not replace', skip the file if it already exists
+          // and do not replace it.
 
           // In mode 'not replace playlist', skip the file if its about
           // the existing playlist and so do not replace it or do not
@@ -3364,7 +3372,7 @@ class PlaylistListVM extends ChangeNotifier {
       }
 
       final Directory destinationDir = Directory(
-        // Extracting the directory from the path file name
+        // Extracting the directory from the path file name.
         path.dirname(destinationPathFileName),
       );
 
@@ -3398,14 +3406,14 @@ class PlaylistListVM extends ChangeNotifier {
         // with the pictureAudioMap.json file contained in the restoration
         // zip file.
 
-        // Convert the byte content to a string
+        // Convert the byte content to a string.
         final String jsonContent =
             utf8.decode(archiveFile.content as List<int>);
 
-        // Parse the string as JSON to get the Map
+        // Parse the string as JSON to get the Map.
         final Map<String, dynamic> jsonMap = jsonDecode(jsonContent);
 
-        // Convert to the required type
+        // Convert to the required type.
         final Map<String, List<String>> pictureAudioMap = {};
         jsonMap.forEach((key, value) {
           if (value is List) {
@@ -3413,7 +3421,7 @@ class PlaylistListVM extends ChangeNotifier {
           }
         });
 
-        // Now call the merge method with the correctly parsed map
+        // Now call the merge method with the correctly parsed map.
         _pictureVM.mergeRestoredPictureAudioMapJsonFile(
           restoredPictureAudioMap: pictureAudioMap,
         );
@@ -3456,7 +3464,86 @@ class PlaylistListVM extends ChangeNotifier {
     restoredInfoLst.add(restoredPicturesJpgNumber);
     restoredInfoLst.add(wasIndividualPlaylistRestored);
 
+    // Merge missing audios from zip playlists with existing
+    // playlists.
+    await _mergeZipPlaylistsWithExistingPlaylists(zipPlaylistJsonContents);
+
     return restoredInfoLst;
+  }
+
+  Future<void> _mergeZipPlaylistsWithExistingPlaylists(
+      Map<String, String> zipPlaylistJsonContents) async {
+    for (String playlistTitle in zipPlaylistJsonContents.keys) {
+      // Find the existing playlist in the application.
+      Playlist? existingPlaylist;
+      try {
+        existingPlaylist = _listOfSelectablePlaylists.firstWhere(
+          (playlist) => playlist.title == playlistTitle,
+        );
+      } catch (e) {
+        continue; // Playlist not found, skip to next.
+      }
+
+      // Parse the playlist from the zip.
+      final Map<String, dynamic> zipPlaylistJson =
+          jsonDecode(zipPlaylistJsonContents[playlistTitle]!);
+
+      Playlist zipPlaylist = Playlist.fromJson(zipPlaylistJson);
+
+      // Merge missing audios.
+      await _mergeAudiosFromZipPlaylist(existingPlaylist, zipPlaylist);
+    }
+
+    // Save modified playlists.
+    await _saveModifiedPlaylists();
+  }
+
+  Future<void> _mergeAudiosFromZipPlaylist(
+      Playlist existingPlaylist, Playlist zipPlaylist) async {
+    int addedAudiosCount = 0;
+
+    // Iterate through audios from the zip playlist.
+    for (Audio zipAudio in zipPlaylist.downloadedAudioLst) {
+      // Check if this audio already exists in the existing playlist
+      bool audioExists = existingPlaylist.downloadedAudioLst.any(
+        (existingAudio) =>
+            existingAudio.audioFileName == zipAudio.audioFileName,
+      );
+
+      if (!audioExists) {
+        // This audio doesn't exist in the existing playlist.
+        // Add it even if the physical file doesn't exist (can be
+        // downloaded later).
+
+        // Create a copy of the audio and add it to the lists.
+        Audio audioToAdd = zipAudio.copy();
+        audioToAdd.enclosingPlaylist = existingPlaylist;
+        audioToAdd.audioPlaySpeed = existingPlaylist.audioPlaySpeed;
+
+        // Add to the downloaded audio list.
+        existingPlaylist.downloadedAudioLst.add(audioToAdd);
+
+        // Check if the audio should also be added to the playable list.
+        bool isInPlayableList = existingPlaylist.playableAudioLst.any(
+          (playableAudio) =>
+              playableAudio.audioFileName == zipAudio.audioFileName,
+        );
+
+        if (!isInPlayableList) {
+          // Add to the playable audio list using the method that
+          // correctly handles the currentOrPastPlayableAudioIndex.
+          existingPlaylist.playableAudioLst.insert(0, audioToAdd);
+          existingPlaylist.currentOrPastPlayableAudioIndex++;
+        }
+
+        addedAudiosCount++;
+      }
+    }
+
+    if (addedAudiosCount > 0) {
+      print(
+          'Added $addedAudiosCount missing audio(s) to playlist "${existingPlaylist.title}"');
+    }
   }
 
   /// This method returns the playlist root directory of the playlist(s) included in the
@@ -3494,6 +3581,27 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Default fallback if no matching playlist file is found
     return '';
+  }
+
+  Future<void> _saveModifiedPlaylists() async {
+    // Save all playlists that have been modified
+    for (Playlist playlist in _listOfSelectablePlaylists) {
+      if (playlist.isSelected) {
+        String playlistJsonFilePathName =
+            playlist.getPlaylistDownloadFilePathName();
+        await _writePlaylistToFile(playlist, playlistJsonFilePathName);
+      }
+    }
+  }
+
+  Future<void> _writePlaylistToFile(Playlist playlist, String filePath) async {
+    try {
+      final File playlistFile = File(filePath);
+      final String playlistJson = jsonEncode(playlist.toJson());
+      await playlistFile.writeAsString(playlistJson, flush: true);
+    } catch (e) {
+      print('Error saving playlist ${playlist.title}: $e');
+    }
   }
 
   /// Method called when the user clicks on the 'Rewind audio to start' playlist
