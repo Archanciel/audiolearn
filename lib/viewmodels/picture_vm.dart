@@ -715,7 +715,7 @@ class PictureVM extends ChangeNotifier {
     return restoredPictureNumber;
   }
 
-  void mergeRestoredPictureAudioMapJsonFile({
+  void mergeAndSaveRestoredPictureAudioMapJsonFile({
     required Map<String, List<String>> restoredPictureAudioMap,
   }) {
     final Map<String, List<String>> applicationPictureAudioMap =
