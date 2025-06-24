@@ -3352,7 +3352,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
-                  "Trier par:\n Uniquement en version initiale:\n   Titre audio desc\n Uniquement en version modifiée:\n   Titre audio asc,\n   Chapitre audio asc,\n   Date mise en ligne vidéo desc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Vitesse téléch audio desc,\n   Durée téléch audio desc\nMots filtre:\n Uniquement en version modifiée:\n   'Marine Le Pen',\n   'Emmanuel Macron'\nOptions filtre:\n En version initiale:\n   Ignorer la casse: coché\n En version modifiée:\n   Ignorer la casse: décoché\n En version initiale:\n   Inclure la chaîne Youtube: coché\n En version modifiée:\n   Inclure la chaîne\n   Youtube: décoché\n En version initiale:\n   Qualité musicale: décoché\n En version modifiée:\n   Qualité musicale: coché\n En version initiale:\n   Non com.: coché\n En version modifiée:\n   Non com.: décoché\n En version initiale:\n   Sans ph.: coché\n En version modifiée:\n   Sans ph.: décoché\n En version initiale:\n   Jouable: coché\n En version modifiée:\n   Jouable: décoché\n En version modifiée:\n   Date début téléch: 26/12/2023\n En version modifiée:\n   Date fin téléch: 06/01/2024\n En version modifiée:\n   Date début mise en\n   ligne: 12/06/2022\n En version modifiée:\n   Date fin mise en\n   ligne: 19/09/2023\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Début: 2.37\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Fin: 2.8\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Début: 00:06\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Fin: 00:08",
+                  "Trier par:\n Uniquement en version initiale:\n   Titre audio desc\n Uniquement en version modifiée:\n   Titre audio asc,\n   Chapitre audio asc,\n   Date mise en ligne vidéo desc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Vitesse téléch audio desc,\n   Durée téléch audio desc\nMots filtre:\n Uniquement en version modifiée:\n   'Marine Le Pen',\n   'Emmanuel Macron'\nOptions filtre:\n En version initiale:\n   Ignorer la casse: coché\n En version modifiée:\n   Ignorer la casse: décoché\n En version initiale:\n   Inclure la chaîne Youtube: coché\n En version modifiée:\n   Inclure la chaîne\n   Youtube: décoché\n En version initiale:\n   Qualité musicale: décoché\n En version modifiée:\n   Qualité musicale: coché\n En version initiale:\n   Non com.: coché\n En version modifiée:\n   Non com.: décoché\n En version initiale:\n   Sans ph.: coché\n En version modifiée:\n   Sans ph.: décoché\n En version initiale:\n   Jouable: coché\n En version modifiée:\n   Jouable: décoché\n En version initiale:\n   Téléchargé: coché\n En version modifiée:\n   Téléchargé: décoché\n En version modifiée:\n   Date début téléch: 26/12/2023\n En version modifiée:\n   Date fin téléch: 06/01/2024\n En version modifiée:\n   Date début mise en\n   ligne: 12/06/2022\n En version modifiée:\n   Date fin mise en\n   ligne: 19/09/2023\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Début: 2.37\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Fin: 2.8\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Début: 00:06\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Fin: 00:08",
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -9444,7 +9444,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         const String notPlayableSortFilterParmsName = 'Not playable';
 
         testWidgets(
-            '''After selecting the restored 'MaValTTest' playlist and hiding the
+            '''After selecting the restored 'MaValTest' playlist and hiding the
                list of playlist, select the 'Not playable' SF which filters the not
                playable audio's. Then extend the list of playlists in order to redownload
                the 'Not playable' filtered audio's. Verify the now empty displayed
@@ -9492,7 +9492,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 1 playlist, 1 comment and 0 picture JSON files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+                'Restored 1 playlist, 1 comment and 0 picture JSON files as well as 0 audio reference(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -9665,7 +9665,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 1 playlist, 1 comment and 0 picture JSON files as well as the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+                'Restored 1 playlist, 1 comment and 0 picture JSON files as well as 0 audio reference(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
