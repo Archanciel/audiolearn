@@ -1124,11 +1124,14 @@
   "notPictured": "Sans ph.",
   "restorePlaylistAndCommentsFromZipMenu": "Restaurer les playlists, commentaires, photos et settings depuis un fichier zip ...",
   "restorePlaylistAndCommentsFromZipTooltip": "Restaure les playlists, les commentaires, les photos ainsi que les paramètres de l'application à partir d'un fichier zip préalablement sauvé. Seuls les fichiers JSON sont restaurés. Les fichiers audio n'étant pas inclus dans le fichier zip, ils ne sont pas restaurés.",
-  "restoredAppDataFromZip": "Les fichiers JSON de {playlistsNumber} playlists, de {commentsNumber} commentaires et de {picturesNumber} photos ainsi que les paramètres de l'application ont été restaurés depuis \"{filePathName}\".",
+  "restoredAppDataFromZip": "Les fichiers JSON de {playlistsNumber} playlists, de {commentsNumber} commentaires et de {picturesNumber} photos ainsi que {audiosNumber} références audio et les paramètres de l'application ont été restaurés depuis \"{filePathName}\".",
   "@restoredAppDataFromZip": {
     "description": "Warning message indicating that the default SF parms were not applied to move audio",
     "placeholders": {
       "playlistsNumber": {
+        "type": "Object"
+      },
+      "audiosNumber": {
         "type": "Object"
       },
       "commentsNumber": {
@@ -1142,11 +1145,14 @@
       }
     }
   },
-  "restoredUniquePlaylistFromZip": "Les fichiers JSON de {playlistsNumber} playlist sauvegardée individuellement, de {commentsNumber} commentaires et de {picturesNumber} photos ont été restaurés depuis \"{filePathName}\".",
+  "restoredUniquePlaylistFromZip": "Les fichiers JSON de {playlistsNumber} playlist sauvegardée individuellement, de {commentsNumber} commentaires et de {picturesNumber} photos ainsi que {audiosNumber} références audio ont été restaurés depuis \"{filePathName}\".",
   "@restoredUniquePlaylistFromZip": {
     "description": "Warning message indicating that the a unique playlist was restored from zip created from playlist item menu",
     "placeholders": {
       "playlistsNumber": {
+        "type": "Object"
+      },
+      "audiosNumber": {
         "type": "Object"
       },
       "commentsNumber": {

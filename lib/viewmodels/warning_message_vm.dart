@@ -798,6 +798,8 @@ class WarningMessageVM extends ChangeNotifier {
 
   int _playlistsNumber = 0;
   int get playlistsNumber => _playlistsNumber;
+  int _audioReferencesNumber = 0;
+  int get audioReferencesNumber => _audioReferencesNumber;
   int _commentJsonFilesNumber = 0;
   int get commentJsonFilesNumber => _commentJsonFilesNumber;
   int _pictureJsonFilesNumber = 0;
@@ -807,6 +809,7 @@ class WarningMessageVM extends ChangeNotifier {
   void confirmRestorationFromZip({
     required String zipFilePathName,
     required int playlistsNumber,
+    required int audioReferencesNumber,
     required int commentJsonFilesNumber,
     required int pictureJsonFilesNumber,
     required int pictureJpgFilesNumber,
@@ -814,6 +817,7 @@ class WarningMessageVM extends ChangeNotifier {
   }) {
     _zipFilePathName = zipFilePathName;
     _playlistsNumber = playlistsNumber;
+    _audioReferencesNumber = audioReferencesNumber;
     _commentJsonFilesNumber = commentJsonFilesNumber;
     _pictureJsonFilesNumber = pictureJsonFilesNumber;
     _savedOrRestoredPictureJpgNumber = pictureJpgFilesNumber;
