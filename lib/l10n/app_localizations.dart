@@ -2696,14 +2696,14 @@ abstract class AppLocalizations {
   /// Warning message indicating that one or several playlists were restored from zip created from appbar menu
   ///
   /// In en, this message translates to:
-  /// **'Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as the application settings from \"{filePathName}\".'**
-  String restoredAppDataFromZip(Object playlistsNumber, Object commentsNumber, Object picturesNumber, Object filePathName);
+  /// **'Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and the application settings from \"{filePathName}\".'**
+  String restoredAppDataFromZip(Object playlistsNumber, Object audiosNumber, Object commentsNumber, Object picturesNumber, Object filePathName);
 
   /// Warning message indicating that the a unique playlist was restored from zip created from playlist item menu
   ///
   /// In en, this message translates to:
-  /// **'Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files from \"{filePathName}\".'**
-  String restoredUniquePlaylistFromZip(Object playlistsNumber, Object commentsNumber, Object picturesNumber, Object filePathName);
+  /// **'Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) from \"{filePathName}\".'**
+  String restoredUniquePlaylistFromZip(Object playlistsNumber, Object audiosNumber, Object commentsNumber, Object picturesNumber, Object filePathName);
 
   /// No description provided for @appDataCouldNotBeRestoredFromZip.
   ///
