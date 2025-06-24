@@ -3208,16 +3208,16 @@ class PlaylistListVM extends ChangeNotifier {
   ///  number of restored pictures JPG files,
   ///  was the zip file created from the playlist item 'Save Playlist, Comments,
   ///  Pictures and Settings to Zip File' menu item (true/false),
+  ///  restoredAudioReferencesNumber
   /// ]
   Future<List<dynamic>> _restoreFilesFromZip({
     required String zipFilePathName,
     required bool doReplaceExistingPlaylists,
   }) async {
-    Map<String, String> zipPlaylistJsonContents = {};
-
-    List<String> existingPlaylistTitles =
+    Map<String, String> zipPlaylistJsonContentsMap = {};
+    List<String> existingPlaylistTitlesLst =
         _listOfSelectablePlaylists.map((playlist) => playlist.title).toList();
-    List<dynamic> restoredInfoLst = [];
+    List<dynamic> restoredInfoLst = []; // restored info returned list
     List<String> restoredPlaylistTitlesLst = [];
     int restoredCommentsNumber = 0;
     int restoredPicturesJsonNumber = 0;
@@ -3233,6 +3233,9 @@ class PlaylistListVM extends ChangeNotifier {
       restoredInfoLst.add(restoredCommentsNumber);
       restoredInfoLst.add(restoredPicturesJsonNumber);
       restoredInfoLst.add(restoredPicturesJpgNumber);
+      restoredInfoLst.add(0); // adding 0 to the
+      //                         restoredAudioReferencesNumber
+      //                         position
 
       return restoredInfoLst;
     }
@@ -3332,12 +3335,12 @@ class PlaylistListVM extends ChangeNotifier {
         String playlistTitle =
             path.basenameWithoutExtension(destinationPathFileName);
 
-        if (existingPlaylistTitles.contains(playlistTitle)) {
+        if (existingPlaylistTitlesLst.contains(playlistTitle)) {
           // This playlist already exists in the application. As
           // consequence, store JSON content for later processing.
           final String jsonContent =
               utf8.decode(archiveFile.content as List<int>);
-          zipPlaylistJsonContents[playlistTitle] = jsonContent;
+          zipPlaylistJsonContentsMap[playlistTitle] = jsonContent;
         }
       }
 
@@ -3350,15 +3353,15 @@ class PlaylistListVM extends ChangeNotifier {
           String playlistTitle =
               path.basenameWithoutExtension(destinationPathFileName);
 
-          if (existingPlaylistTitles.contains(playlistTitle)) {
-            // This playlist already exists - we will merge missing audios
+          if (existingPlaylistTitlesLst.contains(playlistTitle)) {
+            // This playlist already exists - we will add the missing audios
             // instead of replacing the file.
             continue; // Skip writing the JSON file.
           }
         }
 
         // For other files (audio .mp3, etc.).
-        if (existingPlaylistTitles.any((title) =>
+        if (existingPlaylistTitlesLst.any((title) =>
             RegExp(r'\b' + RegExp.escape(title) + r'\b')
                 .hasMatch(destinationPathFileName))) {
           // In mode 'not replace', skip the file if it already exists
@@ -3386,17 +3389,15 @@ class PlaylistListVM extends ChangeNotifier {
       if (destinationPathFileName.contains(kCommentDirName) &&
           outputFile.existsSync()) {
         // If the comment json file already exists, skip it. This is
-        // useful if a new comment was added before the restoration
-        // from the zip file. Otherwise, the new comment would be
-        // lost.
+        // useful if a new comment was added before the restoration.
+        // Otherwise, the new comment would be lost.
         continue;
       }
 
       // if (destinationPathFileName.contains(kPictureDirName) &&
       //     outputFile.existsSync()) {
       //   // If the picture json file already exists, skip it. This
-      //   // useful if a new picture was added before the restoration
-      //   // from the zip file.
+      //   // useful if a new picture was added before the restoration.
       //   continue;
       // }
 
@@ -3422,7 +3423,7 @@ class PlaylistListVM extends ChangeNotifier {
         });
 
         // Now call the merge method with the correctly parsed map.
-        _pictureVM.mergeRestoredPictureAudioMapJsonFile(
+        _pictureVM.mergeAndSaveRestoredPictureAudioMapJsonFile(
           restoredPictureAudioMap: pictureAudioMap,
         );
 
@@ -3456,29 +3457,54 @@ class PlaylistListVM extends ChangeNotifier {
           );
         }
       }
-    }
+    } // End of for loop iterating over the archive files.
 
-    restoredInfoLst.add(restoredPlaylistTitlesLst);
-    restoredInfoLst.add(restoredCommentsNumber);
-    restoredInfoLst.add(restoredPicturesJsonNumber);
-    restoredInfoLst.add(restoredPicturesJpgNumber);
-    restoredInfoLst.add(wasIndividualPlaylistRestored);
-
-    // Merge missing audios from zip playlists with existing
-    // playlists.
-    await _mergeZipPlaylistsWithExistingPlaylists(
-      zipPlaylistJsonContents: zipPlaylistJsonContents,
+    // Add missing audios + their comments + their pictures
+    // from the zip playlists with the existing playlists.
+    //
+    // The returned list of integers contains:
+    //   [0] number of added audio references,
+    //   [1] number of added comments,
+    //   [2] number of added pictures,
+    List<int> restoredNumberLst = await _mergeZipPlaylistsWithExistingPlaylists(
+      zipPlaylistJsonContentsMap: zipPlaylistJsonContentsMap,
       archive: archive,
     );
+
+    restoredInfoLst.add(restoredPlaylistTitlesLst);
+    restoredInfoLst.add(restoredCommentsNumber + restoredNumberLst[1]);
+    restoredInfoLst.add(restoredPicturesJsonNumber + restoredNumberLst[2]);
+    restoredInfoLst.add(restoredPicturesJpgNumber);
+    restoredInfoLst.add(wasIndividualPlaylistRestored);
+    restoredInfoLst.add(restoredNumberLst[0]);
 
     return restoredInfoLst;
   }
 
-  Future<void> _mergeZipPlaylistsWithExistingPlaylists({
-    required Map<String, String> zipPlaylistJsonContents,
+  /// When restoring playlists from a zip file in situation where the playlists
+  /// are not replaced by the zip playlists, this method adds audio's of playlists
+  /// corresponding to existing playlists which are available in the zip file and
+  /// are not already present in the existing playlists.
+  ///
+  /// The fact that an audio is not already present in the existing playlist is due
+  /// to two reasons:
+  ///   1. The audio was deleted from the existing playlist.
+  ///   2. The audio was added to the playlist saved in the zip file.
+  ///
+  /// The returned list of integers contains:
+  ///   [0] number of added audio references,
+  ///   [1] number of added comments,
+  ///   [2] number of added pictures,
+  Future<List<int>> _mergeZipPlaylistsWithExistingPlaylists({
+    required Map<String, String> zipPlaylistJsonContentsMap,
     required Archive archive,
   }) async {
-    for (String playlistTitle in zipPlaylistJsonContents.keys) {
+    int addedAudiosCount = 0;
+    int addedCommentsCount = 0;
+    int addedPicturesCount = 0;
+    List<int> restoredNumberLst = []; // restored number returned list
+
+    for (String playlistTitle in zipPlaylistJsonContentsMap.keys) {
       // Find the existing playlist in the application.
       Playlist? existingPlaylist;
       try {
@@ -3491,27 +3517,49 @@ class PlaylistListVM extends ChangeNotifier {
 
       // Parse the playlist from the zip.
       final Map<String, dynamic> zipPlaylistJson =
-          jsonDecode(zipPlaylistJsonContents[playlistTitle]!);
+          jsonDecode(zipPlaylistJsonContentsMap[playlistTitle]!);
 
       Playlist zipPlaylist = Playlist.fromJson(zipPlaylistJson);
 
-      // Merge missing audios.
-      await _mergeAudiosFromZipPlaylist(
+      // Add missing audios + their comments + their picture(s)
+      // to existing playlists.
+      restoredNumberLst = await _mergeAudiosFromZipPlaylist(
         existingPlaylist: existingPlaylist,
         zipPlaylist: zipPlaylist,
-        zipArchive: archive,
+        archive: archive,
       );
+
+      addedAudiosCount += restoredNumberLst[0];
+      addedCommentsCount += restoredNumberLst[1];
+      addedPicturesCount += restoredNumberLst[2];
     }
+
+    restoredNumberLst.clear();
+    restoredNumberLst.add(addedAudiosCount);
+    restoredNumberLst.add(addedCommentsCount);
+    restoredNumberLst.add(addedPicturesCount);
+
+    return restoredNumberLst;
   }
 
-  Future<void> _mergeAudiosFromZipPlaylist({
+  /// This method adds audio's of playlists corresponding to existing playlists which are
+  /// available in the zip file and are not already present in the existing playlists.
+  /// Additionally, the comments and pictures off the added audios are added to the existing
+  /// playlists.
+  ///
+  /// The returned list of integers contains:
+  ///   - The number of added audio references.
+  ///   - The number of added comments.
+  ///   - The number of added pictures.
+  Future<List<int>> _mergeAudiosFromZipPlaylist({
     required Playlist existingPlaylist,
     required Playlist zipPlaylist,
-    required Archive zipArchive,
+    required Archive archive,
   }) async {
     int addedAudiosCount = 0;
     int addedCommentsCount = 0;
     int addedPicturesCount = 0;
+    List<int> restoredNumberLst = []; // restored number returned list
 
     // Iterate through audios from the zip playlist.
     for (Audio zipAudio in zipPlaylist.downloadedAudioLst) {
@@ -3551,7 +3599,7 @@ class PlaylistListVM extends ChangeNotifier {
 
         // Restore comment file for this audio if it exists in the zip
         if (await _restoreAudioCommentFileFromZip(
-          zipArchive: zipArchive,
+          archive: archive,
           audioToAdd: audioToAdd,
           existingPlaylist: existingPlaylist,
         )) {
@@ -3560,7 +3608,7 @@ class PlaylistListVM extends ChangeNotifier {
 
         // Restore picture files for this audio if they exist in the zip
         int restoredPicturesForAudio = await _restoreAudioPictureFilesFromZip(
-          zipArchive: zipArchive,
+          archive: archive,
           audioToAdd: audioToAdd,
           existingPlaylist: existingPlaylist,
         );
@@ -3577,6 +3625,12 @@ class PlaylistListVM extends ChangeNotifier {
         }
       }
     }
+
+    restoredNumberLst.add(addedAudiosCount);
+    restoredNumberLst.add(addedCommentsCount);
+    restoredNumberLst.add(addedPicturesCount);
+
+    return restoredNumberLst;
   }
 
   /// This method returns the playlist root directory of the playlist(s) included in the
@@ -3633,7 +3687,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// Restores the comment file for a specific audio from the zip if it exists.
   /// Returns true if a comment file was restored, false otherwise.
   Future<bool> _restoreAudioCommentFileFromZip({
-    required Archive zipArchive,
+    required Archive archive,
     required Audio audioToAdd,
     required Playlist existingPlaylist,
   }) async {
@@ -3646,7 +3700,7 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     // Search for the comment file in the zip archive
-    for (ArchiveFile archiveFile in zipArchive) {
+    for (ArchiveFile archiveFile in archive) {
       if (archiveFile.isFile && archiveFile.name.endsWith(zipCommentFilePath)) {
         // Create target comment directory if it doesn't exist
         String targetCommentDirPath = path.join(
@@ -3685,7 +3739,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// Restores picture files for a specific audio from the zip if they exist.
   /// Returns the number of picture files restored.
   Future<int> _restoreAudioPictureFilesFromZip({
-    required Archive zipArchive,
+    required Archive archive,
     required Audio audioToAdd,
     required Playlist existingPlaylist,
   }) async {
@@ -3700,7 +3754,7 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     // Search for the picture JSON file in the zip archive
-    for (ArchiveFile archiveFile in zipArchive) {
+    for (ArchiveFile archiveFile in archive) {
       if (archiveFile.isFile &&
           archiveFile.name.endsWith(zipPictureJsonFilePath)) {
         // Parse the picture JSON file to get the list of pictures
@@ -3739,7 +3793,9 @@ class PlaylistListVM extends ChangeNotifier {
 
             // Update the pictureAudioMap.json file for each picture
             for (Picture picture in pictureLst) {
-              _addPictureAudioAssociationToAppPictureAudioMap(
+              // Associates a picture with an audio file name in the application
+              // picture audio map.
+              _pictureVM.addPictureAudioAssociationToAppPictureAudioMap(
                 pictureFileName: picture.fileName,
                 audioFileName: audioToAdd.audioFileName,
                 audioPlaylistTitle: existingPlaylist.title,
@@ -3754,21 +3810,6 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     return restoredPicturesCount;
-  }
-
-  /// Associates a picture with an audio file name in the application picture audio map.
-  /// This method should be accessible from the existing PictureVM instance.
-  void _addPictureAudioAssociationToAppPictureAudioMap({
-    required String pictureFileName,
-    required String audioFileName,
-    required String audioPlaylistTitle,
-  }) {
-    // Delegate to the existing PictureVM method
-    _pictureVM.addPictureAudioAssociationToAppPictureAudioMap(
-      pictureFileName: pictureFileName,
-      audioFileName: audioFileName,
-      audioPlaylistTitle: audioPlaylistTitle,
-    );
   }
 
   /// Method called when the user clicks on the 'Rewind audio to start' playlist
