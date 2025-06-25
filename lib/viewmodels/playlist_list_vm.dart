@@ -3697,6 +3697,13 @@ class PlaylistListVM extends ChangeNotifier {
       commentFileName,
     );
 
+    // Normalize the zip comment file path to ensure consistent formatting
+    zipCommentFilePath = zipCommentFilePath
+        .replaceAll('\\', '/') // Convert all backslashes to forward slashes
+        .split('/')
+        .map((segment) => segment.trim())
+        .join('/');
+
     // Search for the comment file in the zip archive
     for (ArchiveFile archiveFile in archive) {
       if (archiveFile.isFile &&
@@ -3758,6 +3765,13 @@ class PlaylistListVM extends ChangeNotifier {
       pictureJsonFileName,
     );
 
+    // Normalize the zip picture JSON file path to ensure consistent formatting
+    zipPictureJsonFilePath = zipPictureJsonFilePath
+        .replaceAll('\\', '/') // Convert all backslashes to forward slashes
+        .split('/')
+        .map((segment) => segment.trim())
+        .join('/');
+        
     // Search for the picture JSON file in the zip archive
     for (ArchiveFile archiveFile in archive) {
       if (archiveFile.isFile &&
