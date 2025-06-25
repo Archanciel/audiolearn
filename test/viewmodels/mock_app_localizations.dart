@@ -1784,15 +1784,6 @@ class MockAppLocalizations extends AppLocalizations {
       "The audio\"$redownloadedAudioTitle\" was redownloaded to the playlist \"$playlistTitle\".";
 
   @override
-  String restoredAppDataFromZip(
-    Object playlistsNumber,
-    Object commentsNumber,
-    Object picturesNumber,
-    Object filePathName,
-  ) =>
-      "Restored $playlistsNumber playlist, $commentsNumber comment and $picturesNumber picture json files as well as application settings from \"$filePathName\".";
-
-  @override
   String get playable => "Playable";
 
   @override
@@ -1987,17 +1978,28 @@ class MockAppLocalizations extends AppLocalizations {
       "Saved also $pictureNumber picture JPG file(s) in the ZIP file.";
 
   @override
-  String restoredUniquePlaylistFromZip(
-    Object playlistsNumber,
-    Object commentsNumber,
-    Object picturesNumber,
-    Object filePathName,
-  ) =>
-      "Restored $playlistsNumber playlist, $commentsNumber comment and $picturesNumber picture JSON files from \"$filePathName\".";
-
-  @override
   String get downloadedCheckbox => "Downloaded";
 
   @override
   String get importedCheckbox => "Imported";
+
+  @override
+  String restoredAppDataFromZip(
+    Object playlistsNumber,
+    Object commentsNumber,
+    Object picturesNumber,
+    Object audiosNumber,
+    Object filePathName,
+  ) =>
+      "Restored $playlistsNumber playlist, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and the application settings from \"$filePathName\".";
+
+  @override
+  String restoredUniquePlaylistFromZip(
+    Object playlistsNumber,
+    Object commentsNumber,
+    Object picturesNumber,
+    Object audiosNumber,
+    Object filePathName,
+  ) =>
+      "Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) from \"$filePathName\".";
 }
