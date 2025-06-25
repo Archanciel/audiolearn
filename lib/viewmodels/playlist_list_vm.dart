@@ -3699,7 +3699,14 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Search for the comment file in the zip archive
     for (ArchiveFile archiveFile in archive) {
-      if (archiveFile.isFile && archiveFile.name.endsWith(zipCommentFilePath)) {
+      if (archiveFile.isFile &&
+          archiveFile.name
+              .replaceAll(
+                  '\\', '/') // First convert all backslashes to forward slashes
+              .split('/')
+              .map((segment) => segment.trim())
+              .join('/')
+              .endsWith(zipCommentFilePath)) {
         // Create target comment directory if it doesn't exist
         String targetCommentDirPath = path.join(
           existingPlaylist.downloadPath,
@@ -3754,7 +3761,13 @@ class PlaylistListVM extends ChangeNotifier {
     // Search for the picture JSON file in the zip archive
     for (ArchiveFile archiveFile in archive) {
       if (archiveFile.isFile &&
-          archiveFile.name.endsWith(zipPictureJsonFilePath)) {
+          archiveFile.name
+              .replaceAll(
+                  '\\', '/') // First convert all backslashes to forward slashes
+              .split('/')
+              .map((segment) => segment.trim())
+              .join('/')
+              .endsWith(zipPictureJsonFilePath)) {
         // Parse the picture JSON file to get the list of pictures
         String jsonContent = utf8.decode(archiveFile.content as List<int>);
         List<dynamic> pictureJsonList = jsonDecode(jsonContent);
