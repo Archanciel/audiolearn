@@ -13370,7 +13370,7 @@ void main() {
   group(
       'Restore playlist, comments, pictures and settings from zip file menu test',
       () {
-    group('Restore Windows zip files', () {
+    group('Restore Windows zip files to Windows', () {
       group(
           'On not empty app dir where a playlist is selected, restore Windows zip.',
           () {
@@ -16226,6 +16226,128 @@ void main() {
               rootPath: kApplicationPathWindowsTest,
             );
           });
+        });
+      });
+      group(
+          '''On not empty app dir where a playlist is selected, restore Windows zip in which playlist(s)
+          corresponding to existing playlist(s) contain additional audio's to which comments and pictures
+          are associated. This situation happens if the AudioLearn application exists on two different
+          engines and the user wants to restore the playlists, comments and pictures from one computer
+          to another in order to add to the target pc or smartphone audio's downloaded on the source
+          engine.''', () {
+        testWidgets(
+            '''Unique playlist restore, not replace existing playlist. Restore unique playlist Windows zip
+            containing 'S8 audio' playlist to Windows application containing 'S8 audio' and 'local' playlists.
+            The restored 'S8 audio' playlist contains additional audio's to which comments and pictures
+            are associated.''', (tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}restore_existing_playlists_with_new_audios",
+            destinationRootPath: kApplicationPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+          // Replace the platform instance with your mock
+          MockFilePicker mockFilePicker = MockFilePicker();
+          FilePicker.platform = mockFilePicker;
+
+          await app.main();
+          await tester.pumpAndSettle();
+
+          String restorableZipFilePathName =
+              '$kApplicationPathWindowsTest${path.separator}Windows S8 audio.zip';
+
+          mockFilePicker.setSelectedFiles([
+            PlatformFile(
+                name: restorableZipFilePathName,
+                path: restorableZipFilePathName,
+                size: 163840),
+          ]);
+
+          // Execute the 'Restore Playlists, Comments and Settings from Zip
+          // File ...' menu
+          await IntegrationTestUtil.executeRestorePlaylists(
+            tester: tester,
+            doReplaceExistingPlaylists: false,
+          );
+
+          // Verify the displayed warning confirmation dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 audio reference(s) and the application settings from "$restorableZipFilePathName".',
+            isWarningConfirming: true,
+            warningTitle: 'CONFIRMATION',
+          );
+
+          // Verifying the existing and the restored playlists
+          // list as well as the selected playlist 'Prières du
+          // Maître' displayed audio titles and subtitles.
+
+          List<String> playlistsTitles = [
+            "Prières du Maître",
+          ];
+
+          List<String> audioTitles = [
+            "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+          ];
+
+          List<String> audioSubTitles = [
+            '0:02:39.6. 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00.',
+          ];
+
+          _verifyRestoredPlaylistAndAudio(
+            tester: tester,
+            selectedPlaylistTitle: 'Prières du Maître',
+            playlistsTitles: playlistsTitles,
+            audioTitles: audioTitles,
+            audioSubTitles: audioSubTitles,
+          );
+
+          // Verify the content of the 'Prières du Maître' playlist dir
+          // + comments + pictures dir after restoration.
+          IntegrationTestUtil.verifyPlaylistDirectoryContents(
+            playlistTitle: 'Prières du Maître',
+            expectedAudioFiles: [],
+            expectedCommentFiles: [
+              "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'.json"
+            ],
+            expectedPictureFiles: [
+              "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'.json"
+            ],
+            doesPictureAudioMapFileNameExist: true,
+            applicationPictureDir:
+                '$kApplicationPathWindowsTest${path.separator}$kPictureDirName',
+            pictureFileNameOne: 'Jésus le Dieu vivant.jpg',
+            audioForPictureTitleOneLst: [
+              "Prières du Maître|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'"
+            ],
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
         });
       });
       group('On empty app dir, restore Windows zip.', () {
@@ -19142,7 +19264,7 @@ void main() {
         });
       });
     });
-    group('Restore Android zip files', () {
+    group('Restore Android zip files to Windows', () {
       group('On empty app dir, restore Android zip.', () {
         group(
             '''Restore 2 selected unique playlists. Each playlist contained in its zip file is
