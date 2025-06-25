@@ -16237,9 +16237,9 @@ void main() {
           engine.''', () {
         testWidgets(
             '''Unique playlist restore, not replace existing playlist. Restore unique playlist Windows zip
-            containing 'S8 audio' playlist to Windows application containing 'S8 audio' and 'local' playlists.
-            The restored 'S8 audio' playlist contains additional audio's to which comments and pictures
-            are associated.''', (tester) async {
+            containing 'S8 audio' playlist to Windows application which contains 'S8 audio' and 'local'
+            playlists. The restored 'S8 audio' playlist contains additional audio's to which comments and
+            pictures are associated.''', (tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -16294,30 +16294,36 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 audio reference(s) and the application settings from "$restorableZipFilePathName".',
+                'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 2 audio reference(s) from "$restorableZipFilePathName".\n\nRestored also 2 picture JPG file(s) in the application pictures directory.',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
 
-          // Verifying the existing and the restored playlists
+          // Verifying the existing restored playlist
           // list as well as the selected playlist 'Prières du
           // Maître' displayed audio titles and subtitles.
 
           List<String> playlistsTitles = [
-            "Prières du Maître",
+            "S8 audio",
           ];
 
           List<String> audioTitles = [
             "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+            "Quand Aurélien Barrau va dans une école de management",
+            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+            "La surpopulation mondiale par Jancovici et Barrau",
           ];
 
           List<String> audioSubTitles = [
             '0:02:39.6. 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00.',
+            "0:17:59.0. 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11.",
+            "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
+            "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
           ];
 
           _verifyRestoredPlaylistAndAudio(
             tester: tester,
-            selectedPlaylistTitle: 'Prières du Maître',
+            selectedPlaylistTitle: 'S8 audio',
             playlistsTitles: playlistsTitles,
             audioTitles: audioTitles,
             audioSubTitles: audioSubTitles,
