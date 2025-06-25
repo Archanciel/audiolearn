@@ -3617,9 +3617,6 @@ class PlaylistListVM extends ChangeNotifier {
         addedPicturesCount += restoredPicturesForAudio;
 
         if (addedAudiosCount > 0) {
-          print(
-              'Added $addedAudiosCount missing audio(s) to playlist "${existingPlaylist.title}"');
-
           await _writePlaylistToFile(
             playlist: existingPlaylist,
           );
