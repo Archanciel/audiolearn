@@ -34,11 +34,20 @@ void main() {
   // If this issue persists, please report it on the project's GitHub page.
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Group one.', () {
-    testWidgets('''Restore zip existing playlist selected test. Before running
-    the integration test, C:\\development\\flutter\\audiolearn\\test\\data\\
-    saved\\Android_emulator_bat\\setup_test.bat must be executed !''',
-        (WidgetTester tester) async {
+  group(
+      '''On not empty app dir where a playlist is selected, restore Windows zip in which playlist(s)
+          corresponding to existing playlist(s) contain additional audio's to which comments and pictures
+          are associated. This situation happens if the AudioLearn application exists on two different
+          engines and the user wants to restore the playlists, comments and pictures from one computer
+          to another in order to add to the target pc or smartphone the audio's downloaded on the source
+          engine. The audio mp3 files are not added since they are not in the zip file. But the Audio
+          objects are added to the existing playlist and so can be redownloaded if needed.''',
+      () {
+    testWidgets(
+        '''Unique playlist restore, not replace existing playlist. Restore unique playlist Windows zip
+            containing 'S8 audio' playlist to Android application which contains 'S8 audio' and 'local'
+            playlists. The restored 'S8 audio' playlist contains additional audio's to which comments and
+            pictures are associated.''', (tester) async {
       await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
         tester: tester,
         tapOnPlaylistToggleButton: false,
@@ -48,18 +57,35 @@ void main() {
       MockFilePicker mockFilePicker = MockFilePicker();
       FilePicker.platform = mockFilePicker;
 
-      final String restorableZipFileName = 'toCopyOnAndroidEmulator.zip';
+      String restorableZipFileName = 'audioLearn_app_initialization.zip';
 
       mockFilePicker.setSelectedFiles([
         PlatformFile(
             name: restorableZipFileName,
             path:
                 '$kApplicationPathAndroidTest${path.separator}$restorableZipFileName',
-            size: 8770),
+            size: 5802),
       ]);
 
-      // Execute the 'Restore Playlists, Comments and Settings from Zip
-      // File ...' menu without replacing the existing playlists.
+      // In order to create the Android emulator application, execute the
+      // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+      // without replacing the existing playlists.
+      await IntegrationTestUtil.executeRestorePlaylists(
+        tester: tester,
+        doReplaceExistingPlaylists: false,
+      );
+
+      restorableZipFileName = 'Windows S8 audio.zip';
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: restorableZipFileName,
+            path:
+                '$kApplicationPathAndroidTest${path.separator}$restorableZipFileName',
+            size: 162667),
+      ]);
+      
+      // Now, test execution.
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: false,
@@ -70,13 +96,76 @@ void main() {
       await Future.delayed(const Duration(milliseconds: 500));
       await tester.pumpAndSettle();
 
+      String restorableZipFilePathName = '/storage/emulated/0/Documents/test/audiolearn/S8 audio.zip';
+
       // Verify the displayed warning confirmation dialog
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Restored 2 playlist, 5 comment and 4 picture JSON files as well as the application settings from "$kApplicationPathAndroidTest/$restorableZipFileName".',
+            'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 2 audio reference(s) from "$restorableZipFilePathName".\n\nRestored also 2 picture JPG file(s) in the application pictures directory.',
         isWarningConfirming: true,
         warningTitle: 'CONFIRMATION',
+      );
+
+      // Verifying the existing restored playlist
+      // list as well as the selected playlist 'Prières du
+      // Maître' displayed audio titles and subtitles.
+
+      List<String> playlistsTitles = [
+        "S8 audio",
+        "local",
+      ];
+
+      List<String> audioTitles = [
+        "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+        "Quand Aurélien Barrau va dans une école de management",
+        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+        "La surpopulation mondiale par Jancovici et Barrau",
+      ];
+
+      List<String> audioSubTitles = [
+        '0:02:39.6. 2.59 MB imported on 23/06/2025 at 06:56.',
+        "0:17:59.0. 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55.",
+        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35.",
+        "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
+      ];
+
+      _verifyRestoredPlaylistAndAudio(
+        tester: tester,
+        selectedPlaylistTitle: 'S8 audio',
+        playlistsTitles: playlistsTitles,
+        audioTitles: audioTitles,
+        audioSubTitles: audioSubTitles,
+      );
+
+      // Verify the content of the 'S8 audio' playlist dir
+      // + comments + pictures dir after restoration.
+      IntegrationTestUtil.verifyPlaylistDirectoryContents(
+        playlistTitle: 'S8 audio',
+        expectedAudioFiles: [
+          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3",
+          "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
+        ],
+        expectedCommentFiles: [
+          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.json",
+          "250623-065532-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
+          "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'.json",
+        ],
+        expectedPictureFiles: [
+          "250623-065532-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
+          "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'.json"
+        ],
+        doesPictureAudioMapFileNameExist: true,
+        applicationPictureDir:
+            '$kApplicationPathWindowsTest${path.separator}$kPictureDirName',
+        pictureFileNameOne: 'Barrau.jpg',
+        audioForPictureTitleOneLst: [
+          "S8 audio|250623-065532-Quand Aurélien Barrau va dans une école de management 23-09-10"
+        ],
+        pictureFileNameTwo: 'Jésus, mon amour.jpg',
+        audioForPictureTitleTwoLst: [
+          "S8 audio|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'"
+        ],
       );
     });
   });

@@ -2,9 +2,9 @@
 echo ===== Setting up test environment =====
 
 REM Define parameters (modify these for each test)
-set SOURCE_PATH=C:\development\flutter\audiolearn\test\data\saved\restore_zip_existing_playlist_selected_test_android
+set SOURCE_PATH=C:\development\flutter\audiolearn\test\data\saved\restore_existing_playlists_with_new_audios_android_emulator
 set DEST_PATH=/storage/emulated/0/Documents/test/audiolearn
-set BASE_DIR=restore_zip_existing_playlist_selected_test_android
+set BASE_DIR=restore_existing_playlists_with_new_audios_android_emulator
 
 echo Cleaning target directory...
 adb shell "rm -rf %DEST_PATH%/*"
