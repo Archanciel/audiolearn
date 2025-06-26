@@ -21214,6 +21214,279 @@ void main() {
           });
         });
       });
+      group(
+          '''On not empty app dir where a playlist is selected, restore Android zip in which playlist(s)
+          corresponding to existing playlist(s) contain additional audio's to which comments and pictures
+          are associated. This situation happens if the AudioLearn application exists on two different
+          engines and the user wants to restore the playlists, comments and pictures from one computer
+          to another in order to add to the target pc or smartphone the audio's downloaded on the source
+          engine. The audio mp3 files are not added since they are not in the zip file. But the Audio
+          objects are added to the existing playlist and so can be redownloaded if needed.''',
+          () {
+        testWidgets(
+            '''Unique playlist restore, not replace existing playlist. Restore unique playlist Android zip
+            containing 'S8 audio' playlist to Windows application which contains 'S8 audio' and 'local'
+            playlists. The restored 'S8 audio' playlist contains additional audio's to which comments and
+            pictures are associated.''', (tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}restore_existing_playlists_with_new_audios",
+            destinationRootPath: kApplicationPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+          // Replace the platform instance with your mock
+          MockFilePicker mockFilePicker = MockFilePicker();
+          FilePicker.platform = mockFilePicker;
+
+          await app.main();
+          await tester.pumpAndSettle();
+
+          String restorableZipFilePathName =
+              '$kApplicationPathWindowsTest${path.separator}Android S8 audio.zip';
+
+          mockFilePicker.setSelectedFiles([
+            PlatformFile(
+                name: restorableZipFilePathName,
+                path: restorableZipFilePathName,
+                size: 163840),
+          ]);
+
+          // Execute the 'Restore Playlists, Comments and Settings from Zip
+          // File ...' menu
+          await IntegrationTestUtil.executeRestorePlaylists(
+            tester: tester,
+            doReplaceExistingPlaylists: false,
+          );
+
+          // Verify the displayed warning confirmation dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 2 audio reference(s) from "$restorableZipFilePathName".\n\nRestored also 2 picture JPG file(s) in the application pictures directory.',
+            isWarningConfirming: true,
+            warningTitle: 'CONFIRMATION',
+          );
+
+          // Verifying the existing restored playlist
+          // list as well as the selected playlist 'Prières du
+          // Maître' displayed audio titles and subtitles.
+
+          List<String> playlistsTitles = [
+            "S8 audio",
+            "local",
+          ];
+
+          List<String> audioTitles = [
+            "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+            "Quand Aurélien Barrau va dans une école de management",
+            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+            "La surpopulation mondiale par Jancovici et Barrau",
+          ];
+
+          List<String> audioSubTitles = [
+            '0:02:39.6. 2.59 MB imported on 23/06/2025 at 06:56.',
+            "0:17:59.0. 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55.",
+            "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35.",
+            "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
+          ];
+
+          _verifyRestoredPlaylistAndAudio(
+            tester: tester,
+            selectedPlaylistTitle: 'S8 audio',
+            playlistsTitles: playlistsTitles,
+            audioTitles: audioTitles,
+            audioSubTitles: audioSubTitles,
+          );
+
+          // Verify the content of the 'S8 audio' playlist dir
+          // + comments + pictures dir after restoration.
+          IntegrationTestUtil.verifyPlaylistDirectoryContents(
+            playlistTitle: 'S8 audio',
+            expectedAudioFiles: [
+              "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3",
+              "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
+            ],
+            expectedCommentFiles: [
+              "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.json",
+              "250623-065532-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
+              "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'.json",
+            ],
+            expectedPictureFiles: [
+              "250623-065532-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
+              "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'.json"
+            ],
+            doesPictureAudioMapFileNameExist: true,
+            applicationPictureDir:
+                '$kApplicationPathWindowsTest${path.separator}$kPictureDirName',
+            pictureFileNameOne: 'Barrau.jpg',
+            audioForPictureTitleOneLst: [
+              "S8 audio|250623-065532-Quand Aurélien Barrau va dans une école de management 23-09-10"
+            ],
+            pictureFileNameTwo: 'Jésus, mon amour.jpg',
+            audioForPictureTitleTwoLst: [
+              "S8 audio|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'"
+            ],
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Multiple playlist restore, not replace existing playlists. Restore multiple playlists Android
+             zip containing 'S8 audio' and 'local' playlists to Windows application which contain 'S8 audio'
+             and 'local' playlists. The restored 'S8 audio' and 'local' playlists contains additional audio's
+             to which comments and pictures are associated.''', (tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}restore_existing_playlists_with_new_audios",
+            destinationRootPath: kApplicationPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+          // Replace the platform instance with your mock
+          MockFilePicker mockFilePicker = MockFilePicker();
+          FilePicker.platform = mockFilePicker;
+
+          await app.main();
+          await tester.pumpAndSettle();
+
+          String restorableZipFilePathName =
+              '$kApplicationPathWindowsTest${path.separator}Android 2 existing playlists with new audios.zip';
+
+          mockFilePicker.setSelectedFiles([
+            PlatformFile(
+                name: restorableZipFilePathName,
+                path: restorableZipFilePathName,
+                size: 9387),
+          ]);
+
+          // Execute the 'Restore Playlists, Comments and Settings from Zip
+          // File ...' menu
+          await IntegrationTestUtil.executeRestorePlaylists(
+            tester: tester,
+            doReplaceExistingPlaylists: false,
+          );
+
+          // Verify the displayed warning confirmation dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                'Restored 0 playlist, 3 comment and 3 picture JSON files as well as 4 audio reference(s) and the application settings from "$restorableZipFilePathName".',
+            isWarningConfirming: true,
+            warningTitle: 'CONFIRMATION',
+          );
+
+          // Verifying the existing restored playlist
+          // list as well as the selected playlist 'Prières du
+          // Maître' displayed audio titles and subtitles.
+
+          List<String> playlistsTitles = [
+            "S8 audio",
+            "local",
+          ];
+
+          List<String> audioTitles = [
+            "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+            "Quand Aurélien Barrau va dans une école de management",
+            "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+            "La surpopulation mondiale par Jancovici et Barrau",
+          ];
+
+          List<String> audioSubTitles = [
+            '0:02:39.6. 2.59 MB imported on 23/06/2025 at 06:56.',
+            "0:17:59.0. 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55.",
+            "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35.",
+            "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
+          ];
+
+          _verifyRestoredPlaylistAndAudio(
+            tester: tester,
+            selectedPlaylistTitle: 'S8 audio',
+            playlistsTitles: playlistsTitles,
+            audioTitles: audioTitles,
+            audioSubTitles: audioSubTitles,
+          );
+
+          // Verify the content of the 'S8 audio' playlist dir
+          // + comments + pictures dir after restoration.
+          IntegrationTestUtil.verifyPlaylistDirectoryContents(
+            playlistTitle: 'local',
+            expectedAudioFiles: [
+              "240110-181805-Really short video 23-07-01.mp3",
+              "240110-181810-morning _ cinematic video 23-07-01.mp3",
+            ],
+            expectedCommentFiles: [
+              "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.json",
+            ],
+            expectedPictureFiles: [
+              "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.json",
+            ],
+            doesPictureAudioMapFileNameExist: true,
+            applicationPictureDir:
+                '$kApplicationPathWindowsTest${path.separator}$kPictureDirName',
+            pictureFileNameOne: 'Barrau.jpg',
+            audioForPictureTitleOneLst: [
+              "S8 audio|250623-065532-Quand Aurélien Barrau va dans une école de management 23-09-10"
+            ],
+            pictureFileNameTwo: 'Jésus, mon amour.jpg',
+            audioForPictureTitleTwoLst: [
+              "S8 audio|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'"
+            ],
+            pictureFileNameThree: "Dieu je T'adore.jpg",
+            audioForPictureTitleThreeLst: [
+              "local|Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+            ],
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+      });
     });
   });
   group('Manage picture for audio', () {
