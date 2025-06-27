@@ -3234,6 +3234,7 @@ class PlaylistListVM extends ChangeNotifier {
       restoredInfoLst.add(restoredCommentsNumber);
       restoredInfoLst.add(restoredPicturesJsonNumber);
       restoredInfoLst.add(restoredPicturesJpgNumber);
+      restoredInfoLst.add(false); // wasIndividualPlaylistRestored
       restoredInfoLst.add(0); // adding 0 to the
       //                         restoredAudioReferencesNumber
       //                         position
