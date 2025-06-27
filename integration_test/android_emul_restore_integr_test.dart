@@ -33,6 +33,7 @@ void main() {
   // which broke the library.
   // If this issue persists, please report it on the project's GitHub page.
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  const String androidPathSeparator = '/';
 
   group(
       '''On not empty app dir where a playlist is selected, restore Windows zip in which playlist(s)
@@ -63,7 +64,7 @@ void main() {
         PlatformFile(
             name: restorableZipFileName,
             path:
-                '$kApplicationPathAndroidTest${path.separator}$restorableZipFileName',
+                '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
             size: 5802),
       ]);
 
@@ -73,7 +74,18 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: false,
+        playlistTitlesToDelete: [
+          'S8 audio',
+          'local',
+        ],
       );
+
+      Finder okButtonFinder = find.byKey(const Key('warningDialogOkButton'));
+
+      if (!okButtonFinder.evaluate().isEmpty) {
+        await tester.tap(okButtonFinder.last);
+        await tester.pumpAndSettle();
+      }
 
       restorableZipFileName = 'Windows S8 audio.zip';
 
@@ -81,10 +93,10 @@ void main() {
         PlatformFile(
             name: restorableZipFileName,
             path:
-                '$kApplicationPathAndroidTest${path.separator}$restorableZipFileName',
+                '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
             size: 162667),
       ]);
-      
+
       // Now, test execution.
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
@@ -96,7 +108,8 @@ void main() {
       await Future.delayed(const Duration(milliseconds: 500));
       await tester.pumpAndSettle();
 
-      String restorableZipFilePathName = '/storage/emulated/0/Documents/test/audiolearn/S8 audio.zip';
+      String restorableZipFilePathName =
+          '/storage/emulated/0/Documents/test/audiolearn/$restorableZipFileName';
 
       // Verify the displayed warning confirmation dialog
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
@@ -140,12 +153,10 @@ void main() {
 
       // Verify the content of the 'S8 audio' playlist dir
       // + comments + pictures dir after restoration.
-      IntegrationTestUtil.verifyPlaylistDirectoryContents(
+      IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
         playlistTitle: 'S8 audio',
-        expectedAudioFiles: [
-          "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3",
-          "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
-        ],
+        expectedAudioFiles: [], // empty since all playlists were deleted by
+        // the first IntegrationTestUtil.executeRestorePlaylists executio
         expectedCommentFiles: [
           "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.json",
           "250623-065532-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
@@ -156,8 +167,6 @@ void main() {
           "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'.json"
         ],
         doesPictureAudioMapFileNameExist: true,
-        applicationPictureDir:
-            '$kApplicationPathWindowsTest${path.separator}$kPictureDirName',
         pictureFileNameOne: 'Barrau.jpg',
         audioForPictureTitleOneLst: [
           "S8 audio|250623-065532-Quand Aurélien Barrau va dans une école de management 23-09-10"

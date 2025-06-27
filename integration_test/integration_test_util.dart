@@ -653,7 +653,32 @@ class IntegrationTestUtil {
   static Future<void> executeRestorePlaylists({
     required WidgetTester tester,
     bool doReplaceExistingPlaylists = true,
+    List<String> playlistTitlesToDelete = const [],
   }) async {
+    if (playlistTitlesToDelete.isNotEmpty) {
+      // Delete the playlists which are to be deleted
+      for (String playlistTitle in playlistTitlesToDelete) {
+        // First, find the playlist ListTile Text widget
+        final Finder playlistListTileTextWidgetFinder =
+            find.text(playlistTitle);
+
+        // If the playlist ListTile Text widget is not found, return
+        if (playlistListTileTextWidgetFinder.evaluate().isEmpty) {
+          continue;
+        }
+
+        await typeOnPlaylistMenuItem(
+            tester: tester,
+            playlistTitle: playlistTitle,
+            playlistMenuKeyStr: 'popup_menu_delete_playlist');
+
+        // Now find the confirm button of the delete playlist confirm
+        // dialog and tap on it
+        await tester.tap(find.byKey(const Key('confirmButton')));
+        await tester.pumpAndSettle();
+      }
+    }
+
     // Tap the appbar leading popup menu button
     await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
     await tester.pumpAndSettle();
@@ -3397,8 +3422,8 @@ class IntegrationTestUtil {
       // Now select the ...x play speed
       await tester.tap(find.text('${audioSpeed}x'));
       await tester.pumpAndSettle();
-    } 
-    
+    }
+
     if (minusTapNumber != 0) {
       // Now select the custom play speed
       for (int i = 0; i < minusTapNumber; i++) {
