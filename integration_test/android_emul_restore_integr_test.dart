@@ -319,6 +319,143 @@ void main() {
           ],
         );
       });
+      testWidgets(
+          '''Unique playlist restore, not replace existing playlist. Restore unique playlist Windows zip
+            containing 'Les plus belles chansons chrétiennes' playlist to Android application which contains
+            'S8 audio' and 'local' playlists. All audio's of the restored playlist 'Les plus belles chansons
+            chrétiennes' are then deleted. Afterward, the playlist 'Les plus belles chansons chrétiennes'
+            is restored again so that the deleted audio's will be re-added.''', (tester) async {
+        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+          tester: tester,
+          tapOnPlaylistToggleButton: false,
+        );
+
+        // Now initializing the application on the Android emulator using
+        // zip restoration.
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        String restorableZipFileName = 'audioLearn_app_initialization.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFileName,
+              path:
+                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+              size: 5802),
+        ]);
+
+        // In order to create the Android emulator application, execute the
+        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+        // without replacing the existing playlists.
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+          playlistTitlesToDelete: [
+            'S8 audio',
+            'local',
+          ],
+        );
+
+        Finder okButtonFinder = find.byKey(const Key('warningDialogOkButton'));
+
+        if (!okButtonFinder.evaluate().isEmpty) {
+          await tester.tap(okButtonFinder.last);
+          await tester.pumpAndSettle();
+        }
+
+        restorableZipFileName = 'Windows Les plus belles chansons chrétiennes.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFileName,
+              path:
+                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+              size: 198041),
+        ]);
+
+        // Now, test execution.
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+        );
+
+        // Must be used on Android emulator, otherwise the confirmation
+        // dialog is not displayed and can not be verifyed !
+        await Future.delayed(const Duration(milliseconds: 500));
+        await tester.pumpAndSettle();
+
+        String restorableZipFilePathName =
+            '/storage/emulated/0/Documents/test/audiolearn/$restorableZipFileName';
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              'Restored 1 playlist saved individually, 3 comment and 1 picture JSON files as well as 0 audio reference(s) from "$restorableZipFilePathName".\n\nRestored also 1 picture JPG file(s) in the application pictures directory.',
+          isWarningConfirming: true,
+          warningTitle: 'CONFIRMATION',
+        );
+
+        // Verifying the existing restored playlist
+        // list as well as the selected playlist 'Prières du
+        // Maître' displayed audio titles and subtitles.
+
+        List<String> playlistsTitles = [
+          "S8 audio",
+          "local",
+        ];
+
+        List<String> audioTitles = [
+          "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+          "Quand Aurélien Barrau va dans une école de management",
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+          "La surpopulation mondiale par Jancovici et Barrau",
+        ];
+
+        List<String> audioSubTitles = [
+          '0:02:39.6. 2.59 MB imported on 23/06/2025 at 06:56.',
+          "0:17:59.0. 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55.",
+          "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35.",
+          "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
+        ];
+
+        _verifyRestoredPlaylistAndAudio(
+          tester: tester,
+          selectedPlaylistTitle: 'S8 audio',
+          playlistsTitles: playlistsTitles,
+          audioTitles: audioTitles,
+          audioSubTitles: audioSubTitles,
+        );
+
+        // Verify the content of the 'S8 audio' playlist dir
+        // + comments + pictures dir after restoration.
+        IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
+          playlistTitle: 'S8 audio',
+          expectedAudioFiles: [], // empty since all playlists were deleted by
+          // the first IntegrationTestUtil.executeRestorePlaylists executio
+          expectedCommentFiles: [
+            "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.json",
+            "250623-065532-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
+            "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'.json",
+          ],
+          expectedPictureFiles: [
+            "250623-065532-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
+            "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'.json"
+          ],
+          doesPictureAudioMapFileNameExist: true,
+          pictureFileNameOne: 'Barrau.jpg',
+          audioForPictureTitleOneLst: [
+            "S8 audio|250623-065532-Quand Aurélien Barrau va dans une école de management 23-09-10"
+          ],
+          pictureFileNameTwo: 'Jésus, mon amour.jpg',
+          audioForPictureTitleTwoLst: [
+            "S8 audio|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'"
+          ],
+        );
+      });
     });
     group('''From Android zip.''', () {
       testWidgets(
