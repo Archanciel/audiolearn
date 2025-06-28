@@ -5,6 +5,7 @@ import 'package:archive/archive.dart';
 import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:path/path.dart' as path;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -188,6 +189,8 @@ class PlaylistListVM extends ChangeNotifier {
   //                           displayed with an updated forground
   //                           and background color.
 
+  final Logger _logger = Logger();
+  
   PlaylistListVM({
     required WarningMessageVM warningMessageVM,
     required AudioDownloadVM audioDownloadVM,
@@ -3679,7 +3682,7 @@ class PlaylistListVM extends ChangeNotifier {
       final String playlistJson = jsonEncode(playlist.toJson());
       await playlistFile.writeAsString(playlistJson, flush: true);
     } catch (e) {
-      print('Error saving playlist ${playlist.title}: $e');
+      _logger.i('Error saving playlist ${playlist.title}: $e');
     }
   }
 
@@ -3772,7 +3775,7 @@ class PlaylistListVM extends ChangeNotifier {
         .split('/')
         .map((segment) => segment.trim())
         .join('/');
-        
+
     // Search for the picture JSON file in the zip archive
     for (ArchiveFile archiveFile in archive) {
       if (archiveFile.isFile &&
