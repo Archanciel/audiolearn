@@ -246,11 +246,13 @@ class CommentVM extends ChangeNotifier {
             .isAfter(existingComment.lastUpdateDateTime)) {
           // If the update comment last update date time is after the existing
           // comment last update date time, modify the existing comment.
-          modifyComment(
-            modifiedComment: updateComment,
-            commentedAudio: commentedAudio,
-            modifiedCommentLastUpdateDateTime: updateComment.lastUpdateDateTime,
-          );
+          existingComment.title = updateComment.title;
+          existingComment.content = updateComment.content;
+          existingComment.commentStartPositionInTenthOfSeconds =
+              updateComment.commentStartPositionInTenthOfSeconds;
+          existingComment.commentEndPositionInTenthOfSeconds =
+              updateComment.commentEndPositionInTenthOfSeconds;
+          existingComment.lastUpdateDateTime = updateComment.lastUpdateDateTime;
           modifiedCommentNumber++;
         } else {
           // If the update comment last update date time is before or equal to
@@ -280,14 +282,9 @@ class CommentVM extends ChangeNotifier {
     ];
   }
 
-  /// If this method is executed in order to combine the existing comment
-  /// with the corresponding comment contained in the restore zip file, the
-  /// [modifiedCommentLastUpdateDateTime] parameter isn't null and will be set
-  /// as the last update date time of the existing comment.
   void modifyComment({
     required Comment modifiedComment,
     required Audio commentedAudio,
-    DateTime? modifiedCommentLastUpdateDateTime,
   }) {
     List<Comment> commentLst = loadAudioComments(
       audio: commentedAudio,
@@ -304,16 +301,10 @@ class CommentVM extends ChangeNotifier {
     oldComment.commentEndPositionInTenthOfSeconds =
         modifiedComment.commentEndPositionInTenthOfSeconds;
 
-    if (modifiedCommentLastUpdateDateTime != null) {
-      // If the modified comment last update date time is not null,
-      // it means that the comment was restored from a backup file.
-      oldComment.lastUpdateDateTime = modifiedCommentLastUpdateDateTime;
-    } else {
-      // If the modified comment last update date time is null, it
-      // means that the comment was modified by the user.
-      oldComment.lastUpdateDateTime =
-          DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now());
-    }
+    // If the modified comment last update date time is null, it
+    // means that the comment was modified by the user.
+    oldComment.lastUpdateDateTime =
+        DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now());
 
     _sortAndSaveCommentLst(
       commentLst: commentLst,
