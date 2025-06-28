@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:audiolearn/constants.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as path;
 
@@ -202,13 +203,91 @@ class CommentVM extends ChangeNotifier {
     DirUtil.deleteDirIfEmpty(
       pathStr: commentDirPath,
     );
-    
+
     notifyListeners();
   }
 
+  /// This method is executed in order to combine the audio existing comments
+  /// with the corresponding comments contained in the restore zip file. The
+  /// method handles two cases:
+  ///
+  /// 1. If the update comment already exists in the audio comment json file,
+  /// the corresponding existing comment is modified if the update comment
+  /// last update date time is after the existing comment last update date time.
+  ///
+  /// 2. If the update comment does not exist in the audio comment json file, it
+  /// is added to the audio comment file.
+  ///
+  /// The method returns a list containing two integers:
+  /// - The first integer is the number of modified comments.
+  /// - The second integer is the number of added comments.
+  List<int> updateAudioComments({
+    required Audio commentedAudio,
+    required List<Comment> updateCommentsLst,
+  }) {
+    int modifiedCommentNumber = 0;
+    int addedCommentNumber = 0;
+
+    List<Comment> existingCommentsLst = loadAudioComments(
+      audio: commentedAudio,
+    );
+
+    for (Comment updateComment in updateCommentsLst) {
+      // Check if the comment already exists
+      Comment? existingComment = existingCommentsLst.firstWhereOrNull(
+        (element) => element.id == updateComment.id,
+      );
+
+      if (existingComment != null) {
+        // If the comment already exists, modify it if the update comment
+        // last update date time is after the existing comment
+        // last update date time.
+        if (updateComment.lastUpdateDateTime
+            .isAfter(existingComment.lastUpdateDateTime)) {
+          // If the update comment last update date time is after the existing
+          // comment last update date time, modify the existing comment.
+          modifyComment(
+            modifiedComment: updateComment,
+            commentedAudio: commentedAudio,
+            modifiedCommentLastUpdateDateTime: updateComment.lastUpdateDateTime,
+          );
+          modifiedCommentNumber++;
+        } else {
+          // If the update comment last update date time is before or equal to
+          // the existing comment last update date time, skip the modification.
+          continue;
+        }
+      } else {
+        // If the comment does not exist, add it
+        existingCommentsLst.add(updateComment);
+        addedCommentNumber++;
+      }
+    }
+
+    _sortAndSaveCommentLst(
+      commentLst: existingCommentsLst,
+      commentFilePathName: buildCommentFilePathName(
+        playlistDownloadPath: commentedAudio.enclosingPlaylist!.downloadPath,
+        audioFileName: commentedAudio.audioFileName,
+      ),
+    );
+
+    notifyListeners();
+
+    return [
+      modifiedCommentNumber,
+      addedCommentNumber,
+    ];
+  }
+
+  /// If this method is executed in order to combine the existing comment
+  /// with the corresponding comment contained in the restore zip file, the
+  /// [modifiedCommentLastUpdateDateTime] parameter isn't null and will be set
+  /// as the last update date time of the existing comment.
   void modifyComment({
     required Comment modifiedComment,
     required Audio commentedAudio,
+    DateTime? modifiedCommentLastUpdateDateTime,
   }) {
     List<Comment> commentLst = loadAudioComments(
       audio: commentedAudio,
@@ -224,8 +303,17 @@ class CommentVM extends ChangeNotifier {
         modifiedComment.commentStartPositionInTenthOfSeconds;
     oldComment.commentEndPositionInTenthOfSeconds =
         modifiedComment.commentEndPositionInTenthOfSeconds;
-    oldComment.lastUpdateDateTime =
-        DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now());
+
+    if (modifiedCommentLastUpdateDateTime != null) {
+      // If the modified comment last update date time is not null,
+      // it means that the comment was restored from a backup file.
+      oldComment.lastUpdateDateTime = modifiedCommentLastUpdateDateTime;
+    } else {
+      // If the modified comment last update date time is null, it
+      // means that the comment was modified by the user.
+      oldComment.lastUpdateDateTime =
+          DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now());
+    }
 
     _sortAndSaveCommentLst(
       commentLst: commentLst,
