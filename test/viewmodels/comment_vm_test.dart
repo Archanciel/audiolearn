@@ -218,8 +218,7 @@ void main() {
       Comment expectedCommentFive = Comment.fullConstructor(
         id: 'To end_46727',
         title: 'To end',
-        content:
-            "",
+        content: "",
         commentStartPositionInTenthOfSeconds: 46717,
         commentEndPositionInTenthOfSeconds: 46737,
         creationDateTime: DateTime.parse('2025-06-06 12:48:25.000'),
@@ -627,6 +626,177 @@ void main() {
       validateComment(commentLst[2], commentToModify);
       expect(commentLst[2].lastUpdateDateTime,
           DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now()));
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesAndSubDirsOfDir(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    test('modifyComment in restore situation', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesAndSubDirsOfDir(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      CommentVM commentVM = CommentVM();
+
+      Audio audio = createAudio(
+        playlistTitle: 'local_delete_comment',
+        audioFileName:
+            "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
+      );
+
+      // modifying comment
+
+      List<Comment> commentLst = commentVM.loadAudioComments(audio: audio);
+      Comment lastComment = commentLst[2];
+
+      Comment commentToModify = commentLst[1];
+
+      commentToModify.title = "New title modified";
+      commentToModify.content = "New content modified";
+      commentToModify.commentStartPositionInTenthOfSeconds = 40100;
+      commentToModify.commentEndPositionInTenthOfSeconds = 48100;
+
+      commentVM.modifyComment(
+        modifiedComment: commentToModify,
+        commentedAudio: audio,
+        modifiedCommentLastUpdateDateTime: lastComment.lastUpdateDateTime,
+      );
+
+      // now loading the comment list from the comment file
+
+      commentLst = commentVM.loadAudioComments(audio: audio);
+
+      // the returned Commentlist should have three element
+      expect(commentLst.length, 3);
+
+      validateComment(commentLst[2], commentToModify);
+      expect(
+        commentLst[2].lastUpdateDateTime,
+        lastComment.lastUpdateDateTime,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesAndSubDirsOfDir(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    test('update audio comments in restore situation', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesAndSubDirsOfDir(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      CommentVM commentVM = CommentVM();
+
+      Audio audio = createAudio(
+        playlistTitle: 'local_delete_comment',
+        audioFileName:
+            "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
+      );
+
+      // Creating updated comments list
+
+      Comment addedComment = Comment(
+        title: "New comment",
+        content: "New comment content",
+        commentStartPositionInTenthOfSeconds: 1000,
+        commentEndPositionInTenthOfSeconds: 2000,
+      );
+
+      Comment firstModifiedComment = Comment(
+        title: "First title modified",
+        content: "First content modified",
+        commentStartPositionInTenthOfSeconds: 4100,
+        commentEndPositionInTenthOfSeconds: 6000,
+      );
+      firstModifiedComment.id = "Test Title_0";
+      firstModifiedComment.lastUpdateDateTime =
+          DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now());
+
+      List<Comment> commentLst = commentVM.loadAudioComments(
+        audio: audio,
+      );
+
+      // This modiied comment does not have a lastUpdateDateTime later
+      // than the lastUpdateDateTime of the corresponding comment and
+      // so will not be applied.
+      Comment secondModifiedComment = Comment(
+        title: "Second title modified",
+        content: "Second content modified",
+        commentStartPositionInTenthOfSeconds: 4100,
+        commentEndPositionInTenthOfSeconds: 6000,
+      );
+      secondModifiedComment.id = "Test Title 2_2";
+      secondModifiedComment.lastUpdateDateTime =
+          commentLst[0].lastUpdateDateTime;
+
+      List<Comment> updatedCommentLst = commentLst.map((comment) {
+        if (comment.id == "Test Title_0") {
+          // this is the comment to modify
+          comment.title = firstModifiedComment.title;
+          comment.content = firstModifiedComment.content;
+          comment.commentStartPositionInTenthOfSeconds =
+              firstModifiedComment.commentStartPositionInTenthOfSeconds;
+          comment.commentEndPositionInTenthOfSeconds =
+              firstModifiedComment.commentEndPositionInTenthOfSeconds;
+          comment.lastUpdateDateTime =
+              DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now());
+          return comment;
+        } else if (comment.id == "Test Title 2_2") {
+          comment.title = secondModifiedComment.title;
+          comment.content = secondModifiedComment.content;
+          comment.commentStartPositionInTenthOfSeconds =
+              secondModifiedComment.commentStartPositionInTenthOfSeconds;
+          comment.commentEndPositionInTenthOfSeconds =
+              secondModifiedComment.commentEndPositionInTenthOfSeconds;
+          // Last update date time is not modified
+          return comment;
+        } else {
+          // the other comments are not modified
+          return comment;
+        }
+        // modifying the comment
+      }).toList();
+
+      // adding a new comment to the updated comment list
+      updatedCommentLst.add(addedComment);
+
+      List<int> updateNumberLst = commentVM.updateAudioComments(
+        commentedAudio: audio,
+        updateCommentsLst: updatedCommentLst,
+      );
+
+      // now loading the comment list from the comment file
+
+      commentLst = commentVM.loadAudioComments(audio: audio);
+
+      // the returned Commentlist should have three element
+      expect(commentLst.length, 4);
+
+      validateComment(commentLst[0], secondModifiedComment);
+      validateComment(commentLst[2], addedComment);
+      validateComment(commentLst[2], firstModifiedComment);
+
+      expect(updateNumberLst[0], 1); // modified comment number
+      expect(updateNumberLst[1], 1); // added comment number
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
