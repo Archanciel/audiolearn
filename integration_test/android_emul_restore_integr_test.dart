@@ -86,7 +86,7 @@ void main() {
 
         Finder okButtonFinder = find.byKey(const Key('warningDialogOkButton'));
 
-        if (!okButtonFinder.evaluate().isEmpty) {
+        if (okButtonFinder.evaluate().isNotEmpty) {
           await tester.tap(okButtonFinder.last);
           await tester.pumpAndSettle();
         }
@@ -222,7 +222,7 @@ void main() {
 
         Finder okButtonFinder = find.byKey(const Key('warningDialogOkButton'));
 
-        if (!okButtonFinder.evaluate().isEmpty) {
+        if (okButtonFinder.evaluate().isNotEmpty) {
           await tester.tap(okButtonFinder.last);
           await tester.pumpAndSettle();
         }
@@ -361,7 +361,7 @@ void main() {
 
         Finder okButtonFinder = find.byKey(const Key('warningDialogOkButton'));
 
-        if (!okButtonFinder.evaluate().isEmpty) {
+        if (okButtonFinder.evaluate().isNotEmpty) {
           await tester.tap(okButtonFinder.last);
           await tester.pumpAndSettle();
         }
@@ -499,7 +499,7 @@ void main() {
 
         Finder okButtonFinder = find.byKey(const Key('warningDialogOkButton'));
 
-        if (!okButtonFinder.evaluate().isEmpty) {
+        if (okButtonFinder.evaluate().isNotEmpty) {
           await tester.tap(okButtonFinder.last);
           await tester.pumpAndSettle();
         }
@@ -635,7 +635,7 @@ void main() {
 
         Finder okButtonFinder = find.byKey(const Key('warningDialogOkButton'));
 
-        if (!okButtonFinder.evaluate().isEmpty) {
+        if (okButtonFinder.evaluate().isNotEmpty) {
           await tester.tap(okButtonFinder.last);
           await tester.pumpAndSettle();
         }
