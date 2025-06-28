@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:logger/logger.dart';
 import 'package:matcher/matcher.dart' as matcher;
 
 import 'package:audiolearn/models/comment.dart';
@@ -32,6 +33,8 @@ void main() {
 
   audioPlayerViewSortFilterIntegrationTest();
 
+  final Logger logger = Logger();
+  
   group('''Play/pause/start/end tests, clicking on audio title to open
          AudioPlayerView.''', () {
     testWidgets('Check play/pause button conversion only.', (
@@ -9045,7 +9048,7 @@ void main() {
         await Future.delayed(const Duration(seconds: 3));
         await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
-        print('****** Is the audio stopped ? ');
+        logger.i('****** Is the audio stopped ? ');
 
         // Edited comment and audio player view position verification
         _verifyPositionValueAfterCommentWasPlayed(
@@ -9071,7 +9074,7 @@ void main() {
         await Future.delayed(const Duration(seconds: 2));
         await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
-        print('****** Second question: is the audio stopped ? ');
+        logger.i('****** Second question: is the audio stopped ? ');
 
         // Edited comment and audio player view position verification
         _verifyPositionValueAfterCommentWasPlayed(
@@ -9091,7 +9094,7 @@ void main() {
         await Future.delayed(const Duration(seconds: 2));
         await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
-        print('****** Third question: is the audio stopped ? ');
+        logger.i('****** Third question: is the audio stopped ? ');
 
         // Edited comment and audio player view position verification
         _verifyPositionValueAfterCommentWasPlayed(
@@ -9138,7 +9141,7 @@ void main() {
         await Future.delayed(const Duration(seconds: 2));
         await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
-        print('****** Fourth question: is the audio stopped ? ');
+        logger.i('****** Fourth question: is the audio stopped ? ');
 
         // Now tap a second time on the play icon button of the fourth audio comment
         // in order to restart playing it
@@ -9157,7 +9160,7 @@ void main() {
         await Future.delayed(const Duration(seconds: 2));
         await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
-        print('****** Fith question: is the audio stopped ? ');
+        logger.i('****** Fith question: is the audio stopped ? ');
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
@@ -9297,7 +9300,7 @@ void main() {
         await Future.delayed(const Duration(seconds: 3));
         await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
-        print('****** Is the audio stopped ? ');
+        logger.i('****** Is the audio stopped ? ');
 
         // Edited comment and audio player view position verification
         _verifyPositionValueAfterCommentWasPlayed(
@@ -9332,7 +9335,7 @@ void main() {
         await Future.delayed(const Duration(seconds: 2));
         await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
-        print('****** Second question: is the audio stopped ? ');
+        logger.i('****** Second question: is the audio stopped ? ');
 
         // Edited comment and audio player view position verification
         _verifyPositionValueAfterCommentWasPlayed(
@@ -9352,7 +9355,7 @@ void main() {
         await Future.delayed(const Duration(seconds: 2));
         await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
-        print('****** Third question: is the audio stopped ? ');
+        logger.i('****** Third question: is the audio stopped ? ');
 
         // Edited comment and audio player view position verification
         _verifyPositionValueAfterCommentWasPlayed(
@@ -9399,7 +9402,7 @@ void main() {
         await Future.delayed(const Duration(seconds: 2));
         await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
-        print('****** Fourth question: is the audio stopped ? ');
+        logger.i('****** Fourth question: is the audio stopped ? ');
 
         // Now tap a second time on the play icon button of the fourth audio comment
         // in order to restart playing it
@@ -9418,7 +9421,7 @@ void main() {
         await Future.delayed(const Duration(seconds: 2));
         await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
-        print('****** Fith question: is the audio stopped ? ');
+        logger.i('****** Fith question: is the audio stopped ? ');
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
