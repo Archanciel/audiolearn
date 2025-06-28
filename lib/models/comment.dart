@@ -6,7 +6,7 @@ class Comment {
   String content;
   int commentStartPositionInTenthOfSeconds;
   int commentEndPositionInTenthOfSeconds;
-  final DateTime creationDateTime;
+  late DateTime creationDateTime;
   late DateTime lastUpdateDateTime;
 
   Comment({

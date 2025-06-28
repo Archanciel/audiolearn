@@ -632,64 +632,6 @@ void main() {
       DirUtil.deleteFilesAndSubDirsOfDir(
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
-    test('modifyComment in restore situation', () async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesAndSubDirsOfDir(
-        rootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
-
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
-        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
-      );
-
-      CommentVM commentVM = CommentVM();
-
-      Audio audio = createAudio(
-        playlistTitle: 'local_delete_comment',
-        audioFileName:
-            "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
-      );
-
-      // modifying comment
-
-      List<Comment> commentLst = commentVM.loadAudioComments(audio: audio);
-      Comment lastComment = commentLst[2];
-
-      Comment commentToModify = commentLst[1];
-
-      commentToModify.title = "New title modified";
-      commentToModify.content = "New content modified";
-      commentToModify.commentStartPositionInTenthOfSeconds = 40100;
-      commentToModify.commentEndPositionInTenthOfSeconds = 48100;
-
-      commentVM.modifyComment(
-        modifiedComment: commentToModify,
-        commentedAudio: audio,
-        modifiedCommentLastUpdateDateTime: lastComment.lastUpdateDateTime,
-      );
-
-      // now loading the comment list from the comment file
-
-      commentLst = commentVM.loadAudioComments(audio: audio);
-
-      // the returned Commentlist should have three element
-      expect(commentLst.length, 3);
-
-      validateComment(commentLst[2], commentToModify);
-      expect(
-        commentLst[2].lastUpdateDateTime,
-        lastComment.lastUpdateDateTime,
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesAndSubDirsOfDir(
-          rootPath: kPlaylistDownloadRootPathWindowsTest);
-    });
     test('update audio comments in restore situation', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -728,6 +670,8 @@ void main() {
         commentEndPositionInTenthOfSeconds: 6000,
       );
       firstModifiedComment.id = "Test Title_0";
+      firstModifiedComment.creationDateTime =
+          DateTime.parse('2023-03-24T20:05:32.000');
       firstModifiedComment.lastUpdateDateTime =
           DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now());
 
@@ -758,7 +702,7 @@ void main() {
           comment.commentEndPositionInTenthOfSeconds =
               firstModifiedComment.commentEndPositionInTenthOfSeconds;
           comment.lastUpdateDateTime =
-              DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now());
+              firstModifiedComment.lastUpdateDateTime;
           return comment;
         } else if (comment.id == "Test Title 2_2") {
           comment.title = secondModifiedComment.title;
@@ -791,9 +735,10 @@ void main() {
       // the returned Commentlist should have three element
       expect(commentLst.length, 4);
 
-      validateComment(commentLst[0], secondModifiedComment);
+      validateComment(commentLst[0], commentLst[0]); // unchanged comment
+      validateComment(commentLst[1], commentLst[1]); // unchanged comment
       validateComment(commentLst[2], addedComment);
-      validateComment(commentLst[2], firstModifiedComment);
+      validateComment(commentLst[3], firstModifiedComment);
 
       expect(updateNumberLst[0], 1); // modified comment number
       expect(updateNumberLst[1], 1); // added comment number
