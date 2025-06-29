@@ -232,6 +232,22 @@ class CommentVM extends ChangeNotifier {
       audio: commentedAudio,
     );
 
+    final String commentFilePathName = buildCommentFilePathName(
+      playlistDownloadPath: commentedAudio.enclosingPlaylist!.downloadPath,
+      audioFileName: commentedAudio.audioFileName,
+    );
+
+    if (existingCommentsLst.isEmpty) {
+      // Create the comment dir so that the comment file can be
+      // created. This necessary if the audio does not yet have
+      // any comment.
+      DirUtil.createDirIfNotExistSync(
+        pathStr: DirUtil.getPathFromPathFileName(
+          pathFileName: commentFilePathName,
+        ),
+      );
+    }
+
     for (Comment updateComment in updateCommentsLst) {
       // Check if the comment already exists
       Comment? existingComment = existingCommentsLst.firstWhereOrNull(
@@ -268,10 +284,7 @@ class CommentVM extends ChangeNotifier {
 
     _sortAndSaveCommentLst(
       commentLst: existingCommentsLst,
-      commentFilePathName: buildCommentFilePathName(
-        playlistDownloadPath: commentedAudio.enclosingPlaylist!.downloadPath,
-        audioFileName: commentedAudio.audioFileName,
-      ),
+      commentFilePathName: commentFilePathName,
     );
 
     notifyListeners();
