@@ -16314,14 +16314,12 @@ void main() {
             "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
             "Quand Aurélien Barrau va dans une école de management",
             "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-            "La surpopulation mondiale par Jancovici et Barrau",
           ];
 
           List<String> audioSubTitles = [
             '0:02:39.6. 2.59 MB imported on 23/06/2025 at 06:56.',
             "0:17:59.0. 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55.",
             "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35.",
-            "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -16445,14 +16443,12 @@ void main() {
             "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
             "Quand Aurélien Barrau va dans une école de management",
             "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-            "La surpopulation mondiale par Jancovici et Barrau",
           ];
 
           List<String> audioSubTitles = [
             '0:02:39.6. 2.59 MB imported on 23/06/2025 at 06:56.',
             "0:17:59.0. 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55.",
             "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35.",
-            "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -21300,14 +21296,12 @@ void main() {
             "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
             "Quand Aurélien Barrau va dans une école de management",
             "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-            "La surpopulation mondiale par Jancovici et Barrau",
           ];
 
           List<String> audioSubTitles = [
             '0:02:39.6. 2.59 MB imported on 23/06/2025 at 06:56.',
             "0:17:59.0. 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55.",
             "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35.",
-            "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -21431,14 +21425,12 @@ void main() {
             "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
             "Quand Aurélien Barrau va dans une école de management",
             "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-            "La surpopulation mondiale par Jancovici et Barrau",
           ];
 
           List<String> audioSubTitles = [
             '0:02:39.6. 2.59 MB imported on 23/06/2025 at 06:56.',
             "0:17:59.0. 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55.",
             "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35.",
-            "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
           ];
 
           _verifyRestoredPlaylistAndAudio(
