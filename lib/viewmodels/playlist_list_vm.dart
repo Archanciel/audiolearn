@@ -3530,7 +3530,7 @@ class PlaylistListVM extends ChangeNotifier {
 
       // Add missing audios + their comments + their picture(s)
       // to existing playlists.
-      restoredNumberLst = await _mergeAudiosFromZipPlaylist(
+      restoredNumberLst = await _addNewAudioReferencesAvailableInZipPlaylist(
         existingPlaylist: existingPlaylist,
         zipPlaylist: zipPlaylist,
         archive: archive,
@@ -3549,7 +3549,7 @@ class PlaylistListVM extends ChangeNotifier {
     return restoredNumberLst;
   }
 
-  /// This method adds audio's of playlists corresponding to existing playlists which are
+  /// This method adds Audio instances of playlists corresponding to existing playlists which are
   /// available in the zip file and are not already present in the existing playlists.
   /// Additionally, the comments and pictures off the added audios are added to the existing
   /// playlists.
@@ -3558,7 +3558,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///   - The number of added audio references.
   ///   - The number of added comments.
   ///   - The number of added pictures.
-  Future<List<int>> _mergeAudiosFromZipPlaylist({
+  Future<List<int>> _addNewAudioReferencesAvailableInZipPlaylist({
     required Playlist existingPlaylist,
     required Playlist zipPlaylist,
     required Archive archive,
@@ -3568,10 +3568,10 @@ class PlaylistListVM extends ChangeNotifier {
     int addedPicturesCount = 0;
     List<int> restoredNumberLst = []; // restored number returned list
 
-    // Iterate through audios from the zip playlist.
-    for (Audio zipAudio in zipPlaylist.downloadedAudioLst) {
+    // Iterate through playable audios from the zip playlist.
+    for (Audio zipAudio in zipPlaylist.playableAudioLst) {
       // Check if this audio already exists in the existing playlist
-      bool audioExists = existingPlaylist.downloadedAudioLst.any(
+      bool audioExists = existingPlaylist.playableAudioLst.any(
         (existingAudio) =>
             existingAudio.audioFileName == zipAudio.audioFileName,
       );
@@ -3627,13 +3627,47 @@ class PlaylistListVM extends ChangeNotifier {
             playlist: existingPlaylist,
           );
         }
-      } else {
-        // The audio already exists in the existing playlist.
-        // Check if the comments and pictures should be restored.
-        _commentVM.updateAudioComments(
-          commentedAudio: zipAudio,
-          updateCommentsLst: updateCommentsLst,
+      } else { // The audio already exists in the existing
+      // playlist. Check if the comments and pictures should
+      // be restored.
+        String audioCommentFileName =
+            zipAudio.audioFileName.replaceAll('.mp3', '.json');
+        String zipAudioCommentFilePath = path.join(
+          kCommentDirName,
+          audioCommentFileName,
         );
+
+        // Normalize the zip audio comment file path to ensure consistent formatting
+        zipAudioCommentFilePath = zipAudioCommentFilePath
+            .replaceAll('\\', '/') // Convert all backslashes to forward slashes
+            .split('/')
+            .map((segment) => segment.trim())
+            .join('/');
+
+        // Search for the audio comment file in the zip archive
+        for (ArchiveFile archiveFile in archive) {
+          if (archiveFile.isFile &&
+              archiveFile.name
+                  .replaceAll('\\',
+                      '/') // First convert all backslashes to forward slashes
+                  .split('/')
+                  .map((segment) => segment.trim())
+                  .join('/')
+                  .endsWith(zipAudioCommentFilePath)) {
+            // Parse the JSON content from the archive file to get the list of comments
+            String jsonContent =
+                String.fromCharCodes(archiveFile.content as List<int>);
+            List<dynamic> jsonList = jsonDecode(jsonContent);
+            List<Comment> zipComments =
+                jsonList.map((json) => Comment.fromJson(json)).toList();
+
+            // Comment file already exists, just update the comments
+            _commentVM.updateAudioComments(
+              commentedAudio: zipAudio,
+              updateCommentsLst: zipComments,
+            );
+          }
+        }
       }
     }
 
@@ -3728,7 +3762,6 @@ class PlaylistListVM extends ChangeNotifier {
               .join('/')
               .endsWith(zipAudioCommentFilePath)) {
         // Create target comment directory if it doesn't exist
-
         String targetCommentDirPath = path.join(
           existingPlaylist.downloadPath,
           kCommentDirName,
@@ -3737,7 +3770,6 @@ class PlaylistListVM extends ChangeNotifier {
         Directory targetCommentDir = Directory(targetCommentDirPath);
 
         // Ensure the target comment directory exists
-        // If it doesn't exist, create it recursively
         if (!targetCommentDir.existsSync()) {
           await targetCommentDir.create(recursive: true);
         }
@@ -3750,18 +3782,45 @@ class PlaylistListVM extends ChangeNotifier {
 
         File targetCommentFile = File(targetCommentFilePath);
 
-        // Only restore if the comment file doesn't already exist
-        if (!targetCommentFile.existsSync()) {
-          await targetCommentFile.writeAsBytes(
-            archiveFile.content as List<int>,
-            flush: true,
-          );
-          return true;
-        } else {
-          _commentVM.updateAudioComments(
-            commentedAudio: audioToAdd,
-            updateCommentsLst: updateCommentsLst,
-          );
+        try {
+          // Parse the JSON content from the archive file to get the list of comments
+          String jsonContent =
+              String.fromCharCodes(archiveFile.content as List<int>);
+          List<dynamic> jsonList = jsonDecode(jsonContent);
+          List<Comment> zipComments =
+              jsonList.map((json) => Comment.fromJson(json)).toList();
+
+          // Only restore if the comment file doesn't already exist
+          if (!targetCommentFile.existsSync()) {
+            // Write the comment file to disk
+            await targetCommentFile.writeAsBytes(
+              archiveFile.content as List<int>,
+              flush: true,
+            );
+
+            // Update the audio comments using CommentVM
+            _commentVM.updateAudioComments(
+              commentedAudio: audioToAdd,
+              updateCommentsLst: zipComments,
+            );
+
+            return true;
+          } else {
+            // Comment file already exists, just update the comments
+            _commentVM.updateAudioComments(
+              commentedAudio: audioToAdd,
+              updateCommentsLst: zipComments,
+            );
+          }
+        } catch (e) {
+          _logger.e('Error parsing comment file from zip: $e');
+          // If parsing fails, still try to write the raw file
+          if (!targetCommentFile.existsSync()) {
+            await targetCommentFile.writeAsBytes(
+              archiveFile.content as List<int>,
+              flush: true,
+            );
+          }
         }
         break;
       }
