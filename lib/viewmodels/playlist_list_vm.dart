@@ -190,7 +190,7 @@ class PlaylistListVM extends ChangeNotifier {
   //                           and background color.
 
   final Logger _logger = Logger();
-  
+
   PlaylistListVM({
     required WarningMessageVM warningMessageVM,
     required AudioDownloadVM audioDownloadVM,
@@ -3218,7 +3218,7 @@ class PlaylistListVM extends ChangeNotifier {
     required String zipFilePathName,
     required bool doReplaceExistingPlaylists,
   }) async {
-    Map<String, String> zipPlaylistJsonContentsMap = {};
+    Map<String, String> zipExistingPlaylistJsonContentsMap = {};
     List<String> existingPlaylistTitlesLst =
         _listOfSelectablePlaylists.map((playlist) => playlist.title).toList();
     List<dynamic> restoredInfoLst = []; // restored info returned list
@@ -3252,7 +3252,7 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     // Retrieve the playlist root path. Normally, this value contains
-    // /playlists or \playlists depending on the platform.
+    // '/playlists' or '\playlists' depending on the platform.
     final String playlistRootPath = _settingsDataService.get(
       settingType: SettingType.dataLocation,
       settingSubType: DataLocation.playlistRootPath,
@@ -3345,7 +3345,7 @@ class PlaylistListVM extends ChangeNotifier {
           // consequence, store JSON content for later processing.
           final String jsonContent =
               utf8.decode(archiveFile.content as List<int>);
-          zipPlaylistJsonContentsMap[playlistTitle] = jsonContent;
+          zipExistingPlaylistJsonContentsMap[playlistTitle] = jsonContent;
         }
       }
 
@@ -3365,7 +3365,7 @@ class PlaylistListVM extends ChangeNotifier {
           }
         }
 
-        // For other files (audio .mp3, etc.).
+        // For other files (comments, pictures).
         if (existingPlaylistTitlesLst.any((title) =>
             RegExp(r'\b' + RegExp.escape(title) + r'\b')
                 .hasMatch(destinationPathFileName))) {
@@ -3464,15 +3464,16 @@ class PlaylistListVM extends ChangeNotifier {
       }
     } // End of for loop iterating over the archive files.
 
-    // Add missing audios + their comments + their pictures
-    // from the zip playlists with the existing playlists.
+    // Add missing audios references + their comments +
+    // their pictures from the zip playlists to the existing
+    // playlists.
     //
     // The returned list of integers contains:
     //   [0] number of added audio references,
     //   [1] number of added comments,
     //   [2] number of added pictures,
     List<int> restoredNumberLst = await _mergeZipPlaylistsWithExistingPlaylists(
-      zipPlaylistJsonContentsMap: zipPlaylistJsonContentsMap,
+      zipExistingPlaylistJsonContentsMap: zipExistingPlaylistJsonContentsMap,
       archive: archive,
     );
 
@@ -3501,17 +3502,18 @@ class PlaylistListVM extends ChangeNotifier {
   ///   [1] number of added comments,
   ///   [2] number of added pictures,
   Future<List<int>> _mergeZipPlaylistsWithExistingPlaylists({
-    required Map<String, String> zipPlaylistJsonContentsMap,
+    required Map<String, String> zipExistingPlaylistJsonContentsMap,
     required Archive archive,
   }) async {
     int addedAudiosCount = 0;
     int addedCommentsCount = 0;
     int addedPicturesCount = 0;
-    List<int> restoredNumberLst = []; // restored number returned list
+    List<int> restoredNumberLst = []; // restored numbers returned list
 
-    for (String playlistTitle in zipPlaylistJsonContentsMap.keys) {
+    for (String playlistTitle in zipExistingPlaylistJsonContentsMap.keys) {
       // Find the existing playlist in the application.
       Playlist? existingPlaylist;
+
       try {
         existingPlaylist = _listOfSelectablePlaylists.firstWhere(
           (playlist) => playlist.title == playlistTitle,
@@ -3522,7 +3524,7 @@ class PlaylistListVM extends ChangeNotifier {
 
       // Parse the playlist from the zip.
       final Map<String, dynamic> zipPlaylistJson =
-          jsonDecode(zipPlaylistJsonContentsMap[playlistTitle]!);
+          jsonDecode(zipExistingPlaylistJsonContentsMap[playlistTitle]!);
 
       Playlist zipPlaylist = Playlist.fromJson(zipPlaylistJson);
 
@@ -3625,6 +3627,13 @@ class PlaylistListVM extends ChangeNotifier {
             playlist: existingPlaylist,
           );
         }
+      } else {
+        // The audio already exists in the existing playlist.
+        // Check if the comments and pictures should be restored.
+        _commentVM.updateAudioComments(
+          commentedAudio: zipAudio,
+          updateCommentsLst: updateCommentsLst,
+        );
       }
     }
 
@@ -3693,22 +3702,22 @@ class PlaylistListVM extends ChangeNotifier {
     required Audio audioToAdd,
     required Playlist existingPlaylist,
   }) async {
-    // Build the expected comment file name in the zip
-    String commentFileName =
+    // Build the comment file name expected in the zip
+    String audioCommentFileName =
         audioToAdd.audioFileName.replaceAll('.mp3', '.json');
-    String zipCommentFilePath = path.join(
+    String zipAudioCommentFilePath = path.join(
       kCommentDirName,
-      commentFileName,
+      audioCommentFileName,
     );
 
-    // Normalize the zip comment file path to ensure consistent formatting
-    zipCommentFilePath = zipCommentFilePath
+    // Normalize the zip audio comment file path to ensure consistent formatting
+    zipAudioCommentFilePath = zipAudioCommentFilePath
         .replaceAll('\\', '/') // Convert all backslashes to forward slashes
         .split('/')
         .map((segment) => segment.trim())
         .join('/');
 
-    // Search for the comment file in the zip archive
+    // Search for the audio comment file in the zip archive
     for (ArchiveFile archiveFile in archive) {
       if (archiveFile.isFile &&
           archiveFile.name
@@ -3717,14 +3726,18 @@ class PlaylistListVM extends ChangeNotifier {
               .split('/')
               .map((segment) => segment.trim())
               .join('/')
-              .endsWith(zipCommentFilePath)) {
+              .endsWith(zipAudioCommentFilePath)) {
         // Create target comment directory if it doesn't exist
+
         String targetCommentDirPath = path.join(
           existingPlaylist.downloadPath,
           kCommentDirName,
         );
 
         Directory targetCommentDir = Directory(targetCommentDirPath);
+
+        // Ensure the target comment directory exists
+        // If it doesn't exist, create it recursively
         if (!targetCommentDir.existsSync()) {
           await targetCommentDir.create(recursive: true);
         }
@@ -3732,7 +3745,7 @@ class PlaylistListVM extends ChangeNotifier {
         // Write the comment file to the target playlist
         String targetCommentFilePath = path.join(
           targetCommentDirPath,
-          commentFileName,
+          audioCommentFileName,
         );
 
         File targetCommentFile = File(targetCommentFilePath);
@@ -3744,6 +3757,11 @@ class PlaylistListVM extends ChangeNotifier {
             flush: true,
           );
           return true;
+        } else {
+          _commentVM.updateAudioComments(
+            commentedAudio: audioToAdd,
+            updateCommentsLst: updateCommentsLst,
+          );
         }
         break;
       }
