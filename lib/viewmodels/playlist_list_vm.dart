@@ -3569,9 +3569,9 @@ class PlaylistListVM extends ChangeNotifier {
     List<int> restoredNumberLst = []; // restored number returned list
 
     // Iterate through playable audios from the zip playlist.
-    for (Audio zipAudio in zipPlaylist.playableAudioLst) {
+    for (Audio zipAudio in zipPlaylist.downloadedAudioLst) {
       // Check if this audio already exists in the existing playlist
-      bool audioExists = existingPlaylist.playableAudioLst.any(
+      bool audioExists = existingPlaylist.downloadedAudioLst.any(
         (existingAudio) =>
             existingAudio.audioFileName == zipAudio.audioFileName,
       );
@@ -3627,9 +3627,10 @@ class PlaylistListVM extends ChangeNotifier {
             playlist: existingPlaylist,
           );
         }
-      } else { // The audio already exists in the existing
-      // playlist. Check if the comments and pictures should
-      // be restored.
+      } else {
+        // The audio already exists in the existing
+        // playlist. Check if the comments and pictures should
+        // be restored.
         String audioCommentFileName =
             zipAudio.audioFileName.replaceAll('.mp3', '.json');
         String zipAudioCommentFilePath = path.join(
@@ -3655,8 +3656,7 @@ class PlaylistListVM extends ChangeNotifier {
                   .join('/')
                   .endsWith(zipAudioCommentFilePath)) {
             // Parse the JSON content from the archive file to get the list of comments
-            String jsonContent =
-                String.fromCharCodes(archiveFile.content as List<int>);
+            String jsonContent = utf8.decode(archiveFile.content as List<int>);
             List<dynamic> jsonList = jsonDecode(jsonContent);
             List<Comment> zipComments =
                 jsonList.map((json) => Comment.fromJson(json)).toList();
