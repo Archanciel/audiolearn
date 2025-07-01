@@ -59,3 +59,4 @@ windows/flutter/generated_plugins.cmake
 *.h
 *.cmake
 *.swift
+*.cmake
