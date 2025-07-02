@@ -2,6 +2,7 @@
 
 import 'dart:io';
 import 'package:archive/archive.dart';
+import 'package:logger/logger.dart';
 import 'package:path/path.dart' as path;
 
 import '../constants.dart';
@@ -13,7 +14,9 @@ enum CopyOrMoveFileResult {
   audioNotKeptInSourcePlaylist,
 }
 
-class DirUtil {
+class DirUtil {  
+  static final Logger logger = Logger();
+
   static List<String> readUrlsFromFile(String filePath) {
     try {
       // Read all lines from the file
@@ -25,7 +28,7 @@ class DirUtil {
 
       return lines;
     } catch (e) {
-      print('Error reading file: $e');
+      logger.i('Error reading file: $e');
       return [];
     }
   }
@@ -60,7 +63,7 @@ class DirUtil {
         dir.createSync();
       } catch (e) {
         // Handle the exception, e.g., directory not created
-        print('Directory could not be created: $e');
+        logger.i('Directory could not be created: $e');
       }
     }
 
@@ -96,7 +99,7 @@ class DirUtil {
         dir.createSync();
       } catch (e) {
         // Handle the exception, e.g., directory not created
-        print('Directory could not be created: $e');
+        logger.i('Directory could not be created: $e');
       }
     }
 
@@ -134,7 +137,7 @@ class DirUtil {
         dir.createSync();
       } catch (e) {
         // Handle the exception, e.g., directory not created
-        print('Directory could not be created: $e');
+        logger.i('Directory could not be created: $e');
       }
     }
 
@@ -183,10 +186,10 @@ class DirUtil {
       try {
         directory.deleteSync(recursive: true);
       } catch (e) {
-        print("Error occurred while deleting directory: $e");
+        logger.i("Error occurred while deleting directory: $e");
       }
     } else {
-      print("Directory does not exist.");
+      logger.i("Directory does not exist.");
     }
   }
 
@@ -201,13 +204,13 @@ class DirUtil {
         if (directory.listSync().isEmpty) {
           directory.deleteSync();
         } else {
-          print("Directory is not empty.");
+          logger.i("Directory is not empty.");
         }
       } catch (e) {
-        print("Error occurred while deleting directory: $e");
+        logger.i("Error occurred while deleting directory: $e");
       }
     } else {
-      print("Directory does not exist.");
+      logger.i("Directory does not exist.");
     }
   }
 
@@ -258,10 +261,10 @@ class DirUtil {
           }
         }
       } catch (e) {
-        print('Failed to delete subdirectories or files: $e');
+        logger.i('Failed to delete subdirectories or files: $e');
       }
     } else {
-      print('The directory does not exist.');
+      logger.i('The directory does not exist.');
     }
   }
 
@@ -308,7 +311,7 @@ class DirUtil {
     final directory = Directory(filePath);
 
     if (!directory.existsSync()) {
-      print("Directory does not exist.");
+      logger.i("Directory does not exist.");
       return;
     }
 
@@ -317,7 +320,7 @@ class DirUtil {
         try {
           file.deleteSync();
         } catch (e) {
-          print("Error deleting file: ${file.path}, Error: $e");
+          logger.i("Error deleting file: ${file.path}, Error: $e");
         }
       }
     });
@@ -353,13 +356,13 @@ class DirUtil {
     final Directory targetDirectory = Directory(destinationRootPath);
 
     if (!sourceDirectory.existsSync()) {
-      print(
+      logger.i(
           'Source directory does not exist. Please check the source directory path.');
       return;
     }
 
     if (!targetDirectory.existsSync()) {
-      print('Target directory does not exist. Creating...');
+      logger.i('Target directory $destinationRootPathdoes not exist. Creating...');
       targetDirectory.createSync(recursive: true);
     }
 
@@ -420,7 +423,7 @@ class DirUtil {
 
     // Check if the directory exists
     if (!playlistsDir.existsSync()) {
-      print('Error: Directory $baseDir does not exist.');
+      logger.i('Error: Directory $baseDir does not exist.');
       return jsonPathFileNamesLst;
     }
 
@@ -661,7 +664,7 @@ class DirUtil {
   }) {
     Directory directory = Directory(directoryPath);
     if (!directory.existsSync()) {
-      print('Directory does not exist');
+      logger.i('Directory does not exist');
       return;
     }
 
