@@ -362,7 +362,7 @@ class DirUtil {
     }
 
     if (!targetDirectory.existsSync()) {
-      logger.i('Target directory $destinationRootPathdoes not exist. Creating...');
+      logger.i('Target directory $destinationRootPath does not exist. Creating...');
       targetDirectory.createSync(recursive: true);
     }
 
