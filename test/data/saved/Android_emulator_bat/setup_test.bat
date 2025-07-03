@@ -3,7 +3,7 @@ echo ===== Setting up test environment =====
 
 REM Define parameters (modify these for each test)
 set SOURCE_PATH=C:\development\flutter\audiolearn\test\data\saved\restore_2_existing_playlists_with_new_and_modified_comments
-set DEST_PATH=/storage/emulated/0/Documents/test
+set DEST_PATH=/storage/emulated/0/Documents/test/audiolearn
 set BASE_DIR=restore_2_existing_playlists_with_new_and_modified_comments
 
 echo Cleaning target directory...
