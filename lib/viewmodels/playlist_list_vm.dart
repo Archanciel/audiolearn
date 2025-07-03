@@ -3660,10 +3660,14 @@ class PlaylistListVM extends ChangeNotifier {
             List<dynamic> jsonList = jsonDecode(jsonContent);
             List<Comment> zipComments =
                 jsonList.map((json) => Comment.fromJson(json)).toList();
-
+            Audio existingAudio = existingPlaylist.downloadedAudioLst.firstWhere(
+              (audio) => audio.audioFileName == zipAudio.audioFileName,
+            );
+            
             // Comment file already exists, just update the comments
             _commentVM.updateAudioComments(
-              commentedAudio: zipAudio,
+              commentedAudio: existingAudio, // Using existing audio in order to access
+              // to the valid audio.enclosingPlaylist!.downloadPath (Android or Windows path).
               updateCommentsLst: zipComments,
             );
           }
