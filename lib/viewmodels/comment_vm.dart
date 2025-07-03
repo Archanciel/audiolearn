@@ -115,13 +115,26 @@ class CommentVM extends ChangeNotifier {
     required String playlistDownloadPath,
     required String audioFileName,
   }) {
-    final String playlistCommentPath =
-        "$playlistDownloadPath${path.separator}$kCommentDirName";
-
     final String createdCommentFileName =
         audioFileName.replaceAll('.mp3', '.json');
+    final String playlistCommentPath;
 
-    return "$playlistCommentPath${path.separator}$createdCommentFileName";
+    if (playlistDownloadPath.contains('/')) { // run on Android
+      playlistCommentPath = path.posix.join(
+        playlistDownloadPath,
+        kCommentDirName,
+      );
+
+      return path.posix.join(
+        playlistCommentPath,
+        createdCommentFileName,
+      );
+    } else {
+      playlistCommentPath =
+          "$playlistDownloadPath${path.separator}$kCommentDirName";
+
+      return "$playlistCommentPath${path.separator}$createdCommentFileName";
+    }
   }
 
   void _sortAndSaveCommentLst({
