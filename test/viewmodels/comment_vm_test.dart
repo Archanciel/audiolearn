@@ -12,7 +12,7 @@ import 'package:audiolearn/utils/dir_util.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
 
 void main() {
-  group('CommentVM test', () {
+  group('CommentVM test on Windows', () {
     test('load comments, comment file not exist', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -732,7 +732,7 @@ void main() {
 
       commentLst = commentVM.loadAudioComments(audio: audio);
 
-      // the returned Commentlist should have three element
+      // the returned Commentlist should have four elements
       expect(commentLst.length, 4);
 
       validateComment(commentLst[0], commentLst[0]); // unchanged comment
