@@ -1117,6 +1117,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                 _warningMessageVM.playlistsNumber,
                 _warningMessageVM.audioReferencesNumber,
                 _warningMessageVM.commentJsonFilesNumber,
+                _warningMessageVM.updatedCommentNumber,
                 _warningMessageVM.pictureJsonFilesNumber,
                 _warningMessageVM.zipFilePathName,
               );
@@ -1126,6 +1127,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                 _warningMessageVM.playlistsNumber,
                 _warningMessageVM.audioReferencesNumber,
                 _warningMessageVM.commentJsonFilesNumber,
+                _warningMessageVM.updatedCommentNumber,
                 _warningMessageVM.pictureJsonFilesNumber,
                 _warningMessageVM.zipFilePathName,
               );
