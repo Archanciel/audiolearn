@@ -3080,6 +3080,7 @@ class PlaylistListVM extends ChangeNotifier {
       audioReferencesNumber: restoredInfoLst[5],
       commentJsonFilesNumber: restoredInfoLst[1],
       updatedCommentNumber: restoredInfoLst[6],
+      addedCommentNumber: restoredInfoLst[7],
       pictureJsonFilesNumber: restoredInfoLst[2],
       pictureJpgFilesNumber: restoredInfoLst[3],
       wasIndividualPlaylistRestored: wasIndividualPlaylistRestored,
@@ -3212,9 +3213,10 @@ class PlaylistListVM extends ChangeNotifier {
   ///  number of restored pictures JSON files,
   ///  number of restored pictures JPG files,
   ///  was the zip file created from the playlist item 'Save Playlist, Comments,
-  ///  Pictures and Settings to Zip File' menu item (true/false),
+  ///     Pictures and Settings to Zip File' menu item (true/false),
   ///  restoredAudioReferencesNumber
   ///  updated comment number
+  ///  added comment number
   /// ]
   Future<List<dynamic>> _restoreFilesFromZip({
     required String zipFilePathName,
@@ -3244,7 +3246,7 @@ class PlaylistListVM extends ChangeNotifier {
       //                         restoredAudioReferencesNumber
       //                         position
       restoredInfoLst.add(0); // adding 0 to the updated comment number
-      
+      restoredInfoLst.add(0); // adding 0 to the added comment number
 
       return restoredInfoLst;
     }
@@ -3477,6 +3479,7 @@ class PlaylistListVM extends ChangeNotifier {
     //   [1] number of added comments,
     //   [2] number of added pictures,
     //   [3] number of updated comments,
+    //   [4] number of added comments,
     List<int> restoredNumberLst = await _mergeZipPlaylistsWithExistingPlaylists(
       zipExistingPlaylistJsonContentsMap: zipExistingPlaylistJsonContentsMap,
       archive: archive,
@@ -3489,6 +3492,7 @@ class PlaylistListVM extends ChangeNotifier {
     restoredInfoLst.add(wasIndividualPlaylistRestored);
     restoredInfoLst.add(restoredNumberLst[0]);
     restoredInfoLst.add(restoredNumberLst[3]);
+    restoredInfoLst.add(restoredNumberLst[4]);
 
     return restoredInfoLst;
   }
@@ -3508,14 +3512,16 @@ class PlaylistListVM extends ChangeNotifier {
   ///   [1] number of added comments,
   ///   [2] number of added pictures,
   ///   [3] number of updated comments,
+  ///   [4] number of added comments,
   Future<List<int>> _mergeZipPlaylistsWithExistingPlaylists({
     required Map<String, String> zipExistingPlaylistJsonContentsMap,
     required Archive archive,
   }) async {
     int addedAudiosCount = 0;
-    int addedCommentsCount = 0;
+    int addedCommentJsonFilesCount = 0;
     int addedPicturesCount = 0;
     int updatedCommentsCount = 0;
+    int addedCommentsCount = 0;
     List<int> restoredNumberLst = []; // restored numbers returned list
 
     for (String playlistTitle in zipExistingPlaylistJsonContentsMap.keys) {
@@ -3545,16 +3551,18 @@ class PlaylistListVM extends ChangeNotifier {
       );
 
       addedAudiosCount += restoredNumberLst[0];
-      addedCommentsCount += restoredNumberLst[1];
+      addedCommentJsonFilesCount += restoredNumberLst[1];
       addedPicturesCount += restoredNumberLst[2];
-      updatedCommentsCount += restoredNumberLst[3];
+      updatedCommentsCount += restoredNumberLst[3]; // Updated comments count
+      addedCommentsCount += restoredNumberLst[4]; // Count added comments
     }
 
     restoredNumberLst.clear();
     restoredNumberLst.add(addedAudiosCount);
-    restoredNumberLst.add(addedCommentsCount);
+    restoredNumberLst.add(addedCommentJsonFilesCount);
     restoredNumberLst.add(addedPicturesCount);
     restoredNumberLst.add(updatedCommentsCount);
+    restoredNumberLst.add(addedCommentsCount);
 
     return restoredNumberLst;
   }
@@ -3566,22 +3574,29 @@ class PlaylistListVM extends ChangeNotifier {
   ///
   /// The returned list of integers contains:
   ///   - The number of added audio references.
-  ///   - The number of added comments.
+  ///   - The number of added comment json files.
   ///   - The number of added pictures.
   ///   - The number of updated comments.
+  ///   - The number of added comments.
   Future<List<int>> _addNewAudioReferencesAvailableInZipPlaylist({
     required Playlist existingPlaylist,
     required Playlist zipPlaylist,
     required Archive archive,
   }) async {
     int addedAudiosCount = 0;
-    int addedCommentsCount = 0;
+    int addedCommentJsonFilesCount = 0;
     int addedPicturesCount = 0;
     List<int> restoredNumberLst = []; // restored number returned list
-    List<int> commentUpdateNumberLst = [0, 0]; // [0] is the number of updated comments,
-    // [1] is the number of added comments.
+    List<int> commentUpdateNumberLst = [
+      0,
+      0,
+      0
+    ]; // [0] is the number of updated comments,
+    //                                               [1] is the number of added comments,
+    //                                               [2] is the number of added comment
+    //                                                   json file (0 or 1 for an audio).
 
-    // Iterate through playable audios from the zip playlist.
+    // Iterate through downloaded audios from the zip playlist.
     for (Audio zipAudio in zipPlaylist.downloadedAudioLst) {
       // Check if this audio already exists in the existing playlist
       bool audioExists = existingPlaylist.downloadedAudioLst.any(
@@ -3623,7 +3638,7 @@ class PlaylistListVM extends ChangeNotifier {
           audioToAdd: audioToAdd,
           existingPlaylist: existingPlaylist,
         )) {
-          addedCommentsCount++;
+          addedCommentJsonFilesCount++;
         }
 
         // Restore picture files for this audio if they exist in the zip
@@ -3679,7 +3694,8 @@ class PlaylistListVM extends ChangeNotifier {
             );
 
             // Comment file already exists, just update the comments
-            List<int> audioCommentUpdateNumberLst = _commentVM.updateAudioComments(
+            List<int> audioCommentUpdateNumberLst =
+                _commentVM.updateAudioComments(
               commentedAudio:
                   existingAudio, // Using existing audio in order to access
               // to the valid audio.enclosingPlaylist!.downloadPath (Android or Windows path).
@@ -3690,15 +3706,20 @@ class PlaylistListVM extends ChangeNotifier {
                 audioCommentUpdateNumberLst[0]; // Updated comments
             commentUpdateNumberLst[1] +=
                 audioCommentUpdateNumberLst[1]; // Added comments
+            addedCommentJsonFilesCount +=
+                audioCommentUpdateNumberLst[2]; // Added comment json file
           }
         }
       }
     }
 
     restoredNumberLst.add(addedAudiosCount);
-    restoredNumberLst.add(addedCommentsCount + commentUpdateNumberLst[1]);
+    restoredNumberLst.add(addedCommentJsonFilesCount);
     restoredNumberLst.add(addedPicturesCount);
-    restoredNumberLst.add(commentUpdateNumberLst[0]); // Number of updated comments
+    restoredNumberLst
+        .add(commentUpdateNumberLst[0]); // Number of updated comments
+    restoredNumberLst
+        .add(commentUpdateNumberLst[1]); // Number of added comments
 
     return restoredNumberLst;
   }
