@@ -1484,13 +1484,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get restorePlaylistAndCommentsFromZipTooltip => 'Restaure les playlists, les commentaires, les photos ainsi que les paramètres de l\'application à partir d\'un fichier zip préalablement sauvé. Seuls les fichiers JSON sont restaurés. Les fichiers audio n\'étant pas inclus dans le fichier zip, ils ne sont pas restaurés.';
 
   @override
-  String restoredAppDataFromZip(Object playlistsNumber, Object audiosNumber, Object commentsNumber, Object picturesNumber, Object filePathName) {
-    return 'Les fichiers JSON de $playlistsNumber playlists, de $commentsNumber commentaires et de $picturesNumber photos ainsi que $audiosNumber références audio et les paramètres de l\'application ont été restaurés depuis \"$filePathName\".';
+  String restoredAppDataFromZip(Object playlistsNumber, Object audiosNumber, Object commentsNumber, Object updatedCommentNumber, Object picturesNumber, Object filePathName) {
+    return 'Les fichiers JSON de $playlistsNumber playlists, de $commentsNumber commentaires et de $picturesNumber photos ainsi que $audiosNumber références audio et $updatedCommentNumber commentaires modifiés et les paramètres de l\'application ont été restaurés depuis \"$filePathName\".';
   }
 
   @override
-  String restoredUniquePlaylistFromZip(Object playlistsNumber, Object audiosNumber, Object commentsNumber, Object picturesNumber, Object filePathName) {
-    return 'Les fichiers JSON de $playlistsNumber playlist sauvegardée individuellement, de $commentsNumber commentaires et de $picturesNumber photos ainsi que $audiosNumber références audio ont été restaurés depuis \"$filePathName\".';
+  String restoredUniquePlaylistFromZip(Object playlistsNumber, Object audiosNumber, Object commentsNumber, Object updatedCommentNumber, Object picturesNumber, Object filePathName) {
+    return 'Les fichiers JSON de $playlistsNumber playlist sauvegardée individuellement, de $commentsNumber commentaires et de $picturesNumber photos ainsi que $audiosNumber références audio et $updatedCommentNumber commentaires modifiés ont été restaurés depuis \"$filePathName\".';
   }
 
   @override

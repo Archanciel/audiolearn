@@ -3547,7 +3547,7 @@ class PlaylistListVM extends ChangeNotifier {
       addedAudiosCount += restoredNumberLst[0];
       addedCommentsCount += restoredNumberLst[1];
       addedPicturesCount += restoredNumberLst[2];
-      updatedCommentsCount += restoredNumberLst[0];
+      updatedCommentsCount += restoredNumberLst[3];
     }
 
     restoredNumberLst.clear();
@@ -3679,12 +3679,17 @@ class PlaylistListVM extends ChangeNotifier {
             );
 
             // Comment file already exists, just update the comments
-            commentUpdateNumberLst = _commentVM.updateAudioComments(
+            List<int> audioCommentUpdateNumberLst = _commentVM.updateAudioComments(
               commentedAudio:
                   existingAudio, // Using existing audio in order to access
               // to the valid audio.enclosingPlaylist!.downloadPath (Android or Windows path).
               updateCommentsLst: zipComments,
             );
+
+            commentUpdateNumberLst[0] +=
+                audioCommentUpdateNumberLst[0]; // Updated comments
+            commentUpdateNumberLst[1] +=
+                audioCommentUpdateNumberLst[1]; // Added comments
           }
         }
       }

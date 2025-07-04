@@ -802,6 +802,8 @@ class WarningMessageVM extends ChangeNotifier {
   int get audioReferencesNumber => _audioReferencesNumber;
   int _commentJsonFilesNumber = 0;
   int get commentJsonFilesNumber => _commentJsonFilesNumber;
+  int _updatedCommentNumber = 0;
+  int get updatedCommentNumber => _updatedCommentNumber;
   int _pictureJsonFilesNumber = 0;
   int get pictureJsonFilesNumber => _pictureJsonFilesNumber;
   bool _wasIndividualPlaylistRestored = false;
@@ -811,6 +813,7 @@ class WarningMessageVM extends ChangeNotifier {
     required int playlistsNumber,
     required int audioReferencesNumber,
     required int commentJsonFilesNumber,
+    required int updatedCommentNumber,
     required int pictureJsonFilesNumber,
     required int pictureJpgFilesNumber,
     required bool wasIndividualPlaylistRestored,
@@ -819,6 +822,7 @@ class WarningMessageVM extends ChangeNotifier {
     _playlistsNumber = playlistsNumber;
     _audioReferencesNumber = audioReferencesNumber;
     _commentJsonFilesNumber = commentJsonFilesNumber;
+    _updatedCommentNumber = updatedCommentNumber;
     _pictureJsonFilesNumber = pictureJsonFilesNumber;
     _savedOrRestoredPictureJpgNumber = pictureJpgFilesNumber;
     _wasIndividualPlaylistRestored = wasIndividualPlaylistRestored;
