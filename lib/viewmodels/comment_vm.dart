@@ -234,12 +234,20 @@ class CommentVM extends ChangeNotifier {
   /// The method returns a list containing two integers:
   /// - The first integer is the number of modified comments.
   /// - The second integer is the number of added comments.
+  /// - The third integer is the number of added comment json file.
   List<int> updateAudioComments({
     required Audio commentedAudio,
     required List<Comment> updateCommentsLst,
   }) {
     int modifiedCommentNumber = 0;
+
+    // This variable is incremented if a comment is added to an
+    // audio which already has a comment file.
     int addedCommentNumber = 0;
+
+    // This variable is incremented if a comment is added to an
+    // audio which does not have a comment file yet.
+    int addedCommentJsonFileNumber = 0;
 
     List<Comment> existingCommentsLst = loadAudioComments(
       audio: commentedAudio,
@@ -272,6 +280,9 @@ class CommentVM extends ChangeNotifier {
           // the existing comment last update date time, skip the modification.
           continue;
         }
+      } else if (existingCommentsLst.isEmpty){
+        existingCommentsLst.add(updateComment);
+        addedCommentJsonFileNumber++;
       } else {
         // If the comment does not exist, add it
         existingCommentsLst.add(updateComment);
@@ -292,6 +303,7 @@ class CommentVM extends ChangeNotifier {
     return [
       modifiedCommentNumber,
       addedCommentNumber,
+      addedCommentJsonFileNumber,
     ];
   }
 
