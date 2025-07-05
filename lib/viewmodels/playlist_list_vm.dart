@@ -3227,7 +3227,7 @@ class PlaylistListVM extends ChangeNotifier {
         _listOfSelectablePlaylists.map((playlist) => playlist.title).toList();
     List<dynamic> restoredInfoLst = []; // restored info returned list
     List<String> restoredPlaylistTitlesLst = [];
-    int restoredCommentsNumber = 0;
+    int restoredCommentsJsonNumber = 0;
     int restoredPicturesJsonNumber = 0;
     int restoredPicturesJpgNumber = 0;
 
@@ -3238,7 +3238,7 @@ class PlaylistListVM extends ChangeNotifier {
       // Can not happen since the zip file is selected by the user
       // with the file picker and so the file must exist.
       restoredInfoLst.add(restoredPlaylistTitlesLst);
-      restoredInfoLst.add(restoredCommentsNumber);
+      restoredInfoLst.add(restoredCommentsJsonNumber);
       restoredInfoLst.add(restoredPicturesJsonNumber);
       restoredInfoLst.add(restoredPicturesJpgNumber);
       restoredInfoLst.add(false); // wasIndividualPlaylistRestored
@@ -3451,7 +3451,7 @@ class PlaylistListVM extends ChangeNotifier {
         // Second condition guarantees that the picture json files
         // number is correctly calculated.
         if (destinationPathFileName.contains(kCommentDirName)) {
-          restoredCommentsNumber++;
+          restoredCommentsJsonNumber++;
         } else if (destinationPathFileName.contains(kPictureDirName)) {
           if (destinationPathFileName.endsWith('.jpg')) {
             // The jpg file is a physical picture file.
@@ -3476,7 +3476,7 @@ class PlaylistListVM extends ChangeNotifier {
     //
     // The returned list of integers contains:
     //   [0] number of added audio references,
-    //   [1] number of added comments,
+    //   [1] number of added comment json files,
     //   [2] number of added pictures,
     //   [3] number of updated comments,
     //   [4] number of added comments,
@@ -3486,13 +3486,15 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     restoredInfoLst.add(restoredPlaylistTitlesLst);
-    restoredInfoLst.add(restoredCommentsNumber + restoredNumberLst[1]);
-    restoredInfoLst.add(restoredPicturesJsonNumber + restoredNumberLst[2]);
+    restoredInfoLst.add(restoredCommentsJsonNumber + restoredNumberLst[1]); // adding number
+    //                                                       of restored comments json files
+    restoredInfoLst.add(restoredPicturesJsonNumber + restoredNumberLst[2]); // adding number
+    //                                                       of restored pictures json files
     restoredInfoLst.add(restoredPicturesJpgNumber);
     restoredInfoLst.add(wasIndividualPlaylistRestored);
-    restoredInfoLst.add(restoredNumberLst[0]);
-    restoredInfoLst.add(restoredNumberLst[3]);
-    restoredInfoLst.add(restoredNumberLst[4]);
+    restoredInfoLst.add(restoredNumberLst[0]); // restored audio references number
+    restoredInfoLst.add(restoredNumberLst[3]); // updated comment number
+    restoredInfoLst.add(restoredNumberLst[4]); // added comment number
 
     return restoredInfoLst;
   }
@@ -3509,7 +3511,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///
   /// The returned list of integers contains:
   ///   [0] number of added audio references,
-  ///   [1] number of added comments,
+  ///   [1] number of added comment json files,
   ///   [2] number of added pictures,
   ///   [3] number of updated comments,
   ///   [4] number of added comments,
