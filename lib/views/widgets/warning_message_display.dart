@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/help_item.dart';
 import '../../models/playlist.dart';
 import '../../constants.dart';
 import '../../services/settings_data_service.dart';
@@ -11,6 +12,7 @@ import '../../utils/dir_util.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
+import 'help_dialog.dart';
 
 // Used to determine the title of the warning dialog: 'WARNING' or 'CONFIRM'
 enum WarningMode {
@@ -1109,6 +1111,15 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
       case WarningMessageType.restoreAppDataFromZip:
         WidgetsBinding.instance.addPostFrameCallback((_) {
           String restoredAppDataFromZipMessage;
+          List<HelpItem> restoredAppDataFromZipHelpItemsLst = [
+            HelpItem(
+              helpTitle:
+                  AppLocalizations.of(context)!.restoredElementsHelpTitle,
+              helpContent: AppLocalizations.of(context)!
+                  .restoredElementsHelpContent,
+              displayHelpItemNumber: false,
+            ),
+          ];
 
           if (_warningMessageVM.zipFilePathName != '') {
             if (!_warningMessageVM.wasIndividualPlaylistRestored) {
@@ -1147,6 +1158,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
               warningMessageVM: _warningMessageVM,
               themeProviderVM: themeProviderVM,
               warningMode: WarningMode.confirm,
+              helpItemsLst: restoredAppDataFromZipHelpItemsLst,
             );
           } else {
             restoredAppDataFromZipMessage =
@@ -1193,6 +1205,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
     WarningMessageVM? warningMessageVM,
     required ThemeProviderVM themeProviderVM,
     WarningMode warningMode = WarningMode.warning,
+    List<HelpItem> helpItemsLst = const [],
   }) {
     // The focus node must be created here, otherwise displaying
     // the dialog will cause an error.
@@ -1241,9 +1254,35 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
           }
         },
         child: AlertDialog(
-          title: Text(
-            key: const Key('warningDialogTitle'),
-            alertDialogTitle,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                key: const Key('warningDialogTitle'),
+                alertDialogTitle,
+              ),
+              if (helpItemsLst.isNotEmpty)
+                IconButton(
+                  icon: IconTheme(
+                    data: (themeProviderVM.currentTheme == AppTheme.dark
+                            ? ScreenMixin.themeDataDark
+                            : ScreenMixin.themeDataLight)
+                        .iconTheme,
+                    child: const Icon(
+                      Icons.help_outline,
+                      size: 40.0,
+                    ),
+                  ),
+                  onPressed: () {
+                    showDialog<void>(
+                      context: context,
+                      builder: (context) => HelpDialog(
+                        helpItemsLst: helpItemsLst,
+                      ),
+                    );
+                  },
+                ),
+            ],
           ),
           actionsPadding: kDialogActionsPadding,
           content: SingleChildScrollView(
