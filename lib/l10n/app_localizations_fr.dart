@@ -1659,4 +1659,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get importedCheckbox => 'Importé';
+
+  @override
+  String get restoredElementsHelpTitle => 'Description des éléments restaurés';
+
+  @override
+  String get restoredElementsHelpContent => 'N playlists: nombre de nouveaux fichiers JSON de playlist créés par la restauration.\n\nN commentaires: nombre de nouveaux fichiers JSON de commentaires créés par la restauration. Ceci se produit uniquement si l\'audio commenté n\'avait aucun commentaire avant la restauration. Sinon, le nouveau commentaire est ajouté au fichier JSON de commentaires audio existant.\n\nN photos : nombre de nouveaux fichiers JSON d\'images créés par la restauration. Ceci se produit uniquement si l\'audio illustré n\'avait aucune image avant la restauration. Sinon, la nouvelle image est ajoutée au fichier JSON d\'images audio existant.\n\nN références audio : nombre d\'éléments audio ajoutés au fichier JSON de leur playlist par la restauration. La restauration n\'ajoute pas de fichiers MP3 car aucun MP3 n\'est contenu dans le fichier ZIP. Les audio’s référencés ajoutés peuvent être téléchargés après la restauration.\n\nN commentaires ajoutés: nombre de commentaires ajoutés par la restauration aux fichiers JSON de commentaires audio existants.\n\nN commentaires modifiés: nombre de commentaires modifiés par la restauration dans les fichiers JSON de commentaires audio existants.';
 }

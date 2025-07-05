@@ -2006,4 +2006,12 @@ class MockAppLocalizations extends AppLocalizations {
     Object filePathName,
   ) =>
       "Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) from \"$filePathName\".";
+
+  @override
+  String get restoredElementsHelpTitle => "Restored elements description";
+
+  @override
+  String get restoredElementsHelpContent => "n playlist: number of restored playlist JSON files.
+
+n comment: number of restored comment JSON files.";
 }
