@@ -1984,24 +1984,26 @@ class MockAppLocalizations extends AppLocalizations {
   String get importedCheckbox => "Imported";
 
   @override
-  String restoredUniquePlaylistFromZip(
-    Object playlistsNumber,
-    Object commentsNumber,
-    Object picturesNumber,
-    Object audiosNumber,
-    Object updatedCommentNumber,
-    Object filePathName,
-  ) =>
-      "Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $updatedCommentNumber modified comment(s) from \"$filePathName\".";
-
-  @override
   String restoredAppDataFromZip(
     Object playlistsNumber,
     Object commentsNumber,
     Object picturesNumber,
     Object audiosNumber,
+    Object addedCommentNumber,
     Object updatedCommentNumber,
     Object filePathName,
   ) =>
-      "Restored $playlistsNumber playlist, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $updatedCommentNumber modified comment(s) and the application settings from \"$filePathName\".";
+      "Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) from \"$filePathName\".";
+
+  @override
+  String restoredUniquePlaylistFromZip(
+    Object playlistsNumber,
+    Object commentsNumber,
+    Object picturesNumber,
+    Object audiosNumber,
+    Object addedCommentNumber,
+    Object updatedCommentNumber,
+    Object filePathName,
+  ) =>
+      "Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) from \"$filePathName\".";
 }

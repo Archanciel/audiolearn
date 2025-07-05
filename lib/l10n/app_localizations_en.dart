@@ -1484,13 +1484,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get restorePlaylistAndCommentsFromZipTooltip => 'Restoring the playlists, their audio comments, pictures and the application settings from a saved zip file. The zip file contains the playlists, the comments, the pictures as well as the settings JSON files. The audio files are not included in it.';
 
   @override
-  String restoredAppDataFromZip(Object playlistsNumber, Object audiosNumber, Object commentsNumber, Object updatedCommentNumber, Object picturesNumber, Object filePathName) {
-    return 'Restored $playlistsNumber playlist, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $updatedCommentNumber modified comment(s) and the application settings from \"$filePathName\".';
+  String restoredAppDataFromZip(Object playlistsNumber, Object audiosNumber, Object commentsNumber, Object updatedCommentNumber, Object addedCommentNumber, Object picturesNumber, Object filePathName) {
+    return 'Restored $playlistsNumber playlist, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) and the application settings from \"$filePathName\".';
   }
 
   @override
-  String restoredUniquePlaylistFromZip(Object playlistsNumber, Object audiosNumber, Object commentsNumber, Object updatedCommentNumber, Object picturesNumber, Object filePathName) {
-    return 'Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $updatedCommentNumber modified comment(s) from \"$filePathName\".';
+  String restoredUniquePlaylistFromZip(Object playlistsNumber, Object audiosNumber, Object commentsNumber, Object updatedCommentNumber, Object addedCommentNumber, Object picturesNumber, Object filePathName) {
+    return 'Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) from \"$filePathName\".';
   }
 
   @override
