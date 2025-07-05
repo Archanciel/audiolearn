@@ -840,7 +840,7 @@
   "notPictured": "Unpictured",
   "restorePlaylistAndCommentsFromZipMenu": "Restore Playlists, Comments, Pictures and Settings from Zip File ...",
   "restorePlaylistAndCommentsFromZipTooltip": "Restoring the playlists, their audio comments, pictures and the application settings from a saved zip file. The zip file contains the playlists, the comments, the pictures as well as the settings JSON files. The audio files are not included in it.",
-  "restoredAppDataFromZip": "Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {updatedCommentNumber} modified comment(s) and the application settings from \"{filePathName}\".",
+  "restoredAppDataFromZip": "Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) and the application settings from \"{filePathName}\".",
   "@restoredAppDataFromZip": {
     "description": "Warning message indicating that one or several playlists were restored from zip created from appbar menu",
     "placeholders": {
@@ -848,18 +848,20 @@
       "audiosNumber": {},
       "commentsNumber": {},
       "updatedCommentNumber": {},
+      "addedCommentNumber": {},
       "picturesNumber": {},
       "filePathName": {}
     }
   },
-  "restoredUniquePlaylistFromZip": "Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {updatedCommentNumber} modified comment(s) from \"{filePathName}\".",
+  "restoredUniquePlaylistFromZip": "Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) from \"{filePathName}\".",
   "@restoredUniquePlaylistFromZip": {
-    "description": "Warning message indicating that the a unique playlist was restored from zip created from playlist item menu",
+    "description": "Warning message indicating that a unique playlist was restored from zip created from playlist item menu",
     "placeholders": {
       "playlistsNumber": {},
       "audiosNumber": {},
       "commentsNumber": {},
       "updatedCommentNumber": {},
+      "addedCommentNumber": {},
       "picturesNumber": {},
       "filePathName": {}
     }

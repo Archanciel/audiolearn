@@ -804,6 +804,8 @@ class WarningMessageVM extends ChangeNotifier {
   int get commentJsonFilesNumber => _commentJsonFilesNumber;
   int _updatedCommentNumber = 0;
   int get updatedCommentNumber => _updatedCommentNumber;
+  int _addedCommentNumber = 0;
+  int get addedCommentNumber => _addedCommentNumber;
   int _pictureJsonFilesNumber = 0;
   int get pictureJsonFilesNumber => _pictureJsonFilesNumber;
   bool _wasIndividualPlaylistRestored = false;
@@ -814,6 +816,7 @@ class WarningMessageVM extends ChangeNotifier {
     required int audioReferencesNumber,
     required int commentJsonFilesNumber,
     required int updatedCommentNumber,
+    required int addedCommentNumber,
     required int pictureJsonFilesNumber,
     required int pictureJpgFilesNumber,
     required bool wasIndividualPlaylistRestored,
@@ -826,6 +829,7 @@ class WarningMessageVM extends ChangeNotifier {
     _pictureJsonFilesNumber = pictureJsonFilesNumber;
     _savedOrRestoredPictureJpgNumber = pictureJpgFilesNumber;
     _wasIndividualPlaylistRestored = wasIndividualPlaylistRestored;
+    _addedCommentNumber = addedCommentNumber;
 
     warningMessageType = WarningMessageType.restoreAppDataFromZip;
 
