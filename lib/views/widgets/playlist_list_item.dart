@@ -438,9 +438,6 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                       .setPlaylistAudioQualityDialogTitle,
                   dialogCommentStr:
                       AppLocalizations.of(context)!.selectAudioQuality,
-                  passedValueFieldLabel: '',
-                  passedValueFieldTooltip: '',
-                  passedValueStr: '',
                   targetNamesLst: [
                     AppLocalizations.of(context)!.playlistQualityAudio,
                     AppLocalizations.of(context)!.playlistQualityMusic,
