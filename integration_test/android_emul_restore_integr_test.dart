@@ -26,6 +26,9 @@ import '../test/viewmodels/mock_audio_download_vm.dart';
 import 'integration_test_util.dart';
 import 'mock_file_picker.dart';
 
+/// Run setup_test.bat in order to copy the content of
+/// restore_existing_playlists_with_new_audios_android_emulator.zip
+/// to kApplicationPathAndroidTest = "/storage/emulated/0/Documents/test/audiolearn".
 void main() {
   // Necessary to avoid FatalFailureException (FatalFailureException: Failed
   // to perform an HTTP request to YouTube due to a fatal failure. In most
@@ -79,6 +82,7 @@ void main() {
           tester: tester,
           doReplaceExistingPlaylists: false,
           playlistTitlesToDelete: [
+            'Les plus belles chansons chrétiennes',
             'S8 audio',
             'local',
           ],
@@ -119,7 +123,7 @@ void main() {
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 2 audio reference(s) from "$restorableZipFilePathName".\n\nRestored also 2 picture JPG file(s) in the application pictures directory.',
+              'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 2 audio reference(s) and 0 added plus 0 modified comment(s) from "$restorableZipFilePathName".\n\nRestored also 2 picture JPG file(s) in the application pictures directory.',
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );
@@ -215,6 +219,7 @@ void main() {
           tester: tester,
           doReplaceExistingPlaylists: false,
           playlistTitlesToDelete: [
+            'Les plus belles chansons chrétiennes',
             'S8 audio',
             'local',
           ],
@@ -256,7 +261,7 @@ void main() {
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              'Restored 0 playlist, 3 comment and 3 picture JSON files as well as 4 audio reference(s) and the application settings from "$restorableZipFilePathName".',
+              'Restored 0 playlist, 3 comment and 3 picture JSON files as well as 4 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".',
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );
@@ -324,7 +329,8 @@ void main() {
             containing 'Les plus belles chansons chrétiennes' playlist to Android application which contains
             'S8 audio' and 'local' playlists. All audio's of the restored playlist 'Les plus belles chansons
             chrétiennes' are then deleted. Afterward, the playlist 'Les plus belles chansons chrétiennes'
-            is restored again so that the deleted audio's will be re-added.''', (tester) async {
+            is restored again so that the deleted audio's will be re-added.''',
+          (tester) async {
         await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
           tester: tester,
           tapOnPlaylistToggleButton: false,
@@ -354,6 +360,7 @@ void main() {
           tester: tester,
           doReplaceExistingPlaylists: false,
           playlistTitlesToDelete: [
+            'Les plus belles chansons chrétiennes',
             'S8 audio',
             'local',
           ],
@@ -366,7 +373,8 @@ void main() {
           await tester.pumpAndSettle();
         }
 
-        restorableZipFileName = 'Windows Les plus belles chansons chrétiennes.zip';
+        restorableZipFileName =
+            'Windows Les plus belles chansons chrétiennes.zip';
 
         mockFilePicker.setSelectedFiles([
           PlatformFile(
@@ -394,7 +402,7 @@ void main() {
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              'Restored 1 playlist saved individually, 3 comment and 1 picture JSON files as well as 0 audio reference(s) from "$restorableZipFilePathName".\n\nRestored also 1 picture JPG file(s) in the application pictures directory.',
+              'Restored 1 playlist saved individually, 3 comment and 1 picture JSON files as well as 0 audio reference(s) and 0 added plus 0 modified comment(s) from "$restorableZipFilePathName".\n\nRestored also 1 picture JPG file(s) in the application pictures directory.',
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );
@@ -406,18 +414,15 @@ void main() {
         List<String> playlistsTitles = [
           "S8 audio",
           "local",
+          'Les plus belles chansons chrétiennes',
         ];
 
         List<String> audioTitles = [
-          "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-          "Quand Aurélien Barrau va dans une école de management",
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
           "La surpopulation mondiale par Jancovici et Barrau",
         ];
 
         List<String> audioSubTitles = [
-          '0:02:39.6. 2.59 MB imported on 23/06/2025 at 06:56.',
-          "0:17:59.0. 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55.",
           "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35.",
           "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
         ];
@@ -438,21 +443,17 @@ void main() {
           // the first IntegrationTestUtil.executeRestorePlaylists executio
           expectedCommentFiles: [
             "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.json",
-            "250623-065532-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
-            "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'.json",
           ],
           expectedPictureFiles: [
-            "250623-065532-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
-            "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'.json"
           ],
           doesPictureAudioMapFileNameExist: true,
-          pictureFileNameOne: 'Barrau.jpg',
+          pictureFileNameOne: 'Jésus merveilleux.jpg',
           audioForPictureTitleOneLst: [
             "S8 audio|250623-065532-Quand Aurélien Barrau va dans une école de management 23-09-10"
           ],
           pictureFileNameTwo: 'Jésus, mon amour.jpg',
           audioForPictureTitleTwoLst: [
-            "S8 audio|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'"
+            "Les plus belles chansons chrétiennes|250320-105102-Glorious - Je n'ai que ma prière #louange 23-07-18"
           ],
         );
       });
@@ -492,6 +493,7 @@ void main() {
           tester: tester,
           doReplaceExistingPlaylists: false,
           playlistTitlesToDelete: [
+            'Les plus belles chansons chrétiennes',
             'S8 audio',
             'local',
           ],
@@ -532,7 +534,7 @@ void main() {
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 2 audio reference(s) from "$restorableZipFilePathName".\n\nRestored also 2 picture JPG file(s) in the application pictures directory.',
+              'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 2 audio reference(s) and 0 added plus 0 modified comment(s) from "$restorableZipFilePathName".\n\nRestored also 2 picture JPG file(s) in the application pictures directory.',
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );
@@ -628,6 +630,7 @@ void main() {
           tester: tester,
           doReplaceExistingPlaylists: false,
           playlistTitlesToDelete: [
+            'Les plus belles chansons chrétiennes',
             'S8 audio',
             'local',
           ],
@@ -669,7 +672,7 @@ void main() {
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              'Restored 0 playlist, 3 comment and 3 picture JSON files as well as 4 audio reference(s) and the application settings from "$restorableZipFilePathName".',
+              'Restored 0 playlist, 3 comment and 3 picture JSON files as well as 4 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".',
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );

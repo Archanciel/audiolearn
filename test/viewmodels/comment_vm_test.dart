@@ -802,7 +802,8 @@ void main() {
       validateComment(commentLst[0], addedComment);
 
       expect(updateNumberLst[0], 0); // modified comment number
-      expect(updateNumberLst[1], 1); // added comment number
+      expect(updateNumberLst[1], 0); // added comment number
+      expect(updateNumberLst[2], 1); // added comment json file number
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub

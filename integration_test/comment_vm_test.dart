@@ -19,18 +19,7 @@ void main() {
   group('CommentVM test on Android emulator', () {
     test('update audio comments on Android emulator in restore situation',
         () async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      // DirUtil.deleteFilesAndSubDirsOfDir(
-      //   rootPath: kPlaylistDownloadRootPathAndroidTest,
-      // );
-
-      // Copy the test initial audio data to the app dir
-      // DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-      //   sourceRootPath:
-      //       "$kApplicationPathAndroidTest",
-      //   destinationRootPath: kPlaylistDownloadRootPathAndroidTest,
-      // );
+      // You must execute setup_android_unit_test.bat before test run.
 
       CommentVM commentVM = CommentVM();
 
@@ -127,6 +116,7 @@ void main() {
 
       expect(updateNumberLst[0], 1); // modified comment number
       expect(updateNumberLst[1], 1); // added comment number
+      expect(updateNumberLst[2], 0); // added comment json file number
     });
   });
 }
