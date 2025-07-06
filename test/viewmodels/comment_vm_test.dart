@@ -632,7 +632,9 @@ void main() {
       DirUtil.deleteFilesAndSubDirsOfDir(
           rootPath: kPlaylistDownloadRootPathWindowsTest);
     });
-    test('update audio comments in restore situation', () async {
+    test(
+        '''update audio comments in restore situation with adding and modifying comments to audio
+          already having comments.''', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesAndSubDirsOfDir(
@@ -701,8 +703,7 @@ void main() {
               firstModifiedComment.commentStartPositionInTenthOfSeconds;
           comment.commentEndPositionInTenthOfSeconds =
               firstModifiedComment.commentEndPositionInTenthOfSeconds;
-          comment.lastUpdateDateTime =
-              firstModifiedComment.lastUpdateDateTime;
+          comment.lastUpdateDateTime = firstModifiedComment.lastUpdateDateTime;
           return comment;
         } else if (comment.id == "Test Title 2_2") {
           comment.title = secondModifiedComment.title;
@@ -742,6 +743,67 @@ void main() {
 
       expect(updateNumberLst[0], 1); // modified comment number
       expect(updateNumberLst[1], 1); // added comment number
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesAndSubDirsOfDir(
+          rootPath: kPlaylistDownloadRootPathWindowsTest);
+    });
+    test(
+        '''update audio comments in restore situation with adding comments to audio not yet having
+          comments.''', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesAndSubDirsOfDir(
+        rootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
+        destinationRootPath: kPlaylistDownloadRootPathWindowsTest,
+      );
+
+      CommentVM commentVM = CommentVM();
+
+      Audio audio = createAudio(
+        playlistTitle: 'local',
+        audioFileName:
+            "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
+      );
+
+      // Creating added comment list
+
+      Comment addedComment = Comment(
+        title: "New comment",
+        content: "New comment content",
+        commentStartPositionInTenthOfSeconds: 1000,
+        commentEndPositionInTenthOfSeconds: 2000,
+      );
+
+      // adding a new comment to the updated comment list
+      List<Comment> updatedCommentLst = [];
+      
+      updatedCommentLst.add(addedComment);
+
+      List<int> updateNumberLst = commentVM.updateAudioComments(
+        commentedAudio: audio,
+        updateCommentsLst: updatedCommentLst,
+      );
+
+      // now loading the comment list from the comment file
+
+      List<Comment> commentLst = commentVM.loadAudioComments(audio: audio);
+
+      // the returned Commentlist should have three element
+      expect(commentLst.length, 1);
+
+      validateComment(commentLst[0], addedComment);
+
+      expect(updateNumberLst[0], 0); // modified comment number
+      expect(updateNumberLst[1], 0); // added comment number
+      expect(updateNumberLst[2], 1); // added comment json file number
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub

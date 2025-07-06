@@ -662,7 +662,7 @@ class IntegrationTestUtil {
         final Finder playlistListTileTextWidgetFinder =
             find.text(playlistTitle);
 
-        // If the playlist ListTile Text widget is not found, return
+        // If the playlist ListTile Text widget is not found, continue
         if (playlistListTileTextWidgetFinder.evaluate().isEmpty) {
           continue;
         }
