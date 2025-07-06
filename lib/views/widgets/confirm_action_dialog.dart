@@ -77,7 +77,7 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
         if (event is KeyDownEvent) {
           if (event.logicalKey == LogicalKeyboardKey.enter ||
               event.logicalKey == LogicalKeyboardKey.numpadEnter) {
-            // executing the same code as in the 'Delete'
+            // executing the same code as in the 'Confirm'
             // TextButton onPressed callback
             _applyConfirm(context);
           }
