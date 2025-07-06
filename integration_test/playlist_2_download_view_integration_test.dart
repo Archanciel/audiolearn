@@ -13565,7 +13565,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 5 playlist, 5 comment and 6 picture JSON files as well as 0 audio reference(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+                  'Restored 5 playlist, 5 comment and 6 picture JSON files as well as 0 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -14098,7 +14098,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 4 playlist, 5 comment and 1 picture JSON files as well as 0 audio reference(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+                  'Restored 4 playlist, 5 comment and 1 picture JSON files as well as 0 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -14576,7 +14576,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 5 playlist, 5 comment and 1 picture JSON files as well as 0 audio reference(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+                  'Restored 5 playlist, 5 comment and 1 picture JSON files as well as 0 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -14766,7 +14766,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 4 playlist, 5 comment and 1 picture JSON files as well as 0 audio reference(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+                  'Restored 4 playlist, 5 comment and 1 picture JSON files as well as 0 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -14995,7 +14995,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 5 playlist, 5 comment and 6 picture JSON files as well as 0 audio reference(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+                  'Restored 5 playlist, 5 comment and 6 picture JSON files as well as 0 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -15534,7 +15534,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 4 playlist, 5 comment and 1 picture JSON files as well as 0 audio reference(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+                  'Restored 4 playlist, 5 comment and 1 picture JSON files as well as 0 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -16020,7 +16020,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 5 playlist, 5 comment and 1 picture JSON files as well as 0 audio reference(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+                  'Restored 5 playlist, 5 comment and 1 picture JSON files as well as 0 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -16206,7 +16206,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 4 playlist, 5 comment and 1 picture JSON files as well as 0 audio reference(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+                  'Restored 4 playlist, 5 comment and 1 picture JSON files as well as 0 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -16296,7 +16296,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 2 audio reference(s) from "$restorableZipFilePathName".\n\nRestored also 2 picture JPG file(s) in the application pictures directory.',
+                'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 2 audio reference(s) and 0 added plus 0 modified comment(s) from "$restorableZipFilePathName".\n\nRestored also 2 picture JPG file(s) in the application pictures directory.',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -16425,7 +16425,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 0 playlist, 3 comment and 3 picture JSON files as well as 4 audio reference(s) and the application settings from "$restorableZipFilePathName".',
+                'Restored 0 playlist, 3 comment and 3 picture JSON files as well as 4 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -16606,7 +16606,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 audio reference(s) and the application settings from "$restorableZipFilePathName".',
+                'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -16769,7 +16769,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 audio reference(s) and the application settings from "$restorableZipFilePathName".',
+                'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -16932,7 +16932,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 2 playlist, 1 comment and 1 picture JSON files as well as 0 audio reference(s) and the application settings from "$restorableZipFilePathName".',
+                'Restored 2 playlist, 1 comment and 1 picture JSON files as well as 0 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -17107,7 +17107,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 2 playlist, 1 comment and 1 picture JSON files as well as 0 audio reference(s) and the application settings from "$restorableZipFilePathName".',
+                'Restored 2 playlist, 1 comment and 1 picture JSON files as well as 0 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -17290,7 +17290,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 audio reference(s) and the application settings from "$firstRestorableZipFilePathName".',
+                'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$firstRestorableZipFilePathName".',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -17326,7 +17326,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 2 playlist, 5 comment and 4 picture JSON files as well as 0 audio reference(s) and the application settings from "$secondRestorableZipFilePathName".',
+                'Restored 2 playlist, 5 comment and 4 picture JSON files as well as 0 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$secondRestorableZipFilePathName".',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -17569,7 +17569,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 audio reference(s) and the application settings from "$firstRestorableZipFilePathName".',
+                'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$firstRestorableZipFilePathName".',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -17605,7 +17605,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 2 playlist, 5 comment and 4 picture JSON files as well as 0 audio reference(s) and the application settings from "$secondRestorableZipFilePathName".',
+                'Restored 2 playlist, 5 comment and 4 picture JSON files as well as 0 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$secondRestorableZipFilePathName".',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -20528,7 +20528,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 audio reference(s) and the application settings from "$restorableZipFilePathName".',
+                  'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -20743,7 +20743,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 audio reference(s) and the application settings from "$restorableZipFilePathName".',
+                  'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -20926,7 +20926,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 3 playlist, 7 comment and 7 picture JSON files as well as 0 audio reference(s) and the application settings from "$restorableZipFilePathName".',
+                  'Restored 3 playlist, 7 comment and 7 picture JSON files as well as 0 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -21121,7 +21121,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 3 playlist, 7 comment and 7 picture JSON files as well as 0 audio reference(s) and the application settings from "$restorableZipFilePathName".',
+                  'Restored 3 playlist, 7 comment and 7 picture JSON files as well as 0 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -21407,7 +21407,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 0 playlist, 3 comment and 3 picture JSON files as well as 4 audio reference(s) and the application settings from "$restorableZipFilePathName".',
+                'Restored 0 playlist, 3 comment and 3 picture JSON files as well as 4 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
