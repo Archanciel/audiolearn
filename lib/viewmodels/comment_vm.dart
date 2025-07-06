@@ -246,7 +246,7 @@ class CommentVM extends ChangeNotifier {
     int addedCommentNumber = 0;
 
     // This variable is incremented if a comment is added to an
-    // audio which does not have a comment file yet.
+    // audio which does not yet have a comment file.
     int addedCommentJsonFileNumber = 0;
 
     List<Comment> existingCommentsLst = loadAudioComments(
