@@ -40,6 +40,9 @@ class SetValueToTargetDialog extends StatefulWidget {
   final List<dynamic>
       validationFunctionArgs; // Arguments for the validation function
   final bool canUniqueCheckBoxBeUnchecked;
+  final bool isValueStringUsed; // Indicates if the passed value field is used.
+  //                               Is used to determine if clicking on Enter
+  //                               should close the dialog or not.
 
   /// If the [passedValueFieldLabel] and the [passedValueStr] are not passed and so
   /// remains both empty, the dialog will not display the passed value field.
@@ -55,7 +58,7 @@ class SetValueToTargetDialog extends StatefulWidget {
   /// If [helpItemsLst] is passed to the dialog constructor, a help icon is
   /// displayed in the dialog title. Clicking on the help icon opens a dialog
   /// witch displays the help content contained in the help items.
-  const SetValueToTargetDialog({
+  SetValueToTargetDialog({
     super.key,
     required this.dialogTitle,
     required this.dialogCommentStr,
@@ -70,7 +73,8 @@ class SetValueToTargetDialog extends StatefulWidget {
     this.isPassedValueEditable = true,
     this.canUniqueCheckBoxBeUnchecked = false,
     this.helpItemsLst = const [],
-  });
+  }) : isValueStringUsed =
+            passedValueFieldLabel.isNotEmpty && passedValueStr.isNotEmpty;
 
   @override
   State<SetValueToTargetDialog> createState() => _SetValueToTargetDialogState();
@@ -98,7 +102,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _passedValueTextEditingController.text = widget.passedValueStr;
-      
+
       // Ensure focus after dialog is fully built
       if (widget.passedValueFieldLabel.isNotEmpty &&
           widget.passedValueStr.isNotEmpty) {
@@ -121,10 +125,17 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
     final ThemeProviderVM themeProviderVM =
         Provider.of<ThemeProviderVM>(context); // by default, listen is true
 
-    // Immediate focus request during build
-    FocusScope.of(context).requestFocus(
-      _focusNodePassedValueTextField,
-    );
+    if (widget.isValueStringUsed) {
+      // Immediate focus request during build
+      FocusScope.of(context).requestFocus(
+        _focusNodePassedValueTextField,
+      );
+    } else {
+      // Required so that clicking on Enter closes the dialog
+      FocusScope.of(context).requestFocus(
+        _focusNodeDialog,
+      );
+    }
 
     return KeyboardListener(
       focusNode: _focusNodeDialog,
