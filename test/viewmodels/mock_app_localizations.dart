@@ -2011,7 +2011,5 @@ class MockAppLocalizations extends AppLocalizations {
   String get restoredElementsHelpTitle => "Restored elements description";
 
   @override
-  String get restoredElementsHelpContent => "n playlist: number of restored playlist JSON files.
-
-n comment: number of restored comment JSON files.";
+  String get restoredElementsHelpContent => "n playlist: number of restored playlist JSON files. comment: number of restored comment JSON files.";
 }
