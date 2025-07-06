@@ -3486,13 +3486,16 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     restoredInfoLst.add(restoredPlaylistTitlesLst);
-    restoredInfoLst.add(restoredCommentsJsonNumber + restoredNumberLst[1]); // adding number
-    //                                                       of restored comments json files
-    restoredInfoLst.add(restoredPicturesJsonNumber + restoredNumberLst[2]); // adding number
-    //                                                       of restored pictures json files
+    restoredInfoLst.add(
+        restoredCommentsJsonNumber + restoredNumberLst[1]); // adding number
+    //                                       of restored comments json files
+    restoredInfoLst.add(
+        restoredPicturesJsonNumber + restoredNumberLst[2]); // adding number
+    //                                       of restored pictures json files
     restoredInfoLst.add(restoredPicturesJpgNumber);
     restoredInfoLst.add(wasIndividualPlaylistRestored);
-    restoredInfoLst.add(restoredNumberLst[0]); // restored audio references number
+    restoredInfoLst
+        .add(restoredNumberLst[0]); // restored audio references number
     restoredInfoLst.add(restoredNumberLst[3]); // updated comment number
     restoredInfoLst.add(restoredNumberLst[4]); // added comment number
 
@@ -3664,6 +3667,9 @@ class PlaylistListVM extends ChangeNotifier {
         String audioCommentFileName =
             zipAudio.audioFileName.replaceAll('.mp3', '.json');
         String zipAudioCommentFilePath = path.join(
+          zipPlaylist.title, // Use the zip playlist title as the root directory
+          // for the audio comment file. This avoid a bug caused if two different
+          // playlists have the same audio file name.
           kCommentDirName,
           audioCommentFileName,
         );
