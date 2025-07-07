@@ -1678,47 +1678,44 @@ class IntegrationTestUtil {
       final Finder commentInkWellButtonFinder = find.byKey(
         const Key('commentsInkWellButton'),
       );
-
       await tester.tap(commentInkWellButtonFinder);
       await tester.pumpAndSettle();
     }
 
-    // Find the comment list add dialog widget
-    final Finder commentListDialogFinder = find.byType(CommentListAddDialog);
+    // **UPDATED**: Find the dialog using the ListBody key directly
+    // This approach works regardless of the dialog wrapper structure
+    final Finder listFinder = find.byKey(const Key('audioCommentsListKey'));
 
-    // Find the list body containing the comments
-    final Finder listFinder = find.descendant(
-        of: commentListDialogFinder, matching: find.byType(ListBody));
+    // Verify the list exists
+    if (listFinder.evaluate().isEmpty) {
+      throw Exception('Comment list not found. Make sure the dialog is open.');
+    }
 
-    // Find all the list items
-    final Finder itemsFinder = find.descendant(
-        // 3 GestureDetector per comment item
-        of: listFinder,
-        matching: find.byType(GestureDetector));
+    // **UPDATED**: Find all play/pause buttons directly using their key
+    final Finder playPauseButtonsFinder =
+        find.byKey(const Key('playPauseIconButton'));
 
-    int gestureDectectorNumberByCommentLine = 3;
+    // Verify we have enough comments
+    final int totalPlayPauseButtons = playPauseButtonsFinder.evaluate().length;
+    if (totalPlayPauseButtons < commentPosition) {
+      throw Exception(
+        'Comment position $commentPosition requested but only $totalPlayPauseButtons comments found',
+      );
+    }
 
-    // Since there are 3 GestureDetector per comment item, we need to
-    // multiply the comment line position by 3 to get the right index
-    int itemFinderIndex =
-        (commentPosition - 1) * gestureDectectorNumberByCommentLine;
+    // Get the specific play/pause button for the requested comment position
+    final Finder targetPlayIconButtonFinder =
+        playPauseButtonsFinder.at(commentPosition - 1);
 
-    final Finder playIconButtonFinder = find.descendant(
-      of: itemsFinder.at(itemFinderIndex),
-      matching: find.byKey(const Key('playPauseIconButton')),
-    );
-
-    // Tap on the play/pause icon button to play the audio from the
-    // comment
-    await tester.tap(playIconButtonFinder);
+    // Tap on the play/pause icon button to play the audio from the comment
+    await tester.tap(targetPlayIconButtonFinder);
     await tester.pumpAndSettle();
-
     await Future.delayed(const Duration(milliseconds: 500));
     await tester.pumpAndSettle();
 
     if (mustAudioBePaused) {
       // Tap on the play/pause icon button to pause the audio
-      await tester.tap(playIconButtonFinder);
+      await tester.tap(targetPlayIconButtonFinder);
       await tester.pumpAndSettle();
     }
   }

@@ -279,6 +279,10 @@ class _AutoRefreshCommentDialogState extends State<AutoRefreshCommentDialog> {
   late Audio _currentAudio;
   StreamSubscription? _audioChangeSubscription;
 
+  // **NEW**: Store provider references to avoid accessing them during disposal
+  AudioPlayerVM? _audioPlayerVM;
+  CommentVM? _commentVM;
+
   @override
   void initState() {
     super.initState();
@@ -286,31 +290,46 @@ class _AutoRefreshCommentDialogState extends State<AutoRefreshCommentDialog> {
     _setupAudioChangeListener();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // **NEW**: Store provider references safely during didChangeDependencies
+    _audioPlayerVM = Provider.of<AudioPlayerVM>(context, listen: false);
+    _commentVM = Provider.of<CommentVM>(context, listen: false);
+  }
+
   /// **NEW**: Sets up listener for automatic audio changes
   void _setupAudioChangeListener() {
-    final AudioPlayerVM audioPlayerVM = Provider.of<AudioPlayerVM>(
-      context,
-      listen: false,
-    );
-    final CommentVM commentVM = Provider.of<CommentVM>(
-      context,
-      listen: false,
-    );
+    // Use a post-frame callback to ensure providers are available
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        final AudioPlayerVM audioPlayerVM = Provider.of<AudioPlayerVM>(
+          context,
+          listen: false,
+        );
+        final CommentVM commentVM = Provider.of<CommentVM>(
+          context,
+          listen: false,
+        );
 
-    // Listen for audio changes from AudioPlayerVM
-    audioPlayerVM.currentAudioChangedNotifier.addListener(_onAudioChanged);
+        // Store references for later cleanup
+        _audioPlayerVM = audioPlayerVM;
+        _commentVM = commentVM;
 
-    // Also listen for refresh notifications from CommentVM
-    commentVM.commentDialogRefreshNotifier.addListener(_onRefreshRequested);
+        // Listen for audio changes from AudioPlayerVM
+        audioPlayerVM.currentAudioChangedNotifier.addListener(_onAudioChanged);
+
+        // Also listen for refresh notifications from CommentVM
+        commentVM.commentDialogRefreshNotifier.addListener(_onRefreshRequested);
+      }
+    });
   }
 
   void _onAudioChanged() {
-    final AudioPlayerVM audioPlayerVM = Provider.of<AudioPlayerVM>(
-      context,
-      listen: false,
-    );
+    // **NEW**: Check if widget is still mounted and we have valid references
+    if (!mounted || _audioPlayerVM == null) return;
 
-    final Audio? newAudio = audioPlayerVM.currentAudioChangedNotifier.value;
+    final Audio? newAudio = _audioPlayerVM!.currentAudioChangedNotifier.value;
     if (newAudio != null && newAudio != _currentAudio && mounted) {
       setState(() {
         _currentAudio = newAudio;
@@ -319,12 +338,10 @@ class _AutoRefreshCommentDialogState extends State<AutoRefreshCommentDialog> {
   }
 
   void _onRefreshRequested() {
-    final CommentVM commentVM = Provider.of<CommentVM>(
-      context,
-      listen: false,
-    );
+    // **NEW**: Check if widget is still mounted and we have valid references
+    if (!mounted || _commentVM == null) return;
 
-    final Audio? newAudio = commentVM.commentDialogRefreshNotifier.value;
+    final Audio? newAudio = _commentVM!.commentDialogRefreshNotifier.value;
     if (newAudio != null && newAudio != _currentAudio && mounted) {
       setState(() {
         _currentAudio = newAudio;
@@ -334,18 +351,17 @@ class _AutoRefreshCommentDialogState extends State<AutoRefreshCommentDialog> {
 
   @override
   void dispose() {
-    // Clean up listeners
-    final AudioPlayerVM audioPlayerVM = Provider.of<AudioPlayerVM>(
-      context,
-      listen: false,
-    );
-    final CommentVM commentVM = Provider.of<CommentVM>(
-      context,
-      listen: false,
-    );
+    // **NEW**: Use stored references instead of Provider.of() during disposal
+    // Clean up listeners using stored references
+    if (_audioPlayerVM != null) {
+      _audioPlayerVM!.currentAudioChangedNotifier
+          .removeListener(_onAudioChanged);
+    }
 
-    audioPlayerVM.currentAudioChangedNotifier.removeListener(_onAudioChanged);
-    commentVM.commentDialogRefreshNotifier.removeListener(_onRefreshRequested);
+    if (_commentVM != null) {
+      _commentVM!.commentDialogRefreshNotifier
+          .removeListener(_onRefreshRequested);
+    }
 
     _audioChangeSubscription?.cancel();
     super.dispose();
