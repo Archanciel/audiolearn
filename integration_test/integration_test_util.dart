@@ -2183,7 +2183,7 @@ class IntegrationTestUtil {
         child: Consumer2<ThemeProviderVM, LanguageProviderVM>(
           builder: (context, themeProvider, languageProvider, child) {
             return MaterialApp(
-              title: 'AudioLearn',
+              title: 'Audio Learn',
               locale: (forcedLocale == null)
                   ? languageProvider.currentLocale
                   : forcedLocale,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
+import '../../constants.dart';
 import '../../l10n/app_localizations.dart';
 import '../../services/settings_data_service.dart';
 import '../../viewmodels/language_provider_vm.dart';
@@ -96,7 +97,7 @@ class AppBarRightPopupMenu extends StatelessWidget {
               builder: (BuildContext context) {
                 bool isDarkTheme = themeProvider.currentTheme == AppTheme.dark;
                 AboutDialog aboutDialog = AboutDialog(
-                  applicationName: packageInfo.appName, // ✅ Use app name from pubspec.yaml
+                  applicationName: kApplicationName,
                   applicationVersion: packageInfo.version, // ✅ Using version from pubspec.yam
                   applicationIcon:
                       Image.asset('assets/images/ic_launcher_cleaner_72.png'),
