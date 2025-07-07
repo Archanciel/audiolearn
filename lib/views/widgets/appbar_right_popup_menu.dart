@@ -1,10 +1,10 @@
 import 'package:audiolearn/views/widgets/date_format_selection_dialog.dart';
 import 'package:audiolearn/views/widgets/help_main_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
-import '../../l10n/app_localizations.dart';
 
-import '../../constants.dart';
+import '../../l10n/app_localizations.dart';
 import '../../services/settings_data_service.dart';
 import '../../viewmodels/language_provider_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
@@ -35,7 +35,7 @@ class AppBarRightPopupMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopupMenuButton<AppBarPopupMenu>(
       key: const Key('appBarRightPopupMenu'),
-      onSelected: (AppBarPopupMenu value) {
+      onSelected: (AppBarPopupMenu value) async {
         switch (value) {
           case AppBarPopupMenu.en:
             Locale newLocale = const Locale('en');
@@ -88,13 +88,16 @@ class AppBarRightPopupMenu extends StatelessWidget {
             );
             break;
           case AppBarPopupMenu.about:
+            // Get package info asynchronously
+            PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
             showDialog<void>(
               context: context,
               builder: (BuildContext context) {
                 bool isDarkTheme = themeProvider.currentTheme == AppTheme.dark;
                 AboutDialog aboutDialog = AboutDialog(
-                  applicationName: kApplicationName,
-                  applicationVersion: kApplicationVersion,
+                  applicationName: packageInfo.appName, // ✅ Use app name from pubspec.yaml
+                  applicationVersion: packageInfo.version, // ✅ Using version from pubspec.yam
                   applicationIcon:
                       Image.asset('assets/images/ic_launcher_cleaner_72.png'),
                   children: <Widget>[
