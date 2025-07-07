@@ -157,11 +157,6 @@ class AudioPlayerVM extends ChangeNotifier {
   Timer? _commentEndTimer;
   int _commentEndPositionInTenthOfSeconds = -1;
 
-  // **NEW**: Notifier for when audio changes automatically to next audio
-  // This will be used to notify the comment dialog to refresh for the new audio
-  final ValueNotifier<Audio?> currentAudioChangedNotifier =
-      ValueNotifier<Audio?>(null);
-
   AudioPlayerVM({
     required SettingsDataService settingsDataService,
     required PlaylistListVM playlistListVM,
