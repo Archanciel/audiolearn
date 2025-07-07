@@ -152,6 +152,11 @@ class AudioPlayerVM extends ChangeNotifier {
   Timer? _commentEndTimer;
   int _commentEndPositionInTenthOfSeconds = -1;
 
+  // **NEW**: Notifier for when audio changes automatically to next audio
+  // This will be used to notify the comment dialog to refresh for the new audio
+  final ValueNotifier<Audio?> currentAudioChangedNotifier =
+      ValueNotifier<Audio?>(null);
+
   AudioPlayerVM({
     required SettingsDataService settingsDataService,
     required PlaylistListVM playlistListVM,
@@ -171,6 +176,15 @@ class AudioPlayerVM extends ChangeNotifier {
     _positionSubscription?.cancel();
     _playerCompleteSubscription?.cancel();
     _playerStateChangeSubscription?.cancel();
+
+    currentAudioPositionNotifier.dispose();
+    currentAudioPlayPauseNotifier.dispose();
+    currentAudioTitleNotifier.dispose();
+    currentAudioPlaySpeedNotifier.dispose();
+    currentAudioPlayVolumeNotifier.dispose();
+
+    // **NEW**: Dispose the new notifier
+    currentAudioChangedNotifier.dispose();
 
     super.dispose();
   }
@@ -258,6 +272,10 @@ class AudioPlayerVM extends ChangeNotifier {
 
     currentAudioTitleNotifier.value = getCurrentAudioTitleWithDuration();
     currentAudioPositionNotifier.value = _currentAudioPosition;
+
+    // **NEW**: Notify that the current audio has changed
+    // This will trigger listeners (like the comment dialog) to update
+    currentAudioChangedNotifier.value = audio;
   }
 
   /// Method called when the user in the PlaylistDownloadView clicks

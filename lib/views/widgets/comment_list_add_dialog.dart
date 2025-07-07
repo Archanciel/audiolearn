@@ -35,6 +35,9 @@ class CommentDialogManager {
   // dialog overlay is currently displayed.
   static OverlayEntry? _currentOverlay;
 
+  // **NEW**: Callback to notify when overlay is closed
+  static VoidCallback? _onOverlayClosed;
+
   /// Closes and removes the currently active overlay if one exists.
   ///
   /// This method safely removes any active overlay from the widget tree and
@@ -50,6 +53,12 @@ class CommentDialogManager {
     if (_currentOverlay != null) {
       _currentOverlay!.remove();
       _currentOverlay = null;
+      
+      // **NEW**: Notify that overlay was closed
+      if (_onOverlayClosed != null) {
+        _onOverlayClosed!();
+        _onOverlayClosed = null;
+      }
     }
   }
 
@@ -63,19 +72,23 @@ class CommentDialogManager {
   ///
   /// Parameters:
   ///   * [entry] - The new OverlayEntry to be set as the current overlay.
+  ///   * [onClosed] - **NEW**: Optional callback to be called when overlay is closed.
   ///
   /// Usage example:
   /// ```dart
   /// final overlayEntry = OverlayEntry(
   ///   builder: (context) => CommentDialog(...),
   /// );
-  /// CommentDialogManager.setCurrentOverlay(overlayEntry);
+  /// CommentDialogManager.setCurrentOverlay(overlayEntry, onClosed: () {
+  ///   print('Overlay was closed');
+  /// });
   /// overlayState.insert(overlayEntry);
   /// ```
-  static void setCurrentOverlay(OverlayEntry entry) {
+  static void setCurrentOverlay(OverlayEntry entry, {VoidCallback? onClosed}) {
     // Close any previous overlay before opening a new one
     closeCurrentOverlay();
     _currentOverlay = entry;
+    _onOverlayClosed = onClosed;
   }
 
   // Indicates whether there is currently an active overlay.
@@ -189,9 +202,11 @@ class CommentListAddDialog extends StatefulWidget {
   State<CommentListAddDialog> createState() => _CommentListAddDialogState();
 
   /// Method to display the dialog without darkening the screen when minimized
+  /// **ENHANCED**: Now supports auto-refresh when audio changes and callback when closed
   static void showCommentDialog({
     required BuildContext context,
     required Audio currentAudio,
+    VoidCallback? onClosed, // **NEW**: Optional callback when dialog is closed
   }) {
     OverlayState? overlayState = Overlay.of(context);
 
@@ -214,24 +229,12 @@ class CommentListAddDialog extends StatefulWidget {
                 child: Container(color: Colors.transparent),
               ),
             ),
-            // The dialog widget itself
+            // **NEW**: Auto-refreshing dialog widget
             Center(
               child: Builder(builder: (context) {
-                final dialogWidget = CommentListAddDialog(
-                  currentAudio: currentAudio,
+                return AutoRefreshCommentDialog(
+                  initialAudio: currentAudio,
                 );
-
-                // Schedule focus assignment after frame rendering
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  // Ensure that the FocusNode in CommentListAddDialog is properly focused
-                  final state = context
-                      .findAncestorStateOfType<_CommentListAddDialogState>();
-                  if (state != null) {
-                    FocusScope.of(context).requestFocus(state._focusNodeDialog);
-                  }
-                });
-
-                return dialogWidget;
               }),
             ),
           ],
@@ -239,15 +242,134 @@ class CommentListAddDialog extends StatefulWidget {
       ),
     );
 
-    // Register in our global manager
-    CommentDialogManager.setCurrentOverlay(overlayEntry);
+    // Register in our global manager with callback
+    CommentDialogManager.setCurrentOverlay(overlayEntry, onClosed: onClosed);
 
     // Insert into the overlay
     overlayState.insert(overlayEntry);
   }
 }
 
-class _CommentListAddDialogState extends State<CommentListAddDialog>
+/// **NEW**: Simple state class for CommentListAddDialog that just delegates to the auto-refresh content
+class _CommentListAddDialogState extends State<CommentListAddDialog> {
+  @override
+  Widget build(BuildContext context) {
+    // This is just a simple wrapper that displays the current audio content
+    // The actual auto-refresh logic is handled in AutoRefreshCommentDialog
+    return _CommentListAddDialogContent(currentAudio: widget.currentAudio);
+  }
+}
+
+/// **NEW**: Auto-refreshing wrapper for CommentListAddDialog
+/// This widget listens for audio changes and automatically updates the dialog content
+class AutoRefreshCommentDialog extends StatefulWidget {
+  final Audio initialAudio;
+
+  const AutoRefreshCommentDialog({
+    super.key,
+    required this.initialAudio,
+  });
+
+  @override
+  State<AutoRefreshCommentDialog> createState() => _AutoRefreshCommentDialogState();
+}
+
+class _AutoRefreshCommentDialogState extends State<AutoRefreshCommentDialog> {
+  late Audio _currentAudio;
+  StreamSubscription? _audioChangeSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentAudio = widget.initialAudio;
+    _setupAudioChangeListener();
+  }
+
+  /// **NEW**: Sets up listener for automatic audio changes
+  void _setupAudioChangeListener() {
+    final AudioPlayerVM audioPlayerVM = Provider.of<AudioPlayerVM>(
+      context,
+      listen: false,
+    );
+    final CommentVM commentVM = Provider.of<CommentVM>(
+      context,
+      listen: false,
+    );
+
+    // Listen for audio changes from AudioPlayerVM
+    audioPlayerVM.currentAudioChangedNotifier.addListener(_onAudioChanged);
+    
+    // Also listen for refresh notifications from CommentVM
+    commentVM.commentDialogRefreshNotifier.addListener(_onRefreshRequested);
+  }
+
+  void _onAudioChanged() {
+    final AudioPlayerVM audioPlayerVM = Provider.of<AudioPlayerVM>(
+      context,
+      listen: false,
+    );
+    
+    final Audio? newAudio = audioPlayerVM.currentAudioChangedNotifier.value;
+    if (newAudio != null && newAudio != _currentAudio && mounted) {
+      setState(() {
+        _currentAudio = newAudio;
+      });
+    }
+  }
+
+  void _onRefreshRequested() {
+    final CommentVM commentVM = Provider.of<CommentVM>(
+      context,
+      listen: false,
+    );
+    
+    final Audio? newAudio = commentVM.commentDialogRefreshNotifier.value;
+    if (newAudio != null && newAudio != _currentAudio && mounted) {
+      setState(() {
+        _currentAudio = newAudio;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    // Clean up listeners
+    final AudioPlayerVM audioPlayerVM = Provider.of<AudioPlayerVM>(
+      context,
+      listen: false,
+    );
+    final CommentVM commentVM = Provider.of<CommentVM>(
+      context,
+      listen: false,
+    );
+    
+    audioPlayerVM.currentAudioChangedNotifier.removeListener(_onAudioChanged);
+    commentVM.commentDialogRefreshNotifier.removeListener(_onRefreshRequested);
+    
+    _audioChangeSubscription?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Build the actual dialog content with the current audio
+    return _CommentListAddDialogContent(currentAudio: _currentAudio);
+  }
+}
+
+/// **NEW**: Extracted dialog content as a separate widget for better organization
+class _CommentListAddDialogContent extends StatefulWidget {
+  final Audio currentAudio;
+
+  const _CommentListAddDialogContent({
+    required this.currentAudio,
+  });
+
+  @override
+  State<_CommentListAddDialogContent> createState() => _CommentListAddDialogContentState();
+}
+
+class _CommentListAddDialogContentState extends State<_CommentListAddDialogContent>
     with ScreenMixin {
   final FocusNode _focusNodeDialog = FocusNode();
   Comment? _playingComment;
@@ -266,6 +388,16 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
     super.initState();
     // Set up position monitoring when the widget is created
     _setupPositionMonitoring();
+  }
+
+  @override
+  void didUpdateWidget(_CommentListAddDialogContent oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // **NEW**: Reset playing comment when audio changes
+    if (oldWidget.currentAudio != widget.currentAudio) {
+      _playingComment = null;
+      _setupPositionMonitoring(); // Re-setup monitoring for new audio
+    }
   }
 
   void _setupPositionMonitoring() {
@@ -415,9 +547,24 @@ class _CommentListAddDialogState extends State<CommentListAddDialog>
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 alignment: Alignment.centerLeft,
-                child: Text(
-                  AppLocalizations.of(context)!.commentsDialogTitle,
-                  style: Theme.of(context).textTheme.titleLarge,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.commentsDialogTitle,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    // **NEW**: Show current audio title to indicate auto-refresh
+                    Text(
+                      currentAudio.validVideoTitle,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Colors.grey,
+                        fontSize: 12,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
                 ),
               ),
             ),

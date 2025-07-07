@@ -53,7 +53,27 @@ class CommentVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  // **NEW**: Notifier to signal when the comment dialog should refresh
+  // for a new audio. This will be used by comment dialogs to listen
+  // for audio changes and automatically refresh their content.
+  final ValueNotifier<Audio?> commentDialogRefreshNotifier =
+      ValueNotifier<Audio?>(null);
+
   CommentVM();
+
+  @override
+  void dispose() {
+    // **NEW**: Dispose the new notifier
+    commentDialogRefreshNotifier.dispose();
+    super.dispose();
+  }
+
+  /// **NEW**: Method to notify comment dialogs that they should refresh
+  /// for a new audio. This is called when the audio automatically changes
+  /// to the next audio.
+  void notifyCommentDialogToRefresh(Audio newAudio) {
+    commentDialogRefreshNotifier.value = newAudio;
+  }
 
   /// If the comment file exists, the list of comments it contains is
   /// returned, else, an empty list is returned.
