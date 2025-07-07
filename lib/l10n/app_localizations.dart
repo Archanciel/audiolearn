@@ -1106,7 +1106,7 @@ abstract class AppLocalizations {
   /// No description provided for @aboutAppDescription.
   ///
   /// In en, this message translates to:
-  /// **'AudioLearn allows you to download audio from videos included in Youtube playlists whose links are added to the application, or from individual Youtube videos using their URL\'s.\n\nYou can also import audio files, such as audiobooks, directly into the application.\n\nIn addition to listening the audio files, AudioLearn offers the ability to add timestamped comments to each file, making it easier to replay their most interesting parts.\n\nFinally, the app allows you to sort and filter audio files based on various criteria.\n\nIn the next version, you will be able to extract commented audio segments to share them via email or WhatsApp, or combine them to create a new summarized audio file.'**
+  /// **'Audio Learn allows you to download audio from videos included in Youtube playlists whose links are added to the application, or from individual Youtube videos using their URL\'s.\n\nYou can also import audio files, such as audiobooks, directly into the application.\n\nIn addition to listening the audio files, Audio Learn offers the ability to add timestamped comments to each file, making it easier to replay their most interesting parts.\n\nFinally, the app allows you to sort and filter audio files based on various criteria.\n\nIn the next version, you will be able to extract commented audio segments to share them via email or WhatsApp, or combine them to create a new summarized audio file.'**
   String get aboutAppDescription;
 
   /// No description provided for @keepAudioEntryInSourcePlaylist.

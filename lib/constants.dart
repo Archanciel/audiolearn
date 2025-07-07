@@ -30,6 +30,8 @@ enum AudioPopupMenuAction {
   redownloadDeletedAudio,
 }
 
+const String kApplicationName = "Audio Learn";
+
 // Used for Android app version
 const String kApplicationPath = "/storage/emulated/0/Documents/audiolearn";
 const String kPlaylistDownloadRootPath =
