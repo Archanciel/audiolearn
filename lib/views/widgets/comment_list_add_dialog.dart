@@ -53,7 +53,7 @@ class CommentDialogManager {
     if (_currentOverlay != null) {
       _currentOverlay!.remove();
       _currentOverlay = null;
-      
+
       // **NEW**: Notify that overlay was closed
       if (_onOverlayClosed != null) {
         _onOverlayClosed!();
@@ -271,7 +271,8 @@ class AutoRefreshCommentDialog extends StatefulWidget {
   });
 
   @override
-  State<AutoRefreshCommentDialog> createState() => _AutoRefreshCommentDialogState();
+  State<AutoRefreshCommentDialog> createState() =>
+      _AutoRefreshCommentDialogState();
 }
 
 class _AutoRefreshCommentDialogState extends State<AutoRefreshCommentDialog> {
@@ -298,7 +299,7 @@ class _AutoRefreshCommentDialogState extends State<AutoRefreshCommentDialog> {
 
     // Listen for audio changes from AudioPlayerVM
     audioPlayerVM.currentAudioChangedNotifier.addListener(_onAudioChanged);
-    
+
     // Also listen for refresh notifications from CommentVM
     commentVM.commentDialogRefreshNotifier.addListener(_onRefreshRequested);
   }
@@ -308,7 +309,7 @@ class _AutoRefreshCommentDialogState extends State<AutoRefreshCommentDialog> {
       context,
       listen: false,
     );
-    
+
     final Audio? newAudio = audioPlayerVM.currentAudioChangedNotifier.value;
     if (newAudio != null && newAudio != _currentAudio && mounted) {
       setState(() {
@@ -322,7 +323,7 @@ class _AutoRefreshCommentDialogState extends State<AutoRefreshCommentDialog> {
       context,
       listen: false,
     );
-    
+
     final Audio? newAudio = commentVM.commentDialogRefreshNotifier.value;
     if (newAudio != null && newAudio != _currentAudio && mounted) {
       setState(() {
@@ -342,10 +343,10 @@ class _AutoRefreshCommentDialogState extends State<AutoRefreshCommentDialog> {
       context,
       listen: false,
     );
-    
+
     audioPlayerVM.currentAudioChangedNotifier.removeListener(_onAudioChanged);
     commentVM.commentDialogRefreshNotifier.removeListener(_onRefreshRequested);
-    
+
     _audioChangeSubscription?.cancel();
     super.dispose();
   }
@@ -366,11 +367,12 @@ class _CommentListAddDialogContent extends StatefulWidget {
   });
 
   @override
-  State<_CommentListAddDialogContent> createState() => _CommentListAddDialogContentState();
+  State<_CommentListAddDialogContent> createState() =>
+      _CommentListAddDialogContentState();
 }
 
-class _CommentListAddDialogContentState extends State<_CommentListAddDialogContent>
-    with ScreenMixin {
+class _CommentListAddDialogContentState
+    extends State<_CommentListAddDialogContent> with ScreenMixin {
   final FocusNode _focusNodeDialog = FocusNode();
   Comment? _playingComment;
 
@@ -547,24 +549,9 @@ class _CommentListAddDialogContentState extends State<_CommentListAddDialogConte
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 alignment: Alignment.centerLeft,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.commentsDialogTitle,
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    // **NEW**: Show current audio title to indicate auto-refresh
-                    Text(
-                      currentAudio.validVideoTitle,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Colors.grey,
-                        fontSize: 12,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
+                child: Text(
+                  AppLocalizations.of(context)!.commentsDialogTitle,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
             ),
@@ -1172,7 +1159,8 @@ class _CommentListAddDialogContentState extends State<_CommentListAddDialogConte
 
     await audioPlayerVMlistenFalse.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
-      commentEndPositionInTenthOfSeconds: comment.commentEndPositionInTenthOfSeconds,
+      commentEndPositionInTenthOfSeconds:
+          comment.commentEndPositionInTenthOfSeconds,
     );
   }
 
