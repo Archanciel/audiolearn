@@ -449,10 +449,6 @@ void main() {
           doesPictureAudioMapFileNameExist: true,
           pictureFileNameOne: 'Jésus merveilleux.jpg',
           audioForPictureTitleOneLst: [
-            "S8 audio|250623-065532-Quand Aurélien Barrau va dans une école de management 23-09-10"
-          ],
-          pictureFileNameTwo: 'Jésus, mon amour.jpg',
-          audioForPictureTitleTwoLst: [
             "Les plus belles chansons chrétiennes|250320-105102-Glorious - Je n'ai que ma prière #louange 23-07-18"
           ],
         );
