@@ -56,6 +56,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
 
   final ScrollController _playlistScrollController = ScrollController();
 
+  // **NEW**: Add a variable to track if comment dialog is currently open
+  bool _isCommentDialogOpen = false;
+
   // final bool _wasSortFilterAudioSettingsApplied = false;
 
   @override
@@ -78,6 +81,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
         // When the audio player view is displayed, playlist list is
         // collapsed
         playlistListVM.isPlaylistListExpanded = false;
+
+        // **NEW**: Setup audio change listener for comment dialog refresh
+        _setupAudioChangeListener();
       }
     });
 
@@ -91,6 +97,33 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     _playlistScrollController.dispose();
 
     super.dispose();
+  }
+
+  /// **NEW**: Sets up a listener to detect when the current audio changes
+  /// automatically (when one audio finishes and the next starts playing).
+  /// When this happens and a comment dialog is open, it will refresh the
+  /// dialog to show comments for the new audio.
+  void _setupAudioChangeListener() {
+    final AudioPlayerVM audioPlayerVM = Provider.of<AudioPlayerVM>(
+      context,
+      listen: false,
+    );
+    final CommentVM commentVM = Provider.of<CommentVM>(
+      context,
+      listen: false,
+    );
+
+    // Listen for automatic audio changes (like when audio finishes and next starts)
+    audioPlayerVM.currentAudioChangedNotifier.addListener(() {
+      // Only refresh comment dialog if it's currently open
+      if (_isCommentDialogOpen && mounted) {
+        final Audio? newAudio = audioPlayerVM.currentAudioChangedNotifier.value;
+        if (newAudio != null) {
+          // Notify the CommentVM to refresh the dialog for the new audio
+          commentVM.notifyCommentDialogToRefresh(newAudio);
+        }
+      }
+    });
   }
 
   /// WidgetsBindingObserver method called when the app's lifecycle
@@ -724,11 +757,23 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
           onTap: (!areAudioButtonsEnabled)
               ? null // Disable the button if no audio selected
               : () {
-                  // Using this method enables to minimize the comment list
-                  // add dialog.
+                  // **NEW**: Track when comment dialog is opened and closed
+                  setState(() {
+                    _isCommentDialogOpen = true;
+                  });
+
+                  // Using the enhanced method that supports auto-refresh and callbacks
                   CommentListAddDialog.showCommentDialog(
                     context: context,
                     currentAudio: currentAudio!,
+                    onClosed: () {
+                      // **NEW**: Track when comment dialog is closed
+                      if (mounted) {
+                        setState(() {
+                          _isCommentDialogOpen = false;
+                        });
+                      }
+                    },
                   );
 
                   // Hides the second line play/pause button (present
@@ -741,6 +786,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       ),
     );
   }
+
+  /// **REMOVED**: No longer need the timer-based approach since we now use callbacks
 
   /// Builds the audio popup menu button located on the right of the
   /// screen. This button allows the user to sort and filter the
