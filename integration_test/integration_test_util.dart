@@ -3032,90 +3032,114 @@ class IntegrationTestUtil {
     required List<String> expectedCreationDatesLst,
     required List<String> expectedUpdateDatesLst,
   }) {
-    // Find the list body containing the comments
-    final Finder listFinder = find.descendant(
-        of: commentListDialogFinder, matching: find.byType(ListBody));
+    // **UPDATED**: Since commentListDialogFinder is already pointing to the ListBody
+    // (using the 'audioCommentsListKey'), we can use it directly instead of
+    // looking for ListBody as a descendant
+    final Finder listFinder = commentListDialogFinder;
 
-    // Find all the list items
-    final Finder gestureDetectorsFinder = find.descendant(
-        // 3 GestureDetector per comment item
-        of: listFinder,
-        matching: find.byType(GestureDetector));
+    // **UPDATED**: More robust way to find comment items
+    // Instead of relying on GestureDetector count, find comment items directly
+    final Finder commentTitlesFinder = find.descendant(
+      of: listFinder,
+      matching: find.byKey(const Key('commentTitleKey')),
+    );
 
-    // Check the number of items
+    // Verify we have the expected number of comments
     expect(
-        gestureDetectorsFinder,
-        findsNWidgets(commentsNumber *
-            3)); // commentsNumber items * 3 GestureDetector per item
+      commentTitlesFinder,
+      findsNWidgets(commentsNumber),
+      reason:
+          'Expected $commentsNumber comments but found ${commentTitlesFinder.evaluate().length}',
+    );
 
-    Finder commentTitleFinder;
-    Finder commentContentFinder;
-    Finder commentStartPositionFinder;
-    Finder commentEndPositionFinder;
-    Finder commentCreationDateFinder;
-    Finder commentUpdateDateFinder;
+    // Verify content of each comment
+    for (var i = 0; i < commentsNumber; i++) {
+      // Find specific comment elements by index
+      final Finder specificCommentTitleFinder = commentTitlesFinder.at(i);
 
-    int expectListIndex = 0;
+      // Find the parent GestureDetector of this comment title
+      final Finder commentGestureDetectorFinder = find
+          .ancestor(
+            of: specificCommentTitleFinder,
+            matching: find.byType(GestureDetector),
+          )
+          .first;
 
-    for (var i = 0; i < commentsNumber; i += 3) {
-      commentTitleFinder = find.descendant(
-        of: gestureDetectorsFinder.at(i),
-        matching: find.byKey(const Key('commentTitleKey')),
-      );
-      commentContentFinder = find.descendant(
-        of: gestureDetectorsFinder.at(i),
+      // Find all elements within this specific comment
+      final Finder commentContentFinder = find.descendant(
+        of: commentGestureDetectorFinder,
         matching: find.byKey(const Key('commentTextKey')),
       );
-      commentStartPositionFinder = find.descendant(
-        of: gestureDetectorsFinder.at(i),
+
+      final Finder commentStartPositionFinder = find.descendant(
+        of: commentGestureDetectorFinder,
         matching: find.byKey(const Key('commentStartPositionKey')),
       );
-      commentEndPositionFinder = find.descendant(
-        of: gestureDetectorsFinder.at(i),
+
+      final Finder commentEndPositionFinder = find.descendant(
+        of: commentGestureDetectorFinder,
         matching: find.byKey(const Key('commentEndPositionKey')),
       );
-      commentCreationDateFinder = find.descendant(
-        of: gestureDetectorsFinder.at(i),
+
+      final Finder commentCreationDateFinder = find.descendant(
+        of: commentGestureDetectorFinder,
         matching: find.byKey(const Key('creation_date_key')),
       );
-      commentUpdateDateFinder = find.descendant(
-        of: gestureDetectorsFinder.at(i),
+
+      final Finder commentUpdateDateFinder = find.descendant(
+        of: commentGestureDetectorFinder,
         matching: find.byKey(const Key('last_update_date_key')),
       );
 
       // Verify the text in the title, content, and position of each comment
       expect(
-        tester.widget<Text>(commentTitleFinder).data,
-        expectedTitlesLst[expectListIndex],
+        tester.widget<Text>(specificCommentTitleFinder).data,
+        expectedTitlesLst[i],
+        reason: 'Comment title mismatch at index $i',
       );
-      expect(
-        tester.widget<Text>(commentContentFinder).data,
-        expectedContentsLst[expectListIndex],
-      );
-      expect(
-        tester.widget<Text>(commentStartPositionFinder).data,
-        expectedStartPositionsLst[expectListIndex],
-      );
-      expect(
-        tester.widget<Text>(commentEndPositionFinder).data,
-        expectedEndPositionsLst[expectListIndex],
-      );
-      expect(tester.widget<Text>(commentCreationDateFinder).data,
-          expectedCreationDatesLst[expectListIndex],
-          reason: 'Failure at index $expectListIndex');
 
-      if (expectedUpdateDatesLst[expectListIndex].isNotEmpty) {
-        // if the update date equals the creation date, the Text widget
-        // is not displayed
-        expect(tester.widget<Text>(commentUpdateDateFinder).data,
-            expectedUpdateDatesLst[expectListIndex],
-            reason: 'Failure at index $expectListIndex');
+      if (expectedContentsLst[i].isNotEmpty) {
+        expect(
+          tester.widget<Text>(commentContentFinder).data,
+          expectedContentsLst[i],
+          reason: 'Comment content mismatch at index $i',
+        );
       }
 
-      expectListIndex++;
+      expect(
+        tester.widget<Text>(commentStartPositionFinder).data,
+        expectedStartPositionsLst[i],
+        reason: 'Comment start position mismatch at index $i',
+      );
+
+      expect(
+        tester.widget<Text>(commentEndPositionFinder).data,
+        expectedEndPositionsLst[i],
+        reason: 'Comment end position mismatch at index $i',
+      );
+
+      expect(
+        tester.widget<Text>(commentCreationDateFinder).data,
+        expectedCreationDatesLst[i],
+        reason: 'Comment creation date mismatch at index $i',
+      );
+
+      if (expectedUpdateDatesLst[i].isNotEmpty) {
+        // if the update date equals the creation date, the Text widget
+        // is not displayed
+        expect(
+          tester.widget<Text>(commentUpdateDateFinder).data,
+          expectedUpdateDatesLst[i],
+          reason: 'Comment update date mismatch at index $i',
+        );
+      }
     }
 
-    return gestureDetectorsFinder;
+    // Return all comment GestureDetectors for backward compatibility
+    return find.descendant(
+      of: listFinder,
+      matching: find.byType(GestureDetector),
+    );
   }
 
   static void verifyPictureAudioMapBeforePlaylistDeletion({

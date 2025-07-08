@@ -18338,7 +18338,7 @@ void main() {
       // Verify that the comment list dialog now displays the
       // added comment
 
-      final Finder commentListDialogFinder = find.byType(CommentListAddDialog);
+      final Finder commentListDialogFinder = find.byKey(const Key('audioCommentsListKey'));
 
       expect(
           find.descendant(
@@ -20880,7 +20880,7 @@ Future<void> _checkAudioCommentInAudioPlayerView({
 
   // Verify that the expectedCommentTitle is listed
 
-  Finder commentListDialogFinder = find.byType(CommentListAddDialog);
+  Finder commentListDialogFinder = find.byKey(const Key('audioCommentsListKey'));
 
   expect(
       find.descendant(
