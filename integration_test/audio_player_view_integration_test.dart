@@ -5927,8 +5927,8 @@ void main() {
       // Tap five times on the forward comment end icon button, then
       // one time on the backward comment end icon button and finally
       // one time again on the forward comment end icon button to change
-      // the comment start position. Since the tenth of seconds checkbox
-      // is not checked, the comment start position is changed in seconds.
+      // the comment end position. Since the tenth of seconds checkbox
+      // is not checked, the comment end position is changed in seconds.
       Finder forwardCommentEndIconButtonFinder =
           find.byKey(const Key('forwardCommentEndIconButton'));
       Finder backwardCommentEndIconButtonFinder =
@@ -5987,7 +5987,7 @@ void main() {
 
       // Tap three times on the forward comment start icon button, then
       // one time on the backward comment start icon button and finally
-      // one time again on the forward comment start icon button to change
+      // one time again on the backward comment start icon button to change
       // the comment start position. Since the tenth of seconds checkbox
       // is now checked, the comment start position is changed in tenth
       // of seconds.
@@ -6214,7 +6214,8 @@ void main() {
       // Verify that the comment list dialog now displays the
       // added comment
 
-      final Finder commentListDialogFinder = find.byType(CommentListAddDialog);
+      // Find the list body containing the comments
+      final Finder commentListDialogFinder = find.byKey(const Key('audioCommentsListKey'));
 
       expect(
           find.descendant(
@@ -6722,7 +6723,8 @@ void main() {
       // Verify that the comment list dialog now displays the
       // added comment
 
-      final Finder commentListDialogFinder = find.byType(CommentListAddDialog);
+      // Find the list body containing the comments
+      final Finder commentListDialogFinder = find.byKey(const Key('audioCommentsListKey'));
 
       expect(
           find.descendant(
@@ -7017,7 +7019,8 @@ void main() {
       // Verify that the comment list dialog now displays the
       // added comment
 
-      final Finder commentListDialogFinder = find.byType(CommentListAddDialog);
+      // Find the list body containing the comments
+      final Finder commentListDialogFinder = find.byKey(const Key('audioCommentsListKey'));
 
       List<String> expectedTitles = [
         'One',
@@ -7253,15 +7256,12 @@ void main() {
       await tester.tap(addOrUpdateCommentTextButton);
       await tester.pumpAndSettle();
 
-      final Finder commentListDialogFinder = find.byType(CommentListAddDialog);
-
       // Find the list body containing the comments
-      final Finder listFinder = find.descendant(
-          of: commentListDialogFinder, matching: find.byType(ListBody));
+      final Finder commentListDialogFinder = find.byKey(const Key('audioCommentsListKey'));
 
       // Find all the list items
       final Finder gestureDetectorsFinder = find.descendant(
-          of: listFinder, matching: find.byType(GestureDetector));
+          of: commentListDialogFinder, matching: find.byType(GestureDetector));
 
       // Check the number of items
       expect(
@@ -7336,13 +7336,13 @@ void main() {
 
       // Modify comment text
 
-      String modifiedCcommentText = 'Modified comment';
+      String modifiedCommentText = 'Modified comment';
       final Finder commentContentTextFieldFinder =
           find.byKey(const Key('commentContentTextField'));
 
       await tester.enterText(
         commentContentTextFieldFinder,
-        modifiedCcommentText,
+        modifiedCommentText,
       );
       await tester.pumpAndSettle();
 
@@ -7355,7 +7355,7 @@ void main() {
       await tester.tap(addOrUpdateCommentTextButton);
       await tester.pumpAndSettle();
 
-      final Finder commentListDialogFinder = find.byType(CommentListAddDialog);
+      final Finder commentListDialogFinder = find.byKey(const Key('audioCommentsListKey'));
 
       // Verify that the comment list dialog now displays the
       // added comment
@@ -7371,7 +7371,7 @@ void main() {
         'First comment',
         'Second comment',
         'Third comment',
-        modifiedCcommentText, // updated comment
+        modifiedCommentText, // updated comment
       ];
 
       List<String> expectedStartPositions = [
@@ -7399,7 +7399,7 @@ void main() {
         '29/05/24',
         '30/05/24',
         '', // Text widget not displayed since update date == creation date
-        frenchDateFormat.format(DateTime.now()), // updated comment
+        frenchDateFormatYy.format(DateTime.now()), // updated comment
       ];
 
       // Verify content of each list item
@@ -7499,7 +7499,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the dialog is not closed
-      expect(find.byType(CommentListAddDialog), findsOneWidget);
+      expect(find.byKey(const Key('audioCommentsListKey')), findsOneWidget);
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
@@ -7546,7 +7546,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the dialog is not closed
-      expect(find.byType(CommentListAddDialog), findsOneWidget);
+      expect(find.byKey(const Key('audioCommentsListKey')), findsOneWidget);
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
@@ -7611,7 +7611,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the dialog is not closed
-      expect(find.byType(CommentListAddDialog), findsOneWidget);
+      expect(find.byKey(const Key('audioCommentsListKey')), findsOneWidget);
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
@@ -7685,15 +7685,12 @@ void main() {
       await tester.tap(commentInkWellButtonFinder);
       await tester.pumpAndSettle();
 
-      final Finder commentListDialogFinder = find.byType(CommentListAddDialog);
-
       // Find the list body containing the comments
-      final Finder listFinder = find.descendant(
-          of: commentListDialogFinder, matching: find.byType(ListBody));
+      final Finder commentListDialogFinder = find.byKey(const Key('audioCommentsListKey'));
 
       // Find all the list items
       final Finder gestureDetectorsFinder = find.descendant(
-          of: listFinder, matching: find.byType(GestureDetector));
+          of: commentListDialogFinder, matching: find.byType(GestureDetector));
 
       // Check the number of items
       expect(
@@ -8861,7 +8858,7 @@ void main() {
         await tester.pumpAndSettle();
 
         await tester.drag(
-          find.byType(CommentListAddDialog),
+          find.byKey(const Key('audioCommentsListKey')),
           const Offset(
               0, 600), // Negative value for vertical drag to scroll down
         );
@@ -8892,7 +8889,7 @@ void main() {
         // Without dragging the comment list dialog, the audio
         // won't play !
         await tester.drag(
-          find.byType(CommentListAddDialog),
+          find.byKey(const Key('audioCommentsListKey')),
           const Offset(
               0, 600), // Negative value for vertical drag to scroll down
         );

@@ -22611,7 +22611,7 @@ void main() {
       // Verify that the comment list dialog now displays the
       // added comment
 
-      final Finder commentListDialogFinder = find.byType(CommentListAddDialog);
+      final Finder commentListDialogFinder = find.byKey(const Key('audioCommentsListKey'));
 
       List<String> expectedTitles = [
         'New comment',
