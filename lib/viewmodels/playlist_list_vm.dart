@@ -3339,7 +3339,6 @@ class PlaylistListVM extends ChangeNotifier {
       // Capturing the playlists contained in the zip.
       if (path.extension(destinationPathFileName) == '.json' &&
           !destinationPathFileName.contains(kSettingsFileName) &&
-          !destinationPathFileName.contains(kPictureAudioMapFileName) &&
           !destinationPathFileName.contains(kCommentDirName) &&
           !destinationPathFileName.contains(kPictureDirName)) {
         // This is a playlist JSON file.
