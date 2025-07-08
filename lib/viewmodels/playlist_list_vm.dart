@@ -3340,7 +3340,8 @@ class PlaylistListVM extends ChangeNotifier {
       if (path.extension(destinationPathFileName) == '.json' &&
           !destinationPathFileName.contains(kSettingsFileName) &&
           !destinationPathFileName.contains(kPictureAudioMapFileName) &&
-          !destinationPathFileName.contains(kCommentDirName)) {
+          !destinationPathFileName.contains(kCommentDirName) &&
+          !destinationPathFileName.contains(kPictureDirName)) {
         // This is a playlist JSON file.
         String playlistTitle =
             path.basenameWithoutExtension(destinationPathFileName);
