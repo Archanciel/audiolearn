@@ -3201,10 +3201,9 @@ class PlaylistListVM extends ChangeNotifier {
     _settingsDataService.saveSettings();
   }
 
-  /// Method called when the user clicks on the 'Restore Playlist, Comments and
-  /// Settings from Zip File' menu. It extracts the playlist json files as well
-  /// as the commen json files of the playlists and writes them to the playlists
-  /// root path.
+  /// Method called when the user clicks on the 'Restore Playlist, Comments and Settings
+  /// from Zip File' menu. It extracts the playlist json files as well as the commen json
+  /// files of the playlists and writes them to the playlists root path.
   ///
   /// The returned list contains
   /// [
@@ -3212,8 +3211,8 @@ class PlaylistListVM extends ChangeNotifier {
   ///  number of restored comments JSON files,
   ///  number of restored pictures JSON files,
   ///  number of restored pictures JPG files,
-  ///  was the zip file created from the playlist item 'Save Playlist, Comments,
-  ///     Pictures and Settings to Zip File' menu item (true/false),
+  ///  was the zip file created from the playlist item 'Save the Playlist, its Comments,
+  ///    and its Pictures to Zip File' (true, false if multiple playlists are restored),
   ///  restoredAudioReferencesNumber
   ///  updated comment number
   ///  added comment number
@@ -3329,10 +3328,10 @@ class PlaylistListVM extends ChangeNotifier {
       }
 
       if (destinationPathFileName.contains(kSettingsFileName)) {
-        // In this case, the zip file was created from the appbar
-        // 'Save Playlist, Comments, Pictures and Settings to Zip
-        // File' menu item. If the similar menu was selected from
-        // the playlist item menu, the settings file does not
+        // In this case, the zip file was created from the left
+        // appbar 'Save Playlist, Comments, Pictures and Settings
+        // to Zip File' menu item. If the similar menu was selected
+        // from the playlist item menu, the settings file does not
         // exist in the zip file.
         wasIndividualPlaylistRestored = false;
       }
@@ -3357,10 +3356,11 @@ class PlaylistListVM extends ChangeNotifier {
 
       if (!doReplaceExistingPlaylists &&
           !destinationPathFileName.contains(kSettingsFileName) &&
-          !destinationPathFileName.contains(kPictureAudioMapFileName)) {
+          !destinationPathFileName.contains(kPictureAudioMapFileName)) { // 'pictureAudioMap.json'
         // Check if this is a playlist JSON file to merge.
         if (path.extension(destinationPathFileName) == '.json' &&
-            !destinationPathFileName.contains(kCommentDirName)) {
+            !destinationPathFileName.contains(kCommentDirName) &&
+            !destinationPathFileName.contains(kPictureDirName)) {
           String playlistTitle =
               path.basenameWithoutExtension(destinationPathFileName);
 
@@ -3371,7 +3371,8 @@ class PlaylistListVM extends ChangeNotifier {
           }
         }
 
-        // For other files (comments, pictures).
+        // For other files (comments, pictures). existingPlaylistTitlesLst is
+        // empty if restoring unique or multiple playlists to empty app.
         if (existingPlaylistTitlesLst.any((title) =>
             RegExp(r'\b' + RegExp.escape(title) + r'\b')
                 .hasMatch(destinationPathFileName))) {
