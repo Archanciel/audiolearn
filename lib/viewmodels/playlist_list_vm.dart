@@ -3229,6 +3229,7 @@ class PlaylistListVM extends ChangeNotifier {
     int restoredCommentsJsonNumber = 0;
     int restoredPicturesJsonNumber = 0;
     int restoredPicturesJpgNumber = 0;
+    int restoredAudioReferencesNumber = 0;
 
     // Check if the provided zip file exists.
     final File zipFile = File(zipFilePathName);
@@ -3241,9 +3242,7 @@ class PlaylistListVM extends ChangeNotifier {
       restoredInfoLst.add(restoredPicturesJsonNumber);
       restoredInfoLst.add(restoredPicturesJpgNumber);
       restoredInfoLst.add(false); // wasIndividualPlaylistRestored
-      restoredInfoLst.add(0); // adding 0 to the
-      //                         restoredAudioReferencesNumber
-      //                         position
+      restoredInfoLst.add(restoredAudioReferencesNumber);
       restoredInfoLst.add(0); // adding 0 to the updated comment number
       restoredInfoLst.add(0); // adding 0 to the added comment number
 
@@ -3356,7 +3355,8 @@ class PlaylistListVM extends ChangeNotifier {
 
       if (!doReplaceExistingPlaylists &&
           !destinationPathFileName.contains(kSettingsFileName) &&
-          !destinationPathFileName.contains(kPictureAudioMapFileName)) { // 'pictureAudioMap.json'
+          !destinationPathFileName.contains(kPictureAudioMapFileName)) {
+        // 'pictureAudioMap.json'
         // Check if this is a playlist JSON file to merge.
         if (path.extension(destinationPathFileName) == '.json' &&
             !destinationPathFileName.contains(kCommentDirName) &&
@@ -3462,11 +3462,28 @@ class PlaylistListVM extends ChangeNotifier {
             restoredPicturesJsonNumber++;
           }
         } else {
-          // Adding the restored playlist title to the list
-          // of restored playlist titles.
-          restoredPlaylistTitlesLst.add(
-            path.basenameWithoutExtension(destinationPathFileName),
-          );
+          // Get the playableAudioLst length from the just-written playlist file
+          try {
+            // Read the JSON content that was just written
+            final String jsonContent =
+                utf8.decode(archiveFile.content as List<int>);
+            final Map<String, dynamic> playlistJson = jsonDecode(jsonContent);
+
+            // Get the playableAudioLst length
+            final List<dynamic>? playableAudioLst =
+                playlistJson['playableAudioLst'];
+
+            restoredAudioReferencesNumber += playableAudioLst?.length ?? 0;
+
+            // Adding the restored playlist title to the list
+            // of restored playlist titles.
+            restoredPlaylistTitlesLst.add(
+              path.basenameWithoutExtension(destinationPathFileName),
+            );
+          } catch (e) {
+            // Handle JSON parsing error
+            _logger.i('Error parsing playlist JSON: $e');
+          }
         }
       }
     } // End of for loop iterating over the archive files.
@@ -3496,7 +3513,7 @@ class PlaylistListVM extends ChangeNotifier {
     restoredInfoLst.add(restoredPicturesJpgNumber);
     restoredInfoLst.add(wasIndividualPlaylistRestored);
     restoredInfoLst
-        .add(restoredNumberLst[0]); // restored audio references number
+        .add(restoredAudioReferencesNumber + restoredNumberLst[0]); // restored audio references number
     restoredInfoLst.add(restoredNumberLst[3]); // updated comment number
     restoredInfoLst.add(restoredNumberLst[4]); // added comment number
 
