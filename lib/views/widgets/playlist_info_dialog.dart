@@ -119,7 +119,7 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                     'playlist_info_download_audio_sort_filter_parameters_key'),
                 context: context,
                 label: AppLocalizations.of(context)!.playlistSortFilterLabel(
-                  AppLocalizations.of(context)!.appBarTitleDownloadAudio,
+                  AppLocalizations.of(context)!.playlistInfoDownloadAudio,
                 ),
                 value: (audioSortFilterParmsNameForPlaylistDownloadView.isEmpty)
                     ? AppLocalizations.of(context)!
@@ -131,7 +131,7 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                     Key('playlist_info_play_audio_sort_filter_parameters_key'),
                 context: context,
                 label: AppLocalizations.of(context)!.playlistSortFilterLabel(
-                  AppLocalizations.of(context)!.appBarTitleAudioPlayer,
+                  AppLocalizations.of(context)!.playlistInfoAudioPlayer,
                 ),
                 value: (audioSortFilterParmsNameForAudioPlayerView.isEmpty)
                     ? AppLocalizations.of(context)!
