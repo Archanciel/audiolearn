@@ -11,7 +11,6 @@ import 'package:audiolearn/utils/date_time_parser.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/utils/duration_expansion.dart';
 import 'package:audiolearn/views/widgets/comment_add_edit_dialog.dart';
-import 'package:audiolearn/views/widgets/comment_list_add_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
 import 'package:audiolearn/views/widgets/set_value_to_target_dialog.dart';
 import 'package:path/path.dart' as path;
