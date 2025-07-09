@@ -22610,7 +22610,8 @@ void main() {
       // Verify that the comment list dialog now displays the
       // added comment
 
-      final Finder commentListDialogFinder = find.byKey(const Key('audioCommentsListKey'));
+      final Finder commentListDialogFinder =
+          find.byKey(const Key('audioCommentsListKey'));
 
       List<String> expectedTitles = [
         'New comment',
@@ -22915,6 +22916,88 @@ void main() {
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kApplicationPathWindowsTest,
+      );
+    });
+  });
+  group('Test playlist info modification', () {
+    testWidgets(
+        '''Verify playlist info. Then delete an audio and verify that the playlist info
+           is updated accordingly.''', (tester) async {
+      const String selectedPlaylistTitle = 'audio_player_view_2_shorts_test';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: '2_youtube_2_local_playlists_integr_test_data',
+        selectedPlaylistTitle: selectedPlaylistTitle,
+        tapOnPlaylistToggleButton: true,
+      );
+
+      // Verify the playlist info dialog content
+      await IntegrationTestUtil.verifyPlaylistInfoDialogContent(
+        tester: tester,
+        playlistTitle: selectedPlaylistTitle,
+        playlistDownloadAudioSortFilterParmsName: 'default',
+        playlistPlayAudioSortFilterParmsName: 'default',
+        isPaylistSelected: true,
+        playlistInfoTotalAudioNumber: '2',
+        playlistInfoPlayableAudioNumber: '2',
+        playlistInfoAudioCommentNumber: '2',
+        playlistInfoPlayableAudioTotalDuration: '0:01:09',
+        playlistInfoPlayableAudioTotalRemainingDuration: '0:00:55',
+        playlistInfoPlayableAudioTotalFileSize: '422 KB',
+      );
+
+      // Now we delete the 'Really short video' audio from the
+      // 'audio_player_view_2_shorts_test' playlist.
+
+      const String audioToDeleteTitle = 'Really short video';
+
+      // First, find the Audio sublist ListTile Text widget
+      final Finder uniqueAudioListTileTextWidgetFinder =
+          find.text(audioToDeleteTitle);
+
+      // Then obtain the Audio ListTile widget enclosing the Text widget by
+      // finding its ancestor
+      final Finder uniqueAudioListTileWidgetFinder = find.ancestor(
+        of: uniqueAudioListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the leading menu icon button of the Audio ListTile
+      // and tap on it
+      final Finder uniqueAudioListTileLeadingMenuIconButton = find.descendant(
+        of: uniqueAudioListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(uniqueAudioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the delete audio popup menu item and tap on it
+      final Finder popupDeleteAudioMenuItem =
+          find.byKey(const Key("popup_menu_delete_audio"));
+
+      await tester.tap(popupDeleteAudioMenuItem);
+      await tester.pumpAndSettle();
+
+      // Tap on the confirm button to delete the audio
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      // After audio deletion, verify the playlist info dialog content
+      await IntegrationTestUtil.verifyPlaylistInfoDialogContent(
+        tester: tester,
+        playlistTitle: selectedPlaylistTitle,
+        playlistDownloadAudioSortFilterParmsName: 'default',
+        playlistPlayAudioSortFilterParmsName: 'default',
+        isPaylistSelected: true,
+        playlistInfoTotalAudioNumber: '2',
+        playlistInfoPlayableAudioNumber: '1',
+        playlistInfoAudioCommentNumber: '1',
+        playlistInfoPlayableAudioTotalDuration: '0:00:59',
+        playlistInfoPlayableAudioTotalRemainingDuration: '0:00:54',
+        playlistInfoPlayableAudioTotalFileSize: '360 KB',
       );
     });
   });

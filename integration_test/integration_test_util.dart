@@ -2515,6 +2515,12 @@ class IntegrationTestUtil {
     required String playlistPlayAudioSortFilterParmsName,
     isPaylistSelected = true,
     String playlistAudioQuality = '',
+    String playlistInfoTotalAudioNumber = '',
+    String playlistInfoPlayableAudioNumber = '',
+    String playlistInfoAudioCommentNumber = '',
+    String playlistInfoPlayableAudioTotalDuration = '',
+    String playlistInfoPlayableAudioTotalRemainingDuration = '',
+    String playlistInfoPlayableAudioTotalFileSize = '',
   }) async {
     Finder playlistToExamineInfoTextWidgetFinder;
 
@@ -2556,7 +2562,6 @@ class IntegrationTestUtil {
     await tester.pumpAndSettle();
 
     // Verify the playlist 'Download Audio sort/filter value
-
     final Text playlistLastDownloadDateTimeTextWidget = tester.widget<Text>(
         find.byKey(const Key(
             'playlist_info_download_audio_sort_filter_parameters_key')));
@@ -2574,6 +2579,76 @@ class IntegrationTestUtil {
       expect(
         playlistAudioQualityTextWidget.data,
         playlistAudioQuality,
+      );
+    }
+
+    if (playlistInfoTotalAudioNumber.isNotEmpty) {
+      // Verify the playlist total audio number
+      final Text playlistInfoTotalAudioNumberTextWidget = tester.widget<Text>(
+          find.byKey(const Key('playlist_info_total_audio_number_key')));
+
+      expect(
+        playlistInfoTotalAudioNumberTextWidget.data,
+        playlistInfoTotalAudioNumber,
+      );
+    }
+
+    if (playlistInfoPlayableAudioNumber.isNotEmpty) {
+      // Verify the playlist playable audio number
+      final Text playlistInfoPlayableAudioNumberTextWidget =
+          tester.widget<Text>(
+              find.byKey(const Key('playlist_info_playable_audio_number_key')));
+
+      expect(
+        playlistInfoPlayableAudioNumberTextWidget.data,
+        playlistInfoPlayableAudioNumber,
+      );
+    }
+
+    if (playlistInfoAudioCommentNumber.isNotEmpty) {
+      // Verify the playlist audio comment number
+      final Text playlistInfoAudioCommentNumberTextWidget = tester.widget<Text>(
+          find.byKey(const Key('playlist_info_audio_comment_number_key')));
+
+      expect(
+        playlistInfoAudioCommentNumberTextWidget.data,
+        playlistInfoAudioCommentNumber,
+      );
+    }
+
+    if (playlistInfoPlayableAudioTotalDuration.isNotEmpty) {
+      // Verify the playlist playable audio total duration
+      final Text playlistInfoPlayableAudioTotalDurationTextWidget =
+          tester.widget<Text>(find.byKey(
+              const Key('playlist_info_playable_audio_total_duration_key')));
+
+      expect(
+        playlistInfoPlayableAudioTotalDurationTextWidget.data,
+        playlistInfoPlayableAudioTotalDuration,
+      );
+    }
+
+    if (playlistInfoPlayableAudioTotalRemainingDuration.isNotEmpty) {
+      // Verify the playlist playable audio total remaining duration
+      final Text playlistInfoPlayableAudioTotalRemainingDurationTextWidget =
+          tester.widget<Text>(find.byKey(const Key(
+              'playlist_info_playable_audio_total_remaining_duration_key')));
+
+      expect(
+        playlistInfoPlayableAudioTotalRemainingDurationTextWidget.data,
+        playlistInfoPlayableAudioTotalRemainingDuration,
+      );
+    }
+
+    if (playlistInfoPlayableAudioTotalFileSize.isNotEmpty) {
+      // Verify the playlist playable audio total file size
+      final Text playlistInfoPlayableAudioTotalFileSizeTextWidget =
+          tester.widget<Text>(find.byKey(
+              const Key('playlist_info_playable_audio_total_file_size_key')));
+
+      expect(
+        playlistInfoPlayableAudioTotalFileSizeTextWidget.data,
+        playlistInfoPlayableAudioTotalFileSize,
       );
     }
 
