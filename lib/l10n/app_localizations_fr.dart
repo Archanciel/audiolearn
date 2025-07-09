@@ -379,13 +379,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get playlistIsSelectedLabel => 'Playlist sélectionnée';
 
   @override
-  String get playlistTotalAudioNumberLabel => 'Nombre audio total';
+  String get playlistTotalAudioNumberLabel => 'Nombre audio\'s total';
 
   @override
-  String get playlistPlayableAudioNumberLabel => 'Nombre audio jouables';
+  String get playlistPlayableAudioNumberLabel => 'Nombre audio\'s jouables';
 
   @override
-  String get playlistPlayableAudioTotalDurationLabel => 'Durée totale audio jouables';
+  String get playlistPlayableAudioTotalDurationLabel => 'Durée totale audio jouable';
 
   @override
   String get playlistPlayableAudioTotalRemainingDurationLabel => 'Durée totale audio non écoutée';
@@ -1185,7 +1185,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String rewindedPlayableAudioNumber(Object number) {
-    return '$number audio de la playlist ont été repositionnés au début';
+    return '$number audio\'s de la playlist ont été repositionnés au début';
   }
 
   @override
@@ -1224,10 +1224,10 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get commentedAudioDeletionHelpTitle => 'Comment créer et utiliser un paramètre de tri/filtrage pour éviter de supprimer les audio\'ss commentés ?';
+  String get commentedAudioDeletionHelpTitle => 'Comment créer et utiliser un paramètre de tri/filtrage pour éviter de supprimer les audio\'s commentés ?';
 
   @override
-  String get commentedAudioDeletionHelpContent => 'Ce guide explique comment supprimer les audio\'ss entièrement écoutés qui ne sont pas commentés.';
+  String get commentedAudioDeletionHelpContent => 'Ce guide explique comment supprimer les audio\'s entièrement écoutés qui ne sont pas commentés.';
 
   @override
   String get commentedAudioDeletionSolutionHelpTitle => 'La solution est de créer un paramètre de tri/filtrage pour sélectionner uniquement les audio\'ss entièrement écoutés et non commentés';
@@ -1239,7 +1239,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get commentedAudioDeletionOpenSFDialogHelpTitle => 'Ouvrir la boîte de dialogue de définition des paramètres de tri/filtrage';
 
   @override
-  String get commentedAudioDeletionOpenSFDialogHelpContent => 'Cliquez sur l\'icône de menu à droite dans la vue de téléchargement des audios, puis sélectionnez \"Trier/Filtrer audio ...\"';
+  String get commentedAudioDeletionOpenSFDialogHelpContent => 'Cliquez sur l\'icône de menu à droite dans la vue de téléchargement des audio\'s, puis sélectionnez \"Trier/Filtrer audio ...\"';
 
   @override
   String get commentedAudioDeletionCreateSFParmHelpTitle => 'Créer un paramètre de tri/filtrage valide';
@@ -1248,7 +1248,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get commentedAudioDeletionCreateSFParmHelpContent => 'Dans le champ \"Enregistrer sous\", entrez un nom pour le paramètre de tri/filtrage (par exemple, écoutéNonComm). Décochez les cases \"Partiellement écouté\", \"Non écouté\" et \"Commenté\". Puis cliquez sur \"Sauver\".';
 
   @override
-  String get commentedAudioDeletionSelectSFParmHelpTitle => 'Une fois enregistré, le paramètre de tri/filtrage est appliqué à la playlist, réduisant la liste affichée des audios.';
+  String get commentedAudioDeletionSelectSFParmHelpTitle => 'Une fois enregistré, le paramètre de tri/filtrage est appliqué à la playlist, réduisant la liste affichée des audio\'s.';
 
   @override
   String get commentedAudioDeletionSelectSFParmHelpContent => 'Cliquez sur le bouton \"Playlists\" pour masquer la liste des playlists. Vous verrez votre nouveau paramètre de tri/filtrage sélectionné dans le menu déroulant. Vous pouvez appliquer ce paramètre ou un autre à n\'importe quelle playlist ...';
@@ -1257,7 +1257,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get commentedAudioDeletionApplyingNewSFParmHelpTitle => 'Enfin recliquez sur le bouton \"Playlists\" afin de réafficher la liste des playlists, ouvrez le menu de la playlist source et cliquez sur \"Traiter les audio\'s filtrés ...\" puis sur \"Supprimer les audio\'ss filtrés ...\"';
 
   @override
-  String get commentedAudioDeletionApplyingNewSFParmHelpContent => 'Cette fois, puisqu\'un paramètre de tri/filtrage correct est appliqué, aucun avertissement ne sera affiché lors de la suppression des audios sélectionnés non commentés.';
+  String get commentedAudioDeletionApplyingNewSFParmHelpContent => 'Cette fois, puisqu\'un paramètre de tri/filtrage correct est appliqué, aucun avertissement ne sera affiché lors de la suppression des audio\'s sélectionnés non commentés.';
 
   @override
   String get filteredAudioActions => 'Traiter les audio\'s filtrés ...';
@@ -1665,4 +1665,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get restoredElementsHelpContent => 'N playlists: nombre de nouveaux fichiers JSON de playlist créés par la restauration.\n\nN commentaires: nombre de nouveaux fichiers JSON de commentaires créés par la restauration. Ceci se produit uniquement si l\'audio commenté n\'avait aucun commentaire avant la restauration. Sinon, le nouveau commentaire est ajouté au fichier JSON de commentaires audio existant.\n\nN photos : nombre de nouveaux fichiers JSON d\'images créés par la restauration. Ceci se produit uniquement si l\'audio illustré n\'avait aucune image avant la restauration. Sinon, la nouvelle image est ajoutée au fichier JSON d\'images audio existant.\n\nN références audio : nombre d\'éléments audio ajoutés au fichier JSON de leur playlist par la restauration. La restauration n\'ajoute pas de fichiers MP3 car aucun MP3 n\'est contenu dans le fichier ZIP. Les audio’s référencés ajoutés peuvent être téléchargés après la restauration.\n\nN commentaires ajoutés: nombre de commentaires ajoutés par la restauration aux fichiers JSON de commentaires audio existants.\n\nN commentaires modifiés: nombre de commentaires modifiés par la restauration dans les fichiers JSON de commentaires audio existants.';
+
+  @override
+  String get playlistInfoDownloadAudio => 'Téléch. audio';
+
+  @override
+  String get playlistInfoAudioPlayer => 'Lire audio';
 }

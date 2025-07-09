@@ -1665,4 +1665,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get restoredElementsHelpContent => 'N playlist: number of new playlist JSON files created by the restoration.\n\nN comment: number of new comment JSON files created by the restoration. This happens only if the commented audio had no comment before the restoration. Otherwise, the new comment is added to the existing audio comment JSON file.\n\nN picture: number of new picture JSON files created by the restoration. This happens only if the pictured audio had no picture before the restoration. Otherwise, the new picture is added to the existing audio picture JSON file.\n\nN audio reference: number of audio elements added to their enclosing playlist JSON file by the restoration. The restoration does not add MP3 files since no MP3 is contained in the ZIP file. The added referenced audio\'s can be downloaded after the restoration.\n\nN added comment: number of comments added by the restoration to the existing audio comment JSON files.\n\nN modified comment: number of comments modified by the restoration in the existing audio comment JSON files.';
+
+  @override
+  String get playlistInfoDownloadAudio => 'Download audio';
+
+  @override
+  String get playlistInfoAudioPlayer => 'Play audio';
 }
