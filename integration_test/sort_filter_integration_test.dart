@@ -9917,7 +9917,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-          await IntegrationTestUtil.verifyPlaylistDataDialogContent(
+          await IntegrationTestUtil.verifyPlaylistInfoDialogContent(
             tester: tester,
             playlistTitle: 'S8 audio',
             playlistDownloadAudioSortFilterParmsName: 'Title asc',
@@ -10095,7 +10095,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-          await IntegrationTestUtil.verifyPlaylistDataDialogContent(
+          await IntegrationTestUtil.verifyPlaylistInfoDialogContent(
             tester: tester,
             playlistTitle: 'S8 audio',
             playlistDownloadAudioSortFilterParmsName: 'Title asc',
@@ -10103,7 +10103,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             isPaylistSelected: false,
           );
 
-          await IntegrationTestUtil.verifyPlaylistDataDialogContent(
+          await IntegrationTestUtil.verifyPlaylistInfoDialogContent(
             tester: tester,
             playlistTitle: 'local',
             playlistDownloadAudioSortFilterParmsName: 'Title asc',

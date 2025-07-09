@@ -12,7 +12,6 @@ import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 import 'package:audiolearn/views/widgets/audio_sort_filter_dialog.dart';
-import 'package:audiolearn/views/widgets/comment_list_add_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -23102,26 +23101,26 @@ Future<void> _verifyPlaylistAudioQuality({
       find.byKey(const Key('audio_quality_checkbox'));
   Checkbox downloadAtMusicalQualityCheckBoxWidget =
       tester.widget<Checkbox>(downloadAtMusicalQualityCheckBoxFinder);
-  String playlistWrittenQuality;
+  String playlistAudioQuality;
 
   if (playlistQuality == PlaylistQuality.music) {
     // Verify that the download at musical quality checkbox is
     // checked
     expect(downloadAtMusicalQualityCheckBoxWidget.value, true);
-    playlistWrittenQuality = 'musical';
+    playlistAudioQuality = 'musical';
   } else {
     // Verify that the download at musical quality checkbox is
     // unchecked
     expect(downloadAtMusicalQualityCheckBoxWidget.value, false);
-    playlistWrittenQuality = 'spoken';
+    playlistAudioQuality = 'spoken';
   }
 
-  await IntegrationTestUtil.verifyPlaylistDataDialogContent(
+  await IntegrationTestUtil.verifyPlaylistInfoDialogContent(
     tester: tester,
     playlistTitle: playlistTitle,
     playlistDownloadAudioSortFilterParmsName: 'default',
     playlistPlayAudioSortFilterParmsName: 'default',
-    playlistAudioQuality: playlistWrittenQuality,
+    playlistAudioQuality: playlistAudioQuality,
   );
 }
 
