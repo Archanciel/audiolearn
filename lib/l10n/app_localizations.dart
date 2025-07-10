@@ -1418,7 +1418,7 @@ abstract class AppLocalizations {
   /// No description provided for @updatePlaylistJsonFilesMenuTooltip.
   ///
   /// In en, this message translates to:
-  /// **'If one or several playlist directories containing or not audio\'s were manually added or deleted in the application directory containing the playlists or if audio\'s were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files as well as the JSON file containing the application settings in order to reflect the changes in the application screens. Playlist directories located on PC can as well be copied in the application directory containing the playlists ...'**
+  /// **'If one or several playlist directories containing or not audio\'s were manually added or deleted in the application directory containing the playlists or if audio\'s were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files as well as the JSON file containing the application settings in order to reflect the changes in the application screens. Playlist directories located on PC can as well be copied in the Android application directory containing the playlists. Additionally, playlist directories located on Android can as well be copied in the PC application directory containing the playlists ...'**
   String get updatePlaylistJsonFilesMenuTooltip;
 
   /// No description provided for @updatePlaylistPlayableAudioListTooltip.
