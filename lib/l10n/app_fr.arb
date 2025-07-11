@@ -1317,5 +1317,47 @@
   "restoredElementsHelpTitle": "Description des éléments restaurés",
   "restoredElementsHelpContent": "N playlists: nombre de nouveaux fichiers JSON de playlist créés par la restauration.\n\nN commentaires: nombre de nouveaux fichiers JSON de commentaires créés par la restauration. Ceci se produit uniquement si l'audio commenté n'avait aucun commentaire avant la restauration. Sinon, le nouveau commentaire est ajouté au fichier JSON de commentaires audio existant.\n\nN photos : nombre de nouveaux fichiers JSON d'images créés par la restauration. Ceci se produit uniquement si l'audio illustré n'avait aucune image avant la restauration. Sinon, la nouvelle image est ajoutée au fichier JSON d'images audio existant.\n\nN références audio: nombre d'éléments audio contenus dans un ou plusieurs fichier(s) JSON de playlist créé(s) par la restauration. Si le nombre de playlist restaurée est 0, alors le nombre de référence(s) audio correspond au nombre d'élément(s) audio ajouté(s) à leur fichier JSON de playlist par la restauration. La restauration n'ajoute pas de fichiers MP3 puisqu'aucun MP3 n'est contenu dans le fichier ZIP. Les audios référencés ajoutés peuvent être téléchargés après la restauration.\n\nN commentaires ajoutés: nombre de commentaires ajoutés par la restauration aux fichiers JSON de commentaires audio existants.\n\nN commentaires modifiés: nombre de commentaires modifiés par la restauration dans les fichiers JSON de commentaires audio existants.",
   "playlistInfoDownloadAudio": "Téléch. audio",
-  "playlistInfoAudioPlayer": "Lire audio"
+  "playlistInfoAudioPlayer": "Lire audio",
+  "savedMultiplePlaylistsAudioMp3ToZip": "Enregistré dans le ZIP tous les fichiers audio mp3 des playlists téléchargés depuis le {audioDownloadFromDateTime}.\n\nNombre total d'audios sauvegardés: {savedAudioNumber}, taille totale: {savedAudioTotalFileSize} et durée totale: {savedAudioTotalDuration}.\n\nFichier ZIP: \"{filePathName}\"",
+  "@savedMultiplePlaylistsAudioMp3ToZip": {
+    "description": "Confirmation message after saving the audio mp3 downloaded at or after a specified date time of all application playlists to a zip file",
+    "placeholders": {
+      "audioDownloadFromDateTime": {
+        "type": "Object"
+      },
+      "savedAudioNumber": {
+        "type": "Object"
+      },
+      "savedAudioTotalFileSize": {
+        "type": "Object"
+      },
+      "savedAudioTotalDuration": {
+        "type": "Object"
+      },      
+      "filePathName": {
+        "type": "Object"
+      }      
+    }
+  },
+  "savedUniquePlaylistAudioMp3ToZip": "Enregistré dans le ZIP tous les fichiers audio mp3 de la playlist unique téléchargés depuis le {audioDownloadFromDateTime}.\n\nNombre total d'audios sauvegardés: {savedAudioNumber}, taille totale: {savedAudioTotalFileSize} et durée totale: {savedAudioTotalDuration}.\n\nFichier ZIP: \"{filePathName}\"",
+  "@savedUniquePlaylistAudioMp3ToZip": {
+    "description": "Confirmation message after saving the audio mp3 downloaded at or after a specified date time of a unique playlist to a zip file",
+    "placeholders": {
+      "audioDownloadFromDateTime": {
+        "type": "Object"
+      },
+      "savedAudioNumber": {
+        "type": "Object"
+      },
+      "savedAudioTotalFileSize": {
+        "type": "Object"
+      },
+      "savedAudioTotalDuration": {
+        "type": "Object"
+      },      
+      "filePathName": {
+        "type": "Object"
+      }      
+    }
+  }
 }
