@@ -1149,351 +1149,357 @@ void main() {
       );
     });
   });
-  group('Save all playlists audio mp3 files to zip', () {
-    test('settings and playlists sub dirs in same root path', () async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+  group('Save audio mp3 files to zip', () {
+    group('Save all playlists audio mp3 files to zip', () {
+      test('settings and playlists sub dirs in same root path', () async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
 
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-        isTest: true,
-      );
+        SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: MockSharedPreferences(),
+          isTest: true,
+        );
 
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the download app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-      WarningMessageVM warningMessageVM = WarningMessageVM();
+        WarningMessageVM warningMessageVM = WarningMessageVM();
 
-      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
-        warningMessageVM: warningMessageVM,
-        settingsDataService: settingsDataService,
-      );
-
-      audioDownloadVM.loadExistingPlaylists();
-
-      PlaylistListVM playlistListVM = PlaylistListVM(
-        warningMessageVM: warningMessageVM,
-        audioDownloadVM: audioDownloadVM,
-        commentVM: CommentVM(),
-        pictureVM: PictureVM(
+        AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+          warningMessageVM: warningMessageVM,
           settingsDataService: settingsDataService,
-        ),
-        settingsDataService: settingsDataService,
-      );
+        );
 
-      playlistListVM.getUpToDateSelectablePlaylists();
+        audioDownloadVM.loadExistingPlaylists();
 
-      String savedZipFilePathName =
-          await playlistListVM.savePlaylistsAudioMp3FilesToZip(
-        targetDir: kApplicationPathWindowsTest,
-        fromAudioDownloadDateTime: DateTime(2024, 1, 10),
-      );
+        PlaylistListVM playlistListVM = PlaylistListVM(
+          warningMessageVM: warningMessageVM,
+          audioDownloadVM: audioDownloadVM,
+          commentVM: CommentVM(),
+          pictureVM: PictureVM(
+            settingsDataService: settingsDataService,
+          ),
+          settingsDataService: settingsDataService,
+        );
 
-      expect(
-        savedZipFilePathName,
-        "$kApplicationPathWindowsTest${path.separator}audioLearn_audio_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip",
-      );
+        playlistListVM.getUpToDateSelectablePlaylists();
 
-      List<String> zipLst = DirUtil.listFileNamesInDir(
-        directoryPath: kApplicationPathWindowsTest,
-        fileExtension: 'zip',
-      );
+        String savedZipFilePathName =
+            await playlistListVM.savePlaylistsAudioMp3FilesToZip(
+          targetDir: kApplicationPathWindowsTest,
+          fromAudioDownloadDateTime: DateTime(2024, 1, 10),
+        );
 
-      List<String> expectedZipContent = [
-        "playlists\\local\\240110-181805-Really short video 23-07-01.mp3",
-        "playlists\\local\\240110-181810-morning _ cinematic video 23-07-01.mp3",
-        "playlists\\S8 audio\\240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.mp3",
-        "playlists\\S8 audio\\240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.mp3",
-      ];
+        expect(
+          savedZipFilePathName,
+          "$kApplicationPathWindowsTest${path.separator}audioLearn_audio_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip",
+        );
 
-      List<String> zipFilePathNamesLst = await DirUtil.listPathFileNamesInZip(
-        zipFilePathName:
-            kApplicationPathWindowsTest + path.separator + zipLst[0],
-      );
+        List<String> zipLst = DirUtil.listFileNamesInDir(
+          directoryPath: kApplicationPathWindowsTest,
+          fileExtension: 'zip',
+        );
 
-      expect(
-        zipFilePathNamesLst,
-        expectedZipContent,
-      );
+        List<String> expectedZipContent = [
+          "playlists\\local\\240110-181805-Really short video 23-07-01.mp3",
+          "playlists\\local\\240110-181810-morning _ cinematic video 23-07-01.mp3",
+          "playlists\\S8 audio\\240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.mp3",
+          "playlists\\S8 audio\\240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.mp3",
+        ];
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        List<String> zipFilePathNamesLst = await DirUtil.listPathFileNamesInZip(
+          zipFilePathName:
+              kApplicationPathWindowsTest + path.separator + zipLst[0],
+        );
+
+        expect(
+          zipFilePathNamesLst,
+          expectedZipContent,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      test('settings in app dir and playlists in playlists root path',
+          () async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_two_playlists_test",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
+
+        SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: MockSharedPreferences(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+        WarningMessageVM warningMessageVM = WarningMessageVM();
+
+        AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+          warningMessageVM: warningMessageVM,
+          settingsDataService: settingsDataService,
+        );
+
+        audioDownloadVM.loadExistingPlaylists();
+
+        PlaylistListVM playlistListVM = PlaylistListVM(
+          warningMessageVM: warningMessageVM,
+          audioDownloadVM: audioDownloadVM,
+          commentVM: CommentVM(),
+          pictureVM: PictureVM(
+            settingsDataService: settingsDataService,
+          ),
+          settingsDataService: settingsDataService,
+        );
+
+        playlistListVM.getUpToDateSelectablePlaylists();
+
+        String savedZipFilePathName =
+            await playlistListVM.savePlaylistsAudioMp3FilesToZip(
+          targetDir: kApplicationPathWindowsTest,
+          fromAudioDownloadDateTime: DateTime(2024, 1, 8),
+        );
+
+        expect(
+          savedZipFilePathName,
+          "$kApplicationPathWindowsTest${path.separator}audioLearn_audio_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip",
+        );
+
+        List<String> zipLst = DirUtil.listFileNamesInDir(
+          directoryPath: kApplicationPathWindowsTest,
+          fileExtension: 'zip',
+        );
+
+        List<String> expectedZipContent = [
+          "playlists\\local\\240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
+          "playlists\\http_local\\250318-165814-Really short video 23-07-01.mp3",
+        ];
+
+        List<String> zipFilePathNamesLst = await DirUtil.listPathFileNamesInZip(
+          zipFilePathName:
+              kApplicationPathWindowsTest + path.separator + zipLst[0],
+        );
+
+        expect(
+          zipFilePathNamesLst,
+          expectedZipContent,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
     });
-    test('settings in app dir and playlists in playlists root path', () async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+    group('Save unique playlist audio mp3 files to zip', () {
+      test('settings and playlists sub dirs in same root path', () async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_two_playlists_test",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
 
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-        isTest: true,
-      );
+        SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: MockSharedPreferences(),
+          isTest: true,
+        );
 
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the download app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-      WarningMessageVM warningMessageVM = WarningMessageVM();
+        WarningMessageVM warningMessageVM = WarningMessageVM();
 
-      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
-        warningMessageVM: warningMessageVM,
-        settingsDataService: settingsDataService,
-      );
-
-      audioDownloadVM.loadExistingPlaylists();
-
-      PlaylistListVM playlistListVM = PlaylistListVM(
-        warningMessageVM: warningMessageVM,
-        audioDownloadVM: audioDownloadVM,
-        commentVM: CommentVM(),
-        pictureVM: PictureVM(
+        AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+          warningMessageVM: warningMessageVM,
           settingsDataService: settingsDataService,
-        ),
-        settingsDataService: settingsDataService,
-      );
+        );
 
-      playlistListVM.getUpToDateSelectablePlaylists();
+        audioDownloadVM.loadExistingPlaylists();
 
-      String savedZipFilePathName =
-          await playlistListVM.savePlaylistsAudioMp3FilesToZip(
-        targetDir: kApplicationPathWindowsTest,
-        fromAudioDownloadDateTime: DateTime(2024, 1, 8),
-      );
-
-      expect(
-        savedZipFilePathName,
-        "$kApplicationPathWindowsTest${path.separator}audioLearn_audio_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip",
-      );
-
-      List<String> zipLst = DirUtil.listFileNamesInDir(
-        directoryPath: kApplicationPathWindowsTest,
-        fileExtension: 'zip',
-      );
-
-      List<String> expectedZipContent = [
-        "playlists\\local\\240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
-        "playlists\\http_local\\250318-165814-Really short video 23-07-01.mp3",
-      ];
-
-      List<String> zipFilePathNamesLst = await DirUtil.listPathFileNamesInZip(
-        zipFilePathName:
-            kApplicationPathWindowsTest + path.separator + zipLst[0],
-      );
-
-      expect(
-        zipFilePathNamesLst,
-        expectedZipContent,
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-  });
-  group('Save unique playlist audio mp3 files to zip', () {
-    test('settings and playlists sub dirs in same root path', () async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_test",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
-
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-        isTest: true,
-      );
-
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the download app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
-
-      WarningMessageVM warningMessageVM = WarningMessageVM();
-
-      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
-        warningMessageVM: warningMessageVM,
-        settingsDataService: settingsDataService,
-      );
-
-      audioDownloadVM.loadExistingPlaylists();
-
-      PlaylistListVM playlistListVM = PlaylistListVM(
-        warningMessageVM: warningMessageVM,
-        audioDownloadVM: audioDownloadVM,
-        commentVM: CommentVM(),
-        pictureVM: PictureVM(
+        PlaylistListVM playlistListVM = PlaylistListVM(
+          warningMessageVM: warningMessageVM,
+          audioDownloadVM: audioDownloadVM,
+          commentVM: CommentVM(),
+          pictureVM: PictureVM(
+            settingsDataService: settingsDataService,
+          ),
           settingsDataService: settingsDataService,
-        ),
-        settingsDataService: settingsDataService,
-      );
+        );
 
-      List<Playlist> playlistLst = playlistListVM.getUpToDateSelectablePlaylists();
+        List<Playlist> playlistLst =
+            playlistListVM.getUpToDateSelectablePlaylists();
 
-      String savedZipFilePathName =
-          await playlistListVM.saveUniquePlaylistAudioMp3FilesToZip(
-            playlist: playlistLst[4], // S8 audio
-        targetDir: kApplicationPathWindowsTest,
-        fromAudioDownloadDateTime: DateTime(2024, 1, 10),
-      );
+        String savedZipFilePathName =
+            await playlistListVM.saveUniquePlaylistAudioMp3FilesToZip(
+          playlist: playlistLst[4], // S8 audio
+          targetDir: kApplicationPathWindowsTest,
+          fromAudioDownloadDateTime: DateTime(2024, 1, 10),
+        );
 
-      expect(
-        savedZipFilePathName,
-        "$kApplicationPathWindowsTest${path.separator}S8 audio_audio.zip",
-      );
+        expect(
+          savedZipFilePathName,
+          "$kApplicationPathWindowsTest${path.separator}S8 audio_audio.zip",
+        );
 
-      List<String> zipLst = DirUtil.listFileNamesInDir(
-        directoryPath: kApplicationPathWindowsTest,
-        fileExtension: 'zip',
-      );
+        List<String> zipLst = DirUtil.listFileNamesInDir(
+          directoryPath: kApplicationPathWindowsTest,
+          fileExtension: 'zip',
+        );
 
-      List<String> expectedZipContent = [
-        "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.mp3",
-        "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.mp3",
-      ];
+        List<String> expectedZipContent = [
+          "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.mp3",
+          "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.mp3",
+        ];
 
-      List<String> zipFilePathNamesLst = await DirUtil.listPathFileNamesInZip(
-        zipFilePathName:
-            kApplicationPathWindowsTest + path.separator + zipLst[0],
-      );
+        List<String> zipFilePathNamesLst = await DirUtil.listPathFileNamesInZip(
+          zipFilePathName:
+              kApplicationPathWindowsTest + path.separator + zipLst[0],
+        );
 
-      expect(
-        zipFilePathNamesLst,
-        expectedZipContent,
-      );
+        expect(
+          zipFilePathNamesLst,
+          expectedZipContent,
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    test('settings in app dir and playlists in playlists root path', () async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      test('settings in app dir and playlists in playlists root path',
+          () async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_two_playlists_test",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_two_playlists_test",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
 
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-        isTest: true,
-      );
+        SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: MockSharedPreferences(),
+          isTest: true,
+        );
 
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the download app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-      WarningMessageVM warningMessageVM = WarningMessageVM();
+        WarningMessageVM warningMessageVM = WarningMessageVM();
 
-      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
-        warningMessageVM: warningMessageVM,
-        settingsDataService: settingsDataService,
-      );
-
-      audioDownloadVM.loadExistingPlaylists();
-
-      PlaylistListVM playlistListVM = PlaylistListVM(
-        warningMessageVM: warningMessageVM,
-        audioDownloadVM: audioDownloadVM,
-        commentVM: CommentVM(),
-        pictureVM: PictureVM(
+        AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+          warningMessageVM: warningMessageVM,
           settingsDataService: settingsDataService,
-        ),
-        settingsDataService: settingsDataService,
-      );
+        );
 
-      List<Playlist> playlistLst = playlistListVM.getUpToDateSelectablePlaylists();
+        audioDownloadVM.loadExistingPlaylists();
 
-      String savedZipFilePathName =
-          await playlistListVM.saveUniquePlaylistAudioMp3FilesToZip(
-            playlist: playlistLst[1], // S8 audio
-        targetDir: kApplicationPathWindowsTest,
-        fromAudioDownloadDateTime: DateTime(2024, 1, 10),
-      );
+        PlaylistListVM playlistListVM = PlaylistListVM(
+          warningMessageVM: warningMessageVM,
+          audioDownloadVM: audioDownloadVM,
+          commentVM: CommentVM(),
+          pictureVM: PictureVM(
+            settingsDataService: settingsDataService,
+          ),
+          settingsDataService: settingsDataService,
+        );
 
-      expect(
-        savedZipFilePathName,
-        "$kApplicationPathWindowsTest${path.separator}http_local_audio.zip",
-      );
+        List<Playlist> playlistLst =
+            playlistListVM.getUpToDateSelectablePlaylists();
 
-      List<String> zipLst = DirUtil.listFileNamesInDir(
-        directoryPath: kApplicationPathWindowsTest,
-        fileExtension: 'zip',
-      );
+        String savedZipFilePathName =
+            await playlistListVM.saveUniquePlaylistAudioMp3FilesToZip(
+          playlist: playlistLst[1], // S8 audio
+          targetDir: kApplicationPathWindowsTest,
+          fromAudioDownloadDateTime: DateTime(2024, 1, 10),
+        );
 
-      List<String> expectedZipContent = [
-        "250318-165814-Really short video 23-07-01.mp3",
-      ];
+        expect(
+          savedZipFilePathName,
+          "$kApplicationPathWindowsTest${path.separator}http_local_audio.zip",
+        );
 
-      List<String> zipFilePathNamesLst = await DirUtil.listPathFileNamesInZip(
-        zipFilePathName:
-            kApplicationPathWindowsTest + path.separator + zipLst[0],
-      );
+        List<String> zipLst = DirUtil.listFileNamesInDir(
+          directoryPath: kApplicationPathWindowsTest,
+          fileExtension: 'zip',
+        );
 
-      expect(
-        zipFilePathNamesLst,
-        expectedZipContent,
-      );
+        List<String> expectedZipContent = [
+          "250318-165814-Really short video 23-07-01.mp3",
+        ];
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        List<String> zipFilePathNamesLst = await DirUtil.listPathFileNamesInZip(
+          zipFilePathName:
+              kApplicationPathWindowsTest + path.separator + zipLst[0],
+        );
+
+        expect(
+          zipFilePathNamesLst,
+          expectedZipContent,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
     });
   });
   group('''Delete Sort/Filtered audio physically as well as their comments and
