@@ -843,6 +843,7 @@ class PlaylistListVM extends ChangeNotifier {
 
   void moveSelectedItemUp() {
     int selectedIndex = _getSelectedPlaylistIndex();
+
     if (selectedIndex != -1) {
       moveItemUp(selectedIndex);
       _updateAndSavePlaylistOrder();
@@ -1012,6 +1013,7 @@ class PlaylistListVM extends ChangeNotifier {
 
   void moveSelectedItemDown() {
     int selectedIndex = _getSelectedPlaylistIndex();
+
     if (selectedIndex != -1) {
       moveItemDown(selectedIndex);
       _updateAndSavePlaylistOrder();
@@ -1744,6 +1746,11 @@ class PlaylistListVM extends ChangeNotifier {
     }
   }
 
+  /// Method called by the home page when the user clicks on the 'Playlist Download View'
+  /// button at the bottom of the application.
+  /// 
+  /// This method simply notifies the listeners of the PlaylistListVM
+  /// in order to update them.
   void backToPlaylistDownloadView() {
     notifyListeners();
   }
