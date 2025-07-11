@@ -123,7 +123,7 @@ DateFormat frenchDateFormatYy = DateFormat("dd/MM/yy");
 DateFormat timeFormat = DateFormat("HH:mm");
 DateFormat yearMonthDayDateTimeFormat = DateFormat("yyyy/MM/dd HH:mm");
 DateFormat yearMonthDayDateTimeFormatForFileName =
-    DateFormat("yyyy-MM-dd_HH_mm");
+    DateFormat("yyyy-MM-dd_HH_mm_ss");
 
 const TextStyle kDialogTitlesStyle = TextStyle(
   fontSize: 17,

@@ -175,6 +175,11 @@ enum WarningMessageType {
   // Comments and Pictures to Zip File' menu item located in the playlist
   // popup menu.
 
+  savedUniquePlaylistOrAllPlaylistsAudioMp3ToZip, // The case if the user
+  // clicks on the 'Save Playlists Audio MP3 to Zip File' menu
+  // item located in the appbar leading popup menu or on the 'Save Playlist
+  // Audio MP3 to Zip File' menu item located in the playlist popup menu.
+
   restoreAppDataFromZip, // The case if the user clicks on the
   // 'Restore Playlist, Comments and Settings from Zip File' menu
   // item located in the appbar leading popup menu.
@@ -791,6 +796,36 @@ class WarningMessageVM extends ChangeNotifier {
 
     warningMessageType =
         WarningMessageType.savedUniquePlaylistOrAllPlaylistsAndAppDataToZip;
+
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  String _fromAudioDownloadDateTime = '';
+  String get fromAudioDownloadDateTime => _fromAudioDownloadDateTime;
+  int _savedAudioMp3Number = 0;
+  int get savedAudioMp3Number => _savedAudioMp3Number;
+  int _savedTotalAudioFileSize = 0;
+  int get savedTotalAudioFileSize => _savedTotalAudioFileSize;
+  late Duration _savedTotalAudioDuration;
+  Duration get savedTotalAudioDuration => _savedTotalAudioDuration;
+  void confirmSavingAudioMp3ToZip({
+    required String zipFilePathName,
+    required String fromAudioDownloadDateTime,
+    required int savedAudioMp3Number,
+    required int savedTotalAudioFileSize,
+    required Duration savedTotalAudioDuration,
+    bool uniquePlaylistIsSaved = false,
+  }) {
+    _zipFilePathName = zipFilePathName;
+    _fromAudioDownloadDateTime = fromAudioDownloadDateTime;
+    _savedAudioMp3Number = savedAudioMp3Number;
+    _savedTotalAudioFileSize = savedTotalAudioFileSize;
+    _savedTotalAudioDuration = savedTotalAudioDuration;  
+    _uniquePlaylistIsSaved = uniquePlaylistIsSaved;
+
+    warningMessageType =
+        WarningMessageType.savedUniquePlaylistOrAllPlaylistsAudioMp3ToZip;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();

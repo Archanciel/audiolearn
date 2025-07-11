@@ -1108,6 +1108,59 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
+      case WarningMessageType.savedUniquePlaylistOrAllPlaylistsAudioMp3ToZip:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          String savedAppDataToZipMessage;
+
+          if (_warningMessageVM.zipFilePathName != '') {
+            if (_warningMessageVM.uniquePlaylistIsSaved) {
+              savedAppDataToZipMessage =
+                  AppLocalizations.of(context)!.savedUniquePlaylistAudioMp3ToZip(
+                _warningMessageVM.fromAudioDownloadDateTime,
+                _warningMessageVM.savedAudioMp3Number,
+                _warningMessageVM.savedTotalAudioFileSize,
+                _warningMessageVM.savedTotalAudioDuration,
+                _warningMessageVM.zipFilePathName,
+              );
+            } else {
+              savedAppDataToZipMessage =
+                  AppLocalizations.of(context)!.savedMultiplePlaylistsAudioMp3ToZip(
+                _warningMessageVM.fromAudioDownloadDateTime,
+                _warningMessageVM.savedAudioMp3Number,
+                _warningMessageVM.savedTotalAudioFileSize,
+                _warningMessageVM.savedTotalAudioDuration,
+                _warningMessageVM.zipFilePathName,
+              );
+
+              if (_warningMessageVM.savedOrRestoredPictureJpgNumber > 0) {
+                savedAppDataToZipMessage +=
+                    AppLocalizations.of(context)!.savedPictureNumberMessage(
+                  _warningMessageVM.savedOrRestoredPictureJpgNumber,
+                );
+              }
+            }
+
+            _displayWarningDialog(
+              context: _context,
+              message: savedAppDataToZipMessage,
+              warningMessageVM: _warningMessageVM,
+              themeProviderVM: themeProviderVM,
+              warningMode: WarningMode.confirm,
+            );
+          } else {
+            savedAppDataToZipMessage =
+                AppLocalizations.of(context)!.appDataCouldNotBeSavedToZip;
+
+            _displayWarningDialog(
+              context: _context,
+              message: savedAppDataToZipMessage,
+              warningMessageVM: _warningMessageVM,
+              themeProviderVM: themeProviderVM,
+            );
+          }
+        });
+
+        return const SizedBox.shrink();
       case WarningMessageType.restoreAppDataFromZip:
         WidgetsBinding.instance.addPostFrameCallback((_) {
           String restoredAppDataFromZipMessage;

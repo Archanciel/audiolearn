@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:archive/archive.dart';
+import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -1748,7 +1749,7 @@ class PlaylistListVM extends ChangeNotifier {
 
   /// Method called by the home page when the user clicks on the 'Playlist Download View'
   /// button at the bottom of the application.
-  /// 
+  ///
   /// This method simply notifies the listeners of the PlaylistListVM
   /// in order to update them.
   void backToPlaylistDownloadView() {
@@ -2804,7 +2805,9 @@ class PlaylistListVM extends ChangeNotifier {
 
     _warningMessageVM.confirmSavingToZip(
         zipFilePathName: savedZipFilePathName,
-        savedPictureNumber: savedPictureNumber);
+        savedPictureNumber:
+            savedPictureNumber); // if the picture number is > 0,
+    // then a picture number sentence is added to the confirmation message.
 
     return savedZipFilePathName;
   }
@@ -3014,87 +3017,142 @@ class PlaylistListVM extends ChangeNotifier {
 
     _warningMessageVM.confirmSavingToZip(
         zipFilePathName: savedZipFilePathName,
-        savedPictureNumber: savedPictureNumber,
+        savedPictureNumber: savedPictureNumber, // if the picture number is > 0,
+        // then a picture number sentence is added to the confirmation message.
         uniquePlaylistIsSaved: true);
     return savedZipFilePathName;
   }
 
-  /// This method saves the audio MP3 files located in every playlist which were downloaded at or after the passed
-  /// [fromAudioDownloadDateTime] in a ZIP file located in the passed [targetDir].
-  Future<String> savePlaylistsAudioMp3FilesToZip({
+  /// This method saves the audio MP3 files located in every playlist which were downloaded at or
+  /// after the passed [fromAudioDownloadDateTime] in a ZIP file located in the passed [targetDir].
+  ///
+  /// The returned list contains
+  /// [
+  ///  the created zip file path name,
+  ///  the number of saved audio files,
+  ///  the total unzipped size of the saved audio files in bytes,
+  ///  the total duration of the saved audio files,
+  /// ]
+  Future<List<dynamic>> savePlaylistsAudioMp3FilesToZip({
     required String targetDir,
     required DateTime fromAudioDownloadDateTime,
   }) async {
-    String savedZipFilePathName = await _saveAllAudioMp3FilesToZip(
+    List<dynamic> restoredInfoLst = await _saveAllAudioMp3FilesToZip(
       targetDir: targetDir,
       fromAudioDownloadDateTime: fromAudioDownloadDateTime,
     );
 
-    if (savedZipFilePathName.isEmpty) {
+    if (restoredInfoLst.isEmpty) {
       // The case if the target directory does not exist or is invalid.
       // In this situation, since the passed savedZipFilePathName is empty,
       // a warning message is displayed instead of a confirmation message.
-      _warningMessageVM.confirmSavingToZip(
-        zipFilePathName: savedZipFilePathName,
-        savedPictureNumber: 0,
+      _warningMessageVM.confirmSavingAudioMp3ToZip(
+        zipFilePathName: '',
+        fromAudioDownloadDateTime: '',
+        savedAudioMp3Number: 0,
+        savedTotalAudioFileSize: 0,
+        savedTotalAudioDuration: restoredInfoLst[3],
       );
 
-      return savedZipFilePathName;
+      return restoredInfoLst;
     }
 
-    _warningMessageVM.confirmSavingToZip(
-      zipFilePathName: savedZipFilePathName,
-      savedPictureNumber: 0,
+    DateFormatVM dateFormatVM = DateFormatVM(
+      settingsDataService: _settingsDataService,
     );
 
-    return savedZipFilePathName;
+    _warningMessageVM.confirmSavingAudioMp3ToZip(
+      zipFilePathName: restoredInfoLst[0],
+      fromAudioDownloadDateTime:
+          dateFormatVM.formatDateTime(fromAudioDownloadDateTime),
+      savedAudioMp3Number: restoredInfoLst[1],
+      savedTotalAudioFileSize: restoredInfoLst[2],
+      savedTotalAudioDuration: restoredInfoLst[3],
+    );
+
+    return restoredInfoLst;
   }
 
   /// This method saves the audio MP3 files located in the passed [playlist] which were downloaded at or after the passed
   /// [fromAudioDownloadDateTime] in a ZIP file located in the passed [targetDir].
-  Future<String> saveUniquePlaylistAudioMp3FilesToZip({
+  ///
+  /// The returned list contains
+  /// [
+  ///  the created zip file path name,
+  ///  the number of saved audio files,
+  ///  the total unzipped size of the saved audio files in bytes,
+  ///  the total duration of the saved audio files,
+  /// ]
+  Future<List<dynamic>> saveUniquePlaylistAudioMp3FilesToZip({
     required Playlist playlist,
     required String targetDir,
     required DateTime fromAudioDownloadDateTime,
   }) async {
     if (targetDir == '/') {
-      return '';
+      return [];
     }
 
-    String savedZipFilePathName = await _saveUniquePlaylistAudioMp3FilesToZip(
+    List<dynamic> restoredInfoLst = await _saveUniquePlaylistAudioMp3FilesToZip(
       playlist: playlist,
       targetDir: targetDir,
       fromAudioDownloadDateTime: fromAudioDownloadDateTime,
     );
 
-    if (savedZipFilePathName.isEmpty) {
-      _warningMessageVM.confirmSavingToZip(
-        zipFilePathName: savedZipFilePathName,
-        savedPictureNumber: 0,
+    if (restoredInfoLst.isEmpty) {
+      // The case if the target directory does not exist or is invalid.
+      // In this situation, since the passed savedZipFilePathName is empty,
+      // a warning message is displayed instead of a confirmation message.
+      _warningMessageVM.confirmSavingAudioMp3ToZip(
+        zipFilePathName: '',
+        fromAudioDownloadDateTime: '',
+        savedAudioMp3Number: 0,
+        savedTotalAudioFileSize: 0,
+        savedTotalAudioDuration: restoredInfoLst[3],
+        uniquePlaylistIsSaved: true,
       );
 
-      return savedZipFilePathName;
+      return restoredInfoLst;
     }
 
-    _warningMessageVM.confirmSavingToZip(
-      zipFilePathName: savedZipFilePathName,
-      savedPictureNumber: 0,
+    DateFormatVM dateFormatVM = DateFormatVM(
+      settingsDataService: _settingsDataService,
+    );
+
+    _warningMessageVM.confirmSavingAudioMp3ToZip(
+      zipFilePathName: restoredInfoLst[0],
+      fromAudioDownloadDateTime:
+          dateFormatVM.formatDateTime(fromAudioDownloadDateTime),
+      savedAudioMp3Number: restoredInfoLst[1],
+      savedTotalAudioFileSize: restoredInfoLst[2],
+      savedTotalAudioDuration: restoredInfoLst[3],
       uniquePlaylistIsSaved: true,
     );
 
-    return savedZipFilePathName;
+    return restoredInfoLst;
   }
 
   /// Returns the saved zip file path name, '' if the target dir in which to save
   /// the zip does not exist or if no audio files match the criteria.
-  Future<String> _saveAllAudioMp3FilesToZip({
+  ///
+  /// The returned list contains
+  /// [
+  ///  the created zip file path name,
+  ///  the number of saved audio files,
+  ///  the total unzipped size of the saved audio files in bytes,
+  ///  the total duration of the saved audio files,
+  /// ]
+  Future<List<dynamic>> _saveAllAudioMp3FilesToZip({
     required String targetDir,
     required DateTime fromAudioDownloadDateTime,
   }) async {
+    int savedAudioNumber = 0;
+    int savedAudioFileSize = 0;
+    Duration savedAudioDuration = Duration.zero;
+
     Directory targetDirectory = Directory(targetDir);
 
     if (!targetDirectory.existsSync()) {
-      return '';
+      return [];
     }
 
     // Create a zip encoder
@@ -3134,38 +3192,58 @@ class PlaylistListVM extends ChangeNotifier {
             audioBytes,
           ));
 
+          savedAudioNumber++;
+          savedAudioFileSize += audio.audioFileSize;
+          savedAudioDuration += audio.audioDuration;
+
           hasAudioFiles = true;
         }
       }
     }
 
     if (!hasAudioFiles) {
-      return '';
+      return [];
     }
 
     // Save the archive to a zip file in the target directory
     String zipFileName =
-        "audioLearn_audio_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip";
+        "audioLearn_mp3_from_${yearMonthDayDateTimeFormatForFileName.format(fromAudioDownloadDateTime)}_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip";
 
     String zipFilePathName = path.join(targetDir, zipFileName);
     File zipFile = File(zipFilePathName);
     zipFile.writeAsBytesSync(ZipEncoder().encode(archive), flush: true);
 
-    return zipFilePathName;
+    return [
+      zipFilePathName,
+      savedAudioNumber,
+      savedAudioFileSize,
+      savedAudioDuration,
+    ];
   }
 
   /// Returns the saved zip file path name, '' if the target dir in which to save
   /// the zip does not exist or if no audio files match the criteria.
-  Future<String> _saveUniquePlaylistAudioMp3FilesToZip({
+  ///
+  /// The returned list contains
+  /// [
+  ///  the created zip file path name,
+  ///  the number of saved audio files,
+  ///  the total unzipped size of the saved audio files in bytes,
+  ///  the total duration of the saved audio files,
+  /// ]
+  Future<List<dynamic>> _saveUniquePlaylistAudioMp3FilesToZip({
     required Playlist playlist,
     required String targetDir,
     required DateTime fromAudioDownloadDateTime,
   }) async {
+    int savedAudioNumber = 0;
+    int savedAudioFileSize = 0;
+    Duration savedAudioDuration = Duration.zero;
     Directory targetDirectory = Directory(targetDir);
     Directory playlistDir = Directory(playlist.downloadPath);
 
     if (!targetDirectory.existsSync() || !playlistDir.existsSync()) {
-      return '';
+      return [];
     }
 
     // Create a zip encoder
@@ -3193,21 +3271,31 @@ class PlaylistListVM extends ChangeNotifier {
           audioBytes,
         ));
 
+        savedAudioNumber++;
+        savedAudioFileSize += audio.audioFileSize;
+        savedAudioDuration += audio.audioDuration;
+
         hasAudioFiles = true;
       }
     }
 
     if (!hasAudioFiles) {
-      return '';
+      return [];
     }
 
     // Save the archive to a zip file in the target directory
-    String zipFileName = "${playlist.title}_audio.zip";
+    String zipFileName =
+        "${playlist.title}_mp3_from_${yearMonthDayDateTimeFormatForFileName.format(fromAudioDownloadDateTime)}_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip";
     String zipFilePathName = path.join(targetDir, zipFileName);
     File zipFile = File(zipFilePathName);
     zipFile.writeAsBytesSync(ZipEncoder().encode(archive), flush: true);
 
-    return zipFilePathName;
+    return [
+      zipFilePathName,
+      savedAudioNumber,
+      savedAudioFileSize,
+      savedAudioDuration,
+    ];
   }
 
   /// Method called when the user clicks on the 'Restore Playlist, Comments,
@@ -3412,9 +3500,9 @@ class PlaylistListVM extends ChangeNotifier {
   ///  number of restored pictures JPG files,
   ///  was the zip file created from the playlist item 'Save the Playlist, its Comments,
   ///    and its Pictures to Zip File' (true, false if multiple playlists are restored),
-  ///  restoredAudioReferencesNumber
-  ///  updated comment number
-  ///  added comment number
+  ///  restoredAudioReferencesNumber,
+  ///  updated comment number,
+  ///  added comment number,
   /// ]
   Future<List<dynamic>> _restoreFilesFromZip({
     required String zipFilePathName,
