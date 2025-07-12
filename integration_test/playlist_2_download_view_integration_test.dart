@@ -4536,6 +4536,8 @@ void main() {
         commentCreationDate: '12/10/24',
         commentUpdateDate: '01/11/24',
         datePickerDateStr: DateFormat('dd/MM/yyyy').format(now),
+        savePlaylistsAudioMp3DateFormat: "dd/MM/yyyy",
+        savePlaylistsAudioMp3OldestDate: "26/12/2023",
       );
 
       await _selectDateFormat(
@@ -4600,6 +4602,8 @@ void main() {
         commentCreationDate: '10/12/24',
         commentUpdateDate: '11/01/24',
         datePickerDateStr: DateFormat('MM/dd/yyyy').format(now),
+        savePlaylistsAudioMp3DateFormat: "MM/dd/yyyy",
+        savePlaylistsAudioMp3OldestDate: "12/26/2023",
       );
 
       await _selectDateFormat(
@@ -4664,6 +4668,8 @@ void main() {
         commentCreationDate: '24/10/12',
         commentUpdateDate: '24/11/01',
         datePickerDateStr: DateFormat('yyyy/MM/dd').format(now),
+        savePlaylistsAudioMp3DateFormat: "yyyy/MM/dd",
+        savePlaylistsAudioMp3OldestDate: "2023/12/26",
       );
 
       await _selectDateFormat(
@@ -4728,6 +4734,8 @@ void main() {
         commentCreationDate: '12/10/24',
         commentUpdateDate: '01/11/24',
         datePickerDateStr: DateFormat('dd/MM/yyyy').format(now),
+        savePlaylistsAudioMp3DateFormat: "dd/MM/yyyy",
+        savePlaylistsAudioMp3OldestDate: "26/12/2023",
       );
 
       await _selectDateFormat(
@@ -4821,6 +4829,8 @@ void main() {
         commentCreationDate: '10/12/24',
         commentUpdateDate: '11/01/24',
         datePickerDateStr: DateFormat('MM/dd/yyyy').format(now),
+        savePlaylistsAudioMp3DateFormat: "MM/dd/yyyy",
+        savePlaylistsAudioMp3OldestDate: "12/26/2023",
       );
 
       await _selectDateFormat(
@@ -4913,6 +4923,8 @@ void main() {
         commentCreationDate: '24/10/12',
         commentUpdateDate: '24/11/01',
         datePickerDateStr: DateFormat('yyyy/MM/dd').format(now),
+        savePlaylistsAudioMp3DateFormat: "yyyy/MM/dd",
+        savePlaylistsAudioMp3OldestDate: "2023/12/26",
       );
 
       await _selectDateFormat(
@@ -5005,6 +5017,8 @@ void main() {
         commentCreationDate: '12/10/24',
         commentUpdateDate: '01/11/24',
         datePickerDateStr: DateFormat('dd/MM/yyyy').format(now),
+        savePlaylistsAudioMp3DateFormat: "dd/MM/yyyy",
+        savePlaylistsAudioMp3OldestDate: "26/12/2023",
       );
 
       // Purge the test playlist directory so that the created test
@@ -23803,6 +23817,8 @@ Future<void> _verifyDateFormatApplication({
   required String commentCreationDate,
   required String commentUpdateDate,
   required String datePickerDateStr,
+  required String savePlaylistsAudioMp3DateFormat,
+  required String savePlaylistsAudioMp3OldestDate,
 }) async {
   IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
     tester: tester,
@@ -24049,6 +24065,7 @@ Future<void> _verifyDateFormatApplication({
   await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
   await tester.pumpAndSettle();
 
+  // Now verify the date format on the 'Set the download date dialog'.
   // On the left appbar menu, tap on the 'Save Playlists Audio's MP3
   // to ZIP File ...' menu.
 
@@ -24062,11 +24079,11 @@ Future<void> _verifyDateFormatApplication({
       .tap(find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
   await tester.pumpAndSettle();
 
-  expect(find.text('yyyy/MM/dd hh:mm'), findsOneWidget);
-  expect(find.text('2023/12/26 09:45'), findsOneWidget);
+  expect(find.text('Date/time $savePlaylistsAudioMp3DateFormat hh:mm'),
+      findsOneWidget);
+  expect(find.text('$savePlaylistsAudioMp3OldestDate 09:45'), findsOneWidget);
 
-  await tester
-      .tap(find.byKey(const Key('setValueToTargetCancelButton')));
+  await tester.tap(find.byKey(const Key('setValueToTargetCancelButton')));
   await tester.pumpAndSettle();
 }
 
