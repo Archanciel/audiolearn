@@ -663,8 +663,8 @@
   "remaining": "Durée restante",
   "searchInYoutubeChannelName": "Inclure la chaîne Youtube",
   "searchInYoutubeChannelNameTooltip": "Inclure le nom de la chaîne Youtube dans la recherche.",
-  "savePlaylistAndCommentsToZipMenu": "Sauver les playlists, commentaires, photos et settings dans un fichier zip ...",
-  "savePlaylistAndCommentsToZipTooltip": "Sauvegarde les playlists, les commentaires et les photos ainsi que le fichier settings.json contenant les paramètres de l'application dans un fichier zip. Seuls les fichiers JSON sont copiés. Les fichiers MP3 et JPG ne sont pas inclus.",
+  "savePlaylistAndCommentsToZipMenu": "Sauver les playlists, commentaires, photos et settings dans un fichier ZIP ...",
+  "savePlaylistAndCommentsToZipTooltip": "Sauvegarde les playlists, les commentaires et les photos ainsi que le fichier settings.json contenant les paramètres de l'application dans un fichier ZIP. Seuls les fichiers JSON sont copiés. Les fichiers MP3 et JPG ne sont pas inclus.",
   "setYoutubeChannelMenu": "Youtube channel définition",
   "confirmYoutubeChannelModifications": "La chaîne Youtube a été définie dans {numberOfModifiedDownloadedAudio} audio téléchargés ainsi que dans {numberOfModifiedPlayableAudio} audio écoutables.",
   "@confirmYoutubeChannelModifications": {
@@ -1119,11 +1119,11 @@
   "addAudioPicture": "Ajouter une photo à l'audio ...",
   "removeAudioPicture": "Eliminer la photo de l'audio ...",
   "savedAppDataToZip": "Fichiers JSON des playlists, des commentaires et des photos ainsi que les paramètres de l'application sauvagardés dans \"{filePathName}\".",
-  "appDataCouldNotBeSavedToZip": "Les fichiers JSON des playlists, des commentaires et des photos ainsi que les paramètres de l'application n'ont pu être sauvagardés dans un zip !",
+  "appDataCouldNotBeSavedToZip": "Les fichiers JSON des playlists, des commentaires et des photos ainsi que les paramètres de l'application n'ont pu être sauvagardés dans un ZIP !",
   "pictured": "Avec photo",
   "notPictured": "Sans ph.",
-  "restorePlaylistAndCommentsFromZipMenu": "Restaurer les playlists, commentaires, photos et settings depuis un fichier zip ...",
-  "restorePlaylistAndCommentsFromZipTooltip": "Restaure les playlists, les commentaires, les photos ainsi que les paramètres de l'application à partir d'un fichier zip préalablement sauvé. Seuls les fichiers JSON sont restaurés. Les fichiers audio n'étant pas inclus dans le fichier zip, ils ne sont pas restaurés.",
+  "restorePlaylistAndCommentsFromZipMenu": "Restaurer les playlists, commentaires, photos et settings depuis un fichier ZIP ...",
+  "restorePlaylistAndCommentsFromZipTooltip": "Restaure les playlists, les commentaires, les photos ainsi que les paramètres de l'application à partir d'un fichier ZIP préalablement sauvé. Seuls les fichiers JSON sont restaurés. Les fichiers audio n'étant pas inclus dans le fichier ZIP, ils ne sont pas restaurés.",
   "restoredAppDataFromZip": "Les fichiers JSON de {playlistsNumber} playlists, de {commentsNumber} commentaires et de {picturesNumber} photos ainsi que {audiosNumber} références audio et {addedCommentNumber} commentaires ajoutés plus {updatedCommentNumber} modifiés et les paramètres de l'application ont été restaurés depuis \"{filePathName}\".",
   "@restoredAppDataFromZip": {
     "description": "Warning message indicating that the default SF parms were not applied to move audio",
@@ -1153,7 +1153,7 @@
   },
   "restoredUniquePlaylistFromZip": "Les fichiers JSON de {playlistsNumber} playlist sauvegardée individuellement, de {commentsNumber} commentaires et de {picturesNumber} photos ainsi que {audiosNumber} références audio et {addedCommentNumber} commentaires ajoutés plus {updatedCommentNumber} modifiés ont été restaurés depuis \"{filePathName}\".",
   "@restoredUniquePlaylistFromZip": {
-    "description": "Warning message indicating that the a unique playlist was restored from zip created from playlist item menu",
+    "description": "Warning message indicating that the a unique playlist was restored from ZIP created from playlist item menu",
     "placeholders": {
       "playlistsNumber": {
         "type": "Object"
@@ -1178,7 +1178,7 @@
       }
     }
   },
-  "appDataCouldNotBeRestoredFromZip": "Les fichiers JSON des playlists et des commentaires ainsi que les paramètres de l'application n'ont pu être restaurés à partir d'un zip !",
+  "appDataCouldNotBeRestoredFromZip": "Les fichiers JSON des playlists et des commentaires ainsi que les paramètres de l'application n'ont pu être restaurés à partir d'un ZIP !",
   "deleteFilteredAudioFromPlaylistAsWell": "Supprimer les audio's filtrés de la playlist également ...",
   "deleteFilteredAudioFromPlaylistAsWellConfirmationTitle": "Supprimer les audio's filtrés par le paramètre \"{sortFilterParmsName}\" de la playlist \"{playlistTitle}\" également (pourront être re-téléchargés)",
   "@deleteFilteredAudioFromPlaylistAsWellConfirmationTitle": {
@@ -1309,8 +1309,8 @@
   "updatePlaylistJsonFilesHelpTitle": "Fonction de mise à jour des fichiers playlist JSON",
   "updatePlaylistJsonFilesHelpContent": "Note importante: Cette fonction est uniquement nécessaire pour les modifications effectuées HORS application. Les modifications réalisées directement dans l'application (ajout/suppression de playlists, ajout/importation/suppression de fichiers audio) sont automatiquement prises en compte et ne nécessitent pas d'utiliser cette fonction de mise à jour.",
   "updatePlaylistJsonFilesFirstHelpTitle": "Utilisation de la fonction de mise à jour des fichiers playlist JSON",
-  "saveUniquePlaylistCommentsAndPicturesToZipMenu": "Sauver la playlist, ses commentaires et ses photos dans un fichier zip ...",
-  "saveUniquePlaylistCommentsAndPicturesToZipTooltip": "Sauvegarde la playlist, les commentaires et les photos de ses audio's dans un fichier zip. Seuls les fichiers JSON et JPG sont copiés. Les fichiers MP3 ne sont pas inclus.",
+  "saveUniquePlaylistCommentsAndPicturesToZipMenu": "Sauver la playlist, ses commentaires et ses photos dans un fichier ZIP ...",
+  "saveUniquePlaylistCommentsAndPicturesToZipTooltip": "Sauvegarde la playlist, les commentaires et les photos de ses audio's dans un fichier ZIP. Seuls les fichiers JSON et JPG sont copiés. Les fichiers MP3 ne sont pas inclus.",
   "savedUniquePlaylistToZip": "Fichiers JSON de la playlist, des commentaires et des photos sauvegardés dans \"{filePathName}\".",
   "downloadedCheckbox": "Téléchargé",
   "importedCheckbox": "Importé",
@@ -1318,9 +1318,9 @@
   "restoredElementsHelpContent": "N playlists: nombre de nouveaux fichiers JSON de playlist créés par la restauration.\n\nN commentaires: nombre de nouveaux fichiers JSON de commentaires créés par la restauration. Ceci se produit uniquement si l'audio commenté n'avait aucun commentaire avant la restauration. Sinon, le nouveau commentaire est ajouté au fichier JSON de commentaires audio existant.\n\nN photos : nombre de nouveaux fichiers JSON d'images créés par la restauration. Ceci se produit uniquement si l'audio illustré n'avait aucune image avant la restauration. Sinon, la nouvelle image est ajoutée au fichier JSON d'images audio existant.\n\nN références audio: nombre d'éléments audio contenus dans un ou plusieurs fichier(s) JSON de playlist créé(s) par la restauration. Si le nombre de playlist restaurée est 0, alors le nombre de référence(s) audio correspond au nombre d'élément(s) audio ajouté(s) à leur fichier JSON de playlist par la restauration. La restauration n'ajoute pas de fichiers MP3 puisqu'aucun MP3 n'est contenu dans le fichier ZIP. Les audios référencés ajoutés peuvent être téléchargés après la restauration.\n\nN commentaires ajoutés: nombre de commentaires ajoutés par la restauration aux fichiers JSON de commentaires audio existants.\n\nN commentaires modifiés: nombre de commentaires modifiés par la restauration dans les fichiers JSON de commentaires audio existants.",
   "playlistInfoDownloadAudio": "Téléch. audio",
   "playlistInfoAudioPlayer": "Lire audio",
-  "savedMultiplePlaylistsAudioMp3ToZip": "Enregistré dans le ZIP tous les fichiers audio mp3 des playlists téléchargés depuis le {audioDownloadFromDateTime}.\n\nNombre total d'audios sauvegardés: {savedAudioNumber}, taille totale: {savedAudioTotalFileSize} et durée totale: {savedAudioTotalDuration}.\n\nFichier ZIP: \"{filePathName}\"",
+  "savedMultiplePlaylistsAudioMp3ToZip": "Enregistré dans le ZIP tous les fichiers audio MP3 des playlists téléchargés depuis le {audioDownloadFromDateTime}.\n\nNombre total d'audios sauvegardés: {savedAudioNumber}, taille totale: {savedAudioTotalFileSize} et durée totale: {savedAudioTotalDuration}.\n\nFichier ZIP: \"{filePathName}\"",
   "@savedMultiplePlaylistsAudioMp3ToZip": {
-    "description": "Confirmation message after saving the audio mp3 downloaded at or after a specified date time of all application playlists to a zip file",
+    "description": "Confirmation message after saving the audio MP3 downloaded at or after a specified date time of all application playlists to a ZIP file",
     "placeholders": {
       "audioDownloadFromDateTime": {
         "type": "Object"
@@ -1339,9 +1339,9 @@
       }      
     }
   },
-  "savedUniquePlaylistAudioMp3ToZip": "Enregistré dans le ZIP tous les fichiers audio mp3 de la playlist unique téléchargés depuis le {audioDownloadFromDateTime}.\n\nNombre total d'audios sauvegardés: {savedAudioNumber}, taille totale: {savedAudioTotalFileSize} et durée totale: {savedAudioTotalDuration}.\n\nFichier ZIP: \"{filePathName}\"",
+  "savedUniquePlaylistAudioMp3ToZip": "Enregistré dans le ZIP tous les fichiers audio MP3 de la playlist unique téléchargés depuis le {audioDownloadFromDateTime}.\n\nNombre total d'audios sauvegardés: {savedAudioNumber}, taille totale: {savedAudioTotalFileSize} et durée totale: {savedAudioTotalDuration}.\n\nFichier ZIP: \"{filePathName}\"",
   "@savedUniquePlaylistAudioMp3ToZip": {
-    "description": "Confirmation message after saving the audio mp3 downloaded at or after a specified date time of a unique playlist to a zip file",
+    "description": "Confirmation message after saving the audio MP3 downloaded at or after a specified date time of a unique playlist to a ZIP file",
     "placeholders": {
       "audioDownloadFromDateTime": {
         "type": "Object"
@@ -1360,11 +1360,11 @@
       }      
     }
   },
-  "savePlaylistsAudioMp3FilesToZipMenu": "Sauver les audio's mp3 dans un fichier zip ...",
+  "savePlaylistsAudioMp3FilesToZipMenu": "Sauver les audio's MP3 dans un fichier ZIP ...",
   "savePlaylistsAudioMp3FilesToZipTooltip": "Sauvegarde les fichiers audio MP3 de toutes les playlists dans un fichier ZIP. Vous pouvez spécifier un filtre de date/heure pour n'inclure que les fichiers audio téléchargés à partir de cette date.",
   "setAudioDownloadFromDateTimeTitle": "Définir la date de téléchargement",
-  "audioDownloadFromDateTimeAllPlaylistsExplanation": "La date de téléchargement spécifiée par défaut correspond à la date de téléchargement audio la plus ancienne de toutes les playlists. Modifiez cette valeur en spécifiant la date de téléchargement à partir de laquelle les fichiers audio mp3 seront inclus dans le zip.",
+  "audioDownloadFromDateTimeAllPlaylistsExplanation": "La date de téléchargement spécifiée par défaut correspond à la date de téléchargement audio la plus ancienne de toutes les playlists. Modifiez cette valeur en spécifiant la date de téléchargement à partir de laquelle les fichiers audio MP3 seront inclus dans le fichier ZIP.",
   "audioDownloadFromDateTimeLabel": "Date/heure jj/mm/aaaa hh:mm:ss",
-  "audioDownloadFromDateTimeAllPlaylistsTooltip": "Puisque la valeur de date/heure actuelle correspond à la valeur de date/heure de l'audio téléchargé le plus ancien de l'application, si la date/heure n'est pas modifiée, tous les fichiers audio mp3 de l'application seront inclus dans le fichier zip.",
-  "audioDownloadFromDateTimeSinglePlaylistTooltip": "Puisque la valeur de date/heure actuelle correspond à la valeur de date/heure de l'audio téléchargé le plus ancien de la playlist, si la date/heure n'est pas modifiée, tous les fichiers audio mp3 de la playlist seront inclus dans le fichier zip."
+  "audioDownloadFromDateTimeAllPlaylistsTooltip": "Puisque la valeur de date/heure actuelle correspond à la valeur de date/heure de l'audio téléchargé le plus ancien de l'application, si la date/heure n'est pas modifiée, tous les fichiers audio MP3 de l'application seront inclus dans le fichier ZIP.",
+  "audioDownloadFromDateTimeSinglePlaylistTooltip": "Puisque la valeur de date/heure actuelle correspond à la valeur de date/heure de l'audio téléchargé le plus ancien de la playlist, si la date/heure n'est pas modifiée, tous les fichiers audio MP3 de la playlist seront inclus dans le fichier ZIP."
 }

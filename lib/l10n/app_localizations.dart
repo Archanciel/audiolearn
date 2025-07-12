@@ -2156,13 +2156,13 @@ abstract class AppLocalizations {
   /// No description provided for @savePlaylistAndCommentsToZipMenu.
   ///
   /// In en, this message translates to:
-  /// **'Save Playlists, Comments, Pictures and Settings to Zip File ...'**
+  /// **'Save Playlists, Comments, Pictures and Settings to ZIP File ...'**
   String get savePlaylistAndCommentsToZipMenu;
 
   /// No description provided for @savePlaylistAndCommentsToZipTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Saving the playlists, their audio comments and pictures to a zip file. The zip file will contain the playlists JSON files as well as the comment and picture JSON files. Additionally, the application settings.json will be saved. The MP3 and JPG files will not be included.'**
+  /// **'Saving the playlists, their audio comments and pictures to a ZIP file. The ZIP file will contain the playlists JSON files as well as the comment and picture JSON files. Additionally, the application settings.json will be saved. The MP3 and JPG files will not be included.'**
   String get savePlaylistAndCommentsToZipTooltip;
 
   /// No description provided for @setYoutubeChannelMenu.
@@ -2666,7 +2666,7 @@ abstract class AppLocalizations {
   /// No description provided for @appDataCouldNotBeSavedToZip.
   ///
   /// In en, this message translates to:
-  /// **'Playlist, comment and picture JSON files as well as application settings could not be saved to zip.'**
+  /// **'Playlist, comment and picture JSON files as well as application settings could not be saved to ZIP.'**
   String get appDataCouldNotBeSavedToZip;
 
   /// No description provided for @pictured.
@@ -2684,22 +2684,22 @@ abstract class AppLocalizations {
   /// No description provided for @restorePlaylistAndCommentsFromZipMenu.
   ///
   /// In en, this message translates to:
-  /// **'Restore Playlists, Comments, Pictures and Settings from Zip File ...'**
+  /// **'Restore Playlists, Comments, Pictures and Settings from ZIP File ...'**
   String get restorePlaylistAndCommentsFromZipMenu;
 
   /// No description provided for @restorePlaylistAndCommentsFromZipTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Restoring the playlists, their audio comments, pictures and the application settings from a saved zip file. The zip file contains the playlists, the comments, the pictures as well as the settings JSON files. The audio files are not included in it.'**
+  /// **'Restoring the playlists, their audio comments, pictures and the application settings from a saved ZIP file. The ZIP file contains the playlists, the comments, the pictures as well as the settings JSON files. The audio files are not included in it.'**
   String get restorePlaylistAndCommentsFromZipTooltip;
 
-  /// Warning message indicating that one or several playlists were restored from zip created from appbar menu
+  /// Warning message indicating that one or several playlists were restored from ZIP created from appbar menu
   ///
   /// In en, this message translates to:
   /// **'Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) and the application settings from \"{filePathName}\".'**
   String restoredAppDataFromZip(Object playlistsNumber, Object audiosNumber, Object commentsNumber, Object updatedCommentNumber, Object addedCommentNumber, Object picturesNumber, Object filePathName);
 
-  /// Warning message indicating that a unique playlist was restored from zip created from playlist item menu
+  /// Warning message indicating that a unique playlist was restored from ZIP created from playlist item menu
   ///
   /// In en, this message translates to:
   /// **'Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) from \"{filePathName}\".'**
@@ -2708,7 +2708,7 @@ abstract class AppLocalizations {
   /// No description provided for @appDataCouldNotBeRestoredFromZip.
   ///
   /// In en, this message translates to:
-  /// **'Playlist, comment and picture JSON files as well as application settings could not be restored from zip.'**
+  /// **'Playlist, comment and picture JSON files as well as application settings could not be restored from ZIP.'**
   String get appDataCouldNotBeRestoredFromZip;
 
   /// No description provided for @deleteFilteredAudioFromPlaylistAsWell.
@@ -2972,13 +2972,13 @@ abstract class AppLocalizations {
   /// No description provided for @saveUniquePlaylistCommentsAndPicturesToZipMenu.
   ///
   /// In en, this message translates to:
-  /// **'Save the Playlist, its Comments and its Pictures to Zip File ...'**
+  /// **'Save the Playlist, its Comments and its Pictures to ZIP File ...'**
   String get saveUniquePlaylistCommentsAndPicturesToZipMenu;
 
   /// No description provided for @saveUniquePlaylistCommentsAndPicturesToZipTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Saving the playlist, their audio comments and pictures to a zip file. Only the JSON and JPG files are copied. The MP3 files will not be included.'**
+  /// **'Saving the playlist, their audio comments and pictures to a ZIP file. Only the JSON and JPG files are copied. The MP3 files will not be included.'**
   String get saveUniquePlaylistCommentsAndPicturesToZipTooltip;
 
   /// No description provided for @savedUniquePlaylistToZip.
@@ -3023,22 +3023,22 @@ abstract class AppLocalizations {
   /// **'Play audio'**
   String get playlistInfoAudioPlayer;
 
-  /// Confirmation message after saving the audio mp3 downloaded at or after a specified date time of a unique playlist to a zip file
+  /// Confirmation message after saving the audio MP3 downloaded at or after a specified date time of a unique playlist to a ZIP file
   ///
   /// In en, this message translates to:
-  /// **'Saved to ZIP all playlists audio mp3 files downloaded from {audioDownloadFromDateTime}.\n\nTotal saved audio number: {savedAudioNumber}, total size: {savedAudioTotalFileSize} and total duration: {savedAudioTotalDuration}.\n\nZIP file path name: \"{filePathName}\"'**
+  /// **'Saved to ZIP all playlists audio MP3 files downloaded from {audioDownloadFromDateTime}.\n\nTotal saved audio number: {savedAudioNumber}, total size: {savedAudioTotalFileSize} and total duration: {savedAudioTotalDuration}.\n\nZIP file path name: \"{filePathName}\"'**
   String savedMultiplePlaylistsAudioMp3ToZip(Object audioDownloadFromDateTime, Object savedAudioNumber, Object savedAudioTotalFileSize, Object savedAudioTotalDuration, Object filePathName);
 
   /// No description provided for @savedUniquePlaylistAudioMp3ToZip.
   ///
   /// In en, this message translates to:
-  /// **'Saved to ZIP unique playlist audio mp3 files downloaded from {audioDownloadFromDateTime}.\n\nTotal saved audio number: {savedAudioNumber}, total size: {savedAudioTotalFileSize} and total duration: {savedAudioTotalDuration}.\n\nZIP file path name: \"{filePathName}\"'**
+  /// **'Saved to ZIP unique playlist audio MP3 files downloaded from {audioDownloadFromDateTime}.\n\nTotal saved audio number: {savedAudioNumber}, total size: {savedAudioTotalFileSize} and total duration: {savedAudioTotalDuration}.\n\nZIP file path name: \"{filePathName}\"'**
   String savedUniquePlaylistAudioMp3ToZip(Object audioDownloadFromDateTime, Object filePathName, Object savedAudioNumber, Object savedAudioTotalDuration, Object savedAudioTotalFileSize);
 
   /// No description provided for @savePlaylistsAudioMp3FilesToZipMenu.
   ///
   /// In en, this message translates to:
-  /// **'Save Playlists audio\'s Mp3 to Zip File ...'**
+  /// **'Save Playlists audio\'s MP3 to ZIP File ...'**
   String get savePlaylistsAudioMp3FilesToZipMenu;
 
   /// No description provided for @savePlaylistsAudioMp3FilesToZipTooltip.
@@ -3056,7 +3056,7 @@ abstract class AppLocalizations {
   /// No description provided for @audioDownloadFromDateTimeAllPlaylistsExplanation.
   ///
   /// In en, this message translates to:
-  /// **'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the zip.'**
+  /// **'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.'**
   String get audioDownloadFromDateTimeAllPlaylistsExplanation;
 
   /// No description provided for @audioDownloadFromDateTimeLabel.
@@ -3068,13 +3068,13 @@ abstract class AppLocalizations {
   /// No description provided for @audioDownloadFromDateTimeAllPlaylistsTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Since the current date/time value corresponds to the application oldest date/time downladed audio value, if the date/time is not modified, all the application audio mp3 files will be included in the zip file.'**
+  /// **'Since the current date/time value corresponds to the application oldest date/time downladed audio value, if the date/time is not modified, all the application audio MP3 files will be included in the ZIP file.'**
   String get audioDownloadFromDateTimeAllPlaylistsTooltip;
 
   /// No description provided for @audioDownloadFromDateTimeSinglePlaylistTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Since the current date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio mp3 files will be included in the zip file.'**
+  /// **'Since the current date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio MP3 files will be included in the ZIP file.'**
   String get audioDownloadFromDateTimeSinglePlaylistTooltip;
 }
 
