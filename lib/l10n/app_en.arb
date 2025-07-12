@@ -791,7 +791,7 @@
       "sortedFilterParmsName": {}
     }
   },
-  "appBarMenuEnableNextAudioAutoPlay": "Enable playing next audio automatically ...",
+  "appBarMenuEnableNextAudioAutoPlay": "Enable playing next Audio automatically ...",
   "batteryParameters": "Battery Parameter Change",
   "disableBatteryOptimisation": "Display the battery settings in order to disable its optimization. The result is that it allows the application to automatically play the next audio in the current playlist.\n\nClick on the button below, then select the \"Battery\" option at the bottom of the list. Next, choose \"Unrestricted\" and quit the settings.",
   "openBatteryOptimisationButton": "Display the battery settings",
@@ -991,11 +991,11 @@
       "filePathName": {}      
     }
   },
-  "savePlaylistsAudioMp3FilesToZipMenu": "Save Playlists audio's MP3 to ZIP File ...",
+  "savePlaylistsAudioMp3FilesToZipMenu": "Save Playlists Audio's MP3 to ZIP File ...",
   "savePlaylistsAudioMp3FilesToZipTooltip": "Save audio MP3 files from all playlists to a ZIP file. You can specify a date/time filter to only include audio files downloaded on or after that date.",
   "setAudioDownloadFromDateTimeTitle": "Set the download date",
   "audioDownloadFromDateTimeAllPlaylistsExplanation": "The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.",
-  "audioDownloadFromDateTimeLabel": "Date/time dd/mm/yyyy hh:mm:ss",
+  "audioDownloadFromDateTimeLabel": "Date/time {selectedAppDateFormat} hh:mm",
   "audioDownloadFromDateTimeAllPlaylistsTooltip": "Since the current date/time value corresponds to the application oldest date/time downladed audio value, if the date/time is not modified, all the application audio MP3 files will be included in the ZIP file.",
   "audioDownloadFromDateTimeSinglePlaylistTooltip": "Since the current date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio MP3 files will be included in the ZIP file."
 }

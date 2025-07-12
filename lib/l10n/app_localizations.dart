@@ -2444,7 +2444,7 @@ abstract class AppLocalizations {
   /// No description provided for @appBarMenuEnableNextAudioAutoPlay.
   ///
   /// In en, this message translates to:
-  /// **'Enable playing next audio automatically ...'**
+  /// **'Enable playing next Audio automatically ...'**
   String get appBarMenuEnableNextAudioAutoPlay;
 
   /// No description provided for @batteryParameters.
@@ -3038,7 +3038,7 @@ abstract class AppLocalizations {
   /// No description provided for @savePlaylistsAudioMp3FilesToZipMenu.
   ///
   /// In en, this message translates to:
-  /// **'Save Playlists audio\'s MP3 to ZIP File ...'**
+  /// **'Save Playlists Audio\'s MP3 to ZIP File ...'**
   String get savePlaylistsAudioMp3FilesToZipMenu;
 
   /// No description provided for @savePlaylistsAudioMp3FilesToZipTooltip.
@@ -3050,7 +3050,7 @@ abstract class AppLocalizations {
   /// No description provided for @setAudioDownloadFromDateTimeTitle.
   ///
   /// In en, this message translates to:
-  /// **'Set from download date value'**
+  /// **'Set the download date'**
   String get setAudioDownloadFromDateTimeTitle;
 
   /// No description provided for @audioDownloadFromDateTimeAllPlaylistsExplanation.
@@ -3062,8 +3062,8 @@ abstract class AppLocalizations {
   /// No description provided for @audioDownloadFromDateTimeLabel.
   ///
   /// In en, this message translates to:
-  /// **'Date/time dd/mm/yyyy hh:mm:ss'**
-  String get audioDownloadFromDateTimeLabel;
+  /// **'Date/time {selectedAppDateFormat} hh:mm'**
+  String audioDownloadFromDateTimeLabel(Object selectedAppDateFormat);
 
   /// No description provided for @audioDownloadFromDateTimeAllPlaylistsTooltip.
   ///

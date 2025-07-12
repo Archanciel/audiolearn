@@ -3231,6 +3231,37 @@ class PlaylistListVM extends ChangeNotifier {
   ///  the total unzipped size of the saved audio files in bytes,
   ///  the total duration of the saved audio files,
   /// ]
+  String getOldestAudioDownloadDateFormattedStr({
+    required List<Playlist> listOfPlaylists,
+  }) {
+    DateTime oldestAudioDownloadDateTime = DateTime.now();
+
+    // Iterate through passed playlists
+    for (Playlist playlist in listOfPlaylists) {
+      for (Audio audio in playlist.playableAudioLst) {
+        if (audio.audioDownloadDateTime.isBefore(oldestAudioDownloadDateTime)) {
+          oldestAudioDownloadDateTime = audio.audioDownloadDateTime;
+        }
+      }
+    }
+
+    DateFormatVM dateFormatVM = DateFormatVM(
+      settingsDataService: _settingsDataService,
+    );
+
+    return dateFormatVM.formatDateTime(oldestAudioDownloadDateTime);
+  }
+
+  /// Returns the saved zip file path name, '' if the target dir in which to save
+  /// the zip does not exist or if no audio files match the criteria.
+  ///
+  /// The returned list contains
+  /// [
+  ///  the created zip file path name,
+  ///  the number of saved audio files,
+  ///  the total unzipped size of the saved audio files in bytes,
+  ///  the total duration of the saved audio files,
+  /// ]
   Future<List<dynamic>> _saveUniquePlaylistAudioMp3FilesToZip({
     required Playlist playlist,
     required String targetDir,

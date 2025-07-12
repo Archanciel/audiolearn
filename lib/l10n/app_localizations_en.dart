@@ -1352,7 +1352,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get appBarMenuEnableNextAudioAutoPlay => 'Enable playing next audio automatically ...';
+  String get appBarMenuEnableNextAudioAutoPlay => 'Enable playing next Audio automatically ...';
 
   @override
   String get batteryParameters => 'Battery Parameter Change';
@@ -1683,19 +1683,21 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get savePlaylistsAudioMp3FilesToZipMenu => 'Save Playlists audio\'s MP3 to ZIP File ...';
+  String get savePlaylistsAudioMp3FilesToZipMenu => 'Save Playlists Audio\'s MP3 to ZIP File ...';
 
   @override
   String get savePlaylistsAudioMp3FilesToZipTooltip => 'Save audio MP3 files from all playlists to a ZIP file. You can specify a date/time filter to only include audio files downloaded on or after that date.';
 
   @override
-  String get setAudioDownloadFromDateTimeTitle => 'Set from download date value';
+  String get setAudioDownloadFromDateTimeTitle => 'Set the download date';
 
   @override
   String get audioDownloadFromDateTimeAllPlaylistsExplanation => 'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.';
 
   @override
-  String get audioDownloadFromDateTimeLabel => 'Date/time dd/mm/yyyy hh:mm:ss';
+  String audioDownloadFromDateTimeLabel(Object selectedAppDateFormat) {
+    return 'Date/time $selectedAppDateFormat hh:mm';
+  }
 
   @override
   String get audioDownloadFromDateTimeAllPlaylistsTooltip => 'Since the current date/time value corresponds to the application oldest date/time downladed audio value, if the date/time is not modified, all the application audio MP3 files will be included in the ZIP file.';

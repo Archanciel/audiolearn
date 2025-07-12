@@ -24048,6 +24048,21 @@ Future<void> _verifyDateFormatApplication({
   // button
   await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
   await tester.pumpAndSettle();
+
+  // On the left appbar menu, tap on the 'Save Playlists Audio's MP3
+  // to ZIP File ...' menu.
+
+  // Tap the appbar leading popup menu button
+  await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+  await tester.pumpAndSettle();
+
+  // Find the 'Save Playlists Audio's MP3 to ZIP File ...' menu
+  // item and tap on it
+  await tester
+      .tap(find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
+  await tester.pumpAndSettle();
+
+  
 }
 
 Future<void> _selectApplyAndVerifySortFilterParms({
