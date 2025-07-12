@@ -2057,13 +2057,16 @@ class MockAppLocalizations extends AppLocalizations {
       "Define a date/time filter to only save in the zip file the audio files downloaded on or after that date.";
 
   @override
-  String get audioDownloadFromDateTimeLabel => "Date/time dd/mm/yyyy hh:mm:ss";
-
-  @override
   String get audioDownloadFromDateTimeAllPlaylistsTooltip =>
       "Since the current date/time value corresponds to the application oldest date/time downladed audio value, if the date/time is not modified, all the application audio mp3 files will be included in the zip file.";
 
   @override
   String get audioDownloadFromDateTimeSinglePlaylistTooltip =>
       "Since the current date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio mp3 files will be included in the zip file.";
+
+  @override
+  String audioDownloadFromDateTimeLabel(
+    Object selectedAppDateFormat,
+  ) =>
+      "Date/time $selectedAppDateFormat hh:mm";
 }

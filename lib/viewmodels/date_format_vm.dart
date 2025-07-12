@@ -83,7 +83,7 @@ class DateFormatVM extends ChangeNotifier {
     return DateFormat(_selectedDateYyFormat).format(date);
   }
 
-  /// Format the date according to the selected date format.
+  /// Format the date time (HH:mm) according to the selected date format.
   String formatDateTime(DateTime date) {
     return DateFormat('$_selectedDateFormat HH:mm').format(date);
   }

@@ -1695,7 +1695,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get audioDownloadFromDateTimeAllPlaylistsExplanation => 'La date de téléchargement spécifiée par défaut correspond à la date de téléchargement audio la plus ancienne de toutes les playlists. Modifiez cette valeur en spécifiant la date de téléchargement à partir de laquelle les fichiers audio MP3 seront inclus dans le fichier ZIP.';
 
   @override
-  String get audioDownloadFromDateTimeLabel => 'Date/heure jj/mm/aaaa hh:mm:ss';
+  String audioDownloadFromDateTimeLabel(Object selectedAppDateFormat) {
+    return 'Date/heure $selectedAppDateFormat hh:mm';
+  }
 
   @override
   String get audioDownloadFromDateTimeAllPlaylistsTooltip => 'Puisque la valeur de date/heure actuelle correspond à la valeur de date/heure de l\'audio téléchargé le plus ancien de l\'application, si la date/heure n\'est pas modifiée, tous les fichiers audio MP3 de l\'application seront inclus dans le fichier ZIP.';

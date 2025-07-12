@@ -1,5 +1,6 @@
 import 'package:audiolearn/models/comment.dart';
 import 'package:audiolearn/utils/ui_util.dart';
+import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../l10n/app_localizations.dart';
@@ -803,6 +804,17 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             );
             break;
           case AppBarPopupMenu.savePlaylistsAudioMp3FilesToZip:
+            final PlaylistListVM playlistListVMlistenFalse =
+                Provider.of<PlaylistListVM>(
+              context,
+              listen: false,
+            );
+            final DateFormatVM dateFormatVMlistenFalse =
+                Provider.of<DateFormatVM>(
+              context,
+              listen: false,
+            );
+
             void validateEnteredValueFunction() {}
             showDialog<List<String>>(
               barrierDismissible:
@@ -810,14 +822,19 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
               context: context,
               builder: (BuildContext context) {
                 return SetValueToTargetDialog(
-                  dialogTitle: AppLocalizations.of(context)!.setAudioDownloadFromDateTimeTitle,
-                  dialogCommentStr:
-                      AppLocalizations.of(context)!.audioDownloadFromDateTimeAllPlaylistsExplanation,
-                  passedValueFieldLabel:
-                      AppLocalizations.of(context)!.audioDownloadFromDateTimeLabel,
-                  passedValueFieldTooltip:
-                      AppLocalizations.of(context)!.audioDownloadFromDateTimeAllPlaylistsTooltip,
-                  passedValueStr: '00/00/0000 00:00:00',
+                  dialogTitle: AppLocalizations.of(context)!
+                      .setAudioDownloadFromDateTimeTitle,
+                  dialogCommentStr: AppLocalizations.of(context)!
+                      .audioDownloadFromDateTimeAllPlaylistsExplanation,
+                  passedValueFieldLabel: AppLocalizations.of(context)!
+                      .audioDownloadFromDateTimeLabel(dateFormatVMlistenFalse.selectedDateFormat),
+                  passedValueFieldTooltip: AppLocalizations.of(context)!
+                      .audioDownloadFromDateTimeAllPlaylistsTooltip,
+                  passedValueStr: playlistListVMlistenFalse
+                      .getOldestAudioDownloadDateFormattedStr(
+                    listOfPlaylists: playlistListVMlistenFalse
+                        .getUpToDateSelectablePlaylists(),
+                  ),
                   targetNamesLst: [],
                   validationFunction: validateEnteredValueFunction,
                   validationFunctionArgs: [],
@@ -833,8 +850,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
 
               // Updating the display format according to the provided position.
               int pointPosition = positionStr.indexOf('.');
-              if (pointPosition != -1) {
-              }
+              if (pointPosition != -1) {}
             });
             break;
           case AppBarPopupMenu.restorePlaylistAndCommentsFromZip:
