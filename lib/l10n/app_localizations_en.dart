@@ -1164,10 +1164,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get searchInYoutubeChannelNameTooltip => 'If set, search words or sentences are searched on Youtube channel name as well.';
 
   @override
-  String get savePlaylistAndCommentsToZipMenu => 'Save Playlists, Comments, Pictures and Settings to Zip File ...';
+  String get savePlaylistAndCommentsToZipMenu => 'Save Playlists, Comments, Pictures and Settings to ZIP File ...';
 
   @override
-  String get savePlaylistAndCommentsToZipTooltip => 'Saving the playlists, their audio comments and pictures to a zip file. The zip file will contain the playlists JSON files as well as the comment and picture JSON files. Additionally, the application settings.json will be saved. The MP3 and JPG files will not be included.';
+  String get savePlaylistAndCommentsToZipTooltip => 'Saving the playlists, their audio comments and pictures to a ZIP file. The ZIP file will contain the playlists JSON files as well as the comment and picture JSON files. Additionally, the application settings.json will be saved. The MP3 and JPG files will not be included.';
 
   @override
   String get setYoutubeChannelMenu => 'Youtube channel setting';
@@ -1469,7 +1469,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get appDataCouldNotBeSavedToZip => 'Playlist, comment and picture JSON files as well as application settings could not be saved to zip.';
+  String get appDataCouldNotBeSavedToZip => 'Playlist, comment and picture JSON files as well as application settings could not be saved to ZIP.';
 
   @override
   String get pictured => 'Pictured';
@@ -1478,10 +1478,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notPictured => 'Unpictured';
 
   @override
-  String get restorePlaylistAndCommentsFromZipMenu => 'Restore Playlists, Comments, Pictures and Settings from Zip File ...';
+  String get restorePlaylistAndCommentsFromZipMenu => 'Restore Playlists, Comments, Pictures and Settings from ZIP File ...';
 
   @override
-  String get restorePlaylistAndCommentsFromZipTooltip => 'Restoring the playlists, their audio comments, pictures and the application settings from a saved zip file. The zip file contains the playlists, the comments, the pictures as well as the settings JSON files. The audio files are not included in it.';
+  String get restorePlaylistAndCommentsFromZipTooltip => 'Restoring the playlists, their audio comments, pictures and the application settings from a saved ZIP file. The ZIP file contains the playlists, the comments, the pictures as well as the settings JSON files. The audio files are not included in it.';
 
   @override
   String restoredAppDataFromZip(Object playlistsNumber, Object audiosNumber, Object commentsNumber, Object updatedCommentNumber, Object addedCommentNumber, Object picturesNumber, Object filePathName) {
@@ -1494,7 +1494,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get appDataCouldNotBeRestoredFromZip => 'Playlist, comment and picture JSON files as well as application settings could not be restored from zip.';
+  String get appDataCouldNotBeRestoredFromZip => 'Playlist, comment and picture JSON files as well as application settings could not be restored from ZIP.';
 
   @override
   String get deleteFilteredAudioFromPlaylistAsWell => 'Delete filtered Audio\'s from Playlist as well ...';
@@ -1644,10 +1644,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get updatePlaylistJsonFilesFirstHelpTitle => 'Using the Update Playlist JSON Files function';
 
   @override
-  String get saveUniquePlaylistCommentsAndPicturesToZipMenu => 'Save the Playlist, its Comments and its Pictures to Zip File ...';
+  String get saveUniquePlaylistCommentsAndPicturesToZipMenu => 'Save the Playlist, its Comments and its Pictures to ZIP File ...';
 
   @override
-  String get saveUniquePlaylistCommentsAndPicturesToZipTooltip => 'Saving the playlist, their audio comments and pictures to a zip file. Only the JSON and JPG files are copied. The MP3 files will not be included.';
+  String get saveUniquePlaylistCommentsAndPicturesToZipTooltip => 'Saving the playlist, their audio comments and pictures to a ZIP file. Only the JSON and JPG files are copied. The MP3 files will not be included.';
 
   @override
   String savedUniquePlaylistToZip(Object filePathName) {
@@ -1674,16 +1674,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String savedMultiplePlaylistsAudioMp3ToZip(Object audioDownloadFromDateTime, Object savedAudioNumber, Object savedAudioTotalFileSize, Object savedAudioTotalDuration, Object filePathName) {
-    return 'Saved to ZIP all playlists audio mp3 files downloaded from $audioDownloadFromDateTime.\n\nTotal saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.\n\nZIP file path name: \"$filePathName\"';
+    return 'Saved to ZIP all playlists audio MP3 files downloaded from $audioDownloadFromDateTime.\n\nTotal saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.\n\nZIP file path name: \"$filePathName\"';
   }
 
   @override
   String savedUniquePlaylistAudioMp3ToZip(Object audioDownloadFromDateTime, Object filePathName, Object savedAudioNumber, Object savedAudioTotalDuration, Object savedAudioTotalFileSize) {
-    return 'Saved to ZIP unique playlist audio mp3 files downloaded from $audioDownloadFromDateTime.\n\nTotal saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.\n\nZIP file path name: \"$filePathName\"';
+    return 'Saved to ZIP unique playlist audio MP3 files downloaded from $audioDownloadFromDateTime.\n\nTotal saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.\n\nZIP file path name: \"$filePathName\"';
   }
 
   @override
-  String get savePlaylistsAudioMp3FilesToZipMenu => 'Save Playlists audio\'s Mp3 to Zip File ...';
+  String get savePlaylistsAudioMp3FilesToZipMenu => 'Save Playlists audio\'s MP3 to ZIP File ...';
 
   @override
   String get savePlaylistsAudioMp3FilesToZipTooltip => 'Save audio MP3 files from all playlists to a ZIP file. You can specify a date/time filter to only include audio files downloaded on or after that date.';
@@ -1692,14 +1692,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setAudioDownloadFromDateTimeTitle => 'Set from download date value';
 
   @override
-  String get audioDownloadFromDateTimeAllPlaylistsExplanation => 'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the zip.';
+  String get audioDownloadFromDateTimeAllPlaylistsExplanation => 'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.';
 
   @override
   String get audioDownloadFromDateTimeLabel => 'Date/time dd/mm/yyyy hh:mm:ss';
 
   @override
-  String get audioDownloadFromDateTimeAllPlaylistsTooltip => 'Since the current date/time value corresponds to the application oldest date/time downladed audio value, if the date/time is not modified, all the application audio mp3 files will be included in the zip file.';
+  String get audioDownloadFromDateTimeAllPlaylistsTooltip => 'Since the current date/time value corresponds to the application oldest date/time downladed audio value, if the date/time is not modified, all the application audio MP3 files will be included in the ZIP file.';
 
   @override
-  String get audioDownloadFromDateTimeSinglePlaylistTooltip => 'Since the current date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio mp3 files will be included in the zip file.';
+  String get audioDownloadFromDateTimeSinglePlaylistTooltip => 'Since the current date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio MP3 files will be included in the ZIP file.';
 }
