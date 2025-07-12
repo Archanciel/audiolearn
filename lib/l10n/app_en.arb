@@ -990,5 +990,7 @@
       "savedAudioTotalDuration": {},    
       "filePathName": {}      
     }
-  }
+  },
+  "savePlaylistsAudioMp3FilesToZipMenu": "Save Playlists audio's Mp3 to Zip File ...",
+  "savePlaylistsAudioMp3FilesToZipTooltip": "Sauvegarde les fichiers audio MP3 de toutes les playlists dans un fichier ZIP. Vous pouvez spécifier un filtre de date/heure pour n'inclure que les fichiers audio téléchargés à partir de cette date."
 }

@@ -1359,5 +1359,7 @@
         "type": "Object"
       }      
     }
-  }
+  },
+  "savePlaylistsAudioMp3FilesToZipMenu": "Sauver les audio's mp3 dans un fichier zip ...",
+  "savePlaylistsAudioMp3FilesToZipTooltip": "Sauvegarde les fichiers audio MP3 de toutes les playlists dans un fichier ZIP. Vous pouvez spécifier un filtre de date/heure pour n'inclure que les fichiers audio téléchargés à partir de cette date."
 }

@@ -2021,10 +2021,30 @@ class MockAppLocalizations extends AppLocalizations {
   String get playlistInfoAudioPlayer => "Play audio";
 
   @override
-  String savedMultiplePlaylistsAudioMp3ToZip(Object audioDownloadFromDateTime, Object savedAudioNumber, Object savedAudioTotalFileSize, Object savedAudioTotalDuration, Object filePathName,) =>
+  String savedMultiplePlaylistsAudioMp3ToZip(
+    Object audioDownloadFromDateTime,
+    Object savedAudioNumber,
+    Object savedAudioTotalFileSize,
+    Object savedAudioTotalDuration,
+    Object filePathName,
+  ) =>
       "Saved to ZIP all playlists audio mp3 files downloaded from $audioDownloadFromDateTime.Total saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.ZIP file path name: \"$filePathName\"";
 
   @override
-  String savedUniquePlaylistAudioMp3ToZip(Object audioDownloadFromDateTime, Object savedAudioNumber, Object savedAudioTotalFileSize, Object savedAudioTotalDuration, Object filePathName,) =>
+  String savedUniquePlaylistAudioMp3ToZip(
+    Object audioDownloadFromDateTime,
+    Object savedAudioNumber,
+    Object savedAudioTotalFileSize,
+    Object savedAudioTotalDuration,
+    Object filePathName,
+  ) =>
       "Saved to ZIP unique playlist audio mp3 files downloaded from $audioDownloadFromDateTime.Total saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.ZIP file path name: \"$filePathName\"";
+
+  @override
+  String get savePlaylistsAudioMp3FilesToZipMenu =>
+      "Save Playlists audio's Mp3 to Zip File ...";
+
+  @override
+  String get savePlaylistsAudioMp3FilesToZipTooltip =>
+      "Save audio MP3 files from all playlists to a ZIP file. You can specify a date/time filter to only include audio files downloaded on or after that date.";
 }
