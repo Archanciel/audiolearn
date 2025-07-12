@@ -690,8 +690,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             ),
           ),
           PopupMenuItem<AppBarPopupMenu>(
-            key: const Key(
-                'appBarMenuSavePlaylistsAudioMp3FilesToZip'),
+            key: const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip'),
             value: AppBarPopupMenu.savePlaylistsAudioMp3FilesToZip,
             child: Tooltip(
               message: AppLocalizations.of(context)!
@@ -805,73 +804,45 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             break;
           case AppBarPopupMenu.savePlaylistsAudioMp3FilesToZip:
             void validateEnteredValueFunction() {}
-            final List<HelpItem> restorePlaylistsHelpItemsLst = [
-              HelpItem(
-                helpTitle: AppLocalizations.of(context)!
-                    .playlistRestorationHelpTitle,
-                helpContent: AppLocalizations.of(context)!
-                    .restorePlaylistAndCommentsFromZipTooltip,
-                displayHelpItemNumber: false,
-              ),
-              HelpItem(
-                helpTitle: AppLocalizations.of(context)!
-                    .playlistRestorationFirstHelpTitle,
-                helpContent: AppLocalizations.of(context)!
-                    .playlistRestorationFirstHelpContent,
-                displayHelpItemNumber: true,
-              ),
-              HelpItem(
-                helpTitle: AppLocalizations.of(context)!
-                    .playlistRestorationSecondHelpTitle,
-                helpContent: '',
-                displayHelpItemNumber: false,
-              ),
-            ];
-
             showDialog<List<String>>(
               barrierDismissible:
                   false, // Prevents the dialog from closing when tapping outside.
               context: context,
               builder: (BuildContext context) {
                 return SetValueToTargetDialog(
-                  dialogTitle: AppLocalizations.of(context)!
-                      .playlistRestorationDialogTitle,
-                  dialogCommentStr: AppLocalizations.of(context)!
-                      .playlistRestorationExplanation,
-                  targetNamesLst: [
-                    AppLocalizations.of(context)!.replaceExistingPlaylists,
-                  ],
+                  dialogTitle: AppLocalizations.of(context)!.setAudioDownloadFromDateTimeTitle,
+                  dialogCommentStr:
+                      AppLocalizations.of(context)!.audioDownloadFromDateTimeAllPlaylistsExplanation,
+                  passedValueFieldLabel:
+                      AppLocalizations.of(context)!.audioDownloadFromDateTimeLabel,
+                  passedValueFieldTooltip:
+                      AppLocalizations.of(context)!.audioDownloadFromDateTimeAllPlaylistsTooltip,
+                  passedValueStr: '00/00/0000 00:00:00',
+                  targetNamesLst: [],
                   validationFunction: validateEnteredValueFunction,
                   validationFunctionArgs: [],
-                  canUniqueCheckBoxBeUnchecked: true,
-                  helpItemsLst: restorePlaylistsHelpItemsLst,
                 );
               },
-            ).then((resultStringLst) async {
+            ).then((resultStringLst) {
               if (resultStringLst == null) {
                 // The case if the Cancel button was pressed.
                 return;
               }
 
-              bool doReplaceExistingPlaylists = false;
+              String positionStr = resultStringLst[0];
 
-              if (resultStringLst.isNotEmpty) {
-                // The case when the audio quality is set to audio.
-                doReplaceExistingPlaylists = true;
+              // Updating the display format according to the provided position.
+              int pointPosition = positionStr.indexOf('.');
+              if (pointPosition != -1) {
               }
-
-              await UiUtil.restorePlaylistsCommentsAndAppSettingsFromZip(
-                context: context,
-                doReplaceExistingPlaylists: doReplaceExistingPlaylists,
-              );
             });
             break;
           case AppBarPopupMenu.restorePlaylistAndCommentsFromZip:
             void validateEnteredValueFunction() {}
             final List<HelpItem> restorePlaylistsHelpItemsLst = [
               HelpItem(
-                helpTitle: AppLocalizations.of(context)!
-                    .playlistRestorationHelpTitle,
+                helpTitle:
+                    AppLocalizations.of(context)!.playlistRestorationHelpTitle,
                 helpContent: AppLocalizations.of(context)!
                     .restorePlaylistAndCommentsFromZipTooltip,
                 displayHelpItemNumber: false,
