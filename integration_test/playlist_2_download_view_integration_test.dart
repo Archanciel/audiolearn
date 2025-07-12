@@ -24062,7 +24062,12 @@ Future<void> _verifyDateFormatApplication({
       .tap(find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
   await tester.pumpAndSettle();
 
-  
+  expect(find.text('yyyy/MM/dd hh:mm'), findsOneWidget);
+  expect(find.text('2023/12/26 09:45'), findsOneWidget);
+
+  await tester
+      .tap(find.byKey(const Key('setValueToTargetCancelButton')));
+  await tester.pumpAndSettle();
 }
 
 Future<void> _selectApplyAndVerifySortFilterParms({
