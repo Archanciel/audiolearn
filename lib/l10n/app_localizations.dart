@@ -3034,6 +3034,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Saved to ZIP unique playlist audio mp3 files downloaded from {audioDownloadFromDateTime}.\n\nTotal saved audio number: {savedAudioNumber}, total size: {savedAudioTotalFileSize} and total duration: {savedAudioTotalDuration}.\n\nZIP file path name: \"{filePathName}\"'**
   String savedUniquePlaylistAudioMp3ToZip(Object audioDownloadFromDateTime, Object filePathName, Object savedAudioNumber, Object savedAudioTotalDuration, Object savedAudioTotalFileSize);
+
+  /// No description provided for @savePlaylistsAudioMp3FilesToZipMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Playlists audio\'s Mp3 to Zip File ...'**
+  String get savePlaylistsAudioMp3FilesToZipMenu;
+
+  /// No description provided for @savePlaylistsAudioMp3FilesToZipTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Sauvegarde les fichiers audio MP3 de toutes les playlists dans un fichier ZIP. Vous pouvez spécifier un filtre de date/heure pour n\'inclure que les fichiers audio téléchargés à partir de cette date.'**
+  String get savePlaylistsAudioMp3FilesToZipTooltip;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -31,6 +31,7 @@ enum AppBarPopupMenu {
   enableNextAudioAutoPlay,
   updatePlaylistJson,
   savePlaylistsCommentsAndPicturesToZip,
+  savePlaylistsAudioMp3FilesToZip,
   restorePlaylistAndCommentsFromZip,
 }
 
@@ -679,13 +680,24 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             ),
           ),
           PopupMenuItem<AppBarPopupMenu>(
-            key: const Key('appBarMenuCopyPlaylistsAndCommentsToZip'),
+            key: const Key('appBarMenuSavePlaylistsAndCommentsToZip'),
             value: AppBarPopupMenu.savePlaylistsCommentsAndPicturesToZip,
             child: Tooltip(
               message: AppLocalizations.of(context)!
                   .savePlaylistAndCommentsToZipTooltip,
               child: Text(AppLocalizations.of(context)!
                   .savePlaylistAndCommentsToZipMenu),
+            ),
+          ),
+          PopupMenuItem<AppBarPopupMenu>(
+            key: const Key(
+                'appBarMenuSavePlaylistsAudioMp3FilesToZip'),
+            value: AppBarPopupMenu.savePlaylistsAudioMp3FilesToZip,
+            child: Tooltip(
+              message: AppLocalizations.of(context)!
+                  .savePlaylistsAudioMp3FilesToZipTooltip,
+              child: Text(AppLocalizations.of(context)!
+                  .savePlaylistsAudioMp3FilesToZipMenu),
             ),
           ),
           PopupMenuItem<AppBarPopupMenu>(
@@ -790,6 +802,69 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             await UiUtil.savePlaylistsCommentsPicturesAndAppSettingsToZip(
               context: context,
             );
+            break;
+          case AppBarPopupMenu.savePlaylistsAudioMp3FilesToZip:
+            void validateEnteredValueFunction() {}
+            final List<HelpItem> restorePlaylistsHelpItemsLst = [
+              HelpItem(
+                helpTitle: AppLocalizations.of(context)!
+                    .playlistRestorationHelpTitle,
+                helpContent: AppLocalizations.of(context)!
+                    .restorePlaylistAndCommentsFromZipTooltip,
+                displayHelpItemNumber: false,
+              ),
+              HelpItem(
+                helpTitle: AppLocalizations.of(context)!
+                    .playlistRestorationFirstHelpTitle,
+                helpContent: AppLocalizations.of(context)!
+                    .playlistRestorationFirstHelpContent,
+                displayHelpItemNumber: true,
+              ),
+              HelpItem(
+                helpTitle: AppLocalizations.of(context)!
+                    .playlistRestorationSecondHelpTitle,
+                helpContent: '',
+                displayHelpItemNumber: false,
+              ),
+            ];
+
+            showDialog<List<String>>(
+              barrierDismissible:
+                  false, // Prevents the dialog from closing when tapping outside.
+              context: context,
+              builder: (BuildContext context) {
+                return SetValueToTargetDialog(
+                  dialogTitle: AppLocalizations.of(context)!
+                      .playlistRestorationDialogTitle,
+                  dialogCommentStr: AppLocalizations.of(context)!
+                      .playlistRestorationExplanation,
+                  targetNamesLst: [
+                    AppLocalizations.of(context)!.replaceExistingPlaylists,
+                  ],
+                  validationFunction: validateEnteredValueFunction,
+                  validationFunctionArgs: [],
+                  canUniqueCheckBoxBeUnchecked: true,
+                  helpItemsLst: restorePlaylistsHelpItemsLst,
+                );
+              },
+            ).then((resultStringLst) async {
+              if (resultStringLst == null) {
+                // The case if the Cancel button was pressed.
+                return;
+              }
+
+              bool doReplaceExistingPlaylists = false;
+
+              if (resultStringLst.isNotEmpty) {
+                // The case when the audio quality is set to audio.
+                doReplaceExistingPlaylists = true;
+              }
+
+              await UiUtil.restorePlaylistsCommentsAndAppSettingsFromZip(
+                context: context,
+                doReplaceExistingPlaylists: doReplaceExistingPlaylists,
+              );
+            });
             break;
           case AppBarPopupMenu.restorePlaylistAndCommentsFromZip:
             void validateEnteredValueFunction() {}

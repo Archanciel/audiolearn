@@ -1681,4 +1681,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String savedUniquePlaylistAudioMp3ToZip(Object audioDownloadFromDateTime, Object filePathName, Object savedAudioNumber, Object savedAudioTotalDuration, Object savedAudioTotalFileSize) {
     return 'Enregistré dans le ZIP tous les fichiers audio mp3 de la playlist unique téléchargés depuis le $audioDownloadFromDateTime.\n\nNombre total d\'audios sauvegardés: $savedAudioNumber, taille totale: $savedAudioTotalFileSize et durée totale: $savedAudioTotalDuration.\n\nFichier ZIP: \"$filePathName\"';
   }
+
+  @override
+  String get savePlaylistsAudioMp3FilesToZipMenu => 'Sauver les audio\'s mp3 dans un fichier zip ...';
+
+  @override
+  String get savePlaylistsAudioMp3FilesToZipTooltip => 'Sauvegarde les fichiers audio MP3 de toutes les playlists dans un fichier ZIP. Vous pouvez spécifier un filtre de date/heure pour n\'inclure que les fichiers audio téléchargés à partir de cette date.';
 }

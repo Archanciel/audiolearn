@@ -4081,7 +4081,7 @@ void main() {
 
       // Now tap on the 'Save Playlists and Comments to zip File' menu
       await tester.tap(
-          find.byKey(const Key('appBarMenuCopyPlaylistsAndCommentsToZip')));
+          find.byKey(const Key('appBarMenuSavePlaylistsAndCommentsToZip')));
       await tester.pumpAndSettle();
 
       // Verify the displayed warning dialog
@@ -4180,7 +4180,7 @@ void main() {
 
       // Now tap on the 'Save Playlists and Comments to zip File' menu
       await tester.tap(
-          find.byKey(const Key('appBarMenuCopyPlaylistsAndCommentsToZip')));
+          find.byKey(const Key('appBarMenuSavePlaylistsAndCommentsToZip')));
       await tester.pumpAndSettle();
 
       // Verify the displayed warning dialog
@@ -4588,7 +4588,7 @@ void main() {
 
       // Now tap on the 'Save Playlists and Comments to zip File' menu
       await tester.tap(
-          find.byKey(const Key('appBarMenuCopyPlaylistsAndCommentsToZip')));
+          find.byKey(const Key('appBarMenuSavePlaylistsAndCommentsToZip')));
       await tester.pumpAndSettle();
 
       // Verify the displayed warning dialog
