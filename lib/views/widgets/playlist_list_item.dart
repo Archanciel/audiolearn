@@ -427,7 +427,6 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             });
             break;
           case PlaylistPopupMenuAction.setPlaylistAudioQuality:
-            void validateEnteredValueFunction() {}
             showDialog<List<String>>(
               barrierDismissible:
                   false, // Prevents the dialog from closing when tapping outside.
@@ -442,7 +441,6 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                     AppLocalizations.of(context)!.playlistQualityAudio,
                     AppLocalizations.of(context)!.playlistQualityMusic,
                   ],
-                  validationFunction: validateEnteredValueFunction,
                   validationFunctionArgs: [],
                   checkboxIndexSetToTrue:
                       (playlist.playlistQuality == PlaylistQuality.voice)

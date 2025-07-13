@@ -58,6 +58,20 @@ void main() {
       );
 
       expect(
+        dateFormatVM.parseDateStrUsinAppDateFormat(
+          dateStr: "30/11/2021",
+        ),
+        DateTime(2021, 11, 30),
+      );
+
+      expect(
+        dateFormatVM.parseDateTimeStrUsinAppDateFormat(
+          dateTimeStr: "30/11/2021 23:59",
+        ),
+        DateTime(2021, 11, 30, 23, 59),
+      );
+
+      expect(
         dateFormatVM.selectedDateFormat,
         'dd/MM/yyyy',
       );
@@ -85,6 +99,20 @@ void main() {
       );
 
       expect(
+        dateFormatVM.parseDateStrUsinAppDateFormat(
+          dateStr: "11/30/2021",
+        ),
+        DateTime(2021, 11, 30),
+      );
+
+      expect(
+        dateFormatVM.parseDateTimeStrUsinAppDateFormat(
+          dateTimeStr: "11/30/2021 23:59",
+        ),
+        DateTime(2021, 11, 30, 23, 59),
+      );
+
+      expect(
         dateFormatVM.selectedDateFormat,
         'MM/dd/yyyy',
       );
@@ -109,6 +137,20 @@ void main() {
       expect(
         dateFormatVM.formatDateTime(dateTime),
         "2021/11/30 23:59", // Initial format is 'dd/MM/yyyy'
+      );
+
+      expect(
+        dateFormatVM.parseDateStrUsinAppDateFormat(
+          dateStr: "2021/11/30",
+        ),
+        DateTime(2021, 11, 30),
+      );
+
+      expect(
+        dateFormatVM.parseDateTimeStrUsinAppDateFormat(
+          dateTimeStr: "2021/11/30 23:59",
+        ),
+        DateTime(2021, 11, 30, 23, 59),
       );
 
       expect(
@@ -174,6 +216,20 @@ void main() {
       );
 
       expect(
+        dateFormatVM.parseDateStrUsinAppDateFormat(
+          dateStr: "30/11/2021",
+        ),
+        DateTime(2021, 11, 30),
+      );
+
+      expect(
+        dateFormatVM.parseDateTimeStrUsinAppDateFormat(
+          dateTimeStr: "30/11/2021 23:59",
+        ),
+        DateTime(2021, 11, 30, 23, 59),
+      );
+
+      expect(
         dateFormatVM.selectedDateFormat,
         'dd/MM/yyyy',
       );
@@ -201,6 +257,20 @@ void main() {
       expect(
         dateFormatVM.formatDateTime(dateTime),
         "11/30/2021 23:59", // Initial format is 'dd/MM/yyyy'
+      );
+
+      expect(
+        dateFormatVM.parseDateStrUsinAppDateFormat(
+          dateStr: "11/30/2021",
+        ),
+        DateTime(2021, 11, 30),
+      );
+
+      expect(
+        dateFormatVM.parseDateTimeStrUsinAppDateFormat(
+          dateTimeStr: "11/30/2021 23:59",
+        ),
+        DateTime(2021, 11, 30, 23, 59),
       );
 
       expect(
@@ -269,6 +339,20 @@ void main() {
       expect(
         dateFormatVM.formatDateTime(dateTime),
         "2021/11/30 23:59", // Initial format is 'dd/MM/yyyy'
+      );
+
+      expect(
+        dateFormatVM.parseDateStrUsinAppDateFormat(
+          dateStr: "2021/11/30",
+        ),
+        DateTime(2021, 11, 30),
+      );
+
+      expect(
+        dateFormatVM.parseDateTimeStrUsinAppDateFormat(
+          dateTimeStr: "2021/11/30 23:59",
+        ),
+        DateTime(2021, 11, 30, 23, 59),
       );
 
       expect(

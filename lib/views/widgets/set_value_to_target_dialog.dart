@@ -35,7 +35,7 @@ class SetValueToTargetDialog extends StatefulWidget {
   final int checkboxIndexSetToTrue; // The index of the checkbox set to true
   final bool isPassedValueEditable;
 
-  final Function
+  final Function?
       validationFunction; // The action to execute to validate the entered value
   final List<dynamic>
       validationFunctionArgs; // Arguments for the validation function
@@ -66,7 +66,7 @@ class SetValueToTargetDialog extends StatefulWidget {
     this.passedValueFieldTooltip = '',
     this.passedValueStr = '',
     required this.targetNamesLst,
-    required this.validationFunction,
+    this.validationFunction,
     required this.validationFunctionArgs,
     this.isTargetExclusive = true,
     this.checkboxIndexSetToTrue = -1,
@@ -269,13 +269,16 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
     }
 
     String enteredStr = _passedValueTextEditingController.text;
-    String minValueLimitStr = widget.validationFunctionArgs[0].toString();
-    String maxValueLimitStr;
+    String minValueLimitStr = '';
+    String maxValueLimitStr = '';
 
-    if (_isCheckboxChecked[0]) {
-      maxValueLimitStr = widget.validationFunctionArgs[1].toString();
-    } else {
-      maxValueLimitStr = widget.validationFunctionArgs[2].toString();
+    if (widget.validationFunctionArgs.isNotEmpty) {
+      minValueLimitStr = widget.validationFunctionArgs[0].toString();
+      if (_isCheckboxChecked[0]) {
+        maxValueLimitStr = widget.validationFunctionArgs[1].toString();
+      } else {
+        maxValueLimitStr = widget.validationFunctionArgs[2].toString();
+      }
     }
 
     // The code below simplifies setting the comment start position
@@ -292,7 +295,10 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
     }
 
     widget.validationFunctionArgs.add(enteredStr);
-    widget.validationFunctionArgs.add(_isCheckboxChecked[0]);
+
+    if (_isCheckboxChecked.isNotEmpty) {
+      widget.validationFunctionArgs.add(_isCheckboxChecked[0]);
+    }
 
     // Example of applied validation function:
     // InvalidValueState validateEnteredValueFunction(
@@ -304,15 +310,20 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
     // Initially, the List<dynamic> widget.validationFunctionArgs contains
     // two element, the minimal an maximal acceptable duration. The third
     // element, the entered value, is added in the line above.
-    InvalidValueState invalidValueState = Function.apply(
-      widget.validationFunction,
-      widget.validationFunctionArgs,
-    );
 
-    // Once the validation function has been applied, the 2 entered values
-    // must be removed from the list of arguments, otherwise, the next
-    // time the validation function will be applied, it will fail.
-    widget.validationFunctionArgs.length -= 2;
+    InvalidValueState invalidValueState = InvalidValueState.none;
+
+    if (widget.validationFunction != null) {
+      invalidValueState = Function.apply(
+        widget.validationFunction!,
+        widget.validationFunctionArgs,
+      );
+
+      // Once the validation function has been applied, the 2 entered values
+      // must be removed from the list of arguments, otherwise, the next
+      // time the validation function will be applied, it will fail.
+      widget.validationFunctionArgs.length -= 2;
+    }
 
     if (invalidValueState != InvalidValueState.none) {
       WarningMessageVM warningMessageVM = Provider.of<WarningMessageVM>(
@@ -359,7 +370,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
       }
     }
 
-    if (!isAnyCheckboxChecked) {
+    if (widget.targetNamesLst.isNotEmpty && !isAnyCheckboxChecked) {
       WarningMessageVM warningMessageVM = Provider.of<WarningMessageVM>(
         context,
         listen: false,

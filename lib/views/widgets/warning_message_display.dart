@@ -1,3 +1,4 @@
+import 'package:audiolearn/utils/duration_expansion.dart';
 import 'package:audiolearn/views/widgets/set_value_to_target_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,7 @@ import '../../models/playlist.dart';
 import '../../constants.dart';
 import '../../services/settings_data_service.dart';
 import '../../utils/dir_util.dart';
+import '../../utils/ui_util.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
@@ -1111,24 +1113,32 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
       case WarningMessageType.savedUniquePlaylistOrAllPlaylistsAudioMp3ToZip:
         WidgetsBinding.instance.addPostFrameCallback((_) {
           String savedAppDataToZipMessage;
+          String savedTotalAudioFileSizeStr = UiUtil.formatLargeSizeToKbOrMb(
+            context: context,
+            sizeInBytes: _warningMessageVM.savedTotalAudioFileSize,
+          );
+          String savedTotalAudioDurationStr =
+              _warningMessageVM.savedTotalAudioDuration.HHmmss(
+            addRemainingOneDigitTenthOfSecond: true,
+          );
 
           if (_warningMessageVM.zipFilePathName != '') {
             if (_warningMessageVM.uniquePlaylistIsSaved) {
-              savedAppDataToZipMessage =
-                  AppLocalizations.of(context)!.savedUniquePlaylistAudioMp3ToZip(
+              savedAppDataToZipMessage = AppLocalizations.of(context)!
+                  .savedUniquePlaylistAudioMp3ToZip(
                 _warningMessageVM.fromAudioDownloadDateTime,
                 _warningMessageVM.savedAudioMp3Number,
-                _warningMessageVM.savedTotalAudioFileSize,
-                _warningMessageVM.savedTotalAudioDuration,
+                savedTotalAudioFileSizeStr,
+                savedTotalAudioDurationStr,
                 _warningMessageVM.zipFilePathName,
               );
             } else {
-              savedAppDataToZipMessage =
-                  AppLocalizations.of(context)!.savedMultiplePlaylistsAudioMp3ToZip(
+              savedAppDataToZipMessage = AppLocalizations.of(context)!
+                  .savedMultiplePlaylistsAudioMp3ToZip(
                 _warningMessageVM.fromAudioDownloadDateTime,
                 _warningMessageVM.savedAudioMp3Number,
-                _warningMessageVM.savedTotalAudioFileSize,
-                _warningMessageVM.savedTotalAudioDuration,
+                savedTotalAudioFileSizeStr,
+                savedTotalAudioDurationStr,
                 _warningMessageVM.zipFilePathName,
               );
 
@@ -1168,8 +1178,8 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
             HelpItem(
               helpTitle:
                   AppLocalizations.of(context)!.restoredElementsHelpTitle,
-              helpContent: AppLocalizations.of(context)!
-                  .restoredElementsHelpContent,
+              helpContent:
+                  AppLocalizations.of(context)!.restoredElementsHelpContent,
               displayHelpItemNumber: false,
             ),
           ];

@@ -739,7 +739,6 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             );
             break;
           case AppBarPopupMenu.updatePlaylistJson:
-            void validateEnteredValueFunction() {}
             final List<HelpItem> updatePlaylistsHelpItemsLst = [
               HelpItem(
                 helpTitle: AppLocalizations.of(context)!
@@ -770,7 +769,6 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   targetNamesLst: [
                     AppLocalizations.of(context)!.removeDeletedAudioFiles,
                   ],
-                  validationFunction: validateEnteredValueFunction,
                   validationFunctionArgs: [],
                   canUniqueCheckBoxBeUnchecked: true,
                   helpItemsLst: updatePlaylistsHelpItemsLst,
@@ -804,6 +802,13 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             );
             break;
           case AppBarPopupMenu.savePlaylistsAudioMp3FilesToZip:
+            String? targetSaveDirectoryPath =
+                await UiUtil.filePickerSelectTargetDir();
+
+            if (targetSaveDirectoryPath == null) {
+              return;
+            }
+
             final PlaylistListVM playlistListVMlistenFalse =
                 Provider.of<PlaylistListVM>(
               context,
@@ -815,7 +820,6 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
               listen: false,
             );
 
-            void validateEnteredValueFunction() {}
             showDialog<List<String>>(
               barrierDismissible:
                   false, // Prevents the dialog from closing when tapping outside.
@@ -827,7 +831,8 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   dialogCommentStr: AppLocalizations.of(context)!
                       .audioDownloadFromDateTimeAllPlaylistsExplanation,
                   passedValueFieldLabel: AppLocalizations.of(context)!
-                      .audioDownloadFromDateTimeLabel(dateFormatVMlistenFalse.selectedDateFormat),
+                      .audioDownloadFromDateTimeLabel(
+                          dateFormatVMlistenFalse.selectedDateFormat),
                   passedValueFieldTooltip: AppLocalizations.of(context)!
                       .audioDownloadFromDateTimeAllPlaylistsTooltip,
                   passedValueStr: playlistListVMlistenFalse
@@ -836,7 +841,6 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                         .getUpToDateSelectablePlaylists(),
                   ),
                   targetNamesLst: [],
-                  validationFunction: validateEnteredValueFunction,
                   validationFunctionArgs: [],
                 );
               },
@@ -846,15 +850,18 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 return;
               }
 
-              String positionStr = resultStringLst[0];
+              String oldestAudioDownloadDateFormattedStr = resultStringLst[0];
 
-              // Updating the display format according to the provided position.
-              int pointPosition = positionStr.indexOf('.');
-              if (pointPosition != -1) {}
+              playlistListVMlistenFalse.savePlaylistsAudioMp3FilesToZip(
+                targetDir: targetSaveDirectoryPath,
+                fromAudioDownloadDateTime:
+                    dateFormatVMlistenFalse.parseDateTimeStrUsinAppDateFormat(
+                  dateTimeStr: oldestAudioDownloadDateFormattedStr,
+                )!,
+              );
             });
             break;
           case AppBarPopupMenu.restorePlaylistAndCommentsFromZip:
-            void validateEnteredValueFunction() {}
             final List<HelpItem> restorePlaylistsHelpItemsLst = [
               HelpItem(
                 helpTitle:
@@ -891,7 +898,6 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   targetNamesLst: [
                     AppLocalizations.of(context)!.replaceExistingPlaylists,
                   ],
-                  validationFunction: validateEnteredValueFunction,
                   validationFunctionArgs: [],
                   canUniqueCheckBoxBeUnchecked: true,
                   helpItemsLst: restorePlaylistsHelpItemsLst,

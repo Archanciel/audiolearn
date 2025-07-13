@@ -108,4 +108,25 @@ class DateFormatVM extends ChangeNotifier {
       return null;
     }
   }
+
+  /// Parses a date time string into a DateTime object based on the application date
+  /// format.
+  ///
+  /// If the passed dateTimeStr is empty, null is returned.
+  ///
+  /// Returns the parsed DateTime if successful, otherwise return null.
+  DateTime? parseDateTimeStrUsinAppDateFormat({
+    required String dateTimeStr,
+  }) {
+    if (dateTimeStr.isEmpty) {
+      return null;
+    }
+
+    // Try parsing the date string using each format.
+    try {
+      return DateFormat('$_selectedDateFormat HH:mm').parseStrict(dateTimeStr);
+    } catch (_) {
+      return null;
+    }
+  }
 }

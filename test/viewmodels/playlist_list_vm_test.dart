@@ -1211,7 +1211,7 @@ void main() {
 
         expect(
           savedZipFilePathName,
-          "$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_${yearMonthDayDateTimeFormatForFileName.format(fromDateTime)}_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip",
+          "$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2024-01-10_18_18_05_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip",
         );
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
@@ -1306,7 +1306,7 @@ void main() {
 
         expect(
           savedZipFilePathName,
-          "$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_${yearMonthDayDateTimeFormatForFileName.format(fromDateTime)}_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip",
+          "$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2024-01-08_16_35_21_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip",
         );
 
         expect(
