@@ -3148,6 +3148,7 @@ class PlaylistListVM extends ChangeNotifier {
     int savedAudioNumber = 0;
     int savedAudioFileSize = 0;
     Duration savedAudioDuration = Duration.zero;
+    DateTime oldestAudioDownloadDateTime = DateTime.now();
 
     Directory targetDirectory = Directory(targetDir);
 
@@ -3197,6 +3198,11 @@ class PlaylistListVM extends ChangeNotifier {
           savedAudioDuration += audio.audioDuration;
 
           hasAudioFiles = true;
+
+          if (audio.audioDownloadDateTime
+              .isBefore(oldestAudioDownloadDateTime)) {
+            oldestAudioDownloadDateTime = audio.audioDownloadDateTime;
+          }
         }
       }
     }
@@ -3207,7 +3213,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Save the archive to a zip file in the target directory
     String zipFileName =
-        "audioLearn_mp3_from_${yearMonthDayDateTimeFormatForFileName.format(fromAudioDownloadDateTime)}_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip";
+        "audioLearn_mp3_from_${yearMonthDayDateTimeFormatForFileName.format(oldestAudioDownloadDateTime)}_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip";
 
     String zipFilePathName = path.join(targetDir, zipFileName);
     File zipFile = File(zipFilePathName);
