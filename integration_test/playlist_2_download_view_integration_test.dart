@@ -13,6 +13,7 @@ import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 import 'package:audiolearn/views/widgets/audio_sort_filter_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
+import 'package:audiolearn/views/widgets/set_value_to_target_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -12508,7 +12509,7 @@ void main() {
   group('Save playlist, comments, pictures and settings to zip file menu test',
       () {
     testWidgets(
-        '''Successful save. The integration test verify the confirmation displayed
+        '''Successful save. The integration test verifies the confirmation displayed
            warning''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -12612,7 +12613,7 @@ void main() {
     });
     testWidgets(
         '''Unsuccessful save which happens on the S8 Galaxy smartphone. The
-           integration test verify the displayed warning''',
+           integration test verifies the displayed warning''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -13382,8 +13383,9 @@ void main() {
   });
   group('Save playlists audio mp3 files to zip file menu test', () {
     testWidgets(
-        '''Successful save. The integration test verify the confirmation displayed
-           warning.''', (WidgetTester tester) async {
+        '''Keep download date to the oldest one. The oldest value is 13/07/2025 14:31. The integration
+          test verifies the confirmation displayed warning.''',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -13483,6 +13485,147 @@ void main() {
         "playlists\\Saint François d'Assise\\250714-171854-How to talk to animals The teaching of Saint Francis of Assisi 22-05-28.mp3",
         "playlists\\Saint François d'Assise\\250713-143130-Saint François d'Assise, le jongleur de Dieu 20-10-03.mp3",
         "playlists\\Saint François d'Assise\\250713-143125-4 octobre  - Saint François, le Saint qui a Transformé l'Église et le Monde 24-10-03.mp3",
+        "playlists\\Exo chants chrétiens\\250713-144410-EXO - Ta bienveillance [avec paroles] 13-01-29.mp3",
+        "playlists\\Exo chants chrétiens\\250713-144321-SI TU VEUX LE LOUER - EXO 17-05-31.mp3",
+      ];
+
+      List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
+        zipFilePathName:
+            "$kApplicationPathWindowsTest${path.separator}${zipLst[0]}",
+      );
+
+      expect(
+        zipContentLst,
+        expectedZipContentLst,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Set download date to more recent one. The less old value is 13/07/2025 14:41. The integration
+          test verifies the confirmation displayed warning.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}save_audio_mp3_to_zip",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      // First, set the application language to english
+      await IntegrationTestUtil.setApplicationLanguage(
+        tester: tester,
+        language: Language.english,
+      );
+
+      // Setting the path value returned by the FilePicker mock.
+      mockFilePicker.setPathToSelect(
+        pathToSelectStr: kApplicationPathWindowsTest,
+      );
+
+      // Tap the appbar leading popup menu button
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      // Now tap on the 'Save Playlists and Comments to zip File' menu
+      await tester.tap(
+          find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
+      await tester.pumpAndSettle();
+
+      expect(
+        tester
+            .widget<Text>(find.byKey(
+              const Key('setValueToTargetDialogTitleKey'),
+            ))
+            .data,
+        'Set the download date',
+      );
+
+      expect(
+        tester
+            .widget<Text>(find.byKey(
+              const Key('setValueToTargetDialogKey'),
+            ))
+            .data,
+        'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+      );
+
+      expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
+
+      const String oldestAudioDownloadDateTime = '13/07/2025 14:31';
+
+      expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
+
+      Finder setValueToTargetDialogFinder = find.byType(SetValueToTargetDialog);
+
+      // This finder obtained as descendant of its enclosing dialog does
+      // enable to change the value of the TextField
+      Finder setValueToTargetDialogEditTextFinder = find.descendant(
+        of: setValueToTargetDialogFinder,
+        matching: find.byType(TextField),
+      );
+
+      // Verify that the TextField is focused using its focus node
+      TextField textField =
+          tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
+      expect(textField.focusNode?.hasFocus, isTrue,
+          reason: 'TextField should be focused when dialog opens');
+
+      // Now change the download date in the dialog
+      String audioOldestDownloadDateTime = '13/07/2025 14:41';
+      textField.controller!.text = audioOldestDownloadDateTime;
+      await tester.pumpAndSettle();
+
+      // Tap on the Ok button to set the comment end position to the
+      // audio duration value in the comment previous dialog.
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
+
+      // Verify the displayed warning dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateTime.\n\nTotal saved audio number: 3, total size: 15.49 MB and total duration: 0:22:38.0.\n\nZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-07-13_14_43_21_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\".",
+        isWarningConfirming: true,
+      );
+
+      List<String> zipLst = DirUtil.listFileNamesInDir(
+        directoryPath: kApplicationPathWindowsTest,
+        fileExtension: 'zip',
+      );
+
+      List<String> expectedZipContentLst = [
+        "playlists\\Saint François d'Assise\\250714-171854-How to talk to animals The teaching of Saint Francis of Assisi 22-05-28.mp3",
         "playlists\\Exo chants chrétiens\\250713-144410-EXO - Ta bienveillance [avec paroles] 13-01-29.mp3",
         "playlists\\Exo chants chrétiens\\250713-144321-SI TU VEUX LE LOUER - EXO 17-05-31.mp3",
       ];
