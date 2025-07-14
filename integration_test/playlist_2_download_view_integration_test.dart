@@ -13380,6 +13380,130 @@ void main() {
       );
     });
   });
+  group('Save playlists audio mp3 files to zip file menu test', () {
+    testWidgets(
+        '''Successful save. The integration test verify the confirmation displayed
+           warning.''', (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}save_audio_mp3_to_zip",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      // First, set the application language to english
+      await IntegrationTestUtil.setApplicationLanguage(
+        tester: tester,
+        language: Language.english,
+      );
+
+      // Setting the path value returned by the FilePicker mock.
+      mockFilePicker.setPathToSelect(
+        pathToSelectStr: kApplicationPathWindowsTest,
+      );
+
+      // Tap the appbar leading popup menu button
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      // Now tap on the 'Save Playlists and Comments to zip File' menu
+      await tester.tap(
+          find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
+      await tester.pumpAndSettle();
+
+      expect(
+        tester
+            .widget<Text>(find.byKey(
+              const Key('setValueToTargetDialogTitleKey'),
+            ))
+            .data,
+        'Set the download date',
+      );
+
+      expect(
+        tester
+            .widget<Text>(find.byKey(
+              const Key('setValueToTargetDialogKey'),
+            ))
+            .data,
+        'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+      );
+
+      expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
+
+      const String oldestAudioDownloadDateTime = '13/07/2025 14:31';
+
+      expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
+
+      // Tap on the Ok button to set the comment end position to the
+      // audio duration value in the comment previous dialog.
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
+
+      // Verify the displayed warning dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Saved to ZIP all playlists audio MP3 files downloaded from $oldestAudioDownloadDateTime.\n\nTotal saved audio number: 5, total size: 64.47 MB and total duration: 2:40:27.2.\n\nZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-07-13_14_31_25_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 2)))}.zip\".",
+        isWarningConfirming: true,
+      );
+
+      List<String> zipLst = DirUtil.listFileNamesInDir(
+        directoryPath: kApplicationPathWindowsTest,
+        fileExtension: 'zip',
+      );
+
+      List<String> expectedZipContentLst = [
+        "playlists\\Saint François d'Assise\\250714-171854-How to talk to animals The teaching of Saint Francis of Assisi 22-05-28.mp3",
+        "playlists\\Saint François d'Assise\\250713-143130-Saint François d'Assise, le jongleur de Dieu 20-10-03.mp3",
+        "playlists\\Saint François d'Assise\\250713-143125-4 octobre  - Saint François, le Saint qui a Transformé l'Église et le Monde 24-10-03.mp3",
+        "playlists\\Exo chants chrétiens\\250713-144410-EXO - Ta bienveillance [avec paroles] 13-01-29.mp3",
+        "playlists\\Exo chants chrétiens\\250713-144321-SI TU VEUX LE LOUER - EXO 17-05-31.mp3",
+      ];
+
+      List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
+        zipFilePathName:
+            "$kApplicationPathWindowsTest${path.separator}${zipLst[0]}",
+      );
+
+      expect(
+        zipContentLst,
+        expectedZipContentLst,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+  });
   group(
       'Restore playlist, comments, pictures and settings from zip file menu test',
       () {

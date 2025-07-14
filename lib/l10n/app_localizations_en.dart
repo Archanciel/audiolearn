@@ -1674,12 +1674,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String savedMultiplePlaylistsAudioMp3ToZip(Object audioDownloadFromDateTime, Object savedAudioNumber, Object savedAudioTotalFileSize, Object savedAudioTotalDuration, Object filePathName) {
-    return 'Saved to ZIP all playlists audio MP3 files downloaded from $audioDownloadFromDateTime.\n\nTotal saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.\n\nZIP file path name: \"$filePathName\"';
+    return 'Saved to ZIP all playlists audio MP3 files downloaded from $audioDownloadFromDateTime.\n\nTotal saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.\n\nZIP file path name: \"$filePathName\".';
   }
 
   @override
   String savedUniquePlaylistAudioMp3ToZip(Object audioDownloadFromDateTime, Object filePathName, Object savedAudioNumber, Object savedAudioTotalDuration, Object savedAudioTotalFileSize) {
-    return 'Saved to ZIP unique playlist audio MP3 files downloaded from $audioDownloadFromDateTime.\n\nTotal saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.\n\nZIP file path name: \"$filePathName\"';
+    return 'Saved to ZIP unique playlist audio MP3 files downloaded from $audioDownloadFromDateTime.\n\nTotal saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.\n\nZIP file path name: \"$filePathName\".';
   }
 
   @override
