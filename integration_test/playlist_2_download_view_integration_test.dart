@@ -12675,7 +12675,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Playlist, comment and picture JSON files as well as application settings could not be saved to zip.",
+            "Playlist, comment and picture JSON files as well as application settings could not be saved to ZIP.",
         isWarningConfirming: false,
       );
 
@@ -24068,6 +24068,15 @@ Future<void> _verifyDateFormatApplication({
   // Now verify the date format on the 'Set the download date dialog'.
   // On the left appbar menu, tap on the 'Save Playlists Audio's MP3
   // to ZIP File ...' menu.
+
+  // Replace the platform instance with your mock
+  MockFilePicker mockFilePicker = MockFilePicker();
+  FilePicker.platform = mockFilePicker;
+
+  // Setting the path value returned by the FilePicker mock.
+  mockFilePicker.setPathToSelect(
+    pathToSelectStr: kApplicationPathWindowsTest,
+  );
 
   // Tap the appbar leading popup menu button
   await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
