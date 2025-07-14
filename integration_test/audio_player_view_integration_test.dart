@@ -7823,13 +7823,13 @@ void main() {
       Finder setValueToTargetDialogFinder = find.byType(SetValueToTargetDialog);
 
       // This finder obtained as descendant of its enclosing dialog does
-      // able to change the value of the TextField
+      // enable to change the value of the TextField
       Finder setValueToTargetDialogEditTextFinder = find.descendant(
         of: setValueToTargetDialogFinder,
         matching: find.byType(TextField),
       );
 
-      // Verify the TextField is focused using its focus node
+      // Verify that the TextField is focused using its focus node
       TextField textField = tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
       expect(textField.focusNode?.hasFocus, isTrue, 
             reason: 'TextField should be focused when dialog opens');
