@@ -9477,6 +9477,16 @@ void main() {
         await tester.tap(find.byIcon(Icons.play_arrow));
         await tester.pumpAndSettle();
 
+        Finder forward10sIconButtonFinder =
+            find.byKey(const Key('audioPlayerViewForward10sButton'));
+
+        for (int i = 0; i < 3; i++) {
+          // Tap 3 times on the forward 10 seconds icon button to
+          // advance the audio playback
+          await tester.tap(forward10sIconButtonFinder);
+          await tester.pumpAndSettle();
+        }
+
         // Tap on the comment icon button to open the comment add list
         // dialog
         Finder commentInkWellButtonFinder = find.byKey(
@@ -9488,31 +9498,25 @@ void main() {
         await tester.tap(commentInkWellButtonFinder);
         await tester.pumpAndSettle();
 
-        // Verify that the comment dialog is displayed
-        expect(find.text('Comments'), findsOneWidget);
-
         // Verify that the comment list dialog now displays the
         // added comment
 
-        // Find the list body containing the comments
-        final Finder commentListDialogFinder =
-            find.byKey(const Key('audioCommentsListKey'));
-
-        expect(
-            find.descendant(
-                of: commentListDialogFinder, matching: find.text("La prière du Maître")),
-            findsOneWidget);
-        expect(
-            find.descendant(
-                of: commentListDialogFinder, matching: find.text("« Mon Dieu, je Te donne mon cœur!\r\nL'amour a jailli de mon âme, toujours Ton Esprit me réclame. \r\nLe jour Ta lumière m'enflamme, de joie je Te donne mon cœur! »")),
-            findsOneWidget);
+        // Verify the first played audio comment list add dialog
+        _verifyCommentListAddDialog(
+          commentTitle: "La prière du Maître",
+          commentContent:
+              "« Mon Dieu, je Te donne mon cœur!\r\nL'amour a jailli de mon âme, toujours Ton Esprit me réclame. \r\nLe jour Ta lumière m'enflamme, de joie je Te donne mon cœur! »",
+        );
 
         await Future.delayed(const Duration(seconds: 10));
         await tester.pumpAndSettle();
 
-        // Click on the pause button to stop the last downloaded audio
-        await tester.tap(find.byIcon(Icons.pause));
-        await tester.pumpAndSettle();
+        // Verify the first played audio comment list add dialog
+        _verifyCommentListAddDialog(
+          commentTitle: "Les paroles ...",
+          commentContent:
+              "Jésus, c'est le plus beau nom,\nMerveilleux Sauveur,\nSeigneur de gloire !\nEmmanuel, Dieu est avec nous,\nSource de joie, Parole de vie.",
+        );
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
@@ -10055,6 +10059,25 @@ void main() {
       );
     });
   });
+}
+
+void _verifyCommentListAddDialog({
+  required String commentTitle,
+  required String commentContent,
+}) {
+  // Find the list body containing the comments
+  final Finder commentListDialogFinder =
+      find.byKey(const Key('audioCommentsListKey'));
+
+  expect(
+      find.descendant(
+          of: commentListDialogFinder, matching: find.text(commentTitle)),
+      findsOneWidget);
+
+  expect(
+      find.descendant(
+          of: commentListDialogFinder, matching: find.text(commentContent)),
+      findsOneWidget);
 }
 
 void _verifyPositionValueAfterCommentWasPlayed({
