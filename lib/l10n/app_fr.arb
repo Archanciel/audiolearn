@@ -1366,5 +1366,6 @@
   "audioDownloadFromDateTimeAllPlaylistsExplanation": "La date de téléchargement spécifiée par défaut correspond à la date de téléchargement audio la plus ancienne de toutes les playlists. Modifiez cette valeur en spécifiant la date de téléchargement à partir de laquelle les fichiers audio MP3 seront inclus dans le fichier ZIP.",
   "audioDownloadFromDateTimeLabel": "Date/heure {selectedAppDateFormat} hh:mm",
   "audioDownloadFromDateTimeAllPlaylistsTooltip": "Puisque la valeur de date/heure actuelle correspond à la valeur de date/heure de l'audio téléchargé le plus ancien de l'application, si la date/heure n'est pas modifiée, tous les fichiers audio MP3 de l'application seront inclus dans le fichier ZIP.",
-  "audioDownloadFromDateTimeSinglePlaylistTooltip": "Puisque la valeur de date/heure actuelle correspond à la valeur de date/heure de l'audio téléchargé le plus ancien de la playlist, si la date/heure n'est pas modifiée, tous les fichiers audio MP3 de la playlist seront inclus dans le fichier ZIP."
+  "audioDownloadFromDateTimeSinglePlaylistTooltip": "Puisque la valeur de date/heure actuelle correspond à la valeur de date/heure de l'audio téléchargé le plus ancien de la playlist, si la date/heure n'est pas modifiée, tous les fichiers audio MP3 de la playlist seront inclus dans le fichier ZIP.",
+  "noAudioMp3WereSavedToZip": "Aucun fichier audio MP3 n'a été sauvegardé dans un fichier ZIP du fait qu'aucun audio n'a été téléchargé à partir du {audioDownloadFromDateTime}."
 }

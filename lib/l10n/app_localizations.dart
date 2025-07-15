@@ -3076,6 +3076,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Since the current date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio MP3 files will be included in the ZIP file.'**
   String get audioDownloadFromDateTimeSinglePlaylistTooltip;
+
+  /// No description provided for @noAudioMp3WereSavedToZip.
+  ///
+  /// In en, this message translates to:
+  /// **'No audio MP3 file was saved to ZIP since no audio was downloaded on or after {audioDownloadFromDateTime}.'**
+  String noAudioMp3WereSavedToZip(Object audioDownloadFromDateTime);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
