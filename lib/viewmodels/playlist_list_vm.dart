@@ -3042,24 +3042,24 @@ class PlaylistListVM extends ChangeNotifier {
       fromAudioDownloadDateTime: fromAudioDownloadDateTime,
     );
 
+    DateFormatVM dateFormatVM = DateFormatVM(
+      settingsDataService: _settingsDataService,
+    );
+
     if (restoredInfoLst.isEmpty) {
-      // The case if the target directory does not exist or is invalid.
-      // In this situation, since the passed savedZipFilePathName is empty,
-      // a warning message is displayed instead of a confirmation message.
+      // The case if no audio file was downloaded at or after the
+      // passed fromAudioDownloadDateTime. In this case, a warning
+      // message is displayed instead of a confirmation message.
       _warningMessageVM.confirmSavingAudioMp3ToZip(
         zipFilePathName: '',
-        fromAudioDownloadDateTime: '',
+        fromAudioDownloadDateTime: dateFormatVM.formatDateTime(fromAudioDownloadDateTime),
         savedAudioMp3Number: 0,
         savedTotalAudioFileSize: 0,
-        savedTotalAudioDuration: restoredInfoLst[3],
+        savedTotalAudioDuration: const Duration(seconds: 0),
       );
 
       return restoredInfoLst;
     }
-
-    DateFormatVM dateFormatVM = DateFormatVM(
-      settingsDataService: _settingsDataService,
-    );
 
     _warningMessageVM.confirmSavingAudioMp3ToZip(
       zipFilePathName: restoredInfoLst[0],
@@ -3098,25 +3098,24 @@ class PlaylistListVM extends ChangeNotifier {
       fromAudioDownloadDateTime: fromAudioDownloadDateTime,
     );
 
+    DateFormatVM dateFormatVM = DateFormatVM(
+      settingsDataService: _settingsDataService,
+    );
+
     if (restoredInfoLst.isEmpty) {
-      // The case if the target directory does not exist or is invalid.
-      // In this situation, since the passed savedZipFilePathName is empty,
-      // a warning message is displayed instead of a confirmation message.
+      // The case if no audio file was downloaded at or after the
+      // passed fromAudioDownloadDateTime. In this case, a warning
+      // message is displayed instead of a confirmation message.
       _warningMessageVM.confirmSavingAudioMp3ToZip(
         zipFilePathName: '',
-        fromAudioDownloadDateTime: '',
+        fromAudioDownloadDateTime: dateFormatVM.formatDateTime(fromAudioDownloadDateTime),
         savedAudioMp3Number: 0,
         savedTotalAudioFileSize: 0,
-        savedTotalAudioDuration: restoredInfoLst[3],
-        uniquePlaylistIsSaved: true,
+        savedTotalAudioDuration: const Duration(seconds: 0),
       );
 
       return restoredInfoLst;
     }
-
-    DateFormatVM dateFormatVM = DateFormatVM(
-      settingsDataService: _settingsDataService,
-    );
 
     _warningMessageVM.confirmSavingAudioMp3ToZip(
       zipFilePathName: restoredInfoLst[0],
@@ -3131,8 +3130,8 @@ class PlaylistListVM extends ChangeNotifier {
     return restoredInfoLst;
   }
 
-  /// Returns the saved zip file path name, '' if the target dir in which to save
-  /// the zip does not exist or if no audio files match the criteria.
+  /// Returns the list described below or [] if no audio file was downloaded at or after
+  /// the passed [fromAudioDownloadDateTime].
   ///
   /// The returned list contains
   /// [
@@ -3149,12 +3148,6 @@ class PlaylistListVM extends ChangeNotifier {
     int savedAudioFileSize = 0;
     Duration savedAudioDuration = Duration.zero;
     DateTime oldestAudioDownloadDateTime = DateTime.now();
-
-    Directory targetDirectory = Directory(targetDir);
-
-    if (!targetDirectory.existsSync()) {
-      return [];
-    }
 
     // Create a zip encoder
     final archive = Archive();
@@ -3258,8 +3251,8 @@ class PlaylistListVM extends ChangeNotifier {
     return dateFormatVM.formatDateTime(oldestAudioDownloadDateTime);
   }
 
-  /// Returns the saved zip file path name, '' if the target dir in which to save
-  /// the zip does not exist or if no audio files match the criteria.
+  /// Returns the list described below or [] if no audio file was downloaded at or after
+  /// the passed [fromAudioDownloadDateTime].
   ///
   /// The returned list contains
   /// [
@@ -3276,12 +3269,6 @@ class PlaylistListVM extends ChangeNotifier {
     int savedAudioNumber = 0;
     int savedAudioFileSize = 0;
     Duration savedAudioDuration = Duration.zero;
-    Directory targetDirectory = Directory(targetDir);
-    Directory playlistDir = Directory(playlist.downloadPath);
-
-    if (!targetDirectory.existsSync() || !playlistDir.existsSync()) {
-      return [];
-    }
 
     // Create a zip encoder
     final archive = Archive();

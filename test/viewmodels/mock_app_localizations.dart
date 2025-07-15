@@ -2069,4 +2069,10 @@ class MockAppLocalizations extends AppLocalizations {
     Object selectedAppDateFormat,
   ) =>
       "Date/time $selectedAppDateFormat hh:mm";
+
+  @override
+  String noAudioMp3WereSavedToZip(
+    Object audioDownloadFromDateTime,
+  ) =>
+      "Aucun audio MP3 sauv‚ dans un fichier ZIP du fait qu'aucun audio n'a ‚t‚ t‚l‚charg‚ … partir de $audioDownloadFromDateTime.";
 }

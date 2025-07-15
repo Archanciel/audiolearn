@@ -1112,7 +1112,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         return const SizedBox.shrink();
       case WarningMessageType.savedUniquePlaylistOrAllPlaylistsAudioMp3ToZip:
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          String savedAppDataToZipMessage;
+          String savedAudioMp3ToZipMessage;
           String savedTotalAudioFileSizeStr = UiUtil.formatLargeSizeToKbOrMb(
             context: context,
             sizeInBytes: _warningMessageVM.savedTotalAudioFileSize,
@@ -1124,7 +1124,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
 
           if (_warningMessageVM.zipFilePathName != '') {
             if (_warningMessageVM.uniquePlaylistIsSaved) {
-              savedAppDataToZipMessage = AppLocalizations.of(context)!
+              savedAudioMp3ToZipMessage = AppLocalizations.of(context)!
                   .savedUniquePlaylistAudioMp3ToZip(
                 _warningMessageVM.fromAudioDownloadDateTime,
                 _warningMessageVM.savedAudioMp3Number,
@@ -1133,7 +1133,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                 _warningMessageVM.zipFilePathName,
               );
             } else {
-              savedAppDataToZipMessage = AppLocalizations.of(context)!
+              savedAudioMp3ToZipMessage = AppLocalizations.of(context)!
                   .savedMultiplePlaylistsAudioMp3ToZip(
                 _warningMessageVM.fromAudioDownloadDateTime,
                 _warningMessageVM.savedAudioMp3Number,
@@ -1141,29 +1141,24 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                 savedTotalAudioDurationStr,
                 _warningMessageVM.zipFilePathName,
               );
-
-              if (_warningMessageVM.savedOrRestoredPictureJpgNumber > 0) {
-                savedAppDataToZipMessage +=
-                    AppLocalizations.of(context)!.savedPictureNumberMessage(
-                  _warningMessageVM.savedOrRestoredPictureJpgNumber,
-                );
-              }
             }
 
             _displayWarningDialog(
               context: _context,
-              message: savedAppDataToZipMessage,
+              message: savedAudioMp3ToZipMessage,
               warningMessageVM: _warningMessageVM,
               themeProviderVM: themeProviderVM,
               warningMode: WarningMode.confirm,
             );
           } else {
-            savedAppDataToZipMessage =
-                AppLocalizations.of(context)!.appDataCouldNotBeSavedToZip;
+            savedAudioMp3ToZipMessage =
+                AppLocalizations.of(context)!.noAudioMp3WereSavedToZip(
+              _warningMessageVM.fromAudioDownloadDateTime,
+            );
 
             _displayWarningDialog(
               context: _context,
-              message: savedAppDataToZipMessage,
+              message: savedAudioMp3ToZipMessage,
               warningMessageVM: _warningMessageVM,
               themeProviderVM: themeProviderVM,
             );

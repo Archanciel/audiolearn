@@ -13646,6 +13646,135 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
+    testWidgets(
+        '''Set download date after the last download date. The set value is 14/07/2025 18:31. The integration
+          test verifies the displayed warning indicating that no audio mp3 was saved to ZIP.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}save_audio_mp3_to_zip",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      // First, set the application language to english
+      await IntegrationTestUtil.setApplicationLanguage(
+        tester: tester,
+        language: Language.english,
+      );
+
+      // Setting the path value returned by the FilePicker mock.
+      mockFilePicker.setPathToSelect(
+        pathToSelectStr: kApplicationPathWindowsTest,
+      );
+
+      // Tap the appbar leading popup menu button
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      // Now tap on the 'Save Playlists and Comments to zip File' menu
+      await tester.tap(
+          find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
+      await tester.pumpAndSettle();
+
+      expect(
+        tester
+            .widget<Text>(find.byKey(
+              const Key('setValueToTargetDialogTitleKey'),
+            ))
+            .data,
+        'Set the download date',
+      );
+
+      expect(
+        tester
+            .widget<Text>(find.byKey(
+              const Key('setValueToTargetDialogKey'),
+            ))
+            .data,
+        'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+      );
+
+      expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
+
+      const String oldestAudioDownloadDateTime = '13/07/2025 14:31';
+
+      expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
+
+      Finder setValueToTargetDialogFinder = find.byType(SetValueToTargetDialog);
+
+      // This finder obtained as descendant of its enclosing dialog does
+      // enable to change the value of the TextField
+      Finder setValueToTargetDialogEditTextFinder = find.descendant(
+        of: setValueToTargetDialogFinder,
+        matching: find.byType(TextField),
+      );
+
+      // Verify that the TextField is focused using its focus node
+      TextField textField =
+          tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
+      expect(textField.focusNode?.hasFocus, isTrue,
+          reason: 'TextField should be focused when dialog opens');
+
+      // Now change the download date in the dialog
+      String audioOldestDownloadDateTime = '14/07/2025 18:31';
+      textField.controller!.text = audioOldestDownloadDateTime;
+      await tester.pumpAndSettle();
+
+      // Tap on the Ok button to set the comment end position to the
+      // audio duration value in the comment previous dialog.
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
+
+      // Verify the displayed warning dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "No audio MP3 file was saved to ZIP since no audio was downloaded on or after $audioOldestDownloadDateTime.",
+      );
+
+      List<String> zipLst = DirUtil.listFileNamesInDir(
+        directoryPath: kApplicationPathWindowsTest,
+        fileExtension: 'zip',
+      );
+
+      expect(
+        zipLst.length,
+        0,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
   });
   group(
       'Restore playlist, comments, pictures and settings from zip file menu test',

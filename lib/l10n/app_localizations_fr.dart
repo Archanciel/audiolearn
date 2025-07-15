@@ -1704,4 +1704,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get audioDownloadFromDateTimeSinglePlaylistTooltip => 'Puisque la valeur de date/heure actuelle correspond à la valeur de date/heure de l\'audio téléchargé le plus ancien de la playlist, si la date/heure n\'est pas modifiée, tous les fichiers audio MP3 de la playlist seront inclus dans le fichier ZIP.';
+
+  @override
+  String noAudioMp3WereSavedToZip(Object audioDownloadFromDateTime) {
+    return 'Aucun fichier audio MP3 n\'a été sauvegardé dans un fichier ZIP du fait qu\'aucun audio n\'a été téléchargé à partir du $audioDownloadFromDateTime.';
+  }
 }
