@@ -33,7 +33,7 @@ void main() {
   audioPlayerViewSortFilterIntegrationTest();
 
   final Logger logger = Logger();
-  
+
   group('''Play/pause/start/end tests, clicking on audio title to open
          AudioPlayerView.''', () {
     testWidgets('Check play/pause button conversion only.', (
@@ -6214,7 +6214,8 @@ void main() {
       // added comment
 
       // Find the list body containing the comments
-      final Finder commentListDialogFinder = find.byKey(const Key('audioCommentsListKey'));
+      final Finder commentListDialogFinder =
+          find.byKey(const Key('audioCommentsListKey'));
 
       expect(
           find.descendant(
@@ -6723,7 +6724,8 @@ void main() {
       // added comment
 
       // Find the list body containing the comments
-      final Finder commentListDialogFinder = find.byKey(const Key('audioCommentsListKey'));
+      final Finder commentListDialogFinder =
+          find.byKey(const Key('audioCommentsListKey'));
 
       expect(
           find.descendant(
@@ -7019,7 +7021,8 @@ void main() {
       // added comment
 
       // Find the list body containing the comments
-      final Finder commentListDialogFinder = find.byKey(const Key('audioCommentsListKey'));
+      final Finder commentListDialogFinder =
+          find.byKey(const Key('audioCommentsListKey'));
 
       List<String> expectedTitles = [
         'One',
@@ -7256,7 +7259,8 @@ void main() {
       await tester.pumpAndSettle();
 
       // Find the list body containing the comments
-      final Finder commentListDialogFinder = find.byKey(const Key('audioCommentsListKey'));
+      final Finder commentListDialogFinder =
+          find.byKey(const Key('audioCommentsListKey'));
 
       // Find all the list items
       final Finder gestureDetectorsFinder = find.descendant(
@@ -7354,7 +7358,8 @@ void main() {
       await tester.tap(addOrUpdateCommentTextButton);
       await tester.pumpAndSettle();
 
-      final Finder commentListDialogFinder = find.byKey(const Key('audioCommentsListKey'));
+      final Finder commentListDialogFinder =
+          find.byKey(const Key('audioCommentsListKey'));
 
       // Verify that the comment list dialog now displays the
       // added comment
@@ -7685,7 +7690,8 @@ void main() {
       await tester.pumpAndSettle();
 
       // Find the list body containing the comments
-      final Finder commentListDialogFinder = find.byKey(const Key('audioCommentsListKey'));
+      final Finder commentListDialogFinder =
+          find.byKey(const Key('audioCommentsListKey'));
 
       // Find all the list items
       final Finder gestureDetectorsFinder = find.descendant(
@@ -7830,9 +7836,10 @@ void main() {
       );
 
       // Verify that the TextField is focused using its focus node
-      TextField textField = tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
-      expect(textField.focusNode?.hasFocus, isTrue, 
-            reason: 'TextField should be focused when dialog opens');
+      TextField textField =
+          tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
+      expect(textField.focusNode?.hasFocus, isTrue,
+          reason: 'TextField should be focused when dialog opens');
 
       // Now empty the position in the dialog
       String positionTextToEnterWithTenthOfSeconds = '';
@@ -7873,9 +7880,10 @@ void main() {
       );
 
       // Verify the TextField is focused using its focus node
-      textField = tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
-      expect(textField.focusNode?.hasFocus, isTrue, 
-            reason: 'TextField should be focused when dialog opens');
+      textField =
+          tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
+      expect(textField.focusNode?.hasFocus, isTrue,
+          reason: 'TextField should be focused when dialog opens');
 
       // Now empty the position in the dialog
       textField.controller!.text = positionTextToEnterWithTenthOfSeconds;
@@ -9426,13 +9434,100 @@ void main() {
         );
       });
     });
+    group(
+        '''Playing audio with the displayed comment list add dialog. When the next audio starts,
+            the comment list add dialog remains displayed, showing the current playing audio
+            comment(s).''', () {
+      testWidgets(
+          '''Click on play button, then click on comment icon button to display the comment list
+           add dialog and verify its content. Then let finish playing the audio downloaded
+           before the last downloaded audio and start playing the not listened last downloaded
+           audio. Verify the comment list add dialog content.''', (
+        WidgetTester tester,
+      ) async {
+        const String previousEndDownloadedAudioTitle =
+            'Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!';
+
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName:
+              'audio_player_comment_add_edit_dialog_display_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        // Now we want to tap on the audio downloaded before the last
+        // downloaded audio of the playlist in order to open the
+        // AudioPlayerView displaying the audio.
+
+        // First, get the previous end downloaded audio ListTile Text
+        // widget finder and tap on it
+        final Finder previousEndDownloadedAudioListTileTextWidgetFinder =
+            find.text(previousEndDownloadedAudioTitle);
+
+        await tester.tap(previousEndDownloadedAudioListTileTextWidgetFinder);
+        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+          tester: tester,
+        );
+
+        // Now we tap on the play button in order to finish
+        // playing the audio downloaded before the last downloaded
+        // audio and start playing the last downloaded audio of the
+        // playlist.
+
+        await tester.tap(find.byIcon(Icons.play_arrow));
+        await tester.pumpAndSettle();
+
+        // Tap on the comment icon button to open the comment add list
+        // dialog
+        Finder commentInkWellButtonFinder = find.byKey(
+          const Key('commentsInkWellButton'),
+        );
+
+        // Tap on the comment icon button to open the comment add list
+        // dialog
+        await tester.tap(commentInkWellButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Verify that the comment dialog is displayed
+        expect(find.text('Comments'), findsOneWidget);
+
+        // Verify that the comment list dialog now displays the
+        // added comment
+
+        // Find the list body containing the comments
+        final Finder commentListDialogFinder =
+            find.byKey(const Key('audioCommentsListKey'));
+
+        expect(
+            find.descendant(
+                of: commentListDialogFinder, matching: find.text("La prière du Maître")),
+            findsOneWidget);
+        expect(
+            find.descendant(
+                of: commentListDialogFinder, matching: find.text("« Mon Dieu, je Te donne mon cœur!\r\nL'amour a jailli de mon âme, toujours Ton Esprit me réclame. \r\nLe jour Ta lumière m'enflamme, de joie je Te donne mon cœur! »")),
+            findsOneWidget);
+
+        await Future.delayed(const Duration(seconds: 10));
+        await tester.pumpAndSettle();
+
+        // Click on the pause button to stop the last downloaded audio
+        await tester.tap(find.byIcon(Icons.pause));
+        await tester.pumpAndSettle();
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+    });
   });
   group('Modify audio volume tests', () {
     testWidgets(
-        '''Change first audio volume to max. Then select second audio, verify its volume
-            before reducing it to min. Then return to the first audio and verify its volume
-            set to max. Then reduce its volume to 90 %. Finally, select the second audio, verify
-            its volume set to min. Then increase it to 20 %.''', (
+        '''Change first audio volume to max. Then select second audio, verify its volume before
+            reducing it to min. Then return to the first audio and verify its volume set to max.
+            Then reduce its volume to 90 %. Finally, select the second audio, verify its volume
+            set to min. Then increase it to 20 %.''', (
       WidgetTester tester,
     ) async {
       const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
