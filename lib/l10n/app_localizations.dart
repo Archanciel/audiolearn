@@ -518,13 +518,13 @@ abstract class AppLocalizations {
   /// Warning announcing that downloading the audio's from Youtube failed.
   ///
   /// In en, this message translates to:
-  /// **'Downloading the audio of the video \"{videoTitle}\" from Youtube FAILED: \"{exceptionMessage}\"'**
+  /// **'Downloading the audio of the video \"{videoTitle}\" from Youtube FAILED: \"{exceptionMessage}\".'**
   String downloadAudioYoutubeError(Object videoTitle, Object exceptionMessage);
 
   /// Warning announcing that downloading the audio's from Youtube failed.
   ///
   /// In en, this message translates to:
-  /// **'Error downloading audio from Youtube: \"{exceptionMessage}\"'**
+  /// **'Error downloading audio from Youtube: \"{exceptionMessage}\".'**
   String downloadAudioYoutubeErrorExceptionMessageOnly(Object exceptionMessage);
 
   /// Warning announcing that downloading the audio from Youtube failed due to presence of this audio in the playlist.
@@ -1880,13 +1880,13 @@ abstract class AppLocalizations {
   /// No description provided for @commentStartPositionTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Comment start position in audio'**
+  /// **'Comment start position in audio.'**
   String get commentStartPositionTooltip;
 
   /// No description provided for @commentEndPositionTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Comment end position in audio'**
+  /// **'Comment end position in audio.'**
   String get commentEndPositionTooltip;
 
   /// No description provided for @playlistToggleButtonInAudioPlayerViewTooltip.
@@ -2282,7 +2282,7 @@ abstract class AppLocalizations {
   /// No description provided for @commentedAudioDeletionOpenSFDialogHelpContent.
   ///
   /// In en, this message translates to:
-  /// **'Click the right menu icon in the download audio view, then select \"Sort/Filter Audio ...\"'**
+  /// **'Click the right menu icon in the download audio view, then select \"Sort/Filter Audio ...\".'**
   String get commentedAudioDeletionOpenSFDialogHelpContent;
 
   /// No description provided for @commentedAudioDeletionCreateSFParmHelpTitle.
@@ -2801,7 +2801,7 @@ abstract class AppLocalizations {
   /// **'Select audio quality'**
   String get selectAudioQuality;
 
-  /// Not moved warning
+  /// Not moved warning. No period in end of message since the period is added by the warning message display
   ///
   /// In en, this message translates to:
   /// **'Audio \"{audioTitle}\"{yesOrNo}{operationType} from {fromPlaylistType} playlist \"{fromPlaylistTitle}\" to {toPlaylistType} playlist \"{toPlaylistTitle}\"{notCopiedOrMovedReason}'**

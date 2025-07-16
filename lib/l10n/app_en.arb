@@ -140,7 +140,7 @@
       "title": {}
     }
   },
-  "downloadAudioYoutubeError": "Downloading the audio of the video \"{videoTitle}\" from Youtube FAILED: \"{exceptionMessage}\"",
+  "downloadAudioYoutubeError": "Downloading the audio of the video \"{videoTitle}\" from Youtube FAILED: \"{exceptionMessage}\".",
   "@downloadAudioYoutubeError": {
     "description": "Warning announcing that downloading the audio's from Youtube failed.",
     "placeholders": {
@@ -148,7 +148,7 @@
       "exceptionMessage": {}
     }
   },
-  "downloadAudioYoutubeErrorExceptionMessageOnly": "Error downloading audio from Youtube: \"{exceptionMessage}\"",
+  "downloadAudioYoutubeErrorExceptionMessageOnly": "Error downloading audio from Youtube: \"{exceptionMessage}\".",
   "@downloadAudioYoutubeErrorExceptionMessageOnly": {
     "description": "Warning announcing that downloading the audio's from Youtube failed.",
     "placeholders": {
@@ -491,8 +491,8 @@
   "invalidValueTooSmall": "is below the minimal value",
   "confirmCommentedAudioDeletionTitle": "Confirm deletion of the commented audio \"{audioTitle}\"",
   "confirmCommentedAudioDeletionComment": "The audio contains {commentNumber} comment(s) which will be deleted as well. Confirm deletion ?",
-  "commentStartPositionTooltip": "Comment start position in audio",
-  "commentEndPositionTooltip": "Comment end position in audio",
+  "commentStartPositionTooltip": "Comment start position in audio.",
+  "commentEndPositionTooltip": "Comment end position in audio.",
   "playlistToggleButtonInAudioPlayerViewTooltip": "Show/hide playlists. Then check a playlist to select its current listened audio.",
   "playlistSelectedSnackBarMessage": "Playlist \"{title}\" selected",
   "playlistImportAudioMenu": "Import Audio File(s) ...",
@@ -612,7 +612,7 @@
   "commentedAudioDeletionSolutionHelpTitle": "The solution is to create a Sort/Filter parameter to select only fully played uncommented audio",
   "commentedAudioDeletionSolutionHelpContent": "In the Sort/Filter definition dialog, the selection parameters are represented by checkboxes ...",
   "commentedAudioDeletionOpenSFDialogHelpTitle": "Open the Sort/Filter definition dialog",
-  "commentedAudioDeletionOpenSFDialogHelpContent": "Click the right menu icon in the download audio view, then select \"Sort/Filter Audio ...\"",
+  "commentedAudioDeletionOpenSFDialogHelpContent": "Click the right menu icon in the download audio view, then select \"Sort/Filter Audio ...\".",
   "commentedAudioDeletionCreateSFParmHelpTitle": "Create a valid Sort/Filter parameter",
   "commentedAudioDeletionCreateSFParmHelpContent": "In the \"Save as\" field, enter a name for the Sort/Filter parameter (e.g., FullyListenedUncom). Uncheck the checkboxes for \"Partially listened\", \"Not listened\" and \"Commented\". Then click on \"Save\".",
   "commentedAudioDeletionSelectSFParmHelpTitle": "Once saved, the Sort/Filter parameter is applied to the playlist, reducing the displayed audio's list.",
@@ -914,7 +914,7 @@
   "selectAudioQuality": "Select audio quality",
   "audioCopiedOrMovedFromPlaylistToPlaylist": "Audio \"{audioTitle}\"{yesOrNo}{operationType} from {fromPlaylistType} playlist \"{fromPlaylistTitle}\" to {toPlaylistType} playlist \"{toPlaylistTitle}\"{notCopiedOrMovedReason}",
   "@audioCopiedOrMovedFromPlaylistToPlaylist": {
-    "description": "Not moved warning",
+    "description": "Not moved warning. No period in end of message since the period is added by the warning message display",
     "placeholders": {
       "audioTitle": {},
       "yesOrNo": {},

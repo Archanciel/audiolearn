@@ -244,12 +244,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String downloadAudioYoutubeError(Object videoTitle, Object exceptionMessage) {
-    return 'Downloading the audio of the video \"$videoTitle\" from Youtube FAILED: \"$exceptionMessage\"';
+    return 'Downloading the audio of the video \"$videoTitle\" from Youtube FAILED: \"$exceptionMessage\".';
   }
 
   @override
   String downloadAudioYoutubeErrorExceptionMessageOnly(Object exceptionMessage) {
-    return 'Error downloading audio from Youtube: \"$exceptionMessage\"';
+    return 'Error downloading audio from Youtube: \"$exceptionMessage\".';
   }
 
   @override
@@ -988,10 +988,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get commentStartPositionTooltip => 'Comment start position in audio';
+  String get commentStartPositionTooltip => 'Comment start position in audio.';
 
   @override
-  String get commentEndPositionTooltip => 'Comment end position in audio';
+  String get commentEndPositionTooltip => 'Comment end position in audio.';
 
   @override
   String get playlistToggleButtonInAudioPlayerViewTooltip => 'Show/hide playlists. Then check a playlist to select its current listened audio.';
@@ -1239,7 +1239,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commentedAudioDeletionOpenSFDialogHelpTitle => 'Open the Sort/Filter definition dialog';
 
   @override
-  String get commentedAudioDeletionOpenSFDialogHelpContent => 'Click the right menu icon in the download audio view, then select \"Sort/Filter Audio ...\"';
+  String get commentedAudioDeletionOpenSFDialogHelpContent => 'Click the right menu icon in the download audio view, then select \"Sort/Filter Audio ...\".';
 
   @override
   String get commentedAudioDeletionCreateSFParmHelpTitle => 'Create a valid Sort/Filter parameter';
