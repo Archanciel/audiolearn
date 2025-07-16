@@ -160,7 +160,7 @@
     }
   },
   "youtubePlaylistWithTitleAlreadyInListOfPlaylists": "La playlist Youtube \"{title}\" est déjà dans la liste des playlists. Par conséquent, la playlist locale avec ce titre ne sera pas créée.",
-  "downloadAudioYoutubeError": "ÉCHEC du téléchargement de l'audio de la vidéo \"{videoTitle}\" Youtube: \"{exceptionMessage}\"",
+  "downloadAudioYoutubeError": "ÉCHEC du téléchargement de l'audio de la vidéo \"{videoTitle}\" Youtube: \"{exceptionMessage}\".",
   "@downloadAudioYoutubeError": {
     "description": "Message d'erreur affiché lorsqu'une erreur se produit lors du téléchargement audio Youtube",
     "placeholders": {
@@ -172,7 +172,7 @@
       }
     }
   },
-  "downloadAudioYoutubeErrorExceptionMessageOnly": "Erreur de téléchargement audio Youtube: \"{exceptionMessage}\"",
+  "downloadAudioYoutubeErrorExceptionMessageOnly": "Erreur de téléchargement audio Youtube: \"{exceptionMessage}\".",
   "@downloadAudioYoutubeErrorExceptionMessageOnly": {
     "description": "Message d'erreur affiché lorsqu'une erreur se produit lors du téléchargement audio Youtube",
     "placeholders": {
@@ -589,8 +589,8 @@
   "invalidValueTooSmall": "est inférieure à la valeur minimale",
   "confirmCommentedAudioDeletionTitle": "Confirmez la suppression de l'audio commenté \"{audioTitle}\"",
   "confirmCommentedAudioDeletionComment": "L'audio contient {commentNumber} commentaire(s) qui seront également supprimés. Confirmer la suppression ?",
-  "commentStartPositionTooltip": "Début du commentaire dans l'audio",
-  "commentEndPositionTooltip": "Fin du commentaire dans l'audio",
+  "commentStartPositionTooltip": "Début du commentaire dans l'audio.",
+  "commentEndPositionTooltip": "Fin du commentaire dans l'audio.",
   "playlistToggleButtonInAudioPlayerViewTooltip": "Afficher/masquer les playlists. Ensuite, cochez une playlist pour sélectionner son audio en cours d'écoute.",
   "playlistSelectedSnackBarMessage": "Playlist \"{title}\" sélectionnée",
   "playlistImportAudioMenu": "Importer des audio's ...",
@@ -680,7 +680,7 @@
   },
   "rewindAudioToStart": "Repositionner les audio's au début",
   "rewindAudioToStartTooltip": "Repositionner tous les audio's de la playlist au début. Cela est utile si vous souhaitez réécouter tous les audio's.",
-  "rewindedPlayableAudioNumber": "{number} audio's de la playlist ont été repositionnés au début",
+  "rewindedPlayableAudioNumber": "{number} audio's de la playlist ont été repositionnés au début.",
   "dateFormat": "Format de date ...",
   "dateFormatSelectionDialogTitle": "Sélectionnez le format de date de l'application",
   "commented": "Commenté",
@@ -748,12 +748,12 @@
   "commentedAudioDeletionSolutionHelpTitle": "La solution est de créer un paramètre de tri/filtrage pour sélectionner uniquement les audio'ss entièrement écoutés et non commentés",
   "commentedAudioDeletionSolutionHelpContent": "Dans la boîte de dialogue de définition des paramètres de tri/filtrage, les options de sélection sont représentées par des cases à cocher ...",
   "commentedAudioDeletionOpenSFDialogHelpTitle": "Ouvrir la boîte de dialogue de définition des paramètres de tri/filtrage",
-  "commentedAudioDeletionOpenSFDialogHelpContent": "Cliquez sur l'icône de menu à droite dans la vue de téléchargement des audio's, puis sélectionnez \"Trier/Filtrer audio ...\"",
+  "commentedAudioDeletionOpenSFDialogHelpContent": "Cliquez sur l'icône de menu à droite dans la vue de téléchargement des audio's, puis sélectionnez \"Trier/Filtrer audio ...\".",
   "commentedAudioDeletionCreateSFParmHelpTitle": "Créer un paramètre de tri/filtrage valide",
   "commentedAudioDeletionCreateSFParmHelpContent": "Dans le champ \"Enregistrer sous\", entrez un nom pour le paramètre de tri/filtrage (par exemple, écoutéNonComm). Décochez les cases \"Partiellement écouté\", \"Non écouté\" et \"Commenté\". Puis cliquez sur \"Sauver\".",
   "commentedAudioDeletionSelectSFParmHelpTitle": "Une fois enregistré, le paramètre de tri/filtrage est appliqué à la playlist, réduisant la liste affichée des audio's.",
   "commentedAudioDeletionSelectSFParmHelpContent": "Cliquez sur le bouton \"Playlists\" pour masquer la liste des playlists. Vous verrez votre nouveau paramètre de tri/filtrage sélectionné dans le menu déroulant. Vous pouvez appliquer ce paramètre ou un autre à n'importe quelle playlist ...",
-  "commentedAudioDeletionApplyingNewSFParmHelpTitle": "Enfin recliquez sur le bouton \"Playlists\" afin de réafficher la liste des playlists, ouvrez le menu de la playlist source et cliquez sur \"Traiter les audio's filtrés ...\" puis sur \"Supprimer les audio'ss filtrés ...\"",
+  "commentedAudioDeletionApplyingNewSFParmHelpTitle": "Enfin recliquez sur le bouton \"Playlists\" afin de réafficher la liste des playlists, ouvrez le menu de la playlist source et cliquez sur \"Traiter les audio's filtrés ...\" puis sur \"Supprimer les audio'ss filtrés ...\".",
   "commentedAudioDeletionApplyingNewSFParmHelpContent": "Cette fois, puisqu'un paramètre de tri/filtrage correct est appliqué, aucun avertissement ne sera affiché lors de la suppression des audio's sélectionnés non commentés.",
   "filteredAudioActions": "Traiter les audio's filtrés ...",
   "moveFilteredAudio": "Déplacer les audio's filtrés dans une playlist ...",
@@ -1243,7 +1243,7 @@
   "selectAudioQuality": "Sélectionnez la qualité audio",
   "audioCopiedOrMovedFromPlaylistToPlaylist": "L'audio \"{audioTitle}\"{yesOrNo}{operationType} de la playlist {fromPlaylistType} \"{fromPlaylistTitle}\" vers la playlist {toPlaylistType} \"{toPlaylistTitle}\"{notCopiedOrMovedReason}",
   "@audioCopiedOrMovedFromPlaylistToPlaylist": {
-    "description": "Not moved warning",
+    "description": "Not moved warning. No period in end of message since the period is added by the warning message display",
     "placeholders": {
       "audioTitle": {
         "type": "Object"
@@ -1339,7 +1339,7 @@
       }      
     }
   },
-  "savedUniquePlaylistAudioMp3ToZip": "Enregistré dans le ZIP tous les fichiers audio MP3 de la playlist unique téléchargés depuis le {audioDownloadFromDateTime}.\n\nNombre total d'audios sauvegardés: {savedAudioNumber}, taille totale: {savedAudioTotalFileSize} et durée totale: {savedAudioTotalDuration}.\n\nFichier ZIP: \"{filePathName}\"",
+  "savedUniquePlaylistAudioMp3ToZip": "Enregistré dans le ZIP tous les fichiers audio MP3 de la playlist unique téléchargés depuis le {audioDownloadFromDateTime}.\n\nNombre total d'audios sauvegardés: {savedAudioNumber}, taille totale: {savedAudioTotalFileSize} et durée totale: {savedAudioTotalDuration}.\n\nFichier ZIP: \"{filePathName}\".",
   "@savedUniquePlaylistAudioMp3ToZip": {
     "description": "Confirmation message after saving the audio MP3 downloaded at or after a specified date time of a unique playlist to a ZIP file",
     "placeholders": {

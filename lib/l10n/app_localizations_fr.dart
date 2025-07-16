@@ -244,12 +244,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String downloadAudioYoutubeError(Object videoTitle, Object exceptionMessage) {
-    return 'ÉCHEC du téléchargement de l\'audio de la vidéo \"$videoTitle\" Youtube: \"$exceptionMessage\"';
+    return 'ÉCHEC du téléchargement de l\'audio de la vidéo \"$videoTitle\" Youtube: \"$exceptionMessage\".';
   }
 
   @override
   String downloadAudioYoutubeErrorExceptionMessageOnly(Object exceptionMessage) {
-    return 'Erreur de téléchargement audio Youtube: \"$exceptionMessage\"';
+    return 'Erreur de téléchargement audio Youtube: \"$exceptionMessage\".';
   }
 
   @override
@@ -988,10 +988,10 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get commentStartPositionTooltip => 'Début du commentaire dans l\'audio';
+  String get commentStartPositionTooltip => 'Début du commentaire dans l\'audio.';
 
   @override
-  String get commentEndPositionTooltip => 'Fin du commentaire dans l\'audio';
+  String get commentEndPositionTooltip => 'Fin du commentaire dans l\'audio.';
 
   @override
   String get playlistToggleButtonInAudioPlayerViewTooltip => 'Afficher/masquer les playlists. Ensuite, cochez une playlist pour sélectionner son audio en cours d\'écoute.';
@@ -1185,7 +1185,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String rewindedPlayableAudioNumber(Object number) {
-    return '$number audio\'s de la playlist ont été repositionnés au début';
+    return '$number audio\'s de la playlist ont été repositionnés au début.';
   }
 
   @override
@@ -1239,7 +1239,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get commentedAudioDeletionOpenSFDialogHelpTitle => 'Ouvrir la boîte de dialogue de définition des paramètres de tri/filtrage';
 
   @override
-  String get commentedAudioDeletionOpenSFDialogHelpContent => 'Cliquez sur l\'icône de menu à droite dans la vue de téléchargement des audio\'s, puis sélectionnez \"Trier/Filtrer audio ...\"';
+  String get commentedAudioDeletionOpenSFDialogHelpContent => 'Cliquez sur l\'icône de menu à droite dans la vue de téléchargement des audio\'s, puis sélectionnez \"Trier/Filtrer audio ...\".';
 
   @override
   String get commentedAudioDeletionCreateSFParmHelpTitle => 'Créer un paramètre de tri/filtrage valide';
@@ -1254,7 +1254,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get commentedAudioDeletionSelectSFParmHelpContent => 'Cliquez sur le bouton \"Playlists\" pour masquer la liste des playlists. Vous verrez votre nouveau paramètre de tri/filtrage sélectionné dans le menu déroulant. Vous pouvez appliquer ce paramètre ou un autre à n\'importe quelle playlist ...';
 
   @override
-  String get commentedAudioDeletionApplyingNewSFParmHelpTitle => 'Enfin recliquez sur le bouton \"Playlists\" afin de réafficher la liste des playlists, ouvrez le menu de la playlist source et cliquez sur \"Traiter les audio\'s filtrés ...\" puis sur \"Supprimer les audio\'ss filtrés ...\"';
+  String get commentedAudioDeletionApplyingNewSFParmHelpTitle => 'Enfin recliquez sur le bouton \"Playlists\" afin de réafficher la liste des playlists, ouvrez le menu de la playlist source et cliquez sur \"Traiter les audio\'s filtrés ...\" puis sur \"Supprimer les audio\'ss filtrés ...\".';
 
   @override
   String get commentedAudioDeletionApplyingNewSFParmHelpContent => 'Cette fois, puisqu\'un paramètre de tri/filtrage correct est appliqué, aucun avertissement ne sera affiché lors de la suppression des audio\'s sélectionnés non commentés.';
@@ -1679,7 +1679,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String savedUniquePlaylistAudioMp3ToZip(Object audioDownloadFromDateTime, Object filePathName, Object savedAudioNumber, Object savedAudioTotalDuration, Object savedAudioTotalFileSize) {
-    return 'Enregistré dans le ZIP tous les fichiers audio MP3 de la playlist unique téléchargés depuis le $audioDownloadFromDateTime.\n\nNombre total d\'audios sauvegardés: $savedAudioNumber, taille totale: $savedAudioTotalFileSize et durée totale: $savedAudioTotalDuration.\n\nFichier ZIP: \"$filePathName\"';
+    return 'Enregistré dans le ZIP tous les fichiers audio MP3 de la playlist unique téléchargés depuis le $audioDownloadFromDateTime.\n\nNombre total d\'audios sauvegardés: $savedAudioNumber, taille totale: $savedAudioTotalFileSize et durée totale: $savedAudioTotalDuration.\n\nFichier ZIP: \"$filePathName\".';
   }
 
   @override
