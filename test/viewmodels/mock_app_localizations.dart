@@ -2075,4 +2075,16 @@ class MockAppLocalizations extends AppLocalizations {
     Object audioDownloadFromDateTime,
   ) =>
       "Aucun audio MP3 sauv‚ dans un fichier ZIP du fait qu'aucun audio n'a ‚t‚ t‚l‚charg‚ … partir de $audioDownloadFromDateTime.";
+
+  @override
+  String get savePlaylistAudioMp3FilesToZipMenu =>
+      "Save the Playlist Audio's MP3 to ZIP File ...";
+
+  @override
+  String get savePlaylistAudioMp3FilesToZipTooltip =>
+      "Saving the playlist audio MP3 files to a ZIP file. You can specify a date/time filter to only include audio files downloaded on or after that date.";
+
+  @override
+  String get audioDownloadFromDateTimeUniquePlaylistExplanation =>
+      "The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.";
 }

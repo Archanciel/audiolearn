@@ -14,6 +14,7 @@ import '../../models/playlist.dart';
 import '../../services/settings_data_service.dart';
 import '../../utils/date_time_util.dart';
 import '../../viewmodels/comment_vm.dart';
+import '../../viewmodels/date_format_vm.dart';
 import '../../viewmodels/playlist_list_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
@@ -39,6 +40,7 @@ enum PlaylistPopupMenuAction {
   setPlaylistAudioQuality,
   filteredAudioActions,
   savePlaylistCommentsAndPicturesToZip,
+  savePlaylistAudioMp3FilesToZip,
   deletePlaylist,
 }
 
@@ -246,6 +248,16 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 .saveUniquePlaylistCommentsAndPicturesToZipTooltip,
             child: Text(AppLocalizations.of(context)!
                 .saveUniquePlaylistCommentsAndPicturesToZipMenu),
+          ),
+        ),
+        PopupMenuItem<PlaylistPopupMenuAction>(
+          key: const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip'),
+          value: PlaylistPopupMenuAction.savePlaylistAudioMp3FilesToZip,
+          child: Tooltip(
+            message: AppLocalizations.of(context)!
+                .savePlaylistAudioMp3FilesToZipTooltip,
+            child: Text(AppLocalizations.of(context)!
+                .savePlaylistAudioMp3FilesToZipMenu),
           ),
         ),
         PopupMenuItem<PlaylistPopupMenuAction>(
@@ -482,6 +494,67 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               context: context,
               playlist: playlist,
             );
+            break;
+          case PlaylistPopupMenuAction.savePlaylistAudioMp3FilesToZip:
+            String? targetSaveDirectoryPath =
+                await UiUtil.filePickerSelectTargetDir();
+
+            if (targetSaveDirectoryPath == null) {
+              return;
+            }
+
+            final PlaylistListVM playlistListVMlistenFalse =
+                Provider.of<PlaylistListVM>(
+              context,
+              listen: false,
+            );
+            final DateFormatVM dateFormatVMlistenFalse =
+                Provider.of<DateFormatVM>(
+              context,
+              listen: false,
+            );
+
+            showDialog<List<String>>(
+              barrierDismissible:
+                  false, // Prevents the dialog from closing when tapping outside.
+              context: context,
+              builder: (BuildContext context) {
+                return SetValueToTargetDialog(
+                  dialogTitle: AppLocalizations.of(context)!
+                      .setAudioDownloadFromDateTimeTitle,
+                  dialogCommentStr: AppLocalizations.of(context)!
+                      .audioDownloadFromDateTimeUniquePlaylistExplanation,
+                  passedValueFieldLabel: AppLocalizations.of(context)!
+                      .audioDownloadFromDateTimeLabel(
+                          dateFormatVMlistenFalse.selectedDateFormat),
+                  passedValueFieldTooltip: AppLocalizations.of(context)!
+                      .audioDownloadFromDateTimeAllPlaylistsTooltip,
+                  passedValueStr: playlistListVMlistenFalse
+                      .getOldestAudioDownloadDateFormattedStr(
+                    listOfPlaylists: playlistListVMlistenFalse
+                        .getUpToDateSelectablePlaylists(),
+                  ),
+                  targetNamesLst: [],
+                  validationFunctionArgs: [],
+                );
+              },
+            ).then((resultStringLst) {
+              if (resultStringLst == null) {
+                // The case if the Cancel button was pressed.
+                return;
+              }
+
+              String oldestAudioDownloadDateFormattedStr = resultStringLst[0];
+
+              playlistListVMlistenFalse.saveUniquePlaylistAudioMp3FilesToZip(
+                playlist: playlist,
+                targetDir: targetSaveDirectoryPath,
+                fromAudioDownloadDateTime:
+                    dateFormatVMlistenFalse.parseDateTimeStrUsinAppDateFormat(
+                  dateTimeStr: oldestAudioDownloadDateFormattedStr,
+                )!,
+              );
+            });
             break;
           case PlaylistPopupMenuAction.deletePlaylist:
             showDialog<void>(
