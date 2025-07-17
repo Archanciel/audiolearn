@@ -1683,7 +1683,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get savePlaylistsAudioMp3FilesToZipMenu => 'Sauver les audio\'s MP3 dans un fichier ZIP ...';
+  String get savePlaylistsAudioMp3FilesToZipMenu => 'Sauver les audio\'s MP3 des playlists dans un fichier ZIP ...';
 
   @override
   String get savePlaylistsAudioMp3FilesToZipTooltip => 'Sauvegarde les fichiers audio MP3 de toutes les playlists dans un fichier ZIP. Vous pouvez spécifier un filtre de date/heure pour n\'inclure que les fichiers audio téléchargés à partir de cette date.';
@@ -1709,4 +1709,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String noAudioMp3WereSavedToZip(Object audioDownloadFromDateTime) {
     return 'Aucun fichier audio MP3 n\'a été sauvegardé dans un fichier ZIP du fait qu\'aucun audio n\'a été téléchargé à partir du $audioDownloadFromDateTime.';
   }
+
+  @override
+  String get savePlaylistAudioMp3FilesToZipMenu => 'Sauver les audio\'s MP3 de la playlist dans un fichier ZIP ...';
+
+  @override
+  String get savePlaylistAudioMp3FilesToZipTooltip => 'Sauvegarde les fichiers audio MP3 de la playlist dans un fichier ZIP. Vous pouvez spécifier un filtre de date/heure pour n\'inclure que les fichiers audio téléchargés à partir de cette date.';
+
+  @override
+  String get audioDownloadFromDateTimeUniquePlaylistExplanation => 'La date de téléchargement spécifiée par défaut correspond à la date de téléchargement audio la plus ancienne de la playlist. Modifiez cette valeur en spécifiant la date de téléchargement à partir de laquelle les fichiers audio MP3 seront inclus dans le fichier ZIP.';
 }
