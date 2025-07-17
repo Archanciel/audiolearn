@@ -12577,7 +12577,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-          "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\".",
+            "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\".",
         isWarningConfirming: true,
       );
 
@@ -19818,6 +19818,260 @@ void main() {
             );
           });
         });
+        group(
+            '''On empty app dir, first restore Windows zip in containing a unique or multiple playlist(s).
+          Then restore unique or multiple playlist(s) corresponding to the previously restored playlist(s)
+          which contain a comment for a not yet commented existing audio as well as a new comment for a
+          already commented existing audio as well as an updated comment for an existing audio which
+          already has this comment.''', () {
+          testWidgets(
+              '''Unique playlist restore, not replace existing playlist. Restore unique playlist Windows zip
+            containing 'Prières du Maître' playlist. Then restore to Windows application unique playlist
+            Windows zip containing the corresponding playlist with new and modified comments. The two
+            modified comments will update or not the existing comment according to their modification date.''',
+              (tester) async {
+            // Purge the test playlist directory if it exists so that the
+            // playlist list is empty
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+
+            // Copy the test initial audio data to the app dir
+            DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+              sourceRootPath:
+                  "$kDownloadAppTestSavedDataDir${path.separator}restore_2_existing_playlists_with_new_and_modified_comments",
+              destinationRootPath: kApplicationPathWindowsTest,
+            );
+
+            final SettingsDataService settingsDataService = SettingsDataService(
+              sharedPreferences: await SharedPreferences.getInstance(),
+              isTest: true,
+            );
+
+            // Load the settings from the json file. This is necessary
+            // otherwise the ordered playlist titles will remain empty
+            // and the playlist list will not be filled with the
+            // playlists available in the app test dir
+            await settingsDataService.loadSettingsFromFile(
+                settingsJsonPathFileName:
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+            // Replace the platform instance with your mock
+            MockFilePicker mockFilePicker = MockFilePicker();
+            FilePicker.platform = mockFilePicker;
+
+            await app.main();
+            await tester.pumpAndSettle();
+
+            String restorableZipFilePathName =
+                '$kApplicationPathWindowsTest${path.separator}Windows Prières initialization.zip';
+
+            mockFilePicker.setSelectedFiles([
+              PlatformFile(
+                  name: restorableZipFilePathName,
+                  path: restorableZipFilePathName,
+                  size: 2874035),
+            ]);
+
+            // Execute the 'Restore Playlists, Comments and Settings from Zip
+            // File ...' menu
+            await IntegrationTestUtil.executeRestorePlaylists(
+              tester: tester,
+              doReplaceExistingPlaylists: false,
+            );
+
+            // Verify the displayed warning confirmation dialog
+            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+              tester: tester,
+              warningDialogMessage:
+                  'Restored 1 playlist saved individually, 3 comment and 3 picture JSON files as well as 4 audio reference(s) and 0 added plus 0 modified comment(s) from "$restorableZipFilePathName".\n\nRestored also 3 picture JPG file(s) in the application pictures directory.',
+              isWarningConfirming: true,
+              warningTitle: 'CONFIRMATION',
+            );
+
+            // Verify the playlist audio comments
+
+            // First, open the playlist comment dialog
+            Finder playlistCommentListDialogFinder =
+                await IntegrationTestUtil.openPlaylistCommentDialog(
+              tester: tester,
+              playlistTitle: 'Prières du Maître',
+            );
+
+            final Finder playlistCommentListFinder =
+                find.byKey(const Key('playlistCommentsListKey'));
+
+            // Ensure the list has 6 child widgets
+            expect(
+              tester
+                  .widget<ListBody>(playlistCommentListFinder)
+                  .children
+                  .length,
+              6,
+            );
+
+            _checkPlaylistCommentListDialogContent(
+                playlistCommentListDialogFinder:
+                    playlistCommentListDialogFinder,
+                expectedCommentTextsLst: [
+                  "JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+                  "Les paroles très inspirantes",
+                  "25/06/25",
+                  "16/07/25",
+                  "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+                  "La prière du Maître",
+                  "20/06/25",
+                  "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+                  "Je vivrai d’après l'amour exactement comme l'a enseigné le Christ,",
+                  "12/08/24",
+                  "02/12/24",
+                  "Je pleure, je pleure, je pleure de joie !\n\n\"Je vivrai d’après l'amour exactement comme l'a enseigné le Christ,\nque ma vie s'améliore par l'amour !\nJe vivrai d’après la loi de Dieu,\nque ma vie se transforme, ainsi que Dieu l'a demandé !\"",
+                ]);
+
+            expect(
+                find.descendant(
+                  of: playlistCommentListDialogFinder,
+                  matching: find.text("Les paroles très inspirantes"),
+                ),
+                findsOneWidget);
+
+            // Purge the test playlist directory so that the created test
+            // files are not uploaded to GitHub
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+          });
+          testWidgets(
+              '''Multiple playlist restore, not replace existing playlists. Restore multiple playlists Windows
+             zip containing 'S8 audio' and 'local' playlists to Windows application which contain 'S8 audio'
+             and 'local' playlists. The restored 'S8 audio' and 'local' playlists contains additional audio's
+             to which comments and pictures are associated.''', (tester) async {
+            // Purge the test playlist directory if it exists so that the
+            // playlist list is empty
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+
+            // Copy the test initial audio data to the app dir
+            DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+              sourceRootPath:
+                  "$kDownloadAppTestSavedDataDir${path.separator}restore_existing_playlists_with_new_audios",
+              destinationRootPath: kApplicationPathWindowsTest,
+            );
+
+            final SettingsDataService settingsDataService = SettingsDataService(
+              sharedPreferences: await SharedPreferences.getInstance(),
+              isTest: true,
+            );
+
+            // Load the settings from the json file. This is necessary
+            // otherwise the ordered playlist titles will remain empty
+            // and the playlist list will not be filled with the
+            // playlists available in the app test dir
+            await settingsDataService.loadSettingsFromFile(
+                settingsJsonPathFileName:
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+            // Replace the platform instance with your mock
+            MockFilePicker mockFilePicker = MockFilePicker();
+            FilePicker.platform = mockFilePicker;
+
+            await app.main();
+            await tester.pumpAndSettle();
+
+            String restorableZipFilePathName =
+                '$kApplicationPathWindowsTest${path.separator}Windows 2 existing playlists with new audios.zip';
+
+            mockFilePicker.setSelectedFiles([
+              PlatformFile(
+                  name: restorableZipFilePathName,
+                  path: restorableZipFilePathName,
+                  size: 9387),
+            ]);
+
+            // Execute the 'Restore Playlists, Comments and Settings from Zip
+            // File ...' menu
+            await IntegrationTestUtil.executeRestorePlaylists(
+              tester: tester,
+              doReplaceExistingPlaylists: false,
+            );
+
+            // Verify the displayed warning confirmation dialog
+            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+              tester: tester,
+              warningDialogMessage:
+                  'Restored 0 playlist, 3 comment and 3 picture JSON files as well as 4 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".',
+              isWarningConfirming: true,
+              warningTitle: 'CONFIRMATION',
+            );
+
+            // Verifying the existing restored playlist
+            // list as well as the selected playlist 'Prières du
+            // Maître' displayed audio titles and subtitles.
+
+            List<String> playlistsTitles = [
+              "S8 audio",
+              "local",
+            ];
+
+            List<String> audioTitles = [
+              "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+              "Quand Aurélien Barrau va dans une école de management",
+              "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+            ];
+
+            List<String> audioSubTitles = [
+              '0:02:39.6. 2.59 MB imported on 23/06/2025 at 06:56.',
+              "0:17:59.0. 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55.",
+              "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35.",
+            ];
+
+            _verifyRestoredPlaylistAndAudio(
+              tester: tester,
+              selectedPlaylistTitle: 'S8 audio',
+              playlistsTitles: playlistsTitles,
+              audioTitles: audioTitles,
+              audioSubTitles: audioSubTitles,
+            );
+
+            // Verify the content of the 'S8 audio' playlist dir
+            // + comments + pictures dir after restoration.
+            IntegrationTestUtil.verifyPlaylistDirectoryContents(
+              playlistTitle: 'local',
+              expectedAudioFiles: [
+                "240110-181805-Really short video 23-07-01.mp3",
+                "240110-181810-morning _ cinematic video 23-07-01.mp3",
+              ],
+              expectedCommentFiles: [
+                "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.json",
+              ],
+              expectedPictureFiles: [
+                "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.json",
+              ],
+              doesPictureAudioMapFileNameExist: true,
+              applicationPictureDir:
+                  '$kApplicationPathWindowsTest${path.separator}$kPictureDirName',
+              pictureFileNameOne: 'Barrau.jpg',
+              audioForPictureTitleOneLst: [
+                "S8 audio|250623-065532-Quand Aurélien Barrau va dans une école de management 23-09-10"
+              ],
+              pictureFileNameTwo: 'Jésus, mon amour.jpg',
+              audioForPictureTitleTwoLst: [
+                "S8 audio|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'"
+              ],
+              pictureFileNameThree: "Dieu je T'adore.jpg",
+              audioForPictureTitleThreeLst: [
+                "local|Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+              ],
+            );
+
+            // Purge the test playlist directory so that the created test
+            // files are not uploaded to GitHub
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+          });
+        });
       });
     });
     group('Restore Android zip files to Windows', () {
@@ -23411,6 +23665,21 @@ void main() {
       );
     });
   });
+}
+
+void _checkPlaylistCommentListDialogContent({
+  required Finder playlistCommentListDialogFinder,
+  required List<String> expectedCommentTextsLst,
+}) {
+  for (String text in expectedCommentTextsLst) {
+    expect(
+      find.descendant(
+        of: playlistCommentListDialogFinder,
+        matching: find.text(text),
+      ),
+      findsOneWidget,
+    );
+  }
 }
 
 Future<void> _verifyTargetListTitles({
