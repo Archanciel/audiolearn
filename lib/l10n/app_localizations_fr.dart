@@ -1718,4 +1718,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get audioDownloadFromDateTimeUniquePlaylistExplanation => 'La date de téléchargement spécifiée par défaut correspond à la date de téléchargement audio la plus ancienne de la playlist. Modifiez cette valeur en spécifiant la date de téléchargement à partir de laquelle les fichiers audio MP3 seront inclus dans le fichier ZIP.';
+
+  @override
+  String get audioDownloadFromDateTimeUniquePlaylistTooltip => 'Puisque la valeur de date/heure actuelle correspond à la valeur de date/heure de l\'audio téléchargé le plus ancien de la playlist, si la date/heure n\'est pas modifiée, tous les fichiers audio MP3 de la playlist seront inclus dans le fichier ZIP.';
 }
