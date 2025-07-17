@@ -22360,6 +22360,478 @@ void main() {
           );
         });
       });
+        group(
+            '''On empty app dir, first restore Android zip in containing a unique or multiple playlist(s).
+          Then restore unique or multiple playlist(s) corresponding to the previously restored playlist(s)
+          which contain a comment for a not yet commented existing audio as well as a new comment for a
+          already commented existing audio as well as an updated comment for an existing audio which
+          already has this comment.''', () {
+          testWidgets(
+              '''Unique playlist restore, not replace existing playlist. Restore unique playlist Android zip
+            containing 'Prières du Maître' playlist. Then restore to Windows application unique playlist
+            Android zip containing the corresponding playlist with new and modified comments. The two
+            modified comments will update or not the existing comment according to their modification date.''',
+              (tester) async {
+            // Purge the test playlist directory if it exists so that the
+            // playlist list is empty
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+
+            // Copy the test initial audio data to the app dir
+            DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+              sourceRootPath:
+                  "$kDownloadAppTestSavedDataDir${path.separator}restore_2_existing_playlists_with_new_and_modified_comments",
+              destinationRootPath: kApplicationPathWindowsTest,
+            );
+
+            final SettingsDataService settingsDataService = SettingsDataService(
+              sharedPreferences: await SharedPreferences.getInstance(),
+              isTest: true,
+            );
+
+            // Load the settings from the json file. This is necessary
+            // otherwise the ordered playlist titles will remain empty
+            // and the playlist list will not be filled with the
+            // playlists available in the app test dir
+            await settingsDataService.loadSettingsFromFile(
+                settingsJsonPathFileName:
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+            // Replace the platform instance with your mock
+            MockFilePicker mockFilePicker = MockFilePicker();
+            FilePicker.platform = mockFilePicker;
+
+            await app.main();
+            await tester.pumpAndSettle();
+
+            // Install the initial version of the unique saved
+            // playlist 'Prières du Maître'
+
+            String restorableZipFilePathName =
+                '$kApplicationPathWindowsTest${path.separator}Android Prières initialization.zip';
+
+            mockFilePicker.setSelectedFiles([
+              PlatformFile(
+                  name: restorableZipFilePathName,
+                  path: restorableZipFilePathName,
+                  size: 2874035),
+            ]);
+
+            // Execute the 'Restore Playlists, Comments and Settings
+            // from Zip File ...' menu to install the initial version
+            // of the unique saved playlist 'Prières du Maître'
+            await IntegrationTestUtil.executeRestorePlaylists(
+              tester: tester,
+              doReplaceExistingPlaylists: false,
+            );
+
+            // Verify the displayed warning confirmation dialog
+            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+              tester: tester,
+              warningDialogMessage:
+                  'Restored 1 playlist saved individually, 3 comment and 3 picture JSON files as well as 4 audio reference(s) and 0 added plus 0 modified comment(s) from "$restorableZipFilePathName".\n\nRestored also 3 picture JPG file(s) in the application pictures directory.',
+              isWarningConfirming: true,
+              warningTitle: 'CONFIRMATION',
+            );
+
+            // Verify the restored playlist audio comments
+
+            // First, open the playlist comment dialog
+            Finder playlistCommentListDialogFinder =
+                await IntegrationTestUtil.openPlaylistCommentDialog(
+              tester: tester,
+              playlistTitle: 'Prières du Maître',
+            );
+
+            Finder playlistCommentListFinder =
+                find.byKey(const Key('playlistCommentsListKey'));
+
+            // Ensure the list has 6 child widgets
+            expect(
+              tester
+                  .widget<ListBody>(playlistCommentListFinder)
+                  .children
+                  .length,
+              6,
+            );
+
+            _checkPlaylistCommentListDialogContent(
+                playlistCommentListDialogFinder:
+                    playlistCommentListDialogFinder,
+                expectedCommentTextsLst: [
+                  "JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+                  "Les paroles très inspirantes",
+                  "25/06/25",
+                  "16/07/25",
+                  "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+                  "La prière du Maître",
+                  "20/06/25",
+                  "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+                  "Je vivrai d’après l'amour exactement comme l'a enseigné le Christ,",
+                  "12/08/24",
+                  "02/12/24",
+                  "Je pleure, je pleure, je pleure de joie !\n\n\"Je vivrai d’après l'amour exactement comme l'a enseigné le Christ,\nque ma vie s'améliore par l'amour !\nJe vivrai d’après la loi de Dieu,\nque ma vie se transforme, ainsi que Dieu l'a demandé !\"",
+                ]);
+
+            // Now close the comment list dialog
+            await tester.tap(find
+                .byKey(const Key('playlistCommentListCloseDialogTextButton')));
+            await tester.pumpAndSettle();
+
+            // Restore the modified version of the unique saved
+            // playlist 'Prières du Maître' which contains new
+            // and modified comments
+
+            restorableZipFilePathName =
+                '$kApplicationPathWindowsTest${path.separator}Android Prières comment restoration.zip';
+
+            mockFilePicker.setSelectedFiles([
+              PlatformFile(
+                  name: restorableZipFilePathName,
+                  path: restorableZipFilePathName,
+                  size: 2874418),
+            ]);
+
+            // Execute the 'Restore Playlists, Comments and Settings
+            // from Zip File ...' menu to install the modified version
+            // of the unique saved playlist 'Prières du Maître'
+            await IntegrationTestUtil.executeRestorePlaylists(
+              tester: tester,
+              doReplaceExistingPlaylists: false,
+            );
+
+            // Verify the displayed warning confirmation dialog
+            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+              tester: tester,
+              warningDialogMessage:
+                  'Restored 0 playlist saved individually, 1 comment and 0 picture JSON files as well as 0 audio reference(s) and 0 added plus 1 modified comment(s) from "$restorableZipFilePathName".\n\nRestored also 3 picture JPG file(s) in the application pictures directory.',
+              isWarningConfirming: true,
+              warningTitle: 'CONFIRMATION',
+            );
+
+            // Verify the restored playlist audio comments
+
+            // First, open the playlist comment dialog
+            playlistCommentListDialogFinder =
+                await IntegrationTestUtil.openPlaylistCommentDialog(
+              tester: tester,
+              playlistTitle: 'Prières du Maître',
+            );
+
+            playlistCommentListFinder =
+                find.byKey(const Key('playlistCommentsListKey'));
+
+            // Ensure the list has 6 child widgets
+            expect(
+              tester
+                  .widget<ListBody>(playlistCommentListFinder)
+                  .children
+                  .length,
+              8,
+            );
+
+            _checkPlaylistCommentListDialogContent(
+                playlistCommentListDialogFinder:
+                    playlistCommentListDialogFinder,
+                expectedCommentTextsLst: [
+                  "JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+                  "Les paroles très inspirantes",
+                  "25/06/25",
+                  "16/07/25",
+                  "Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour !",
+                  "Full comment",
+                  "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+                  "La prière du Maître",
+                  "20/06/25",
+                  "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+                  "Je vivrai d’après l'amour exactement comme l'a enseigné le Christ,",
+                  "12/08/24",
+                  "\"Je vivrai d’après l'amour exactement comme l'a enseigné le Christ,\nque ma vie s'améliore par l'amour !\nJe vivrai d’après la loi de Dieu,\nque ma vie se transforme, ainsi que Dieu l'a demandé !\"",
+                ]);
+
+            // Now close the comment list dialog
+            await tester.tap(find
+                .byKey(const Key('playlistCommentListCloseDialogTextButton')));
+            await tester.pumpAndSettle();
+
+            // Purge the test playlist directory so that the created test
+            // files are not uploaded to GitHub
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+          });
+          testWidgets(
+              '''Multiple playlists restore, not replace existing playlists. Restore multiple playlist Android
+              zip containing 'Prières du Maître' and 'local' playlists. Then restore to Windows application
+              the multiple playlists Android zip containing the corresponding playlists with new and modified
+              comments. The two modified comments will update or not the existing comment according to their
+              modification date.''', (tester) async {
+            // Purge the test playlist directory if it exists so that the
+            // playlist list is empty
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+
+            // Copy the test initial audio data to the app dir
+            DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+              sourceRootPath:
+                  "$kDownloadAppTestSavedDataDir${path.separator}restore_2_existing_playlists_with_new_and_modified_comments",
+              destinationRootPath: kApplicationPathWindowsTest,
+            );
+
+            final SettingsDataService settingsDataService = SettingsDataService(
+              sharedPreferences: await SharedPreferences.getInstance(),
+              isTest: true,
+            );
+
+            // Load the settings from the json file. This is necessary
+            // otherwise the ordered playlist titles will remain empty
+            // and the playlist list will not be filled with the
+            // playlists available in the app test dir
+            await settingsDataService.loadSettingsFromFile(
+                settingsJsonPathFileName:
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+            // Replace the platform instance with your mock
+            MockFilePicker mockFilePicker = MockFilePicker();
+            FilePicker.platform = mockFilePicker;
+
+            await app.main();
+            await tester.pumpAndSettle();
+
+            // Install the initial version of the unique saved
+            // playlist 'Prières du Maître'
+
+            String restorableZipFilePathName =
+                '$kApplicationPathWindowsTest${path.separator}Android Prières and local initialization.zip';
+
+            mockFilePicker.setSelectedFiles([
+              PlatformFile(
+                  name: restorableZipFilePathName,
+                  path: restorableZipFilePathName,
+                  size: 7898000),
+            ]);
+
+            // Execute the 'Restore Playlists, Comments and Settings
+            // from Zip File ...' menu to install the initial version
+            // of the unique saved playlist 'Prières du Maître'
+            await IntegrationTestUtil.executeRestorePlaylists(
+              tester: tester,
+              doReplaceExistingPlaylists: false,
+            );
+
+            // Verify the displayed warning confirmation dialog
+            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+              tester: tester,
+              warningDialogMessage:
+                  'Restored 2 playlist, 5 comment and 4 picture JSON files as well as 8 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".',
+              isWarningConfirming: true,
+              warningTitle: 'CONFIRMATION',
+            );
+
+            // Verify the restored playlist audio comments
+
+            // First, open the 'Prières du Maître' playlist comment dialog
+            Finder playlistCommentListDialogFinder =
+                await IntegrationTestUtil.openPlaylistCommentDialog(
+              tester: tester,
+              playlistTitle: 'Prières du Maître',
+            );
+
+            Finder playlistCommentListFinder =
+                find.byKey(const Key('playlistCommentsListKey'));
+
+            // Ensure the list has 6 child widgets
+            expect(
+              tester
+                  .widget<ListBody>(playlistCommentListFinder)
+                  .children
+                  .length,
+              6,
+            );
+
+            _checkPlaylistCommentListDialogContent(
+                playlistCommentListDialogFinder:
+                    playlistCommentListDialogFinder,
+                expectedCommentTextsLst: [
+                  "JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+                  "Les paroles ...",
+                  "25/06/25",
+                  "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+                  "La prière du Maître",
+                  "20/06/25",
+                  "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+                  "Je vivrai d’après l'amour exactement comme l'a enseigné le Christ,",
+                  "12/08/24",
+                  "02/12/24",
+                  "Je pleure, je pleure, je pleure de joie !\n\n\"Je vivrai d’après l'amour exactement comme l'a enseigné le Christ,\nque ma vie s'améliore par l'amour !\nJe vivrai d’après la loi de Dieu,\nque ma vie se transforme, ainsi que Dieu l'a demandé !\"",
+                ]);
+
+            // Now close the comment list dialog
+            await tester.tap(find
+                .byKey(const Key('playlistCommentListCloseDialogTextButton')));
+            await tester.pumpAndSettle();
+
+            // First, open the 'local' playlist comment dialog
+            playlistCommentListDialogFinder =
+                await IntegrationTestUtil.openPlaylistCommentDialog(
+              tester: tester,
+              playlistTitle: 'local',
+            );
+
+            playlistCommentListFinder =
+                find.byKey(const Key('playlistCommentsListKey'));
+
+            // Ensure the list has 6 child widgets
+            expect(
+              tester
+                  .widget<ListBody>(playlistCommentListFinder)
+                  .children
+                  .length,
+              5,
+            );
+
+            _checkPlaylistCommentListDialogContent(
+                playlistCommentListDialogFinder:
+                    playlistCommentListDialogFinder,
+                expectedCommentTextsLst: [
+                  "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+                  "All",
+                  "23/06/25",
+                  "Marie-France",
+                  "One",
+                  "Two",
+                ]);
+
+            // Now close the comment list dialog
+            await tester.tap(find
+                .byKey(const Key('playlistCommentListCloseDialogTextButton')));
+            await tester.pumpAndSettle();
+
+            // Restore the modified version of the unique saved
+            // playlist 'Prières du Maître' which contains new
+            // and modified comments
+
+            restorableZipFilePathName =
+                '$kApplicationPathWindowsTest${path.separator}Android Prières and local comment restoration.zip';
+
+            mockFilePicker.setSelectedFiles([
+              PlatformFile(
+                  name: restorableZipFilePathName,
+                  path: restorableZipFilePathName,
+                  size: 2874418),
+            ]);
+
+            // Execute the 'Restore Playlists, Comments and Settings
+            // from Zip File ...' menu to install the modified version
+            // of the unique saved playlist 'Prières du Maître'
+            await IntegrationTestUtil.executeRestorePlaylists(
+              tester: tester,
+              doReplaceExistingPlaylists: false,
+            );
+
+            // Verify the displayed warning confirmation dialog
+            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+              tester: tester,
+              warningDialogMessage:
+                  'Restored 0 playlist, 1 comment and 0 picture JSON files as well as 0 audio reference(s) and 1 added plus 4 modified comment(s) and the application settings from "$restorableZipFilePathName".',
+              isWarningConfirming: true,
+              warningTitle: 'CONFIRMATION',
+            );
+
+            // Verify the restored playlist audio comments
+
+            // First, open the playlist comment dialog
+            playlistCommentListDialogFinder =
+                await IntegrationTestUtil.openPlaylistCommentDialog(
+              tester: tester,
+              playlistTitle: 'Prières du Maître',
+            );
+
+            playlistCommentListFinder =
+                find.byKey(const Key('playlistCommentsListKey'));
+
+            // Ensure the list has 6 child widgets
+            expect(
+              tester
+                  .widget<ListBody>(playlistCommentListFinder)
+                  .children
+                  .length,
+              8,
+            );
+
+            _checkPlaylistCommentListDialogContent(
+                playlistCommentListDialogFinder:
+                    playlistCommentListDialogFinder,
+                expectedCommentTextsLst: [
+                  "JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+                  "Les paroles inspirantes",
+                  "25/06/25",
+                  "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+                  "La prière du Maître",
+                  "20/06/25",
+                  "Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour !",
+                  "Full comment",
+                  "30/06/25",
+                  "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+                  "Je vivrai d’après l'amour exactement comme l'a enseigné le Christ,",
+                  "12/08/24",
+                  "\"Je vivrai d’après l'amour exactement comme l'a enseigné le Christ,\nque ma vie s'améliore par l'amour !\nJe vivrai d’après la loi de Dieu,\nque ma vie se transforme, ainsi que Dieu l'a demandé !\"",
+                ]);
+
+            // Now close the comment list dialog
+            await tester.tap(find
+                .byKey(const Key('playlistCommentListCloseDialogTextButton')));
+            await tester.pumpAndSettle();
+
+            // First, open the 'local' playlist comment dialog
+            playlistCommentListDialogFinder =
+                await IntegrationTestUtil.openPlaylistCommentDialog(
+              tester: tester,
+              playlistTitle: 'local',
+            );
+
+            playlistCommentListFinder =
+                find.byKey(const Key('playlistCommentsListKey'));
+
+            // Ensure the list has 6 child widgets
+            expect(
+              tester
+                  .widget<ListBody>(playlistCommentListFinder)
+                  .children
+                  .length,
+              6,
+            );
+
+            _checkPlaylistCommentListDialogContent(
+                playlistCommentListDialogFinder:
+                    playlistCommentListDialogFinder,
+                expectedCommentTextsLst: [
+                  "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+                  "Prière",
+                  "23/06/25",
+                  "Marie-France",
+                  "One",
+                  "Two",
+                  "Before restore",
+                  "Three",
+                  "0:28",
+                  "0:33",
+                ]);
+
+            // Now close the comment list dialog
+            await tester.tap(find
+                .byKey(const Key('playlistCommentListCloseDialogTextButton')));
+            await tester.pumpAndSettle();
+
+            // Purge the test playlist directory so that the created test
+            // files are not uploaded to GitHub
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+          });
+        });
     });
   });
   group('Manage picture for audio', () {
