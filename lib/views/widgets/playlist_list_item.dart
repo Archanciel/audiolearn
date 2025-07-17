@@ -528,11 +528,11 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                       .audioDownloadFromDateTimeLabel(
                           dateFormatVMlistenFalse.selectedDateFormat),
                   passedValueFieldTooltip: AppLocalizations.of(context)!
-                      .audioDownloadFromDateTimeAllPlaylistsTooltip,
+                      .audioDownloadFromDateTimeUniquePlaylistTooltip,
                   passedValueStr: playlistListVMlistenFalse
                       .getOldestAudioDownloadDateFormattedStr(
                     listOfPlaylists: playlistListVMlistenFalse
-                        .getUpToDateSelectablePlaylists(),
+                        .getSelectedPlaylists(),
                   ),
                   targetNamesLst: [],
                   validationFunctionArgs: [],

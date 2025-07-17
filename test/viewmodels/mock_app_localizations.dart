@@ -2087,4 +2087,8 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get audioDownloadFromDateTimeUniquePlaylistExplanation =>
       "The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.";
+
+  @override
+  String get audioDownloadFromDateTimeUniquePlaylistTooltip =>
+      "Since the current date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio MP3 files will be included in the ZIP file.";
 }
