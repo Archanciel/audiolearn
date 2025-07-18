@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -192,6 +193,9 @@ class PlaylistListVM extends ChangeNotifier {
   //                           and background color.
 
   final Logger _logger = Logger();
+
+  bool _isSaving = false;
+  bool get isSaving => _isSaving;
 
   PlaylistListVM({
     required WarningMessageVM warningMessageVM,
@@ -3052,7 +3056,8 @@ class PlaylistListVM extends ChangeNotifier {
       // message is displayed instead of a confirmation message.
       _warningMessageVM.confirmSavingAudioMp3ToZip(
         zipFilePathName: '',
-        fromAudioDownloadDateTime: dateFormatVM.formatDateTime(fromAudioDownloadDateTime),
+        fromAudioDownloadDateTime:
+            dateFormatVM.formatDateTime(fromAudioDownloadDateTime),
         savedAudioMp3Number: 0,
         savedTotalAudioFileSize: 0,
         savedTotalAudioDuration: const Duration(seconds: 0),
@@ -3108,7 +3113,8 @@ class PlaylistListVM extends ChangeNotifier {
       // message is displayed instead of a confirmation message.
       _warningMessageVM.confirmSavingAudioMp3ToZip(
         zipFilePathName: '',
-        fromAudioDownloadDateTime: dateFormatVM.formatDateTime(fromAudioDownloadDateTime),
+        fromAudioDownloadDateTime:
+            dateFormatVM.formatDateTime(fromAudioDownloadDateTime),
         savedAudioMp3Number: 0,
         savedTotalAudioFileSize: 0,
         savedTotalAudioDuration: const Duration(seconds: 0),
@@ -3280,6 +3286,10 @@ class PlaylistListVM extends ChangeNotifier {
             audio.audioDownloadDateTime.isAtOrAfter(fromAudioDownloadDateTime))
         .toList();
 
+    // Start the timer and saving state before processing files
+    _isSaving = true;
+    notifyListeners();
+
     for (Audio audio in filteredAudioLst) {
       File audioFile = File(audio.filePathName);
 
@@ -3313,6 +3323,9 @@ class PlaylistListVM extends ChangeNotifier {
     String zipFilePathName = path.join(targetDir, zipFileName);
     File zipFile = File(zipFilePathName);
     zipFile.writeAsBytesSync(ZipEncoder().encode(archive), flush: true);
+
+    _isSaving = false;
+    notifyListeners();
 
     return [
       zipFilePathName,

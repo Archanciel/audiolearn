@@ -229,9 +229,15 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           playlistListVMlistenTrue: _playlistListVMlistenTrue,
           warningMessageVMlistenFalse: warningMessageVMlistenFalse,
         ),
+
         // displaying the currently downloading audiodownload
-        // informations.
+        // informations or nothing.
         _buildDisplayDownloadProgressionInfo(),
+
+        // displaying the currently playlist(s) audio saved to
+        // ZIP informations or nothing.
+        _buildDisplayPlaylistsMp3SaveToZipProgressionInfo(),
+
         _buildSecondLine(
             context: context,
             themeProviderVM: themeProviderVM,
@@ -564,7 +570,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     }
   }
 
-  ///
+  /// If an audio is downloading, the download progression is displayed.
+  /// Otherwise, nothing is displayed.
   Consumer<AudioDownloadVM> _buildDisplayDownloadProgressionInfo() {
     return Consumer<AudioDownloadVM>(
       builder: (context, audioDownloadVMlistenTrue, child) {
@@ -595,6 +602,36 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 const SizedBox(height: 10.0),
                 Text(
                   '$downloadProgressPercent ${AppLocalizations.of(context)!.ofPreposition} $downloadFileSize ${AppLocalizations.of(context)!.atPreposition} $downloadSpeed',
+                ),
+              ],
+            ),
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
+    );
+  }
+
+  /// If an audio is downloading, the download progression is displayed.
+  /// Otherwise, nothing is displayed.
+  Consumer<PlaylistListVM> _buildDisplayPlaylistsMp3SaveToZipProgressionInfo() {
+    return Consumer<PlaylistListVM>(
+      builder: (context, playlistListVMlistenTrue, child) {
+        if (playlistListVMlistenTrue.isSaving) {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Text(
+                  'Saving audio files to ZIP ...',
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10.0),
+                LinearProgressIndicator(), // Indeterminate progress bar
+                const SizedBox(height: 10.0),
+                Text(
+                  'Please wait, this may take several minutes ...',
                 ),
               ],
             ),
