@@ -197,6 +197,10 @@ class PlaylistListVM extends ChangeNotifier {
   bool _isSaving = false;
   bool get isSaving => _isSaving;
 
+  String _audioMp3SaveUniquePlaylistName = '';
+  String get audioMp3SaveUniquePlaylistName =>
+      _audioMp3SaveUniquePlaylistName;
+
   PlaylistListVM({
     required WarningMessageVM warningMessageVM,
     required AudioDownloadVM audioDownloadVM,
@@ -3276,6 +3280,8 @@ class PlaylistListVM extends ChangeNotifier {
     int savedAudioFileSize = 0;
     Duration savedAudioDuration = Duration.zero;
 
+    _audioMp3SaveUniquePlaylistName = playlist.title;
+    
     // Create a zip encoder
     final archive = Archive();
     bool hasAudioFiles = false;

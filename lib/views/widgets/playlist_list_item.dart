@@ -546,13 +546,27 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
 
               String oldestAudioDownloadDateFormattedStr = resultStringLst[0];
 
+              DateTime? parseDateTimeOrDateStrUsinAppDateFormat = dateFormatVMlistenFalse.parseDateTimeStrUsinAppDateFormat(
+                  dateTimeStr: oldestAudioDownloadDateFormattedStr,
+                );
+
+              parseDateTimeOrDateStrUsinAppDateFormat ??= dateFormatVMlistenFalse.parseDateStrUsinAppDateFormat(
+                  dateStr: oldestAudioDownloadDateFormattedStr,
+                );
+
+              if (parseDateTimeOrDateStrUsinAppDateFormat == null) {
+                warningMessageVMlistenFalse.setError(
+                  errorType: ErrorType.dateFormatError,
+                  errorArgOne: oldestAudioDownloadDateFormattedStr,
+                );
+                return;
+              }
+
               playlistListVMlistenFalse.saveUniquePlaylistAudioMp3FilesToZip(
                 playlist: playlist,
                 targetDir: targetSaveDirectoryPath,
                 fromAudioDownloadDateTime:
-                    dateFormatVMlistenFalse.parseDateTimeStrUsinAppDateFormat(
-                  dateTimeStr: oldestAudioDownloadDateFormattedStr,
-                )!,
+                    parseDateTimeOrDateStrUsinAppDateFormat,
               );
             });
             break;

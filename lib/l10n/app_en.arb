@@ -1002,5 +1002,6 @@
   "savePlaylistAudioMp3FilesToZipMenu": "Save the Playlist Audio's MP3 to ZIP File ...",
   "savePlaylistAudioMp3FilesToZipTooltip": "Saving the playlist audio MP3 files to a ZIP file. You can specify a date/time filter to only include audio files downloaded on or after that date.",
   "audioDownloadFromDateTimeUniquePlaylistExplanation": "The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.",
-  "audioDownloadFromDateTimeUniquePlaylistTooltip": "Since the current date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio MP3 files will be included in the ZIP file."
+  "audioDownloadFromDateTimeUniquePlaylistTooltip": "Since the current date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio MP3 files will be included in the ZIP file.",
+  "invalidDateFormatErrorMessage": "{dateStr} does not respect the date or date/time format."
 }

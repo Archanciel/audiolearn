@@ -113,38 +113,53 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
           case ErrorType.noInternet:
             WidgetsBinding.instance.addPostFrameCallback((_) {
               _displayWarningDialog(
-                  context: _context,
-                  message: AppLocalizations.of(context)!.noInternet,
-                  warningMessageVM: _warningMessageVM,
-                  themeProviderVM: themeProviderVM);
+                context: _context,
+                message: AppLocalizations.of(context)!.noInternet,
+                warningMessageVM: _warningMessageVM,
+                themeProviderVM: themeProviderVM,
+              );
             });
 
             return const SizedBox.shrink();
           case ErrorType.downloadAudioFileAlreadyOnAudioDirectory:
             WidgetsBinding.instance.addPostFrameCallback((_) {
               _displayWarningDialog(
-                  context: _context,
-                  message: AppLocalizations.of(context)!
-                      .downloadAudioFileAlreadyOnAudioDirectory(
-                    _warningMessageVM.errorArgOne,
-                    _warningMessageVM.errorArgTwo,
-                    _warningMessageVM.errorArgThree,
-                  ),
-                  warningMessageVM: _warningMessageVM,
-                  themeProviderVM: themeProviderVM);
+                context: _context,
+                message: AppLocalizations.of(context)!
+                    .downloadAudioFileAlreadyOnAudioDirectory(
+                  _warningMessageVM.errorArgOne,
+                  _warningMessageVM.errorArgTwo,
+                  _warningMessageVM.errorArgThree,
+                ),
+                warningMessageVM: _warningMessageVM,
+                themeProviderVM: themeProviderVM,
+              );
             });
 
             return const SizedBox.shrink();
           case ErrorType.errorInPlaylistJsonFile:
             WidgetsBinding.instance.addPostFrameCallback((_) {
               _displayWarningDialog(
-                  context: _context,
-                  message:
-                      AppLocalizations.of(context)!.errorInPlaylistJsonFile(
-                    _warningMessageVM.errorArgOne,
-                  ),
-                  warningMessageVM: _warningMessageVM,
-                  themeProviderVM: themeProviderVM);
+                context: _context,
+                message: AppLocalizations.of(context)!.errorInPlaylistJsonFile(
+                  _warningMessageVM.errorArgOne,
+                ),
+                warningMessageVM: _warningMessageVM,
+                themeProviderVM: themeProviderVM,
+              );
+            });
+
+            return const SizedBox.shrink();
+          case ErrorType.dateFormatError:
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              _displayWarningDialog(
+                context: _context,
+                message: AppLocalizations.of(context)!
+                    .invalidDateFormatErrorMessage(
+                        _warningMessageVM.errorArgOne),
+                warningMessageVM: _warningMessageVM,
+                themeProviderVM: themeProviderVM,
+              );
             });
 
             return const SizedBox.shrink();

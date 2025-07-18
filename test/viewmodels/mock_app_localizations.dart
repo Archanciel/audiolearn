@@ -2091,4 +2091,10 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get audioDownloadFromDateTimeUniquePlaylistTooltip =>
       "Since the current date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio MP3 files will be included in the ZIP file.";
+
+  @override
+  String invalidDateFormatErrorMessage(
+    Object dateStr,
+  ) =>
+      "$dateStr does not respect the date or date/time format.";
 }

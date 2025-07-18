@@ -1721,4 +1721,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get audioDownloadFromDateTimeUniquePlaylistTooltip => 'Puisque la valeur de date/heure actuelle correspond à la valeur de date/heure de l\'audio téléchargé le plus ancien de la playlist, si la date/heure n\'est pas modifiée, tous les fichiers audio MP3 de la playlist seront inclus dans le fichier ZIP.';
+
+  @override
+  String invalidDateFormatErrorMessage(Object dateStr) {
+    return '$dateStr ne respecte pas le format date ou date / heure minute.';
+  }
 }
