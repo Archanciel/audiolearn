@@ -3112,6 +3112,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{dateStr} does not respect the date or date/time format.'**
   String invalidDateFormatErrorMessage(Object dateStr);
+
+  /// No description provided for @savingUniquePlaylistAudioMp3.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving {playlistTitle} audio files to ZIP ...'**
+  String savingUniquePlaylistAudioMp3(Object playlistTitle);
+
+  /// No description provided for @savingMultiplePlaylistsAudioMp3.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving multiple playlists audio files to ZIP ...'**
+  String get savingMultiplePlaylistsAudioMp3;
+
+  /// No description provided for @savingMultipleMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'Please wait, this may take several minutes ...'**
+  String get savingMultipleMinutes;
+
+  /// No description provided for @savingUpToHalfHour.
+  ///
+  /// In en, this message translates to:
+  /// **'Please wait, this may take 10 to 30 minutes or more ...'**
+  String get savingUpToHalfHour;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

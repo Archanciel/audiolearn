@@ -1724,6 +1724,20 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String invalidDateFormatErrorMessage(Object dateStr) {
-    return '$dateStr ne respecte pas le format date ou date / heure minute.';
+    return '$dateStr ne respecte pas le format date ou date heure:minute.';
   }
+
+  @override
+  String savingUniquePlaylistAudioMp3(Object playlistTitle) {
+    return 'Sauvegarde des fichiers audio de la playlist $playlistTitle ...';
+  }
+
+  @override
+  String get savingMultiplePlaylistsAudioMp3 => 'Sauvegarde des fichiers audio de multiples playlists ...';
+
+  @override
+  String get savingMultipleMinutes => 'Patience, cela peut prendre plusieurs minutes ...';
+
+  @override
+  String get savingUpToHalfHour => 'Patience, cela peut prendre 10 à 30 minutes, voir plus ...';
 }
