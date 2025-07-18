@@ -214,6 +214,8 @@ enum ErrorType {
   // or update an existing playlist.
 
   errorInPlaylistJsonFile, // Error in the playlist json file.
+
+  dateFormatError, // Error in the date format.
 }
 
 /// This VM (View Model) class is part of the MVVM architecture.

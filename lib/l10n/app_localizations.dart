@@ -3106,6 +3106,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Since the current date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio MP3 files will be included in the ZIP file.'**
   String get audioDownloadFromDateTimeUniquePlaylistTooltip;
+
+  /// No description provided for @invalidDateFormatErrorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'{dateStr} does not respect the date or date/time format.'**
+  String invalidDateFormatErrorMessage(Object dateStr);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

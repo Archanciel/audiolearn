@@ -619,19 +619,25 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     return Consumer<PlaylistListVM>(
       builder: (context, playlistListVMlistenTrue, child) {
         if (playlistListVMlistenTrue.isSaving) {
+          String audioMp3SaveUniquePlaylistName =
+              playlistListVMlistenTrue.audioMp3SaveUniquePlaylistName;
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
                 Text(
-                  'Saving audio files to ZIP ...',
+                  (audioMp3SaveUniquePlaylistName.isNotEmpty)
+                      ? 'Saving $audioMp3SaveUniquePlaylistName audio files to ZIP ...'
+                      : 'Saving all playlists audio files to ZIP ...',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10.0),
                 LinearProgressIndicator(), // Indeterminate progress bar
                 const SizedBox(height: 10.0),
                 Text(
-                  'Please wait, this may take several minutes ...',
+                  (audioMp3SaveUniquePlaylistName.isNotEmpty)
+                      ? 'Please wait, this may take several minutes ...'
+                      : 'Please wait, this may take 10 to 30 minutes or more ...',
                 ),
               ],
             ),
