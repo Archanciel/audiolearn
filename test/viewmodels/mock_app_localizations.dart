@@ -2097,4 +2097,22 @@ class MockAppLocalizations extends AppLocalizations {
     Object dateStr,
   ) =>
       "$dateStr does not respect the date or date/time format.";
+
+  @override
+  String savingUniquePlaylistAudioMp3(
+    Object playlistTitle,
+  ) =>
+      "Saving $playlistTitle audio files to ZIP ...";
+
+  @override
+  String get savingMultiplePlaylistsAudioMp3 =>
+      "Saving audio files to ZIP ...";
+
+  @override
+  String get savingMultipleMinutes =>
+      "Please wait, this may take several minutes ...";
+
+  @override
+  String get savingUpToHalfHour =>
+      "Please wait, this may take 10 to 30 minutes or more ...";
 }

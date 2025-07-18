@@ -1372,5 +1372,9 @@
   "savePlaylistAudioMp3FilesToZipTooltip": "Sauvegarde les fichiers audio MP3 de la playlist dans un fichier ZIP. Vous pouvez spécifier un filtre de date/heure pour n'inclure que les fichiers audio téléchargés à partir de cette date.",
   "audioDownloadFromDateTimeUniquePlaylistExplanation": "La date de téléchargement spécifiée par défaut correspond à la date de téléchargement audio la plus ancienne de la playlist. Modifiez cette valeur en spécifiant la date de téléchargement à partir de laquelle les fichiers audio MP3 seront inclus dans le fichier ZIP.",
   "audioDownloadFromDateTimeUniquePlaylistTooltip": "Puisque la valeur de date/heure actuelle correspond à la valeur de date/heure de l'audio téléchargé le plus ancien de la playlist, si la date/heure n'est pas modifiée, tous les fichiers audio MP3 de la playlist seront inclus dans le fichier ZIP.",
-  "invalidDateFormatErrorMessage": "{dateStr} ne respecte pas le format date ou date heure:minute."
+  "invalidDateFormatErrorMessage": "{dateStr} ne respecte pas le format date ou date heure:minute.",
+  "savingUniquePlaylistAudioMp3": "Sauvegarde des fichiers audio de la playlist {playlistTitle} ...",
+  "savingMultiplePlaylistsAudioMp3": "Sauvegarde des fichiers audio de multiples playlists ...",
+  "savingMultipleMinutes": "Patience, cela peut prendre plusieurs minutes ...",
+  "savingUpToHalfHour": "Patience, cela peut prendre 10 à 30 minutes, voir plus ..."
 }

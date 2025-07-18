@@ -627,8 +627,12 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               children: [
                 Text(
                   (audioMp3SaveUniquePlaylistName.isNotEmpty)
-                      ? 'Saving $audioMp3SaveUniquePlaylistName audio files to ZIP ...'
-                      : 'Saving all playlists audio files to ZIP ...',
+                      ? AppLocalizations.of(context)!
+                          .savingUniquePlaylistAudioMp3(
+                          audioMp3SaveUniquePlaylistName,
+                        )
+                      : AppLocalizations.of(context)!
+                          .savingMultiplePlaylistsAudioMp3,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10.0),
@@ -636,8 +640,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 const SizedBox(height: 10.0),
                 Text(
                   (audioMp3SaveUniquePlaylistName.isNotEmpty)
-                      ? 'Please wait, this may take several minutes ...'
-                      : 'Please wait, this may take 10 to 30 minutes or more ...',
+                      ? AppLocalizations.of(context)!.savingMultipleMinutes
+                      : AppLocalizations.of(context)!.savingUpToHalfHour,
                 ),
               ],
             ),
