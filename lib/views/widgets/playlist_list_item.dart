@@ -349,27 +349,49 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               listen: false,
             );
 
-            showDialog<void>(
+            showDialog<List<String>>(
+              barrierDismissible:
+                  false, // Prevents the dialog from closing when tapping outside.
               context: context,
               builder: (BuildContext context) {
-                return ConfirmActionDialog(
-                  actionFunction:
-                      downloadAudioFromVideoUrlsContainedInTextFileToPlaylist,
-                  actionFunctionArgs: [
-                    audioDownloadVMlistenFalse,
-                    warningMessageVMlistenFalse,
-                    playlist,
-                    videoUrls,
-                  ],
-                  dialogTitleOne: AppLocalizations.of(context)!
+                return SetValueToTargetDialog(
+                  dialogTitle: AppLocalizations.of(context)!
                       .downloadAudioFromVideoUrlsInPlaylistTitle(
                           playlist.title),
-                  dialogContent: AppLocalizations.of(context)!
+                  dialogCommentStr: AppLocalizations.of(context)!
                       .downloadAudioFromVideoUrlsInPlaylist(
-                          videoUrls.length.toString()),
+                    videoUrls.length.toString(),
+                  ),
+                  targetNamesLst: [
+                    AppLocalizations.of(context)!.playlistQualityAudio,
+                    AppLocalizations.of(context)!.playlistQualityMusic,
+                  ],
+                  validationFunctionArgs: [],
+                  checkboxIndexSetToTrue:
+                      (playlist.playlistQuality == PlaylistQuality.voice)
+                          ? 0
+                          : 1, // 0 for audio, 1 for music
                 );
               },
-            );
+            ).then((resultStringLst) async {
+              if (resultStringLst == null) {
+                // The case if the Cancel button was pressed.
+                return;
+              }
+
+              PlaylistQuality downloadAudioQuality = (resultStringLst[0] == '0')
+                  ? PlaylistQuality.voice
+                  : PlaylistQuality.music;
+
+              await downloadAudioFromVideoUrlsContainedInTextFileToPlaylist(
+                audioDownloadVMlistenFalse: audioDownloadVMlistenFalse,
+                warningMessageVM: warningMessageVMlistenFalse,
+                targetPlaylist: playlist,
+                videoUrls: videoUrls,
+                downloadAudioAtMusicQuality:
+                    downloadAudioQuality == PlaylistQuality.music,
+              );
+            });
             break;
           case PlaylistPopupMenuAction.updatePlaylistPlayableAudios:
             int removedPlayableAudioNumber =
@@ -531,8 +553,8 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                       .audioDownloadFromDateTimeUniquePlaylistTooltip,
                   passedValueStr: playlistListVMlistenFalse
                       .getOldestAudioDownloadDateFormattedStr(
-                    listOfPlaylists: playlistListVMlistenFalse
-                        .getSelectedPlaylists(),
+                    listOfPlaylists:
+                        playlistListVMlistenFalse.getSelectedPlaylists(),
                   ),
                   targetNamesLst: [],
                   validationFunctionArgs: [],
@@ -546,13 +568,15 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
 
               String oldestAudioDownloadDateFormattedStr = resultStringLst[0];
 
-              DateTime? parseDateTimeOrDateStrUsinAppDateFormat = dateFormatVMlistenFalse.parseDateTimeStrUsinAppDateFormat(
-                  dateTimeStr: oldestAudioDownloadDateFormattedStr,
-                );
+              DateTime? parseDateTimeOrDateStrUsinAppDateFormat =
+                  dateFormatVMlistenFalse.parseDateTimeStrUsinAppDateFormat(
+                dateTimeStr: oldestAudioDownloadDateFormattedStr,
+              );
 
-              parseDateTimeOrDateStrUsinAppDateFormat ??= dateFormatVMlistenFalse.parseDateStrUsinAppDateFormat(
-                  dateStr: oldestAudioDownloadDateFormattedStr,
-                );
+              parseDateTimeOrDateStrUsinAppDateFormat ??=
+                  dateFormatVMlistenFalse.parseDateStrUsinAppDateFormat(
+                dateStr: oldestAudioDownloadDateFormattedStr,
+              );
 
               if (parseDateTimeOrDateStrUsinAppDateFormat == null) {
                 warningMessageVMlistenFalse.setError(
@@ -1080,16 +1104,18 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
   /// Method called when the user clicks on the 'Confirm' button after having
   /// selected a text file containing video URLs whose audio are to be downloaded
   /// to the playlist.
-  Future<void> downloadAudioFromVideoUrlsContainedInTextFileToPlaylist(
-    AudioDownloadVM audioDownloadVMlistenFalse,
-    WarningMessageVM warningMessageVM,
-    Playlist targetPlaylist,
-    List<String> videoUrls,
-  ) async {
+  Future<void> downloadAudioFromVideoUrlsContainedInTextFileToPlaylist({
+    required AudioDownloadVM audioDownloadVMlistenFalse,
+    required WarningMessageVM warningMessageVM,
+    required Playlist targetPlaylist,
+    required List<String> videoUrls,
+    required bool downloadAudioAtMusicQuality,
+  }) async {
     int existingAudioFilesNotRedownloadedCount =
         await audioDownloadVMlistenFalse.downloadAudioFromVideoUrlsToPlaylist(
       targetPlaylist: targetPlaylist,
       videoUrlsLst: videoUrls,
+      downloadAtMusicQuality: downloadAudioAtMusicQuality,
     );
 
     if (existingAudioFilesNotRedownloadedCount > 0) {

@@ -2060,7 +2060,7 @@ abstract class AppLocalizations {
   /// No description provided for @downloadAudioFromVideoUrlsInPlaylist.
   ///
   /// In en, this message translates to:
-  /// **'Downloading {number} audio.'**
+  /// **'Downloading {number} audio\'s in selected quality.'**
   String downloadAudioFromVideoUrlsInPlaylist(Object number);
 
   /// No description provided for @notRedownloadAudioFilesInPlaylistDirectory.

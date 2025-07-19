@@ -1101,7 +1101,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String downloadAudioFromVideoUrlsInPlaylist(Object number) {
-    return 'Téléchargement de $number audio.';
+    return 'Téléchargement de $number audio\'s en qualité sélectionnée.';
   }
 
   @override

@@ -39,7 +39,7 @@ class SetValueToTargetDialog extends StatefulWidget {
       validationFunction; // The action to execute to validate the entered value
   final List<dynamic>
       validationFunctionArgs; // Arguments for the validation function
-  final bool canUniqueCheckBoxBeUnchecked;
+  final bool canAllCheckBoxBeUnchecked;
   final bool isValueStringUsed; // Indicates if the passed value field is used.
   //                               Is used to determine if clicking on Enter
   //                               should close the dialog or not.
@@ -71,7 +71,7 @@ class SetValueToTargetDialog extends StatefulWidget {
     this.isTargetExclusive = true,
     this.checkboxIndexSetToTrue = -1,
     this.isPassedValueEditable = true,
-    this.canUniqueCheckBoxBeUnchecked = false,
+    this.canAllCheckBoxBeUnchecked = false,
     this.helpItemsLst = const [],
   }) : isValueStringUsed =
             passedValueFieldLabel.isNotEmpty && passedValueStr.isNotEmpty;
@@ -86,7 +86,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
       TextEditingController();
   final FocusNode _focusNodeDialog = FocusNode();
   final FocusNode _focusNodePassedValueTextField = FocusNode();
-  final List<bool> _isCheckboxChecked = [];
+  final List<bool> _checkboxesLst = [];
 
   @override
   void initState() {
@@ -94,9 +94,9 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
 
     for (int i = 0; i < widget.targetNamesLst.length; i++) {
       if (i == widget.checkboxIndexSetToTrue) {
-        _isCheckboxChecked.add(true);
+        _checkboxesLst.add(true);
       } else {
-        _isCheckboxChecked.add(false);
+        _checkboxesLst.add(false);
       }
     }
 
@@ -248,7 +248,8 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
   void executeFinalOperation(BuildContext context) {
     List<String> resultLst = _createResultList();
 
-    if (resultLst.isEmpty && !widget.canUniqueCheckBoxBeUnchecked) {
+    if (resultLst.isEmpty && !widget.canAllCheckBoxBeUnchecked) {
+      // The case if the user did not check any checkbox
       return;
     }
 
@@ -260,10 +261,10 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
   List<String> _createResultList() {
     if (widget.passedValueFieldLabel.isEmpty && widget.passedValueStr.isEmpty) {
       // No passed value field, so no need to validate it
-      return _isCheckboxChecked
+      return _checkboxesLst
           .asMap()
           .entries
-          .where((entry) => entry.value)
+          .where((entry) => entry.value) // checkbox is checked
           .map((entry) => entry.key.toString())
           .toList();
     }
@@ -274,7 +275,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
 
     if (widget.validationFunctionArgs.isNotEmpty) {
       minValueLimitStr = widget.validationFunctionArgs[0].toString();
-      if (_isCheckboxChecked[0]) {
+      if (_checkboxesLst[0]) {
         maxValueLimitStr = widget.validationFunctionArgs[1].toString();
       } else {
         maxValueLimitStr = widget.validationFunctionArgs[2].toString();
@@ -284,9 +285,9 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
     // The code below simplifies setting the comment start position
     // to 0 or the comment end position to audio duration.
     if (enteredStr.isEmpty) {
-      if (_isCheckboxChecked[0] == true) {
+      if (_checkboxesLst[0] == true) {
         enteredStr = minValueLimitStr;
-      } else if (_isCheckboxChecked[1] == true) {
+      } else if (_checkboxesLst[1] == true) {
         enteredStr = maxValueLimitStr;
       } else {
         // Avoiding the empty string to avoid an exception
@@ -296,8 +297,8 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
 
     widget.validationFunctionArgs.add(enteredStr);
 
-    if (_isCheckboxChecked.isNotEmpty) {
-      widget.validationFunctionArgs.add(_isCheckboxChecked[0]);
+    if (_checkboxesLst.isNotEmpty) {
+      widget.validationFunctionArgs.add(_checkboxesLst[0]);
     }
 
     // Example of applied validation function:
@@ -363,8 +364,8 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
 
     bool isAnyCheckboxChecked = false;
 
-    for (int i = 0; i < _isCheckboxChecked.length; i++) {
-      if (_isCheckboxChecked[i]) {
+    for (int i = 0; i < _checkboxesLst.length; i++) {
+      if (_checkboxesLst[i]) {
         resultLst.add(i.toString());
         isAnyCheckboxChecked = true;
       }
@@ -397,15 +398,15 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
             checkBoxWidgetKey: Key('checkbox_${index}_key'),
             context: context,
             label: widget.targetNamesLst[index],
-            value: _isCheckboxChecked[index],
+            value: _checkboxesLst[index],
             onChangedFunction: (bool? value) {
               setState(() {
                 if (value != null && value && widget.isTargetExclusive) {
-                  for (int i = 0; i < _isCheckboxChecked.length; i++) {
-                    _isCheckboxChecked[i] = false;
+                  for (int i = 0; i < _checkboxesLst.length; i++) {
+                    _checkboxesLst[i] = false;
                   }
                 }
-                _isCheckboxChecked[index] = value ?? false;
+                _checkboxesLst[index] = value ?? false;
               });
             },
           );
