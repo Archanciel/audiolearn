@@ -3262,7 +3262,9 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   /// Returns the list described below or [] if no audio file was downloaded at or after
-  /// the passed [fromAudioDownloadDateTime].
+  /// the passed [fromAudioDownloadDateTime]. The audio's from the playable audio list are
+  /// savable to the zip file, not the audio's from the downloaded audio list since some
+  /// audio's from the downloaded audio list may have been deleted. 
   ///
   /// The returned list contains
   /// [
