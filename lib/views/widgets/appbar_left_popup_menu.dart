@@ -770,7 +770,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                     AppLocalizations.of(context)!.removeDeletedAudioFiles,
                   ],
                   validationFunctionArgs: [],
-                  canUniqueCheckBoxBeUnchecked: true,
+                  canAllCheckBoxBeUnchecked: true,
                   helpItemsLst: updatePlaylistsHelpItemsLst,
                 );
               },
@@ -783,7 +783,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
               bool removeFromPlayableAudioDeletedAudioFiles = false;
 
               if (resultStringLst.isNotEmpty) {
-                // The case when the audio quality is set to audio.
+                // The case when 'Remove deleted audio files' is set to true.
                 removeFromPlayableAudioDeletedAudioFiles = true;
               }
 
@@ -899,7 +899,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                     AppLocalizations.of(context)!.replaceExistingPlaylists,
                   ],
                   validationFunctionArgs: [],
-                  canUniqueCheckBoxBeUnchecked: true,
+                  canAllCheckBoxBeUnchecked: true,
                   helpItemsLst: restorePlaylistsHelpItemsLst,
                 );
               },
@@ -912,7 +912,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
               bool doReplaceExistingPlaylists = false;
 
               if (resultStringLst.isNotEmpty) {
-                // The case when the audio quality is set to audio.
+                // The case when 'Replace existing playlists' is set to true.
                 doReplaceExistingPlaylists = true;
               }
 

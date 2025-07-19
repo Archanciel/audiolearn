@@ -619,7 +619,7 @@
   "downloadVideoUrlsFromTextFileInPlaylist": "Télécharger les URL depuis un fichier ...",
   "downloadVideoUrlsFromTextFileInPlaylistTooltip": "Téléchargez les audio's dans la playlist à partir des URL vidéo répertoriées dans un fichier texte à sélectionner. Le fichier texte doit contenir une URL par ligne.",
   "downloadAudioFromVideoUrlsInPlaylistTitle": "Télécharger les audio's des videos dans la playlist \"{title}\"",
-  "downloadAudioFromVideoUrlsInPlaylist": "Téléchargement de {number} audio.",
+  "downloadAudioFromVideoUrlsInPlaylist": "Téléchargement de {number} audio's en qualité sélectionnée.",
   "notRedownloadAudioFilesInPlaylistDirectory": "{number} audio's sont déjà contenus dans le répertoire de la playlist cible \"{playlistTitle}\" et n'ont donc pas été re-téléchargés.",
   "clickToSetAscendingOrDescendingPlayingOrderTooltip": "Cliquez pour définir l'ordre de lecture croissant ou décroissant.",
   "removeSortFilterAudiosOptionsFromPlaylistMenu": "Eliminer les paramètres tri/filtre de la playlist ...",

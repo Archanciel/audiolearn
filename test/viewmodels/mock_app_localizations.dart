@@ -1178,7 +1178,7 @@ class MockAppLocalizations extends AppLocalizations {
   String downloadAudioFromVideoUrlsInPlaylist(
     Object number,
   ) =>
-      "Downloading $number audio.";
+      "Downloading $number audio's in selected quality.";
 
   @override
   String notRedownloadAudioFilesInPlaylistDirectory(

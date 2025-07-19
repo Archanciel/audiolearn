@@ -521,7 +521,7 @@
   "downloadVideoUrlsFromTextFileInPlaylist": "Download URLs from Text File ...",
   "downloadVideoUrlsFromTextFileInPlaylistTooltip": "Download audio's to the playlist from video URLs listed in a text file to select. The text file must contain one video URL per line.",
   "downloadAudioFromVideoUrlsInPlaylistTitle": "Download video audio to playlist \"{title}\"",
-  "downloadAudioFromVideoUrlsInPlaylist": "Downloading {number} audio.",
+  "downloadAudioFromVideoUrlsInPlaylist": "Downloading {number} audio's in selected quality.",
   "notRedownloadAudioFilesInPlaylistDirectory": "{number} audio's are already contained in the target playlist \"{playlistTitle}\" directory and so were not redownloaded.",
   "clickToSetAscendingOrDescendingPlayingOrderTooltip": "Click to set ascending or descending playing order.",
   "removeSortFilterAudiosOptionsFromPlaylistMenu": "Remove Sort/Filter Parameters from Playlist ...",

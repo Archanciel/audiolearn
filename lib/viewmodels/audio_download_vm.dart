@@ -1681,6 +1681,7 @@ class AudioDownloadVM extends ChangeNotifier {
   Future<int> downloadAudioFromVideoUrlsToPlaylist({
     required Playlist targetPlaylist,
     required List<String> videoUrlsLst,
+    required bool downloadAtMusicQuality,
   }) async {
     int existingAudioFilesNotRedownloadedCount = 0;
 
@@ -1689,6 +1690,7 @@ class AudioDownloadVM extends ChangeNotifier {
         singleVideoTargetPlaylist: targetPlaylist,
         videoUrl: videoUrl,
         displayWarningIfAudioAlreadyExists: false,
+        downloadAtMusicQuality: downloadAtMusicQuality,
       );
 
       if (errorType == ErrorType.downloadAudioFileAlreadyOnAudioDirectory) {
