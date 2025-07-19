@@ -24288,6 +24288,8 @@ void main() {
       await _tapOnDownloadURLsFromTextFileMenu(
         tester: tester,
         playlistToDownloadInTitle: localPlaylistTitleInWhichToDownloadURLs,
+        initialSpokenCheckboxState: false,
+        initialMusicCheckboxState: true,
         setMusicQuality: false,
       );
 
@@ -24313,6 +24315,81 @@ void main() {
         youtubeChannelValue: "Bible en ligne",
         movedOrCopiedAudioTitle: "Chanson évangélique  Ta foi en Dieu doit être au-dessus de tout",
         audioQuality: 'No', // Is spoken quality
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Download URLs in spoken quality playlist in music quality.''',
+        (tester) async {
+
+      const String localPlaylistTitleInWhichToDownloadURLs =
+          'Chants Bible en ligne spoken';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'download_urls_from_text_field_test',
+        selectedPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
+        tapOnPlaylistToggleButton: false,
+      );
+
+      await _verifyPlaylistAudioQuality(
+        tester: tester,
+        playlistTitle: localPlaylistTitleInWhichToDownloadURLs,
+        isPlaylistLocal: true,
+        playlistQuality: PlaylistQuality.voice,
+      );
+
+      String urlsTextFileName = 'youtube_bibleenlignefr_urls.txt';
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: urlsTextFileName,
+            path:
+                '$kApplicationPathWindowsTest${path.separator}$urlsTextFileName',
+            size: 131),
+      ]);
+
+      // Set playlist audio quality to musical. Then, the application is
+      // restarted ...
+      await _tapOnDownloadURLsFromTextFileMenu(
+        tester: tester,
+        playlistToDownloadInTitle: localPlaylistTitleInWhichToDownloadURLs,
+        initialSpokenCheckboxState: true,
+        initialMusicCheckboxState: false,
+        setMusicQuality: true,
+      );
+
+      // Add a delay to allow the download to finish. Since a mock
+      // AudioDownloadVM is used, the download will be simulated and
+      // will not take time.
+      for (int i = 0; i < 10; i++) {
+        await Future.delayed(const Duration(milliseconds: 500));
+        await tester.pumpAndSettle();
+      }
+
+      await IntegrationTestUtil.verifyAudioInfoDialog(
+        tester: tester,
+        audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
+        youtubeChannelValue: "Bible en ligne",
+        movedOrCopiedAudioTitle: "Musique chrétienne 2019 - Le temps (avec paroles)",
+        audioQuality: 'Yes', // Is music quality
+      );
+
+      await IntegrationTestUtil.verifyAudioInfoDialog(
+        tester: tester,
+        audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
+        youtubeChannelValue: "Bible en ligne",
+        movedOrCopiedAudioTitle: "Chanson évangélique  Ta foi en Dieu doit être au-dessus de tout",
+        audioQuality: 'Yes', // Is music quality
       );
 
       // Purge the test playlist directory so that the created test
@@ -25722,6 +25799,8 @@ Future<void> _tapOnSetAudioQualityMenu({
 Future<void> _tapOnDownloadURLsFromTextFileMenu({
   required WidgetTester tester,
   required String playlistToDownloadInTitle,
+  required bool initialSpokenCheckboxState, // true: spoken checkbox is checked,
+  required bool initialMusicCheckboxState, // true: music checkbox is checked,
   required bool setMusicQuality, // true: set music quality,
   //                                 false: set spoken quality
 }) async {
@@ -25746,11 +25825,11 @@ Future<void> _tapOnDownloadURLsFromTextFileMenu({
   // Verify the checkbox state
   final Checkbox checkboxZeroWidget =
       tester.widget<Checkbox>(find.byKey(const Key('checkbox_0_key')));
-  expect(checkboxZeroWidget.value, isFalse);
+  expect(checkboxZeroWidget.value, initialSpokenCheckboxState);
 
   final Checkbox checkboxOneWidget =
       tester.widget<Checkbox>(find.byKey(const Key('checkbox_1_key')));
-  expect(checkboxOneWidget.value, isTrue);
+  expect(checkboxOneWidget.value, initialMusicCheckboxState);
 
   if (setMusicQuality) {
     // Tap on the 'musical' quality checkbox to select it
