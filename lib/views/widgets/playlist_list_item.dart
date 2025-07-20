@@ -555,7 +555,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   passedValueStr: playlistListVMlistenFalse
                       .getOldestAudioDownloadDateFormattedStr(
                     listOfPlaylists:
-                        playlistListVMlistenFalse.getSelectedPlaylists(),
+                        [playlist], // only one playlist
                   ),
                   targetNamesLst: [],
                   validationFunctionArgs: [],

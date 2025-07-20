@@ -3125,11 +3125,11 @@ abstract class AppLocalizations {
   /// **'Saving multiple playlists audio files to ZIP ...'**
   String get savingMultiplePlaylistsAudioMp3;
 
-  /// No description provided for @savingMultipleMinutes.
+  /// No description provided for @savingApproximativeTime.
   ///
   /// In en, this message translates to:
-  /// **'Please wait, this may take several minutes ...'**
-  String get savingMultipleMinutes;
+  /// **'Please wait, this should approximately take {saveTime} ...'**
+  String savingApproximativeTime(Object saveTime);
 
   /// No description provided for @savingUpToHalfHour.
   ///
