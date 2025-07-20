@@ -1740,4 +1740,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get savingUpToHalfHour => 'Patience, cela peut prendre 10 à 30 minutes, voir plus ...';
+
+  @override
+  String savingAudioToZipTime(Object evaluatedSaveTime) {
+    return 'La sauvegarde des fichiers audio MP3 dan un fichier ZIP va nécessiter cette durée évaluée: $evaluatedSaveTime.';
+  }
 }

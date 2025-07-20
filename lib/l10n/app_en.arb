@@ -1007,5 +1007,6 @@
   "savingUniquePlaylistAudioMp3": "Saving {playlistTitle} audio files to ZIP ...",
   "savingMultiplePlaylistsAudioMp3": "Saving multiple playlists audio files to ZIP ...",
   "savingMultipleMinutes": "Please wait, this may take several minutes ...",
-  "savingUpToHalfHour": "Please wait, this may take 10 to 30 minutes or more ..."
+  "savingUpToHalfHour": "Please wait, this may take 10 to 30 minutes or more ...",
+  "savingAudioToZipTime": "Saving the audio MP3 files will take this evaluated time: {evaluatedSaveTime}."
 }
