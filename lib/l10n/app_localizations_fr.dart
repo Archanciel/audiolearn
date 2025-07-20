@@ -1743,6 +1743,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String savingAudioToZipTime(Object evaluatedSaveTime) {
-    return 'La sauvegarde des fichiers audio MP3 dan un fichier ZIP va nécessiter cette durée évaluée: $evaluatedSaveTime.';
+    return 'La sauvegarde des fichiers audio MP3 dans un fichier ZIP va nécessiter cette durée estimée (hh:mm:ss): $evaluatedSaveTime.';
   }
+
+  @override
+  String get savingAudioToZipTimeTitle => 'Estimation de la durée de sauvegarde';
 }

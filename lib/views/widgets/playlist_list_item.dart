@@ -613,7 +613,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                       // Handle any post-execution logic here
                     },
                     actionFunctionArgs: [],
-                    dialogTitleOne: _createDeletePlaylistDialogTitle(context),
+                    dialogTitleOne: AppLocalizations.of(context)!.savingAudioToZipTimeTitle,
                     dialogContent:
                         AppLocalizations.of(context)!.savingAudioToZipTime(
                       audioMp3SavingToZipDuration.HHmmss(),
@@ -621,23 +621,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   );
                 },
               );
-
-              // final stopwatch = Stopwatch()..start();
-
-              // await playlistListVMlistenFalse
-              //     .saveUniquePlaylistAudioMp3FilesToZip(
-              //   playlist: playlist,
-              //   targetDir: targetSaveDirectoryPath,
-              //   fromAudioDownloadDateTime:
-              //       parseDateTimeOrDateStrUsinAppDateFormat,
-              // );
-
-              // stopwatch.stop();
-              // Duration savedAudioDuration = stopwatch.elapsed;
-              // print(
-              //   '***** Evaluated duration too big ${audioMp3SavingToZipDuration.inMicroseconds / savedAudioDuration.inMicroseconds} time');
             });
-
             break;
           case PlaylistPopupMenuAction.deletePlaylist:
             showDialog<void>(

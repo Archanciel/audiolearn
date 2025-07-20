@@ -3140,8 +3140,14 @@ abstract class AppLocalizations {
   /// No description provided for @savingAudioToZipTime.
   ///
   /// In en, this message translates to:
-  /// **'Saving the audio MP3 files will take this evaluated time: {evaluatedSaveTime}.'**
+  /// **'Saving the audio MP3 files will take this estimated duration (hh:mm:ss): {evaluatedSaveTime}.'**
   String savingAudioToZipTime(Object evaluatedSaveTime);
+
+  /// No description provided for @savingAudioToZipTimeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Prevision of the save duration'**
+  String get savingAudioToZipTimeTitle;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

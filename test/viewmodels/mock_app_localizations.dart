@@ -2120,4 +2120,7 @@ class MockAppLocalizations extends AppLocalizations {
     Object evaluatedSaveTime,
   ) =>
       "Saving the audio MP3 files will take this evaluated time: $evaluatedSaveTime.";
+
+  @override
+  String get savingAudioToZipTimeTitle => "Prevision of the save duration";
 }
