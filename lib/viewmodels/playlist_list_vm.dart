@@ -3321,7 +3321,7 @@ Duration _savingAudioMp3FileToZipDuration = Duration.zero;
     _savingAudioMp3FileToZipDuration = Duration(
         seconds: (savedAudiosFileSize / (savedAudioBytesNumberToZipInOneMicroSecond * 4000000))
             .ceil());
-            
+
     return _savingAudioMp3FileToZipDuration;
   }
 
@@ -3362,7 +3362,7 @@ Duration _savingAudioMp3FileToZipDuration = Duration.zero;
       );
     }
 
-    return (savedAudioFileSize / savedAudioDuration.inMicroseconds);;
+    return (savedAudioFileSize / savedAudioDuration.inMicroseconds);
   }
 
   /// Returns the list described below or [] if no audio file was downloaded at or after

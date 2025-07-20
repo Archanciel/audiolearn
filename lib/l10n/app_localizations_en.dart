@@ -1736,7 +1736,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get savingMultiplePlaylistsAudioMp3 => 'Saving multiple playlists audio files to ZIP ...';
 
   @override
-  String get savingMultipleMinutes => 'Please wait, this may take several minutes ...';
+  String savingApproximativeTime(Object saveTime) {
+    return 'Please wait, this should approximately take $saveTime ...';
+  }
 
   @override
   String get savingUpToHalfHour => 'Please wait, this may take 10 to 30 minutes or more ...';

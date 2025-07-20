@@ -2108,10 +2108,6 @@ class MockAppLocalizations extends AppLocalizations {
   String get savingMultiplePlaylistsAudioMp3 => "Saving audio files to ZIP ...";
 
   @override
-  String get savingMultipleMinutes =>
-      "Please wait, this may take several minutes ...";
-
-  @override
   String get savingUpToHalfHour =>
       "Please wait, this may take 10 to 30 minutes or more ...";
 
@@ -2123,4 +2119,10 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get savingAudioToZipTimeTitle => "Prevision of the save duration";
+
+  @override
+  String savingApproximativeTime(
+    Object saveTime,
+  ) =>
+      "Please wait, this should approximately take $saveTime ...";
 }

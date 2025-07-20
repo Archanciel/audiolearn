@@ -1375,6 +1375,7 @@
   "invalidDateFormatErrorMessage": "{dateStr} ne respecte pas le format date ou date heure:minute.",
   "savingUniquePlaylistAudioMp3": "Sauvegarde des fichiers audio de la playlist {playlistTitle} ...",
   "savingMultiplePlaylistsAudioMp3": "Sauvegarde des fichiers audio de multiples playlists ...",
+  "savingApproximativeTime": "Patience, cela peut prendre approximativement {saveTime} ...",
   "savingMultipleMinutes": "Patience, cela peut prendre plusieurs minutes ...",
   "savingUpToHalfHour": "Patience, cela peut prendre 10 à 30 minutes, voir plus ...",
   "savingAudioToZipTime": "La sauvegarde des fichiers audio MP3 dans un fichier ZIP va nécessiter cette durée estimée (hh:mm:ss): {evaluatedSaveTime}.",
