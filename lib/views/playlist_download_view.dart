@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:another_flushbar/flushbar.dart';
+import 'package:audiolearn/utils/duration_expansion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -638,11 +639,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 const SizedBox(height: 10.0),
                 LinearProgressIndicator(), // Indeterminate progress bar
                 const SizedBox(height: 10.0),
-                Text(
-                  (audioMp3SaveUniquePlaylistName.isNotEmpty)
-                      ? AppLocalizations.of(context)!.savingMultipleMinutes
-                      : AppLocalizations.of(context)!.savingUpToHalfHour,
-                ),
+                Text(playlistListVMlistenTrue.savingAudioMp3FileToZipDuration
+                    .HHmmss()),
               ],
             ),
           );

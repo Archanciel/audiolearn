@@ -200,6 +200,10 @@ class PlaylistListVM extends ChangeNotifier {
   String _audioMp3SaveUniquePlaylistName = '';
   String get audioMp3SaveUniquePlaylistName => _audioMp3SaveUniquePlaylistName;
 
+Duration _savingAudioMp3FileToZipDuration = Duration.zero;
+  Duration get savingAudioMp3FileToZipDuration =>
+      _savingAudioMp3FileToZipDuration;
+
   PlaylistListVM({
     required WarningMessageVM warningMessageVM,
     required AudioDownloadVM audioDownloadVM,
@@ -3314,9 +3318,11 @@ class PlaylistListVM extends ChangeNotifier {
     // Multiplying by 4000000 instead of 1000000 is due to the fact that
     // the savedAudioBytesNumberToZipInOneMicroSecond is 4 times or more
     // too big.
-    return Duration(
+    _savingAudioMp3FileToZipDuration = Duration(
         seconds: (savedAudiosFileSize / (savedAudioBytesNumberToZipInOneMicroSecond * 4000000))
             .ceil());
+            
+    return _savingAudioMp3FileToZipDuration;
   }
 
   Future<double> _calculateHowManyMp3BytesAreIncludedInZipInOneSecond({

@@ -30,7 +30,24 @@ class ConfirmActionDialog extends StatefulWidget {
   final List<HelpItem> helpItemsLst;
 
   final bool dialogTitleOneReducedFontSize;
-
+  
+  /// Creates a ConfirmActionDialog.
+  /// The [actionFunction] is the function to be executed when the user
+  /// confirms the action. The [actionFunctionArgs] are the arguments to be
+  /// passed to the [actionFunction].
+  /// 
+  /// Here's an example of how to pass an async function as [actionFunction]:
+  /// actionFunction: () async {
+  ///   await playlistListVMlistenFalse
+  ///       .saveUniquePlaylistAudioMp3FilesToZip(
+  ///           playlist: playlist,
+  ///           targetDir: targetSaveDirectoryPath,
+  ///           fromAudioDownloadDateTime:
+  ///           parseDateTimeOrDateStrUsinAppDateFormat!,
+  ///   
+  ///   // Handle any post-execution logic here
+  ///   // Pass [] as [actionFunctionArgs] since no arguments are needed.
+  /// },
   const ConfirmActionDialog({
     required this.actionFunction,
     required this.actionFunctionArgs,
