@@ -3136,6 +3136,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please wait, this may take 10 to 30 minutes or more ...'**
   String get savingUpToHalfHour;
+
+  /// No description provided for @savingAudioToZipTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving the audio MP3 files will take this evaluated time: {evaluatedSaveTime}.'**
+  String savingAudioToZipTime(Object evaluatedSaveTime);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

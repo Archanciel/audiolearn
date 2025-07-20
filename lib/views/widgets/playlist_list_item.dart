@@ -1,5 +1,6 @@
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/utils/dir_util.dart';
+import 'package:audiolearn/utils/duration_expansion.dart';
 import 'package:audiolearn/utils/ui_util.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/audio_player_vm.dart';
@@ -594,15 +595,42 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                     parseDateTimeOrDateStrUsinAppDateFormat,
               );
 
+              showDialog<void>(
+                context: context,
+                barrierDismissible:
+                    false, // This line prevents the dialog from closing when
+                //            tapping outside the dialog
+                builder: (BuildContext context) {
+                  return ConfirmActionDialog(
+                    actionFunction: () async {
+                      await playlistListVMlistenFalse
+                          .saveUniquePlaylistAudioMp3FilesToZip(
+                        playlist: playlist,
+                        targetDir: targetSaveDirectoryPath,
+                        fromAudioDownloadDateTime:
+                            parseDateTimeOrDateStrUsinAppDateFormat!,
+                      );
+                      // Handle any post-execution logic here
+                    },
+                    actionFunctionArgs: [],
+                    dialogTitleOne: _createDeletePlaylistDialogTitle(context),
+                    dialogContent:
+                        AppLocalizations.of(context)!.savingAudioToZipTime(
+                      audioMp3SavingToZipDuration.HHmmss(),
+                    ),
+                  );
+                },
+              );
 
               // final stopwatch = Stopwatch()..start();
 
-              await playlistListVMlistenFalse.saveUniquePlaylistAudioMp3FilesToZip(
-                playlist: playlist,
-                targetDir: targetSaveDirectoryPath,
-                fromAudioDownloadDateTime:
-                    parseDateTimeOrDateStrUsinAppDateFormat,
-              );
+              // await playlistListVMlistenFalse
+              //     .saveUniquePlaylistAudioMp3FilesToZip(
+              //   playlist: playlist,
+              //   targetDir: targetSaveDirectoryPath,
+              //   fromAudioDownloadDateTime:
+              //       parseDateTimeOrDateStrUsinAppDateFormat,
+              // );
 
               // stopwatch.stop();
               // Duration savedAudioDuration = stopwatch.elapsed;
