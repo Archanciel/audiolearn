@@ -13743,7 +13743,7 @@ void main() {
           reason: 'TextField should be focused when dialog opens');
 
       // Now change the download date in the dialog
-      String audioOldestDownloadDateTime = '14/07/2025 18:31';
+      String audioOldestDownloadDateTime = '15/07/2025 18:31';
       textField.controller!.text = audioOldestDownloadDateTime;
       await tester.pumpAndSettle();
 
@@ -13751,6 +13751,14 @@ void main() {
       // audio duration value in the comment previous dialog.
       await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
       await tester.pumpAndSettle();
+
+      // Add a delay to allow the download to finish. Since a mock
+      // AudioDownloadVM is used, the download will be simulated and
+      // will not take time.
+      for (int i = 0; i < 10; i++) {
+        await Future.delayed(const Duration(milliseconds: 500));
+        await tester.pumpAndSettle();
+      }
 
       // Verify the displayed warning dialog
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
