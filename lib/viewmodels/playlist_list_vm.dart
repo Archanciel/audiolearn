@@ -198,8 +198,7 @@ class PlaylistListVM extends ChangeNotifier {
   bool get isSaving => _isSaving;
 
   String _audioMp3SaveUniquePlaylistName = '';
-  String get audioMp3SaveUniquePlaylistName =>
-      _audioMp3SaveUniquePlaylistName;
+  String get audioMp3SaveUniquePlaylistName => _audioMp3SaveUniquePlaylistName;
 
   PlaylistListVM({
     required WarningMessageVM warningMessageVM,
@@ -3261,10 +3260,109 @@ class PlaylistListVM extends ChangeNotifier {
     return dateFormatVM.formatDateTime(oldestAudioDownloadDateTime);
   }
 
+  Future<Duration> evaluateSavingAudioMp3FileToZipDuration({
+    required List<Playlist> listOfPlaylists,
+    required DateTime fromAudioDownloadDateTime,
+  }) async {
+    int savedAudiosFileSize = 0;
+    double savedAudioBytesNumberToZipInOneMicroSecond = 0.0;
+
+    // Iterate through all playlists
+    for (Playlist playlist in listOfPlaylists) {
+      Directory playlistDir = Directory(playlist.downloadPath);
+
+      if (!playlistDir.existsSync()) {
+        continue;
+      }
+
+      // Get all audio files from the playlist that match the date criteria
+      List<Audio> filteredAudioLst = playlist.playableAudioLst
+          .where((audio) => audio.audioDownloadDateTime
+              .isAtOrAfter(fromAudioDownloadDateTime))
+          .toList();
+
+      for (Audio audio in filteredAudioLst) {
+        File audioFile = File(audio.filePathName);
+
+        // Calculate zip rate only once using the first valid audio file
+        if (savedAudioBytesNumberToZipInOneMicroSecond == 0 &&
+            audioFile.existsSync()) {
+          try {
+            savedAudioBytesNumberToZipInOneMicroSecond =
+                await _calculateHowManyMp3BytesAreIncludedInZipInOneSecond(
+              audio: audio,
+              audioFile: audioFile,
+            );
+          } catch (e) {
+            // If calculation fails, use a default rate (e.g., 1MB/second)
+            savedAudioBytesNumberToZipInOneMicroSecond =
+                1024 * 1024; // 1MB/s fallback
+          }
+        }
+
+        if (audioFile.existsSync()) {
+          savedAudiosFileSize += audio.audioFileSize;
+        }
+      }
+    }
+
+    // Handle edge cases
+    if (savedAudiosFileSize == 0) {
+      return Duration.zero; // No files to process
+    }
+
+    // Multiplying by 4000000 instead of 1000000 is due to the fact that
+    // the savedAudioBytesNumberToZipInOneMicroSecond is 4 times or more
+    // too big.
+    return Duration(
+        seconds: (savedAudiosFileSize / (savedAudioBytesNumberToZipInOneMicroSecond * 4000000))
+            .ceil());
+  }
+
+  Future<double> _calculateHowManyMp3BytesAreIncludedInZipInOneSecond({
+    required Audio audio,
+    required File audioFile,
+  }) async {
+    final archive = Archive();
+    int savedAudioFileSize = audio.audioFileSize;
+    Duration savedAudioDuration = Duration.zero;
+
+    if (audioFile.existsSync()) {
+      // Start timing the zip creation process
+      final stopwatch = Stopwatch()..start();
+
+      // Read the file and add it to the archive
+      List<int> audioBytes = await audioFile.readAsBytes();
+      archive.addFile(ArchiveFile(
+        audio.audioFileName,
+        audioBytes.length,
+        audioBytes,
+      ));
+      String applicationPath = _settingsDataService.get(
+        settingType: SettingType.dataLocation,
+        settingSubType: DataLocation.appSettingsPath,
+      );
+      String zipFilePathName = path.join(applicationPath, 'temp.zip');
+      File zipFile = File(zipFilePathName);
+
+      zipFile.writeAsBytesSync(ZipEncoder().encode(archive), flush: true);
+
+      // Stop timing and calculate duration
+      stopwatch.stop();
+      savedAudioDuration = stopwatch.elapsed;
+
+      DirUtil.deleteFileIfExist(
+        pathFileName: zipFilePathName,
+      );
+    }
+
+    return (savedAudioFileSize / savedAudioDuration.inMicroseconds);;
+  }
+
   /// Returns the list described below or [] if no audio file was downloaded at or after
   /// the passed [fromAudioDownloadDateTime]. The audio's from the playable audio list are
   /// savable to the zip file, not the audio's from the downloaded audio list since some
-  /// audio's from the downloaded audio list may have been deleted. 
+  /// audio's from the downloaded audio list may have been deleted.
   ///
   /// The returned list contains
   /// [
@@ -3283,7 +3381,7 @@ class PlaylistListVM extends ChangeNotifier {
     Duration savedAudioDuration = Duration.zero;
 
     _audioMp3SaveUniquePlaylistName = playlist.title;
-    
+
     // Create a zip encoder
     final archive = Archive();
     bool hasAudioFiles = false;

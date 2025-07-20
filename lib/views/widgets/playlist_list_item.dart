@@ -560,7 +560,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   validationFunctionArgs: [],
                 );
               },
-            ).then((resultStringLst) {
+            ).then((resultStringLst) async {
               if (resultStringLst == null) {
                 // The case if the Cancel button was pressed.
                 return;
@@ -586,13 +586,30 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 return;
               }
 
-              playlistListVMlistenFalse.saveUniquePlaylistAudioMp3FilesToZip(
+              Duration audioMp3SavingToZipDuration =
+                  await playlistListVMlistenFalse
+                      .evaluateSavingAudioMp3FileToZipDuration(
+                listOfPlaylists: [playlist],
+                fromAudioDownloadDateTime:
+                    parseDateTimeOrDateStrUsinAppDateFormat,
+              );
+
+
+              // final stopwatch = Stopwatch()..start();
+
+              await playlistListVMlistenFalse.saveUniquePlaylistAudioMp3FilesToZip(
                 playlist: playlist,
                 targetDir: targetSaveDirectoryPath,
                 fromAudioDownloadDateTime:
                     parseDateTimeOrDateStrUsinAppDateFormat,
               );
+
+              // stopwatch.stop();
+              // Duration savedAudioDuration = stopwatch.elapsed;
+              // print(
+              //   '***** Evaluated duration too big ${audioMp3SavingToZipDuration.inMicroseconds / savedAudioDuration.inMicroseconds} time');
             });
+
             break;
           case PlaylistPopupMenuAction.deletePlaylist:
             showDialog<void>(
