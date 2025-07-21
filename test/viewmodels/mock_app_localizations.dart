@@ -2107,10 +2107,29 @@ class MockAppLocalizations extends AppLocalizations {
       "Please wait, this should approximately take $saveTime ...";
 
   @override
-  String correctedSavedUniquePlaylistAudioMp3ToZip(Object audioDownloadFromDateTime, Object savedAudioNumber, Object savedAudioTotalFileSize, Object savedAudioTotalDuration, Object saveOperationRealDuration, Object bytesNumberSavedPerSecond, Object filePathName,) =>
+  String correctedSavedUniquePlaylistAudioMp3ToZip(
+    Object audioDownloadFromDateTime,
+    Object savedAudioNumber,
+    Object savedAudioTotalFileSize,
+    Object savedAudioTotalDuration,
+    Object saveOperationRealDuration,
+    Object bytesNumberSavedPerSecond,
+    Object filePathName,
+  ) =>
       "Saved to ZIP unique playlist audio MP3 files downloaded from $audioDownloadFromDateTime.Total saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.Save operation real duration: $saveOperationRealDuration, number of bytes saved per second: $bytesNumberSavedPerSecond.ZIP file path name: \"$filePathName\".";
 
   @override
-  String correctedSavedMultiplePlaylistsAudioMp3ToZip(Object audioDownloadFromDateTime, Object savedAudioNumber, Object savedAudioTotalFileSize, Object savedAudioTotalDuration, Object saveOperationRealDuration, Object bytesNumberSavedPerSecond, Object filePathName,) =>
+  String correctedSavedMultiplePlaylistsAudioMp3ToZip(
+    Object audioDownloadFromDateTime,
+    Object savedAudioNumber,
+    Object savedAudioTotalFileSize,
+    Object savedAudioTotalDuration,
+    Object saveOperationRealDuration,
+    Object bytesNumberSavedPerSecond,
+    Object filePathName,
+  ) =>
       "Saved to ZIP all playlists audio MP3 files downloaded from $audioDownloadFromDateTime.Total saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.Save operation real duration: $saveOperationRealDuration, number of bytes saved per second: $bytesNumberSavedPerSecond.ZIP file path name: \"$filePathName\".";
+
+  @override
+  String get audioSpokenQuality => "Spoken quality";
 }
