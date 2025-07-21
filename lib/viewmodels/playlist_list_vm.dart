@@ -78,6 +78,8 @@ class PlaylistListVM extends ChangeNotifier {
   bool get isOnePlaylistSelected => _isOnePlaylistSelected;
 
   List<Playlist> _listOfSelectablePlaylists = [];
+  List<Playlist> get listOfSelectablePlaylists =>
+      List<Playlist>.from(_listOfSelectablePlaylists);
 
   // This list is used to store the filtered and sorted audio list.
   // Its content corresponds to the sorted and filtered parms selected
