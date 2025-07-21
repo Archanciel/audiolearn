@@ -3099,8 +3099,9 @@ Duration _savingAudioMp3FileToZipDuration = Duration.zero;
     required Playlist playlist,
     required String targetDir,
     required DateTime fromAudioDownloadDateTime,
+    required Duration audioMp3SavingToZipEstimatedDuration
   }) async {
-    if (targetDir == '/') {
+    if (targetDir == '/' || audioMp3SavingToZipEstimatedDuration == Duration.zero) {
       return [];
     }
 

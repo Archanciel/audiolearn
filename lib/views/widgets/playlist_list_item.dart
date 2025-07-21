@@ -609,6 +609,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                         targetDir: targetSaveDirectoryPath,
                         fromAudioDownloadDateTime:
                             parseDateTimeOrDateStrUsinAppDateFormat!,
+                        audioMp3SavingToZipEstimatedDuration: audioMp3SavingToZipDuration,
                       );
                       // Handle any post-execution logic here
                     },

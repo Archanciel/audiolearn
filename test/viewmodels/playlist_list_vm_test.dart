@@ -1410,11 +1410,18 @@ void main() {
 
         final DateTime fromDateTime = DateTime(2024, 1, 10);
 
+        Duration audioMp3SavingToZipDuration =
+            await playlistListVM.evaluateSavingAudioMp3FileToZipDuration(
+          listOfPlaylists: [playlistLst[4]], // S8 audio
+          fromAudioDownloadDateTime: fromDateTime,
+        );
+
         List<dynamic> restoredInfoLst =
             await playlistListVM.saveUniquePlaylistAudioMp3FilesToZip(
           playlist: playlistLst[4], // S8 audio
           targetDir: kApplicationPathWindowsTest,
           fromAudioDownloadDateTime: fromDateTime,
+          audioMp3SavingToZipEstimatedDuration: audioMp3SavingToZipDuration,
         );
 
         String savedZipFilePathName = restoredInfoLst[0];
@@ -1520,11 +1527,18 @@ void main() {
 
         final DateTime fromDateTime = DateTime(2024, 1, 10);
 
+        Duration audioMp3SavingToZipDuration =
+            await playlistListVM.evaluateSavingAudioMp3FileToZipDuration(
+          listOfPlaylists: [playlistLst[4]], // S8 audio
+          fromAudioDownloadDateTime: fromDateTime,
+        );
+
         List<dynamic> restoredInfoLst =
             await playlistListVM.saveUniquePlaylistAudioMp3FilesToZip(
           playlist: playlistLst[1], // S8 audio
           targetDir: kApplicationPathWindowsTest,
           fromAudioDownloadDateTime: fromDateTime,
+          audioMp3SavingToZipEstimatedDuration: audioMp3SavingToZipDuration,
         );
 
         String savedZipFilePathName = restoredInfoLst[0];
