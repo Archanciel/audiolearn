@@ -554,8 +554,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                       .audioDownloadFromDateTimeUniquePlaylistTooltip,
                   passedValueStr: playlistListVMlistenFalse
                       .getOldestAudioDownloadDateFormattedStr(
-                    listOfPlaylists:
-                        [playlist], // only one playlist
+                    listOfPlaylists: [playlist], // only one playlist
                   ),
                   targetNamesLst: [],
                   validationFunctionArgs: [],
@@ -569,31 +568,24 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
 
               String oldestAudioDownloadDateFormattedStr = resultStringLst[0];
 
-              DateTime? parseDateTimeOrDateStrUsinAppDateFormat =
-                  dateFormatVMlistenFalse.parseDateTimeStrUsinAppDateFormat(
-                dateTimeStr: oldestAudioDownloadDateFormattedStr,
+              List<dynamic> resultsLst =
+                  await UiUtil.obtainAudioMp3SavingToZipDuration(
+                playlistListVMlistenFalse: playlistListVMlistenFalse,
+                dateFormatVMlistenFalse: dateFormatVMlistenFalse,
+                warningMessageVMlistenFalse: warningMessageVMlistenFalse,
+                playlistsLst: [playlist], // only one playlist
+                oldestAudioDownloadDateFormattedStr:
+                    oldestAudioDownloadDateFormattedStr,
               );
 
-              parseDateTimeOrDateStrUsinAppDateFormat ??=
-                  dateFormatVMlistenFalse.parseDateStrUsinAppDateFormat(
-                dateStr: oldestAudioDownloadDateFormattedStr,
-              );
-
-              if (parseDateTimeOrDateStrUsinAppDateFormat == null) {
-                warningMessageVMlistenFalse.setError(
-                  errorType: ErrorType.dateFormatError,
-                  errorArgOne: oldestAudioDownloadDateFormattedStr,
-                );
+              if (resultsLst[0] == null) {
+                // The case if the date format is invalid.
                 return;
               }
 
-              Duration audioMp3SavingToZipDuration =
-                  await playlistListVMlistenFalse
-                      .evaluateSavingAudioMp3FileToZipDuration(
-                listOfPlaylists: [playlist],
-                fromAudioDownloadDateTime:
-                    parseDateTimeOrDateStrUsinAppDateFormat,
-              );
+              DateTime parseDateTimeOrDateStrUsinAppDateFormat =
+                  resultsLst[0]! as DateTime;
+              Duration audioMp3SavingToZipDuration = resultsLst[1] as Duration;
 
               showDialog<void>(
                 context: context,
@@ -608,13 +600,15 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                         playlist: playlist,
                         targetDir: targetSaveDirectoryPath,
                         fromAudioDownloadDateTime:
-                            parseDateTimeOrDateStrUsinAppDateFormat!,
-                        audioMp3SavingToZipEstimatedDuration: audioMp3SavingToZipDuration,
+                            parseDateTimeOrDateStrUsinAppDateFormat,
+                        audioMp3SavingToZipEstimatedDuration:
+                            audioMp3SavingToZipDuration,
                       );
                       // Handle any post-execution logic here
                     },
                     actionFunctionArgs: [],
-                    dialogTitleOne: AppLocalizations.of(context)!.savingAudioToZipTimeTitle,
+                    dialogTitleOne:
+                        AppLocalizations.of(context)!.savingAudioToZipTimeTitle,
                     dialogContent:
                         AppLocalizations.of(context)!.savingAudioToZipTime(
                       audioMp3SavingToZipDuration.HHmmss(),
