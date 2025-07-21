@@ -1,4 +1,5 @@
 import 'package:audiolearn/models/comment.dart';
+import 'package:audiolearn/utils/duration_expansion.dart';
 import 'package:audiolearn/utils/ui_util.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:flutter/material.dart';
@@ -844,22 +845,76 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   validationFunctionArgs: [],
                 );
               },
-            ).then((resultStringLst) {
+            ).then((resultStringLst) async {
               if (resultStringLst == null) {
                 // The case if the Cancel button was pressed.
                 return;
               }
 
+              final WarningMessageVM warningMessageVMlistenFalse =
+                  Provider.of<WarningMessageVM>(
+                context,
+                listen: false,
+              );
+
               String oldestAudioDownloadDateFormattedStr = resultStringLst[0];
 
-              playlistListVMlistenFalse.savePlaylistsAudioMp3FilesToZip(
-                targetDir: targetSaveDirectoryPath,
-                fromAudioDownloadDateTime:
-                    dateFormatVMlistenFalse.parseDateTimeStrUsinAppDateFormat(
-                  dateTimeStr: oldestAudioDownloadDateFormattedStr,
-                )!,
+              List<dynamic> resultsLst =
+                  await UiUtil.obtainAudioMp3SavingToZipDuration(
+                playlistListVMlistenFalse: playlistListVMlistenFalse,
+                dateFormatVMlistenFalse: dateFormatVMlistenFalse,
+                warningMessageVMlistenFalse: warningMessageVMlistenFalse,
+                playlistsLst: playlistListVMlistenFalse
+                    .listOfSelectablePlaylists, // only one playlist
+                oldestAudioDownloadDateFormattedStr:
+                    oldestAudioDownloadDateFormattedStr,
+              );
+
+              if (resultsLst[0] == null) {
+                // The case if the date format is invalid.
+                return;
+              }
+
+              DateTime parseDateTimeOrDateStrUsinAppDateFormat =
+                  resultsLst[0]! as DateTime;
+              Duration audioMp3SavingToZipDuration = resultsLst[1] as Duration;
+
+              showDialog<void>(
+                context: context,
+                barrierDismissible:
+                    false, // This line prevents the dialog from closing when
+                //            tapping outside the dialog
+                builder: (BuildContext context) {
+                  return ConfirmActionDialog(
+                    actionFunction: () async {
+                      await playlistListVMlistenFalse
+                          .savePlaylistsAudioMp3FilesToZip(
+                        targetDir: targetSaveDirectoryPath,
+                        fromAudioDownloadDateTime:
+                            parseDateTimeOrDateStrUsinAppDateFormat,
+                      );
+                      // Handle any post-execution logic here
+                    },
+                    actionFunctionArgs: [],
+                    dialogTitleOne:
+                        AppLocalizations.of(context)!.savingAudioToZipTimeTitle,
+                    dialogContent:
+                        AppLocalizations.of(context)!.savingAudioToZipTime(
+                      audioMp3SavingToZipDuration.HHmmss(),
+                    ),
+                  );
+                },
               );
             });
+
+            //   playlistListVMlistenFalse.savePlaylistsAudioMp3FilesToZip(
+            //     targetDir: targetSaveDirectoryPath,
+            //     fromAudioDownloadDateTime:
+            //         dateFormatVMlistenFalse.parseDateTimeStrUsinAppDateFormat(
+            //       dateTimeStr: oldestAudioDownloadDateFormattedStr,
+            //     )!,
+            //   );
+            // });
             break;
           case AppBarPopupMenu.restorePlaylistAndCommentsFromZip:
             final List<HelpItem> restorePlaylistsHelpItemsLst = [
