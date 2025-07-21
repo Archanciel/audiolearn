@@ -1318,7 +1318,7 @@
   "restoredElementsHelpContent": "N playlists: nombre de nouveaux fichiers JSON de playlist créés par la restauration.\n\nN commentaires: nombre de nouveaux fichiers JSON de commentaires créés par la restauration. Ceci se produit uniquement si l'audio commenté n'avait aucun commentaire avant la restauration. Sinon, le nouveau commentaire est ajouté au fichier JSON de commentaires audio existant.\n\nN photos : nombre de nouveaux fichiers JSON d'images créés par la restauration. Ceci se produit uniquement si l'audio illustré n'avait aucune image avant la restauration. Sinon, la nouvelle image est ajoutée au fichier JSON d'images audio existant.\n\nN références audio: nombre d'éléments audio contenus dans un ou plusieurs fichier(s) JSON de playlist créé(s) par la restauration. Si le nombre de playlist restaurée est 0, alors le nombre de référence(s) audio correspond au nombre d'élément(s) audio ajouté(s) à leur fichier JSON de playlist par la restauration. La restauration n'ajoute pas de fichiers MP3 puisqu'aucun MP3 n'est contenu dans le fichier ZIP. Les audios référencés ajoutés peuvent être téléchargés après la restauration.\n\nN commentaires ajoutés: nombre de commentaires ajoutés par la restauration aux fichiers JSON de commentaires audio existants.\n\nN commentaires modifiés: nombre de commentaires modifiés par la restauration dans les fichiers JSON de commentaires audio existants.",
   "playlistInfoDownloadAudio": "Téléch. audio",
   "playlistInfoAudioPlayer": "Lire audio",
-  "savedMultiplePlaylistsAudioMp3ToZip": "Enregistré dans le ZIP tous les fichiers audio MP3 des playlists téléchargés depuis le {audioDownloadFromDateTime}.\n\nNombre total d'audios sauvegardés: {savedAudioNumber}, taille totale: {savedAudioTotalFileSize} et durée totale: {savedAudioTotalDuration}.\n\nFichier ZIP: \"{filePathName}\"",
+  "savedMultiplePlaylistsAudioMp3ToZip": "Enregistré dans le ZIP tous les fichiers audio MP3 des playlists téléchargés depuis le {audioDownloadFromDateTime}.\n\nNombre total d'audios sauvegardés: {savedAudioNumber}, taille totale: {savedAudioTotalFileSize} et durée totale: {savedAudioTotalDuration}.\n\nDurée réelle de l'opération de sauvegarde: {saveOperationRealDuration}, nombre de bytes sauvés par seconde: {bytesNumberSavedPerSecond}.\n\nFichier ZIP: \"{filePathName}\"",
   "@savedMultiplePlaylistsAudioMp3ToZip": {
     "description": "Confirmation message after saving the audio MP3 downloaded at or after a specified date time of all application playlists to a ZIP file",
     "placeholders": {
@@ -1334,25 +1334,10 @@
       "savedAudioTotalDuration": {
         "type": "Object"
       },      
-      "filePathName": {
-        "type": "Object"
-      }      
-    }
-  },
-  "savedUniquePlaylistAudioMp3ToZip": "Enregistré dans le ZIP tous les fichiers audio MP3 de la playlist unique téléchargés depuis le {audioDownloadFromDateTime}.\n\nNombre total d'audios sauvegardés: {savedAudioNumber}, taille totale: {savedAudioTotalFileSize} et durée totale: {savedAudioTotalDuration}.\n\nFichier ZIP: \"{filePathName}\".",
-  "@savedUniquePlaylistAudioMp3ToZip": {
-    "description": "Confirmation message after saving the audio MP3 downloaded at or after a specified date time of a unique playlist to a ZIP file",
-    "placeholders": {
-      "audioDownloadFromDateTime": {
+      "saveOperationRealDuration": {
         "type": "Object"
       },
-      "savedAudioNumber": {
-        "type": "Object"
-      },
-      "savedAudioTotalFileSize": {
-        "type": "Object"
-      },
-      "savedAudioTotalDuration": {
+      "bytesNumberSavedPerSecond": {
         "type": "Object"
       },      
       "filePathName": {
@@ -1379,5 +1364,59 @@
   "savingMultipleMinutes": "Patience, cela peut prendre plusieurs minutes ...",
   "savingUpToHalfHour": "Patience, cela peut prendre 10 à 30 minutes, voir plus ...",
   "savingAudioToZipTime": "La sauvegarde des fichiers audio MP3 dans un fichier ZIP va nécessiter cette durée estimée (hh:mm:ss): {evaluatedSaveTime}.",
-  "savingAudioToZipTimeTitle": "Estimation de la durée de sauvegarde"
+  "savingAudioToZipTimeTitle": "Estimation de la durée de sauvegarde",
+  "correctedSavedUniquePlaylistAudioMp3ToZip": "Enregistré dans le ZIP tous les fichiers audio MP3 de la playlist unique téléchargés depuis le {audioDownloadFromDateTime}.\n\nNombre total d'audios sauvegardés: {savedAudioNumber}, taille totale: {savedAudioTotalFileSize} et durée totale: {savedAudioTotalDuration}.\n\nDurée réelle de l'opération de sauvegarde: {saveOperationRealDuration}, nombre de bytes sauvés par seconde: {bytesNumberSavedPerSecond}.\n\nFichier ZIP: \"{filePathName}\".",
+  "@correctedSavedUniquePlaylistAudioMp3ToZip": {
+    "description": "Confirmation message after saving the audio MP3 downloaded at or after a specified date time of a unique playlist to a ZIP file",
+    "placeholders": {
+      "audioDownloadFromDateTime": {
+        "type": "Object"
+      },
+      "savedAudioNumber": {
+        "type": "Object"
+      },
+      "savedAudioTotalFileSize": {
+        "type": "Object"
+      },
+      "savedAudioTotalDuration": {
+        "type": "Object"
+      },      
+      "saveOperationRealDuration": {
+        "type": "Object"
+      },
+      "bytesNumberSavedPerSecond": {
+        "type": "Object"
+      },      
+      "filePathName": {
+        "type": "Object"
+      }      
+    }
+  },
+  "correctedSavedMultiplePlaylistsAudioMp3ToZip": "Enregistré dans le ZIP tous les fichiers audio MP3 des playlists téléchargés depuis le {audioDownloadFromDateTime}.\n\nNombre total d'audios sauvegardés: {savedAudioNumber}, taille totale: {savedAudioTotalFileSize} et durée totale: {savedAudioTotalDuration}.\n\nDurée réelle de l'opération de sauvegarde: {saveOperationRealDuration}, nombre de bytes sauvés par seconde: {bytesNumberSavedPerSecond}.\n\nFichier ZIP: \"{filePathName}\"",
+  "@correctedSavedMultiplePlaylistsAudioMp3ToZip": {
+    "description": "Confirmation message after saving the audio MP3 downloaded at or after a specified date time of all application playlists to a ZIP file",
+    "placeholders": {
+      "audioDownloadFromDateTime": {
+        "type": "Object"
+      },
+      "savedAudioNumber": {
+        "type": "Object"
+      },
+      "savedAudioTotalFileSize": {
+        "type": "Object"
+      },
+      "savedAudioTotalDuration": {
+        "type": "Object"
+      },      
+      "saveOperationRealDuration": {
+        "type": "Object"
+      },
+      "bytesNumberSavedPerSecond": {
+        "type": "Object"
+      },      
+      "filePathName": {
+        "type": "Object"
+      }      
+    }
+  }
 }

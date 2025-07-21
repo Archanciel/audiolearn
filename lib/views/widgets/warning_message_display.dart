@@ -1140,21 +1140,25 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
           if (_warningMessageVM.zipFilePathName != '') {
             if (_warningMessageVM.uniquePlaylistIsSaved) {
               savedAudioMp3ToZipMessage = AppLocalizations.of(context)!
-                  .savedUniquePlaylistAudioMp3ToZip(
+                  .correctedSavedUniquePlaylistAudioMp3ToZip(
                 _warningMessageVM.fromAudioDownloadDateTime,
-                _warningMessageVM.zipFilePathName,
                 _warningMessageVM.savedAudioMp3Number,
-                savedTotalAudioDurationStr,
                 savedTotalAudioFileSizeStr,
+                savedTotalAudioDurationStr,
+                _warningMessageVM.savingAudioToZipOperationDuration,
+                _warningMessageVM.realNumberOfBytesSavedToZipPerSecond,
+                _warningMessageVM.zipFilePathName,
               );
             } else {
               savedAudioMp3ToZipMessage = AppLocalizations.of(context)!
-                  .savedMultiplePlaylistsAudioMp3ToZip(
+                  .correctedSavedMultiplePlaylistsAudioMp3ToZip(
                 _warningMessageVM.fromAudioDownloadDateTime,
                 _warningMessageVM.savedAudioMp3Number,
                 savedTotalAudioFileSizeStr,
                 savedTotalAudioDurationStr,
                 _warningMessageVM.zipFilePathName,
+                _warningMessageVM.savingAudioToZipOperationDuration,
+                _warningMessageVM.realNumberOfBytesSavedToZipPerSecond,
               );
             }
 

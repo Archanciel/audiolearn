@@ -43,14 +43,14 @@ void main() {
     audioDownloadSpeed: 1000000,
     videoUploadDate: DateTime(2023, 3, 1),
     audioDuration: const Duration(minutes: 8, seconds: 30),
-    isAudioMusicQuality: false,
+    isAudioMusicQuality: true,
     audioPlaySpeed: kAudioDefaultPlaySpeed,
     audioPlayVolume: kAudioDefaultPlayVolume,
     isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
     isPaused: true,
     audioPausedDateTime: null,
     audioPositionSeconds: 0,
-    audioFileName: 'Test Video Title.mp3',
+    audioFileName: 'Test Video Title one.mp3',
     audioFileSize: 125000000,
     isAudioImported: false,
   );
@@ -79,7 +79,7 @@ void main() {
     isPaused: true,
     audioPausedDateTime: null,
     audioPositionSeconds: 0,
-    audioFileName: 'Test Video Title.mp3',
+    audioFileName: 'Test Video Title two.mp3',
     audioFileSize: 70000000,
     isAudioImported: false,
   );
@@ -101,14 +101,14 @@ void main() {
     audioDownloadSpeed: 1000000,
     videoUploadDate: DateTime(2023, 4, 1),
     audioDuration: const Duration(minutes: 15, seconds: 30),
-    isAudioMusicQuality: false,
+    isAudioMusicQuality: true,
     audioPlaySpeed: kAudioDefaultPlaySpeed,
     audioPlayVolume: kAudioDefaultPlayVolume,
     isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
     isPaused: true,
     audioPausedDateTime: null,
     audioPositionSeconds: 0,
-    audioFileName: 'Test Video Title.mp3',
+    audioFileName: 'Test Video Title three.mp3',
     audioFileSize: 130000000,
     isAudioImported: false,
   );
@@ -137,7 +137,7 @@ void main() {
     isPaused: true,
     audioPausedDateTime: null,
     audioPositionSeconds: 0,
-    audioFileName: 'Test Video Title.mp3',
+    audioFileName: 'Test Video Title four.mp3',
     audioFileSize: 110000000,
     isAudioImported: false,
   );
@@ -13553,6 +13553,68 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
+    });
+  });
+  group('filter test: on music or spoken quality', () {
+    late AudioSortFilterService audioSortFilterService;
+
+    SettingsDataService settingsDataService = SettingsDataService(
+      sharedPreferences: MockSharedPreferences(),
+    );
+
+    setUp(() async {
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+      audioSortFilterService = AudioSortFilterService(
+        settingsDataService: settingsDataService,
+      );
+    });
+    test('filter audio of music quality', () {
+      List<Audio> expectedFilteredAudios = [
+        audioOne,
+        audioThree,
+      ];
+
+      AudioSortFilterParameters audioSortFilterParameters =
+          AudioSortFilterParameters(
+        selectedSortItemLst: [],
+        sentencesCombination: SentencesCombination.and,
+        filterMusicQuality: true,);
+
+      List<Audio> actualFilteredAudioLst =
+          audioSortFilterService.filterOnOtherOptions(
+        selectedPlaylist: audioPlaylist,
+        audioLst: audioLst,
+        audioSortFilterParameters: audioSortFilterParameters,
+      );
+
+      expect(actualFilteredAudioLst, expectedFilteredAudios);
+    });
+    test('filter audio of spoken quality', () {
+      List<Audio> expectedFilteredAudios = [
+        audioTwo,
+        audioFour,
+      ];
+
+      AudioSortFilterParameters audioSortFilterParameters =
+          AudioSortFilterParameters(
+        selectedSortItemLst: [],
+        sentencesCombination: SentencesCombination.and,
+        filterMusicQuality: false,);
+
+      List<Audio> actualFilteredAudioLst =
+          audioSortFilterService.filterOnOtherOptions(
+        selectedPlaylist: audioPlaylist,
+        audioLst: audioLst,
+        audioSortFilterParameters: audioSortFilterParameters,
+      );
+
+      expect(actualFilteredAudioLst, expectedFilteredAudios);
     });
   });
 }
