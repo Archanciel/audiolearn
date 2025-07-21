@@ -250,6 +250,9 @@ class AudioSortFilterParameters {
   // If true, only audio with music quality are selected.
   final bool filterMusicQuality;
 
+  // If true, only audio with spoken quality are selected.
+  final bool filterSpokenQuality;
+
   // If true, fully listened audio are also selected.
   final bool filterFullyListened;
 
@@ -306,7 +309,8 @@ class AudioSortFilterParameters {
     this.ignoreCase = true,
     this.searchAsWellInYoutubeChannelName = true,
     this.searchAsWellInVideoCompactDescription = true,
-    this.filterMusicQuality = false,
+    this.filterMusicQuality = true,
+    this.filterSpokenQuality = true,
     this.filterFullyListened = true,
     this.filterPartiallyListened = true,
     this.filterNotListened = true,
@@ -342,6 +346,7 @@ class AudioSortFilterParameters {
       searchAsWellInVideoCompactDescription:
           json['searchAsWellInVideoCompactDescription'],
       filterMusicQuality: json['filterMusicQuality'],
+      filterSpokenQuality: json['filterSpokenQuality'] ?? true,
       filterFullyListened: json['filterFullyListened'],
       filterPartiallyListened: json['filterPartiallyListened'],
       filterNotListened: json['filterNotListened'],
@@ -382,6 +387,7 @@ class AudioSortFilterParameters {
       'searchAsWellInVideoCompactDescription':
           searchAsWellInVideoCompactDescription,
       'filterMusicQuality': filterMusicQuality,
+      'filterSpokenQuality': filterSpokenQuality,
       'filterFullyListened': filterFullyListened,
       'filterPartiallyListened': filterPartiallyListened,
       'filterNotListened': filterNotListened,
@@ -418,6 +424,7 @@ class AudioSortFilterParameters {
         other.searchAsWellInVideoCompactDescription ==
             searchAsWellInVideoCompactDescription &&
         other.filterMusicQuality == filterMusicQuality &&
+        other.filterSpokenQuality == filterSpokenQuality &&
         other.filterFullyListened == filterFullyListened &&
         other.filterPartiallyListened == filterPartiallyListened &&
         other.filterNotListened == filterNotListened &&
@@ -449,6 +456,7 @@ class AudioSortFilterParameters {
       searchAsWellInYoutubeChannelName,
       searchAsWellInVideoCompactDescription,
       filterMusicQuality,
+      filterSpokenQuality,
       filterFullyListened,
       filterPartiallyListened,
       filterNotListened,
@@ -461,7 +469,6 @@ class AudioSortFilterParameters {
       uploadDateStartRange,
       uploadDateEndRange,
       fileSizeStartRangeMB + durationStartRangeSec, // 20 arguments max !
-      fileSizeEndRangeMB + durationEndRangeSec, // 20 arguments max !
     );
   }
 
@@ -476,6 +483,7 @@ class AudioSortFilterParameters {
       searchAsWellInVideoCompactDescription:
           searchAsWellInVideoCompactDescription,
       filterMusicQuality: filterMusicQuality,
+      filterSpokenQuality: filterSpokenQuality,
       filterFullyListened: filterFullyListened,
       filterPartiallyListened: filterPartiallyListened,
       filterNotListened: filterNotListened,

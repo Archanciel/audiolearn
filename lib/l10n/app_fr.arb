@@ -49,6 +49,7 @@
   "audioRemainingDuration": "Durée audio écoutable restante",
   "audioFileSize": "Taille fichier audio",
   "audioMusicQuality": "Qualité musicale",
+  "audioSpokenQuality": "Qualité audio",
   "audioDownloadSpeed": "Vitesse téléch audio",
   "audioDownloadDuration": "Durée téléch audio",
   "sortAscending": "Asc",

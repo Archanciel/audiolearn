@@ -77,6 +77,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   late bool _searchInVideoCompactDescription;
   late bool _searchInYoutubeChannelName;
   late bool _filterMusicQuality;
+  late bool _filterSpokenQuality;
   late bool _filterFullyListened;
   late bool _filterPartiallyListened;
   late bool _filterNotListened;
@@ -249,6 +250,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
         SentencesCombination.and);
     _isOr = !_isAnd;
     _filterMusicQuality = audioSortDefaultFilterParameters.filterMusicQuality;
+    _filterSpokenQuality =
+        audioSortDefaultFilterParameters.filterSpokenQuality;
     _filterFullyListened = audioSortDefaultFilterParameters.filterFullyListened;
     _filterPartiallyListened =
         audioSortDefaultFilterParameters.filterPartiallyListened;
@@ -1356,6 +1359,34 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                 setState(() {
                   _filterMusicQuality = newValue!;
                 });
+
+                if (!_filterMusicQuality) {
+                  // If the music quality checkbox is unchecked, the spoken
+                  // quality checkbox must be checked since it makes no sense
+                  // to have both unchecked
+                  _filterSpokenQuality = true;
+                }
+
+                // now clicking on Enter works since the
+                // Checkbox is not focused anymore
+                _audioTitleSearchSentenceFocusNode.requestFocus();
+              },
+            ),
+            Text(AppLocalizations.of(context)!.audioSpokenQuality),
+            Checkbox(
+              key: const Key('filterSpokenQualityCheckbox'),
+              value: _filterSpokenQuality,
+              onChanged: (bool? newValue) {
+                setState(() {
+                  _filterSpokenQuality = newValue!;
+                });
+
+                if (!_filterSpokenQuality) {
+                  // If the spoken quality checkbox is unchecked, the music
+                  // quality checkbox must be checked since it makes no sense
+                  // to have both unchecked
+                  _filterMusicQuality = true;
+                }
 
                 // now clicking on Enter works since the
                 // Checkbox is not focused anymore
@@ -2559,6 +2590,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       searchAsWellInYoutubeChannelName: _searchInYoutubeChannelName,
       searchAsWellInVideoCompactDescription: _searchInVideoCompactDescription,
       filterMusicQuality: _filterMusicQuality,
+      filterSpokenQuality: _filterSpokenQuality,
       filterFullyListened: _filterFullyListened,
       filterPartiallyListened: _filterPartiallyListened,
       filterNotListened: _filterNotListened,
