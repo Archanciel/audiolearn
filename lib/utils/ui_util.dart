@@ -163,6 +163,11 @@ class UiUtil {
     return File(audio.filePathName).existsSync();
   }
 
+  /// The method returns a list containing the parsed date time or date
+  /// and the evaluated duration of the audio mp3 saving to zip operation.
+  /// 
+  /// If the date time or the date parsing fails, it returns a list
+  /// containing only null.
   static Future<List<dynamic>> obtainAudioMp3SavingToZipDuration({
     required PlaylistListVM playlistListVMlistenFalse,
     required DateFormatVM dateFormatVMlistenFalse,
