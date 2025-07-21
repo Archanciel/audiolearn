@@ -2021,26 +2021,6 @@ class MockAppLocalizations extends AppLocalizations {
   String get playlistInfoAudioPlayer => "Play audio";
 
   @override
-  String savedMultiplePlaylistsAudioMp3ToZip(
-    Object audioDownloadFromDateTime,
-    Object savedAudioNumber,
-    Object savedAudioTotalFileSize,
-    Object savedAudioTotalDuration,
-    Object filePathName,
-  ) =>
-      "Saved to ZIP all playlists audio mp3 files downloaded from $audioDownloadFromDateTime.Total saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.ZIP file path name: \"$filePathName\"";
-
-  @override
-  String savedUniquePlaylistAudioMp3ToZip(
-    Object audioDownloadFromDateTime,
-    Object savedAudioNumber,
-    Object savedAudioTotalFileSize,
-    Object savedAudioTotalDuration,
-    Object filePathName,
-  ) =>
-      "Saved to ZIP unique playlist audio mp3 files downloaded from $audioDownloadFromDateTime.Total saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.ZIP file path name: \"$filePathName\"";
-
-  @override
   String get savePlaylistsAudioMp3FilesToZipMenu =>
       "Save Playlists audio's Mp3 to Zip File ...";
 
@@ -2125,4 +2105,12 @@ class MockAppLocalizations extends AppLocalizations {
     Object saveTime,
   ) =>
       "Please wait, this should approximately take $saveTime ...";
+
+  @override
+  String correctedSavedUniquePlaylistAudioMp3ToZip(Object audioDownloadFromDateTime, Object savedAudioNumber, Object savedAudioTotalFileSize, Object savedAudioTotalDuration, Object saveOperationRealDuration, Object bytesNumberSavedPerSecond, Object filePathName,) =>
+      "Saved to ZIP unique playlist audio MP3 files downloaded from $audioDownloadFromDateTime.Total saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.Save operation real duration: $saveOperationRealDuration, number of bytes saved per second: $bytesNumberSavedPerSecond.ZIP file path name: \"$filePathName\".";
+
+  @override
+  String correctedSavedMultiplePlaylistsAudioMp3ToZip(Object audioDownloadFromDateTime, Object savedAudioNumber, Object savedAudioTotalFileSize, Object savedAudioTotalDuration, Object saveOperationRealDuration, Object bytesNumberSavedPerSecond, Object filePathName,) =>
+      "Saved to ZIP all playlists audio MP3 files downloaded from $audioDownloadFromDateTime.Total saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.Save operation real duration: $saveOperationRealDuration, number of bytes saved per second: $bytesNumberSavedPerSecond.ZIP file path name: \"$filePathName\".";
 }
