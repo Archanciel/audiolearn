@@ -203,6 +203,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
                               widget.passedValueFieldTooltip,
                           controller: _passedValueTextEditingController,
                           textFieldFocusNode: _focusNodePassedValueTextField,
+                          isCursorAtStart: false,
                         )
                       : createInfoRowFunction(
                           context: context,
