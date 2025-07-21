@@ -8,7 +8,9 @@ import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../models/audio.dart';
+import '../viewmodels/date_format_vm.dart';
 import '../viewmodels/playlist_list_vm.dart';
+import '../viewmodels/warning_message_vm.dart';
 import 'dir_util.dart';
 
 class UiUtil {
@@ -159,5 +161,46 @@ class UiUtil {
     required Audio audio,
   }) {
     return File(audio.filePathName).existsSync();
+  }
+
+  static Future<List<dynamic>> obtainAudioMp3SavingToZipDuration({
+    required PlaylistListVM playlistListVMlistenFalse,
+    required DateFormatVM dateFormatVMlistenFalse,
+    required WarningMessageVM warningMessageVMlistenFalse,
+    required List<Playlist> playlistsLst,
+    required String oldestAudioDownloadDateFormattedStr,
+  }) async {
+    // Since the entered date can be either a date or a date time,
+    // we try to parse it as a date time first, then as a date.
+    // If both parsing attempts fail, we display an error message.
+
+    DateTime? parseDateTimeOrDateStrUsinAppDateFormat =
+        dateFormatVMlistenFalse.parseDateTimeStrUsinAppDateFormat(
+      dateTimeStr: oldestAudioDownloadDateFormattedStr,
+    );
+
+    parseDateTimeOrDateStrUsinAppDateFormat ??=
+        dateFormatVMlistenFalse.parseDateStrUsinAppDateFormat(
+      dateStr: oldestAudioDownloadDateFormattedStr,
+    );
+
+    if (parseDateTimeOrDateStrUsinAppDateFormat == null) {
+      warningMessageVMlistenFalse.setError(
+        errorType: ErrorType.dateFormatError,
+        errorArgOne: oldestAudioDownloadDateFormattedStr,
+      );
+      return [parseDateTimeOrDateStrUsinAppDateFormat];
+    }
+
+    Duration audioMp3SavingToZipDuration =
+        await playlistListVMlistenFalse.evaluateSavingAudioMp3FileToZipDuration(
+      listOfPlaylists: playlistsLst,
+      fromAudioDownloadDateTime: parseDateTimeOrDateStrUsinAppDateFormat,
+    );
+
+    return [
+      parseDateTimeOrDateStrUsinAppDateFormat,
+      audioMp3SavingToZipDuration,
+    ];
   }
 }
