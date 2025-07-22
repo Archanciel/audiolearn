@@ -13584,7 +13584,8 @@ void main() {
           AudioSortFilterParameters(
         selectedSortItemLst: [],
         sentencesCombination: SentencesCombination.and,
-        filterMusicQuality: true,);
+        filterMusicQuality: true,
+        filterSpokenQuality: false);
 
       List<Audio> actualFilteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
@@ -13605,7 +13606,8 @@ void main() {
           AudioSortFilterParameters(
         selectedSortItemLst: [],
         sentencesCombination: SentencesCombination.and,
-        filterMusicQuality: false,);
+        filterMusicQuality: false,
+        filterSpokenQuality: true);
 
       List<Audio> actualFilteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
