@@ -1021,12 +1021,13 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               sortFilterParametersSaveAsUniqueName: _sortFilterSaveAsUniqueName,
             );
 
-            playlistListVMlistenFalse.saveAudioSortFilterParameters(
-              audioSortFilterParametersName: _sortFilterSaveAsUniqueName.trim(),
-              audioSortFilterParameters: filterSortAudioAndParmLst[1],
-            );
-
             if (filterSortAudioAndParmLst.isNotEmpty) {
+              playlistListVMlistenFalse.saveAudioSortFilterParameters(
+                audioSortFilterParametersName:
+                    _sortFilterSaveAsUniqueName.trim(),
+                audioSortFilterParameters: filterSortAudioAndParmLst[1],
+              );
+
               // The filterSortAudioAndParmLst is empty when the user
               // cancelled saving the sort/filter parameters with the
               // same name as an existing one
@@ -2418,6 +2419,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       'searchAsWellInVideoCompactDescription':
           AppLocalizations.of(context)!.searchInVideoCompactDescription,
       'filterMusicQuality': AppLocalizations.of(context)!.audioMusicQuality,
+      'filterSpokenQuality': AppLocalizations.of(context)!.audioSpokenQuality,
       'filterFullyListened': AppLocalizations.of(context)!.fullyListened,
       'filterPartiallyListened':
           AppLocalizations.of(context)!.partiallyListened,
