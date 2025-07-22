@@ -2,6 +2,7 @@ import 'package:audiolearn/utils/duration_expansion.dart';
 import 'package:audiolearn/views/widgets/set_value_to_target_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import '../../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -1145,8 +1146,12 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                 _warningMessageVM.savedAudioMp3Number,
                 savedTotalAudioFileSizeStr,
                 savedTotalAudioDurationStr,
-                _warningMessageVM.savingAudioToZipOperationDuration,
-                _warningMessageVM.realNumberOfBytesSavedToZipPerSecond,
+                _warningMessageVM.savingAudioToZipOperationDuration.HHmmss(
+                  addRemainingOneDigitTenthOfSecond: true,
+                ),
+                NumberFormat.decimalPattern().format(
+                  _warningMessageVM.realNumberOfBytesSavedToZipPerSecond,
+                ),
                 _warningMessageVM.zipFilePathName,
               );
             } else {
@@ -1156,9 +1161,13 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                 _warningMessageVM.savedAudioMp3Number,
                 savedTotalAudioFileSizeStr,
                 savedTotalAudioDurationStr,
+                _warningMessageVM.savingAudioToZipOperationDuration.HHmmss(
+                  addRemainingOneDigitTenthOfSecond: true,
+                ),
+                NumberFormat.decimalPattern().format(
+                  _warningMessageVM.realNumberOfBytesSavedToZipPerSecond,
+                ),
                 _warningMessageVM.zipFilePathName,
-                _warningMessageVM.savingAudioToZipOperationDuration,
-                _warningMessageVM.realNumberOfBytesSavedToZipPerSecond,
               );
             }
 
