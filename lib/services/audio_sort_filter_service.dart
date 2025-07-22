@@ -384,21 +384,6 @@ class AudioSortFilterService {
               wasFilterOptionsTitleAddedToDifferencesLst:
                   wasFilterOptionsTitleAddedToDifferencesLst);
     }
-    if (existingAudioSortFilterParms.filterMusicQuality !=
-        newOrModifiedaudioSortFilterParms.filterMusicQuality) {
-      wasFilterOptionsTitleAddedToDifferencesLst =
-          _addToDifferencesLstOtherOptionCheckboxValueStr(
-              initialCheckBoxState:
-                  existingAudioSortFilterParms.filterMusicQuality,
-              modifiedCheckBoxState:
-                  newOrModifiedaudioSortFilterParms.filterMusicQuality,
-              sortFilterParmsNameTranslationMap:
-                  sortFilterParmsNameTranslationMap,
-              optionNameTranslationKey: 'filterMusicQuality',
-              differencesLst: differencesLst,
-              wasFilterOptionsTitleAddedToDifferencesLst:
-                  wasFilterOptionsTitleAddedToDifferencesLst);
-    }
     if (existingAudioSortFilterParms.filterFullyListened !=
         newOrModifiedaudioSortFilterParms.filterFullyListened) {
       wasFilterOptionsTitleAddedToDifferencesLst =
@@ -440,6 +425,36 @@ class AudioSortFilterService {
               sortFilterParmsNameTranslationMap:
                   sortFilterParmsNameTranslationMap,
               optionNameTranslationKey: 'filterNotListened',
+              differencesLst: differencesLst,
+              wasFilterOptionsTitleAddedToDifferencesLst:
+                  wasFilterOptionsTitleAddedToDifferencesLst);
+    }
+    if (existingAudioSortFilterParms.filterMusicQuality !=
+        newOrModifiedaudioSortFilterParms.filterMusicQuality) {
+      wasFilterOptionsTitleAddedToDifferencesLst =
+          _addToDifferencesLstOtherOptionCheckboxValueStr(
+              initialCheckBoxState:
+                  existingAudioSortFilterParms.filterMusicQuality,
+              modifiedCheckBoxState:
+                  newOrModifiedaudioSortFilterParms.filterMusicQuality,
+              sortFilterParmsNameTranslationMap:
+                  sortFilterParmsNameTranslationMap,
+              optionNameTranslationKey: 'filterMusicQuality',
+              differencesLst: differencesLst,
+              wasFilterOptionsTitleAddedToDifferencesLst:
+                  wasFilterOptionsTitleAddedToDifferencesLst);
+    }
+    if (existingAudioSortFilterParms.filterSpokenQuality !=
+        newOrModifiedaudioSortFilterParms.filterSpokenQuality) {
+      wasFilterOptionsTitleAddedToDifferencesLst =
+          _addToDifferencesLstOtherOptionCheckboxValueStr(
+              initialCheckBoxState:
+                  existingAudioSortFilterParms.filterSpokenQuality,
+              modifiedCheckBoxState:
+                  newOrModifiedaudioSortFilterParms.filterSpokenQuality,
+              sortFilterParmsNameTranslationMap:
+                  sortFilterParmsNameTranslationMap,
+              optionNameTranslationKey: 'filterSpokenQuality',
               differencesLst: differencesLst,
               wasFilterOptionsTitleAddedToDifferencesLst:
                   wasFilterOptionsTitleAddedToDifferencesLst);
