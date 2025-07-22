@@ -313,7 +313,9 @@ class AudioSortFilterService {
                 'presentOnlyInFirstTitle';
         differencesLst.add(presentOnlyInFirstTitle);
         differencesLst.add(
-            sentenceDifferencesMap[SortFilterParmsVersion.versionOne]!.map((item) => "'$item'").join(', '));
+            sentenceDifferencesMap[SortFilterParmsVersion.versionOne]!
+                .map((item) => "'$item'")
+                .join(', '));
       }
 
       if (sentenceDifferencesMap[SortFilterParmsVersion.versionTwo]!
@@ -323,7 +325,9 @@ class AudioSortFilterService {
                 'presentOnlyInSecondTitle';
         differencesLst.add(presentOnlyInSecondTitle);
         differencesLst.add(
-            sentenceDifferencesMap[SortFilterParmsVersion.versionTwo]!.map((item) => "'$item'").join(', '));
+            sentenceDifferencesMap[SortFilterParmsVersion.versionTwo]!
+                .map((item) => "'$item'")
+                .join(', '));
       }
     }
 
@@ -1142,16 +1146,6 @@ class AudioSortFilterService {
   }) {
     List<Audio> filteredAudios = audioLst;
 
-    // If the 'Audio music quality' checkbox is set to true, the
-    // returned audio list contains only music quality audio.
-    // Otherwise, the returned audio list contains both music and
-    // speech quality audio.
-    if (audioSortFilterParameters.filterMusicQuality) {
-      filteredAudios = audioLst.where((audio) {
-        return audio.isAudioMusicQuality;
-      }).toList();
-    }
-
     // If the 'Fully listened' checkbox was set to false (by
     // default it is set to true), the returned audio list
     // does not contain audio that were fully listened.
@@ -1177,6 +1171,28 @@ class AudioSortFilterService {
     if (!audioSortFilterParameters.filterNotListened) {
       filteredAudios = filteredAudios.where((audio) {
         return audio.wasFullyListened() || audio.isPartiallyListened();
+      }).toList();
+    }
+
+    if (filteredAudios.isEmpty) {
+      return filteredAudios;
+    }
+
+    // If the 'Music qual.' checkbox was set to false (by
+    // default it is set to true), the returned audio list
+    // does not contain audio that are of music quality.
+    if (!audioSortFilterParameters.filterMusicQuality) {
+      filteredAudios = filteredAudios.where((audio) {
+        return !audio.isAudioMusicQuality;
+      }).toList();
+    }
+
+    // If the 'Spoken qual.' checkbox was set to false (by
+    // default it is set to true), the returned audio list
+    // only contain audio which are of music quality.
+    if (!audioSortFilterParameters.filterSpokenQuality) {
+      filteredAudios = filteredAudios.where((audio) {
+        return audio.isAudioMusicQuality;
       }).toList();
     }
 
