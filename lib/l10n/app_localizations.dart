@@ -320,13 +320,13 @@ abstract class AppLocalizations {
   /// No description provided for @audioMusicQuality.
   ///
   /// In en, this message translates to:
-  /// **'Music quality'**
+  /// **'Music qual.'**
   String get audioMusicQuality;
 
   /// No description provided for @audioSpokenQuality.
   ///
   /// In en, this message translates to:
-  /// **'Spoken quality'**
+  /// **'Spoken q.'**
   String get audioSpokenQuality;
 
   /// No description provided for @audioDownloadSpeed.

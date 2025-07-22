@@ -124,10 +124,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get audioFileSize => 'Audio file size';
 
   @override
-  String get audioMusicQuality => 'Music quality';
+  String get audioMusicQuality => 'Music qual.';
 
   @override
-  String get audioSpokenQuality => 'Spoken quality';
+  String get audioSpokenQuality => 'Spoken q.';
 
   @override
   String get audioDownloadSpeed => 'Audio downl speed';
