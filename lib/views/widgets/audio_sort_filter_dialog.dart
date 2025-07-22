@@ -250,8 +250,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
         SentencesCombination.and);
     _isOr = !_isAnd;
     _filterMusicQuality = audioSortDefaultFilterParameters.filterMusicQuality;
-    _filterSpokenQuality =
-        audioSortDefaultFilterParameters.filterSpokenQuality;
+    _filterSpokenQuality = audioSortDefaultFilterParameters.filterSpokenQuality;
     _filterFullyListened = audioSortDefaultFilterParameters.filterFullyListened;
     _filterPartiallyListened =
         audioSortDefaultFilterParameters.filterPartiallyListened;
@@ -636,6 +635,9 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                       ),
                     ),
                     _buildAudioStateCheckboxes(
+                      context: context,
+                    ),
+                    _buildAudioQualityCheckboxes(
                       context: context,
                     ),
                     _buildCommentSelectionCheckboxes(
@@ -1351,52 +1353,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       children: [
         Row(
           children: [
-            Text(AppLocalizations.of(context)!.audioMusicQuality),
-            Checkbox(
-              key: const Key('filterMusicQualityCheckbox'),
-              value: _filterMusicQuality,
-              onChanged: (bool? newValue) {
-                setState(() {
-                  _filterMusicQuality = newValue!;
-                });
-
-                if (!_filterMusicQuality) {
-                  // If the music quality checkbox is unchecked, the spoken
-                  // quality checkbox must be checked since it makes no sense
-                  // to have both unchecked
-                  _filterSpokenQuality = true;
-                }
-
-                // now clicking on Enter works since the
-                // Checkbox is not focused anymore
-                _audioTitleSearchSentenceFocusNode.requestFocus();
-              },
-            ),
-            Text(AppLocalizations.of(context)!.audioSpokenQuality),
-            Checkbox(
-              key: const Key('filterSpokenQualityCheckbox'),
-              value: _filterSpokenQuality,
-              onChanged: (bool? newValue) {
-                setState(() {
-                  _filterSpokenQuality = newValue!;
-                });
-
-                if (!_filterSpokenQuality) {
-                  // If the spoken quality checkbox is unchecked, the music
-                  // quality checkbox must be checked since it makes no sense
-                  // to have both unchecked
-                  _filterMusicQuality = true;
-                }
-
-                // now clicking on Enter works since the
-                // Checkbox is not focused anymore
-                _audioTitleSearchSentenceFocusNode.requestFocus();
-              },
-            ),
-          ],
-        ),
-        Row(
-          children: [
             Text(AppLocalizations.of(context)!.fullyListened),
             Checkbox(
               key: const Key('filterFullyListenedCheckbox'),
@@ -1448,6 +1404,57 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               },
             ),
           ],
+        ),
+      ],
+    );
+  }
+
+  Row _buildAudioQualityCheckboxes({
+    required BuildContext context,
+  }) {
+    return Row(
+      children: [
+        Text(AppLocalizations.of(context)!.audioMusicQuality),
+        Checkbox(
+          key: const Key('filterMusicQualityCheckbox'),
+          value: _filterMusicQuality,
+          onChanged: (bool? newValue) {
+            setState(() {
+              _filterMusicQuality = newValue!;
+            });
+
+            if (!_filterMusicQuality) {
+              // If the music quality checkbox is unchecked, the spoken
+              // quality checkbox must be checked since it makes no sense
+              // to have both unchecked
+              _filterSpokenQuality = true;
+            }
+
+            // now clicking on Enter works since the
+            // Checkbox is not focused anymore
+            _audioTitleSearchSentenceFocusNode.requestFocus();
+          },
+        ),
+        Text(AppLocalizations.of(context)!.audioSpokenQuality),
+        Checkbox(
+          key: const Key('filterSpokenQualityCheckbox'),
+          value: _filterSpokenQuality,
+          onChanged: (bool? newValue) {
+            setState(() {
+              _filterSpokenQuality = newValue!;
+            });
+
+            if (!_filterSpokenQuality) {
+              // If the spoken quality checkbox is unchecked, the music
+              // quality checkbox must be checked since it makes no sense
+              // to have both unchecked
+              _filterMusicQuality = true;
+            }
+
+            // now clicking on Enter works since the
+            // Checkbox is not focused anymore
+            _audioTitleSearchSentenceFocusNode.requestFocus();
+          },
         ),
       ],
     );
@@ -1950,10 +1957,11 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                     controller: _audioTitleSearchSentenceController,
                     keyboardType: TextInputType.text,
                     onChanged: (value) {
-                      _audioTitleSearchSentence = value; // the value must not be trimed
+                      _audioTitleSearchSentence =
+                          value; // the value must not be trimed
                       //                                    since the user may want to search
                       //                                    for 'with ' for example !
-                      
+
                       // setting the Add button color according to the
                       // TextField content ...
                       _audioTitleSearchSentenceAddButtonIconColor =
