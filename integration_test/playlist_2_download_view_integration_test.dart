@@ -13382,1050 +13382,1056 @@ void main() {
       );
     });
   });
-  group('Save playlists audio mp3 files to zip file menu test', () {
-    testWidgets(
-        '''Keep download date to the oldest one. The oldest value is 13/07/2025 14:31. The integration
+  group(
+      'Save audio mp3 files to zip files for all playlists or unique playlist test',
+      () {
+    group('Save playlists audio mp3 files to zip file menu test', () {
+      testWidgets(
+          '''Keep download date to the oldest one. The oldest value is 13/07/2025 14:31. The integration
           test verifies the confirmation displayed warning.''',
-        (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}save_audio_mp3_to_zip",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}save_audio_mp3_to_zip",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
 
-      final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
-      );
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
 
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
 
-      await app.main();
-      await tester.pumpAndSettle();
+        await app.main();
+        await tester.pumpAndSettle();
 
-      // First, set the application language to english
-      await IntegrationTestUtil.setApplicationLanguage(
-        tester: tester,
-        language: Language.english,
-      );
+        // First, set the application language to english
+        await IntegrationTestUtil.setApplicationLanguage(
+          tester: tester,
+          language: Language.english,
+        );
 
-      // Setting the path value returned by the FilePicker mock.
-      mockFilePicker.setPathToSelect(
-        pathToSelectStr: kApplicationPathWindowsTest,
-      );
+        // Setting the path value returned by the FilePicker mock.
+        mockFilePicker.setPathToSelect(
+          pathToSelectStr: kApplicationPathWindowsTest,
+        );
 
-      // Tap the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button
+        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+        await tester.pumpAndSettle();
 
-      // Now tap on the 'Save Playlists Audio's MP3 to ZIP File' menu
-      await tester.tap(
-          find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
-      await tester.pumpAndSettle();
+        // Now tap on the 'Save Playlists Audio's MP3 to ZIP File' menu
+        await tester.tap(
+            find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
+        await tester.pumpAndSettle();
 
-      expect(
-        tester
-            .widget<Text>(find.byKey(
-              const Key('setValueToTargetDialogTitleKey'),
-            ))
-            .data,
-        'Set the download date',
-      );
+        expect(
+          tester
+              .widget<Text>(find.byKey(
+                const Key('setValueToTargetDialogTitleKey'),
+              ))
+              .data,
+          'Set the download date',
+        );
 
-      expect(
-        tester
-            .widget<Text>(find.byKey(
-              const Key('setValueToTargetDialogKey'),
-            ))
-            .data,
-        'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
-      );
+        expect(
+          tester
+              .widget<Text>(find.byKey(
+                const Key('setValueToTargetDialogKey'),
+              ))
+              .data,
+          'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+        );
 
-      expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
+        expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
 
-      const String oldestAudioDownloadDateTime = '13/07/2025 14:31';
+        const String oldestAudioDownloadDateTime = '13/07/2025 14:31';
 
-      expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
+        expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
 
-      // Tap on the Ok button to set the comment end position to the
-      // audio duration value in the comment previous dialog.
-      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-      await tester.pumpAndSettle();
+        // Tap on the Ok button to set the comment end position to the
+        // audio duration value in the comment previous dialog.
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
 
-      // Now check the confirm dialog which indicates the estimated
-      // save audio mp3 to zip duration and accept save execution.
+        // Now check the confirm dialog which indicates the estimated
+        // save audio mp3 to zip duration and accept save execution.
 
-      Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
+        Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
 
-      // Check the value of the confirm dialog title
-      Finder confirmActionDialogTitleText = find.descendant(
-          of: confirmActionDialogFinder,
-          matching: find.byKey(const Key("confirmDialogTitleOneKey")));
+        // Check the value of the confirm dialog title
+        Finder confirmActionDialogTitleText = find.descendant(
+            of: confirmActionDialogFinder,
+            matching: find.byKey(const Key("confirmDialogTitleOneKey")));
 
-      expect(
-        tester.widget<Text>(confirmActionDialogTitleText).data!,
-        "Prevision of the save duration",
-      );
+        expect(
+          tester.widget<Text>(confirmActionDialogTitleText).data!,
+          "Prevision of the save duration",
+        );
 
-      // Check the value of the confirm dialog message
-      Finder confirmActionDialogMessageText = find.descendant(
-          of: confirmActionDialogFinder,
-          matching: find.byKey(const Key("confirmationDialogMessageKey")));
+        // Check the value of the confirm dialog message
+        Finder confirmActionDialogMessageText = find.descendant(
+            of: confirmActionDialogFinder,
+            matching: find.byKey(const Key("confirmationDialogMessageKey")));
 
-      expect(
-        tester.widget<Text>(confirmActionDialogMessageText).data!,
-        anyOf([
-          equals(
-            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:01.",
-          ),
-          equals(
-            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02.",
-          ),
-        ]),
-      );
+        expect(
+          tester.widget<Text>(confirmActionDialogMessageText).data!,
+          anyOf([
+            equals(
+              "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:01.",
+            ),
+            equals(
+              "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02.",
+            ),
+          ]),
+        );
 
-      // Confirm the saving of the audio mp3 files and close the
-      // confirm dialog by tapping on the Confirm button.
-      await tester.tap(find.byKey(const Key('confirmButton')));
-      await tester.pumpAndSettle();
+        // Confirm the saving of the audio mp3 files and close the
+        // confirm dialog by tapping on the Confirm button.
+        await tester.tap(find.byKey(const Key('confirmButton')));
+        await tester.pumpAndSettle();
 
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')).last);
+        Text warningDialogTitle =
+            tester.widget(find.byKey(const Key('warningDialogTitle')).last);
 
-      expect(warningDialogTitle.data, 'CONFIRMATION');
+        expect(warningDialogTitle.data, 'CONFIRMATION');
 
-      String actualMessage = tester
-          .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
-          .data!;
+        String actualMessage = tester
+            .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+            .data!;
 
-      expect(
-          actualMessage,
-          contains(
-              "Saved to ZIP all playlists audio MP3 files downloaded from $oldestAudioDownloadDateTime.\n\nTotal saved audio number: 5, total size: 64.47 MB and total duration: 2:40:27.2."));
-      expect(actualMessage, contains("Save operation real duration: 0:00:01"));
-      expect(
-          actualMessage, contains("number of bytes saved per second: 3"));
-      expect(
-          actualMessage,
-          contains(
-              "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-07-13_14_31_25_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 2)))}.zip\"."));
+        expect(
+            actualMessage,
+            contains(
+                "Saved to ZIP all playlists audio MP3 files downloaded from $oldestAudioDownloadDateTime.\n\nTotal saved audio number: 5, total size: 64.47 MB and total duration: 2:40:27.2."));
+        expect(
+            actualMessage, contains("Save operation real duration: 0:00:01"));
+        expect(actualMessage, contains("number of bytes saved per second: 3"));
+        expect(
+            actualMessage,
+            contains(
+                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-07-13_14_31_25_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 2)))}.zip\"."));
 
-      List<String> zipLst = DirUtil.listFileNamesInDir(
-        directoryPath: kApplicationPathWindowsTest,
-        fileExtension: 'zip',
-      );
+        List<String> zipLst = DirUtil.listFileNamesInDir(
+          directoryPath: kApplicationPathWindowsTest,
+          fileExtension: 'zip',
+        );
 
-      List<String> expectedZipContentLst = [
-        "playlists\\Saint François d'Assise\\250714-171854-How to talk to animals The teaching of Saint Francis of Assisi 22-05-28.mp3",
-        "playlists\\Saint François d'Assise\\250713-143130-Saint François d'Assise, le jongleur de Dieu 20-10-03.mp3",
-        "playlists\\Saint François d'Assise\\250713-143125-4 octobre  - Saint François, le Saint qui a Transformé l'Église et le Monde 24-10-03.mp3",
-        "playlists\\Exo chants chrétiens\\250713-144410-EXO - Ta bienveillance [avec paroles] 13-01-29.mp3",
-        "playlists\\Exo chants chrétiens\\250713-144321-SI TU VEUX LE LOUER - EXO 17-05-31.mp3",
-      ];
+        List<String> expectedZipContentLst = [
+          "playlists\\Saint François d'Assise\\250714-171854-How to talk to animals The teaching of Saint Francis of Assisi 22-05-28.mp3",
+          "playlists\\Saint François d'Assise\\250713-143130-Saint François d'Assise, le jongleur de Dieu 20-10-03.mp3",
+          "playlists\\Saint François d'Assise\\250713-143125-4 octobre  - Saint François, le Saint qui a Transformé l'Église et le Monde 24-10-03.mp3",
+          "playlists\\Exo chants chrétiens\\250713-144410-EXO - Ta bienveillance [avec paroles] 13-01-29.mp3",
+          "playlists\\Exo chants chrétiens\\250713-144321-SI TU VEUX LE LOUER - EXO 17-05-31.mp3",
+        ];
 
-      List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
-        zipFilePathName:
-            "$kApplicationPathWindowsTest${path.separator}${zipLst[0]}",
-      );
+        List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
+          zipFilePathName:
+              "$kApplicationPathWindowsTest${path.separator}${zipLst[0]}",
+        );
 
-      expect(
-        zipContentLst,
-        expectedZipContentLst,
-      );
+        expect(
+          zipContentLst,
+          expectedZipContentLst,
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Set download date to more recent one. The less old value is 13/07/2025 14:41. The integration
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Set download date to more recent one. The less old value is 13/07/2025 14:41. The integration
           test verifies the confirmation displayed warning.''',
-        (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}save_audio_mp3_to_zip",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}save_audio_mp3_to_zip",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
 
-      final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
-      );
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
 
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
 
-      await app.main();
-      await tester.pumpAndSettle();
+        await app.main();
+        await tester.pumpAndSettle();
 
-      // First, set the application language to english
-      await IntegrationTestUtil.setApplicationLanguage(
-        tester: tester,
-        language: Language.english,
-      );
+        // First, set the application language to english
+        await IntegrationTestUtil.setApplicationLanguage(
+          tester: tester,
+          language: Language.english,
+        );
 
-      // Setting the path value returned by the FilePicker mock.
-      mockFilePicker.setPathToSelect(
-        pathToSelectStr: kApplicationPathWindowsTest,
-      );
+        // Setting the path value returned by the FilePicker mock.
+        mockFilePicker.setPathToSelect(
+          pathToSelectStr: kApplicationPathWindowsTest,
+        );
 
-      // Tap the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button
+        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+        await tester.pumpAndSettle();
 
-      // Now tap on the 'Save Playlists Audio's MP3 to ZIP File' menu
-      await tester.tap(
-          find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
-      await tester.pumpAndSettle();
+        // Now tap on the 'Save Playlists Audio's MP3 to ZIP File' menu
+        await tester.tap(
+            find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
+        await tester.pumpAndSettle();
 
-      expect(
-        tester
-            .widget<Text>(find.byKey(
-              const Key('setValueToTargetDialogTitleKey'),
-            ))
-            .data,
-        'Set the download date',
-      );
+        expect(
+          tester
+              .widget<Text>(find.byKey(
+                const Key('setValueToTargetDialogTitleKey'),
+              ))
+              .data,
+          'Set the download date',
+        );
 
-      expect(
-        tester
-            .widget<Text>(find.byKey(
-              const Key('setValueToTargetDialogKey'),
-            ))
-            .data,
-        'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
-      );
+        expect(
+          tester
+              .widget<Text>(find.byKey(
+                const Key('setValueToTargetDialogKey'),
+              ))
+              .data,
+          'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+        );
 
-      expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
+        expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
 
-      const String oldestAudioDownloadDateTime = '13/07/2025 14:31';
+        const String oldestAudioDownloadDateTime = '13/07/2025 14:31';
 
-      expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
+        expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
 
-      Finder setValueToTargetDialogFinder = find.byType(SetValueToTargetDialog);
+        Finder setValueToTargetDialogFinder =
+            find.byType(SetValueToTargetDialog);
 
-      // This finder obtained as descendant of its enclosing dialog does
-      // enable to change the value of the TextField
-      Finder setValueToTargetDialogEditTextFinder = find.descendant(
-        of: setValueToTargetDialogFinder,
-        matching: find.byType(TextField),
-      );
+        // This finder obtained as descendant of its enclosing dialog does
+        // enable to change the value of the TextField
+        Finder setValueToTargetDialogEditTextFinder = find.descendant(
+          of: setValueToTargetDialogFinder,
+          matching: find.byType(TextField),
+        );
 
-      // Verify that the TextField is focused using its focus node
-      TextField textField =
-          tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
-      expect(textField.focusNode?.hasFocus, isTrue,
-          reason: 'TextField should be focused when dialog opens');
+        // Verify that the TextField is focused using its focus node
+        TextField textField =
+            tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
+        expect(textField.focusNode?.hasFocus, isTrue,
+            reason: 'TextField should be focused when dialog opens');
 
-      // Now change the download date in the dialog
-      String audioOldestDownloadDateTime = '13/07/2025 14:41';
-      textField.controller!.text = audioOldestDownloadDateTime;
-      await tester.pumpAndSettle();
+        // Now change the download date in the dialog
+        String audioOldestDownloadDateTime = '13/07/2025 14:41';
+        textField.controller!.text = audioOldestDownloadDateTime;
+        await tester.pumpAndSettle();
 
-      // Tap on the Ok button to set the comment end position to the
-      // audio duration value in the comment previous dialog.
-      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-      await tester.pumpAndSettle();
+        // Tap on the Ok button to set the comment end position to the
+        // audio duration value in the comment previous dialog.
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
 
-      // Now check the confirm dialog which indicates the estimated
-      // save audio mp3 to zip duration and accept save execution.
+        // Now check the confirm dialog which indicates the estimated
+        // save audio mp3 to zip duration and accept save execution.
 
-      Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
+        Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
 
-      // Check the value of the confirm dialog title
-      Finder confirmActionDialogTitleText = find.descendant(
-          of: confirmActionDialogFinder,
-          matching: find.byKey(const Key("confirmDialogTitleOneKey")));
+        // Check the value of the confirm dialog title
+        Finder confirmActionDialogTitleText = find.descendant(
+            of: confirmActionDialogFinder,
+            matching: find.byKey(const Key("confirmDialogTitleOneKey")));
 
-      expect(
-        tester.widget<Text>(confirmActionDialogTitleText).data!,
-        "Prevision of the save duration",
-      );
+        expect(
+          tester.widget<Text>(confirmActionDialogTitleText).data!,
+          "Prevision of the save duration",
+        );
 
-      // Check the value of the confirm dialog message
-      Finder confirmActionDialogMessageText = find.descendant(
-          of: confirmActionDialogFinder,
-          matching: find.byKey(const Key("confirmationDialogMessageKey")));
+        // Check the value of the confirm dialog message
+        Finder confirmActionDialogMessageText = find.descendant(
+            of: confirmActionDialogFinder,
+            matching: find.byKey(const Key("confirmationDialogMessageKey")));
 
-      expect(
-        tester.widget<Text>(confirmActionDialogMessageText).data!,
-        anyOf([
-          equals(
-            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:01.",
-          ),
-          equals(
-            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02.",
-          ),
-        ]),
-      );
+        expect(
+          tester.widget<Text>(confirmActionDialogMessageText).data!,
+          anyOf([
+            equals(
+              "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:01.",
+            ),
+            equals(
+              "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02.",
+            ),
+          ]),
+        );
 
-      // Confirm the saving of the audio mp3 files and close the
-      // confirm dialog by tapping on the Confirm button.
-      await tester.tap(find.byKey(const Key('confirmButton')));
-      await tester.pumpAndSettle();
+        // Confirm the saving of the audio mp3 files and close the
+        // confirm dialog by tapping on the Confirm button.
+        await tester.tap(find.byKey(const Key('confirmButton')));
+        await tester.pumpAndSettle();
 
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')).last);
+        Text warningDialogTitle =
+            tester.widget(find.byKey(const Key('warningDialogTitle')).last);
 
-      expect(warningDialogTitle.data, 'CONFIRMATION');
+        expect(warningDialogTitle.data, 'CONFIRMATION');
 
-      String actualMessage = tester
-          .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
-          .data!;
-      expect(
-          actualMessage,
-          contains(
-              "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateTime.\n\nTotal saved audio number: 3, total size: 15.49 MB and total duration: 0:22:38.0."));
-      expect(actualMessage, contains("Save operation real duration: 0:00:00"));
-      expect(
-          actualMessage, contains("number of bytes saved per second: "));
-      expect(
-          actualMessage,
-          contains(
-              "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-07-13_14_43_21_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\"."));
+        String actualMessage = tester
+            .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+            .data!;
+        expect(
+            actualMessage,
+            contains(
+                "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateTime.\n\nTotal saved audio number: 3, total size: 15.49 MB and total duration: 0:22:38.0."));
+        expect(
+            actualMessage, contains("Save operation real duration: 0:00:00"));
+        expect(actualMessage, contains("number of bytes saved per second: "));
+        expect(
+            actualMessage,
+            contains(
+                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-07-13_14_43_21_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\"."));
 
-      List<String> zipLst = DirUtil.listFileNamesInDir(
-        directoryPath: kApplicationPathWindowsTest,
-        fileExtension: 'zip',
-      );
+        List<String> zipLst = DirUtil.listFileNamesInDir(
+          directoryPath: kApplicationPathWindowsTest,
+          fileExtension: 'zip',
+        );
 
-      List<String> expectedZipContentLst = [
-        "playlists\\Saint François d'Assise\\250714-171854-How to talk to animals The teaching of Saint Francis of Assisi 22-05-28.mp3",
-        "playlists\\Exo chants chrétiens\\250713-144410-EXO - Ta bienveillance [avec paroles] 13-01-29.mp3",
-        "playlists\\Exo chants chrétiens\\250713-144321-SI TU VEUX LE LOUER - EXO 17-05-31.mp3",
-      ];
+        List<String> expectedZipContentLst = [
+          "playlists\\Saint François d'Assise\\250714-171854-How to talk to animals The teaching of Saint Francis of Assisi 22-05-28.mp3",
+          "playlists\\Exo chants chrétiens\\250713-144410-EXO - Ta bienveillance [avec paroles] 13-01-29.mp3",
+          "playlists\\Exo chants chrétiens\\250713-144321-SI TU VEUX LE LOUER - EXO 17-05-31.mp3",
+        ];
 
-      List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
-        zipFilePathName:
-            "$kApplicationPathWindowsTest${path.separator}${zipLst[0]}",
-      );
+        List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
+          zipFilePathName:
+              "$kApplicationPathWindowsTest${path.separator}${zipLst[0]}",
+        );
 
-      expect(
-        zipContentLst,
-        expectedZipContentLst,
-      );
+        expect(
+          zipContentLst,
+          expectedZipContentLst,
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Set download date after the last download date. The set value is 14/07/2025 18:31. The integration
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Set download date after the last download date. The set value is 14/07/2025 18:31. The integration
           test verifies the displayed warning indicating that no audio mp3 was saved to ZIP.''',
-        (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}save_audio_mp3_to_zip",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}save_audio_mp3_to_zip",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
 
-      final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
-      );
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
 
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
 
-      await app.main();
-      await tester.pumpAndSettle();
+        await app.main();
+        await tester.pumpAndSettle();
 
-      // First, set the application language to english
-      await IntegrationTestUtil.setApplicationLanguage(
-        tester: tester,
-        language: Language.english,
-      );
+        // First, set the application language to english
+        await IntegrationTestUtil.setApplicationLanguage(
+          tester: tester,
+          language: Language.english,
+        );
 
-      // Setting the path value returned by the FilePicker mock.
-      mockFilePicker.setPathToSelect(
-        pathToSelectStr: kApplicationPathWindowsTest,
-      );
+        // Setting the path value returned by the FilePicker mock.
+        mockFilePicker.setPathToSelect(
+          pathToSelectStr: kApplicationPathWindowsTest,
+        );
 
-      // Tap the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button
+        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+        await tester.pumpAndSettle();
 
-      // Now tap on the 'Save Playlists Audio's MP3 to ZIP File' menu
-      await tester.tap(
-          find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
-      await tester.pumpAndSettle();
+        // Now tap on the 'Save Playlists Audio's MP3 to ZIP File' menu
+        await tester.tap(
+            find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
+        await tester.pumpAndSettle();
 
-      expect(
-        tester
-            .widget<Text>(find.byKey(
-              const Key('setValueToTargetDialogTitleKey'),
-            ))
-            .data,
-        'Set the download date',
-      );
+        expect(
+          tester
+              .widget<Text>(find.byKey(
+                const Key('setValueToTargetDialogTitleKey'),
+              ))
+              .data,
+          'Set the download date',
+        );
 
-      expect(
-        tester
-            .widget<Text>(find.byKey(
-              const Key('setValueToTargetDialogKey'),
-            ))
-            .data,
-        'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
-      );
+        expect(
+          tester
+              .widget<Text>(find.byKey(
+                const Key('setValueToTargetDialogKey'),
+              ))
+              .data,
+          'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+        );
 
-      expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
+        expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
 
-      const String oldestAudioDownloadDateTime = '13/07/2025 14:31';
+        const String oldestAudioDownloadDateTime = '13/07/2025 14:31';
 
-      expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
+        expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
 
-      Finder setValueToTargetDialogFinder = find.byType(SetValueToTargetDialog);
+        Finder setValueToTargetDialogFinder =
+            find.byType(SetValueToTargetDialog);
 
-      // This finder obtained as descendant of its enclosing dialog does
-      // enable to change the value of the TextField
-      Finder setValueToTargetDialogEditTextFinder = find.descendant(
-        of: setValueToTargetDialogFinder,
-        matching: find.byType(TextField),
-      );
+        // This finder obtained as descendant of its enclosing dialog does
+        // enable to change the value of the TextField
+        Finder setValueToTargetDialogEditTextFinder = find.descendant(
+          of: setValueToTargetDialogFinder,
+          matching: find.byType(TextField),
+        );
 
-      // Verify that the TextField is focused using its focus node
-      TextField textField =
-          tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
-      expect(textField.focusNode?.hasFocus, isTrue,
-          reason: 'TextField should be focused when dialog opens');
+        // Verify that the TextField is focused using its focus node
+        TextField textField =
+            tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
+        expect(textField.focusNode?.hasFocus, isTrue,
+            reason: 'TextField should be focused when dialog opens');
 
-      // Now change the download date in the dialog
-      const String tooRecentAudioDownloadDateTime = '15/07/2025 14:31';
-      String audioOldestDownloadDateTime = tooRecentAudioDownloadDateTime;
-      textField.controller!.text = audioOldestDownloadDateTime;
-      await tester.pumpAndSettle();
+        // Now change the download date in the dialog
+        const String tooRecentAudioDownloadDateTime = '15/07/2025 14:31';
+        String audioOldestDownloadDateTime = tooRecentAudioDownloadDateTime;
+        textField.controller!.text = audioOldestDownloadDateTime;
+        await tester.pumpAndSettle();
 
-      // Tap on the Ok button to set the comment end position to the
-      // audio duration value in the comment previous dialog.
-      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-      await tester.pumpAndSettle();
+        // Tap on the Ok button to set the comment end position to the
+        // audio duration value in the comment previous dialog.
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
 
-      // Now check the confirm dialog which indicates the estimated
-      // save audio mp3 to zip duration and accept save execution.
+        // Now check the confirm dialog which indicates the estimated
+        // save audio mp3 to zip duration and accept save execution.
 
-      Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
+        Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
 
-      // Check the value of the confirm dialog title
-      Finder confirmActionDialogTitleText = find.descendant(
-          of: confirmActionDialogFinder,
-          matching: find.byKey(const Key("confirmDialogTitleOneKey")));
+        // Check the value of the confirm dialog title
+        Finder confirmActionDialogTitleText = find.descendant(
+            of: confirmActionDialogFinder,
+            matching: find.byKey(const Key("confirmDialogTitleOneKey")));
 
-      expect(
-        tester.widget<Text>(confirmActionDialogTitleText).data!,
-        "Prevision of the save duration",
-      );
+        expect(
+          tester.widget<Text>(confirmActionDialogTitleText).data!,
+          "Prevision of the save duration",
+        );
 
-      // Check the value of the confirm dialog message
-      Finder confirmActionDialogMessageText = find.descendant(
-          of: confirmActionDialogFinder,
-          matching: find.byKey(const Key("confirmationDialogMessageKey")));
+        // Check the value of the confirm dialog message
+        Finder confirmActionDialogMessageText = find.descendant(
+            of: confirmActionDialogFinder,
+            matching: find.byKey(const Key("confirmationDialogMessageKey")));
 
-      expect(
-        tester.widget<Text>(confirmActionDialogMessageText).data!,
-            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:00.",
-      );
+        expect(
+          tester.widget<Text>(confirmActionDialogMessageText).data!,
+          "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:00.",
+        );
 
-      // Confirm the saving of the audio mp3 files and close the
-      // confirm dialog by tapping on the Confirm button.
-      await tester.tap(find.byKey(const Key('confirmButton')));
-      await tester.pumpAndSettle();
+        // Confirm the saving of the audio mp3 files and close the
+        // confirm dialog by tapping on the Confirm button.
+        await tester.tap(find.byKey(const Key('confirmButton')));
+        await tester.pumpAndSettle();
 
-      // Verify the displayed warning dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "No audio MP3 file was saved to ZIP since no audio was downloaded on or after $tooRecentAudioDownloadDateTime.",
-      );
+        // Verify the displayed warning dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "No audio MP3 file was saved to ZIP since no audio was downloaded on or after $tooRecentAudioDownloadDateTime.",
+        );
 
-      List<String> zipLst = DirUtil.listFileNamesInDir(
-        directoryPath: kApplicationPathWindowsTest,
-        fileExtension: 'zip',
-      );
+        List<String> zipLst = DirUtil.listFileNamesInDir(
+          directoryPath: kApplicationPathWindowsTest,
+          fileExtension: 'zip',
+        );
 
-      expect(
-        zipLst.length,
-        0,
-      );
+        expect(
+          zipLst.length,
+          0,
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
     });
-  });
-  group('Save unique playlist audio mp3 files to zip file menu test', () {
-    testWidgets(
-        '''Keep download date to the oldest one. The oldest value in the 'Saint François d'Assise'
+    group('Save unique playlist audio mp3 files to zip file menu test', () {
+      testWidgets(
+          '''Keep download date to the oldest one. The oldest value in the 'Saint François d'Assise'
           playlist is 13/07/2025 14:31. The integration test verifies the confirmation displayed
-          warning.''',
-        (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+          warning.''', (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}save_audio_mp3_to_zip",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}save_audio_mp3_to_zip",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
 
-      final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
-      );
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
 
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
 
-      await app.main();
-      await tester.pumpAndSettle();
+        await app.main();
+        await tester.pumpAndSettle();
 
-      // First, set the application language to english
-      await IntegrationTestUtil.setApplicationLanguage(
-        tester: tester,
-        language: Language.english,
-      );
+        // First, set the application language to english
+        await IntegrationTestUtil.setApplicationLanguage(
+          tester: tester,
+          language: Language.english,
+        );
 
-      // Setting the path value returned by the FilePicker mock.
-      mockFilePicker.setPathToSelect(
-        pathToSelectStr: kApplicationPathWindowsTest,
-      );
+        // Setting the path value returned by the FilePicker mock.
+        mockFilePicker.setPathToSelect(
+          pathToSelectStr: kApplicationPathWindowsTest,
+        );
 
-      const String playlistToSaveTitle = "Saint François d'Assise";
+        const String playlistToSaveTitle = "Saint François d'Assise";
 
-      await IntegrationTestUtil.typeOnPlaylistMenuItem(
-        tester: tester,
-        playlistTitle: playlistToSaveTitle,
-        playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
-      );
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: playlistToSaveTitle,
+          playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
+        );
 
-      expect(
-        tester
-            .widget<Text>(find.byKey(
-              const Key('setValueToTargetDialogTitleKey'),
-            ))
-            .data,
-        'Set the download date',
-      );
+        expect(
+          tester
+              .widget<Text>(find.byKey(
+                const Key('setValueToTargetDialogTitleKey'),
+              ))
+              .data,
+          'Set the download date',
+        );
 
-      expect(
-        tester
-            .widget<Text>(find.byKey(
-              const Key('setValueToTargetDialogKey'),
-            ))
-            .data,
-        'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
-      );
+        expect(
+          tester
+              .widget<Text>(find.byKey(
+                const Key('setValueToTargetDialogKey'),
+              ))
+              .data,
+          'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+        );
 
-      expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
+        expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
 
-      const String oldestAudioDownloadDateTime = '13/07/2025 14:31';
+        const String oldestAudioDownloadDateTime = '13/07/2025 14:31';
 
-      expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
+        expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
 
-      // Tap on the Ok button to set the comment end position to the
-      // audio duration value in the comment previous dialog.
-      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-      await tester.pumpAndSettle();
+        // Tap on the Ok button to set the comment end position to the
+        // audio duration value in the comment previous dialog.
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
 
-      // Now check the confirm dialog which indicates the estimated
-      // save audio mp3 to zip duration and accept save execution.
+        // Now check the confirm dialog which indicates the estimated
+        // save audio mp3 to zip duration and accept save execution.
 
-      Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
+        Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
 
-      // Check the value of the confirm dialog title
-      Finder confirmActionDialogTitleText = find.descendant(
-          of: confirmActionDialogFinder,
-          matching: find.byKey(const Key("confirmDialogTitleOneKey")));
+        // Check the value of the confirm dialog title
+        Finder confirmActionDialogTitleText = find.descendant(
+            of: confirmActionDialogFinder,
+            matching: find.byKey(const Key("confirmDialogTitleOneKey")));
 
-      expect(
-        tester.widget<Text>(confirmActionDialogTitleText).data!,
-        "Prevision of the save duration",
-      );
+        expect(
+          tester.widget<Text>(confirmActionDialogTitleText).data!,
+          "Prevision of the save duration",
+        );
 
-      // Check the value of the confirm dialog message
-      Finder confirmActionDialogMessageText = find.descendant(
-          of: confirmActionDialogFinder,
-          matching: find.byKey(const Key("confirmationDialogMessageKey")));
+        // Check the value of the confirm dialog message
+        Finder confirmActionDialogMessageText = find.descendant(
+            of: confirmActionDialogFinder,
+            matching: find.byKey(const Key("confirmationDialogMessageKey")));
 
-      expect(
-        tester.widget<Text>(confirmActionDialogMessageText).data!,
-        anyOf([
-          equals(
-            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:01.",
-          ),
-          equals(
-            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02.",
-          ),
-        ]),
-      );
+        expect(
+          tester.widget<Text>(confirmActionDialogMessageText).data!,
+          anyOf([
+            equals(
+              "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:01.",
+            ),
+            equals(
+              "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02.",
+            ),
+          ]),
+        );
 
-      // Confirm the saving of the audio mp3 files and close the
-      // confirm dialog by tapping on the Confirm button.
-      await tester.tap(find.byKey(const Key('confirmButton')));
-      await tester.pumpAndSettle();
+        // Confirm the saving of the audio mp3 files and close the
+        // confirm dialog by tapping on the Confirm button.
+        await tester.tap(find.byKey(const Key('confirmButton')));
+        await tester.pumpAndSettle();
 
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')).last);
+        Text warningDialogTitle =
+            tester.widget(find.byKey(const Key('warningDialogTitle')).last);
 
-      expect(warningDialogTitle.data, 'CONFIRMATION');
+        expect(warningDialogTitle.data, 'CONFIRMATION');
 
-      String actualMessage = tester
-          .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
-          .data!;
+        String actualMessage = tester
+            .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+            .data!;
 
-      expect(
-          actualMessage,
-          contains(
-              "Saved to ZIP unique playlist audio MP3 files downloaded from $oldestAudioDownloadDateTime.\n\nTotal saved audio number: 3, total size: 53.12 MB and total duration: 2:29:08.4."));
-      expect(actualMessage, contains("Save operation real duration: 0:00:01"));
-      expect(
-          actualMessage, contains("number of bytes saved per second: 3"));
-      expect(
-          actualMessage,
-          contains(
-              "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}Saint François d'Assise_mp3_from_2025-07-13_14_31_25_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 2)))}.zip\"."));
+        expect(
+            actualMessage,
+            contains(
+                "Saved to ZIP unique playlist audio MP3 files downloaded from $oldestAudioDownloadDateTime.\n\nTotal saved audio number: 3, total size: 53.12 MB and total duration: 2:29:08.4."));
+        expect(
+            actualMessage, contains("Save operation real duration: 0:00:01"));
+        expect(actualMessage, contains("number of bytes saved per second: 3"));
+        expect(
+            actualMessage,
+            contains(
+                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}Saint François d'Assise_mp3_from_2025-07-13_14_31_25_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 2)))}.zip\"."));
 
-      List<String> zipLst = DirUtil.listFileNamesInDir(
-        directoryPath: kApplicationPathWindowsTest,
-        fileExtension: 'zip',
-      );
+        List<String> zipLst = DirUtil.listFileNamesInDir(
+          directoryPath: kApplicationPathWindowsTest,
+          fileExtension: 'zip',
+        );
 
-      List<String> expectedZipContentLst = [
-        "250714-171854-How to talk to animals The teaching of Saint Francis of Assisi 22-05-28.mp3",
-        "250713-143130-Saint François d'Assise, le jongleur de Dieu 20-10-03.mp3",
-        "250713-143125-4 octobre  - Saint François, le Saint qui a Transformé l'Église et le Monde 24-10-03.mp3",
-      ];
+        List<String> expectedZipContentLst = [
+          "250714-171854-How to talk to animals The teaching of Saint Francis of Assisi 22-05-28.mp3",
+          "250713-143130-Saint François d'Assise, le jongleur de Dieu 20-10-03.mp3",
+          "250713-143125-4 octobre  - Saint François, le Saint qui a Transformé l'Église et le Monde 24-10-03.mp3",
+        ];
 
-      List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
-        zipFilePathName:
-            "$kApplicationPathWindowsTest${path.separator}${zipLst[0]}",
-      );
+        List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
+          zipFilePathName:
+              "$kApplicationPathWindowsTest${path.separator}${zipLst[0]}",
+        );
 
-      expect(
-        zipContentLst,
-        expectedZipContentLst,
-      );
+        expect(
+          zipContentLst,
+          expectedZipContentLst,
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Set download date to more recent one. A less old value will be 14/07/2025 14:31. The integration
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Set download date to more recent one. A less old value will be 14/07/2025 14:31. The integration
           test verifies the confirmation displayed warning.''',
-        (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}save_audio_mp3_to_zip",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}save_audio_mp3_to_zip",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
 
-      final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
-      );
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
 
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
 
-      await app.main();
-      await tester.pumpAndSettle();
+        await app.main();
+        await tester.pumpAndSettle();
 
-      // First, set the application language to english
-      await IntegrationTestUtil.setApplicationLanguage(
-        tester: tester,
-        language: Language.english,
-      );
+        // First, set the application language to english
+        await IntegrationTestUtil.setApplicationLanguage(
+          tester: tester,
+          language: Language.english,
+        );
 
-      // Setting the path value returned by the FilePicker mock.
-      mockFilePicker.setPathToSelect(
-        pathToSelectStr: kApplicationPathWindowsTest,
-      );
+        // Setting the path value returned by the FilePicker mock.
+        mockFilePicker.setPathToSelect(
+          pathToSelectStr: kApplicationPathWindowsTest,
+        );
 
-      const String playlistToSaveTitle = "Saint François d'Assise";
+        const String playlistToSaveTitle = "Saint François d'Assise";
 
-      await IntegrationTestUtil.typeOnPlaylistMenuItem(
-        tester: tester,
-        playlistTitle: playlistToSaveTitle,
-        playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
-      );
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: playlistToSaveTitle,
+          playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
+        );
 
-      expect(
-        tester
-            .widget<Text>(find.byKey(
-              const Key('setValueToTargetDialogTitleKey'),
-            ))
-            .data,
-        'Set the download date',
-      );
+        expect(
+          tester
+              .widget<Text>(find.byKey(
+                const Key('setValueToTargetDialogTitleKey'),
+              ))
+              .data,
+          'Set the download date',
+        );
 
-      expect(
-        tester
-            .widget<Text>(find.byKey(
-              const Key('setValueToTargetDialogKey'),
-            ))
-            .data,
-        'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
-      );
+        expect(
+          tester
+              .widget<Text>(find.byKey(
+                const Key('setValueToTargetDialogKey'),
+              ))
+              .data,
+          'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+        );
 
-      expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
+        expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
 
-      const String oldestAudioDownloadDateTime = '13/07/2025 14:31';
+        const String oldestAudioDownloadDateTime = '13/07/2025 14:31';
 
-      expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
+        expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
 
-      Finder setValueToTargetDialogFinder = find.byType(SetValueToTargetDialog);
+        Finder setValueToTargetDialogFinder =
+            find.byType(SetValueToTargetDialog);
 
-      // This finder obtained as descendant of its enclosing dialog does
-      // enable to change the value of the TextField
-      Finder setValueToTargetDialogEditTextFinder = find.descendant(
-        of: setValueToTargetDialogFinder,
-        matching: find.byType(TextField),
-      );
+        // This finder obtained as descendant of its enclosing dialog does
+        // enable to change the value of the TextField
+        Finder setValueToTargetDialogEditTextFinder = find.descendant(
+          of: setValueToTargetDialogFinder,
+          matching: find.byType(TextField),
+        );
 
-      // Verify that the TextField is focused using its focus node
-      TextField textField =
-          tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
-      expect(textField.focusNode?.hasFocus, isTrue,
-          reason: 'TextField should be focused when dialog opens');
+        // Verify that the TextField is focused using its focus node
+        TextField textField =
+            tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
+        expect(textField.focusNode?.hasFocus, isTrue,
+            reason: 'TextField should be focused when dialog opens');
 
-      // Now change the download date in the dialog. This date is
-      // before the last download date of the playlist
-      String audioOldestDownloadDateTime = '14/07/2025 14:31';
-      textField.controller!.text = audioOldestDownloadDateTime;
-      await tester.pumpAndSettle();
+        // Now change the download date in the dialog. This date is
+        // before the last download date of the playlist
+        String audioOldestDownloadDateTime = '14/07/2025 14:31';
+        textField.controller!.text = audioOldestDownloadDateTime;
+        await tester.pumpAndSettle();
 
-      // Tap on the Ok button to set the comment end position to the
-      // audio duration value in the comment previous dialog.
-      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-      await tester.pumpAndSettle();
+        // Tap on the Ok button to set the comment end position to the
+        // audio duration value in the comment previous dialog.
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
 
-      // Now check the confirm dialog which indicates the estimated
-      // save audio mp3 to zip duration and accept save execution.
+        // Now check the confirm dialog which indicates the estimated
+        // save audio mp3 to zip duration and accept save execution.
 
-      Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
+        Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
 
-      // Check the value of the confirm dialog title
-      Finder confirmActionDialogTitleText = find.descendant(
-          of: confirmActionDialogFinder,
-          matching: find.byKey(const Key("confirmDialogTitleOneKey")));
+        // Check the value of the confirm dialog title
+        Finder confirmActionDialogTitleText = find.descendant(
+            of: confirmActionDialogFinder,
+            matching: find.byKey(const Key("confirmDialogTitleOneKey")));
 
-      expect(
-        tester.widget<Text>(confirmActionDialogTitleText).data!,
-        "Prevision of the save duration",
-      );
+        expect(
+          tester.widget<Text>(confirmActionDialogTitleText).data!,
+          "Prevision of the save duration",
+        );
 
-      // Check the value of the confirm dialog message
-      Finder confirmActionDialogMessageText = find.descendant(
-          of: confirmActionDialogFinder,
-          matching: find.byKey(const Key("confirmationDialogMessageKey")));
+        // Check the value of the confirm dialog message
+        Finder confirmActionDialogMessageText = find.descendant(
+            of: confirmActionDialogFinder,
+            matching: find.byKey(const Key("confirmationDialogMessageKey")));
 
-      expect(
-        tester.widget<Text>(confirmActionDialogMessageText).data!,
-        anyOf([
-          equals(
-            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:01.",
-          ),
-          equals(
-            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02.",
-          ),
-        ]),
-      );
+        expect(
+          tester.widget<Text>(confirmActionDialogMessageText).data!,
+          anyOf([
+            equals(
+              "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:01.",
+            ),
+            equals(
+              "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02.",
+            ),
+          ]),
+        );
 
-      // Confirm the saving of the audio mp3 files and close the
-      // confirm dialog by tapping on the Confirm button.
-      await tester.tap(find.byKey(const Key('confirmButton')));
-      await tester.pumpAndSettle();
+        // Confirm the saving of the audio mp3 files and close the
+        // confirm dialog by tapping on the Confirm button.
+        await tester.tap(find.byKey(const Key('confirmButton')));
+        await tester.pumpAndSettle();
 
-      Text warningDialogTitle =
-          tester.widget(find.byKey(const Key('warningDialogTitle')).last);
+        Text warningDialogTitle =
+            tester.widget(find.byKey(const Key('warningDialogTitle')).last);
 
-      expect(warningDialogTitle.data, 'CONFIRMATION');
+        expect(warningDialogTitle.data, 'CONFIRMATION');
 
-      String actualMessage = tester
-          .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
-          .data!;
-      expect(
-          actualMessage,
-          contains(
-              "Saved to ZIP unique playlist audio MP3 files downloaded from $audioOldestDownloadDateTime.\n\nTotal saved audio number: 1, total size: 4.14 MB and total duration: 0:11:19.3."));
-      expect(actualMessage, contains("Save operation real duration: 0:00:00"));
-      expect(
-          actualMessage, contains("number of bytes saved per second: "));
-      expect(
-          actualMessage,
-          contains(
-              "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}Saint François d'Assise_mp3_from_2025-07-14_17_18_54_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\"."));
+        String actualMessage = tester
+            .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+            .data!;
+        expect(
+            actualMessage,
+            contains(
+                "Saved to ZIP unique playlist audio MP3 files downloaded from $audioOldestDownloadDateTime.\n\nTotal saved audio number: 1, total size: 4.14 MB and total duration: 0:11:19.3."));
+        expect(
+            actualMessage, contains("Save operation real duration: 0:00:00"));
+        expect(actualMessage, contains("number of bytes saved per second: "));
+        expect(
+            actualMessage,
+            contains(
+                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}Saint François d'Assise_mp3_from_2025-07-14_17_18_54_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\"."));
 
-      List<String> zipLst = DirUtil.listFileNamesInDir(
-        directoryPath: kApplicationPathWindowsTest,
-        fileExtension: 'zip',
-      );
+        List<String> zipLst = DirUtil.listFileNamesInDir(
+          directoryPath: kApplicationPathWindowsTest,
+          fileExtension: 'zip',
+        );
 
-      List<String> expectedZipContentLst = [
-        "250714-171854-How to talk to animals The teaching of Saint Francis of Assisi 22-05-28.mp3",
-      ];
+        List<String> expectedZipContentLst = [
+          "250714-171854-How to talk to animals The teaching of Saint Francis of Assisi 22-05-28.mp3",
+        ];
 
-      List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
-        zipFilePathName:
-            "$kApplicationPathWindowsTest${path.separator}${zipLst[0]}",
-      );
+        List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
+          zipFilePathName:
+              "$kApplicationPathWindowsTest${path.separator}${zipLst[0]}",
+        );
 
-      expect(
-        zipContentLst,
-        expectedZipContentLst,
-      );
+        expect(
+          zipContentLst,
+          expectedZipContentLst,
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Set download date after the last download date. The set value is 14/07/2025 18:31. The integration
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Set download date after the last download date. The set value is 14/07/2025 18:31. The integration
           test verifies the displayed warning indicating that no audio mp3 was saved to ZIP.''',
-        (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}save_audio_mp3_to_zip",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}save_audio_mp3_to_zip",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
 
-      final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
-      );
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
 
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
 
-      await app.main();
-      await tester.pumpAndSettle();
+        await app.main();
+        await tester.pumpAndSettle();
 
-      // First, set the application language to english
-      await IntegrationTestUtil.setApplicationLanguage(
-        tester: tester,
-        language: Language.english,
-      );
+        // First, set the application language to english
+        await IntegrationTestUtil.setApplicationLanguage(
+          tester: tester,
+          language: Language.english,
+        );
 
-      // Setting the path value returned by the FilePicker mock.
-      mockFilePicker.setPathToSelect(
-        pathToSelectStr: kApplicationPathWindowsTest,
-      );
+        // Setting the path value returned by the FilePicker mock.
+        mockFilePicker.setPathToSelect(
+          pathToSelectStr: kApplicationPathWindowsTest,
+        );
 
-      // Tap the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
+        const String playlistToSaveTitle = "Saint François d'Assise";
 
-      // Now tap on the 'Save Playlists Audio's MP3 to ZIP File' menu
-      await tester.tap(
-          find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
-      await tester.pumpAndSettle();
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: playlistToSaveTitle,
+          playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
+        );
 
-      expect(
-        tester
-            .widget<Text>(find.byKey(
-              const Key('setValueToTargetDialogTitleKey'),
-            ))
-            .data,
-        'Set the download date',
-      );
+        expect(
+          tester
+              .widget<Text>(find.byKey(
+                const Key('setValueToTargetDialogTitleKey'),
+              ))
+              .data,
+          'Set the download date',
+        );
 
-      expect(
-        tester
-            .widget<Text>(find.byKey(
-              const Key('setValueToTargetDialogKey'),
-            ))
-            .data,
-        'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
-      );
+        expect(
+          tester
+              .widget<Text>(find.byKey(
+                const Key('setValueToTargetDialogKey'),
+              ))
+              .data,
+          'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+        );
 
-      expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
+        expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
 
-      const String oldestAudioDownloadDateTime = '13/07/2025 14:31';
+        const String oldestAudioDownloadDateTime = '13/07/2025 14:31';
 
-      expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
+        expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
 
-      Finder setValueToTargetDialogFinder = find.byType(SetValueToTargetDialog);
+        Finder setValueToTargetDialogFinder =
+            find.byType(SetValueToTargetDialog);
 
-      // This finder obtained as descendant of its enclosing dialog does
-      // enable to change the value of the TextField
-      Finder setValueToTargetDialogEditTextFinder = find.descendant(
-        of: setValueToTargetDialogFinder,
-        matching: find.byType(TextField),
-      );
+        // This finder obtained as descendant of its enclosing dialog does
+        // enable to change the value of the TextField
+        Finder setValueToTargetDialogEditTextFinder = find.descendant(
+          of: setValueToTargetDialogFinder,
+          matching: find.byType(TextField),
+        );
 
-      // Verify that the TextField is focused using its focus node
-      TextField textField =
-          tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
-      expect(textField.focusNode?.hasFocus, isTrue,
-          reason: 'TextField should be focused when dialog opens');
+        // Verify that the TextField is focused using its focus node
+        TextField textField =
+            tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
+        expect(textField.focusNode?.hasFocus, isTrue,
+            reason: 'TextField should be focused when dialog opens');
 
-      // Now change the download date in the dialog
-      const String tooRecentAudioDownloadDateTime = '15/07/2025 14:31';
-      String audioOldestDownloadDateTime = tooRecentAudioDownloadDateTime;
-      textField.controller!.text = audioOldestDownloadDateTime;
-      await tester.pumpAndSettle();
+        // Now change the download date in the dialog
+        const String tooRecentAudioDownloadDateTime = '15/07/2025 14:31';
+        String audioOldestDownloadDateTime = tooRecentAudioDownloadDateTime;
+        textField.controller!.text = audioOldestDownloadDateTime;
+        await tester.pumpAndSettle();
 
-      // Tap on the Ok button to set the comment end position to the
-      // audio duration value in the comment previous dialog.
-      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-      await tester.pumpAndSettle();
+        // Tap on the Ok button to set the comment end position to the
+        // audio duration value in the comment previous dialog.
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
 
-      // Now check the confirm dialog which indicates the estimated
-      // save audio mp3 to zip duration and accept save execution.
+        // Now check the confirm dialog which indicates the estimated
+        // save audio mp3 to zip duration and accept save execution.
 
-      Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
+        Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
 
-      // Check the value of the confirm dialog title
-      Finder confirmActionDialogTitleText = find.descendant(
-          of: confirmActionDialogFinder,
-          matching: find.byKey(const Key("confirmDialogTitleOneKey")));
+        // Check the value of the confirm dialog title
+        Finder confirmActionDialogTitleText = find.descendant(
+            of: confirmActionDialogFinder,
+            matching: find.byKey(const Key("confirmDialogTitleOneKey")));
 
-      expect(
-        tester.widget<Text>(confirmActionDialogTitleText).data!,
-        "Prevision of the save duration",
-      );
+        expect(
+          tester.widget<Text>(confirmActionDialogTitleText).data!,
+          "Prevision of the save duration",
+        );
 
-      // Check the value of the confirm dialog message
-      Finder confirmActionDialogMessageText = find.descendant(
-          of: confirmActionDialogFinder,
-          matching: find.byKey(const Key("confirmationDialogMessageKey")));
+        // Check the value of the confirm dialog message
+        Finder confirmActionDialogMessageText = find.descendant(
+            of: confirmActionDialogFinder,
+            matching: find.byKey(const Key("confirmationDialogMessageKey")));
 
-      expect(
-        tester.widget<Text>(confirmActionDialogMessageText).data!,
-            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:00.",
-      );
+        expect(
+          tester.widget<Text>(confirmActionDialogMessageText).data!,
+          "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:00.",
+        );
 
-      // Confirm the saving of the audio mp3 files and close the
-      // confirm dialog by tapping on the Confirm button.
-      await tester.tap(find.byKey(const Key('confirmButton')));
-      await tester.pumpAndSettle();
+        // Confirm the saving of the audio mp3 files and close the
+        // confirm dialog by tapping on the Confirm button.
+        await tester.tap(find.byKey(const Key('confirmButton')));
+        await tester.pumpAndSettle();
 
-      // Verify the displayed warning dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "No audio MP3 file was saved to ZIP since no audio was downloaded on or after $tooRecentAudioDownloadDateTime.",
-      );
+        // Verify the displayed warning dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "No audio MP3 file was saved to ZIP since no audio was downloaded on or after $tooRecentAudioDownloadDateTime.",
+        );
 
-      List<String> zipLst = DirUtil.listFileNamesInDir(
-        directoryPath: kApplicationPathWindowsTest,
-        fileExtension: 'zip',
-      );
+        List<String> zipLst = DirUtil.listFileNamesInDir(
+          directoryPath: kApplicationPathWindowsTest,
+          fileExtension: 'zip',
+        );
 
-      expect(
-        zipLst.length,
-        0,
-      );
+        expect(
+          zipLst.length,
+          0,
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
     });
   });
   group(
