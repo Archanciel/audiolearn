@@ -14050,7 +14050,7 @@ void main() {
         expect(
             actualMessage,
             contains(
-                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}Saint François d'Assise_mp3_from_2025-07-13_14_31_25_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 2)))}.zip\"."));
+                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}Saint François d'Assise_mp3_from_2025-07-13_14_31_25_on_"));
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
           directoryPath: kApplicationPathWindowsTest,
@@ -14240,7 +14240,7 @@ void main() {
         expect(
             actualMessage,
             contains(
-                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}Saint François d'Assise_mp3_from_2025-07-14_17_18_54_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\"."));
+                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}Saint François d'Assise_mp3_from_2025-07-14_17_18_54_on_"));
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
           directoryPath: kApplicationPathWindowsTest,

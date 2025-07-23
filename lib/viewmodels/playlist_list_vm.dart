@@ -3255,7 +3255,9 @@ class PlaylistListVM extends ChangeNotifier {
     stopwatch.stop();
     savingAudioToZipDuration = stopwatch.elapsed;
     int realSavingAudioToZipBytesPerSecond =
-        ((savedAudioFileSize / savingAudioToZipDuration.inMicroseconds) * 1000000).round();
+        ((savedAudioFileSize / savingAudioToZipDuration.inMicroseconds) *
+                1000000)
+            .round();
 
     return [
       zipFilePathName,
@@ -3462,6 +3464,9 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     if (!hasAudioFiles) {
+      _isSaving = false;
+      notifyListeners();
+
       return [];
     }
 
@@ -3475,7 +3480,9 @@ class PlaylistListVM extends ChangeNotifier {
     stopwatch.stop();
     savingAudioToZipDuration = stopwatch.elapsed;
     int realSavingAudioToZipBytesPerSecond =
-        ((savedAudioFileSize / savingAudioToZipDuration.inMicroseconds) * 1000000).round();
+        ((savedAudioFileSize / savingAudioToZipDuration.inMicroseconds) *
+                1000000)
+            .round();
 
     _isSaving = false;
     notifyListeners();
