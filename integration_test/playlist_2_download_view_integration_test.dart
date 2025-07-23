@@ -13506,13 +13506,26 @@ void main() {
       await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
-      // Verify the displayed warning dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Saved to ZIP all playlists audio MP3 files downloaded from $oldestAudioDownloadDateTime.\n\nTotal saved audio number: 5, total size: 64.47 MB and total duration: 2:40:27.2.\n\nZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-07-13_14_31_25_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 2)))}.zip\".",
-        isWarningConfirming: true,
-      );
+      Text warningDialogTitle =
+          tester.widget(find.byKey(const Key('warningDialogTitle')).last);
+
+      expect(warningDialogTitle.data, 'CONFIRMATION');
+
+      String actualMessage = tester
+          .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+          .data!;
+
+      expect(
+          actualMessage,
+          contains(
+              "Saved to ZIP all playlists audio MP3 files downloaded from $oldestAudioDownloadDateTime.\n\nTotal saved audio number: 5, total size: 64.47 MB and total duration: 2:40:27.2."));
+      expect(actualMessage, contains("Save operation real duration: 0:00:01"));
+      expect(
+          actualMessage, contains("number of bytes saved per second: 3"));
+      expect(
+          actualMessage,
+          contains(
+              "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-07-13_14_31_25_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 2)))}.zip\"."));
 
       List<String> zipLst = DirUtil.listFileNamesInDir(
         directoryPath: kApplicationPathWindowsTest,
@@ -13649,13 +13662,69 @@ void main() {
       await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
       await tester.pumpAndSettle();
 
-      // Verify the displayed warning dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateTime.\n\nTotal saved audio number: 3, total size: 15.49 MB and total duration: 0:22:38.0.\n\nZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-07-13_14_43_21_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\".",
-        isWarningConfirming: true,
+      // Now check the confirm dialog which indicates the estimated
+      // save audio mp3 to zip duration and accept save execution.
+
+      Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
+
+      // Check the value of the confirm dialog title
+      Finder confirmActionDialogTitleText = find.descendant(
+          of: confirmActionDialogFinder,
+          matching: find.byKey(const Key("confirmDialogTitleOneKey")));
+
+      expect(
+        tester.widget<Text>(confirmActionDialogTitleText).data!,
+        "Prevision of the save duration",
       );
+
+      // Check the value of the confirm dialog message
+      Finder confirmActionDialogMessageText = find.descendant(
+          of: confirmActionDialogFinder,
+          matching: find.byKey(const Key("confirmationDialogMessageKey")));
+
+      expect(
+        tester.widget<Text>(confirmActionDialogMessageText).data!,
+        anyOf([
+          equals(
+            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:01.",
+          ),
+          equals(
+            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02.",
+          ),
+        ]),
+      );
+
+      // Confirm the saving of the audio mp3 files and close the
+      // confirm dialog by tapping on the Confirm button.
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      Text warningDialogTitle =
+          tester.widget(find.byKey(const Key('warningDialogTitle')).last);
+
+      expect(warningDialogTitle.data, 'CONFIRMATION');
+      String actualMessage = tester
+          .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+          .data!;
+      expect(
+          actualMessage,
+          contains(
+              "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateTime.\n\nTotal saved audio number: 3, total size: 15.49 MB and total duration: 0:22:38.0."));
+      expect(actualMessage, contains("Save operation real duration: 0:00:01"));
+      expect(
+          actualMessage, contains("number of bytes saved per second: 15,490,"));
+      expect(
+          actualMessage,
+          contains(
+              "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-07-13_14_43_21_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\"."));
+
+      // Verify the displayed warning dialog
+      // await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      //   tester: tester,
+      //   warningDialogMessage:
+      //       "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateTime.\n\nTotal saved audio number: 3, total size: 15.49 MB and total duration: 0:22:38.0.\n\nZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-07-13_14_43_21_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\".",
+      //   isWarningConfirming: true,
+      // );
 
       List<String> zipLst = DirUtil.listFileNamesInDir(
         directoryPath: kApplicationPathWindowsTest,
