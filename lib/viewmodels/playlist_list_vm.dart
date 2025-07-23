@@ -3050,6 +3050,10 @@ class PlaylistListVM extends ChangeNotifier {
     required String targetDir,
     required DateTime fromAudioDownloadDateTime,
   }) async {
+    if (targetDir == '/') {
+      return [];
+    }
+
     List<dynamic> restoredInfoLst = await _saveAllAudioMp3FilesToZip(
       targetDir: targetDir,
       fromAudioDownloadDateTime: fromAudioDownloadDateTime,
@@ -3111,8 +3115,7 @@ class PlaylistListVM extends ChangeNotifier {
       required String targetDir,
       required DateTime fromAudioDownloadDateTime,
       required Duration audioMp3SavingToZipEstimatedDuration}) async {
-    if (targetDir == '/' ||
-        audioMp3SavingToZipEstimatedDuration == Duration.zero) {
+    if (targetDir == '/') {
       return [];
     }
 
