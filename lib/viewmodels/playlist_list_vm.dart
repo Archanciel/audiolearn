@@ -3181,7 +3181,7 @@ class PlaylistListVM extends ChangeNotifier {
     int savedAudioNumber = 0;
     int savedAudioFileSize = 0;
     Duration savedAudioDuration = Duration.zero;
-    DateTime oldestAudioDownloadDateTime = DateTime.now();
+    DateTime oldestAudioSavedToZipDownloadDateTime = DateTime.now();
 
     // Create a zip encoder
     final archive = Archive();
@@ -3230,8 +3230,8 @@ class PlaylistListVM extends ChangeNotifier {
           hasAudioFiles = true;
 
           if (audio.audioDownloadDateTime
-              .isBefore(oldestAudioDownloadDateTime)) {
-            oldestAudioDownloadDateTime = audio.audioDownloadDateTime;
+              .isBefore(oldestAudioSavedToZipDownloadDateTime)) {
+            oldestAudioSavedToZipDownloadDateTime = audio.audioDownloadDateTime;
           }
         }
       }
@@ -3243,7 +3243,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Save the archive to a zip file in the target directory
     String zipFileName =
-        "audioLearn_mp3_from_${yearMonthDayDateTimeFormatForFileName.format(oldestAudioDownloadDateTime)}_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip";
+        "audioLearn_mp3_from_${yearMonthDayDateTimeFormatForFileName.format(oldestAudioSavedToZipDownloadDateTime)}_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip";
 
     String zipFilePathName = path.join(targetDir, zipFileName);
     File zipFile = File(zipFilePathName);
@@ -3252,7 +3252,7 @@ class PlaylistListVM extends ChangeNotifier {
     stopwatch.stop();
     savingAudioToZipDuration = stopwatch.elapsed;
     int realSavingAudioToZipBytesPerSecond =
-        savedAudioFileSize ~/ savingAudioToZipDuration.inSeconds;
+        ((savedAudioFileSize / savingAudioToZipDuration.inMicroseconds) * 1000000).round();
 
     return [
       zipFilePathName,
@@ -3264,16 +3264,6 @@ class PlaylistListVM extends ChangeNotifier {
     ];
   }
 
-  /// Returns the saved zip file path name, '' if the target dir in which to save
-  /// the zip does not exist or if no audio files match the criteria.
-  ///
-  /// The returned list contains
-  /// [
-  ///  the created zip file path name,
-  ///  the number of saved audio files,
-  ///  the total unzipped size of the saved audio files in bytes,
-  ///  the total duration of the saved audio files,
-  /// ]
   String getOldestAudioDownloadDateFormattedStr({
     required List<Playlist> listOfPlaylists,
   }) {
@@ -3333,11 +3323,6 @@ class PlaylistListVM extends ChangeNotifier {
             savedAudioBytesNumberToZipInOneMicroSecond =
                 1024 * 1024; // 1MB/s fallback
           }
-
-          _logger.i(
-            '***** Calculated savedAudioBytesNumberToZipInOneMicroSecond: '
-            '$savedAudioBytesNumberToZipInOneMicroSecond using $audioFile of size ${audio.audioFileSize} bytes',
-          );
         }
 
         if (audioFile.existsSync()) {
@@ -3358,12 +3343,6 @@ class PlaylistListVM extends ChangeNotifier {
         seconds: (savedAudiosFileSize /
                 (savedAudioBytesNumberToZipInOneMicroSecond * 5000000))
             .ceil());
-
-    _logger.i(
-      '***** Estimated save duration: $_savingAudioMp3FileToZipDuration '
-      'for $savedAudiosFileSize bytes using a rate of '
-      '${savedAudioBytesNumberToZipInOneMicroSecond * 4000000} bytes/second',
-    );
 
     return _savingAudioMp3FileToZipDuration;
   }
@@ -3430,6 +3409,7 @@ class PlaylistListVM extends ChangeNotifier {
     int savedAudioNumber = 0;
     int savedAudioFileSize = 0;
     Duration savedAudioDuration = Duration.zero;
+    DateTime oldestAudioSavedToZipDownloadDateTime = DateTime.now();
 
     _audioMp3SaveUniquePlaylistName = playlist.title;
 
@@ -3470,6 +3450,11 @@ class PlaylistListVM extends ChangeNotifier {
         savedAudioDuration += audio.audioDuration;
 
         hasAudioFiles = true;
+
+        if (audio.audioDownloadDateTime
+            .isBefore(oldestAudioSavedToZipDownloadDateTime)) {
+          oldestAudioSavedToZipDownloadDateTime = audio.audioDownloadDateTime;
+        }
       }
     }
 
@@ -3479,7 +3464,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Save the archive to a zip file in the target directory
     String zipFileName =
-        "${playlist.title}_mp3_from_${yearMonthDayDateTimeFormatForFileName.format(fromAudioDownloadDateTime)}_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip";
+        "${playlist.title}_mp3_from_${yearMonthDayDateTimeFormatForFileName.format(oldestAudioSavedToZipDownloadDateTime)}_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip";
     String zipFilePathName = path.join(targetDir, zipFileName);
     File zipFile = File(zipFilePathName);
     zipFile.writeAsBytesSync(ZipEncoder().encode(archive), flush: true);
@@ -3487,7 +3472,7 @@ class PlaylistListVM extends ChangeNotifier {
     stopwatch.stop();
     savingAudioToZipDuration = stopwatch.elapsed;
     int realSavingAudioToZipBytesPerSecond =
-        savedAudioFileSize ~/ savingAudioToZipDuration.inSeconds;
+        ((savedAudioFileSize / savingAudioToZipDuration.inMicroseconds) * 1000000).round();
 
     _isSaving = false;
     notifyListeners();
