@@ -13843,7 +13843,8 @@ void main() {
           reason: 'TextField should be focused when dialog opens');
 
       // Now change the download date in the dialog
-      String audioOldestDownloadDateTime = '15/07/2025 18:31';
+      const String tooRecentAudioDownloadDateTime = '15/07/2025 14:31';
+      String audioOldestDownloadDateTime = tooRecentAudioDownloadDateTime;
       textField.controller!.text = audioOldestDownloadDateTime;
       await tester.pumpAndSettle();
 
@@ -13852,26 +13853,41 @@ void main() {
       await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
       await tester.pumpAndSettle();
 
+      // Now check the confirm dialog which indicates the estimated
+      // save audio mp3 to zip duration and accept save execution.
 
+      Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
 
+      // Check the value of the confirm dialog title
+      Finder confirmActionDialogTitleText = find.descendant(
+          of: confirmActionDialogFinder,
+          matching: find.byKey(const Key("confirmDialogTitleOneKey")));
 
+      expect(
+        tester.widget<Text>(confirmActionDialogTitleText).data!,
+        "Prevision of the save duration",
+      );
 
+      // Check the value of the confirm dialog message
+      Finder confirmActionDialogMessageText = find.descendant(
+          of: confirmActionDialogFinder,
+          matching: find.byKey(const Key("confirmationDialogMessageKey")));
 
+      expect(
+        tester.widget<Text>(confirmActionDialogMessageText).data!,
+            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:00.",
+      );
 
-
-      // Add a delay to allow the download to finish. Since a mock
-      // AudioDownloadVM is used, the download will be simulated and
-      // will not take time.
-      for (int i = 0; i < 10; i++) {
-        await Future.delayed(const Duration(milliseconds: 500));
-        await tester.pumpAndSettle();
-      }
+      // Confirm the saving of the audio mp3 files and close the
+      // confirm dialog by tapping on the Confirm button.
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
 
       // Verify the displayed warning dialog
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "No audio MP3 file was saved to ZIP since no audio was downloaded on or after $audioOldestDownloadDateTime.",
+            "No audio MP3 file was saved to ZIP since no audio was downloaded on or after $tooRecentAudioDownloadDateTime.",
       );
 
       List<String> zipLst = DirUtil.listFileNamesInDir(
