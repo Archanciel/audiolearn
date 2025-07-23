@@ -252,7 +252,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
           ),
         ),
         PopupMenuItem<PlaylistPopupMenuAction>(
-          key: const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip'),
+          key: const Key('popup_menu_save_playlist_audio_mp3_files_to_zip'),
           value: PlaylistPopupMenuAction.savePlaylistAudioMp3FilesToZip,
           child: Tooltip(
             message: AppLocalizations.of(context)!
