@@ -3193,6 +3193,10 @@ class PlaylistListVM extends ChangeNotifier {
 
     final stopwatch = Stopwatch()..start();
 
+    // Start the timer and saving state before processing files
+    _isSaving = true;
+    notifyListeners();
+
     // Iterate through all playlists
     for (Playlist playlist in _listOfSelectablePlaylists) {
       Directory playlistDir = Directory(playlist.downloadPath);
@@ -3241,7 +3245,11 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     if (!hasAudioFiles) {
-      return [];
+       // Stops the timer and saving state if no audio files were found
+      _isSaving = false;
+      notifyListeners();
+
+     return [];
     }
 
     // Save the archive to a zip file in the target directory
@@ -3258,6 +3266,10 @@ class PlaylistListVM extends ChangeNotifier {
         ((savedAudioFileSize / savingAudioToZipDuration.inMicroseconds) *
                 1000000)
             .round();
+
+    // Stops the timer and saving state after processing files
+    _isSaving = false;
+    notifyListeners();
 
     return [
       zipFilePathName,
@@ -3464,6 +3476,7 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     if (!hasAudioFiles) {
+      // Stops the timer and saving state if no audio files were found
       _isSaving = false;
       notifyListeners();
 
@@ -3484,6 +3497,7 @@ class PlaylistListVM extends ChangeNotifier {
                 1000000)
             .round();
 
+    // Stops the timer and saving state after processing files
     _isSaving = false;
     notifyListeners();
 
