@@ -14080,7 +14080,7 @@ void main() {
       );
     });
     testWidgets(
-        '''Set download date to more recent one. The less old value is 13/07/2025 14:41. The integration
+        '''Set download date to more recent one. A less old value will be 14/07/2025 14:31. The integration
           test verifies the confirmation displayed warning.''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
@@ -14150,7 +14150,7 @@ void main() {
               const Key('setValueToTargetDialogKey'),
             ))
             .data,
-        'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+        'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
       );
 
       expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
@@ -14174,8 +14174,9 @@ void main() {
       expect(textField.focusNode?.hasFocus, isTrue,
           reason: 'TextField should be focused when dialog opens');
 
-      // Now change the download date in the dialog
-      String audioOldestDownloadDateTime = '13/07/2025 14:41';
+      // Now change the download date in the dialog. This date is
+      // before the last download date of the playlist
+      String audioOldestDownloadDateTime = '14/07/2025 14:31';
       textField.controller!.text = audioOldestDownloadDateTime;
       await tester.pumpAndSettle();
 
@@ -14232,14 +14233,14 @@ void main() {
       expect(
           actualMessage,
           contains(
-              "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateTime.\n\nTotal saved audio number: 3, total size: 15.49 MB and total duration: 0:22:38.0."));
+              "Saved to ZIP unique playlist audio MP3 files downloaded from $audioOldestDownloadDateTime.\n\nTotal saved audio number: 1, total size: 4.14 MB and total duration: 0:11:19.3."));
       expect(actualMessage, contains("Save operation real duration: 0:00:00"));
       expect(
           actualMessage, contains("number of bytes saved per second: "));
       expect(
           actualMessage,
           contains(
-              "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-07-13_14_43_21_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\"."));
+              "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}Saint François d'Assise_mp3_from_2025-07-14_17_18_54_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\"."));
 
       List<String> zipLst = DirUtil.listFileNamesInDir(
         directoryPath: kApplicationPathWindowsTest,
@@ -14247,9 +14248,7 @@ void main() {
       );
 
       List<String> expectedZipContentLst = [
-        "playlists\\Saint François d'Assise\\250714-171854-How to talk to animals The teaching of Saint Francis of Assisi 22-05-28.mp3",
-        "playlists\\Exo chants chrétiens\\250713-144410-EXO - Ta bienveillance [avec paroles] 13-01-29.mp3",
-        "playlists\\Exo chants chrétiens\\250713-144321-SI TU VEUX LE LOUER - EXO 17-05-31.mp3",
+        "250714-171854-How to talk to animals The teaching of Saint Francis of Assisi 22-05-28.mp3",
       ];
 
       List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
