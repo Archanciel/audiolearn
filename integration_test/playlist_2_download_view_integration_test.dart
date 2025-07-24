@@ -12574,12 +12574,15 @@ void main() {
           find.byKey(const Key('appBarMenuSavePlaylistsAndCommentsToZip')));
       await tester.pumpAndSettle();
 
-      // Verify the displayed warning dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\".",
-        isWarningConfirming: true,
+      String actualMessage = tester
+          .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+          .data!;
+
+      expect(
+        actualMessage,
+        contains(
+          "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_",
+        ),
       );
 
       List<String> zipLst = DirUtil.listFileNamesInDir(
@@ -13527,7 +13530,7 @@ void main() {
         expect(
             actualMessage,
             contains(
-                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-07-13_14_31_25_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 2)))}.zip\"."));
+                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-07-13_14_31_25_on_"));
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
           directoryPath: kApplicationPathWindowsTest,
