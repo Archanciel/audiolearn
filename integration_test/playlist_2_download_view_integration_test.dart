@@ -14058,9 +14058,9 @@ void main() {
         );
 
         List<String> expectedZipContentLst = [
-          "250714-171854-How to talk to animals The teaching of Saint Francis of Assisi 22-05-28.mp3",
-          "250713-143130-Saint François d'Assise, le jongleur de Dieu 20-10-03.mp3",
-          "250713-143125-4 octobre  - Saint François, le Saint qui a Transformé l'Église et le Monde 24-10-03.mp3",
+          "playlists\\Saint François d'Assise\\250714-171854-How to talk to animals The teaching of Saint Francis of Assisi 22-05-28.mp3",
+          "playlists\\Saint François d'Assise\\250713-143130-Saint François d'Assise, le jongleur de Dieu 20-10-03.mp3",
+          "playlists\\Saint François d'Assise\\250713-143125-4 octobre  - Saint François, le Saint qui a Transformé l'Église et le Monde 24-10-03.mp3",
         ];
 
         List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
@@ -14248,7 +14248,7 @@ void main() {
         );
 
         List<String> expectedZipContentLst = [
-          "250714-171854-How to talk to animals The teaching of Saint Francis of Assisi 22-05-28.mp3",
+          "playlists\\Saint François d'Assise\\250714-171854-How to talk to animals The teaching of Saint Francis of Assisi 22-05-28.mp3",
         ];
 
         List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
