@@ -596,13 +596,12 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   return ConfirmActionDialog(
                     actionFunction: () async {
                       await playlistListVMlistenFalse
-                          .saveUniquePlaylistAudioMp3FilesToZip(
-                        playlist: playlist,
+                          .savePlaylistsAudioMp3FilesToZip(
+                        listOfPlaylists:  [playlist],
                         targetDir: targetSaveDirectoryPath,
                         fromAudioDownloadDateTime:
                             parseDateTimeOrDateStrUsinAppDateFormat,
-                        audioMp3SavingToZipEstimatedDuration:
-                            audioMp3SavingToZipDuration,
+                        uniquePlaylistIsSaved: true,
                       );
                       // Handle any post-execution logic here
                     },

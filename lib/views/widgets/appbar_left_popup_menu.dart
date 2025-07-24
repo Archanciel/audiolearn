@@ -859,13 +859,15 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
 
               String oldestAudioDownloadDateFormattedStr = resultStringLst[0];
 
+              final List<Playlist> listOfSelectablePlaylists =
+                  playlistListVMlistenFalse.listOfSelectablePlaylists;
+
               List<dynamic> resultsLst =
                   await UiUtil.obtainAudioMp3SavingToZipDuration(
                 playlistListVMlistenFalse: playlistListVMlistenFalse,
                 dateFormatVMlistenFalse: dateFormatVMlistenFalse,
                 warningMessageVMlistenFalse: warningMessageVMlistenFalse,
-                playlistsLst: playlistListVMlistenFalse
-                    .listOfSelectablePlaylists, // only one playlist
+                playlistsLst: listOfSelectablePlaylists, // only one playlist
                 oldestAudioDownloadDateFormattedStr:
                     oldestAudioDownloadDateFormattedStr,
               );
@@ -889,6 +891,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                     actionFunction: () async {
                       await playlistListVMlistenFalse
                           .savePlaylistsAudioMp3FilesToZip(
+                        listOfPlaylists: listOfSelectablePlaylists,
                         targetDir: targetSaveDirectoryPath,
                         fromAudioDownloadDateTime:
                             parseDateTimeOrDateStrUsinAppDateFormat,

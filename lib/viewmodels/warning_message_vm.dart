@@ -825,7 +825,7 @@ class WarningMessageVM extends ChangeNotifier {
     required Duration savedTotalAudioDuration,
     required Duration savingAudioToZipOperationDuration,
     required int realNumberOfBytesSavedToZipPerSecond,
-    bool uniquePlaylistIsSaved = false,
+    required bool uniquePlaylistIsSaved,
   }) {
     _zipFilePathName = zipFilePathName;
     _fromAudioDownloadDateTime = fromAudioDownloadDateTime;

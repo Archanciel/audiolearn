@@ -1201,13 +1201,14 @@ void main() {
 
         final DateTime fromDateTime = DateTime(2024, 1, 10);
 
-        List<dynamic> restoredInfoLst =
+        List<dynamic> savedMp3InfoLst =
             await playlistListVM.savePlaylistsAudioMp3FilesToZip(
+          listOfPlaylists: playlistListVM.listOfSelectablePlaylists,
           targetDir: kApplicationPathWindowsTest,
           fromAudioDownloadDateTime: fromDateTime,
         );
 
-        String savedZipFilePathName = restoredInfoLst[0];
+        String savedZipFilePathName = savedMp3InfoLst[0];
 
         expect(
           savedZipFilePathName,
@@ -1300,16 +1301,17 @@ void main() {
 
         final DateTime fromDateTime = DateTime(2024, 1, 8);
 
-        List<dynamic> restoredInfoLst =
+        List<dynamic> savedMp3InfoLst =
             await playlistListVM.savePlaylistsAudioMp3FilesToZip(
+          listOfPlaylists: playlistListVM.listOfSelectablePlaylists,
           targetDir: kApplicationPathWindowsTest,
           fromAudioDownloadDateTime: fromDateTime,
         );
 
-        String savedZipFilePathName = restoredInfoLst[0];
-        int savedTotalAudioFilesCount = restoredInfoLst[1];
-        int savedTotalAudioFilesSize = restoredInfoLst[2];
-        Duration savedTotalAudioFilesDuration = restoredInfoLst[3];
+        String savedZipFilePathName = savedMp3InfoLst[0];
+        int savedTotalAudioFilesCount = savedMp3InfoLst[1];
+        int savedTotalAudioFilesSize = savedMp3InfoLst[2];
+        Duration savedTotalAudioFilesDuration = savedMp3InfoLst[3];
 
         expect(
           savedZipFilePathName,
@@ -1410,28 +1412,22 @@ void main() {
 
         final DateTime fromDateTime = DateTime(2024, 1, 10);
 
-        Duration audioMp3SavingToZipDuration =
-            await playlistListVM.evaluateSavingAudioMp3FileToZipDuration(
+        List<dynamic> savedMp3InfoLst =
+            await playlistListVM.savePlaylistsAudioMp3FilesToZip(
           listOfPlaylists: [playlistLst[4]], // S8 audio
-          fromAudioDownloadDateTime: fromDateTime,
-        );
-
-        List<dynamic> restoredInfoLst =
-            await playlistListVM.saveUniquePlaylistAudioMp3FilesToZip(
-          playlist: playlistLst[4], // S8 audio
           targetDir: kApplicationPathWindowsTest,
           fromAudioDownloadDateTime: fromDateTime,
-          audioMp3SavingToZipEstimatedDuration: audioMp3SavingToZipDuration,
+          uniquePlaylistIsSaved: true,
         );
 
-        String savedZipFilePathName = restoredInfoLst[0];
-        int savedTotalAudioFilesCount = restoredInfoLst[1];
-        int savedTotalAudioFilesSize = restoredInfoLst[2];
-        Duration savedTotalAudioFilesDuration = restoredInfoLst[3];
+        String savedZipFilePathName = savedMp3InfoLst[0];
+        int savedTotalAudioFilesCount = savedMp3InfoLst[1];
+        int savedTotalAudioFilesSize = savedMp3InfoLst[2];
+        Duration savedTotalAudioFilesDuration = savedMp3InfoLst[3];
 
         expect(
           savedZipFilePathName,
-          "$kApplicationPathWindowsTest${path.separator}S8 audio_mp3_from_${yearMonthDayDateTimeFormatForFileName.format(fromDateTime)}_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip",
+          "$kApplicationPathWindowsTest${path.separator}S8 audio_mp3_from_2024-05-28_13_06_36_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip",
         );
 
         expect(
@@ -1455,8 +1451,8 @@ void main() {
         );
 
         List<String> expectedZipContent = [
-          "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.mp3",
-          "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.mp3",
+          "playlists\\S8 audio\\240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.mp3",
+          "playlists\\S8 audio\\240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.mp3",
         ];
 
         List<String> zipFilePathNamesLst = await DirUtil.listPathFileNamesInZip(
@@ -1527,28 +1523,22 @@ void main() {
 
         final DateTime fromDateTime = DateTime(2024, 1, 10);
 
-        Duration audioMp3SavingToZipDuration =
-            await playlistListVM.evaluateSavingAudioMp3FileToZipDuration(
-          listOfPlaylists: [playlistLst[4]], // S8 audio
-          fromAudioDownloadDateTime: fromDateTime,
-        );
-
-        List<dynamic> restoredInfoLst =
-            await playlistListVM.saveUniquePlaylistAudioMp3FilesToZip(
-          playlist: playlistLst[1], // S8 audio
+        List<dynamic> savedMp3InfoLst =
+            await playlistListVM.savePlaylistsAudioMp3FilesToZip(
+          listOfPlaylists: [playlistLst[1]], // S8 audio
           targetDir: kApplicationPathWindowsTest,
           fromAudioDownloadDateTime: fromDateTime,
-          audioMp3SavingToZipEstimatedDuration: audioMp3SavingToZipDuration,
+          uniquePlaylistIsSaved: true,
         );
 
-        String savedZipFilePathName = restoredInfoLst[0];
-        int savedTotalAudioFilesCount = restoredInfoLst[1];
-        int savedTotalAudioFilesSize = restoredInfoLst[2];
-        Duration savedTotalAudioFilesDuration = restoredInfoLst[3];
+        String savedZipFilePathName = savedMp3InfoLst[0];
+        int savedTotalAudioFilesCount = savedMp3InfoLst[1];
+        int savedTotalAudioFilesSize = savedMp3InfoLst[2];
+        Duration savedTotalAudioFilesDuration = savedMp3InfoLst[3];
 
         expect(
           savedZipFilePathName,
-          "$kApplicationPathWindowsTest${path.separator}http_local_mp3_from_${yearMonthDayDateTimeFormatForFileName.format(fromDateTime)}_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip",
+          "$kApplicationPathWindowsTest${path.separator}http_local_mp3_from_2025-03-18_16_58_14_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip",
         );
 
         expect(
@@ -1572,7 +1562,7 @@ void main() {
         );
 
         List<String> expectedZipContent = [
-          "250318-165814-Really short video 23-07-01.mp3",
+          "playlists\\http_local\\250318-165814-Really short video 23-07-01.mp3",
         ];
 
         List<String> zipFilePathNamesLst = await DirUtil.listPathFileNamesInZip(
