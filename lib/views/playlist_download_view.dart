@@ -627,6 +627,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             child: Column(
               children: [
                 Text(
+                  key: const Key('saving_playlists_audio_mp3_to_zip'),
                   (audioMp3SaveUniquePlaylistName.isNotEmpty)
                       ? AppLocalizations.of(context)!
                           .savingUniquePlaylistAudioMp3(

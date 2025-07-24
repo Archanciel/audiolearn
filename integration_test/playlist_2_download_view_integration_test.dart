@@ -13509,6 +13509,16 @@ void main() {
         // Confirm the saving of the audio mp3 files and close the
         // confirm dialog by tapping on the Confirm button.
         await tester.tap(find.byKey(const Key('confirmButton')));
+        await tester.pump(); // Process the tap immediately
+
+        // Only works if tester.pump() is used instead of
+        // tester.pumpAndSettle()
+        expect(
+          find.text("Saving multiple playlists audio files to ZIP ..."),
+          findsOneWidget,
+        );
+
+        // Wait for completion
         await tester.pumpAndSettle();
 
         Text warningDialogTitle =
@@ -13702,6 +13712,16 @@ void main() {
         // Confirm the saving of the audio mp3 files and close the
         // confirm dialog by tapping on the Confirm button.
         await tester.tap(find.byKey(const Key('confirmButton')));
+        await tester.pump(); // Process the tap immediately
+
+        // Only works if tester.pump() is used instead of
+        // tester.pumpAndSettle()
+        expect(
+          find.text("Saving multiple playlists audio files to ZIP ..."),
+          findsOneWidget,
+        );
+
+        // Wait for completion
         await tester.pumpAndSettle();
 
         Text warningDialogTitle =
@@ -14032,6 +14052,16 @@ void main() {
         // Confirm the saving of the audio mp3 files and close the
         // confirm dialog by tapping on the Confirm button.
         await tester.tap(find.byKey(const Key('confirmButton')));
+        await tester.pump(); // Process the tap immediately
+
+        // Only works if tester.pump() is used instead of
+        // tester.pumpAndSettle()
+        expect(
+          find.text("Saving $playlistToSaveTitle audio files to ZIP ..."),
+          findsOneWidget,
+        );
+
+        // Wait for completion
         await tester.pumpAndSettle();
 
         Text warningDialogTitle =
