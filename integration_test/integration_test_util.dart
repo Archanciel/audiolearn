@@ -696,7 +696,7 @@ class IntegrationTestUtil {
 
     // Tap on the Ok button to launch the restoration.
     await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-    await tester.pumpAndSettle();
+    await tester.pumpAndSettle(const Duration(seconds: 1));
   }
 
   static void expectWithSuccessMessage({
