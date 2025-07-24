@@ -3137,6 +3137,25 @@ class PlaylistListVM extends ChangeNotifier {
     bool hasAudioFiles = false;
     Duration savingAudioToZipDuration = Duration.zero;
 
+    String playlistTitle;
+
+    if (uniquePlaylistIsSaved) {
+      playlistTitle = listOfPlaylists[0].title;
+
+      // This field value is used by the save progression display text field
+      // located above the LinearProgressIndicator on the playlist download
+      // view
+      _audioMp3SaveUniquePlaylistName = playlistTitle; // Save the unique playlist name
+    } else {
+      // If multiple playlists are saved, use a generic title
+      playlistTitle = 'audioLearn';
+
+      // This field value is used by the save progression display text field
+      // located above the LinearProgressIndicator on the playlist download
+      // view
+      _audioMp3SaveUniquePlaylistName = '';
+    }
+
     final stopwatch = Stopwatch()..start();
 
     // Start the timer and saving state before processing files
@@ -3196,15 +3215,6 @@ class PlaylistListVM extends ChangeNotifier {
       notifyListeners();
 
       return [];
-    }
-
-    String playlistTitle;
-
-    if (uniquePlaylistIsSaved) {
-      playlistTitle = listOfPlaylists[0].title;
-    } else {
-      // If multiple playlists are saved, use a generic title
-      playlistTitle = 'audioLearn';
     }
 
     // Save the archive to a zip file in the target directory
