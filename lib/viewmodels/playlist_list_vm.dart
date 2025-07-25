@@ -4380,9 +4380,16 @@ class PlaylistListVM extends ChangeNotifier {
       for (ArchiveFile file in archive) {
         // Skip directories
         if (file.isFile && file.name.endsWith('.mp3')) {
+          final String sanitizedArchiveFilePathName = file.name
+              .replaceAll(
+                  '\\', '/') // First convert all backslashes to forward slashes
+              .split('/')
+              .map((segment) => segment.trim())
+              .join('/');
+
           // Extract playlist name and audio file name from the path
           // Expected path format: playlists/PlaylistTitle/audioFileName.mp3
-          List<String> pathParts = file.name.split('/');
+          List<String> pathParts = sanitizedArchiveFilePathName.split('/');
 
           if (pathParts.length >= 3 && pathParts[0] == 'playlists') {
             String playlistTitle = pathParts[1];

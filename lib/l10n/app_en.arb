@@ -1014,5 +1014,7 @@
       "bytesNumberSavedPerSecond": {},  
       "filePathName": {}      
     }
-  }
+  },
+  "restorePlaylistsAudioMp3FilesFromZipMenu": "Restore Playlists Audio's MP3 from ZIP File ...",
+  "restorePlaylistsAudioMp3FilesFromZipTooltip": "Restoring audio's MP3 not yet present in the playlists from a saved ZIP file. Only the MP3 relative to the audio's listed in the playlists are restorable."
 }

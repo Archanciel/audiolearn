@@ -2132,4 +2132,12 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get audioSpokenQuality => "Spoken quality";
+
+  @override
+  String get restorePlaylistsAudioMp3FilesFromZipMenu =>
+      "Restore Playlists, Comments, Pictures and Settings from ZIP File ...";
+
+  @override
+  String get restorePlaylistsAudioMp3FilesFromZipTooltip =>
+      "Restoring the playlists, their audio comments, pictures and the application settings from a saved ZIP file. The ZIP file contains the playlists, the comments, the pictures as well as the settings JSON files. The audio files are not included in it.";
 }

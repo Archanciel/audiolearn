@@ -3154,6 +3154,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Saved to ZIP all playlists audio MP3 files downloaded from {audioDownloadFromDateTime}.\n\nTotal saved audio number: {savedAudioNumber}, total size: {savedAudioTotalFileSize} and total duration: {savedAudioTotalDuration}.\n\nSave operation real duration: {saveOperationRealDuration}, number of bytes saved per second: {bytesNumberSavedPerSecond}.\n\nZIP file path name: \"{filePathName}\".'**
   String correctedSavedMultiplePlaylistsAudioMp3ToZip(Object audioDownloadFromDateTime, Object savedAudioNumber, Object savedAudioTotalFileSize, Object savedAudioTotalDuration, Object saveOperationRealDuration, Object bytesNumberSavedPerSecond, Object filePathName);
+
+  /// No description provided for @restorePlaylistsAudioMp3FilesFromZipMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore Playlists Audio\'s MP3 from ZIP File ...'**
+  String get restorePlaylistsAudioMp3FilesFromZipMenu;
+
+  /// No description provided for @restorePlaylistsAudioMp3FilesFromZipTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Restoring audio\'s MP3 not yet present in the playlists from a saved ZIP file. Only the MP3 relative to the audio\'s listed in the playlists are restorable.'**
+  String get restorePlaylistsAudioMp3FilesFromZipTooltip;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

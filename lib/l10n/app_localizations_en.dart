@@ -1753,4 +1753,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String correctedSavedMultiplePlaylistsAudioMp3ToZip(Object audioDownloadFromDateTime, Object savedAudioNumber, Object savedAudioTotalFileSize, Object savedAudioTotalDuration, Object saveOperationRealDuration, Object bytesNumberSavedPerSecond, Object filePathName) {
     return 'Saved to ZIP all playlists audio MP3 files downloaded from $audioDownloadFromDateTime.\n\nTotal saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.\n\nSave operation real duration: $saveOperationRealDuration, number of bytes saved per second: $bytesNumberSavedPerSecond.\n\nZIP file path name: \"$filePathName\".';
   }
+
+  @override
+  String get restorePlaylistsAudioMp3FilesFromZipMenu => 'Restore Playlists Audio\'s MP3 from ZIP File ...';
+
+  @override
+  String get restorePlaylistsAudioMp3FilesFromZipTooltip => 'Restoring audio\'s MP3 not yet present in the playlists from a saved ZIP file. Only the MP3 relative to the audio\'s listed in the playlists are restorable.';
 }
