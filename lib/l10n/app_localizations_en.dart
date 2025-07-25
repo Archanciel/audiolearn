@@ -1759,4 +1759,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get restorePlaylistsAudioMp3FilesFromZipTooltip => 'Restoring audio\'s MP3 not yet present in the playlists from a saved ZIP file. Only the MP3 relative to the audio\'s listed in the playlists are restorable.';
+
+  @override
+  String get audioMp3RestorationDialogTitle => 'MP3 Restoration';
+
+  @override
+  String get audioMp3RestorationExplanation => 'Only the MP3 relative to the audio\'s listed in the playlists and which are not already present in the playlists are restorable.';
 }

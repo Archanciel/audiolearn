@@ -3166,6 +3166,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Restoring audio\'s MP3 not yet present in the playlists from a saved ZIP file. Only the MP3 relative to the audio\'s listed in the playlists are restorable.'**
   String get restorePlaylistsAudioMp3FilesFromZipTooltip;
+
+  /// No description provided for @audioMp3RestorationDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'MP3 Restoration'**
+  String get audioMp3RestorationDialogTitle;
+
+  /// No description provided for @audioMp3RestorationExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'Only the MP3 relative to the audio\'s listed in the playlists and which are not already present in the playlists are restorable.'**
+  String get audioMp3RestorationExplanation;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

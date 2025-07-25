@@ -1023,11 +1023,10 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
               builder: (BuildContext context) {
                 return SetValueToTargetDialog(
                   dialogTitle: AppLocalizations.of(context)!
-                      .playlistRestorationDialogTitle,
+                      .audioMp3RestorationDialogTitle,
                   dialogCommentStr: AppLocalizations.of(context)!
-                      .playlistRestorationExplanation,
+                      .audioMp3RestorationExplanation,
                   targetNamesLst: [
-                    AppLocalizations.of(context)!.replaceExistingPlaylists,
                   ],
                   validationFunctionArgs: [],
                   canAllCheckBoxBeUnchecked: true,

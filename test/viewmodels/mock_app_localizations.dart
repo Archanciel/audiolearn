@@ -2140,4 +2140,11 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get restorePlaylistsAudioMp3FilesFromZipTooltip =>
       "Restoring the playlists, their audio comments, pictures and the application settings from a saved ZIP file. The ZIP file contains the playlists, the comments, the pictures as well as the settings JSON files. The audio files are not included in it.";
+
+  @override
+  String get audioMp3RestorationDialogTitle => "MP3 Restoration";
+
+  @override
+  String get audioMp3RestorationExplanation =>
+      "Only the MP3 relative to the audio's listed in the playlists and which are not already present in the playlists are restorable.";
 }
