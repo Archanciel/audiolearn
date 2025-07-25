@@ -1753,4 +1753,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String correctedSavedMultiplePlaylistsAudioMp3ToZip(Object audioDownloadFromDateTime, Object savedAudioNumber, Object savedAudioTotalFileSize, Object savedAudioTotalDuration, Object saveOperationRealDuration, Object bytesNumberSavedPerSecond, Object filePathName) {
     return 'Enregistré dans le ZIP tous les fichiers audio MP3 des playlists téléchargés depuis le $audioDownloadFromDateTime.\n\nNombre total d\'audios sauvegardés: $savedAudioNumber, taille totale: $savedAudioTotalFileSize et durée totale: $savedAudioTotalDuration.\n\nDurée réelle de l\'opération de sauvegarde: $saveOperationRealDuration, nombre de bytes sauvés par seconde: $bytesNumberSavedPerSecond.\n\nFichier ZIP: \"$filePathName\"';
   }
+
+  @override
+  String get restorePlaylistsAudioMp3FilesFromZipMenu => 'Restaurer les audio\'s MP3 des playlists depuis un fichier ZIP ...';
+
+  @override
+  String get restorePlaylistsAudioMp3FilesFromZipTooltip => 'Restaure les audio\'s MP3 des playlists à partir d\'un fichier ZIP préalablement sauvé. Seuls les fichiers MP3 qui correspondent aux audio\'s listés dans les playlists et qui ne sont pas déjà présents dans les playlists sont restaurés.';
 }

@@ -122,6 +122,25 @@ class UiUtil {
     );
   }
 
+  static Future<void> restorePlaylistsAudioMp3FilesFromZip({
+    required BuildContext context,
+    required List<Playlist> playlistsLst,
+  }) async {
+    String selectedZipFilePathName = await filePickerSelectZipFilePathName();
+
+    if (selectedZipFilePathName.isEmpty) {
+      return;
+    }
+
+    await Provider.of<PlaylistListVM>(
+      context,
+      listen: false,
+    ).restorePlaylistsAudioMp3FilesFromZip(
+      zipFilePathName: selectedZipFilePathName,
+      listOfPlaylists: playlistsLst,
+    );
+  }
+
   static Future<String?> filePickerSelectTargetDir() async {
     return await FilePicker.platform.getDirectoryPath();
   }

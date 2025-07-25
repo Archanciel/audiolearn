@@ -35,6 +35,7 @@ enum AppBarPopupMenu {
   savePlaylistsCommentsAndPicturesToZip,
   savePlaylistsAudioMp3FilesToZip,
   restorePlaylistAndCommentsFromZip,
+  restorePlaylistsAudioMp3FilesFromZip,
 }
 
 /// The AppBarLeadingPopupMenuWidget is used to display the leading
@@ -712,6 +713,17 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   .restorePlaylistAndCommentsFromZipMenu),
             ),
           ),
+          PopupMenuItem<AppBarPopupMenu>(
+            key: const Key(
+                'appBarMenuRestorePlaylistsAudioMp3FilesFromZip'),
+            value: AppBarPopupMenu.restorePlaylistsAudioMp3FilesFromZip,
+            child: Tooltip(
+              message: AppLocalizations.of(context)!
+                  .restorePlaylistsAudioMp3FilesFromZipTooltip,
+              child: Text(AppLocalizations.of(context)!
+                  .restorePlaylistsAudioMp3FilesFromZipMenu),
+            ),
+          ),
         ];
       },
       icon: const Icon(Icons.menu),
@@ -977,6 +989,63 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
               await UiUtil.restorePlaylistsCommentsAndAppSettingsFromZip(
                 context: context,
                 doReplaceExistingPlaylists: doReplaceExistingPlaylists,
+              );
+            });
+            break;
+          case AppBarPopupMenu.restorePlaylistsAudioMp3FilesFromZip:
+            final List<HelpItem> restorePlaylistsHelpItemsLst = [
+              HelpItem(
+                helpTitle:
+                    AppLocalizations.of(context)!.playlistRestorationHelpTitle,
+                helpContent: AppLocalizations.of(context)!
+                    .restorePlaylistAndCommentsFromZipTooltip,
+                displayHelpItemNumber: false,
+              ),
+              HelpItem(
+                helpTitle: AppLocalizations.of(context)!
+                    .playlistRestorationFirstHelpTitle,
+                helpContent: AppLocalizations.of(context)!
+                    .playlistRestorationFirstHelpContent,
+                displayHelpItemNumber: true,
+              ),
+              HelpItem(
+                helpTitle: AppLocalizations.of(context)!
+                    .playlistRestorationSecondHelpTitle,
+                helpContent: '',
+                displayHelpItemNumber: false,
+              ),
+            ];
+
+            showDialog<List<String>>(
+              barrierDismissible:
+                  false, // Prevents the dialog from closing when tapping outside.
+              context: context,
+              builder: (BuildContext context) {
+                return SetValueToTargetDialog(
+                  dialogTitle: AppLocalizations.of(context)!
+                      .playlistRestorationDialogTitle,
+                  dialogCommentStr: AppLocalizations.of(context)!
+                      .playlistRestorationExplanation,
+                  targetNamesLst: [
+                    AppLocalizations.of(context)!.replaceExistingPlaylists,
+                  ],
+                  validationFunctionArgs: [],
+                  canAllCheckBoxBeUnchecked: true,
+                  helpItemsLst: restorePlaylistsHelpItemsLst,
+                );
+              },
+            ).then((resultStringLst) async {
+              if (resultStringLst == null) {
+                // The case if the Cancel button was pressed.
+                return;
+              }
+
+              await UiUtil.restorePlaylistsAudioMp3FilesFromZip(
+                context: context,
+                playlistsLst: Provider.of<PlaylistListVM>(
+                  context,
+                  listen: false,
+                ).listOfSelectablePlaylists,
               );
             });
             break;
