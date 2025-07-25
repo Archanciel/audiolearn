@@ -4372,6 +4372,7 @@ class PlaylistListVM extends ChangeNotifier {
 
       // Create a map of playlist titles to playlists for efficient lookup
       Map<String, Playlist> playlistMap = {};
+
       for (Playlist playlist in listOfPlaylists) {
         playlistMap[playlist.title] = playlist;
       }
@@ -4380,6 +4381,8 @@ class PlaylistListVM extends ChangeNotifier {
       for (ArchiveFile file in archive) {
         // Skip directories
         if (file.isFile && file.name.endsWith('.mp3')) {
+          // Enables restoring MP3 from zip files created on Windows
+          // or on Android.
           final String sanitizedArchiveFilePathName = file.name
               .replaceAll(
                   '\\', '/') // First convert all backslashes to forward slashes
@@ -4397,6 +4400,7 @@ class PlaylistListVM extends ChangeNotifier {
 
             // Find the corresponding playlist
             Playlist? playlist = playlistMap[playlistTitle];
+
             if (playlist != null) {
               // Check if this audio file corresponds to an Audio in playableAudioLst
               bool shouldRestore = false;
@@ -4429,7 +4433,7 @@ class PlaylistListVM extends ChangeNotifier {
                     restoredAudioCount++;
                   } catch (e) {
                     // Log error but continue with other files
-                    print(
+                    _logger.i(
                         'Error restoring file $audioFileName to playlist $playlistTitle: $e');
                   }
                 }
@@ -4440,7 +4444,7 @@ class PlaylistListVM extends ChangeNotifier {
       }
     } catch (e) {
       // Log error and return current count
-      print('Error processing ZIP file $zipFilePathName: $e');
+      _logger.i('Error processing ZIP file $zipFilePathName: $e');
     }
 
     return restoredAudioCount;
