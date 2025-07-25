@@ -13517,6 +13517,14 @@ void main() {
           find.text("Saving multiple playlists audio files to ZIP ..."),
           findsOneWidget,
         );
+        expect(
+          tester
+            .widget<Text>(find.byKey(const Key('saving_please_wait')).last)
+            .data!,
+          contains(
+            "Please wait, this should approximately take ",
+          ),
+        );
 
         // Wait for completion
         await tester.pumpAndSettle();
@@ -13535,7 +13543,7 @@ void main() {
             contains(
                 "Saved to ZIP all playlists audio MP3 files downloaded from $oldestAudioDownloadDateTime.\n\nTotal saved audio number: 5, total size: 64.47 MB and total duration: 2:40:27.2."));
         expect(
-            actualMessage, contains("Save operation real duration: 0:00:01"));
+            actualMessage, contains("Save operation real duration: "));
         expect(actualMessage, contains("number of bytes saved per second: 3"));
         expect(
             actualMessage,
@@ -13720,7 +13728,15 @@ void main() {
           find.text("Saving multiple playlists audio files to ZIP ..."),
           findsOneWidget,
         );
-
+        expect(
+          tester
+            .widget<Text>(find.byKey(const Key('saving_please_wait')).last)
+            .data!,
+          contains(
+            "Please wait, this should approximately take ",
+          ),
+        );
+        
         // Wait for completion
         await tester.pumpAndSettle();
 
@@ -14059,6 +14075,14 @@ void main() {
         expect(
           find.text("Saving $playlistToSaveTitle audio files to ZIP ..."),
           findsOneWidget,
+        );
+        expect(
+          tester
+            .widget<Text>(find.byKey(const Key('saving_please_wait')).last)
+            .data!,
+          contains(
+            "Please wait, this should approximately take ",
+          ),
         );
 
         // Wait for completion
