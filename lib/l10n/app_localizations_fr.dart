@@ -1758,11 +1758,23 @@ class AppLocalizationsFr extends AppLocalizations {
   String get restorePlaylistsAudioMp3FilesFromZipMenu => 'Restaurer les audio\'s MP3 des playlists depuis un fichier ZIP ...';
 
   @override
-  String get restorePlaylistsAudioMp3FilesFromZipTooltip => 'Restaure les audio\'s MP3 des playlists à partir d\'un fichier ZIP préalablement sauvé. Seuls les fichiers MP3 qui correspondent aux audio\'s listés dans les playlists et qui ne sont pas déjà présents dans les playlists sont restaurés.';
+  String get restorePlaylistsAudioMp3FilesFromZipTooltip => 'Restaure les audio\'s MP3 des playlists à partir d\'un fichier ZIP préalablement sauvé. Seuls les fichiers MP3 qui correspondent aux audio\'s listés dans les playlists et qui ne sont pas déjà présents dans ces playlists sont restaurés.';
 
   @override
   String get audioMp3RestorationDialogTitle => 'Restauration des MP3';
 
   @override
   String get audioMp3RestorationExplanation => 'Seuls les fichiers MP3 qui correspondent aux audio\'s listés dans les playlists et qui ne sont pas déjà présents dans les playlists sont restaurés.';
+
+  @override
+  String get restorePlaylistAudioMp3FilesFromZipMenu => 'Restaurer les audio\'s MP3 de la playlist depuis un fichier ZIP ...';
+
+  @override
+  String get restorePlaylistAudioMp3FilesFromZipTooltip => 'Restaure les audio\'s MP3 de la playlist à partir d\'un fichier ZIP préalablement sauvé. Seuls les fichiers MP3 qui correspondent aux audio\'s listés dans la playlist et qui ne sont pas déjà présents dans cette playlist sont restaurés.';
+
+  @override
+  String get audioMp3UniquePlaylistRestorationDialogTitle => 'Restauration des MP3';
+
+  @override
+  String get audioMp3UniquePlaylistRestorationExplanation => 'Seuls les fichiers MP3 qui correspondent aux audio\'s listés dans la playlist et qui ne sont pas déjà présents dans cette playlist sont restaurés.';
 }

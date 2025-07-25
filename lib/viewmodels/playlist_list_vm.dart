@@ -4361,6 +4361,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Check if zip file exists
     File zipFile = File(zipFilePathName);
+    
     if (!zipFile.existsSync()) {
       return 0;
     }

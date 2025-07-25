@@ -42,6 +42,7 @@ enum PlaylistPopupMenuAction {
   filteredAudioActions,
   savePlaylistCommentsAndPicturesToZip,
   savePlaylistAudioMp3FilesToZip,
+  restorePlaylistAudioMp3FilesFromZip,
   deletePlaylist,
 }
 
@@ -259,6 +260,16 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 .savePlaylistAudioMp3FilesToZipTooltip,
             child: Text(AppLocalizations.of(context)!
                 .savePlaylistAudioMp3FilesToZipMenu),
+          ),
+        ),
+        PopupMenuItem<PlaylistPopupMenuAction>(
+          key: const Key('popup_menu_save_playlist_audio_mp3_files_to_zip'),
+          value: PlaylistPopupMenuAction.restorePlaylistAudioMp3FilesFromZip,
+          child: Tooltip(
+            message: AppLocalizations.of(context)!
+                .restorePlaylistAudioMp3FilesFromZipTooltip,
+            child: Text(AppLocalizations.of(context)!
+                .restorePlaylistAudioMp3FilesFromZipMenu),
           ),
         ),
         PopupMenuItem<PlaylistPopupMenuAction>(
@@ -614,6 +625,59 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                     ),
                   );
                 },
+              );
+            });
+            break;
+          case PlaylistPopupMenuAction.restorePlaylistAudioMp3FilesFromZip:
+            final List<HelpItem> restorePlaylistsHelpItemsLst = [
+              HelpItem(
+                helpTitle:
+                    AppLocalizations.of(context)!.playlistRestorationHelpTitle,
+                helpContent: AppLocalizations.of(context)!
+                    .restorePlaylistAndCommentsFromZipTooltip,
+                displayHelpItemNumber: false,
+              ),
+              HelpItem(
+                helpTitle: AppLocalizations.of(context)!
+                    .playlistRestorationFirstHelpTitle,
+                helpContent: AppLocalizations.of(context)!
+                    .playlistRestorationFirstHelpContent,
+                displayHelpItemNumber: true,
+              ),
+              HelpItem(
+                helpTitle: AppLocalizations.of(context)!
+                    .playlistRestorationSecondHelpTitle,
+                helpContent: '',
+                displayHelpItemNumber: false,
+              ),
+            ];
+
+            showDialog<List<String>>(
+              barrierDismissible:
+                  false, // Prevents the dialog from closing when tapping outside.
+              context: context,
+              builder: (BuildContext context) {
+                return SetValueToTargetDialog(
+                  dialogTitle: AppLocalizations.of(context)!
+                      .audioMp3UniquePlaylistRestorationDialogTitle,
+                  dialogCommentStr: AppLocalizations.of(context)!
+                      .audioMp3UniquePlaylistRestorationExplanation,
+                  targetNamesLst: [
+                  ],
+                  validationFunctionArgs: [],
+                  canAllCheckBoxBeUnchecked: true,
+                  helpItemsLst: restorePlaylistsHelpItemsLst,
+                );
+              },
+            ).then((resultStringLst) async {
+              if (resultStringLst == null) {
+                // The case if the Cancel button was pressed.
+                return;
+              }
+
+              await UiUtil.restorePlaylistsAudioMp3FilesFromZip(
+                context: context,
+                playlistsLst: [playlist], // only one playlist
               );
             });
             break;
