@@ -1016,5 +1016,7 @@
     }
   },
   "restorePlaylistsAudioMp3FilesFromZipMenu": "Restore Playlists Audio's MP3 from ZIP File ...",
-  "restorePlaylistsAudioMp3FilesFromZipTooltip": "Restoring audio's MP3 not yet present in the playlists from a saved ZIP file. Only the MP3 relative to the audio's listed in the playlists are restorable."
+  "restorePlaylistsAudioMp3FilesFromZipTooltip": "Restoring audio's MP3 not yet present in the playlists from a saved ZIP file. Only the MP3 relative to the audio's listed in the playlists are restorable.",
+  "audioMp3RestorationDialogTitle": "MP3 Restoration",
+  "audioMp3RestorationExplanation": "Only the MP3 relative to the audio's listed in the playlists and which are not already present in the playlists are restorable."
 }
