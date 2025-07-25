@@ -3040,7 +3040,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// Files to Zip File' menu item or when the user clicks on the playlist item 'Save the Playlist
   /// Audio MP3 to Zip File' menu item. In this case, the [listOfPlaylists] parameter contains only
   /// one playlist and the [uniquePlaylistIsSaved] parameter is set to true.
-  /// 
+  ///
   /// This method saves the audio MP3 files located in the passed playlist(s) which were downloaded
   /// at or after the passed [fromAudioDownloadDateTime] in a ZIP file located in the passed [targetDir].
   ///
@@ -3145,7 +3145,8 @@ class PlaylistListVM extends ChangeNotifier {
       // This field value is used by the save progression display text field
       // located above the LinearProgressIndicator on the playlist download
       // view
-      _audioMp3SaveUniquePlaylistName = playlistTitle; // Save the unique playlist name
+      _audioMp3SaveUniquePlaylistName =
+          playlistTitle; // Save the unique playlist name
     } else {
       // If multiple playlists are saved, use a generic title
       playlistTitle = 'audioLearn';
@@ -4345,6 +4346,97 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     return restoredPicturesCount;
+  }
+
+  /// Restores MP3 audio files from a ZIP file to their respective playlist directories.
+  /// Only copies MP3 files that correspond to Audio objects present in the
+  /// playlist.playableAudioLst and that don't already exist in the playlist directory.
+  ///
+  /// Returns the number of MP3 files that were successfully restored.
+  Future<int> restorePlaylistsAudioMp3FilesFromZip({
+    required String zipFilePathName,
+    required List<Playlist> listOfPlaylists,
+  }) async {
+    int restoredAudioCount = 0;
+
+    // Check if zip file exists
+    File zipFile = File(zipFilePathName);
+    if (!zipFile.existsSync()) {
+      return 0;
+    }
+
+    try {
+      // Read and decode the ZIP file
+      List<int> zipBytes = await zipFile.readAsBytes();
+      Archive archive = ZipDecoder().decodeBytes(zipBytes);
+
+      // Create a map of playlist titles to playlists for efficient lookup
+      Map<String, Playlist> playlistMap = {};
+      for (Playlist playlist in listOfPlaylists) {
+        playlistMap[playlist.title] = playlist;
+      }
+
+      // Process each file in the archive
+      for (ArchiveFile file in archive) {
+        // Skip directories
+        if (file.isFile && file.name.endsWith('.mp3')) {
+          // Extract playlist name and audio file name from the path
+          // Expected path format: playlists/PlaylistTitle/audioFileName.mp3
+          List<String> pathParts = file.name.split('/');
+
+          if (pathParts.length >= 3 && pathParts[0] == 'playlists') {
+            String playlistTitle = pathParts[1];
+            String audioFileName = pathParts[2];
+
+            // Find the corresponding playlist
+            Playlist? playlist = playlistMap[playlistTitle];
+            if (playlist != null) {
+              // Check if this audio file corresponds to an Audio in playableAudioLst
+              bool shouldRestore = false;
+              for (Audio audio in playlist.playableAudioLst) {
+                if (audio.audioFileName == audioFileName) {
+                  shouldRestore = true;
+                  break;
+                }
+              }
+
+              if (shouldRestore) {
+                // Create the target file path
+                String targetFilePath =
+                    path.join(playlist.downloadPath, audioFileName);
+                File targetFile = File(targetFilePath);
+
+                // Only copy if the file doesn't already exist
+                if (!targetFile.existsSync()) {
+                  try {
+                    // Ensure the playlist directory exists
+                    Directory playlistDir = Directory(playlist.downloadPath);
+                    if (!playlistDir.existsSync()) {
+                      await playlistDir.create(recursive: true);
+                    }
+
+                    // Extract and write the file
+                    List<int> fileBytes = file.content as List<int>;
+                    await targetFile.writeAsBytes(fileBytes);
+
+                    restoredAudioCount++;
+                  } catch (e) {
+                    // Log error but continue with other files
+                    print(
+                        'Error restoring file $audioFileName to playlist $playlistTitle: $e');
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    } catch (e) {
+      // Log error and return current count
+      print('Error processing ZIP file $zipFilePathName: $e');
+    }
+
+    return restoredAudioCount;
   }
 
   /// Method called when the user clicks on the 'Rewind audio to start' playlist
