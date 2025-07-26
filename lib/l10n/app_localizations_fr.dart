@@ -1780,6 +1780,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String playlistInvalidRootPathWarning(Object playlistRootPath) {
-    return 'Le répertoire défini \"$playlistRootPath\" est invalid du fait que le nom du répertoire playlists est différent de \'playlists\'. Veuillez renommer le nouveau répertoire contenant les playlists et réffectuer son changement';
+    return 'Le répertoire défini \"$playlistRootPath\" est invalide du fait que le nom du répertoire final devant contenir les playlists est différent de \'playlists\'. Veuillez renommer le nouveau répertoire contenant les playlists et rééffectuer son changement';
   }
 }

@@ -1780,6 +1780,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String playlistInvalidRootPathWarning(Object playlistRootPath) {
-    return 'The defined path \"$playlistRootPath\" is invalid since the playlists dir is not equal to \'playlists\'. Please define a valid playlist directory and retry changing the playlists root path.';
+    return 'The defined path \"$playlistRootPath\" is invalid since the playlists final dir name is not equal to \'playlists\'. Please define a valid playlist directory and retry changing the playlists root path.';
   }
 }
