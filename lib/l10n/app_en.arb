@@ -1022,5 +1022,6 @@
   "restorePlaylistAudioMp3FilesFromZipMenu": "Restore Playlist Audio's MP3 from ZIP File ...",
   "restorePlaylistAudioMp3FilesFromZipTooltip": "Restoring audio's MP3 not yet present in the playlist from a saved ZIP file. Only the MP3 relative to the audio's listed in the playlist are restorable.",
   "audioMp3UniquePlaylistRestorationDialogTitle": "MP3 Restoration",
-  "audioMp3UniquePlaylistRestorationExplanation": "Only the MP3 relative to the audio's listed in the playlist and which are not already present in the playlist are restorable."
+  "audioMp3UniquePlaylistRestorationExplanation": "Only the MP3 relative to the audio's listed in the playlist and which are not already present in the playlist are restorable.",
+  "playlistInvalidRootPathWarning": "The defined path \"{playlistRootPath}\" is invalid since the playlists dir is not equal to 'playlists'. Please define a valid playlist directory and retry changing the playlists root path."
 }

@@ -31,18 +31,19 @@ enum AudioPopupMenuAction {
 }
 
 const String kApplicationName = "Audio Learn";
+const String kImposedPlaylistsSubDirName = 'playlists';
 
 // Used for Android app version
 const String kApplicationPath = "/storage/emulated/0/Documents/audiolearn";
 const String kPlaylistDownloadRootPath =
-    "/storage/emulated/0/Documents/audiolearn/playlists";
+    "/storage/emulated/0/Documents/audiolearn/$kImposedPlaylistsSubDirName";
 const String kApplicationPicturePath =
     "/storage/emulated/0/Documents/audiolearn/pictures";
 
 // Used for testing on Android
 const String kApplicationPathAndroidTest = "/storage/emulated/0/Documents/test/audiolearn";
 const String kPlaylistDownloadRootPathAndroidTest =
-    "/storage/emulated/0/Documents/test/audiolearn/playlists";
+    "/storage/emulated/0/Documents/test/audiolearn/$kImposedPlaylistsSubDirName";
 const String kApplicationPicturePathAndroidTest =
     "/storage/emulated/0/Documents/test/audiolearn/pictures";
 
@@ -50,7 +51,7 @@ const String kApplicationPicturePathAndroidTest =
 const String kApplicationPathWindows =
     "C:\\audiolearn";
 const String kPlaylistDownloadRootPathWindows =
-    "C:\\audiolearn\\playlists";
+    "C:\\audiolearn\\$kImposedPlaylistsSubDirName";
 const String kApplicationPicturePathWindows =
     "C:\\audiolearn\\pictures";
 
@@ -58,7 +59,7 @@ const String kApplicationPicturePathWindows =
 const String kApplicationPathWindowsTest =
     "C:\\development\\flutter\\audiolearn\\test\\data\\audio";
 const String kPlaylistDownloadRootPathWindowsTest =
-    "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists";
+    "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$kImposedPlaylistsSubDirName";
 const String kApplicationPicturePathWindowsTest =
     "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\pictures";
 

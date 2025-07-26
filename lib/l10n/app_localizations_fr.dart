@@ -1777,4 +1777,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get audioMp3UniquePlaylistRestorationExplanation => 'Seuls les fichiers MP3 qui correspondent aux audio\'s listés dans la playlist et qui ne sont pas déjà présents dans cette playlist sont restaurés.';
+
+  @override
+  String playlistInvalidRootPathWarning(Object playlistRootPath) {
+    return 'Le répertoire défini \"$playlistRootPath\" est invalid du fait que le nom du répertoire playlists est différent de \'playlists\'. Veuillez renommer le nouveau répertoire contenant les playlists et réffectuer son changement';
+  }
 }

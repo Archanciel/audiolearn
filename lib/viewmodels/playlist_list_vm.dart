@@ -4493,6 +4493,11 @@ class PlaylistListVM extends ChangeNotifier {
     required String actualPlaylistRootPath,
     required String modifiedPlaylistRootPath,
   }) {
+    // if (!_settingsDataService.isTest && !actualPlaylistRootPath.endsWith(kImposedPlaylistsSubDirName)) {
+    // if (!actualPlaylistRootPath.endsWith(kImposedPlaylistsSubDirName)) {
+    //   // No change in the playlists root path.
+    //   return;
+    // } not working
     _settingsDataService.savePlaylistTitleOrder(
       directory: actualPlaylistRootPath,
     );
