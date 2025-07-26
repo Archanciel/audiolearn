@@ -1766,7 +1766,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           testWidgets(
               '''Modify all parms in 'Title asc' existing named and saved SF parms.
                  Then save it and verify ConfirmActionDialog content. Then reedit
-                 and modify all sort/filter parms and save it with on the same name
+                 and modify all sort/filter parms and save it with the same name
                  to verify that the ConfirmActionDialog content contains every
                  sort/filter parm.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
@@ -1853,12 +1853,22 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             );
             await tester.pumpAndSettle();
 
-            // Tap on the Comment checkbox to unselect it
+            // Tap on the Music qual. checkbox to unselect it
+            await tester.tap(find.byKey(const Key('filterMusicQualityCheckbox')));
+            await tester.pumpAndSettle();
+
+            // Tap on the Spoken qual. checkbox to unselect it. This deselect
+            // Spoken qual. and reselcet Music qual.
+            await tester
+                .tap(find.byKey(const Key('filterSpokenQualityCheckbox')));
+            await tester.pumpAndSettle();
+
+            // Tap on the Commented checkbox to unselect it
             await tester.tap(find.byKey(const Key('filterCommentedCheckbox')));
             await tester.pumpAndSettle();
 
             // Tap on the Uncom. checkbox to unselect it. This deselect
-            // Uncom. and reselct Comment.
+            // Uncom. and reselect Commented.
             await tester
                 .tap(find.byKey(const Key('filterNotCommentedCheckbox')));
             await tester.pumpAndSettle();
@@ -1868,7 +1878,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.pumpAndSettle();
 
             // Tap on the Unpictured checkbox to unselect it. This deselect
-            // Unpictured and reselct Pictured.
+            // Unpictured and reselect Pictured.
             await tester
                 .tap(find.byKey(const Key('filterNotPicturedCheckbox')));
             await tester.pumpAndSettle();
@@ -1905,11 +1915,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Tap on the Search in Youtube compact description checkbox to unselect it
             await tester
                 .tap(find.byKey(const Key('searchInYoutubeChannelName')));
-            await tester.pumpAndSettle();
-
-            // Tap on the Music quality checkbox to select it
-            await tester
-                .tap(find.byKey(const Key('filterMusicQualityCheckbox')));
             await tester.pumpAndSettle();
 
             // Set start and end audio download dates
@@ -2041,7 +2046,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
-                  "Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Audio chapter asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Audio downl speed desc,\n   Audio downl duration desc\nFilter words:\n Present only in modified version:\n   'Marine Le Pen',\n   'Emmanuel Macron'\nFilter options:\n In initial version:\n   Ignore case: checked\n In modified version:\n   Ignore case: unchecked\n In initial version:\n   Include Youtube channel: checked\n In modified version:\n   Include Youtube\n   channel: unchecked\n In initial version:\n   Music qual.: unchecked\n In modified version:\n   Music qual.: checked\n In initial version:\n   Uncom.: checked\n In modified version:\n   Uncom.: unchecked\n In initial version:\n   Unpictured: checked\n In modified version:\n   Unpictured: unchecked\n In initial version:\n   Not playable: checked\n In modified version:\n   Not playable: unchecked\n In initial version:\n   Imported: checked\n In modified version:\n   Imported: unchecked\n In modified version:\n   Start downl date: 26/12/2023\n In modified version:\n   End downl date: 06/01/2024\n In modified version:\n   Start upl date: 12/06/2022\n In modified version:\n   End upl date: 19/09/2023\n In modified version:\n   File size range (MB) Start: 2.37\n In modified version:\n   File size range (MB) End: 2.8\n In modified version:\n   Audio duration range (hh:mm)\n   Start: 00:06\n In modified version:\n   Audio duration range (hh:mm)\n   End: 00:08",
+                  "Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Audio chapter asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Audio downl speed desc,\n   Audio downl duration desc\nFilter words:\n Present only in modified version:\n   'Marine Le Pen',\n   'Emmanuel Macron'\nFilter options:\n In initial version:\n   Ignore case: checked\n In modified version:\n   Ignore case: unchecked\n In initial version:\n   Include Youtube channel: checked\n In modified version:\n   Include Youtube\n   channel: unchecked\n In initial version:\n   Spoken q.: checked\n In modified version:\n   Spoken q.: unchecked\n In initial version:\n   Uncom.: checked\n In modified version:\n   Uncom.: unchecked\n In initial version:\n   Unpictured: checked\n In modified version:\n   Unpictured: unchecked\n In initial version:\n   Not playable: checked\n In modified version:\n   Not playable: unchecked\n In initial version:\n   Imported: checked\n In modified version:\n   Imported: unchecked\n In modified version:\n   Start downl date: 26/12/2023\n In modified version:\n   End downl date: 06/01/2024\n In modified version:\n   Start upl date: 12/06/2022\n In modified version:\n   End upl date: 19/09/2023\n In modified version:\n   File size range (MB) Start: 2.37\n In modified version:\n   File size range (MB) End: 2.8\n In modified version:\n   Audio duration range (hh:mm)\n   Start: 00:06\n In modified version:\n   Audio duration range (hh:mm)\n   End: 00:08",
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -3164,7 +3169,17 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             );
             await tester.pumpAndSettle();
 
-            // Tap on the Comment checkbox to unselect it
+            // Tap on the Music qual. checkbox to unselect it
+            await tester.tap(find.byKey(const Key('filterMusicQualityCheckbox')));
+            await tester.pumpAndSettle();
+
+            // Tap on the Spoken qual. checkbox to unselect it. This deselect
+            // Spoken qual. and reselcet Music qual.
+            await tester
+                .tap(find.byKey(const Key('filterSpokenQualityCheckbox')));
+            await tester.pumpAndSettle();
+
+            // Tap on the Commented checkbox to unselect it
             await tester.tap(find.byKey(const Key('filterCommentedCheckbox')));
             await tester.pumpAndSettle();
 
@@ -3216,11 +3231,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Tap on the Search in Youtube compact description checkbox to unselect it
             await tester
                 .tap(find.byKey(const Key('searchInYoutubeChannelName')));
-            await tester.pumpAndSettle();
-
-            // Tap on the Music quality checkbox to select it
-            await tester
-                .tap(find.byKey(const Key('filterMusicQualityCheckbox')));
             await tester.pumpAndSettle();
 
             // Set start and end audio download dates
@@ -3352,7 +3362,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
-                  "Trier par:\n Uniquement en version initiale:\n   Titre audio desc\n Uniquement en version modifiée:\n   Titre audio asc,\n   Chapitre audio asc,\n   Date mise en ligne vidéo desc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Vitesse téléch audio desc,\n   Durée téléch audio desc\nMots filtre:\n Uniquement en version modifiée:\n   'Marine Le Pen',\n   'Emmanuel Macron'\nOptions filtre:\n En version initiale:\n   Ignorer la casse: coché\n En version modifiée:\n   Ignorer la casse: décoché\n En version initiale:\n   Inclure la chaîne Youtube: coché\n En version modifiée:\n   Inclure la chaîne\n   Youtube: décoché\n En version initiale:\n   Qual. musicale: décoché\n En version modifiée:\n   Qual. musicale: coché\n En version initiale:\n   Non com.: coché\n En version modifiée:\n   Non com.: décoché\n En version initiale:\n   Sans ph.: coché\n En version modifiée:\n   Sans ph.: décoché\n En version initiale:\n   Jouable: coché\n En version modifiée:\n   Jouable: décoché\n En version initiale:\n   Téléchargé: coché\n En version modifiée:\n   Téléchargé: décoché\n En version modifiée:\n   Date début téléch: 26/12/2023\n En version modifiée:\n   Date fin téléch: 06/01/2024\n En version modifiée:\n   Date début mise en\n   ligne: 12/06/2022\n En version modifiée:\n   Date fin mise en\n   ligne: 19/09/2023\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Début: 2.37\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Fin: 2.8\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Début: 00:06\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Fin: 00:08",
+                  "Trier par:\n Uniquement en version initiale:\n   Titre audio desc\n Uniquement en version modifiée:\n   Titre audio asc,\n   Chapitre audio asc,\n   Date mise en ligne vidéo desc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Vitesse téléch audio desc,\n   Durée téléch audio desc\nMots filtre:\n Uniquement en version modifiée:\n   'Marine Le Pen',\n   'Emmanuel Macron'\nOptions filtre:\n En version initiale:\n   Ignorer la casse: coché\n En version modifiée:\n   Ignorer la casse: décoché\n En version initiale:\n   Inclure la chaîne Youtube: coché\n En version modifiée:\n   Inclure la chaîne\n   Youtube: décoché\n En version initiale:\n   Q. orale: coché\n En version modifiée:\n   Q. orale: décoché\n En version initiale:\n   Non com.: coché\n En version modifiée:\n   Non com.: décoché\n En version initiale:\n   Sans ph.: coché\n En version modifiée:\n   Sans ph.: décoché\n En version initiale:\n   Jouable: coché\n En version modifiée:\n   Jouable: décoché\n En version initiale:\n   Téléchargé: coché\n En version modifiée:\n   Téléchargé: décoché\n En version modifiée:\n   Date début téléch: 26/12/2023\n En version modifiée:\n   Date fin téléch: 06/01/2024\n En version modifiée:\n   Date début mise en\n   ligne: 12/06/2022\n En version modifiée:\n   Date fin mise en\n   ligne: 19/09/2023\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Début: 2.37\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Fin: 2.8\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Début: 00:06\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Fin: 00:08",
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
