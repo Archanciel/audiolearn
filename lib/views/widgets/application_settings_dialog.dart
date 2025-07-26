@@ -4,6 +4,7 @@ import 'package:audiolearn/models/help_item.dart';
 import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as path;
 import '../../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +34,7 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
   bool _applyAudioPlaySpeedToExistingPlaylists = false;
   bool _applyAudioPlaySpeedToAlreadyDownloadedAudios = false;
   late final List<HelpItem> _helpItemsLst;
-  String _playlistRootPath = '';
+  String _applicationDialogPlaylistRootPath = '';
 
   @override
   void initState() {
@@ -45,7 +46,7 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
             settingSubType: Playlists.playSpeed) ??
         1.0;
 
-    _playlistRootPath = widget.settingsDataService.get(
+    _applicationDialogPlaylistRootPath = widget.settingsDataService.get(
             settingType: SettingType.dataLocation,
             settingSubType: DataLocation.playlistRootPath) ??
         '';
@@ -148,7 +149,7 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width,
                       child: Text(
-                        _playlistRootPath,
+                        _applicationDialogPlaylistRootPath,
                         key: const Key('playlistsRootPathText'),
                       ),
                     ),
@@ -225,18 +226,33 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
     // the path was changed and saving the playlists title order list in
     // the previous root path.
 
-    String actualPlaylistRootPath = widget.settingsDataService.get(
+    String settingsDataServicePlaylistRootPath =
+        widget.settingsDataService.get(
       settingType: SettingType.dataLocation,
       settingSubType: DataLocation.playlistRootPath,
     );
 
-    if (actualPlaylistRootPath == _playlistRootPath) {
-      // If the playlist root path is not changed, doesn't update the
-      // settings and the playlist json files.
+    String lastComponent = path.basename(_applicationDialogPlaylistRootPath);
+    
+    if (lastComponent != kImposedPlaylistsSubDirName) {
+      // If the modified playlist directory name is invalid (must be 'playlists'), a warning
+      // is displayed and return is performed, so that the modified playlist dir is ignored.
+      Provider.of<WarningMessageVM>(
+        context,
+        listen: false,
+      ).signalInvalidPlaylistRootDirName(
+        playlistInvalidRootPath: _applicationDialogPlaylistRootPath,
+      );
+
+      return;
+    }
+    if (settingsDataServicePlaylistRootPath ==
+            _applicationDialogPlaylistRootPath ||
+        _applicationDialogPlaylistRootPath.isEmpty) {
       return;
     }
 
-    final Directory directory = Directory(_playlistRootPath);
+    final Directory directory = Directory(_applicationDialogPlaylistRootPath);
 
     if (!directory.existsSync()) {
       // If the modified playlist root path does not exist, a warning
@@ -245,15 +261,15 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
         context,
         listen: false,
       ).setPlaylistInexistingRootPath(
-        playlistInexistingRootPath: _playlistRootPath,
+        playlistInexistingRootPath: _applicationDialogPlaylistRootPath,
       );
 
       return;
     }
 
     playlistListVMlistenFalse.updatePlaylistRootPathAndSavePlaylistTitleOrder(
-      actualPlaylistRootPath: actualPlaylistRootPath,
-      modifiedPlaylistRootPath: _playlistRootPath,
+      actualPlaylistRootPath: settingsDataServicePlaylistRootPath,
+      modifiedPlaylistRootPath: _applicationDialogPlaylistRootPath,
     );
   }
 
@@ -358,7 +374,7 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
                   String? selectedDir = await _filePickerSelectDirectory();
 
                   if (selectedDir != null) {
-                    _playlistRootPath = selectedDir;
+                    _applicationDialogPlaylistRootPath = selectedDir;
                   }
 
                   setState(() {}); // required, otherwise the TextButton

@@ -3202,6 +3202,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Only the MP3 relative to the audio\'s listed in the playlist and which are not already present in the playlist are restorable.'**
   String get audioMp3UniquePlaylistRestorationExplanation;
+
+  /// No description provided for @playlistInvalidRootPathWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'The defined path \"{playlistRootPath}\" is invalid since the playlists dir is not equal to \'playlists\'. Please define a valid playlist directory and retry changing the playlists root path.'**
+  String playlistInvalidRootPathWarning(Object playlistRootPath);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
