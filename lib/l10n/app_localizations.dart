@@ -3206,7 +3206,7 @@ abstract class AppLocalizations {
   /// No description provided for @playlistInvalidRootPathWarning.
   ///
   /// In en, this message translates to:
-  /// **'The defined path \"{playlistRootPath}\" is invalid since the playlists dir is not equal to \'playlists\'. Please define a valid playlist directory and retry changing the playlists root path.'**
+  /// **'The defined path \"{playlistRootPath}\" is invalid since the playlists final dir name is not equal to \'playlists\'. Please define a valid playlist directory and retry changing the playlists root path.'**
   String playlistInvalidRootPathWarning(Object playlistRootPath);
 }
 
