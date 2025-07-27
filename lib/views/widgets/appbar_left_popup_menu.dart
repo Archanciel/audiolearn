@@ -4,6 +4,7 @@ import 'package:audiolearn/utils/ui_util.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:googleapis/admob/v1.dart';
 import '../../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -883,13 +884,28 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
               return;
             }
 
-            final PlaylistListVM playlistListVMlistenFalse =
-                Provider.of<PlaylistListVM>(
+            final DateFormatVM dateFormatVMlistenFalse =
+                Provider.of<DateFormatVM>(
               context,
               listen: false,
             );
-            final DateFormatVM dateFormatVMlistenFalse =
-                Provider.of<DateFormatVM>(
+
+            final List<HelpItem> savePlaylistsMp3HelpItemsLst = [
+              HelpItem(
+                helpTitle:
+                    AppLocalizations.of(context)!.playlistsMp3SaveHelpTitle,
+                helpContent: AppLocalizations.of(context)!
+                    .playlistsMp3SaveHelpContent(
+                      dateFormatVMlistenFalse.formatDate(DateTime(2025,7,27)), // Example date,
+                      dateFormatVMlistenFalse.formatDate(DateTime(2025,6,20)), // Example date,
+                      dateFormatVMlistenFalse.formatDate(DateTime(2025,6,15)), // Example date,
+                    ),
+                displayHelpItemNumber: false,
+              ),
+            ];
+
+            final PlaylistListVM playlistListVMlistenFalse =
+                Provider.of<PlaylistListVM>(
               context,
               listen: false,
             );
@@ -916,6 +932,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   ),
                   targetNamesLst: [],
                   validationFunctionArgs: [],
+                  helpItemsLst: savePlaylistsMp3HelpItemsLst,
                 );
               },
             ).then((resultStringLst) async {

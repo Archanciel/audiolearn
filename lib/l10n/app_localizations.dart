@@ -3422,6 +3422,32 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This function is useful in the situation where the playlist was restored from a ZIP file which only contained the playlist, comments and pictures JSON files and so did not contain the audio MP3 files.'**
   String get uniquePlaylistMp3RestorationHelpContent;
+
+  /// No description provided for @playlistsMp3SaveHelpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlists Mp3 Save Function'**
+  String get playlistsMp3SaveHelpTitle;
+
+  /// No description provided for @playlistsMp3SaveHelpContent.
+  ///
+  /// In en, this message translates to:
+  /// **'If you already executed this save MP3 functionality a couple of weeks ago, the following example will help you to understand the result of the new save playlists MP3 execution. Consider that the first created MP3 saved ZIP is named audioLearn_mp3_from_2023-05-17_07_03_50_on_2025-06-15_11_59_38.zip. Now, on {dateOne} at 10:00 you do a new playlist MP3 backup with setting the oldest audio download date to {dateTwo}, i.e. the date on which the previous MP3 ZIP file was created. But if the newly created ZIP file is named audioLearn_mp3_from_2025-06-20_09_25_34_on_2025-07-27_16_23_32.zip and not audioLearn_mp3_from_2025-06-15_on_2025-07-27_16_23_32.zip, the reason is that the oldest downloaded audio after {dateTwo} was downloaded on {dateThree} 09:25:34.'**
+  String playlistsMp3SaveHelpContent(
+      Object dateOne, Object dateThree, Object dateTwo);
+
+  /// No description provided for @uniquePlaylistMp3SaveHelpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist Mp3 Save Function'**
+  String get uniquePlaylistMp3SaveHelpTitle;
+
+  /// No description provided for @uniquePlaylistMp3SaveHelpContent.
+  ///
+  /// In en, this message translates to:
+  /// **'If you already executed this save MP3 functionality a couple of weeks ago, the following example will help you to understand the result of the new save playlist MP3 execution. Consider that the first created MP3 saved ZIP is named audioLearn_mp3_from_2023-05-17_07_03_50_on_2025-06-15_11_59_38.zip. Now, on {dateOne} at 10:00 you do a new playlist MP3 backup with setting the oldest audio download date to {dateTwo}, i.e. the date on which the previous MP3 ZIP file was created. But if the newly created ZIP file is named audioLearn_mp3_from_2025-06-20_09_25_34_on_2025-07-27_16_23_32.zip and not audioLearn_mp3_from_2025-06-15_on_2025-07-27_16_23_32.zip, the reason is that the oldest downloaded audio after {dateTwo} was downloaded on {dateThree} 09:25:34.'**
+  String uniquePlaylistMp3SaveHelpContent(
+      Object dateOne, Object dateThree, Object dateTwo);
 }
 
 class _AppLocalizationsDelegate

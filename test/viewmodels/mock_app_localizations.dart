@@ -2195,4 +2195,26 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get uniquePlaylistMp3RestorationHelpTitle =>
       "Playlist Mp3 Restoration Function";
+
+  @override
+  String get playlistsMp3SaveHelpTitle => "Playlists Mp3 Save Function";
+
+  @override
+  String playlistsMp3SaveHelpContent(
+    Object dateOne,
+    Object dateTwo,
+    Object dateThree,
+  ) =>
+      "If you already executed this save MP3 functionality a couple of weeks ago, the following example will help you to understand the result of the new playlists MP3 save. Consider that the first created MP3 save ZIP is named audioLearn_mp3_from_2023-05-17_07_03_50_on_2025-06-15_11_59_38.zip. Now, on $dateOne at 10:00 you do a new playlist MP3 backup with setting the oldest audio download date to $dateTwo, i.e. the date on which the previous MP3 ZIP file was created. But if the newly created ZIP file is named audioLearn_mp3_from_2025-06-20_09_25_34_on_2025-07-27_16_23_32.zip and not audioLearn_mp3_from_2025-06-15_on_2025-07-27_16_23_32.zip, the reason is that the oldest downloaded audio after $dateTwo was downloaded on $dateThree 09:25:34.";
+
+  @override
+  String get uniquePlaylistMp3SaveHelpTitle => "Playlist Mp3 Save Function";
+
+  @override
+  String uniquePlaylistMp3SaveHelpContent(
+    Object dateOne,
+    Object dateTwo,
+    Object dateThree,
+  ) =>
+      "If you already executed this save MP3 functionality a couple of weeks ago, the following example will help you to understand the result of the new save playlist MP3 execution. Consider that the first created MP3 saved ZIP is named audioLearn_mp3_from_2023-05-17_07_03_50_on_2025-06-15_11_59_38.zip. Now, on $dateOne at 10:00 you do a new playlist MP3 backup with setting the oldest audio download date to $dateTwo, i.e. the date on which the previous MP3 ZIP file was created. But if the newly created ZIP file is named audioLearn_mp3_from_2025-06-20_09_25_34_on_2025-07-27_16_23_32.zip and not audioLearn_mp3_from_2025-06-15_on_2025-07-27_16_23_32.zip, the reason is that the oldest downloaded audio after $dateTwo was downloaded on $dateThree 09:25:34.";
 }

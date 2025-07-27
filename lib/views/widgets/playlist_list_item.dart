@@ -548,6 +548,20 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               listen: false,
             );
 
+            final List<HelpItem> savePlaylistMp3HelpItemsLst = [
+              HelpItem(
+                helpTitle:
+                    AppLocalizations.of(context)!.uniquePlaylistMp3SaveHelpTitle,
+                helpContent: AppLocalizations.of(context)!
+                    .uniquePlaylistMp3SaveHelpContent(
+                      dateFormatVMlistenFalse.formatDate(DateTime(2025,7,27)), // Example date,
+                      dateFormatVMlistenFalse.formatDate(DateTime(2025,6,20)), // Example date,
+                      dateFormatVMlistenFalse.formatDate(DateTime(2025,6,15)), // Example date,
+                    ),
+                displayHelpItemNumber: false,
+              ),
+            ];
+
             showDialog<List<String>>(
               barrierDismissible:
                   false, // Prevents the dialog from closing when tapping outside.
@@ -569,6 +583,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   ),
                   targetNamesLst: [],
                   validationFunctionArgs: [],
+                  helpItemsLst: savePlaylistMp3HelpItemsLst,
                 );
               },
             ).then((resultStringLst) async {
