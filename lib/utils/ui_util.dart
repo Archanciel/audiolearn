@@ -125,6 +125,7 @@ class UiUtil {
   static Future<void> restorePlaylistsAudioMp3FilesFromZip({
     required BuildContext context,
     required List<Playlist> playlistsLst,
+    bool uniquePlaylistIsRestored = false,
   }) async {
     String selectedZipFilePathName = await filePickerSelectZipFilePathName();
 
@@ -138,6 +139,7 @@ class UiUtil {
     ).restorePlaylistsAudioMp3FilesFromZip(
       zipFilePathName: selectedZipFilePathName,
       listOfPlaylists: playlistsLst,
+      uniquePlaylistIsRestored: uniquePlaylistIsRestored,
     );
   }
 

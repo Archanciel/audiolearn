@@ -1428,5 +1428,7 @@
   "restorePlaylistAudioMp3FilesFromZipTooltip": "Restaure les audio's MP3 de la playlist à partir d'un fichier ZIP préalablement sauvé. Seuls les fichiers MP3 qui correspondent aux audio's listés dans la playlist et qui ne sont pas déjà présents dans cette playlist sont restaurés.",
   "audioMp3UniquePlaylistRestorationDialogTitle": "Restauration des MP3",
   "audioMp3UniquePlaylistRestorationExplanation": "Seuls les fichiers MP3 qui correspondent aux audio's listés dans la playlist et qui ne sont pas déjà présents dans cette playlist sont restaurés.",
-  "playlistInvalidRootPathWarning": "Le répertoire défini \"{playlistRootPath}\" est invalide du fait que le nom du répertoire final '{wrongName}' devant contenir les playlists est différent de 'playlists'. Veuillez renommer le nouveau répertoire contenant les playlists et rééffectuer son changement"
+  "playlistInvalidRootPathWarning": "Le répertoire défini \"{playlistRootPath}\" est invalide du fait que le nom du répertoire final '{wrongName}' devant contenir les playlists est différent de 'playlists'. Veuillez renommer le nouveau répertoire contenant les playlists et rééffectuer son changement",
+  "restoringUniquePlaylistAudioMp3": "Restoration des fichiers audio de la playlist {playlistTitle} ...",
+  "restoringMultiplePlaylistsAudioMp3": "Restoration des fichiers audio de multiples playlists ..."
 }

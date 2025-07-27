@@ -235,9 +235,13 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         // informations or nothing.
         _buildDisplayDownloadProgressionInfo(),
 
-        // displaying the currently playlist(s) audio saved to
+        // displaying the currently playlist(s) audio MP3 saved to
         // ZIP informations or nothing.
         _buildDisplayPlaylistsMp3SaveToZipProgressionInfo(),
+
+        // displaying the currently playlist(s) audio MMP3 restored
+        // from ZIP informations or nothing.
+        _buildDisplayPlaylistsMp3RestoreFromZipProgressionInfo(),
 
         _buildSecondLine(
             context: context,
@@ -614,12 +618,12 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     );
   }
 
-  /// If an audio is downloading, the download progression is displayed.
+  /// If playlists MP3 are saved to a ZIP file, the save progression is displayed.
   /// Otherwise, nothing is displayed.
   Consumer<PlaylistListVM> _buildDisplayPlaylistsMp3SaveToZipProgressionInfo() {
     return Consumer<PlaylistListVM>(
       builder: (context, playlistListVMlistenTrue, child) {
-        if (playlistListVMlistenTrue.isSaving) {
+        if (playlistListVMlistenTrue.isSavingMp3) {
           String audioMp3SaveUniquePlaylistName =
               playlistListVMlistenTrue.audioMp3SaveUniquePlaylistName;
           return Padding(
@@ -646,6 +650,48 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                       playlistListVMlistenTrue.savingAudioMp3FileToZipDuration
                           .HHmmss()),
                 ),
+              ],
+            ),
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
+    );
+  }
+
+  /// If playlists MP3 are restored from a ZIP file, the restore progression is displayed.
+  /// Otherwise, nothing is displayed.
+  Consumer<PlaylistListVM> _buildDisplayPlaylistsMp3RestoreFromZipProgressionInfo() {
+    return Consumer<PlaylistListVM>(
+      builder: (context, playlistListVMlistenTrue, child) {
+        if (playlistListVMlistenTrue.isRestoringMp3) {
+          String audioMp3RestoreUniquePlaylistName =
+              playlistListVMlistenTrue.audioMp3RestoreUniquePlaylistName;
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Text(
+                  key: const Key('restoring_playlists_audio_mp3_to_zip'),
+                  (audioMp3RestoreUniquePlaylistName.isNotEmpty)
+                      ? AppLocalizations.of(context)!
+                          .restoringUniquePlaylistAudioMp3(
+                          audioMp3RestoreUniquePlaylistName,
+                        )
+                      : AppLocalizations.of(context)!
+                          .restoringMultiplePlaylistsAudioMp3,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10.0),
+                LinearProgressIndicator(), // Indeterminate progress bar
+                // const SizedBox(height: 10.0),
+                // Text(
+                //   key: const Key('restoring_please_wait'),
+                //   AppLocalizations.of(context)!.savingApproximativeTime(
+                //       playlistListVMlistenTrue.savingAudioMp3FileToZipDuration
+                //           .HHmmss()),
+                // ),
               ],
             ),
           );

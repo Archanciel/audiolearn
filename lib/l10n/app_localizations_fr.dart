@@ -1782,4 +1782,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String playlistInvalidRootPathWarning(Object playlistRootPath, Object wrongName) {
     return 'Le répertoire défini \"$playlistRootPath\" est invalide du fait que le nom du répertoire final \'$wrongName\' devant contenir les playlists est différent de \'playlists\'. Veuillez renommer le nouveau répertoire contenant les playlists et rééffectuer son changement';
   }
+
+  @override
+  String restoringUniquePlaylistAudioMp3(Object playlistTitle) {
+    return 'Restoration des fichiers audio de la playlist $playlistTitle ...';
+  }
+
+  @override
+  String get restoringMultiplePlaylistsAudioMp3 => 'Restoration des fichiers audio de multiples playlists ...';
 }

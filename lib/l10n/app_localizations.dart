@@ -3208,6 +3208,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The defined path \"{playlistRootPath}\" is invalid since the playlists final dir name \'{wrongName}\' is not equal to \'playlists\'. Please define a valid playlist directory and retry changing the playlists root path.'**
   String playlistInvalidRootPathWarning(Object playlistRootPath, Object wrongName);
+
+  /// No description provided for @restoringUniquePlaylistAudioMp3.
+  ///
+  /// In en, this message translates to:
+  /// **'Restoring {playlistTitle} audio files from ZIP ...'**
+  String restoringUniquePlaylistAudioMp3(Object playlistTitle);
+
+  /// No description provided for @restoringMultiplePlaylistsAudioMp3.
+  ///
+  /// In en, this message translates to:
+  /// **'Restoring multiple playlists audio files from ZIP ...'**
+  String get restoringMultiplePlaylistsAudioMp3;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
