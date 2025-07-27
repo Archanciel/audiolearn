@@ -2147,4 +2147,24 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get uniquePlaylistMp3RestorationHelpContent =>
       'This function is useful in the situation where the playlist was restored from a ZIP file which only contained the playlist, comments and pictures JSON files and so did not contain the audio MP3 files.';
+
+  @override
+  String get playlistsMp3SaveHelpTitle =>
+      'Fonction de sauvegarde MP3 des playlists';
+
+  @override
+  String playlistsMp3SaveHelpContent(
+      Object dateOne, Object dateThree, Object dateTwo) {
+    return 'Si vous avez déjà exécuté cette fonctionnalité de sauvegarde MP3 il y a quelques semaines, l\'exemple suivant vous aidera à comprendre le résultat de la nouvelle exécution de sauvegarde MP3 des playlists. Considérez que le premier fichier ZIP MP3 sauvegardé est nommé audioLearn_mp3_from_2023-05-17_07_03_50_on_2025-06-15_11_59_38.zip. Maintenant, le $dateOne à 10:00 vous effectuez une nouvelle sauvegarde MP3 des playlists en définissant la date de téléchargement audio la plus ancienne au $dateTwo, c\'est-à-dire la date à laquelle le fichier ZIP MP3 précédent a été créé. Mais si le fichier ZIP nouvellement créé est nommé audioLearn_mp3_from_2025-06-20_09_25_34_on_2025-07-27_16_23_32.zip et non audioLearn_mp3_from_2025-06-15_on_2025-07-27_16_23_32.zip, la raison est que l\'audio téléchargé le plus ancien après le $dateTwo a été téléchargé le $dateThree 09:25:34.';
+  }
+
+  @override
+  String get uniquePlaylistMp3SaveHelpTitle =>
+      'Fonction de sauvegarde MP3 de la playlist';
+
+  @override
+  String uniquePlaylistMp3SaveHelpContent(
+      Object dateOne, Object dateThree, Object dateTwo) {
+    return 'Si vous avez déjà exécuté cette fonctionnalité de sauvegarde MP3 il y a quelques semaines, l\'exemple suivant vous aidera à comprendre le résultat de la nouvelle exécution de sauvegarde MP3 de la playlist. Considérez que le premier fichier ZIP MP3 sauvegardé est nommé audioLearn_mp3_from_2023-05-17_07_03_50_on_2025-06-15_11_59_38.zip. Maintenant, le $dateOne à 10:00 vous effectuez une nouvelle sauvegarde MP3 de la playlist en définissant la date de téléchargement audio la plus ancienne au $dateTwo, c\'est-à-dire la date à laquelle le fichier ZIP MP3 précédent a été créé. Mais si le fichier ZIP nouvellement créé est nommé audioLearn_mp3_from_2025-06-20_09_25_34_on_2025-07-27_16_23_32.zip et non audioLearn_mp3_from_2025-06-15_on_2025-07-27_16_23_32.zip, la raison est que l\'audio téléchargé le plus ancien après le $dateTwo a été téléchargé le $dateThree 09:25:34.';
+  }
 }
