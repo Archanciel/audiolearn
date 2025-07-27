@@ -196,11 +196,18 @@ class PlaylistListVM extends ChangeNotifier {
 
   final Logger _logger = Logger();
 
-  bool _isSaving = false;
-  bool get isSaving => _isSaving;
+  bool _isSavingMp3 = false;
+  bool get isSavingMp3 => _isSavingMp3;
+
+  bool _isRestoringMp3 = false;
+  bool get isRestoringMp3 => _isRestoringMp3;
 
   String _audioMp3SaveUniquePlaylistName = '';
   String get audioMp3SaveUniquePlaylistName => _audioMp3SaveUniquePlaylistName;
+
+  String _audioMp3RestoreUniquePlaylistName = '';
+  String get audioMp3RestoreUniquePlaylistName =>
+      _audioMp3RestoreUniquePlaylistName;
 
   Duration _savingAudioMp3FileToZipDuration = Duration.zero;
   Duration get savingAudioMp3FileToZipDuration =>
@@ -3160,7 +3167,7 @@ class PlaylistListVM extends ChangeNotifier {
     final stopwatch = Stopwatch()..start();
 
     // Start the timer and saving state before processing files
-    _isSaving = true;
+    _isSavingMp3 = true;
     notifyListeners();
 
     // Iterate through all playlists
@@ -3212,7 +3219,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     if (!hasAudioFiles) {
       // Stops the timer and saving state if no audio files were found
-      _isSaving = false;
+      _isSavingMp3 = false;
       notifyListeners();
 
       return [];
@@ -3234,7 +3241,7 @@ class PlaylistListVM extends ChangeNotifier {
             .round();
 
     // Stops the timer and saving state after processing files
-    _isSaving = false;
+    _isSavingMp3 = false;
     notifyListeners();
 
     return [
@@ -4356,12 +4363,17 @@ class PlaylistListVM extends ChangeNotifier {
   Future<int> restorePlaylistsAudioMp3FilesFromZip({
     required String zipFilePathName,
     required List<Playlist> listOfPlaylists,
+    bool uniquePlaylistIsRestored = false,
   }) async {
     int restoredAudioCount = 0;
 
+    if (uniquePlaylistIsRestored) {
+      _audioMp3RestoreUniquePlaylistName = listOfPlaylists[0].title;
+    }
+
     // Check if zip file exists
     File zipFile = File(zipFilePathName);
-    
+
     if (!zipFile.existsSync()) {
       return 0;
     }
@@ -4377,6 +4389,9 @@ class PlaylistListVM extends ChangeNotifier {
       for (Playlist playlist in listOfPlaylists) {
         playlistMap[playlist.title] = playlist;
       }
+
+      _isRestoringMp3 = true;
+      notifyListeners();
 
       // Process each file in the archive
       for (ArchiveFile file in archive) {
@@ -4443,6 +4458,9 @@ class PlaylistListVM extends ChangeNotifier {
           }
         }
       }
+
+      _isRestoringMp3 = false;
+      notifyListeners();
     } catch (e) {
       // Log error and return current count
       _logger.i('Error processing ZIP file $zipFilePathName: $e');

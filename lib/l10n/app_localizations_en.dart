@@ -1782,4 +1782,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String playlistInvalidRootPathWarning(Object playlistRootPath, Object wrongName) {
     return 'The defined path \"$playlistRootPath\" is invalid since the playlists final dir name \'$wrongName\' is not equal to \'playlists\'. Please define a valid playlist directory and retry changing the playlists root path.';
   }
+
+  @override
+  String restoringUniquePlaylistAudioMp3(Object playlistTitle) {
+    return 'Restoring $playlistTitle audio files from ZIP ...';
+  }
+
+  @override
+  String get restoringMultiplePlaylistsAudioMp3 => 'Restoring multiple playlists audio files from ZIP ...';
 }

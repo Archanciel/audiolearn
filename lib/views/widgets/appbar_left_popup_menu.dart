@@ -693,16 +693,6 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             ),
           ),
           PopupMenuItem<AppBarPopupMenu>(
-            key: const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip'),
-            value: AppBarPopupMenu.savePlaylistsAudioMp3FilesToZip,
-            child: Tooltip(
-              message: AppLocalizations.of(context)!
-                  .savePlaylistsAudioMp3FilesToZipTooltip,
-              child: Text(AppLocalizations.of(context)!
-                  .savePlaylistsAudioMp3FilesToZipMenu),
-            ),
-          ),
-          PopupMenuItem<AppBarPopupMenu>(
             key: const Key(
                 'appBarMenuRestorePlaylistsCommentsAndSettingsFromZip'),
             value: AppBarPopupMenu.restorePlaylistAndCommentsFromZip,
@@ -711,6 +701,16 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   .restorePlaylistAndCommentsFromZipTooltip,
               child: Text(AppLocalizations.of(context)!
                   .restorePlaylistAndCommentsFromZipMenu),
+            ),
+          ),
+          PopupMenuItem<AppBarPopupMenu>(
+            key: const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip'),
+            value: AppBarPopupMenu.savePlaylistsAudioMp3FilesToZip,
+            child: Tooltip(
+              message: AppLocalizations.of(context)!
+                  .savePlaylistsAudioMp3FilesToZipTooltip,
+              child: Text(AppLocalizations.of(context)!
+                  .savePlaylistsAudioMp3FilesToZipMenu),
             ),
           ),
           PopupMenuItem<AppBarPopupMenu>(
@@ -813,6 +813,67 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             await UiUtil.savePlaylistsCommentsPicturesAndAppSettingsToZip(
               context: context,
             );
+            break;
+          case AppBarPopupMenu.restorePlaylistAndCommentsFromZip:
+            final List<HelpItem> restorePlaylistsHelpItemsLst = [
+              HelpItem(
+                helpTitle:
+                    AppLocalizations.of(context)!.playlistRestorationHelpTitle,
+                helpContent: AppLocalizations.of(context)!
+                    .restorePlaylistAndCommentsFromZipTooltip,
+                displayHelpItemNumber: false,
+              ),
+              HelpItem(
+                helpTitle: AppLocalizations.of(context)!
+                    .playlistRestorationFirstHelpTitle,
+                helpContent: AppLocalizations.of(context)!
+                    .playlistRestorationFirstHelpContent,
+                displayHelpItemNumber: true,
+              ),
+              HelpItem(
+                helpTitle: AppLocalizations.of(context)!
+                    .playlistRestorationSecondHelpTitle,
+                helpContent: '',
+                displayHelpItemNumber: false,
+              ),
+            ];
+
+            showDialog<List<String>>(
+              barrierDismissible:
+                  false, // Prevents the dialog from closing when tapping outside.
+              context: context,
+              builder: (BuildContext context) {
+                return SetValueToTargetDialog(
+                  dialogTitle: AppLocalizations.of(context)!
+                      .playlistRestorationDialogTitle,
+                  dialogCommentStr: AppLocalizations.of(context)!
+                      .playlistRestorationExplanation,
+                  targetNamesLst: [
+                    AppLocalizations.of(context)!.replaceExistingPlaylists,
+                  ],
+                  validationFunctionArgs: [],
+                  canAllCheckBoxBeUnchecked: true,
+                  helpItemsLst: restorePlaylistsHelpItemsLst,
+                );
+              },
+            ).then((resultStringLst) async {
+              if (resultStringLst == null) {
+                // The case if the Cancel button was pressed.
+                return;
+              }
+
+              bool doReplaceExistingPlaylists = false;
+
+              if (resultStringLst.isNotEmpty) {
+                // The case when 'Replace existing playlists' is set to true.
+                doReplaceExistingPlaylists = true;
+              }
+
+              await UiUtil.restorePlaylistsCommentsAndAppSettingsFromZip(
+                context: context,
+                doReplaceExistingPlaylists: doReplaceExistingPlaylists,
+              );
+            });
             break;
           case AppBarPopupMenu.savePlaylistsAudioMp3FilesToZip:
             String? targetSaveDirectoryPath =
@@ -919,76 +980,6 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                     ),
                   );
                 },
-              );
-            });
-
-            //   playlistListVMlistenFalse.savePlaylistsAudioMp3FilesToZip(
-            //     targetDir: targetSaveDirectoryPath,
-            //     fromAudioDownloadDateTime:
-            //         dateFormatVMlistenFalse.parseDateTimeStrUsinAppDateFormat(
-            //       dateTimeStr: oldestAudioDownloadDateFormattedStr,
-            //     )!,
-            //   );
-            // });
-            break;
-          case AppBarPopupMenu.restorePlaylistAndCommentsFromZip:
-            final List<HelpItem> restorePlaylistsHelpItemsLst = [
-              HelpItem(
-                helpTitle:
-                    AppLocalizations.of(context)!.playlistRestorationHelpTitle,
-                helpContent: AppLocalizations.of(context)!
-                    .restorePlaylistAndCommentsFromZipTooltip,
-                displayHelpItemNumber: false,
-              ),
-              HelpItem(
-                helpTitle: AppLocalizations.of(context)!
-                    .playlistRestorationFirstHelpTitle,
-                helpContent: AppLocalizations.of(context)!
-                    .playlistRestorationFirstHelpContent,
-                displayHelpItemNumber: true,
-              ),
-              HelpItem(
-                helpTitle: AppLocalizations.of(context)!
-                    .playlistRestorationSecondHelpTitle,
-                helpContent: '',
-                displayHelpItemNumber: false,
-              ),
-            ];
-
-            showDialog<List<String>>(
-              barrierDismissible:
-                  false, // Prevents the dialog from closing when tapping outside.
-              context: context,
-              builder: (BuildContext context) {
-                return SetValueToTargetDialog(
-                  dialogTitle: AppLocalizations.of(context)!
-                      .playlistRestorationDialogTitle,
-                  dialogCommentStr: AppLocalizations.of(context)!
-                      .playlistRestorationExplanation,
-                  targetNamesLst: [
-                    AppLocalizations.of(context)!.replaceExistingPlaylists,
-                  ],
-                  validationFunctionArgs: [],
-                  canAllCheckBoxBeUnchecked: true,
-                  helpItemsLst: restorePlaylistsHelpItemsLst,
-                );
-              },
-            ).then((resultStringLst) async {
-              if (resultStringLst == null) {
-                // The case if the Cancel button was pressed.
-                return;
-              }
-
-              bool doReplaceExistingPlaylists = false;
-
-              if (resultStringLst.isNotEmpty) {
-                // The case when 'Replace existing playlists' is set to true.
-                doReplaceExistingPlaylists = true;
-              }
-
-              await UiUtil.restorePlaylistsCommentsAndAppSettingsFromZip(
-                context: context,
-                doReplaceExistingPlaylists: doReplaceExistingPlaylists,
               );
             });
             break;

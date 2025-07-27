@@ -2169,4 +2169,14 @@ class MockAppLocalizations extends AppLocalizations {
     Object wrongName,
   ) =>
       "The defined path \"$playlistRootPath\" is invalid since the playlists final dir name '$wrongName' is not equal to 'playlists'. Please define a valid playlist directory and retry changing the playlists root path.";
+
+  @override
+  String restoringUniquePlaylistAudioMp3(
+    Object playlistTitle,
+  ) =>
+      "Restoring $playlistTitle audio files from ZIP ...";
+
+  @override
+  String get restoringMultiplePlaylistsAudioMp3 =>
+      "Restoring multiple playlists audio files from ZIP ...";
 }
