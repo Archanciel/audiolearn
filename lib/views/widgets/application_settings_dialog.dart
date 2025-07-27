@@ -242,6 +242,7 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
         listen: false,
       ).signalInvalidPlaylistRootDirName(
         playlistInvalidRootPath: _applicationDialogPlaylistRootPath,
+        playlistInvalidRootName: lastComponent,
       );
 
       return;

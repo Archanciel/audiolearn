@@ -2164,8 +2164,9 @@ class MockAppLocalizations extends AppLocalizations {
       "Only the MP3 relative to the audio's listed in the playlist and which are not already present in the playlist are restorable.";
 
   @override
-  String playlistRootPathNotExistWarning(
+  String playlistInvalidRootPathWarning(
     Object playlistRootPath,
+    Object wrongName,
   ) =>
-      "The defined path \"$playlistRootPath\" is invalid since the playlists dir is not equal to 'playlists'. Please define a valid playlist directory and retry changing the playlists root path.";
+      "The defined path \"$playlistRootPath\" is invalid since the playlists final dir name '$wrongName' is not equal to 'playlists'. Please define a valid playlist directory and retry changing the playlists root path.";
 }
