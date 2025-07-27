@@ -50,7 +50,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get musicalQualityTooltip => 'For Youtube playlist, if set, downloads at musical quality. For local playlist, if set, indicates that the playlist is at music quality.';
+  String get musicalQualityTooltip =>
+      'For Youtube playlist, if set, downloads at musical quality. For local playlist, if set, indicates that the playlist is at music quality.';
 
   @override
   String get ofPreposition => 'of';
@@ -94,10 +95,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get defineSortFilterAudiosMenu => 'Sort/Filter Audio ...';
 
   @override
-  String get clearSortFilterAudiosParmsHistoryMenu => 'Clear Sort/Filter Parameters History';
+  String get clearSortFilterAudiosParmsHistoryMenu =>
+      'Clear Sort/Filter Parameters History';
 
   @override
-  String get saveSortFilterAudiosOptionsToPlaylistMenu => 'Save Sort/Filter Parameters to Playlist ...';
+  String get saveSortFilterAudiosOptionsToPlaylistMenu =>
+      'Save Sort/Filter Parameters to Playlist ...';
 
   @override
   String get sortFilterDialogTitle => 'Sort and Filter Parameters';
@@ -190,10 +193,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deleteAudio => 'Delete Audio ...';
 
   @override
-  String get deleteAudioFromPlaylistAswell => 'Delete Audio from Playlist as well ...';
+  String get deleteAudioFromPlaylistAswell =>
+      'Delete Audio from Playlist as well ...';
 
   @override
-  String deleteAudioFromPlaylistAswellWarning(Object audioTitle, Object playlistTitle) {
+  String deleteAudioFromPlaylistAswellWarning(
+      Object audioTitle, Object playlistTitle) {
     return 'If the deleted audio video \"$audioTitle\" remains in the \"$playlistTitle\" Youtube playlist, it will be downloaded again the next time you download the playlist !';
   }
 
@@ -211,7 +216,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String addCorrectedYoutubePlaylistTitle(Object originalTitle, Object quality, Object correctedTitle) {
+  String addCorrectedYoutubePlaylistTitle(
+      Object originalTitle, Object quality, Object correctedTitle) {
     return 'Youtube playlist \"$originalTitle\" of $quality quality added with corrected title \"$correctedTitle\" at the end of the playlist list.';
   }
 
@@ -251,17 +257,20 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String downloadAudioYoutubeErrorExceptionMessageOnly(Object exceptionMessage) {
+  String downloadAudioYoutubeErrorExceptionMessageOnly(
+      Object exceptionMessage) {
     return 'Error downloading audio from Youtube: \"$exceptionMessage\".';
   }
 
   @override
-  String downloadAudioYoutubeErrorDueToLiveVideoInPlaylist(Object playlistTitle, Object liveVideoString) {
+  String downloadAudioYoutubeErrorDueToLiveVideoInPlaylist(
+      Object playlistTitle, Object liveVideoString) {
     return 'Error downloading audio from Youtube. The playlist \"$playlistTitle\" contains a live video which causes the playlist audio downloading failure. To solve the problem, after having downloaded the audio of the live video as explained below, remove the live video from the playlist, then restart the application and retry.\n\nThe live video URL contains the following string: \"$liveVideoString\". In order to add the live video audio to the playlist \"$playlistTitle\", download it separately as single video download adding it to the playlist \"$playlistTitle\".';
   }
 
   @override
-  String downloadAudioFileAlreadyOnAudioDirectory(Object audioValidVideoTitle, Object fileName, Object playlistTitle) {
+  String downloadAudioFileAlreadyOnAudioDirectory(
+      Object audioValidVideoTitle, Object fileName, Object playlistTitle) {
     return 'Audio \"$audioValidVideoTitle\" is contained in file \"$fileName\" present in the target playlist \"$playlistTitle\" directory and so won\'t be redownloaded.';
   }
 
@@ -376,7 +385,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get playlistDownloadPathLabel => 'Playlist path';
 
   @override
-  String get playlistLastDownloadDateTimeLabel => 'Playlist last downl date time';
+  String get playlistLastDownloadDateTimeLabel =>
+      'Playlist last downl date time';
 
   @override
   String get playlistIsSelectedLabel => 'Playlist is selected';
@@ -388,13 +398,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get playlistPlayableAudioNumberLabel => 'Playable audio\'s';
 
   @override
-  String get playlistPlayableAudioTotalDurationLabel => 'Playable audio\'s total duration';
+  String get playlistPlayableAudioTotalDurationLabel =>
+      'Playable audio\'s total duration';
 
   @override
-  String get playlistPlayableAudioTotalRemainingDurationLabel => 'Playable audio\'s total remaining duration';
+  String get playlistPlayableAudioTotalRemainingDurationLabel =>
+      'Playable audio\'s total remaining duration';
 
   @override
-  String get playlistPlayableAudioTotalSizeLabel => 'Playable audio\'s total file size';
+  String get playlistPlayableAudioTotalSizeLabel =>
+      'Playable audio\'s total file size';
 
   @override
   String get updatePlaylistPlayableAudioList => 'Update playable Audio\'s List';
@@ -414,7 +427,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get renameAudioFileDialogTitle => 'Rename Audio File';
 
   @override
-  String get renameAudioFileDialogComment => 'Renaming audio file in order to improve their playing order.';
+  String get renameAudioFileDialogComment =>
+      'Renaming audio file in order to improve their playing order.';
 
   @override
   String get renameAudioFileLabel => 'Name';
@@ -426,7 +440,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get modifyAudioTitleDialogTitle => 'Modify Audio Title';
 
   @override
-  String get modifyAudioTitleDialogComment => 'Modify the audio title to identify it more easily during listening.';
+  String get modifyAudioTitleDialogComment =>
+      'Modify the audio title to identify it more easily during listening.';
 
   @override
   String get modifyAudioTitleLabel => 'Title';
@@ -468,34 +483,44 @@ class AppLocalizationsEn extends AppLocalizations {
   String get add => 'Add';
 
   @override
-  String get noSortFilterSaveAsNameWarning => 'No sort/filter save as name defined. Please enter a name and retry ...';
+  String get noSortFilterSaveAsNameWarning =>
+      'No sort/filter save as name defined. Please enter a name and retry ...';
 
   @override
-  String get noPlaylistSelectedForSingleVideoDownloadWarning => 'No playlist selected for single video download. Select one playlist and retry ...';
+  String get noPlaylistSelectedForSingleVideoDownloadWarning =>
+      'No playlist selected for single video download. Select one playlist and retry ...';
 
   @override
-  String get noPlaylistSelectedForAudioCopyWarning => 'No playlist selected for copying audio. Select one playlist and retry ...';
+  String get noPlaylistSelectedForAudioCopyWarning =>
+      'No playlist selected for copying audio. Select one playlist and retry ...';
 
   @override
-  String get noPlaylistSelectedForAudioMoveWarning => 'No playlist selected for moving audio. Select one playlist and retry ...';
+  String get noPlaylistSelectedForAudioMoveWarning =>
+      'No playlist selected for moving audio. Select one playlist and retry ...';
 
   @override
-  String get tooManyPlaylistSelectedForSingleVideoDownloadWarning => 'More than one playlist selected for single video download. Select only one playlist and retry ...';
+  String get tooManyPlaylistSelectedForSingleVideoDownloadWarning =>
+      'More than one playlist selected for single video download. Select only one playlist and retry ...';
 
   @override
-  String get noSortFilterParameterWasModifiedWarning => 'No sort/filter parameter was modified. Please set a sort/filter parameter and retry ...';
+  String get noSortFilterParameterWasModifiedWarning =>
+      'No sort/filter parameter was modified. Please set a sort/filter parameter and retry ...';
 
   @override
-  String get deletedSortFilterParameterNotExistWarning => 'The sort/filter parameter you try to delete does not exist. Please define an existing sort/filter parameter and retry ...';
+  String get deletedSortFilterParameterNotExistWarning =>
+      'The sort/filter parameter you try to delete does not exist. Please define an existing sort/filter parameter and retry ...';
 
   @override
-  String get historicalSortFilterParameterWasDeletedWarning => 'The historical sort/filter parameter was deleted.';
+  String get historicalSortFilterParameterWasDeletedWarning =>
+      'The historical sort/filter parameter was deleted.';
 
   @override
-  String get allHistoricalSortFilterParameterWereDeletedWarning => 'All historical sort/filter parameters were deleted.';
+  String get allHistoricalSortFilterParameterWereDeletedWarning =>
+      'All historical sort/filter parameters were deleted.';
 
   @override
-  String get allHistoricalSortFilterParametersDeleteConfirmation => 'Deleting all historical sort/filter parameters.';
+  String get allHistoricalSortFilterParametersDeleteConfirmation =>
+      'Deleting all historical sort/filter parameters.';
 
   @override
   String playlistRootPathNotExistWarning(Object playlistRootPath) {
@@ -528,42 +553,74 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enclosingPlaylistLabel => 'Enclosing playlist';
 
   @override
-  String audioNotMovedFromLocalPlaylistToLocalPlaylist(Object audioTitle, Object fromPlaylistTitle, Object notCopiedOrMovedReason, Object toPlaylistTitle) {
+  String audioNotMovedFromLocalPlaylistToLocalPlaylist(
+      Object audioTitle,
+      Object fromPlaylistTitle,
+      Object notCopiedOrMovedReason,
+      Object toPlaylistTitle) {
     return 'Audio \"$audioTitle\" NOT moved from local playlist \"$fromPlaylistTitle\" to local playlist \"$toPlaylistTitle\" $notCopiedOrMovedReason.';
   }
 
   @override
-  String audioNotMovedFromLocalPlaylistToYoutubePlaylist(Object audioTitle, Object fromPlaylistTitle, Object notCopiedOrMovedReason, Object toPlaylistTitle) {
+  String audioNotMovedFromLocalPlaylistToYoutubePlaylist(
+      Object audioTitle,
+      Object fromPlaylistTitle,
+      Object notCopiedOrMovedReason,
+      Object toPlaylistTitle) {
     return 'Audio \"$audioTitle\" NOT moved from local playlist \"$fromPlaylistTitle\" to Youtube playlist \"$toPlaylistTitle\" $notCopiedOrMovedReason.';
   }
 
   @override
-  String audioNotMovedFromYoutubePlaylistToLocalPlaylist(Object audioTitle, Object fromPlaylistTitle, Object notCopiedOrMovedReason, Object toPlaylistTitle) {
+  String audioNotMovedFromYoutubePlaylistToLocalPlaylist(
+      Object audioTitle,
+      Object fromPlaylistTitle,
+      Object notCopiedOrMovedReason,
+      Object toPlaylistTitle) {
     return 'Audio \"$audioTitle\" NOT moved from Youtube playlist \"$fromPlaylistTitle\" to local playlist \"$toPlaylistTitle\" $notCopiedOrMovedReason.';
   }
 
   @override
-  String audioNotMovedFromYoutubePlaylistToYoutubePlaylist(Object audioTitle, Object fromPlaylistTitle, Object notCopiedOrMovedReason, Object toPlaylistTitle) {
+  String audioNotMovedFromYoutubePlaylistToYoutubePlaylist(
+      Object audioTitle,
+      Object fromPlaylistTitle,
+      Object notCopiedOrMovedReason,
+      Object toPlaylistTitle) {
     return 'Audio \"$audioTitle\" NOT moved from Youtube playlist \"$fromPlaylistTitle\" to Youtube playlist \"$toPlaylistTitle\" $notCopiedOrMovedReason.';
   }
 
   @override
-  String audioNotCopiedFromLocalPlaylistToLocalPlaylist(Object audioTitle, Object fromPlaylistTitle, Object notCopiedOrMovedReason, Object toPlaylistTitle) {
+  String audioNotCopiedFromLocalPlaylistToLocalPlaylist(
+      Object audioTitle,
+      Object fromPlaylistTitle,
+      Object notCopiedOrMovedReason,
+      Object toPlaylistTitle) {
     return 'Audio \"$audioTitle\" NOT copied from local playlist \"$fromPlaylistTitle\" to local playlist \"$toPlaylistTitle\" $notCopiedOrMovedReason.';
   }
 
   @override
-  String audioNotCopiedFromLocalPlaylistToYoutubePlaylist(Object audioTitle, Object fromPlaylistTitle, Object notCopiedOrMovedReason, Object toPlaylistTitle) {
+  String audioNotCopiedFromLocalPlaylistToYoutubePlaylist(
+      Object audioTitle,
+      Object fromPlaylistTitle,
+      Object notCopiedOrMovedReason,
+      Object toPlaylistTitle) {
     return 'Audio \"$audioTitle\" NOT copied from local playlist \"$fromPlaylistTitle\" to Youtube playlist \"$toPlaylistTitle\" $notCopiedOrMovedReason.';
   }
 
   @override
-  String audioNotCopiedFromYoutubePlaylistToLocalPlaylist(Object audioTitle, Object fromPlaylistTitle, Object notCopiedOrMovedReason, Object toPlaylistTitle) {
+  String audioNotCopiedFromYoutubePlaylistToLocalPlaylist(
+      Object audioTitle,
+      Object fromPlaylistTitle,
+      Object notCopiedOrMovedReason,
+      Object toPlaylistTitle) {
     return 'Audio \"$audioTitle\" NOT copied from Youtube playlist \"$fromPlaylistTitle\" to local playlist \"$toPlaylistTitle\" $notCopiedOrMovedReason.';
   }
 
   @override
-  String audioNotCopiedFromYoutubePlaylistToYoutubePlaylist(Object audioTitle, Object fromPlaylistTitle, Object notCopiedOrMovedReason, Object toPlaylistTitle) {
+  String audioNotCopiedFromYoutubePlaylistToYoutubePlaylist(
+      Object audioTitle,
+      Object fromPlaylistTitle,
+      Object notCopiedOrMovedReason,
+      Object toPlaylistTitle) {
     return 'Audio \"$audioTitle\" NOT copied from Youtube playlist \"$fromPlaylistTitle\" to Youtube playlist \"$toPlaylistTitle\" $notCopiedOrMovedReason.';
   }
 
@@ -574,13 +631,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authorName => 'Jean-Pierre Schnyder / Switzerland';
 
   @override
-  String get aboutAppDescription => 'Audio Learn allows you to download audio from videos included in Youtube playlists whose links are added to the application, or from individual Youtube videos using their URL\'s.\n\nYou can also import audio files, such as audiobooks, directly into the application.\n\nIn addition to listening the audio files, Audio Learn offers the ability to add timestamped comments to each file, making it easier to replay their most interesting parts.\n\nFinally, the app allows you to sort and filter audio files based on various criteria.\n\nIn the next version, you will be able to extract commented audio segments to share them via email or WhatsApp, or combine them to create a new summarized audio file.';
+  String get aboutAppDescription =>
+      'Audio Learn allows you to download audio from videos included in Youtube playlists whose links are added to the application, or from individual Youtube videos using their URL\'s.\n\nYou can also import audio files, such as audiobooks, directly into the application.\n\nIn addition to listening the audio files, Audio Learn offers the ability to add timestamped comments to each file, making it easier to replay their most interesting parts.\n\nFinally, the app allows you to sort and filter audio files based on various criteria.\n\nIn the next version, you will be able to extract commented audio segments to share them via email or WhatsApp, or combine them to create a new summarized audio file.';
 
   @override
-  String get keepAudioEntryInSourcePlaylist => 'Keep audio data in source playlist';
+  String get keepAudioEntryInSourcePlaylist =>
+      'Keep audio data in source playlist';
 
   @override
-  String get keepAudioEntryInSourcePlaylistTooltip => 'Keep audio data in the original playlist\'s JSON file even after transferring the audio file to another playlist. This prevents re-downloading the audio file if it no longer exists in its original directory.';
+  String get keepAudioEntryInSourcePlaylistTooltip =>
+      'Keep audio data in the original playlist\'s JSON file even after transferring the audio file to another playlist. This prevents re-downloading the audio file if it no longer exists in its original directory.';
 
   @override
   String get movedFromPlaylistLabel => 'Moved from playlist';
@@ -589,22 +649,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get movedToPlaylistLabel => 'Moved to playlist';
 
   @override
-  String get downloadSingleVideoButtonTooltip => 'Download single video audio.\n\nTo download a single video audio, enter its URL in the \"Youtube Link\" field and click the One button. You then have to select the playlist to which the audio will be added.';
+  String get downloadSingleVideoButtonTooltip =>
+      'Download single video audio.\n\nTo download a single video audio, enter its URL in the \"Youtube Link\" field and click the One button. You then have to select the playlist to which the audio will be added.';
 
   @override
-  String get addPlaylistButtonTooltip => 'Add a Youtube or local playlist.\n\nTo add a Youtube playlist, enter its URL in the \"Youtube Link\" field and click the Add button. IMPORTANT: for a Youtube playlist to be downloaded by the app, its privacy setting must not be \"Private\" but \"Unlisted\" or \"Public\".\n\nTo set up a local playlist, click the Add button while the \"Youtube Link\" field is empty.';
+  String get addPlaylistButtonTooltip =>
+      'Add a Youtube or local playlist.\n\nTo add a Youtube playlist, enter its URL in the \"Youtube Link\" field and click the Add button. IMPORTANT: for a Youtube playlist to be downloaded by the app, its privacy setting must not be \"Private\" but \"Unlisted\" or \"Public\".\n\nTo set up a local playlist, click the Add button while the \"Youtube Link\" field is empty.';
 
   @override
   String get stopDownloadingButtonTooltip => 'Stop downloading ...';
 
   @override
-  String get clearPlaylistUrlOrSearchButtonTooltip => 'Clear \"Youtube link or sentence\" field.';
+  String get clearPlaylistUrlOrSearchButtonTooltip =>
+      'Clear \"Youtube link or sentence\" field.';
 
   @override
-  String get playlistToggleButtonInPlaylistDownloadViewTooltip => 'Show/hide playlists.';
+  String get playlistToggleButtonInPlaylistDownloadViewTooltip =>
+      'Show/hide playlists.';
 
   @override
-  String get downloadSelPlaylistsButtonTooltip => 'Download audio\'s of the selected playlist.';
+  String get downloadSelPlaylistsButtonTooltip =>
+      'Download audio\'s of the selected playlist.';
 
   @override
   String get audioOneSelectedDialogTitle => 'Select an Audio';
@@ -662,7 +727,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String deletePlaylistDialogComment(Object audioNumber, Object audioCommentsNumber, Object audioPicturesNumber) {
+  String deletePlaylistDialogComment(Object audioNumber,
+      Object audioCommentsNumber, Object audioPicturesNumber) {
     return 'Deleting the playlist and its $audioNumber audio\'s, $audioCommentsNumber audio comment(s), $audioPicturesNumber audio picture(s) as well as its JSON file and its directory.';
   }
 
@@ -695,10 +761,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get resetSortFilterOptionsTooltip => 'Reset the sort and filter parameters.';
+  String get resetSortFilterOptionsTooltip =>
+      'Reset the sort and filter parameters.';
 
   @override
-  String get clickToSetAscendingOrDescendingTooltip => 'Click to set ascending or descending sort order.';
+  String get clickToSetAscendingOrDescendingTooltip =>
+      'Click to set ascending or descending sort order.';
 
   @override
   String get and => 'and';
@@ -707,16 +775,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get or => 'or';
 
   @override
-  String get videoTitleSearchSentenceTextFieldTooltip => 'Enter a word or a sentence to be selected in the video title and in the Youtube channel if \'înclude Youtube channel\' is checked and in the video description if \'Include description\' is checked. THEN, CLICK ON THE \'+\' BUTTON.';
+  String get videoTitleSearchSentenceTextFieldTooltip =>
+      'Enter a word or a sentence to be selected in the video title and in the Youtube channel if \'înclude Youtube channel\' is checked and in the video description if \'Include description\' is checked. THEN, CLICK ON THE \'+\' BUTTON.';
 
   @override
-  String get andSentencesTooltip => 'If set, only audio containing all the listed words or sentences are selected.';
+  String get andSentencesTooltip =>
+      'If set, only audio containing all the listed words or sentences are selected.';
 
   @override
-  String get orSentencesTooltip => 'If set, audio containing one of the listed words or sentences are selected.';
+  String get orSentencesTooltip =>
+      'If set, audio containing one of the listed words or sentences are selected.';
 
   @override
-  String get searchInVideoCompactDescriptionTooltip => 'If set, search words or sentences are searched on video description as well.';
+  String get searchInVideoCompactDescriptionTooltip =>
+      'If set, search words or sentences are searched on video description as well.';
 
   @override
   String get fullyListened => 'Fully listened';
@@ -728,7 +800,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notListened => 'Not listened';
 
   @override
-  String saveSortFilterOptionsToPlaylistDialogTitle(Object sortFilterParmsName) {
+  String saveSortFilterOptionsToPlaylistDialogTitle(
+      Object sortFilterParmsName) {
     return 'Save Sort/Filter \"$sortFilterParmsName\"';
   }
 
@@ -746,67 +819,85 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get updatePlaylistJsonFilesMenuTooltip => 'If one or several playlist directories containing or not audio\'s were manually added or deleted in the application directory containing the playlists or if audio\'s were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files as well as the JSON file containing the application settings in order to reflect the changes in the application screens. Playlist directories located on PC can as well be copied in the Android application directory containing the playlists. Additionally, playlist directories located on Android can as well be copied in the PC application directory containing the playlists ...';
+  String get updatePlaylistJsonFilesMenuTooltip =>
+      'If one or several playlist directories containing or not audio\'s were manually added or deleted in the application directory containing the playlists or if audio\'s were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files as well as the JSON file containing the application settings in order to reflect the changes in the application screens. Playlist directories located on PC can as well be copied in the Android application directory containing the playlists. Additionally, playlist directories located on Android can as well be copied in the PC application directory containing the playlists ...';
 
   @override
-  String get updatePlaylistPlayableAudioListTooltip => 'If audio\'s were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files to reflect the changes in the application screens.';
+  String get updatePlaylistPlayableAudioListTooltip =>
+      'If audio\'s were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files to reflect the changes in the application screens.';
 
   @override
-  String get audioPlayedInThisOrderTooltip => 'Audio are played in this order. By default, the last downloaded audio\'s are at bottom of the list.';
+  String get audioPlayedInThisOrderTooltip =>
+      'Audio are played in this order. By default, the last downloaded audio\'s are at bottom of the list.';
 
   @override
-  String get playableAudioDialogSortDescriptionTooltipBottomDownloadBefore => 'Audio at bottom were downloaded before those at top.';
+  String get playableAudioDialogSortDescriptionTooltipBottomDownloadBefore =>
+      'Audio at bottom were downloaded before those at top.';
 
   @override
-  String get playableAudioDialogSortDescriptionTooltipBottomDownloadAfter => 'Audio at the bottom were downloaded after those at the top.';
+  String get playableAudioDialogSortDescriptionTooltipBottomDownloadAfter =>
+      'Audio at the bottom were downloaded after those at the top.';
 
   @override
-  String get playableAudioDialogSortDescriptionTooltipBottomUploadBefore => 'Videos at the bottom were uploaded before those at the top.';
+  String get playableAudioDialogSortDescriptionTooltipBottomUploadBefore =>
+      'Videos at the bottom were uploaded before those at the top.';
 
   @override
-  String get playableAudioDialogSortDescriptionTooltipBottomUploadAfter => 'Videos at the bottom were uploaded after those at the top.';
+  String get playableAudioDialogSortDescriptionTooltipBottomUploadAfter =>
+      'Videos at the bottom were uploaded after those at the top.';
 
   @override
-  String get playableAudioDialogSortDescriptionTooltipTopDurationBigger => 'Audio at the top have a longer duration than those at the bottom.';
+  String get playableAudioDialogSortDescriptionTooltipTopDurationBigger =>
+      'Audio at the top have a longer duration than those at the bottom.';
 
   @override
-  String get playableAudioDialogSortDescriptionTooltipTopDurationSmaller => 'Audio at the top have a shorter duration than those at the bottom.';
+  String get playableAudioDialogSortDescriptionTooltipTopDurationSmaller =>
+      'Audio at the top have a shorter duration than those at the bottom.';
 
   @override
-  String get playableAudioDialogSortDescriptionTooltipTopRemainingDurationBigger => 'Audio at the top have more remaining listenable duration than those at the bottom.';
+  String get playableAudioDialogSortDescriptionTooltipTopRemainingDurationBigger =>
+      'Audio at the top have more remaining listenable duration than those at the bottom.';
 
   @override
-  String get playableAudioDialogSortDescriptionTooltipTopRemainingDurationSmaller => 'Audio at the top have less remaining listenable duration than those at the bottom.';
+  String get playableAudioDialogSortDescriptionTooltipTopRemainingDurationSmaller =>
+      'Audio at the top have less remaining listenable duration than those at the bottom.';
 
   @override
-  String get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeBigger => 'Audio at the top were listened more recently than those at the bottom.';
+  String get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeBigger =>
+      'Audio at the top were listened more recently than those at the bottom.';
 
   @override
-  String get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller => 'Audio at the top were listened less recently than those at the bottom.';
+  String get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller =>
+      'Audio at the top were listened less recently than those at the bottom.';
 
   @override
   String get saveAs => 'Save as:';
 
   @override
-  String get sortFilterSaveAsTextFieldTooltip => 'Save the sort/filter settings with the specified name. Existing settings with the same name will be updated.';
+  String get sortFilterSaveAsTextFieldTooltip =>
+      'Save the sort/filter settings with the specified name. Existing settings with the same name will be updated.';
 
   @override
   String get applySortFilterToView => 'Apply sort/filter to:';
 
   @override
-  String get applySortFilterToViewTooltip => 'Selecting sort/filter application to one or two audio views. This will be applied to the playlists to which this sort/filter is associated.';
+  String get applySortFilterToViewTooltip =>
+      'Selecting sort/filter application to one or two audio views. This will be applied to the playlists to which this sort/filter is associated.';
 
   @override
-  String get saveSortFilterOptionsTooltip => 'Update existing sort/filter parameters with modified parameters if the name already exists.';
+  String get saveSortFilterOptionsTooltip =>
+      'Update existing sort/filter parameters with modified parameters if the name already exists.';
 
   @override
   String get applyButton => 'Apply';
 
   @override
-  String get applySortFilterOptionsTooltip => 'Apply the sort/filter parameters and add them to the sort/filter history if the name is empty.';
+  String get applySortFilterOptionsTooltip =>
+      'Apply the sort/filter parameters and add them to the sort/filter history if the name is empty.';
 
   @override
-  String get deleteSortFilterOptionsTooltip => 'After deletion, the Default sort/filter parameters will be applied if these settings are in use.';
+  String get deleteSortFilterOptionsTooltip =>
+      'After deletion, the Default sort/filter parameters will be applied if these settings are in use.';
 
   @override
   String get deleteShort => 'Delete';
@@ -827,19 +918,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setAudioPlaySpeed => 'Set Audio\'s Play Speed ...';
 
   @override
-  String get applyToAlreadyDownloadedAudio => 'Apply to already downloaded\nor imported audio';
+  String get applyToAlreadyDownloadedAudio =>
+      'Apply to already downloaded\nor imported audio';
 
   @override
-  String get applyToAlreadyDownloadedAudioTooltip => 'Apply the playback speed to audio\'s in all existing playlists. If not set, apply it only to newly added playlists.';
+  String get applyToAlreadyDownloadedAudioTooltip =>
+      'Apply the playback speed to audio\'s in all existing playlists. If not set, apply it only to newly added playlists.';
 
   @override
-  String get applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip => 'Apply the playback speed to audio\'s in the current playlist. If not set, apply it only to newly downloaded or imported audio.';
+  String get applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip =>
+      'Apply the playback speed to audio\'s in the current playlist. If not set, apply it only to newly downloaded or imported audio.';
 
   @override
   String get applyToExistingPlaylist => 'Apply to existing\nplaylists';
 
   @override
-  String get applyToExistingPlaylistTooltip => 'Apply the playback speed to all existing playlists. If not set, apply it only to newly added playlists.';
+  String get applyToExistingPlaylistTooltip =>
+      'Apply the playback speed to all existing playlists. If not set, apply it only to newly added playlists.';
 
   @override
   String get playlistRootpathLabel => 'Playlists root path';
@@ -854,34 +949,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String get defaultApplicationHelpTitle => 'Default Application';
 
   @override
-  String get defaultApplicationHelpContent => 'If no option is selected, the defined playback speed will only apply to newly created playlists.';
+  String get defaultApplicationHelpContent =>
+      'If no option is selected, the defined playback speed will only apply to newly created playlists.';
 
   @override
-  String get modifyingExistingPlaylistsHelpTitle => 'Modifying Existing Playlists';
+  String get modifyingExistingPlaylistsHelpTitle =>
+      'Modifying Existing Playlists';
 
   @override
-  String get modifyingExistingPlaylistsHelpContent => 'By selecting the first checkbox, all existing playlists will be set to use the new playback speed. However, this change will only affect audio files that are downloaded after this option is enabled.';
+  String get modifyingExistingPlaylistsHelpContent =>
+      'By selecting the first checkbox, all existing playlists will be set to use the new playback speed. However, this change will only affect audio files that are downloaded after this option is enabled.';
 
   @override
-  String get alreadyDownloadedAudiosHelpTitle => 'Already Downloaded or Imported Audio';
+  String get alreadyDownloadedAudiosHelpTitle =>
+      'Already Downloaded or Imported Audio';
 
   @override
-  String get alreadyDownloadedAudiosHelpContent => 'Selecting the second checkbox allows you to change the playback speed for audio files already present on the device.';
+  String get alreadyDownloadedAudiosHelpContent =>
+      'Selecting the second checkbox allows you to change the playback speed for audio files already present on the device.';
 
   @override
   String get excludingFutureDownloadsHelpTitle => 'Excluding Future Downloads';
 
   @override
-  String get excludingFutureDownloadsHelpContent => 'If only the second checkbox is checked, the playback speed will not be modified for audio\'s that will be downloaded later in existing playlists. However, as mentioned previously, new playlists will use the newly defined playback speed for all downloaded audio.';
+  String get excludingFutureDownloadsHelpContent =>
+      'If only the second checkbox is checked, the playback speed will not be modified for audio\'s that will be downloaded later in existing playlists. However, as mentioned previously, new playlists will use the newly defined playback speed for all downloaded audio.';
 
   @override
-  String get alreadyDownloadedAudiosPlaylistHelpTitle => 'Apply to already downloaded or imported audio';
+  String get alreadyDownloadedAudiosPlaylistHelpTitle =>
+      'Apply to already downloaded or imported audio';
 
   @override
-  String get alreadyDownloadedAudiosPlaylistHelpContent => 'Selecting this checkbox allows you to change the playback speed for the playlist audio files already present on the device.';
+  String get alreadyDownloadedAudiosPlaylistHelpContent =>
+      'Selecting this checkbox allows you to change the playback speed for the playlist audio files already present on the device.';
 
   @override
-  String get commentsIconButtonTooltip => 'Show or insert comments at specific points in the audio.';
+  String get commentsIconButtonTooltip =>
+      'Show or insert comments at specific points in the audio.';
 
   @override
   String get commentsDialogTitle => 'Comments';
@@ -890,7 +994,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get playlistCommentsDialogTitle => 'Playlist Audio Comments';
 
   @override
-  String get addPositionedCommentTooltip => 'Add a comment at the current audio position.';
+  String get addPositionedCommentTooltip =>
+      'Add a comment at the current audio position.';
 
   @override
   String get commentTitle => 'Title';
@@ -916,7 +1021,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commentMenu => 'Audio Comments ...';
 
   @override
-  String get tenthOfSecondsCheckboxTooltip => 'Enable this checkbox to specify the comment position with precision up to a tenth of second.';
+  String get tenthOfSecondsCheckboxTooltip =>
+      'Enable this checkbox to specify the comment position with precision up to a tenth of second.';
 
   @override
   String get setCommentPosition => 'Set comment position';
@@ -925,10 +1031,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commentPosition => 'Position (hh:)mm:ss(.t)';
 
   @override
-  String get commentPositionTooltip => 'Clearing the position field and selecting the \"Start\" checkbox will set the comment\'s start position to 0:00. Selecting the \"End\" checkbox will set the comment\'s end position to the total duration of the audio.';
+  String get commentPositionTooltip =>
+      'Clearing the position field and selecting the \"Start\" checkbox will set the comment\'s start position to 0:00. Selecting the \"End\" checkbox will set the comment\'s end position to the total duration of the audio.';
 
   @override
-  String get commentPositionExplanation => 'The proposed comment position corresponds to the current audio position. Modify it if needed and select to which position it must be applied.';
+  String get commentPositionExplanation =>
+      'The proposed comment position corresponds to the current audio position. Modify it if needed and select to which position it must be applied.';
 
   @override
   String get commentStartPosition => 'Start';
@@ -937,7 +1045,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commentEndPosition => 'End';
 
   @override
-  String get updateCommentStartEndPositionTooltip => 'Update comment start or end position.';
+  String get updateCommentStartEndPositionTooltip =>
+      'Update comment start or end position.';
 
   @override
   String noCheckboxSelectedWarning(Object atLeast) {
@@ -970,7 +1079,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String setValueToTargetWarning(Object invalidValueWarningParam, Object maxMinPossibleValue) {
+  String setValueToTargetWarning(
+      Object invalidValueWarningParam, Object maxMinPossibleValue) {
     return 'The entered value $invalidValueWarningParam ($maxMinPossibleValue). Please correct it and retry ...';
   }
 
@@ -997,7 +1107,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commentEndPositionTooltip => 'Comment end position in audio.';
 
   @override
-  String get playlistToggleButtonInAudioPlayerViewTooltip => 'Show/hide playlists. Then check a playlist to select its current listened audio.';
+  String get playlistToggleButtonInAudioPlayerViewTooltip =>
+      'Show/hide playlists. Then check a playlist to select its current listened audio.';
 
   @override
   String playlistSelectedSnackBarMessage(Object title) {
@@ -1008,28 +1119,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get playlistImportAudioMenu => 'Import Audio File(s) ...';
 
   @override
-  String get playlistImportAudioMenuTooltip => 'Import audio file(s) into the playlist in order to be able to listen them and add positionned comments to them.';
+  String get playlistImportAudioMenuTooltip =>
+      'Import audio file(s) into the playlist in order to be able to listen them and add positionned comments to them.';
 
   @override
-  String get setPlaylistAudioPlaySpeedTooltip => 'Set audio play speed for the playlist existing and next downloaded audio.';
+  String get setPlaylistAudioPlaySpeedTooltip =>
+      'Set audio play speed for the playlist existing and next downloaded audio.';
 
   @override
-  String audioNotImportedToLocalPlaylist(Object rejectedImportedAudioFileNames, Object toPlaylistTitle) {
+  String audioNotImportedToLocalPlaylist(
+      Object rejectedImportedAudioFileNames, Object toPlaylistTitle) {
     return 'Audio(s)\n\n$rejectedImportedAudioFileNames\n\nNOT imported to local playlist \"$toPlaylistTitle\" since the playlist directory already contains the audio(s).';
   }
 
   @override
-  String audioNotImportedToYoutubePlaylist(Object rejectedImportedAudioFileNames, Object toPlaylistTitle) {
+  String audioNotImportedToYoutubePlaylist(
+      Object rejectedImportedAudioFileNames, Object toPlaylistTitle) {
     return 'Audio(s)\n\n$rejectedImportedAudioFileNames\n\nNOT imported to Youtube playlist \"$toPlaylistTitle\" since the playlist directory already contains the audio(s).';
   }
 
   @override
-  String audioImportedToLocalPlaylist(Object importedAudioFileNames, Object toPlaylistTitle) {
+  String audioImportedToLocalPlaylist(
+      Object importedAudioFileNames, Object toPlaylistTitle) {
     return 'Audio(s)\n\n$importedAudioFileNames\n\nimported to local playlist \"$toPlaylistTitle\".';
   }
 
   @override
-  String audioImportedToYoutubePlaylist(Object importedAudioFileNames, Object toPlaylistTitle) {
+  String audioImportedToYoutubePlaylist(
+      Object importedAudioFileNames, Object toPlaylistTitle) {
     return 'Audio(s)\n\n$importedAudioFileNames\n\nimported to Youtube playlist \"$toPlaylistTitle\".';
   }
 
@@ -1061,10 +1178,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lastListenedDateTime => 'Last listened date/time';
 
   @override
-  String get downloadSingleVideoAudioAtMusicQuality => 'Download single video audio at music quality';
+  String get downloadSingleVideoAudioAtMusicQuality =>
+      'Download single video audio at music quality';
 
   @override
-  String get videoTitleNotWrittenInOccidentalLettersWarning => 'Since the original video title is not written in occidental letters, the audio title is empty. You can use the \'Modify audio title ...\' audio menu in order to define a valid title. Same remark for improving the audio file name ...';
+  String get videoTitleNotWrittenInOccidentalLettersWarning =>
+      'Since the original video title is not written in occidental letters, the audio title is empty. You can use the \'Modify audio title ...\' audio menu in order to define a valid title. Same remark for improving the audio file name ...';
 
   @override
   String renameCommentFileNameAlreadyUsed(Object fileName) {
@@ -1082,7 +1201,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String renameAudioAndCommentFileConfirmation(Object newFileName, Object oldFileIame) {
+  String renameAudioAndCommentFileConfirmation(
+      Object newFileName, Object oldFileIame) {
     return 'Audio file \"$oldFileIame.mp3\" renamed to \"$newFileName.mp3\" as well as comment file \"$oldFileIame.json\" renamed to \"$newFileName.json\".';
   }
 
@@ -1092,10 +1212,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get downloadVideoUrlsFromTextFileInPlaylist => 'Download URLs from Text File ...';
+  String get downloadVideoUrlsFromTextFileInPlaylist =>
+      'Download URLs from Text File ...';
 
   @override
-  String get downloadVideoUrlsFromTextFileInPlaylistTooltip => 'Download audio\'s to the playlist from video URLs listed in a text file to select. The text file must contain one video URL per line.';
+  String get downloadVideoUrlsFromTextFileInPlaylistTooltip =>
+      'Download audio\'s to the playlist from video URLs listed in a text file to select. The text file must contain one video URL per line.';
 
   @override
   String downloadAudioFromVideoUrlsInPlaylistTitle(Object title) {
@@ -1108,15 +1230,18 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String notRedownloadAudioFilesInPlaylistDirectory(Object number, Object playlistTitle) {
+  String notRedownloadAudioFilesInPlaylistDirectory(
+      Object number, Object playlistTitle) {
     return '$number audio\'s are already contained in the target playlist \"$playlistTitle\" directory and so were not redownloaded.';
   }
 
   @override
-  String get clickToSetAscendingOrDescendingPlayingOrderTooltip => 'Click to set ascending or descending playing order.';
+  String get clickToSetAscendingOrDescendingPlayingOrderTooltip =>
+      'Click to set ascending or descending playing order.';
 
   @override
-  String get removeSortFilterAudiosOptionsFromPlaylistMenu => 'Remove Sort/Filter Parameters from Playlist ...';
+  String get removeSortFilterAudiosOptionsFromPlaylistMenu =>
+      'Remove Sort/Filter Parameters from Playlist ...';
 
   @override
   String removeSortFilterOptionsFromPlaylist(Object title) {
@@ -1124,7 +1249,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String removeSortFilterOptionsFromPlaylistDialogTitle(Object sortFilterParmsName) {
+  String removeSortFilterOptionsFromPlaylistDialogTitle(
+      Object sortFilterParmsName) {
     return 'Remove Sort/Filter Parameters \"$sortFilterParmsName\"';
   }
 
@@ -1137,12 +1263,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get removeButton => 'Remove';
 
   @override
-  String saveSortFilterParmsConfirmation(Object sortFilterParmsName, Object playlistTitle, Object forViewMessage) {
+  String saveSortFilterParmsConfirmation(
+      Object sortFilterParmsName, Object playlistTitle, Object forViewMessage) {
     return 'Sort/filter parameters \"$sortFilterParmsName\" were saved to playlist \"$playlistTitle\" for screen(s) \"$forViewMessage\".';
   }
 
   @override
-  String removeSortFilterParmsConfirmation(Object sortFilterParmsName, Object playlistTitle, Object forViewMessage) {
+  String removeSortFilterParmsConfirmation(
+      Object sortFilterParmsName, Object playlistTitle, Object forViewMessage) {
     return 'Sort/filter parameters \"$sortFilterParmsName\" were removed from playlist \"$playlistTitle\" on screen(s) \"$forViewMessage\".';
   }
 
@@ -1164,19 +1292,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get searchInYoutubeChannelName => 'Include Youtube channel';
 
   @override
-  String get searchInYoutubeChannelNameTooltip => 'If set, search words or sentences are searched on Youtube channel name as well.';
+  String get searchInYoutubeChannelNameTooltip =>
+      'If set, search words or sentences are searched on Youtube channel name as well.';
 
   @override
-  String get savePlaylistAndCommentsToZipMenu => 'Save Playlists, Comments, Pictures and Settings to ZIP File ...';
+  String get savePlaylistAndCommentsToZipMenu =>
+      'Save Playlists, Comments, Pictures and Settings to ZIP File ...';
 
   @override
-  String get savePlaylistAndCommentsToZipTooltip => 'Saving the playlists, their audio comments and pictures to a ZIP file. The ZIP file will contain the playlists JSON files as well as the comment and picture JSON files. Additionally, the application settings.json will be saved. The MP3 and JPG files will not be included.';
+  String get savePlaylistAndCommentsToZipTooltip =>
+      'Saving the playlists, their audio comments and pictures to a ZIP file. The ZIP file will contain the playlists JSON files as well as the comment and picture JSON files. Additionally, the application settings.json will be saved. The MP3 and JPG files will not be included.';
 
   @override
   String get setYoutubeChannelMenu => 'Youtube channel setting';
 
   @override
-  String confirmYoutubeChannelModifications(Object numberOfModifiedDownloadedAudio, Object numberOfModifiedPlayableAudio) {
+  String confirmYoutubeChannelModifications(
+      Object numberOfModifiedDownloadedAudio,
+      Object numberOfModifiedPlayableAudio) {
     return 'The Youtube channel was set in $numberOfModifiedDownloadedAudio downloaded audio\'s and in $numberOfModifiedPlayableAudio playable audio.';
   }
 
@@ -1184,7 +1317,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get rewindAudioToStart => 'Rewind all Audio\'s to Start';
 
   @override
-  String get rewindAudioToStartTooltip => 'Rewind all playlist audio\'s to start position. This is useful if you wish to replay all the audio\'s.';
+  String get rewindAudioToStartTooltip =>
+      'Rewind all playlist audio\'s to start position. This is useful if you wish to replay all the audio\'s.';
 
   @override
   String rewindedPlayableAudioNumber(Object number) {
@@ -1195,7 +1329,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dateFormat => 'Select Date Format ...';
 
   @override
-  String get dateFormatSelectionDialogTitle => 'Select the Application Date Format';
+  String get dateFormatSelectionDialogTitle =>
+      'Select the Application Date Format';
 
   @override
   String get commented => 'Commented';
@@ -1204,63 +1339,83 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notCommented => 'Uncom.';
 
   @override
-  String deleteFilteredAudioConfirmationTitle(Object sortFilterParmsName, Object playlistTitle) {
+  String deleteFilteredAudioConfirmationTitle(
+      Object sortFilterParmsName, Object playlistTitle) {
     return 'Delete audio\'s filtered by \"$sortFilterParmsName\" parms from playlist \"$playlistTitle\"';
   }
 
   @override
-  String deleteFilteredAudioConfirmation(Object deleteAudioNumber, Object deleteAudioTotalFileSize, Object deleteAudioTotalDuration) {
+  String deleteFilteredAudioConfirmation(Object deleteAudioNumber,
+      Object deleteAudioTotalFileSize, Object deleteAudioTotalDuration) {
     return 'Audio\'s to delete number: $deleteAudioNumber,\nCorresponding total file size: $deleteAudioTotalFileSize,\nCorresponding total duration: $deleteAudioTotalDuration.';
   }
 
   @override
-  String get deleteFilteredCommentedAudioWarningTitleOne => 'WARNING: you are going to';
+  String get deleteFilteredCommentedAudioWarningTitleOne =>
+      'WARNING: you are going to';
 
   @override
-  String deleteFilteredCommentedAudioWarningTitleTwo(Object sortFilterParmsName, Object playlistTitle) {
+  String deleteFilteredCommentedAudioWarningTitleTwo(
+      Object sortFilterParmsName, Object playlistTitle) {
     return 'delete COMMENTED and uncommented audio\'s filtered by \"$sortFilterParmsName\" parms from playlist \"$playlistTitle\". Watch the help to solve the problem ...';
   }
 
   @override
-  String deleteFilteredCommentedAudioWarning(Object deleteAudioNumber, Object deleteCommentedAudioNumber, Object deleteAudioTotalFileSize, Object deleteAudioTotalDuration) {
+  String deleteFilteredCommentedAudioWarning(
+      Object deleteAudioNumber,
+      Object deleteCommentedAudioNumber,
+      Object deleteAudioTotalFileSize,
+      Object deleteAudioTotalDuration) {
     return 'Total audio\'s to delete number: $deleteAudioNumber,\nCOMMENTED audio\'s to delete number: $deleteCommentedAudioNumber,\nCorresponding total file size: $deleteAudioTotalFileSize,\nCorresponding total duration: $deleteAudioTotalDuration.';
   }
 
   @override
-  String get commentedAudioDeletionHelpTitle => 'How to create and use a Sort/Filter parameter to prevent deleting commented audio\'s ?';
+  String get commentedAudioDeletionHelpTitle =>
+      'How to create and use a Sort/Filter parameter to prevent deleting commented audio\'s ?';
 
   @override
-  String get commentedAudioDeletionHelpContent => 'This guide explains how to delete fully listened audio\'s that are not commented.';
+  String get commentedAudioDeletionHelpContent =>
+      'This guide explains how to delete fully listened audio\'s that are not commented.';
 
   @override
-  String get commentedAudioDeletionSolutionHelpTitle => 'The solution is to create a Sort/Filter parameter to select only fully played uncommented audio';
+  String get commentedAudioDeletionSolutionHelpTitle =>
+      'The solution is to create a Sort/Filter parameter to select only fully played uncommented audio';
 
   @override
-  String get commentedAudioDeletionSolutionHelpContent => 'In the Sort/Filter definition dialog, the selection parameters are represented by checkboxes ...';
+  String get commentedAudioDeletionSolutionHelpContent =>
+      'In the Sort/Filter definition dialog, the selection parameters are represented by checkboxes ...';
 
   @override
-  String get commentedAudioDeletionOpenSFDialogHelpTitle => 'Open the Sort/Filter definition dialog';
+  String get commentedAudioDeletionOpenSFDialogHelpTitle =>
+      'Open the Sort/Filter definition dialog';
 
   @override
-  String get commentedAudioDeletionOpenSFDialogHelpContent => 'Click the right menu icon in the download audio view, then select \"Sort/Filter Audio ...\".';
+  String get commentedAudioDeletionOpenSFDialogHelpContent =>
+      'Click the right menu icon in the download audio view, then select \"Sort/Filter Audio ...\".';
 
   @override
-  String get commentedAudioDeletionCreateSFParmHelpTitle => 'Create a valid Sort/Filter parameter';
+  String get commentedAudioDeletionCreateSFParmHelpTitle =>
+      'Create a valid Sort/Filter parameter';
 
   @override
-  String get commentedAudioDeletionCreateSFParmHelpContent => 'In the \"Save as\" field, enter a name for the Sort/Filter parameter (e.g., FullyListenedUncom). Uncheck the checkboxes for \"Partially listened\", \"Not listened\" and \"Commented\". Then click on \"Save\".';
+  String get commentedAudioDeletionCreateSFParmHelpContent =>
+      'In the \"Save as\" field, enter a name for the Sort/Filter parameter (e.g., FullyListenedUncom). Uncheck the checkboxes for \"Partially listened\", \"Not listened\" and \"Commented\". Then click on \"Save\".';
 
   @override
-  String get commentedAudioDeletionSelectSFParmHelpTitle => 'Once saved, the Sort/Filter parameter is applied to the playlist, reducing the displayed audio\'s list.';
+  String get commentedAudioDeletionSelectSFParmHelpTitle =>
+      'Once saved, the Sort/Filter parameter is applied to the playlist, reducing the displayed audio\'s list.';
 
   @override
-  String get commentedAudioDeletionSelectSFParmHelpContent => 'Click on the \"Playlists\" button to hide the list of playlists. You’ll see your newly created SF parameter selected in the dropdown menu. You can apply this parameter or another one to any playlist ...';
+  String get commentedAudioDeletionSelectSFParmHelpContent =>
+      'Click on the \"Playlists\" button to hide the list of playlists. You’ll see your newly created SF parameter selected in the dropdown menu. You can apply this parameter or another one to any playlist ...';
 
   @override
-  String get commentedAudioDeletionApplyingNewSFParmHelpTitle => 'Finally, reclick on the \"Playlists\" button to display the list of playlists, open the source playlist menu and click on \"Filtered Audio\'s Actions ...\" and then on \"Delete filtered Audio\'s ...\"';
+  String get commentedAudioDeletionApplyingNewSFParmHelpTitle =>
+      'Finally, reclick on the \"Playlists\" button to display the list of playlists, open the source playlist menu and click on \"Filtered Audio\'s Actions ...\" and then on \"Delete filtered Audio\'s ...\"';
 
   @override
-  String get commentedAudioDeletionApplyingNewSFParmHelpContent => 'This time, since a correct SF parameter is applied, no warning will be displayed when deleting the selected uncommented audio.';
+  String get commentedAudioDeletionApplyingNewSFParmHelpContent =>
+      'This time, since a correct SF parameter is applied, no warning will be displayed when deleting the selected uncommented audio.';
 
   @override
   String get filteredAudioActions => 'Filtered Audio\'s Actions ...';
@@ -1275,99 +1430,174 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deleteFilteredAudio => 'Delete filtered Audio\'s ...';
 
   @override
-  String confirmMovedUnmovedAudioNumberFromYoutubeToYoutubePlaylist(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName, Object movedAudioNumber, Object movedCommentedAudioNumber, Object unmovedAudioNumber) {
+  String confirmMovedUnmovedAudioNumberFromYoutubeToYoutubePlaylist(
+      Object sourcePlaylistTitle,
+      Object targetPlaylistTitle,
+      Object sortedFilterParmsName,
+      Object movedAudioNumber,
+      Object movedCommentedAudioNumber,
+      Object unmovedAudioNumber) {
     return 'Applying Sort/Filter parms \"$sortedFilterParmsName\", from Youtube playlist \"$sourcePlaylistTitle\" to Youtube playlist \"$targetPlaylistTitle\", $movedAudioNumber audio(s) were moved from which $movedCommentedAudioNumber were commented, and $unmovedAudioNumber audio(s) were unmoved.';
   }
 
   @override
-  String confirmMovedUnmovedAudioNumberFromYoutubeToLocalPlaylist(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName, Object movedAudioNumber, Object movedCommentedAudioNumber, Object unmovedAudioNumber) {
+  String confirmMovedUnmovedAudioNumberFromYoutubeToLocalPlaylist(
+      Object sourcePlaylistTitle,
+      Object targetPlaylistTitle,
+      Object sortedFilterParmsName,
+      Object movedAudioNumber,
+      Object movedCommentedAudioNumber,
+      Object unmovedAudioNumber) {
     return 'Applying Sort/Filter parms \"$sortedFilterParmsName\", from Youtube playlist \"$sourcePlaylistTitle\" to local playlist \"$targetPlaylistTitle\", $movedAudioNumber audio(s) were moved from which $movedCommentedAudioNumber were commented, and $unmovedAudioNumber audio(s) were unmoved.';
   }
 
   @override
-  String confirmMovedUnmovedAudioNumberFromLocalToYoutubePlaylist(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName, Object movedAudioNumber, Object movedCommentedAudioNumber, Object unmovedAudioNumber) {
+  String confirmMovedUnmovedAudioNumberFromLocalToYoutubePlaylist(
+      Object sourcePlaylistTitle,
+      Object targetPlaylistTitle,
+      Object sortedFilterParmsName,
+      Object movedAudioNumber,
+      Object movedCommentedAudioNumber,
+      Object unmovedAudioNumber) {
     return 'Applying Sort/Filter parms \"$sortedFilterParmsName\", from local playlist \"$sourcePlaylistTitle\" to Youtube playlist \"$targetPlaylistTitle\", $movedAudioNumber audio(s) were moved from which $movedCommentedAudioNumber were commented, and $unmovedAudioNumber audio(s) were unmoved.';
   }
 
   @override
-  String confirmMovedUnmovedAudioNumberFromLocalToLocalPlaylist(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName, Object movedAudioNumber, Object movedCommentedAudioNumber, Object unmovedAudioNumber) {
+  String confirmMovedUnmovedAudioNumberFromLocalToLocalPlaylist(
+      Object sourcePlaylistTitle,
+      Object targetPlaylistTitle,
+      Object sortedFilterParmsName,
+      Object movedAudioNumber,
+      Object movedCommentedAudioNumber,
+      Object unmovedAudioNumber) {
     return 'Applying Sort/Filter parms \"$sortedFilterParmsName\", from local playlist \"$sourcePlaylistTitle\" to local playlist \"$targetPlaylistTitle\", $movedAudioNumber audio(s) were moved from which $movedCommentedAudioNumber were commented, and $unmovedAudioNumber audio(s) were unmoved.';
   }
 
   @override
-  String confirmCopiedNotCopiedAudioNumberFromYoutubeToYoutubePlaylist(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName, Object copiedAudioNumber, Object copiedCommentedAudioNumber, Object notCopiedAudioNumber) {
+  String confirmCopiedNotCopiedAudioNumberFromYoutubeToYoutubePlaylist(
+      Object sourcePlaylistTitle,
+      Object targetPlaylistTitle,
+      Object sortedFilterParmsName,
+      Object copiedAudioNumber,
+      Object copiedCommentedAudioNumber,
+      Object notCopiedAudioNumber) {
     return 'Applying Sort/Filter parms \"$sortedFilterParmsName\", from Youtube playlist \"$sourcePlaylistTitle\" to Youtube playlist \"$targetPlaylistTitle\", $copiedAudioNumber audio(s) were copied from which $copiedCommentedAudioNumber were commented, and $notCopiedAudioNumber audio(s) were not copied.';
   }
 
   @override
-  String confirmCopiedNotCopiedAudioNumberFromYoutubeToLocalPlaylist(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName, Object copiedAudioNumber, Object copiedCommentedAudioNumber, Object notCopiedAudioNumber) {
+  String confirmCopiedNotCopiedAudioNumberFromYoutubeToLocalPlaylist(
+      Object sourcePlaylistTitle,
+      Object targetPlaylistTitle,
+      Object sortedFilterParmsName,
+      Object copiedAudioNumber,
+      Object copiedCommentedAudioNumber,
+      Object notCopiedAudioNumber) {
     return 'Applying Sort/Filter parms \"$sortedFilterParmsName\", from Youtube playlist \"$sourcePlaylistTitle\" to local playlist \"$targetPlaylistTitle\", $copiedAudioNumber audio(s) were copied from which $copiedCommentedAudioNumber were commented, and $notCopiedAudioNumber audio(s) were not copied.';
   }
 
   @override
-  String confirmCopiedNotCopiedAudioNumberFromLocalToYoutubePlaylist(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName, Object copiedAudioNumber, Object copiedCommentedAudioNumber, Object notCopiedAudioNumber) {
+  String confirmCopiedNotCopiedAudioNumberFromLocalToYoutubePlaylist(
+      Object sourcePlaylistTitle,
+      Object targetPlaylistTitle,
+      Object sortedFilterParmsName,
+      Object copiedAudioNumber,
+      Object copiedCommentedAudioNumber,
+      Object notCopiedAudioNumber) {
     return 'Applying Sort/Filter parms \"$sortedFilterParmsName\", from local playlist \"$sourcePlaylistTitle\" to Youtube playlist \"$targetPlaylistTitle\", $copiedAudioNumber audio(s) were copied from which $copiedCommentedAudioNumber were commented, and $notCopiedAudioNumber audio(s) were not copied.';
   }
 
   @override
-  String confirmCopiedNotCopiedAudioNumberFromLocalToLocalPlaylist(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName, Object copiedAudioNumber, Object copiedCommentedAudioNumber, Object notCopiedAudioNumber) {
+  String confirmCopiedNotCopiedAudioNumberFromLocalToLocalPlaylist(
+      Object sourcePlaylistTitle,
+      Object targetPlaylistTitle,
+      Object sortedFilterParmsName,
+      Object copiedAudioNumber,
+      Object copiedCommentedAudioNumber,
+      Object notCopiedAudioNumber) {
     return 'Applying Sort/Filter parms \"$sortedFilterParmsName\", from local playlist \"$sourcePlaylistTitle\" to local playlist \"$targetPlaylistTitle\", $copiedAudioNumber audio(s) were copied from which $copiedCommentedAudioNumber were commented, and $notCopiedAudioNumber audio(s) were not copied.';
   }
 
   @override
-  String defaultSFPNotApplyedToMoveAudioFromYoutubeToYoutubePlaylistWarning(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName) {
+  String defaultSFPNotApplyedToMoveAudioFromYoutubeToYoutubePlaylistWarning(
+      Object sourcePlaylistTitle,
+      Object targetPlaylistTitle,
+      Object sortedFilterParmsName) {
     return 'Since \"$sortedFilterParmsName\" Sort/Filter parms is selected, no audio can be moved from Youtube playlist \"$sourcePlaylistTitle\" to Youtube playlist \"$targetPlaylistTitle\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...';
   }
 
   @override
-  String defaultSFPNotApplyedToMoveAudioFromYoutubeToLocalPlaylistWarning(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName) {
+  String defaultSFPNotApplyedToMoveAudioFromYoutubeToLocalPlaylistWarning(
+      Object sourcePlaylistTitle,
+      Object targetPlaylistTitle,
+      Object sortedFilterParmsName) {
     return 'Since \"$sortedFilterParmsName\" Sort/Filter parms is selected, no audio can be moved from Youtube playlist \"$sourcePlaylistTitle\" to local playlist \"$targetPlaylistTitle\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...';
   }
 
   @override
-  String defaultSFPNotApplyedToMoveAudioFromLocalToYoutubePlaylistWarning(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName) {
+  String defaultSFPNotApplyedToMoveAudioFromLocalToYoutubePlaylistWarning(
+      Object sourcePlaylistTitle,
+      Object targetPlaylistTitle,
+      Object sortedFilterParmsName) {
     return 'Since \"$sortedFilterParmsName\" Sort/Filter parms is selected, no audio can be moved from local playlist \"$sourcePlaylistTitle\" to Youtube playlist \"$targetPlaylistTitle\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...';
   }
 
   @override
-  String defaultSFPNotApplyedToMoveAudioFromLocalToLocalPlaylistWarning(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName) {
+  String defaultSFPNotApplyedToMoveAudioFromLocalToLocalPlaylistWarning(
+      Object sourcePlaylistTitle,
+      Object targetPlaylistTitle,
+      Object sortedFilterParmsName) {
     return 'Since \"$sortedFilterParmsName\" Sort/Filter parms is selected, no audio can be moved from local playlist \"$sourcePlaylistTitle\" to local playlist \"$targetPlaylistTitle\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...';
   }
 
   @override
-  String defaultSFPNotApplyedToCopyAudioFromYoutubeToYoutubePlaylistWarning(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName) {
+  String defaultSFPNotApplyedToCopyAudioFromYoutubeToYoutubePlaylistWarning(
+      Object sourcePlaylistTitle,
+      Object targetPlaylistTitle,
+      Object sortedFilterParmsName) {
     return 'Since \"$sortedFilterParmsName\" Sort/Filter parms is selected, no audio can be copied from Youtube playlist \"$sourcePlaylistTitle\" to Youtube playlist \"$targetPlaylistTitle\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...';
   }
 
   @override
-  String defaultSFPNotApplyedToCopyAudioFromYoutubeToLocalPlaylistWarning(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName) {
+  String defaultSFPNotApplyedToCopyAudioFromYoutubeToLocalPlaylistWarning(
+      Object sourcePlaylistTitle,
+      Object targetPlaylistTitle,
+      Object sortedFilterParmsName) {
     return 'Since \"$sortedFilterParmsName\" Sort/Filter parms is selected, no audio can be copied from Youtube playlist \"$sourcePlaylistTitle\" to local playlist \"$targetPlaylistTitle\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...';
   }
 
   @override
-  String defaultSFPNotApplyedToCopyAudioFromLocalToYoutubePlaylistWarning(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName) {
+  String defaultSFPNotApplyedToCopyAudioFromLocalToYoutubePlaylistWarning(
+      Object sourcePlaylistTitle,
+      Object targetPlaylistTitle,
+      Object sortedFilterParmsName) {
     return 'Since \"$sortedFilterParmsName\" Sort/Filter parms is selected, no audio can be copied from local playlist \"$sourcePlaylistTitle\" to Youtube playlist \"$targetPlaylistTitle\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...';
   }
 
   @override
-  String defaultSFPNotApplyedToCopyAudioFromLocalToLocalPlaylistWarning(Object sourcePlaylistTitle, Object targetPlaylistTitle, Object sortedFilterParmsName) {
+  String defaultSFPNotApplyedToCopyAudioFromLocalToLocalPlaylistWarning(
+      Object sourcePlaylistTitle,
+      Object targetPlaylistTitle,
+      Object sortedFilterParmsName) {
     return 'Since \"$sortedFilterParmsName\" Sort/Filter parms is selected, no audio can be copied from local playlist \"$sourcePlaylistTitle\" to local playlist \"$targetPlaylistTitle\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...';
   }
 
   @override
-  String get appBarMenuEnableNextAudioAutoPlay => 'Enable playing next Audio automatically ...';
+  String get appBarMenuEnableNextAudioAutoPlay =>
+      'Enable playing next Audio automatically ...';
 
   @override
   String get batteryParameters => 'Battery Parameter Change';
 
   @override
-  String get disableBatteryOptimisation => 'Display the battery settings in order to disable its optimization. The result is that it allows the application to automatically play the next audio in the current playlist.\n\nClick on the button below, then select the \"Battery\" option at the bottom of the list. Next, choose \"Unrestricted\" and quit the settings.';
+  String get disableBatteryOptimisation =>
+      'Display the battery settings in order to disable its optimization. The result is that it allows the application to automatically play the next audio in the current playlist.\n\nClick on the button below, then select the \"Battery\" option at the bottom of the list. Next, choose \"Unrestricted\" and quit the settings.';
 
   @override
   String get openBatteryOptimisationButton => 'Display the battery settings';
 
   @override
-  String deleteSortFilterParmsWarningTitle(Object sortFilterParmsName, Object playlistNumber) {
+  String deleteSortFilterParmsWarningTitle(
+      Object sortFilterParmsName, Object playlistNumber) {
     return 'WARNING: you are going to delete the Sort/Filter parms \"$sortFilterParmsName\" which is used in $playlistNumber playlist(s) listed below';
   }
 
@@ -1389,28 +1619,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get descendingShort => 'desc';
 
   @override
-  String get startAudioDownloadDateSortFilterTooltip => 'Lists all audio\'s downloaded on or after the specified start date if set.';
+  String get startAudioDownloadDateSortFilterTooltip =>
+      'Lists all audio\'s downloaded on or after the specified start date if set.';
 
   @override
-  String get endAudioDownloadDateSortFilterTooltip => 'Lists all audio\'s downloaded on or before the specified end date if set.';
+  String get endAudioDownloadDateSortFilterTooltip =>
+      'Lists all audio\'s downloaded on or before the specified end date if set.';
 
   @override
-  String get startVideoUploadDateSortFilterTooltip => 'Lists all videos uploaded on or after the specified start date if set.';
+  String get startVideoUploadDateSortFilterTooltip =>
+      'Lists all videos uploaded on or after the specified start date if set.';
 
   @override
-  String get endVideoUploadDateSortFilterTooltip => 'Lists all videos uploaded on or before the specified end date if set.';
+  String get endVideoUploadDateSortFilterTooltip =>
+      'Lists all videos uploaded on or before the specified end date if set.';
 
   @override
-  String get startAudioDurationSortFilterTooltip => 'Lists all audio\'s with a duration equal to or greater than the specified minimum duration if set.';
+  String get startAudioDurationSortFilterTooltip =>
+      'Lists all audio\'s with a duration equal to or greater than the specified minimum duration if set.';
 
   @override
-  String get endAudioDurationSortFilterTooltip => 'Lists all audio\'s with a duration equal to or less than the specified maximum duration if set.';
+  String get endAudioDurationSortFilterTooltip =>
+      'Lists all audio\'s with a duration equal to or less than the specified maximum duration if set.';
 
   @override
-  String get startAudioFileSizeSortFilterTooltip => 'Lists all audio\'s with a file size equal to or greater than the specified minimum size if set.';
+  String get startAudioFileSizeSortFilterTooltip =>
+      'Lists all audio\'s with a file size equal to or greater than the specified minimum size if set.';
 
   @override
-  String get endAudioFileSizeSortFilterTooltip => 'Lists all audio\'s with a file size equal to or less than the specified maximum size if set.';
+  String get endAudioFileSizeSortFilterTooltip =>
+      'Lists all audio\'s with a file size equal to or less than the specified maximum size if set.';
 
   @override
   String get valueInInitialVersionTitle => 'In initial version';
@@ -1431,13 +1669,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpMainTitle => 'Audio Learn Help';
 
   @override
-  String get helpMainIntroduction => 'Consult the Audio Learn Introduction Help the first time you use the application in order to initialize it correctly !';
+  String get helpMainIntroduction =>
+      'Consult the Audio Learn Introduction Help the first time you use the application in order to initialize it correctly !';
 
   @override
   String get helpAudioLearnIntroductionTitle => 'Audio Learn Introduction';
 
   @override
-  String get helpAudioLearnIntroductionSubTitle => 'Defining, adding and downloading a Youtube playlist';
+  String get helpAudioLearnIntroductionSubTitle =>
+      'Defining, adding and downloading a Youtube playlist';
 
   @override
   String get helpLocalPlaylistTitle => 'Local Playlist';
@@ -1458,7 +1698,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpAudioMenuSubTitle => 'Audio menu functionalities';
 
   @override
-  String get addPrivateYoutubePlaylist => 'Trying to add a private Youtube playlist is not possible since the audio\'s of a private playlist can not be downloaded. To solve the problem, edit the playlist on Youtube and change its visibility from \"Private\" to \"Unlisted\" or to \"Public\" and then re-add it to the application.';
+  String get addPrivateYoutubePlaylist =>
+      'Trying to add a private Youtube playlist is not possible since the audio\'s of a private playlist can not be downloaded. To solve the problem, edit the playlist on Youtube and change its visibility from \"Private\" to \"Unlisted\" or to \"Public\" and then re-add it to the application.';
 
   @override
   String get addAudioPicture => 'Add Audio Picture ...';
@@ -1472,7 +1713,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get appDataCouldNotBeSavedToZip => 'Playlist, comment and picture JSON files as well as application settings could not be saved to ZIP.';
+  String get appDataCouldNotBeSavedToZip =>
+      'Playlist, comment and picture JSON files as well as application settings could not be saved to ZIP.';
 
   @override
   String get pictured => 'Pictured';
@@ -1481,29 +1723,48 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notPictured => 'Unpictured';
 
   @override
-  String get restorePlaylistAndCommentsFromZipMenu => 'Restore Playlists, Comments, Pictures and Settings from ZIP File ...';
+  String get restorePlaylistAndCommentsFromZipMenu =>
+      'Restore Playlists, Comments, Pictures and Settings from ZIP File ...';
 
   @override
-  String get restorePlaylistAndCommentsFromZipTooltip => 'Restoring the playlists, their audio comments, pictures and the application settings from a saved ZIP file. The ZIP file contains the playlists, the comments, the pictures as well as the settings JSON files. The audio files are not included in it.';
+  String get restorePlaylistAndCommentsFromZipTooltip =>
+      'Restoring the playlists, their audio comments, pictures and the application settings from a saved ZIP file. The ZIP file contains the playlists, the comments, the pictures as well as the settings JSON files. The audio files are not included in it.';
 
   @override
-  String restoredAppDataFromZip(Object playlistsNumber, Object audiosNumber, Object commentsNumber, Object updatedCommentNumber, Object addedCommentNumber, Object picturesNumber, Object filePathName) {
+  String restoredAppDataFromZip(
+      Object playlistsNumber,
+      Object audiosNumber,
+      Object commentsNumber,
+      Object updatedCommentNumber,
+      Object addedCommentNumber,
+      Object picturesNumber,
+      Object filePathName) {
     return 'Restored $playlistsNumber playlist, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) and the application settings from \"$filePathName\".';
   }
 
   @override
-  String restoredUniquePlaylistFromZip(Object playlistsNumber, Object audiosNumber, Object commentsNumber, Object updatedCommentNumber, Object addedCommentNumber, Object picturesNumber, Object filePathName) {
+  String restoredUniquePlaylistFromZip(
+      Object playlistsNumber,
+      Object audiosNumber,
+      Object commentsNumber,
+      Object updatedCommentNumber,
+      Object addedCommentNumber,
+      Object picturesNumber,
+      Object filePathName) {
     return 'Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) from \"$filePathName\".';
   }
 
   @override
-  String get appDataCouldNotBeRestoredFromZip => 'Playlist, comment and picture JSON files as well as application settings could not be restored from ZIP.';
+  String get appDataCouldNotBeRestoredFromZip =>
+      'Playlist, comment and picture JSON files as well as application settings could not be restored from ZIP.';
 
   @override
-  String get deleteFilteredAudioFromPlaylistAsWell => 'Delete filtered Audio\'s from Playlist as well ...';
+  String get deleteFilteredAudioFromPlaylistAsWell =>
+      'Delete filtered Audio\'s from Playlist as well ...';
 
   @override
-  String deleteFilteredAudioFromPlaylistAsWellConfirmationTitle(Object sortFilterParmsName, Object playlistTitle) {
+  String deleteFilteredAudioFromPlaylistAsWellConfirmationTitle(
+      Object sortFilterParmsName, Object playlistTitle) {
     return 'Delete audio\'s filtered by \"$sortFilterParmsName\" parms from playlist \"$playlistTitle\" as well (will be re-downloadable)';
   }
 
@@ -1511,10 +1772,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get redownloadFilteredAudio => 'Redownload filtered Audio\'s';
 
   @override
-  String get redownloadFilteredAudioTooltip => 'Filtered audio files are re-downloaded using their original file names.';
+  String get redownloadFilteredAudioTooltip =>
+      'Filtered audio files are re-downloaded using their original file names.';
 
   @override
-  String redownloadedAudioNumbersConfirmation(Object playlistTitle, Object redownloadedAudioNumber, Object notRedownloadedAudioNumber) {
+  String redownloadedAudioNumbersConfirmation(Object playlistTitle,
+      Object redownloadedAudioNumber, Object notRedownloadedAudioNumber) {
     return '\"$redownloadedAudioNumber\" audio\'s were redownloaded to the playlist \"$playlistTitle\". \"$notRedownloadedAudioNumber\" audio\'s were not redownloaded since they are already present in the playlist directory.';
   }
 
@@ -1522,7 +1785,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get redownloadDeletedAudio => 'Redownload deleted Audio';
 
   @override
-  String redownloadedAudioConfirmation(Object playlistTitle, Object redownloadedAudioTitle) {
+  String redownloadedAudioConfirmation(
+      Object playlistTitle, Object redownloadedAudioTitle) {
     return 'The audio \"$redownloadedAudioTitle\" was redownloaded in the playlist \"$playlistTitle\".';
   }
 
@@ -1533,7 +1797,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notPlayable => 'Not playable';
 
   @override
-  String audioNotRedownloadedWarning(Object playlistTitle, Object redownloadedAudioTitle) {
+  String audioNotRedownloadedWarning(
+      Object playlistTitle, Object redownloadedAudioTitle) {
     return 'The audio \"$redownloadedAudioTitle\" was NOT redownloaded in the playlist \"$playlistTitle\" because it already exists in the playlist directory.';
   }
 
@@ -1544,7 +1809,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setPlaylistAudioQuality => 'Set Audio Quality ...';
 
   @override
-  String get setPlaylistAudioQualityTooltip => 'The selected audio quality will be applied to the next downloaded audio\'s. If the audio quality must be applied to the already downloaded audio\'s, those audio\'s must be deleted \"from playlist as well\" so that they will be redownloadable in the modified audio quality.';
+  String get setPlaylistAudioQualityTooltip =>
+      'The selected audio quality will be applied to the next downloaded audio\'s. If the audio quality must be applied to the already downloaded audio\'s, those audio\'s must be deleted \"from playlist as well\" so that they will be redownloadable in the modified audio quality.';
 
   @override
   String get setPlaylistAudioQualityDialogTitle => 'Playlist Audio Quality';
@@ -1553,18 +1819,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get selectAudioQuality => 'Select audio quality';
 
   @override
-  String audioCopiedOrMovedFromPlaylistToPlaylist(Object audioTitle, Object yesOrNo, Object operationType, Object fromPlaylistType, Object fromPlaylistTitle, Object toPlaylistTitle, Object toPlaylistType, Object notCopiedOrMovedReason) {
+  String audioCopiedOrMovedFromPlaylistToPlaylist(
+      Object audioTitle,
+      Object yesOrNo,
+      Object operationType,
+      Object fromPlaylistType,
+      Object fromPlaylistTitle,
+      Object toPlaylistTitle,
+      Object toPlaylistType,
+      Object notCopiedOrMovedReason) {
     return 'Audio \"$audioTitle\"$yesOrNo$operationType from $fromPlaylistType playlist \"$fromPlaylistTitle\" to $toPlaylistType playlist \"$toPlaylistTitle\"$notCopiedOrMovedReason';
   }
 
   @override
-  String get sinceAbsentFromSourcePlaylist => ' since it is not present in the source playlist.';
+  String get sinceAbsentFromSourcePlaylist =>
+      ' since it is not present in the source playlist.';
 
   @override
-  String get sinceAlreadyPresentInTargetPlaylist => ' since it is already present in the destination playlist.';
+  String get sinceAlreadyPresentInTargetPlaylist =>
+      ' since it is already present in the destination playlist.';
 
   @override
-  String audioNotKeptInSourcePlaylist(Object audioTitle, Object fromPlaylistTitle) {
+  String audioNotKeptInSourcePlaylist(
+      Object audioTitle, Object fromPlaylistTitle) {
     return '.\n\nIF THE DELETED AUDIO VIDEO \"$audioTitle\" REMAINS IN THE \"$fromPlaylistTitle\" YOUTUBE PLAYLIST, IT WILL BE DOWNLOADED AGAIN THE NEXT TIME YOU DOWNLOAD THE PLAYLIST !';
   }
 
@@ -1614,43 +1891,53 @@ class AppLocalizationsEn extends AppLocalizations {
   String get playlistRestorationDialogTitle => 'Playlists Restoration';
 
   @override
-  String get playlistRestorationExplanation => 'Important: if you\'ve modified your existing playlists (added audio files, comments, or pictures) since creating the ZIP backup, keep this checkbox UNCHECKED. Otherwise, your recent changes will be replaced by the older versions contained in the backup.';
+  String get playlistRestorationExplanation =>
+      'Important: if you\'ve modified your existing playlists (added audio files, comments, or pictures) since creating the ZIP backup, keep this checkbox UNCHECKED. Otherwise, your recent changes will be replaced by the older versions contained in the backup.';
 
   @override
   String get playlistRestorationHelpTitle => 'Playlist Restoration Function';
 
   @override
-  String get playlistRestorationFirstHelpTitle => 'Problematic scenario: you restored playlists from a ZIP file, then ran the \"Update playlist JSON files\" function with the \"Remove deleted audio files\" checkbox enabled. Since restoration from a ZIP doesn\'t reinstall the audio files, enabling this option removed these files from the application. As a result, they are no longer available for re-downloading.';
+  String get playlistRestorationFirstHelpTitle =>
+      'Problematic scenario: you restored playlists from a ZIP file, then ran the \"Update playlist JSON files\" function with the \"Remove deleted audio files\" checkbox enabled. Since restoration from a ZIP doesn\'t reinstall the audio files, enabling this option removed these files from the application. As a result, they are no longer available for re-downloading.';
 
   @override
-  String get playlistRestorationFirstHelpContent => 'To resolve this issue, you need to delete the playlists affected by the loss of their audio files. Here are two methods for deleting these playlists:\n\n1 - Deletion through the application\nEach  playlist has a menu. Use its last element \"Delete Playlist ...\".\n\n2 - Manual deletion (recommended if multiple playlists must be deleted)\nNavigate to the application\'s storage directory in which the playlist directories are present. Select the folders to be removed and delete the selected group.';
+  String get playlistRestorationFirstHelpContent =>
+      'To resolve this issue, you need to delete the playlists affected by the loss of their audio files. Here are two methods for deleting these playlists:\n\n1 - Deletion through the application\nEach  playlist has a menu. Use its last element \"Delete Playlist ...\".\n\n2 - Manual deletion (recommended if multiple playlists must be deleted)\nNavigate to the application\'s storage directory in which the playlist directories are present. Select the folders to be removed and delete the selected group.';
 
   @override
-  String get playlistRestorationSecondHelpTitle => 'After deleting the affected playlists, restore them again from the ZIP file while ensuring the \"Remove deleted audio files\" checkbox remains UNCHECKED. This step is crucial as it will allow audio files to remain available for downloading after restoration.';
+  String get playlistRestorationSecondHelpTitle =>
+      'After deleting the affected playlists, restore them again from the ZIP file while ensuring the \"Remove deleted audio files\" checkbox remains UNCHECKED. This step is crucial as it will allow audio files to remain available for downloading after restoration.';
 
   @override
   String get playlistJsonFilesUpdateDialogTitle => 'Playlist JSON Files Update';
 
   @override
-  String get playlistJsonFilesUpdateExplanation => 'Important: if you\'ve restored from a ZIP backup AND manually added playlists afterward, please use caution when updating. When you run \"Update Playlist JSON Files\", any restored audio files that haven\'t been redownloaded will disappear from your playlists. To preserve these files and conserve the possibility of redownloading them, make sure the \"Remove deleted audio files\" checkbox remains UNCHECKED before updating.';
+  String get playlistJsonFilesUpdateExplanation =>
+      'Important: if you\'ve restored from a ZIP backup AND manually added playlists afterward, please use caution when updating. When you run \"Update Playlist JSON Files\", any restored audio files that haven\'t been redownloaded will disappear from your playlists. To preserve these files and conserve the possibility of redownloading them, make sure the \"Remove deleted audio files\" checkbox remains UNCHECKED before updating.';
 
   @override
   String get removeDeletedAudioFiles => 'Remove deleted audio files';
 
   @override
-  String get updatePlaylistJsonFilesHelpTitle => 'Update Playlist JSON Files function';
+  String get updatePlaylistJsonFilesHelpTitle =>
+      'Update Playlist JSON Files function';
 
   @override
-  String get updatePlaylistJsonFilesHelpContent => 'Important note: This function is only necessary for changes made OUTSIDE the application. Changes made directly within the application (adding/removing playlists, adding/importing/deleting audio files) are automatically processed and do not require using this update function.';
+  String get updatePlaylistJsonFilesHelpContent =>
+      'Important note: This function is only necessary for changes made OUTSIDE the application. Changes made directly within the application (adding/removing playlists, adding/importing/deleting audio files) are automatically processed and do not require using this update function.';
 
   @override
-  String get updatePlaylistJsonFilesFirstHelpTitle => 'Using the Update Playlist JSON Files function';
+  String get updatePlaylistJsonFilesFirstHelpTitle =>
+      'Using the Update Playlist JSON Files function';
 
   @override
-  String get saveUniquePlaylistCommentsAndPicturesToZipMenu => 'Save the Playlist, its Comments and its Pictures to ZIP File ...';
+  String get saveUniquePlaylistCommentsAndPicturesToZipMenu =>
+      'Save the Playlist, its Comments and its Pictures to ZIP File ...';
 
   @override
-  String get saveUniquePlaylistCommentsAndPicturesToZipTooltip => 'Saving the playlist, their audio comments and pictures to a ZIP file. Only the JSON and JPG files are copied. The MP3 files will not be included.';
+  String get saveUniquePlaylistCommentsAndPicturesToZipTooltip =>
+      'Saving the playlist, their audio comments and pictures to a ZIP file. Only the JSON and JPG files are copied. The MP3 files will not be included.';
 
   @override
   String savedUniquePlaylistToZip(Object filePathName) {
@@ -1667,7 +1954,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get restoredElementsHelpTitle => 'Restored elements description';
 
   @override
-  String get restoredElementsHelpContent => 'N playlist: number of new playlist JSON files created by the restoration.\n\nN comment: number of new comment JSON files created by the restoration. This happens only if the commented audio had no comment before the restoration. Otherwise, the new comment is added to the existing audio comment JSON file.\n\nN picture: number of new picture JSON files created by the restoration. This happens only if the pictured audio had no picture before the restoration. Otherwise, the new picture is added to the existing audio picture JSON file.\n\nN audio reference: number of audio elements contained in the unique or multiple new playlist json file(s) created by the restoration. If the restored playlist number is 0, then the audio reference(s) number correspond to the number of audio element(s) added to their enclosing playlist JSON file by the restoration. The restoration does not add MP3 files since no MP3 is contained in the ZIP file. The added referenced audio\'s can be downloaded after the restoration.\n\nN added comment: number of comments added by the restoration to the existing audio comment JSON files.\n\nN modified comment: number of comments modified by the restoration in the existing audio comment JSON files.';
+  String get restoredElementsHelpContent =>
+      'N playlist: number of new playlist JSON files created by the restoration.\n\nN comment: number of new comment JSON files created by the restoration. This happens only if the commented audio had no comment before the restoration. Otherwise, the new comment is added to the existing audio comment JSON file.\n\nN picture: number of new picture JSON files created by the restoration. This happens only if the pictured audio had no picture before the restoration. Otherwise, the new picture is added to the existing audio picture JSON file.\n\nN audio reference: number of audio elements contained in the unique or multiple new playlist json file(s) created by the restoration. If the restored playlist number is 0, then the audio reference(s) number correspond to the number of audio element(s) added to their enclosing playlist JSON file by the restoration. The restoration does not add MP3 files since no MP3 is contained in the ZIP file. The added referenced audio\'s can be downloaded after the restoration.\n\nN added comment: number of comments added by the restoration to the existing audio comment JSON files.\n\nN modified comment: number of comments modified by the restoration in the existing audio comment JSON files.';
 
   @override
   String get playlistInfoDownloadAudio => 'Download audio';
@@ -1676,16 +1964,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get playlistInfoAudioPlayer => 'Play audio';
 
   @override
-  String get savePlaylistsAudioMp3FilesToZipMenu => 'Save Playlists Audio\'s MP3 to ZIP File ...';
+  String get savePlaylistsAudioMp3FilesToZipMenu =>
+      'Save Playlists Audio\'s MP3 to ZIP File ...';
 
   @override
-  String get savePlaylistsAudioMp3FilesToZipTooltip => 'Save audio MP3 files from all playlists to a ZIP file. You can specify a date/time filter to only include audio files downloaded on or after that date.';
+  String get savePlaylistsAudioMp3FilesToZipTooltip =>
+      'Save audio MP3 files from all playlists to a ZIP file. You can specify a date/time filter to only include audio files downloaded on or after that date.';
 
   @override
   String get setAudioDownloadFromDateTimeTitle => 'Set the download date';
 
   @override
-  String get audioDownloadFromDateTimeAllPlaylistsExplanation => 'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.';
+  String get audioDownloadFromDateTimeAllPlaylistsExplanation =>
+      'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.';
 
   @override
   String audioDownloadFromDateTimeLabel(Object selectedAppDateFormat) {
@@ -1693,10 +1984,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get audioDownloadFromDateTimeAllPlaylistsTooltip => 'Since the current date/time value corresponds to the application oldest date/time downladed audio value, if the date/time is not modified, all the application audio MP3 files will be included in the ZIP file.';
+  String get audioDownloadFromDateTimeAllPlaylistsTooltip =>
+      'Since the current date/time value corresponds to the application oldest date/time downladed audio value, if the date/time is not modified, all the application audio MP3 files will be included in the ZIP file.';
 
   @override
-  String get audioDownloadFromDateTimeSinglePlaylistTooltip => 'Since the current date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio MP3 files will be included in the ZIP file.';
+  String get audioDownloadFromDateTimeSinglePlaylistTooltip =>
+      'Since the current date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio MP3 files will be included in the ZIP file.';
 
   @override
   String noAudioMp3WereSavedToZip(Object audioDownloadFromDateTime) {
@@ -1704,16 +1997,20 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get savePlaylistAudioMp3FilesToZipMenu => 'Save the Playlist Audio\'s MP3 to ZIP File ...';
+  String get savePlaylistAudioMp3FilesToZipMenu =>
+      'Save the Playlist Audio\'s MP3 to ZIP File ...';
 
   @override
-  String get savePlaylistAudioMp3FilesToZipTooltip => 'Saving the playlist audio MP3 files to a ZIP file. You can specify a date/time filter to only include audio files downloaded on or after that date.';
+  String get savePlaylistAudioMp3FilesToZipTooltip =>
+      'Saving the playlist audio MP3 files to a ZIP file. You can specify a date/time filter to only include audio files downloaded on or after that date.';
 
   @override
-  String get audioDownloadFromDateTimeUniquePlaylistExplanation => 'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.';
+  String get audioDownloadFromDateTimeUniquePlaylistExplanation =>
+      'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.';
 
   @override
-  String get audioDownloadFromDateTimeUniquePlaylistTooltip => 'Since the current date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio MP3 files will be included in the ZIP file.';
+  String get audioDownloadFromDateTimeUniquePlaylistTooltip =>
+      'Since the current date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio MP3 files will be included in the ZIP file.';
 
   @override
   String invalidDateFormatErrorMessage(Object dateStr) {
@@ -1726,7 +2023,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get savingMultiplePlaylistsAudioMp3 => 'Saving multiple playlists audio files to ZIP ...';
+  String get savingMultiplePlaylistsAudioMp3 =>
+      'Saving multiple playlists audio files to ZIP ...';
 
   @override
   String savingApproximativeTime(Object saveTime) {
@@ -1734,7 +2032,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get savingUpToHalfHour => 'Please wait, this may take 10 to 30 minutes or more ...';
+  String get savingUpToHalfHour =>
+      'Please wait, this may take 10 to 30 minutes or more ...';
 
   @override
   String savingAudioToZipTime(Object evaluatedSaveTime) {
@@ -1745,41 +2044,62 @@ class AppLocalizationsEn extends AppLocalizations {
   String get savingAudioToZipTimeTitle => 'Prevision of the save duration';
 
   @override
-  String correctedSavedUniquePlaylistAudioMp3ToZip(Object audioDownloadFromDateTime, Object savedAudioNumber, Object savedAudioTotalFileSize, Object savedAudioTotalDuration, Object saveOperationRealDuration, Object bytesNumberSavedPerSecond, Object filePathName) {
+  String correctedSavedUniquePlaylistAudioMp3ToZip(
+      Object audioDownloadFromDateTime,
+      Object savedAudioNumber,
+      Object savedAudioTotalFileSize,
+      Object savedAudioTotalDuration,
+      Object saveOperationRealDuration,
+      Object bytesNumberSavedPerSecond,
+      Object filePathName) {
     return 'Saved to ZIP unique playlist audio MP3 files downloaded from $audioDownloadFromDateTime.\n\nTotal saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.\n\nSave operation real duration: $saveOperationRealDuration, number of bytes saved per second: $bytesNumberSavedPerSecond.\n\nZIP file path name: \"$filePathName\".';
   }
 
   @override
-  String correctedSavedMultiplePlaylistsAudioMp3ToZip(Object audioDownloadFromDateTime, Object savedAudioNumber, Object savedAudioTotalFileSize, Object savedAudioTotalDuration, Object saveOperationRealDuration, Object bytesNumberSavedPerSecond, Object filePathName) {
+  String correctedSavedMultiplePlaylistsAudioMp3ToZip(
+      Object audioDownloadFromDateTime,
+      Object savedAudioNumber,
+      Object savedAudioTotalFileSize,
+      Object savedAudioTotalDuration,
+      Object saveOperationRealDuration,
+      Object bytesNumberSavedPerSecond,
+      Object filePathName) {
     return 'Saved to ZIP all playlists audio MP3 files downloaded from $audioDownloadFromDateTime.\n\nTotal saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.\n\nSave operation real duration: $saveOperationRealDuration, number of bytes saved per second: $bytesNumberSavedPerSecond.\n\nZIP file path name: \"$filePathName\".';
   }
 
   @override
-  String get restorePlaylistsAudioMp3FilesFromZipMenu => 'Restore Playlists Audio\'s MP3 from ZIP File ...';
+  String get restorePlaylistsAudioMp3FilesFromZipMenu =>
+      'Restore Playlists Audio\'s MP3 from ZIP File ...';
 
   @override
-  String get restorePlaylistsAudioMp3FilesFromZipTooltip => 'Restoring audio\'s MP3 not yet present in the playlists from a saved ZIP file. Only the MP3 relative to the audio\'s listed in the playlists are restorable.';
+  String get restorePlaylistsAudioMp3FilesFromZipTooltip =>
+      'Restoring audio\'s MP3 not yet present in the playlists from a saved ZIP file. Only the MP3 relative to the audio\'s listed in the playlists are restorable.';
 
   @override
   String get audioMp3RestorationDialogTitle => 'MP3 Restoration';
 
   @override
-  String get audioMp3RestorationExplanation => 'Only the MP3 relative to the audio\'s listed in the playlists and which are not already present in the playlists are restorable.';
+  String get audioMp3RestorationExplanation =>
+      'Only the MP3 relative to the audio\'s listed in the playlists and which are not already present in the playlists are restorable.';
 
   @override
-  String get restorePlaylistAudioMp3FilesFromZipMenu => 'Restore Playlist Audio\'s MP3 from ZIP File ...';
+  String get restorePlaylistAudioMp3FilesFromZipMenu =>
+      'Restore Playlist Audio\'s MP3 from ZIP File ...';
 
   @override
-  String get restorePlaylistAudioMp3FilesFromZipTooltip => 'Restoring audio\'s MP3 not yet present in the playlist from a saved ZIP file. Only the MP3 relative to the audio\'s listed in the playlist are restorable.';
+  String get restorePlaylistAudioMp3FilesFromZipTooltip =>
+      'Restoring audio\'s MP3 not yet present in the playlist from a saved ZIP file. Only the MP3 relative to the audio\'s listed in the playlist are restorable.';
 
   @override
   String get audioMp3UniquePlaylistRestorationDialogTitle => 'MP3 Restoration';
 
   @override
-  String get audioMp3UniquePlaylistRestorationExplanation => 'Only the MP3 relative to the audio\'s listed in the playlist and which are not already present in the playlist are restorable.';
+  String get audioMp3UniquePlaylistRestorationExplanation =>
+      'Only the MP3 relative to the audio\'s listed in the playlist and which are not already present in the playlist are restorable.';
 
   @override
-  String playlistInvalidRootPathWarning(Object playlistRootPath, Object wrongName) {
+  String playlistInvalidRootPathWarning(
+      Object playlistRootPath, Object wrongName) {
     return 'The defined path \"$playlistRootPath\" is invalid since the playlists final dir name \'$wrongName\' is not equal to \'playlists\'. Please define a valid playlist directory and retry changing the playlists root path.';
   }
 
@@ -1789,5 +2109,22 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get restoringMultiplePlaylistsAudioMp3 => 'Restoring multiple playlists audio files from ZIP ...';
+  String get restoringMultiplePlaylistsAudioMp3 =>
+      'Restoring multiple playlists audio files from ZIP ...';
+
+  @override
+  String get playlistsMp3RestorationHelpTitle =>
+      'Playlists Mp3 Restoration Function';
+
+  @override
+  String get playlistsMp3RestorationHelpContent =>
+      'This function is useful in the situation where playlists were restored from a ZIP file which only contained the playlists, comments and pictures JSON files and so did not contain the audio MP3 files.';
+
+  @override
+  String get uniquePlaylistMp3RestorationHelpTitle =>
+      'Playlist Mp3 Restoration Function';
+
+  @override
+  String get uniquePlaylistMp3RestorationHelpContent =>
+      'This function is useful in the situation where the playlist was restored from a ZIP file which only contained the playlist, comments and pictures JSON files and so did not contain the audio MP3 files.';
 }

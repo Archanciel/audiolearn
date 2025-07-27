@@ -1,1 +1,6 @@
-{}
+{
+  "fr": [
+    "uniquePlaylistMp3RestorationHelpTitle",
+    "uniquePlaylistMp3RestorationHelpContent"
+  ]
+}

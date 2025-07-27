@@ -632,22 +632,9 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             final List<HelpItem> restorePlaylistsHelpItemsLst = [
               HelpItem(
                 helpTitle:
-                    AppLocalizations.of(context)!.playlistRestorationHelpTitle,
+                    AppLocalizations.of(context)!.uniquePlaylistMp3RestorationHelpTitle,
                 helpContent: AppLocalizations.of(context)!
-                    .restorePlaylistAndCommentsFromZipTooltip,
-                displayHelpItemNumber: false,
-              ),
-              HelpItem(
-                helpTitle: AppLocalizations.of(context)!
-                    .playlistRestorationFirstHelpTitle,
-                helpContent: AppLocalizations.of(context)!
-                    .playlistRestorationFirstHelpContent,
-                displayHelpItemNumber: true,
-              ),
-              HelpItem(
-                helpTitle: AppLocalizations.of(context)!
-                    .playlistRestorationSecondHelpTitle,
-                helpContent: '',
+                    .uniquePlaylistMp3RestorationHelpContent,
                 displayHelpItemNumber: false,
               ),
             ];
