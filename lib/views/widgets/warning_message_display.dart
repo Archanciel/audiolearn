@@ -929,7 +929,8 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
             context: _context,
             message: AppLocalizations.of(context)!
                 .playlistInvalidRootPathWarning(
-                    _warningMessageVM.playlistInvalidRootPath),
+                    _warningMessageVM.playlistInvalidRootPath,
+                    _warningMessageVM.playlistInvalidRootName),
             warningMessageVM: _warningMessageVM,
             themeProviderVM: themeProviderVM,
           );

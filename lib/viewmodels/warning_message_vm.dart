@@ -1162,11 +1162,14 @@ class WarningMessageVM extends ChangeNotifier {
 
   String _playlistInvalidRootPath = '';
   String get playlistInvalidRootPath => _playlistInvalidRootPath;
+  String _playlistInvalidRootName = '';
+  String get playlistInvalidRootName => _playlistInvalidRootName;
 
   void signalInvalidPlaylistRootDirName({
     required String playlistInvalidRootPath,
-  }) {
+    required String playlistInvalidRootName,}) {
     _playlistInvalidRootPath = playlistInvalidRootPath;
+    _playlistInvalidRootName = playlistInvalidRootName;
 
     warningMessageType = WarningMessageType.playlistInvalidRootPath;
 
