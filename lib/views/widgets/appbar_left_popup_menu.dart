@@ -987,22 +987,9 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             final List<HelpItem> restorePlaylistsHelpItemsLst = [
               HelpItem(
                 helpTitle:
-                    AppLocalizations.of(context)!.playlistRestorationHelpTitle,
+                    AppLocalizations.of(context)!.playlistsMp3RestorationHelpTitle,
                 helpContent: AppLocalizations.of(context)!
-                    .restorePlaylistAndCommentsFromZipTooltip,
-                displayHelpItemNumber: false,
-              ),
-              HelpItem(
-                helpTitle: AppLocalizations.of(context)!
-                    .playlistRestorationFirstHelpTitle,
-                helpContent: AppLocalizations.of(context)!
-                    .playlistRestorationFirstHelpContent,
-                displayHelpItemNumber: true,
-              ),
-              HelpItem(
-                helpTitle: AppLocalizations.of(context)!
-                    .playlistRestorationSecondHelpTitle,
-                helpContent: '',
+                    .playlistsMp3RestorationHelpContent,
                 displayHelpItemNumber: false,
               ),
             ];

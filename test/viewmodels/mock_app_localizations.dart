@@ -2179,4 +2179,20 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get restoringMultiplePlaylistsAudioMp3 =>
       "Restoring multiple playlists audio files from ZIP ...";
+
+  @override
+  String get playlistsMp3RestorationHelpTitle =>
+      "Playlists Mp3 Restoration Function";
+
+  @override
+  String get playlistsMp3RestorationHelpContent =>
+      "This function is useful in the situation where playlists were restored from a ZIP file which only contained the playlists, the comments and pictures JSON files and so did not contained the audio MP3 files.";
+
+  @override
+  String get uniquePlaylistMp3RestorationHelpContent =>
+      "This function is useful in the situation where the playlist were restored from a ZIP file which only contained the playlist, comments and pictures JSON files and so did not contain the audio MP3 files.";
+
+  @override
+  String get uniquePlaylistMp3RestorationHelpTitle =>
+      "Playlist Mp3 Restoration Function";
 }
