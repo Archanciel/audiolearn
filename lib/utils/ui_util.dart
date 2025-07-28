@@ -3,8 +3,11 @@ import 'dart:io';
 import 'package:audiolearn/models/playlist.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:logger/logger.dart';
 import '../../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../constants.dart';
 import '../models/audio.dart';
@@ -13,7 +16,33 @@ import '../viewmodels/playlist_list_vm.dart';
 import '../viewmodels/warning_message_vm.dart';
 import 'dir_util.dart';
 
+class StorageUtil {
+  /// Check if device has sufficient storage space
+  static Future<bool> hasEnoughSpace({required int requiredBytes}) async {
+    try {
+      if (Platform.isAndroid) {
+        Directory tempDir = await getTemporaryDirectory();
+        var stat = await tempDir.stat();
+        // Get available space (this is a simplified check)
+        return true; // You might need a platform-specific plugin for accurate space check
+      }
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /// Get available storage space in bytes
+  static Future<int> getAvailableSpace() async {
+    // This would require a platform-specific implementation
+    // Consider using a plugin like 'disk_space' or 'device_info_plus'
+    return 0;
+  }
+}
+
 class UiUtil {
+  static Logger logger = Logger();
+
   static String formatLargeSizeToKbOrMb({
     required BuildContext context,
     required int sizeInBytes,
@@ -163,16 +192,47 @@ class UiUtil {
   }
 
   static Future<String> filePickerSelectZipFilePathName() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['zip'],
-      allowMultiple: false,
-      withData: false,
-      initialDirectory: Platform.isAndroid ? '/storage/emulated/0' : null,
-    );
+    FilePickerResult? result;
 
-    if (result != null && result.files.isNotEmpty) {
-      return result.files.first.path ?? '';
+    try {
+      // Check available storage first (optional enhancement)
+      // bool hasSpace = await StorageUtil.hasEnoughSpace(requiredBytes: 100 * 1024 * 1024); // 100MB
+      // if (!hasSpace) {
+      //   logger.e('Insufficient storage space');
+      //   return '';
+      // }
+
+      result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['zip'],
+        allowMultiple: false,
+        withData: false, // Keep this false to avoid loading file into memory
+        initialDirectory: Platform.isAndroid ? '/storage/emulated/0' : null,
+      );
+
+      if (result != null && result.files.isNotEmpty) {
+        String? filePath = result.files.first.path;
+
+        if (filePath != null && filePath.isNotEmpty) {
+          // Verify the file exists and is accessible
+          File selectedFile = File(filePath);
+          if (await selectedFile.exists()) {
+            return filePath;
+          } else {
+            logger.e('Selected file does not exist: $filePath');
+          }
+        }
+      }
+    } on PlatformException catch (e) {
+      if (e.code == 'unknown_path' && e.message?.contains('ENOSPC') == true) {
+        logger.e('Insufficient storage space to select file');
+        // Show user-friendly error message about storage space
+      } else {
+        logger.e(
+            'Platform exception selecting zip file: ${e.code} - ${e.message}');
+      }
+    } catch (e) {
+      logger.e('Error selecting zip file: $e');
     }
 
     return '';
@@ -186,7 +246,7 @@ class UiUtil {
 
   /// The method returns a list containing the parsed date time or date
   /// and the evaluated duration of the audio mp3 saving to zip operation.
-  /// 
+  ///
   /// If the date time or the date parsing fails, it returns a list
   /// containing only null.
   static Future<List<dynamic>> obtainAudioMp3SavingToZipDuration({

@@ -1011,7 +1011,8 @@ class PlaylistListVM extends ChangeNotifier {
     // empty application, the playlistOrder must be updated
     // by playlistOrderFromListOfSelectablePlaylists.
     if (managePlaylistOrder) {
-      if (playlistOrder[0] == '' ||
+      if (playlistOrder.isEmpty ||
+          playlistOrder[0] == '' ||
           playlistOrderFromListOfSelectablePlaylists.length >
               playlistOrder.length) {
         playlistOrder = playlistOrderFromListOfSelectablePlaylists;
@@ -4410,7 +4411,8 @@ class PlaylistListVM extends ChangeNotifier {
           // Expected path format: playlists/PlaylistTitle/audioFileName.mp3
           List<String> pathParts = sanitizedArchiveFilePathName.split('/');
 
-          if (pathParts.length >= 3 && pathParts[0] == kImposedPlaylistsSubDirName) {
+          if (pathParts.length >= 3 &&
+              pathParts[0] == kImposedPlaylistsSubDirName) {
             String playlistTitle = pathParts[1];
             String audioFileName = pathParts[2];
 
