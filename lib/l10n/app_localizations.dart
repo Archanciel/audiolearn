@@ -3207,31 +3207,37 @@ abstract class AppLocalizations {
   /// No description provided for @setAudioDownloadFromDateTimeTitle.
   ///
   /// In en, this message translates to:
-  /// **'Set the download date'**
+  /// **'Set the download dates'**
   String get setAudioDownloadFromDateTimeTitle;
 
   /// No description provided for @audioDownloadFromDateTimeAllPlaylistsExplanation.
   ///
   /// In en, this message translates to:
-  /// **'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.'**
+  /// **'The default specified \'from\' download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.'**
   String get audioDownloadFromDateTimeAllPlaylistsExplanation;
 
   /// No description provided for @audioDownloadFromDateTimeLabel.
   ///
   /// In en, this message translates to:
-  /// **'Date/time {selectedAppDateFormat} hh:mm'**
+  /// **'From date/time {selectedAppDateFormat} hh:mm'**
   String audioDownloadFromDateTimeLabel(Object selectedAppDateFormat);
+
+  /// No description provided for @audioDownloadToDateTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'To date/time {selectedAppDateFormat} hh:mm'**
+  String audioDownloadToDateTimeLabel(Object selectedAppDateFormat);
 
   /// No description provided for @audioDownloadFromDateTimeAllPlaylistsTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Since the current date/time value corresponds to the application oldest date/time downladed audio value, if the date/time is not modified, all the application audio MP3 files will be included in the ZIP file.'**
+  /// **'Set the \'from\' and \'to\' dates to limit the number of MP3 files which will be included in the ZIP. This will creates a smaller ZIP file, making it easier to restore audio files on mobile devices with limited storage space.'**
   String get audioDownloadFromDateTimeAllPlaylistsTooltip;
 
   /// No description provided for @audioDownloadFromDateTimeSinglePlaylistTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Since the current date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio MP3 files will be included in the ZIP file.'**
+  /// **'Set the \'from\' and \'to\' dates to limit the number of MP3 files which will be included in the ZIP. This will creates a smaller ZIP file, making it easier to restore audio files on mobile devices with limited storage space.'**
   String get audioDownloadFromDateTimeSinglePlaylistTooltip;
 
   /// No description provided for @noAudioMp3WereSavedToZip.
@@ -3255,13 +3261,13 @@ abstract class AppLocalizations {
   /// No description provided for @audioDownloadFromDateTimeUniquePlaylistExplanation.
   ///
   /// In en, this message translates to:
-  /// **'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.'**
+  /// **'The default specified \'from\' download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.'**
   String get audioDownloadFromDateTimeUniquePlaylistExplanation;
 
   /// No description provided for @audioDownloadFromDateTimeUniquePlaylistTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Since the current date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio MP3 files will be included in the ZIP file.'**
+  /// **'Since the current from date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio MP3 files will be included in the ZIP file.'**
   String get audioDownloadFromDateTimeUniquePlaylistTooltip;
 
   /// No description provided for @invalidDateFormatErrorMessage.
