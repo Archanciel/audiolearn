@@ -154,11 +154,25 @@ class UiUtil {
   static Future<void> restorePlaylistsAudioMp3FilesFromZip({
     required BuildContext context,
     required List<Playlist> playlistsLst,
+    required WarningMessageVM warningMessageVMlistenFalse,
     bool uniquePlaylistIsRestored = false,
   }) async {
     String selectedZipFilePathName = await filePickerSelectZipFilePathName();
 
     if (selectedZipFilePathName.isEmpty) {
+      return;
+    }
+
+    if (selectedZipFilePathName == 'INSUFFICIENT_STORAGE_SPACE') {
+      warningMessageVMlistenFalse.setError(
+        errorType: ErrorType.insufficientStorageSpace,
+      );
+      return;
+    } else if (selectedZipFilePathName == 'PATH_ERROR') {
+      warningMessageVMlistenFalse.setError(
+        errorType: ErrorType.pathError,
+      );
+      
       return;
     }
 
@@ -224,9 +238,29 @@ class UiUtil {
         }
       }
     } on PlatformException catch (e) {
-      if (e.code == 'unknown_path' && e.message?.contains('ENOSPC') == true) {
-        logger.e('Insufficient storage space to select file');
-        // Show user-friendly error message about storage space
+      if (e.code == 'unknown_path') {
+        // The ENOSPC error doesn't appear in e.message, only in native logs
+        // So we need to infer it from the context or check for other indicators
+
+        // Option 1: Check if it's likely a storage issue by checking available space
+        try {
+          Directory tempDir = await getTemporaryDirectory();
+          var stat = await tempDir.stat();
+          // If we can't write to temp directory, it's likely a storage issue
+
+          // Try to create a small test file to check storage
+          File testFile = File('${tempDir.path}/storage_test.tmp');
+          await testFile.writeAsString('test');
+          await testFile.delete();
+
+          // If we reach here, it's not a storage issue
+          logger.e('Failed to retrieve file path: ${e.message}');
+          return 'PATH_ERROR';
+        } catch (storageError) {
+          // If we can't write the test file, it's likely storage full
+          logger.e('Insufficient storage space detected during file selection');
+          return 'INSUFFICIENT_STORAGE_SPACE';
+        }
       } else {
         logger.e(
             'Platform exception selecting zip file: ${e.code} - ${e.message}');

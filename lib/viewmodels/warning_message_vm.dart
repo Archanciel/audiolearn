@@ -219,6 +219,10 @@ enum ErrorType {
   errorInPlaylistJsonFile, // Error in the playlist json file.
 
   dateFormatError, // Error in the date format.
+
+  insufficientStorageSpace, // Error in the storage space.
+
+  pathError, // Error in the path.
 }
 
 /// This VM (View Model) class is part of the MVVM architecture.
