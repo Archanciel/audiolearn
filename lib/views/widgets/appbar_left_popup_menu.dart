@@ -1040,6 +1040,10 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   context,
                   listen: false,
                 ).listOfSelectablePlaylists,
+                warningMessageVMlistenFalse: Provider.of<WarningMessageVM>(
+                  context,
+                  listen: false,
+                ),
               );
             });
             break;

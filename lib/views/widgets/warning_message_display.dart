@@ -164,6 +164,30 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
             });
 
             return const SizedBox.shrink();
+          case ErrorType.insufficientStorageSpace:
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              _displayWarningDialog(
+                context: _context,
+                message: AppLocalizations.of(context)!
+                    .insufficientStorageSpace,
+                warningMessageVM: _warningMessageVM,
+                themeProviderVM: themeProviderVM,
+              );
+            });
+
+            return const SizedBox.shrink();
+          case ErrorType.pathError:
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              _displayWarningDialog(
+                context: _context,
+                message: AppLocalizations.of(context)!
+                    .pathError,
+                warningMessageVM: _warningMessageVM,
+                themeProviderVM: themeProviderVM,
+              );
+            });
+
+            return const SizedBox.shrink();
           default:
             return const SizedBox.shrink();
         }

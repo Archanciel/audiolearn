@@ -680,6 +680,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               await UiUtil.restorePlaylistsAudioMp3FilesFromZip(
                 context: context,
                 playlistsLst: [playlist], // only one playlist
+                warningMessageVMlistenFalse: warningMessageVMlistenFalse,
                 uniquePlaylistIsRestored: true,
               );
             });
