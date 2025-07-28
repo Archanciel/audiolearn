@@ -2224,4 +2224,10 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get pathError => "Failed to retrieve file path.";
+
+  @override
+  String audioDownloadToDateTimeLabel(
+    Object selectedAppDateFormat,
+  ) =>
+      "To date/time $selectedAppDateFormat hh:mm";
 }
