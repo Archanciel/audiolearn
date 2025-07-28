@@ -4410,7 +4410,7 @@ class PlaylistListVM extends ChangeNotifier {
           // Expected path format: playlists/PlaylistTitle/audioFileName.mp3
           List<String> pathParts = sanitizedArchiveFilePathName.split('/');
 
-          if (pathParts.length >= 3 && pathParts[0] == 'playlists') {
+          if (pathParts.length >= 3 && pathParts[0] == kImposedPlaylistsSubDirName) {
             String playlistTitle = pathParts[1];
             String audioFileName = pathParts[2];
 
