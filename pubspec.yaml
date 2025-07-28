@@ -66,6 +66,7 @@ dependencies:
   volume_controller: ^3.4.0
   logger: ^2.6.0
   package_info_plus: ^8.3.0
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:
