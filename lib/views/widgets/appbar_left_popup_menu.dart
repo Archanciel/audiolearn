@@ -4,7 +4,6 @@ import 'package:audiolearn/utils/ui_util.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:googleapis/admob/v1.dart';
 import '../../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -715,8 +714,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             ),
           ),
           PopupMenuItem<AppBarPopupMenu>(
-            key: const Key(
-                'appBarMenuRestorePlaylistsAudioMp3FilesFromZip'),
+            key: const Key('appBarMenuRestorePlaylistsAudioMp3FilesFromZip'),
             value: AppBarPopupMenu.restorePlaylistsAudioMp3FilesFromZip,
             child: Tooltip(
               message: AppLocalizations.of(context)!
@@ -894,12 +892,15 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
               HelpItem(
                 helpTitle:
                     AppLocalizations.of(context)!.playlistsMp3SaveHelpTitle,
-                helpContent: AppLocalizations.of(context)!
-                    .playlistsMp3SaveHelpContent(
-                      dateFormatVMlistenFalse.formatDate(DateTime(2025,7,27)), // Example date,
-                      dateFormatVMlistenFalse.formatDate(DateTime(2025,6,20)), // Example date,
-                      dateFormatVMlistenFalse.formatDate(DateTime(2025,6,15)), // Example date,
-                    ),
+                helpContent:
+                    AppLocalizations.of(context)!.playlistsMp3SaveHelpContent(
+                  dateFormatVMlistenFalse
+                      .formatDate(DateTime(2025, 7, 27)), // Example date,
+                  dateFormatVMlistenFalse
+                      .formatDate(DateTime(2025, 6, 20)), // Example date,
+                  dateFormatVMlistenFalse
+                      .formatDate(DateTime(2025, 6, 15)), // Example date,
+                ),
                 displayHelpItemNumber: false,
               ),
             ];
@@ -985,6 +986,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                         targetDir: targetSaveDirectoryPath,
                         fromAudioDownloadDateTime:
                             parseDateTimeOrDateStrUsinAppDateFormat,
+                        zipFileSizeLimitInMb: kMp3ZipFileSizeLimitInMb,
                       );
                       // Handle any post-execution logic here
                     },
@@ -1003,8 +1005,8 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
           case AppBarPopupMenu.restorePlaylistsAudioMp3FilesFromZip:
             final List<HelpItem> restorePlaylistsHelpItemsLst = [
               HelpItem(
-                helpTitle:
-                    AppLocalizations.of(context)!.playlistsMp3RestorationHelpTitle,
+                helpTitle: AppLocalizations.of(context)!
+                    .playlistsMp3RestorationHelpTitle,
                 helpContent: AppLocalizations.of(context)!
                     .playlistsMp3RestorationHelpContent,
                 displayHelpItemNumber: false,
@@ -1021,8 +1023,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                       .audioMp3RestorationDialogTitle,
                   dialogCommentStr: AppLocalizations.of(context)!
                       .audioMp3RestorationExplanation,
-                  targetNamesLst: [
-                  ],
+                  targetNamesLst: [],
                   validationFunctionArgs: [],
                   canAllCheckBoxBeUnchecked: true,
                   helpItemsLst: restorePlaylistsHelpItemsLst,

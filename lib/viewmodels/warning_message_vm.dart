@@ -824,6 +824,9 @@ class WarningMessageVM extends ChangeNotifier {
   int _realNumberOfBytesSavedToZipPerSecond = 0;
   int get realNumberOfBytesSavedToZipPerSecond =>
       _realNumberOfBytesSavedToZipPerSecond;
+  int _numberOfCreatedZipFiles = 0;
+  int get numberOfCreatedZipFiles => _numberOfCreatedZipFiles;
+
   void confirmSavingAudioMp3ToZip({
     required String zipFilePathName,
     required String fromAudioDownloadDateTime,
@@ -833,6 +836,7 @@ class WarningMessageVM extends ChangeNotifier {
     required Duration savingAudioToZipOperationDuration,
     required int realNumberOfBytesSavedToZipPerSecond,
     required bool uniquePlaylistIsSaved,
+    required int numberOfCreatedZipFiles,
   }) {
     _zipFilePathName = zipFilePathName;
     _fromAudioDownloadDateTime = fromAudioDownloadDateTime;
@@ -842,6 +846,7 @@ class WarningMessageVM extends ChangeNotifier {
     _uniquePlaylistIsSaved = uniquePlaylistIsSaved;
     _savingAudioToZipOperationDuration = savingAudioToZipOperationDuration;
     _realNumberOfBytesSavedToZipPerSecond = realNumberOfBytesSavedToZipPerSecond;
+    _numberOfCreatedZipFiles = numberOfCreatedZipFiles;
 
     warningMessageType =
         WarningMessageType.savedUniquePlaylistOrAllPlaylistsAudioMp3ToZip;

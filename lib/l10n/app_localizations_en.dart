@@ -2051,8 +2051,9 @@ class AppLocalizationsEn extends AppLocalizations {
       Object savedAudioTotalDuration,
       Object saveOperationRealDuration,
       Object bytesNumberSavedPerSecond,
-      Object filePathName) {
-    return 'Saved to ZIP unique playlist audio MP3 files downloaded from $audioDownloadFromDateTime.\n\nTotal saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.\n\nSave operation real duration: $saveOperationRealDuration, number of bytes saved per second: $bytesNumberSavedPerSecond.\n\nZIP file path name: \"$filePathName\".';
+      Object filePathName,
+      Object zipFilesNumber) {
+    return 'Saved to ZIP file(s) unique playlist audio MP3 files downloaded from $audioDownloadFromDateTime.\n\nTotal saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.\n\nSave operation real duration: $saveOperationRealDuration, number of bytes saved per second: $bytesNumberSavedPerSecond, number of created ZIP file(s): $zipFilesNumber.\n\nZIP file path name: \"$filePathName\".';
   }
 
   @override
@@ -2063,8 +2064,9 @@ class AppLocalizationsEn extends AppLocalizations {
       Object savedAudioTotalDuration,
       Object saveOperationRealDuration,
       Object bytesNumberSavedPerSecond,
-      Object filePathName) {
-    return 'Saved to ZIP all playlists audio MP3 files downloaded from $audioDownloadFromDateTime.\n\nTotal saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.\n\nSave operation real duration: $saveOperationRealDuration, number of bytes saved per second: $bytesNumberSavedPerSecond.\n\nZIP file path name: \"$filePathName\".';
+      Object filePathName,
+      Object zipFilesNumber) {
+    return 'Saved to ZIP all playlists audio MP3 files downloaded from $audioDownloadFromDateTime.\n\nTotal saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.\n\nSave operation real duration: $saveOperationRealDuration, number of bytes saved per second: $bytesNumberSavedPerSecond, number of created ZIP file(s): $zipFilesNumber.\n\nZIP file path name: \"$filePathName\".';
   }
 
   @override

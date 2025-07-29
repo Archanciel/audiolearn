@@ -550,14 +550,17 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
 
             final List<HelpItem> savePlaylistMp3HelpItemsLst = [
               HelpItem(
-                helpTitle:
-                    AppLocalizations.of(context)!.uniquePlaylistMp3SaveHelpTitle,
+                helpTitle: AppLocalizations.of(context)!
+                    .uniquePlaylistMp3SaveHelpTitle,
                 helpContent: AppLocalizations.of(context)!
                     .uniquePlaylistMp3SaveHelpContent(
-                      dateFormatVMlistenFalse.formatDate(DateTime(2025,7,27)), // Example date,
-                      dateFormatVMlistenFalse.formatDate(DateTime(2025,6,20)), // Example date,
-                      dateFormatVMlistenFalse.formatDate(DateTime(2025,6,15)), // Example date,
-                    ),
+                  dateFormatVMlistenFalse
+                      .formatDate(DateTime(2025, 7, 27)), // Example date,
+                  dateFormatVMlistenFalse
+                      .formatDate(DateTime(2025, 6, 20)), // Example date,
+                  dateFormatVMlistenFalse
+                      .formatDate(DateTime(2025, 6, 15)), // Example date,
+                ),
                 displayHelpItemNumber: false,
               ),
             ];
@@ -623,10 +626,11 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                     actionFunction: () async {
                       await playlistListVMlistenFalse
                           .savePlaylistsAudioMp3FilesToZip(
-                        listOfPlaylists:  [playlist],
+                        listOfPlaylists: [playlist],
                         targetDir: targetSaveDirectoryPath,
                         fromAudioDownloadDateTime:
                             parseDateTimeOrDateStrUsinAppDateFormat,
+                        zipFileSizeLimitInMb: kMp3ZipFileSizeLimitInMb,
                         uniquePlaylistIsSaved: true,
                       );
                       // Handle any post-execution logic here
@@ -646,8 +650,8 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
           case PlaylistPopupMenuAction.restorePlaylistAudioMp3FilesFromZip:
             final List<HelpItem> restorePlaylistsHelpItemsLst = [
               HelpItem(
-                helpTitle:
-                    AppLocalizations.of(context)!.uniquePlaylistMp3RestorationHelpTitle,
+                helpTitle: AppLocalizations.of(context)!
+                    .uniquePlaylistMp3RestorationHelpTitle,
                 helpContent: AppLocalizations.of(context)!
                     .uniquePlaylistMp3RestorationHelpContent,
                 displayHelpItemNumber: false,
@@ -664,8 +668,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                       .audioMp3UniquePlaylistRestorationDialogTitle,
                   dialogCommentStr: AppLocalizations.of(context)!
                       .audioMp3UniquePlaylistRestorationExplanation,
-                  targetNamesLst: [
-                  ],
+                  targetNamesLst: [],
                   validationFunctionArgs: [],
                   canAllCheckBoxBeUnchecked: true,
                   helpItemsLst: restorePlaylistsHelpItemsLst,

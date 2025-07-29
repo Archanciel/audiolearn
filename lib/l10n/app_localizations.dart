@@ -3309,7 +3309,7 @@ abstract class AppLocalizations {
   /// Confirmation message after saving the audio MP3 downloaded at or after a specified date time of a unique playlist to a ZIP file
   ///
   /// In en, this message translates to:
-  /// **'Saved to ZIP unique playlist audio MP3 files downloaded from {audioDownloadFromDateTime}.\n\nTotal saved audio number: {savedAudioNumber}, total size: {savedAudioTotalFileSize} and total duration: {savedAudioTotalDuration}.\n\nSave operation real duration: {saveOperationRealDuration}, number of bytes saved per second: {bytesNumberSavedPerSecond}.\n\nZIP file path name: \"{filePathName}\".'**
+  /// **'Saved to ZIP file(s) unique playlist audio MP3 files downloaded from {audioDownloadFromDateTime}.\n\nTotal saved audio number: {savedAudioNumber}, total size: {savedAudioTotalFileSize} and total duration: {savedAudioTotalDuration}.\n\nSave operation real duration: {saveOperationRealDuration}, number of bytes saved per second: {bytesNumberSavedPerSecond}, number of created ZIP file(s): {zipFilesNumber}.\n\nZIP file path name: \"{filePathName}\".'**
   String correctedSavedUniquePlaylistAudioMp3ToZip(
       Object audioDownloadFromDateTime,
       Object savedAudioNumber,
@@ -3317,12 +3317,13 @@ abstract class AppLocalizations {
       Object savedAudioTotalDuration,
       Object saveOperationRealDuration,
       Object bytesNumberSavedPerSecond,
-      Object filePathName);
+      Object filePathName,
+      Object zipFilesNumber);
 
   /// Confirmation message after saving the audio MP3 downloaded at or after a specified date time of all application playlists to a ZIP file
   ///
   /// In en, this message translates to:
-  /// **'Saved to ZIP all playlists audio MP3 files downloaded from {audioDownloadFromDateTime}.\n\nTotal saved audio number: {savedAudioNumber}, total size: {savedAudioTotalFileSize} and total duration: {savedAudioTotalDuration}.\n\nSave operation real duration: {saveOperationRealDuration}, number of bytes saved per second: {bytesNumberSavedPerSecond}.\n\nZIP file path name: \"{filePathName}\".'**
+  /// **'Saved to ZIP all playlists audio MP3 files downloaded from {audioDownloadFromDateTime}.\n\nTotal saved audio number: {savedAudioNumber}, total size: {savedAudioTotalFileSize} and total duration: {savedAudioTotalDuration}.\n\nSave operation real duration: {saveOperationRealDuration}, number of bytes saved per second: {bytesNumberSavedPerSecond}, number of created ZIP file(s): {zipFilesNumber}.\n\nZIP file path name: \"{filePathName}\".'**
   String correctedSavedMultiplePlaylistsAudioMp3ToZip(
       Object audioDownloadFromDateTime,
       Object savedAudioNumber,
@@ -3330,7 +3331,8 @@ abstract class AppLocalizations {
       Object savedAudioTotalDuration,
       Object saveOperationRealDuration,
       Object bytesNumberSavedPerSecond,
-      Object filePathName);
+      Object filePathName,
+      Object zipFilesNumber);
 
   /// No description provided for @restorePlaylistsAudioMp3FilesFromZipMenu.
   ///

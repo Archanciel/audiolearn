@@ -218,3 +218,5 @@ const double kListDialogBottomTextFontSize = 16.0;
 const kAudioExtractorExtractPositionStyle = TextStyle(
   fontSize: 14.0,
 );
+
+const int kMp3ZipFileSizeLimitInMb = 740; // required by Android
