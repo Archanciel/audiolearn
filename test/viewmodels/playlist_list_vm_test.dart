@@ -1206,6 +1206,7 @@ void main() {
           listOfPlaylists: playlistListVM.listOfSelectablePlaylists,
           targetDir: kApplicationPathWindowsTest,
           fromAudioDownloadDateTime: fromDateTime,
+          zipFileSizeLimitInMb: kMp3ZipFileSizeLimitInMb,
         );
 
         String savedZipFilePathName = savedMp3InfoLst[0];
@@ -1306,6 +1307,7 @@ void main() {
           listOfPlaylists: playlistListVM.listOfSelectablePlaylists,
           targetDir: kApplicationPathWindowsTest,
           fromAudioDownloadDateTime: fromDateTime,
+          zipFileSizeLimitInMb: kMp3ZipFileSizeLimitInMb,
         );
 
         String savedZipFilePathName = savedMp3InfoLst[0];
@@ -1417,6 +1419,7 @@ void main() {
           listOfPlaylists: [playlistLst[4]], // S8 audio
           targetDir: kApplicationPathWindowsTest,
           fromAudioDownloadDateTime: fromDateTime,
+          zipFileSizeLimitInMb: kMp3ZipFileSizeLimitInMb,
           uniquePlaylistIsSaved: true,
         );
 
@@ -1528,6 +1531,7 @@ void main() {
           listOfPlaylists: [playlistLst[1]], // S8 audio
           targetDir: kApplicationPathWindowsTest,
           fromAudioDownloadDateTime: fromDateTime,
+          zipFileSizeLimitInMb: kMp3ZipFileSizeLimitInMb,
           uniquePlaylistIsSaved: true,
         );
 
