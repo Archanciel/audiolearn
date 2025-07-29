@@ -1366,7 +1366,7 @@
   "savingUpToHalfHour": "Patience, cela peut prendre 10 à 30 minutes, voir plus ...",
   "savingAudioToZipTime": "La sauvegarde des fichiers audio MP3 dans un fichier ZIP va nécessiter cette durée estimée (hh:mm:ss): {evaluatedSaveTime}.",
   "savingAudioToZipTimeTitle": "Estimation de la durée de sauvegarde",
-  "correctedSavedUniquePlaylistAudioMp3ToZip": "Enregistré dans le ZIP tous les fichiers audio MP3 de la playlist unique téléchargés depuis le {audioDownloadFromDateTime}.\n\nNombre total d'audios sauvegardés: {savedAudioNumber}, taille totale: {savedAudioTotalFileSize} et durée totale: {savedAudioTotalDuration}.\n\nDurée réelle de l'opération de sauvegarde: {saveOperationRealDuration}, nombre de bytes sauvés par seconde: {bytesNumberSavedPerSecond}.\n\nFichier ZIP: \"{filePathName}\".",
+  "correctedSavedUniquePlaylistAudioMp3ToZip": "Enregistré dans le ZIP tous les fichiers audio MP3 de la playlist unique téléchargés depuis le {audioDownloadFromDateTime}.\n\nNombre total d'audios sauvegardés: {savedAudioNumber}, taille totale: {savedAudioTotalFileSize} et durée totale: {savedAudioTotalDuration}.\n\nDurée réelle de l'opération de sauvegarde: {saveOperationRealDuration}, nombre de bytes sauvés par seconde: {bytesNumberSavedPerSecond}, nombre de fichier(s) ZIP créé(s): {zipFilesNumber}.\n\nFichier ZIP: \"{filePathName}\".",
   "@correctedSavedUniquePlaylistAudioMp3ToZip": {
     "description": "Confirmation message after saving the audio MP3 downloaded at or after a specified date time of a unique playlist to a ZIP file",
     "placeholders": {

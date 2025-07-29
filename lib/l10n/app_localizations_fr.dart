@@ -2072,7 +2072,7 @@ class AppLocalizationsFr extends AppLocalizations {
       Object bytesNumberSavedPerSecond,
       Object filePathName,
       Object zipFilesNumber) {
-    return 'Enregistré dans le ZIP tous les fichiers audio MP3 de la playlist unique téléchargés depuis le $audioDownloadFromDateTime.\n\nNombre total d\'audios sauvegardés: $savedAudioNumber, taille totale: $savedAudioTotalFileSize et durée totale: $savedAudioTotalDuration.\n\nDurée réelle de l\'opération de sauvegarde: $saveOperationRealDuration, nombre de bytes sauvés par seconde: $bytesNumberSavedPerSecond.\n\nFichier ZIP: \"$filePathName\".';
+    return 'Enregistré dans le ZIP tous les fichiers audio MP3 de la playlist unique téléchargés depuis le $audioDownloadFromDateTime.\n\nNombre total d\'audios sauvegardés: $savedAudioNumber, taille totale: $savedAudioTotalFileSize et durée totale: $savedAudioTotalDuration.\n\nDurée réelle de l\'opération de sauvegarde: $saveOperationRealDuration, nombre de bytes sauvés par seconde: $bytesNumberSavedPerSecond, nombre de fichier(s) ZIP créé(s): $zipFilesNumber.\n\nFichier ZIP: \"$filePathName\".';
   }
 
   @override
