@@ -3045,12 +3045,17 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   /// This method is called when the user clicks on the appbar menu item 'Save Playlists Audio MP3
-  /// Files to Zip File' menu item or when the user clicks on the playlist item 'Save the Playlist
-  /// Audio MP3 to Zip File' menu item. In this case, the [listOfPlaylists] parameter contains only
-  /// one playlist and the [uniquePlaylistIsSaved] parameter is set to true.
+  /// Files to Zip File' menu item or on the playlist item 'Save the Playlist Audio MP3 to Zip File'
+  /// menu item. In this case, the [listOfPlaylists] parameter contains only one playlist and the
+  /// [uniquePlaylistIsSaved] parameter is set to true.
   ///
   /// This method saves the audio MP3 files located in the passed playlist(s) which were downloaded
   /// at or after the passed [fromAudioDownloadDateTime] in a ZIP file located in the passed [targetDir].
+  /// 
+  /// Since creating a MP3 ZIP file on an Android device can't exceed a certain size, the passed
+  /// [zipFileSizeLimitInMb] parameter value is used to limit the size of the created ZIP file. Also,
+  /// restoring a MP3 ZIP file on an Android device is limited to a certain size. This is the second
+  /// of the [zipFileSizeLimitInMb] parameter.
   ///
   /// The returned list contains
   /// [
@@ -3058,11 +3063,13 @@ class PlaylistListVM extends ChangeNotifier {
   ///  the number of saved audio files,
   ///  the total unzipped size of the saved audio files in bytes,
   ///  the total duration of the saved audio files,
+  ///  the number of created zip files
   /// ]
   Future<List<dynamic>> savePlaylistsAudioMp3FilesToZip({
     required List<Playlist> listOfPlaylists,
     required String targetDir,
     required DateTime fromAudioDownloadDateTime,
+    required int zipFileSizeLimitInMb,
     bool uniquePlaylistIsSaved = false,
   }) async {
     if (targetDir == '/') {
