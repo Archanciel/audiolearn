@@ -20,6 +20,12 @@ class StorageUtil {
   /// Check if device has sufficient storage space
   static Future<bool> hasEnoughSpace({required int requiredBytes}) async {
     try {
+      if (Platform.isAndroid) {
+        Directory tempDir = await getTemporaryDirectory();
+        var stat = await tempDir.stat();
+        // Get available space (this is a simplified check)
+        return true; // You might need a platform-specific plugin for accurate space check
+      }
       return true;
     } catch (e) {
       return false;
@@ -239,6 +245,7 @@ class UiUtil {
         // Option 1: Check if it's likely a storage issue by checking available space
         try {
           Directory tempDir = await getTemporaryDirectory();
+          var stat = await tempDir.stat();
           // If we can't write to temp directory, it's likely a storage issue
 
           // Try to create a small test file to check storage

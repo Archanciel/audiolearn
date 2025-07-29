@@ -1972,29 +1972,24 @@ class AppLocalizationsEn extends AppLocalizations {
       'Save audio MP3 files from all playlists to a ZIP file. You can specify a date/time filter to only include audio files downloaded on or after that date.';
 
   @override
-  String get setAudioDownloadFromDateTimeTitle => 'Set the download dates';
+  String get setAudioDownloadFromDateTimeTitle => 'Set the download date';
 
   @override
   String get audioDownloadFromDateTimeAllPlaylistsExplanation =>
-      'The default specified \'from\' download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.';
+      'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.';
 
   @override
   String audioDownloadFromDateTimeLabel(Object selectedAppDateFormat) {
-    return 'From date/time $selectedAppDateFormat hh:mm';
-  }
-
-  @override
-  String audioDownloadToDateTimeLabel(Object selectedAppDateFormat) {
-    return 'To date/time $selectedAppDateFormat hh:mm';
+    return 'Date/time $selectedAppDateFormat hh:mm';
   }
 
   @override
   String get audioDownloadFromDateTimeAllPlaylistsTooltip =>
-      'Set the \'from\' and \'to\' dates to limit the number of MP3 files which will be included in the ZIP. This will creates a smaller ZIP file, making it easier to restore audio files on mobile devices with limited storage space.';
+      'Since the current date/time value corresponds to the application oldest date/time downladed audio value, if the date/time is not modified, all the application audio MP3 files will be included in the ZIP file.';
 
   @override
   String get audioDownloadFromDateTimeSinglePlaylistTooltip =>
-      'Set the \'from\' and \'to\' dates to limit the number of MP3 files which will be included in the ZIP. This will creates a smaller ZIP file, making it easier to restore audio files on mobile devices with limited storage space.';
+      'Since the current date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio MP3 files will be included in the ZIP file.';
 
   @override
   String noAudioMp3WereSavedToZip(Object audioDownloadFromDateTime) {
@@ -2011,11 +2006,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get audioDownloadFromDateTimeUniquePlaylistExplanation =>
-      'The default specified \'from\' download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.';
+      'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.';
 
   @override
   String get audioDownloadFromDateTimeUniquePlaylistTooltip =>
-      'Since the current from date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio MP3 files will be included in the ZIP file.';
+      'Since the current date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio MP3 files will be included in the ZIP file.';
 
   @override
   String invalidDateFormatErrorMessage(Object dateStr) {
