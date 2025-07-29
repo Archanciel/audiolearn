@@ -3188,7 +3188,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Start the timer and saving state before processing files
     _isSavingMp3 = true;
-    notifyListeners();
+    notifyListeners(); // since _isSavingMp3 is true, the LinearProgressIndicator will be moving
 
     // Collect all audio files that need to be saved
     for (Playlist playlist in listOfPlaylists) {
@@ -3211,12 +3211,14 @@ class PlaylistListVM extends ChangeNotifier {
             audio.audioFileName,
           );
 
-          audioFilesToSave.add(AudioFileInfo(
-            audio: audio,
-            audioFile: audioFile,
-            relativePath: relativePath,
-            playlist: playlist,
-          ));
+          audioFilesToSave.add(
+            AudioFileInfo(
+              audio: audio,
+              audioFile: audioFile,
+              relativePath: relativePath,
+              playlist: playlist,
+            ),
+          );
 
           savedAudioNumber++;
           savedAudioFileSize += audio.audioFileSize;
@@ -3232,7 +3234,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     if (audioFilesToSave.isEmpty) {
       _isSavingMp3 = false;
-      notifyListeners();
+      notifyListeners(); // since _isSavingMp3 is false, the LinearProgressIndicator will stop moving
       return [];
     }
 
@@ -3255,12 +3257,10 @@ class PlaylistListVM extends ChangeNotifier {
           archive: currentArchive,
           targetDir: targetDir,
           baseFileName: baseZipFileName,
-          partNumber: numberOfCreatedZipFiles + 1,
+          partNumber: ++numberOfCreatedZipFiles,
           totalParts:
               _calculateTotalParts(audioFilesToSave, zipFileSizeLimitInBytes),
         );
-
-        numberOfCreatedZipFiles++;
 
         // Start new archive
         currentArchive = Archive();
@@ -3283,11 +3283,22 @@ class PlaylistListVM extends ChangeNotifier {
         archive: currentArchive,
         targetDir: targetDir,
         baseFileName: baseZipFileName,
-        partNumber: numberOfCreatedZipFiles + 1,
+        partNumber: ++numberOfCreatedZipFiles,
         totalParts:
             _calculateTotalParts(audioFilesToSave, zipFileSizeLimitInBytes),
       );
-      numberOfCreatedZipFiles++;
+    }
+
+    // If only one ZIP file was created, rename it to remove the _part1 suffix
+    if (numberOfCreatedZipFiles == 1) {
+      String originalPath =
+          path.join(targetDir, "${baseZipFileName}_part1.zip");
+      String newPath = path.join(targetDir, "${baseZipFileName}.zip");
+
+      File originalFile = File(originalPath);
+      if (await originalFile.exists()) {
+        await originalFile.rename(newPath);
+      }
     }
 
     stopwatch.stop();
@@ -3298,11 +3309,16 @@ class PlaylistListVM extends ChangeNotifier {
             .round();
 
     _isSavingMp3 = false;
-    notifyListeners();
+    notifyListeners(); // since _isSavingMp3 is false, the LinearProgressIndicator will stop moving
 
-    String finalZipPath = numberOfCreatedZipFiles > 1
-        ? path.join(targetDir, "${baseZipFileName}_part 1 to $numberOfCreatedZipFiles.zip")
-        : path.join(targetDir, "$baseZipFileName.zip");
+    String finalZipPath;
+
+    if (numberOfCreatedZipFiles > 1) {
+      finalZipPath = path.join(targetDir,
+          "${baseZipFileName}_part 1 to $numberOfCreatedZipFiles.zip");
+    } else {
+      finalZipPath = path.join(targetDir, "$baseZipFileName.zip");
+    }
 
     return [
       finalZipPath,
@@ -3324,7 +3340,7 @@ class PlaylistListVM extends ChangeNotifier {
   }) async {
     String zipFileName;
 
-    if (totalParts > 1) {
+    if (totalParts >= 1) {
       zipFileName = "${baseFileName}_part$partNumber.zip";
     } else {
       zipFileName = "$baseFileName.zip";
