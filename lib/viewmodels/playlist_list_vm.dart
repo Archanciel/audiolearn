@@ -3327,12 +3327,12 @@ class PlaylistListVM extends ChangeNotifier {
       return Duration.zero; // No files to process
     }
 
-    // Multiplying by 5000000 instead of 1000000 is due to the fact that
-    // the savedAudioBytesNumberToZipInOneMicroSecond is 4 times or more
-    // too big.
+    // Multiplying by 1200000 instead of 1000000 is due to the fact that
+    // the savedAudioBytesNumberToZipInOneMicroSecond is 1.2 times too
+    // big on Android.
     _savingAudioMp3FileToZipDuration = Duration(
         seconds: (savedAudiosFileSize /
-                (savedAudioBytesNumberToZipInOneMicroSecond * 5000000))
+                (savedAudioBytesNumberToZipInOneMicroSecond * 1200000))
             .ceil());
 
     return _savingAudioMp3FileToZipDuration;
