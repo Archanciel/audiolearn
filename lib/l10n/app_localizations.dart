@@ -3353,7 +3353,7 @@ abstract class AppLocalizations {
   /// No description provided for @audioMp3RestorationExplanation.
   ///
   /// In en, this message translates to:
-  /// **'Only the MP3 relative to the audio\'s listed in the playlists and which are not already present in the playlists are restorable.'**
+  /// **'Only the MP3 relative to the audio\'s listed in the playlists which are not already present in the playlists are restorable.'**
   String get audioMp3RestorationExplanation;
 
   /// No description provided for @restorePlaylistAudioMp3FilesFromZipMenu.
@@ -3377,7 +3377,7 @@ abstract class AppLocalizations {
   /// No description provided for @audioMp3UniquePlaylistRestorationExplanation.
   ///
   /// In en, this message translates to:
-  /// **'Only the MP3 relative to the audio\'s listed in the playlist and which are not already present in the playlist are restorable.'**
+  /// **'Only the MP3 relative to the audio\'s listed in the playlist which are not already present in the playlist are restorable.'**
   String get audioMp3UniquePlaylistRestorationExplanation;
 
   /// No description provided for @playlistInvalidRootPathWarning.
