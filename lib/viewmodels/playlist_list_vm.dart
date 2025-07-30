@@ -9,6 +9,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
@@ -3188,9 +3189,9 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Start the timer and saving state before processing files
     _isSavingMp3 = true;
-    notifyListeners(); // since _isSavingMp3 is true, the LinearProgressIndicator will be moving
+    notifyListeners();
 
-    // Collect all audio files that need to be saved
+    // Collect all audio files that need to be saved (WITHOUT loading them into memory)
     for (Playlist playlist in listOfPlaylists) {
       Directory playlistDir = Directory(playlist.downloadPath);
       if (!playlistDir.existsSync()) {
@@ -3234,27 +3235,26 @@ class PlaylistListVM extends ChangeNotifier {
 
     if (audioFilesToSave.isEmpty) {
       _isSavingMp3 = false;
-      notifyListeners(); // since _isSavingMp3 is false, the LinearProgressIndicator will stop moving
+      notifyListeners();
       return [];
     }
 
-    // Create ZIP files with size limit
+    // Create ZIP files with size limit using streaming approach
     int numberOfCreatedZipFiles = 0;
     String baseZipFileName =
         "${playlistTitle}_mp3_from_${yearMonthDayDateTimeFormatForFileName.format(oldestAudioSavedToZipDownloadDateTime)}_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}";
 
-    Archive currentArchive = Archive();
-    int currentArchiveSize = 0;
+    List<AudioFileInfo> currentBatch = [];
+    int currentBatchSize = 0;
 
     for (AudioFileInfo audioInfo in audioFilesToSave) {
-      List<int> audioBytes = await audioInfo.audioFile.readAsBytes();
-
       // Check if adding this file would exceed the size limit
-      if (currentArchiveSize + audioBytes.length > zipFileSizeLimitInBytes &&
-          currentArchive.files.isNotEmpty) {
-        // Save current archive
-        await _saveArchiveToFile(
-          archive: currentArchive,
+      if (currentBatchSize + audioInfo.audio.audioFileSize >
+              zipFileSizeLimitInBytes &&
+          currentBatch.isNotEmpty) {
+        // Save current batch
+        await _saveArchiveBatchToFile(
+          audioBatch: currentBatch,
           targetDir: targetDir,
           baseFileName: baseZipFileName,
           partNumber: ++numberOfCreatedZipFiles,
@@ -3262,25 +3262,22 @@ class PlaylistListVM extends ChangeNotifier {
               _calculateTotalParts(audioFilesToSave, zipFileSizeLimitInBytes),
         );
 
-        // Start new archive
-        currentArchive = Archive();
-        currentArchiveSize = 0;
+        // Clear memory and start new batch
+        currentBatch.clear();
+        currentBatchSize = 0;
+
+        // Force garbage collection
+        await Future.delayed(Duration(milliseconds: 100));
       }
 
-      // Add file to current archive
-      currentArchive.addFile(ArchiveFile(
-        audioInfo.relativePath,
-        audioBytes.length,
-        audioBytes,
-      ));
-
-      currentArchiveSize += audioBytes.length;
+      currentBatch.add(audioInfo);
+      currentBatchSize += audioInfo.audio.audioFileSize;
     }
 
-    // Save the last archive if it has files
-    if (currentArchive.files.isNotEmpty) {
-      await _saveArchiveToFile(
-        archive: currentArchive,
+    // Save the last batch if it has files
+    if (currentBatch.isNotEmpty) {
+      await _saveArchiveBatchToFile(
+        audioBatch: currentBatch,
         targetDir: targetDir,
         baseFileName: baseZipFileName,
         partNumber: ++numberOfCreatedZipFiles,
@@ -3289,11 +3286,11 @@ class PlaylistListVM extends ChangeNotifier {
       );
     }
 
-    // If only one ZIP file was created, rename it to remove the _part1 suffix
+    // Rename single file if needed
     if (numberOfCreatedZipFiles == 1) {
       String originalPath =
           path.join(targetDir, "${baseZipFileName}_part1.zip");
-      String newPath = path.join(targetDir, "${baseZipFileName}.zip");
+      String newPath = path.join(targetDir, "$baseZipFileName.zip");
 
       File originalFile = File(originalPath);
       if (await originalFile.exists()) {
@@ -3309,10 +3306,9 @@ class PlaylistListVM extends ChangeNotifier {
             .round();
 
     _isSavingMp3 = false;
-    notifyListeners(); // since _isSavingMp3 is false, the LinearProgressIndicator will stop moving
+    notifyListeners();
 
     String finalZipPath;
-
     if (numberOfCreatedZipFiles > 1) {
       finalZipPath = path.join(targetDir,
           "${baseZipFileName}_part 1 to $numberOfCreatedZipFiles.zip");
@@ -3331,24 +3327,73 @@ class PlaylistListVM extends ChangeNotifier {
     ];
   }
 
-  Future<void> _saveArchiveToFile({
-    required Archive archive,
+// New memory-efficient method to save a batch of files
+// Corrected memory-efficient method to save a batch of files
+  Future<void> _saveArchiveBatchToFile({
+    required List<AudioFileInfo> audioBatch,
     required String targetDir,
     required String baseFileName,
     required int partNumber,
     required int totalParts,
   }) async {
-    String zipFileName;
+    try {
+      String zipFileName;
+      if (totalParts > 1) {
+        zipFileName = "${baseFileName}_part$partNumber.zip";
+      } else {
+        zipFileName = "$baseFileName.zip";
+      }
 
-    if (totalParts >= 1) {
-      zipFileName = "${baseFileName}_part$partNumber.zip";
-    } else {
-      zipFileName = "$baseFileName.zip";
+      // Get storage directory
+      String finalTargetDir;
+      if (Platform.isAndroid) {
+        Directory? externalDir = await getExternalStorageDirectory();
+        if (externalDir != null) {
+          Directory mp3Dir =
+              Directory('${externalDir.path}/downloads/AudioLearn');
+          if (!await mp3Dir.exists()) {
+            await mp3Dir.create(recursive: true);
+          }
+          finalTargetDir = mp3Dir.path;
+        } else {
+          throw Exception('Could not access external storage');
+        }
+      } else {
+        finalTargetDir = targetDir;
+      }
+
+      String zipFilePathName = path.join(finalTargetDir, zipFileName);
+
+      // Create archive and add files one by one
+      Archive archive = Archive();
+
+      for (AudioFileInfo audioInfo in audioBatch) {
+        // Read file bytes
+        List<int> audioBytes = await audioInfo.audioFile.readAsBytes();
+
+        // Add to archive immediately
+        archive.addFile(ArchiveFile(
+          audioInfo.relativePath,
+          audioBytes.length,
+          audioBytes,
+        ));
+
+        // Don't clear here - let audioBytes go out of scope naturally
+      }
+
+      // Encode and save the ZIP
+      List<int> zipData = ZipEncoder().encode(archive);
+      File zipFile = File(zipFilePathName);
+      await zipFile.writeAsBytes(zipData, flush: true);
+
+      _logger.i('ZIP file saved successfully: $zipFilePathName');
+
+      // Force garbage collection after each ZIP file
+      await Future.delayed(Duration(milliseconds: 200));
+    } catch (e) {
+      _logger.i('Error saving ZIP file: $e');
+      rethrow;
     }
-
-    String zipFilePathName = path.join(targetDir, zipFileName);
-    File zipFile = File(zipFilePathName);
-    zipFile.writeAsBytesSync(ZipEncoder().encode(archive), flush: true);
   }
 
   int _calculateTotalParts(
