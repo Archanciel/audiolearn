@@ -3096,7 +3096,7 @@ class PlaylistListVM extends ChangeNotifier {
     List<dynamic> savedMp3InfoLst =
         await _saveAllAudioMp3FilesToZipWithSizeLimit(
       listOfPlaylists: listOfPlaylists,
-      targetDir: targetDir,
+      targetDirStr: targetDir,
       fromAudioDownloadDateTime: fromAudioDownloadDateTime,
       zipFileSizeLimitInMb: zipFileSizeLimitInMb,
       uniquePlaylistIsSaved: uniquePlaylistIsSaved,
@@ -3160,7 +3160,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// ]
   Future<List<dynamic>> _saveAllAudioMp3FilesToZipWithSizeLimit({
     required List<Playlist> listOfPlaylists,
-    required String targetDir,
+    required String targetDirStr,
     required DateTime fromAudioDownloadDateTime,
     required int zipFileSizeLimitInMb,
     required bool uniquePlaylistIsSaved,
@@ -3190,6 +3190,24 @@ class PlaylistListVM extends ChangeNotifier {
     // Start the timer and saving state before processing files
     _isSavingMp3 = true;
     notifyListeners();
+
+    // Determine the actual target directory early
+    String actualTargetDir;
+    if (Platform.isAndroid) {
+      Directory? externalDir = await getExternalStorageDirectory();
+      if (externalDir != null) {
+        Directory mp3Dir =
+            Directory('${externalDir.path}/downloads/AudioLearn');
+        if (!await mp3Dir.exists()) {
+          await mp3Dir.create(recursive: true);
+        }
+        actualTargetDir = mp3Dir.path;
+      } else {
+        throw Exception('Could not access external storage');
+      }
+    } else {
+      actualTargetDir = targetDirStr;
+    }
 
     // Collect all audio files that need to be saved (WITHOUT loading them into memory)
     for (Playlist playlist in listOfPlaylists) {
@@ -3255,7 +3273,7 @@ class PlaylistListVM extends ChangeNotifier {
         // Save current batch
         await _saveArchiveBatchToFile(
           audioBatch: currentBatch,
-          targetDir: targetDir,
+          targetDir: actualTargetDir, // Use the actual target directory
           baseFileName: baseZipFileName,
           partNumber: ++numberOfCreatedZipFiles,
           totalParts:
@@ -3278,7 +3296,7 @@ class PlaylistListVM extends ChangeNotifier {
     if (currentBatch.isNotEmpty) {
       await _saveArchiveBatchToFile(
         audioBatch: currentBatch,
-        targetDir: targetDir,
+        targetDir: actualTargetDir, // Use the actual target directory
         baseFileName: baseZipFileName,
         partNumber: ++numberOfCreatedZipFiles,
         totalParts:
@@ -3289,8 +3307,8 @@ class PlaylistListVM extends ChangeNotifier {
     // Rename single file if needed
     if (numberOfCreatedZipFiles == 1) {
       String originalPath =
-          path.join(targetDir, "${baseZipFileName}_part1.zip");
-      String newPath = path.join(targetDir, "$baseZipFileName.zip");
+          path.join(actualTargetDir, "${baseZipFileName}_part1.zip");
+      String newPath = path.join(actualTargetDir, "$baseZipFileName.zip");
 
       File originalFile = File(originalPath);
       if (await originalFile.exists()) {
@@ -3308,16 +3326,17 @@ class PlaylistListVM extends ChangeNotifier {
     _isSavingMp3 = false;
     notifyListeners();
 
-    String finalZipPath;
+    // FIXED: Use actualTargetDir instead of targetDirStr for final path
+    String finalZipPathStr;
     if (numberOfCreatedZipFiles > 1) {
-      finalZipPath = path.join(targetDir,
+      finalZipPathStr = path.join(actualTargetDir,
           "${baseZipFileName}_part 1 to $numberOfCreatedZipFiles.zip");
     } else {
-      finalZipPath = path.join(targetDir, "$baseZipFileName.zip");
+      finalZipPathStr = path.join(actualTargetDir, "$baseZipFileName.zip");
     }
 
     return [
-      finalZipPath,
+      finalZipPathStr,
       savedAudioNumber,
       savedAudioFileSize,
       savedAudioDuration,
@@ -3327,8 +3346,7 @@ class PlaylistListVM extends ChangeNotifier {
     ];
   }
 
-// New memory-efficient method to save a batch of files
-// Corrected memory-efficient method to save a batch of files
+// Improved memory-efficient method to save a batch of files
   Future<void> _saveArchiveBatchToFile({
     required List<AudioFileInfo> audioBatch,
     required String targetDir,
@@ -3344,25 +3362,8 @@ class PlaylistListVM extends ChangeNotifier {
         zipFileName = "$baseFileName.zip";
       }
 
-      // Get storage directory
-      String finalTargetDir;
-      if (Platform.isAndroid) {
-        Directory? externalDir = await getExternalStorageDirectory();
-        if (externalDir != null) {
-          Directory mp3Dir =
-              Directory('${externalDir.path}/downloads/AudioLearn');
-          if (!await mp3Dir.exists()) {
-            await mp3Dir.create(recursive: true);
-          }
-          finalTargetDir = mp3Dir.path;
-        } else {
-          throw Exception('Could not access external storage');
-        }
-      } else {
-        finalTargetDir = targetDir;
-      }
-
-      String zipFilePathName = path.join(finalTargetDir, zipFileName);
+      // Note: targetDir is now already the correct directory (passed from main method)
+      String zipFilePathName = path.join(targetDir, zipFileName);
 
       // Create archive and add files one by one
       Archive archive = Archive();
