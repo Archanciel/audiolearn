@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/utils/dir_util.dart';
 import 'package:audiolearn/utils/duration_expansion.dart';
@@ -7,6 +9,7 @@ import 'package:audiolearn/viewmodels/audio_player_vm.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import '../../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -530,11 +533,38 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             );
             break;
           case PlaylistPopupMenuAction.savePlaylistAudioMp3FilesToZip:
-            String? targetSaveDirectoryPath =
-                await UiUtil.filePickerSelectTargetDir();
+            String? targetSaveDirectoryPath;
 
-            if (targetSaveDirectoryPath == null) {
-              return;
+            if (Platform.isAndroid) {
+              // On Android, use the predefined path - no file picker needed
+              Directory? externalDir = await getExternalStorageDirectory();
+              if (externalDir != null) {
+                Directory mp3Dir =
+                    Directory('${externalDir.path}/downloads/AudioLearn');
+                if (!await mp3Dir.exists()) {
+                  await mp3Dir.create(recursive: true);
+                }
+                targetSaveDirectoryPath = mp3Dir.path;
+              } else {
+                // Handle error case
+                final WarningMessageVM warningMessageVMlistenFalse =
+                    Provider.of<WarningMessageVM>(
+                  context,
+                  listen: false,
+                );
+                warningMessageVMlistenFalse.setError(
+                  errorType: ErrorType.androidStorageAccessError,
+                );
+                return;
+              }
+            } else {
+              // On other platforms, use the file picker
+              targetSaveDirectoryPath =
+                  await UiUtil.filePickerSelectTargetDir();
+
+              if (targetSaveDirectoryPath == null) {
+                return;
+              }
             }
 
             final PlaylistListVM playlistListVMlistenFalse =
@@ -586,6 +616,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   ),
                   targetNamesLst: [],
                   validationFunctionArgs: [],
+                  isCursorAtStart: true,
                   helpItemsLst: savePlaylistMp3HelpItemsLst,
                 );
               },
@@ -627,7 +658,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                       await playlistListVMlistenFalse
                           .savePlaylistsAudioMp3FilesToZip(
                         listOfPlaylists: [playlist],
-                        targetDir: targetSaveDirectoryPath,
+                        targetDir: targetSaveDirectoryPath!,
                         fromAudioDownloadDateTime:
                             parseDateTimeOrDateStrUsinAppDateFormat,
                         zipFileSizeLimitInMb: kMp3ZipFileSizeLimitInMb,

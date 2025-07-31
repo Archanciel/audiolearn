@@ -3462,6 +3462,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to retrieve file path.'**
   String get pathError;
+
+  /// No description provided for @androidStorageAccessErrorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not access Android external storage.'**
+  String get androidStorageAccessErrorMessage;
 }
 
 class _AppLocalizationsDelegate

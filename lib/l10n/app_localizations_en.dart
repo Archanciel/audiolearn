@@ -2154,4 +2154,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pathError => 'Failed to retrieve file path.';
+
+  @override
+  String get androidStorageAccessErrorMessage =>
+      'Could not access Android external storage.';
 }
