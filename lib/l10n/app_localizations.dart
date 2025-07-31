@@ -3285,8 +3285,8 @@ abstract class AppLocalizations {
   /// No description provided for @savingApproximativeTime.
   ///
   /// In en, this message translates to:
-  /// **'Please wait, this should approximately take {saveTime} ...'**
-  String savingApproximativeTime(Object saveTime);
+  /// **'Should approxim. take {saveTime}. ZIP number: {zipNumber}'**
+  String savingApproximativeTime(Object saveTime, Object zipNumber);
 
   /// No description provided for @savingUpToHalfHour.
   ///

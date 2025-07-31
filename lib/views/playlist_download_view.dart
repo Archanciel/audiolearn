@@ -648,7 +648,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   key: const Key('saving_please_wait'),
                   AppLocalizations.of(context)!.savingApproximativeTime(
                       playlistListVMlistenTrue.savingAudioMp3FileToZipDuration
-                          .HHmmss()),
+                          .HHmmss(),
+                      playlistListVMlistenTrue.numberOfCreatedZipFiles),
                 ),
               ],
             ),
@@ -662,7 +663,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
   /// If playlists MP3 are restored from a ZIP file, the restore progression is displayed.
   /// Otherwise, nothing is displayed.
-  Consumer<PlaylistListVM> _buildDisplayPlaylistsMp3RestoreFromZipProgressionInfo() {
+  Consumer<PlaylistListVM>
+      _buildDisplayPlaylistsMp3RestoreFromZipProgressionInfo() {
     return Consumer<PlaylistListVM>(
       builder: (context, playlistListVMlistenTrue, child) {
         if (playlistListVMlistenTrue.isRestoringMp3) {

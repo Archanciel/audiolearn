@@ -2101,12 +2101,6 @@ class MockAppLocalizations extends AppLocalizations {
   String get savingAudioToZipTimeTitle => "Prevision of the save duration";
 
   @override
-  String savingApproximativeTime(
-    Object saveTime,
-  ) =>
-      "Please wait, this should approximately take $saveTime ...";
-
-  @override
   String correctedSavedUniquePlaylistAudioMp3ToZip(
     Object audioDownloadFromDateTime,
     Object savedAudioNumber,
@@ -2230,4 +2224,11 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get androidStorageAccessErrorMessage =>
       "Could not access Android external storage.";
+
+  @override
+  String savingApproximativeTime(
+    Object saveTime,
+    Object zipNumber,
+  ) =>
+      "Should approximately take $saveTime. ZIP number: $zipNumber";
 }

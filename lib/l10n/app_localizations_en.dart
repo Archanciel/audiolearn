@@ -2027,8 +2027,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'Saving multiple playlists audio files to ZIP ...';
 
   @override
-  String savingApproximativeTime(Object saveTime) {
-    return 'Please wait, this should approximately take $saveTime ...';
+  String savingApproximativeTime(Object saveTime, Object zipNumber) {
+    return 'Should approxim. take $saveTime. ZIP number: $zipNumber';
   }
 
   @override
