@@ -168,8 +168,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               _displayWarningDialog(
                 context: _context,
-                message: AppLocalizations.of(context)!
-                    .insufficientStorageSpace,
+                message: AppLocalizations.of(context)!.insufficientStorageSpace,
                 warningMessageVM: _warningMessageVM,
                 themeProviderVM: themeProviderVM,
               );
@@ -180,8 +179,19 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               _displayWarningDialog(
                 context: _context,
+                message: AppLocalizations.of(context)!.pathError,
+                warningMessageVM: _warningMessageVM,
+                themeProviderVM: themeProviderVM,
+              );
+            });
+
+            return const SizedBox.shrink();
+          case ErrorType.androidStorageAccessError:
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              _displayWarningDialog(
+                context: _context,
                 message: AppLocalizations.of(context)!
-                    .pathError,
+                    .androidStorageAccessErrorMessage,
                 warningMessageVM: _warningMessageVM,
                 themeProviderVM: themeProviderVM,
               );
@@ -1180,35 +1190,35 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
             if (_warningMessageVM.uniquePlaylistIsSaved) {
               savedAudioMp3ToZipMessage = AppLocalizations.of(context)!
                   .correctedSavedUniquePlaylistAudioMp3ToZip(
-                _warningMessageVM.fromAudioDownloadDateTime,
-                _warningMessageVM.savedAudioMp3Number,
-                savedTotalAudioFileSizeStr,
-                savedTotalAudioDurationStr,
-                _warningMessageVM.savingAudioToZipOperationDuration.HHmmss(
-                  addRemainingOneDigitTenthOfSecond: true,
-                ),
-                NumberFormat.decimalPattern().format(
-                  _warningMessageVM.realNumberOfBytesSavedToZipPerSecond,
-                ),
-                _warningMessageVM.zipFilePathName,
-                _warningMessageVM.numberOfCreatedZipFiles
-              );
+                      _warningMessageVM.fromAudioDownloadDateTime,
+                      _warningMessageVM.savedAudioMp3Number,
+                      savedTotalAudioFileSizeStr,
+                      savedTotalAudioDurationStr,
+                      _warningMessageVM.savingAudioToZipOperationDuration
+                          .HHmmss(
+                        addRemainingOneDigitTenthOfSecond: true,
+                      ),
+                      NumberFormat.decimalPattern().format(
+                        _warningMessageVM.realNumberOfBytesSavedToZipPerSecond,
+                      ),
+                      _warningMessageVM.zipFilePathName,
+                      _warningMessageVM.numberOfCreatedZipFiles);
             } else {
               savedAudioMp3ToZipMessage = AppLocalizations.of(context)!
                   .correctedSavedMultiplePlaylistsAudioMp3ToZip(
-                _warningMessageVM.fromAudioDownloadDateTime,
-                _warningMessageVM.savedAudioMp3Number,
-                savedTotalAudioFileSizeStr,
-                savedTotalAudioDurationStr,
-                _warningMessageVM.savingAudioToZipOperationDuration.HHmmss(
-                  addRemainingOneDigitTenthOfSecond: true,
-                ),
-                NumberFormat.decimalPattern().format(
-                  _warningMessageVM.realNumberOfBytesSavedToZipPerSecond,
-                ),
-                _warningMessageVM.zipFilePathName,
-                _warningMessageVM.numberOfCreatedZipFiles
-              );
+                      _warningMessageVM.fromAudioDownloadDateTime,
+                      _warningMessageVM.savedAudioMp3Number,
+                      savedTotalAudioFileSizeStr,
+                      savedTotalAudioDurationStr,
+                      _warningMessageVM.savingAudioToZipOperationDuration
+                          .HHmmss(
+                        addRemainingOneDigitTenthOfSecond: true,
+                      ),
+                      NumberFormat.decimalPattern().format(
+                        _warningMessageVM.realNumberOfBytesSavedToZipPerSecond,
+                      ),
+                      _warningMessageVM.zipFilePathName,
+                      _warningMessageVM.numberOfCreatedZipFiles);
             }
 
             _displayWarningDialog(

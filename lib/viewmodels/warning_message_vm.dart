@@ -223,6 +223,9 @@ enum ErrorType {
   insufficientStorageSpace, // Error in the storage space.
 
   pathError, // Error in the path.
+
+  androidStorageAccessError, // Error in obtaining the Android external
+  // storage used for storing the created MP3 ZIP files.
 }
 
 /// This VM (View Model) class is part of the MVVM architecture.

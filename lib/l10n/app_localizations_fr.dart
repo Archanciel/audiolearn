@@ -2176,4 +2176,8 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get pathError => 'Échec de la récupération du chemin de fichier.';
+
+  @override
+  String get androidStorageAccessErrorMessage =>
+      'Impossible d\'accéder au stockage externe Android.';
 }
