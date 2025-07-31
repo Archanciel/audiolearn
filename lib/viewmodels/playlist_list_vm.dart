@@ -229,6 +229,9 @@ class PlaylistListVM extends ChangeNotifier {
   Duration get savingAudioMp3FileToZipDuration =>
       _savingAudioMp3FileToZipDuration;
 
+  int _numberOfCreatedZipFiles = 0;
+  int get numberOfCreatedZipFiles => _numberOfCreatedZipFiles;
+
   PlaylistListVM({
     required WarningMessageVM warningMessageVM,
     required AudioDownloadVM audioDownloadVM,
@@ -3094,7 +3097,7 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     List<dynamic> savedMp3InfoLst =
-        await _saveAllAudioMp3FilesToZipWithSizeLimit(
+        await _saveAllAudioMp3FilesToZipWithZipSizeLimit(
       listOfPlaylists: listOfPlaylists,
       targetDirStr: targetDir,
       fromAudioDownloadDateTime: fromAudioDownloadDateTime,
@@ -3158,7 +3161,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///  the real quantity of bytes saved to zip in one second,
   ///  the number of created zip files,
   /// ]
-  Future<List<dynamic>> _saveAllAudioMp3FilesToZipWithSizeLimit({
+  Future<List<dynamic>> _saveAllAudioMp3FilesToZipWithZipSizeLimit({
     required List<Playlist> listOfPlaylists,
     required String targetDirStr,
     required DateTime fromAudioDownloadDateTime,
@@ -3193,6 +3196,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Determine the actual target directory early
     String actualTargetDir;
+
     if (Platform.isAndroid) {
       Directory? externalDir = await getExternalStorageDirectory();
       if (externalDir != null) {
@@ -3258,7 +3262,7 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     // Create ZIP files with size limit using streaming approach
-    int numberOfCreatedZipFiles = 0;
+    _numberOfCreatedZipFiles = 0;
     String baseZipFileName =
         "${playlistTitle}_mp3_from_${yearMonthDayDateTimeFormatForFileName.format(oldestAudioSavedToZipDownloadDateTime)}_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}";
 
@@ -3275,7 +3279,7 @@ class PlaylistListVM extends ChangeNotifier {
           audioBatch: currentBatch,
           targetDir: actualTargetDir, // Use the actual target directory
           baseFileName: baseZipFileName,
-          partNumber: ++numberOfCreatedZipFiles,
+          partNumber: _numberOfCreatedZipFiles,
           totalParts:
               _calculateTotalParts(audioFilesToSave, zipFileSizeLimitInBytes),
         );
@@ -3298,14 +3302,14 @@ class PlaylistListVM extends ChangeNotifier {
         audioBatch: currentBatch,
         targetDir: actualTargetDir, // Use the actual target directory
         baseFileName: baseZipFileName,
-        partNumber: ++numberOfCreatedZipFiles,
+        partNumber: _numberOfCreatedZipFiles,
         totalParts:
             _calculateTotalParts(audioFilesToSave, zipFileSizeLimitInBytes),
       );
     }
 
     // Rename single file if needed
-    if (numberOfCreatedZipFiles == 1) {
+    if (_numberOfCreatedZipFiles == 1) {
       String originalPath =
           path.join(actualTargetDir, "${baseZipFileName}_part1.zip");
       String newPath = path.join(actualTargetDir, "$baseZipFileName.zip");
@@ -3328,9 +3332,10 @@ class PlaylistListVM extends ChangeNotifier {
 
     // FIXED: Use actualTargetDir instead of targetDirStr for final path
     String finalZipPathStr;
-    if (numberOfCreatedZipFiles > 1) {
+
+    if (_numberOfCreatedZipFiles > 1) {
       finalZipPathStr = path.join(actualTargetDir,
-          "${baseZipFileName}_part 1 to $numberOfCreatedZipFiles.zip");
+          "${baseZipFileName}_part 1 to $_numberOfCreatedZipFiles.zip");
     } else {
       finalZipPathStr = path.join(actualTargetDir, "$baseZipFileName.zip");
     }
@@ -3342,7 +3347,7 @@ class PlaylistListVM extends ChangeNotifier {
       savedAudioDuration,
       savingAudioToZipDuration,
       realSavingAudioToZipBytesPerSecond,
-      numberOfCreatedZipFiles,
+      _numberOfCreatedZipFiles,
     ];
   }
 
@@ -3356,6 +3361,7 @@ class PlaylistListVM extends ChangeNotifier {
   }) async {
     try {
       String zipFileName;
+
       if (totalParts > 1) {
         zipFileName = "${baseFileName}_part$partNumber.zip";
       } else {
@@ -3386,11 +3392,14 @@ class PlaylistListVM extends ChangeNotifier {
       List<int> zipData = ZipEncoder().encode(archive);
       File zipFile = File(zipFilePathName);
       await zipFile.writeAsBytes(zipData, flush: true);
-
+      _numberOfCreatedZipFiles++;
+      
       _logger.i('ZIP file saved successfully: $zipFilePathName');
 
       // Force garbage collection after each ZIP file
       await Future.delayed(Duration(milliseconds: 200));
+
+      notifyListeners();
     } catch (e) {
       _logger.i('Error saving ZIP file: $e');
       rethrow;

@@ -2045,8 +2045,8 @@ class AppLocalizationsFr extends AppLocalizations {
       'Sauvegarde des fichiers audio de multiples playlists ...';
 
   @override
-  String savingApproximativeTime(Object saveTime) {
-    return 'Patience, cela peut prendre approximativement $saveTime ...';
+  String savingApproximativeTime(Object saveTime, Object zipNumber) {
+    return 'Peut prendre approxim. $saveTime. Nb ZIP: $zipNumber';
   }
 
   @override
