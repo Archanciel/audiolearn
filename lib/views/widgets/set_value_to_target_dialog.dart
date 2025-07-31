@@ -40,6 +40,8 @@ class SetValueToTargetDialog extends StatefulWidget {
   final List<dynamic>
       validationFunctionArgs; // Arguments for the validation function
   final bool canAllCheckBoxBeUnchecked;
+  final bool isCursorAtStart; // If true, the cursor is at the start of the
+  //                             TextField containing the passed value.
   final bool isValueStringUsed; // Indicates if the passed value field is used.
   //                               Is used to determine if clicking on Enter
   //                               should close the dialog or not.
@@ -72,6 +74,7 @@ class SetValueToTargetDialog extends StatefulWidget {
     this.checkboxIndexSetToTrue = -1,
     this.isPassedValueEditable = true,
     this.canAllCheckBoxBeUnchecked = false,
+    this.isCursorAtStart = false,
     this.helpItemsLst = const [],
   }) : isValueStringUsed =
             passedValueFieldLabel.isNotEmpty && passedValueStr.isNotEmpty;
@@ -203,7 +206,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
                               widget.passedValueFieldTooltip,
                           controller: _passedValueTextEditingController,
                           textFieldFocusNode: _focusNodePassedValueTextField,
-                          isCursorAtStart: false,
+                          isCursorAtStart: widget.isCursorAtStart,
                         )
                       : createInfoRowFunction(
                           context: context,
