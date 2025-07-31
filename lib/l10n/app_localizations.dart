@@ -3195,7 +3195,7 @@ abstract class AppLocalizations {
   /// No description provided for @savePlaylistsAudioMp3FilesToZipMenu.
   ///
   /// In en, this message translates to:
-  /// **'Save Playlists Audio\'s MP3 to ZIP File ...'**
+  /// **'Save Playlists Audio\'s MP3 to ZIP File(s) ...'**
   String get savePlaylistsAudioMp3FilesToZipMenu;
 
   /// No description provided for @savePlaylistsAudioMp3FilesToZipTooltip.
