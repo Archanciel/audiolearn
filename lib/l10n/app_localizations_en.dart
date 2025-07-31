@@ -1965,7 +1965,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get savePlaylistsAudioMp3FilesToZipMenu =>
-      'Save Playlists Audio\'s MP3 to ZIP File ...';
+      'Save Playlists Audio\'s MP3 to ZIP File(s) ...';
 
   @override
   String get savePlaylistsAudioMp3FilesToZipTooltip =>
