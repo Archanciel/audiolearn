@@ -34,14 +34,14 @@ Map<String, dynamic> _createZipInIsolate(Map<String, dynamic> params) {
   try {
     final List<Map<String, dynamic>> audioFilesData = params['audioFiles'];
     final String zipFilePath = params['zipFilePath'];
-    
+
     // Create archive
     Archive archive = Archive();
-    
+
     for (final audioData in audioFilesData) {
       final String filePath = audioData['filePath'];
       final String relativePath = audioData['relativePath'];
-      
+
       // Read file
       File audioFile = File(filePath);
       if (audioFile.existsSync()) {
@@ -53,13 +53,13 @@ Map<String, dynamic> _createZipInIsolate(Map<String, dynamic> params) {
         ));
       }
     }
-    
+
     // Encode ZIP (this heavy operation runs in background isolate)
     List<int> zipData = ZipEncoder().encode(archive);
-    
+
     // Write ZIP file
     File(zipFilePath).writeAsBytesSync(zipData, flush: true);
-    
+
     return {'success': true, 'zipPath': zipFilePath};
   } catch (e) {
     return {'success': false, 'error': e.toString()};
@@ -3309,15 +3309,19 @@ class PlaylistListVM extends ChangeNotifier {
 
     for (AudioFileInfo audioInfo in audioFilesToSave) {
       // Check if adding this file would exceed the size limit
+      // SECTION 1: When saving current batch
       if (currentBatchSize + audioInfo.audio.audioFileSize >
               zipFileSizeLimitInBytes &&
           currentBatch.isNotEmpty) {
+        // FIXED: Increment BEFORE calling _saveArchiveBatchToFile
+        _numberOfCreatedZipFiles++;
+
         // Save current batch
         await _saveArchiveBatchToFile(
           audioBatch: currentBatch,
-          targetDir: actualTargetDir, // Use the actual target directory
+          targetDir: actualTargetDir,
           baseFileName: baseZipFileName,
-          partNumber: _numberOfCreatedZipFiles++,
+          partNumber: _numberOfCreatedZipFiles, // Now correctly incremented
           totalParts:
               _calculateTotalParts(audioFilesToSave, zipFileSizeLimitInBytes),
         );
@@ -3334,13 +3338,17 @@ class PlaylistListVM extends ChangeNotifier {
       currentBatchSize += audioInfo.audio.audioFileSize;
     }
 
+    // SECTION 2: When saving the last batch
     // Save the last batch if it has files
     if (currentBatch.isNotEmpty) {
+      // FIXED: Increment BEFORE calling _saveArchiveBatchToFile
+      _numberOfCreatedZipFiles++;
+
       await _saveArchiveBatchToFile(
         audioBatch: currentBatch,
-        targetDir: actualTargetDir, // Use the actual target directory
+        targetDir: actualTargetDir,
         baseFileName: baseZipFileName,
-        partNumber: _numberOfCreatedZipFiles++,
+        partNumber: _numberOfCreatedZipFiles, // Now correctly incremented
         totalParts:
             _calculateTotalParts(audioFilesToSave, zipFileSizeLimitInBytes),
       );
