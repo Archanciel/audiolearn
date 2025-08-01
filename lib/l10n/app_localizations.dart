@@ -2826,13 +2826,13 @@ abstract class AppLocalizations {
   /// No description provided for @restorePlaylistAndCommentsFromZipMenu.
   ///
   /// In en, this message translates to:
-  /// **'Restore Playlists, Comments, Pictures and Settings from ZIP File ...'**
+  /// **'Restore Playlist(s), Comments, Pictures and Settings from ZIP File ...'**
   String get restorePlaylistAndCommentsFromZipMenu;
 
   /// No description provided for @restorePlaylistAndCommentsFromZipTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Restoring the playlists, their audio comments, pictures and the application settings from a saved ZIP file. The ZIP file contains the playlists, the comments, the pictures as well as the settings JSON files. The audio files are not included in it.'**
+  /// **'According to the content of the selected ZIP file, restoring a unique or multiple playlists, their audio comments, pictures and, if awailable, the application settings. The audio files are not included in the ZIP file.'**
   String get restorePlaylistAndCommentsFromZipTooltip;
 
   /// Warning message indicating that one or several playlists were restored from ZIP created from appbar menu
