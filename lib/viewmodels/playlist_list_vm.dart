@@ -6,6 +6,7 @@ import 'package:archive/archive.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:path/path.dart' as path;
@@ -27,6 +28,43 @@ import 'audio_download_vm.dart';
 import 'audio_player_vm.dart';
 import 'comment_vm.dart';
 import 'warning_message_vm.dart';
+
+// Top-level function for isolate (place OUTSIDE your class)
+Map<String, dynamic> _createZipInIsolate(Map<String, dynamic> params) {
+  try {
+    final List<Map<String, dynamic>> audioFilesData = params['audioFiles'];
+    final String zipFilePath = params['zipFilePath'];
+    
+    // Create archive
+    Archive archive = Archive();
+    
+    for (final audioData in audioFilesData) {
+      final String filePath = audioData['filePath'];
+      final String relativePath = audioData['relativePath'];
+      
+      // Read file
+      File audioFile = File(filePath);
+      if (audioFile.existsSync()) {
+        List<int> audioBytes = audioFile.readAsBytesSync();
+        archive.addFile(ArchiveFile(
+          relativePath,
+          audioBytes.length,
+          audioBytes,
+        ));
+      }
+    }
+    
+    // Encode ZIP (this heavy operation runs in background isolate)
+    List<int> zipData = ZipEncoder().encode(archive);
+    
+    // Write ZIP file
+    File(zipFilePath).writeAsBytesSync(zipData, flush: true);
+    
+    return {'success': true, 'zipPath': zipFilePath};
+  } catch (e) {
+    return {'success': false, 'error': e.toString()};
+  }
+}
 
 // Helper class to store audio file information
 class AudioFileInfo {
@@ -3279,7 +3317,7 @@ class PlaylistListVM extends ChangeNotifier {
           audioBatch: currentBatch,
           targetDir: actualTargetDir, // Use the actual target directory
           baseFileName: baseZipFileName,
-          partNumber: _numberOfCreatedZipFiles,
+          partNumber: _numberOfCreatedZipFiles++,
           totalParts:
               _calculateTotalParts(audioFilesToSave, zipFileSizeLimitInBytes),
         );
@@ -3302,7 +3340,7 @@ class PlaylistListVM extends ChangeNotifier {
         audioBatch: currentBatch,
         targetDir: actualTargetDir, // Use the actual target directory
         baseFileName: baseZipFileName,
-        partNumber: _numberOfCreatedZipFiles,
+        partNumber: _numberOfCreatedZipFiles++,
         totalParts:
             _calculateTotalParts(audioFilesToSave, zipFileSizeLimitInBytes),
       );
@@ -3351,7 +3389,7 @@ class PlaylistListVM extends ChangeNotifier {
     ];
   }
 
-// Improved memory-efficient method to save a batch of files
+  // Modified version of your _saveArchiveBatchToFile method (inside your class)
   Future<void> _saveArchiveBatchToFile({
     required List<AudioFileInfo> audioBatch,
     required String targetDir,
@@ -3361,7 +3399,6 @@ class PlaylistListVM extends ChangeNotifier {
   }) async {
     try {
       String zipFileName;
-
       if (totalParts > 1) {
         zipFileName = "${baseFileName}_part$partNumber.zip";
       } else {
@@ -3371,34 +3408,44 @@ class PlaylistListVM extends ChangeNotifier {
       // Note: targetDir is now already the correct directory (passed from main method)
       String zipFilePathName = path.join(targetDir, zipFileName);
 
-      // Create archive and add files one by one
-      Archive archive = Archive();
+      // Prepare data for isolate (don't load files into memory here)
+      List<Map<String, dynamic>> audioFilesData = [];
 
       for (AudioFileInfo audioInfo in audioBatch) {
-        // Read file bytes
-        List<int> audioBytes = await audioInfo.audioFile.readAsBytes();
-
-        // Add to archive immediately
-        archive.addFile(ArchiveFile(
-          audioInfo.relativePath,
-          audioBytes.length,
-          audioBytes,
-        ));
-
-        // Don't clear here - let audioBytes go out of scope naturally
+        // Only pass file paths and metadata to isolate, not the actual bytes
+        if (audioInfo.audioFile.existsSync()) {
+          audioFilesData.add({
+            'filePath': audioInfo.audioFile.path,
+            'relativePath': audioInfo.relativePath,
+            'audioFileSize': audioInfo.audio.audioFileSize,
+          });
+        }
       }
 
-      // Encode and save the ZIP
-      List<int> zipData = ZipEncoder().encode(archive);
-      File zipFile = File(zipFilePathName);
-      await zipFile.writeAsBytes(zipData, flush: true);
-      _numberOfCreatedZipFiles++;
-      
-      _logger.i('ZIP file saved successfully: $zipFilePathName');
+      if (audioFilesData.isEmpty) {
+        _logger.i('No valid files to add to ZIP: $zipFilePathName');
+        return;
+      }
+
+      // Prepare parameters for isolate
+      Map<String, dynamic> isolateParams = {
+        'audioFiles': audioFilesData,
+        'zipFilePath': zipFilePathName,
+      };
+
+      // Run ZIP creation in background isolate to prevent ANR
+      Map<String, dynamic> result =
+          await compute(_createZipInIsolate, isolateParams);
+
+      if (result['success']) {
+        _logger
+            .i('ZIP file saved successfully in isolate: ${result['zipPath']}');
+      } else {
+        throw Exception('Isolate ZIP creation failed: ${result['error']}');
+      }
 
       // Force garbage collection after each ZIP file
       await Future.delayed(Duration(milliseconds: 200));
-
       notifyListeners();
     } catch (e) {
       _logger.i('Error saving ZIP file: $e');
