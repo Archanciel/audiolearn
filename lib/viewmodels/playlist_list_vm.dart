@@ -3267,7 +3267,7 @@ class PlaylistListVM extends ChangeNotifier {
         File audioFile = File(audio.filePathName);
         if (audioFile.existsSync()) {
           String relativePath = path.join(
-            'playlists',
+            kImposedPlaylistsSubDirName,
             playlist.title,
             audio.audioFileName,
           );
@@ -3407,6 +3407,7 @@ class PlaylistListVM extends ChangeNotifier {
   }) async {
     try {
       String zipFileName;
+      
       if (totalParts > 1) {
         zipFileName = "${baseFileName}_part$partNumber.zip";
       } else {
