@@ -1738,11 +1738,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get restorePlaylistAndCommentsFromZipMenu =>
-      'Restaurer les playlists, commentaires, photos et settings depuis un fichier ZIP ...';
+      'Restaurer la/les playlist(s), commentaires, photos et settings depuis un fichier ZIP ...';
 
   @override
   String get restorePlaylistAndCommentsFromZipTooltip =>
-      'Restaure les playlists, les commentaires, les photos ainsi que les paramètres de l\'application à partir d\'un fichier ZIP préalablement sauvé. Seuls les fichiers JSON sont restaurés. Les fichiers audio n\'étant pas inclus dans le fichier ZIP, ils ne sont pas restaurés.';
+      'En fonction du contenu du fichier ZIP sélectionné, restaure une ou plusieurs playlists, leurs commentaires, photos ainsi que les paramètres de l\'application s\'ils sont inclus dans le fichier ZIP. Les fichiers audio n\'étant pas inclus dans ce fichier, ils ne sont pas restaurés.';
 
   @override
   String restoredAppDataFromZip(

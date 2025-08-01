@@ -1123,8 +1123,8 @@
   "appDataCouldNotBeSavedToZip": "Les fichiers JSON des playlists, des commentaires et des photos ainsi que les paramètres de l'application n'ont pu être sauvagardés dans un ZIP !",
   "pictured": "Avec photo",
   "notPictured": "Sans ph.",
-  "restorePlaylistAndCommentsFromZipMenu": "Restaurer les playlists, commentaires, photos et settings depuis un fichier ZIP ...",
-  "restorePlaylistAndCommentsFromZipTooltip": "Restaure les playlists, les commentaires, les photos ainsi que les paramètres de l'application à partir d'un fichier ZIP préalablement sauvé. Seuls les fichiers JSON sont restaurés. Les fichiers audio n'étant pas inclus dans le fichier ZIP, ils ne sont pas restaurés.",
+  "restorePlaylistAndCommentsFromZipMenu": "Restaurer la/les playlist(s), commentaires, photos et settings depuis un fichier ZIP ...",
+  "restorePlaylistAndCommentsFromZipTooltip": "En fonction du contenu du fichier ZIP sélectionné, restaure une ou plusieurs playlists, leurs commentaires, photos ainsi que les paramètres de l'application s'ils sont inclus dans le fichier ZIP. Les fichiers audio n'étant pas inclus dans ce fichier, ils ne sont pas restaurés.",
   "restoredAppDataFromZip": "Les fichiers JSON de {playlistsNumber} playlists, de {commentsNumber} commentaires et de {picturesNumber} photos ainsi que {audiosNumber} références audio et {addedCommentNumber} commentaires ajoutés plus {updatedCommentNumber} modifiés et les paramètres de l'application ont été restaurés depuis \"{filePathName}\".",
   "@restoredAppDataFromZip": {
     "description": "Warning message indicating that the default SF parms were not applied to move audio",
