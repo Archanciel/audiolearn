@@ -829,6 +829,9 @@ class WarningMessageVM extends ChangeNotifier {
       _realNumberOfBytesSavedToZipPerSecond;
   int _numberOfCreatedZipFiles = 0;
   int get numberOfCreatedZipFiles => _numberOfCreatedZipFiles;
+  List<String> _excludedTooLargeAudioFilesLst = [];
+  List<String> get excludedTooLargeAudioFilesLst =>
+      _excludedTooLargeAudioFilesLst;
 
   void confirmSavingAudioMp3ToZip({
     required String zipFilePathName,
@@ -840,16 +843,19 @@ class WarningMessageVM extends ChangeNotifier {
     required int realNumberOfBytesSavedToZipPerSecond,
     required bool uniquePlaylistIsSaved,
     required int numberOfCreatedZipFiles,
+    required List<String> excludedTooLargeAudioFilesLst,
   }) {
     _zipFilePathName = zipFilePathName;
     _fromAudioDownloadDateTime = fromAudioDownloadDateTime;
     _savedAudioMp3Number = savedAudioMp3Number;
     _savedTotalAudioFileSize = savedTotalAudioFileSize;
-    _savedTotalAudioDuration = savedTotalAudioDuration;  
+    _savedTotalAudioDuration = savedTotalAudioDuration;
     _uniquePlaylistIsSaved = uniquePlaylistIsSaved;
     _savingAudioToZipOperationDuration = savingAudioToZipOperationDuration;
-    _realNumberOfBytesSavedToZipPerSecond = realNumberOfBytesSavedToZipPerSecond;
+    _realNumberOfBytesSavedToZipPerSecond =
+        realNumberOfBytesSavedToZipPerSecond;
     _numberOfCreatedZipFiles = numberOfCreatedZipFiles;
+    _excludedTooLargeAudioFilesLst = excludedTooLargeAudioFilesLst;
 
     warningMessageType =
         WarningMessageType.savedUniquePlaylistOrAllPlaylistsAudioMp3ToZip;
@@ -1179,7 +1185,8 @@ class WarningMessageVM extends ChangeNotifier {
 
   void signalInvalidPlaylistRootDirName({
     required String playlistInvalidRootPath,
-    required String playlistInvalidRootName,}) {
+    required String playlistInvalidRootName,
+  }) {
     _playlistInvalidRootPath = playlistInvalidRootPath;
     _playlistInvalidRootName = playlistInvalidRootName;
 

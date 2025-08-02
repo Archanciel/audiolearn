@@ -1185,6 +1185,12 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
               _warningMessageVM.savedTotalAudioDuration.HHmmss(
             addRemainingOneDigitTenthOfSecond: true,
           );
+          String zipTooLargeFileInfo = '';
+
+          if (_warningMessageVM.excludedTooLargeAudioFilesLst.isNotEmpty) {
+            zipTooLargeFileInfo =
+                "\n\n${AppLocalizations.of(context)!.zipTooLargeFileInfoLabel}${_warningMessageVM.excludedTooLargeAudioFilesLst.join(' M${AppLocalizations.of(context)!.octetShort}\n')} M${AppLocalizations.of(context)!.octetShort}";
+          }
 
           if (_warningMessageVM.zipFilePathName != '') {
             if (_warningMessageVM.uniquePlaylistIsSaved) {
@@ -1202,7 +1208,8 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                         _warningMessageVM.realNumberOfBytesSavedToZipPerSecond,
                       ),
                       _warningMessageVM.zipFilePathName,
-                      _warningMessageVM.numberOfCreatedZipFiles);
+                      _warningMessageVM.numberOfCreatedZipFiles,
+                      zipTooLargeFileInfo);
             } else {
               savedAudioMp3ToZipMessage = AppLocalizations.of(context)!
                   .correctedSavedMultiplePlaylistsAudioMp3ToZip(
@@ -1218,7 +1225,8 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                         _warningMessageVM.realNumberOfBytesSavedToZipPerSecond,
                       ),
                       _warningMessageVM.zipFilePathName,
-                      _warningMessageVM.numberOfCreatedZipFiles);
+                      _warningMessageVM.numberOfCreatedZipFiles,
+                      zipTooLargeFileInfo);
             }
 
             _displayWarningDialog(

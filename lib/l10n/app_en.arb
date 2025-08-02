@@ -989,7 +989,7 @@
   "savingUpToHalfHour": "Please wait, this may take 10 to 30 minutes or more ...",
   "savingAudioToZipTime": "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): {evaluatedSaveTime}.",
   "savingAudioToZipTimeTitle": "Prevision of the save duration",
-  "correctedSavedUniquePlaylistAudioMp3ToZip": "Saved to ZIP file(s) unique playlist audio MP3 files downloaded from {audioDownloadFromDateTime}.\n\nTotal saved audio number: {savedAudioNumber}, total size: {savedAudioTotalFileSize} and total duration: {savedAudioTotalDuration}.\n\nSave operation real duration: {saveOperationRealDuration}, number of bytes saved per second: {bytesNumberSavedPerSecond}, number of created ZIP file(s): {zipFilesNumber}.\n\nZIP file path name: \"{filePathName}\".",
+  "correctedSavedUniquePlaylistAudioMp3ToZip": "Saved to ZIP file(s) unique playlist audio MP3 files downloaded from {audioDownloadFromDateTime}.\n\nTotal saved audio number: {savedAudioNumber}, total size: {savedAudioTotalFileSize} and total duration: {savedAudioTotalDuration}.\n\nSave operation real duration: {saveOperationRealDuration}, number of bytes saved per second: {bytesNumberSavedPerSecond}, number of created ZIP file(s): {zipFilesNumber}.\n\nZIP file path name: \"{filePathName}\".{zipTooLargeFileInfo}",
   "@correctedSavedUniquePlaylistAudioMp3ToZip": {
     "description": "Confirmation message after saving the audio MP3 downloaded at or after a specified date time of a unique playlist to a ZIP file",
     "placeholders": {
@@ -1000,10 +1000,11 @@
       "saveOperationRealDuration": {},
       "bytesNumberSavedPerSecond": {},  
       "filePathName": {},
-      "zipFilesNumber": {}
+      "zipFilesNumber": {},
+      "zipTooLargeFileInfo": {}
     }
   },
-  "correctedSavedMultiplePlaylistsAudioMp3ToZip": "Saved to ZIP all playlists audio MP3 files downloaded from {audioDownloadFromDateTime}.\n\nTotal saved audio number: {savedAudioNumber}, total size: {savedAudioTotalFileSize} and total duration: {savedAudioTotalDuration}.\n\nSave operation real duration: {saveOperationRealDuration}, number of bytes saved per second: {bytesNumberSavedPerSecond}, number of created ZIP file(s): {zipFilesNumber}.\n\nZIP file path name: \"{filePathName}\".",
+  "correctedSavedMultiplePlaylistsAudioMp3ToZip": "Saved to ZIP all playlists audio MP3 files downloaded from {audioDownloadFromDateTime}.\n\nTotal saved audio number: {savedAudioNumber}, total size: {savedAudioTotalFileSize} and total duration: {savedAudioTotalDuration}.\n\nSave operation real duration: {saveOperationRealDuration}, number of bytes saved per second: {bytesNumberSavedPerSecond}, number of created ZIP file(s): {zipFilesNumber}.\n\nZIP file path name: \"{filePathName}\".{zipTooLargeFileInfo}",
   "@correctedSavedMultiplePlaylistsAudioMp3ToZip": {
     "description": "Confirmation message after saving the audio MP3 downloaded at or after a specified date time of all application playlists to a ZIP file",
     "placeholders": {
@@ -1014,7 +1015,8 @@
       "saveOperationRealDuration": {},
       "bytesNumberSavedPerSecond": {},  
       "filePathName": {},
-      "zipFilesNumber": {}
+      "zipFilesNumber": {},
+      "zipTooLargeFileInfo": {}
     }
   },
   "restorePlaylistsAudioMp3FilesFromZipMenu": "Restore Playlists Audio's MP3 from ZIP File ...",
@@ -1038,5 +1040,6 @@
   "uniquePlaylistMp3SaveHelpContent": "If you already executed this save MP3 functionality a couple of weeks ago, the following example will help you to understand the result of the new save playlist MP3 execution. Consider that the first created MP3 saved ZIP is named audioLearn_mp3_from_2023-05-17_07_03_50_on_2025-06-15_11_59_38.zip. Now, on {dateOne} at 10:00 you do a new playlist MP3 backup with setting the oldest audio download date to {dateTwo}, i.e. the date on which the previous MP3 ZIP file was created. But if the newly created ZIP file is named audioLearn_mp3_from_2025-06-20_09_25_34_on_2025-07-27_16_23_32.zip and not audioLearn_mp3_from_2025-06-15_on_2025-07-27_16_23_32.zip, the reason is that the oldest downloaded audio after {dateTwo} was downloaded on {dateThree} 09:25:34.",
   "insufficientStorageSpace": "Insufficient storage space detected during selecting the ZIP file containing MP3's.",
   "pathError": "Failed to retrieve file path.",
-  "androidStorageAccessErrorMessage": "Could not access Android external storage."
+  "androidStorageAccessErrorMessage": "Could not access Android external storage.",
+  "zipTooLargeFileInfoLabel": "Those files are too large to be included in the MP3 saved ZIP file and so were not saved:\n"
 }

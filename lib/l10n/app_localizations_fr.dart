@@ -2071,8 +2071,9 @@ class AppLocalizationsFr extends AppLocalizations {
       Object saveOperationRealDuration,
       Object bytesNumberSavedPerSecond,
       Object filePathName,
-      Object zipFilesNumber) {
-    return 'Enregistré dans des ZIP\'s tous les fichiers audio MP3 de la playlist unique téléchargés depuis le $audioDownloadFromDateTime.\n\nNombre total d\'audios sauvegardés: $savedAudioNumber, taille totale: $savedAudioTotalFileSize et durée totale: $savedAudioTotalDuration.\n\nDurée réelle de l\'opération de sauvegarde: $saveOperationRealDuration, nombre de bytes sauvés par seconde: $bytesNumberSavedPerSecond, nombre de fichier(s) ZIP créé(s): $zipFilesNumber.\n\nFichier ZIP: \"$filePathName\".';
+      Object zipFilesNumber,
+      Object zipTooLargeFileInfo) {
+    return 'Enregistré dans des ZIP\'s tous les fichiers audio MP3 de la playlist unique téléchargés depuis le $audioDownloadFromDateTime.\n\nNombre total d\'audios sauvegardés: $savedAudioNumber, taille totale: $savedAudioTotalFileSize et durée totale: $savedAudioTotalDuration.\n\nDurée réelle de l\'opération de sauvegarde: $saveOperationRealDuration, nombre de bytes sauvés par seconde: $bytesNumberSavedPerSecond, nombre de fichier(s) ZIP créé(s): $zipFilesNumber.\n\nFichier ZIP: \"$filePathName\".$zipTooLargeFileInfo';
   }
 
   @override
@@ -2084,8 +2085,9 @@ class AppLocalizationsFr extends AppLocalizations {
       Object saveOperationRealDuration,
       Object bytesNumberSavedPerSecond,
       Object filePathName,
-      Object zipFilesNumber) {
-    return 'Enregistré dans le ZIP tous les fichiers audio MP3 des playlists téléchargés depuis le $audioDownloadFromDateTime.\n\nNombre total d\'audios sauvegardés: $savedAudioNumber, taille totale: $savedAudioTotalFileSize et durée totale: $savedAudioTotalDuration.\n\nDurée réelle de l\'opération de sauvegarde: $saveOperationRealDuration, nombre de bytes sauvés par seconde: $bytesNumberSavedPerSecond, nombre de fichier(s) ZIP créé(s): $zipFilesNumber, nombre de fichier(s) ZIP créé(s): $zipFilesNumber.\n\nFichier ZIP: \"$filePathName\"';
+      Object zipFilesNumber,
+      Object zipTooLargeFileInfo) {
+    return 'Enregistré dans le ZIP tous les fichiers audio MP3 des playlists téléchargés depuis le $audioDownloadFromDateTime.\n\nNombre total d\'audios sauvegardés: $savedAudioNumber, taille totale: $savedAudioTotalFileSize et durée totale: $savedAudioTotalDuration.\n\nDurée réelle de l\'opération de sauvegarde: $saveOperationRealDuration, nombre de bytes sauvés par seconde: $bytesNumberSavedPerSecond, nombre de fichier(s) ZIP créé(s): $zipFilesNumber, nombre de fichier(s) ZIP créé(s): $zipFilesNumber.\n\nFichier ZIP: \"$filePathName\"$zipTooLargeFileInfo';
   }
 
   @override
@@ -2180,4 +2182,8 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get androidStorageAccessErrorMessage =>
       'Impossible d\'accéder au stockage externe Android.';
+
+  @override
+  String get zipTooLargeFileInfoLabel =>
+      'Ces fichiers sont trop volumineux pour être inclus dans les fichiers ZIP MP3 et non donc pas étés sauvés:\n';
 }
