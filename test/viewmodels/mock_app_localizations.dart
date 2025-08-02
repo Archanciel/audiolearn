@@ -2110,8 +2110,9 @@ class MockAppLocalizations extends AppLocalizations {
     Object bytesNumberSavedPerSecond,
     Object filePathName,
     Object zipFilesNumber,
+    Object zipTooLargeFileInfo,
   ) =>
-      "Saved to ZIP unique playlist audio MP3 files downloaded from $audioDownloadFromDateTime.Total saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.Save operation real duration: $saveOperationRealDuration, number of bytes saved per second: $bytesNumberSavedPerSecond, number of created ZIP file(s): $zipFilesNumber.ZIP file path name: \"$filePathName\".";
+      "Saved to ZIP unique playlist audio MP3 files downloaded from $audioDownloadFromDateTime.Total saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.Save operation real duration: $saveOperationRealDuration, number of bytes saved per second: $bytesNumberSavedPerSecond, number of created ZIP file(s): $zipFilesNumber.ZIP file path name: \"$filePathName\".$zipTooLargeFileInfo";
 
   @override
   String correctedSavedMultiplePlaylistsAudioMp3ToZip(
@@ -2123,8 +2124,9 @@ class MockAppLocalizations extends AppLocalizations {
     Object bytesNumberSavedPerSecond,
     Object filePathName,
     Object zipFilesNumber,
+    Object zipTooLargeFileInfo,
   ) =>
-      "Saved to ZIP unique playlist audio MP3 files downloaded from $audioDownloadFromDateTime.Total saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.Save operation real duration: $saveOperationRealDuration, number of bytes saved per second: $bytesNumberSavedPerSecond, number of created ZIP file(s): $zipFilesNumber.ZIP file path name: \"$filePathName\".";
+      "Saved to ZIP unique playlist audio MP3 files downloaded from $audioDownloadFromDateTime.Total saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.Save operation real duration: $saveOperationRealDuration, number of bytes saved per second: $bytesNumberSavedPerSecond, number of created ZIP file(s): $zipFilesNumber.ZIP file path name: \"$filePathName\".$zipTooLargeFileInfo";
 
   @override
   String get audioSpokenQuality => "Spoken quality";
@@ -2231,4 +2233,7 @@ class MockAppLocalizations extends AppLocalizations {
     Object zipNumber,
   ) =>
       "Should approximately take $saveTime. ZIP number: $zipNumber";
+
+  @override
+  String get zipTooLargeFileInfoLabel => "Those files are too large to be included in the MP3 saved ZIP file and so were not saved:";
 }

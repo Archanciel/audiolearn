@@ -2052,8 +2052,9 @@ class AppLocalizationsEn extends AppLocalizations {
       Object saveOperationRealDuration,
       Object bytesNumberSavedPerSecond,
       Object filePathName,
-      Object zipFilesNumber) {
-    return 'Saved to ZIP file(s) unique playlist audio MP3 files downloaded from $audioDownloadFromDateTime.\n\nTotal saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.\n\nSave operation real duration: $saveOperationRealDuration, number of bytes saved per second: $bytesNumberSavedPerSecond, number of created ZIP file(s): $zipFilesNumber.\n\nZIP file path name: \"$filePathName\".';
+      Object zipFilesNumber,
+      Object zipTooLargeFileInfo) {
+    return 'Saved to ZIP file(s) unique playlist audio MP3 files downloaded from $audioDownloadFromDateTime.\n\nTotal saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.\n\nSave operation real duration: $saveOperationRealDuration, number of bytes saved per second: $bytesNumberSavedPerSecond, number of created ZIP file(s): $zipFilesNumber.\n\nZIP file path name: \"$filePathName\".$zipTooLargeFileInfo';
   }
 
   @override
@@ -2065,8 +2066,9 @@ class AppLocalizationsEn extends AppLocalizations {
       Object saveOperationRealDuration,
       Object bytesNumberSavedPerSecond,
       Object filePathName,
-      Object zipFilesNumber) {
-    return 'Saved to ZIP all playlists audio MP3 files downloaded from $audioDownloadFromDateTime.\n\nTotal saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.\n\nSave operation real duration: $saveOperationRealDuration, number of bytes saved per second: $bytesNumberSavedPerSecond, number of created ZIP file(s): $zipFilesNumber.\n\nZIP file path name: \"$filePathName\".';
+      Object zipFilesNumber,
+      Object zipTooLargeFileInfo) {
+    return 'Saved to ZIP all playlists audio MP3 files downloaded from $audioDownloadFromDateTime.\n\nTotal saved audio number: $savedAudioNumber, total size: $savedAudioTotalFileSize and total duration: $savedAudioTotalDuration.\n\nSave operation real duration: $saveOperationRealDuration, number of bytes saved per second: $bytesNumberSavedPerSecond, number of created ZIP file(s): $zipFilesNumber.\n\nZIP file path name: \"$filePathName\".$zipTooLargeFileInfo';
   }
 
   @override
@@ -2158,4 +2160,8 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get androidStorageAccessErrorMessage =>
       'Could not access Android external storage.';
+
+  @override
+  String get zipTooLargeFileInfoLabel =>
+      'Those files are too large to be included in the MP3 saved ZIP file and so were not saved:\n';
 }
