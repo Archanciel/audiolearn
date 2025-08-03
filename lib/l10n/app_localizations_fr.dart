@@ -2087,7 +2087,7 @@ class AppLocalizationsFr extends AppLocalizations {
       Object filePathName,
       Object zipFilesNumber,
       Object zipTooLargeFileInfo) {
-    return 'Enregistré dans le ZIP tous les fichiers audio MP3 des playlists téléchargés depuis le $audioDownloadFromDateTime.\n\nNombre total d\'audios sauvegardés: $savedAudioNumber, taille totale: $savedAudioTotalFileSize et durée totale: $savedAudioTotalDuration.\n\nDurée réelle de l\'opération de sauvegarde: $saveOperationRealDuration, nombre de bytes sauvés par seconde: $bytesNumberSavedPerSecond, nombre de fichier(s) ZIP créé(s): $zipFilesNumber, nombre de fichier(s) ZIP créé(s): $zipFilesNumber.\n\nFichier ZIP: \"$filePathName\"$zipTooLargeFileInfo';
+    return 'Enregistré dans le ZIP tous les fichiers audio MP3 des playlists téléchargés depuis le $audioDownloadFromDateTime.\n\nNombre total d\'audios sauvegardés: $savedAudioNumber, taille totale: $savedAudioTotalFileSize et durée totale: $savedAudioTotalDuration.\n\nDurée réelle de l\'opération de sauvegarde: $saveOperationRealDuration, nombre de bytes sauvés par seconde: $bytesNumberSavedPerSecond, nombre de fichier(s) ZIP créé(s): $zipFilesNumber.\n\nFichier ZIP: \"$filePathName\"$zipTooLargeFileInfo';
   }
 
   @override
