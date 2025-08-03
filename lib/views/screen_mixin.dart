@@ -520,15 +520,23 @@ mixin ScreenMixin {
   /// proportion of the label and the TextField can be adjusted by setting
   /// the flexValue parameter. The flexValue parameter is set to 6 for the
   /// modify title dialog and to 4 for the rename file dialog.
+  /// 
+  /// [labelFlexValue] if set to a value greater than 1, the editable text
+  /// field will be smaller than the label text.
+  /// [editableFieldFlexValue] if the flex value of the editable text field
+  /// is set to a value greater than 1, the editable text field will be
+  /// smaller than the label text.
   Widget createFlexibleEditableRowFunction({
     Key? valueTextFieldWidgetKey, // key set to the TextField widget
     //                               containing the value
     required BuildContext context,
     required String label,
+    String labelAndTextFieldTooltip = '',
     required TextEditingController controller,
     FocusNode? textFieldFocusNode,
     bool isCursorAtStart = true,
-    required int flexValue,
+    int labelFlexValue = 1,
+    required int editableFieldFlexValue,
   }) {
     if (isCursorAtStart) {
       // Set the cursor position at the start of the TextField,
@@ -539,28 +547,31 @@ mixin ScreenMixin {
     }
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Flexible(
-            flex: 1,
-            child: Text(
-              label,
-              style: kDialogLabelStyle,
+      child: Tooltip(
+        message: labelAndTextFieldTooltip,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Flexible(
+              flex: labelFlexValue,
+              child: Text(
+                label,
+                style: kDialogLabelStyle,
+              ),
             ),
-          ),
-          const SizedBox(width: 5.0),
-          Flexible(
-            flex: flexValue,
-            child: TextField(
-              key: valueTextFieldWidgetKey,
-              style: kDialogTextFieldStyle,
-              controller: controller,
-              decoration: getDialogTextFieldInputDecoration(),
-              focusNode: textFieldFocusNode,
+            const SizedBox(width: 5.0),
+            Flexible(
+              flex: editableFieldFlexValue,
+              child: TextField(
+                key: valueTextFieldWidgetKey,
+                style: kDialogTextFieldStyle,
+                controller: controller,
+                decoration: getDialogTextFieldInputDecoration(),
+                focusNode: textFieldFocusNode,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

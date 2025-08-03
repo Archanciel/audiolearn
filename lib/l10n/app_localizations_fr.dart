@@ -2185,5 +2185,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get zipTooLargeFileInfoLabel =>
-      'Ces fichiers sont trop volumineux pour être inclus dans les fichiers ZIP MP3 et non donc pas étés sauvés:\n';
+      'Ces fichiers sont trop volumineux pour être inclus dans les fichiers ZIP MP3 et non donc pas été sauvegardés:\n';
+
+  @override
+  String get mp3ZipFileSizeLimitInMbLabel =>
+      'Taille maximale en Mo des fichiers ZIP';
+
+  @override
+  String get mp3ZipFileSizeLimitInMbTooltip =>
+      'Taille maximale en Mo pour chaque fichier ZIP lors de la sauvegarde des fichiers audio MP3. Sur les appareils Android, si cette limite est trop élevée, l\'opération de sauvegarde échouera en raison de contraintes de mémoire. Plusieurs fichiers ZIP seront créés automatiquement si le contenu total dépasse cette limite.';
 }

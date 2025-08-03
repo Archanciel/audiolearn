@@ -3476,6 +3476,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Those files are too large to be included in the MP3 saved ZIP file and so were not saved:\n'**
   String get zipTooLargeFileInfoLabel;
+
+  /// No description provided for @mp3ZipFileSizeLimitInMbLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'ZIP file size limit in MB'**
+  String get mp3ZipFileSizeLimitInMbLabel;
+
+  /// No description provided for @mp3ZipFileSizeLimitInMbTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum size in MB for each ZIP file when saving audio MP3 files. On Android devices, if this limit is set too high, the save operation will fail due to memory constraints. Multiple ZIP files will be created automatically if the total content exceeds this limit.'**
+  String get mp3ZipFileSizeLimitInMbTooltip;
 }
 
 class _AppLocalizationsDelegate
