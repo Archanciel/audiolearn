@@ -139,7 +139,7 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
                 label: labelStr,
                 controller: _audioModificationTextEditingController,
                 textFieldFocusNode: _focusNodeAudioModificationTextField,
-                flexValue: flexibleValue,
+                editableFieldFlexValue: flexibleValue,
               ),
             ],
           ),
