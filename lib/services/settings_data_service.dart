@@ -35,6 +35,7 @@ enum Playlists {
   isMusicQualityByDefault,
   playSpeed,
   arePlaylistsDisplayedInPlaylistDownloadView,
+  maxSavableAudioMp3FileSizeInMb,
 }
 
 enum DataLocation {
@@ -68,6 +69,7 @@ class SettingsDataService {
       //
       // This changes when the user clicks on the playlist toggle button.
       Playlists.arePlaylistsDisplayedInPlaylistDownloadView: true,
+      Playlists.maxSavableAudioMp3FileSizeInMb: kMp3ZipFileSizeLimitInMb,
     },
     SettingType.dataLocation: {
       DataLocation.appSettingsPath: '',
