@@ -1187,9 +1187,14 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
           );
           String zipTooLargeFileInfo = '';
 
-          if (_warningMessageVM.excludedTooLargeAudioFilesLst.isNotEmpty) {
+          final int lstLength = _warningMessageVM.excludedTooLargeAudioFilesLst.length;
+
+          if (lstLength > 1) {
             zipTooLargeFileInfo =
-                "\n\n${AppLocalizations.of(context)!.zipTooLargeFileInfoLabel}${_warningMessageVM.excludedTooLargeAudioFilesLst.join(' M${AppLocalizations.of(context)!.octetShort}\n')} M${AppLocalizations.of(context)!.octetShort}";
+                "\n\n${AppLocalizations.of(context)!.zipTooLargeFileInfoLabel}${_warningMessageVM.excludedTooLargeAudioFilesLst.join(' M${AppLocalizations.of(context)!.octetShort};\n')} M${AppLocalizations.of(context)!.octetShort}.";
+          } else if (lstLength > 0) {
+            zipTooLargeFileInfo =
+                "\n\n${AppLocalizations.of(context)!.zipTooLargeOneFileInfoLabel}${_warningMessageVM.excludedTooLargeAudioFilesLst.first} M${AppLocalizations.of(context)!.octetShort}.";
           }
 
           if (_warningMessageVM.zipFilePathName != '') {

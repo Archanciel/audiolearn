@@ -1427,7 +1427,8 @@
   "insufficientStorageSpace": "Espace de stockage insuffisant détecté lors de la sélection du fichier ZIP contenant les MP3's.",
   "pathError": "Échec de la récupération du chemin de fichier.",
   "androidStorageAccessErrorMessage": "Impossible d'accéder au stockage externe Android.",
-  "zipTooLargeFileInfoLabel": "Ces fichiers sont trop volumineux pour être inclus dans les fichiers ZIP MP3 et non donc pas été sauvegardés:\n",
+  "zipTooLargeFileInfoLabel": "Ces fichiers sont trop volumineux pour être inclus dans les fichiers ZIP MP3 et n'ont donc pas été sauvegardés:\n",
   "mp3ZipFileSizeLimitInMbLabel": "Taille maximale en Mo des fichiers ZIP",
-  "mp3ZipFileSizeLimitInMbTooltip": "Taille maximale en Mo pour chaque fichier ZIP lors de la sauvegarde des fichiers audio MP3. Sur les appareils Android, si cette limite est trop élevée, l'opération de sauvegarde échouera en raison de contraintes de mémoire. Plusieurs fichiers ZIP seront créés automatiquement si le contenu total dépasse cette limite."
+  "mp3ZipFileSizeLimitInMbTooltip": "Taille maximale en Mo pour chaque fichier ZIP lors de la sauvegarde des fichiers audio MP3. Sur les appareils Android, si cette limite est trop élevée, l'opération de sauvegarde échouera en raison de contraintes de mémoire. Plusieurs fichiers ZIP seront créés automatiquement si le contenu total dépasse cette limite.",
+  "zipTooLargeOneFileInfoLabel": "Ce fichier est trop volumineux pour être inclu dans un fichier ZIP MP3 et n'a donc pas été sauvegardé:\n"
 }
