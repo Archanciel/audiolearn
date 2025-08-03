@@ -661,7 +661,12 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                         targetDir: targetSaveDirectoryPath!,
                         fromAudioDownloadDateTime:
                             parseDateTimeOrDateStrUsinAppDateFormat,
-                        zipFileSizeLimitInMb: kMp3ZipFileSizeLimitInMb,
+                        zipFileSizeLimitInMb: settingsDataService.get(
+                          settingType: SettingType.playlists,
+                          settingSubType:
+                              Playlists.maxSavableAudioMp3FileSizeInMb,
+                        ) ??
+                            kMp3ZipFileSizeLimitInMb,
                         uniquePlaylistIsSaved: true,
                       );
                       // Handle any post-execution logic here

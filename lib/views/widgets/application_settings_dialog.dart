@@ -53,6 +53,14 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
             settingSubType: DataLocation.playlistRootPath) ??
         '';
 
+    _mp3ZipFileSizeLimitInMbController.text = widget.settingsDataService
+            .get(
+              settingType: SettingType.playlists,
+              settingSubType: Playlists.maxSavableAudioMp3FileSizeInMb,
+            )
+            ?.toString() ??
+        kMp3ZipFileSizeLimitInMb.toString();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _helpItemsLst = [
         HelpItem(
@@ -255,6 +263,17 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
       );
     }
 
+    int? value = int.tryParse(_mp3ZipFileSizeLimitInMbController.text);
+
+    if (value != null) {
+      widget.settingsDataService.set(
+          settingType: SettingType.playlists,
+          settingSubType: Playlists.maxSavableAudioMp3FileSizeInMb,
+          value: value);
+
+      widget.settingsDataService.saveSettings();
+    }
+
     // Updating the playlist root path in the application settings if
     // the path was changed and saving the playlists title order list in
     // the previous root path.
@@ -279,6 +298,7 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
 
       return;
     }
+
     if (settingsDataServicePlaylistRootPath ==
             _applicationDialogPlaylistRootPath ||
         _applicationDialogPlaylistRootPath.isEmpty) {
