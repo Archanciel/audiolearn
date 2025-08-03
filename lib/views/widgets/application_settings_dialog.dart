@@ -35,6 +35,8 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
   bool _applyAudioPlaySpeedToAlreadyDownloadedAudios = false;
   late final List<HelpItem> _helpItemsLst;
   String _applicationDialogPlaylistRootPath = '';
+  final TextEditingController _mp3ZipFileSizeLimitInMbController =
+      TextEditingController();
 
   @override
   void initState() {
@@ -78,6 +80,13 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
         ),
       ];
     });
+  }
+
+  @override
+  void dispose() {
+    _mp3ZipFileSizeLimitInMbController.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -154,6 +163,30 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
                       ),
                     ),
                   ),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: createFlexibleEditableRowFunction(
+                            context: context,
+                            valueTextFieldWidgetKey:
+                                const Key('mp3ZipFileSizeLimitInMb'),
+                            label: AppLocalizations.of(context)!
+                                .mp3ZipFileSizeLimitInMbLabel,
+                            labelAndTextFieldTooltip:
+                                AppLocalizations.of(context)!
+                                    .mp3ZipFileSizeLimitInMbTooltip,
+                            controller: _mp3ZipFileSizeLimitInMbController,
+                            labelFlexValue: 4,
+                            editableFieldFlexValue: 1,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -226,14 +259,13 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
     // the path was changed and saving the playlists title order list in
     // the previous root path.
 
-    String settingsDataServicePlaylistRootPath =
-        widget.settingsDataService.get(
+    String settingsDataServicePlaylistRootPath = widget.settingsDataService.get(
       settingType: SettingType.dataLocation,
       settingSubType: DataLocation.playlistRootPath,
     );
 
     String lastComponent = path.basename(_applicationDialogPlaylistRootPath);
-    
+
     if (lastComponent != kImposedPlaylistsSubDirName) {
       // If the modified playlist directory name is invalid (must be 'playlists'), a warning
       // is displayed and return is performed, so that the modified playlist dir is ignored.

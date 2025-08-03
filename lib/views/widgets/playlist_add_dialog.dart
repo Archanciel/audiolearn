@@ -115,7 +115,7 @@ class _PlaylistAddDialogState extends State<PlaylistAddDialog>
                           AppLocalizations.of(context)!.localPlaylistTitleLabel,
                       controller: _localPlaylistTitleTextEditingController,
                       textFieldFocusNode: _focusNodeLocalPlaylistTitle,
-                      flexValue: 3,
+                      editableFieldFlexValue: 3,
                     ),
               createCheckboxRowFunction(
                 // displaying music quality checkbox
