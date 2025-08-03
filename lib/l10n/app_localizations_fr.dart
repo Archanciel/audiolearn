@@ -2146,11 +2146,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get uniquePlaylistMp3RestorationHelpTitle =>
-      'Playlist Mp3 Restoration Function';
+      'Fonction de restauration MP3 de la playlist';
 
   @override
   String get uniquePlaylistMp3RestorationHelpContent =>
-      'This function is useful in the situation where the playlist was restored from a ZIP file which only contained the playlist, comments and pictures JSON files and so did not contain the audio MP3 files.';
+      'Cette fonction est utile dans la situation où la playlist a été restaurée depuis un fichier ZIP qui ne contenait que les fichiers JSON de la playlist, des commentaires et des photos et donc ne contenait pas les fichiers audio MP3.';
 
   @override
   String get playlistsMp3SaveHelpTitle =>
