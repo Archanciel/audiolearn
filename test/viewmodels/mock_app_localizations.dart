@@ -2235,5 +2235,13 @@ class MockAppLocalizations extends AppLocalizations {
       "Should approximately take $saveTime. ZIP number: $zipNumber";
 
   @override
-  String get zipTooLargeFileInfoLabel => "Those files are too large to be included in the MP3 saved ZIP file and so were not saved:";
+  String get zipTooLargeFileInfoLabel =>
+      "Those files are too large to be included in the MP3 saved ZIP file and so were not saved:";
+
+  @override
+  String get mp3ZipFileSizeLimitInMbLabel => "ZIP file size in MB limit";
+
+  @override
+  String get mp3ZipFileSizeLimitInMbTooltip =>
+      "Maximum size in MB for each ZIP file when saving audio MP3 files. On Android devices, if this limit is set too high, the save operation will fail due to memory constraints. Multiple ZIP files will be created automatically if the total content exceeds this limit.";
 }
