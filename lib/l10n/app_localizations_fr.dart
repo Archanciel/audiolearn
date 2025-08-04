@@ -198,7 +198,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String deleteAudioFromPlaylistAswellWarning(
-      Object audioTitle, Object playlistTitle) {
+    Object audioTitle,
+    Object playlistTitle,
+  ) {
     return 'Supprimer l\'audio \"$audioTitle\" de la playlist Youtube \"$playlistTitle\", sinon l\'audio sera téléchargé à nouveau lors du prochain téléchargement de la playlist.';
   }
 
@@ -217,7 +219,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String addCorrectedYoutubePlaylistTitle(
-      Object originalTitle, Object quality, Object correctedTitle) {
+    Object originalTitle,
+    Object quality,
+    Object correctedTitle,
+  ) {
     return 'Nouvelle playlist Youtube \"$originalTitle\" de qualité $quality ajoutée avec le titre corrigé \"$correctedTitle\" à la fin de la liste des playlists.';
   }
 
@@ -258,19 +263,25 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String downloadAudioYoutubeErrorExceptionMessageOnly(
-      Object exceptionMessage) {
+    Object exceptionMessage,
+  ) {
     return 'Erreur de téléchargement audio Youtube: \"$exceptionMessage\".';
   }
 
   @override
   String downloadAudioYoutubeErrorDueToLiveVideoInPlaylist(
-      Object playlistTitle, Object liveVideoString) {
+    Object playlistTitle,
+    Object liveVideoString,
+  ) {
     return 'Erreur de téléchargement audio Youtube. La playlist \"$playlistTitle\" contient une video live qui provoque l\'échec du téléchargement des audio\'s de la playlist. Pour résoudre le problème, après avoir téléchargé l\'audio de la vidéo live comme expliqué ci-dessous, supprimez la vidéo live de la playlist puis redémarrez l\'application et rééssayez.\n\nL\'URL de la vidéo live contient cet élément: \"$liveVideoString\". Afin d\'ajouter l\'audio de cette vidéo live à la playlist \"$playlistTitle\", téléchargez-la séparément en tant que vidéo unique en l\'ajoutant à playlist \"$playlistTitle\".';
   }
 
   @override
   String downloadAudioFileAlreadyOnAudioDirectory(
-      Object audioValidVideoTitle, Object fileName, Object playlistTitle) {
+    Object audioValidVideoTitle,
+    Object fileName,
+    Object playlistTitle,
+  ) {
     return 'L\'audio \"$audioValidVideoTitle\" est contenu dans le fichier \"$fileName\" se trouvant dans le répertoire de la playlist cible \"$playlistTitle\" et ne sera donc pas re-téléchargé.';
   }
 
@@ -557,73 +568,81 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String audioNotMovedFromLocalPlaylistToLocalPlaylist(
-      Object audioTitle,
-      Object fromPlaylistTitle,
-      Object notCopiedOrMovedReason,
-      Object toPlaylistTitle) {
+    Object audioTitle,
+    Object fromPlaylistTitle,
+    Object notCopiedOrMovedReason,
+    Object toPlaylistTitle,
+  ) {
     return 'L\'audio \"$audioTitle\" N\'A PAS été déplacé de la playlist locale \"$fromPlaylistTitle\" vers la playlist locale \"$toPlaylistTitle\" $notCopiedOrMovedReason.';
   }
 
   @override
   String audioNotMovedFromLocalPlaylistToYoutubePlaylist(
-      Object audioTitle,
-      Object fromPlaylistTitle,
-      Object notCopiedOrMovedReason,
-      Object toPlaylistTitle) {
+    Object audioTitle,
+    Object fromPlaylistTitle,
+    Object notCopiedOrMovedReason,
+    Object toPlaylistTitle,
+  ) {
     return 'L\'audio \"$audioTitle\" N\'A PAS été déplacé de la playlist locale \"$fromPlaylistTitle\" vers la playlist Youtube \"$toPlaylistTitle\" $notCopiedOrMovedReason.';
   }
 
   @override
   String audioNotMovedFromYoutubePlaylistToLocalPlaylist(
-      Object audioTitle,
-      Object fromPlaylistTitle,
-      Object notCopiedOrMovedReason,
-      Object toPlaylistTitle) {
+    Object audioTitle,
+    Object fromPlaylistTitle,
+    Object notCopiedOrMovedReason,
+    Object toPlaylistTitle,
+  ) {
     return 'L\'audio \"$audioTitle\" N\'A PAS été déplacé de la playlist Youtube \"$fromPlaylistTitle\" vers la playlist locale \"$toPlaylistTitle\" $notCopiedOrMovedReason.';
   }
 
   @override
   String audioNotMovedFromYoutubePlaylistToYoutubePlaylist(
-      Object audioTitle,
-      Object fromPlaylistTitle,
-      Object notCopiedOrMovedReason,
-      Object toPlaylistTitle) {
+    Object audioTitle,
+    Object fromPlaylistTitle,
+    Object notCopiedOrMovedReason,
+    Object toPlaylistTitle,
+  ) {
     return 'L\'audio \"$audioTitle\" N\'A PAS été déplacé de la playlist Youtube \"$fromPlaylistTitle\" vers la playlist Youtube \"$toPlaylistTitle\" $notCopiedOrMovedReason.';
   }
 
   @override
   String audioNotCopiedFromLocalPlaylistToLocalPlaylist(
-      Object audioTitle,
-      Object fromPlaylistTitle,
-      Object notCopiedOrMovedReason,
-      Object toPlaylistTitle) {
+    Object audioTitle,
+    Object fromPlaylistTitle,
+    Object notCopiedOrMovedReason,
+    Object toPlaylistTitle,
+  ) {
     return 'L\'audio \"$audioTitle\" N\'A PAS été copié de la playlist locale \"$fromPlaylistTitle\" vers la playlist locale \"$toPlaylistTitle\" $notCopiedOrMovedReason.';
   }
 
   @override
   String audioNotCopiedFromLocalPlaylistToYoutubePlaylist(
-      Object audioTitle,
-      Object fromPlaylistTitle,
-      Object notCopiedOrMovedReason,
-      Object toPlaylistTitle) {
+    Object audioTitle,
+    Object fromPlaylistTitle,
+    Object notCopiedOrMovedReason,
+    Object toPlaylistTitle,
+  ) {
     return 'L\'audio \"$audioTitle\" N\'A PAS été copié de la playlist locale \"$fromPlaylistTitle\" vers la playlist Youtube \"$toPlaylistTitle\" $notCopiedOrMovedReason.';
   }
 
   @override
   String audioNotCopiedFromYoutubePlaylistToLocalPlaylist(
-      Object audioTitle,
-      Object fromPlaylistTitle,
-      Object notCopiedOrMovedReason,
-      Object toPlaylistTitle) {
+    Object audioTitle,
+    Object fromPlaylistTitle,
+    Object notCopiedOrMovedReason,
+    Object toPlaylistTitle,
+  ) {
     return 'L\'audio \"$audioTitle\" N\'A PAS été copié de la playlist Youtube \"$fromPlaylistTitle\" vers la playlist locale \"$toPlaylistTitle\" $notCopiedOrMovedReason.';
   }
 
   @override
   String audioNotCopiedFromYoutubePlaylistToYoutubePlaylist(
-      Object audioTitle,
-      Object fromPlaylistTitle,
-      Object notCopiedOrMovedReason,
-      Object toPlaylistTitle) {
+    Object audioTitle,
+    Object fromPlaylistTitle,
+    Object notCopiedOrMovedReason,
+    Object toPlaylistTitle,
+  ) {
     return 'L\'audio \"$audioTitle\" N\'A PAS été copié de la playlist Youtube \"$fromPlaylistTitle\" vers la playlist Youtube \"$toPlaylistTitle\" $notCopiedOrMovedReason.';
   }
 
@@ -730,8 +749,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String deletePlaylistDialogComment(Object audioNumber,
-      Object audioCommentsNumber, Object audioPicturesNumber) {
+  String deletePlaylistDialogComment(
+    Object audioNumber,
+    Object audioCommentsNumber,
+    Object audioPicturesNumber,
+  ) {
     return 'Suppression de la playlist, de ses $audioNumber fichiers audio, de ses $audioCommentsNumber commentaire(s) audio, de ses $audioPicturesNumber photo(s) audio ainsi que de son fichier JSON et de son répertoire.';
   }
 
@@ -805,7 +827,8 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String saveSortFilterOptionsToPlaylistDialogTitle(
-      Object sortFilterParmsName) {
+    Object sortFilterParmsName,
+  ) {
     return 'Sauvegarder les paramètres de tri et de filtre \"$sortFilterParmsName\"';
   }
 
@@ -859,22 +882,24 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les audio en haut ont une durée plus courte que ceux d\'en bas.';
 
   @override
-  String get playableAudioDialogSortDescriptionTooltipTopRemainingDurationBigger =>
+  String
+  get playableAudioDialogSortDescriptionTooltipTopRemainingDurationBigger =>
       'Les audio en haut ont une durée d\'écoute restante plus longue que ceux d\'en bas.';
 
   @override
-  String get playableAudioDialogSortDescriptionTooltipTopRemainingDurationSmaller =>
+  String
+  get playableAudioDialogSortDescriptionTooltipTopRemainingDurationSmaller =>
       'Les audio en haut ont une durée d\'écoute restante plus courte que ceux d\'en bas.';
 
   @override
   String
-      get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeBigger =>
-          'Les audio en haut ont été écoutés plus récemment que ceux d\'en bas.';
+  get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeBigger =>
+      'Les audio en haut ont été écoutés plus récemment que ceux d\'en bas.';
 
   @override
   String
-      get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller =>
-          'Les audio en haut ont été écoutés moins récemment que ceux d\'en bas.';
+  get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller =>
+      'Les audio en haut ont été écoutés moins récemment que ceux d\'en bas.';
 
   @override
   String get saveAs => 'Enregistrer sous:';
@@ -1088,7 +1113,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String setValueToTargetWarning(
-      Object invalidValueWarningParam, Object maxMinPossibleValue) {
+    Object invalidValueWarningParam,
+    Object maxMinPossibleValue,
+  ) {
     return 'La valeur entrée $invalidValueWarningParam ($maxMinPossibleValue). Corrigez la valeur et rééssayez ...';
   }
 
@@ -1137,25 +1164,33 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String audioNotImportedToLocalPlaylist(
-      Object rejectedImportedAudioFileNames, Object toPlaylistTitle) {
+    Object rejectedImportedAudioFileNames,
+    Object toPlaylistTitle,
+  ) {
     return 'Le(s) audio(s)\n\n$rejectedImportedAudioFileNames\n\nn\'ont pas été importés vers la playlist locale \"$toPlaylistTitle\" car ils sont déjà présents dans son répertoire.';
   }
 
   @override
   String audioNotImportedToYoutubePlaylist(
-      Object rejectedImportedAudioFileNames, Object toPlaylistTitle) {
+    Object rejectedImportedAudioFileNames,
+    Object toPlaylistTitle,
+  ) {
     return 'Le(s) audio(s)\n\n$rejectedImportedAudioFileNames\n\nn\'ont pas été importés vers la playlist Youtube \"$toPlaylistTitle\" car ils sont déjà présents dans son répertoire.';
   }
 
   @override
   String audioImportedToLocalPlaylist(
-      Object importedAudioFileNames, Object toPlaylistTitle) {
+    Object importedAudioFileNames,
+    Object toPlaylistTitle,
+  ) {
     return 'Le(s) audio(s)\n\n$importedAudioFileNames\n\nont été importés vers la playlist locale \"$toPlaylistTitle\".';
   }
 
   @override
   String audioImportedToYoutubePlaylist(
-      Object importedAudioFileNames, Object toPlaylistTitle) {
+    Object importedAudioFileNames,
+    Object toPlaylistTitle,
+  ) {
     return 'Le(s) audio(s)\n\n$importedAudioFileNames\n\nont été importés vers la playlist Youtube \"$toPlaylistTitle\".';
   }
 
@@ -1212,7 +1247,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String renameAudioAndCommentFileConfirmation(
-      Object newFileName, Object oldFileIame) {
+    Object newFileName,
+    Object oldFileIame,
+  ) {
     return 'Le fichier audio \"$oldFileIame.mp3\" a été renommé \"$newFileName.mp3\" ainsi que le fichier de commentaires associé \"$oldFileIame.json\" a été renommé \"$newFileName.json\".';
   }
 
@@ -1241,7 +1278,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String notRedownloadAudioFilesInPlaylistDirectory(
-      Object number, Object playlistTitle) {
+    Object number,
+    Object playlistTitle,
+  ) {
     return '$number audio\'s sont déjà contenus dans le répertoire de la playlist cible \"$playlistTitle\" et n\'ont donc pas été re-téléchargés.';
   }
 
@@ -1260,7 +1299,8 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String removeSortFilterOptionsFromPlaylistDialogTitle(
-      Object sortFilterParmsName) {
+    Object sortFilterParmsName,
+  ) {
     return 'Eliminer les paramètres de tri et de filtre \"$sortFilterParmsName\"';
   }
 
@@ -1274,13 +1314,19 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String saveSortFilterParmsConfirmation(
-      Object sortFilterParmsName, Object playlistTitle, Object forViewMessage) {
+    Object sortFilterParmsName,
+    Object playlistTitle,
+    Object forViewMessage,
+  ) {
     return 'Les paramètres de tri/filtre \"$sortFilterParmsName\" ont été enregistrés dans la playlist \"$playlistTitle\" pour l\'écran(s) \"$forViewMessage\".';
   }
 
   @override
   String removeSortFilterParmsConfirmation(
-      Object sortFilterParmsName, Object playlistTitle, Object forViewMessage) {
+    Object sortFilterParmsName,
+    Object playlistTitle,
+    Object forViewMessage,
+  ) {
     return 'Les paramètres de tri/filtre \"$sortFilterParmsName\" ont été supprimés de la playlist \"$playlistTitle\" sur l\'écran(s) \"$forViewMessage\".';
   }
 
@@ -1318,8 +1364,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String confirmYoutubeChannelModifications(
-      Object numberOfModifiedDownloadedAudio,
-      Object numberOfModifiedPlayableAudio) {
+    Object numberOfModifiedDownloadedAudio,
+    Object numberOfModifiedPlayableAudio,
+  ) {
     return 'La chaîne Youtube a été définie dans $numberOfModifiedDownloadedAudio audio téléchargés ainsi que dans $numberOfModifiedPlayableAudio audio écoutables.';
   }
 
@@ -1350,13 +1397,18 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String deleteFilteredAudioConfirmationTitle(
-      Object sortFilterParmsName, Object playlistTitle) {
+    Object sortFilterParmsName,
+    Object playlistTitle,
+  ) {
     return 'Supprimer les audio\'s filtrés par le paramètre \"$sortFilterParmsName\" dans la playlist \"$playlistTitle\"';
   }
 
   @override
-  String deleteFilteredAudioConfirmation(Object deleteAudioNumber,
-      Object deleteAudioTotalFileSize, Object deleteAudioTotalDuration) {
+  String deleteFilteredAudioConfirmation(
+    Object deleteAudioNumber,
+    Object deleteAudioTotalFileSize,
+    Object deleteAudioTotalDuration,
+  ) {
     return 'Nombre d\'audio\'s à supprimer: $deleteAudioNumber,\nTaille totale correspondante: $deleteAudioTotalFileSize,\nDurée totale correspondante: $deleteAudioTotalDuration.';
   }
 
@@ -1366,16 +1418,19 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String deleteFilteredCommentedAudioWarningTitleTwo(
-      Object sortFilterParmsName, Object playlistTitle) {
+    Object sortFilterParmsName,
+    Object playlistTitle,
+  ) {
     return 'des audio\'s COMMENTÉS et non commentés filtrés par le paramètre \"$sortFilterParmsName\" dans la playlist \"$playlistTitle\". Consultez l\'aide pour résoudre le problème.';
   }
 
   @override
   String deleteFilteredCommentedAudioWarning(
-      Object deleteAudioNumber,
-      Object deleteCommentedAudioNumber,
-      Object deleteAudioTotalFileSize,
-      Object deleteAudioTotalDuration) {
+    Object deleteAudioNumber,
+    Object deleteCommentedAudioNumber,
+    Object deleteAudioTotalFileSize,
+    Object deleteAudioTotalDuration,
+  ) {
     return 'Nombre total d\'audio à supprimer: $deleteAudioNumber,\nNombre d\'audio COMMENTÉS à supprimer: $deleteCommentedAudioNumber,\nTaille totale correspondante: $deleteAudioTotalFileSize,\nDurée totale correspondante: $deleteAudioTotalDuration.';
   }
 
@@ -1443,153 +1498,169 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String confirmMovedUnmovedAudioNumberFromYoutubeToYoutubePlaylist(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName,
-      Object movedAudioNumber,
-      Object movedCommentedAudioNumber,
-      Object unmovedAudioNumber) {
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+    Object movedAudioNumber,
+    Object movedCommentedAudioNumber,
+    Object unmovedAudioNumber,
+  ) {
     return 'En appliquant le filtre \"$sortedFilterParmsName\", de la playlist Youtube \"$sourcePlaylistTitle\" à la playlist Youtube \"$targetPlaylistTitle\", $movedAudioNumber audio(s) ont été déplacé(s) dont $movedCommentedAudioNumber commenté(s), et $unmovedAudioNumber audio(s) n\'ont pu être déplacé(s).';
   }
 
   @override
   String confirmMovedUnmovedAudioNumberFromYoutubeToLocalPlaylist(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName,
-      Object movedAudioNumber,
-      Object movedCommentedAudioNumber,
-      Object unmovedAudioNumber) {
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+    Object movedAudioNumber,
+    Object movedCommentedAudioNumber,
+    Object unmovedAudioNumber,
+  ) {
     return 'En appliquant le filtre \"$sortedFilterParmsName\", de la playlist Youtube \"$sourcePlaylistTitle\" à la playlist locale \"$targetPlaylistTitle\", $movedAudioNumber audio(s) ont été déplacé(s) dont $movedCommentedAudioNumber commenté(s), et $unmovedAudioNumber audio(s) n\'ont pu être déplacé(s).';
   }
 
   @override
   String confirmMovedUnmovedAudioNumberFromLocalToYoutubePlaylist(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName,
-      Object movedAudioNumber,
-      Object movedCommentedAudioNumber,
-      Object unmovedAudioNumber) {
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+    Object movedAudioNumber,
+    Object movedCommentedAudioNumber,
+    Object unmovedAudioNumber,
+  ) {
     return 'En appliquant le filtre \"$sortedFilterParmsName\", de la playlist locale \"$sourcePlaylistTitle\" à la playlist Youtube \"$targetPlaylistTitle\", $movedAudioNumber audio(s) ont été déplacé(s) dont $movedCommentedAudioNumber commenté(s), et $unmovedAudioNumber audio(s) n\'ont pu être déplacé(s).';
   }
 
   @override
   String confirmMovedUnmovedAudioNumberFromLocalToLocalPlaylist(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName,
-      Object movedAudioNumber,
-      Object movedCommentedAudioNumber,
-      Object unmovedAudioNumber) {
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+    Object movedAudioNumber,
+    Object movedCommentedAudioNumber,
+    Object unmovedAudioNumber,
+  ) {
     return 'En appliquant le filtre \"$sortedFilterParmsName\", de la playlist locale \"$sourcePlaylistTitle\" à la playlist locale \"$targetPlaylistTitle\", $movedAudioNumber audio(s) ont été déplacé(s) dont $movedCommentedAudioNumber commenté(s), et $unmovedAudioNumber audio(s) n\'ont pu être déplacé(s).';
   }
 
   @override
   String confirmCopiedNotCopiedAudioNumberFromYoutubeToYoutubePlaylist(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName,
-      Object copiedAudioNumber,
-      Object copiedCommentedAudioNumber,
-      Object notCopiedAudioNumber) {
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+    Object copiedAudioNumber,
+    Object copiedCommentedAudioNumber,
+    Object notCopiedAudioNumber,
+  ) {
     return 'En appliquant le filtre \"$sortedFilterParmsName\", de la playlist Youtube \"$sourcePlaylistTitle\" à la playlist Youtube \"$targetPlaylistTitle\", $copiedAudioNumber audio(s) ont été copié(s) dont $copiedCommentedAudioNumber commenté(s), et $notCopiedAudioNumber audio(s) n\'ont pu être copié(s).';
   }
 
   @override
   String confirmCopiedNotCopiedAudioNumberFromYoutubeToLocalPlaylist(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName,
-      Object copiedAudioNumber,
-      Object copiedCommentedAudioNumber,
-      Object notCopiedAudioNumber) {
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+    Object copiedAudioNumber,
+    Object copiedCommentedAudioNumber,
+    Object notCopiedAudioNumber,
+  ) {
     return 'En appliquant le filtre \"$sortedFilterParmsName\", de la playlist Youtube \"$sourcePlaylistTitle\" à la playlist locale \"$targetPlaylistTitle\", $copiedAudioNumber audio(s) ont été copié(s) dont $copiedCommentedAudioNumber commenté(s), et $notCopiedAudioNumber audio(s) n\'ont pu être copié(s).';
   }
 
   @override
   String confirmCopiedNotCopiedAudioNumberFromLocalToYoutubePlaylist(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName,
-      Object copiedAudioNumber,
-      Object copiedCommentedAudioNumber,
-      Object notCopiedAudioNumber) {
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+    Object copiedAudioNumber,
+    Object copiedCommentedAudioNumber,
+    Object notCopiedAudioNumber,
+  ) {
     return 'En appliquant le filtre \"$sortedFilterParmsName\", de la playlist locale \"$sourcePlaylistTitle\" à la playlist Youtube \"$targetPlaylistTitle\", $copiedAudioNumber audio(s) ont été copié(s) dont $copiedCommentedAudioNumber commenté(s), et $notCopiedAudioNumber audio(s) n\'ont pu être copié(s).';
   }
 
   @override
   String confirmCopiedNotCopiedAudioNumberFromLocalToLocalPlaylist(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName,
-      Object copiedAudioNumber,
-      Object copiedCommentedAudioNumber,
-      Object notCopiedAudioNumber) {
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+    Object copiedAudioNumber,
+    Object copiedCommentedAudioNumber,
+    Object notCopiedAudioNumber,
+  ) {
     return 'En appliquant le filtre \"$sortedFilterParmsName\", de la playlist locale \"$sourcePlaylistTitle\" à la playlist locale \"$targetPlaylistTitle\", $copiedAudioNumber audio(s) ont été copié(s) dont $copiedCommentedAudioNumber commenté(s), et $notCopiedAudioNumber audio(s) n\'ont pu être copié(s).';
   }
 
   @override
   String defaultSFPNotApplyedToMoveAudioFromYoutubeToYoutubePlaylistWarning(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName) {
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+  ) {
     return 'Puisque les paramètres de tri/filtrage \"$sortedFilterParmsName\" sont sélectionnés, aucun audio ne peut être déplacé de la playlist YouTube \"$sourcePlaylistTitle\" vers la playlist YouTube \"$targetPlaylistTitle\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d\'exécuter cette opération ...';
   }
 
   @override
   String defaultSFPNotApplyedToMoveAudioFromYoutubeToLocalPlaylistWarning(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName) {
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+  ) {
     return 'Puisque les paramètres de tri/filtrage \"$sortedFilterParmsName\" sont sélectionnés, aucun audio ne peut être déplacé de la playlist YouTube \"$sourcePlaylistTitle\" vers la playlist locale \"$targetPlaylistTitle\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d\'exécuter cette opération ...';
   }
 
   @override
   String defaultSFPNotApplyedToMoveAudioFromLocalToYoutubePlaylistWarning(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName) {
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+  ) {
     return 'Puisque les paramètres de tri/filtrage \"$sortedFilterParmsName\" sont sélectionnés, aucun audio ne peut être déplacé de la playlist locale \"$sourcePlaylistTitle\" vers la playlist YouTube \"$targetPlaylistTitle\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d\'exécuter cette opération ...';
   }
 
   @override
   String defaultSFPNotApplyedToMoveAudioFromLocalToLocalPlaylistWarning(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName) {
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+  ) {
     return 'Puisque les paramètres de tri/filtrage \"$sortedFilterParmsName\" sont sélectionnés, aucun audio ne peut être déplacé de la playlist locale \"$sourcePlaylistTitle\" vers la playlist locale \"$targetPlaylistTitle\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d\'exécuter cette opération ...';
   }
 
   @override
   String defaultSFPNotApplyedToCopyAudioFromYoutubeToYoutubePlaylistWarning(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName) {
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+  ) {
     return 'Puisque les paramètres de tri/filtrage \"$sortedFilterParmsName\" sont sélectionnés, aucun audio ne peut être copié de la playlist YouTube \"$sourcePlaylistTitle\" vers la playlist YouTube \"$targetPlaylistTitle\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d\'exécuter cette opération ...';
   }
 
   @override
   String defaultSFPNotApplyedToCopyAudioFromYoutubeToLocalPlaylistWarning(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName) {
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+  ) {
     return 'Puisque les paramètres de tri/filtrage \"$sortedFilterParmsName\" sont sélectionnés, aucun audio ne peut être copié de la playlist YouTube \"$sourcePlaylistTitle\" vers la playlist locale \"$targetPlaylistTitle\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d\'exécuter cette opération ...';
   }
 
   @override
   String defaultSFPNotApplyedToCopyAudioFromLocalToYoutubePlaylistWarning(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName) {
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+  ) {
     return 'Puisque les paramètres de tri/filtrage \"$sortedFilterParmsName\" sont sélectionnés, aucun audio ne peut être copié de la playlist locale \"$sourcePlaylistTitle\" vers la playlist YouTube \"$targetPlaylistTitle\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d\'exécuter cette opération ...';
   }
 
   @override
   String defaultSFPNotApplyedToCopyAudioFromLocalToLocalPlaylistWarning(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName) {
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+  ) {
     return 'Puisque les paramètres de tri/filtrage \"$sortedFilterParmsName\" sont sélectionnés, aucun audio ne peut être copié de la playlist locale \"$sourcePlaylistTitle\" vers la playlist locale \"$targetPlaylistTitle\". SOLUTION : définissez des paramètres de tri/filtrage et appliquez-les avant d\'exécuter cette opération ...';
   }
 
@@ -1610,7 +1681,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String deleteSortFilterParmsWarningTitle(
-      Object sortFilterParmsName, Object playlistNumber) {
+    Object sortFilterParmsName,
+    Object playlistNumber,
+  ) {
     return 'ATTENTION: vous supprimez le paramètre de tri/filtre \"$sortFilterParmsName\" utilisé dans $playlistNumber playlist(s) listée(s) ci-dessous';
   }
 
@@ -1746,25 +1819,27 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String restoredAppDataFromZip(
-      Object playlistsNumber,
-      Object audiosNumber,
-      Object commentsNumber,
-      Object updatedCommentNumber,
-      Object addedCommentNumber,
-      Object picturesNumber,
-      Object filePathName) {
+    Object playlistsNumber,
+    Object audiosNumber,
+    Object commentsNumber,
+    Object updatedCommentNumber,
+    Object addedCommentNumber,
+    Object picturesNumber,
+    Object filePathName,
+  ) {
     return 'Les fichiers JSON de $playlistsNumber playlists, de $commentsNumber commentaires et de $picturesNumber photos ainsi que $audiosNumber références audio et $addedCommentNumber commentaires ajoutés plus $updatedCommentNumber modifiés et les paramètres de l\'application ont été restaurés depuis \"$filePathName\".';
   }
 
   @override
   String restoredUniquePlaylistFromZip(
-      Object playlistsNumber,
-      Object audiosNumber,
-      Object commentsNumber,
-      Object updatedCommentNumber,
-      Object addedCommentNumber,
-      Object picturesNumber,
-      Object filePathName) {
+    Object playlistsNumber,
+    Object audiosNumber,
+    Object commentsNumber,
+    Object updatedCommentNumber,
+    Object addedCommentNumber,
+    Object picturesNumber,
+    Object filePathName,
+  ) {
     return 'Les fichiers JSON de $playlistsNumber playlist sauvegardée individuellement, de $commentsNumber commentaires et de $picturesNumber photos ainsi que $audiosNumber références audio et $addedCommentNumber commentaires ajoutés plus $updatedCommentNumber modifiés ont été restaurés depuis \"$filePathName\".';
   }
 
@@ -1778,7 +1853,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String deleteFilteredAudioFromPlaylistAsWellConfirmationTitle(
-      Object sortFilterParmsName, Object playlistTitle) {
+    Object sortFilterParmsName,
+    Object playlistTitle,
+  ) {
     return 'Supprimer les audio\'s filtrés par le paramètre \"$sortFilterParmsName\" de la playlist \"$playlistTitle\" également (pourront être re-téléchargés)';
   }
 
@@ -1790,8 +1867,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les audio\'s filtrés sont re-téléchargés sous leurs noms de fichiers d\'origine.';
 
   @override
-  String redownloadedAudioNumbersConfirmation(Object playlistTitle,
-      Object redownloadedAudioNumber, Object notRedownloadedAudioNumber) {
+  String redownloadedAudioNumbersConfirmation(
+    Object playlistTitle,
+    Object redownloadedAudioNumber,
+    Object notRedownloadedAudioNumber,
+  ) {
     return '\"$redownloadedAudioNumber\" audio\'s ont été re-téléchargés dans la playlist \"$playlistTitle\". \"$notRedownloadedAudioNumber\" audio\'s n\'ont pas été re-téléchargés du fait qu\'ils sont déjà presents dans le répertoire de la playlist.';
   }
 
@@ -1800,7 +1880,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String redownloadedAudioConfirmation(
-      Object playlistTitle, Object redownloadedAudioTitle) {
+    Object playlistTitle,
+    Object redownloadedAudioTitle,
+  ) {
     return 'L\'audio \"$redownloadedAudioTitle\" a été re-téléchargé dans la playlist \"$playlistTitle\".';
   }
 
@@ -1812,7 +1894,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String audioNotRedownloadedWarning(
-      Object playlistTitle, Object redownloadedAudioTitle) {
+    Object playlistTitle,
+    Object redownloadedAudioTitle,
+  ) {
     return 'L\'audio \"$redownloadedAudioTitle\" N\'A PAS été re-téléchargé dans la playlist \"$playlistTitle\" du fait que le fichier audio est déjà présent dans le répertoire de la playlist.';
   }
 
@@ -1835,14 +1919,15 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String audioCopiedOrMovedFromPlaylistToPlaylist(
-      Object audioTitle,
-      Object yesOrNo,
-      Object operationType,
-      Object fromPlaylistType,
-      Object fromPlaylistTitle,
-      Object toPlaylistTitle,
-      Object toPlaylistType,
-      Object notCopiedOrMovedReason) {
+    Object audioTitle,
+    Object yesOrNo,
+    Object operationType,
+    Object fromPlaylistType,
+    Object fromPlaylistTitle,
+    Object toPlaylistTitle,
+    Object toPlaylistType,
+    Object notCopiedOrMovedReason,
+  ) {
     return 'L\'audio \"$audioTitle\"$yesOrNo$operationType de la playlist $fromPlaylistType \"$fromPlaylistTitle\" vers la playlist $toPlaylistType \"$toPlaylistTitle\"$notCopiedOrMovedReason';
   }
 
@@ -1856,7 +1941,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String audioNotKeptInSourcePlaylist(
-      Object audioTitle, Object fromPlaylistTitle) {
+    Object audioTitle,
+    Object fromPlaylistTitle,
+  ) {
     return '.\n\nSUPPRIMEZ L\'AUDIO \"$audioTitle\" DE LA PLAYLIST YOUTUBE \"$fromPlaylistTitle\", SINON L\'AUDIO SERA TÉLÉCHARGÉ À NOUVEAU LORS DU PROCHAIN TÉLÉCHARGEMENT DE LA PLAYLIST.';
   }
 
@@ -2064,29 +2151,31 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String correctedSavedUniquePlaylistAudioMp3ToZip(
-      Object audioDownloadFromDateTime,
-      Object savedAudioNumber,
-      Object savedAudioTotalFileSize,
-      Object savedAudioTotalDuration,
-      Object saveOperationRealDuration,
-      Object bytesNumberSavedPerSecond,
-      Object filePathName,
-      Object zipFilesNumber,
-      Object zipTooLargeFileInfo) {
+    Object audioDownloadFromDateTime,
+    Object savedAudioNumber,
+    Object savedAudioTotalFileSize,
+    Object savedAudioTotalDuration,
+    Object saveOperationRealDuration,
+    Object bytesNumberSavedPerSecond,
+    Object filePathName,
+    Object zipFilesNumber,
+    Object zipTooLargeFileInfo,
+  ) {
     return 'Enregistré dans des ZIP\'s tous les fichiers audio MP3 de la playlist unique téléchargés depuis le $audioDownloadFromDateTime.\n\nNombre total d\'audios sauvegardés: $savedAudioNumber, taille totale: $savedAudioTotalFileSize et durée totale: $savedAudioTotalDuration.\n\nDurée réelle de l\'opération de sauvegarde: $saveOperationRealDuration, nombre de bytes sauvés par seconde: $bytesNumberSavedPerSecond, nombre de fichier(s) ZIP créé(s): $zipFilesNumber.\n\nFichier ZIP: \"$filePathName\".$zipTooLargeFileInfo';
   }
 
   @override
   String correctedSavedMultiplePlaylistsAudioMp3ToZip(
-      Object audioDownloadFromDateTime,
-      Object savedAudioNumber,
-      Object savedAudioTotalFileSize,
-      Object savedAudioTotalDuration,
-      Object saveOperationRealDuration,
-      Object bytesNumberSavedPerSecond,
-      Object filePathName,
-      Object zipFilesNumber,
-      Object zipTooLargeFileInfo) {
+    Object audioDownloadFromDateTime,
+    Object savedAudioNumber,
+    Object savedAudioTotalFileSize,
+    Object savedAudioTotalDuration,
+    Object saveOperationRealDuration,
+    Object bytesNumberSavedPerSecond,
+    Object filePathName,
+    Object zipFilesNumber,
+    Object zipTooLargeFileInfo,
+  ) {
     return 'Enregistré dans le ZIP tous les fichiers audio MP3 des playlists téléchargés depuis le $audioDownloadFromDateTime.\n\nNombre total d\'audios sauvegardés: $savedAudioNumber, taille totale: $savedAudioTotalFileSize et durée totale: $savedAudioTotalDuration.\n\nDurée réelle de l\'opération de sauvegarde: $saveOperationRealDuration, nombre de bytes sauvés par seconde: $bytesNumberSavedPerSecond, nombre de fichier(s) ZIP créé(s): $zipFilesNumber.\n\nFichier ZIP: \"$filePathName\"$zipTooLargeFileInfo';
   }
 
@@ -2123,7 +2212,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String playlistInvalidRootPathWarning(
-      Object playlistRootPath, Object wrongName) {
+    Object playlistRootPath,
+    Object wrongName,
+  ) {
     return 'Le répertoire défini \"$playlistRootPath\" est invalide du fait que le nom du répertoire final \'$wrongName\' devant contenir les playlists est différent de \'playlists\'. Veuillez renommer le nouveau répertoire contenant les playlists et rééffectuer son changement';
   }
 
@@ -2158,7 +2249,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String playlistsMp3SaveHelpContent(
-      Object dateOne, Object dateThree, Object dateTwo) {
+    Object dateOne,
+    Object dateThree,
+    Object dateTwo,
+  ) {
     return 'Si vous avez déjà exécuté cette fonctionnalité de sauvegarde MP3 il y a quelques semaines, l\'exemple suivant vous aidera à comprendre le résultat de la nouvelle exécution de sauvegarde MP3 des playlists. Considérez que le premier fichier ZIP MP3 sauvegardé est nommé audioLearn_mp3_from_2023-05-17_07_03_50_on_2025-06-15_11_59_38.zip. Maintenant, le $dateOne à 10:00 vous effectuez une nouvelle sauvegarde MP3 des playlists en définissant la date de téléchargement audio la plus ancienne au $dateTwo, c\'est-à-dire la date à laquelle le fichier ZIP MP3 précédent a été créé. Mais si le fichier ZIP nouvellement créé est nommé audioLearn_mp3_from_2025-06-20_09_25_34_on_2025-07-27_16_23_32.zip et non audioLearn_mp3_from_2025-06-15_on_2025-07-27_16_23_32.zip, la raison est que l\'audio téléchargé le plus ancien après le $dateTwo a été téléchargé le $dateThree 09:25:34.';
   }
 
@@ -2168,7 +2262,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String uniquePlaylistMp3SaveHelpContent(
-      Object dateOne, Object dateThree, Object dateTwo) {
+    Object dateOne,
+    Object dateThree,
+    Object dateTwo,
+  ) {
     return 'Si vous avez déjà exécuté cette fonctionnalité de sauvegarde MP3 il y a quelques semaines, l\'exemple suivant vous aidera à comprendre le résultat de la nouvelle exécution de sauvegarde MP3 de la playlist. Considérez que le premier fichier ZIP MP3 sauvegardé est nommé audioLearn_mp3_from_2023-05-17_07_03_50_on_2025-06-15_11_59_38.zip. Maintenant, le $dateOne à 10:00 vous effectuez une nouvelle sauvegarde MP3 de la playlist en définissant la date de téléchargement audio la plus ancienne au $dateTwo, c\'est-à-dire la date à laquelle le fichier ZIP MP3 précédent a été créé. Mais si le fichier ZIP nouvellement créé est nommé audioLearn_mp3_from_2025-06-20_09_25_34_on_2025-07-27_16_23_32.zip et non audioLearn_mp3_from_2025-06-15_on_2025-07-27_16_23_32.zip, la raison est que l\'audio téléchargé le plus ancien après le $dateTwo a été téléchargé le $dateThree 09:25:34.';
   }
 

@@ -63,7 +63,7 @@ import 'app_localizations_fr.dart';
 /// property.
 abstract class AppLocalizations {
   AppLocalizations(String locale)
-      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -86,16 +86,16 @@ abstract class AppLocalizations {
   /// of delegates is preferred or required.
   static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
       <LocalizationsDelegate<dynamic>>[
-    delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-  ];
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
-    Locale('fr')
+    Locale('fr'),
   ];
 
   /// The page title displayed in the appbar.
@@ -463,7 +463,9 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'If the deleted audio video \"{audioTitle}\" remains in the \"{playlistTitle}\" Youtube playlist, it will be downloaded again the next time you download the playlist !'**
   String deleteAudioFromPlaylistAswellWarning(
-      Object audioTitle, Object playlistTitle);
+    Object audioTitle,
+    Object playlistTitle,
+  );
 
   /// No description provided for @warningDialogTitle.
   ///
@@ -488,7 +490,10 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Youtube playlist \"{originalTitle}\" of {quality} quality added with corrected title \"{correctedTitle}\" at the end of the playlist list.'**
   String addCorrectedYoutubePlaylistTitle(
-      Object originalTitle, Object quality, Object correctedTitle);
+    Object originalTitle,
+    Object quality,
+    Object correctedTitle,
+  );
 
   /// Warning announcing that the playlist was added at the end of the playlist list.
   ///
@@ -543,14 +548,19 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error downloading audio from Youtube. The playlist \"{playlistTitle}\" contains a live video which causes the playlist audio downloading failure. To solve the problem, after having downloaded the audio of the live video as explained below, remove the live video from the playlist, then restart the application and retry.\n\nThe live video URL contains the following string: \"{liveVideoString}\". In order to add the live video audio to the playlist \"{playlistTitle}\", download it separately as single video download adding it to the playlist \"{playlistTitle}\".'**
   String downloadAudioYoutubeErrorDueToLiveVideoInPlaylist(
-      Object playlistTitle, Object liveVideoString);
+    Object playlistTitle,
+    Object liveVideoString,
+  );
 
   /// Warning announcing that the audio file is already in the target playlist directory.
   ///
   /// In en, this message translates to:
   /// **'Audio \"{audioValidVideoTitle}\" is contained in file \"{fileName}\" present in the target playlist \"{playlistTitle}\" directory and so won\'t be redownloaded.'**
   String downloadAudioFileAlreadyOnAudioDirectory(
-      Object audioValidVideoTitle, Object fileName, Object playlistTitle);
+    Object audioValidVideoTitle,
+    Object fileName,
+    Object playlistTitle,
+  );
 
   /// No description provided for @noInternet.
   ///
@@ -1061,80 +1071,88 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Audio \"{audioTitle}\" NOT moved from local playlist \"{fromPlaylistTitle}\" to local playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.'**
   String audioNotMovedFromLocalPlaylistToLocalPlaylist(
-      Object audioTitle,
-      Object fromPlaylistTitle,
-      Object notCopiedOrMovedReason,
-      Object toPlaylistTitle);
+    Object audioTitle,
+    Object fromPlaylistTitle,
+    Object notCopiedOrMovedReason,
+    Object toPlaylistTitle,
+  );
 
   /// Not moved warning
   ///
   /// In en, this message translates to:
   /// **'Audio \"{audioTitle}\" NOT moved from local playlist \"{fromPlaylistTitle}\" to Youtube playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.'**
   String audioNotMovedFromLocalPlaylistToYoutubePlaylist(
-      Object audioTitle,
-      Object fromPlaylistTitle,
-      Object notCopiedOrMovedReason,
-      Object toPlaylistTitle);
+    Object audioTitle,
+    Object fromPlaylistTitle,
+    Object notCopiedOrMovedReason,
+    Object toPlaylistTitle,
+  );
 
   /// Not moved warning
   ///
   /// In en, this message translates to:
   /// **'Audio \"{audioTitle}\" NOT moved from Youtube playlist \"{fromPlaylistTitle}\" to local playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.'**
   String audioNotMovedFromYoutubePlaylistToLocalPlaylist(
-      Object audioTitle,
-      Object fromPlaylistTitle,
-      Object notCopiedOrMovedReason,
-      Object toPlaylistTitle);
+    Object audioTitle,
+    Object fromPlaylistTitle,
+    Object notCopiedOrMovedReason,
+    Object toPlaylistTitle,
+  );
 
   /// Not moved warning
   ///
   /// In en, this message translates to:
   /// **'Audio \"{audioTitle}\" NOT moved from Youtube playlist \"{fromPlaylistTitle}\" to Youtube playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.'**
   String audioNotMovedFromYoutubePlaylistToYoutubePlaylist(
-      Object audioTitle,
-      Object fromPlaylistTitle,
-      Object notCopiedOrMovedReason,
-      Object toPlaylistTitle);
+    Object audioTitle,
+    Object fromPlaylistTitle,
+    Object notCopiedOrMovedReason,
+    Object toPlaylistTitle,
+  );
 
   /// Not moved warning
   ///
   /// In en, this message translates to:
   /// **'Audio \"{audioTitle}\" NOT copied from local playlist \"{fromPlaylistTitle}\" to local playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.'**
   String audioNotCopiedFromLocalPlaylistToLocalPlaylist(
-      Object audioTitle,
-      Object fromPlaylistTitle,
-      Object notCopiedOrMovedReason,
-      Object toPlaylistTitle);
+    Object audioTitle,
+    Object fromPlaylistTitle,
+    Object notCopiedOrMovedReason,
+    Object toPlaylistTitle,
+  );
 
   /// Not moved warning
   ///
   /// In en, this message translates to:
   /// **'Audio \"{audioTitle}\" NOT copied from local playlist \"{fromPlaylistTitle}\" to Youtube playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.'**
   String audioNotCopiedFromLocalPlaylistToYoutubePlaylist(
-      Object audioTitle,
-      Object fromPlaylistTitle,
-      Object notCopiedOrMovedReason,
-      Object toPlaylistTitle);
+    Object audioTitle,
+    Object fromPlaylistTitle,
+    Object notCopiedOrMovedReason,
+    Object toPlaylistTitle,
+  );
 
   /// Not moved warning
   ///
   /// In en, this message translates to:
   /// **'Audio \"{audioTitle}\" NOT copied from Youtube playlist \"{fromPlaylistTitle}\" to local playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.'**
   String audioNotCopiedFromYoutubePlaylistToLocalPlaylist(
-      Object audioTitle,
-      Object fromPlaylistTitle,
-      Object notCopiedOrMovedReason,
-      Object toPlaylistTitle);
+    Object audioTitle,
+    Object fromPlaylistTitle,
+    Object notCopiedOrMovedReason,
+    Object toPlaylistTitle,
+  );
 
   /// Not moved warning
   ///
   /// In en, this message translates to:
   /// **'Audio \"{audioTitle}\" NOT copied from Youtube playlist \"{fromPlaylistTitle}\" to Youtube playlist \"{toPlaylistTitle}\" {notCopiedOrMovedReason}.'**
   String audioNotCopiedFromYoutubePlaylistToYoutubePlaylist(
-      Object audioTitle,
-      Object fromPlaylistTitle,
-      Object notCopiedOrMovedReason,
-      Object toPlaylistTitle);
+    Object audioTitle,
+    Object fromPlaylistTitle,
+    Object notCopiedOrMovedReason,
+    Object toPlaylistTitle,
+  );
 
   /// No description provided for @author.
   ///
@@ -1320,8 +1338,11 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Deleting the playlist and its {audioNumber} audio\'s, {audioCommentsNumber} audio comment(s), {audioPicturesNumber} audio picture(s) as well as its JSON file and its directory.'**
-  String deletePlaylistDialogComment(Object audioNumber,
-      Object audioCommentsNumber, Object audioPicturesNumber);
+  String deletePlaylistDialogComment(
+    Object audioNumber,
+    Object audioCommentsNumber,
+    Object audioPicturesNumber,
+  );
 
   /// No description provided for @appBarTitleAudioExtractor.
   ///
@@ -1520,28 +1541,28 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Audio at the top have more remaining listenable duration than those at the bottom.'**
   String
-      get playableAudioDialogSortDescriptionTooltipTopRemainingDurationBigger;
+  get playableAudioDialogSortDescriptionTooltipTopRemainingDurationBigger;
 
   /// No description provided for @playableAudioDialogSortDescriptionTooltipTopRemainingDurationSmaller.
   ///
   /// In en, this message translates to:
   /// **'Audio at the top have less remaining listenable duration than those at the bottom.'**
   String
-      get playableAudioDialogSortDescriptionTooltipTopRemainingDurationSmaller;
+  get playableAudioDialogSortDescriptionTooltipTopRemainingDurationSmaller;
 
   /// No description provided for @playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeBigger.
   ///
   /// In en, this message translates to:
   /// **'Audio at the top were listened more recently than those at the bottom.'**
   String
-      get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeBigger;
+  get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeBigger;
 
   /// No description provided for @playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller.
   ///
   /// In en, this message translates to:
   /// **'Audio at the top were listened less recently than those at the bottom.'**
   String
-      get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller;
+  get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller;
 
   /// No description provided for @saveAs.
   ///
@@ -1902,7 +1923,9 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The entered value {invalidValueWarningParam} ({maxMinPossibleValue}). Please correct it and retry ...'**
   String setValueToTargetWarning(
-      Object invalidValueWarningParam, Object maxMinPossibleValue);
+    Object invalidValueWarningParam,
+    Object maxMinPossibleValue,
+  );
 
   /// No description provided for @invalidValueTooBig.
   ///
@@ -1975,28 +1998,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Audio(s)\n\n{rejectedImportedAudioFileNames}\n\nNOT imported to local playlist \"{toPlaylistTitle}\" since the playlist directory already contains the audio(s).'**
   String audioNotImportedToLocalPlaylist(
-      Object rejectedImportedAudioFileNames, Object toPlaylistTitle);
+    Object rejectedImportedAudioFileNames,
+    Object toPlaylistTitle,
+  );
 
   /// No description provided for @audioNotImportedToYoutubePlaylist.
   ///
   /// In en, this message translates to:
   /// **'Audio(s)\n\n{rejectedImportedAudioFileNames}\n\nNOT imported to Youtube playlist \"{toPlaylistTitle}\" since the playlist directory already contains the audio(s).'**
   String audioNotImportedToYoutubePlaylist(
-      Object rejectedImportedAudioFileNames, Object toPlaylistTitle);
+    Object rejectedImportedAudioFileNames,
+    Object toPlaylistTitle,
+  );
 
   /// No description provided for @audioImportedToLocalPlaylist.
   ///
   /// In en, this message translates to:
   /// **'Audio(s)\n\n{importedAudioFileNames}\n\nimported to local playlist \"{toPlaylistTitle}\".'**
   String audioImportedToLocalPlaylist(
-      Object importedAudioFileNames, Object toPlaylistTitle);
+    Object importedAudioFileNames,
+    Object toPlaylistTitle,
+  );
 
   /// No description provided for @audioImportedToYoutubePlaylist.
   ///
   /// In en, this message translates to:
   /// **'Audio(s)\n\n{importedAudioFileNames}\n\nimported to Youtube playlist \"{toPlaylistTitle}\".'**
   String audioImportedToYoutubePlaylist(
-      Object importedAudioFileNames, Object toPlaylistTitle);
+    Object importedAudioFileNames,
+    Object toPlaylistTitle,
+  );
 
   /// No description provided for @imported.
   ///
@@ -2087,7 +2118,9 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Audio file \"{oldFileIame}.mp3\" renamed to \"{newFileName}.mp3\" as well as comment file \"{oldFileIame}.json\" renamed to \"{newFileName}.json\".'**
   String renameAudioAndCommentFileConfirmation(
-      Object newFileName, Object oldFileIame);
+    Object newFileName,
+    Object oldFileIame,
+  );
 
   /// No description provided for @forScreen.
   ///
@@ -2124,7 +2157,9 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{number} audio\'s are already contained in the target playlist \"{playlistTitle}\" directory and so were not redownloaded.'**
   String notRedownloadAudioFilesInPlaylistDirectory(
-      Object number, Object playlistTitle);
+    Object number,
+    Object playlistTitle,
+  );
 
   /// No description provided for @clickToSetAscendingOrDescendingPlayingOrderTooltip.
   ///
@@ -2149,7 +2184,8 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove Sort/Filter Parameters \"{sortFilterParmsName}\"'**
   String removeSortFilterOptionsFromPlaylistDialogTitle(
-      Object sortFilterParmsName);
+    Object sortFilterParmsName,
+  );
 
   /// No description provided for @fromScreen.
   ///
@@ -2168,14 +2204,20 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sort/filter parameters \"{sortFilterParmsName}\" were saved to playlist \"{playlistTitle}\" for screen(s) \"{forViewMessage}\".'**
   String saveSortFilterParmsConfirmation(
-      Object sortFilterParmsName, Object playlistTitle, Object forViewMessage);
+    Object sortFilterParmsName,
+    Object playlistTitle,
+    Object forViewMessage,
+  );
 
   /// Confirmation message for removing sort/filter parameters
   ///
   /// In en, this message translates to:
   /// **'Sort/filter parameters \"{sortFilterParmsName}\" were removed from playlist \"{playlistTitle}\" on screen(s) \"{forViewMessage}\".'**
   String removeSortFilterParmsConfirmation(
-      Object sortFilterParmsName, Object playlistTitle, Object forViewMessage);
+    Object sortFilterParmsName,
+    Object playlistTitle,
+    Object forViewMessage,
+  );
 
   /// No description provided for @playlistSortFilterLabel.
   ///
@@ -2236,8 +2278,9 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The Youtube channel was set in {numberOfModifiedDownloadedAudio} downloaded audio\'s and in {numberOfModifiedPlayableAudio} playable audio.'**
   String confirmYoutubeChannelModifications(
-      Object numberOfModifiedDownloadedAudio,
-      Object numberOfModifiedPlayableAudio);
+    Object numberOfModifiedDownloadedAudio,
+    Object numberOfModifiedPlayableAudio,
+  );
 
   /// No description provided for @rewindAudioToStart.
   ///
@@ -2286,14 +2329,19 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete audio\'s filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\"'**
   String deleteFilteredAudioConfirmationTitle(
-      Object sortFilterParmsName, Object playlistTitle);
+    Object sortFilterParmsName,
+    Object playlistTitle,
+  );
 
   /// Confirmation message for deleting filtered audio
   ///
   /// In en, this message translates to:
   /// **'Audio\'s to delete number: {deleteAudioNumber},\nCorresponding total file size: {deleteAudioTotalFileSize},\nCorresponding total duration: {deleteAudioTotalDuration}.'**
-  String deleteFilteredAudioConfirmation(Object deleteAudioNumber,
-      Object deleteAudioTotalFileSize, Object deleteAudioTotalDuration);
+  String deleteFilteredAudioConfirmation(
+    Object deleteAudioNumber,
+    Object deleteAudioTotalFileSize,
+    Object deleteAudioTotalDuration,
+  );
 
   /// No description provided for @deleteFilteredCommentedAudioWarningTitleOne.
   ///
@@ -2306,17 +2354,20 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'delete COMMENTED and uncommented audio\'s filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\". Watch the help to solve the problem ...'**
   String deleteFilteredCommentedAudioWarningTitleTwo(
-      Object sortFilterParmsName, Object playlistTitle);
+    Object sortFilterParmsName,
+    Object playlistTitle,
+  );
 
   /// Warning message for deleting commented and uncommented filtered audio
   ///
   /// In en, this message translates to:
   /// **'Total audio\'s to delete number: {deleteAudioNumber},\nCOMMENTED audio\'s to delete number: {deleteCommentedAudioNumber},\nCorresponding total file size: {deleteAudioTotalFileSize},\nCorresponding total duration: {deleteAudioTotalDuration}.'**
   String deleteFilteredCommentedAudioWarning(
-      Object deleteAudioNumber,
-      Object deleteCommentedAudioNumber,
-      Object deleteAudioTotalFileSize,
-      Object deleteAudioTotalDuration);
+    Object deleteAudioNumber,
+    Object deleteCommentedAudioNumber,
+    Object deleteAudioTotalFileSize,
+    Object deleteAudioTotalDuration,
+  );
 
   /// No description provided for @commentedAudioDeletionHelpTitle.
   ///
@@ -2419,168 +2470,184 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from Youtube playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) were moved from which {movedCommentedAudioNumber} were commented, and {unmovedAudioNumber} audio(s) were unmoved.'**
   String confirmMovedUnmovedAudioNumberFromYoutubeToYoutubePlaylist(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName,
-      Object movedAudioNumber,
-      Object movedCommentedAudioNumber,
-      Object unmovedAudioNumber);
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+    Object movedAudioNumber,
+    Object movedCommentedAudioNumber,
+    Object unmovedAudioNumber,
+  );
 
   /// Confirmation message indicating how many audio's were moved and unmoved
   ///
   /// In en, this message translates to:
   /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from Youtube playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) were moved from which {movedCommentedAudioNumber} were commented, and {unmovedAudioNumber} audio(s) were unmoved.'**
   String confirmMovedUnmovedAudioNumberFromYoutubeToLocalPlaylist(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName,
-      Object movedAudioNumber,
-      Object movedCommentedAudioNumber,
-      Object unmovedAudioNumber);
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+    Object movedAudioNumber,
+    Object movedCommentedAudioNumber,
+    Object unmovedAudioNumber,
+  );
 
   /// Confirmation message indicating how many audio's were moved and unmoved
   ///
   /// In en, this message translates to:
   /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from local playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) were moved from which {movedCommentedAudioNumber} were commented, and {unmovedAudioNumber} audio(s) were unmoved.'**
   String confirmMovedUnmovedAudioNumberFromLocalToYoutubePlaylist(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName,
-      Object movedAudioNumber,
-      Object movedCommentedAudioNumber,
-      Object unmovedAudioNumber);
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+    Object movedAudioNumber,
+    Object movedCommentedAudioNumber,
+    Object unmovedAudioNumber,
+  );
 
   /// Confirmation message indicating how many audio's were moved and unmoved
   ///
   /// In en, this message translates to:
   /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from local playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) were moved from which {movedCommentedAudioNumber} were commented, and {unmovedAudioNumber} audio(s) were unmoved.'**
   String confirmMovedUnmovedAudioNumberFromLocalToLocalPlaylist(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName,
-      Object movedAudioNumber,
-      Object movedCommentedAudioNumber,
-      Object unmovedAudioNumber);
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+    Object movedAudioNumber,
+    Object movedCommentedAudioNumber,
+    Object unmovedAudioNumber,
+  );
 
   /// Confirmation message indicating how many audio's were copied and not copied
   ///
   /// In en, this message translates to:
   /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from Youtube playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) were copied from which {copiedCommentedAudioNumber} were commented, and {notCopiedAudioNumber} audio(s) were not copied.'**
   String confirmCopiedNotCopiedAudioNumberFromYoutubeToYoutubePlaylist(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName,
-      Object copiedAudioNumber,
-      Object copiedCommentedAudioNumber,
-      Object notCopiedAudioNumber);
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+    Object copiedAudioNumber,
+    Object copiedCommentedAudioNumber,
+    Object notCopiedAudioNumber,
+  );
 
   /// Confirmation message indicating how many audio's were copied and not copied
   ///
   /// In en, this message translates to:
   /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from Youtube playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) were copied from which {copiedCommentedAudioNumber} were commented, and {notCopiedAudioNumber} audio(s) were not copied.'**
   String confirmCopiedNotCopiedAudioNumberFromYoutubeToLocalPlaylist(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName,
-      Object copiedAudioNumber,
-      Object copiedCommentedAudioNumber,
-      Object notCopiedAudioNumber);
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+    Object copiedAudioNumber,
+    Object copiedCommentedAudioNumber,
+    Object notCopiedAudioNumber,
+  );
 
   /// Confirmation message indicating how many audio's were copied and not copied
   ///
   /// In en, this message translates to:
   /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from local playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) were copied from which {copiedCommentedAudioNumber} were commented, and {notCopiedAudioNumber} audio(s) were not copied.'**
   String confirmCopiedNotCopiedAudioNumberFromLocalToYoutubePlaylist(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName,
-      Object copiedAudioNumber,
-      Object copiedCommentedAudioNumber,
-      Object notCopiedAudioNumber);
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+    Object copiedAudioNumber,
+    Object copiedCommentedAudioNumber,
+    Object notCopiedAudioNumber,
+  );
 
   /// Confirmation message indicating how many audio's were copied and not copied
   ///
   /// In en, this message translates to:
   /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from local playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) were copied from which {copiedCommentedAudioNumber} were commented, and {notCopiedAudioNumber} audio(s) were not copied.'**
   String confirmCopiedNotCopiedAudioNumberFromLocalToLocalPlaylist(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName,
-      Object copiedAudioNumber,
-      Object copiedCommentedAudioNumber,
-      Object notCopiedAudioNumber);
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+    Object copiedAudioNumber,
+    Object copiedCommentedAudioNumber,
+    Object notCopiedAudioNumber,
+  );
 
   /// Warning message indicating that the default SF parms were not applied to move audio
   ///
   /// In en, this message translates to:
   /// **'Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be moved from Youtube playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...'**
   String defaultSFPNotApplyedToMoveAudioFromYoutubeToYoutubePlaylistWarning(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName);
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+  );
 
   /// Warning message indicating that the default SF parms were not applied to move audio
   ///
   /// In en, this message translates to:
   /// **'Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be moved from Youtube playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...'**
   String defaultSFPNotApplyedToMoveAudioFromYoutubeToLocalPlaylistWarning(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName);
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+  );
 
   /// Warning message indicating that the default SF parms were not applied to move audio
   ///
   /// In en, this message translates to:
   /// **'Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be moved from local playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...'**
   String defaultSFPNotApplyedToMoveAudioFromLocalToYoutubePlaylistWarning(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName);
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+  );
 
   /// Warning message indicating that the default SF parms were not applied to move audio
   ///
   /// In en, this message translates to:
   /// **'Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be moved from local playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...'**
   String defaultSFPNotApplyedToMoveAudioFromLocalToLocalPlaylistWarning(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName);
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+  );
 
   /// Warning message indicating that the default SF parms were not applied to move audio
   ///
   /// In en, this message translates to:
   /// **'Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be copied from Youtube playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...'**
   String defaultSFPNotApplyedToCopyAudioFromYoutubeToYoutubePlaylistWarning(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName);
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+  );
 
   /// Warning message indicating that the default SF parms were not applied to move audio
   ///
   /// In en, this message translates to:
   /// **'Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be copied from Youtube playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...'**
   String defaultSFPNotApplyedToCopyAudioFromYoutubeToLocalPlaylistWarning(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName);
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+  );
 
   /// Warning message indicating that the default SF parms were not applied to move audio
   ///
   /// In en, this message translates to:
   /// **'Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be copied from local playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...'**
   String defaultSFPNotApplyedToCopyAudioFromLocalToYoutubePlaylistWarning(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName);
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+  );
 
   /// Warning message indicating that the default SF parms were not applied to move audio
   ///
   /// In en, this message translates to:
   /// **'Since \"{sortedFilterParmsName}\" Sort/Filter parms is selected, no audio can be copied from local playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...'**
   String defaultSFPNotApplyedToCopyAudioFromLocalToLocalPlaylistWarning(
-      Object sourcePlaylistTitle,
-      Object targetPlaylistTitle,
-      Object sortedFilterParmsName);
+    Object sourcePlaylistTitle,
+    Object targetPlaylistTitle,
+    Object sortedFilterParmsName,
+  );
 
   /// No description provided for @appBarMenuEnableNextAudioAutoPlay.
   ///
@@ -2611,7 +2678,9 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'WARNING: you are going to delete the Sort/Filter parms \"{sortFilterParmsName}\" which is used in {playlistNumber} playlist(s) listed below'**
   String deleteSortFilterParmsWarningTitle(
-      Object sortFilterParmsName, Object playlistNumber);
+    Object sortFilterParmsName,
+    Object playlistNumber,
+  );
 
   /// No description provided for @updatingSortFilterParmsWarningTitle.
   ///
@@ -2840,26 +2909,28 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) and the application settings from \"{filePathName}\".'**
   String restoredAppDataFromZip(
-      Object playlistsNumber,
-      Object audiosNumber,
-      Object commentsNumber,
-      Object updatedCommentNumber,
-      Object addedCommentNumber,
-      Object picturesNumber,
-      Object filePathName);
+    Object playlistsNumber,
+    Object audiosNumber,
+    Object commentsNumber,
+    Object updatedCommentNumber,
+    Object addedCommentNumber,
+    Object picturesNumber,
+    Object filePathName,
+  );
 
   /// Warning message indicating that a unique playlist was restored from ZIP created from playlist item menu
   ///
   /// In en, this message translates to:
   /// **'Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) from \"{filePathName}\".'**
   String restoredUniquePlaylistFromZip(
-      Object playlistsNumber,
-      Object audiosNumber,
-      Object commentsNumber,
-      Object updatedCommentNumber,
-      Object addedCommentNumber,
-      Object picturesNumber,
-      Object filePathName);
+    Object playlistsNumber,
+    Object audiosNumber,
+    Object commentsNumber,
+    Object updatedCommentNumber,
+    Object addedCommentNumber,
+    Object picturesNumber,
+    Object filePathName,
+  );
 
   /// No description provided for @appDataCouldNotBeRestoredFromZip.
   ///
@@ -2878,7 +2949,9 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete audio\'s filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\" as well (will be re-downloadable)'**
   String deleteFilteredAudioFromPlaylistAsWellConfirmationTitle(
-      Object sortFilterParmsName, Object playlistTitle);
+    Object sortFilterParmsName,
+    Object playlistTitle,
+  );
 
   /// No description provided for @redownloadFilteredAudio.
   ///
@@ -2896,8 +2969,11 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'\"{redownloadedAudioNumber}\" audio\'s were redownloaded to the playlist \"{playlistTitle}\". \"{notRedownloadedAudioNumber}\" audio\'s were not redownloaded since they are already present in the playlist directory.'**
-  String redownloadedAudioNumbersConfirmation(Object playlistTitle,
-      Object redownloadedAudioNumber, Object notRedownloadedAudioNumber);
+  String redownloadedAudioNumbersConfirmation(
+    Object playlistTitle,
+    Object redownloadedAudioNumber,
+    Object notRedownloadedAudioNumber,
+  );
 
   /// No description provided for @redownloadDeletedAudio.
   ///
@@ -2910,7 +2986,9 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The audio \"{redownloadedAudioTitle}\" was redownloaded in the playlist \"{playlistTitle}\".'**
   String redownloadedAudioConfirmation(
-      Object playlistTitle, Object redownloadedAudioTitle);
+    Object playlistTitle,
+    Object redownloadedAudioTitle,
+  );
 
   /// No description provided for @playable.
   ///
@@ -2929,7 +3007,9 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The audio \"{redownloadedAudioTitle}\" was NOT redownloaded in the playlist \"{playlistTitle}\" because it already exists in the playlist directory.'**
   String audioNotRedownloadedWarning(
-      Object playlistTitle, Object redownloadedAudioTitle);
+    Object playlistTitle,
+    Object redownloadedAudioTitle,
+  );
 
   /// No description provided for @isPlayableLabel.
   ///
@@ -2966,14 +3046,15 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Audio \"{audioTitle}\"{yesOrNo}{operationType} from {fromPlaylistType} playlist \"{fromPlaylistTitle}\" to {toPlaylistType} playlist \"{toPlaylistTitle}\"{notCopiedOrMovedReason}'**
   String audioCopiedOrMovedFromPlaylistToPlaylist(
-      Object audioTitle,
-      Object yesOrNo,
-      Object operationType,
-      Object fromPlaylistType,
-      Object fromPlaylistTitle,
-      Object toPlaylistTitle,
-      Object toPlaylistType,
-      Object notCopiedOrMovedReason);
+    Object audioTitle,
+    Object yesOrNo,
+    Object operationType,
+    Object fromPlaylistType,
+    Object fromPlaylistTitle,
+    Object toPlaylistTitle,
+    Object toPlaylistType,
+    Object notCopiedOrMovedReason,
+  );
 
   /// No description provided for @sinceAbsentFromSourcePlaylist.
   ///
@@ -2992,7 +3073,9 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'.\n\nIF THE DELETED AUDIO VIDEO \"{audioTitle}\" REMAINS IN THE \"{fromPlaylistTitle}\" YOUTUBE PLAYLIST, IT WILL BE DOWNLOADED AGAIN THE NEXT TIME YOU DOWNLOAD THE PLAYLIST !'**
   String audioNotKeptInSourcePlaylist(
-      Object audioTitle, Object fromPlaylistTitle);
+    Object audioTitle,
+    Object fromPlaylistTitle,
+  );
 
   /// No description provided for @noOperation.
   ///
@@ -3311,30 +3394,32 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Saved to ZIP file(s) unique playlist audio MP3 files downloaded from {audioDownloadFromDateTime}.\n\nTotal saved audio number: {savedAudioNumber}, total size: {savedAudioTotalFileSize} and total duration: {savedAudioTotalDuration}.\n\nSave operation real duration: {saveOperationRealDuration}, number of bytes saved per second: {bytesNumberSavedPerSecond}, number of created ZIP file(s): {zipFilesNumber}.\n\nZIP file path name: \"{filePathName}\".{zipTooLargeFileInfo}'**
   String correctedSavedUniquePlaylistAudioMp3ToZip(
-      Object audioDownloadFromDateTime,
-      Object savedAudioNumber,
-      Object savedAudioTotalFileSize,
-      Object savedAudioTotalDuration,
-      Object saveOperationRealDuration,
-      Object bytesNumberSavedPerSecond,
-      Object filePathName,
-      Object zipFilesNumber,
-      Object zipTooLargeFileInfo);
+    Object audioDownloadFromDateTime,
+    Object savedAudioNumber,
+    Object savedAudioTotalFileSize,
+    Object savedAudioTotalDuration,
+    Object saveOperationRealDuration,
+    Object bytesNumberSavedPerSecond,
+    Object filePathName,
+    Object zipFilesNumber,
+    Object zipTooLargeFileInfo,
+  );
 
   /// Confirmation message after saving the audio MP3 downloaded at or after a specified date time of all application playlists to a ZIP file
   ///
   /// In en, this message translates to:
   /// **'Saved to ZIP all playlists audio MP3 files downloaded from {audioDownloadFromDateTime}.\n\nTotal saved audio number: {savedAudioNumber}, total size: {savedAudioTotalFileSize} and total duration: {savedAudioTotalDuration}.\n\nSave operation real duration: {saveOperationRealDuration}, number of bytes saved per second: {bytesNumberSavedPerSecond}, number of created ZIP file(s): {zipFilesNumber}.\n\nZIP file path name: \"{filePathName}\".{zipTooLargeFileInfo}'**
   String correctedSavedMultiplePlaylistsAudioMp3ToZip(
-      Object audioDownloadFromDateTime,
-      Object savedAudioNumber,
-      Object savedAudioTotalFileSize,
-      Object savedAudioTotalDuration,
-      Object saveOperationRealDuration,
-      Object bytesNumberSavedPerSecond,
-      Object filePathName,
-      Object zipFilesNumber,
-      Object zipTooLargeFileInfo);
+    Object audioDownloadFromDateTime,
+    Object savedAudioNumber,
+    Object savedAudioTotalFileSize,
+    Object savedAudioTotalDuration,
+    Object saveOperationRealDuration,
+    Object bytesNumberSavedPerSecond,
+    Object filePathName,
+    Object zipFilesNumber,
+    Object zipTooLargeFileInfo,
+  );
 
   /// No description provided for @restorePlaylistsAudioMp3FilesFromZipMenu.
   ///
@@ -3389,7 +3474,9 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The defined path \"{playlistRootPath}\" is invalid since the playlists final dir name \'{wrongName}\' is not equal to \'playlists\'. Please define a valid playlist directory and retry changing the playlists root path.'**
   String playlistInvalidRootPathWarning(
-      Object playlistRootPath, Object wrongName);
+    Object playlistRootPath,
+    Object wrongName,
+  );
 
   /// No description provided for @restoringUniquePlaylistAudioMp3.
   ///
@@ -3438,7 +3525,10 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'If you already executed this save MP3 functionality a couple of weeks ago, the following example will help you to understand the result of the new save playlists MP3 execution. Consider that the first created MP3 saved ZIP is named audioLearn_mp3_from_2023-05-17_07_03_50_on_2025-06-15_11_59_38.zip. Now, on {dateOne} at 10:00 you do a new playlist MP3 backup with setting the oldest audio download date to {dateTwo}, i.e. the date on which the previous MP3 ZIP file was created. But if the newly created ZIP file is named audioLearn_mp3_from_2025-06-20_09_25_34_on_2025-07-27_16_23_32.zip and not audioLearn_mp3_from_2025-06-15_on_2025-07-27_16_23_32.zip, the reason is that the oldest downloaded audio after {dateTwo} was downloaded on {dateThree} 09:25:34.'**
   String playlistsMp3SaveHelpContent(
-      Object dateOne, Object dateThree, Object dateTwo);
+    Object dateOne,
+    Object dateThree,
+    Object dateTwo,
+  );
 
   /// No description provided for @uniquePlaylistMp3SaveHelpTitle.
   ///
@@ -3451,7 +3541,10 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'If you already executed this save MP3 functionality a couple of weeks ago, the following example will help you to understand the result of the new save playlist MP3 execution. Consider that the first created MP3 saved ZIP is named audioLearn_mp3_from_2023-05-17_07_03_50_on_2025-06-15_11_59_38.zip. Now, on {dateOne} at 10:00 you do a new playlist MP3 backup with setting the oldest audio download date to {dateTwo}, i.e. the date on which the previous MP3 ZIP file was created. But if the newly created ZIP file is named audioLearn_mp3_from_2025-06-20_09_25_34_on_2025-07-27_16_23_32.zip and not audioLearn_mp3_from_2025-06-15_on_2025-07-27_16_23_32.zip, the reason is that the oldest downloaded audio after {dateTwo} was downloaded on {dateThree} 09:25:34.'**
   String uniquePlaylistMp3SaveHelpContent(
-      Object dateOne, Object dateThree, Object dateTwo);
+    Object dateOne,
+    Object dateThree,
+    Object dateTwo,
+  );
 
   /// No description provided for @insufficientStorageSpace.
   ///
@@ -3523,8 +3616,9 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   }
 
   throw FlutterError(
-      'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
+    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.',
+  );
 }
