@@ -3500,6 +3500,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error saving the ZIP file {zipFileName}. This due to its too large size: {zipFileSize}.'**
   String androidZipFileCreationError(Object zipFileName, Object zipFileSize);
+
+  /// No description provided for @obtainMostRecentAudioDownloadDateTimeMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Latest Audio Download Date'**
+  String get obtainMostRecentAudioDownloadDateTimeMenu;
+
+  /// No description provided for @obtainMostRecentAudioDownloadDateTimeTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Finds the most recent audio download date across all playlists. Use this date when creating ZIP backups with the \'Save Playlists Audio\'s MP3 to ZIP File(s)\' menu to ensure you capture only the newest audio files for restoring them to the current app version.'**
+  String get obtainMostRecentAudioDownloadDateTimeTooltip;
 }
 
 class _AppLocalizationsDelegate

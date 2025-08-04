@@ -1431,5 +1431,7 @@
   "mp3ZipFileSizeLimitInMbLabel": "Taille maximale en Mo des fichiers ZIP",
   "mp3ZipFileSizeLimitInMbTooltip": "Taille maximale en Mo pour chaque fichier ZIP lors de la sauvegarde des fichiers audio MP3. Sur les appareils Android, si cette limite est trop élevée, l'opération de sauvegarde échouera en raison de contraintes de mémoire. Plusieurs fichiers ZIP seront créés automatiquement si le contenu total dépasse cette limite.",
   "zipTooLargeOneFileInfoLabel": "Ce fichier est trop volumineux pour être inclu dans un fichier ZIP MP3 et n'a donc pas été sauvegardé:\n",
-  "androidZipFileCreationError": "Erreur lors de la sauvegarde du fichier ZIP {zipFileName}. Ceci est dû à sa taille trop importante: {zipFileSize}."
-}
+  "androidZipFileCreationError": "Erreur lors de la sauvegarde du fichier ZIP {zipFileName}. Ceci est dû à sa taille trop importante: {zipFileSize}.",
+  "obtainMostRecentAudioDownloadDateTimeMenu": "Obtenir la date de téléchargement audio la plus récente",
+  "obtainMostRecentAudioDownloadDateTimeTooltip": "Trouve la date de téléchargement audio la plus récente parmi toutes les playlists. Utilisez cette date lors de la création de sauvegardes ZIP avec le menu 'Sauver les audio's MP3 des playlists dans des fichiers ZIP' pour ne capturer que les fichiers audio les plus récents afin de les restaurer dans cette version de l'application."
+  }
