@@ -39,6 +39,7 @@ enum AppBarPopupMenu {
   savePlaylistsAudioMp3FilesToZip,
   restorePlaylistAndCommentsFromZip,
   restorePlaylistsAudioMp3FilesFromZip,
+  obtainMostRecentAudioDownloadDateTime,
 }
 
 /// The AppBarLeadingPopupMenuWidget is used to display the leading
@@ -726,6 +727,16 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   .restorePlaylistsAudioMp3FilesFromZipMenu),
             ),
           ),
+          PopupMenuItem<AppBarPopupMenu>(
+            key: const Key('appBarMenuObtainMostRecentAudioDownloadDateTime'),
+            value: AppBarPopupMenu.obtainMostRecentAudioDownloadDateTime,
+            child: Tooltip(
+              message: AppLocalizations.of(context)!
+                  .obtainMostRecentAudioDownloadDateTimeTooltip,
+              child: Text(AppLocalizations.of(context)!
+                  .obtainMostRecentAudioDownloadDateTimeMenu),
+            ),
+          ),
         ];
       },
       icon: const Icon(Icons.menu),
@@ -1018,10 +1029,10 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                         fromAudioDownloadDateTime:
                             parseDateTimeOrDateStrUsinAppDateFormat,
                         zipFileSizeLimitInMb: settingsDataService.get(
-                          settingType: SettingType.playlists,
-                          settingSubType:
-                              Playlists.maxSavableAudioMp3FileSizeInMb,
-                        ) ??
+                              settingType: SettingType.playlists,
+                              settingSubType:
+                                  Playlists.maxSavableAudioMp3FileSizeInMb,
+                            ) ??
                             kMp3ZipFileSizeLimitInMb,
                       );
                       // Handle any post-execution logic here
@@ -1083,6 +1094,8 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 ),
               );
             });
+            break;
+          case AppBarPopupMenu.obtainMostRecentAudioDownloadDateTime:
             break;
         }
       },

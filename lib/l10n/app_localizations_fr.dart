@@ -2203,4 +2203,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String androidZipFileCreationError(Object zipFileName, Object zipFileSize) {
     return 'Erreur lors de la sauvegarde du fichier ZIP $zipFileName. Ceci est dû à sa taille trop importante: $zipFileSize.';
   }
+
+  @override
+  String get obtainMostRecentAudioDownloadDateTimeMenu =>
+      'Obtenir la date de téléchargement audio la plus récente';
+
+  @override
+  String get obtainMostRecentAudioDownloadDateTimeTooltip =>
+      'Trouve la date de téléchargement audio la plus récente parmi toutes les playlists. Utilisez cette date lors de la création de sauvegardes ZIP avec le menu \'Sauver les audio\'s MP3 des playlists dans des fichiers ZIP\' pour ne capturer que les fichiers audio les plus récents afin de les restaurer dans cette version de l\'application.';
 }
