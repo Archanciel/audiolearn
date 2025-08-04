@@ -2246,5 +2246,13 @@ class MockAppLocalizations extends AppLocalizations {
       "Maximum size in MB for each ZIP file when saving audio MP3 files. On Android devices, if this limit is set too high, the save operation will fail due to memory constraints. Multiple ZIP files will be created automatically if the total content exceeds this limit.";
 
   @override
-  String get zipTooLargeOneFileInfoLabel => "This file is too large to be included in the MP3 saved ZIP file and so was not saved";
+  String get zipTooLargeOneFileInfoLabel =>
+      "This file is too large to be included in the MP3 saved ZIP file and so was not saved";
+
+  @override
+  String androidZipFileCreationError(
+    Object zipFileName,
+    Object zipFileSize,
+  ) =>
+      "Error saving the ZIP file $zipFileName. This due to its too large size: $zipFileSize MB.";
 }

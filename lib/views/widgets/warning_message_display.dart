@@ -198,6 +198,23 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
             });
 
             return const SizedBox.shrink();
+          case ErrorType.androidZipFileCreationError:
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              _displayWarningDialog(
+                context: _context,
+                message:
+                    AppLocalizations.of(context)!.androidZipFileCreationError(
+                        _warningMessageVM.errorArgOne,
+                        UiUtil.formatLargeSizeToKbOrMb(
+                          context: context,
+                          sizeInBytes: int.parse(_warningMessageVM.errorArgTwo),
+                        )),
+                warningMessageVM: _warningMessageVM,
+                themeProviderVM: themeProviderVM,
+              );
+            });
+
+            return const SizedBox.shrink();
           default:
             return const SizedBox.shrink();
         }
@@ -1187,7 +1204,8 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
           );
           String zipTooLargeFileInfo = '';
 
-          final int lstLength = _warningMessageVM.excludedTooLargeAudioFilesLst.length;
+          final int lstLength =
+              _warningMessageVM.excludedTooLargeAudioFilesLst.length;
 
           if (lstLength > 1) {
             zipTooLargeFileInfo =

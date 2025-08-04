@@ -3217,7 +3217,7 @@ class PlaylistListVM extends ChangeNotifier {
     DateTime oldestAudioSavedToZipDownloadDateTime = DateTime.now();
 
     // Convert MB limit to bytes
-    int zipFileSizeLimitInBytes = zipFileSizeLimitInMb * 1024 * 1024;
+    int zipFileSizeLimitInBytes = zipFileSizeLimitInMb * 1000000;
 
     // Collect all audio files to be saved
     List<AudioFileInfo> audioFilesToSave = [];
@@ -3470,10 +3470,22 @@ class PlaylistListVM extends ChangeNotifier {
           await compute(_createZipInIsolate, isolateParams);
 
       if (result['success']) {
-        _logger
-            .i('ZIP file saved successfully in isolate: ${result['zipPath']}');
+        _logger.i(
+            'ZIP file saved successfully in isolate: ${result['zipPath']}: ${_computeAudioFileDataTotalSize(audioFilesData)} bytes');
       } else {
-        throw Exception('Isolate ZIP creation failed: ${result['error']}');
+        _logger.i(
+            'Total size of saved audio files in $zipFileName is too large: ${_computeAudioFileDataTotalSize(audioFilesData)} bytes');
+        _warningMessageVM.setError(
+          errorType: ErrorType.androidZipFileCreationError,
+          errorArgOne: zipFileName,
+          errorArgTwo:
+              _computeAudioFileDataTotalSize(audioFilesData).toString(),
+        );
+
+        _isSavingMp3 = false;
+
+        notifyListeners();
+        // throw Exception('Isolate ZIP creation failed: ${result['error']}');
       }
 
       // Force garbage collection after each ZIP file
@@ -3485,6 +3497,25 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     return excludedTooLargeAudioFilesLst;
+  }
+
+  /// Computes the total size in bytes of all audio files in the provided data list
+  ///
+  /// [audioFilesData] - List of maps containing audio file metadata
+  /// Each map should have an 'audioFileSize' key with the file size in bytes
+  ///
+  /// Returns the total size in bytes as an int
+  int _computeAudioFileDataTotalSize(
+      List<Map<String, dynamic>> audioFilesData) {
+    int totalSize = 0;
+
+    for (Map<String, dynamic> audioFileData in audioFilesData) {
+      // Get the audioFileSize from the map, defaulting to 0 if not found or null
+      int fileSize = audioFileData['audioFileSize'] as int? ?? 0;
+      totalSize += fileSize;
+    }
+
+    return totalSize;
   }
 
   int _calculateTotalParts(
