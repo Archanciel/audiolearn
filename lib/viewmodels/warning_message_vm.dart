@@ -226,6 +226,9 @@ enum ErrorType {
 
   androidStorageAccessError, // Error in obtaining the Android external
   // storage used for storing the created MP3 ZIP files.
+
+  androidZipFileCreationError, // Error in creating the ZIP file since it
+  // is too large.
 }
 
 /// This VM (View Model) class is part of the MVVM architecture.

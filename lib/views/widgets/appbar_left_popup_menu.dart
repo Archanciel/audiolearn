@@ -1017,7 +1017,12 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                         targetDir: targetSaveDirectoryPath!,
                         fromAudioDownloadDateTime:
                             parseDateTimeOrDateStrUsinAppDateFormat,
-                        zipFileSizeLimitInMb: kMp3ZipFileSizeLimitInMb,
+                        zipFileSizeLimitInMb: settingsDataService.get(
+                          settingType: SettingType.playlists,
+                          settingSubType:
+                              Playlists.maxSavableAudioMp3FileSizeInMb,
+                        ) ??
+                            kMp3ZipFileSizeLimitInMb,
                       );
                       // Handle any post-execution logic here
                     },
