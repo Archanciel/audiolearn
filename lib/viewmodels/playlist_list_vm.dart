@@ -3485,7 +3485,7 @@ class PlaylistListVM extends ChangeNotifier {
         _isSavingMp3 = false;
 
         notifyListeners();
-        // throw Exception('Isolate ZIP creation failed: ${result['error']}');
+        throw Exception('Isolate ZIP creation failed: ${result['error']}');
       }
 
       // Force garbage collection after each ZIP file
