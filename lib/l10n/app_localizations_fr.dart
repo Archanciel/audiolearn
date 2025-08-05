@@ -2201,7 +2201,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String androidZipFileCreationError(Object zipFileName, Object zipFileSize) {
-    return 'Erreur lors de la sauvegarde du fichier ZIP $zipFileName. Ceci est dû à sa taille trop importante: $zipFileSize.';
+    return 'Erreur lors de la sauvegarde du fichier ZIP $zipFileName. Ceci est dû à sa taille trop importante: $zipFileSize.\n\nSolution: dans les paramètres de l\'application, réduisez la taille maximale des fichiers ZIP et réexécutez la sauvegarde des MP3 dans des fichiers ZIP.';
   }
 
   @override
