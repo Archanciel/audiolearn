@@ -1191,6 +1191,27 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
+      case WarningMessageType.displayNewestAudioDownloadDateTime:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          String displayNewestAudioDownloadDateTimeMessage;
+
+          displayNewestAudioDownloadDateTimeMessage =
+              AppLocalizations.of(context)!.displayNewestAudioDownloadDateTime(
+            _warningMessageVM.newestAudioDownloadDateTime,
+          );
+
+          _displayWarningDialog(
+            context: _context,
+            message: displayNewestAudioDownloadDateTimeMessage,
+            warningMessageVM: _warningMessageVM,
+            themeProviderVM: themeProviderVM,
+            warningMode: WarningMode.confirm,
+            warningDialogTitle: AppLocalizations.of(context)!
+                .displayNewestAudioDownloadDateTimeTitle,
+          );
+        });
+
+        return const SizedBox.shrink();
       case WarningMessageType.savedUniquePlaylistOrAllPlaylistsAudioMp3ToZip:
         WidgetsBinding.instance.addPostFrameCallback((_) {
           String savedAudioMp3ToZipMessage;
@@ -1373,19 +1394,24 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
     required ThemeProviderVM themeProviderVM,
     WarningMode warningMode = WarningMode.warning,
     List<HelpItem> helpItemsLst = const [],
+    String warningDialogTitle = '',
   }) {
     // The focus node must be created here, otherwise displaying
     // the dialog will cause an error.
     final focusNodeDialog = FocusNode();
     String alertDialogTitle = '';
 
-    switch (warningMode) {
-      case WarningMode.warning:
-        alertDialogTitle = AppLocalizations.of(context)!.warningDialogTitle;
-        break;
-      case WarningMode.confirm:
-        alertDialogTitle = AppLocalizations.of(context)!.confirmDialogTitle;
-        break;
+    if (warningDialogTitle.isNotEmpty) {
+      alertDialogTitle = warningDialogTitle;
+    } else {
+      switch (warningMode) {
+        case WarningMode.warning:
+          alertDialogTitle = AppLocalizations.of(context)!.warningDialogTitle;
+          break;
+        case WarningMode.confirm:
+          alertDialogTitle = AppLocalizations.of(context)!.confirmDialogTitle;
+          break;
+      }
     }
 
     showDialog<void>(
@@ -1424,9 +1450,11 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                key: const Key('warningDialogTitle'),
-                alertDialogTitle,
+              Flexible(
+                child: Text(
+                  key: const Key('warningDialogTitle'),
+                  alertDialogTitle,
+                ),
               ),
               if (helpItemsLst.isNotEmpty)
                 IconButton(

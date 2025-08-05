@@ -3223,6 +3223,7 @@ class PlaylistListVM extends ChangeNotifier {
     List<AudioFileInfo> audioFilesToSave = [];
 
     String playlistTitle;
+
     if (uniquePlaylistIsSaved) {
       playlistTitle = listOfPlaylists[0].title;
       _audioMp3SaveUniquePlaylistName = playlistTitle;
@@ -3555,6 +3556,25 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     return dateFormatVM.formatDateTime(oldestAudioDownloadDateTime);
+  }
+
+  String getNewestAudioDownloadDateFormattedStr() {
+    DateTime newestAudioDownloadDateTime = DateTime(2020, 1, 1);
+
+    // Iterate through passed playlists
+    for (Playlist playlist in _listOfSelectablePlaylists) {
+      for (Audio audio in playlist.playableAudioLst) {
+        if (audio.audioDownloadDateTime.isAfter(newestAudioDownloadDateTime)) {
+          newestAudioDownloadDateTime = audio.audioDownloadDateTime;
+        }
+      }
+    }
+
+    DateFormatVM dateFormatVM = DateFormatVM(
+      settingsDataService: _settingsDataService,
+    );
+
+    return dateFormatVM.formatDateTime(newestAudioDownloadDateTime);
   }
 
   Future<Duration> evaluateSavingAudioMp3FileToZipDuration({
