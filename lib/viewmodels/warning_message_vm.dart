@@ -178,6 +178,9 @@ enum WarningMessageType {
   // Comments and Pictures to Zip File' menu item located in the playlist
   // popup menu.
 
+  displayNewestAudioDownloadDateTime, // The case if the user clicks on the
+  // 'Get latest Audio download Date' menu item located in the appbar.
+
   savedUniquePlaylistOrAllPlaylistsAudioMp3ToZip, // The case if the user
   // clicks on the 'Save Playlists Audio MP3 to Zip File' menu
   // item located in the appbar leading popup menu or on the 'Save Playlist
@@ -811,6 +814,20 @@ class WarningMessageVM extends ChangeNotifier {
 
     warningMessageType =
         WarningMessageType.savedUniquePlaylistOrAllPlaylistsAndAppDataToZip;
+
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  String _newestAudioDownloadDateTime = '';
+  String get newestAudioDownloadDateTime => _newestAudioDownloadDateTime;
+  void displayNewestAudioDownloadDate({
+    required String newestAudioDownloadDateTime,
+  }) {
+    _newestAudioDownloadDateTime = newestAudioDownloadDateTime;
+
+    warningMessageType =
+        WarningMessageType.displayNewestAudioDownloadDateTime;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();

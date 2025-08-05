@@ -2211,4 +2211,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get obtainMostRecentAudioDownloadDateTimeTooltip =>
       'Trouve la date de téléchargement audio la plus récente parmi toutes les playlists. Utilisez cette date lors de la création de sauvegardes ZIP avec le menu \'Sauver les audio\'s MP3 des playlists dans des fichiers ZIP\' pour ne capturer que les fichiers audio les plus récents afin de les restaurer dans cette version de l\'application.';
+
+  @override
+  String get displayNewestAudioDownloadDateTimeTitle =>
+      'Date récente de téléchargement audio';
+
+  @override
+  String displayNewestAudioDownloadDateTime(
+      Object newestAudioDownloadDateTime) {
+    return 'Ceci est la date/heure de téléchargement audio la plus récente: $newestAudioDownloadDateTime.';
+  }
 }

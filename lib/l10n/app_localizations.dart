@@ -3504,7 +3504,7 @@ abstract class AppLocalizations {
   /// No description provided for @obtainMostRecentAudioDownloadDateTimeMenu.
   ///
   /// In en, this message translates to:
-  /// **'Get Latest Audio Download Date'**
+  /// **'Get latest Audio download Date'**
   String get obtainMostRecentAudioDownloadDateTimeMenu;
 
   /// No description provided for @obtainMostRecentAudioDownloadDateTimeTooltip.
@@ -3512,6 +3512,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Finds the most recent audio download date across all playlists. Use this date when creating ZIP backups with the \'Save Playlists Audio\'s MP3 to ZIP File(s)\' menu to ensure you capture only the newest audio files for restoring them to the current app version.'**
   String get obtainMostRecentAudioDownloadDateTimeTooltip;
+
+  /// No description provided for @displayNewestAudioDownloadDateTimeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest audio download date'**
+  String get displayNewestAudioDownloadDateTimeTitle;
+
+  /// No description provided for @displayNewestAudioDownloadDateTime.
+  ///
+  /// In en, this message translates to:
+  /// **'This is the latest audio download date/time: {newestAudioDownloadDateTime}.'**
+  String displayNewestAudioDownloadDateTime(Object newestAudioDownloadDateTime);
 }
 
 class _AppLocalizationsDelegate
