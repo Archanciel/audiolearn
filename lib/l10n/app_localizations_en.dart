@@ -2178,7 +2178,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String androidZipFileCreationError(Object zipFileName, Object zipFileSize) {
-    return 'Error saving the ZIP file $zipFileName. This due to its too large size: $zipFileSize.';
+    return 'Error saving the ZIP file $zipFileName. This is due to its too large size: $zipFileSize.\n\nSolution: in the application settings, reduce the maximum ZIP file size and re-run the save MP3 to ZIP function.';
   }
 
   @override
