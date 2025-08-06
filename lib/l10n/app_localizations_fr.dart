@@ -984,7 +984,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get alreadyDownloadedAudiosPlaylistHelpTitle =>
-      'Appliquer aux audio déjà téléchargés ou importés';
+      'Appliquer aux audio\'s déjà téléchargés ou importés';
 
   @override
   String get alreadyDownloadedAudiosPlaylistHelpContent =>

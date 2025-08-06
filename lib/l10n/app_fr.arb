@@ -542,7 +542,7 @@
   "alreadyDownloadedAudiosHelpContent": "La sélection de la deuxième case à cocher permet de modifier la vitesse de lecture pour les fichiers audio déjà présents sur l'appareil.",
   "excludingFutureDownloadsHelpTitle": "Exclusion des futurs téléchargements",
   "excludingFutureDownloadsHelpContent": "Si seule la deuxième case est cochée, la vitesse de lecture des audio's qui seront téléchargés ultérieurement ne sera pas modifiée dans les playlists existantes. Toutefois, comme mentionné précédemment, les nouvelles playlists utiliseront la vitesse de lecture nouvellement définie pour tous les audio's téléchargés.",
-  "alreadyDownloadedAudiosPlaylistHelpTitle": "Appliquer aux audio déjà téléchargés ou importés",
+  "alreadyDownloadedAudiosPlaylistHelpTitle": "Appliquer aux audio's déjà téléchargés ou importés",
   "alreadyDownloadedAudiosPlaylistHelpContent": "La sélection de cette case à cocher permet de modifier la vitesse de lecture pour les fichiers audio de la playlist déjà présents sur l'appareil.",
   "commentsIconButtonTooltip": "Afficher ou insérer des commentaires à des points spécifiques de l'audio.",
   "commentsDialogTitle": "Commentaires",

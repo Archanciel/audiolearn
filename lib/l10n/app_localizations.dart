@@ -1726,7 +1726,7 @@ abstract class AppLocalizations {
   /// No description provided for @alreadyDownloadedAudiosPlaylistHelpTitle.
   ///
   /// In en, this message translates to:
-  /// **'Apply to already downloaded or imported audio'**
+  /// **'Apply to already downloaded or imported audio\'s'**
   String get alreadyDownloadedAudiosPlaylistHelpTitle;
 
   /// No description provided for @alreadyDownloadedAudiosPlaylistHelpContent.
