@@ -4540,6 +4540,7 @@ void main() {
         datePickerDateStr: DateFormat('dd/MM/yyyy').format(now),
         savePlaylistsAudioMp3DateFormat: "dd/MM/yyyy",
         savePlaylistsAudioMp3OldestDate: "26/12/2023",
+        latestAudioDownloadDate: "10/01/2024",
       );
 
       await _selectDateFormat(
@@ -4606,6 +4607,7 @@ void main() {
         datePickerDateStr: DateFormat('MM/dd/yyyy').format(now),
         savePlaylistsAudioMp3DateFormat: "MM/dd/yyyy",
         savePlaylistsAudioMp3OldestDate: "12/26/2023",
+        latestAudioDownloadDate: "01/10/2024",
       );
 
       await _selectDateFormat(
@@ -4672,6 +4674,7 @@ void main() {
         datePickerDateStr: DateFormat('yyyy/MM/dd').format(now),
         savePlaylistsAudioMp3DateFormat: "yyyy/MM/dd",
         savePlaylistsAudioMp3OldestDate: "2023/12/26",
+        latestAudioDownloadDate: "2024/01/10",
       );
 
       await _selectDateFormat(
@@ -4738,6 +4741,7 @@ void main() {
         datePickerDateStr: DateFormat('dd/MM/yyyy').format(now),
         savePlaylistsAudioMp3DateFormat: "dd/MM/yyyy",
         savePlaylistsAudioMp3OldestDate: "26/12/2023",
+        latestAudioDownloadDate: "10/01/2024",
       );
 
       await _selectDateFormat(
@@ -4833,6 +4837,7 @@ void main() {
         datePickerDateStr: DateFormat('MM/dd/yyyy').format(now),
         savePlaylistsAudioMp3DateFormat: "MM/dd/yyyy",
         savePlaylistsAudioMp3OldestDate: "12/26/2023",
+        latestAudioDownloadDate: "01/10/2024",
       );
 
       await _selectDateFormat(
@@ -4927,6 +4932,7 @@ void main() {
         datePickerDateStr: DateFormat('yyyy/MM/dd').format(now),
         savePlaylistsAudioMp3DateFormat: "yyyy/MM/dd",
         savePlaylistsAudioMp3OldestDate: "2023/12/26",
+        latestAudioDownloadDate: "2024/01/10",
       );
 
       await _selectDateFormat(
@@ -5021,6 +5027,7 @@ void main() {
         datePickerDateStr: DateFormat('dd/MM/yyyy').format(now),
         savePlaylistsAudioMp3DateFormat: "dd/MM/yyyy",
         savePlaylistsAudioMp3OldestDate: "26/12/2023",
+        latestAudioDownloadDate: "10/01/2024",
       );
 
       // Purge the test playlist directory so that the created test
@@ -26157,6 +26164,7 @@ Future<void> _verifyDateFormatApplication({
   required String datePickerDateStr,
   required String savePlaylistsAudioMp3DateFormat,
   required String savePlaylistsAudioMp3OldestDate,
+  required String latestAudioDownloadDate,
 }) async {
   IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
     tester: tester,
