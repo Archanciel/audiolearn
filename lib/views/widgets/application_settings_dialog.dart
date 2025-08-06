@@ -249,19 +249,16 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
       listen: false,
     );
 
-    if (_applyAudioPlaySpeedToExistingPlaylists ||
-        _applyAudioPlaySpeedToAlreadyDownloadedAudios) {
-      // This method modifies also the playlist default play speed in
-      // the application settings file and saves the file.
-      playlistListVMlistenFalse
-          .updateExistingPlaylistsAndOrAlreadyDownloadedAudioPlaySpeed(
-        audioPlaySpeed: _audioPlaySpeed,
-        applyAudioPlaySpeedToExistingPlaylists:
-            _applyAudioPlaySpeedToExistingPlaylists,
-        applyAudioPlaySpeedToAlreadyDownloadedAudio:
-            _applyAudioPlaySpeedToAlreadyDownloadedAudios,
-      );
-    }
+    // This method modifies also the playlist default play speed in
+    // the application settings file and saves the file.
+    playlistListVMlistenFalse
+        .updateExistingPlaylistsAndOrAlreadyDownloadedAudioPlaySpeed(
+      audioPlaySpeed: _audioPlaySpeed,
+      applyAudioPlaySpeedToExistingPlaylists:
+          _applyAudioPlaySpeedToExistingPlaylists,
+      applyAudioPlaySpeedToAlreadyDownloadedAudio:
+          _applyAudioPlaySpeedToAlreadyDownloadedAudios,
+    );
 
     int? value = int.tryParse(_mp3ZipFileSizeLimitInMbController.text);
 
@@ -366,8 +363,7 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
                   ).then((value) {
                     // not null value is boolean
                     if (value != null) {
-                      // value is null if clicking on Cancel or if the dialog
-                      // is dismissed by clicking outside the dialog.
+                      // value is null if clicking on Cancel
 
                       _audioPlaySpeed = value[0] as double;
                       _applyAudioPlaySpeedToExistingPlaylists = value[1];
