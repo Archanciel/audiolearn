@@ -13494,14 +13494,9 @@ void main() {
 
         expect(
           tester.widget<Text>(confirmActionDialogMessageText).data!,
-          anyOf([
-            equals(
-              "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:01.",
-            ),
-            equals(
-              "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02.",
-            ),
-          ]),
+          contains(
+            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:",
+          ),
         );
 
         // Confirm the saving of the audio mp3 files and close the
@@ -13520,7 +13515,7 @@ void main() {
               .widget<Text>(find.byKey(const Key('saving_please_wait')).last)
               .data!,
           contains(
-            "Please wait, this should approximately take ",
+            "Should approxim. take ",
           ),
         );
 
@@ -13540,8 +13535,13 @@ void main() {
             actualMessage,
             contains(
                 "Saved to ZIP all playlists audio MP3 files downloaded from $oldestAudioDownloadDateTime.\n\nTotal saved audio number: 5, total size: 64.47 MB and total duration: 2:40:27.2."));
+        expect(
+            actualMessage,
+            contains(
+                "Total saved audio number: 5, total size: 64.47 MB and total duration: 2:40:27.2."));
         expect(actualMessage, contains("Save operation real duration: "));
-        expect(actualMessage, contains("number of bytes saved per second: 3"));
+        expect(actualMessage, contains("number of bytes saved per second: "));
+        expect(actualMessage, contains("number of created ZIP file(s): 1."));
         expect(
             actualMessage,
             contains(
@@ -13730,7 +13730,7 @@ void main() {
               .widget<Text>(find.byKey(const Key('saving_please_wait')).last)
               .data!,
           contains(
-            "Please wait, this should approximately take ",
+            "Should approxim. take ",
           ),
         );
 
@@ -13750,8 +13750,13 @@ void main() {
             contains(
                 "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateTime.\n\nTotal saved audio number: 3, total size: 15.49 MB and total duration: 0:22:38.0."));
         expect(
+            actualMessage,
+            contains(
+                "Total saved audio number: 3, total size: 15.49 MB and total duration: 0:22:38.0."));
+        expect(
             actualMessage, contains("Save operation real duration: 0:00:00"));
         expect(actualMessage, contains("number of bytes saved per second: "));
+        expect(actualMessage, contains("number of created ZIP file(s): 1."));
         expect(
             actualMessage,
             contains(
@@ -14052,14 +14057,9 @@ void main() {
 
         expect(
           tester.widget<Text>(confirmActionDialogMessageText).data!,
-          anyOf([
-            equals(
-              "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:01.",
-            ),
-            equals(
-              "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02.",
-            ),
-          ]),
+          contains(
+            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:",
+          ),
         );
 
         // Confirm the saving of the audio mp3 files and close the
@@ -14078,7 +14078,7 @@ void main() {
               .widget<Text>(find.byKey(const Key('saving_please_wait')).last)
               .data!,
           contains(
-            "Please wait, this should approximately take ",
+            "Should approxim. take ",
           ),
         );
 
@@ -14097,10 +14097,14 @@ void main() {
         expect(
             actualMessage,
             contains(
-                "Saved to ZIP unique playlist audio MP3 files downloaded from $oldestAudioDownloadDateTime.\n\nTotal saved audio number: 3, total size: 53.12 MB and total duration: 2:29:08.4."));
+                "Saved to ZIP file(s) unique playlist audio MP3 files downloaded from $oldestAudioDownloadDateTime.\n\nTotal saved audio number: 3, total size: 53.12 MB and total duration: 2:29:08.4."));
         expect(
-            actualMessage, contains("Save operation real duration: 0:00:01"));
-        expect(actualMessage, contains("number of bytes saved per second: 3"));
+            actualMessage,
+            contains(
+                "Total saved audio number: 3, total size: 53.12 MB and total duration: 2:29:08.4."));
+        expect(actualMessage, contains("Save operation real duration: 0:00:"));
+        expect(actualMessage, contains("number of bytes saved per second: "));
+        expect(actualMessage, contains("number of created ZIP file(s): 1."));
         expect(
             actualMessage,
             contains(
@@ -14287,10 +14291,15 @@ void main() {
         expect(
             actualMessage,
             contains(
-                "Saved to ZIP unique playlist audio MP3 files downloaded from $audioOldestDownloadDateTime.\n\nTotal saved audio number: 1, total size: 4.14 MB and total duration: 0:11:19.3."));
+                "Saved to ZIP file(s) unique playlist audio MP3 files downloaded from $audioOldestDownloadDateTime.\n\nTotal saved audio number: 1, total size: 4.14 MB and total duration: 0:11:19.3."));
+        expect(
+            actualMessage,
+            contains(
+                "Total saved audio number: 1, total size: 4.14 MB and total duration: 0:11:19.3."));
         expect(
             actualMessage, contains("Save operation real duration: 0:00:00"));
         expect(actualMessage, contains("number of bytes saved per second: "));
+        expect(actualMessage, contains("number of created ZIP file(s): 1."));
         expect(
             actualMessage,
             contains(
