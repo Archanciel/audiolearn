@@ -26440,6 +26440,21 @@ Future<void> _verifyDateFormatApplication({
 
   await tester.tap(find.byKey(const Key('setValueToTargetCancelButton')));
   await tester.pumpAndSettle();
+
+  // Tap the appbar leading popup menu button
+  await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+  await tester.pumpAndSettle();
+
+  // Find the 'Get last Audio download Date' menu
+  // item and tap on it
+  await tester
+      .tap(find.byKey(const Key('appBarMenuObtainMostRecentAudioDownloadDateTime')));
+  await tester.pumpAndSettle();
+
+  expect(find.text('This is the latest audio download date/time: $latestAudioDownloadDate 18:18.'), findsOneWidget);
+
+  await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+  await tester.pumpAndSettle();
 }
 
 Future<void> _selectApplyAndVerifySortFilterParms({
