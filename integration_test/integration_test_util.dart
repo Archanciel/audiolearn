@@ -172,6 +172,7 @@ class IntegrationTestUtil {
     required WidgetTester tester,
     required String playlistTitle,
     required String playlistMenuKeyStr,
+    bool dragToBottom = false,
   }) async {
     // Now find the leading menu icon button of the Playlist ListTile
     // and tap on it
@@ -194,6 +195,15 @@ class IntegrationTestUtil {
     // Tap the leading menu icon button to open the popup menu
     await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
     await tester.pumpAndSettle();
+
+    if (dragToBottom) {
+      await tester.drag(
+        find.byType(Material).last, // The popup menu is wrapped in Material
+        const Offset(0, -300),
+      );
+      
+      await tester.pumpAndSettle();
+    }
 
     // Now find the playlist popup menu item and tap on it
     final Finder popupFilteredAudioActionPlaylistMenuItem =
@@ -669,7 +679,8 @@ class IntegrationTestUtil {
         await typeOnPlaylistMenuItem(
             tester: tester,
             playlistTitle: playlistTitle,
-            playlistMenuKeyStr: 'popup_menu_delete_playlist');
+            playlistMenuKeyStr: 'popup_menu_delete_playlist',
+            dragToBottom: true);
 
         // Now find the confirm button of the delete playlist confirm
         // dialog and tap on it
