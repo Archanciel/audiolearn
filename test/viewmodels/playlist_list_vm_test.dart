@@ -2558,11 +2558,11 @@ void main() {
   });
   group('''Update audio play speed''', () {
     test(
-        '''First copy test data. Then verify the initial application playlist audio play speed
-          defined in the settings.json file managed by the SettingsDataService instance as well
-          as the playlist audio play speed defined in the playlist json files. Verify also the
-          audio play speed defined in the Audio contained in the playlist playable audiolist
-          contained also in the playlist.json file.''', () async {
+        '''First copy test data. Then update the app audio play speed defined in the settings.json
+          file managed by the SettingsDataService instance without modifying the playlist audio play
+          speed as well as the the audio play speed defined in the Audio contained in the playlist
+          downloadable and playable audiolist contained in the playlist.json file.''',
+        () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -2618,6 +2618,10 @@ void main() {
         1.25,
       );
 
+      // Ensure that all the playlists are available in the
+      // playlistListVM.
+      playlistListVM.getUpToDateSelectablePlaylists();
+
       const bool applyAudioPlaySpeedToExistingPlaylists = false;
       const bool applyAudioPlaySpeedToAlreadyDownloadedAudio = false;
 
@@ -2636,8 +2640,99 @@ void main() {
         settingsDataService: settingsDataService,
         playlistListVM: playlistListVM,
         settingsPlaylistAudioPlaySpeed: 0.7,
-        playlistTitle: 'S8 audio',
+        playlistTitleLst: [
+          'S8 audio',
+          'local',
+        ],
         playlistAudioPlaySpeed: 1.0,
+        downloadedAudioPlaySpeed: 1.25,
+        playableAudioPlaySpeed: 1.25,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    test(
+        '''First copy test data. Then update the app audio play speed defined in the settings.json
+          file managed by the SettingsDataService instance with modifying the playlist audio play
+          speed without modifying the the audio play speed defined in the Audio contained in the playlist
+          playable audiolist contained in the playlist.json file.''', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}app_settings_set_play_speed",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+        settingsJsonPathFileName:
+            "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName",
+      );
+
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+      );
+
+      PictureVM pictureVM = PictureVM(
+        settingsDataService: settingsDataService,
+      );
+
+      PlaylistListVM playlistListVM = PlaylistListVM(
+        warningMessageVM: warningMessageVM,
+        audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
+        pictureVM: pictureVM,
+        settingsDataService: settingsDataService,
+      );
+
+      // Ensure that all the playlists are available in the
+      // playlistListVM.
+      playlistListVM.getUpToDateSelectablePlaylists();
+
+      const bool applyAudioPlaySpeedToExistingPlaylists = true;
+      const bool applyAudioPlaySpeedToAlreadyDownloadedAudio = false;
+
+      playlistListVM
+          .updateExistingPlaylistsAndOrAlreadyDownloadedAudioPlaySpeed(
+        audioPlaySpeed: 0.7,
+        applyAudioPlaySpeedToExistingPlaylists:
+            applyAudioPlaySpeedToExistingPlaylists,
+        applyAudioPlaySpeedToAlreadyDownloadedAudio:
+            applyAudioPlaySpeedToAlreadyDownloadedAudio,
+      );
+
+      // Verify the updated playlist play speed
+
+      await _verifyAudioPlaySpeed(
+        settingsDataService: settingsDataService,
+        playlistListVM: playlistListVM,
+        settingsPlaylistAudioPlaySpeed: 0.7,
+        playlistTitleLst: [
+          'S8 audio',
+          'local',
+        ],
+        playlistAudioPlaySpeed: 0.7,
         downloadedAudioPlaySpeed: 1.25,
         playableAudioPlaySpeed: 1.25,
       );
@@ -2655,7 +2750,7 @@ Future<void> _verifyAudioPlaySpeed({
   required SettingsDataService settingsDataService,
   required PlaylistListVM playlistListVM,
   required double settingsPlaylistAudioPlaySpeed,
-  required String playlistTitle,
+  required List<String> playlistTitleLst,
   required double playlistAudioPlaySpeed,
   required double downloadedAudioPlaySpeed,
   required double playableAudioPlaySpeed,
@@ -2673,30 +2768,32 @@ Future<void> _verifyAudioPlaySpeed({
     settingsPlaylistAudioPlaySpeed,
   );
 
-  Playlist testPlaylist = playlistListVM
-      .getUpToDateSelectablePlaylists()
-      .firstWhere((Playlist playlist) => playlist.title == playlistTitle);
+  for (String playlistTitle in playlistTitleLst) {
+    Playlist testPlaylist = playlistListVM
+        .getUpToDateSelectablePlaylists()
+        .firstWhere((Playlist playlist) => playlist.title == playlistTitle);
 
-  // Additional verification: Load playlist directly from JSON file to double-check
-  String playlistJsonPath = testPlaylist.getPlaylistDownloadFilePathName();
-  File playlistJsonFile = File(playlistJsonPath);
-  expect(playlistJsonFile.existsSync(), true);
+    // Additional verification: Load playlist directly from JSON file to double-check
+    String playlistJsonPath = testPlaylist.getPlaylistDownloadFilePathName();
+    File playlistJsonFile = File(playlistJsonPath);
+    expect(playlistJsonFile.existsSync(), true);
 
-  String playlistJsonContent = playlistJsonFile.readAsStringSync();
-  Map<String, dynamic> playlistJsonMap = jsonDecode(playlistJsonContent);
-  Playlist playlistFromJson = Playlist.fromJson(playlistJsonMap);
+    String playlistJsonContent = playlistJsonFile.readAsStringSync();
+    Map<String, dynamic> playlistJsonMap = jsonDecode(playlistJsonContent);
+    Playlist playlistFromJson = Playlist.fromJson(playlistJsonMap);
 
-  // Verify playlist audioPlaySpeed in the JSON file
-  expect(playlistFromJson.audioPlaySpeed, playlistAudioPlaySpeed);
+    // Verify playlist audioPlaySpeed in the JSON file
+    expect(playlistFromJson.audioPlaySpeed, playlistAudioPlaySpeed);
 
-  // Verify audio play speeds in playableAudioLst from JSON
-  for (Audio audio in playlistFromJson.playableAudioLst) {
-    expect(audio.audioPlaySpeed, playableAudioPlaySpeed);
-  }
+    // Verify audio play speeds in playableAudioLst from JSON
+    for (Audio audio in playlistFromJson.playableAudioLst) {
+      expect(audio.audioPlaySpeed, playableAudioPlaySpeed);
+    }
 
-  // Verify audio play speeds in downloadedAudioLst from JSON
-  for (Audio audio in playlistFromJson.downloadedAudioLst) {
-    expect(audio.audioPlaySpeed, downloadedAudioPlaySpeed);
+    // Verify audio play speeds in downloadedAudioLst from JSON
+    for (Audio audio in playlistFromJson.downloadedAudioLst) {
+      expect(audio.audioPlaySpeed, downloadedAudioPlaySpeed);
+    }
   }
 }
 
