@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:audiolearn/services/sort_filter_parameters.dart';
@@ -2631,15 +2632,14 @@ void main() {
 
       // Verify the updated playlist play speed
 
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
-      expect(
-        settingsDataService.get(
-          settingType: SettingType.playlists,
-          settingSubType: Playlists.playSpeed,
-        ),
-        0.7,
+      await _verifyAudioPlaySpeed(
+        settingsDataService: settingsDataService,
+        playlistListVM: playlistListVM,
+        settingsPlaylistAudioPlaySpeed: 0.7,
+        playlistTitle: 'S8 audio',
+        playlistAudioPlaySpeed: 1.0,
+        downloadedAudioPlaySpeed: 1.25,
+        playableAudioPlaySpeed: 1.25,
       );
 
       // Purge the test playlist directory so that the created test
@@ -2649,6 +2649,55 @@ void main() {
       );
     });
   });
+}
+
+Future<void> _verifyAudioPlaySpeed({
+  required SettingsDataService settingsDataService,
+  required PlaylistListVM playlistListVM,
+  required double settingsPlaylistAudioPlaySpeed,
+  required String playlistTitle,
+  required double playlistAudioPlaySpeed,
+  required double downloadedAudioPlaySpeed,
+  required double playableAudioPlaySpeed,
+}) async {
+  // Verify the updated playlist play speed
+
+  await settingsDataService.loadSettingsFromFile(
+      settingsJsonPathFileName:
+          "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+  expect(
+    settingsDataService.get(
+      settingType: SettingType.playlists,
+      settingSubType: Playlists.playSpeed,
+    ),
+    settingsPlaylistAudioPlaySpeed,
+  );
+
+  Playlist testPlaylist = playlistListVM
+      .getUpToDateSelectablePlaylists()
+      .firstWhere((Playlist playlist) => playlist.title == playlistTitle);
+
+  // Additional verification: Load playlist directly from JSON file to double-check
+  String playlistJsonPath = testPlaylist.getPlaylistDownloadFilePathName();
+  File playlistJsonFile = File(playlistJsonPath);
+  expect(playlistJsonFile.existsSync(), true);
+
+  String playlistJsonContent = playlistJsonFile.readAsStringSync();
+  Map<String, dynamic> playlistJsonMap = jsonDecode(playlistJsonContent);
+  Playlist playlistFromJson = Playlist.fromJson(playlistJsonMap);
+
+  // Verify playlist audioPlaySpeed in the JSON file
+  expect(playlistFromJson.audioPlaySpeed, playlistAudioPlaySpeed);
+
+  // Verify audio play speeds in playableAudioLst from JSON
+  for (Audio audio in playlistFromJson.playableAudioLst) {
+    expect(audio.audioPlaySpeed, playableAudioPlaySpeed);
+  }
+
+  // Verify audio play speeds in downloadedAudioLst from JSON
+  for (Audio audio in playlistFromJson.downloadedAudioLst) {
+    expect(audio.audioPlaySpeed, downloadedAudioPlaySpeed);
+  }
 }
 
 void _verifyOrderedTitlesAndPlaylistSelection({
