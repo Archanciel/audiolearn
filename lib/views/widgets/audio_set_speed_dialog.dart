@@ -235,6 +235,7 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
           height: 20,
         ),
         createCheckboxRowFunction(
+          checkBoxWidgetKey: const Key('applyToExistingPlaylistsKey'),
           context: context,
           label: AppLocalizations.of(context)!.applyToExistingPlaylist,
           labelTooltip:
@@ -257,6 +258,7 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
           height: 20,
         ),
         createCheckboxRowFunction(
+          checkBoxWidgetKey: const Key('applyToAlreadyDownloadedAudioKey'),
           context: context,
           label: AppLocalizations.of(context)!.applyToAlreadyDownloadedAudio,
           labelTooltip: (widget.displayApplyToExistingPlaylistCheckbox)
