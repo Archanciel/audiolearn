@@ -12700,6 +12700,72 @@ void main() {
         // Verify if the play speed is 0.70x
         expect(find.text('0.70x'), findsOneWidget);
 
+        // Tap on cancel button
+        await tester.tap(find.byKey(const Key('cancelButton')));
+        await tester.pumpAndSettle();
+
+        // Now create a new local playlist
+
+        String newLocalPlaylistTitle = 'new_local';
+
+        // Open the add playlist dialog by tapping the add playlist
+        // button
+        await tester.tap(find.byKey(const Key('addPlaylistButton')));
+        await tester.pumpAndSettle();
+
+        // Enter the title of the local playlist
+        await tester.enterText(
+          find.byKey(const Key('playlistLocalTitleConfirmDialogTextField')),
+          newLocalPlaylistTitle,
+        );
+
+        // Confirm the addition by tapping the confirmation button in
+        // the AlertDialog
+        await tester
+            .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
+        await tester.pumpAndSettle();
+
+        // Close the warning dialog
+        await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+        await tester.pumpAndSettle();
+
+        List<String> oldPlaylistTitles = [
+          "local",
+          "S8 audio",
+        ];
+
+        // Verify that the play speed was not applied to the existing playlists
+
+        for (String playlistTitle in oldPlaylistTitles) {
+          await IntegrationTestUtil.typeOnPlaylistMenuItem(
+            tester: tester,
+            playlistTitle: playlistTitle,
+            playlistMenuKeyStr: 'popup_menu_set_audio_play_speed',
+          );
+
+          // Verify if the play speed is 0.70x
+          expect(find.text('1.0x'), findsOneWidget);
+
+          // Tap on cancel button
+          await tester.tap(find.byKey(const Key('cancelButtonKey')));
+          await tester.pumpAndSettle();
+        }
+
+        // Verify that the play speed was applied to the new playlist
+
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: newLocalPlaylistTitle,
+          playlistMenuKeyStr: 'popup_menu_set_audio_play_speed',
+        );
+
+        // Verify if the play speed is 0.70x
+        expect(find.text('0.7x'), findsOneWidget);
+
+        // Tap on cancel button
+        await tester.tap(find.byKey(const Key('cancelButtonKey')));
+        await tester.pumpAndSettle();
+
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
