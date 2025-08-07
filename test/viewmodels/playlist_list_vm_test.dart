@@ -2645,7 +2645,7 @@ void main() {
           'local',
         ],
         playlistAudioPlaySpeed: 1.0,
-        downloadedAudioPlaySpeed: 1.25,
+        downloadedAudioPlaySpeed: 1.25, // Is never modified
         playableAudioPlaySpeed: 1.25,
       );
 
@@ -2657,7 +2657,7 @@ void main() {
     });
     test(
         '''First copy test data. Then update the app audio play speed defined in the settings.json
-          file managed by the SettingsDataService instance with modifying the playlist audio play
+          file managed by the SettingsDataService instance as well as modifying the playlist audio play
           speed without modifying the the audio play speed defined in the Audio contained in the playlist
           playable audiolist contained in the playlist.json file.''', () async {
       // Purge the test playlist directory if it exists so that the
@@ -2733,8 +2733,184 @@ void main() {
           'local',
         ],
         playlistAudioPlaySpeed: 0.7,
-        downloadedAudioPlaySpeed: 1.25,
+        downloadedAudioPlaySpeed: 1.25, // Is never modified
         playableAudioPlaySpeed: 1.25,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    test(
+        '''First copy test data. Then update the app audio play speed defined in the settings.json
+          file managed by the SettingsDataService instance without modifying the playlist audio play
+          speed and modifying the the audio play speed defined in the Audio contained in the playlist
+          playable audiolist contained in the playlist.json file.''', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}app_settings_set_play_speed",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+        settingsJsonPathFileName:
+            "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName",
+      );
+
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+      );
+
+      PictureVM pictureVM = PictureVM(
+        settingsDataService: settingsDataService,
+      );
+
+      PlaylistListVM playlistListVM = PlaylistListVM(
+        warningMessageVM: warningMessageVM,
+        audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
+        pictureVM: pictureVM,
+        settingsDataService: settingsDataService,
+      );
+
+      // Ensure that all the playlists are available in the
+      // playlistListVM.
+      playlistListVM.getUpToDateSelectablePlaylists();
+
+      const bool applyAudioPlaySpeedToExistingPlaylists = false;
+      const bool applyAudioPlaySpeedToAlreadyDownloadedAudio = true;
+
+      playlistListVM
+          .updateExistingPlaylistsAndOrAlreadyDownloadedAudioPlaySpeed(
+        audioPlaySpeed: 0.7,
+        applyAudioPlaySpeedToExistingPlaylists:
+            applyAudioPlaySpeedToExistingPlaylists,
+        applyAudioPlaySpeedToAlreadyDownloadedAudio:
+            applyAudioPlaySpeedToAlreadyDownloadedAudio,
+      );
+
+      // Verify the updated playlist play speed
+
+      await _verifyAudioPlaySpeed(
+        settingsDataService: settingsDataService,
+        playlistListVM: playlistListVM,
+        settingsPlaylistAudioPlaySpeed: 0.7,
+        playlistTitleLst: [
+          'S8 audio',
+          'local',
+        ],
+        playlistAudioPlaySpeed: 1.0,
+        downloadedAudioPlaySpeed: 1.25, // Is never modified
+        playableAudioPlaySpeed: 0.7,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    test(
+        '''First copy test data. Then update the app audio play speed defined in the settings.json
+          file managed by the SettingsDataService instance as well as modifying the playlist audio play
+          speed and modifying the the audio play speed defined in the Audio contained in the playlist
+          playable audiolist contained in the playlist.json file.''', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}app_settings_set_play_speed",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+        settingsJsonPathFileName:
+            "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName",
+      );
+
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+      );
+
+      PictureVM pictureVM = PictureVM(
+        settingsDataService: settingsDataService,
+      );
+
+      PlaylistListVM playlistListVM = PlaylistListVM(
+        warningMessageVM: warningMessageVM,
+        audioDownloadVM: audioDownloadVM,
+        commentVM: CommentVM(),
+        pictureVM: pictureVM,
+        settingsDataService: settingsDataService,
+      );
+
+      // Ensure that all the playlists are available in the
+      // playlistListVM.
+      playlistListVM.getUpToDateSelectablePlaylists();
+
+      const bool applyAudioPlaySpeedToExistingPlaylists = true;
+      const bool applyAudioPlaySpeedToAlreadyDownloadedAudio = true;
+
+      playlistListVM
+          .updateExistingPlaylistsAndOrAlreadyDownloadedAudioPlaySpeed(
+        audioPlaySpeed: 0.7,
+        applyAudioPlaySpeedToExistingPlaylists:
+            applyAudioPlaySpeedToExistingPlaylists,
+        applyAudioPlaySpeedToAlreadyDownloadedAudio:
+            applyAudioPlaySpeedToAlreadyDownloadedAudio,
+      );
+
+      // Verify the updated playlist play speed
+
+      await _verifyAudioPlaySpeed(
+        settingsDataService: settingsDataService,
+        playlistListVM: playlistListVM,
+        settingsPlaylistAudioPlaySpeed: 0.7,
+        playlistTitleLst: [
+          'S8 audio',
+          'local',
+        ],
+        playlistAudioPlaySpeed: 0.7,
+        downloadedAudioPlaySpeed: 1.25, // Is never modified
+        playableAudioPlaySpeed: 0.7,
       );
 
       // Purge the test playlist directory so that the created test
