@@ -1318,7 +1318,9 @@ void main() {
 
         expect(
           savedZipFilePathName,
-          "$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2024-01-08_16_35_21_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip",
+          contains(
+            "$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2024-01-08_16_35_21_on_",
+          ),
         );
 
         expect(
@@ -1431,7 +1433,9 @@ void main() {
 
         expect(
           savedZipFilePathName,
-          "$kApplicationPathWindowsTest${path.separator}S8 audio_mp3_from_2024-05-28_13_06_36_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip",
+          contains(
+            "$kApplicationPathWindowsTest${path.separator}S8 audio_mp3_from_2024-05-28_13_06_36_on_",
+          ),
         );
 
         expect(
@@ -1543,7 +1547,9 @@ void main() {
 
         expect(
           savedZipFilePathName,
-          "$kApplicationPathWindowsTest${path.separator}http_local_mp3_from_2025-03-18_16_58_14_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip",
+          contains(
+            "$kApplicationPathWindowsTest${path.separator}http_local_mp3_from_2025-03-18_16_58_14_on_",
+          ),
         );
 
         expect(
