@@ -6100,7 +6100,7 @@ void main() {
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: youtubeAudioSourcePlaylistTitle,
-        movedOrCopiedAudioTitle: copiedAudioTitle,
+        audioTitle: copiedAudioTitle,
         movedFromPlaylistTitle: '',
         movedToPlaylistTitle: '',
         copiedFromPlaylistTitle: '',
@@ -6123,7 +6123,7 @@ void main() {
           await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localAudioTargetOnePlaylistTitle,
-        movedOrCopiedAudioTitle: copiedAudioTitle,
+        audioTitle: copiedAudioTitle,
         movedFromPlaylistTitle: '',
         movedToPlaylistTitle: '',
         copiedFromPlaylistTitle: youtubeAudioSourcePlaylistTitle,
@@ -6220,7 +6220,7 @@ void main() {
           await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localAudioTargetOnePlaylistTitle,
-        movedOrCopiedAudioTitle: copiedAudioTitle,
+        audioTitle: copiedAudioTitle,
         movedFromPlaylistTitle: '',
         movedToPlaylistTitle: '',
         copiedFromPlaylistTitle: youtubeAudioSourcePlaylistTitle,
@@ -6242,7 +6242,7 @@ void main() {
           await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localAudioTargetTwoPlaylistTitle,
-        movedOrCopiedAudioTitle: copiedAudioTitle,
+        audioTitle: copiedAudioTitle,
         movedFromPlaylistTitle: '',
         movedToPlaylistTitle: '',
         copiedFromPlaylistTitle: localAudioTargetOnePlaylistTitle,
@@ -6784,7 +6784,7 @@ void main() {
           await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localAudioTargetPlaylistTitle,
-        movedOrCopiedAudioTitle: movedAudioTitle,
+        audioTitle: movedAudioTitle,
         movedFromPlaylistTitle: youtubeAudioSourcePlaylistTitle,
         movedToPlaylistTitle: '',
         copiedFromPlaylistTitle: '',
@@ -6933,7 +6933,7 @@ void main() {
           await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: youtubeAudioSourcePlaylistTitle,
-        movedOrCopiedAudioTitle: movedAudioTitle,
+        audioTitle: movedAudioTitle,
         movedFromPlaylistTitle: localAudioTargetPlaylistTitle,
         movedToPlaylistTitle: youtubeAudioSourcePlaylistTitle,
         copiedFromPlaylistTitle: '',
@@ -7015,7 +7015,7 @@ void main() {
           await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localAudioTargetPlaylistTitle,
-        movedOrCopiedAudioTitle: movedAudioTitle,
+        audioTitle: movedAudioTitle,
         movedFromPlaylistTitle: youtubeAudioSourcePlaylistTitle,
         movedToPlaylistTitle: localAudioTargetPlaylistTitle,
         copiedFromPlaylistTitle: '',
