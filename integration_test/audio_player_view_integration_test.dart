@@ -9575,6 +9575,7 @@ void main() {
       // info dialog
       await _verifyAudioVolume(
         tester: tester,
+        audioTitle: firstModifiedAudioTitle,
         volumeUpButtonFinder: volumeUpButtonFinder,
         volumeUpIconButtonKey: volumeUpIconButtonKey,
         volumeDownButtonFinder: volumeDownButtonFinder,
@@ -9597,6 +9598,7 @@ void main() {
       // info dialog
       await _verifyAudioVolume(
         tester: tester,
+        audioTitle: firstModifiedAudioTitle,
         volumeUpButtonFinder: volumeUpButtonFinder,
         volumeUpIconButtonKey: volumeUpIconButtonKey,
         volumeDownButtonFinder: volumeDownButtonFinder,
@@ -9635,6 +9637,7 @@ void main() {
       // info dialog
       await _verifyAudioVolume(
         tester: tester,
+        audioTitle: secondModifiedAudioTitle,
         volumeUpButtonFinder: volumeUpButtonFinder,
         volumeUpIconButtonKey: volumeUpIconButtonKey,
         volumeDownButtonFinder: volumeDownButtonFinder,
@@ -9657,6 +9660,7 @@ void main() {
       // info dialog
       await _verifyAudioVolume(
         tester: tester,
+        audioTitle: secondModifiedAudioTitle,
         volumeUpButtonFinder: volumeUpButtonFinder,
         volumeUpIconButtonKey: volumeUpIconButtonKey,
         volumeDownButtonFinder: volumeDownButtonFinder,
@@ -9696,6 +9700,7 @@ void main() {
       // 100 % in the audio info dialog
       await _verifyAudioVolume(
         tester: tester,
+        audioTitle: firstModifiedAudioTitle,
         volumeUpButtonFinder: volumeUpButtonFinder,
         volumeUpIconButtonKey: volumeUpIconButtonKey,
         volumeDownButtonFinder: volumeDownButtonFinder,
@@ -9717,6 +9722,7 @@ void main() {
       // info dialog
       await _verifyAudioVolume(
         tester: tester,
+        audioTitle: firstModifiedAudioTitle,
         volumeUpButtonFinder: volumeUpButtonFinder,
         volumeUpIconButtonKey: volumeUpIconButtonKey,
         volumeDownButtonFinder: volumeDownButtonFinder,
@@ -9756,6 +9762,7 @@ void main() {
       // 100 % in the audio info dialog
       await _verifyAudioVolume(
         tester: tester,
+        audioTitle: secondModifiedAudioTitle,
         volumeUpButtonFinder: volumeUpButtonFinder,
         volumeUpIconButtonKey: volumeUpIconButtonKey,
         volumeDownButtonFinder: volumeDownButtonFinder,
@@ -9777,6 +9784,7 @@ void main() {
       // info dialog
       await _verifyAudioVolume(
         tester: tester,
+        audioTitle: secondModifiedAudioTitle,
         volumeUpButtonFinder: volumeUpButtonFinder,
         volumeUpIconButtonKey: volumeUpIconButtonKey,
         volumeDownButtonFinder: volumeDownButtonFinder,
@@ -9845,6 +9853,7 @@ void main() {
       // info dialog
       await _verifyAudioVolume(
         tester: tester,
+        audioTitle: firstModifiedAudioTitle,
         volumeUpButtonFinder: volumeUpButtonFinder,
         volumeUpIconButtonKey: volumeUpIconButtonKey,
         volumeDownButtonFinder: volumeDownButtonFinder,
@@ -9867,6 +9876,7 @@ void main() {
       // info dialog
       await _verifyAudioVolume(
         tester: tester,
+        audioTitle: firstModifiedAudioTitle,
         volumeUpButtonFinder: volumeUpButtonFinder,
         volumeUpIconButtonKey: volumeUpIconButtonKey,
         volumeDownButtonFinder: volumeDownButtonFinder,
@@ -9903,6 +9913,7 @@ void main() {
       // info dialog
       await _verifyAudioVolume(
         tester: tester,
+        audioTitle: secondModifiedAudioTitle,
         volumeUpButtonFinder: volumeUpButtonFinder,
         volumeUpIconButtonKey: volumeUpIconButtonKey,
         volumeDownButtonFinder: volumeDownButtonFinder,
@@ -9925,6 +9936,7 @@ void main() {
       // info dialog
       await _verifyAudioVolume(
         tester: tester,
+        audioTitle: secondModifiedAudioTitle,
         volumeUpButtonFinder: volumeUpButtonFinder,
         volumeUpIconButtonKey: volumeUpIconButtonKey,
         volumeDownButtonFinder: volumeDownButtonFinder,
@@ -9961,6 +9973,7 @@ void main() {
       // 100 % in the audio info dialog
       await _verifyAudioVolume(
         tester: tester,
+        audioTitle: firstModifiedAudioTitle,
         volumeUpButtonFinder: volumeUpButtonFinder,
         volumeUpIconButtonKey: volumeUpIconButtonKey,
         volumeDownButtonFinder: volumeDownButtonFinder,
@@ -9982,6 +9995,7 @@ void main() {
       // info dialog
       await _verifyAudioVolume(
         tester: tester,
+        audioTitle: firstModifiedAudioTitle,
         volumeUpButtonFinder: volumeUpButtonFinder,
         volumeUpIconButtonKey: volumeUpIconButtonKey,
         volumeDownButtonFinder: volumeDownButtonFinder,
@@ -10018,6 +10032,7 @@ void main() {
       // 100 % in the audio info dialog
       await _verifyAudioVolume(
         tester: tester,
+        audioTitle: secondModifiedAudioTitle,
         volumeUpButtonFinder: volumeUpButtonFinder,
         volumeUpIconButtonKey: volumeUpIconButtonKey,
         volumeDownButtonFinder: volumeDownButtonFinder,
@@ -10039,6 +10054,7 @@ void main() {
       // info dialog
       await _verifyAudioVolume(
         tester: tester,
+        audioTitle: secondModifiedAudioTitle,
         volumeUpButtonFinder: volumeUpButtonFinder,
         volumeUpIconButtonKey: volumeUpIconButtonKey,
         volumeDownButtonFinder: volumeDownButtonFinder,
@@ -10152,6 +10168,7 @@ void _verifyPositionValueAfterCommentWasPlayed({
 
 Future<void> _verifyAudioVolume({
   required WidgetTester tester,
+  required String audioTitle,
   required Finder volumeUpButtonFinder,
   required String volumeUpIconButtonKey,
   required Finder volumeDownButtonFinder,
@@ -10165,6 +10182,7 @@ Future<void> _verifyAudioVolume({
   // Verify the audio volume in the audio info dialog
   await IntegrationTestUtil.verifyAudioInfoDialog(
     tester: tester,
+    audioTitle: audioTitle,
     youtubeChannelValue: '',
     copiedToPlaylistTitle: 'local_several_played_unplayed_audios',
     inAudioPlayerView: true,

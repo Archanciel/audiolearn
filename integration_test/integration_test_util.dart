@@ -2748,7 +2748,7 @@ class IntegrationTestUtil {
     bool inAudioPlayerView = false,
     String audioEnclosingPlaylistTitle = '',
     String youtubeChannelValue = "Jean-Pierre Schnyder",
-    String movedOrCopiedAudioTitle = '',
+    required String audioTitle,
     String movedFromPlaylistTitle = '',
     String movedToPlaylistTitle = '',
     String copiedFromPlaylistTitle = '',
@@ -2756,6 +2756,7 @@ class IntegrationTestUtil {
     String audioDuration = '',
     String audioQuality = '',
     String audioVolume = '',
+    String audioPlaySpeed = '',
   }) async {
     // Now we want to tap the popup menu of the Audio ListTile
     // "audio learn test short video one" in order to display
@@ -2763,7 +2764,7 @@ class IntegrationTestUtil {
 
     // First, find the Audio sublist ListTile Text widget
     final Finder targetAudioListTileTextWidgetFinder =
-        find.text(movedOrCopiedAudioTitle);
+        find.text(audioTitle);
 
     // Then obtain the Audio ListTile widget enclosing the Text widget by
     // finding its ancestor
@@ -2883,6 +2884,14 @@ class IntegrationTestUtil {
           tester.widget<Text>(find.byKey(const Key('audioVolumeKey')));
 
       expect(audioVolumeTextWidget.data, audioVolume);
+    }
+
+    if (audioPlaySpeed.isNotEmpty) {
+      // Verify the audio volume of the audio
+      final Text audioPlaySpeedTextWidget =
+          tester.widget<Text>(find.byKey(const Key('audioPlaySpeedKey')));
+
+      expect(audioPlaySpeedTextWidget.data, audioPlaySpeed);
     }
 
     // Now find the close button of the audio info dialog

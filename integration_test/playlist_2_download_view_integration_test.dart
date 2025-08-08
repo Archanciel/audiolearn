@@ -12627,7 +12627,8 @@ void main() {
     group('App settings set speed test', () {
       testWidgets(
           '''Modify playback speed without selecting existing playlists or already downloaded or imported
-            audio's.''', (WidgetTester tester) async {
+            audio's. Finally, create a new playlist and verify that its audio play speed is equal to the
+            modified playback speed.''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -12693,7 +12694,7 @@ void main() {
         await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
         await tester.pumpAndSettle();
 
-        // Now open the app settings dialog
+        // Now re-open the app settings dialog
         await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
         await tester.pumpAndSettle();
 
@@ -12734,7 +12735,8 @@ void main() {
           await tester.pumpAndSettle();
         }
 
-        // Verify that the play speed was applied to the new playlist
+        // Verify that the play speed was applied to the new created
+        // playlist
 
         await IntegrationTestUtil.typeOnPlaylistMenuItem(
           tester: tester,
@@ -12757,7 +12759,9 @@ void main() {
       });
       testWidgets(
           '''Modify playback speed with selecting existing playlists and without selecting already
-            downloaded or imported audio's.''', (WidgetTester tester) async {
+            downloaded or imported audio's. Finally, create a new playlist and verify that its audio
+            play speed is equal to the modified playback speed.''',
+          (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -12827,7 +12831,7 @@ void main() {
         await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
         await tester.pumpAndSettle();
 
-        // Now open the app settings dialog
+        // Now re-open the app settings dialog
         await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
         await tester.pumpAndSettle();
 
@@ -12837,6 +12841,14 @@ void main() {
         // Tap on cancel button
         await tester.tap(find.byKey(const Key('cancelButton')));
         await tester.pumpAndSettle();
+
+        // Now create a new local playlist
+        const String newLocalPlaylistTitle = 'new_local';
+
+        await createNewLocalPlaylist(
+          tester: tester,
+          newPlaylistTitle: newLocalPlaylistTitle,
+        );
 
         List<String> playlistTitles = [
           "local",
@@ -12860,6 +12872,22 @@ void main() {
           await tester.pumpAndSettle();
         }
 
+        // Verify that the play speed was applied to the new created
+        // playlist
+
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: newLocalPlaylistTitle,
+          playlistMenuKeyStr: 'popup_menu_set_audio_play_speed',
+        );
+
+        // Verify if the play speed is 0.70x
+        expect(find.text('0.7x'), findsOneWidget);
+
+        // Tap on cancel button
+        await tester.tap(find.byKey(const Key('cancelButtonKey')));
+        await tester.pumpAndSettle();
+
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -12868,7 +12896,9 @@ void main() {
       });
       testWidgets(
           '''Modify playback speed without selecting existing playlists and with selecting already
-            downloaded or imported audio's.''', (WidgetTester tester) async {
+            downloaded or imported audio's. Finally, create a new playlist and verify that its audio
+            play speed is equal to the modified playback speed.''',
+          (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -12939,7 +12969,7 @@ void main() {
         await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
         await tester.pumpAndSettle();
 
-        // Now open the app settings dialog
+        // Now re-open the app settings dialog
         await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
         await tester.pumpAndSettle();
 
@@ -12949,6 +12979,14 @@ void main() {
         // Tap on cancel button
         await tester.tap(find.byKey(const Key('cancelButton')));
         await tester.pumpAndSettle();
+
+        // Now create a new local playlist
+        const String newLocalPlaylistTitle = 'new_local';
+
+        await createNewLocalPlaylist(
+          tester: tester,
+          newPlaylistTitle: newLocalPlaylistTitle,
+        );
 
         List<String> playlistTitles = [
           "local",
@@ -12971,6 +13009,50 @@ void main() {
           await tester.tap(find.byKey(const Key('cancelButtonKey')));
           await tester.pumpAndSettle();
         }
+
+        // Verify that the play speed was applied to the new created
+        // playlist
+
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: newLocalPlaylistTitle,
+          playlistMenuKeyStr: 'popup_menu_set_audio_play_speed',
+        );
+
+        // Verify if the play speed is 0.70x
+        expect(find.text('0.7x'), findsOneWidget);
+
+        // Tap on cancel button
+        await tester.tap(find.byKey(const Key('cancelButtonKey')));
+        await tester.pumpAndSettle();
+
+        await IntegrationTestUtil.verifyAudioInfoDialog(
+            tester: tester,
+            audioTitle:
+                "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
+            youtubeChannelValue: "",
+            copiedFromPlaylistTitle: "S8 audio",
+            audioPlaySpeed: "0.7");
+
+        await IntegrationTestUtil.verifyAudioInfoDialog(
+            tester: tester,
+            audioTitle: "Really short video",
+            youtubeChannelValue: "",
+            copiedFromPlaylistTitle: 'audio_player_view_2_shorts_test',
+            audioPlaySpeed: "0.7");
+
+        await IntegrationTestUtil.verifyAudioInfoDialog(
+            tester: tester,
+            audioTitle: "morning _ cinematic video",
+            youtubeChannelValue: "",
+            copiedFromPlaylistTitle: 'audio_player_view_2_shorts_test',
+            audioPlaySpeed: "0.7");
+
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: "S8 audio",
+        );
+
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
@@ -25262,7 +25344,7 @@ void main() {
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: youtubePlaylistToModifyTitle,
-        movedOrCopiedAudioTitle: 'Really short video',
+        audioTitle: 'Really short video',
         movedFromPlaylistTitle: '',
         movedToPlaylistTitle: '',
         copiedFromPlaylistTitle: '',
@@ -25371,7 +25453,7 @@ void main() {
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localSpokenPlaylistTitle,
-        movedOrCopiedAudioTitle: 'audio learn test short video two',
+        audioTitle: 'audio learn test short video two',
         movedFromPlaylistTitle: '',
         movedToPlaylistTitle: '',
         copiedFromPlaylistTitle: '',
@@ -25423,7 +25505,7 @@ void main() {
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: youtubePlaylistToModifyTitle,
-        movedOrCopiedAudioTitle: 'morning _ cinematic video',
+        audioTitle: 'morning _ cinematic video',
         movedFromPlaylistTitle: '',
         movedToPlaylistTitle: '',
         copiedFromPlaylistTitle: '',
@@ -25495,8 +25577,7 @@ void main() {
         tester: tester,
         audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
         youtubeChannelValue: "Bible en ligne",
-        movedOrCopiedAudioTitle:
-            "Musique chrétienne 2019 - Le temps (avec paroles)",
+        audioTitle: "Musique chrétienne 2019 - Le temps (avec paroles)",
         audioQuality: 'No', // Is spoken quality
       );
 
@@ -25504,7 +25585,7 @@ void main() {
         tester: tester,
         audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
         youtubeChannelValue: "Bible en ligne",
-        movedOrCopiedAudioTitle:
+        audioTitle:
             "Chanson évangélique  Ta foi en Dieu doit être au-dessus de tout",
         audioQuality: 'No', // Is spoken quality
       );
@@ -25570,8 +25651,7 @@ void main() {
         tester: tester,
         audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
         youtubeChannelValue: "Bible en ligne",
-        movedOrCopiedAudioTitle:
-            "Musique chrétienne 2019 - Le temps (avec paroles)",
+        audioTitle: "Musique chrétienne 2019 - Le temps (avec paroles)",
         audioQuality: 'Yes', // Is music quality
       );
 
@@ -25579,7 +25659,7 @@ void main() {
         tester: tester,
         audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
         youtubeChannelValue: "Bible en ligne",
-        movedOrCopiedAudioTitle:
+        audioTitle:
             "Chanson évangélique  Ta foi en Dieu doit être au-dessus de tout",
         audioQuality: 'Yes', // Is music quality
       );
@@ -25645,8 +25725,7 @@ void main() {
         tester: tester,
         audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
         youtubeChannelValue: "Bible en ligne",
-        movedOrCopiedAudioTitle:
-            "Musique chrétienne 2019 - Le temps (avec paroles)",
+        audioTitle: "Musique chrétienne 2019 - Le temps (avec paroles)",
         audioQuality: 'Yes', // Is music quality
       );
 
@@ -25654,7 +25733,7 @@ void main() {
         tester: tester,
         audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
         youtubeChannelValue: "Bible en ligne",
-        movedOrCopiedAudioTitle:
+        audioTitle:
             "Chanson évangélique  Ta foi en Dieu doit être au-dessus de tout",
         audioQuality: 'Yes', // Is music quality
       );
