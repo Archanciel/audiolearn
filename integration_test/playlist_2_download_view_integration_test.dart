@@ -12705,29 +12705,12 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now create a new local playlist
+        const String newLocalPlaylistTitle = 'new_local';
 
-        String newLocalPlaylistTitle = 'new_local';
-
-        // Open the add playlist dialog by tapping the add playlist
-        // button
-        await tester.tap(find.byKey(const Key('addPlaylistButton')));
-        await tester.pumpAndSettle();
-
-        // Enter the title of the local playlist
-        await tester.enterText(
-          find.byKey(const Key('playlistLocalTitleConfirmDialogTextField')),
-          newLocalPlaylistTitle,
+        await createNewLocalPlaylist(
+          tester: tester,
+          newPlaylistTitle: newLocalPlaylistTitle,
         );
-
-        // Confirm the addition by tapping the confirmation button in
-        // the AlertDialog
-        await tester
-            .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
-        await tester.pumpAndSettle();
-
-        // Close the warning dialog
-        await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-        await tester.pumpAndSettle();
 
         List<String> oldPlaylistTitles = [
           "local",
@@ -12871,6 +12854,118 @@ void main() {
 
           // Verify if the play speed is 0.70x
           expect(find.text('0.70x'), findsOneWidget);
+
+          // Tap on cancel button
+          await tester.tap(find.byKey(const Key('cancelButtonKey')));
+          await tester.pumpAndSettle();
+        }
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Modify playback speed without selecting existing playlists and with selecting already
+            downloaded or imported audio's.''', (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}app_settings_set_play_speed",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+        await app.main();
+        await tester.pumpAndSettle();
+
+        // Set the app settings playlist audio play speed to 0.7
+
+        // Tap the appbar leading popup menu button
+        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+        await tester.pumpAndSettle();
+
+        // Now open the app settings dialog
+        await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
+        await tester.pumpAndSettle();
+
+        // Tap on the playback speed text button
+
+        await tester.tap(find.byKey(const Key('setAudioSpeedTextButton')));
+        await tester.pumpAndSettle();
+
+        // Now select the 0.7x play speed
+        await tester.tap(find.text('0.7x'));
+        await tester.pumpAndSettle();
+
+        // Select the 'Apply to already downloaded or imported audio' checkbox
+        await tester
+            .tap(find.byKey(const Key('applyToAlreadyDownloadedAudioKey')));
+        await tester.pumpAndSettle();
+
+        // And click on the Ok button
+        await tester.tap(find.text('Ok'));
+        await tester.pumpAndSettle();
+
+        // Verify if the play speed is 0.70x
+        expect(find.text('0.70x'), findsOneWidget);
+
+        // And tap on save button
+        await tester.tap(find.byKey(const Key('saveButton')));
+        await tester.pumpAndSettle();
+
+        // Verify that the app settings playlist audio play speed is now 0.7
+
+        // Tap the appbar leading popup menu button
+        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+        await tester.pumpAndSettle();
+
+        // Now open the app settings dialog
+        await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
+        await tester.pumpAndSettle();
+
+        // Verify if the play speed is 0.70x
+        expect(find.text('0.70x'), findsOneWidget);
+
+        // Tap on cancel button
+        await tester.tap(find.byKey(const Key('cancelButton')));
+        await tester.pumpAndSettle();
+
+        List<String> playlistTitles = [
+          "local",
+          "S8 audio",
+        ];
+
+        // Verify that the play speed was not applied to the existing playlists
+
+        for (String playlistTitle in playlistTitles) {
+          await IntegrationTestUtil.typeOnPlaylistMenuItem(
+            tester: tester,
+            playlistTitle: playlistTitle,
+            playlistMenuKeyStr: 'popup_menu_set_audio_play_speed',
+          );
+
+          // Verify if the play speed is 0.70x
+          expect(find.text('1.0x'), findsOneWidget);
 
           // Tap on cancel button
           await tester.tap(find.byKey(const Key('cancelButtonKey')));
@@ -25718,6 +25813,32 @@ void main() {
       );
     });
   });
+}
+
+Future<String> createNewLocalPlaylist({
+  required WidgetTester tester,
+  required String newPlaylistTitle,
+}) async {
+  // Open the add playlist dialog by tapping the add playlist
+  // button
+  await tester.tap(find.byKey(const Key('addPlaylistButton')));
+  await tester.pumpAndSettle();
+
+  // Enter the title of the local playlist
+  await tester.enterText(
+    find.byKey(const Key('playlistLocalTitleConfirmDialogTextField')),
+    newPlaylistTitle,
+  );
+
+  // Confirm the addition by tapping the confirmation button in
+  // the AlertDialog
+  await tester.tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
+  await tester.pumpAndSettle();
+
+  // Close the warning dialog
+  await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+  await tester.pumpAndSettle();
+  return newPlaylistTitle;
 }
 
 void _checkPlaylistCommentListDialogContent({
