@@ -3313,6 +3313,11 @@ class PlaylistListVM extends ChangeNotifier {
     List<AudioFileInfo> currentBatch = [];
     int currentBatchSize = 0;
     List<String> excludedTooLargeAudioFilesLst = [];
+    List<dynamic> excludedTooLargeAudioFilesValueLst = [
+      0, // excluded files total size in bytes
+      Duration(seconds: 0), // excluded files total duration
+    ];
+    List<dynamic> resultLst = [];
 
     for (AudioFileInfo audioInfo in audioFilesToSave) {
       // Check if adding this file would exceed the size limit
@@ -3324,17 +3329,29 @@ class PlaylistListVM extends ChangeNotifier {
         _numberOfCreatedZipFiles++;
 
         // Save current batch
-        excludedTooLargeAudioFilesLst.addAll(
-          await _saveArchiveBatchToFile(
-            audioBatch: currentBatch,
-            zipFileSizeLimitInBytes: zipFileSizeLimitInBytes,
-            targetDir: actualTargetDir,
-            baseFileName: baseZipFileName,
-            partNumber: _numberOfCreatedZipFiles, // Now correctly incremented
-            totalParts:
-                _calculateTotalParts(audioFilesToSave, zipFileSizeLimitInBytes),
-          ),
+        resultLst = await _saveArchiveBatchToFile(
+          audioBatch: currentBatch,
+          zipFileSizeLimitInBytes: zipFileSizeLimitInBytes,
+          targetDir: actualTargetDir,
+          baseFileName: baseZipFileName,
+          partNumber: _numberOfCreatedZipFiles, // Now correctly incremented
+          totalParts:
+              _calculateTotalParts(audioFilesToSave, zipFileSizeLimitInBytes),
         );
+
+        if (resultLst[0] == false) {
+          // If no files were saved, reduce the count of created zip files
+          _numberOfCreatedZipFiles--;
+        }
+
+        // If files were saved, add the excluded files to the list
+        excludedTooLargeAudioFilesLst.addAll(
+          resultLst[1],
+        );
+        excludedTooLargeAudioFilesValueLst[0] +=
+            resultLst[2][0]; // Accumulate excluded files size in MB
+        excludedTooLargeAudioFilesValueLst[1] +=
+            resultLst[2][1]; // Accumulate excluded files duration
 
         // Clear memory and start new batch
         currentBatch.clear();
@@ -3354,17 +3371,29 @@ class PlaylistListVM extends ChangeNotifier {
       // FIXED: Increment BEFORE calling _saveArchiveBatchToFile
       _numberOfCreatedZipFiles++;
 
-      excludedTooLargeAudioFilesLst.addAll(
-        await _saveArchiveBatchToFile(
-          audioBatch: currentBatch,
-          zipFileSizeLimitInBytes: zipFileSizeLimitInBytes,
-          targetDir: actualTargetDir,
-          baseFileName: baseZipFileName,
-          partNumber: _numberOfCreatedZipFiles, // Now correctly incremented
-          totalParts:
-              _calculateTotalParts(audioFilesToSave, zipFileSizeLimitInBytes),
-        ),
+      resultLst = await _saveArchiveBatchToFile(
+        audioBatch: currentBatch,
+        zipFileSizeLimitInBytes: zipFileSizeLimitInBytes,
+        targetDir: actualTargetDir,
+        baseFileName: baseZipFileName,
+        partNumber: _numberOfCreatedZipFiles, // Now correctly incremented
+        totalParts:
+            _calculateTotalParts(audioFilesToSave, zipFileSizeLimitInBytes),
       );
+
+      if (resultLst[0] == false) {
+        // If no files were saved, reduce the count of created zip files
+        _numberOfCreatedZipFiles--;
+      }
+
+      // If files were saved, add the excluded files to the list
+      excludedTooLargeAudioFilesLst.addAll(
+        resultLst[1],
+      );
+      excludedTooLargeAudioFilesValueLst[0] +=
+          resultLst[2][0]; // Accumulate excluded files size in MB
+      excludedTooLargeAudioFilesValueLst[1] +=
+          resultLst[2][1]; // Accumulate excluded files duration
     }
 
     // Rename single file if needed
@@ -3372,8 +3401,8 @@ class PlaylistListVM extends ChangeNotifier {
       String originalPath =
           path.join(actualTargetDir, "${baseZipFileName}_part1.zip");
       String newPath = path.join(actualTargetDir, "$baseZipFileName.zip");
-
       File originalFile = File(originalPath);
+
       if (await originalFile.exists()) {
         await originalFile.rename(newPath);
       }
@@ -3401,9 +3430,9 @@ class PlaylistListVM extends ChangeNotifier {
 
     return [
       finalZipPathStr,
-      savedAudioNumber,
-      savedAudioFileSize,
-      savedAudioDuration,
+      savedAudioNumber - excludedTooLargeAudioFilesLst.length,
+      savedAudioFileSize - excludedTooLargeAudioFilesValueLst[0],
+      savedAudioDuration - excludedTooLargeAudioFilesValueLst[1],
       savingAudioToZipDuration,
       realSavingAudioToZipBytesPerSecond,
       _numberOfCreatedZipFiles,
@@ -3411,8 +3440,17 @@ class PlaylistListVM extends ChangeNotifier {
     ];
   }
 
-  // Modified version of your _saveArchiveBatchToFile method (inside your class)
-  Future<List<String>> _saveArchiveBatchToFile({
+  /// The returned list contains
+  /// [
+  ///   wasZipFileCreated,
+  ///   excludedTooLargeAudioFilesLst,
+  ///   excludedTooLargeAudioFilesValueLst, contains
+  ///      [
+  ///         excluded files total size in bytes,
+  ///         excluded files total duration,
+  ///      ]
+  /// ]
+  Future<List<dynamic>> _saveArchiveBatchToFile({
     required List<AudioFileInfo> audioBatch,
     required int zipFileSizeLimitInBytes,
     required String targetDir,
@@ -3420,7 +3458,13 @@ class PlaylistListVM extends ChangeNotifier {
     required int partNumber,
     required int totalParts,
   }) async {
+    bool wasZipFileCreated = false;
     List<String> excludedTooLargeAudioFilesLst = [];
+    List<dynamic> excludedTooLargeAudioFilesValueLst = [
+      0, // excluded files total size in bytes
+      Duration(seconds: 0), // excluded files total duration
+    ];
+
     try {
       String zipFileName;
 
@@ -3442,6 +3486,10 @@ class PlaylistListVM extends ChangeNotifier {
         if (audioFileSize > zipFileSizeLimitInBytes) {
           excludedTooLargeAudioFilesLst.add(
               "${audioInfo.playlist.title}${path.separator}${audioInfo.audio.audioFileName}, ${(audioFileSize / 1000000).toStringAsFixed(2)}");
+          excludedTooLargeAudioFilesValueLst[0] +=
+              audioFileSize; // Convert to MB and accumulate
+          excludedTooLargeAudioFilesValueLst[1] +=
+              audioInfo.audio.audioDuration; // Accumulate duration
           continue; // Skip files that are larger than the limit
         }
 
@@ -3457,7 +3505,11 @@ class PlaylistListVM extends ChangeNotifier {
 
       if (audioFilesData.isEmpty) {
         _logger.i('No valid files to add to ZIP: $zipFilePathName');
-        return excludedTooLargeAudioFilesLst;
+        return [
+          wasZipFileCreated, // This will be false
+          excludedTooLargeAudioFilesLst,
+          excludedTooLargeAudioFilesValueLst,
+        ];
       }
 
       // Prepare parameters for isolate
@@ -3471,6 +3523,7 @@ class PlaylistListVM extends ChangeNotifier {
           await compute(_createZipInIsolate, isolateParams);
 
       if (result['success']) {
+        wasZipFileCreated = true;
         _logger.i(
             'ZIP file saved successfully in isolate: ${result['zipPath']}: ${_computeAudioFileDataTotalSize(audioFilesData)} bytes');
       } else {
@@ -3497,7 +3550,11 @@ class PlaylistListVM extends ChangeNotifier {
       rethrow;
     }
 
-    return excludedTooLargeAudioFilesLst;
+    return [
+      wasZipFileCreated,
+      excludedTooLargeAudioFilesLst,
+      excludedTooLargeAudioFilesValueLst
+    ];
   }
 
   /// Computes the total size in bytes of all audio files in the provided data list
