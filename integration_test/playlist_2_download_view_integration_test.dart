@@ -13049,6 +13049,7 @@ void main() {
             audioTitle: "morning _ cinematic video",
             youtubeChannelValue: "",
             copiedFromPlaylistTitle: 'audio_player_view_2_shorts_test',
+            copiedToPlaylistTitle: 'S8 audio',
             audioPlaySpeed: "0.7");
 
         await IntegrationTestUtil.verifyAudioInfoDialog(
@@ -13080,6 +13081,13 @@ void main() {
                 "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             youtubeChannelValue: "",
             copiedToPlaylistTitle: "local",
+            audioPlaySpeed: "0.7");
+
+        await IntegrationTestUtil.verifyAudioInfoDialog(
+            tester: tester,
+            audioTitle: "morning _ cinematic video",
+            youtubeChannelValue: "",
+            copiedFromPlaylistTitle: 'local',
             audioPlaySpeed: "0.7");
 
         // Purge the test playlist directory so that the created test
@@ -13247,6 +13255,7 @@ void main() {
             audioTitle: "morning _ cinematic video",
             youtubeChannelValue: "",
             copiedFromPlaylistTitle: 'audio_player_view_2_shorts_test',
+            copiedToPlaylistTitle: 'S8 audio',
             audioPlaySpeed: "0.7");
 
         await IntegrationTestUtil.verifyAudioInfoDialog(
@@ -13278,6 +13287,13 @@ void main() {
                 "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             youtubeChannelValue: "",
             copiedToPlaylistTitle: "local",
+            audioPlaySpeed: "0.7");
+
+        await IntegrationTestUtil.verifyAudioInfoDialog(
+            tester: tester,
+            audioTitle: "morning _ cinematic video",
+            youtubeChannelValue: "",
+            copiedFromPlaylistTitle: 'local',
             audioPlaySpeed: "0.7");
 
         // Purge the test playlist directory so that the created test
