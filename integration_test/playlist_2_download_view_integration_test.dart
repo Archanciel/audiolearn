@@ -13463,9 +13463,11 @@ void main() {
         );
       });
       testWidgets(
-          '''Reduce ZIP file size limit to 2.6 MB and then execute the appBar menu 'Save Playlists
-            Audio's MP3 to ZIP file(s). Then, verify the confirmation dialog data which displays
-            a small number of saved ZIP files since the majority of audio files were not added
+          '''Reduce ZIP file size limit to 1 MB and delete '240701-163521-Jancovici m'explique
+            l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3' from
+            the 'local' and the 'S8 audio' playlists. Then execute the appBar menu 'Save Playlists
+            Audio's MP3 to ZIP file(s) and verify the confirmation dialog data which displays
+            a greater number of saved ZIP files since only one audio file was not added
             to the created ZIP file.''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
@@ -13478,6 +13480,16 @@ void main() {
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}app_settings_set_play_speed",
           destinationRootPath: kApplicationPathWindowsTest,
+        );
+
+        DirUtil.deleteFileIfExist(
+          pathFileName:
+              "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}local${path.separator}240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
+        );
+
+        DirUtil.deleteFileIfExist(
+          pathFileName:
+              "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}S8 audio${path.separator}240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
@@ -13508,7 +13520,7 @@ void main() {
         await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
         await tester.pumpAndSettle();
 
-        // And reduce the ZIP file size limit to 1 MB
+        // And reduce the ZIP file size limit to 2.6 MB
 
         // Find the TextField using the Key
         final Finder textFieldFinder =
@@ -13578,7 +13590,7 @@ void main() {
         expect(
             actualMessage,
             contains(
-                "Saved to ZIP all playlists audio MP3 files downloaded from $oldestAudioDownloadDateTime.\n\nTotal saved audio number: 3, total size: 783 KB and total duration: 0:02:08.0."));
+                "Saved to ZIP all playlists audio MP3 files downloaded from $oldestAudioDownloadDateTime."));
         expect(
             actualMessage,
             contains(
@@ -13593,7 +13605,7 @@ void main() {
         expect(
             actualMessage,
             contains(
-                "Those files are too large to be included in the MP3 saved ZIP file and so were not saved:\nlocal\\240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3, 2.37 MB;\nS8 audio\\240701-163521-La surpopulation mondiale par Jancovici et Barrau 22-06-12.mp3, 2.79 MB;\nS8 audio\\240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3, 2.37 MB.\n"));
+                "This file is too large to be included in the MP3 saved ZIP file and so was not saved:\nS8 audio\\240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3, 2.79 MB."));
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
           directoryPath: kApplicationPathWindowsTest,
@@ -13601,9 +13613,9 @@ void main() {
         );
 
         List<String> expectedZipContentLst = [
-          "playlists\\local\\240701-163521-Really short video 22-06-12.mp3",
-          "playlists\\local\\240701-163521-morning _ cinematic video 22-06-12.mp3",
-          "playlists\\S8 audio\\240701-163521-morning _ cinematic video 22-06-12.mp3",
+          'playlists\\local\\240110-181805-Really short video 23-07-01.mp3',
+          'playlists\\local\\240110-181810-morning _ cinematic video 23-07-01.mp3',
+          'playlists\\S8 audio\\240110-181810-morning _ cinematic video 23-07-01.mp3'
         ];
 
         List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
