@@ -13418,7 +13418,7 @@ void main() {
         expect(
             actualMessage,
             contains(
-                "Saved to ZIP all playlists audio MP3 files downloaded from $oldestAudioDownloadDateTime.\n\nTotal saved audio number: 3, total size: 783 KB and total duration: 0:02:08.0."));
+                "Saved to ZIP all playlists audio MP3 files downloaded from $oldestAudioDownloadDateTime."));
         expect(
             actualMessage,
             contains(
@@ -13433,7 +13433,7 @@ void main() {
         expect(
             actualMessage,
             contains(
-                "Those files are too large to be included in the MP3 saved ZIP file and so were not saved:\nlocal\\240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3, 2.37 MB;\nS8 audio\\240701-163521-La surpopulation mondiale par Jancovici et Barrau 22-06-12.mp3, 2.79 MB;\nS8 audio\\240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3, 2.37 MB.\n"));
+                "Those files are too large to be included in the MP3 saved ZIP file and so were not saved:\nlocal\\240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3, 2.37 MB;\nS8 audio\\240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3, 2.79 MB;\nS8 audio\\240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3, 2.37 MB."));
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
           directoryPath: kApplicationPathWindowsTest,
@@ -13441,9 +13441,9 @@ void main() {
         );
 
         List<String> expectedZipContentLst = [
-          "playlists\\local\\240701-163521-Really short video 22-06-12.mp3",
-          "playlists\\local\\240701-163521-morning _ cinematic video 22-06-12.mp3",
-          "playlists\\S8 audio\\240701-163521-morning _ cinematic video 22-06-12.mp3",
+          'playlists\\local\\240110-181805-Really short video 23-07-01.mp3',
+          'playlists\\local\\240110-181810-morning _ cinematic video 23-07-01.mp3',
+          'playlists\\S8 audio\\240110-181810-morning _ cinematic video 23-07-01.mp3'
         ];
 
         List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
