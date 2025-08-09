@@ -13636,9 +13636,9 @@ void main() {
       });
       testWidgets(
           '''Reduce ZIP file size limit to 1 MB and then execute the playlist menu 'Save the Playlist
-            Audio's MP3 to ZIP file(s). Then, verify the confirmation dialog data which displays
-            a small number of saved ZIP files since the majority of audio files were not added
-            to the created ZIP file.''', (WidgetTester tester) async {
+            Audio's MP3 to ZIP file(s) on the 'S8 audio' playlist. Then, verify the confirmation dialog
+            data which displays a small number of saved ZIP files since the majority of audio files were
+            not added to the created ZIP file.''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -13696,6 +13696,94 @@ void main() {
         // And tap on save button
         await tester.tap(find.byKey(const Key('saveButton')));
         await tester.pumpAndSettle();
+
+        // Now execute the playlist menu 'Save the Playlist Audio's MP3 to
+        // ZIP file(s) ...' on the 'S8 audio' playlist
+
+        // Setting the path value returned by the FilePicker mock.
+        mockFilePicker.setPathToSelect(
+          pathToSelectStr: kApplicationPathWindowsTest,
+        );
+
+        const String playlistTitle = 'S8 audio';
+
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: playlistTitle,
+          playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
+        );
+
+        // Tap on the Ok button to set download date time.
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
+
+        // Confirm the saving of the audio mp3 files and close the
+        // confirm dialog by tapping on the Confirm button.
+        await tester.tap(find.byKey(const Key('confirmButton')));
+        await tester.pump(); // Process the tap immediately
+
+        // Only works if tester.pump() is used instead of
+        // tester.pumpAndSettle()
+        expect(
+          find.text("Saving $playlistTitle audio files to ZIP ..."),
+          findsOneWidget,
+        );
+        expect(
+          tester
+              .widget<Text>(find.byKey(const Key('saving_please_wait')).last)
+              .data!,
+          contains(
+            "Should approxim. take ",
+          ),
+        );
+
+        // Wait for completion
+        await tester.pumpAndSettle();
+
+        String actualMessage = tester
+            .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+            .data!;
+
+        String oldestAudioDownloadDateTime = "07/01/2024 16:36";
+
+        expect(
+            actualMessage,
+            contains(
+                "Saved to ZIP file(s) unique playlist audio MP3 files downloaded from $oldestAudioDownloadDateTime."));
+        expect(
+            actualMessage,
+            contains(
+                "Total saved audio number: 1, total size: 360 KB and total duration: 0:00:59.0."));
+        expect(actualMessage, contains("Save operation real duration: "));
+        expect(actualMessage, contains("number of bytes saved per second: "));
+        expect(actualMessage, contains("number of created ZIP file(s): 1."));
+        expect(
+            actualMessage,
+            contains(
+                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}${playlistTitle}_mp3_from_2024-01-07_16_36_07_on_"));
+        expect(
+            actualMessage,
+            contains(
+                "Those files are too large to be included in the MP3 saved ZIP file and so were not saved:\nS8 audio\\240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3, 2.79 MB;\nS8 audio\\240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3, 2.37 MB."));
+
+        List<String> zipLst = DirUtil.listFileNamesInDir(
+          directoryPath: kApplicationPathWindowsTest,
+          fileExtension: 'zip',
+        );
+
+        List<String> expectedZipContentLst = [
+          'playlists\\S8 audio\\240110-181810-morning _ cinematic video 23-07-01.mp3'
+        ];
+
+        List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
+          zipFilePathName:
+              "$kApplicationPathWindowsTest${path.separator}${zipLst[0]}",
+        );
+
+        expect(
+          zipContentLst,
+          expectedZipContentLst,
+        );
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
