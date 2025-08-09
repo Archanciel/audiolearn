@@ -3201,7 +3201,7 @@ abstract class AppLocalizations {
   /// No description provided for @savePlaylistsAudioMp3FilesToZipTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Save audio MP3 files from all playlists to a ZIP file. You can specify a date/time filter to only include audio files downloaded on or after that date.'**
+  /// **'Save audio MP3 files from all playlists to ZIP file(s). You can specify a date/time filter to only include audio files downloaded on or after that date.'**
   String get savePlaylistsAudioMp3FilesToZipTooltip;
 
   /// No description provided for @setAudioDownloadFromDateTimeTitle.
@@ -3243,13 +3243,13 @@ abstract class AppLocalizations {
   /// No description provided for @savePlaylistAudioMp3FilesToZipMenu.
   ///
   /// In en, this message translates to:
-  /// **'Save the Playlist Audio\'s MP3 to ZIP File ...'**
+  /// **'Save the Playlist Audio\'s MP3 to 1 or n ZIP File(s) ...'**
   String get savePlaylistAudioMp3FilesToZipMenu;
 
   /// No description provided for @savePlaylistAudioMp3FilesToZipTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Saving the playlist audio MP3 files to a ZIP file. You can specify a date/time filter to only include audio files downloaded on or after that date.'**
+  /// **'Saving the playlist audio MP3 files to one or several ZIP file(s). You can specify a date/time filter to only include audio files downloaded on or after that date.'**
   String get savePlaylistAudioMp3FilesToZipTooltip;
 
   /// No description provided for @audioDownloadFromDateTimeUniquePlaylistExplanation.
