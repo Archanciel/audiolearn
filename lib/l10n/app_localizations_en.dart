@@ -1969,7 +1969,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get savePlaylistsAudioMp3FilesToZipTooltip =>
-      'Save audio MP3 files from all playlists to a ZIP file. You can specify a date/time filter to only include audio files downloaded on or after that date.';
+      'Save audio MP3 files from all playlists to ZIP file(s). You can specify a date/time filter to only include audio files downloaded on or after that date.';
 
   @override
   String get setAudioDownloadFromDateTimeTitle => 'Set the download date';
@@ -1998,11 +1998,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get savePlaylistAudioMp3FilesToZipMenu =>
-      'Save the Playlist Audio\'s MP3 to ZIP File ...';
+      'Save the Playlist Audio\'s MP3 to 1 or n ZIP File(s) ...';
 
   @override
   String get savePlaylistAudioMp3FilesToZipTooltip =>
-      'Saving the playlist audio MP3 files to a ZIP file. You can specify a date/time filter to only include audio files downloaded on or after that date.';
+      'Saving the playlist audio MP3 files to one or several ZIP file(s). You can specify a date/time filter to only include audio files downloaded on or after that date.';
 
   @override
   String get audioDownloadFromDateTimeUniquePlaylistExplanation =>
