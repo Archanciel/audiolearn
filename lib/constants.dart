@@ -219,4 +219,4 @@ const kAudioExtractorExtractPositionStyle = TextStyle(
   fontSize: 14.0,
 );
 
-const int kMp3ZipFileSizeLimitInMb = 525; // 525 required by Android
+const double kMp3ZipFileSizeLimitInMb = 525.0; // 525 required by Android

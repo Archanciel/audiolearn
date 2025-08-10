@@ -260,7 +260,7 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
           _applyAudioPlaySpeedToAlreadyDownloadedAudios,
     );
 
-    int? value = int.tryParse(_mp3ZipFileSizeLimitInMbController.text);
+    double? value = double.tryParse(_mp3ZipFileSizeLimitInMbController.text);
 
     if (value != null) {
       widget.settingsDataService.set(

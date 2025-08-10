@@ -3129,7 +3129,7 @@ class PlaylistListVM extends ChangeNotifier {
     required List<Playlist> listOfPlaylists,
     required String targetDir,
     required DateTime fromAudioDownloadDateTime,
-    required int zipFileSizeLimitInMb,
+    required double zipFileSizeLimitInMb,
     bool uniquePlaylistIsSaved = false,
   }) async {
     if (targetDir == '/') {
@@ -3208,7 +3208,7 @@ class PlaylistListVM extends ChangeNotifier {
     required List<Playlist> listOfPlaylists,
     required String targetDirStr,
     required DateTime fromAudioDownloadDateTime,
-    required int zipFileSizeLimitInMb,
+    required double zipFileSizeLimitInMb,
     required bool uniquePlaylistIsSaved,
   }) async {
     int savedAudioNumber = 0;
@@ -3217,7 +3217,7 @@ class PlaylistListVM extends ChangeNotifier {
     DateTime oldestAudioSavedToZipDownloadDateTime = DateTime.now();
 
     // Convert MB limit to bytes
-    int zipFileSizeLimitInBytes = zipFileSizeLimitInMb * 1000000;
+    double zipFileSizeLimitInBytes = zipFileSizeLimitInMb * 1000000;
 
     // Collect all audio files to be saved
     List<AudioFileInfo> audioFilesToSave = [];
@@ -3335,8 +3335,10 @@ class PlaylistListVM extends ChangeNotifier {
           targetDir: actualTargetDir,
           baseFileName: baseZipFileName,
           partNumber: _numberOfCreatedZipFiles, // Now correctly incremented
-          totalParts:
-              _calculateTotalParts(audioFilesToSave, zipFileSizeLimitInBytes),
+          totalParts: _calculateTotalParts(
+            audioFileInfoLst: audioFilesToSave,
+            sizeLimitInBytes: zipFileSizeLimitInBytes,
+          ),
         );
 
         if (resultLst[0] == false) {
@@ -3377,8 +3379,10 @@ class PlaylistListVM extends ChangeNotifier {
         targetDir: actualTargetDir,
         baseFileName: baseZipFileName,
         partNumber: _numberOfCreatedZipFiles, // Now correctly incremented
-        totalParts:
-            _calculateTotalParts(audioFilesToSave, zipFileSizeLimitInBytes),
+        totalParts: _calculateTotalParts(
+          audioFileInfoLst: audioFilesToSave,
+          sizeLimitInBytes: zipFileSizeLimitInBytes,
+        ),
       );
 
       if (resultLst[0] == false) {
@@ -3452,7 +3456,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// ]
   Future<List<dynamic>> _saveArchiveBatchToFile({
     required List<AudioFileInfo> audioBatch,
-    required int zipFileSizeLimitInBytes,
+    required double zipFileSizeLimitInBytes,
     required String targetDir,
     required String baseFileName,
     required int partNumber,
@@ -3576,12 +3580,14 @@ class PlaylistListVM extends ChangeNotifier {
     return totalSize;
   }
 
-  int _calculateTotalParts(
-      List<AudioFileInfo> audioFiles, int sizeLimitInBytes) {
+  int _calculateTotalParts({
+    required List<AudioFileInfo> audioFileInfoLst,
+    required double sizeLimitInBytes,
+  }) {
     int parts = 1;
     int currentPartSize = 0;
 
-    for (AudioFileInfo audioInfo in audioFiles) {
+    for (AudioFileInfo audioInfo in audioFileInfoLst) {
       if (currentPartSize + audioInfo.audio.audioFileSize > sizeLimitInBytes &&
           currentPartSize > 0) {
         parts++;
