@@ -827,7 +827,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
 
               if (_audioSortFilterParameters ==
                   AudioSortFilterParameters
-                      .createDefaultAudioSortFilterParameters() && _sortFilterSaveAsUniqueNameController.text.isEmpty) {
+                      .createDefaultAudioSortFilterParameters() && _sortFilterSaveAsUniqueName.isEmpty) {
                 // here, the user clicks on the Delete button without
                 // having modified the sort/filter parameters. In this case,
                 // the Default sort/filter parameters are not deleted.
