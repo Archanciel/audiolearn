@@ -2152,7 +2152,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get insufficientStorageSpace =>
-      'Insufficient storage space detected during selecting the ZIP file containing MP3\'s.';
+      'Insufficient storage space detected when selecting the ZIP file containing MP3\'s.';
 
   @override
   String get pathError => 'Failed to retrieve file path.';
