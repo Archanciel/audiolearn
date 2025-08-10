@@ -818,12 +818,16 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           child: TextButton(
             key: const Key('deleteSortFilterTextButton'),
             onPressed: () async {
+              // if (executeAudioSortFilterParmsDeletion(
+              //         playlistListVMlistenFalse) !=
+              //     null) {
+              // } else {
               _audioSortFilterParameters =
                   _generateAudioSortFilterParametersFromDialogFields();
 
               if (_audioSortFilterParameters ==
                   AudioSortFilterParameters
-                      .createDefaultAudioSortFilterParameters()) {
+                      .createDefaultAudioSortFilterParameters() && _sortFilterSaveAsUniqueNameController.text.isEmpty) {
                 // here, the user clicks on the Delete button without
                 // having modified the sort/filter parameters. In this case,
                 // the Default sort/filter parameters are not deleted.
@@ -906,7 +910,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                       playlistListVMlistenFalse);
                 }
               }
-
+              // }
               Navigator.of(context).pop(['delete']);
             },
             child: Text(
@@ -933,10 +937,11 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     );
   }
 
-  void executeAudioSortFilterParmsDeletion(
+  AudioSortFilterParameters? executeAudioSortFilterParmsDeletion(
     PlaylistListVM playlistListVM,
   ) {
-    playlistListVM.deleteAudioSortFilterParameters(
+    AudioSortFilterParameters? deletedSFparms =
+        playlistListVM.deleteAudioSortFilterParameters(
       audioSortFilterParametersName: _sortFilterSaveAsUniqueName,
     );
 
@@ -945,6 +950,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     setState(() {
       _resetSortFilterOptions();
     });
+
+    return deletedSFparms;
   }
 
   /// Save button is displayed when the sort filter name is defined.
