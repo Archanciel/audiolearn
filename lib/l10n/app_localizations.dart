@@ -3456,7 +3456,7 @@ abstract class AppLocalizations {
   /// No description provided for @insufficientStorageSpace.
   ///
   /// In en, this message translates to:
-  /// **'Insufficient storage space detected during selecting the ZIP file containing MP3\'s.'**
+  /// **'Insufficient storage space detected when selecting the ZIP file containing MP3\'s.'**
   String get insufficientStorageSpace;
 
   /// No description provided for @pathError.
