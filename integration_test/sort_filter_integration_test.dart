@@ -15723,6 +15723,836 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
       });
+      group('''Downloaded/Imported related checkboxes''', () {
+        testWidgets(
+            '''Playable checkbox true and Not playable checkbox false in order to filter
+             only the playable audio. Create and then edit a named and saved 'Playable'
+             filter parms. Then verifying that the corresponding sort/filter dropdown
+             button item is applied to the playlist download view list of audio.''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          const String localPlaylistTitle = 'local'; // Youtube playlist
+
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_filter_dialog_test',
+            selectedPlaylistTitle: localPlaylistTitle,
+          );
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type 'Playable' in the 'Save as' TextField
+
+          String saveAsTitle = 'Playable';
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+          // Scrolling down the sort filter dialog so that the 'Playable' /
+          // 'Not playable' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Unselect the 'Not playable' checkbox
+
+          // Find the 'Not playable' checkbox widget
+          Finder filterNotPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPlayableCheckbox'));
+
+          // Tap the checkbox to unselect it
+          await tester.tap(filterNotPlayableCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Tap the 'Toggle List' button to avoid displaying the list
+          // of playlists which may hide the audio title we want to
+          // tap on
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now verify the playlist download view state with the 'Playable'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'Playable' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          List<String> audioTitlesFilteredByPictured = [
+            "Really short video",
+            "230628-033813-audio learn test short video two 23-06-10",
+            "audio learn test short video one",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByPictured,
+          );
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'Playable' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu in order to edit the 'Playable'
+          // sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Scrolling down the sort filter dialog so that the 'Playable' /
+          // 'Not playable' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Find the 'Playable' checkbox widget and verify it is
+          // selected
+          final Finder filterPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterPlayableCheckbox'));
+
+          expect(
+            tester.widget<Checkbox>(filterPlayableCheckboxWidgetFinder).value,
+            true,
+          );
+
+          // Find the 'Not playable' checkbox widget and verify it is not
+          // selected
+          filterNotPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPlayableCheckbox'));
+
+          expect(
+            tester
+                .widget<Checkbox>(filterNotPlayableCheckboxWidgetFinder)
+                .value,
+            false,
+          );
+
+          // Click on the "Cancel" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the modified sort/filter parms
+          await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+          await tester.pumpAndSettle();
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Playable checkbox false and Not playable checkbox true in order to filter
+             only the not playable audio. Create and then edit a named and saved
+             'Not playable' filter parms. Then verifying that the corresponding sort/filter
+             dropdown button item is applied to the playlist download view list of
+             audio.''', (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          const String localPlaylistTitle = 'local'; // Youtube playlist
+
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_filter_dialog_test',
+            selectedPlaylistTitle: localPlaylistTitle,
+          );
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type 'Not playable' in the 'Save as' TextField
+
+          String saveAsTitle = 'Not playable';
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+          // Scrolling down the sort filter dialog so that the 'Playable' /
+          // 'Not playable' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Unselect the 'Playable' checkbox
+
+          // Find the 'Playable' checkbox widget
+          Finder filterPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterPlayableCheckbox'));
+
+          // Tap the checkbox to unselect it
+          await tester.tap(filterPlayableCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Tap the 'Toggle List' button to avoid displaying the list
+          // of playlists which may hide the audio title we want to
+          // tap on
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now verify the playlist download view state with the 'Not playable'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'Not playable' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          List<String> audioTitlesFilteredByNotPictured = [
+            "morning _ cinematic video",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByNotPictured,
+          );
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'Not playable' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu in order to edit the 'Not playable'
+          // sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Scrolling down the sort filter dialog so that the 'Playable' /
+          // 'Not playable' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Find the 'Playable' checkbox widget and verify it is not
+          // selected
+          filterPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterPlayableCheckbox'));
+
+          expect(
+            tester.widget<Checkbox>(filterPlayableCheckboxWidgetFinder).value,
+            false,
+          );
+
+          // Find the 'Not playable' checkbox widget and verify it is
+          // selected
+          final Finder filterNotPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPlayableCheckbox'));
+
+          expect(
+            tester
+                .widget<Checkbox>(filterNotPlayableCheckboxWidgetFinder)
+                .value,
+            true,
+          );
+
+          // Click on the "Cancel" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the modified sort/filter parms
+          await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+          await tester.pumpAndSettle();
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Both Playable and Not playable checkboxes true in order to filter both
+             the playable and not playable audio. Create and then edit a named and
+             saved 'PlayNotPlay' filter parms. Then verifying that the corresponding
+             sort/filter dropdown button item is applied to the playlist download
+             view list of audio.''', (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          const String localPlaylistTitle = 'local'; // Youtube playlist
+
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_filter_dialog_test',
+            selectedPlaylistTitle: localPlaylistTitle,
+          );
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type 'PlayNotPlay' in the 'Save as' TextField
+
+          String saveAsTitle = 'PlayNotPlay';
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+          // Do not modify the default true values of the 'Playable' /
+          // 'Not playable' checkboxes
+
+          // Scrolling down the sort filter dialog so that the 'Save' button is
+          // visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Tap the 'Toggle List' button to avoid displaying the list
+          // of playlists which may hide the audio title we want to
+          // tap on
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now verify the playlist download view state with the 'PlayNotPlay'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'PlayNotPlay' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          List<String> audioTitlesFilteredByPictured = [
+            "morning _ cinematic video",
+            "Really short video",
+            "230628-033813-audio learn test short video two 23-06-10",
+            "audio learn test short video one",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByPictured,
+          );
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'PlayNotPlay' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu in order to edit the 'PlayNotPlay'
+          // sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Scrolling down the sort filter dialog so that the 'Playable' /
+          // 'Not playable' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Find the 'Playable' checkbox widget and verify it is
+          // selected
+          final Finder filterPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterPlayableCheckbox'));
+
+          expect(
+            tester.widget<Checkbox>(filterPlayableCheckboxWidgetFinder).value,
+            true,
+          );
+
+          // Find the 'Not playable' checkbox widget and verify it is
+          // selected
+          final Finder filterNotPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPlayableCheckbox'));
+
+          expect(
+            tester
+                .widget<Checkbox>(filterNotPlayableCheckboxWidgetFinder)
+                .value,
+            true,
+          );
+
+          // Click on the 'Cancel' button. This closes the sort/filter dialog
+          // and the 'PlayNotPlay' sort/filter dropdown button item is removed
+          await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+          await tester.pumpAndSettle();
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Unselect Playable then Not playable checkbox in order to filter Playable 
+             audio. Create and then edit a named and saved 'UnselectPlayThenNotPlay' sort
+             filter parms. Then verifying that the corresponding sort/filter dropdown
+             button item is applied to the playlist download view list of audio.''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          const String localPlaylistTitle = 'local'; // Youtube playlist
+
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_filter_dialog_test',
+            selectedPlaylistTitle: localPlaylistTitle,
+          );
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type 'UnselectPlayThenNotPlay' in the 'Save as' TextField
+
+          String saveAsTitle = 'UnselectPlayThenNotPlay';
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+          // Scrolling down the sort filter dialog so that the 'Playable' /
+          // 'Not playable' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Unselect the 'Playable' checkbox
+
+          // Find the 'Playable' checkbox widget
+          Finder filterPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterPlayableCheckbox'));
+
+          // Tap the checkbox to unselect it
+          await tester.tap(filterPlayableCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Unselect the 'Not playable' checkbox
+
+          // Find the 'Not playable' checkbox widget
+          Finder filterNotPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPlayableCheckbox'));
+
+          // Tap the checkbox to unselect it. Since the two playable
+          // related checkboxex can not be both unselected, the
+          // 'Playable' checkbox is reselected.
+          await tester.tap(filterNotPlayableCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Tap the 'Toggle List' button to avoid displaying the list
+          // of playlists which may hide the audio title we want to
+          // tap on
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now verify the playlist download view state with the 'Playable'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'Playable' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          List<String> audioTitlesFilteredByPictured = [
+            "Really short video",
+            "230628-033813-audio learn test short video two 23-06-10",
+            "audio learn test short video one",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByPictured,
+          );
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'UnselectPlayThenNotPlay' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu in order to edit the
+          // 'UnselectPlayThenNotPlay' sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Scrolling down the sort filter dialog so that the 'Playable' /
+          // 'Not playable' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Find the 'Playable' checkbox widget and verify it is
+          // selected
+          filterPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterPlayableCheckbox'));
+
+          expect(
+            tester.widget<Checkbox>(filterPlayableCheckboxWidgetFinder).value,
+            true,
+          );
+
+          // Find the 'Not playable' checkbox widget and verify it is not
+          // selected
+          filterNotPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPlayableCheckbox'));
+
+          expect(
+            tester
+                .widget<Checkbox>(filterNotPlayableCheckboxWidgetFinder)
+                .value,
+            false,
+          );
+
+          // Click on the "Cancel" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the modified sort/filter parms
+          await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+          await tester.pumpAndSettle();
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Unselect Not playable then Playable checkbox in order to filter not
+             playable audio. Create and then edit a named and saved 'UnselecNotPlThenPlay'
+             sort filter parms. Then verifying that the corresponding sort/filter
+             dropdown button item is applied to the playlist download view list
+             of audio.''', (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          const String localPlaylistTitle = 'local'; // Youtube playlist
+
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_filter_dialog_test',
+            selectedPlaylistTitle: localPlaylistTitle,
+          );
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type 'UnselecNotPlThenPlay' in the 'Save as' TextField
+
+          String saveAsTitle = 'UnselecNotPlThenPlay';
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+          // Scrolling down the sort filter dialog so that the 'Playable' /
+          // 'Not playable' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Unselect the 'Not playable' checkbox
+
+          // Find the 'Not playable' checkbox widget
+          Finder filterNotPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPlayableCheckbox'));
+
+          // Tap the checkbox to unselect it.
+          await tester.tap(filterNotPlayableCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Unselect the 'Playable' checkbox
+
+          // Find the 'Playable' checkbox widget
+          Finder filterPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterPlayableCheckbox'));
+
+          // Tap the checkbox to unselect it. Since the two playable
+          // related checkboxex can not be both unselected, the
+          // 'Not playable' checkbox is reselected.
+          await tester.tap(filterPlayableCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Tap the 'Toggle List' button to avoid displaying the list
+          // of playlists which may hide the audio title we want to
+          // tap on
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now verify the playlist download view state with the 'Playable'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'Playable' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          List<String> audioTitlesFilteredByPictured = [
+            "morning _ cinematic video",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByPictured,
+          );
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'UnselecNotPlThenPlay' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu in order to edit the
+          // 'UnselecNotPlThenPlay' sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Scrolling down the sort filter dialog so that the 'Playable' /
+          // 'Not playable' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Find the 'Playable' checkbox widget and verify it is
+          // not selected
+          filterPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterPlayableCheckbox'));
+
+          expect(
+            tester.widget<Checkbox>(filterPlayableCheckboxWidgetFinder).value,
+            false,
+          );
+
+          // Find the 'Not playable' checkbox widget and verify it is
+          // selected
+          filterNotPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPlayableCheckbox'));
+
+          expect(
+            tester
+                .widget<Checkbox>(filterNotPlayableCheckboxWidgetFinder)
+                .value,
+            true,
+          );
+
+          // Click on the "Cancel" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the modified sort/filter parms
+          await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+          await tester.pumpAndSettle();
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+      });
     });
   });
 }
