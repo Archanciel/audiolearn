@@ -1854,7 +1854,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.pumpAndSettle();
 
             // Tap on the Music qual. checkbox to unselect it
-            await tester.tap(find.byKey(const Key('filterMusicQualityCheckbox')));
+            await tester
+                .tap(find.byKey(const Key('filterMusicQualityCheckbox')));
             await tester.pumpAndSettle();
 
             // Tap on the Spoken qual. checkbox to unselect it. This deselect
@@ -1899,8 +1900,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             // Tap on the Imported checkbox to unselect it. This deselect
             // Imported and reselect Downloaded.
-            await tester
-                .tap(find.byKey(const Key('filterImportedCheckbox')));
+            await tester.tap(find.byKey(const Key('filterImportedCheckbox')));
             await tester.pumpAndSettle();
 
             // Tap on the Exclude ignore case checkbox to unselect it
@@ -3170,7 +3170,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.pumpAndSettle();
 
             // Tap on the Music qual. checkbox to unselect it
-            await tester.tap(find.byKey(const Key('filterMusicQualityCheckbox')));
+            await tester
+                .tap(find.byKey(const Key('filterMusicQualityCheckbox')));
             await tester.pumpAndSettle();
 
             // Tap on the Spoken qual. checkbox to unselect it. This deselect
@@ -3210,8 +3211,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             // Tap on the Imported checkbox to unselect it. This deselect
             // Imported.
-            await tester
-                .tap(find.byKey(const Key('filterImportedCheckbox')));
+            await tester.tap(find.byKey(const Key('filterImportedCheckbox')));
             await tester.pumpAndSettle();
 
             // Tap on the Downloaded checkbox to unselect it. This deselects
@@ -13914,8 +13914,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kApplicationPathWindowsTest,
           );
 
-          const String localPlaylistTitle =
-              'local'; // Youtube playlist
+          const String localPlaylistTitle = 'local'; // Youtube playlist
 
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
@@ -14036,7 +14035,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const Key('filterMusicQualityCheckbox'));
 
           expect(
-            tester.widget<Checkbox>(filterMusicQualityCheckboxWidgetFinder).value,
+            tester
+                .widget<Checkbox>(filterMusicQualityCheckboxWidgetFinder)
+                .value,
             true,
           );
 
@@ -14046,7 +14047,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const Key('filterSpokenQualityCheckbox'));
 
           expect(
-            tester.widget<Checkbox>(filterSpokenQualityCheckboxWidgetFinder).value,
+            tester
+                .widget<Checkbox>(filterSpokenQualityCheckboxWidgetFinder)
+                .value,
             false,
           );
 
@@ -14074,8 +14077,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kApplicationPathWindowsTest,
           );
 
-          const String localPlaylistTitle =
-              'local'; // Youtube playlist
+          const String localPlaylistTitle = 'local'; // Youtube playlist
 
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
@@ -14198,7 +14200,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const Key('filterMusicQualityCheckbox'));
 
           expect(
-            tester.widget<Checkbox>(filterMusicQualityCheckboxWidgetFinder).value,
+            tester
+                .widget<Checkbox>(filterMusicQualityCheckboxWidgetFinder)
+                .value,
             false,
           );
 
@@ -14208,7 +14212,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const Key('filterSpokenQualityCheckbox'));
 
           expect(
-            tester.widget<Checkbox>(filterSpokenQualityCheckboxWidgetFinder).value,
+            tester
+                .widget<Checkbox>(filterSpokenQualityCheckboxWidgetFinder)
+                .value,
             true,
           );
 
@@ -14236,8 +14242,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kApplicationPathWindowsTest,
           );
 
-          const String localPlaylistTitle =
-              'local'; // Youtube playlist
+          const String localPlaylistTitle = 'local'; // Youtube playlist
 
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
@@ -14289,11 +14294,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle();
 
-          // Now verify the playlist download view state with the 'Music qual'
+          // Now verify the playlist download view state with the 'MusSpok'
           // sort/filter parms applied
 
           // Verify that the dropdown button has been updated with the
-          // 'Music qual' sort/filter parms selected
+          // 'MusSpok' sort/filter parms selected
           IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
             tester: tester,
             dropdownButtonSelectedTitle: saveAsTitle,
@@ -14305,7 +14310,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             "morning _ cinematic video",
             "Really short video",
             "230628-033813-audio learn test short video two 23-06-10",
-            "audio learn test short video one",];
+            "audio learn test short video one",
+          ];
 
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
@@ -14326,12 +14332,12 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(dropDownButtonTextFinder);
           await tester.pumpAndSettle();
 
-          // And find the 'Music qual' sort/filter item
+          // And find the 'MusSpok' sort/filter item
           final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
           await tester.tap(titleAscDropDownTextFinder);
           await tester.pumpAndSettle();
 
-          // Now open the audio popup menu in order to edit the 'Music qual'
+          // Now open the audio popup menu in order to edit the 'MusSpok'
           // sort/filter parms
           final Finder dropdownItemEditIconButtonFinder = find.byKey(
               const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
@@ -14353,7 +14359,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const Key('filterMusicQualityCheckbox'));
 
           expect(
-            tester.widget<Checkbox>(filterMusicQualityCheckboxWidgetFinder).value,
+            tester
+                .widget<Checkbox>(filterMusicQualityCheckboxWidgetFinder)
+                .value,
             true,
           );
 
@@ -14363,15 +14371,25 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const Key('filterSpokenQualityCheckbox'));
 
           expect(
-            tester.widget<Checkbox>(filterSpokenQualityCheckboxWidgetFinder).value,
+            tester
+                .widget<Checkbox>(filterSpokenQualityCheckboxWidgetFinder)
+                .value,
             true,
           );
 
-          // Click on the "Cancel" button. This closes the sort/filter dialog
-          // and updates the sort/filter playlist download view dropdown
-          // button with the modified sort/filter parms
-          await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+          // Click on the "Delete" button. This closes the sort/filter dialog
+          // and the 'MusSpok' sort/filter dropdown button item is removed
+          await tester.tap(find.byKey(const Key('deleteSortFilterTextButton')));
           await tester.pumpAndSettle();
+
+          // Verify that the 'MusSpok' sort/filter dropdown button item has been
+          // removed from the dropdown button items list
+          expect(
+            find.text(saveAsTitle),
+            findsNothing,
+            reason: 'The MusSpok sort/filter dropdown button item should '
+                'have been removed from the dropdown button items list.',
+          );
 
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
@@ -14384,15 +14402,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
              qual. audio. Create and then edit a named and saved 'UnselectMusThenSpok'
              sort filter parms. Then verifying that the corresponding sort/filter
              dropdown button item is applied to the playlist download view list
-             of audio.''', (WidgetTester tester) async {
+             of audio. Finally, delete the created sort filter parameters.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
             rootPath: kApplicationPathWindowsTest,
           );
 
-          const String localPlaylistTitle =
-              'local'; // Youtube playlist
+          const String localPlaylistTitle = 'local'; // Youtube playlist
 
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
@@ -14476,7 +14493,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // And verify the order of the playlist audio titles
 
           List<String> audioTitlesFilteredByPictured = [
-            "NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE",
+            "audio learn test short video one",
           ];
 
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
@@ -14525,7 +14542,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const Key('filterMusicQualityCheckbox'));
 
           expect(
-            tester.widget<Checkbox>(filterMusicQualityCheckboxWidgetFinder).value,
+            tester
+                .widget<Checkbox>(filterMusicQualityCheckboxWidgetFinder)
+                .value,
             true,
           );
 
@@ -14535,7 +14554,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const Key('filterSpokenQualityCheckbox'));
 
           expect(
-            tester.widget<Checkbox>(filterSpokenQualityCheckboxWidgetFinder).value,
+            tester
+                .widget<Checkbox>(filterSpokenQualityCheckboxWidgetFinder)
+                .value,
             false,
           );
 
@@ -14563,8 +14584,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kApplicationPathWindowsTest,
           );
 
-          const String localPlaylistTitle =
-              'local'; // Youtube playlist
+          const String localPlaylistTitle = 'local'; // Youtube playlist
 
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
@@ -14648,7 +14668,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // And verify the order of the playlist audio titles
 
           List<String> audioTitlesFilteredByPictured = [
-            "CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien",
+            "morning _ cinematic video",
+            "Really short video",
+            "230628-033813-audio learn test short video two 23-06-10",
           ];
 
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
@@ -14697,7 +14719,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const Key('filterMusicQualityCheckbox'));
 
           expect(
-            tester.widget<Checkbox>(filterMusicQualityCheckboxWidgetFinder).value,
+            tester
+                .widget<Checkbox>(filterMusicQualityCheckboxWidgetFinder)
+                .value,
             false,
           );
 
@@ -14707,7 +14731,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const Key('filterSpokenQualityCheckbox'));
 
           expect(
-            tester.widget<Checkbox>(filterSpokenQualityCheckboxWidgetFinder).value,
+            tester
+                .widget<Checkbox>(filterSpokenQualityCheckboxWidgetFinder)
+                .value,
             true,
           );
 
