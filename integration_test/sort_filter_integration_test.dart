@@ -14893,6 +14893,856 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
       });
+      group('''Playable related checkboxes''', () {
+        testWidgets(
+            '''Music qual. checkbox true and Spoken q. checkbox false in order to filter
+             only the music qual. audio. Create and then edit a named and saved
+             'Music qual' filter parms. Then verifying that the corresponding sort/filter
+             dropdown button item is applied to the playlist download view list of
+             audio.''', (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          const String localPlaylistTitle = 'local'; // Youtube playlist
+
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_filter_dialog_test',
+            selectedPlaylistTitle: localPlaylistTitle,
+          );
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type 'Music qual' in the 'Save as' TextField
+
+          String saveAsTitle = 'Music qual';
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+          // Scrolling down the sort filter dialog so that the 'Music qual' /
+          // 'Spoken q' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Unselect the 'Spoken q' checkbox
+
+          // Find the 'Spoken q' checkbox widget
+          Finder filterSpokenQualityCheckboxWidgetFinder =
+              find.byKey(const Key('filterSpokenQualityCheckbox'));
+
+          // Tap the checkbox to unselect it
+          await tester.tap(filterSpokenQualityCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Tap the 'Toggle List' button to avoid displaying the list
+          // of playlists which may hide the audio title we want to
+          // tap on
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now verify the playlist download view state with the 'Music qual'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'Music qual' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          List<String> audioTitlesFilteredByPictured = [
+            "audio learn test short video one",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByPictured,
+          );
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'Music qual' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu in order to edit the 'Music qual'
+          // sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Scrolling down the sort filter dialog so that the 'Music qual' /
+          // 'Spoken q' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Find the 'Music qual' checkbox widget and verify it is
+          // selected
+          final Finder filterMusicQualityCheckboxWidgetFinder =
+              find.byKey(const Key('filterMusicQualityCheckbox'));
+
+          expect(
+            tester
+                .widget<Checkbox>(filterMusicQualityCheckboxWidgetFinder)
+                .value,
+            true,
+          );
+
+          // Find the 'Spoken q' checkbox widget and verify it is not
+          // selected
+          filterSpokenQualityCheckboxWidgetFinder =
+              find.byKey(const Key('filterSpokenQualityCheckbox'));
+
+          expect(
+            tester
+                .widget<Checkbox>(filterSpokenQualityCheckboxWidgetFinder)
+                .value,
+            false,
+          );
+
+          // Click on the "Cancel" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the modified sort/filter parms
+          await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+          await tester.pumpAndSettle();
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Music qual. checkbox false and Spoken q. checkbox true in order to filter
+             only the not music qual. audio. Create and then edit a named and saved
+             'Spoken q' filter parms. Then verifying that the corresponding sort/filter
+             dropdown button item is applied to the playlist download view list of
+             audio.''', (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          const String localPlaylistTitle = 'local'; // Youtube playlist
+
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_filter_dialog_test',
+            selectedPlaylistTitle: localPlaylistTitle,
+          );
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type 'Spoken q' in the 'Save as' TextField
+
+          String saveAsTitle = 'Spoken q';
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+          // Scrolling down the sort filter dialog so that the 'Music qual' /
+          // 'Spoken q' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Unselect the 'Music qual' checkbox
+
+          // Find the 'Music qual' checkbox widget
+          Finder filterMusicQualityCheckboxWidgetFinder =
+              find.byKey(const Key('filterMusicQualityCheckbox'));
+
+          // Tap the checkbox to unselect it
+          await tester.tap(filterMusicQualityCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Tap the 'Toggle List' button to avoid displaying the list
+          // of playlists which may hide the audio title we want to
+          // tap on
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now verify the playlist download view state with the 'Spoken q'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'Spoken q' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          List<String> audioTitlesFilteredByNotPictured = [
+            "morning _ cinematic video",
+            "Really short video",
+            "230628-033813-audio learn test short video two 23-06-10",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByNotPictured,
+          );
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'Spoken q' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu in order to edit the 'Spoken q'
+          // sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Scrolling down the sort filter dialog so that the 'Music qual' /
+          // 'Spoken q' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Find the 'Music qual' checkbox widget and verify it is not
+          // selected
+          filterMusicQualityCheckboxWidgetFinder =
+              find.byKey(const Key('filterMusicQualityCheckbox'));
+
+          expect(
+            tester
+                .widget<Checkbox>(filterMusicQualityCheckboxWidgetFinder)
+                .value,
+            false,
+          );
+
+          // Find the 'Spoken q' checkbox widget and verify it is
+          // selected
+          final Finder filterSpokenQualityCheckboxWidgetFinder =
+              find.byKey(const Key('filterSpokenQualityCheckbox'));
+
+          expect(
+            tester
+                .widget<Checkbox>(filterSpokenQualityCheckboxWidgetFinder)
+                .value,
+            true,
+          );
+
+          // Click on the "Cancel" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the modified sort/filter parms
+          await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+          await tester.pumpAndSettle();
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Both Music qual. and Spoken q. checkboxes true in order to filter both
+             the music qual. and not music qual. audio. Create and then edit a named
+             and saved 'MusSpok' filter parms. Then verifying that the corresponding
+             sort/filter dropdown button item is applied to the playlist download
+             view list of audio.''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          const String localPlaylistTitle = 'local'; // Youtube playlist
+
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_filter_dialog_test',
+            selectedPlaylistTitle: localPlaylistTitle,
+          );
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type "MusSpok" in the 'Save as' TextField
+
+          String saveAsTitle = 'MusSpok';
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+          // Do not modify the default true values of the 'Music qual' /
+          // 'Uncom.' checkboxes
+
+          // Scrolling down the sort filter dialog so that the 'Save' button is
+          // visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Tap the 'Toggle List' button to avoid displaying the list
+          // of playlists which may hide the audio title we want to
+          // tap on
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now verify the playlist download view state with the 'MusSpok'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'MusSpok' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          List<String> audioTitlesFilteredByPictured = [
+            "morning _ cinematic video",
+            "Really short video",
+            "230628-033813-audio learn test short video two 23-06-10",
+            "audio learn test short video one",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByPictured,
+          );
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'MusSpok' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu in order to edit the 'MusSpok'
+          // sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Scrolling down the sort filter dialog so that the 'Music qual' /
+          // 'Spoken q' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Find the 'Music qual' checkbox widget and verify it is
+          // selected
+          final Finder filterMusicQualityCheckboxWidgetFinder =
+              find.byKey(const Key('filterMusicQualityCheckbox'));
+
+          expect(
+            tester
+                .widget<Checkbox>(filterMusicQualityCheckboxWidgetFinder)
+                .value,
+            true,
+          );
+
+          // Find the 'Spoken q' checkbox widget and verify it is
+          // selected
+          final Finder filterSpokenQualityCheckboxWidgetFinder =
+              find.byKey(const Key('filterSpokenQualityCheckbox'));
+
+          expect(
+            tester
+                .widget<Checkbox>(filterSpokenQualityCheckboxWidgetFinder)
+                .value,
+            true,
+          );
+
+          // Click on the "Delete" button. This closes the sort/filter dialog
+          // and the 'MusSpok' sort/filter dropdown button item is removed
+          await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+          await tester.pumpAndSettle();
+
+          // Verify that the 'MusSpok' sort/filter dropdown button item has been
+          // removed from the dropdown button items list
+          expect(
+            find.text(saveAsTitle),
+            findsNothing,
+            reason: 'The MusSpok sort/filter dropdown button item should '
+                'have been removed from the dropdown button items list.',
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+         testWidgets(
+            '''Unselect Music qual. then Spoken q. checkbox in order to filter Music 
+             qual. audio. Create and then edit a named and saved 'UnselectMusThenSpok'
+             sort filter parms. Then verifying that the corresponding sort/filter
+             dropdown button item is applied to the playlist download view list
+             of audio.''', (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          const String localPlaylistTitle = 'local'; // Youtube playlist
+
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_filter_dialog_test',
+            selectedPlaylistTitle: localPlaylistTitle,
+          );
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type "UnselectMusThenSpok" in the 'Save as' TextField
+
+          String saveAsTitle = 'UnselectMusThenSpok';
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+          // Scrolling down the sort filter dialog so that the 'Music qual' /
+          // 'Spoken q' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Unselect the 'Music qual' checkbox
+
+          // Find the 'Music qual' checkbox widget
+          Finder filterMusicQualityCheckboxWidgetFinder =
+              find.byKey(const Key('filterMusicQualityCheckbox'));
+
+          // Tap the checkbox to unselect it
+          await tester.tap(filterMusicQualityCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Unselect the 'Spoken q' checkbox
+
+          // Find the 'Spoken q' checkbox widget
+          Finder filterSpokenQualityCheckboxWidgetFinder =
+              find.byKey(const Key('filterSpokenQualityCheckbox'));
+
+          // Tap the checkbox to unselect it. Since the two picture
+          // related checkboxex can not be both unselected, the
+          // 'Music qual' checkbox is reselected.
+          await tester.tap(filterSpokenQualityCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Tap the 'Toggle List' button to avoid displaying the list
+          // of playlists which may hide the audio title we want to
+          // tap on
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now verify the playlist download view state with the 'Music qual'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'Music qual' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          List<String> audioTitlesFilteredByPictured = [
+            "audio learn test short video one",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByPictured,
+          );
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'UnselectMusThenSpok' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu in order to edit the
+          // 'UnselectMusThenSpok' sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Scrolling down the sort filter dialog so that the 'Music qual' /
+          // 'Spoken q' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Find the 'Music qual' checkbox widget and verify it is
+          // selected
+          filterMusicQualityCheckboxWidgetFinder =
+              find.byKey(const Key('filterMusicQualityCheckbox'));
+
+          expect(
+            tester
+                .widget<Checkbox>(filterMusicQualityCheckboxWidgetFinder)
+                .value,
+            true,
+          );
+
+          // Find the 'Spoken q' checkbox widget and verify it is not
+          // selected
+          filterSpokenQualityCheckboxWidgetFinder =
+              find.byKey(const Key('filterSpokenQualityCheckbox'));
+
+          expect(
+            tester
+                .widget<Checkbox>(filterSpokenQualityCheckboxWidgetFinder)
+                .value,
+            false,
+          );
+
+          // Click on the "Cancel" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the modified sort/filter parms
+          await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+          await tester.pumpAndSettle();
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Unselect Spoken q. then Music qual. checkbox in order to filter not music
+             qual audio. Create and then edit a named and saved 'UnselecSpokThenMus'
+             sort filter parms. Then verifying that the corresponding sort/filter
+             dropdown button item is applied to the playlist download view list
+             of audio.''', (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          const String localPlaylistTitle = 'local'; // Youtube playlist
+
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_filter_dialog_test',
+            selectedPlaylistTitle: localPlaylistTitle,
+          );
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type "UnselecSpokThenMus" in the 'Save as' TextField
+
+          String saveAsTitle = 'UnselecSpokThenMus';
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+          // Scrolling down the sort filter dialog so that the 'Music qual' /
+          // 'Spoken q' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Unselect the 'Spoken q' checkbox
+
+          // Find the 'Spoken q' checkbox widget
+          Finder filterSpokenQualityCheckboxWidgetFinder =
+              find.byKey(const Key('filterSpokenQualityCheckbox'));
+
+          // Tap the checkbox to unselect it.
+          await tester.tap(filterSpokenQualityCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Unselect the 'Music qual' checkbox
+
+          // Find the 'Music qual' checkbox widget
+          Finder filterMusicQualityCheckboxWidgetFinder =
+              find.byKey(const Key('filterMusicQualityCheckbox'));
+
+          // Tap the checkbox to unselect it. Since the two picture
+          // related checkboxex can not be both unselected, the
+          // 'Spoken q' checkbox is reselected.
+          await tester.tap(filterMusicQualityCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Tap the 'Toggle List' button to avoid displaying the list
+          // of playlists which may hide the audio title we want to
+          // tap on
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now verify the playlist download view state with the 'Music qual'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'Music qual' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          List<String> audioTitlesFilteredByPictured = [
+            "morning _ cinematic video",
+            "Really short video",
+            "230628-033813-audio learn test short video two 23-06-10",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByPictured,
+          );
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'UnselecSpokThenMus' sort/filter item
+          final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu in order to edit the
+          // 'UnselecSpokThenMus' sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Scrolling down the sort filter dialog so that the 'Music qual' /
+          // 'Spoken q' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Find the 'Music qual' checkbox widget and verify it is
+          // not selected
+          filterMusicQualityCheckboxWidgetFinder =
+              find.byKey(const Key('filterMusicQualityCheckbox'));
+
+          expect(
+            tester
+                .widget<Checkbox>(filterMusicQualityCheckboxWidgetFinder)
+                .value,
+            false,
+          );
+
+          // Find the 'Spoken q' checkbox widget and verify it is
+          // selected
+          filterSpokenQualityCheckboxWidgetFinder =
+              find.byKey(const Key('filterSpokenQualityCheckbox'));
+
+          expect(
+            tester
+                .widget<Checkbox>(filterSpokenQualityCheckboxWidgetFinder)
+                .value,
+            true,
+          );
+
+          // Click on the "Cancel" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the modified sort/filter parms
+          await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+          await tester.pumpAndSettle();
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+      });
     });
   });
 }
