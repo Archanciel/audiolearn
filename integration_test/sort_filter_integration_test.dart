@@ -14235,7 +14235,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
              the music qual. and not music qual. audio. Create and then edit a named
              and saved 'MusSpok' filter parms. Then verifying that the corresponding
              sort/filter dropdown button item is applied to the playlist download
-             view list of audio.''', (WidgetTester tester) async {
+             view list of audio. Finally, delete the created sort filter parameters.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -14402,7 +14402,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
              qual. audio. Create and then edit a named and saved 'UnselectMusThenSpok'
              sort filter parms. Then verifying that the corresponding sort/filter
              dropdown button item is applied to the playlist download view list
-             of audio. Finally, delete the created sort filter parameters.''', (WidgetTester tester) async {
+             of audio.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
