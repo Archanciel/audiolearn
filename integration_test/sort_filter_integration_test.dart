@@ -13903,8 +13903,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
       });
       group('''Audio quality related checkboxes''', () {
         testWidgets(
-            '''Music qual.checkbox true and Spoken q. checkbox false in order to filter
-             only the pictured audio. Create and then edit a named and saved
+            '''Music qual. checkbox true and Spoken q. checkbox false in order to filter
+             only the music qual. audio. Create and then edit a named and saved
              'Music qual' filter parms. Then verifying that the corresponding sort/filter
              dropdown button item is applied to the playlist download view list of
              audio.''', (WidgetTester tester) async {
@@ -13987,7 +13987,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // And verify the order of the playlist audio titles
 
           List<String> audioTitlesFilteredByPictured = [
-            "NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE",
+            "audio learn test short video one",
           ];
 
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
@@ -14063,8 +14063,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
         testWidgets(
-            '''Music qual.checkbox false and Spoken q. checkbox true in order to filter
-             only the not pictured audio. Create and then edit a named and saved
+            '''Music qual. checkbox false and Spoken q. checkbox true in order to filter
+             only the not music qual. audio. Create and then edit a named and saved
              'Spoken q' filter parms. Then verifying that the corresponding sort/filter
              dropdown button item is applied to the playlist download view list of
              audio.''', (WidgetTester tester) async {
@@ -14147,7 +14147,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // And verify the order of the playlist audio titles
 
           List<String> audioTitlesFilteredByNotPictured = [
-            "CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien",
+            "morning _ cinematic video",
+            "Really short video",
+            "230628-033813-audio learn test short video two 23-06-10",
           ];
 
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
@@ -14223,9 +14225,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
         testWidgets(
-            '''Both Music qual.and Spoken q. checkboxes true in order to filter both
-             the pictured and not pictured audio. Create and then edit a named
-             and saved 'ComUncom' filter parms. Then verifying that the corresponding
+            '''Both Music qual. and Spoken q. checkboxes true in order to filter both
+             the music qual. and not music qual. audio. Create and then edit a named
+             and saved 'MusSpok' filter parms. Then verifying that the corresponding
              sort/filter dropdown button item is applied to the playlist download
              view list of audio.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
@@ -14253,9 +14255,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
           await tester.pumpAndSettle();
 
-          // Type "ComUncom" in the 'Save as' TextField
+          // Type "MusSpok" in the 'Save as' TextField
 
-          String saveAsTitle = 'ComUncom';
+          String saveAsTitle = 'MusSpok';
 
           await tester.enterText(
               find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
@@ -14300,9 +14302,10 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // And verify the order of the playlist audio titles
 
           List<String> audioTitlesFilteredByPictured = [
-            "CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien",
-            "NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE",
-          ];
+            "morning _ cinematic video",
+            "Really short video",
+            "230628-033813-audio learn test short video two 23-06-10",
+            "audio learn test short video one",];
 
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
@@ -14377,8 +14380,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
         testWidgets(
-            '''Unselect Music qual.then Spoken q. checkbox in order to filter pictured
-             audio. Create and then edit a named and saved 'UnselectPicThenUnpic'
+            '''Unselect Music qual. then Spoken q. checkbox in order to filter Music 
+             qual. audio. Create and then edit a named and saved 'UnselectMusThenSpok'
              sort filter parms. Then verifying that the corresponding sort/filter
              dropdown button item is applied to the playlist download view list
              of audio.''', (WidgetTester tester) async {
@@ -14407,9 +14410,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
           await tester.pumpAndSettle();
 
-          // Type "UnselectPicThenUnpic" in the 'Save as' TextField
+          // Type "UnselectMusThenSpok" in the 'Save as' TextField
 
-          String saveAsTitle = 'UnselectPicThenUnpic';
+          String saveAsTitle = 'UnselectMusThenSpok';
 
           await tester.enterText(
               find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
@@ -14495,13 +14498,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(dropDownButtonTextFinder);
           await tester.pumpAndSettle();
 
-          // And find the 'UnselectPicThenUnpic' sort/filter item
+          // And find the 'UnselectMusThenSpok' sort/filter item
           final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
           await tester.tap(titleAscDropDownTextFinder);
           await tester.pumpAndSettle();
 
           // Now open the audio popup menu in order to edit the
-          // 'UnselectPicThenUnpic' sort/filter parms
+          // 'UnselectMusThenSpok' sort/filter parms
           final Finder dropdownItemEditIconButtonFinder = find.byKey(
               const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
           await tester.tap(dropdownItemEditIconButtonFinder);
@@ -14549,8 +14552,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
         testWidgets(
-            '''Unselect Spoken q. then Music qual.checkbox in order to filter not pictured
-             audio. Create and then edit a named and saved 'UnselectUnpicThenPic'
+            '''Unselect Spoken q. then Music qual. checkbox in order to filter not music
+             qual audio. Create and then edit a named and saved 'UnselecSpokThenMus'
              sort filter parms. Then verifying that the corresponding sort/filter
              dropdown button item is applied to the playlist download view list
              of audio.''', (WidgetTester tester) async {
@@ -14579,9 +14582,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
           await tester.pumpAndSettle();
 
-          // Type "UnselectUnpicThenPic" in the 'Save as' TextField
+          // Type "UnselecSpokThenMus" in the 'Save as' TextField
 
-          String saveAsTitle = 'UnselectUnpicThenPic';
+          String saveAsTitle = 'UnselecSpokThenMus';
 
           await tester.enterText(
               find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
@@ -14667,13 +14670,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(dropDownButtonTextFinder);
           await tester.pumpAndSettle();
 
-          // And find the 'UnselectUnpicThenPic' sort/filter item
+          // And find the 'UnselecSpokThenMus' sort/filter item
           final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
           await tester.tap(titleAscDropDownTextFinder);
           await tester.pumpAndSettle();
 
           // Now open the audio popup menu in order to edit the
-          // 'UnselectUnpicThenPic' sort/filter parms
+          // 'UnselecSpokThenMus' sort/filter parms
           final Finder dropdownItemEditIconButtonFinder = find.byKey(
               const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
           await tester.tap(dropdownItemEditIconButtonFinder);
