@@ -14895,11 +14895,10 @@ void playlistDownloadViewSortFilterIntegrationTest() {
       });
       group('''Playable related checkboxes''', () {
         testWidgets(
-            '''Music qual. checkbox true and Spoken q. checkbox false in order to filter
-             only the music qual. audio. Create and then edit a named and saved
-             'Music qual' filter parms. Then verifying that the corresponding sort/filter
-             dropdown button item is applied to the playlist download view list of
-             audio.''', (WidgetTester tester) async {
+            '''Playable checkbox true and Not playable checkbox false in order to filter
+             only the playable audio. Create and then edit a named and saved 'Playable'
+             filter parms. Then verifying that the corresponding sort/filter dropdown
+             button item is applied to the playlist download view list of audio.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -14924,17 +14923,17 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
           await tester.pumpAndSettle();
 
-          // Type 'Music qual' in the 'Save as' TextField
+          // Type 'Playable' in the 'Save as' TextField
 
-          String saveAsTitle = 'Music qual';
+          String saveAsTitle = 'Playable';
 
           await tester.enterText(
               find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
               saveAsTitle);
           await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-          // Scrolling down the sort filter dialog so that the 'Music qual' /
-          // 'Spoken q' checkbox are visible and so accessible by the integration test
+          // Scrolling down the sort filter dialog so that the 'Playable' /
+          // 'Not playable' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -14942,14 +14941,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
           await tester.pumpAndSettle();
 
-          // Unselect the 'Spoken q' checkbox
+          // Unselect the 'Not playable' checkbox
 
-          // Find the 'Spoken q' checkbox widget
-          Finder filterSpokenQualityCheckboxWidgetFinder =
-              find.byKey(const Key('filterSpokenQualityCheckbox'));
+          // Find the 'Not playable' checkbox widget
+          Finder filterNotPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPlayableCheckbox'));
 
           // Tap the checkbox to unselect it
-          await tester.tap(filterSpokenQualityCheckboxWidgetFinder);
+          await tester.tap(filterNotPlayableCheckboxWidgetFinder);
           await tester.pumpAndSettle();
 
           // Click on the "Save" button. This closes the sort/filter dialog
@@ -14965,11 +14964,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle();
 
-          // Now verify the playlist download view state with the 'Music qual'
+          // Now verify the playlist download view state with the 'Playable'
           // sort/filter parms applied
 
           // Verify that the dropdown button has been updated with the
-          // 'Music qual' sort/filter parms selected
+          // 'Playable' sort/filter parms selected
           IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
             tester: tester,
             dropdownButtonSelectedTitle: saveAsTitle,
@@ -14978,6 +14977,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // And verify the order of the playlist audio titles
 
           List<String> audioTitlesFilteredByPictured = [
+            "Really short video",
+            "230628-033813-audio learn test short video two 23-06-10",
             "audio learn test short video one",
           ];
 
@@ -15000,20 +15001,20 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(dropDownButtonTextFinder);
           await tester.pumpAndSettle();
 
-          // And find the 'Music qual' sort/filter item
+          // And find the 'Playable' sort/filter item
           final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
           await tester.tap(titleAscDropDownTextFinder);
           await tester.pumpAndSettle();
 
-          // Now open the audio popup menu in order to edit the 'Music qual'
+          // Now open the audio popup menu in order to edit the 'Playable'
           // sort/filter parms
           final Finder dropdownItemEditIconButtonFinder = find.byKey(
               const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
           await tester.tap(dropdownItemEditIconButtonFinder);
           await tester.pumpAndSettle();
 
-          // Scrolling down the sort filter dialog so that the 'Music qual' /
-          // 'Spoken q' checkbox are visible and so accessible by the integration test
+          // Scrolling down the sort filter dialog so that the 'Playable' /
+          // 'Not playable' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -15021,26 +15022,26 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
           await tester.pumpAndSettle();
 
-          // Find the 'Music qual' checkbox widget and verify it is
+          // Find the 'Playable' checkbox widget and verify it is
           // selected
-          final Finder filterMusicQualityCheckboxWidgetFinder =
-              find.byKey(const Key('filterMusicQualityCheckbox'));
+          final Finder filterPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterPlayableCheckbox'));
 
           expect(
             tester
-                .widget<Checkbox>(filterMusicQualityCheckboxWidgetFinder)
+                .widget<Checkbox>(filterPlayableCheckboxWidgetFinder)
                 .value,
             true,
           );
 
-          // Find the 'Spoken q' checkbox widget and verify it is not
+          // Find the 'Not playable' checkbox widget and verify it is not
           // selected
-          filterSpokenQualityCheckboxWidgetFinder =
-              find.byKey(const Key('filterSpokenQualityCheckbox'));
+          filterNotPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPlayableCheckbox'));
 
           expect(
             tester
-                .widget<Checkbox>(filterSpokenQualityCheckboxWidgetFinder)
+                .widget<Checkbox>(filterNotPlayableCheckboxWidgetFinder)
                 .value,
             false,
           );
@@ -15058,9 +15059,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
         testWidgets(
-            '''Music qual. checkbox false and Spoken q. checkbox true in order to filter
-             only the not music qual. audio. Create and then edit a named and saved
-             'Spoken q' filter parms. Then verifying that the corresponding sort/filter
+            '''Playable checkbox false and Not playable checkbox true in order to filter
+             only the not playable audio. Create and then edit a named and saved
+             'Not playable' filter parms. Then verifying that the corresponding sort/filter
              dropdown button item is applied to the playlist download view list of
              audio.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
@@ -15087,17 +15088,17 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
           await tester.pumpAndSettle();
 
-          // Type 'Spoken q' in the 'Save as' TextField
+          // Type 'Not playable' in the 'Save as' TextField
 
-          String saveAsTitle = 'Spoken q';
+          String saveAsTitle = 'Not playable';
 
           await tester.enterText(
               find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
               saveAsTitle);
           await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-          // Scrolling down the sort filter dialog so that the 'Music qual' /
-          // 'Spoken q' checkbox are visible and so accessible by the integration test
+          // Scrolling down the sort filter dialog so that the 'Playable' /
+          // 'Not playable' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -15105,14 +15106,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
           await tester.pumpAndSettle();
 
-          // Unselect the 'Music qual' checkbox
+          // Unselect the 'Playable' checkbox
 
-          // Find the 'Music qual' checkbox widget
-          Finder filterMusicQualityCheckboxWidgetFinder =
-              find.byKey(const Key('filterMusicQualityCheckbox'));
+          // Find the 'Playable' checkbox widget
+          Finder filterPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterPlayableCheckbox'));
 
           // Tap the checkbox to unselect it
-          await tester.tap(filterMusicQualityCheckboxWidgetFinder);
+          await tester.tap(filterPlayableCheckboxWidgetFinder);
           await tester.pumpAndSettle();
 
           // Click on the "Save" button. This closes the sort/filter dialog
@@ -15128,11 +15129,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle();
 
-          // Now verify the playlist download view state with the 'Spoken q'
+          // Now verify the playlist download view state with the 'Not playable'
           // sort/filter parms applied
 
           // Verify that the dropdown button has been updated with the
-          // 'Spoken q' sort/filter parms selected
+          // 'Not playable' sort/filter parms selected
           IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
             tester: tester,
             dropdownButtonSelectedTitle: saveAsTitle,
@@ -15165,20 +15166,20 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(dropDownButtonTextFinder);
           await tester.pumpAndSettle();
 
-          // And find the 'Spoken q' sort/filter item
+          // And find the 'Not playable' sort/filter item
           final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
           await tester.tap(titleAscDropDownTextFinder);
           await tester.pumpAndSettle();
 
-          // Now open the audio popup menu in order to edit the 'Spoken q'
+          // Now open the audio popup menu in order to edit the 'Not playable'
           // sort/filter parms
           final Finder dropdownItemEditIconButtonFinder = find.byKey(
               const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
           await tester.tap(dropdownItemEditIconButtonFinder);
           await tester.pumpAndSettle();
 
-          // Scrolling down the sort filter dialog so that the 'Music qual' /
-          // 'Spoken q' checkbox are visible and so accessible by the integration test
+          // Scrolling down the sort filter dialog so that the 'Playable' /
+          // 'Not playable' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -15186,26 +15187,26 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
           await tester.pumpAndSettle();
 
-          // Find the 'Music qual' checkbox widget and verify it is not
+          // Find the 'Playable' checkbox widget and verify it is not
           // selected
-          filterMusicQualityCheckboxWidgetFinder =
-              find.byKey(const Key('filterMusicQualityCheckbox'));
+          filterPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterPlayableCheckbox'));
 
           expect(
             tester
-                .widget<Checkbox>(filterMusicQualityCheckboxWidgetFinder)
+                .widget<Checkbox>(filterPlayableCheckboxWidgetFinder)
                 .value,
             false,
           );
 
-          // Find the 'Spoken q' checkbox widget and verify it is
+          // Find the 'Not playable' checkbox widget and verify it is
           // selected
-          final Finder filterSpokenQualityCheckboxWidgetFinder =
-              find.byKey(const Key('filterSpokenQualityCheckbox'));
+          final Finder filterNotPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPlayableCheckbox'));
 
           expect(
             tester
-                .widget<Checkbox>(filterSpokenQualityCheckboxWidgetFinder)
+                .widget<Checkbox>(filterNotPlayableCheckboxWidgetFinder)
                 .value,
             true,
           );
@@ -15223,8 +15224,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
         testWidgets(
-            '''Both Music qual. and Spoken q. checkboxes true in order to filter both
-             the music qual. and not music qual. audio. Create and then edit a named
+            '''Both Playable and Not playable checkboxes true in order to filter both
+             the playable and not playable audio. Create and then edit a named
              and saved 'MusSpok' filter parms. Then verifying that the corresponding
              sort/filter dropdown button item is applied to the playlist download
              view list of audio.''',
@@ -15262,7 +15263,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               saveAsTitle);
           await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-          // Do not modify the default true values of the 'Music qual' /
+          // Do not modify the default true values of the 'Playable' /
           // 'Uncom.' checkboxes
 
           // Scrolling down the sort filter dialog so that the 'Save' button is
@@ -15337,8 +15338,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(dropdownItemEditIconButtonFinder);
           await tester.pumpAndSettle();
 
-          // Scrolling down the sort filter dialog so that the 'Music qual' /
-          // 'Spoken q' checkbox are visible and so accessible by the integration test
+          // Scrolling down the sort filter dialog so that the 'Playable' /
+          // 'Not playable' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -15346,26 +15347,26 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
           await tester.pumpAndSettle();
 
-          // Find the 'Music qual' checkbox widget and verify it is
+          // Find the 'Playable' checkbox widget and verify it is
           // selected
-          final Finder filterMusicQualityCheckboxWidgetFinder =
-              find.byKey(const Key('filterMusicQualityCheckbox'));
+          final Finder filterPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterPlayableCheckbox'));
 
           expect(
             tester
-                .widget<Checkbox>(filterMusicQualityCheckboxWidgetFinder)
+                .widget<Checkbox>(filterPlayableCheckboxWidgetFinder)
                 .value,
             true,
           );
 
-          // Find the 'Spoken q' checkbox widget and verify it is
+          // Find the 'Not playable' checkbox widget and verify it is
           // selected
-          final Finder filterSpokenQualityCheckboxWidgetFinder =
-              find.byKey(const Key('filterSpokenQualityCheckbox'));
+          final Finder filterNotPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPlayableCheckbox'));
 
           expect(
             tester
-                .widget<Checkbox>(filterSpokenQualityCheckboxWidgetFinder)
+                .widget<Checkbox>(filterNotPlayableCheckboxWidgetFinder)
                 .value,
             true,
           );
@@ -15391,7 +15392,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
          testWidgets(
-            '''Unselect Music qual. then Spoken q. checkbox in order to filter Music 
+            '''Unselect Playable then Not playable checkbox in order to filter Music 
              qual. audio. Create and then edit a named and saved 'UnselectMusThenSpok'
              sort filter parms. Then verifying that the corresponding sort/filter
              dropdown button item is applied to the playlist download view list
@@ -15429,8 +15430,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               saveAsTitle);
           await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-          // Scrolling down the sort filter dialog so that the 'Music qual' /
-          // 'Spoken q' checkbox are visible and so accessible by the integration test
+          // Scrolling down the sort filter dialog so that the 'Playable' /
+          // 'Not playable' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -15438,26 +15439,26 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
           await tester.pumpAndSettle();
 
-          // Unselect the 'Music qual' checkbox
+          // Unselect the 'Playable' checkbox
 
-          // Find the 'Music qual' checkbox widget
-          Finder filterMusicQualityCheckboxWidgetFinder =
-              find.byKey(const Key('filterMusicQualityCheckbox'));
+          // Find the 'Playable' checkbox widget
+          Finder filterPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterPlayableCheckbox'));
 
           // Tap the checkbox to unselect it
-          await tester.tap(filterMusicQualityCheckboxWidgetFinder);
+          await tester.tap(filterPlayableCheckboxWidgetFinder);
           await tester.pumpAndSettle();
 
-          // Unselect the 'Spoken q' checkbox
+          // Unselect the 'Not playable' checkbox
 
-          // Find the 'Spoken q' checkbox widget
-          Finder filterSpokenQualityCheckboxWidgetFinder =
-              find.byKey(const Key('filterSpokenQualityCheckbox'));
+          // Find the 'Not playable' checkbox widget
+          Finder filterNotPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPlayableCheckbox'));
 
           // Tap the checkbox to unselect it. Since the two picture
           // related checkboxex can not be both unselected, the
-          // 'Music qual' checkbox is reselected.
-          await tester.tap(filterSpokenQualityCheckboxWidgetFinder);
+          // 'Playable' checkbox is reselected.
+          await tester.tap(filterNotPlayableCheckboxWidgetFinder);
           await tester.pumpAndSettle();
 
           // Click on the "Save" button. This closes the sort/filter dialog
@@ -15473,11 +15474,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle();
 
-          // Now verify the playlist download view state with the 'Music qual'
+          // Now verify the playlist download view state with the 'Playable'
           // sort/filter parms applied
 
           // Verify that the dropdown button has been updated with the
-          // 'Music qual' sort/filter parms selected
+          // 'Playable' sort/filter parms selected
           IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
             tester: tester,
             dropdownButtonSelectedTitle: saveAsTitle,
@@ -15520,8 +15521,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(dropdownItemEditIconButtonFinder);
           await tester.pumpAndSettle();
 
-          // Scrolling down the sort filter dialog so that the 'Music qual' /
-          // 'Spoken q' checkbox are visible and so accessible by the integration test
+          // Scrolling down the sort filter dialog so that the 'Playable' /
+          // 'Not playable' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -15529,26 +15530,26 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
           await tester.pumpAndSettle();
 
-          // Find the 'Music qual' checkbox widget and verify it is
+          // Find the 'Playable' checkbox widget and verify it is
           // selected
-          filterMusicQualityCheckboxWidgetFinder =
-              find.byKey(const Key('filterMusicQualityCheckbox'));
+          filterPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterPlayableCheckbox'));
 
           expect(
             tester
-                .widget<Checkbox>(filterMusicQualityCheckboxWidgetFinder)
+                .widget<Checkbox>(filterPlayableCheckboxWidgetFinder)
                 .value,
             true,
           );
 
-          // Find the 'Spoken q' checkbox widget and verify it is not
+          // Find the 'Not playable' checkbox widget and verify it is not
           // selected
-          filterSpokenQualityCheckboxWidgetFinder =
-              find.byKey(const Key('filterSpokenQualityCheckbox'));
+          filterNotPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPlayableCheckbox'));
 
           expect(
             tester
-                .widget<Checkbox>(filterSpokenQualityCheckboxWidgetFinder)
+                .widget<Checkbox>(filterNotPlayableCheckboxWidgetFinder)
                 .value,
             false,
           );
@@ -15566,7 +15567,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
         testWidgets(
-            '''Unselect Spoken q. then Music qual. checkbox in order to filter not music
+            '''Unselect Not playable then Playable checkbox in order to filter not music
              qual audio. Create and then edit a named and saved 'UnselecSpokThenMus'
              sort filter parms. Then verifying that the corresponding sort/filter
              dropdown button item is applied to the playlist download view list
@@ -15604,8 +15605,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               saveAsTitle);
           await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-          // Scrolling down the sort filter dialog so that the 'Music qual' /
-          // 'Spoken q' checkbox are visible and so accessible by the integration test
+          // Scrolling down the sort filter dialog so that the 'Playable' /
+          // 'Not playable' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -15613,26 +15614,26 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
           await tester.pumpAndSettle();
 
-          // Unselect the 'Spoken q' checkbox
+          // Unselect the 'Not playable' checkbox
 
-          // Find the 'Spoken q' checkbox widget
-          Finder filterSpokenQualityCheckboxWidgetFinder =
-              find.byKey(const Key('filterSpokenQualityCheckbox'));
+          // Find the 'Not playable' checkbox widget
+          Finder filterNotPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPlayableCheckbox'));
 
           // Tap the checkbox to unselect it.
-          await tester.tap(filterSpokenQualityCheckboxWidgetFinder);
+          await tester.tap(filterNotPlayableCheckboxWidgetFinder);
           await tester.pumpAndSettle();
 
-          // Unselect the 'Music qual' checkbox
+          // Unselect the 'Playable' checkbox
 
-          // Find the 'Music qual' checkbox widget
-          Finder filterMusicQualityCheckboxWidgetFinder =
-              find.byKey(const Key('filterMusicQualityCheckbox'));
+          // Find the 'Playable' checkbox widget
+          Finder filterPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterPlayableCheckbox'));
 
           // Tap the checkbox to unselect it. Since the two picture
           // related checkboxex can not be both unselected, the
-          // 'Spoken q' checkbox is reselected.
-          await tester.tap(filterMusicQualityCheckboxWidgetFinder);
+          // 'Not playable' checkbox is reselected.
+          await tester.tap(filterPlayableCheckboxWidgetFinder);
           await tester.pumpAndSettle();
 
           // Click on the "Save" button. This closes the sort/filter dialog
@@ -15648,11 +15649,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle();
 
-          // Now verify the playlist download view state with the 'Music qual'
+          // Now verify the playlist download view state with the 'Playable'
           // sort/filter parms applied
 
           // Verify that the dropdown button has been updated with the
-          // 'Music qual' sort/filter parms selected
+          // 'Playable' sort/filter parms selected
           IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
             tester: tester,
             dropdownButtonSelectedTitle: saveAsTitle,
@@ -15697,8 +15698,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(dropdownItemEditIconButtonFinder);
           await tester.pumpAndSettle();
 
-          // Scrolling down the sort filter dialog so that the 'Music qual' /
-          // 'Spoken q' checkbox are visible and so accessible by the integration test
+          // Scrolling down the sort filter dialog so that the 'Playable' /
+          // 'Not playable' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -15706,26 +15707,26 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
           await tester.pumpAndSettle();
 
-          // Find the 'Music qual' checkbox widget and verify it is
+          // Find the 'Playable' checkbox widget and verify it is
           // not selected
-          filterMusicQualityCheckboxWidgetFinder =
-              find.byKey(const Key('filterMusicQualityCheckbox'));
+          filterPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterPlayableCheckbox'));
 
           expect(
             tester
-                .widget<Checkbox>(filterMusicQualityCheckboxWidgetFinder)
+                .widget<Checkbox>(filterPlayableCheckboxWidgetFinder)
                 .value,
             false,
           );
 
-          // Find the 'Spoken q' checkbox widget and verify it is
+          // Find the 'Not playable' checkbox widget and verify it is
           // selected
-          filterSpokenQualityCheckboxWidgetFinder =
-              find.byKey(const Key('filterSpokenQualityCheckbox'));
+          filterNotPlayableCheckboxWidgetFinder =
+              find.byKey(const Key('filterNotPlayableCheckbox'));
 
           expect(
             tester
-                .widget<Checkbox>(filterSpokenQualityCheckboxWidgetFinder)
+                .widget<Checkbox>(filterNotPlayableCheckboxWidgetFinder)
                 .value,
             true,
           );
