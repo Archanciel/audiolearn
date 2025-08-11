@@ -13914,7 +13914,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kApplicationPathWindowsTest,
           );
 
-          const String localPlaylistTitle = 'local'; // Youtube playlist
+          const String localPlaylistTitle = 'local'; // local playlist
 
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
@@ -14077,7 +14077,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kApplicationPathWindowsTest,
           );
 
-          const String localPlaylistTitle = 'local'; // Youtube playlist
+          const String localPlaylistTitle = 'local'; // local playlist
 
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
@@ -14243,7 +14243,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kApplicationPathWindowsTest,
           );
 
-          const String localPlaylistTitle = 'local'; // Youtube playlist
+          const String localPlaylistTitle = 'local'; // local playlist
 
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
@@ -14410,7 +14410,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kApplicationPathWindowsTest,
           );
 
-          const String localPlaylistTitle = 'local'; // Youtube playlist
+          const String localPlaylistTitle = 'local'; // local playlist
 
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
@@ -14552,7 +14552,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kApplicationPathWindowsTest,
           );
 
-          const String localPlaylistTitle = 'local'; // Youtube playlist
+          const String localPlaylistTitle = 'local'; // local playlist
 
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
@@ -14727,7 +14727,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kApplicationPathWindowsTest,
           );
 
-          const String localPlaylistTitle = 'local'; // Youtube playlist
+          const String localPlaylistTitle = 'local'; // local playlist
 
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
@@ -14906,7 +14906,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kApplicationPathWindowsTest,
           );
 
-          const String localPlaylistTitle = 'local'; // Youtube playlist
+          const String localPlaylistTitle = 'local'; // local playlist
 
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
@@ -15069,7 +15069,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kApplicationPathWindowsTest,
           );
 
-          const String localPlaylistTitle = 'local'; // Youtube playlist
+          const String localPlaylistTitle = 'local'; // local playlist
 
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
@@ -15230,7 +15230,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kApplicationPathWindowsTest,
           );
 
-          const String localPlaylistTitle = 'local'; // Youtube playlist
+          const String localPlaylistTitle = 'local'; // local playlist
 
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
@@ -15386,7 +15386,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kApplicationPathWindowsTest,
           );
 
-          const String localPlaylistTitle = 'local'; // Youtube playlist
+          const String localPlaylistTitle = 'local'; // local playlist
 
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
@@ -15561,7 +15561,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kApplicationPathWindowsTest,
           );
 
-          const String localPlaylistTitle = 'local'; // Youtube playlist
+          const String localPlaylistTitle = 'local'; // local playlist
 
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
@@ -15725,8 +15725,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
       });
       group('''Downloaded/Imported related checkboxes''', () {
         testWidgets(
-            '''Playable checkbox true and Not playable checkbox false in order to filter
-             only the playable audio. Create and then edit a named and saved 'Playable'
+            '''Downloaded checkbox true and Imported checkbox false in order to filter
+             only the downloaded audio. Create and then edit a named and saved 'Downloaded'
              filter parms. Then verifying that the corresponding sort/filter dropdown
              button item is applied to the playlist download view list of audio.''',
             (WidgetTester tester) async {
@@ -15736,7 +15736,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kApplicationPathWindowsTest,
           );
 
-          const String localPlaylistTitle = 'local'; // Youtube playlist
+          const String localPlaylistTitle = 'local'; // local playlist
 
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
@@ -15754,17 +15754,17 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
           await tester.pumpAndSettle();
 
-          // Type 'Playable' in the 'Save as' TextField
+          // Type 'Downloaded' in the 'Save as' TextField
 
-          String saveAsTitle = 'Playable';
+          String saveAsTitle = 'Downloaded';
 
           await tester.enterText(
               find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
               saveAsTitle);
           await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-          // Scrolling down the sort filter dialog so that the 'Playable' /
-          // 'Not playable' checkbox are visible and so accessible by the integration test
+          // Scrolling down the sort filter dialog so that the 'Downloaded' /
+          // 'Imported' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -15772,14 +15772,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
           await tester.pumpAndSettle();
 
-          // Unselect the 'Not playable' checkbox
+          // Unselect the 'Imported' checkbox
 
-          // Find the 'Not playable' checkbox widget
-          Finder filterNotPlayableCheckboxWidgetFinder =
-              find.byKey(const Key('filterNotPlayableCheckbox'));
+          // Find the 'Imported' checkbox widget
+          Finder filterImportedCheckboxWidgetFinder =
+              find.byKey(const Key('filterImportedCheckbox'));
 
           // Tap the checkbox to unselect it
-          await tester.tap(filterNotPlayableCheckboxWidgetFinder);
+          await tester.tap(filterImportedCheckboxWidgetFinder);
           await tester.pumpAndSettle();
 
           // Click on the "Save" button. This closes the sort/filter dialog
@@ -15795,11 +15795,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle();
 
-          // Now verify the playlist download view state with the 'Playable'
+          // Now verify the playlist download view state with the 'Downloaded'
           // sort/filter parms applied
 
           // Verify that the dropdown button has been updated with the
-          // 'Playable' sort/filter parms selected
+          // 'Downloaded' sort/filter parms selected
           IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
             tester: tester,
             dropdownButtonSelectedTitle: saveAsTitle,
@@ -15808,8 +15808,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // And verify the order of the playlist audio titles
 
           List<String> audioTitlesFilteredByPictured = [
+            "morning _ cinematic video",
             "Really short video",
-            "230628-033813-audio learn test short video two 23-06-10",
             "audio learn test short video one",
           ];
 
@@ -15832,20 +15832,20 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(dropDownButtonTextFinder);
           await tester.pumpAndSettle();
 
-          // And find the 'Playable' sort/filter item
+          // And find the 'Downloaded' sort/filter item
           final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
           await tester.tap(titleAscDropDownTextFinder);
           await tester.pumpAndSettle();
 
-          // Now open the audio popup menu in order to edit the 'Playable'
+          // Now open the audio popup menu in order to edit the 'Downloaded'
           // sort/filter parms
           final Finder dropdownItemEditIconButtonFinder = find.byKey(
               const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
           await tester.tap(dropdownItemEditIconButtonFinder);
           await tester.pumpAndSettle();
 
-          // Scrolling down the sort filter dialog so that the 'Playable' /
-          // 'Not playable' checkbox are visible and so accessible by the integration test
+          // Scrolling down the sort filter dialog so that the 'Downloaded' /
+          // 'Imported' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -15853,7 +15853,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
           await tester.pumpAndSettle();
 
-          // Find the 'Playable' checkbox widget and verify it is
+          // Find the 'Downloaded' checkbox widget and verify it is
           // selected
           final Finder filterPlayableCheckboxWidgetFinder =
               find.byKey(const Key('filterPlayableCheckbox'));
@@ -15863,14 +15863,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             true,
           );
 
-          // Find the 'Not playable' checkbox widget and verify it is not
+          // Find the 'Imported' checkbox widget and verify it is not
           // selected
-          filterNotPlayableCheckboxWidgetFinder =
-              find.byKey(const Key('filterNotPlayableCheckbox'));
+          filterImportedCheckboxWidgetFinder =
+              find.byKey(const Key('filterImportedCheckbox'));
 
           expect(
             tester
-                .widget<Checkbox>(filterNotPlayableCheckboxWidgetFinder)
+                .widget<Checkbox>(filterImportedCheckboxWidgetFinder)
                 .value,
             false,
           );
@@ -15888,9 +15888,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
         testWidgets(
-            '''Playable checkbox false and Not playable checkbox true in order to filter
-             only the not playable audio. Create and then edit a named and saved
-             'Not playable' filter parms. Then verifying that the corresponding sort/filter
+            '''Downloaded checkbox false and Imported checkbox true in order to filter
+             only the not downloaded audio. Create and then edit a named and saved
+             'Imported' filter parms. Then verifying that the corresponding sort/filter
              dropdown button item is applied to the playlist download view list of
              audio.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
@@ -15899,7 +15899,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kApplicationPathWindowsTest,
           );
 
-          const String localPlaylistTitle = 'local'; // Youtube playlist
+          const String localPlaylistTitle = 'local'; // local playlist
 
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
@@ -15917,17 +15917,17 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
           await tester.pumpAndSettle();
 
-          // Type 'Not playable' in the 'Save as' TextField
+          // Type 'Imported' in the 'Save as' TextField
 
-          String saveAsTitle = 'Not playable';
+          String saveAsTitle = 'Imported';
 
           await tester.enterText(
               find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
               saveAsTitle);
           await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-          // Scrolling down the sort filter dialog so that the 'Playable' /
-          // 'Not playable' checkbox are visible and so accessible by the integration test
+          // Scrolling down the sort filter dialog so that the 'Downloaded' /
+          // 'Imported' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -15935,9 +15935,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
           await tester.pumpAndSettle();
 
-          // Unselect the 'Playable' checkbox
+          // Unselect the 'Downloaded' checkbox
 
-          // Find the 'Playable' checkbox widget
+          // Find the 'Downloaded' checkbox widget
           Finder filterPlayableCheckboxWidgetFinder =
               find.byKey(const Key('filterPlayableCheckbox'));
 
@@ -15958,11 +15958,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle();
 
-          // Now verify the playlist download view state with the 'Not playable'
+          // Now verify the playlist download view state with the 'Imported'
           // sort/filter parms applied
 
           // Verify that the dropdown button has been updated with the
-          // 'Not playable' sort/filter parms selected
+          // 'Imported' sort/filter parms selected
           IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
             tester: tester,
             dropdownButtonSelectedTitle: saveAsTitle,
@@ -15993,20 +15993,20 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(dropDownButtonTextFinder);
           await tester.pumpAndSettle();
 
-          // And find the 'Not playable' sort/filter item
+          // And find the 'Imported' sort/filter item
           final Finder titleAscDropDownTextFinder = find.text(saveAsTitle).last;
           await tester.tap(titleAscDropDownTextFinder);
           await tester.pumpAndSettle();
 
-          // Now open the audio popup menu in order to edit the 'Not playable'
+          // Now open the audio popup menu in order to edit the 'Imported'
           // sort/filter parms
           final Finder dropdownItemEditIconButtonFinder = find.byKey(
               const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
           await tester.tap(dropdownItemEditIconButtonFinder);
           await tester.pumpAndSettle();
 
-          // Scrolling down the sort filter dialog so that the 'Playable' /
-          // 'Not playable' checkbox are visible and so accessible by the integration test
+          // Scrolling down the sort filter dialog so that the 'Downloaded' /
+          // 'Imported' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -16014,7 +16014,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
           await tester.pumpAndSettle();
 
-          // Find the 'Playable' checkbox widget and verify it is not
+          // Find the 'Downloaded' checkbox widget and verify it is not
           // selected
           filterPlayableCheckboxWidgetFinder =
               find.byKey(const Key('filterPlayableCheckbox'));
@@ -16024,14 +16024,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             false,
           );
 
-          // Find the 'Not playable' checkbox widget and verify it is
+          // Find the 'Imported' checkbox widget and verify it is
           // selected
-          final Finder filterNotPlayableCheckboxWidgetFinder =
-              find.byKey(const Key('filterNotPlayableCheckbox'));
+          final Finder filterImportedCheckboxWidgetFinder =
+              find.byKey(const Key('filterImportedCheckbox'));
 
           expect(
             tester
-                .widget<Checkbox>(filterNotPlayableCheckboxWidgetFinder)
+                .widget<Checkbox>(filterImportedCheckboxWidgetFinder)
                 .value,
             true,
           );
@@ -16049,8 +16049,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
         testWidgets(
-            '''Both Playable and Not playable checkboxes true in order to filter both
-             the playable and not playable audio. Create and then edit a named and
+            '''Both Downloaded and Imported checkboxes true in order to filter both
+             the downloaded and not downloaded audio. Create and then edit a named and
              saved 'PlayNotPlay' filter parms. Then verifying that the corresponding
              sort/filter dropdown button item is applied to the playlist download
              view list of audio.''', (WidgetTester tester) async {
@@ -16060,7 +16060,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kApplicationPathWindowsTest,
           );
 
-          const String localPlaylistTitle = 'local'; // Youtube playlist
+          const String localPlaylistTitle = 'local'; // local playlist
 
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
@@ -16087,8 +16087,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               saveAsTitle);
           await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-          // Do not modify the default true values of the 'Playable' /
-          // 'Not playable' checkboxes
+          // Do not modify the default true values of the 'Downloaded' /
+          // 'Imported' checkboxes
 
           // Scrolling down the sort filter dialog so that the 'Save' button is
           // visible and so accessible by the integration test
@@ -16162,8 +16162,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(dropdownItemEditIconButtonFinder);
           await tester.pumpAndSettle();
 
-          // Scrolling down the sort filter dialog so that the 'Playable' /
-          // 'Not playable' checkbox are visible and so accessible by the integration test
+          // Scrolling down the sort filter dialog so that the 'Downloaded' /
+          // 'Imported' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -16171,7 +16171,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
           await tester.pumpAndSettle();
 
-          // Find the 'Playable' checkbox widget and verify it is
+          // Find the 'Downloaded' checkbox widget and verify it is
           // selected
           final Finder filterPlayableCheckboxWidgetFinder =
               find.byKey(const Key('filterPlayableCheckbox'));
@@ -16181,14 +16181,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             true,
           );
 
-          // Find the 'Not playable' checkbox widget and verify it is
+          // Find the 'Imported' checkbox widget and verify it is
           // selected
-          final Finder filterNotPlayableCheckboxWidgetFinder =
-              find.byKey(const Key('filterNotPlayableCheckbox'));
+          final Finder filterImportedCheckboxWidgetFinder =
+              find.byKey(const Key('filterImportedCheckbox'));
 
           expect(
             tester
-                .widget<Checkbox>(filterNotPlayableCheckboxWidgetFinder)
+                .widget<Checkbox>(filterImportedCheckboxWidgetFinder)
                 .value,
             true,
           );
@@ -16205,7 +16205,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
         testWidgets(
-            '''Unselect Playable then Not playable checkbox in order to filter Playable 
+            '''Unselect Downloaded then Imported checkbox in order to filter Downloaded 
              audio. Create and then edit a named and saved 'UnselectPlayThenNotPlay' sort
              filter parms. Then verifying that the corresponding sort/filter dropdown
              button item is applied to the playlist download view list of audio.''',
@@ -16216,7 +16216,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kApplicationPathWindowsTest,
           );
 
-          const String localPlaylistTitle = 'local'; // Youtube playlist
+          const String localPlaylistTitle = 'local'; // local playlist
 
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
@@ -16243,8 +16243,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               saveAsTitle);
           await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-          // Scrolling down the sort filter dialog so that the 'Playable' /
-          // 'Not playable' checkbox are visible and so accessible by the integration test
+          // Scrolling down the sort filter dialog so that the 'Downloaded' /
+          // 'Imported' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -16252,9 +16252,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
           await tester.pumpAndSettle();
 
-          // Unselect the 'Playable' checkbox
+          // Unselect the 'Downloaded' checkbox
 
-          // Find the 'Playable' checkbox widget
+          // Find the 'Downloaded' checkbox widget
           Finder filterPlayableCheckboxWidgetFinder =
               find.byKey(const Key('filterPlayableCheckbox'));
 
@@ -16262,16 +16262,16 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(filterPlayableCheckboxWidgetFinder);
           await tester.pumpAndSettle();
 
-          // Unselect the 'Not playable' checkbox
+          // Unselect the 'Imported' checkbox
 
-          // Find the 'Not playable' checkbox widget
-          Finder filterNotPlayableCheckboxWidgetFinder =
-              find.byKey(const Key('filterNotPlayableCheckbox'));
+          // Find the 'Imported' checkbox widget
+          Finder filterImportedCheckboxWidgetFinder =
+              find.byKey(const Key('filterImportedCheckbox'));
 
           // Tap the checkbox to unselect it. Since the two playable
           // related checkboxex can not be both unselected, the
-          // 'Playable' checkbox is reselected.
-          await tester.tap(filterNotPlayableCheckboxWidgetFinder);
+          // 'Downloaded' checkbox is reselected.
+          await tester.tap(filterImportedCheckboxWidgetFinder);
           await tester.pumpAndSettle();
 
           // Click on the "Save" button. This closes the sort/filter dialog
@@ -16287,11 +16287,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle();
 
-          // Now verify the playlist download view state with the 'Playable'
+          // Now verify the playlist download view state with the 'Downloaded'
           // sort/filter parms applied
 
           // Verify that the dropdown button has been updated with the
-          // 'Playable' sort/filter parms selected
+          // 'Downloaded' sort/filter parms selected
           IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
             tester: tester,
             dropdownButtonSelectedTitle: saveAsTitle,
@@ -16336,8 +16336,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(dropdownItemEditIconButtonFinder);
           await tester.pumpAndSettle();
 
-          // Scrolling down the sort filter dialog so that the 'Playable' /
-          // 'Not playable' checkbox are visible and so accessible by the integration test
+          // Scrolling down the sort filter dialog so that the 'Downloaded' /
+          // 'Imported' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -16345,7 +16345,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
           await tester.pumpAndSettle();
 
-          // Find the 'Playable' checkbox widget and verify it is
+          // Find the 'Downloaded' checkbox widget and verify it is
           // selected
           filterPlayableCheckboxWidgetFinder =
               find.byKey(const Key('filterPlayableCheckbox'));
@@ -16355,14 +16355,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             true,
           );
 
-          // Find the 'Not playable' checkbox widget and verify it is not
+          // Find the 'Imported' checkbox widget and verify it is not
           // selected
-          filterNotPlayableCheckboxWidgetFinder =
-              find.byKey(const Key('filterNotPlayableCheckbox'));
+          filterImportedCheckboxWidgetFinder =
+              find.byKey(const Key('filterImportedCheckbox'));
 
           expect(
             tester
-                .widget<Checkbox>(filterNotPlayableCheckboxWidgetFinder)
+                .widget<Checkbox>(filterImportedCheckboxWidgetFinder)
                 .value,
             false,
           );
@@ -16380,8 +16380,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
         testWidgets(
-            '''Unselect Not playable then Playable checkbox in order to filter not
-             playable audio. Create and then edit a named and saved 'UnselecNotPlThenPlay'
+            '''Unselect Imported then Downloaded checkbox in order to filter not
+             downloaded audio. Create and then edit a named and saved 'UnselecNotPlThenPlay'
              sort filter parms. Then verifying that the corresponding sort/filter
              dropdown button item is applied to the playlist download view list
              of audio.''', (WidgetTester tester) async {
@@ -16391,7 +16391,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kApplicationPathWindowsTest,
           );
 
-          const String localPlaylistTitle = 'local'; // Youtube playlist
+          const String localPlaylistTitle = 'local'; // local playlist
 
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
@@ -16418,8 +16418,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               saveAsTitle);
           await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-          // Scrolling down the sort filter dialog so that the 'Playable' /
-          // 'Not playable' checkbox are visible and so accessible by the integration test
+          // Scrolling down the sort filter dialog so that the 'Downloaded' /
+          // 'Imported' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -16427,25 +16427,25 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
           await tester.pumpAndSettle();
 
-          // Unselect the 'Not playable' checkbox
+          // Unselect the 'Imported' checkbox
 
-          // Find the 'Not playable' checkbox widget
-          Finder filterNotPlayableCheckboxWidgetFinder =
-              find.byKey(const Key('filterNotPlayableCheckbox'));
+          // Find the 'Imported' checkbox widget
+          Finder filterImportedCheckboxWidgetFinder =
+              find.byKey(const Key('filterImportedCheckbox'));
 
           // Tap the checkbox to unselect it.
-          await tester.tap(filterNotPlayableCheckboxWidgetFinder);
+          await tester.tap(filterImportedCheckboxWidgetFinder);
           await tester.pumpAndSettle();
 
-          // Unselect the 'Playable' checkbox
+          // Unselect the 'Downloaded' checkbox
 
-          // Find the 'Playable' checkbox widget
+          // Find the 'Downloaded' checkbox widget
           Finder filterPlayableCheckboxWidgetFinder =
               find.byKey(const Key('filterPlayableCheckbox'));
 
           // Tap the checkbox to unselect it. Since the two playable
           // related checkboxex can not be both unselected, the
-          // 'Not playable' checkbox is reselected.
+          // 'Imported' checkbox is reselected.
           await tester.tap(filterPlayableCheckboxWidgetFinder);
           await tester.pumpAndSettle();
 
@@ -16462,11 +16462,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle();
 
-          // Now verify the playlist download view state with the 'Playable'
+          // Now verify the playlist download view state with the 'Downloaded'
           // sort/filter parms applied
 
           // Verify that the dropdown button has been updated with the
-          // 'Playable' sort/filter parms selected
+          // 'Downloaded' sort/filter parms selected
           IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
             tester: tester,
             dropdownButtonSelectedTitle: saveAsTitle,
@@ -16509,8 +16509,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(dropdownItemEditIconButtonFinder);
           await tester.pumpAndSettle();
 
-          // Scrolling down the sort filter dialog so that the 'Playable' /
-          // 'Not playable' checkbox are visible and so accessible by the integration test
+          // Scrolling down the sort filter dialog so that the 'Downloaded' /
+          // 'Imported' checkbox are visible and so accessible by the integration test
           await tester.drag(
             find.byType(AudioSortFilterDialog),
             const Offset(
@@ -16518,7 +16518,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
           await tester.pumpAndSettle();
 
-          // Find the 'Playable' checkbox widget and verify it is
+          // Find the 'Downloaded' checkbox widget and verify it is
           // not selected
           filterPlayableCheckboxWidgetFinder =
               find.byKey(const Key('filterPlayableCheckbox'));
@@ -16528,14 +16528,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             false,
           );
 
-          // Find the 'Not playable' checkbox widget and verify it is
+          // Find the 'Imported' checkbox widget and verify it is
           // selected
-          filterNotPlayableCheckboxWidgetFinder =
-              find.byKey(const Key('filterNotPlayableCheckbox'));
+          filterImportedCheckboxWidgetFinder =
+              find.byKey(const Key('filterImportedCheckbox'));
 
           expect(
             tester
-                .widget<Checkbox>(filterNotPlayableCheckboxWidgetFinder)
+                .widget<Checkbox>(filterImportedCheckboxWidgetFinder)
                 .value,
             true,
           );
