@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import '../../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/help_item.dart';
 import '../../views/screen_mixin.dart';
 import '../../constants.dart';
 import '../../models/audio.dart';
@@ -10,6 +11,7 @@ import '../../services/settings_data_service.dart';
 import '../../utils/ui_util.dart';
 import '../../viewmodels/audio_download_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
+import 'help_dialog.dart';
 
 enum AudioModificationType {
   renameAudioFile,
@@ -20,10 +22,12 @@ enum AudioModificationType {
 class AudioModificationDialog extends StatefulWidget {
   final Audio audio;
   final AudioModificationType audioModificationType;
+  final List<HelpItem> helpItemsLst;
 
   const AudioModificationDialog({
     required this.audio,
     required this.audioModificationType,
+    this.helpItemsLst = const [],
     super.key,
   });
 
@@ -119,9 +123,37 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
         }
       },
       child: AlertDialog(
-        title: Text(
-          key: const Key('audioModificationDialogTitleKey'),
-          titleStr,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              child: Text(
+                key: const Key('audioModificationDialogTitleKey'),
+                titleStr,
+              ),
+            ),
+            if (widget.helpItemsLst.isNotEmpty)
+              IconButton(
+                icon: IconTheme(
+                  data: (themeProviderVM.currentTheme == AppTheme.dark
+                          ? ScreenMixin.themeDataDark
+                          : ScreenMixin.themeDataLight)
+                      .iconTheme,
+                  child: const Icon(
+                    Icons.help_outline,
+                    size: 40.0,
+                  ),
+                ),
+                onPressed: () {
+                  showDialog<void>(
+                    context: context,
+                    builder: (context) => HelpDialog(
+                      helpItemsLst: widget.helpItemsLst,
+                    ),
+                  );
+                },
+              ),
+          ],
         ),
         actionsPadding: kDialogActionsPadding,
         content: SingleChildScrollView(
