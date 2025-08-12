@@ -427,8 +427,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get renameAudioFileDialogTitle => 'Rename Audio File';
 
   @override
-  String get renameAudioFileDialogComment =>
-      'Renaming audio file in order to improve their playing order.';
+  String get renameAudioFileDialogComment => '';
 
   @override
   String get renameAudioFileLabel => 'Name';
@@ -441,7 +440,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get modifyAudioTitleDialogComment =>
-      'Modify the audio title to identify it more easily during listening.';
+      'Modify the audio title to allow adjusting its playback order.';
 
   @override
   String get modifyAudioTitleLabel => 'Title';

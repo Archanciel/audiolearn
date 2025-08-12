@@ -843,7 +843,7 @@ abstract class AppLocalizations {
   /// No description provided for @renameAudioFileDialogComment.
   ///
   /// In en, this message translates to:
-  /// **'Renaming audio file in order to improve their playing order.'**
+  /// **''**
   String get renameAudioFileDialogComment;
 
   /// No description provided for @renameAudioFileLabel.
@@ -867,7 +867,7 @@ abstract class AppLocalizations {
   /// No description provided for @modifyAudioTitleDialogComment.
   ///
   /// In en, this message translates to:
-  /// **'Modify the audio title to identify it more easily during listening.'**
+  /// **'Modify the audio title to allow adjusting its playback order.'**
   String get modifyAudioTitleDialogComment;
 
   /// No description provided for @modifyAudioTitleLabel.
