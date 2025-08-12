@@ -279,12 +279,12 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
             );
             break;
           case AudioPopupMenuAction.modifyAudioTitle:
-            List<HelpItem> restoredAppDataFromZipHelpItemsLst = [
+            List<HelpItem> audioTitleModificationHelpItemsLst = [
               HelpItem(
                 helpTitle:
-                    AppLocalizations.of(context)!.restoredElementsHelpTitle,
+                    AppLocalizations.of(context)!.audioTitleModificationHelpTitle,
                 helpContent:
-                    AppLocalizations.of(context)!.restoredElementsHelpContent,
+                    AppLocalizations.of(context)!.audioTitleModificationHelpContent,
                 displayHelpItemNumber: false,
               ),
             ];
@@ -297,7 +297,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                 return AudioModificationDialog(
                   audio: audio,
                   audioModificationType: AudioModificationType.modifyAudioTitle,
-                  helpItemsLst: restoredAppDataFromZipHelpItemsLst,
+                  helpItemsLst: audioTitleModificationHelpItemsLst,
                 );
               },
             ).then((String? modifiedAudioTitle) async {
