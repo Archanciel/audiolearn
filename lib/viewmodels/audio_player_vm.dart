@@ -276,6 +276,11 @@ class AudioPlayerVM extends ChangeNotifier {
     // **NEW**: Notify that the current audio has changed
     // This will trigger listeners (like the comment dialog) to update
     currentAudioChangedNotifier.value = audio;
+
+    // Add these lines to ensure Android UI updates:
+    await Future.delayed(const Duration(milliseconds: 10));
+    currentAudioPlayPauseNotifier.value = !audio.isPaused;
+    currentAudioTitleNotifier.value = getCurrentAudioTitleWithDuration();
   }
 
   /// Method called when the user in the PlaylistDownloadView clicks
