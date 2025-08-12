@@ -6,6 +6,7 @@ import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import '../../l10n/app_localizations.dart';
 
@@ -45,6 +46,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
   final Function(int) onPageChangedFunction;
 
   final bool _isAudioCurrent;
+  final Logger _logger = Logger();
 
   AudioListItem({
     super.key,
@@ -869,6 +871,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                 // audio without switching to the AudioPlayerView
                 // screen.
                 playOrPauseIcon = const Icon(Icons.pause);
+                _logger.i("${audio.validVideoTitle} is playing at ${audio.audioPositionSeconds} seconds.");
               }
 
               circleAvatar = formatIconBackAndForgroundColor(
