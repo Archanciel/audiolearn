@@ -13,6 +13,7 @@ import '../../l10n/app_localizations.dart';
 import '../../../models/audio.dart';
 import '../../../utils/ui_util.dart';
 import '../../models/comment.dart';
+import '../../models/help_item.dart';
 import '../../models/playlist.dart';
 import '../../viewmodels/audio_player_vm.dart';
 import '../../../viewmodels/playlist_list_vm.dart';
@@ -278,6 +279,15 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
             );
             break;
           case AudioPopupMenuAction.modifyAudioTitle:
+            List<HelpItem> restoredAppDataFromZipHelpItemsLst = [
+              HelpItem(
+                helpTitle:
+                    AppLocalizations.of(context)!.restoredElementsHelpTitle,
+                helpContent:
+                    AppLocalizations.of(context)!.restoredElementsHelpContent,
+                displayHelpItemNumber: false,
+              ),
+            ];
             await showDialog<String?>(
               context: context,
               barrierDismissible:
@@ -287,6 +297,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                 return AudioModificationDialog(
                   audio: audio,
                   audioModificationType: AudioModificationType.modifyAudioTitle,
+                  helpItemsLst: restoredAppDataFromZipHelpItemsLst,
                 );
               },
             ).then((String? modifiedAudioTitle) async {
@@ -871,7 +882,8 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                 // audio without switching to the AudioPlayerView
                 // screen.
                 playOrPauseIcon = const Icon(Icons.pause);
-                _logger.i("${audio.validVideoTitle} is playing at ${audio.audioPositionSeconds} seconds.");
+                _logger.i(
+                    "${audio.validVideoTitle} is playing at ${audio.audioPositionSeconds} seconds.");
               }
 
               circleAvatar = formatIconBackAndForgroundColor(
