@@ -383,7 +383,7 @@
     }
   },
   "appBarTitleAudioExtractor": "Extract Audio",
-  "setAudioPlaySpeedDialogTitle": "Playback Speed",
+  "setAudioPlaySpeedDialogTitle": "Playback speed",
   "setAudioPlaySpeedTooltip": "Set Audio's Play Speed.",
   "exclude": "Exclude ",
   "fullyPlayed": "fully played ",
