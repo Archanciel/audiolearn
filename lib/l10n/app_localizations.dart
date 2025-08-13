@@ -1332,7 +1332,7 @@ abstract class AppLocalizations {
   /// No description provided for @setAudioPlaySpeedDialogTitle.
   ///
   /// In en, this message translates to:
-  /// **'Playback Speed'**
+  /// **'Playback speed'**
   String get setAudioPlaySpeedDialogTitle;
 
   /// No description provided for @setAudioPlaySpeedTooltip.

@@ -735,7 +735,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appBarTitleAudioExtractor => 'Extract Audio';
 
   @override
-  String get setAudioPlaySpeedDialogTitle => 'Playback Speed';
+  String get setAudioPlaySpeedDialogTitle => 'Playback speed';
 
   @override
   String get setAudioPlaySpeedTooltip => 'Set Audio\'s Play Speed.';
