@@ -1,5 +1,18 @@
-$sourcePath = 'C:\development\flutter\audiolearn\test\data\audio\Sauvegarde'
-$destPath = '/storage/emulated/0/Documents/test/audiolearn'
+# Accept parameters from command line
+param(
+    [Parameter(Mandatory=$false)]
+    [string]$SourcePath = 'C:\development\flutter\audiolearn\test\data\audio\Sauvegarde',
+    
+    [Parameter(Mandatory=$false)]
+    [string]$DestPath = '/storage/emulated/0/Documents/test/audiolearn'
+)
+
+$sourcePath = $SourcePath
+$destPath = $DestPath
+
+Write-Host "Source: $sourcePath" -ForegroundColor Cyan
+Write-Host "Destination: $destPath" -ForegroundColor Cyan
+Write-Host ""
 
 Write-Host 'Cleaning target directory...'
 adb shell "rm -rf $destPath/*"
