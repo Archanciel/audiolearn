@@ -74,3 +74,4 @@ windows/flutter/generated_plugins.cmake
 *.cmake
 /test/data/audiolearn
 /test/data/audio_
+/test/data/audio__
