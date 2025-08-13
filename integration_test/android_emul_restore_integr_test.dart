@@ -28,7 +28,7 @@ import '../test/viewmodels/mock_audio_download_vm.dart';
 import 'integration_test_util.dart';
 import 'mock_file_picker.dart';
 
-/// Run setup_test.bat in order to copy the content of
+/// RUN setup_test.bat IN ORDER TO COPY THE CONTENT OF
 /// restore_existing_playlists_with_new_audios_android_emulator.zip
 /// to kApplicationPathAndroidTest = "/storage/emulated/0/Documents/test/audiolearn".
 void main() {
