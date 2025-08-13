@@ -41,7 +41,8 @@ void main() {
   const String androidPathSeparator = '/';
 
   group(
-      '''On not empty app dir where a playlist is selected, restore Windows zip in which playlist(s)
+      '''ONLY WORKS ON FLUTTER EMULATOR, NOT ON START MEDIUM PHONE EMULATOR. REASON: EMULATOR SIZE !
+          On not empty app dir where a playlist is selected, restore Windows zip in which playlist(s)
           corresponding to existing playlist(s) contain additional audio's to which comments and pictures
           are associated. This situation happens if the AudioLearn application exists on two different
           engines and the user wants to restore the playlists, comments and pictures from one computer
