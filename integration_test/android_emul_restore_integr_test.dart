@@ -726,282 +726,88 @@ void main() {
         );
       });
     });
-    group(
-        '''From Android data. Before running the test, execute C:\development\flutter\audiolearn\test\
+  });
+  group(
+      r'''From Android data. Before running the test, execute C:\development\flutter\audiolearn\test\
        data\saved\Android_emulator_bat\copy_sauvegarde.bat "C:\development\flutter\audiolearn\test\data\
        saved\test_on_Android_emulator_inkwell_button"''', () {
-      testWidgets(
-          '''Unique playlist restore, not replace existing playlist. Restore unique playlist Android zip
-            containing 'S8 audio' playlist to Android application which contains 'S8 audio' and 'local'
-            playlists. The restored 'S8 audio' playlist contains additional audio's to which comments and
-            pictures are associated.''', (tester) async {
-        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
-          tester: tester,
-          tapOnPlaylistToggleButton: false,
-        );
+    testWidgets(
+        '''Test on the playlist download view the correct audio item inkwell play/pause button change
+            when the current playing audio reaches its end and the next audio starts playing.''',
+        (tester) async {
+      await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+        tester: tester,
+        tapOnPlaylistToggleButton: false,
+      );
 
-        // Now initializing the application on the Android emulator using
-        // zip restoration.
+      const String thirdAudioTitle =
+          "NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12";
 
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
+      // final Finder thirdAudioListTileListTileTextWidgetFinder =
+      //     find.text(thirdAudioTitle);
 
-        String restorableZipFileName = 'audioLearn_app_initialization.zip';
+      // await tester.tap(thirdAudioListTileListTileTextWidgetFinder);
+      // await tester.pumpAndSettle();
 
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 5802),
-        ]);
+      // // Tapping twice on the 10 seconds forward icon button
 
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          playlistTitlesToDelete: [
-            'Les plus belles chansons chrétiennes',
-            'S8 audio',
-            'local',
-          ],
-        );
+      // Finder forward10sButtonFinder = find.byKey(const Key('audioPlayerViewForward10sButton'));
+      // await tester
+      //     .tap(forward10sButtonFinder);
+      // await tester.pumpAndSettle();
+      // await tester
+      //     .tap(forward10sButtonFinder);
+      // await tester.pumpAndSettle();
 
-        Finder okButtonFinder = find.byKey(const Key('warningDialogOkButton'));
+      // // Now play the audio and go back to the playlist download
+      // // view screen
+      // await tester.tap(find.byIcon(Icons.play_arrow));
+      // await tester.pumpAndSettle();
 
-        if (okButtonFinder.evaluate().isNotEmpty) {
-          await tester.tap(okButtonFinder.last);
-          await tester.pumpAndSettle();
-        }
+      // Tapping on the third audio item play icon button to play
+      // the audio and to open the AudioPlayerView screen
 
-        restorableZipFileName = 'Android S8 audio.zip';
+      // Find the audio list widget using its key
+      final listFinder = find.byKey(const Key('audio_list'));
+      // Perform the scroll action
+      await tester.drag(listFinder, const Offset(0, -300));
+      await tester.pumpAndSettle();
+      
+      Finder thirdAudioListTileInkWellFinder =
+          IntegrationTestUtil.findAudioItemInkWellWidget(
+        audioTitle: thirdAudioTitle,
+      );
 
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 162667),
-        ]);
+      await tester.tap(thirdAudioListTileInkWellFinder);
+      await tester.pumpAndSettle();
 
-        // Now, test execution.
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-        );
+      // Tapping three times on the 10 seconds forward icon button
+      // and go back to the playlist download view screen
 
-        // Must be used on Android emulator, otherwise the confirmation
-        // dialog is not displayed and can not be verifyed !
-        await Future.delayed(const Duration(milliseconds: 500));
-        await tester.pumpAndSettle();
+      Finder forward10sButtonFinder =
+          find.byKey(const Key('audioPlayerViewForward10sButton'));
+      await tester.tap(forward10sButtonFinder);
+      await tester.pumpAndSettle();
+      await tester.tap(forward10sButtonFinder);
+      await tester.pumpAndSettle();
+      await tester.tap(forward10sButtonFinder);
+      await tester.pumpAndSettle();
 
-        String restorableZipFilePathName =
-            '/storage/emulated/0/Documents/test/audiolearn/$restorableZipFileName';
+      // Go back to the playlist download view.
+      final Finder appScreenNavigationButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
 
-        // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-          tester: tester,
-          warningDialogMessage:
-              'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 2 audio reference(s) and 0 added plus 0 modified comment(s) from "$restorableZipFilePathName".\n\nRestored also 2 picture JPG file(s) in the application pictures directory.',
-          isWarningConfirming: true,
-          warningTitle: 'CONFIRMATION',
-        );
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        audioTitle: thirdAudioTitle,
+        expectedIcon: Icons.pause,
+        expectedIconColor: Colors.white,
+        expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
+      );
 
-        // Verifying the existing restored playlist
-        // list as well as the selected playlist 'Prières du
-        // Maître' displayed audio titles and subtitles.
-
-        List<String> playlistsTitles = [
-          "S8 audio",
-          "local",
-        ];
-
-        List<String> audioTitles = [
-          "Quand Aurélien Barrau va dans une école de management",
-          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          "La surpopulation mondiale par Jancovici et Barrau",
-        ];
-
-        List<String> audioSubTitles = [
-          "0:17:59.0. 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55.",
-          "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35.",
-          "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
-        ];
-
-        _verifyRestoredPlaylistAndAudio(
-          tester: tester,
-          selectedPlaylistTitle: 'S8 audio',
-          playlistsTitles: playlistsTitles,
-          audioTitles: audioTitles,
-          audioSubTitles: audioSubTitles,
-        );
-
-        // Verify the content of the 'S8 audio' playlist dir
-        // + comments + pictures dir after restoration.
-        IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
-          playlistTitle: 'S8 audio',
-          expectedAudioFiles: [], // empty since all playlists were deleted by
-          // the first IntegrationTestUtil.executeRestorePlaylists executio
-          expectedCommentFiles: [
-            "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.json",
-            "250623-065532-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
-            "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'.json",
-          ],
-          expectedPictureFiles: [
-            "250623-065532-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
-            "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'.json"
-          ],
-          doesPictureAudioMapFileNameExist: true,
-          pictureFileNameOne: 'Barrau.jpg',
-          audioForPictureTitleOneLst: [
-            "S8 audio|250623-065532-Quand Aurélien Barrau va dans une école de management 23-09-10"
-          ],
-          pictureFileNameTwo: 'Jésus, mon amour.jpg',
-          audioForPictureTitleTwoLst: [
-            "S8 audio|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'"
-          ],
-        );
-      });
-      testWidgets(
-          '''Multiple playlist restore, not replace existing playlists. Restore multiple playlists Android
-             zip containing 'S8 audio' and 'local' playlists to Android application which contain 'S8 audio'
-             and 'local' playlists. The restored 'S8 audio' and 'local' playlists contains additional audio's
-             to which comments and pictures are associated.''', (tester) async {
-        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
-          tester: tester,
-          tapOnPlaylistToggleButton: false,
-        );
-
-        // Now initializing the application on the Android emulator using
-        // zip restoration.
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        String restorableZipFileName = 'audioLearn_app_initialization.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 5802),
-        ]);
-
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          playlistTitlesToDelete: [
-            'Les plus belles chansons chrétiennes',
-            'S8 audio',
-            'local',
-          ],
-        );
-
-        Finder okButtonFinder = find.byKey(const Key('warningDialogOkButton'));
-
-        if (okButtonFinder.evaluate().isNotEmpty) {
-          await tester.tap(okButtonFinder.last);
-          await tester.pumpAndSettle();
-        }
-
-        restorableZipFileName =
-            'Android 2 existing playlists with new audios.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 162667),
-        ]);
-
-        // Now, test execution.
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-        );
-
-        // Must be used on Android emulator, otherwise the confirmation
-        // dialog is not displayed and can not be verifyed !
-        await Future.delayed(const Duration(milliseconds: 500));
-        await tester.pumpAndSettle();
-
-        String restorableZipFilePathName =
-            '/storage/emulated/0/Documents/test/audiolearn/$restorableZipFileName';
-
-        // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-          tester: tester,
-          warningDialogMessage:
-              'Restored 0 playlist, 3 comment and 3 picture JSON files as well as 4 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".',
-          isWarningConfirming: true,
-          warningTitle: 'CONFIRMATION',
-        );
-
-        // Verifying the existing restored playlist
-        // list as well as the selected playlist 'Prières du
-        // Maître' displayed audio titles and subtitles.
-
-        List<String> playlistsTitles = [
-          "S8 audio",
-          "local",
-        ];
-
-        List<String> audioTitles = [
-          "Quand Aurélien Barrau va dans une école de management",
-          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-          "La surpopulation mondiale par Jancovici et Barrau",
-        ];
-
-        List<String> audioSubTitles = [
-          "0:17:59.0. 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55.",
-          "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35.",
-          "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
-        ];
-
-        _verifyRestoredPlaylistAndAudio(
-          tester: tester,
-          selectedPlaylistTitle: 'S8 audio',
-          playlistsTitles: playlistsTitles,
-          audioTitles: audioTitles,
-          audioSubTitles: audioSubTitles,
-        );
-
-        // Verify the content of the 'S8 audio' playlist dir
-        // + comments + pictures dir after restoration.
-        IntegrationTestUtil.verifyPlaylistDirectoryContentsOnAndroid(
-          playlistTitle: 'local',
-          expectedAudioFiles: [], // empty since all playlists were deleted by
-          // the first IntegrationTestUtil.executeRestorePlaylists execution
-          expectedCommentFiles: [
-            "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.json",
-          ],
-          expectedPictureFiles: [
-            "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.json",
-          ],
-          doesPictureAudioMapFileNameExist: true,
-          pictureFileNameOne: 'Barrau.jpg',
-          audioForPictureTitleOneLst: [
-            "S8 audio|250623-065532-Quand Aurélien Barrau va dans une école de management 23-09-10"
-          ],
-          pictureFileNameTwo: 'Jésus, mon amour.jpg',
-          audioForPictureTitleTwoLst: [
-            "S8 audio|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'"
-          ],
-          pictureFileNameThree: "Dieu je T'adore.jpg",
-          audioForPictureTitleThreeLst: [
-            "local|Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          ],
-        );
-      });
+      int i = 0;
     });
   });
   group(

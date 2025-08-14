@@ -201,7 +201,7 @@ class IntegrationTestUtil {
         find.byType(Material).last, // The popup menu is wrapped in Material
         const Offset(0, -300),
       );
-      
+
       await tester.pumpAndSettle();
     }
 
@@ -299,7 +299,7 @@ class IntegrationTestUtil {
       audioListTileInkWellFinder = find.byKey(Key(inkWellButtonKey));
     } else {
       audioListTileInkWellFinder = findAudioItemInkWellWidget(
-        audioTitle!,
+        audioTitle: audioTitle!,
       );
     }
 
@@ -331,7 +331,9 @@ class IntegrationTestUtil {
     return audioListTileInkWellFinder;
   }
 
-  static Finder findAudioItemInkWellWidget(String audioTitle) {
+  static Finder findAudioItemInkWellWidget({
+    required String audioTitle,
+  }) {
     // First, get the downloaded Audio item ListTile Text
     // widget finder
     final Finder audioListTileTextWidgetFinder = find.text(audioTitle);
@@ -2763,8 +2765,7 @@ class IntegrationTestUtil {
     // the audio info dialog
 
     // First, find the Audio sublist ListTile Text widget
-    final Finder targetAudioListTileTextWidgetFinder =
-        find.text(audioTitle);
+    final Finder targetAudioListTileTextWidgetFinder = find.text(audioTitle);
 
     // Then obtain the Audio ListTile widget enclosing the Text widget by
     // finding its ancestor
