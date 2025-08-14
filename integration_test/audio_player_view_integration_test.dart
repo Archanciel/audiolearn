@@ -5017,7 +5017,13 @@ void main() {
         expectedIconColor: Colors.white,
         expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
       );
-    });
+  
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+  });
   });
   group('Selecting playlist in AudioPlayerView', () {
     testWidgets(
