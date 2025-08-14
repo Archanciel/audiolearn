@@ -28,9 +28,6 @@ import '../test/viewmodels/mock_audio_download_vm.dart';
 import 'integration_test_util.dart';
 import 'mock_file_picker.dart';
 
-/// RUN setup_test.bat IN ORDER TO COPY THE CONTENT OF
-/// restore_existing_playlists_with_new_audios_android_emulator.zip
-/// to kApplicationPathAndroidTest = "/storage/emulated/0/Documents/test/audiolearn".
 void main() {
   // Necessary to avoid FatalFailureException (FatalFailureException: Failed
   // to perform an HTTP request to YouTube due to a fatal failure. In most
@@ -42,6 +39,10 @@ void main() {
 
   group(
       '''ONLY WORKS ON FLUTTER EMULATOR, NOT ON START MEDIUM PHONE EMULATOR. REASON: EMULATOR SIZE !
+          RUN setup_test.bat IN ORDER TO COPY THE CONTENT OF restore_existing_playlists_with_new_
+          audios_android_emulator.zip to kApplicationPathAndroidTest = "/storage/emulated/0/Documents
+          /test/audiolearn".
+
           On not empty app dir where a playlist is selected, restore Windows zip in which playlist(s)
           corresponding to existing playlist(s) contain additional audio's to which comments and pictures
           are associated. This situation happens if the AudioLearn application exists on two different
@@ -733,7 +734,9 @@ void main() {
        saved\test_on_Android_emulator_inkwell_button"''', () {
     testWidgets(
         '''Test on the playlist download view the correct audio item inkwell play/pause button change
-            when the current playing audio reaches its end and the next audio starts playing.''',
+            when the current playing audio reaches its end and the next audio starts playing. DDue to
+            the main branch audioplayer version which does not support the integration test action,
+            the test is not executable4 on the main branch.''',
         (tester) async {
       await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
         tester: tester,
@@ -788,7 +791,6 @@ void main() {
       for (int i = 0; i < 16; i++) {
         await Future.delayed(const Duration(seconds: 1));
         await tester.pumpAndSettle();
-        print('Waiting for third audio to reach its end: ${i + 1} seconds');
       }
 
       IntegrationTestUtil.validateInkWellButton(
@@ -800,8 +802,7 @@ void main() {
         expectedIconBackgroundColor: Colors.black,
       );
 
-      const String secondAudioTitle =
-          "L’uniforme arrive en France en 2024";
+      const String secondAudioTitle = "L’uniforme arrive en France en 2024";
 
       final Finder secondAudioListTileTextWidgetFinder =
           find.text(secondAudioTitle);
@@ -811,15 +812,13 @@ void main() {
 
       // Tapping three time on the 10 seconds forward icon button
 
-      forward10sButtonFinder = find.byKey(const Key('audioPlayerViewForward10sButton'));
-      await tester
-          .tap(forward10sButtonFinder);
+      forward10sButtonFinder =
+          find.byKey(const Key('audioPlayerViewForward10sButton'));
+      await tester.tap(forward10sButtonFinder);
       await tester.pumpAndSettle();
-      await tester
-          .tap(forward10sButtonFinder);
+      await tester.tap(forward10sButtonFinder);
       await tester.pumpAndSettle();
-      await tester
-          .tap(forward10sButtonFinder);
+      await tester.tap(forward10sButtonFinder);
       await tester.pumpAndSettle();
 
       // Now go back to the playlist download view screen
@@ -842,7 +841,6 @@ void main() {
       for (int i = 0; i < 16; i++) {
         await Future.delayed(const Duration(seconds: 1));
         await tester.pumpAndSettle();
-        print('Waiting for second audio to reach its end: ${i + 1} seconds');
       }
 
       IntegrationTestUtil.validateInkWellButton(
@@ -854,7 +852,21 @@ void main() {
         expectedIconBackgroundColor: Colors.black,
       );
 
-      int i = 0;
+      const String firstAudioTitle =
+          "DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES";
+
+      // Perform the scroll action
+      await tester.drag(
+          listFinder, const Offset(0, 300)); // Scroll back to the top
+      await tester.pumpAndSettle();
+
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        audioTitle: firstAudioTitle,
+        expectedIcon: Icons.pause,
+        expectedIconColor: Colors.white,
+        expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
+      );
     });
   });
   group(
