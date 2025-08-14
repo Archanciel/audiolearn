@@ -772,7 +772,7 @@ void main() {
       // Perform the scroll action
       await tester.drag(listFinder, const Offset(0, -300));
       await tester.pumpAndSettle();
-      
+
       Finder thirdAudioListTileInkWellFinder =
           IntegrationTestUtil.findAudioItemInkWellWidget(
         audioTitle: thirdAudioTitle,
@@ -782,7 +782,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Tapping three times on the 10 seconds forward icon button
-      // and go back to the playlist download view screen
+      // and go back to the playlist download view screen.
 
       Finder forward10sButtonFinder =
           find.byKey(const Key('audioPlayerViewForward10sButton'));
@@ -806,6 +806,14 @@ void main() {
         expectedIconColor: Colors.white,
         expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
       );
+
+      // Add a delay to allow the audio to reach its end and the next audio
+      // to start playing.
+      for (int i = 0; i < 20; i++) {
+        await Future.delayed(const Duration(seconds: 1));
+        await tester.pumpAndSettle();
+        print('Waiting for audio to reach its end: ${i + 1} seconds');
+      }
 
       int i = 0;
     });
