@@ -275,7 +275,7 @@ abstract class AppLocalizations {
   /// No description provided for @sortFilterDialogTitle.
   ///
   /// In en, this message translates to:
-  /// **'Sort and Filter Parameters'**
+  /// **'Sort and Filter Parms'**
   String get sortFilterDialogTitle;
 
   /// No description provided for @sortBy.

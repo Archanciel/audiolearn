@@ -2152,6 +2152,9 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     return SingleChildScrollView(
       child: DropdownButton<SortingOption>(
         key: const Key('sortingOptionDropdownButton'),
+        isExpanded: true, // This might affect arrow visibility
+        icon: Icon(Icons
+            .arrow_drop_down), // Explicitly set the icon        value: SortingOption.audioDownloadDate,
         value: SortingOption.audioDownloadDate,
         onChanged: (SortingOption? newValue) {
           // situation when the user selects a sorting option
