@@ -743,30 +743,6 @@ void main() {
       const String thirdAudioTitle =
           "NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12";
 
-      // final Finder thirdAudioListTileListTileTextWidgetFinder =
-      //     find.text(thirdAudioTitle);
-
-      // await tester.tap(thirdAudioListTileListTileTextWidgetFinder);
-      // await tester.pumpAndSettle();
-
-      // // Tapping twice on the 10 seconds forward icon button
-
-      // Finder forward10sButtonFinder = find.byKey(const Key('audioPlayerViewForward10sButton'));
-      // await tester
-      //     .tap(forward10sButtonFinder);
-      // await tester.pumpAndSettle();
-      // await tester
-      //     .tap(forward10sButtonFinder);
-      // await tester.pumpAndSettle();
-
-      // // Now play the audio and go back to the playlist download
-      // // view screen
-      // await tester.tap(find.byIcon(Icons.play_arrow));
-      // await tester.pumpAndSettle();
-
-      // Tapping on the third audio item play icon button to play
-      // the audio and to open the AudioPlayerView screen
-
       // Find the audio list widget using its key
       final listFinder = find.byKey(const Key('audio_list'));
       // Perform the scroll action
@@ -794,7 +770,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Go back to the playlist download view.
-      final Finder appScreenNavigationButton =
+      Finder appScreenNavigationButton =
           find.byKey(const ValueKey('playlistDownloadViewIconButton'));
       await tester.tap(appScreenNavigationButton);
       await tester.pumpAndSettle();
@@ -809,11 +785,74 @@ void main() {
 
       // Add a delay to allow the audio to reach its end and the next audio
       // to start playing.
-      for (int i = 0; i < 20; i++) {
+      for (int i = 0; i < 16; i++) {
         await Future.delayed(const Duration(seconds: 1));
         await tester.pumpAndSettle();
-        print('Waiting for audio to reach its end: ${i + 1} seconds');
+        print('Waiting for third audio to reach its end: ${i + 1} seconds');
       }
+
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        audioTitle: thirdAudioTitle,
+        expectedIcon: Icons.play_arrow,
+        expectedIconColor:
+            kSliderThumbColorInDarkMode, // Fully played audio item play icon color
+        expectedIconBackgroundColor: Colors.black,
+      );
+
+      const String secondAudioTitle =
+          "L’uniforme arrive en France en 2024";
+
+      final Finder secondAudioListTileTextWidgetFinder =
+          find.text(secondAudioTitle);
+
+      await tester.tap(secondAudioListTileTextWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Tapping three time on the 10 seconds forward icon button
+
+      forward10sButtonFinder = find.byKey(const Key('audioPlayerViewForward10sButton'));
+      await tester
+          .tap(forward10sButtonFinder);
+      await tester.pumpAndSettle();
+      await tester
+          .tap(forward10sButtonFinder);
+      await tester.pumpAndSettle();
+      await tester
+          .tap(forward10sButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Now go back to the playlist download view screen
+
+      appScreenNavigationButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        audioTitle: secondAudioTitle,
+        expectedIcon: Icons.pause,
+        expectedIconColor: Colors.white,
+        expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
+      );
+
+      // Add a delay to allow the audio to reach its end and the next audio
+      // to start playing.
+      for (int i = 0; i < 16; i++) {
+        await Future.delayed(const Duration(seconds: 1));
+        await tester.pumpAndSettle();
+        print('Waiting for second audio to reach its end: ${i + 1} seconds');
+      }
+
+      IntegrationTestUtil.validateInkWellButton(
+        tester: tester,
+        audioTitle: secondAudioTitle,
+        expectedIcon: Icons.play_arrow,
+        expectedIconColor:
+            kSliderThumbColorInDarkMode, // Fully played audio item play icon color
+        expectedIconBackgroundColor: Colors.black,
+      );
 
       int i = 0;
     });
