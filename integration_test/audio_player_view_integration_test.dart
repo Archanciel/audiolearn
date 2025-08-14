@@ -10727,7 +10727,7 @@ Future<void> _goBackToPlaylistDownloadViewToCheckAudioStateAndIcon({
   // and tapping on it plays or pauses the audio.
   final Finder lastDownloadedAudioListTileInkWellFinder =
       IntegrationTestUtil.findAudioItemInkWellWidget(
-    audioTitle,
+    audioTitle: audioTitle,
   );
 
   // Find the Icon within the InkWell

@@ -2488,7 +2488,7 @@ void main() {
 
         final Finder lastDownloadedAudioListTileInkWellFinder =
             IntegrationTestUtil.findAudioItemInkWellWidget(
-          remainingAudioTitle,
+          audioTitle: remainingAudioTitle,
         );
 
         await tester.tap(lastDownloadedAudioListTileInkWellFinder);
@@ -2822,7 +2822,7 @@ void main() {
 
         final Finder lastDownloadedAudioListTileInkWellFinder =
             IntegrationTestUtil.findAudioItemInkWellWidget(
-          remainingAudioTitle,
+          audioTitle: remainingAudioTitle,
         );
 
         await tester.tap(lastDownloadedAudioListTileInkWellFinder);
