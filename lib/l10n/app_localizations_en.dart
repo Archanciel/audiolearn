@@ -103,7 +103,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Save Sort/Filter Parameters to Playlist ...';
 
   @override
-  String get sortFilterDialogTitle => 'Sort and Filter Parameters';
+  String get sortFilterDialogTitle => 'Sort and Filter Parms';
 
   @override
   String get sortBy => 'Sort by:';
