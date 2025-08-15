@@ -61,8 +61,8 @@ class SortCriteria<T> {
 
   SortCriteria<T> copy() {
     return SortCriteria<T>(
-      selectorFunction: this.selectorFunction,
-      sortOrder: this.sortOrder,
+      selectorFunction: selectorFunction,
+      sortOrder: sortOrder,
     );
   }
 }

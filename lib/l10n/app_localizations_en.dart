@@ -2205,4 +2205,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get audioTitleModificationHelpContent =>
       'For example, if in a playlist we have three audios that were downloaded in this order:\n  last\n  first\n  second\nand we want to listen to them in order according to their title, it is useful to rename the titles this way:\n  3-last\n  1-first\n  2-second\n\nThen you need to click on the \"Sort/Filter Audio ...\" menu to define a sort that you name and that sorts the audio\'s according to their title.\n\nOnce the \"Sort and Filter Parameters\" dialog is open, define the filter name in the \"Save as:\" field and open the \"Sort by:\" list. Select \"Audio title\" and then remove \"Audio downl date\". Finally, click on \"Save\".\n\nOnce this sort is defined, check that it is selected and use the \"Save Sort/Filter Parameters to Playlist ...\" menu by selecting the screen for which the sort will be applied. This way, the audios will be played in the order in which you want to listen to them.';
+
+  @override
+  String get playlistConvertTextToAudioMenu => 'Convert Text to Audio ...';
+
+  @override
+  String get playlistConvertTextToAudioMenuTooltip =>
+      'Convert a text to a listenable audio which is added to the playlist. Adding positionned comments or a picture to this audio will be possible like for the other audio\'s.';
 }

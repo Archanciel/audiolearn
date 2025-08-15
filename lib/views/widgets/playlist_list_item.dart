@@ -13,9 +13,11 @@ import 'package:path_provider/path_provider.dart';
 import '../../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/audio.dart';
 import '../../models/help_item.dart';
 import '../../models/playlist.dart';
 import '../../services/settings_data_service.dart';
+import '../../services/sort_filter_parameters.dart';
 import '../../utils/date_time_util.dart';
 import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/date_format_vm.dart';
@@ -24,6 +26,7 @@ import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
 import 'application_snackbar.dart';
 import 'confirm_action_dialog.dart';
+import 'convert_text_to_audio_dialog.dart';
 import 'playlist_comment_list_dialog.dart';
 import 'playlist_info_dialog.dart';
 import 'audio_set_speed_dialog.dart';
@@ -36,6 +39,7 @@ enum PlaylistPopupMenuAction {
   displayPlaylistInfo,
   displayPlaylistAudioComments,
   importAudioFilesInPlaylist,
+  convertTextToAudioInPlaylist, // New action to convert text to audio
   downloadVideoUrlsFromTextFileInPlaylist,
   updatePlaylistPlayableAudios, // useful if playlist audio files were
   //                               deleted from the app dir
@@ -191,6 +195,15 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             message:
                 AppLocalizations.of(context)!.playlistImportAudioMenuTooltip,
             child: Text(AppLocalizations.of(context)!.playlistImportAudioMenu),
+          ),
+        ),
+        PopupMenuItem<PlaylistPopupMenuAction>(
+          key: const Key('popup_menu_convert_text_to_audio_in_playlist'),
+          value: PlaylistPopupMenuAction.convertTextToAudioInPlaylist,
+          child: Tooltip(
+            message:
+                AppLocalizations.of(context)!.playlistConvertTextToAudioMenuTooltip,
+            child: Text(AppLocalizations.of(context)!.playlistConvertTextToAudioMenu),
           ),
         ),
         PopupMenuItem<PlaylistPopupMenuAction>(
@@ -351,6 +364,60 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               filePathNameToImportLst: selectedFilePathNameLst,
             );
             break;
+          case PlaylistPopupMenuAction.convertTextToAudioInPlaylist:
+              // Using FocusNode to enable clicking on Enter to close
+              // the dialog
+              final FocusNode focusNode = FocusNode();
+              showDialog<List<dynamic>>(
+                context: context,
+                barrierDismissible: false, // This line prevents the dialog from
+                // closing when tapping outside the dialog
+                builder: (BuildContext context) {
+                  return ConvertTextToAudioDialog(
+                    settingsDataService: settingsDataService,
+                    warningMessageVM: warningMessageVMlistenFalse,
+                    selectedPlaylist:
+                        playlistListVMlistenFalse.uniqueSelectedPlaylist!,
+                    selectedPlaylistAudioLst: playlistListVMlistenFalse
+                        .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+                      audioLearnAppViewType:
+                          AudioLearnAppViewType.playlistDownloadView,
+                    ),
+                    audioSortFilterParametersName: '',
+                    audioSortFilterParameters: AudioSortFilterParameters
+                        .createDefaultAudioSortFilterParameters(),
+                    audioLearnAppViewType:
+                        AudioLearnAppViewType.playlistDownloadView,
+                    focusNode: focusNode,
+                    calledFrom: CalledFrom.playlistDownloadViewAudioMenu,
+                  );
+                },
+              ).then((filterSortAudioAndParmLst) {
+                if (filterSortAudioAndParmLst != null) {
+                  // user clicked on Save or Apply button on sort and filter
+                  // dialog opened by the popup menu button item
+                  List<Audio> returnedAudioList = filterSortAudioAndParmLst[0];
+                  AudioSortFilterParameters audioSortFilterParameters =
+                      filterSortAudioAndParmLst[1];
+                  String audioSortFilterParametersName =
+                      filterSortAudioAndParmLst[2];
+                  playlistListVMlistenFalse
+                      .setSortFilterForSelectedPlaylistPlayableAudiosAndParms(
+                    audioLearnAppViewType:
+                        AudioLearnAppViewType.playlistDownloadView,
+                    sortFilteredSelectedPlaylistPlayableAudio:
+                        returnedAudioList,
+                    audioSortFilterParms: audioSortFilterParameters,
+                    audioSortFilterParmsName: audioSortFilterParametersName,
+                    translatedAppliedSortFilterParmsName:
+                        AppLocalizations.of(context)!
+                            .sortFilterParametersAppliedName,
+                  );
+                  // _wasSortFilterAudioSettingsApplied = true;
+                }
+              });
+              focusNode.requestFocus();
+              break;
           case PlaylistPopupMenuAction.downloadVideoUrlsFromTextFileInPlaylist:
             String selectedFilePathName =
                 await _filePickerSelectVideoUrlsTextFile();
