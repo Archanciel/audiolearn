@@ -727,146 +727,145 @@ void main() {
         );
       });
     });
-  });
-  group(
-      r'''From Android data. Before running the test, execute C:\development\flutter\audiolearn\test\
+    group(
+        r'''From Android data. Before running the test, execute C:\development\flutter\audiolearn\test\
        data\saved\Android_emulator_bat\copy_sauvegarde.bat "C:\development\flutter\audiolearn\test\data\
        saved\test_on_Android_emulator_inkwell_button"''', () {
-    testWidgets(
-        '''Test on the playlist download view the correct audio item inkwell play/pause button change
+      testWidgets(
+          '''Test on the playlist download view the correct audio item inkwell play/pause button change
             when the current playing audio reaches its end and the next audio starts playing. DDue to
             the main branch audioplayer version which does not support the integration test action,
-            the test is not executable4 on the main branch.''',
-        (tester) async {
-      await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
-        tester: tester,
-        tapOnPlaylistToggleButton: false,
-      );
+            the test is not executable4 on the main branch.''', (tester) async {
+        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+          tester: tester,
+          tapOnPlaylistToggleButton: false,
+        );
 
-      const String thirdAudioTitle =
-          "NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12";
+        const String thirdAudioTitle =
+            "NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12";
 
-      // Find the audio list widget using its key
-      final listFinder = find.byKey(const Key('audio_list'));
-      // Perform the scroll action
-      await tester.drag(listFinder, const Offset(0, -300));
-      await tester.pumpAndSettle();
-
-      Finder thirdAudioListTileInkWellFinder =
-          IntegrationTestUtil.findAudioItemInkWellWidget(
-        audioTitle: thirdAudioTitle,
-      );
-
-      await tester.tap(thirdAudioListTileInkWellFinder);
-      await tester.pumpAndSettle();
-
-      // Tapping three times on the 10 seconds forward icon button
-      // and go back to the playlist download view screen.
-
-      Finder forward10sButtonFinder =
-          find.byKey(const Key('audioPlayerViewForward10sButton'));
-      await tester.tap(forward10sButtonFinder);
-      await tester.pumpAndSettle();
-      await tester.tap(forward10sButtonFinder);
-      await tester.pumpAndSettle();
-      await tester.tap(forward10sButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Go back to the playlist download view.
-      Finder appScreenNavigationButton =
-          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
-
-      IntegrationTestUtil.validateInkWellButton(
-        tester: tester,
-        audioTitle: thirdAudioTitle,
-        expectedIcon: Icons.pause,
-        expectedIconColor: Colors.white,
-        expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
-      );
-
-      // Add a delay to allow the audio to reach its end and the next audio
-      // to start playing.
-      for (int i = 0; i < 16; i++) {
-        await Future.delayed(const Duration(seconds: 1));
+        // Find the audio list widget using its key
+        final listFinder = find.byKey(const Key('audio_list'));
+        // Perform the scroll action
+        await tester.drag(listFinder, const Offset(0, -300));
         await tester.pumpAndSettle();
-      }
 
-      IntegrationTestUtil.validateInkWellButton(
-        tester: tester,
-        audioTitle: thirdAudioTitle,
-        expectedIcon: Icons.play_arrow,
-        expectedIconColor:
-            kSliderThumbColorInDarkMode, // Fully played audio item play icon color
-        expectedIconBackgroundColor: Colors.black,
-      );
+        Finder thirdAudioListTileInkWellFinder =
+            IntegrationTestUtil.findAudioItemInkWellWidget(
+          audioTitle: thirdAudioTitle,
+        );
 
-      const String secondAudioTitle = "L’uniforme arrive en France en 2024";
-
-      final Finder secondAudioListTileTextWidgetFinder =
-          find.text(secondAudioTitle);
-
-      await tester.tap(secondAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
-
-      // Tapping three time on the 10 seconds forward icon button
-
-      forward10sButtonFinder =
-          find.byKey(const Key('audioPlayerViewForward10sButton'));
-      await tester.tap(forward10sButtonFinder);
-      await tester.pumpAndSettle();
-      await tester.tap(forward10sButtonFinder);
-      await tester.pumpAndSettle();
-      await tester.tap(forward10sButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Now go back to the playlist download view screen
-
-      appScreenNavigationButton =
-          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
-
-      IntegrationTestUtil.validateInkWellButton(
-        tester: tester,
-        audioTitle: secondAudioTitle,
-        expectedIcon: Icons.pause,
-        expectedIconColor: Colors.white,
-        expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
-      );
-
-      // Add a delay to allow the audio to reach its end and the next audio
-      // to start playing.
-      for (int i = 0; i < 16; i++) {
-        await Future.delayed(const Duration(seconds: 1));
+        await tester.tap(thirdAudioListTileInkWellFinder);
         await tester.pumpAndSettle();
-      }
 
-      IntegrationTestUtil.validateInkWellButton(
-        tester: tester,
-        audioTitle: secondAudioTitle,
-        expectedIcon: Icons.play_arrow,
-        expectedIconColor:
-            kSliderThumbColorInDarkMode, // Fully played audio item play icon color
-        expectedIconBackgroundColor: Colors.black,
-      );
+        // Tapping three times on the 10 seconds forward icon button
+        // and go back to the playlist download view screen.
 
-      const String firstAudioTitle =
-          "DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES";
+        Finder forward10sButtonFinder =
+            find.byKey(const Key('audioPlayerViewForward10sButton'));
+        await tester.tap(forward10sButtonFinder);
+        await tester.pumpAndSettle();
+        await tester.tap(forward10sButtonFinder);
+        await tester.pumpAndSettle();
+        await tester.tap(forward10sButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Perform the scroll action
-      await tester.drag(
-          listFinder, const Offset(0, 300)); // Scroll back to the top
-      await tester.pumpAndSettle();
+        // Go back to the playlist download view.
+        Finder appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
 
-      IntegrationTestUtil.validateInkWellButton(
-        tester: tester,
-        audioTitle: firstAudioTitle,
-        expectedIcon: Icons.pause,
-        expectedIconColor: Colors.white,
-        expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
-      );
+        IntegrationTestUtil.validateInkWellButton(
+          tester: tester,
+          audioTitle: thirdAudioTitle,
+          expectedIcon: Icons.pause,
+          expectedIconColor: Colors.white,
+          expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
+        );
+
+        // Add a delay to allow the audio to reach its end and the next audio
+        // to start playing.
+        for (int i = 0; i < 16; i++) {
+          await Future.delayed(const Duration(seconds: 1));
+          await tester.pumpAndSettle();
+        }
+
+        IntegrationTestUtil.validateInkWellButton(
+          tester: tester,
+          audioTitle: thirdAudioTitle,
+          expectedIcon: Icons.play_arrow,
+          expectedIconColor:
+              kSliderThumbColorInDarkMode, // Fully played audio item play icon color
+          expectedIconBackgroundColor: Colors.black,
+        );
+
+        const String secondAudioTitle = "L’uniforme arrive en France en 2024";
+
+        final Finder secondAudioListTileTextWidgetFinder =
+            find.text(secondAudioTitle);
+
+        await tester.tap(secondAudioListTileTextWidgetFinder);
+        await tester.pumpAndSettle();
+
+        // Tapping three time on the 10 seconds forward icon button
+
+        forward10sButtonFinder =
+            find.byKey(const Key('audioPlayerViewForward10sButton'));
+        await tester.tap(forward10sButtonFinder);
+        await tester.pumpAndSettle();
+        await tester.tap(forward10sButtonFinder);
+        await tester.pumpAndSettle();
+        await tester.tap(forward10sButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Now go back to the playlist download view screen
+
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        IntegrationTestUtil.validateInkWellButton(
+          tester: tester,
+          audioTitle: secondAudioTitle,
+          expectedIcon: Icons.pause,
+          expectedIconColor: Colors.white,
+          expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
+        );
+
+        // Add a delay to allow the audio to reach its end and the next audio
+        // to start playing.
+        for (int i = 0; i < 16; i++) {
+          await Future.delayed(const Duration(seconds: 1));
+          await tester.pumpAndSettle();
+        }
+
+        IntegrationTestUtil.validateInkWellButton(
+          tester: tester,
+          audioTitle: secondAudioTitle,
+          expectedIcon: Icons.play_arrow,
+          expectedIconColor:
+              kSliderThumbColorInDarkMode, // Fully played audio item play icon color
+          expectedIconBackgroundColor: Colors.black,
+        );
+
+        const String firstAudioTitle =
+            "DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES";
+
+        // Perform the scroll action
+        await tester.drag(
+            listFinder, const Offset(0, 300)); // Scroll back to the top
+        await tester.pumpAndSettle();
+
+        IntegrationTestUtil.validateInkWellButton(
+          tester: tester,
+          audioTitle: firstAudioTitle,
+          expectedIcon: Icons.pause,
+          expectedIconColor: Colors.white,
+          expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
+        );
+      });
     });
   });
   group(
