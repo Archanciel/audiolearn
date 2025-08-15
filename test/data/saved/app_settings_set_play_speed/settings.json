@@ -10,7 +10,7 @@
         "Playlists.isMusicQualityByDefault": "false",
         "Playlists.orderedTitleLst": "[local, S8 audio]",
         "Playlists.playSpeed": "1.25",
-        "Playlists.maxSavableAudioMp3FileSizeInMb": "525"
+        "Playlists.maxSavableAudioMp3FileSizeInMb": "525.0"
     },
     "SettingType.dataLocation": {
         "DataLocation.appSettingsPath": "C:\\development\\flutter\\audiolearn\\test\\data\\audio",
