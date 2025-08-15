@@ -89,6 +89,7 @@ void main() {
             'Les plus belles chansons chrétiennes',
             'S8 audio',
             'local',
+            'urgent_actus_17-12-2023',
           ],
         );
 
@@ -224,6 +225,7 @@ void main() {
             'Les plus belles chansons chrétiennes',
             'S8 audio',
             'local',
+            'urgent_actus_17-12-2023',
           ],
         );
 
@@ -363,6 +365,7 @@ void main() {
             'Les plus belles chansons chrétiennes',
             'S8 audio',
             'local',
+            'urgent_actus_17-12-2023',
           ],
         );
 
@@ -491,6 +494,7 @@ void main() {
             'Les plus belles chansons chrétiennes',
             'S8 audio',
             'local',
+            'urgent_actus_17-12-2023',
           ],
         );
 
@@ -626,6 +630,7 @@ void main() {
             'Les plus belles chansons chrétiennes',
             'S8 audio',
             'local',
+            'urgent_actus_17-12-2023',
           ],
         );
 
@@ -740,6 +745,85 @@ void main() {
           tester: tester,
           tapOnPlaylistToggleButton: false,
         );
+
+        // Now initializing the application on the Android emulator using
+        // zip restoration.
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        const String restorableZipFileName = 'urgent_actus_17-12-2023.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFileName,
+              path:
+                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+              size: 2655),
+        ]);
+
+        // In order to create the Android emulator application, execute the
+        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+        // without replacing the existing playlists.
+        const String urgentActusPlaylistTitle = 'urgent_actus_17-12-2023';
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+          playlistTitlesToDelete: [
+            'Les plus belles chansons chrétiennes',
+            'S8 audio',
+            'local',
+            urgentActusPlaylistTitle,
+          ],
+        );
+
+        // Tap on the 'OK' button of the confirmation dialog
+        await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+        await tester.pumpAndSettle();
+
+        const String restorableMp3ZipFileName =
+            'urgent_actus_17-12-2023_mp3_from_2025-08-12_16_29_25_on_2025-08-15_11_23_41.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableMp3ZipFileName,
+              path:
+                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableMp3ZipFileName',
+              size: 15366672),
+        ]);
+
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: urgentActusPlaylistTitle,
+          playlistMenuKeyStr:
+              'popup_menu_restore_playlist_audio_mp3_files_from_zip',
+        );
+
+        // Now verifying the confirm dialog message
+
+        expect(
+          tester
+              .widget<Text>(find.byKey(
+                const Key('setValueToTargetDialogTitleKey'),
+              ))
+              .data,
+          'MP3 Restoration',
+        );
+
+        expect(
+          tester
+              .widget<Text>(find.byKey(
+                const Key('setValueToTargetDialogKey'),
+              ))
+              .data,
+          "Only the MP3 relative to the audio's listed in the playlist which are not already present in the playlist are restorable.",
+        );
+
+        // Now find the 'Ok' button of the SetValueToTarget dialog
+        // and tap on it
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
 
         const String thirdAudioTitle =
             "NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12";
