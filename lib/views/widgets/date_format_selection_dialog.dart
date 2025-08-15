@@ -107,21 +107,31 @@ class _DateFormatSelectionDialogState extends State<DateFormatSelectionDialog>
             mainAxisSize: MainAxisSize.min, // Use minimum space
             children: [
               Expanded(
-                child: ListView.builder(
-                  itemCount: _nowDateFormatList.length,
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    return RadioListTile<int>(
-                      title: Text(_nowDateFormatList[index]),
-                      value: index,
-                      groupValue: _selectedIndex,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedIndex = value ?? 0;
-                        });
-                      },
-                    );
+                child: RadioGroup<int>(
+                  groupValue: _selectedIndex,
+                  onChanged: (int? value) {
+                    setState(() {
+                      _selectedIndex = value ?? 0;
+                    });
                   },
+                  child: ListView.builder(
+                    itemCount: _nowDateFormatList.length,
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        title: Text(_nowDateFormatList[index]),
+                        leading: Radio<int>(
+                          value: index,
+                          // groupValue and onChanged are now handled by RadioGroup
+                        ),
+                        onTap: () {
+                          setState(() {
+                            _selectedIndex = index;
+                          });
+                        },
+                      );
+                    },
+                  ),
                 ),
               ),
             ],
