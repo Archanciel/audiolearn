@@ -2228,4 +2228,12 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get audioTitleModificationHelpContent =>
       'Par exemple, si dans une playlist on dispose de trois audio\'s qui ont été téléchargés dans cet ordre:\n  dernier\n  premier\n  deuxième\net que l\'on souhaite écouter dans l\'ordre en rapport avec leur titre, il est utile de renommer les titres de cette manière:\n  3-dernier\n  1-premier\n  2-deuxième\n\nEnsuite il faut cliquer sur le menu \"Trier/filtrer audio ...\" afin de définir un tri que l\'on nomme et qui trie les audios selon leur titre.\n\nUne fois le dialogue \"Paramètres tri et filtre\" ouvert, définir le nom du filtre dans le champ \"Enregistrer sous:\" et ouvrir la liste \"Trier par:\". Sélectionner \"Titre audio\" et ensuite supprimer \"Date téléch audio\". Enfin, cliquer sur \"Sauver\".\n\nUne fois que ce tri est défini, on vérifie qu\'il est sélectionné et l\'on utilise le menu \"Sauvegarder les paramètres tri/filtre dans la playlist ...\" en sélectionnant l\'écran pour lequel le tri sera appliqué. Ainsi, les audios seront joués dans l\'ordre dans lequel on souhaite les écouter.';
+
+  @override
+  String get playlistConvertTextToAudioMenu =>
+      'Convertir un texte en audio ...';
+
+  @override
+  String get playlistConvertTextToAudioMenuTooltip =>
+      'Convertir un texte en audio écoutable qui est ajouté à la playlist. Comme pour les autres audio\'s, il sera possible d\'ajouter des commentaires positionnés ou une image à cet audio.';
 }
