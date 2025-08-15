@@ -277,7 +277,10 @@ class AudioPlayerVM extends ChangeNotifier {
     // This will trigger listeners (like the comment dialog) to update
     currentAudioChangedNotifier.value = audio;
 
-    // Add these lines to ensure Android UI updates:
+    // Add these lines to ensure Android UI updates. This fix a
+    // bug only applying on Android wheN the playing audio audio
+    // changes on the playlist download view. Without this, the
+    // audio item play/pause icon buttons are not updated.
     await Future.delayed(const Duration(milliseconds: 10));
     currentAudioPlayPauseNotifier.value = !audio.isPaused;
     currentAudioTitleNotifier.value = getCurrentAudioTitleWithDuration();
