@@ -81,8 +81,8 @@ class _PlaylistOneSelectableDialogState
     if (widget.excludedPlaylist == null) {
       upToDateSelectablePlaylists =
           playlistVMlistenFalse.getUpToDateSelectablePlaylists(
-            ignoreSearchSentence: true,
-          );
+        ignoreSearchSentence: true,
+      );
     } else {
       upToDateSelectablePlaylists = playlistVMlistenFalse
           .getUpToDateSelectablePlaylistsExceptExcludedPlaylist(
@@ -123,25 +123,39 @@ class _PlaylistOneSelectableDialogState
             mainAxisSize: MainAxisSize.min, // Use minimum space
             children: [
               Flexible(
-                child: ListView.builder(
-                  key: const Key('selectable_playlist_list'),
-                  itemCount: upToDateSelectablePlaylists.length,
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    return RadioListTile<Playlist>(
-                      title: Text(upToDateSelectablePlaylists[index].title),
-                      value: upToDateSelectablePlaylists[index],
-                      groupValue: _selectedPlaylist,
-                      onChanged: (Playlist? value) {
-                        setState(() {
-                          _selectedPlaylist = value;
-                          _downloadSingleVideoAudioAtMusicQuality =
-                              (_selectedPlaylist!.playlistQuality ==
-                                  PlaylistQuality.music);
-                        });
-                      },
-                    );
+                child: RadioGroup<Playlist>(
+                  groupValue: _selectedPlaylist,
+                  onChanged: (Playlist? value) {
+                    setState(() {
+                      _selectedPlaylist = value;
+                      _downloadSingleVideoAudioAtMusicQuality =
+                          (_selectedPlaylist!.playlistQuality ==
+                              PlaylistQuality.music);
+                    });
                   },
+                  child: ListView.builder(
+                    key: const Key('selectable_playlist_list'),
+                    itemCount: upToDateSelectablePlaylists.length,
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        title: Text(upToDateSelectablePlaylists[index].title),
+                        leading: Radio<Playlist>(
+                          value: upToDateSelectablePlaylists[index],
+                          // Remove groupValue and onChanged - they're now handled by RadioGroup
+                        ),
+                        onTap: () {
+                          setState(() {
+                            _selectedPlaylist =
+                                upToDateSelectablePlaylists[index];
+                            _downloadSingleVideoAudioAtMusicQuality =
+                                (_selectedPlaylist!.playlistQuality ==
+                                    PlaylistQuality.music);
+                          });
+                        },
+                      );
+                    },
+                  ),
                 ),
               ),
               (widget.usedFor ==
