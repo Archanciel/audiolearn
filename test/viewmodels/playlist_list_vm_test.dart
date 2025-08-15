@@ -2974,10 +2974,14 @@ Future<void> _verifyAudioPlaySpeed({
 
     // Verify audio play speeds in downloadedAudioLst from JSON
     for (Audio audio in playlistFromJson.downloadedAudioLst) {
-      expect(audio.audioPlaySpeed, downloadedAudioPlaySpeed);
+      expect(
+        audio.audioPlaySpeed,
+        downloadedAudioPlaySpeed,
+        reason: "${audio.audioPlaySpeed} of ${audio.validVideoTitle} in ${audio.enclosingPlaylist!.title} downloaded audio list",
+      );
     }
   }
-}
+} 
 
 void _verifyOrderedTitlesAndPlaylistSelection({
   required SettingsDataService settingsDataService,

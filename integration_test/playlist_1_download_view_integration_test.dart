@@ -16755,12 +16755,6 @@ void main() {
       // Verify that the rename audio file dialog is displayed
       expect(find.byType(AudioModificationDialog), findsOneWidget);
 
-      // Verify the dialog comment
-      expect(
-          find.text(
-              'Renaming audio file in order to improve their playing order.'),
-          findsOneWidget);
-
       // Verify the button text
       final Finder audioModificationButtonFinder =
           find.byKey(const Key('audioModificationButton'));
@@ -16909,12 +16903,6 @@ void main() {
 
       // Verify that the rename audio file dialog is displayed
       expect(find.byType(AudioModificationDialog), findsOneWidget);
-
-      // Verify the dialog comment
-      expect(
-          find.text(
-              'Renaming audio file in order to improve their playing order.'),
-          findsOneWidget);
 
       // Verify the button text
       final Finder audioModificationButtonFinder =
@@ -17341,12 +17329,6 @@ void main() {
       // Verify that the rename audio file dialog is displayed
       expect(find.byType(AudioModificationDialog), findsOneWidget);
 
-      // Verify the dialog comment
-      expect(
-          find.text(
-              'Renaming audio file in order to improve their playing order.'),
-          findsOneWidget);
-
       // Verify the button text
       final Finder audioModificationButtonFinder =
           find.byKey(const Key('audioModificationButton'));
@@ -17484,7 +17466,7 @@ void main() {
       // Verify the dialog comment
       expect(
           find.text(
-              'Modify the audio title to identify it more easily during listening.'),
+              'Modify the audio title to allow adjusting its playback order.'),
           findsOneWidget);
 
       // Verify the button text
@@ -17633,7 +17615,7 @@ void main() {
       // Verify the dialog comment
       expect(
           find.text(
-              'Modify the audio title to identify it more easily during listening.'),
+              'Modify the audio title to allow adjusting its playback order.'),
           findsOneWidget);
 
       // Verify the button text
@@ -17782,7 +17764,7 @@ void main() {
       // Verify the dialog comment
       expect(
           find.text(
-              'Modify the audio title to identify it more easily during listening.'),
+              'Modify the audio title to allow adjusting its playback order.'),
           findsOneWidget);
 
       // Verify the button text

@@ -1058,6 +1058,7 @@ class IntegrationTestUtil {
   static Future<void> verifyWarningDisplayAndCloseIt({
     required WidgetTester tester,
     required String warningDialogMessage,
+    String warningDialogMessageAlternative = '',
     bool isWarningConfirming = false,
     bool tapTwiceOnOkButton = false,
     String warningTitle =
@@ -1080,12 +1081,25 @@ class IntegrationTestUtil {
     }
 
     // Check the value of the warning dialog message
-    expect(
-      tester
-          .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
-          .data,
-      warningDialogMessage,
-    );
+
+    if (warningDialogMessageAlternative.isNotEmpty) {
+      expect(
+        tester
+            .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+            .data,
+        anyOf([
+          equals(warningDialogMessage),
+          equals(warningDialogMessageAlternative),
+        ]),
+      );
+    } else {
+      expect(
+        tester
+            .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+            .data,
+        warningDialogMessage,
+      );
+    }
 
     // Close the warning dialog by tapping on the Ok button
 
