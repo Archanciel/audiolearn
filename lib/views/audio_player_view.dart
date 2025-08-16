@@ -1045,7 +1045,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 onTap: () {
                   if (audioPlayerVMlistenFalse
                       .getPlayableAudiosApplyingSortFilterParameters(
-                        AudioLearnAppViewType.audioPlayerView,
+                        audioLearnAppViewType:  AudioLearnAppViewType.audioPlayerView,
                       )
                       .isEmpty) {
                     return;
