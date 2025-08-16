@@ -4849,6 +4849,44 @@ class PlaylistListVM extends ChangeNotifier {
   }) {
     int rewindedAudioNumber = playlist.rewindPlayableAudioToStart();
 
+    if (rewindedAudioNumber > 0) {
+      // Obtaining the playable audio list ordered according to the
+      // sort/filter parameters applied to the audio player view.
+      List<Audio> audioPlayerViewAudioLst =
+          getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+        audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+      );
+
+      // Obtaining the playable audio list ordered according to the
+      // sort/filter parameters applied to the playlist download view.
+      List<Audio> playlistDownloadViewAudioLst =
+          getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+      );
+
+      Audio currentAudioInAudioPlayableListDialog;
+
+      if (playlist.audioPlayingOrder == AudioPlayingOrder.descending) {
+      // If the audio playing order is descending, we need to
+      // set the current audio to the first playable audio.
+        currentAudioInAudioPlayableListDialog = audioPlayerViewAudioLst.first;
+      } else {
+      // If the audio playing order is ascending, we need to
+      // set the current audio to the last playable audio.
+        currentAudioInAudioPlayableListDialog = audioPlayerViewAudioLst.last;
+      }
+
+      audioPlayerVMlistenFalse.setCurrentAudio(
+          audio: currentAudioInAudioPlayableListDialog);
+
+      // Setting the current audio index in the download playlist
+      // view audio list
+      playlist.currentOrPastPlayableAudioIndex =
+          playlistDownloadViewAudioLst.indexOf(
+        currentAudioInAudioPlayableListDialog,
+      );
+    }
+
     if (playlist.currentOrPastPlayableAudioIndex != -1 &&
         audioPlayerVMlistenFalse.currentAudio != null) {
       audioPlayerVMlistenFalse.skipToStart(
