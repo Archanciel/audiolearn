@@ -1360,9 +1360,9 @@ class AudioPlayerVM extends ChangeNotifier {
   /// 5 nov
   /// 21 nov
   /// 24 nov
-  List<Audio> getPlayableAudiosApplyingSortFilterParameters(
-    AudioLearnAppViewType audioLearnAppViewType,
-  ) {
+  List<Audio> getPlayableAudiosApplyingSortFilterParameters({
+    required AudioLearnAppViewType audioLearnAppViewType,
+  }) {
     List<Playlist> selectedPlaylists = _playlistListVM.getSelectedPlaylists();
 
     if (selectedPlaylists.isEmpty) {
