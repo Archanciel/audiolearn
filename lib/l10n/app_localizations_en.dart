@@ -735,10 +735,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appBarTitleAudioExtractor => 'Extract Audio';
 
   @override
-  String get setAudioPlaySpeedDialogTitle => 'Playback speed';
+  String get setAudioPlaySpeedDialogTitle => 'Playback Speed';
 
   @override
-  String get setAudioPlaySpeedTooltip => 'Set Audio\'s Play Speed.';
+  String get setAudioPlaySpeedTooltip => 'Set audio\'s play speed.';
 
   @override
   String get exclude => 'Exclude ';
@@ -976,7 +976,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get alreadyDownloadedAudiosPlaylistHelpTitle =>
-      'Apply to already downloaded or imported audio\'s';
+      'Apply to already downloaded or imported Audio\'s';
 
   @override
   String get alreadyDownloadedAudiosPlaylistHelpContent =>
@@ -1386,7 +1386,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commentedAudioDeletionOpenSFDialogHelpTitle =>
-      'Open the Sort/Filter definition dialog';
+      'Open the Sort/Filter Definition Dialog';
 
   @override
   String get commentedAudioDeletionOpenSFDialogHelpContent =>
@@ -1394,7 +1394,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commentedAudioDeletionCreateSFParmHelpTitle =>
-      'Create a valid Sort/Filter parameter';
+      'Create a valid Sort/Filter Parameter';
 
   @override
   String get commentedAudioDeletionCreateSFParmHelpContent =>
@@ -1920,7 +1920,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get updatePlaylistJsonFilesHelpTitle =>
-      'Update Playlist JSON Files function';
+      'Update Playlist JSON Files Function';
 
   @override
   String get updatePlaylistJsonFilesHelpContent =>
@@ -1928,7 +1928,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get updatePlaylistJsonFilesFirstHelpTitle =>
-      'Using the Update Playlist JSON Files function';
+      'Using the Update Playlist JSON Files Function';
 
   @override
   String get saveUniquePlaylistCommentsAndPicturesToZipMenu =>
@@ -1950,7 +1950,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get importedCheckbox => 'Imported';
 
   @override
-  String get restoredElementsHelpTitle => 'Restored elements description';
+  String get restoredElementsHelpTitle => 'Restored Elements Description';
 
   @override
   String get restoredElementsHelpContent =>
@@ -1971,7 +1971,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Save audio MP3 files from all playlists to ZIP file(s). You can specify a date/time filter to only include audio files downloaded on or after that date.';
 
   @override
-  String get setAudioDownloadFromDateTimeTitle => 'Set the download date';
+  String get setAudioDownloadFromDateTimeTitle => 'Set the Download Date';
 
   @override
   String get audioDownloadFromDateTimeAllPlaylistsExplanation =>
@@ -2040,7 +2040,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get savingAudioToZipTimeTitle => 'Prevision of the save duration';
+  String get savingAudioToZipTimeTitle => 'Prevision of the Save Duration';
 
   @override
   String correctedSavedUniquePlaylistAudioMp3ToZip(
@@ -2190,7 +2190,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get displayNewestAudioDownloadDateTimeTitle =>
-      'Latest audio download date';
+      'Latest Audio Download Date';
 
   @override
   String displayNewestAudioDownloadDateTime(
@@ -2200,7 +2200,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get audioTitleModificationHelpTitle =>
-      'Using audio title modification';
+      'Using Audio Title Modification';
 
   @override
   String get audioTitleModificationHelpContent =>

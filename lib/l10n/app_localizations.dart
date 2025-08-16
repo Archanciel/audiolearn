@@ -1332,13 +1332,13 @@ abstract class AppLocalizations {
   /// No description provided for @setAudioPlaySpeedDialogTitle.
   ///
   /// In en, this message translates to:
-  /// **'Playback speed'**
+  /// **'Playback Speed'**
   String get setAudioPlaySpeedDialogTitle;
 
   /// No description provided for @setAudioPlaySpeedTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Set Audio\'s Play Speed.'**
+  /// **'Set audio\'s play speed.'**
   String get setAudioPlaySpeedTooltip;
 
   /// No description provided for @exclude.
@@ -1726,7 +1726,7 @@ abstract class AppLocalizations {
   /// No description provided for @alreadyDownloadedAudiosPlaylistHelpTitle.
   ///
   /// In en, this message translates to:
-  /// **'Apply to already downloaded or imported audio\'s'**
+  /// **'Apply to already downloaded or imported Audio\'s'**
   String get alreadyDownloadedAudiosPlaylistHelpTitle;
 
   /// No description provided for @alreadyDownloadedAudiosPlaylistHelpContent.
@@ -2345,7 +2345,7 @@ abstract class AppLocalizations {
   /// No description provided for @commentedAudioDeletionOpenSFDialogHelpTitle.
   ///
   /// In en, this message translates to:
-  /// **'Open the Sort/Filter definition dialog'**
+  /// **'Open the Sort/Filter Definition Dialog'**
   String get commentedAudioDeletionOpenSFDialogHelpTitle;
 
   /// No description provided for @commentedAudioDeletionOpenSFDialogHelpContent.
@@ -2357,7 +2357,7 @@ abstract class AppLocalizations {
   /// No description provided for @commentedAudioDeletionCreateSFParmHelpTitle.
   ///
   /// In en, this message translates to:
-  /// **'Create a valid Sort/Filter parameter'**
+  /// **'Create a valid Sort/Filter Parameter'**
   String get commentedAudioDeletionCreateSFParmHelpTitle;
 
   /// No description provided for @commentedAudioDeletionCreateSFParmHelpContent.
@@ -3123,7 +3123,7 @@ abstract class AppLocalizations {
   /// No description provided for @updatePlaylistJsonFilesHelpTitle.
   ///
   /// In en, this message translates to:
-  /// **'Update Playlist JSON Files function'**
+  /// **'Update Playlist JSON Files Function'**
   String get updatePlaylistJsonFilesHelpTitle;
 
   /// No description provided for @updatePlaylistJsonFilesHelpContent.
@@ -3135,7 +3135,7 @@ abstract class AppLocalizations {
   /// No description provided for @updatePlaylistJsonFilesFirstHelpTitle.
   ///
   /// In en, this message translates to:
-  /// **'Using the Update Playlist JSON Files function'**
+  /// **'Using the Update Playlist JSON Files Function'**
   String get updatePlaylistJsonFilesFirstHelpTitle;
 
   /// No description provided for @saveUniquePlaylistCommentsAndPicturesToZipMenu.
@@ -3171,7 +3171,7 @@ abstract class AppLocalizations {
   /// No description provided for @restoredElementsHelpTitle.
   ///
   /// In en, this message translates to:
-  /// **'Restored elements description'**
+  /// **'Restored Elements Description'**
   String get restoredElementsHelpTitle;
 
   /// No description provided for @restoredElementsHelpContent.
@@ -3207,7 +3207,7 @@ abstract class AppLocalizations {
   /// No description provided for @setAudioDownloadFromDateTimeTitle.
   ///
   /// In en, this message translates to:
-  /// **'Set the download date'**
+  /// **'Set the Download Date'**
   String get setAudioDownloadFromDateTimeTitle;
 
   /// No description provided for @audioDownloadFromDateTimeAllPlaylistsExplanation.
@@ -3303,7 +3303,7 @@ abstract class AppLocalizations {
   /// No description provided for @savingAudioToZipTimeTitle.
   ///
   /// In en, this message translates to:
-  /// **'Prevision of the save duration'**
+  /// **'Prevision of the Save Duration'**
   String get savingAudioToZipTimeTitle;
 
   /// Confirmation message after saving the audio MP3 downloaded at or after a specified date time of a unique playlist to a ZIP file
@@ -3516,7 +3516,7 @@ abstract class AppLocalizations {
   /// No description provided for @displayNewestAudioDownloadDateTimeTitle.
   ///
   /// In en, this message translates to:
-  /// **'Latest audio download date'**
+  /// **'Latest Audio Download Date'**
   String get displayNewestAudioDownloadDateTimeTitle;
 
   /// No description provided for @displayNewestAudioDownloadDateTime.
@@ -3528,7 +3528,7 @@ abstract class AppLocalizations {
   /// No description provided for @audioTitleModificationHelpTitle.
   ///
   /// In en, this message translates to:
-  /// **'Using audio title modification'**
+  /// **'Using Audio Title Modification'**
   String get audioTitleModificationHelpTitle;
 
   /// No description provided for @audioTitleModificationHelpContent.
