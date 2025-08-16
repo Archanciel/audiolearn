@@ -5,6 +5,7 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   audioplayers_windows
   connectivity_plus
+  flutter_tts
   permission_handler_windows
   screen_retriever_windows
   url_launcher_windows
