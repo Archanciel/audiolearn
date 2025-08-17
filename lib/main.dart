@@ -15,6 +15,7 @@ import 'viewmodels/playlist_list_vm.dart';
 import 'viewmodels/audio_download_vm.dart';
 import 'viewmodels/audio_player_vm.dart';
 import 'viewmodels/language_provider_vm.dart';
+import 'viewmodels/text_to_speech_vm.dart';
 import 'viewmodels/theme_provider_vm.dart';
 import 'viewmodels/warning_message_vm.dart';
 import 'services/settings_data_service.dart';
@@ -118,6 +119,9 @@ class MainApp extends StatelessWidget with ScreenMixin {
       settingsDataService: _settingsDataService,
     );
 
+    final TextToSpeechVM textToSpeechVM = TextToSpeechVM(
+    );
+
     final PlaylistListVM playlistListVM = PlaylistListVM(
       warningMessageVM: warningMessageVM,
       audioDownloadVM: audioDownloadVM,
@@ -173,6 +177,7 @@ class MainApp extends StatelessWidget with ScreenMixin {
                   settingsDataService: _settingsDataService,
                 )),
         ChangeNotifierProvider(create: (_) => pictureVM),
+        ChangeNotifierProvider(create: (_) => textToSpeechVM),
       ],
       child: Consumer2<ThemeProviderVM, LanguageProviderVM>(
         builder: (context, themeProvider, languageProvider, child) {
