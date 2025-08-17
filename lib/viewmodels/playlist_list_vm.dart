@@ -4847,14 +4847,18 @@ class PlaylistListVM extends ChangeNotifier {
     required AudioPlayerVM audioPlayerVMlistenFalse,
     required Playlist playlist,
   }) {
-    int rewindedAudioNumber = playlist.rewindPlayableAudioToStart();
+    // Obtaining the playable audio list ordered according to the
+    // sort/filter parameters applied to the audio player view.
+    List<Audio> audioPlayerViewAudioLst =
+        getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+      audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+    );
 
-    if (rewindedAudioNumber > 0) {
-      // Obtaining the playable audio list ordered according to the
-      // sort/filter parameters applied to the audio player view.
-      List<Audio> audioPlayerViewAudioLst =
-          getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
-        audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+    int rewindedAudioNumber = 0;
+
+    if (audioPlayerViewAudioLst.isNotEmpty) {
+      rewindedAudioNumber = playlist.rewindPlayableAudioToStart(
+        audioToRewindLst: audioPlayerViewAudioLst
       );
 
       // Obtaining the playable audio list ordered according to the
@@ -4867,12 +4871,12 @@ class PlaylistListVM extends ChangeNotifier {
       Audio currentAudioInAudioPlayableListDialog;
 
       if (playlist.audioPlayingOrder == AudioPlayingOrder.descending) {
-      // If the audio playing order is descending, we need to
-      // set the current audio to the first playable audio.
+        // If the audio playing order is descending, we need to
+        // set the current audio to the first playable audio.
         currentAudioInAudioPlayableListDialog = audioPlayerViewAudioLst.first;
       } else {
-      // If the audio playing order is ascending, we need to
-      // set the current audio to the last playable audio.
+        // If the audio playing order is ascending, we need to
+        // set the current audio to the last playable audio.
         currentAudioInAudioPlayableListDialog = audioPlayerViewAudioLst.last;
       }
 
