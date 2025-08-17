@@ -2245,8 +2245,31 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get textToConvertTextFieldTooltip =>
-      'Entrer le texte à convertir en un audio ajouté à la playlist.';
+      'Entrer le texte à convertir en un audio ajouté à la playlist. L\'audio est généré en utilisant la voix sélectionée.';
 
   @override
   String get textToConvertTextFieldHint => 'Entrez votre texte ici ...';
+
+  @override
+  String get conversionVoiceSelection => 'Sélection de la voix:';
+
+  @override
+  String get masculineVoice => 'masculine';
+
+  @override
+  String get femineVoice => 'féminine';
+
+  @override
+  String get listenTextButton => 'Écouter';
+
+  @override
+  String get listenTextButtonTooltip =>
+      'Écoute du texte à convertir avec la voix sélectionnée.';
+
+  @override
+  String get createAudioFileButton => 'Créer fichier audio';
+
+  @override
+  String get createAudioFileButtonTooltip =>
+      'Création du audio en utilisant la voix sélectionnée et ajout de l\'audio à la playlist.';
 }

@@ -3564,7 +3564,7 @@ abstract class AppLocalizations {
   /// No description provided for @textToConvertTextFieldTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Enter the text to convert an audio added to the playlist.'**
+  /// **'Enter the text to convert an audio added to the playlist. The audio is created using the selected voice.'**
   String get textToConvertTextFieldTooltip;
 
   /// No description provided for @textToConvertTextFieldHint.
@@ -3572,6 +3572,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter your text here ...'**
   String get textToConvertTextFieldHint;
+
+  /// No description provided for @conversionVoiceSelection.
+  ///
+  /// In en, this message translates to:
+  /// **'Voice selection:'**
+  String get conversionVoiceSelection;
+
+  /// No description provided for @masculineVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'masculine'**
+  String get masculineVoice;
+
+  /// No description provided for @femineVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'feminine'**
+  String get femineVoice;
+
+  /// No description provided for @listenTextButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Listen'**
+  String get listenTextButton;
+
+  /// No description provided for @listenTextButtonTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Listening the text to convert with the selected voice.'**
+  String get listenTextButtonTooltip;
+
+  /// No description provided for @createAudioFileButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Create audio file'**
+  String get createAudioFileButton;
+
+  /// No description provided for @createAudioFileButtonTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Create the audio file using the selected voice and add it to the playlist.'**
+  String get createAudioFileButtonTooltip;
 }
 
 class _AppLocalizationsDelegate
