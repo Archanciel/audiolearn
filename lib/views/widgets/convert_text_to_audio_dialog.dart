@@ -93,7 +93,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
   final TextEditingController _startFileSizeController =
       TextEditingController();
   final TextEditingController _endFileSizeController = TextEditingController();
-  final TextEditingController _sortFilterSaveAsUniqueNameController =
+  final TextEditingController _textToConvertController =
       TextEditingController();
   final TextEditingController _audioTitleSearchSentenceController =
       TextEditingController();
@@ -110,19 +110,19 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
   final TextEditingController _endAudioDurationController =
       TextEditingController();
   String _audioTitleSearchSentence = '';
-  late String _sortFilterSaveAsUniqueName;
+  late String _textToConvert;
   DateTime? _startDownloadDateTime;
   DateTime? _endDownloadDateTime;
   DateTime? _startUploadDateTime;
   DateTime? _endUploadDateTime;
 
   final _audioTitleSearchSentenceFocusNode = FocusNode();
-  final _sortFilterSaveAsUniqueNameFocusNode = FocusNode();
+  final _textToConvertFocusNode = FocusNode();
 
   Color _audioTitleSearchSentenceAddButtonIconColor =
       kDarkAndLightDisabledIconColor;
   Color _audioSortOptionButtonIconColor = kDarkAndLightDisabledIconColor;
-  Color _audioSaveAsNameDeleteIconColor = kDarkAndLightDisabledIconColor;
+  Color _textToConvertIconColor = kDarkAndLightDisabledIconColor;
   Color _historicalAudioSortFilterParamsLeftIconColor =
       kDarkAndLightDisabledIconColor;
   Color _historicalAudioSortFilterParamsRightIconColor =
@@ -174,7 +174,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
       switch (widget.calledFrom) {
         case CalledFrom.playlistDownloadView:
           FocusScope.of(context).requestFocus(
-            _sortFilterSaveAsUniqueNameFocusNode,
+            _textToConvertFocusNode,
           );
           break;
         case CalledFrom.playlistDownloadViewAudioMenu:
@@ -184,7 +184,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
           break;
         case CalledFrom.audioPlayerView:
           FocusScope.of(context).requestFocus(
-            _sortFilterSaveAsUniqueNameFocusNode,
+            _textToConvertFocusNode,
           );
           break;
         case CalledFrom.audioPlayerViewAudioMenu:
@@ -199,11 +199,11 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     Future.delayed(Duration.zero, () {
       if (widget.audioSortFilterParametersName ==
           AppLocalizations.of(context)!.sortFilterParametersDefaultName) {
-        _sortFilterSaveAsUniqueNameController.text = '';
-        _sortFilterSaveAsUniqueName = '';
-        _audioSaveAsNameDeleteIconColor = kDarkAndLightDisabledIconColor;
+        _textToConvertController.text = '';
+        _textToConvert = '';
+        _textToConvertIconColor = kDarkAndLightDisabledIconColor;
       } else if (widget.audioSortFilterParametersName.isNotEmpty) {
-        _audioSaveAsNameDeleteIconColor = kDarkAndLightEnabledIconColor;
+        _textToConvertIconColor = kDarkAndLightEnabledIconColor;
       }
 
       _historicalAudioSortFilterParametersLst = Provider.of<PlaylistListVM>(
@@ -214,7 +214,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
       _initializeHistoricalAudioSortFilterParamsLeftIconColors();
     });
 
-    _sortFilterSaveAsUniqueNameController.text =
+    _textToConvertController.text =
         widget.audioSortFilterParametersName;
 
     // Since the _sortFilterSaveAsUniqueNameController is late, it
@@ -222,9 +222,9 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     // will not work since an error is thrown  due to the fact that
     // the late _sortFilterSaveAsUniqueNameController is not
     // initialized
-    _sortFilterSaveAsUniqueName = widget.audioSortFilterParametersName;
+    _textToConvert = widget.audioSortFilterParametersName;
 
-    _sortFilterSaveAsUniqueNameController.text =
+    _textToConvertController.text =
         widget.audioSortFilterParametersName;
 
     AudioSortFilterParameters audioSortDefaultFilterParameters;
@@ -298,7 +298,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
   void dispose() {
     _startFileSizeController.dispose();
     _endFileSizeController.dispose();
-    _sortFilterSaveAsUniqueNameController.dispose();
+    _textToConvertController.dispose();
     _audioTitleSearchSentenceController.dispose();
     _startDownloadDateTimeController.dispose();
     _endDownloadDateTimeController.dispose();
@@ -307,7 +307,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     _startAudioDurationController.dispose();
     _endAudioDurationController.dispose();
     _audioTitleSearchSentenceFocusNode.dispose();
-    _sortFilterSaveAsUniqueNameFocusNode.dispose();
+    _textToConvertFocusNode.dispose();
 
     super.dispose();
   }
@@ -316,7 +316,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     _selectedSortingItemLst.clear();
     _selectedSortingItemLst
         .add(AudioSortFilterParameters.getDefaultSortingItem());
-    _clearSortFilterSaveAsNameField();
+    _clearTextToConvertField();
     _audioTitleSearchSentenceController.clear();
     _audioTitleFilterSentencesLst.clear();
     _ignoreCase = true;
@@ -357,7 +357,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     _selectedSortingItemLst.clear();
     _selectedSortingItemLst
         .addAll(audioSortFilterParameters.selectedSortItemLst);
-    _sortFilterSaveAsUniqueNameController.clear();
+    _textToConvertController.clear();
     _audioTitleSearchSentenceController.clear();
     _audioTitleFilterSentencesLst.clear();
     _audioTitleFilterSentencesLst
@@ -460,7 +460,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     );
     return Center(
       child: AlertDialog(
-        title: Text(AppLocalizations.of(context)!.sortFilterDialogTitle),
+        title: Text(AppLocalizations.of(context)!.convertTextToAudioDialogTitle),
         actionsPadding:
             // reduces the top vertical space between the buttons
             // and the content
@@ -481,7 +481,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                   // mainAxisAlignment: MainAxisAlignment.start,
                   // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildSaveAsFieldAndDeleteButton(context),
+                    _buildTextToConvertFieldAndDeleteButton(context),
                     const SizedBox(
                       height: kDialogTextFieldVerticalSeparation,
                     ),
@@ -685,16 +685,16 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     );
   }
 
-  Widget _buildSaveAsFieldAndDeleteButton(
+  Widget _buildTextToConvertFieldAndDeleteButton(
     BuildContext context,
   ) {
     return Tooltip(
-      message: AppLocalizations.of(context)!.sortFilterSaveAsTextFieldTooltip,
+      message: AppLocalizations.of(context)!.textToConvertTextFieldTooltip,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            AppLocalizations.of(context)!.saveAs,
+            AppLocalizations.of(context)!.textToConvert,
             style: kDialogTitlesStyle,
           ),
           const SizedBox(
@@ -702,21 +702,21 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
           ),
           Row(
             children: [
-              SizedBox(
-                width: 200,
+              Flexible(
                 child: TextField(
-                  key: const Key('sortFilterSaveAsUniqueNameTextField'),
-                  focusNode: _sortFilterSaveAsUniqueNameFocusNode,
+                  key: const Key('textToConvertTextField'),
+                  focusNode: _textToConvertFocusNode,
                   style: kDialogTextFieldStyle,
+                  maxLines: 4,
                   decoration: _dialogTextFieldDecoration,
-                  controller: _sortFilterSaveAsUniqueNameController,
+                  controller: _textToConvertController,
                   keyboardType: TextInputType.text,
                   onChanged: (value) {
-                    _sortFilterSaveAsUniqueName = value;
+                    _textToConvert = value;
                     // setting the Delete button color according to the
                     // TextField content ...
-                    _audioSaveAsNameDeleteIconColor =
-                        _sortFilterSaveAsUniqueName.isNotEmpty
+                    _textToConvertIconColor =
+                        _textToConvert.isNotEmpty
                             ? kDarkAndLightEnabledIconColor
                             : kDarkAndLightDisabledIconColor;
 
@@ -727,10 +727,10 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
               SizedBox(
                 width: kSmallIconButtonWidth,
                 child: IconButton(
-                  key: const Key('deleteSaveAsNameIconButton'),
+                  key: const Key('deleteTextToConvertIconButton'),
                   onPressed: () async {
-                    _clearSortFilterSaveAsNameField();
-                    _sortFilterSaveAsUniqueNameFocusNode.requestFocus();
+                    _clearTextToConvertField();
+                    _textToConvertFocusNode.requestFocus();
                     setState(() {}); // necessary to update Delete button color
                   },
                   padding: const EdgeInsets.all(0),
@@ -749,7 +749,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                     // is not grey, we need to set it manually. Additionally,
                     // the sentence TextField onChanged callback must execute
                     // setState() to update the IconButton color
-                    color: _audioSaveAsNameDeleteIconColor,
+                    color: _textToConvertIconColor,
                   ),
                 ),
               ),
@@ -760,10 +760,10 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     );
   }
 
-  void _clearSortFilterSaveAsNameField() {
-    _sortFilterSaveAsUniqueNameController.clear();
-    _sortFilterSaveAsUniqueName = '';
-    _audioSaveAsNameDeleteIconColor = kDarkAndLightDisabledIconColor;
+  void _clearTextToConvertField() {
+    _textToConvertController.clear();
+    _textToConvert = '';
+    _textToConvertIconColor = kDarkAndLightDisabledIconColor;
   }
 
   /// Create Reset (X), Save or Apply, Delete and Cancel buttons.
@@ -812,7 +812,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
           themeProviderVM: themeProviderVM,
         ),
         Tooltip(
-          message: (_sortFilterSaveAsUniqueName.isNotEmpty)
+          message: (_textToConvert.isNotEmpty)
               ? AppLocalizations.of(context)!.deleteSortFilterOptionsTooltip
               : '',
           child: TextButton(
@@ -827,7 +827,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
 
               if (_audioSortFilterParameters ==
                   AudioSortFilterParameters
-                      .createDefaultAudioSortFilterParameters() && _sortFilterSaveAsUniqueName.isEmpty) {
+                      .createDefaultAudioSortFilterParameters() && _textToConvert.isEmpty) {
                 // here, the user clicks on the Delete button without
                 // having modified the sort/filter parameters. In this case,
                 // the Default sort/filter parameters are not deleted.
@@ -835,7 +835,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
 
                 // does not close the sort and filter dialog
                 return;
-              } else if (_sortFilterSaveAsUniqueName.isEmpty) {
+              } else if (_textToConvert.isEmpty) {
                 // here, the user deletes an historical sort/filter parameter
                 if (!playlistListVMlistenFalse
                     .clearAudioSortFilterSettingsSearchHistoryElement(
@@ -872,7 +872,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                     playlistListVMlistenFalse
                         .getPlaylistsUsingSortFilterParmsName(
                             audioSortFilterParmsName:
-                                _sortFilterSaveAsUniqueName);
+                                _textToConvert);
                 List<String> playlistsUsingSortFilterParmsNameLst =
                     playlistsUsingSortFilterParmsName
                         .map((playlist) => playlist.title)
@@ -897,7 +897,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                         ],
                         dialogTitleOne: AppLocalizations.of(context)!
                             .deleteSortFilterParmsWarningTitle(
-                          _sortFilterSaveAsUniqueName,
+                          _textToConvert,
                           playlistsUsingSortFilterParmsNameLst.length,
                         ),
                         dialogContent:
@@ -942,7 +942,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
   ) {
     AudioSortFilterParameters? deletedSFparms =
         playlistListVM.deleteAudioSortFilterParameters(
-      audioSortFilterParametersName: _sortFilterSaveAsUniqueName,
+      audioSortFilterParametersName: _textToConvert,
     );
 
     // removing the deleted sort/filter parameters from the
@@ -961,7 +961,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     required DateFormatVM dateFormatVMlistenFalse,
     required ThemeProviderVM themeProviderVM,
   }) {
-    if (_sortFilterSaveAsUniqueName.isEmpty) {
+    if (_textToConvert.isEmpty) {
       // In this situation, the user applies a sort/filter (mainly
       // a filter only) parameters without saving them. In this case,
       // the defined sort/filter parameters are added to the search
@@ -1025,13 +1025,13 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                 await _filterAndSortAudioLst(
               playlistListVMlistenFalse: playlistListVMlistenFalse,
               dateFormatVMlistenFalse: dateFormatVMlistenFalse,
-              sortFilterParametersSaveAsUniqueName: _sortFilterSaveAsUniqueName,
+              sortFilterParametersSaveAsUniqueName: _textToConvert,
             );
 
             if (filterSortAudioAndParmLst.isNotEmpty) {
               playlistListVMlistenFalse.saveAudioSortFilterParameters(
                 audioSortFilterParametersName:
-                    _sortFilterSaveAsUniqueName.trim(),
+                    _textToConvert.trim(),
                 audioSortFilterParameters: filterSortAudioAndParmLst[1],
               );
 
@@ -2287,12 +2287,12 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     bool cancelSaveSortFilterParms = false;
 
     if (playlistListVMlistenFalse.doesAudioSortFilterParmsNameAlreadyExist(
-        audioSortFilterParmrsName: _sortFilterSaveAsUniqueName)) {
+        audioSortFilterParmrsName: _textToConvert)) {
       // Obtaining the existing sort/filter parameters in order to
       // compare them with the new or modified ones.
       AudioSortFilterParameters existingAudioSortFilterParameters =
           playlistListVMlistenFalse.getAudioSortFilterParameters(
-        audioSortFilterParametersName: _sortFilterSaveAsUniqueName,
+        audioSortFilterParametersName: _textToConvert,
       );
 
       // Getting the list of differences between the existing and the new
@@ -2329,7 +2329,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
               actionFunctionArgs: [],
               dialogTitleOne: AppLocalizations.of(context)!
                   .updatingSortFilterParmsWarningTitle(
-                _sortFilterSaveAsUniqueName,
+                _textToConvert,
               ),
               dialogTitleOneReducedFontSize: true,
               dialogContent: formattedModifiedSortFilterParmsStr,

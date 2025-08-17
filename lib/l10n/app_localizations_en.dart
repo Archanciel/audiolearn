@@ -2212,4 +2212,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get playlistConvertTextToAudioMenuTooltip =>
       'Convert a text to a listenable audio which is added to the playlist. Adding positionned comments or a picture to this audio will be possible like for the other audio\'s.';
+
+  @override
+  String get convertTextToAudioDialogTitle => 'Convert Text to Audio';
+
+  @override
+  String get textToConvert => 'Text to convert';
+
+  @override
+  String get textToConvertTextFieldTooltip =>
+      'Enter the text to convert an audio added to the playlist.';
 }
