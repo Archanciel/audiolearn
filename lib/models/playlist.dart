@@ -746,10 +746,12 @@ class Playlist {
         replacedPlaylist.audioSortFilterParmsNameForAudioPlayerView;
   }
 
-  int rewindPlayableAudioToStart() {
+  int rewindPlayableAudioToStart({
+    required List<Audio> audioToRewindLst,
+  }) {
     int rewindedAudioNumber = 0;
 
-    for (Audio audio in playableAudioLst) {
+    for (Audio audio in audioToRewindLst) {
       if (audio.audioPositionSeconds > 0 ||
           audio.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd) {
         audio.audioPositionSeconds = 0;
