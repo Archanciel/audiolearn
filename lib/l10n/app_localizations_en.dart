@@ -2222,4 +2222,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get textToConvertTextFieldTooltip =>
       'Enter the text to convert an audio added to the playlist.';
+
+  @override
+  String get textToConvertTextFieldHint => 'Enter your text here ...';
 }

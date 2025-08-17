@@ -3566,6 +3566,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter the text to convert an audio added to the playlist.'**
   String get textToConvertTextFieldTooltip;
+
+  /// No description provided for @textToConvertTextFieldHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your text here ...'**
+  String get textToConvertTextFieldHint;
 }
 
 class _AppLocalizationsDelegate

@@ -1056,5 +1056,6 @@
   "playlistConvertTextToAudioMenuTooltip": "Convert a text to a listenable audio which is added to the playlist. Adding positionned comments or a picture to this audio will be possible like for the other audio's.",
   "convertTextToAudioDialogTitle": "Convert Text to Audio",
   "textToConvert": "Text to convert",
-  "textToConvertTextFieldTooltip": "Enter the text to convert an audio added to the playlist."
+  "textToConvertTextFieldTooltip": "Enter the text to convert an audio added to the playlist.",
+  "textToConvertTextFieldHint": "Enter your text here ..."
 }
