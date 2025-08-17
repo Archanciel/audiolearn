@@ -1331,7 +1331,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String rewindedPlayableAudioNumber(Object number) {
-    return '$number audio\'s de la playlist ont été repositionnés au début.';
+    return '$number audio\'s de la playlist ont été repositionnés au début et le premier audio écoutable a été selectionné.';
   }
 
   @override
