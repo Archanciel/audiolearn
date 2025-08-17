@@ -2236,4 +2236,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get playlistConvertTextToAudioMenuTooltip =>
       'Convertir un texte en audio écoutable qui est ajouté à la playlist. Comme pour les autres audio\'s, il sera possible d\'ajouter des commentaires positionnés ou une image à cet audio.';
+
+  @override
+  String get convertTextToAudioDialogTitle => 'Convertir le texte en audio';
+
+  @override
+  String get textToConvert => 'Texte à convertir';
+
+  @override
+  String get textToConvertTextFieldTooltip =>
+      'Entrer le texte à convertir en un audio ajouté à la playlist.';
 }

@@ -3548,6 +3548,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Convert a text to a listenable audio which is added to the playlist. Adding positionned comments or a picture to this audio will be possible like for the other audio\'s.'**
   String get playlistConvertTextToAudioMenuTooltip;
+
+  /// No description provided for @convertTextToAudioDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Convert Text to Audio'**
+  String get convertTextToAudioDialogTitle;
+
+  /// No description provided for @textToConvert.
+  ///
+  /// In en, this message translates to:
+  /// **'Text to convert'**
+  String get textToConvert;
+
+  /// No description provided for @textToConvertTextFieldTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the text to convert an audio added to the playlist.'**
+  String get textToConvertTextFieldTooltip;
 }
 
 class _AppLocalizationsDelegate
