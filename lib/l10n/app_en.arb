@@ -567,7 +567,7 @@
   },
   "rewindAudioToStart": "Rewind all Audio's to Start",
   "rewindAudioToStartTooltip": "Rewind all playlist audio's to start position. This is useful if you wish to replay all the audio's.",
-  "rewindedPlayableAudioNumber": "{number} playlist audio's were repositioned to start.",
+  "rewindedPlayableAudioNumber": "{number} playlist audio's were repositioned to start and the first listenable audio was selected.",
   "dateFormat": "Select Date Format ...",
   "dateFormatSelectionDialogTitle": "Select the Application Date Format",
   "commented": "Commented",
