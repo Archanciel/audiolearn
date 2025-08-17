@@ -2297,4 +2297,30 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get textToConvertTextFieldTooltip =>
       "Enter the text to convert an audio added to the playlist.";
+
+  @override
+  String get textToConvertTextFieldHint => "Enter your text here ...";
+
+  @override
+  String get conversionVoiceSelection => "Voice selection:";
+
+  @override
+  String get masculineVoice => "masculine";
+
+  @override
+  String get femineVoice => "feminine";
+
+  @override
+  String get listenTextButton => "Listen";
+
+  @override
+  String get listenTextButtonTooltip =>
+      "Listening the text to convert with the selected voice.";
+
+  @override
+  String get createAudioFileButton => "Create audio file";
+
+  @override
+  String get createAudioFileButtonTooltip =>
+      "Create the audio file using the selected voice.";
 }

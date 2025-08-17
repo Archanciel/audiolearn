@@ -1056,6 +1056,13 @@
   "playlistConvertTextToAudioMenuTooltip": "Convert a text to a listenable audio which is added to the playlist. Adding positionned comments or a picture to this audio will be possible like for the other audio's.",
   "convertTextToAudioDialogTitle": "Convert Text to Audio",
   "textToConvert": "Text to convert",
-  "textToConvertTextFieldTooltip": "Enter the text to convert an audio added to the playlist.",
-  "textToConvertTextFieldHint": "Enter your text here ..."
+  "textToConvertTextFieldTooltip": "Enter the text to convert an audio added to the playlist. The audio is created using the selected voice.",
+  "textToConvertTextFieldHint": "Enter your text here ...",
+  "conversionVoiceSelection": "Voice selection:",
+  "masculineVoice": "masculine",
+  "femineVoice": "feminine",
+  "listenTextButton": "Listen",
+  "listenTextButtonTooltip": "Listening the text to convert with the selected voice.",
+  "createAudioFileButton": "Create audio file",
+  "createAudioFileButtonTooltip": "Create the audio file using the selected voice and add it to the playlist."
 }
