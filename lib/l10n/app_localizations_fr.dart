@@ -2279,4 +2279,16 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get stopListeningTextButtonTooltip =>
       'Arrêter la lecture utilisant la voix sélectionnée.';
+
+  @override
+  String get mp3FileName => 'Nom du fichier MP3';
+
+  @override
+  String get enterMp3FileName => 'Entrer le nom du fichier MP3';
+
+  @override
+  String get myMp3FileName => 'mon_nom';
+
+  @override
+  String get createMP3 => 'Créer MP3';
 }
