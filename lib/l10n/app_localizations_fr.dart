@@ -2271,10 +2271,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get createAudioFileButtonTooltip =>
-      'Création du audio en utilisant la voix sélectionnée et ajout de l\'audio à la playlist.';
+      'Création du fichier audio en utilisant la voix sélectionnée et ajout de l\'audio à la playlist.';
 
   @override
-  String get stopListeningTextButton => 'Arrêter la lecture';
+  String get stopListeningTextButton => 'Stopper';
 
   @override
   String get stopListeningTextButtonTooltip =>

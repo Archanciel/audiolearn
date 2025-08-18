@@ -2250,7 +2250,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Create the audio file using the selected voice and add it to the playlist.';
 
   @override
-  String get stopListeningTextButton => 'Stop playing';
+  String get stopListeningTextButton => 'Stop';
 
   @override
   String get stopListeningTextButtonTooltip =>
