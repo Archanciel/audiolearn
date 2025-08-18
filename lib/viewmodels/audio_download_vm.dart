@@ -582,7 +582,8 @@ class AudioDownloadVM extends ChangeNotifier {
 
         playlistTitle = playlistTitle.replaceAll('/', '-');
         playlistTitle = playlistTitle.replaceAll(':', '-');
-        playlistTitle = playlistTitle.replaceAll('\\', '-');}
+        playlistTitle = playlistTitle.replaceAll('\\', '-');
+      }
 
       int playlistIndex = _listOfPlaylist
           .indexWhere((playlist) => playlist.title == playlistTitle);
@@ -1764,7 +1765,7 @@ class AudioDownloadVM extends ChangeNotifier {
   Future<void> importAudioFilesInPlaylist({
     required Playlist targetPlaylist,
     required List<String> filePathNameToImportLst,
-    bool canImportAudioFilesBeLocatedInPlaylistDownloadPath = false,
+    bool doesImportedFileResultFromTextToSpeech = false,
   }) async {
     List<String> filePathNameToImportLstCopy = List<String>.from(
         filePathNameToImportLst); // necessary since the filePathNameToImportLst
@@ -1777,8 +1778,7 @@ class AudioDownloadVM extends ChangeNotifier {
       File targetFile =
           File('${targetPlaylist.downloadPath}${path.separator}$fileName');
 
-      if (targetFile.existsSync() &&
-          !canImportAudioFilesBeLocatedInPlaylistDownloadPath) {
+      if (targetFile.existsSync() && !doesImportedFileResultFromTextToSpeech) {
         // the case if the imported audio file already exist in the target
         // playlist directory
         rejectedImportedFileNames += "\"$fileName\",\n";
@@ -1795,8 +1795,8 @@ class AudioDownloadVM extends ChangeNotifier {
     // directory.
     if (rejectedImportedFileNames.isNotEmpty) {
       warningMessageVM.setAudioNotImportedToPlaylistTitles(
-          rejectedImportedAudioFileNames: rejectedImportedFileNames.substring(
-              0, rejectedImportedFileNames.length - 2), // removing the last comma
+          rejectedImportedAudioFileNames: rejectedImportedFileNames.substring(0,
+              rejectedImportedFileNames.length - 2), // removing the last comma
           //                                               and the last line break
           importedToPlaylistTitle: targetPlaylist.title,
           importedToPlaylistType: targetPlaylist.playlistType);
@@ -1807,7 +1807,9 @@ class AudioDownloadVM extends ChangeNotifier {
     if (acceptableImportedFileNames.isNotEmpty) {
       warningMessageVM.setAudioImportedToPlaylistTitles(
           importedAudioFileNames: acceptableImportedFileNames.substring(
-              0, acceptableImportedFileNames.length - 2), // removing the last comma
+              0,
+              acceptableImportedFileNames.length -
+                  2), // removing the last comma
           //                                                 and the last line break
           importedToPlaylistTitle: targetPlaylist.title,
           importedToPlaylistType: targetPlaylist.playlistType);
@@ -1821,12 +1823,17 @@ class AudioDownloadVM extends ChangeNotifier {
       // Now, the filePathNameToImportLst does not contain the audio
       // files which already exist in the target playlist directory !
       String fileName = filePathName.split(path.separator).last;
-      File sourceFile = File(filePathName);
       String targetFilePathName =
           "${targetPlaylist.downloadPath}${path.separator}$fileName";
 
-      // Physically copying the audio file to the target playlist directory
-      sourceFile.copySync(targetFilePathName);
+      if (!doesImportedFileResultFromTextToSpeech) {
+        // Physically copying the audio file to the target playlist
+        // directory. If the audio file already exist in the
+        // target playlist directory due to the fact it was created
+        // from the text to speech operation, the copy must not be
+        // executed, otherwise _createImportedAudio will fail.
+        File(filePathName).copySync(targetFilePathName);
+      }
 
       // Instantiating the imported audio and adding it to the target
       // playlist downloaded audio list and playable audio list.
