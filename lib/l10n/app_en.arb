@@ -1064,5 +1064,7 @@
   "listenTextButton": "Listen",
   "listenTextButtonTooltip": "Listening the text to convert with the selected voice.",
   "createAudioFileButton": "Create audio file",
-  "createAudioFileButtonTooltip": "Create the audio file using the selected voice and add it to the playlist."
+  "createAudioFileButtonTooltip": "Create the audio file using the selected voice and add it to the playlist.",
+  "stopListeningTextButton": "Stop playing",
+  "stopListeningTextButtonTooltip": "Stop listening the text using the selected voice."
 }
