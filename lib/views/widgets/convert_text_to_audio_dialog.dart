@@ -431,7 +431,6 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                     : textToSpeechVMlistenTrue.speakText(
                         isVoiceMan: _isVoiceMan,
                       );
-            setState(() {});
           },
           child: Row(
             mainAxisSize: MainAxisSize
