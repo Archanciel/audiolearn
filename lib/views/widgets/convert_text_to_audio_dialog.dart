@@ -398,9 +398,10 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
         textToSpeechVMlistenTrue.isSpeaking;
 
     return SizedBox(
-      // sets the rounded TextButton size improving the distance
-      // between the button text and its boarder
-      width: kGreaterButtonWidth + 10,
+      // Dynamic width: increase when showing "Stop playing" text
+      width: _isAnythingPlaying
+          ? kGreaterButtonWidth + 65 // Increased width for "Stop playing"
+          : kGreaterButtonWidth + 20, // Original width for "Listen"
       height: kNormalButtonHeight,
       child: Tooltip(
         message: _isAnythingPlaying
@@ -433,21 +434,27 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                       );
           },
           child: Row(
-            mainAxisSize: MainAxisSize
-                .min, // Pour s'assurer que le Row n'occupe pas plus d'espace que nécessaire
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Icon(
                 _isAnythingPlaying ? Icons.stop : Icons.volume_up,
                 size: 18,
               ),
-              Text(
-                _isAnythingPlaying
-                    ? AppLocalizations.of(context)!.stopListeningTextButton
-                    : AppLocalizations.of(context)!.listenTextButton,
-                style: (themeProviderVM.currentTheme == AppTheme.dark)
-                    ? kTextButtonStyleDarkMode
-                    : kTextButtonStyleLightMode,
-              ), // Texte
+              const SizedBox(
+                  width: 4), // Add small spacing between icon and text
+              Flexible(
+                // Add Flexible to prevent text overflow
+                child: Text(
+                  _isAnythingPlaying
+                      ? AppLocalizations.of(context)!.stopListeningTextButton
+                      : AppLocalizations.of(context)!.listenTextButton,
+                  style: (themeProviderVM.currentTheme == AppTheme.dark)
+                      ? kTextButtonStyleDarkMode
+                      : kTextButtonStyleLightMode,
+                  overflow:
+                      TextOverflow.ellipsis, // Handle any remaining overflow
+                ),
+              ),
             ],
           ),
         ),
