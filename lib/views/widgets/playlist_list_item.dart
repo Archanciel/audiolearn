@@ -378,18 +378,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                     warningMessageVM: warningMessageVMlistenFalse,
                     selectedPlaylist:
                         playlistListVMlistenFalse.uniqueSelectedPlaylist!,
-                    selectedPlaylistAudioLst: playlistListVMlistenFalse
-                        .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
-                      audioLearnAppViewType:
-                          AudioLearnAppViewType.playlistDownloadView,
-                    ),
-                    audioSortFilterParametersName: '',
-                    audioSortFilterParameters: AudioSortFilterParameters
-                        .createDefaultAudioSortFilterParameters(),
-                    audioLearnAppViewType:
-                        AudioLearnAppViewType.playlistDownloadView,
                     focusNode: focusNode,
-                    calledFrom: CalledFrom.playlistDownloadViewAudioMenu,
                   );
                 },
               ).then((filterSortAudioAndParmLst) {
