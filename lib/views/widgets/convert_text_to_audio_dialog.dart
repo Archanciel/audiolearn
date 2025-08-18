@@ -510,7 +510,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
           ).importAudioFilesInPlaylist(
             targetPlaylist: selectedPlaylist,
             filePathNameToImportLst: [currentAudioFile.filePath],
-            canImportAudioFilesBeLocatedInPlaylistDownloadPath: true,
+            doesImportedFileResultFromTextToSpeech: true,
           );
 
           ScaffoldMessenger.of(context).showSnackBar(
