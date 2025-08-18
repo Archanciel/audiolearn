@@ -1450,7 +1450,7 @@
   "listenTextButton": "Écouter",
   "listenTextButtonTooltip": "Écoute du texte à convertir avec la voix sélectionnée.",
   "createAudioFileButton": "Créer fichier audio",
-  "createAudioFileButtonTooltip": "Création du audio en utilisant la voix sélectionnée et ajout de l'audio à la playlist.",
-  "stopListeningTextButton": "Arrêter la lecture",
+  "createAudioFileButtonTooltip": "Création du fichier audio en utilisant la voix sélectionnée et ajout de l'audio à la playlist.",
+  "stopListeningTextButton": "Stopper",
   "stopListeningTextButtonTooltip": "Arrêter la lecture utilisant la voix sélectionnée."
 }

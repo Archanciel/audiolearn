@@ -374,6 +374,19 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
         ),
         TextButton(
           key: const Key('cancelSortFilterButton'),
+          style: ButtonStyle(
+            shape: getButtonRoundedShape(
+                currentTheme: themeProviderVM.currentTheme,
+                isButtonEnabled: true,
+                context: context),
+            padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+              const EdgeInsets.symmetric(
+                horizontal: kSmallButtonInsidePadding,
+                vertical: 0,
+              ),
+            ),
+            overlayColor: textButtonTapModification, // Tap feedback color
+          ),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -400,7 +413,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     return SizedBox(
       // Dynamic width: increase when showing "Stop playing" text
       width: _isAnythingPlaying
-          ? kGreaterButtonWidth + 65 // Increased width for "Stop playing"
+          ? kGreaterButtonWidth + 20 // Increased width for "Stop playing"
           : kGreaterButtonWidth + 20, // Original width for "Listen"
       height: kNormalButtonHeight,
       child: Tooltip(
@@ -477,7 +490,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     return SizedBox(
       // sets the rounded TextButton size improving the distance
       // between the button text and its boarder
-      width: kGreaterButtonWidth * 2.25,
+      width: kGreaterButtonWidth * 2.35,
       height: kNormalButtonHeight,
       child: Tooltip(
         message: AppLocalizations.of(context)!.createAudioFileButtonTooltip,

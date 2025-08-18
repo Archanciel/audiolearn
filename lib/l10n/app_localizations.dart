@@ -3618,7 +3618,7 @@ abstract class AppLocalizations {
   /// No description provided for @stopListeningTextButton.
   ///
   /// In en, this message translates to:
-  /// **'Stop playing'**
+  /// **'Stop'**
   String get stopListeningTextButton;
 
   /// No description provided for @stopListeningTextButtonTooltip.
