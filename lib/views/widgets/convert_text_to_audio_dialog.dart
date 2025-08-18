@@ -1,16 +1,16 @@
-import 'package:audiolearn/utils/duration_expansion.dart';
+import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:flutter/material.dart';
 import '../../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants.dart';
+import '../../models/audio_file.dart';
 import '../../models/playlist.dart';
 import '../../services/sort_filter_parameters.dart';
 import '../../viewmodels/text_to_speech_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
-import '../../models/audio.dart';
 import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import 'confirm_action_dialog.dart';
@@ -51,7 +51,6 @@ class ConvertTextToAudioDialog extends StatefulWidget {
 
 class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     with ScreenMixin {
-
   final TextEditingController _textToConvertController =
       TextEditingController();
   late String _textToConvert;
@@ -79,9 +78,9 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
 
     /// In this method, the context is available.
     Future.delayed(Duration.zero, () {
-        _textToConvertController.text = '';
-        _textToConvert = '';
-        _textToConvertIconColor = kDarkAndLightDisabledIconColor;
+      _textToConvertController.text = '';
+      _textToConvert = '';
+      _textToConvertIconColor = kDarkAndLightDisabledIconColor;
     });
   }
 
@@ -272,11 +271,13 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
         _buildCreateAudioFileButton(
           context: context,
           themeProviderVM: themeProviderVM,
+          textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
+          selectedPlaylistDownloadPath: widget.selectedPlaylist.downloadPath,
         ),
         SizedBox(
           height: kNormalButtonHeight,
           child: TextButton(
-            key: const Key('cancelSortFilterButton'),
+            key: const Key('convertTextToAudioCancelButton'),
             style: ButtonStyle(
               shape: getButtonRoundedShape(
                   currentTheme: themeProviderVM.currentTheme,
@@ -390,6 +391,8 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
   Widget _buildCreateAudioFileButton({
     required BuildContext context,
     required ThemeProviderVM themeProviderVM,
+    required TextToSpeechVM textToSpeechVMlistenTrue,
+    required String selectedPlaylistDownloadPath,
   }) {
     return SizedBox(
       // sets the rounded TextButton size improving the distance
@@ -413,7 +416,13 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
             ),
             overlayColor: textButtonTapModification, // Tap feedback color
           ),
-          onPressed: () async {},
+          onPressed: textToSpeechVMlistenTrue.inputText.trim().isEmpty
+              ? null
+              : () => _showFileNameDialog(
+                    context: context,
+                    textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
+                    selectedPlaylist: widget.selectedPlaylist,
+                  ),
           child: Row(
             mainAxisSize: MainAxisSize
                 .min, // Pour s'assurer que le Row n'occupe pas plus d'espace que nécessaire
@@ -433,6 +442,107 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
         ),
       ),
     );
+  }
+
+  Future<void> _showFileNameDialog({
+    required BuildContext context,
+    required TextToSpeechVM textToSpeechVMlistenTrue,
+    required Playlist selectedPlaylist,
+  }) async {
+    final TextEditingController fileNameController = TextEditingController();
+
+    final fileName = await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(AppLocalizations.of(context)!.mp3FileName),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(AppLocalizations.of(context)!.enterMp3FileName),
+            SizedBox(height: 16),
+            TextField(
+              controller: fileNameController,
+              decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!.myMp3FileName,
+                border: OutlineInputBorder(),
+                suffixText: '.mp3',
+              ),
+              autofocus: true,
+            ),
+          ],
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              final name = fileNameController.text.trim();
+              if (name.isNotEmpty) {
+                Navigator.of(context).pop(name);
+              }
+            },
+            child: Text(AppLocalizations.of(context)!.createMP3),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(AppLocalizations.of(context)!.cancelButton),
+          ),
+        ],
+      ),
+    );
+
+    if (fileName != null && fileName.trim().isNotEmpty) {
+      try {
+        // Pass voice selection to MP3 conversion
+        await textToSpeechVMlistenTrue.convertTextToMP3WithFileName(
+          fileName: fileName,
+          mp3FileDirectory: selectedPlaylist.downloadPath,
+          isVoiceMan: _isVoiceMan,
+        );
+
+        AudioFile? currentAudioFile = textToSpeechVMlistenTrue.currentAudioFile;
+
+        if (currentAudioFile != null) {
+          if (!context.mounted) return;
+
+          Provider.of<AudioDownloadVM>(
+            context,
+            listen: false,
+          ).importAudioFilesInPlaylist(
+            targetPlaylist: selectedPlaylist,
+            filePathNameToImportLst: [currentAudioFile.filePath],
+            canImportAudioFilesBeLocatedInPlaylistDownloadPath: true,
+          );
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Fichier MP3 créé avec succès !'),
+              backgroundColor: Colors.green,
+              duration: Duration(seconds: 3),
+            ),
+          );
+        } else {
+          if (!context.mounted) return;
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Création annulée'),
+              backgroundColor: Colors.orange,
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      } catch (e) {
+        if (!context.mounted) return;
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Erreur: ${e.toString()}'),
+            backgroundColor: Colors.red,
+            duration: Duration(seconds: 3),
+          ),
+        );
+      }
+    }
   }
 
   Row _buildVoiceSelectionCheckboxes({

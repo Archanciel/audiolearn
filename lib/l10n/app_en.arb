@@ -1066,5 +1066,9 @@
   "createAudioFileButton": "Create audio file",
   "createAudioFileButtonTooltip": "Create the audio file using the selected voice and add it to the playlist.",
   "stopListeningTextButton": "Stop",
-  "stopListeningTextButtonTooltip": "Stop listening the text using the selected voice."
+  "stopListeningTextButtonTooltip": "Stop listening the text using the selected voice.",
+  "mp3FileName": "MP3 File Name",
+  "enterMp3FileName": "Enter the MP3 file name",
+  "myMp3FileName": "my_name",
+  "createMP3": "Create MP3"
 }

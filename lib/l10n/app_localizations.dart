@@ -3626,6 +3626,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Stop listening the text using the selected voice.'**
   String get stopListeningTextButtonTooltip;
+
+  /// No description provided for @mp3FileName.
+  ///
+  /// In en, this message translates to:
+  /// **'MP3 File Name'**
+  String get mp3FileName;
+
+  /// No description provided for @enterMp3FileName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the MP3 file name'**
+  String get enterMp3FileName;
+
+  /// No description provided for @myMp3FileName.
+  ///
+  /// In en, this message translates to:
+  /// **'my_name'**
+  String get myMp3FileName;
+
+  /// No description provided for @createMP3.
+  ///
+  /// In en, this message translates to:
+  /// **'Create MP3'**
+  String get createMP3;
 }
 
 class _AppLocalizationsDelegate

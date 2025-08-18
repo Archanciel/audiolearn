@@ -3,7 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:file_picker/file_picker.dart';
+import 'package:path/path.dart' as path;
 import '../models/audio_file.dart';
 import 'logging_service.dart';
 
@@ -13,19 +13,13 @@ class DirectGoogleTtsService {
   Future<AudioFile?> convertTextToMP3({
     required String text,
     required String customFileName,
+    required String mp3FileDirectory,
     required bool isVoiceMan,
   }) async {
     try {
       logInfo('=== CONVERSION MP3 AVEC VOIX SELECTIONNEE ===');
       logInfo('Texte: "$text"');
       logInfo('Fichier: "$customFileName"');
-
-      // Choisir le dossier
-      String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
-      if (selectedDirectory == null) {
-        logInfo('Sélection annulée');
-        return null;
-      }
 
       List<Map<String, String>>? voicesToTry;
 
@@ -86,7 +80,7 @@ class DirectGoogleTtsService {
             final fileName = customFileName.endsWith('.mp3')
                 ? customFileName
                 : '$customFileName.mp3';
-            final filePath = '$selectedDirectory/$fileName';
+            final filePath = '$mp3FileDirectory${path.separator}$fileName';
 
             final file = File(filePath);
             await file.writeAsBytes(audioBytes);

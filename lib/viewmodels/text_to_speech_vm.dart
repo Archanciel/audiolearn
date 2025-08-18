@@ -93,6 +93,7 @@ class TextToSpeechVM extends ChangeNotifier {
 
   Future<void> convertTextToMP3WithFileName({
     required String fileName,
+    required String mp3FileDirectory,
     bool isVoiceMan = true,
   }) async {
     if (_inputText.trim().isEmpty) return;
@@ -106,6 +107,7 @@ class TextToSpeechVM extends ChangeNotifier {
       audioFile = await _directGoogleTtsService.convertTextToMP3(
         text: _inputText,
         customFileName: fileName,
+        mp3FileDirectory: mp3FileDirectory, // Replace with actual directory path
         isVoiceMan: isVoiceMan,
       );
 

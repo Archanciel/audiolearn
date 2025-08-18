@@ -2330,4 +2330,16 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get stopListeningTextButtonTooltip =>
       "Stop listening the text using the selected voice.";
+
+  @override
+  String get mp3FileName => "MP3 File Name";
+
+  @override
+  String get enterMp3FileName => "Enter the MP3 file name.";
+
+  @override
+  String get myMp3FileName => "my_name";
+
+  @override
+  String get createMP3 => "Create MP3";
 }

@@ -1764,6 +1764,7 @@ class AudioDownloadVM extends ChangeNotifier {
   Future<void> importAudioFilesInPlaylist({
     required Playlist targetPlaylist,
     required List<String> filePathNameToImportLst,
+    bool canImportAudioFilesBeLocatedInPlaylistDownloadPath = false,
   }) async {
     List<String> filePathNameToImportLstCopy = List<String>.from(
         filePathNameToImportLst); // necessary since the filePathNameToImportLst
@@ -1776,7 +1777,8 @@ class AudioDownloadVM extends ChangeNotifier {
       File targetFile =
           File('${targetPlaylist.downloadPath}${path.separator}$fileName');
 
-      if (targetFile.existsSync()) {
+      if (targetFile.existsSync() &&
+          !canImportAudioFilesBeLocatedInPlaylistDownloadPath) {
         // the case if the imported audio file already exist in the target
         // playlist directory
         rejectedImportedFileNames += "\"$fileName\",\n";
