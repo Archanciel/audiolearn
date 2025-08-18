@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 
 import '../../constants.dart';
 import '../../models/playlist.dart';
-import '../../viewmodels/playlist_list_vm.dart';
 import '../../services/sort_filter_parameters.dart';
 import '../../viewmodels/text_to_speech_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
@@ -356,10 +355,6 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     required DateFormatVM dateFormatVMlistenFalse,
     required TextToSpeechVM textToSpeechVMlistenTrue,
   }) {
-    PlaylistListVM playlistListVMlistenFalse = Provider.of<PlaylistListVM>(
-      context,
-      listen: false,
-    );
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
