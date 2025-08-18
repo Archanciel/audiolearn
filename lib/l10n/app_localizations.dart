@@ -3614,6 +3614,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Create the audio file using the selected voice and add it to the playlist.'**
   String get createAudioFileButtonTooltip;
+
+  /// No description provided for @stopListeningTextButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop playing'**
+  String get stopListeningTextButton;
+
+  /// No description provided for @stopListeningTextButtonTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop listening the text using the selected voice.'**
+  String get stopListeningTextButtonTooltip;
 }
 
 class _AppLocalizationsDelegate

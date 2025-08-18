@@ -95,6 +95,8 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
   // Voice selection state
   bool _isVoiceMan = true; // Default to masculine voice
 
+  bool _isAnythingPlaying = false;
+
   @override
   void initState() {
     super.initState();
@@ -198,6 +200,11 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
       context,
       listen: false,
     );
+    TextToSpeechVM textToSpeechVMlistenTrue = Provider.of<TextToSpeechVM>(
+      context,
+      listen: true,
+    );
+
     return Center(
       child: AlertDialog(
         title:
@@ -222,7 +229,10 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                   // mainAxisAlignment: MainAxisAlignment.start,
                   // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildTextToConvertFieldAndDeleteButton(context),
+                    _buildTextToConvertFieldAndDeleteButton(
+                      context: context,
+                      textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
+                    ),
                     const SizedBox(
                       height: kDialogTextFieldVerticalSeparation,
                     ),
@@ -241,18 +251,19 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
         ),
         actions: [
           _buildActionButtonsLine(
-            context: context,
-            themeProviderVM: themeProviderVM,
-            dateFormatVMlistenFalse: dateFormatVMlistenFalse,
-          ),
+              context: context,
+              themeProviderVM: themeProviderVM,
+              dateFormatVMlistenFalse: dateFormatVMlistenFalse,
+              textToSpeechVMlistenTrue: textToSpeechVMlistenTrue),
         ],
       ),
     );
   }
 
-  Widget _buildTextToConvertFieldAndDeleteButton(
-    BuildContext context,
-  ) {
+  Widget _buildTextToConvertFieldAndDeleteButton({
+    required BuildContext context,
+    required TextToSpeechVM textToSpeechVMlistenTrue,
+  }) {
     return Tooltip(
       message: AppLocalizations.of(context)!.textToConvertTextFieldTooltip,
       child: Column(
@@ -279,15 +290,17 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                   ),
                   controller: _textToConvertController,
                   keyboardType: TextInputType.text,
-                  onChanged: (value) {
-                    _textToConvert = value;
+                  onChanged: (text) {
+                    _textToConvert = text;
+                    textToSpeechVMlistenTrue.updateInputText(text: text);
+
                     // setting the Delete button color according to the
                     // TextField content ...
                     _textToConvertIconColor = _textToConvert.isNotEmpty
                         ? kDarkAndLightEnabledIconColor
                         : kDarkAndLightDisabledIconColor;
 
-                    setState(() {}); // necessary to update Plus button color
+                    setState(() {}); // necessary to update Delete button color
                   },
                 ),
               ),
@@ -341,17 +354,14 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     required BuildContext context,
     required ThemeProviderVM themeProviderVM,
     required DateFormatVM dateFormatVMlistenFalse,
+    required TextToSpeechVM textToSpeechVMlistenTrue,
   }) {
     PlaylistListVM playlistListVMlistenFalse = Provider.of<PlaylistListVM>(
       context,
       listen: false,
     );
-    TextToSpeechVM textToSpeechVMlistenTrue = Provider.of<TextToSpeechVM>(
-      context,
-      listen: true,
-    );
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _buildListenTextButton(
           context: context,
@@ -384,7 +394,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     required TextToSpeechVM textToSpeechVMlistenTrue,
   }) {
     // Check if either TTS is speaking OR audio file is playing
-    bool isAnythingPlaying = textToSpeechVMlistenTrue.isPlaying ||
+    _isAnythingPlaying = textToSpeechVMlistenTrue.isPlaying ||
         textToSpeechVMlistenTrue.isSpeaking;
 
     return SizedBox(
@@ -393,7 +403,9 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
       width: kGreaterButtonWidth + 10,
       height: kNormalButtonHeight,
       child: Tooltip(
-        message: AppLocalizations.of(context)!.listenTextButtonTooltip,
+        message: _isAnythingPlaying
+            ? AppLocalizations.of(context)!.stopListeningTextButtonTooltip
+            : AppLocalizations.of(context)!.listenTextButtonTooltip,
         child: TextButton(
           key: const Key('listen_text_button'),
           style: ButtonStyle(
@@ -409,25 +421,30 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
             ),
             overlayColor: textButtonTapModification, // Tap feedback color
           ),
-          onPressed: textToSpeechVMlistenTrue.inputText.trim().isEmpty
-              ? null
-              : isAnythingPlaying
-                  ? () => _stopAllAudio(
+          onPressed: () {
+            (textToSpeechVMlistenTrue.inputText.trim().isEmpty)
+                ? null
+                : (_isAnythingPlaying)
+                    ? _stopAllAudio(
                         textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
                       )
-                  : () => textToSpeechVMlistenTrue.speakText(
+                    : textToSpeechVMlistenTrue.speakText(
                         isVoiceMan: _isVoiceMan,
-                      ),
+                      );
+            setState(() {});
+          },
           child: Row(
             mainAxisSize: MainAxisSize
                 .min, // Pour s'assurer que le Row n'occupe pas plus d'espace que nécessaire
             children: <Widget>[
-              const Icon(
-                Icons.volume_up,
+              Icon(
+                _isAnythingPlaying ? Icons.stop : Icons.volume_up,
                 size: 18,
               ),
               Text(
-                AppLocalizations.of(context)!.listenTextButton,
+                _isAnythingPlaying
+                    ? AppLocalizations.of(context)!.stopListeningTextButton
+                    : AppLocalizations.of(context)!.listenTextButton,
                 style: (themeProviderVM.currentTheme == AppTheme.dark)
                     ? kTextButtonStyleDarkMode
                     : kTextButtonStyleLightMode,
