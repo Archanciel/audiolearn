@@ -372,29 +372,32 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
           context: context,
           themeProviderVM: themeProviderVM,
         ),
-        TextButton(
-          key: const Key('cancelSortFilterButton'),
-          style: ButtonStyle(
-            shape: getButtonRoundedShape(
-                currentTheme: themeProviderVM.currentTheme,
-                isButtonEnabled: true,
-                context: context),
-            padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-              const EdgeInsets.symmetric(
-                horizontal: kSmallButtonInsidePadding,
-                vertical: 0,
+        SizedBox(
+          height: kNormalButtonHeight,
+          child: TextButton(
+            key: const Key('cancelSortFilterButton'),
+            style: ButtonStyle(
+              shape: getButtonRoundedShape(
+                  currentTheme: themeProviderVM.currentTheme,
+                  isButtonEnabled: true,
+                  context: context),
+              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                const EdgeInsets.symmetric(
+                  horizontal: kSmallButtonInsidePadding,
+                  vertical: 0,
+                ),
               ),
+              overlayColor: textButtonTapModification, // Tap feedback color
             ),
-            overlayColor: textButtonTapModification, // Tap feedback color
-          ),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text(
-            AppLocalizations.of(context)!.cancelButton,
-            style: (themeProviderVM.currentTheme == AppTheme.dark)
-                ? kTextButtonStyleDarkMode
-                : kTextButtonStyleLightMode,
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              AppLocalizations.of(context)!.cancelButton,
+              style: (themeProviderVM.currentTheme == AppTheme.dark)
+                  ? kTextButtonStyleDarkMode
+                  : kTextButtonStyleLightMode,
+            ),
           ),
         ),
       ],
