@@ -31,13 +31,8 @@ enum DateTimeType {
 
 class ConvertTextToAudioDialog extends StatefulWidget {
   final Playlist selectedPlaylist;
-  final List<Audio> selectedPlaylistAudioLst;
-  final String audioSortFilterParametersName;
-  final AudioSortFilterParameters audioSortFilterParameters;
-  final AudioLearnAppViewType audioLearnAppViewType;
   final FocusNode focusNode;
   final WarningMessageVM warningMessageVM;
-  final CalledFrom calledFrom;
   final SettingsDataService settingsDataService;
 
   const ConvertTextToAudioDialog({
@@ -45,12 +40,7 @@ class ConvertTextToAudioDialog extends StatefulWidget {
     required this.settingsDataService,
     required this.warningMessageVM,
     required this.selectedPlaylist,
-    required this.selectedPlaylistAudioLst,
-    required this.audioSortFilterParameters,
-    required this.audioLearnAppViewType,
     required this.focusNode,
-    required this.calledFrom,
-    this.audioSortFilterParametersName = '',
   });
 
   @override
@@ -61,32 +51,11 @@ class ConvertTextToAudioDialog extends StatefulWidget {
 
 class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     with ScreenMixin {
-  late final List<String> _audioTitleFilterSentencesLst = [];
 
-  late List<SortingItem> _selectedSortingItemLst;
-
-  final TextEditingController _startFileSizeController =
-      TextEditingController();
-  final TextEditingController _endFileSizeController = TextEditingController();
   final TextEditingController _textToConvertController =
-      TextEditingController();
-  final TextEditingController _audioTitleSearchSentenceController =
-      TextEditingController();
-  final TextEditingController _startDownloadDateTimeController =
-      TextEditingController();
-  final TextEditingController _endDownloadDateTimeController =
-      TextEditingController();
-  final TextEditingController _startUploadDateTimeController =
-      TextEditingController();
-  final TextEditingController _endUploadDateTimeController =
-      TextEditingController();
-  final TextEditingController _startAudioDurationController =
-      TextEditingController();
-  final TextEditingController _endAudioDurationController =
       TextEditingController();
   late String _textToConvert;
 
-  final _audioTitleSearchSentenceFocusNode = FocusNode();
   final _textToConvertFocusNode = FocusNode();
 
   Color _textToConvertIconColor = kDarkAndLightDisabledIconColor;
@@ -110,78 +79,15 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
 
     /// In this method, the context is available.
     Future.delayed(Duration.zero, () {
-      if (widget.audioSortFilterParametersName ==
-          AppLocalizations.of(context)!.sortFilterParametersDefaultName) {
         _textToConvertController.text = '';
         _textToConvert = '';
         _textToConvertIconColor = kDarkAndLightDisabledIconColor;
-      } else if (widget.audioSortFilterParametersName.isNotEmpty) {
-        _textToConvertIconColor = kDarkAndLightEnabledIconColor;
-      }
     });
-
-    _textToConvertController.text = widget.audioSortFilterParametersName;
-
-    // Since the _sortFilterSaveAsUniqueNameController is late, it
-    // must be set here otherwise saving the sort filter parameters
-    // will not work since an error is thrown  due to the fact that
-    // the late _sortFilterSaveAsUniqueNameController is not
-    // initialized
-    _textToConvert = widget.audioSortFilterParametersName;
-
-    _textToConvertController.text = widget.audioSortFilterParametersName;
-
-    AudioSortFilterParameters audioSortDefaultFilterParameters;
-
-    if (widget.audioSortFilterParametersName.isNotEmpty) {
-      audioSortDefaultFilterParameters = widget.audioSortFilterParameters;
-    } else {
-      audioSortDefaultFilterParameters =
-          AudioSortFilterParameters.createDefaultAudioSortFilterParameters();
-    }
-
-    _selectedSortingItemLst = [];
-    _selectedSortingItemLst
-        .addAll(audioSortDefaultFilterParameters.selectedSortItemLst);
-    _audioTitleFilterSentencesLst
-        .addAll(audioSortDefaultFilterParameters.filterSentenceLst);
-
-    double fileSizeStartRangeMB =
-        audioSortDefaultFilterParameters.fileSizeStartRangeMB;
-    _startFileSizeController.text =
-        (fileSizeStartRangeMB > 0.0) ? fileSizeStartRangeMB.toString() : '';
-
-    double fileSizeEndRangeMB =
-        audioSortDefaultFilterParameters.fileSizeEndRangeMB;
-    _endFileSizeController.text =
-        (fileSizeEndRangeMB > 0.0) ? fileSizeEndRangeMB.toString() : '';
-
-    int durationStartRangeSec =
-        audioSortDefaultFilterParameters.durationStartRangeSec;
-    _startAudioDurationController.text = (durationStartRangeSec > 0)
-        ? Duration(seconds: durationStartRangeSec).HHmm()
-        : '';
-
-    int durationEndRangeSec =
-        audioSortDefaultFilterParameters.durationEndRangeSec;
-    _endAudioDurationController.text = (durationEndRangeSec > 0)
-        ? Duration(seconds: durationEndRangeSec).HHmm()
-        : '';
   }
 
   @override
   void dispose() {
-    _startFileSizeController.dispose();
-    _endFileSizeController.dispose();
     _textToConvertController.dispose();
-    _audioTitleSearchSentenceController.dispose();
-    _startDownloadDateTimeController.dispose();
-    _endDownloadDateTimeController.dispose();
-    _startUploadDateTimeController.dispose();
-    _endUploadDateTimeController.dispose();
-    _startAudioDurationController.dispose();
-    _endAudioDurationController.dispose();
-    _audioTitleSearchSentenceFocusNode.dispose();
     _textToConvertFocusNode.dispose();
 
     super.dispose();
