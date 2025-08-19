@@ -2267,7 +2267,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Écoute du texte à convertir avec la voix sélectionnée.';
 
   @override
-  String get createAudioFileButton => 'Créer fichier audio';
+  String get createAudioFileButton => 'Créer MP3';
 
   @override
   String get createAudioFileButtonTooltip =>

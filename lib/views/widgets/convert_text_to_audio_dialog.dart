@@ -404,7 +404,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     return SizedBox(
       // sets the rounded TextButton size improving the distance
       // between the button text and its boarder
-      width: kGreaterButtonWidth * 2.35,
+      width: kGreaterButtonWidth * 1.4,
       height: kNormalButtonHeight,
       child: Tooltip(
         message: AppLocalizations.of(context)!.createAudioFileButtonTooltip,
@@ -434,10 +434,6 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
             mainAxisSize: MainAxisSize
                 .min, // Pour s'assurer que le Row n'occupe pas plus d'espace que nécessaire
             children: <Widget>[
-              const Icon(
-                Icons.audiotrack,
-                size: 18,
-              ),
               Text(
                 AppLocalizations.of(context)!.createAudioFileButton,
                 style: (themeProviderVM.currentTheme == AppTheme.dark)

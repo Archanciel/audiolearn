@@ -2243,7 +2243,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Listening the text to convert with the selected voice.';
 
   @override
-  String get createAudioFileButton => 'Create audio file';
+  String get createAudioFileButton => 'Create MP3';
 
   @override
   String get createAudioFileButtonTooltip =>
