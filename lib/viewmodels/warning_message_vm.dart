@@ -983,8 +983,9 @@ class WarningMessageVM extends ChangeNotifier {
 
     warningMessageType = WarningMessageType.audioImportedFromTextToSpeechOperation;
 
-    // Causes the display warning message widget to be displayed.
-    notifyListeners();
+    _addWarningMessageElements(
+      warningMessageElements: _importedAudioFileNames,
+    );
 }
 
   String _updatedPlayableAudioLstPlaylistTitle = '';
