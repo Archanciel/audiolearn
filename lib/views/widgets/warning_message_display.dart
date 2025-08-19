@@ -1589,6 +1589,34 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
           );
         }
         break;
+      case WarningMessageType.audioImportedFromTextToSpeechOperation:
+        final String importedAudioFileNames = _warningMessageVM.importedAudioFileNames;
+
+        if (importedAudioFileNames.isNotEmpty) {
+          String audioImportedFromTextToSpeechToPlaylistMessage;
+
+          if (_warningMessageVM.importedToPlaylistType == PlaylistType.local) {
+            audioImportedFromTextToSpeechToPlaylistMessage =
+                AppLocalizations.of(context)!.audioImportedFromTextToSpeechToLocalPlaylist(
+              importedAudioFileNames,
+              _warningMessageVM.importedToPlaylistTitle,
+            );
+          } else {
+            audioImportedFromTextToSpeechToPlaylistMessage =
+                AppLocalizations.of(context)!.audioImportedFromTextToSpeechToYoutubePlaylist(
+              importedAudioFileNames,
+              _warningMessageVM.importedToPlaylistTitle,
+            );
+          }
+
+          _displayWarningDialog(
+            context: context,
+            message: audioImportedFromTextToSpeechToPlaylistMessage,
+            themeProviderVM: themeProviderVM,
+            warningMode: WarningMode.confirm,
+          );
+        }
+        break;
       default:
         break;
     }

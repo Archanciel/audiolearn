@@ -3650,6 +3650,20 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Create MP3'**
   String get createMP3;
+
+  /// No description provided for @audioImportedFromTextToSpeechToLocalPlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'The audio created by the text to MP3 convertion\n\n{importedAudioFileNames}\n\nwas imported to local playlist \"{toPlaylistTitle}\".'**
+  String audioImportedFromTextToSpeechToLocalPlaylist(
+      Object importedAudioFileNames, Object toPlaylistTitle);
+
+  /// No description provided for @audioImportedFromTextToSpeechToYoutubePlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'The audio created by the text to MP3 convertion\n\n{importedAudioFileNames}\n\nwas imported to Youtube playlist \"{toPlaylistTitle}\".'**
+  String audioImportedFromTextToSpeechToYoutubePlaylist(
+      Object importedAudioFileNames, Object toPlaylistTitle);
 }
 
 class _AppLocalizationsDelegate

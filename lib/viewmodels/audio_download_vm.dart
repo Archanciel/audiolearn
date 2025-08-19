@@ -1760,8 +1760,14 @@ class AudioDownloadVM extends ChangeNotifier {
     ];
   }
 
-  /// This method is called when the user selects the "Import audio files ..."
-  /// playlist menu item.
+  /// This method is called when the user selects the "Import Audio Files ..."
+  /// playlist menu item. In this case, a filepicker dialog is displayed
+  /// which allows the user to select one or everal audio files to import.
+  ///
+  /// The method is also used when the user selects the "Convert Text to
+  /// Audio ..." playlist menu item. After the text was converted to audio,
+  /// the audio file is imported to the target playlist. In this case,
+  /// {doesImportedFileResultFromTextToSpeech} is set to true.
   Future<void> importAudioFilesInPlaylist({
     required Playlist targetPlaylist,
     required List<String> filePathNameToImportLst,
@@ -1805,14 +1811,26 @@ class AudioDownloadVM extends ChangeNotifier {
     // Displaying a confirmation which lists the audio files which will be
     // imported to the playlist.
     if (acceptableImportedFileNames.isNotEmpty) {
-      warningMessageVM.setAudioImportedToPlaylistTitles(
-          importedAudioFileNames: acceptableImportedFileNames.substring(
-              0,
-              acceptableImportedFileNames.length -
-                  2), // removing the last comma
-          //                                                 and the last line break
+      if (!doesImportedFileResultFromTextToSpeech) {
+        warningMessageVM.setAudioImportedToPlaylistTitles(
+            importedAudioFileNames: acceptableImportedFileNames.substring(
+                0,
+                acceptableImportedFileNames.length -
+                    2), // removing the last comma and the last line break
+            importedToPlaylistTitle: targetPlaylist.title,
+            importedToPlaylistType: targetPlaylist.playlistType);
+      } else {
+        // the case if the imported audio file was created from the text to
+        // speech operation
+        warningMessageVM.setAudioImportedFromTextToSpeechOperation(
+          importedAudioFileName: acceptableImportedFileNames.substring(
+            0,
+            acceptableImportedFileNames.length - 2,
+          ), // removing the last comma and the last line break
           importedToPlaylistTitle: targetPlaylist.title,
-          importedToPlaylistType: targetPlaylist.playlistType);
+          importedToPlaylistType: targetPlaylist.playlistType,
+        );
+      }
     }
 
     // AudioPlayer is used to get the audio duration of the

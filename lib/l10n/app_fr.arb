@@ -1456,5 +1456,7 @@
   "mp3FileName": "Nom du fichier MP3",
   "enterMp3FileName": "Entrer le nom du fichier MP3",
   "myMp3FileName": "mon_nom",
-  "createMP3": "Créer MP3"
+  "createMP3": "Créer MP3",
+  "audioImportedFromTextToSpeechToLocalPlaylist": "L'audio créé par la conversion de texte en MP3\n\n{importedAudioFileNames}\n\na été importé vers la playlist locale \"{toPlaylistTitle}\".",
+  "audioImportedFromTextToSpeechToYoutubePlaylist": "L'audio créé par la conversion de texte en MP3\n\n{importedAudioFileNames}\n\na été importé vers la playlist Youtube \"{toPlaylistTitle}\"."
 }

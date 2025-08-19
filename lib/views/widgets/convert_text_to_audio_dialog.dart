@@ -30,7 +30,7 @@ enum DateTimeType {
 }
 
 class ConvertTextToAudioDialog extends StatefulWidget {
-  final Playlist selectedPlaylist;
+  final Playlist targetPlaylist;
   final FocusNode focusNode;
   final WarningMessageVM warningMessageVM;
   final SettingsDataService settingsDataService;
@@ -39,7 +39,7 @@ class ConvertTextToAudioDialog extends StatefulWidget {
     super.key,
     required this.settingsDataService,
     required this.warningMessageVM,
-    required this.selectedPlaylist,
+    required this.targetPlaylist,
     required this.focusNode,
   });
 
@@ -272,7 +272,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
           context: context,
           themeProviderVM: themeProviderVM,
           textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
-          selectedPlaylistDownloadPath: widget.selectedPlaylist.downloadPath,
+          selectedPlaylistDownloadPath: widget.targetPlaylist.downloadPath,
         ),
         SizedBox(
           height: kNormalButtonHeight,
@@ -421,7 +421,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
               : () => _showFileNameDialog(
                     context: context,
                     textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
-                    selectedPlaylist: widget.selectedPlaylist,
+                    targetPlaylist: widget.targetPlaylist,
                   ),
           child: Row(
             mainAxisSize: MainAxisSize
@@ -447,7 +447,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
   Future<void> _showFileNameDialog({
     required BuildContext context,
     required TextToSpeechVM textToSpeechVMlistenTrue,
-    required Playlist selectedPlaylist,
+    required Playlist targetPlaylist,
   }) async {
     final TextEditingController fileNameController = TextEditingController();
 
@@ -495,7 +495,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
         // Pass voice selection to MP3 conversion
         await textToSpeechVMlistenTrue.convertTextToMP3WithFileName(
           fileName: fileName,
-          mp3FileDirectory: selectedPlaylist.downloadPath,
+          mp3FileDirectory: targetPlaylist.downloadPath,
           isVoiceMan: _isVoiceMan,
         );
 
@@ -508,7 +508,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
             context,
             listen: false,
           ).importAudioFilesInPlaylist(
-            targetPlaylist: selectedPlaylist,
+            targetPlaylist: targetPlaylist,
             filePathNameToImportLst: [currentAudioFile.filePath],
             doesImportedFileResultFromTextToSpeech: true,
           );
