@@ -430,17 +430,11 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                     textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
                     targetPlaylist: widget.targetPlaylist,
                   ),
-          child: Row(
-            mainAxisSize: MainAxisSize
-                .min, // Pour s'assurer que le Row n'occupe pas plus d'espace que nécessaire
-            children: <Widget>[
-              Text(
-                AppLocalizations.of(context)!.createAudioFileButton,
-                style: (themeProviderVM.currentTheme == AppTheme.dark)
-                    ? kTextButtonStyleDarkMode
-                    : kTextButtonStyleLightMode,
-              ), // Texte
-            ],
+          child: Text(
+            AppLocalizations.of(context)!.createAudioFileButton,
+            style: (themeProviderVM.currentTheme == AppTheme.dark)
+                ? kTextButtonStyleDarkMode
+                : kTextButtonStyleLightMode,
           ),
         ),
       ),
