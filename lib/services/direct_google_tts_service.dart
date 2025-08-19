@@ -10,6 +10,44 @@ import 'logging_service.dart';
 class DirectGoogleTtsService {
   final String _apiKey = 'AIzaSyCcj0KjrlTuj8a6JTdowDMODjZSlTGVGvo';
 
+  // Sanitize filename for Android compatibility
+  String _sanitizeFilename(String filename) {
+    // Remove or replace problematic characters
+    String sanitized = filename
+        // Replace quotes with nothing
+        .replaceAll('"', '')
+        .replaceAll("'", '')
+        // Replace colon with dash
+        .replaceAll(':', ' -')
+        // Replace other problematic characters
+        .replaceAll('/', '_')
+        .replaceAll('\\', '_')
+        .replaceAll('<', '_')
+        .replaceAll('>', '_')
+        .replaceAll('|', '_')
+        .replaceAll('*', '_')
+        .replaceAll('?', '_')
+        // Replace multiple spaces with single space
+        .replaceAll(RegExp(r'\s+'), ' ')
+        // Trim whitespace
+        .trim();
+
+    // Ensure filename isn't too long (Android has ~255 char limit)
+    if (sanitized.length > 200) {
+      sanitized = sanitized.substring(0, 200);
+    }
+
+    // Ensure it's not empty after sanitization
+    if (sanitized.isEmpty) {
+      sanitized = 'audio_${DateTime.now().millisecondsSinceEpoch}';
+    }
+
+    logInfo('Original filename: "$filename"');
+    logInfo('Sanitized filename: "$sanitized"');
+
+    return sanitized;
+  }
+
   Future<AudioFile?> convertTextToMP3({
     required String text,
     required String customFileName,
@@ -19,7 +57,10 @@ class DirectGoogleTtsService {
     try {
       logInfo('=== CONVERSION MP3 AVEC VOIX SELECTIONNEE ===');
       logInfo('Texte: "$text"');
-      logInfo('Fichier: "$customFileName"');
+      logInfo('Fichier original: "$customFileName"');
+
+      // Sanitize the filename
+      String sanitizedFileName = _sanitizeFilename(customFileName);
 
       List<Map<String, String>>? voicesToTry;
 
@@ -76,24 +117,61 @@ class DirectGoogleTtsService {
               '✅ Succès avec ${voice['name']}: ${audioBytes.length} bytes',
             );
 
-            // Sauvegarder le fichier
-            final fileName = customFileName.endsWith('.mp3')
-                ? customFileName
-                : '$customFileName.mp3';
+            // Use sanitized filename
+            final fileName = sanitizedFileName.endsWith('.mp3')
+                ? sanitizedFileName
+                : '$sanitizedFileName.mp3';
             final filePath = '$mp3FileDirectory${path.separator}$fileName';
 
+            logInfo('Chemin du fichier: $filePath');
+
+            // Check if directory exists and create if necessary
+            final directory = Directory(mp3FileDirectory);
+            if (!directory.existsSync()) {
+              logInfo('Création du répertoire: $mp3FileDirectory');
+              directory.createSync(recursive: true);
+            }
+
             final file = File(filePath);
-            await file.writeAsBytes(audioBytes);
 
-            logInfo('✅ Fichier sauvegardé: $filePath');
+            // Check if we have write permissions
+            try {
+              await file.writeAsBytes(audioBytes);
+              logInfo('✅ Fichier sauvegardé: $filePath');
+            } catch (writeError) {
+              logError('Erreur d\'écriture du fichier: $writeError');
 
-            result = AudioFile(
-              id: DateTime.now().millisecondsSinceEpoch.toString(),
-              text: text,
-              filePath: filePath,
-              createdAt: DateTime.now(),
-              sizeBytes: audioBytes.length,
-            );
+              // Try alternative location if write fails
+              final fallbackDir = Directory('/storage/emulated/0/Download');
+              if (fallbackDir.existsSync()) {
+                final fallbackPath =
+                    '${fallbackDir.path}${path.separator}$fileName';
+                logInfo(
+                    'Tentative d\'écriture dans le répertoire de téléchargement: $fallbackPath');
+
+                final fallbackFile = File(fallbackPath);
+                await fallbackFile.writeAsBytes(audioBytes);
+                logInfo('✅ Fichier sauvegardé dans Download: $fallbackPath');
+
+                result = AudioFile(
+                  id: DateTime.now().millisecondsSinceEpoch.toString(),
+                  text: text,
+                  filePath: fallbackPath,
+                  createdAt: DateTime.now(),
+                  sizeBytes: audioBytes.length,
+                );
+              } else {
+                rethrow;
+              }
+            }
+
+            result ??= AudioFile(
+                id: DateTime.now().millisecondsSinceEpoch.toString(),
+                text: text,
+                filePath: filePath,
+                createdAt: DateTime.now(),
+                sizeBytes: audioBytes.length,
+              );
 
             break; // Succès ! Sortir de la boucle
           } else {
