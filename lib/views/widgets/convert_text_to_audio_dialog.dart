@@ -187,7 +187,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                   key: const Key('textToConvertTextField'),
                   focusNode: _textToConvertFocusNode,
                   style: kDialogTextFieldStyle,
-                  maxLines: 22,
+                  maxLines: 18,
                   decoration: getDialogTextFieldInputDecoration(
                     hintText: AppLocalizations.of(context)!
                         .textToConvertTextFieldHint,
