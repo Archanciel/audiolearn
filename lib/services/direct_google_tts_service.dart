@@ -16,7 +16,6 @@ class DirectGoogleTtsService {
     String sanitized = filename
         // Replace quotes with nothing
         .replaceAll('"', '')
-        .replaceAll("'", '')
         // Replace colon with dash
         .replaceAll(':', ' -')
         // Replace other problematic characters
