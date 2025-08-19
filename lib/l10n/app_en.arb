@@ -1063,7 +1063,7 @@
   "femineVoice": "feminine",
   "listenTextButton": "Listen",
   "listenTextButtonTooltip": "Listening the text to convert with the selected voice.",
-  "createAudioFileButton": "Create audio file",
+  "createAudioFileButton": "Create MP3",
   "createAudioFileButtonTooltip": "Create the audio file using the selected voice and add it to the playlist.",
   "stopListeningTextButton": "Stop",
   "stopListeningTextButtonTooltip": "Stop listening the text using the selected voice.",

@@ -3606,7 +3606,7 @@ abstract class AppLocalizations {
   /// No description provided for @createAudioFileButton.
   ///
   /// In en, this message translates to:
-  /// **'Create audio file'**
+  /// **'Create MP3'**
   String get createAudioFileButton;
 
   /// No description provided for @createAudioFileButtonTooltip.
