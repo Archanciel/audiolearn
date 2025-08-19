@@ -187,7 +187,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                   key: const Key('textToConvertTextField'),
                   focusNode: _textToConvertFocusNode,
                   style: kDialogTextFieldStyle,
-                  maxLines: 6,
+                  maxLines: 22,
                   decoration: getDialogTextFieldInputDecoration(
                     hintText: AppLocalizations.of(context)!
                         .textToConvertTextFieldHint,
@@ -254,53 +254,60 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
   ///
   /// Save button is displayed when the sort filter name is defined.
   /// If the sort filter name is empty, the Apply button is displayed.
-  Row _buildActionButtonsLine({
+  Column _buildActionButtonsLine({
     required BuildContext context,
     required ThemeProviderVM themeProviderVM,
     required DateFormatVM dateFormatVMlistenFalse,
     required TextToSpeechVM textToSpeechVMlistenTrue,
   }) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Column(
       children: [
-        _buildListenTextButton(
-          context: context,
-          themeProviderVM: themeProviderVM,
-          textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
-        ),
-        _buildCreateAudioFileButton(
-          context: context,
-          themeProviderVM: themeProviderVM,
-          textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
-          selectedPlaylistDownloadPath: widget.targetPlaylist.downloadPath,
-        ),
-        SizedBox(
-          height: kNormalButtonHeight,
-          child: TextButton(
-            key: const Key('convertTextToAudioCancelButton'),
-            style: ButtonStyle(
-              shape: getButtonRoundedShape(
-                  currentTheme: themeProviderVM.currentTheme,
-                  isButtonEnabled: true,
-                  context: context),
-              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                const EdgeInsets.symmetric(
-                  horizontal: kSmallButtonInsidePadding,
-                  vertical: 0,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            _buildListenTextButton(
+              context: context,
+              themeProviderVM: themeProviderVM,
+              textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
+            ),
+            _buildCreateAudioFileButton(
+              context: context,
+              themeProviderVM: themeProviderVM,
+              textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
+              selectedPlaylistDownloadPath: widget.targetPlaylist.downloadPath,
+            ),
+            SizedBox(
+              height: kNormalButtonHeight,
+              child: TextButton(
+                key: const Key('convertTextToAudioCancelButton'),
+                style: ButtonStyle(
+                  shape: getButtonRoundedShape(
+                      currentTheme: themeProviderVM.currentTheme,
+                      isButtonEnabled: true,
+                      context: context),
+                  padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                    const EdgeInsets.symmetric(
+                      horizontal: kSmallButtonInsidePadding,
+                      vertical: 0,
+                    ),
+                  ),
+                  overlayColor: textButtonTapModification, // Tap feedback color
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  AppLocalizations.of(context)!.cancelButton,
+                  style: (themeProviderVM.currentTheme == AppTheme.dark)
+                      ? kTextButtonStyleDarkMode
+                      : kTextButtonStyleLightMode,
                 ),
               ),
-              overlayColor: textButtonTapModification, // Tap feedback color
             ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text(
-              AppLocalizations.of(context)!.cancelButton,
-              style: (themeProviderVM.currentTheme == AppTheme.dark)
-                  ? kTextButtonStyleDarkMode
-                  : kTextButtonStyleLightMode,
-            ),
-          ),
+          ],
+        ),
+        const SizedBox(
+          height: 10,
         ),
       ],
     );
@@ -511,14 +518,6 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
             targetPlaylist: targetPlaylist,
             filePathNameToImportLst: [currentAudioFile.filePath],
             doesImportedFileResultFromTextToSpeech: true,
-          );
-
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Fichier MP3 créé avec succès !'),
-              backgroundColor: Colors.green,
-              duration: Duration(seconds: 3),
-            ),
           );
         } else {
           if (!context.mounted) return;
