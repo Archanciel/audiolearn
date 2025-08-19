@@ -2342,4 +2342,12 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get createMP3 => "Create MP3";
+
+  @override
+  String audioImportedFromTextToSpeechToLocalPlaylist(Object importedAudioFileNames, Object toPlaylistTitle,) =>
+      "The audio created by the text to MP3 convertion$importedAudioFileNames was imported to local playlist \"$toPlaylistTitle\".";
+
+  @override
+  String audioImportedFromTextToSpeechToYoutubePlaylist(Object importedAudioFileNames, Object toPlaylistTitle,) =>
+      "The audio created by the text to MP3 convertion$importedAudioFileNames was imported to Youtube playlist \"$toPlaylistTitle\".";
 }

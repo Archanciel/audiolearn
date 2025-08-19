@@ -2267,4 +2267,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get createMP3 => 'Create MP3';
+
+  @override
+  String audioImportedFromTextToSpeechToLocalPlaylist(
+      Object importedAudioFileNames, Object toPlaylistTitle) {
+    return 'The audio created by the text to MP3 convertion\n\n$importedAudioFileNames\n\nwas imported to local playlist \"$toPlaylistTitle\".';
+  }
+
+  @override
+  String audioImportedFromTextToSpeechToYoutubePlaylist(
+      Object importedAudioFileNames, Object toPlaylistTitle) {
+    return 'The audio created by the text to MP3 convertion\n\n$importedAudioFileNames\n\nwas imported to Youtube playlist \"$toPlaylistTitle\".';
+  }
 }

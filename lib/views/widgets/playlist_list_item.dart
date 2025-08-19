@@ -376,8 +376,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   return ConvertTextToAudioDialog(
                     settingsDataService: settingsDataService,
                     warningMessageVM: warningMessageVMlistenFalse,
-                    selectedPlaylist:
-                        playlistListVMlistenFalse.uniqueSelectedPlaylist!,
+                    targetPlaylist: playlist,
                     focusNode: focusNode,
                   );
                 },

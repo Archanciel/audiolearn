@@ -199,6 +199,10 @@ enum WarningMessageType {
   // the import audio to playlist menu item and the audio was
   // imported to the target playlist
 
+  audioImportedFromTextToSpeechOperation, // The case if the user
+  // clicks on the convert text to audio menu item and the audio
+  // was imported to the target playlist
+
   videoTitleNotWrittenInOccidentalLetters, // The case if the video
   // title is not written in occidental letters.
 }
@@ -961,6 +965,19 @@ class WarningMessageVM extends ChangeNotifier {
     _importedToPlaylistType = importedToPlaylistType;
 
     warningMessageType = WarningMessageType.audioImportedToPlaylist;
+  }
+
+  void setAudioImportedFromTextToSpeechOperation({
+    required String importedAudioFileName,
+    required String importedToPlaylistTitle,
+    required PlaylistType importedToPlaylistType,
+  }) {
+    _isDisplaying = false; // Reset the display state for the next warning.
+    _importedAudioFileNames = importedAudioFileName;
+    _importedToPlaylistTitle = importedToPlaylistTitle;
+    _importedToPlaylistType = importedToPlaylistType;
+
+    warningMessageType = WarningMessageType.audioImportedFromTextToSpeechOperation;
 
     _addWarningMessageElements(
       warningMessageElements: _importedAudioFileNames,
