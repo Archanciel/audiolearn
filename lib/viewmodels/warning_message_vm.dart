@@ -965,6 +965,10 @@ class WarningMessageVM extends ChangeNotifier {
     _importedToPlaylistType = importedToPlaylistType;
 
     warningMessageType = WarningMessageType.audioImportedToPlaylist;
+
+    _addWarningMessageElements(
+      warningMessageElements: _importedAudioFileNames,
+    );
   }
 
   void setAudioImportedFromTextToSpeechOperation({
@@ -979,10 +983,9 @@ class WarningMessageVM extends ChangeNotifier {
 
     warningMessageType = WarningMessageType.audioImportedFromTextToSpeechOperation;
 
-    _addWarningMessageElements(
-      warningMessageElements: _importedAudioFileNames,
-    );
-  }
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
+}
 
   String _updatedPlayableAudioLstPlaylistTitle = '';
   String get updatedPlayableAudioLstPlaylistTitle =>
