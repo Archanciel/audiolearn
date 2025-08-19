@@ -6,6 +6,10 @@ import 'logging_service.dart';
 class TextToSpeechService {
   AudioPlayer? _directAudioPlayer;
   FlutterTts? _flutterTts;
+  
+  // Track speaking state internally
+  bool _isSpeaking = false;
+  bool get isSpeaking => _isSpeaking;
 
   // Completion callback
   Function()? _onSpeechComplete;
@@ -22,6 +26,7 @@ class TextToSpeechService {
     // Set up completion handler
     _flutterTts!.setCompletionHandler(() {
       logInfo('TTS completed - calling completion callback');
+      _isSpeaking = false;  // Update internal state
       if (_onSpeechComplete != null) {
         _onSpeechComplete!();
       }
@@ -30,6 +35,22 @@ class TextToSpeechService {
     // Set up error handler
     _flutterTts!.setErrorHandler((msg) {
       logError('TTS Error: $msg');
+      _isSpeaking = false;  // Update internal state on error
+      if (_onSpeechComplete != null) {
+        _onSpeechComplete!();
+      }
+    });
+
+    // Set up start handler
+    _flutterTts!.setStartHandler(() {
+      logInfo('TTS started speaking');
+      _isSpeaking = true;
+    });
+
+    // Set up cancel handler
+    _flutterTts!.setCancelHandler(() {
+      logInfo('TTS cancelled');
+      _isSpeaking = false;
       if (_onSpeechComplete != null) {
         _onSpeechComplete!();
       }
@@ -50,6 +71,9 @@ class TextToSpeechService {
     try {
       // Initialiser flutter_tts si nécessaire
       _flutterTts ??= FlutterTts();
+
+      // Set speaking state to true at start
+      _isSpeaking = true;
 
       // Each voice is a Map containing at least these keys: name, locale
       // - Windows (UWP voices) only: gender, identifier
@@ -101,18 +125,22 @@ class TextToSpeechService {
         logInfo('✅ Lecture flutter_tts lancée avec succès');
       } else {
         logWarning('⚠️ Problème avec flutter_tts, code: $result');
+        _isSpeaking = false; // Reset state if speak failed
       }
     } catch (e) {
       logError('Erreur avec flutter_tts', e);
+      _isSpeaking = false; // Reset state on error
 
       // Dernier recours : essayer avec voix par défaut
       try {
         logWarning('Dernier recours avec voix système...');
+        _isSpeaking = true; // Set again for fallback attempt
         await _flutterTts!.setLanguage("en-US"); // Anglais par défaut
         await _flutterTts!.speak(text);
         logInfo('✅ Lecture avec voix anglaise système');
       } catch (finalError) {
         logError('Toutes les options TTS ont échoué', finalError);
+        _isSpeaking = false; // Reset state on final error
         rethrow;
       }
     }
@@ -120,15 +148,18 @@ class TextToSpeechService {
 
   Future<void> stop() async {
     try {
+      _isSpeaking = false; // Set state to false when stopping
       await _directAudioPlayer?.stop();
       await _flutterTts?.stop();
       logInfo('Lecture arrêtée (tous systèmes)');
     } catch (e) {
       logError('Erreur lors de l\'arrêt', e);
+      _isSpeaking = false; // Ensure state is reset even on error
     }
   }
 
   void dispose() {
+    _isSpeaking = false;
     _directAudioPlayer?.dispose();
     _flutterTts = null;
   }

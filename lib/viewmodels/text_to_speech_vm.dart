@@ -76,19 +76,19 @@ class TextToSpeechVM extends ChangeNotifier {
     notifyListeners();
 
     try {
-      // Start speaking (this is fire-and-forget)
+      // Start speaking - the TTS service will handle state management
       await _ttsService.speak(text: _inputText, isVoiceMan: isVoiceMan);
-
-      // The _isSpeaking state will be set to false by:
-      // 1. stopSpeaking() method when user clicks stop
-      // 2. TTS completion callback (if implemented)
-      // 3. For now, we keep it true until manually stopped
+      
+      // The _isSpeaking state will be managed by:
+      // 1. TTS completion callback (most reliable)
+      // 2. TTS error callback
+      // 3. Manual stop via stopSpeaking() method
+      
     } catch (e) {
       logInfo('Erreur lors de la lecture: $e');
       _isSpeaking = false;
       notifyListeners();
     }
-    // Note: Don't set _isSpeaking = false here because TTS continues in background
   }
 
   Future<void> convertTextToMP3WithFileName({
@@ -107,7 +107,7 @@ class TextToSpeechVM extends ChangeNotifier {
       audioFile = await _directGoogleTtsService.convertTextToMP3(
         text: _inputText,
         customFileName: fileName,
-        mp3FileDirectory: mp3FileDirectory, // Replace with actual directory path
+        mp3FileDirectory: mp3FileDirectory,
         isVoiceMan: isVoiceMan,
       );
 
@@ -160,5 +160,12 @@ class TextToSpeechVM extends ChangeNotifier {
 
   Future<void> stopAudio() async {
     await _audioPlayerService.stopAudio();
+  }
+
+  @override
+  void dispose() {
+    // Clean up when the ViewModel is disposed
+    _audioPlayerService.dispose();
+    super.dispose();
   }
 }
