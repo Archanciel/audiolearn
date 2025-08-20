@@ -5,6 +5,7 @@ import '../../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants.dart';
+import '../../models/audio.dart';
 import '../../models/audio_file.dart';
 import '../../models/playlist.dart';
 import '../../services/sort_filter_parameters.dart';
@@ -447,9 +448,15 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     required Playlist targetPlaylist,
   }) async {
     final TextEditingController fileNameController = TextEditingController();
+    final AudioDownloadVM audioDownloadVMlistenFalse =
+        Provider.of<AudioDownloadVM>(
+      context,
+      listen: false,
+    );
 
     final fileName = await showDialog<String>(
       context: context,
+      barrierDismissible: false, // Prevent close by tapping outside
       builder: (context) => AlertDialog(
         title: Text(AppLocalizations.of(context)!.mp3FileName),
         content: Column(
@@ -488,6 +495,25 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     );
 
     if (fileName != null && fileName.trim().isNotEmpty) {
+      // The case if the imported audio file was created from the
+      // text to speech operation. In this case, the audio file
+      // may already exist in the target playlist directory. If it
+      // already exist, it is deleted and the new audio file is copied
+      // to the target playlist directory.
+      // DirUtil.deleteFileIfExist(pathFileName: targetFilePathName);
+      Audio? audioToRemove = targetPlaylist.getAudioByFileNameNoExt(
+        audioFileNameNoExt: fileName.replaceFirst(
+          '.mp3',
+          '',
+        ),
+      );
+
+      if (audioToRemove != null) {
+        audioDownloadVMlistenFalse.deleteAudioPhysicallyAndFromAllAudioLists(
+          audio: audioToRemove,
+        );
+      }
+
       try {
         // Pass voice selection to MP3 conversion
         await textToSpeechVMlistenTrue.convertTextToMP3WithFileName(
@@ -501,10 +527,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
         if (currentAudioFile != null) {
           if (!context.mounted) return;
 
-          Provider.of<AudioDownloadVM>(
-            context,
-            listen: false,
-          ).importAudioFilesInPlaylist(
+          audioDownloadVMlistenFalse.importAudioFilesInPlaylist(
             targetPlaylist: targetPlaylist,
             filePathNameToImportLst: [currentAudioFile.filePath],
             doesImportedFileResultFromTextToSpeech: true,
