@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
 import '../services/direct_google_tts_service.dart';
 import '../services/logging_service.dart';
 import '../models/audio_file.dart';
-import '../services/text_to_speech_audio_player_service.dart';
 import '../services/text_to_speech_service.dart';
 
 class TextToSpeechVM extends ChangeNotifier {
   final TextToSpeechService _ttsService = TextToSpeechService();
   final DirectGoogleTtsService _directGoogleTtsService =
       DirectGoogleTtsService();
-  final TextToSpeechAudioPlayerService _audioPlayerService =
-      TextToSpeechAudioPlayerService();
-
   String _inputText = '';
   bool _isConverting = false;
   bool _isPlaying = false;
   AudioFile? _currentAudioFile;
   Duration _currentPosition = Duration.zero;
   Duration _totalDuration = Duration.zero;
+
+  // Silence duration setting
+  double _silenceDurationSeconds = 2.0;
 
   // Getters
   String get inputText => _inputText;
@@ -27,26 +25,12 @@ class TextToSpeechVM extends ChangeNotifier {
   AudioFile? get currentAudioFile => _currentAudioFile;
   Duration get currentPosition => _currentPosition;
   Duration get totalDuration => _totalDuration;
+  double get silenceDurationSeconds => _silenceDurationSeconds;
 
   bool _isSpeaking = false;
   bool get isSpeaking => _isSpeaking;
 
   TextToSpeechVM() {
-    _audioPlayerService.playerStateStream.listen((state) {
-      _isPlaying = state == PlayerState.playing;
-      notifyListeners();
-    });
-
-    _audioPlayerService.positionStream.listen((position) {
-      _currentPosition = position;
-      notifyListeners();
-    });
-
-    _audioPlayerService.durationStream.listen((duration) {
-      _totalDuration = duration;
-      notifyListeners();
-    });
-
     // Set up TTS completion listener
     _setupTtsListeners();
   }
@@ -67,6 +51,13 @@ class TextToSpeechVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateSilenceDuration({
+    required double seconds,
+  }) {
+    _silenceDurationSeconds = seconds;
+    notifyListeners();
+  }
+
   Future<void> speakText({
     bool isVoiceMan = true,
   }) async {
@@ -76,19 +67,23 @@ class TextToSpeechVM extends ChangeNotifier {
     notifyListeners();
 
     try {
-      // Start speaking (this is fire-and-forget)
-      await _ttsService.speak(text: _inputText, isVoiceMan: isVoiceMan);
-
-      // The _isSpeaking state will be set to false by:
-      // 1. stopSpeaking() method when user clicks stop
-      // 2. TTS completion callback (if implemented)
-      // 3. For now, we keep it true until manually stopped
+      // Start speaking with silence support
+      await _ttsService.speak(
+        text: _inputText, 
+        isVoiceMan: isVoiceMan,
+        silenceDurationSeconds: _silenceDurationSeconds,
+      );
+      
+      // The _isSpeaking state will be managed by:
+      // 1. TTS completion callback (most reliable)
+      // 2. TTS error callback
+      // 3. Manual stop via stopSpeaking() method
+      
     } catch (e) {
       logInfo('Erreur lors de la lecture: $e');
       _isSpeaking = false;
       notifyListeners();
     }
-    // Note: Don't set _isSpeaking = false here because TTS continues in background
   }
 
   Future<void> convertTextToMP3WithFileName({
@@ -107,8 +102,9 @@ class TextToSpeechVM extends ChangeNotifier {
       audioFile = await _directGoogleTtsService.convertTextToMP3(
         text: _inputText,
         customFileName: fileName,
-        mp3FileDirectory: mp3FileDirectory, // Replace with actual directory path
+        mp3FileDirectory: mp3FileDirectory,
         isVoiceMan: isVoiceMan,
+        silenceDurationSeconds: _silenceDurationSeconds, // Pass silence duration
       );
 
       if (audioFile != null) {
@@ -124,24 +120,7 @@ class TextToSpeechVM extends ChangeNotifier {
     }
   }
 
-  Future<void> playCurrentAudio() async {
-    if (_currentAudioFile != null) {
-      await _audioPlayerService.playAudioFile(audioFile: _currentAudioFile!);
-    }
-  }
-
-  Future<void> playAudioFile({
-    required AudioFile audioFile,
-  }) async {
-    _currentAudioFile = audioFile;
-    await _audioPlayerService.playAudioFile(audioFile: audioFile);
-    notifyListeners();
-  }
-
   Future<void> stopSpeaking() async {
-    // Stop both audio systems
-    await _audioPlayerService.stopAudio();
-
     try {
       await _ttsService.stop();
       logInfo('Lecture arrêtée');
@@ -152,13 +131,5 @@ class TextToSpeechVM extends ChangeNotifier {
       _isSpeaking = false;
       notifyListeners();
     }
-  }
-
-  Future<void> pauseAudio() async {
-    await _audioPlayerService.pauseAudio();
-  }
-
-  Future<void> stopAudio() async {
-    await _audioPlayerService.stopAudio();
   }
 }

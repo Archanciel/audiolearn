@@ -10,6 +10,21 @@ import 'logging_service.dart';
 class DirectGoogleTtsService {
   final String _apiKey = 'AIzaSyCcj0KjrlTuj8a6JTdowDMODjZSlTGVGvo';
 
+  // Convert { characters to SSML breaks
+  String _convertSilenceToSSML(String text, double silenceDurationSeconds) {
+    if (!text.contains('{')) {
+      return text;
+    }
+
+    String ssmlText = text.replaceAll('{', '<break time="${silenceDurationSeconds}s"/>');
+    
+    // Wrap in SSML speak tags
+    ssmlText = '<speak>$ssmlText</speak>';
+    
+    logInfo('Text with silence converted to SSML: $ssmlText');
+    return ssmlText;
+  }
+
   // Sanitize filename for Android compatibility
   String _sanitizeFilename(String filename) {
     // Remove or replace problematic characters
@@ -52,11 +67,16 @@ class DirectGoogleTtsService {
     required String customFileName,
     required String mp3FileDirectory,
     required bool isVoiceMan,
+    double silenceDurationSeconds = 2.0, // Default 2 seconds silence
   }) async {
     try {
       logInfo('=== CONVERSION MP3 AVEC VOIX SELECTIONNEE ===');
       logInfo('Texte: "$text"');
       logInfo('Fichier original: "$customFileName"');
+      logInfo('Durée silence: ${silenceDurationSeconds}s');
+
+      // Convert { to SSML silence
+      String processedText = _convertSilenceToSSML(text, silenceDurationSeconds);
 
       // Sanitize the filename
       String sanitizedFileName = _sanitizeFilename(customFileName);
@@ -84,7 +104,9 @@ class DirectGoogleTtsService {
           logInfo('Tentative avec voix: ${voice['name']}');
 
           final requestBody = {
-            'input': {'text': text},
+            'input': processedText.startsWith('<speak>') 
+                ? {'ssml': processedText}  // Use SSML if text contains silence markers
+                : {'text': processedText}, // Use plain text otherwise
             'voice': {'languageCode': voice['lang'], 'name': voice['name']},
             'audioConfig': {'audioEncoding': 'MP3', 'sampleRateHertz': 24000},
           };
