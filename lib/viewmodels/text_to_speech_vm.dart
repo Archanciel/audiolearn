@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
 import '../services/direct_google_tts_service.dart';
 import '../services/logging_service.dart';
 import '../models/audio_file.dart';
-import '../services/text_to_speech_audio_player_service.dart';
 import '../services/text_to_speech_service.dart';
 
 class TextToSpeechVM extends ChangeNotifier {
   final TextToSpeechService _ttsService = TextToSpeechService();
   final DirectGoogleTtsService _directGoogleTtsService =
       DirectGoogleTtsService();
-  final TextToSpeechAudioPlayerService _audioPlayerService =
-      TextToSpeechAudioPlayerService();
-
   String _inputText = '';
   bool _isConverting = false;
   bool _isPlaying = false;
@@ -36,21 +31,6 @@ class TextToSpeechVM extends ChangeNotifier {
   bool get isSpeaking => _isSpeaking;
 
   TextToSpeechVM() {
-    _audioPlayerService.playerStateStream.listen((state) {
-      _isPlaying = state == PlayerState.playing;
-      notifyListeners();
-    });
-
-    _audioPlayerService.positionStream.listen((position) {
-      _currentPosition = position;
-      notifyListeners();
-    });
-
-    _audioPlayerService.durationStream.listen((duration) {
-      _totalDuration = duration;
-      notifyListeners();
-    });
-
     // Set up TTS completion listener
     _setupTtsListeners();
   }
@@ -140,24 +120,7 @@ class TextToSpeechVM extends ChangeNotifier {
     }
   }
 
-  Future<void> playCurrentAudio() async {
-    if (_currentAudioFile != null) {
-      await _audioPlayerService.playAudioFile(audioFile: _currentAudioFile!);
-    }
-  }
-
-  Future<void> playAudioFile({
-    required AudioFile audioFile,
-  }) async {
-    _currentAudioFile = audioFile;
-    await _audioPlayerService.playAudioFile(audioFile: audioFile);
-    notifyListeners();
-  }
-
   Future<void> stopSpeaking() async {
-    // Stop both audio systems
-    await _audioPlayerService.stopAudio();
-
     try {
       await _ttsService.stop();
       logInfo('Lecture arrêtée');
@@ -168,20 +131,5 @@ class TextToSpeechVM extends ChangeNotifier {
       _isSpeaking = false;
       notifyListeners();
     }
-  }
-
-  Future<void> pauseAudio() async {
-    await _audioPlayerService.pauseAudio();
-  }
-
-  Future<void> stopAudio() async {
-    await _audioPlayerService.stopAudio();
-  }
-
-  @override
-  void dispose() {
-    // Clean up when the ViewModel is disposed
-    _audioPlayerService.dispose();
-    super.dispose();
   }
 }
