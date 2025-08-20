@@ -11,9 +11,6 @@ class TextToSpeechService {
   bool _isSpeaking = false;
   bool get isSpeaking => _isSpeaking;
 
-  // Track if we're in multi-part speech mode
-  bool _isMultiPartSpeech = false;
-
   // Completion callback
   Function()? _onSpeechComplete;
 
@@ -29,13 +26,9 @@ class TextToSpeechService {
     // Set up completion handler
     _flutterTts!.setCompletionHandler(() {
       logInfo('TTS completed - calling completion callback');
-      
-      // Only call completion if we're not in multi-part speech mode
-      if (!_isMultiPartSpeech) {
-        _isSpeaking = false;  // Update internal state
-        if (_onSpeechComplete != null) {
-          _onSpeechComplete!();
-        }
+      _isSpeaking = false;  // Update internal state
+      if (_onSpeechComplete != null) {
+        _onSpeechComplete!();
       }
     });
 
@@ -43,7 +36,6 @@ class TextToSpeechService {
     _flutterTts!.setErrorHandler((msg) {
       logError('TTS Error: $msg');
       _isSpeaking = false;  // Update internal state on error
-      _isMultiPartSpeech = false;
       if (_onSpeechComplete != null) {
         _onSpeechComplete!();
       }
@@ -52,16 +44,13 @@ class TextToSpeechService {
     // Set up start handler
     _flutterTts!.setStartHandler(() {
       logInfo('TTS started speaking');
-      if (!_isMultiPartSpeech) {
-        _isSpeaking = true;
-      }
+      _isSpeaking = true;
     });
 
     // Set up cancel handler
     _flutterTts!.setCancelHandler(() {
       logInfo('TTS cancelled');
       _isSpeaking = false;
-      _isMultiPartSpeech = false;
       if (_onSpeechComplete != null) {
         _onSpeechComplete!();
       }
@@ -73,93 +62,47 @@ class TextToSpeechService {
     _onSpeechComplete = onComplete;
   }
 
-  // Process text with silence markers using async approach
-  Future<void> _speakTextWithSilence({
+  // Simple approach: speak the entire text with { replaced by pauses
+  Future<void> _speakTextWithSilenceSimple({
     required String text,
     required bool isVoiceMan,
     required double silenceDurationSeconds,
   }) async {
     logInfo('Processing text with silence markers: "$text"');
     
-    _isMultiPartSpeech = true;
-    
-    // Split text by { character
+    // Split text by { character and process each part
     List<String> parts = text.split('{');
     
-    try {
-      for (int i = 0; i < parts.length; i++) {
-        if (!_isSpeaking) {
-          // Stop processing if TTS was stopped
-          break;
-        }
-        
-        String part = parts[i].trim();
-        
-        if (part.isNotEmpty) {
-          logInfo('Speaking part ${i + 1}: "$part"');
-          
-          // Speak this part and wait for completion
-          await _speakPartAndWait(part);
-        }
-        
-        // Add silence if this is not the last part and TTS is still active
-        if (i < parts.length - 1 && _isSpeaking) {
-          logInfo('Adding ${silenceDurationSeconds}s silence');
-          await Future.delayed(Duration(milliseconds: (silenceDurationSeconds * 1000).round()));
-        }
-      }
-    } finally {
-      _isMultiPartSpeech = false;
+    // Create one continuous text stream with artificial pauses
+    String processedText = '';
+    
+    for (int i = 0; i < parts.length; i++) {
+      String part = parts[i].trim();
       
-      // Call completion handler manually at the end
-      if (_isSpeaking) {
-        logInfo('Multi-part speech completed');
-        _isSpeaking = false;
-        if (_onSpeechComplete != null) {
-          _onSpeechComplete!();
+      if (part.isNotEmpty) {
+        processedText += part;
+        
+        // Add silence marker between parts (but not after the last part)
+        if (i < parts.length - 1) {
+          // Add period and spaces to create a natural pause
+          // The number of periods/spaces can simulate longer pauses
+          int pauseUnits = (silenceDurationSeconds * 2).round(); // 2 units per second
+          processedText += '.' + (' ' * pauseUnits);
         }
       }
     }
-  }
-
-  // Speak a single part and wait for it to complete
-  Future<void> _speakPartAndWait(String text) async {
-    bool partCompleted = false;
     
-    // Create a one-time completion handler for this part
-    void partCompletionHandler() {
-      partCompleted = true;
+    logInfo('Processed text for TTS: "$processedText"');
+    
+    // Speak the processed text normally
+    final result = await _flutterTts!.speak(processedText);
+    
+    if (result == 1) {
+      logInfo('✅ Lecture flutter_tts avec silences lancée avec succès');
+    } else {
+      logWarning('⚠️ Problème avec flutter_tts avec silences, code: $result');
+      _isSpeaking = false;
     }
-    
-    // Temporarily override the completion handler
-    _flutterTts!.setCompletionHandler(partCompletionHandler);
-    
-    // Speak the text
-    final result = await _flutterTts!.speak(text);
-    if (result != 1) {
-      logWarning('⚠️ Problème avec flutter_tts, code: $result');
-      partCompleted = true; // Assume completed on error
-    }
-    
-    // Wait for completion with timeout
-    int waitTime = 0;
-    while (!partCompleted && waitTime < 10000 && _isSpeaking) { // 10 second timeout
-      await Future.delayed(Duration(milliseconds: 100));
-      waitTime += 100;
-    }
-    
-    // Restore the original completion handler
-    _flutterTts!.setCompletionHandler(() {
-      logInfo('TTS completed - calling completion callback');
-      
-      // Only call completion if we're not in multi-part speech mode
-      if (!_isMultiPartSpeech) {
-        _isSpeaking = false;
-        if (_onSpeechComplete != null) {
-          _onSpeechComplete!();
-        }
-      }
-    });
   }
 
   Future<void> speak({
@@ -175,7 +118,6 @@ class TextToSpeechService {
 
       // Set speaking state to true at start
       _isSpeaking = true;
-      _isMultiPartSpeech = false;
 
       // Each voice is a Map containing at least these keys: name, locale
       // - Windows (UWP voices) only: gender, identifier
@@ -223,7 +165,7 @@ class TextToSpeechService {
       // Check if text contains silence markers
       if (text.contains('{')) {
         logInfo('Text contains silence markers, processing with pauses...');
-        await _speakTextWithSilence(
+        await _speakTextWithSilenceSimple(
           text: text,
           isVoiceMan: isVoiceMan,
           silenceDurationSeconds: silenceDurationSeconds,
@@ -242,7 +184,6 @@ class TextToSpeechService {
     } catch (e) {
       logError('Erreur avec flutter_tts', e);
       _isSpeaking = false; // Reset state on error
-      _isMultiPartSpeech = false;
 
       // Dernier recours : essayer avec voix par défaut
       try {
@@ -251,7 +192,7 @@ class TextToSpeechService {
         await _flutterTts!.setLanguage("en-US"); // Anglais par défaut
         
         if (text.contains('{')) {
-          await _speakTextWithSilence(
+          await _speakTextWithSilenceSimple(
             text: text,
             isVoiceMan: isVoiceMan,
             silenceDurationSeconds: silenceDurationSeconds,
@@ -263,7 +204,6 @@ class TextToSpeechService {
       } catch (finalError) {
         logError('Toutes les options TTS ont échoué', finalError);
         _isSpeaking = false; // Reset state on final error
-        _isMultiPartSpeech = false;
         rethrow;
       }
     }
@@ -272,20 +212,17 @@ class TextToSpeechService {
   Future<void> stop() async {
     try {
       _isSpeaking = false; // Set state to false when stopping
-      _isMultiPartSpeech = false;
       await _directAudioPlayer?.stop();
       await _flutterTts?.stop();
       logInfo('Lecture arrêtée (tous systèmes)');
     } catch (e) {
       logError('Erreur lors de l\'arrêt', e);
       _isSpeaking = false; // Ensure state is reset even on error
-      _isMultiPartSpeech = false;
     }
   }
 
   void dispose() {
     _isSpeaking = false;
-    _isMultiPartSpeech = false;
     _directAudioPlayer?.dispose();
     _flutterTts = null;
   }
