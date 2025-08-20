@@ -295,6 +295,9 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                   overlayColor: textButtonTapModification, // Tap feedback color
                 ),
                 onPressed: () {
+                  _stopAllAudio(
+                    textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
+                  );
                   Navigator.of(context).pop();
                 },
                 child: Text(
