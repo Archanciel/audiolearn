@@ -20,6 +20,9 @@ class TextToSpeechVM extends ChangeNotifier {
   Duration _currentPosition = Duration.zero;
   Duration _totalDuration = Duration.zero;
 
+  // Silence duration setting
+  double _silenceDurationSeconds = 2.0;
+
   // Getters
   String get inputText => _inputText;
   bool get isConverting => _isConverting;
@@ -27,6 +30,7 @@ class TextToSpeechVM extends ChangeNotifier {
   AudioFile? get currentAudioFile => _currentAudioFile;
   Duration get currentPosition => _currentPosition;
   Duration get totalDuration => _totalDuration;
+  double get silenceDurationSeconds => _silenceDurationSeconds;
 
   bool _isSpeaking = false;
   bool get isSpeaking => _isSpeaking;
@@ -67,6 +71,13 @@ class TextToSpeechVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateSilenceDuration({
+    required double seconds,
+  }) {
+    _silenceDurationSeconds = seconds;
+    notifyListeners();
+  }
+
   Future<void> speakText({
     bool isVoiceMan = true,
   }) async {
@@ -76,8 +87,12 @@ class TextToSpeechVM extends ChangeNotifier {
     notifyListeners();
 
     try {
-      // Start speaking - the TTS service will handle state management
-      await _ttsService.speak(text: _inputText, isVoiceMan: isVoiceMan);
+      // Start speaking with silence support
+      await _ttsService.speak(
+        text: _inputText, 
+        isVoiceMan: isVoiceMan,
+        silenceDurationSeconds: _silenceDurationSeconds,
+      );
       
       // The _isSpeaking state will be managed by:
       // 1. TTS completion callback (most reliable)
@@ -109,6 +124,7 @@ class TextToSpeechVM extends ChangeNotifier {
         customFileName: fileName,
         mp3FileDirectory: mp3FileDirectory,
         isVoiceMan: isVoiceMan,
+        silenceDurationSeconds: _silenceDurationSeconds, // Pass silence duration
       );
 
       if (audioFile != null) {

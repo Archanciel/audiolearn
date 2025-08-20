@@ -62,9 +62,58 @@ class TextToSpeechService {
     _onSpeechComplete = onComplete;
   }
 
+  // Process text with silence markers
+  Future<void> _speakTextWithSilence({
+    required String text,
+    required bool isVoiceMan,
+    required double silenceDurationSeconds,
+  }) async {
+    logInfo('Processing text with silence markers: "$text"');
+    
+    // Split text by { character
+    List<String> parts = text.split('{');
+    
+    for (int i = 0; i < parts.length; i++) {
+      if (!_isSpeaking) {
+        // Stop processing if TTS was stopped
+        break;
+      }
+      
+      String part = parts[i].trim();
+      
+      if (part.isNotEmpty) {
+        logInfo('Speaking part ${i + 1}: "$part"');
+        
+        // Speak this part
+        final result = await _flutterTts!.speak(part);
+        if (result != 1) {
+          logWarning('⚠️ Problème avec flutter_tts pour la partie ${i + 1}, code: $result');
+        }
+        
+        // Wait for this part to complete before continuing
+        await _waitForSpeechCompletion();
+      }
+      
+      // Add silence if this is not the last part and TTS is still active
+      if (i < parts.length - 1 && _isSpeaking) {
+        logInfo('Adding ${silenceDurationSeconds}s silence');
+        await Future.delayed(Duration(milliseconds: (silenceDurationSeconds * 1000).round()));
+      }
+    }
+  }
+
+  // Wait for speech to complete
+  Future<void> _waitForSpeechCompletion() async {
+    // Poll until speech is not speaking anymore
+    while (_isSpeaking) {
+      await Future.delayed(Duration(milliseconds: 100));
+    }
+  }
+
   Future<void> speak({
     required String text,
     required bool isVoiceMan,
+    double silenceDurationSeconds = 2.0, // Default 2 seconds silence
   }) async {
     logInfo('=== FALLBACK: LECTURE AVEC FLUTTER_TTS ===');
 
@@ -118,14 +167,24 @@ class TextToSpeechService {
       logInfo('Configuration flutter_tts terminée');
       logInfo('Lecture du texte: "$text"');
 
-      // Lire le texte avec flutter_tts
-      final result = await _flutterTts!.speak(text);
-
-      if (result == 1) {
-        logInfo('✅ Lecture flutter_tts lancée avec succès');
+      // Check if text contains silence markers
+      if (text.contains('{')) {
+        logInfo('Text contains silence markers, processing with pauses...');
+        await _speakTextWithSilence(
+          text: text,
+          isVoiceMan: isVoiceMan,
+          silenceDurationSeconds: silenceDurationSeconds,
+        );
       } else {
-        logWarning('⚠️ Problème avec flutter_tts, code: $result');
-        _isSpeaking = false; // Reset state if speak failed
+        // Regular speech without silence markers
+        final result = await _flutterTts!.speak(text);
+
+        if (result == 1) {
+          logInfo('✅ Lecture flutter_tts lancée avec succès');
+        } else {
+          logWarning('⚠️ Problème avec flutter_tts, code: $result');
+          _isSpeaking = false; // Reset state if speak failed
+        }
       }
     } catch (e) {
       logError('Erreur avec flutter_tts', e);
@@ -136,7 +195,16 @@ class TextToSpeechService {
         logWarning('Dernier recours avec voix système...');
         _isSpeaking = true; // Set again for fallback attempt
         await _flutterTts!.setLanguage("en-US"); // Anglais par défaut
-        await _flutterTts!.speak(text);
+        
+        if (text.contains('{')) {
+          await _speakTextWithSilence(
+            text: text,
+            isVoiceMan: isVoiceMan,
+            silenceDurationSeconds: silenceDurationSeconds,
+          );
+        } else {
+          await _flutterTts!.speak(text);
+        }
         logInfo('✅ Lecture avec voix anglaise système');
       } catch (finalError) {
         logError('Toutes les options TTS ont échoué', finalError);
