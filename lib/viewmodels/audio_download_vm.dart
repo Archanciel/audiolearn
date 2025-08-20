@@ -1851,25 +1851,6 @@ class AudioDownloadVM extends ChangeNotifier {
         // from the text to speech operation, the copy must not be
         // executed, otherwise _createImportedAudio will fail.
         File(filePathName).copySync(targetFilePathName);
-      } else {
-        // The case if the imported audio file was created from the
-        // text to speech operation. In this case, the audio file
-        // may already exist in the target playlist directory. If it
-        // already exist, it is deleted and the new audio file is copied
-        // to the target playlist directory.
-        // DirUtil.deleteFileIfExist(pathFileName: targetFilePathName);
-        Audio? audioToRemove = targetPlaylist.getAudioByFileNameNoExt(
-          audioFileNameNoExt: fileName.replaceFirst(
-            '.mp3',
-            '',
-          ),
-        );
-        
-        if (audioToRemove != null) {
-          targetPlaylist.removeAudioFromDownloadAndPlayableAudioLst(
-            downloadedAudio: audioToRemove!,
-          );
-        }
       }
 
       // Instantiating the imported audio and adding it to the target
