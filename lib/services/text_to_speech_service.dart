@@ -62,47 +62,89 @@ class TextToSpeechService {
     _onSpeechComplete = onComplete;
   }
 
-  // Simple approach: speak the entire text with { replaced by pauses
-  Future<void> _speakTextWithSilenceSimple({
+  // Speak text with actual silence delays between segments
+  Future<void> _speakTextWithActualSilence({
     required String text,
     required bool isVoiceMan,
     required double silenceDurationSeconds,
   }) async {
-    logInfo('Processing text with silence markers: "$text"');
+    logInfo('Processing text with actual silence delays: "$text"');
     
-    // Split text by { character and process each part
+    // Temporarily disable the completion handler to prevent premature completion
+    _flutterTts!.setCompletionHandler(() {
+      // Do nothing during multi-part speech
+      logInfo('TTS segment completed (ignored during multi-part speech)');
+    });
+    
+    // Split text by { character
     List<String> parts = text.split('{');
     
-    // Create one continuous text stream with artificial pauses
-    String processedText = '';
-    
-    for (int i = 0; i < parts.length; i++) {
-      String part = parts[i].trim();
-      
-      if (part.isNotEmpty) {
-        processedText += part;
+    try {
+      for (int i = 0; i < parts.length; i++) {
+        if (!_isSpeaking) {
+          // Stop processing if TTS was stopped
+          break;
+        }
         
-        // Add silence marker between parts (but not after the last part)
-        if (i < parts.length - 1) {
-          // Add period and spaces to create a natural pause
-          // The number of periods/spaces can simulate longer pauses
-          int pauseUnits = (silenceDurationSeconds * 2).round(); // 2 units per second
-          processedText += '.' + (' ' * pauseUnits);
+        String part = parts[i].trim();
+        
+        if (part.isNotEmpty) {
+          logInfo('Speaking part ${i + 1}: "$part"');
+          
+          // Speak this part
+          final result = await _flutterTts!.speak(part);
+          if (result != 1) {
+            logWarning('⚠️ Problème avec flutter_tts pour la partie ${i + 1}, code: $result');
+          }
+          
+          // Wait for this segment to complete using a simple time-based approach
+          await _waitForSegmentCompletionSimple(part);
+        }
+        
+        // Add actual silence delay if this is not the last part and still speaking
+        if (i < parts.length - 1 && _isSpeaking) {
+          logInfo('Adding ${silenceDurationSeconds}s actual silence');
+          await Future.delayed(Duration(milliseconds: (silenceDurationSeconds * 1000).round()));
+        }
+      }
+    } finally {
+      // Always restore the original completion handler
+      _flutterTts!.setCompletionHandler(() {
+        logInfo('TTS completed - calling completion callback');
+        _isSpeaking = false;
+        if (_onSpeechComplete != null) {
+          _onSpeechComplete!();
+        }
+      });
+      
+      // Call completion manually if we finished successfully
+      if (_isSpeaking) {
+        logInfo('Multi-part speech completed successfully');
+        _isSpeaking = false;
+        if (_onSpeechComplete != null) {
+          _onSpeechComplete!();
         }
       }
     }
+  }
+
+  // Simple time-based waiting for segment completion
+  Future<void> _waitForSegmentCompletionSimple(String text) async {
+    // Estimate speaking time based on text length and speech rate
+    // Average speaking rate is about 150-200 words per minute
+    int wordCount = text.split(' ').length;
+    int estimatedMs = ((wordCount * 60000) / 180).round(); // 180 WPM
     
-    logInfo('Processed text for TTS: "$processedText"');
+    // Add minimum wait time and maximum cap
+    estimatedMs = estimatedMs.clamp(500, 15000); // 0.5 to 15 seconds
     
-    // Speak the processed text normally
-    final result = await _flutterTts!.speak(processedText);
+    logInfo('Estimated speaking time for segment: ${estimatedMs}ms');
     
-    if (result == 1) {
-      logInfo('✅ Lecture flutter_tts avec silences lancée avec succès');
-    } else {
-      logWarning('⚠️ Problème avec flutter_tts avec silences, code: $result');
-      _isSpeaking = false;
-    }
+    // Wait for the estimated time
+    await Future.delayed(Duration(milliseconds: estimatedMs));
+    
+    // Add a small buffer
+    await Future.delayed(Duration(milliseconds: 200));
   }
 
   Future<void> speak({
@@ -164,8 +206,8 @@ class TextToSpeechService {
 
       // Check if text contains silence markers
       if (text.contains('{')) {
-        logInfo('Text contains silence markers, processing with pauses...');
-        await _speakTextWithSilenceSimple(
+        logInfo('Text contains silence markers, processing with actual delays...');
+        await _speakTextWithActualSilence(
           text: text,
           isVoiceMan: isVoiceMan,
           silenceDurationSeconds: silenceDurationSeconds,
@@ -192,7 +234,7 @@ class TextToSpeechService {
         await _flutterTts!.setLanguage("en-US"); // Anglais par défaut
         
         if (text.contains('{')) {
-          await _speakTextWithSilenceSimple(
+          await _speakTextWithActualSilence(
             text: text,
             isVoiceMan: isVoiceMan,
             silenceDurationSeconds: silenceDurationSeconds,
