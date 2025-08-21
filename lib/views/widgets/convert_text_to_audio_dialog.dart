@@ -8,6 +8,7 @@ import '../../constants.dart';
 import '../../models/audio_file.dart';
 import '../../models/playlist.dart';
 import '../../services/sort_filter_parameters.dart';
+import '../../viewmodels/audio_player_vm.dart';
 import '../../viewmodels/text_to_speech_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
@@ -498,8 +499,15 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
 
     if (fileName != null && fileName.trim().isNotEmpty) {
       try {
+        final AudioPlayerVM audioPlayerVMlistenFalse =
+            Provider.of<AudioPlayerVM>(
+          context,
+          listen: false,
+        );
+
         // Pass voice selection to MP3 conversion
         await textToSpeechVMlistenTrue.convertTextToMP3WithFileName(
+          audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
           fileName: fileName,
           mp3FileDirectory: targetPlaylist.downloadPath,
           isVoiceMan: _isVoiceMan,
