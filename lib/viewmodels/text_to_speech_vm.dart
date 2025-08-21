@@ -1,3 +1,4 @@
+import 'package:audiolearn/viewmodels/audio_player_vm.dart';
 import 'package:flutter/material.dart';
 import '../services/direct_google_tts_service.dart';
 import '../services/logging_service.dart';
@@ -63,16 +64,15 @@ class TextToSpeechVM extends ChangeNotifier {
     try {
       // Start speaking with silence support
       await _ttsService.speak(
-        text: _inputText, 
+        text: _inputText,
         isVoiceMan: isVoiceMan,
         silenceDurationSeconds: _silenceDurationSeconds,
       );
-      
+
       // The _isSpeaking state will be managed by:
       // 1. TTS completion callback (most reliable)
       // 2. TTS error callback
       // 3. Manual stop via stopSpeaking() method
-      
     } catch (e) {
       logInfo('Erreur lors de la lecture: $e');
       _isSpeaking = false;
@@ -81,6 +81,7 @@ class TextToSpeechVM extends ChangeNotifier {
   }
 
   Future<void> convertTextToMP3WithFileName({
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required String fileName,
     required String mp3FileDirectory,
     bool isVoiceMan = true,
@@ -89,6 +90,7 @@ class TextToSpeechVM extends ChangeNotifier {
 
     _isConverting = true;
     notifyListeners();
+    await audioPlayerVMlistenFalse.releaseCurrentAudioFile();
 
     try {
       AudioFile? audioFile;
