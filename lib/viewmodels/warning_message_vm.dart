@@ -830,8 +830,7 @@ class WarningMessageVM extends ChangeNotifier {
   }) {
     _newestAudioDownloadDateTime = newestAudioDownloadDateTime;
 
-    warningMessageType =
-        WarningMessageType.displayNewestAudioDownloadDateTime;
+    warningMessageType = WarningMessageType.displayNewestAudioDownloadDateTime;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();
@@ -981,12 +980,13 @@ class WarningMessageVM extends ChangeNotifier {
     _importedToPlaylistTitle = importedToPlaylistTitle;
     _importedToPlaylistType = importedToPlaylistType;
 
-    warningMessageType = WarningMessageType.audioImportedFromTextToSpeechOperation;
+    warningMessageType =
+        WarningMessageType.audioImportedFromTextToSpeechOperation;
 
     _addWarningMessageElements(
       warningMessageElements: _importedAudioFileNames,
     );
-}
+  }
 
   String _updatedPlayableAudioLstPlaylistTitle = '';
   String get updatedPlayableAudioLstPlaylistTitle =>
