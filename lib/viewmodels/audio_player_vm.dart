@@ -199,6 +199,30 @@ class AudioPlayerVM extends ChangeNotifier {
     super.dispose();
   }
 
+  /// Method to release the current audio file and clear the player.
+  /// This method is uniquely used in the method TextToSpeechVM.
+  /// convertTextToMP3WithFileName so that if the existing converted
+  /// audio file was listened before redefining it in the convert text
+  /// to audio dialog, it is released and the and so the recreation of
+  /// the audio file does not fail.
+  Future<void> releaseCurrentAudioFile() async {
+    if (_currentAudio != null) {
+      try {
+        await _audioPlayer.stop();
+        await _audioPlayer.dispose();
+
+        // Reinitialize the audio player
+        await initializeAudioPlayer();
+
+        _wasAudioPlayersStopped = true;
+
+        logInfo('Audio player released and reinitialized');
+      } catch (e) {
+        logError('Error releasing audio player: $e');
+      }
+    }
+  }
+
   /// {volumeChangedValue} must be between -1.0 and 1.0. The
   /// initial audio volume is 0.5 and will be decreased or
   /// increased by this value.
