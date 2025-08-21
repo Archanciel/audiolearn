@@ -110,7 +110,6 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
       listen: true,
     );
 
-// Add this consumer to ensure warnings are displayed
     return Center(
       child: AlertDialog(
         title:
