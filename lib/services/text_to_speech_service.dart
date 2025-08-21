@@ -150,7 +150,7 @@ class TextToSpeechService {
   Future<void> speak({
     required String text,
     required bool isVoiceMan,
-    double silenceDurationSeconds = 2.0, // Default 2 seconds silence
+    required double silenceDurationSeconds,
   }) async {
     logInfo('=== FALLBACK: LECTURE AVEC FLUTTER_TTS ===');
 
