@@ -1590,22 +1590,22 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         }
         break;
       case WarningMessageType.audioImportedFromTextToSpeechOperation:
-        final String importedAudioFileNames =
-            _warningMessageVM.getNextWarningMessageElements();
+        final String importedAudioFileName =
+            _warningMessageVM.importedAudioFileNames;
 
-        if (importedAudioFileNames.isNotEmpty) {
+        if (importedAudioFileName.isNotEmpty) {
           String audioImportedFromTextToSpeechToPlaylistMessage;
 
           if (_warningMessageVM.importedToPlaylistType == PlaylistType.local) {
             audioImportedFromTextToSpeechToPlaylistMessage =
                 AppLocalizations.of(context)!.audioImportedFromTextToSpeechToLocalPlaylist(
-              importedAudioFileNames,
+              importedAudioFileName,
               _warningMessageVM.importedToPlaylistTitle,
             );
           } else {
             audioImportedFromTextToSpeechToPlaylistMessage =
                 AppLocalizations.of(context)!.audioImportedFromTextToSpeechToYoutubePlaylist(
-              importedAudioFileNames,
+              importedAudioFileName,
               _warningMessageVM.importedToPlaylistTitle,
             );
           }
