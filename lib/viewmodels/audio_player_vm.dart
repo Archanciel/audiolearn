@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:audiolearn/services/logging_service.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
@@ -208,8 +209,10 @@ class AudioPlayerVM extends ChangeNotifier {
   Future<void> releaseCurrentAudioFile() async {
     if (_currentAudio != null) {
       try {
-        await _audioPlayer.stop();
-        await _audioPlayer.dispose();
+        if (_audioPlayer != null) {
+          await _audioPlayer!.stop();
+          await _audioPlayer!.dispose();
+        }
 
         // Reinitialize the audio player
         await initializeAudioPlayer();
