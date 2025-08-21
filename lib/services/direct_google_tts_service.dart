@@ -67,7 +67,7 @@ class DirectGoogleTtsService {
     required String customFileName,
     required String mp3FileDirectory,
     required bool isVoiceMan,
-    double silenceDurationSeconds = 2.0, // Default 2 seconds silence
+    required double silenceDurationSeconds,
   }) async {
     try {
       logInfo('=== CONVERSION MP3 AVEC VOIX SELECTIONNEE ===');

@@ -16,7 +16,7 @@ class TextToSpeechVM extends ChangeNotifier {
   Duration _totalDuration = Duration.zero;
 
   // Silence duration setting
-  double _silenceDurationSeconds = 2.0;
+  double _silenceDurationSeconds = 1.0;
 
   // Getters
   String get inputText => _inputText;
@@ -104,7 +104,7 @@ class TextToSpeechVM extends ChangeNotifier {
         customFileName: fileName,
         mp3FileDirectory: mp3FileDirectory,
         isVoiceMan: isVoiceMan,
-        silenceDurationSeconds: _silenceDurationSeconds, // Pass silence duration
+        silenceDurationSeconds: _silenceDurationSeconds,
       );
 
       if (audioFile != null) {
