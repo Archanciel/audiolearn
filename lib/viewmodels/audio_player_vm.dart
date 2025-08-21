@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:audiolearn/services/logging_service.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
@@ -187,6 +188,30 @@ class AudioPlayerVM extends ChangeNotifier {
     currentAudioChangedNotifier.dispose();
 
     super.dispose();
+  }
+
+  /// Method to release the current audio file and clear the player.
+  /// This method is uniquely used in the method TextToSpeechVM.
+  /// convertTextToMP3WithFileName so that if the existing converted
+  /// audio file was listened before redefining it in the convert text
+  /// to audio dialog, it is released and the and so the recreation of
+  /// the audio file does not fail.
+  Future<void> releaseCurrentAudioFile() async {
+    if (_currentAudio != null) {
+      try {
+        await _audioPlayer.stop();
+        await _audioPlayer.dispose();
+
+        // Reinitialize the audio player
+        await initializeAudioPlayer();
+
+        _wasAudioPlayersStopped = true;
+
+        logInfo('Audio player released and reinitialized');
+      } catch (e) {
+        logError('Error releasing audio player: $e');
+      }
+    }
   }
 
   /// {volumeChangedValue} must be between -1.0 and 1.0. The
