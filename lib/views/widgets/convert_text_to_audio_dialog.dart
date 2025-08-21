@@ -5,7 +5,6 @@ import '../../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants.dart';
-import '../../models/audio.dart';
 import '../../models/audio_file.dart';
 import '../../models/playlist.dart';
 import '../../services/sort_filter_parameters.dart';
@@ -110,6 +109,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
       listen: true,
     );
 
+// Add this consumer to ensure warnings are displayed
     return Center(
       child: AlertDialog(
         title:
@@ -323,8 +323,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     required TextToSpeechVM textToSpeechVMlistenTrue,
   }) {
     // Check if either TTS is speaking OR audio file is playing
-    _isAnythingPlaying = textToSpeechVMlistenTrue.isPlaying ||
-        textToSpeechVMlistenTrue.isSpeaking;
+    _isAnythingPlaying = textToSpeechVMlistenTrue.isSpeaking;
 
     return SizedBox(
       // Dynamic width: increase when showing "Stop playing" text
@@ -498,25 +497,6 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     );
 
     if (fileName != null && fileName.trim().isNotEmpty) {
-      // The case if the imported audio file was created from the
-      // text to speech operation. In this case, the audio file
-      // may already exist in the target playlist directory. If it
-      // already exist, it is deleted and the new audio file is copied
-      // to the target playlist directory.
-      // DirUtil.deleteFileIfExist(pathFileName: targetFilePathName);
-      Audio? audioToRemove = targetPlaylist.getAudioByFileNameNoExt(
-        audioFileNameNoExt: fileName.replaceFirst(
-          '.mp3',
-          '',
-        ),
-      );
-
-      if (audioToRemove != null) {
-        audioDownloadVMlistenFalse.deleteAudioPhysicallyAndFromAllAudioLists(
-          audio: audioToRemove,
-        );
-      }
-
       try {
         // Pass voice selection to MP3 conversion
         await textToSpeechVMlistenTrue.convertTextToMP3WithFileName(

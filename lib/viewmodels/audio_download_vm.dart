@@ -1778,22 +1778,25 @@ class AudioDownloadVM extends ChangeNotifier {
     //                               may modified
     String rejectedImportedFileNames = '';
     String acceptableImportedFileNames = '';
+    bool isTextToSpeechAudioFileReplaced = false;
 
     for (String filePathName in filePathNameToImportLstCopy) {
       String fileName = filePathName.split(path.separator).last;
       File targetFile =
           File('${targetPlaylist.downloadPath}${path.separator}$fileName');
 
-      if (targetFile.existsSync() && !doesImportedFileResultFromTextToSpeech) {
-        // the case if the imported audio file already exist in the target
-        // playlist directory
-        rejectedImportedFileNames += "\"$fileName\",\n";
-        filePathNameToImportLst.remove(filePathName);
+      if (targetFile.existsSync()) {
+        if (!doesImportedFileResultFromTextToSpeech) {
+          // the case if the imported audio file already exist in the target
+          // playlist directory
+          rejectedImportedFileNames += "\"$fileName\",\n";
+          filePathNameToImportLst.remove(filePathName);
 
-        continue;
+          continue;
+        } else {
+          acceptableImportedFileNames += "\"$fileName\",\n";
+        }
       }
-
-      acceptableImportedFileNames += "\"$fileName\",\n";
     }
 
     // Displaying a warning which lists the audio files which won't be
@@ -1853,19 +1856,29 @@ class AudioDownloadVM extends ChangeNotifier {
         File(filePathName).copySync(targetFilePathName);
       }
 
+      isTextToSpeechAudioFileReplaced = (targetPlaylist.getAudioByFileNameNoExt(
+            audioFileNameNoExt: fileName.replaceFirst(
+              '.mp3',
+              '',
+            ),
+          ) !=
+          null);
+
       // Instantiating the imported audio and adding it to the target
       // playlist downloaded audio list and playable audio list.
 
-      Audio importedAudio = await _createImportedAudio(
-        targetPlaylist: targetPlaylist,
-        audioPlayer: audioPlayer,
-        targetFilePathName: targetFilePathName,
-        importedFileName: fileName,
-      );
+      if (!isTextToSpeechAudioFileReplaced) {
+        Audio importedAudio = await _createImportedAudio(
+          targetPlaylist: targetPlaylist,
+          audioPlayer: audioPlayer,
+          targetFilePathName: targetFilePathName,
+          importedFileName: fileName,
+        );
 
-      targetPlaylist.addImportedAudio(
-        importedAudio,
-      );
+        targetPlaylist.addImportedAudio(
+          importedAudio,
+        );
+      }
 
       notifyListeners();
     }
