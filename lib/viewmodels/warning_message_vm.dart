@@ -983,9 +983,7 @@ class WarningMessageVM extends ChangeNotifier {
     warningMessageType =
         WarningMessageType.audioImportedFromTextToSpeechOperation;
 
-    _addWarningMessageElements(
-      warningMessageElements: _importedAudioFileNames,
-    );
+    notifyListeners();
   }
 
   String _updatedPlayableAudioLstPlaylistTitle = '';
