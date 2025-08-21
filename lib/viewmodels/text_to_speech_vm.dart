@@ -10,10 +10,7 @@ class TextToSpeechVM extends ChangeNotifier {
       DirectGoogleTtsService();
   String _inputText = '';
   bool _isConverting = false;
-  bool _isPlaying = false;
   AudioFile? _currentAudioFile;
-  Duration _currentPosition = Duration.zero;
-  Duration _totalDuration = Duration.zero;
 
   // Silence duration setting
   double _silenceDurationSeconds = 1.0;
@@ -21,10 +18,7 @@ class TextToSpeechVM extends ChangeNotifier {
   // Getters
   String get inputText => _inputText;
   bool get isConverting => _isConverting;
-  bool get isPlaying => _isPlaying;
   AudioFile? get currentAudioFile => _currentAudioFile;
-  Duration get currentPosition => _currentPosition;
-  Duration get totalDuration => _totalDuration;
   double get silenceDurationSeconds => _silenceDurationSeconds;
 
   bool _isSpeaking = false;
