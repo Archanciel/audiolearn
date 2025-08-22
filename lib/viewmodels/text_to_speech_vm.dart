@@ -59,6 +59,8 @@ class TextToSpeechVM extends ChangeNotifier {
   }) async {
     if (_inputText.trim().isEmpty) return;
 
+    _inputText = _convertSingleBracesToQuoted(_inputText);
+
     _isSpeaking = true;
     notifyListeners();
 
@@ -79,6 +81,35 @@ class TextToSpeechVM extends ChangeNotifier {
       _isSpeaking = false;
       notifyListeners();
     }
+  }
+
+  String _convertSingleBracesToQuoted(String text) {
+    if (!text.contains('{')) {
+      return text;
+    }
+
+    StringBuffer result = StringBuffer();
+
+    for (int i = 0; i < text.length; i++) {
+      if (text[i] == '{') {
+        // Check if this is a single { (not part of consecutive {{{)
+        bool isPreviousBrace = i > 0 && text[i - 1] == '{';
+        bool isNextBrace = i < text.length - 1 && text[i + 1] == '{';
+
+        if (!isPreviousBrace && !isNextBrace) {
+          // This is a single {, convert it to '{'
+          result.write("'{'");
+        } else {
+          // This is part of consecutive braces, keep it as is
+          result.write('{');
+        }
+      } else {
+        // Regular character, add as is
+        result.write(text[i]);
+      }
+    }
+
+    return result.toString();
   }
 
   Future<void> convertTextToMP3WithFileName({
