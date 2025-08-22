@@ -1362,6 +1362,37 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
+      case WarningMessageType.audioImportedFromTextToSpeechOperation:
+        final String importedAudioFileName =
+            _warningMessageVM.importedAudioFileNames;
+
+        if (importedAudioFileName.isNotEmpty) {
+          String audioImportedFromTextToSpeechToPlaylistMessage;
+
+          if (_warningMessageVM.importedToPlaylistType == PlaylistType.local) {
+            audioImportedFromTextToSpeechToPlaylistMessage =
+                AppLocalizations.of(context)!.audioImportedFromTextToSpeechToLocalPlaylist(
+              importedAudioFileName,
+              _warningMessageVM.importedToPlaylistTitle,
+            );
+          } else {
+            audioImportedFromTextToSpeechToPlaylistMessage =
+                AppLocalizations.of(context)!.audioImportedFromTextToSpeechToYoutubePlaylist(
+              importedAudioFileName,
+              _warningMessageVM.importedToPlaylistTitle,
+            );
+          }
+
+          _displayWarningDialog(
+            context: context,
+            message: audioImportedFromTextToSpeechToPlaylistMessage,
+            warningMessageVM: _warningMessageVM,
+            themeProviderVM: themeProviderVM,
+            warningMode: WarningMode.confirm,
+          );
+        }
+
+        return const SizedBox.shrink();
       default:
         // Add the WarningMessageDisplayWidget to the listeners of the
         // WarningMessageVM. When WarningMessageVM executes notifyListeners(),
@@ -1584,35 +1615,6 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
           _displayWarningDialog(
             context: context,
             message: audioImportedFromToPlaylistMessage,
-            themeProviderVM: themeProviderVM,
-            warningMode: WarningMode.confirm,
-          );
-        }
-        break;
-      case WarningMessageType.audioImportedFromTextToSpeechOperation:
-        final String importedAudioFileName =
-            _warningMessageVM.importedAudioFileNames;
-
-        if (importedAudioFileName.isNotEmpty) {
-          String audioImportedFromTextToSpeechToPlaylistMessage;
-
-          if (_warningMessageVM.importedToPlaylistType == PlaylistType.local) {
-            audioImportedFromTextToSpeechToPlaylistMessage =
-                AppLocalizations.of(context)!.audioImportedFromTextToSpeechToLocalPlaylist(
-              importedAudioFileName,
-              _warningMessageVM.importedToPlaylistTitle,
-            );
-          } else {
-            audioImportedFromTextToSpeechToPlaylistMessage =
-                AppLocalizations.of(context)!.audioImportedFromTextToSpeechToYoutubePlaylist(
-              importedAudioFileName,
-              _warningMessageVM.importedToPlaylistTitle,
-            );
-          }
-
-          _displayWarningDialog(
-            context: context,
-            message: audioImportedFromTextToSpeechToPlaylistMessage,
             themeProviderVM: themeProviderVM,
             warningMode: WarningMode.confirm,
           );
