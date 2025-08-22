@@ -271,7 +271,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
               themeProviderVM: themeProviderVM,
               textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
             ),
-            _buildCreateAudioFileButton(
+            _buildCreateMP3Button(
               context: context,
               themeProviderVM: themeProviderVM,
               textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
@@ -398,7 +398,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     textToSpeechVMlistenTrue.stopSpeaking();
   }
 
-  Widget _buildCreateAudioFileButton({
+  Widget _buildCreateMP3Button({
     required BuildContext context,
     required ThemeProviderVM themeProviderVM,
     required TextToSpeechVM textToSpeechVMlistenTrue,
