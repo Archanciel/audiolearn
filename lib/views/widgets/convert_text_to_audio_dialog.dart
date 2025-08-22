@@ -33,13 +33,13 @@ enum DateTimeType {
 class ConvertTextToAudioDialog extends StatefulWidget {
   final Playlist targetPlaylist;
   final FocusNode focusNode;
-  final WarningMessageVM warningMessageVM;
+  final WarningMessageVM warningMessageVMlistenFalse;
   final SettingsDataService settingsDataService;
 
   const ConvertTextToAudioDialog({
     super.key,
     required this.settingsDataService,
-    required this.warningMessageVM,
+    required this.warningMessageVMlistenFalse,
     required this.targetPlaylist,
     required this.focusNode,
   });
@@ -507,6 +507,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
         // Pass voice selection to MP3 conversion
         await textToSpeechVMlistenTrue.convertTextToMP3WithFileName(
           audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+          warningMessageVMlistenFalse: widget.warningMessageVMlistenFalse,
           fileName: fileName,
           mp3FileDirectory: targetPlaylist.downloadPath,
           isVoiceMan: _isVoiceMan,

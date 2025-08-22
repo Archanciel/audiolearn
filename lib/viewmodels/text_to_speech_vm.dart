@@ -4,6 +4,7 @@ import '../services/direct_google_tts_service.dart';
 import '../services/logging_service.dart';
 import '../models/audio_file.dart';
 import '../services/text_to_speech_service.dart';
+import 'warning_message_vm.dart';
 
 class TextToSpeechVM extends ChangeNotifier {
   final TextToSpeechService _ttsService = TextToSpeechService();
@@ -82,6 +83,7 @@ class TextToSpeechVM extends ChangeNotifier {
 
   Future<void> convertTextToMP3WithFileName({
     required AudioPlayerVM audioPlayerVMlistenFalse,
+    required WarningMessageVM warningMessageVMlistenFalse,
     required String fileName,
     required String mp3FileDirectory,
     bool isVoiceMan = true,
@@ -96,6 +98,7 @@ class TextToSpeechVM extends ChangeNotifier {
       AudioFile? audioFile;
 
       audioFile = await _directGoogleTtsService.convertTextToMP3(
+        warningMessageVMlistenFalse: warningMessageVMlistenFalse,
         text: _inputText,
         customFileName: fileName,
         mp3FileDirectory: mp3FileDirectory,
