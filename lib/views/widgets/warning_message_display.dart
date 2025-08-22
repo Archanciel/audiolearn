@@ -1365,32 +1365,35 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
       case WarningMessageType.audioImportedFromTextToSpeechOperation:
         final String importedAudioFileName =
             _warningMessageVM.importedAudioFileNames;
+        String audioImportedFromTextToSpeechToPlaylistMessage = '';
 
         if (importedAudioFileName.isNotEmpty) {
-          String audioImportedFromTextToSpeechToPlaylistMessage;
-
           if (_warningMessageVM.importedToPlaylistType == PlaylistType.local) {
             audioImportedFromTextToSpeechToPlaylistMessage =
-                AppLocalizations.of(context)!.audioImportedFromTextToSpeechToLocalPlaylist(
+                AppLocalizations.of(context)!
+                    .audioImportedFromTextToSpeechToLocalPlaylist(
               importedAudioFileName,
               _warningMessageVM.importedToPlaylistTitle,
             );
           } else {
             audioImportedFromTextToSpeechToPlaylistMessage =
-                AppLocalizations.of(context)!.audioImportedFromTextToSpeechToYoutubePlaylist(
+                AppLocalizations.of(context)!
+                    .audioImportedFromTextToSpeechToYoutubePlaylist(
               importedAudioFileName,
               _warningMessageVM.importedToPlaylistTitle,
             );
           }
+        }
 
+        // return const SizedBox.shrink();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
           _displayWarningDialog(
-            context: context,
+            context: _context,
             message: audioImportedFromTextToSpeechToPlaylistMessage,
             warningMessageVM: _warningMessageVM,
             themeProviderVM: themeProviderVM,
-            warningMode: WarningMode.confirm,
           );
-        }
+        });
 
         return const SizedBox.shrink();
       default:
