@@ -31,7 +31,8 @@ Future<void> main() async {
   //                     generating the Android as well as the Windows
   //                     version of the app so that the app accesses the
   //                     correct application directory and not the test
-  //                     directory.
+  //                     directory. Must also be set to false when
+  //                     debugging the application on the smartphone.
 
   String applicationPath = '';
 
