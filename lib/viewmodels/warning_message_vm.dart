@@ -975,7 +975,6 @@ class WarningMessageVM extends ChangeNotifier {
     required String importedToPlaylistTitle,
     required PlaylistType importedToPlaylistType,
   }) {
-    _isDisplaying = false; // Reset the display state for the next warning.
     _importedAudioFileNames = importedAudioFileName;
     _importedToPlaylistTitle = importedToPlaylistTitle;
     _importedToPlaylistType = importedToPlaylistType;
