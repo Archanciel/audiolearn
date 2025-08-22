@@ -497,51 +497,38 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     );
 
     if (fileName != null && fileName.trim().isNotEmpty) {
-      try {
-        final AudioPlayerVM audioPlayerVMlistenFalse =
-            Provider.of<AudioPlayerVM>(
-          context,
-          listen: false,
+      final AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
+        context,
+        listen: false,
+      );
+
+      // Pass voice selection to MP3 conversion
+      await textToSpeechVMlistenTrue.convertTextToMP3WithFileName(
+        audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+        warningMessageVMlistenFalse: widget.warningMessageVMlistenFalse,
+        fileName: fileName,
+        mp3FileDirectory: targetPlaylist.downloadPath,
+        isVoiceMan: _isVoiceMan,
+      );
+
+      AudioFile? currentAudioFile = textToSpeechVMlistenTrue.currentAudioFile;
+
+      if (currentAudioFile != null) {
+        if (!context.mounted) return;
+
+        audioDownloadVMlistenFalse.importAudioFilesInPlaylist(
+          targetPlaylist: targetPlaylist,
+          filePathNameToImportLst: [currentAudioFile.filePath],
+          doesImportedFileResultFromTextToSpeech: true,
         );
-
-        // Pass voice selection to MP3 conversion
-        await textToSpeechVMlistenTrue.convertTextToMP3WithFileName(
-          audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-          warningMessageVMlistenFalse: widget.warningMessageVMlistenFalse,
-          fileName: fileName,
-          mp3FileDirectory: targetPlaylist.downloadPath,
-          isVoiceMan: _isVoiceMan,
-        );
-
-        AudioFile? currentAudioFile = textToSpeechVMlistenTrue.currentAudioFile;
-
-        if (currentAudioFile != null) {
-          if (!context.mounted) return;
-
-          audioDownloadVMlistenFalse.importAudioFilesInPlaylist(
-            targetPlaylist: targetPlaylist,
-            filePathNameToImportLst: [currentAudioFile.filePath],
-            doesImportedFileResultFromTextToSpeech: true,
-          );
-        } else {
-          if (!context.mounted) return;
-
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Création annulée'),
-              backgroundColor: Colors.orange,
-              duration: Duration(seconds: 2),
-            ),
-          );
-        }
-      } catch (e) {
+      } else {
         if (!context.mounted) return;
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Erreur: ${e.toString()}'),
-            backgroundColor: Colors.red,
-            duration: Duration(seconds: 3),
+            content: Text('Création annulée'),
+            backgroundColor: Colors.orange,
+            duration: Duration(seconds: 2),
           ),
         );
       }
