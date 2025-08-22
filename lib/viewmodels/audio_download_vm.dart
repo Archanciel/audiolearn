@@ -1793,10 +1793,10 @@ class AudioDownloadVM extends ChangeNotifier {
           filePathNameToImportLst.remove(filePathName);
 
           continue;
-        } else {
-          acceptableImportedFileNames += "\"$fileName\",\n";
         }
       }
+      
+      acceptableImportedFileNames += "\"$fileName\",\n";
     }
 
     // Displaying a warning which lists the audio files which won't be
