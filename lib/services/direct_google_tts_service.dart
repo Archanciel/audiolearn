@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
 import '../models/audio_file.dart';
+import '../viewmodels/warning_message_vm.dart';
 import 'logging_service.dart';
 
 class DirectGoogleTtsService {
@@ -16,11 +17,12 @@ class DirectGoogleTtsService {
       return text;
     }
 
-    String ssmlText = text.replaceAll('{', '<break time="${silenceDurationSeconds}s"/>');
-    
+    String ssmlText =
+        text.replaceAll('{', '<break time="${silenceDurationSeconds}s"/>');
+
     // Wrap in SSML speak tags
     ssmlText = '<speak>$ssmlText</speak>';
-    
+
     logInfo('Text with silence converted to SSML: $ssmlText');
     return ssmlText;
   }
@@ -63,6 +65,7 @@ class DirectGoogleTtsService {
   }
 
   Future<AudioFile?> convertTextToMP3({
+    required WarningMessageVM warningMessageVMlistenFalse,
     required String text,
     required String customFileName,
     required String mp3FileDirectory,
@@ -76,7 +79,8 @@ class DirectGoogleTtsService {
       logInfo('Durée silence: ${silenceDurationSeconds}s');
 
       // Convert { to SSML silence
-      String processedText = _convertSilenceToSSML(text, silenceDurationSeconds);
+      String processedText =
+          _convertSilenceToSSML(text, silenceDurationSeconds);
 
       // Sanitize the filename
       String sanitizedFileName = _sanitizeFilename(customFileName);
@@ -104,8 +108,10 @@ class DirectGoogleTtsService {
           logInfo('Tentative avec voix: ${voice['name']}');
 
           final requestBody = {
-            'input': processedText.startsWith('<speak>') 
-                ? {'ssml': processedText}  // Use SSML if text contains silence markers
+            'input': processedText.startsWith('<speak>')
+                ? {
+                    'ssml': processedText
+                  } // Use SSML if text contains silence markers
                 : {'text': processedText}, // Use plain text otherwise
             'voice': {'languageCode': voice['lang'], 'name': voice['name']},
             'audioConfig': {'audioEncoding': 'MP3', 'sampleRateHertz': 24000},
@@ -187,12 +193,12 @@ class DirectGoogleTtsService {
             }
 
             result ??= AudioFile(
-                id: DateTime.now().millisecondsSinceEpoch.toString(),
-                text: text,
-                filePath: filePath,
-                createdAt: DateTime.now(),
-                sizeBytes: audioBytes.length,
-              );
+              id: DateTime.now().millisecondsSinceEpoch.toString(),
+              text: text,
+              filePath: filePath,
+              createdAt: DateTime.now(),
+              sizeBytes: audioBytes.length,
+            );
 
             break; // Succès ! Sortir de la boucle
           } else {
@@ -209,8 +215,8 @@ class DirectGoogleTtsService {
       }
 
       if (result == null) {
-        throw Exception(
-          'Toutes les voix ont échoué - Vérifiez votre connexion internet et votre clé API',
+        warningMessageVMlistenFalse.setError(
+          errorType: ErrorType.noInternet,
         );
       }
 
