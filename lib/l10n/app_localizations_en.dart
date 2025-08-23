@@ -2217,11 +2217,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get convertTextToAudioDialogTitle => 'Convert Text to Audio';
 
   @override
-  String get textToConvert => 'Text to convert';
+  String get textToConvert => 'Text to convert, brace = ';
 
   @override
   String get textToConvertTextFieldTooltip =>
-      'Enter the text to convert an audio added to the playlist. The audio is created using the selected voice.';
+      'Enter the text to convert an audio added to the playlist. The audio is created using the selected voice. Add one or several brace(s) to include one or several second(s) of silence at this position.';
 
   @override
   String get textToConvertTextFieldHint => 'Enter your text here ...';

@@ -1795,7 +1795,7 @@ class AudioDownloadVM extends ChangeNotifier {
           continue;
         }
       }
-      
+
       acceptableImportedFileNames += "\"$fileName\",\n";
     }
 
@@ -1880,7 +1880,9 @@ class AudioDownloadVM extends ChangeNotifier {
         );
       }
 
-      notifyListeners();
+      if (!doesImportedFileResultFromTextToSpeech) {
+        notifyListeners();
+      }
     }
 
     if (audioPlayer != null) {

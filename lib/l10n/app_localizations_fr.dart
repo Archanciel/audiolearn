@@ -2241,11 +2241,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get convertTextToAudioDialogTitle => 'Convertir le texte en audio';
 
   @override
-  String get textToConvert => 'Texte à convertir';
+  String get textToConvert => 'Texte à convertir, accolade = ';
 
   @override
   String get textToConvertTextFieldTooltip =>
-      'Entrer le texte à convertir en un audio ajouté à la playlist. L\'audio est généré en utilisant la voix sélectionée.';
+      'Entrer le texte à convertir en un audio ajouté à la playlist. L\'audio est généré en utilisant la voix sélectionée. Insérer une ou plusieures accolade(s) afin d\'ajouter à cet endroit une ou plusieures seconde(s) de silence.';
 
   @override
   String get textToConvertTextFieldHint => 'Entrez votre texte ici ...';
