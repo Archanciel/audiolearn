@@ -105,9 +105,9 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
       context,
       listen: false,
     );
-    TextToSpeechVM textToSpeechVMlistenFalse = Provider.of<TextToSpeechVM>(
+    TextToSpeechVM textToSpeechVMlistenTrue = Provider.of<TextToSpeechVM>(
       context,
-      listen: false,
+      listen: true,
     );
 
     return Center(
@@ -136,7 +136,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                   children: [
                     _buildTextToConvertFieldAndDeleteButton(
                       context: context,
-                      textToSpeechVMlistenFalse: textToSpeechVMlistenFalse,
+                      textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
                     ),
                     const SizedBox(
                       height: kDialogTextFieldVerticalSeparation,
@@ -159,7 +159,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
               context: context,
               themeProviderVM: themeProviderVM,
               dateFormatVMlistenFalse: dateFormatVMlistenFalse,
-              textToSpeechVMlistenFalse: textToSpeechVMlistenFalse),
+              textToSpeechVMlistenTrue: textToSpeechVMlistenTrue),
         ],
       ),
     );
@@ -167,7 +167,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
 
   Widget _buildTextToConvertFieldAndDeleteButton({
     required BuildContext context,
-    required TextToSpeechVM textToSpeechVMlistenFalse,
+    required TextToSpeechVM textToSpeechVMlistenTrue,
   }) {
     return Tooltip(
       message: AppLocalizations.of(context)!.textToConvertTextFieldTooltip,
@@ -207,7 +207,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                   keyboardType: TextInputType.text,
                   onChanged: (text) {
                     _textToConvert = text;
-                    textToSpeechVMlistenFalse.updateInputText(text: text);
+                    textToSpeechVMlistenTrue.updateInputText(text: text);
 
                     // setting the Delete button color according to the
                     // TextField content ...
@@ -269,7 +269,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     required BuildContext context,
     required ThemeProviderVM themeProviderVM,
     required DateFormatVM dateFormatVMlistenFalse,
-    required TextToSpeechVM textToSpeechVMlistenFalse,
+    required TextToSpeechVM textToSpeechVMlistenTrue,
   }) {
     final AudioDownloadVM audioDownloadVMlistenFalse =
         Provider.of<AudioDownloadVM>(
@@ -285,12 +285,12 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
             _buildListenTextButton(
               context: context,
               themeProviderVM: themeProviderVM,
-              textToSpeechVMlistenFalse: textToSpeechVMlistenFalse,
+              textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
             ),
             _buildCreateMP3Button(
               context: context,
               themeProviderVM: themeProviderVM,
-              textToSpeechVMlistenFalse: textToSpeechVMlistenFalse,
+              textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
               audioDownloadVMlistenFalse: audioDownloadVMlistenFalse,
               selectedPlaylistDownloadPath: widget.targetPlaylist.downloadPath,
             ),
@@ -313,7 +313,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                 ),
                 onPressed: () {
                   _stopAllAudio(
-                    textToSpeechVMlistenFalse: textToSpeechVMlistenFalse,
+                    textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
                   );
                   final AudioDownloadVM audioDownloadVMlistenFalse =
                       Provider.of<AudioDownloadVM>(
@@ -344,10 +344,10 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
   Widget _buildListenTextButton({
     required BuildContext context,
     required ThemeProviderVM themeProviderVM,
-    required TextToSpeechVM textToSpeechVMlistenFalse,
+    required TextToSpeechVM textToSpeechVMlistenTrue,
   }) {
     // Check if either TTS is speaking OR audio file is playing
-    _isAnythingPlaying = textToSpeechVMlistenFalse.isSpeaking;
+    _isAnythingPlaying = textToSpeechVMlistenTrue.isSpeaking;
 
     return SizedBox(
       // Dynamic width: increase when showing "Stop playing" text
@@ -375,13 +375,13 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
             overlayColor: textButtonTapModification, // Tap feedback color
           ),
           onPressed: () {
-            (textToSpeechVMlistenFalse.inputText.trim().isEmpty)
+            (textToSpeechVMlistenTrue.inputText.trim().isEmpty)
                 ? null
                 : (_isAnythingPlaying)
                     ? _stopAllAudio(
-                        textToSpeechVMlistenFalse: textToSpeechVMlistenFalse,
+                        textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
                       )
-                    : textToSpeechVMlistenFalse.speakText(
+                    : textToSpeechVMlistenTrue.speakText(
                         isVoiceMan: _isVoiceMan,
                       );
           },
@@ -416,16 +416,16 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
 
   // Method to stop all audio (both TTS and audio file playback)
   void _stopAllAudio({
-    required TextToSpeechVM textToSpeechVMlistenFalse,
+    required TextToSpeechVM textToSpeechVMlistenTrue,
   }) {
     // Stop TTS speaking
-    textToSpeechVMlistenFalse.stopSpeaking();
+    textToSpeechVMlistenTrue.stopSpeaking();
   }
 
   Widget _buildCreateMP3Button({
     required BuildContext context,
     required ThemeProviderVM themeProviderVM,
-    required TextToSpeechVM textToSpeechVMlistenFalse,
+    required TextToSpeechVM textToSpeechVMlistenTrue,
     required AudioDownloadVM audioDownloadVMlistenFalse,
     required String selectedPlaylistDownloadPath,
   }) {
@@ -451,11 +451,11 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
             ),
             overlayColor: textButtonTapModification, // Tap feedback color
           ),
-          onPressed: textToSpeechVMlistenFalse.inputText.trim().isEmpty
+          onPressed: textToSpeechVMlistenTrue.inputText.trim().isEmpty
               ? null
               : () => _showFileNameDialog(
                     context: context,
-                    textToSpeechVMlistenFalse: textToSpeechVMlistenFalse,
+                    textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
                     audioDownloadVMlistenFalse: audioDownloadVMlistenFalse,
                     targetPlaylist: widget.targetPlaylist,
                   ),
@@ -472,7 +472,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
 
   Future<void> _showFileNameDialog({
     required BuildContext context,
-    required TextToSpeechVM textToSpeechVMlistenFalse,
+    required TextToSpeechVM textToSpeechVMlistenTrue,
     required AudioDownloadVM audioDownloadVMlistenFalse,
     required Playlist targetPlaylist,
   }) async {
@@ -525,7 +525,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
       );
 
       // Pass voice selection to MP3 conversion
-      await textToSpeechVMlistenFalse.convertTextToMP3WithFileName(
+      await textToSpeechVMlistenTrue.convertTextToMP3WithFileName(
         audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
         warningMessageVMlistenFalse: widget.warningMessageVMlistenFalse,
         fileName: fileName,
@@ -533,7 +533,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
         isVoiceMan: _isVoiceMan,
       );
 
-      AudioFile? currentAudioFile = textToSpeechVMlistenFalse.currentAudioFile;
+      AudioFile? currentAudioFile = textToSpeechVMlistenTrue.currentAudioFile;
 
       if (currentAudioFile != null) {
         if (!context.mounted) return;
