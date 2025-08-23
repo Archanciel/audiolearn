@@ -103,7 +103,7 @@ class AudioDownloadVM extends ChangeNotifier {
   /// This method is used by ConvertTextToAudioDialog in order to update the
   /// playlist download view playlist audio list so that the audio added by
   /// the text to speech conversion is immediately visible in its playlist.
-  /// 
+  ///
   /// This method is necessary since the AudioDownloadVM.importAudioFilesInPlaylist
   /// method does not call notifyListeners() if the audio files are imported
   /// from text to speech conversion.
@@ -1834,8 +1834,15 @@ class AudioDownloadVM extends ChangeNotifier {
             importedToPlaylistTitle: targetPlaylist.title,
             importedToPlaylistType: targetPlaylist.playlistType);
       } else {
-        // the case if the imported audio file was created from the text to
-        // speech operation
+        // The case if the imported audio file was created from the text to
+        // speech operation. If the MP3 file already existed in the target
+        // playlist directory, it was replaced by the new created MP3 file
+        // and the corresponding Audio is modified. The Audio creation date
+        // time is not modified in order to avoid to modify the order of
+        // playing the audio if their order depends of the default SF parms.
+        if (filePathNameToImportLst.length < filePathNameToImportLstCopy.length) {
+          isTextToSpeechAudioFileReplaced = true;
+        }
         warningMessageVM.setAudioImportedFromTextToSpeechOperation(
           importedAudioFileName: acceptableImportedFileNames.substring(
             0,
@@ -1867,18 +1874,16 @@ class AudioDownloadVM extends ChangeNotifier {
         File(filePathName).copySync(targetFilePathName);
       }
 
-      isTextToSpeechAudioFileReplaced = (targetPlaylist.getAudioByFileNameNoExt(
-            audioFileNameNoExt: fileName.replaceFirst(
-              '.mp3',
-              '',
-            ),
-          ) !=
-          null);
-
+      Audio? existingAudio = targetPlaylist.getAudioByFileNameNoExt(
+        audioFileNameNoExt: fileName.replaceFirst(
+          '.mp3',
+          '',
+        ),
+      );
       // Instantiating the imported audio and adding it to the target
       // playlist downloaded audio list and playable audio list.
 
-      if (!isTextToSpeechAudioFileReplaced) {
+      if (existingAudio == null) {
         Audio importedAudio = await _createImportedAudio(
           targetPlaylist: targetPlaylist,
           audioPlayer: audioPlayer,
@@ -1889,6 +1894,14 @@ class AudioDownloadVM extends ChangeNotifier {
         targetPlaylist.addImportedAudio(
           importedAudio,
         );
+      } else {
+        Duration? importedAudioDuration = await getMp3DurationWithAudioPlayer(
+          audioPlayer: audioPlayer,
+          filePathName: targetFilePathName,
+        );
+
+        existingAudio.audioDuration = importedAudioDuration;
+        existingAudio.fileSize = File(targetFilePathName).lengthSync();
       }
 
       if (!doesImportedFileResultFromTextToSpeech) {
