@@ -2344,10 +2344,23 @@ class MockAppLocalizations extends AppLocalizations {
   String get createMP3 => "Create MP3";
 
   @override
-  String audioImportedFromTextToSpeechToLocalPlaylist(Object importedAudioFileNames, Object toPlaylistTitle,) =>
+  String audioImportedFromTextToSpeechToLocalPlaylist(
+    Object importedAudioFileNames,
+    Object toPlaylistTitle,
+  ) =>
       "The audio created by the text to MP3 convertion$importedAudioFileNames was imported to local playlist \"$toPlaylistTitle\".";
 
   @override
-  String audioImportedFromTextToSpeechToYoutubePlaylist(Object importedAudioFileNames, Object toPlaylistTitle,) =>
+  String audioImportedFromTextToSpeechToYoutubePlaylist(
+    Object importedAudioFileNames,
+    Object toPlaylistTitle,
+  ) =>
       "The audio created by the text to MP3 convertion$importedAudioFileNames was imported to Youtube playlist \"$toPlaylistTitle\".";
+
+  @override
+  String replaceExistingAudioInPlaylist(
+    Object fileName,
+    Object playlistTitle,
+  ) =>
+      "The file \"$fileName.mp3\" already exists in the playlist \"$playlistTitle\". If you want to replace it with the new version, click on the \"Save\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.";
 }
