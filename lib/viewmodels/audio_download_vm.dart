@@ -1789,7 +1789,6 @@ class AudioDownloadVM extends ChangeNotifier {
     //                               may modified
     String rejectedImportedFileNames = '';
     String acceptableImportedFileNames = '';
-    bool isTextToSpeechAudioFileReplaced = false;
 
     for (String filePathName in filePathNameToImportLstCopy) {
       String fileName = filePathName.split(path.separator).last;
@@ -1834,15 +1833,6 @@ class AudioDownloadVM extends ChangeNotifier {
             importedToPlaylistTitle: targetPlaylist.title,
             importedToPlaylistType: targetPlaylist.playlistType);
       } else {
-        // The case if the imported audio file was created from the text to
-        // speech operation. If the MP3 file already existed in the target
-        // playlist directory, it was replaced by the new created MP3 file
-        // and the corresponding Audio is modified. The Audio creation date
-        // time is not modified in order to avoid to modify the order of
-        // playing the audio if their order depends of the default SF parms.
-        if (filePathNameToImportLst.length < filePathNameToImportLstCopy.length) {
-          isTextToSpeechAudioFileReplaced = true;
-        }
         warningMessageVM.setAudioImportedFromTextToSpeechOperation(
           importedAudioFileName: acceptableImportedFileNames.substring(
             0,
@@ -1895,6 +1885,12 @@ class AudioDownloadVM extends ChangeNotifier {
           importedAudio,
         );
       } else {
+        // The case if the imported audio file was created from the text to
+        // speech operation. If the MP3 file already existed in the target
+        // playlist directory, it was replaced by the new created MP3 file
+        // and the corresponding Audio is modified. The Audio creation date
+        // time is not modified in order to avoid to modify the order of
+        // playing the audio if their order depends of the default SF parms.
         Duration? importedAudioDuration = await getMp3DurationWithAudioPlayer(
           audioPlayer: audioPlayer,
           filePathName: targetFilePathName,
