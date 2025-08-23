@@ -2303,4 +2303,9 @@ class AppLocalizationsFr extends AppLocalizations {
       Object importedAudioFileNames, Object toPlaylistTitle) {
     return 'L\'audio créé par la conversion de texte en MP3\n\n$importedAudioFileNames\n\na été importé vers la playlist Youtube \"$toPlaylistTitle\".';
   }
+
+  @override
+  String replaceExistingAudioInPlaylist(Object fileName, Object playlistTitle) {
+    return 'Le fichier \"$fileName.mp3\" existe déjà dans la playlist \"$playlistTitle\". Si vous voulez le remplacer par la nouvelle version, cliquez sur le bouton \"Confirmer\". Sinon, cliquez sur le bouton \"Annuler\" et vous pourrez définir un nom de fichier différent.';
+  }
 }

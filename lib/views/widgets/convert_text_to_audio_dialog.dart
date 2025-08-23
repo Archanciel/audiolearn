@@ -5,6 +5,7 @@ import '../../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants.dart';
+import '../../models/audio.dart';
 import '../../models/audio_file.dart';
 import '../../models/playlist.dart';
 import '../../services/sort_filter_parameters.dart';
@@ -518,11 +519,47 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
       ),
     );
 
+    bool cancelTextToAudioCreation = false;
+
     if (fileName != null && fileName.trim().isNotEmpty) {
       final AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
         context,
         listen: false,
       );
+
+      Audio? existingAudio = targetPlaylist.getAudioByFileNameNoExt(
+        audioFileNameNoExt: fileName.replaceFirst('.mp3', ''),
+      );
+
+      if (existingAudio != null) {
+        await showDialog<dynamic>(
+          context: context,
+          barrierDismissible:
+              false, // This line prevents the dialog from closing when
+          //            tapping outside the dialog
+          builder: (BuildContext context) {
+            return ConfirmActionDialog(
+              actionFunction: returnConfirmAction,
+              actionFunctionArgs: [],
+              dialogTitleOne: AppLocalizations.of(context)!
+                  .replaceExistingAudioInPlaylist(
+                fileName,
+                targetPlaylist.title,
+              ),
+              dialogTitleOneReducedFontSize: true,
+              dialogContent: "",
+            );
+          },
+        ).then((result) {
+          if (result == ConfirmAction.cancel) {
+            cancelTextToAudioCreation = true;
+          }
+        });
+      }
+
+      if (cancelTextToAudioCreation) {
+        return;
+      }
 
       // Pass voice selection to MP3 conversion
       await textToSpeechVMlistenTrue.convertTextToMP3WithFileName(
@@ -557,6 +594,10 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
         // );
       }
     }
+  }
+
+  ConfirmAction returnConfirmAction() {
+    return ConfirmAction.confirm;
   }
 
   Row _buildVoiceSelectionCheckboxes({
@@ -597,10 +638,6 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
         ),
       ],
     );
-  }
-
-  ConfirmAction returnConfirmAction() {
-    return ConfirmAction.confirm;
   }
 }
 
