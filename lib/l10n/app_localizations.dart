@@ -3558,13 +3558,13 @@ abstract class AppLocalizations {
   /// No description provided for @textToConvert.
   ///
   /// In en, this message translates to:
-  /// **'Text to convert'**
+  /// **'Text to convert, brace = '**
   String get textToConvert;
 
   /// No description provided for @textToConvertTextFieldTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Enter the text to convert an audio added to the playlist. The audio is created using the selected voice.'**
+  /// **'Enter the text to convert an audio added to the playlist. The audio is created using the selected voice. Add one or several brace(s) to include one or several second(s) of silence at this position.'**
   String get textToConvertTextFieldTooltip;
 
   /// No description provided for @textToConvertTextFieldHint.

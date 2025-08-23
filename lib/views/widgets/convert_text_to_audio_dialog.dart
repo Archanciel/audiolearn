@@ -174,9 +174,19 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            AppLocalizations.of(context)!.textToConvert,
-            style: kDialogTitlesStyle,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                AppLocalizations.of(context)!.textToConvert,
+                style: kDialogTitlesStyle,
+              ),
+              Text(
+                '{',
+                style: kDialogTitlesStyle,
+              ),
+            ],
           ),
           const SizedBox(
             height: 5,
@@ -521,16 +531,18 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
           filePathNameToImportLst: [currentAudioFile.filePath],
           doesImportedFileResultFromTextToSpeech: true,
         );
-      } else {
-        if (!context.mounted) return;
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Création annulée'),
-            backgroundColor: Colors.orange,
-            duration: Duration(seconds: 2),
-          ),
-        );
+        // audioDownloadVMlistenFalse.addFileInPlaylist(
+        //   targetPlaylist: targetPlaylist,
+        //   filePathNameToImportLst: [currentAudioFile.filePath],
+        // );
+
+        // widget.warningMessageVMlistenFalse
+        //     .setAudioImportedFromTextToSpeechOperation(
+        //   importedAudioFileName: "\"$fileName\"",
+        //   importedToPlaylistTitle: targetPlaylist.title,
+        //   importedToPlaylistType: targetPlaylist.playlistType,
+        // );
       }
     }
   }
