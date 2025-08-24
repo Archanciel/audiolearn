@@ -90,23 +90,60 @@ class TextToSpeechVM extends ChangeNotifier {
 
     StringBuffer result = StringBuffer();
 
+    // First, identify all brace sequences
+    List<int> bracePositions = [];
     for (int i = 0; i < text.length; i++) {
       if (text[i] == '{') {
-        // Check if this is a single { (not part of consecutive {{{)
-        bool isPreviousBrace = i > 0 && text[i - 1] == '{';
-        bool isNextBrace = i < text.length - 1 && text[i + 1] == '{';
+        bracePositions.add(i);
+      }
+    }
 
-        if (!isPreviousBrace && !isNextBrace) {
-          // This is a single {, convert it to '{'
-          result.write("'{'");
+    // Group consecutive brace positions
+    List<List<int>> braceGroups = [];
+    if (bracePositions.isNotEmpty) {
+      List<int> currentGroup = [bracePositions[0]];
+
+      for (int i = 1; i < bracePositions.length; i++) {
+        if (bracePositions[i] == bracePositions[i - 1] + 1) {
+          // Consecutive brace
+          currentGroup.add(bracePositions[i]);
         } else {
-          // This is part of consecutive braces, keep it as is
+          // Non-consecutive, start new group
+          braceGroups.add(currentGroup);
+          currentGroup = [bracePositions[i]];
+        }
+      }
+      braceGroups.add(currentGroup); // Add the last group
+    }
+
+    // Build result string
+    int textIndex = 0;
+
+    for (List<int> group in braceGroups) {
+      // Add text before this brace group
+      while (textIndex < group[0]) {
+        result.write(text[textIndex]);
+        textIndex++;
+      }
+
+      // Handle the brace group
+      if (group.length == 1) {
+        // Single brace - convert to quoted
+        result.write("'{'");
+      } else {
+        // Multiple consecutive braces - keep as is
+        for (int pos in group) {
           result.write('{');
         }
-      } else {
-        // Regular character, add as is
-        result.write(text[i]);
       }
+
+      textIndex += group.length;
+    }
+
+    // Add remaining text after last brace group
+    while (textIndex < text.length) {
+      result.write(text[textIndex]);
+      textIndex++;
     }
 
     return result.toString();
