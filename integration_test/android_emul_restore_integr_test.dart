@@ -798,6 +798,7 @@ void main() {
           playlistTitle: urgentActusPlaylistTitle,
           playlistMenuKeyStr:
               'popup_menu_restore_playlist_audio_mp3_files_from_zip',
+          dragToBottom: true, // necessary if Flutter emulator is used
         );
 
         // Now verifying the confirm dialog message

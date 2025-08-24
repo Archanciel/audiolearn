@@ -4009,7 +4009,7 @@ void main() {
   });
   group('Rewind all playlist audio to start position test', () {
     testWidgets('''Rewind playlist audio for selected playlist''',
-        (tester) async {
+        (WidgetTester tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
@@ -4161,9 +4161,10 @@ void main() {
         appScreenNavigationButton: appScreenNavigationButton,
         doExpandPlaylistList: true,
         playlistToRewindTitle: youtubePlaylistToRewindTitle,
-        audioToPlayTitle: "Les besoins artificiels par R.Keucheyan",
+        audioToPlayTitle:
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         audioToPlayTitleAndDuration:
-            "Les besoins artificiels par R.Keucheyan\n19:05",
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
       );
 
       // Now play then pause "Ce qui va vraiment sauver notre espèce
@@ -4174,9 +4175,10 @@ void main() {
         appScreenNavigationButton: appScreenNavigationButton,
         doExpandPlaylistList: false,
         playlistToRewindTitle: youtubePlaylistToRewindTitle,
-        audioToPlayTitle: "Les besoins artificiels par R.Keucheyan",
+        audioToPlayTitle:
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         audioToPlayTitleAndDuration:
-            "Les besoins artificiels par R.Keucheyan\n19:05",
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
         otherAudioTitleToTapOnBeforeRewinding:
             "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         otherAudioTitleToTapOnBeforeRewindingDuration:
@@ -4220,7 +4222,7 @@ void main() {
     testWidgets('''After rewinding playlist audio for selected playlist, play
         then pause an audio, then select another audio and rewind again. Ensure
         the last selected audio remains being the current aidio. Bug fix check.''',
-        (tester) async {
+        (WidgetTester tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
@@ -4269,7 +4271,7 @@ void main() {
     });
     testWidgets(
         '''Rewind playlist audio for unselected playlist. No other playlist
-        is selected.''', (tester) async {
+        is selected.''', (WidgetTester tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
@@ -4303,7 +4305,7 @@ void main() {
       );
     });
     testWidgets('''Rewind playlist audio for unselected playlist, other selected
-        playlist exist''', (tester) async {
+        playlist exist''', (WidgetTester tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
@@ -4340,7 +4342,7 @@ void main() {
     });
     testWidgets(
         '''Rewind local playlist audio for unselected playlist, other selected
-        playlist exist''', (tester) async {
+        playlist exist''', (WidgetTester tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
@@ -4367,7 +4369,7 @@ void main() {
       );
     });
     testWidgets('''Rewind local selected playlist audio to start position''',
-        (tester) async {
+        (WidgetTester tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
@@ -4403,7 +4405,7 @@ void main() {
     });
     testWidgets(
         '''On audio player view, rewind playlist audio for selected playlist''',
-        (tester) async {
+        (WidgetTester tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
@@ -4472,7 +4474,7 @@ void main() {
         '''Check application date format set to the 3 available date formats
         and verify the effect everywhere in the application where the date format
         is applied. Then, the application will be restarted ...''',
-        (tester) async {
+        (WidgetTester tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'date_format_dialog_test',
@@ -4756,7 +4758,7 @@ void main() {
         set in previous testWidgets() function to the 'MM/dd/yyyy' and verify the
         effect everywhere in the application where the date format is applied. Then,
         set date format to 'yyyy/MM/dd' and restart the application ...''',
-        (tester) async {
+        (WidgetTester tester) async {
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
@@ -4851,7 +4853,7 @@ void main() {
         '''After restarting the application, verify the application date format
         set in previous testWidgets() function to the ''yyyy/MM/dd'' and verify the
         effect everywhere in the application where the date format is applied.''',
-        (tester) async {
+        (WidgetTester tester) async {
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
@@ -4946,7 +4948,7 @@ void main() {
         '''After restarting the application, verify the application date format
         set in previous testWidgets() function to the 'dd/MM/yyyy' and verify the
         effect everywhere in the application where the date format is applied.''',
-        (tester) async {
+        (WidgetTester tester) async {
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
@@ -5040,7 +5042,7 @@ void main() {
   group('Scrolling audio or playlists test', () {
     group('Scrolling audio test', () {
       testWidgets('''Automatic scrolling audio to display current audio.''',
-          (tester) async {
+          (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'scrolling_audio_and_playlists_test',
@@ -5231,7 +5233,7 @@ void main() {
       });
       testWidgets(
           '''Playlist list not displayed, automatic scrolling audio to display current
-              audio.''', (tester) async {
+              audio.''', (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'scrolling_audio_and_playlists_test',
@@ -5324,7 +5326,7 @@ void main() {
       testWidgets(
           '''Searching playlist and select it, verifying automatic scrolling
            audio displaying selected playlist current audio.''',
-          (tester) async {
+          (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'scrolling_audio_and_playlists_test',
@@ -5417,7 +5419,7 @@ void main() {
       });
       testWidgets(
           '''Changing sort/filter parameter, automatic scrolling audio to display current
-              audio.''', (tester) async {
+              audio.''', (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'scrolling_audio_and_playlists_test',
@@ -5477,7 +5479,7 @@ void main() {
       testWidgets(
           '''Setting searching audio word, automatic scrolling audio to display
               current audio whose title contains the search word.''',
-          (tester) async {
+          (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'scrolling_audio_and_playlists_test',
@@ -5535,7 +5537,7 @@ void main() {
       testWidgets(
           '''Selecting playlist in AudioPlayerView select it, verifying automatic scrolling
            audio displaying selected playlist current audio.''',
-          (tester) async {
+          (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'scrolling_audio_and_playlists_test',
@@ -5611,7 +5613,7 @@ void main() {
     group('Scrolling playlist test', () {
       testWidgets(
           '''In playlist download view, selecting every available playlist and verifying
-             it was scrolled correctly.''', (tester) async {
+             it was scrolled correctly.''', (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'scrolling_audio_and_playlists_test',
@@ -5711,7 +5713,8 @@ void main() {
       });
       testWidgets(
           '''With search '_1' in playlist download view, selecting available playlist
-             and verifying it was scrolled correctly.''', (tester) async {
+             and verifying it was scrolled correctly.''',
+          (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'scrolling_playlists_test',
@@ -5773,7 +5776,7 @@ void main() {
       testWidgets(
           '''In audio player view, selecting every available playlist and verifying
              it was scrolled correctly in playlist download view.''',
-          (tester) async {
+          (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'scrolling_audio_and_playlists_test',
@@ -5884,7 +5887,7 @@ void main() {
              the list of playlists by clicking on the move down icon button. This
              positions the moved playlist at top of the list of playlists. Then,
              verifying that it was scrolled correctly and it is visible.''',
-          (tester) async {
+          (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'scrolling_audio_and_playlists_test',
@@ -5955,7 +5958,7 @@ void main() {
              the list of playlists by clicking on the move up icon button. This
              positions the moved playlist at bottom of the list of playlists. Then,
              verifying that it was scrolled correctly and it is visible.''',
-          (tester) async {
+          (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'scrolling_audio_and_playlists_test',
@@ -6019,7 +6022,7 @@ void main() {
       testWidgets(
           '''Select a filter SF parms and apply it. Then, click on the 'Delete
            Filtered Audio' playlist menu and verify the audio suppression as
-           well as the audio selection.''', (tester) async {
+           well as the audio selection.''', (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
@@ -6291,7 +6294,8 @@ void main() {
            lower than the filtered SF audio which will be deleted (was downloaded
            before them). Then select a filter SF parms and apply it. Then, click
            on the 'Delete Filtered Audio' playlist menu and verify the audio
-           suppression as well as the audio selection.''', (tester) async {
+           suppression as well as the audio selection.''',
+          (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
@@ -6578,7 +6582,8 @@ void main() {
            parms lower than the filtered SF audio which will be deleted (was downloaded
            before them). Then select a filter SF parms and apply it. Then, click
            on the 'Delete Filtered Audio' playlist menu and verify the audio
-           suppression as well as the audio selection.''', (tester) async {
+           suppression as well as the audio selection.''',
+          (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
@@ -6865,7 +6870,8 @@ void main() {
            parms higher than the filtered SF audio which will be deleted (was downloaded
            after them). Then select a filter SF parms and apply it. Then, click
            on the 'Delete Filtered Audio' playlist menu and verify the audio
-           suppression as well as the audio selection.''', (tester) async {
+           suppression as well as the audio selection.''',
+          (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
@@ -7212,7 +7218,7 @@ void main() {
           '''Select the 'FullyListened' SF parms and apply it. Then, click on the 'Delete
            Filtered Audio' playlist menu and verify the displayed warning as well
            as the suppression of all playlist fully listened audio as well as their
-           comments.''', (tester) async {
+           comments.''', (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
@@ -7606,7 +7612,7 @@ void main() {
           '''SF parms 'default' is applied. Then, click on the 'Delete Filtered
            Audio' playlist menu and verify the displayed warning as well as
            the suppression of all playlist fully listened audio as well as their
-           comments.''', (tester) async {
+           comments.''', (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
@@ -7807,7 +7813,7 @@ void main() {
     group('Move filtered uncommented audio from playlist test', () {
       testWidgets('''Apply the 'listenedNoCom' SF parms. Then, click on the
           'Move Filtered Audio' playlist menu and verify the audio moved as well
-          as the audio selection.''', (tester) async {
+          as the audio selection.''', (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
@@ -8194,7 +8200,8 @@ void main() {
            SF parms lower than the filtered SF audio which will be moved (was downloaded
            before them). Then select 'listenedNoCom' SF parms and apply it. Then,
            click on the 'Move Filtered Audio' playlist menu and verify the audio
-           move as well as the audio selection.''', (tester) async {
+           move as well as the audio selection.''',
+          (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
@@ -8377,7 +8384,8 @@ void main() {
            parms lower than the filtered SF audio which will be moved (was downloaded
            before them). Then select 'listenedNoCom' SF parms and apply it. Then,
            click  on the 'Move Filtered Audio' playlist menu and verify the audio
-           move as well as the audio selection.''', (tester) async {
+           move as well as the audio selection.''',
+          (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
@@ -8583,7 +8591,7 @@ void main() {
            audio to the target playlist. Then select 'listenedNoCom' SF parms and
            apply it. Then, click on the 'Move Filtered Audio' playlist menu and
            verify the audio move as well as the audio selection.''',
-          (tester) async {
+          (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
@@ -8672,12 +8680,12 @@ void main() {
         // Find the RadioListTile target playlist to which the audio
         // will be copied
 
-        final Finder targetPlaylistRadioListTile = find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is RadioListTile &&
-              widget.title is Text &&
-              (widget.title as Text).data == targetPlaylistTitle,
-        );
+        final Finder targetPlaylistRadioListTile = find
+            .ancestor(
+              of: find.text(targetPlaylistTitle),
+              matching: find.byType(ListTile),
+            )
+            .last;
 
         // Tap the target playlist RadioListTile to select it
         await tester.tap(targetPlaylistRadioListTile);
@@ -8919,7 +8927,7 @@ void main() {
            click on the 'Move Filtered Audio' playlist menu and verify the displayed
            warning as well as the move of all playlist fully listened audio as well
            as their comments. Verification done on source as well as target playlists.''',
-          (tester) async {
+          (WidgetTester tester) async {
         final String applicationPictureDir =
             "$kApplicationPathWindowsTest${path.separator}$kPictureDirName";
 
@@ -9489,7 +9497,7 @@ void main() {
             '''SF parms 'default'. Move Youtube->local. Then, click on the
            'Move Filtered Audio' playlist menu and verify the displayed warning
            indicating that the move operation can not be done when 'default'
-           is applyed.''', (tester) async {
+           is applyed.''', (WidgetTester tester) async {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName: 'delete_filtered_audio_test',
@@ -9532,13 +9540,12 @@ void main() {
           // Find the RadioListTile target playlist to which the audio
           // will be moved
 
-          Finder radioListTile = find.byWidgetPredicate(
-            (Widget widget) {
-              return widget is RadioListTile &&
-                  widget.title is Text &&
-                  (widget.title as Text).data == targetPlaylistTitle;
-            },
-          );
+          Finder radioListTile = find
+              .ancestor(
+                of: find.text(targetPlaylistTitle),
+                matching: find.byType(ListTile),
+              )
+              .last;
 
           // Tap the target playlist RadioListTile to select it
           await tester.tap(radioListTile);
@@ -9601,7 +9608,7 @@ void main() {
             '''SF parms 'default'. Move Youtube->Youtube. Then, click on the
            'Move Filtered Audio' playlist menu and verify the displayed warning
            indicating that the move operation can not be done when 'default'
-           is applyed.''', (tester) async {
+           is applyed.''', (WidgetTester tester) async {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName: 'delete_filtered_audio_test',
@@ -9648,13 +9655,12 @@ void main() {
           // Find the RadioListTile target playlist to which the audio
           // will be moved
 
-          Finder radioListTile = find.byWidgetPredicate(
-            (Widget widget) {
-              return widget is RadioListTile &&
-                  widget.title is Text &&
-                  (widget.title as Text).data == targetPlaylistTitle;
-            },
-          );
+          Finder radioListTile = find
+              .ancestor(
+                of: find.text(targetPlaylistTitle),
+                matching: find.byType(ListTile),
+              )
+              .last;
 
           // Tap the target playlist RadioListTile to select it
           await tester.tap(radioListTile);
@@ -9720,7 +9726,7 @@ void main() {
             '''SF parms 'default'. Move local->Youtube. Then, click on the
            'Move Filtered Audio' playlist menu and verify the displayed warning
            indicating that the move operation can not be done when 'default'
-           is applyed.''', (tester) async {
+           is applyed.''', (WidgetTester tester) async {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName: 'delete_filtered_audio_test',
@@ -9763,13 +9769,12 @@ void main() {
           // Find the RadioListTile target playlist to which the audio
           // will be moved
 
-          Finder radioListTile = find.byWidgetPredicate(
-            (Widget widget) {
-              return widget is RadioListTile &&
-                  widget.title is Text &&
-                  (widget.title as Text).data == targetPlaylistTitle;
-            },
-          );
+          Finder radioListTile = find
+              .ancestor(
+                of: find.text(targetPlaylistTitle),
+                matching: find.byType(ListTile),
+              )
+              .last;
 
           // Tap the target playlist RadioListTile to select it
           await tester.tap(radioListTile);
@@ -9828,7 +9833,7 @@ void main() {
         testWidgets('''SF parms 'default'. Move local->local. Then, click on the
            'Move Filtered Audio' playlist menu and verify the displayed warning
            indicating that the move operation can not be done when 'default'
-           is applyed.''', (tester) async {
+           is applyed.''', (WidgetTester tester) async {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName: 'delete_filtered_audio_test',
@@ -9871,13 +9876,12 @@ void main() {
           // Find the RadioListTile target playlist to which the audio
           // will be moved
 
-          Finder radioListTile = find.byWidgetPredicate(
-            (Widget widget) {
-              return widget is RadioListTile &&
-                  widget.title is Text &&
-                  (widget.title as Text).data == targetPlaylistTitle;
-            },
-          );
+          Finder radioListTile = find
+              .ancestor(
+                of: find.text(targetPlaylistTitle),
+                matching: find.byType(ListTile),
+              )
+              .last;
 
           // Tap the target playlist RadioListTile to select it
           await tester.tap(radioListTile);
@@ -9948,7 +9952,7 @@ void main() {
     group('Copy filtered uncommented audio from playlist test', () {
       testWidgets('''Apply the 'listenedNoCom' SF parms. Then, click
           on the 'Copy Filtered Audio' playlist menu and verify the audio copied
-          as well as the audio selection.''', (tester) async {
+          as well as the audio selection.''', (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
@@ -10289,7 +10293,7 @@ void main() {
       testWidgets(
           '''Using very long playlist list. This test only verifies that the unique
              playlist selection dialog can display a very long playlist list.''',
-          (tester) async {
+          (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'playlist_selectable_dialog_test',
@@ -10348,13 +10352,12 @@ void main() {
             "Add padding or margins To prevent the content from touching the edges of the dialog";
         String lastPlaylistTitle = "lo20";
 
-        Finder targetPlaylistRadioListTile = find.byWidgetPredicate(
-          (Widget widget) {
-            return widget is RadioListTile &&
-                widget.title is Text &&
-                (widget.title as Text).data == longPlaylistTitle;
-          },
-        );
+        Finder targetPlaylistRadioListTile = find
+            .ancestor(
+              of: find.text(longPlaylistTitle),
+              matching: find.byType(ListTile),
+            )
+            .last;
 
         expect(targetPlaylistRadioListTile, findsOneWidget);
 
@@ -10367,13 +10370,12 @@ void main() {
         await tester.drag(listFinder, const Offset(0, -1000));
         await tester.pumpAndSettle();
 
-        targetPlaylistRadioListTile = find.byWidgetPredicate(
-          (Widget widget) {
-            return widget is RadioListTile &&
-                widget.title is Text &&
-                (widget.title as Text).data == lastPlaylistTitle;
-          },
-        );
+        targetPlaylistRadioListTile = find
+            .ancestor(
+              of: find.text(lastPlaylistTitle),
+              matching: find.byType(ListTile),
+            )
+            .last;
 
         expect(targetPlaylistRadioListTile, findsOneWidget);
 
@@ -10404,7 +10406,7 @@ void main() {
            (was downloaded before them). Then select 'listenedNoCom' SF parms and
            apply it. Then, click on the 'Copy Filtered Audio' playlist menu and
            verify the audio copy as well as the audio selection.''',
-          (tester) async {
+          (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
@@ -10587,7 +10589,7 @@ void main() {
            (was downloaded before them). Then select 'listenedNoCom' SF parms and
            apply it. Then, click on the 'Copy Filtered Audio' playlist menu and
            verify the audio copy as well as the audio selection.''',
-          (tester) async {
+          (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
@@ -10793,7 +10795,7 @@ void main() {
            commented audio to the target playlist. Then select 'listenedNoCom' SF
            parms and apply it. Then, click on the 'Copy Filtered Audio' playlist
            menu and verify the audio copy as well as the audio selection.''',
-          (tester) async {
+          (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
@@ -10883,12 +10885,12 @@ void main() {
         // Find the RadioListTile target playlist to which the audio
         // will be copied
 
-        final Finder targetPlaylistRadioListTile = find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is RadioListTile &&
-              widget.title is Text &&
-              (widget.title as Text).data == targetPlaylistTitle,
-        );
+        Finder targetPlaylistRadioListTile = find
+            .ancestor(
+              of: find.text(targetPlaylistTitle),
+              matching: find.byType(ListTile),
+            )
+            .last;
 
         // Tap the target playlist RadioListTile to select it
         await tester.tap(targetPlaylistRadioListTile);
@@ -11124,7 +11126,7 @@ void main() {
            click on the 'copy Filtered Audio' playlist menu and verify the displayed
            warning as well as the copy of all playlist fully listened audio as well
            as their comments and their picture. Verification done on source as well
-           as target playlists.''', (tester) async {
+           as target playlists.''', (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
@@ -11626,7 +11628,7 @@ void main() {
             '''SF parms 'default'. Copy Youtube->local. Then, click on the 'Copy Filtered
            Audio' playlist menu and verify the displayed warning indicating
            that the copy operation can not be done when 'default' is applyed.''',
-            (tester) async {
+            (WidgetTester tester) async {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName: 'delete_filtered_audio_test',
@@ -11669,13 +11671,12 @@ void main() {
           // Find the RadioListTile target playlist to which the audio
           // will be copied
 
-          Finder radioListTile = find.byWidgetPredicate(
-            (Widget widget) {
-              return widget is RadioListTile &&
-                  widget.title is Text &&
-                  (widget.title as Text).data == targetPlaylistTitle;
-            },
-          );
+          Finder radioListTile = find
+              .ancestor(
+                of: find.text(targetPlaylistTitle),
+                matching: find.byType(ListTile),
+              )
+              .last;
 
           // Tap the target playlist RadioListTile to select it
           await tester.tap(radioListTile);
@@ -11738,7 +11739,7 @@ void main() {
             '''SF parms 'default'. Copy Youtube->Youtube. Then, click on the 'Copy Filtered
            Audio' playlist menu and verify the displayed warning indicating
            that the copy operation can not be done when 'default' is applyed.''',
-            (tester) async {
+            (WidgetTester tester) async {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName: 'delete_filtered_audio_test',
@@ -11781,13 +11782,12 @@ void main() {
           // Find the RadioListTile target playlist to which the audio
           // will be copied
 
-          Finder radioListTile = find.byWidgetPredicate(
-            (Widget widget) {
-              return widget is RadioListTile &&
-                  widget.title is Text &&
-                  (widget.title as Text).data == targetPlaylistTitle;
-            },
-          );
+          Finder radioListTile = find
+              .ancestor(
+                of: find.text(targetPlaylistTitle),
+                matching: find.byType(ListTile),
+              )
+              .last;
 
           // Tap the target playlist RadioListTile to select it
           await tester.tap(radioListTile);
@@ -11853,7 +11853,7 @@ void main() {
             '''SF parms 'default'. Copy local->Youtube. Then, click on the 'Copy Filtered
            Audio' playlist menu and verify the displayed warning indicating
            that the copy operation can not be done when 'default' is applyed.''',
-            (tester) async {
+            (WidgetTester tester) async {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName: 'delete_filtered_audio_test',
@@ -11896,13 +11896,12 @@ void main() {
           // Find the RadioListTile target playlist to which the audio
           // will be copied
 
-          Finder radioListTile = find.byWidgetPredicate(
-            (Widget widget) {
-              return widget is RadioListTile &&
-                  widget.title is Text &&
-                  (widget.title as Text).data == targetPlaylistTitle;
-            },
-          );
+          Finder radioListTile = find
+              .ancestor(
+                of: find.text(targetPlaylistTitle),
+                matching: find.byType(ListTile),
+              )
+              .last;
 
           // Tap the target playlist RadioListTile to select it
           await tester.tap(radioListTile);
@@ -11964,7 +11963,7 @@ void main() {
             '''SF parms 'default'. Copy local->local. Then, click on the 'Copy Filtered
            Audio' playlist menu and verify the displayed warning indicating
            that the copy operation can not be done when 'default' is applyed.''',
-            (tester) async {
+            (WidgetTester tester) async {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName: 'delete_filtered_audio_test',
@@ -12007,13 +12006,12 @@ void main() {
           // Find the RadioListTile target playlist to which the audio
           // will be copied
 
-          Finder radioListTile = find.byWidgetPredicate(
-            (Widget widget) {
-              return widget is RadioListTile &&
-                  widget.title is Text &&
-                  (widget.title as Text).data == targetPlaylistTitle;
-            },
-          );
+          Finder radioListTile = find
+              .ancestor(
+                of: find.text(targetPlaylistTitle),
+                matching: find.byType(ListTile),
+              )
+              .last;
 
           // Tap the target playlist RadioListTile to select it
           await tester.tap(radioListTile);
@@ -12082,7 +12080,7 @@ void main() {
         in DatePicker dialog used in audio sort filter dialog as well. Then, switch
         to audio player view verify translated texts. Then, change to english, verify
         translation and go back to playlist download view and verify translation.''',
-        (tester) async {
+        (WidgetTester tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
@@ -12182,7 +12180,7 @@ void main() {
         '''Go to audio player view, change to french and verify translated
         texts. Then, switch to playlist download view and verify translated texts.
         Then, change to english, verify translation and go back to audio player view
-        and verify translation.''', (tester) async {
+        and verify translation.''', (WidgetTester tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'sort_and_filter_audio_dialog_widget_test',
@@ -15230,7 +15228,7 @@ void main() {
                 const Key('setValueToTargetDialogTitleKey'),
               ))
               .data,
-          'Set the download date',
+          'Set the Download Date',
         );
 
         expect(
@@ -15264,7 +15262,7 @@ void main() {
 
         expect(
           tester.widget<Text>(confirmActionDialogTitleText).data!,
-          "Prevision of the save duration",
+          "Prevision of the Save Duration",
         );
 
         // Check the value of the confirm dialog message
@@ -15419,7 +15417,7 @@ void main() {
                 const Key('setValueToTargetDialogTitleKey'),
               ))
               .data,
-          'Set the download date',
+          'Set the Download Date',
         );
 
         expect(
@@ -15474,7 +15472,7 @@ void main() {
 
         expect(
           tester.widget<Text>(confirmActionDialogTitleText).data!,
-          "Prevision of the save duration",
+          "Prevision of the Save Duration",
         );
 
         // Check the value of the confirm dialog message
@@ -15632,7 +15630,7 @@ void main() {
                 const Key('setValueToTargetDialogTitleKey'),
               ))
               .data,
-          'Set the download date',
+          'Set the Download Date',
         );
 
         expect(
@@ -15688,7 +15686,7 @@ void main() {
 
         expect(
           tester.widget<Text>(confirmActionDialogTitleText).data!,
-          "Prevision of the save duration",
+          "Prevision of the Save Duration",
         );
 
         // Check the value of the confirm dialog message
@@ -15793,7 +15791,7 @@ void main() {
                 const Key('setValueToTargetDialogTitleKey'),
               ))
               .data,
-          'Set the download date',
+          'Set the Download Date',
         );
 
         expect(
@@ -15827,7 +15825,7 @@ void main() {
 
         expect(
           tester.widget<Text>(confirmActionDialogTitleText).data!,
-          "Prevision of the save duration",
+          "Prevision of the Save Duration",
         );
 
         // Check the value of the confirm dialog message
@@ -15979,7 +15977,7 @@ void main() {
                 const Key('setValueToTargetDialogTitleKey'),
               ))
               .data,
-          'Set the download date',
+          'Set the Download Date',
         );
 
         expect(
@@ -16035,7 +16033,7 @@ void main() {
 
         expect(
           tester.widget<Text>(confirmActionDialogTitleText).data!,
-          "Prevision of the save duration",
+          "Prevision of the Save Duration",
         );
 
         // Check the value of the confirm dialog message
@@ -16172,7 +16170,7 @@ void main() {
                 const Key('setValueToTargetDialogTitleKey'),
               ))
               .data,
-          'Set the download date',
+          'Set the Download Date',
         );
 
         expect(
@@ -16228,7 +16226,7 @@ void main() {
 
         expect(
           tester.widget<Text>(confirmActionDialogTitleText).data!,
-          "Prevision of the save duration",
+          "Prevision of the Save Duration",
         );
 
         // Check the value of the confirm dialog message
@@ -16288,7 +16286,7 @@ void main() {
               in which 'local' is selected.
               
               Then, select a SF parm and redownload the filtered audio's. Finally, redownload an
-              individual not playable audio.''', (tester) async {
+              individual not playable audio.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -16822,7 +16820,7 @@ void main() {
               in which 'local' is selected.
               
               Then, select a SF parm and redownload the filtered audio's. Finally, redownload an
-              individual not playable audio.''', (tester) async {
+              individual not playable audio.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -17357,7 +17355,7 @@ void main() {
               is not selected anymore.
               
               Then, select a SF parm and redownload the filtered audio's. Finally, redownload an
-              individual not playable audio.''', (tester) async {
+              individual not playable audio.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -17550,7 +17548,7 @@ void main() {
               is not selected anymore.
               
               Then, select a SF parm and redownload the filtered audio's. Finally, redownload an
-              individual not playable audio.''', (tester) async {
+              individual not playable audio.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -17714,7 +17712,7 @@ void main() {
               selected in the zip file, it will be reselected.
               
               Then, select a SF parm and redownload the filtered audio's. Finally, redownload an
-              individual not playable audio.''', (tester) async {
+              individual not playable audio.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -18254,7 +18252,7 @@ void main() {
               playlist will be selected.
 
               Then, select a SF parm and redownload the filtered audio's. Finally, redownload an
-              individual not playable audio.''', (tester) async {
+              individual not playable audio.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -18802,7 +18800,7 @@ void main() {
               was selected in the zip file.
               
               Then, select a SF parm and redownload the filtered audio's. Finally, redownload an
-              individual not playable audio.''', (tester) async {
+              individual not playable audio.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -18991,7 +18989,7 @@ void main() {
               it was selected in the zip file.
               
               Then, select a SF parm and redownload the filtered audio's. Finally, redownload an
-              individual not playable audio.''', (tester) async {
+              individual not playable audio.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -19145,7 +19143,7 @@ void main() {
             '''Unique playlist restore, not replace existing playlist. Restore unique playlist Windows zip
             containing 'S8 audio' playlist to Windows application which contains 'S8 audio' and 'local'
             playlists. The restored 'S8 audio' playlist contains additional audio's to which comments and
-            pictures are associated.''', (tester) async {
+            pictures are associated.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -19274,7 +19272,8 @@ void main() {
             '''Multiple playlist restore, not replace existing playlists. Restore multiple playlists Windows
              zip containing 'S8 audio' and 'local' playlists to Windows application which contain 'S8 audio'
              and 'local' playlists. The restored 'S8 audio' and 'local' playlists contains additional audio's
-             to which comments and pictures are associated.''', (tester) async {
+             to which comments and pictures are associated.''',
+            (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -19405,7 +19404,7 @@ void main() {
         testWidgets(
             '''Unique playlist restore, not replace existing playlist. Restore unique playlist Windows zip
             containing 'Prières du Maître' playlist to empty Windows application''',
-            (tester) async {
+            (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -19568,7 +19567,7 @@ void main() {
         testWidgets(
             '''Unique playlist restore, replace existing playlist. Restore unique playlist Windows zip
             containing 'Prières du Maître' playlist to empty Windows application''',
-            (tester) async {
+            (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -19731,7 +19730,7 @@ void main() {
         testWidgets(
             '''Multiple playlists restore, not replace existing playlist. Restore multiple playlists Windows
             zip containing 'local' and 'S8 audio' playlists to empty Windows application.''',
-            (tester) async {
+            (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -19906,7 +19905,7 @@ void main() {
         testWidgets(
             '''Multiple playlists restore, replace existing playlist. Restore multiple playlists Windows
             zip containing 'local' and 'S8 audio' playlists to empty Windows application.''',
-            (tester) async {
+            (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -20084,7 +20083,7 @@ void main() {
             in which 'Prières du Maître' is selected, restore a Windows zip containing
             'local' and 'A restaurer' playlists in which 'A restaurer' is selected.
             The result will be that the first restored selected playlist 'Prières du Maître'
-            will remain being selected.''', (tester) async {
+            will remain being selected.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -20364,7 +20363,7 @@ void main() {
             in which 'Prières du Maître' is selected, restore a Windows zip containing
             'local' and 'A restaurer' playlists in which 'A restaurer' is selected.
             The result will be that the first restored selected playlist 'Prières du Maître'
-            will remain being selected.''', (tester) async {
+            will remain being selected.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -20643,7 +20642,7 @@ void main() {
             unique playlist Windows zip containing 'Restore- short - test - playlist' playlist with
             3 short audio's to empty Windows application. Then redownload the restored audio in
             2 ways: redownload sort/filtered audio and redownload single audio.''',
-              (tester) async {
+              (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -20992,7 +20991,7 @@ void main() {
             playlist Windows zip containing 'Restore- short - test - playlist' playlist with 3
             short audio's to empty Windows application. Then redownload the restored audio in
             2 ways: redownload sort/filtered audio and redownload single audio.''',
-              (tester) async {
+              (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -21343,7 +21342,7 @@ void main() {
             playlist Windows zip containing 'Local restore- short - test - playlist' playlist with 3 short
             audio's to empty Windows application. Then redownload the restored audio in 2 ways:
             redownload sort/filtered audio and redownload single audio.''',
-              (tester) async {
+              (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -21692,7 +21691,7 @@ void main() {
             playlist Windows zip containing 'Local restore- short - test - playlist' playlist with 3
             short audio's to empty Windows application. Then redownload the restored audio in
             2 ways: redownload sort/filtered audio and redownload single audio.''',
-              (tester) async {
+              (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -22045,7 +22044,7 @@ void main() {
             short - test - playlist'. Then restore the local 'Local restore- short - test - playlist'.
             Verify the correct playlist selection. Finally, execute the 'Update Playlist JSON Files'
             appbar menu and verify that the playlist selection remains correct.''',
-              (tester) async {
+              (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -22181,7 +22180,7 @@ void main() {
             short - test - playlist'. Then restore the local 'Local restore- short - test - playlist'.
             Verify the correct playlist selection. Finally, execute the 'Update Playlist JSON Files'
             appbar menu and verify that the playlist selection remains correct.''',
-              (tester) async {
+              (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -22324,7 +22323,7 @@ void main() {
             containing 'Prières du Maître' playlist. Then restore to Windows application unique playlist
             Windows zip containing the corresponding playlist with new and modified comments. The two
             modified comments will update or not the existing comment according to their modification date.''',
-              (tester) async {
+              (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -22519,7 +22518,7 @@ void main() {
               zip containing 'Prières du Maître' and 'local' playlists. Then restore to Windows application
               the multiple playlists Windows zip containing the corresponding playlists with new and modified
               comments. The two modified comments will update or not the existing comment according to their
-              modification date.''', (tester) async {
+              modification date.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -22797,7 +22796,7 @@ void main() {
             short - test - playlist'. Then restore the local 'Local restore- short - test - playlist'.
             Verify the correct playlist selection. Finally, execute the 'Update Playlist JSON Files'
             appbar menu and verify that the playlist selection remains correct.''',
-              (tester) async {
+              (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -22933,7 +22932,7 @@ void main() {
             short - test - playlist'. Then restore the local 'Local restore- short - test - playlist'.
             Verify the correct playlist selection. Finally, execute the 'Update Playlist JSON Files'
             appbar menu and verify that the playlist selection remains correct.''',
-              (tester) async {
+              (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -23071,7 +23070,7 @@ void main() {
             unique playlist Android zip containing 'Restore- short - test - playlist' playlist with
             3 short audio's to empty Windows application. Then redownload the restored audio in
             2 ways: redownload sort/filtered audio and redownload single audio.''',
-              (tester) async {
+              (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -23420,7 +23419,7 @@ void main() {
             playlist Android zip containing 'Restore- short - test - playlist' playlist with 3
             short audio's to empty Windows application. Then redownload the restored audio in
             2 ways: redownload sort/filtered audio and redownload single audio.''',
-              (tester) async {
+              (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -23775,7 +23774,7 @@ void main() {
               'Prières du Maître' playlist. After each each restore, verify the correct playlist selection.
               Finally, execute the 'Update Playlist JSON Files' appbar menu and verify that the playlist
               selection remains correct. Verify also the application pictureAudioMap.json file content.''',
-              (tester) async {
+              (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -23986,7 +23985,7 @@ void main() {
               
               Finally, execute the 'Update Playlist JSON Files' appbar menu and verify that the playlist
               selection remains correct. Verify also the application pictureAudioMap.json file content.''',
-              (tester) async {
+              (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -24197,7 +24196,7 @@ void main() {
           testWidgets(
               '''Multiple playlists restore, not replace existing playlist. Restore multiple playlists
               Android zip containing "A restaurer", "local" and "Restore- short - test - playlist" playlists
-              to empty Windows application.''', (tester) async {
+              to empty Windows application.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -24392,7 +24391,7 @@ void main() {
           testWidgets(
               '''Multiple playlists restore, replace existing playlist. Restore multiple playlists
               Android zip containing "A restaurer", "local" and "Restore- short - test - playlist" playlists
-              to empty Windows application.''', (tester) async {
+              to empty Windows application.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -24599,7 +24598,7 @@ void main() {
             '''Unique playlist restore, not replace existing playlist. Restore unique playlist Android zip
             containing 'S8 audio' playlist to Windows application which contains 'S8 audio' and 'local'
             playlists. The restored 'S8 audio' playlist contains additional audio's to which comments and
-            pictures are associated.''', (tester) async {
+            pictures are associated.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -24728,7 +24727,8 @@ void main() {
             '''Multiple playlist restore, not replace existing playlists. Restore multiple playlists Android
              zip containing 'S8 audio' and 'local' playlists to Windows application which contain 'S8 audio'
              and 'local' playlists. The restored 'S8 audio' and 'local' playlists contains additional audio's
-             to which comments and pictures are associated.''', (tester) async {
+             to which comments and pictures are associated.''',
+            (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -24866,7 +24866,7 @@ void main() {
             containing 'Prières du Maître' playlist. Then restore to Windows application unique playlist
             Android zip containing the corresponding playlist with new and modified comments. The two
             modified comments will update or not the existing comment according to their modification date.''',
-            (tester) async {
+            (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -25053,7 +25053,7 @@ void main() {
               zip containing 'Prières du Maître' and 'local' playlists. Then restore to Windows application
               the multiple playlists Android zip containing the corresponding playlists with new and modified
               comments. The two modified comments will update or not the existing comment according to their
-              modification date.''', (tester) async {
+              modification date.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -26497,7 +26497,7 @@ void main() {
     testWidgets(
         '''Spoken changed to musical quality. Then, restart the application to verify
            that the audio quality checkbox state was preserved.''',
-        (tester) async {
+        (WidgetTester tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName:
@@ -26533,7 +26533,7 @@ void main() {
         '''Restart the application to verify that the audio quality checkbox state was preserved.
            Then download one audio in the playlist and verify its audio musical quality. Then
            select the local playlist and restart the application.''',
-        (tester) async {
+        (WidgetTester tester) async {
       const String youtubePlaylistToModifyTitle = 'MaValTest';
 
       await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
@@ -26597,7 +26597,7 @@ void main() {
            musical. verify that the audio quality checkbox state was preserved.
            Then download one audio in the playlist and verify its audio musical quality. Then
            select the local playlist and restart the application.''',
-        (tester) async {
+        (WidgetTester tester) async {
       const String youtubePlaylistToModifyTitle = 'MaValTest';
       const String localSpokenPlaylistTitle = 'local_audio';
 
@@ -26647,12 +26647,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be downloaded
 
-      final Finder radioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localSpokenPlaylistTitle,
-      );
+      Finder radioListTile = find
+          .ancestor(
+            of: find.text(localSpokenPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(radioListTile);
@@ -26747,7 +26747,7 @@ void main() {
   group('Download URLs from Text File tests', () {
     testWidgets(
         '''Download URLs in music quality playlist in spoken quality.''',
-        (tester) async {
+        (WidgetTester tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'download_urls_from_text_field_test',
@@ -26820,7 +26820,7 @@ void main() {
       );
     });
     testWidgets('''Download URLs in spoken quality playlist.''',
-        (tester) async {
+        (WidgetTester tester) async {
       const String localPlaylistTitleInWhichToDownloadURLs =
           'Chants Bible en ligne spoken';
 
@@ -26894,7 +26894,7 @@ void main() {
       );
     });
     testWidgets('''Download URLs in spoken quality playlist.''',
-        (tester) async {
+        (WidgetTester tester) async {
       const String localPlaylistTitleInWhichToDownloadURLs =
           'Chants Bible en ligne spoken';
 
@@ -26969,7 +26969,7 @@ void main() {
     });
     testWidgets(
         '''Uncheck all checkbox. Download URLs in music quality playlist in spoken quality.''',
-        (tester) async {
+        (WidgetTester tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'download_urls_from_text_field_test',
@@ -27036,7 +27036,7 @@ void main() {
   group('Test playlist info modification', () {
     testWidgets(
         '''Verify playlist info. Then delete an audio and verify that the playlist info
-           is updated accordingly.''', (tester) async {
+           is updated accordingly.''', (WidgetTester tester) async {
       const String selectedPlaylistTitle = 'audio_player_view_2_shorts_test';
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
@@ -27711,13 +27711,12 @@ Future<void> _testMovingOrCopyingFilteredAudio({
   // Find the RadioListTile target playlist to which the audio
   // will be moved or copied
 
-  Finder radioListTile = find.byWidgetPredicate(
-    (Widget widget) {
-      return widget is RadioListTile &&
-          widget.title is Text &&
-          (widget.title as Text).data == targetPlaylistTitle;
-    },
-  );
+  Finder radioListTile = find
+      .ancestor(
+        of: find.text(targetPlaylistTitle),
+        matching: find.byType(ListTile),
+      )
+      .last;
 
   // Tap the target playlist RadioListTile to select it
   await tester.tap(radioListTile);
@@ -27917,14 +27916,10 @@ Future<void> _selectDateFormat({
 
   // Find the RadioListTile date format to select
 
-  Finder radioListTile = find.byWidgetPredicate(
-    (Widget widget) {
-      return widget is RadioListTile &&
-          widget.title is Text &&
-          (widget.title as Text).data!.contains(dateFormatToSelectLowCase);
-    },
+  Finder radioListTile = find.ancestor(
+    of: find.textContaining(dateFormatToSelectLowCase),
+    matching: find.byType(ListTile),
   );
-
   // Tap the target dateformat RadioListTile to select it
   await tester.tap(radioListTile);
   await tester.pumpAndSettle();
@@ -28224,7 +28219,7 @@ Future<void> _verifyDateFormatApplication({
   await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
   await tester.pumpAndSettle();
 
-  // Now verify the date format on the 'Set the download date dialog'.
+  // Now verify the date format on the 'Set the Download Date dialog'.
   // On the left appbar menu, tap on the 'Save Playlists Audio's MP3
   // to ZIP File ...' menu.
 
@@ -28384,12 +28379,7 @@ Future<void> _rewindPlaylistAfterPlayThenPauseAnAudio({
 
   Finder currentAudioTitleFinder;
 
-  if (otherAudioTitleToTapOnBeforeRewinding != null) {
-    currentAudioTitleFinder =
-        find.text(otherAudioTitleToTapOnBeforeRewindingDuration!);
-  } else {
-    currentAudioTitleFinder = find.text(audioToPlayTitleAndDuration);
-  }
+  currentAudioTitleFinder = find.text(audioToPlayTitleAndDuration);
 
   expect(
     currentAudioTitleFinder,
@@ -28449,7 +28439,7 @@ Future<void> _tapOnRewindPlaylistAudioToStartPositionMenu({
   await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
     tester: tester,
     warningDialogMessage:
-        "$numberOfRewindedAudio playlist audio's were repositioned to start.",
+        "$numberOfRewindedAudio playlist audio's were repositioned to start and the first listenable audio was selected.",
     isWarningConfirming: true,
   );
 }

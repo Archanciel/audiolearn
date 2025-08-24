@@ -1510,22 +1510,30 @@ class PlaylistListVM extends ChangeNotifier {
     required AudioLearnAppViewType audioLearnAppViewType,
     AudioSortFilterParameters? passedAudioSortFilterParameters,
     String passedAudioSortFilterParametersName = '',
+    Playlist? playlist,
   }) {
-    List<Playlist> selectedPlaylists = getSelectedPlaylists();
+    Playlist selectedPlaylist;
 
-    if (selectedPlaylists.isEmpty) {
-      return [];
+    if (playlist != null) {
+      selectedPlaylist = playlist;
+    } else {
+      List<Playlist> selectedPlaylists = getSelectedPlaylists();
+
+      if (selectedPlaylists.isEmpty) {
+        return [];
+      }
+
+      if (!_isPlaylistListExpanded && _isSearchSentenceApplied) {
+        // This test fixes a bug which made impossible to search an
+        // audio in the audio list displayed in the situation where
+        // the playlist list was collapsed.
+        return _sortedFilteredSelectedPlaylistPlayableAudioLst ?? [];
+      }
+
+      selectedPlaylist =
+          selectedPlaylists[0]; // currently, only one playlist can be selected
     }
 
-    if (!_isPlaylistListExpanded && _isSearchSentenceApplied) {
-      // This test fixes a bug which made impossible to search an
-      // audio in the audio list displayed in the situation where
-      // the playlist list was collapsed.
-      return _sortedFilteredSelectedPlaylistPlayableAudioLst ?? [];
-    }
-
-    Playlist selectedPlaylist =
-        selectedPlaylists[0]; // currently, only one playlist can be selected
     List<Audio> selectedPlaylistsAudios = selectedPlaylist.playableAudioLst;
 
     _audioSortFilterParameters = null;
@@ -4852,14 +4860,14 @@ class PlaylistListVM extends ChangeNotifier {
     List<Audio> audioPlayerViewAudioLst =
         getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
       audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+      playlist: playlist
     );
 
     int rewindedAudioNumber = 0;
 
     if (audioPlayerViewAudioLst.isNotEmpty) {
       rewindedAudioNumber = playlist.rewindPlayableAudioToStart(
-        audioToRewindLst: audioPlayerViewAudioLst
-      );
+          audioToRewindLst: audioPlayerViewAudioLst);
 
       // Obtaining the playable audio list ordered according to the
       // sort/filter parameters applied to the playlist download view.
