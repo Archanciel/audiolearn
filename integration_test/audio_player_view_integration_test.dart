@@ -698,7 +698,7 @@ void main() {
 
       // Without delaying, the playing audio and dragging to the
       // AudioPlayerView screen will not be successful !
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       // Verify if the pause button is present
