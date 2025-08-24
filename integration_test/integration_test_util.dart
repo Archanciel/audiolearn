@@ -3044,11 +3044,9 @@ class IntegrationTestUtil {
 
     // Find the RadioListTile target playlist to which the audio
     // will be copied
-    final Finder targetPlaylistRadioListTile = find.byWidgetPredicate(
-      (Widget widget) =>
-          widget is RadioListTile &&
-          widget.title is Text &&
-          (widget.title as Text).data == targetPlaylistTitle,
+    Finder targetPlaylistRadioListTile = find.ancestor(
+      of: find.text(targetPlaylistTitle),
+      matching: find.byType(ListTile),
     );
 
     // Tap the target playlist RadioListTile to select it
@@ -3120,11 +3118,13 @@ class IntegrationTestUtil {
   static List<String> getPlaylistTitlesFromDialog({
     required WidgetTester tester,
   }) {
-    final Iterable<RadioListTile<Playlist>> radioListTiles =
-        tester.widgetList<RadioListTile<Playlist>>(
-            find.byType(RadioListTile<Playlist>));
+    final Iterable<ListTile> listTiles =
+        tester.widgetList<ListTile>(find.byType(ListTile));
 
-    return radioListTiles.map((tile) {
+    return listTiles
+        .where(
+            (tile) => tile.title is Text && (tile.title as Text).data != null)
+        .map((tile) {
       final Text titleText = tile.title as Text;
       return titleText.data!;
     }).toList();

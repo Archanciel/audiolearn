@@ -58,7 +58,7 @@ void main() {
 
   group('Add or delete Youtube or local Playlist tests', () {
     testWidgets('Youtube playlist audio quality addition and then delete it ',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -353,7 +353,7 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Add with comma titled Youtube playlist', (tester) async {
+    testWidgets('Add with comma titled Youtube playlist', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -500,7 +500,7 @@ void main() {
     });
     testWidgets(
         '''Youtube playlist music quality addition and then add it again with same
-           URL to verify the displayed warning message.''', (tester) async {
+           URL to verify the displayed warning message.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -777,7 +777,7 @@ void main() {
     /// the Cancel button of the add playlist dialog.
     testWidgets(
         '''Open the add playlist dialog to add a Youtube playlist and then
-           click on Cancel button''', (tester) async {
+           click on Cancel button''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -922,7 +922,7 @@ void main() {
     });
     testWidgets(
         '''Local playlist music quality addition with empty playlist URL''',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -1147,7 +1147,7 @@ void main() {
     });
     testWidgets(
         '''Local playlist audio quality addition with empty playlist URL and then
-           delete local playlist''', (tester) async {
+           delete local playlist''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -1392,7 +1392,7 @@ void main() {
     });
     testWidgets(
         '''Add local playlist with title equal to previously created local
-           playlist''', (tester) async {
+           playlist''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -1472,7 +1472,7 @@ void main() {
       );
     });
     testWidgets('Add local playlist with invalid title containing a comma',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -1541,7 +1541,7 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Add local playlist with title ended by space', (tester) async {
+    testWidgets('Add local playlist with title ended by space', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -1592,7 +1592,7 @@ void main() {
     });
     testWidgets(
         '''Add local playlist with title equal to previously created Youtube
-           playlist''', (tester) async {
+           playlist''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -1748,7 +1748,7 @@ void main() {
       );
     });
     testWidgets('''Open the add playlist dialog to add a local playlist and then
-           click on Cancel button''', (tester) async {
+           click on Cancel button''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -1825,7 +1825,7 @@ void main() {
       );
     });
     testWidgets('''Add Youtube and local playlist, download the Youtube playlist
-           and restart the app''', (tester) async {
+           and restart the app''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -2030,7 +2030,7 @@ void main() {
       );
     });
     testWidgets('Add Youtube playlist with invalid URL containing list=',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -2179,7 +2179,7 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Add Youtube playlist with invalid URL', (tester) async {
+    testWidgets('Add Youtube playlist with invalid URL', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -2324,7 +2324,7 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Add private Youtube playlist', (tester) async {
+    testWidgets('Add private Youtube playlist', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -2471,7 +2471,7 @@ void main() {
       );
     });
     testWidgets('''Add and download 2 Youtube playlists using audio download VM
-                   mock version.''', (tester) async {
+                   mock version.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -2721,7 +2721,7 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Delete pictured playlist', (tester) async {
+    testWidgets('Delete pictured playlist', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -2844,7 +2844,7 @@ void main() {
   group('Various Tests', () {
     testWidgets(
         '''Entered a Youtube playlist URL. Then switch to AudioPlayerView
-           and then back to PlaylistView''', (tester) async {
+           and then back to PlaylistView''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -2924,7 +2924,7 @@ void main() {
     /// the url text field will not be emptied after adding a
     /// local playlist, in contrary of what happens after adding
     /// a Youtube playlist.
-    testWidgets('Select then unselect local playlist', (tester) async {
+    testWidgets('Select then unselect local playlist', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -3074,7 +3074,7 @@ void main() {
     });
     testWidgets(
         'Download single video audio in spoken quality with invalid URL',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -3210,12 +3210,12 @@ void main() {
       // Find the RadioListTile target playlist in which the audio
       // will be downloaded
 
-      final Finder radioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioPlaylistTitle,
-      );
+      final Finder radioListTile = find
+          .ancestor(
+            of: find.text(localAudioPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(radioListTile);
@@ -3264,7 +3264,7 @@ void main() {
       );
     });
     testWidgets('Download single video audio in music quality with invalid URL',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -3400,12 +3400,12 @@ void main() {
       // Find the RadioListTile target playlist in which the audio
       // will be downloaded
 
-      final Finder radioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioPlaylistTitle,
-      );
+      final Finder radioListTile = find
+          .ancestor(
+            of: find.text(localAudioPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(radioListTile);
@@ -3468,7 +3468,7 @@ void main() {
 
     testWidgets(
         'Download single video audio in playlist already containing the audio',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -3635,13 +3635,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be downloaded
 
-      final Finder radioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data ==
-                youtubeAudioSourceAndTargetPlaylistTitle,
-      );
+      final Finder radioListTile = find
+          .ancestor(
+            of: find.text(youtubeAudioSourceAndTargetPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(radioListTile);
@@ -3692,7 +3691,7 @@ void main() {
     });
     testWidgets(
         'Download single video audio in playlist not containing the audio',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -3858,12 +3857,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be downloaded
 
-      final Finder radioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetPlaylistTitle,
-      );
+      final Finder radioListTile = find
+          .ancestor(
+            of: find.text(localAudioTargetPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(radioListTile);
@@ -3893,7 +3892,7 @@ void main() {
     });
   });
   group('Settings update test', () {
-    testWidgets('After moving down a playlist item', (tester) async {
+    testWidgets('After moving down a playlist item', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -4091,7 +4090,7 @@ void main() {
            same duplicate copy is then performed again, but this time the
            user tap on the cancel button instead of the confirm button. Then
            3rd time copy to another empty target playlist and click on cancel
-           button''', (tester) async {
+           button''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -4171,12 +4170,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be copied
 
-      Finder targetPlaylistRadioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetPlaylistTitleTwo,
-      );
+      Finder targetPlaylistRadioListTile = find
+          .ancestor(
+            of: find.text(localAudioTargetPlaylistTitleTwo),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(targetPlaylistRadioListTile);
@@ -4484,12 +4483,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be copied
 
-      targetPlaylistRadioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetPlaylistTitleTwo,
-      );
+      targetPlaylistRadioListTile = find
+          .ancestor(
+            of: find.text(localAudioTargetPlaylistTitleTwo),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(targetPlaylistRadioListTile);
@@ -4545,12 +4544,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be copied
 
-      targetPlaylistRadioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetPlaylistTitleTwo,
-      );
+      targetPlaylistRadioListTile = find
+          .ancestor(
+            of: find.text(localAudioTargetPlaylistTitleTwo),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(targetPlaylistRadioListTile);
@@ -4607,12 +4606,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be copied
 
-      targetPlaylistRadioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetPlaylistTitleThree,
-      );
+      targetPlaylistRadioListTile = find
+          .ancestor(
+            of: find.text(localAudioTargetPlaylistTitleThree),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(targetPlaylistRadioListTile);
@@ -4710,7 +4709,7 @@ void main() {
         '''Copy audio and then move it to same target playlist: the move is
            refused with warning since the copied audio now exists in the
            target playlist. Then 3rd time move to another playlist and click
-           on cancel button''', (tester) async {
+           on cancel button''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -4790,12 +4789,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be copied
 
-      Finder targetPlaylistRadioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetPlaylistTitleTwo,
-      );
+      Finder targetPlaylistRadioListTile = find
+          .ancestor(
+            of: find.text(localAudioTargetPlaylistTitleTwo),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(targetPlaylistRadioListTile);
@@ -4969,12 +4968,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be copied
 
-      targetPlaylistRadioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetPlaylistTitleTwo,
-      );
+      targetPlaylistRadioListTile = find
+          .ancestor(
+            of: find.text(localAudioTargetPlaylistTitleTwo),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(targetPlaylistRadioListTile);
@@ -5036,12 +5035,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be copied
 
-      targetPlaylistRadioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetPlaylistTitleThree,
-      );
+      targetPlaylistRadioListTile = find
+          .ancestor(
+            of: find.text(localAudioTargetPlaylistTitleThree),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(targetPlaylistRadioListTile);
@@ -5090,7 +5089,7 @@ void main() {
       );
     });
     testWidgets('''Copy audio not present in the source playlist.''',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -5178,12 +5177,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be copied
 
-      Finder targetPlaylistRadioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetPlaylistTitleTwo,
-      );
+      Finder targetPlaylistRadioListTile = find
+          .ancestor(
+            of: find.text(localAudioTargetPlaylistTitleTwo),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(targetPlaylistRadioListTile);
@@ -5208,7 +5207,7 @@ void main() {
       );
     });
     testWidgets('''Copy audio without selecting the target playlist.''',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -5298,7 +5297,7 @@ void main() {
            audio to target playlist and then delete it from target playlist.
            A warning is displayed informing that the audio has comment(s)
            and that those comments will be deleted. Confirm deletion and
-           then move the audio to the same target playlist.''', (tester) async {
+           then move the audio to the same target playlist.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -5377,12 +5376,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be copied
 
-      Finder targetPlaylistRadioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetPlaylistTitle,
-      );
+      Finder targetPlaylistRadioListTile = find
+          .ancestor(
+            of: find.text(localAudioTargetPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(targetPlaylistRadioListTile);
@@ -5606,12 +5605,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be copied
 
-      targetPlaylistRadioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetPlaylistTitle,
-      );
+      targetPlaylistRadioListTile = find
+          .ancestor(
+            of: find.text(localAudioTargetPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(targetPlaylistRadioListTile);
@@ -5648,7 +5647,7 @@ void main() {
            A warning is displayed informing that the audio has comment(s)
            and that those comments will be deleted. Confirm deletion and
            then copy again the audio to the same target playlist.''',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -5727,12 +5726,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be copied
 
-      Finder targetPlaylistRadioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetPlaylistTitle,
-      );
+      Finder targetPlaylistRadioListTile = find
+          .ancestor(
+            of: find.text(localAudioTargetPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(targetPlaylistRadioListTile);
@@ -5912,12 +5911,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be copied
 
-      targetPlaylistRadioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetPlaylistTitle,
-      );
+      targetPlaylistRadioListTile = find
+          .ancestor(
+            of: find.text(localAudioTargetPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(targetPlaylistRadioListTile);
@@ -5953,7 +5952,7 @@ void main() {
            the local target playlist, then copy it from the target playlist
            to the another target playlist. The purpose of this test is to check
            that the 'Copied from playlist' and 'Copied to playlist' audio info
-           fields are correctly updated.''', (tester) async {
+           fields are correctly updated.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -6036,12 +6035,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be moved
 
-      Finder radioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetOnePlaylistTitle,
-      );
+      Finder radioListTile = find
+          .ancestor(
+            of: find.text(localAudioTargetOnePlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(radioListTile);
@@ -6194,12 +6193,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be moved
 
-      radioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetTwoPlaylistTitle,
-      );
+      radioListTile = find
+          .ancestor(
+            of: find.text(localAudioTargetTwoPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(radioListTile);
@@ -6262,7 +6261,7 @@ void main() {
            dir, a warning indicating that the audio copy is not performed.
            Verify that the audio comment file itself was not copied to the
            target playlist comment dir since the copy was excluded.''',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -6359,12 +6358,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be copied
 
-      Finder targetPlaylistRadioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetPlaylistTitleThree,
-      );
+      Finder targetPlaylistRadioListTile = find
+          .ancestor(
+            of: find.text(localAudioTargetPlaylistTitleThree),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(targetPlaylistRadioListTile);
@@ -6400,7 +6399,7 @@ void main() {
     testWidgets(
         '''Copy in new created local playlist an audio whose play speed is set to 
            1.5. Verify that the audio play speed is correctly set in the copied
-           audio file''', (tester) async {
+           audio file''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -6491,12 +6490,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be copied
 
-      Finder targetPlaylistRadioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == newLocalAudioTargetPlaylistTitle,
-      );
+      Finder targetPlaylistRadioListTile = find
+          .ancestor(
+            of: find.text(newLocalAudioTargetPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(targetPlaylistRadioListTile);
@@ -6583,7 +6582,7 @@ void main() {
            it again back from the target to the source playlist. The purpose
            of this test is to check that the 'Moved from playlist' and 'Moved
            to playlist' audio info fields are correctly updated.''',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -6665,12 +6664,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be moved
 
-      Finder radioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetPlaylistTitle,
-      );
+      Finder radioListTile = find
+          .ancestor(
+            of: find.text(localAudioTargetPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(radioListTile);
@@ -6892,12 +6891,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be moved
 
-      radioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == youtubeAudioSourcePlaylistTitle,
-      );
+      radioListTile = find
+          .ancestor(
+            of: find.text(youtubeAudioSourcePlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(radioListTile);
@@ -6982,10 +6981,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be moved
 
-      radioListTile = find.byWidgetPredicate((Widget widget) =>
-          widget is RadioListTile &&
-          widget.title is Text &&
-          (widget.title as Text).data == localAudioTargetPlaylistTitle);
+      radioListTile = find
+          .ancestor(
+            of: find.text(localAudioTargetPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(radioListTile);
@@ -7034,7 +7035,7 @@ void main() {
            in source playlist checkbox. This displays a warning indicating
            that the audio reference in the Youtube playlist should be removed
            otherwise it will be downloaded again the next time the user
-           will download this playlist.''', (tester) async {
+           will download this playlist.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -7112,12 +7113,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be moved
 
-      final Finder radioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioPlaylistTitle,
-      );
+      final Finder radioListTile = find
+          .ancestor(
+            of: find.text(localAudioPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(radioListTile);
@@ -7153,7 +7154,7 @@ void main() {
     });
     testWidgets(
         '''Move audio not present in source playlist unchecking the 'keep
-           audio in source playlist' checkbox.''', (tester) async {
+           audio in source playlist' checkbox.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -7240,12 +7241,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be moved
 
-      final Finder radioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioPlaylistTitle,
-      );
+      final Finder radioListTile = find
+          .ancestor(
+            of: find.text(localAudioPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(radioListTile);
@@ -7276,7 +7277,7 @@ void main() {
       );
     });
     testWidgets('''Move audio not present in source playlist without unchecking
-           the 'keep audio in source playlist' checkbox.''', (tester) async {
+           the 'keep audio in source playlist' checkbox.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -7363,12 +7364,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be moved
 
-      final Finder radioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioPlaylistTitle,
-      );
+      final Finder radioListTile = find
+          .ancestor(
+            of: find.text(localAudioPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(radioListTile);
@@ -7395,7 +7396,7 @@ void main() {
     });
     testWidgets(
         '''Move audio without selecting the target playlist and unchecking
-           the 'keep audio in source playlist' checkbox.''', (tester) async {
+           the 'keep audio in source playlist' checkbox.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -7497,7 +7498,7 @@ void main() {
     });
     testWidgets(
         '''Move audio without selecting the target playlist without unchecking
-           the 'keep audio in source playlist' checkbox.''', (tester) async {
+           the 'keep audio in source playlist' checkbox.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -7598,7 +7599,7 @@ void main() {
            dir, a warning indicating that the audio move is not performed.
            Verify that the audio comment file itself was not moved to the
            target playlist comment dir since the move operation was excluded.''',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -7695,12 +7696,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be copied
 
-      Finder targetPlaylistRadioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetPlaylistTitleThree,
-      );
+      Finder targetPlaylistRadioListTile = find
+          .ancestor(
+            of: find.text(localAudioTargetPlaylistTitleThree),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(targetPlaylistRadioListTile);
@@ -7736,7 +7737,7 @@ void main() {
     testWidgets(
         '''Move in new created local playlist an audio whose play speed is set to 
            1.5. Verify that the audio play speed is correctly set in the moved
-           audio file''', (tester) async {
+           audio file''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -7827,12 +7828,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be moved
 
-      Finder targetPlaylistRadioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == newLocalAudioTargetPlaylistTitle,
-      );
+      Finder targetPlaylistRadioListTile = find
+          .ancestor(
+            of: find.text(newLocalAudioTargetPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(targetPlaylistRadioListTile);
@@ -7917,7 +7918,7 @@ void main() {
            Youtube playlist. This audio is then 'deleted from playlist as well'
            from the other Youtube playlist with no warning being displayed
            since, as a copied audio, it is not referenced in the Youtube
-           playlist.''', (tester) async {
+           playlist.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -8017,12 +8018,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be copied
 
-      final Finder radioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetSourcePlaylistTitle,
-      );
+      final Finder radioListTile = find
+          .ancestor(
+            of: find.text(localAudioTargetSourcePlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(radioListTile);
@@ -8148,12 +8149,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be copied
 
-      final Finder secondYoutubeTargetRadioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == youtubeAudioTargetPlaylistTitle,
-      );
+      final Finder secondYoutubeTargetRadioListTile = find
+          .ancestor(
+            of: find.text(youtubeAudioTargetPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(secondYoutubeTargetRadioListTile);
@@ -8329,7 +8330,7 @@ void main() {
            Youtube playlist. This audio is then 'deleted from playlist as well'
            from the other Youtube playlist with no warning being displayed
            since, as a copied audio, it is not referenced in the Youtube
-           playlist.''', (tester) async {
+           playlist.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -8429,12 +8430,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be moved
 
-      final Finder radioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localAudioTargetSourcePlaylistTitle,
-      );
+      final Finder radioListTile = find
+          .ancestor(
+            of: find.text(localAudioTargetSourcePlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(radioListTile);
@@ -8547,12 +8548,12 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be moved
 
-      final Finder secondYoutubeTargetRadioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == youtubeAudioTargetPlaylistTitle,
-      );
+      final Finder secondYoutubeTargetRadioListTile = find
+          .ancestor(
+            of: find.text(youtubeAudioTargetPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(secondYoutubeTargetRadioListTile);
@@ -8689,7 +8690,7 @@ void main() {
   group('''Executing update playable audio list after manually deleting audio
            files test''', () {
     testWidgets('Manually delete all audio in Youtube playlist directory.',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -8895,7 +8896,7 @@ void main() {
       );
     });
     testWidgets('Manually delete all audio in local playlist directory.',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -9092,7 +9093,7 @@ void main() {
       );
     });
     testWidgets('Manually delete some audio in Youtube playlist directory.',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -9275,7 +9276,7 @@ void main() {
       );
     });
     testWidgets('Manually delete some audio in local playlist directory.',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -9454,7 +9455,7 @@ void main() {
          playlists test''', () {
     testWidgets(
         '''Manually delete all audio files in existing playlist and manually
-           add a Youtube playlist directory.''', (tester) async {
+           add a Youtube playlist directory.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -9680,7 +9681,7 @@ void main() {
       );
     });
     testWidgets('Manually add copied smartphone local playlist directory.',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -9802,7 +9803,7 @@ void main() {
       );
     });
     testWidgets('Manually add copied smartphone Youtube playlist directory.',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -9927,7 +9928,7 @@ void main() {
     });
     testWidgets(
         '''Manually delete all application data including the settings.json file
-           and then execute update playlist JSON files''', (tester) async {
+           and then execute update playlist JSON files''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -10003,7 +10004,7 @@ void main() {
       );
     });
     testWidgets('''Manually delete Youtube playlist directory after adding it
-           manually.''', (tester) async {
+           manually.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -10122,7 +10123,7 @@ void main() {
     });
     testWidgets(
         '''Manually delete Youtube playlist directory with playlist expanded
-           list closed after adding it manually.''', (tester) async {
+           list closed after adding it manually.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -10263,7 +10264,7 @@ void main() {
         '''With Playlist list displayed, execute update playlist json file
            after deleting all files in app audio dir and verify audio menu
            state. Do the same after re-adding app audio dir files.''',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -10386,7 +10387,7 @@ void main() {
         '''With Playlist list not displayed, execute update playlist json
            file after deleting all files in app audio dir and verify audio
            menu state. Do same after re-adding app audio dir files.''',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -10515,7 +10516,7 @@ void main() {
         '''With Playlist list displayed and selected playlist empty, execute
            update playlist json file after deleting all files in app audio
            dir and verify audio menu state. Do same after re-adding app audio
-           dir files.''', (tester) async {
+           dir files.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -10654,7 +10655,7 @@ void main() {
     testWidgets('''With Playlist list not displayed and selected playlist empty,
            execute update playlist json file after deleting all files in
            app audio dir and verify audio menu state. Do same after re-adding
-           app audio dir files.''', (tester) async {
+           app audio dir files.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -10896,7 +10897,7 @@ void main() {
            'Delete Audio ...'. Verify the displayed warning. Then click on the
            'Confirm' button. Verify the suppression of the audio mp3 file as well
            as its comment file. Verify also the updated playlist playable audio
-           list.''', (tester) async {
+           list.''', (WidgetTester tester) async {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName: 'delete_filtered_audio_test',
@@ -11087,7 +11088,7 @@ void main() {
            select 'Delete Audio ...'. Verify the suppression of the audio mp3. Verify
            also the updated playlist playable audio list and the new not totally
            played selected audio and the new not totally played selected audio.''',
-            (tester) async {
+            (WidgetTester tester) async {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName:
@@ -11226,7 +11227,7 @@ void main() {
            'Delete Audio ...'. Verify the displayed warning. Then click on the
            'Confirm' button. Verify the suppression of the audio mp3 file as well
            as its comment file. Verify also the updated playlist playable audio
-           list.''', (tester) async {
+           list.''', (WidgetTester tester) async {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName: 'delete_filtered_audio_test',
@@ -11471,7 +11472,7 @@ void main() {
            uncommented audio "Les besoins artificiels par R.Keucheyan" and select
            'Delete Audio ...'. Verify the suppression of the audio mp3. Verify
            also the updated playlist playable audio list and the new not totally
-           played selected audio.''', (tester) async {
+           played selected audio.''', (WidgetTester tester) async {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName:
@@ -11680,7 +11681,7 @@ void main() {
            'Delete Audio from Playlist as well ...'. Verify the displayed warning.
            Then click on the 'Confirm' button. Verify the suppression of the audio
            mp3 file as well as its comment file. Verify also the updated playlist
-           playable audio list.''', (tester) async {
+           playable audio list.''', (WidgetTester tester) async {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName: 'delete_filtered_audio_test',
@@ -11880,7 +11881,7 @@ void main() {
            select 'Delete Audio from Playlist as well ...'. Verify the suppression
            of the audio mp3. Verify also the updated playlist playable audio list
            and the new not totally played selected audio and the new not totally
-           played selected audio.''', (tester) async {
+           played selected audio.''', (WidgetTester tester) async {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName:
@@ -12028,7 +12029,7 @@ void main() {
            and select 'Delete Audio from Playlist as well ...'. Verify the displayed
            warning. Then click on the 'Confirm' button. Verify the suppression of
            the audio mp3 file as well as its comment file. Verify also the updated
-           playlist playable audio list.''', (tester) async {
+           playlist playable audio list.''', (WidgetTester tester) async {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName: 'delete_filtered_audio_test',
@@ -12324,7 +12325,7 @@ void main() {
            and select 'Delete Audio from Playlist as well ...'. Verify the suppression
            of the audio mp3. Verify also the updated playlist playable audio list
            and the new not totally played selected audio and the new not totally
-           played selected audio.''', (tester) async {
+           played selected audio.''', (WidgetTester tester) async {
           await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
             tester: tester,
             savedTestDataDirName:
@@ -12567,7 +12568,7 @@ void main() {
       group('In playlist download view, delete unique audio test', () {
         testWidgets(
             '''Delete unique audio mp3 only and then switch to AudioPlayerView
-           screen.''', (tester) async {
+           screen.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -12732,7 +12733,7 @@ void main() {
         });
         testWidgets(
             '''Delete unique audio from playlist as well and then switch to
-           AudioPlayerView screen.''', (tester) async {
+           AudioPlayerView screen.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -12878,7 +12879,7 @@ void main() {
       });
     });
     group('In audio player view, delete unique audio test', () {
-      testWidgets('''Delete unique audio mp3 only.''', (tester) async {
+      testWidgets('''Delete unique audio mp3 only.''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -13061,7 +13062,7 @@ void main() {
         );
       });
       testWidgets('''On no selected playlist, delete unique audio mp3 only.''',
-          (tester) async {
+          (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -13246,7 +13247,7 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
-      testWidgets('''Delete unique playing audio mp3 only.''', (tester) async {
+      testWidgets('''Delete unique playing audio mp3 only.''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -13419,7 +13420,7 @@ void main() {
         );
       });
       testWidgets('''From playlist as well, delete unique audio mp3.''',
-          (tester) async {
+          (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -13587,7 +13588,7 @@ void main() {
   });
   group('Bug fix tests', () {
     testWidgets('Verifying with partial download of single video audio',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -13651,7 +13652,7 @@ void main() {
       );
     });
     testWidgets('''Verifying execution of "Delete audio from playlist as well"
-           playlist menu item''', (tester) async {
+           playlist menu item''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -13795,7 +13796,7 @@ void main() {
       );
     });
     testWidgets('Click on download at musical quality checkbox bug fix',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -13877,7 +13878,7 @@ void main() {
     });
   });
   group('Delete existing playlist test', () {
-    testWidgets('Delete selected Youtube playlist', (tester) async {
+    testWidgets('Delete selected Youtube playlist', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -14051,7 +14052,8 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('From playlists root dir, delete selected Youtube playlist', (tester) async {
+    testWidgets('From playlists root dir, delete selected Youtube playlist',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -14225,7 +14227,7 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Cancel delete selected Youtube playlist', (tester) async {
+    testWidgets('Cancel delete selected Youtube playlist', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -14391,7 +14393,7 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Delete selected local playlist', (tester) async {
+    testWidgets('Delete selected local playlist', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -14558,7 +14560,8 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('From playlists root dir, delete selected local playlist', (tester) async {
+    testWidgets('From playlists root dir, delete selected local playlist',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -14725,7 +14728,7 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Cancel delete selected local playlist', (tester) async {
+    testWidgets('Cancel delete selected local playlist', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -14893,7 +14896,7 @@ void main() {
       );
     });
     testWidgets('''Delete non selected Youtube playlist while another Youtube
-           playlist is selected''', (tester) async {
+           playlist is selected''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -15073,7 +15076,7 @@ void main() {
     });
     testWidgets(
         '''Delete non selected Youtube playlist while a local playlist is
-           selected''', (tester) async {
+           selected''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -15257,7 +15260,7 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Delete non selected local playlist', (tester) async {
+    testWidgets('Delete non selected local playlist', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -15382,7 +15385,7 @@ void main() {
   });
   group('PlaylistDownloadView buttons state test', () {
     testWidgets('PlaylistDownloadView displayed with no selected playlist',
-        (tester) async {
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -15430,7 +15433,7 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Select a local playlist with no audio', (tester) async {
+    testWidgets('Select a local playlist with no audio', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -15516,7 +15519,7 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Select a Youtube playlist with no audio', (tester) async {
+    testWidgets('Select a Youtube playlist with no audio', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -15602,7 +15605,7 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Select a local playlist with audio', (tester) async {
+    testWidgets('Select a local playlist with audio', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -15678,7 +15681,7 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Select a Youtube playlist with audio', (tester) async {
+    testWidgets('Select a Youtube playlist with audio', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -15754,7 +15757,7 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Delete a Youtube playlist with audio', (tester) async {
+    testWidgets('Delete a Youtube playlist with audio', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -15888,7 +15891,7 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Delete a local playlist with 1 audio', (tester) async {
+    testWidgets('Delete a local playlist with 1 audio', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -16016,7 +16019,7 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Delete a unique audio in a local playlist', (tester) async {
+    testWidgets('Delete a unique audio in a local playlist', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -16134,7 +16137,7 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Delete a unique audio in a Youtube playlist', (tester) async {
+    testWidgets('Delete a unique audio in a Youtube playlist', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -16254,7 +16257,7 @@ void main() {
     });
     group('Open app with or without selected playlist', () {
       group('With playlist list displayed', () {
-        testWidgets('Selected local playlist with no audio', (tester) async {
+        testWidgets('Selected local playlist with no audio', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -16297,7 +16300,7 @@ void main() {
             rootPath: kApplicationPathWindowsTest,
           );
         });
-        testWidgets('Selected Youtube playlist with no audio', (tester) async {
+        testWidgets('Selected Youtube playlist with no audio', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -16350,7 +16353,7 @@ void main() {
             rootPath: kApplicationPathWindowsTest,
           );
         });
-        testWidgets('Selected Local playlist with audio', (tester) async {
+        testWidgets('Selected Local playlist with audio', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -16402,7 +16405,7 @@ void main() {
             rootPath: kApplicationPathWindowsTest,
           );
         });
-        testWidgets('Selected Youtube playlist with audio', (tester) async {
+        testWidgets('Selected Youtube playlist with audio', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -16457,7 +16460,7 @@ void main() {
         });
       });
       group('With playlist list not displayed', () {
-        testWidgets('Selected local playlist with no audio', (tester) async {
+        testWidgets('Selected local playlist with no audio', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -16510,7 +16513,7 @@ void main() {
             rootPath: kApplicationPathWindowsTest,
           );
         });
-        testWidgets('Selected Youtube playlist with no audio', (tester) async {
+        testWidgets('Selected Youtube playlist with no audio', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -16573,7 +16576,7 @@ void main() {
             rootPath: kApplicationPathWindowsTest,
           );
         });
-        testWidgets('Selected Local playlist with audio', (tester) async {
+        testWidgets('Selected Local playlist with audio', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -16635,7 +16638,7 @@ void main() {
             rootPath: kApplicationPathWindowsTest,
           );
         });
-        testWidgets('Selected Youtube playlist with audio', (tester) async {
+        testWidgets('Selected Youtube playlist with audio', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -18320,7 +18323,8 @@ void main() {
       // Verify that the comment list dialog now displays the
       // added comment
 
-      final Finder commentListDialogFinder = find.byKey(const Key('audioCommentsListKey'));
+      final Finder commentListDialogFinder =
+          find.byKey(const Key('audioCommentsListKey'));
 
       expect(
           find.descendant(
@@ -20474,8 +20478,7 @@ void main() {
 
       await tester.drag(
         find.byType(CommentListAddDialog),
-        const Offset(
-            0, 800), // Negative value for vertical drag to scroll down
+        const Offset(0, 800), // Negative value for vertical drag to scroll down
       );
 
       await tester.pumpAndSettle();
@@ -20495,10 +20498,10 @@ void main() {
       iconWidget = tester.widget<Icon>(iconFinder);
       expect(iconWidget.icon, Icons.play_arrow);
 
-        // Let the last comment of the fourth audio be played during
-        // 2.1 seconds since it arrives to the audio end after 2 seconds.
-        await Future.delayed(const Duration(milliseconds: 2100));
-        await tester.pumpAndSettle();
+      // Let the last comment of the fourth audio be played during
+      // 2.1 seconds since it arrives to the audio end after 2 seconds.
+      await Future.delayed(const Duration(milliseconds: 2100));
+      await tester.pumpAndSettle();
 
       // Checking the currently played comment icon button
 
@@ -20862,7 +20865,8 @@ Future<void> _checkAudioCommentInAudioPlayerView({
 
   // Verify that the expectedCommentTitle is listed
 
-  Finder commentListDialogFinder = find.byKey(const Key('audioCommentsListKey'));
+  Finder commentListDialogFinder =
+      find.byKey(const Key('audioCommentsListKey'));
 
   expect(
       find.descendant(

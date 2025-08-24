@@ -602,12 +602,12 @@ Future<void> main() async {
       // Find the RadioListTile target playlist to which the audio
       // will be downloaded
 
-      final Finder radioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == emptyLocalTestPlaylistTitle,
-      );
+      Finder radioListTile = find
+          .ancestor(
+            of: find.text(emptyLocalTestPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(radioListTile);
@@ -743,12 +743,12 @@ Future<void> main() async {
       // Find the RadioListTile target playlist to which the audio
       // will be downloaded
 
-      final Finder radioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == emptyLocalTestPlaylistTitle,
-      );
+      Finder radioListTile = find
+          .ancestor(
+            of: find.text(emptyLocalTestPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(radioListTile);
@@ -891,12 +891,12 @@ Future<void> main() async {
       // Find the RadioListTile target playlist to which the audio
       // will be downloaded
 
-      final Finder radioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == localTestPlaylistTitle,
-      );
+      Finder radioListTile = find
+          .ancestor(
+            of: find.text(localTestPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
 
       // Tap the target playlist RadioListTile to select it
       await tester.tap(radioListTile);
@@ -1474,7 +1474,8 @@ Future<void> main() async {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('''Adding playlist in spoken quality with backward invalid char.''',
+    testWidgets(
+        '''Adding playlist in spoken quality with backward invalid char.''',
         (WidgetTester tester) async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
@@ -1547,7 +1548,8 @@ Future<void> main() async {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('''Adding playlist in spoken quality with three invalid chars ':', '/' and "\\".''',
+    testWidgets(
+        '''Adding playlist in spoken quality with three invalid chars ':', '/' and "\\".''',
         (WidgetTester tester) async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir

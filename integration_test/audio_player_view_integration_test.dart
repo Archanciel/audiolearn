@@ -4894,7 +4894,7 @@ void main() {
     testWidgets(
         '''Test on the playlist download view the correct audio item inkwell play/pause button change
             when the current playing audio reaches its end and the next audio starts playing.''',
-        (tester) async {
+        (WidgetTester tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'test_on_Windows_inkwell_button',
@@ -5017,13 +5017,13 @@ void main() {
         expectedIconColor: Colors.white,
         expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
       );
-  
+
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kApplicationPathWindowsTest,
       );
-  });
+    });
   });
   group('Selecting playlist in AudioPlayerView', () {
     testWidgets(
@@ -5549,11 +5549,9 @@ void main() {
       // Find the RadioListTile target playlist to which the audio
       // will be copied
 
-      Finder targetPlaylistRadioListTile = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is RadioListTile &&
-            widget.title is Text &&
-            (widget.title as Text).data == emptyPlaylistTitle,
+      Finder targetPlaylistRadioListTile = find.ancestor(
+        of: find.text(emptyPlaylistTitle),
+        matching: find.byType(ListTile),
       );
 
       // Tap the target playlist RadioListTile to select it
