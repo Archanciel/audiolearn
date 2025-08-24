@@ -167,9 +167,13 @@ class TextToSpeechVM extends ChangeNotifier {
     try {
       AudioFile? audioFile;
 
+      // CRITICAL FIX: Don't modify _inputText directly
+      // Create a processed copy instead
+      String processedText = _convertSingleBracesToQuoted(_inputText);
+
       audioFile = await _directGoogleTtsService.convertTextToMP3(
         warningMessageVMlistenFalse: warningMessageVMlistenFalse,
-        text: _inputText,
+        text: processedText, // Use processedText, not _inputText
         customFileName: fileName,
         mp3FileDirectory: mp3FileDirectory,
         isVoiceMan: isVoiceMan,
