@@ -3670,6 +3670,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The file \"{fileName}.mp3\" already exists in the playlist \"{playlistTitle}\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.'**
   String replaceExistingAudioInPlaylist(Object fileName, Object playlistTitle);
+
+  /// No description provided for @speech.
+  ///
+  /// In en, this message translates to:
+  /// **'Text'**
+  String get speech;
 }
 
 class _AppLocalizationsDelegate

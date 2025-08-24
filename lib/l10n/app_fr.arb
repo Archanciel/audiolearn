@@ -1459,5 +1459,6 @@
   "createMP3": "Créer MP3",
   "audioImportedFromTextToSpeechToLocalPlaylist": "L'audio créé par la conversion de texte en MP3\n\n{importedAudioFileNames}\n\na été importé vers la playlist locale \"{toPlaylistTitle}\".",
   "audioImportedFromTextToSpeechToYoutubePlaylist": "L'audio créé par la conversion de texte en MP3\n\n{importedAudioFileNames}\n\na été importé vers la playlist Youtube \"{toPlaylistTitle}\".",
-  "replaceExistingAudioInPlaylist": "Le fichier \"{fileName}.mp3\" existe déjà dans la playlist \"{playlistTitle}\". Si vous voulez le remplacer par la nouvelle version, cliquez sur le bouton \"Confirmer\". Sinon, cliquez sur le bouton \"Annuler\" et vous pourrez définir un nom de fichier différent."
+  "replaceExistingAudioInPlaylist": "Le fichier \"{fileName}.mp3\" existe déjà dans la playlist \"{playlistTitle}\". Si vous voulez le remplacer par la nouvelle version, cliquez sur le bouton \"Confirmer\". Sinon, cliquez sur le bouton \"Annuler\" et vous pourrez définir un nom de fichier différent.",
+  "speech": "Paroles"
 }

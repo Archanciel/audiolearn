@@ -2308,4 +2308,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String replaceExistingAudioInPlaylist(Object fileName, Object playlistTitle) {
     return 'Le fichier \"$fileName.mp3\" existe déjà dans la playlist \"$playlistTitle\". Si vous voulez le remplacer par la nouvelle version, cliquez sur le bouton \"Confirmer\". Sinon, cliquez sur le bouton \"Annuler\" et vous pourrez définir un nom de fichier différent.';
   }
+
+  @override
+  String get speech => 'Paroles';
 }

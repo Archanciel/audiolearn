@@ -1,6 +1,7 @@
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as path;
 import '../../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -8,8 +9,10 @@ import '../../constants.dart';
 import '../../models/audio.dart';
 import '../../models/audio_file.dart';
 import '../../models/playlist.dart';
+import '../../models/comment.dart' as audiolearn;
 import '../../services/sort_filter_parameters.dart';
 import '../../viewmodels/audio_player_vm.dart';
+import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/text_to_speech_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
@@ -541,8 +544,8 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
             return ConfirmActionDialog(
               actionFunction: returnConfirmAction,
               actionFunctionArgs: [],
-              dialogTitleOne: AppLocalizations.of(context)!
-                  .replaceExistingAudioInPlaylist(
+              dialogTitleOne:
+                  AppLocalizations.of(context)!.replaceExistingAudioInPlaylist(
                 fileName,
                 targetPlaylist.title,
               ),
@@ -575,23 +578,35 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
       if (currentAudioFile != null) {
         if (!context.mounted) return;
 
-        audioDownloadVMlistenFalse.importAudioFilesInPlaylist(
+        await audioDownloadVMlistenFalse.importAudioFilesInPlaylist(
           targetPlaylist: targetPlaylist,
           filePathNameToImportLst: [currentAudioFile.filePath],
           doesImportedFileResultFromTextToSpeech: true,
         );
 
-        // audioDownloadVMlistenFalse.addFileInPlaylist(
-        //   targetPlaylist: targetPlaylist,
-        //   filePathNameToImportLst: [currentAudioFile.filePath],
-        // );
+        Audio? audio = targetPlaylist.getAudioByFileNameNoExt(
+            audioFileNameNoExt: currentAudioFile.filePath
+                .split(path.separator)
+                .last
+                .replaceFirst(
+                  '.mp3',
+                  '',
+                ));
 
-        // widget.warningMessageVMlistenFalse
-        //     .setAudioImportedFromTextToSpeechOperation(
-        //   importedAudioFileName: "\"$fileName\"",
-        //   importedToPlaylistTitle: targetPlaylist.title,
-        //   importedToPlaylistType: targetPlaylist.playlistType,
-        // );
+        CommentVM commentVMlistenFalse = Provider.of<CommentVM>(
+          context,
+          listen: false,
+        );
+
+        commentVMlistenFalse.addComment(
+          comment: audiolearn.Comment(
+            title: AppLocalizations.of(context)!.speech,
+            content: currentAudioFile.text,
+            commentStartPositionInTenthOfSeconds: 0,
+            commentEndPositionInTenthOfSeconds:0,
+          ),
+          audioToComment: audio!,
+        );
       }
     }
   }
