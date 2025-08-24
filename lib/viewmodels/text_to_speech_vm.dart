@@ -59,7 +59,9 @@ class TextToSpeechVM extends ChangeNotifier {
   }) async {
     if (_inputText.trim().isEmpty) return;
 
-    _inputText = _convertSingleBracesToQuoted(_inputText);
+    // CRITICAL FIX: Don't modify _inputText directly
+    // Create a processed copy instead
+    String processedText = _convertSingleBracesToQuoted(_inputText);
 
     _isSpeaking = true;
     notifyListeners();
@@ -67,7 +69,7 @@ class TextToSpeechVM extends ChangeNotifier {
     try {
       // Start speaking with silence support
       await _ttsService.speak(
-        text: _inputText,
+        text: processedText, // Use processedText, not _inputText
         isVoiceMan: isVoiceMan,
         silenceDurationSeconds: _silenceDurationSeconds,
       );
