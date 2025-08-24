@@ -134,7 +134,7 @@ class TextToSpeechVM extends ChangeNotifier {
         result.write("'{'");
       } else {
         // Multiple consecutive braces - keep as is
-        for (int pos in group) {
+        for (int _ in group) {
           result.write('{');
         }
       }
