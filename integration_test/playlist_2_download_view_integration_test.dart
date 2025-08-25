@@ -27115,6 +27115,130 @@ void main() {
       );
     });
   });
+  group('''Test AudioDownloadVM import audio's functionality.''', () {
+    testWidgets(
+        '''Importing one audio test. Normally, the imported audio's are not located in
+          a playlist !''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      const String selectedPlaylistTitle = 'urgent_actus_17-12-2023';
+      const String localPlaylistTitle = 'local';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'import_audios_integr_test',
+        selectedPlaylistTitle: selectedPlaylistTitle,
+        tapOnPlaylistToggleButton: false,
+      );
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      const String fileName_5 = "bbb.mp3";
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: fileName_5,
+            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_5",
+            size: 155136),
+      ]);
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: localPlaylistTitle,
+        playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
+      );
+
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Audio(s)\n\n\"$fileName_5\"\n\nimported to local playlist \"$localPlaylistTitle\".",
+        isWarningConfirming: true,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''2 audio's present in the source playlist exist in the playlist which will import
+          all audio's of the source playlist. This situation will display 2 warnings, one
+          audio import confirmation and one already existing audio's not imported warning.
+          Normally, the imported audio's are not located in a playlist !''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      const String selectedPlaylistTitle = 'urgent_actus_17-12-2023';
+      const String localPlaylistTitle = 'local';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'import_audios_integr_test',
+        selectedPlaylistTitle: selectedPlaylistTitle,
+        tapOnPlaylistToggleButton: false,
+      );
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      const String fileName_5 = "bbb.mp3";
+
+      mockFilePicker.setSelectedFiles([
+        // PlatformFile(
+        //     name: "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+        //     path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle",
+        //     size: 176640),
+        // PlatformFile(
+        //     name: "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
+        //     path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle",
+        //     size: 183552),
+        // PlatformFile(
+        //     name: "250812-162933-DETTE PUBLIQUE - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+        //     path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle",
+        //     size: 176640),
+        // PlatformFile(
+        //     name: "aaa.mp3",
+        //     path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle",
+        //     size: 175296),
+        PlatformFile(
+            name: fileName_5,
+            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_5",
+            size: 155136),
+      ]);
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: localPlaylistTitle,
+        playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
+      );
+
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Audio(s)\n\n\"$fileName_5\"\n\nimported to local playlist \"$localPlaylistTitle\".",
+        isWarningConfirming: true,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+  });
 }
 
 Future<void> _verifyCreatedZipFilesContent({
