@@ -359,7 +359,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               listen: false,
             );
 
-            audioDownloadVMlistenFalse.importAudioFilesInPlaylist(
+            await audioDownloadVMlistenFalse.importAudioFilesInPlaylist(
               targetPlaylist: playlist,
               filePathNameToImportLst: selectedFilePathNameLst,
             );
