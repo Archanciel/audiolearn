@@ -2217,7 +2217,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get convertTextToAudioDialogTitle => 'Convert Text to Audio';
 
   @override
-  String get textToConvert => 'Text to convert, brace = ';
+  String textToConvert(Object brace_1) {
+    return 'Text to convert, $brace_1 = silence';
+  }
 
   @override
   String get textToConvertTextFieldTooltip =>
@@ -2287,4 +2289,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get speech => 'Text';
+
+  @override
+  String convertTextToAudioHelpTitle(Object brace_1) {
+    return 'How to use the $brace_1 character';
+  }
+
+  @override
+  String convertTextToAudioHelpContent(
+      Object brace_1, Object brace_2, Object brace_3) {
+    return '${brace_1}A text with a character that introduces a 1-second silence. At the beginning of the text, 2 seconds of silence are added. $brace_2 Before this sentence, 4 seconds of silence are introduced. $brace_3 Here, one second of silence. This character was chosen because it is not normally used in writing.';
+  }
 }
