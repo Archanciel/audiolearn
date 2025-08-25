@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../../constants.dart';
 import '../../models/audio.dart';
 import '../../models/audio_file.dart';
+import '../../models/help_item.dart';
 import '../../models/playlist.dart';
 import '../../models/comment.dart' as audiolearn;
 import '../../services/sort_filter_parameters.dart';
@@ -19,6 +20,7 @@ import '../screen_mixin.dart';
 import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import 'confirm_action_dialog.dart';
+import 'help_dialog.dart';
 
 enum CalledFrom {
   playlistDownloadView,
@@ -116,8 +118,46 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
 
     return Center(
       child: AlertDialog(
-        title:
-            Text(AppLocalizations.of(context)!.convertTextToAudioDialogTitle),
+        // title:
+        //     Text(AppLocalizations.of(context)!.convertTextToAudioDialogTitle),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              child: Text(
+                AppLocalizations.of(context)!.convertTextToAudioDialogTitle,
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+            ),
+            IconButton(
+              icon: IconTheme(
+                data: (themeProviderVM.currentTheme == AppTheme.dark
+                        ? ScreenMixin.themeDataDark
+                        : ScreenMixin.themeDataLight)
+                    .iconTheme,
+                child: const Icon(
+                  Icons.help_outline,
+                  size: 40.0,
+                ),
+              ),
+              onPressed: () {
+                showDialog<void>(
+                  context: context,
+                  builder: (context) => HelpDialog(
+                    helpItemsLst: [
+                      HelpItem(
+                        helpTitle: AppLocalizations.of(context)!
+                            .convertTextToAudioHelpTitle(('{')),
+                        helpContent: AppLocalizations.of(context)!
+                            .convertTextToAudioHelpContent('{{', '{{{{', '{'),
+                      )
+                    ],
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
         actionsPadding:
             // reduces the top vertical space between the buttons
             // and the content
@@ -183,11 +223,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                AppLocalizations.of(context)!.textToConvert,
-                style: kDialogTitlesStyle,
-              ),
-              Text(
-                '{',
+                AppLocalizations.of(context)!.textToConvert('{'),
                 style: kDialogTitlesStyle,
               ),
             ],
@@ -603,7 +639,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
             title: AppLocalizations.of(context)!.speech,
             content: currentAudioFile.text,
             commentStartPositionInTenthOfSeconds: 0,
-            commentEndPositionInTenthOfSeconds:0,
+            commentEndPositionInTenthOfSeconds: 0,
           ),
           audioToComment: audio!,
         );

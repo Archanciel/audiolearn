@@ -1441,7 +1441,7 @@
   "playlistConvertTextToAudioMenu": "Convertir un texte en audio ...",
   "playlistConvertTextToAudioMenuTooltip": "Convertir un texte en audio écoutable qui est ajouté à la playlist. Comme pour les autres audio's, il sera possible d'ajouter des commentaires positionnés ou une image à cet audio.",
   "convertTextToAudioDialogTitle": "Convertir le texte en audio",
-  "textToConvert": "Texte à convertir, accolade = ",
+  "textToConvert": "Texte à convertir, {brace_1} = silence",
   "textToConvertTextFieldTooltip": "Entrer le texte à convertir en un audio ajouté à la playlist. L'audio est généré en utilisant la voix sélectionée. Insérer une ou plusieures accolade(s) afin d'ajouter à cet endroit une ou plusieures seconde(s) de silence.",
   "textToConvertTextFieldHint": "Entrez votre texte ici ...",
   "conversionVoiceSelection": "Sélection de la voix:",
@@ -1460,5 +1460,7 @@
   "audioImportedFromTextToSpeechToLocalPlaylist": "L'audio créé par la conversion de texte en MP3\n\n{importedAudioFileNames}\n\na été importé vers la playlist locale \"{toPlaylistTitle}\".",
   "audioImportedFromTextToSpeechToYoutubePlaylist": "L'audio créé par la conversion de texte en MP3\n\n{importedAudioFileNames}\n\na été importé vers la playlist Youtube \"{toPlaylistTitle}\".",
   "replaceExistingAudioInPlaylist": "Le fichier \"{fileName}.mp3\" existe déjà dans la playlist \"{playlistTitle}\". Si vous voulez le remplacer par la nouvelle version, cliquez sur le bouton \"Confirmer\". Sinon, cliquez sur le bouton \"Annuler\" et vous pourrez définir un nom de fichier différent.",
-  "speech": "Paroles"
+  "speech": "Paroles",
+  "convertTextToAudioHelpTitle": "Utilisation du caractère {brace_1}",
+  "convertTextToAudioHelpContent": "{brace_1}Un texte avec un caractère qui introduit un silence de 1 seconde. Au dàbut du texte, 2 secondes de silence sont ajoutées. {brace_2} Avant cette phrase, 4 secondes de silence sont introduites. {brace_3} Ici, une seconde de silence. Ce caractère a été choisi du fait qu'il n'est pas normalement utilisé dans les écritures."
 }
