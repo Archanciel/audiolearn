@@ -222,9 +222,12 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                AppLocalizations.of(context)!.textToConvert('{'),
-                style: kDialogTitlesStyle,
+              Flexible(
+                child: Text(
+                  AppLocalizations.of(context)!.textToConvert('{'),
+                  style: kDialogTitlesStyle,
+                  maxLines: 2,
+                ),
               ),
             ],
           ),
