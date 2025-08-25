@@ -107,15 +107,13 @@ class TextToSpeechVM extends ChangeNotifier {
 
       for (int i = 1; i < bracePositions.length; i++) {
         if (bracePositions[i] == bracePositions[i - 1] + 1) {
-          // Consecutive brace
           currentGroup.add(bracePositions[i]);
         } else {
-          // Non-consecutive, start new group
           braceGroups.add(currentGroup);
           currentGroup = [bracePositions[i]];
         }
       }
-      braceGroups.add(currentGroup); // Add the last group
+      braceGroups.add(currentGroup);
     }
 
     // Build result string
@@ -130,11 +128,12 @@ class TextToSpeechVM extends ChangeNotifier {
 
       // Handle the brace group
       if (group.length == 1) {
-        // Single brace - convert to quoted
-        result.write("'{'");
+        // Single brace - replace with placeholder that includes "brace"
+        // This will be spoken as "open brace" by TTS
+        result.write('{{');
       } else {
-        // Multiple consecutive braces - keep as is
-        for (int _ in group) {
+        // Multiple consecutive braces - keep as silence markers
+        for (int i = 0; i < group.length; i++) {
           result.write('{');
         }
       }
@@ -142,7 +141,7 @@ class TextToSpeechVM extends ChangeNotifier {
       textIndex += group.length;
     }
 
-    // Add remaining text after last brace group
+    // Add remaining text
     while (textIndex < text.length) {
       result.write(text[textIndex]);
       textIndex++;
