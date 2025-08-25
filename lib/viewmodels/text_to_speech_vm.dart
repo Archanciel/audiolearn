@@ -85,6 +85,7 @@ class TextToSpeechVM extends ChangeNotifier {
     }
   }
 
+
   String _convertSingleBracesToQuoted(String text) {
     if (!text.contains('{')) {
       return text;
@@ -107,13 +108,15 @@ class TextToSpeechVM extends ChangeNotifier {
 
       for (int i = 1; i < bracePositions.length; i++) {
         if (bracePositions[i] == bracePositions[i - 1] + 1) {
+          // Consecutive brace
           currentGroup.add(bracePositions[i]);
         } else {
+          // Non-consecutive, start new group
           braceGroups.add(currentGroup);
           currentGroup = [bracePositions[i]];
         }
       }
-      braceGroups.add(currentGroup);
+      braceGroups.add(currentGroup); // Add the last group
     }
 
     // Build result string
@@ -128,12 +131,11 @@ class TextToSpeechVM extends ChangeNotifier {
 
       // Handle the brace group
       if (group.length == 1) {
-        // Single brace - replace with placeholder that includes "brace"
-        // This will be spoken as "open brace" by TTS
-        result.write('{{');
+        // Single brace - convert to quoted
+        result.write('{');
       } else {
-        // Multiple consecutive braces - keep as silence markers
-        for (int i = 0; i < group.length; i++) {
+        // Multiple consecutive braces - keep as is
+        for (int _ in group) {
           result.write('{');
         }
       }
@@ -141,7 +143,7 @@ class TextToSpeechVM extends ChangeNotifier {
       textIndex += group.length;
     }
 
-    // Add remaining text
+    // Add remaining text after last brace group
     while (textIndex < text.length) {
       result.write(text[textIndex]);
       textIndex++;
