@@ -27117,8 +27117,9 @@ void main() {
   });
   group('''Test AudioDownloadVM import audio's functionality.''', () {
     testWidgets(
-        '''Importing one audio test. Normally, the imported audio's are not located in
-          a playlist !''',
+        '''Importing one audio test. Verify conversion warning. Then reimporting it and verify
+          the not imported warning. Normally, the imported audio's are not located in a playlist
+          directory !''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -27142,6 +27143,7 @@ void main() {
 
       const String fileName_5 = "bbb.mp3";
 
+      // Setting one selected mp3 file.
       mockFilePicker.setSelectedFiles([
         PlatformFile(
             name: fileName_5,
@@ -27160,6 +27162,19 @@ void main() {
         warningDialogMessage:
             "Audio(s)\n\n\"$fileName_5\"\n\nimported to local playlist \"$localPlaylistTitle\".",
         isWarningConfirming: true,
+      );
+
+      // Re-import the same audio to verify the not imported warning
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: localPlaylistTitle,
+        playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
+      );
+
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Audio(s)\n\n\"$fileName_5\"\n\nNOT imported to local playlist \"$localPlaylistTitle\" since the playlist directory already contains the audio(s).",
       );
 
       // Purge the test playlist directory so that the created test
@@ -27194,25 +27209,29 @@ void main() {
       MockFilePicker mockFilePicker = MockFilePicker();
       FilePicker.platform = mockFilePicker;
 
+      const String fileName_1 = "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3";
+      const String fileName_2 = "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3";
+      const String fileName_3 = "250812-162933-DETTE PUBLIQUE - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3";
+      const String fileName_4 = "aaa.mp3";
       const String fileName_5 = "bbb.mp3";
 
       mockFilePicker.setSelectedFiles([
-        // PlatformFile(
-        //     name: "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-        //     path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle",
-        //     size: 176640),
-        // PlatformFile(
-        //     name: "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
-        //     path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle",
-        //     size: 183552),
-        // PlatformFile(
-        //     name: "250812-162933-DETTE PUBLIQUE - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-        //     path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle",
-        //     size: 176640),
-        // PlatformFile(
-        //     name: "aaa.mp3",
-        //     path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle",
-        //     size: 175296),
+        PlatformFile(
+            name: fileName_1,
+            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_1",
+            size: 176640),
+        PlatformFile(
+            name: fileName_2,
+            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_2",
+            size: 183552),
+        PlatformFile(
+            name: fileName_3,
+            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_3",
+            size: 176640),
+        PlatformFile(
+            name: fileName_4,
+            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_4",
+            size: 175296),
         PlatformFile(
             name: fileName_5,
             path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_5",
@@ -27228,8 +27247,51 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Audio(s)\n\n\"$fileName_5\"\n\nimported to local playlist \"$localPlaylistTitle\".",
+            "Audio(s)\n\n\"$fileName_1\",\n\"$fileName_2\",\n\"$fileName_5\"\n\nimported to local playlist \"$localPlaylistTitle\".",
         isWarningConfirming: true,
+      );
+
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Audio(s)\n\n\"$fileName_3\",\n\"$fileName_4\"\n\nNOT imported to local playlist \"$localPlaylistTitle\" since the playlist directory already contains the audio(s).",
+      );
+
+      // Re-import the same audio's to verify the not imported warning\
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: fileName_1,
+            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_1",
+            size: 176640),
+        PlatformFile(
+            name: fileName_2,
+            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_2",
+            size: 183552),
+        PlatformFile(
+            name: fileName_3,
+            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_3",
+            size: 176640),
+        PlatformFile(
+            name: fileName_4,
+            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_4",
+            size: 175296),
+        PlatformFile(
+            name: fileName_5,
+            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_5",
+            size: 155136),
+      ]);
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: localPlaylistTitle,
+        playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
+      );
+
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Audio(s)\n\n\"$fileName_1\",\n\"$fileName_2\",\n\"\"$fileName_3\",\n\"$fileName_4\",\n\"$fileName_5\"\n\nNOT imported to local playlist \"$localPlaylistTitle\" since the playlist directory already contains the audio(s).",
       );
 
       // Purge the test playlist directory so that the created test
