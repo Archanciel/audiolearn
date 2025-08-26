@@ -645,7 +645,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
             commentEndPositionInTenthOfSeconds:
                 audio!.audioDuration.inMilliseconds ~/ 100,
           ),
-          audioToComment: audio!,
+          audioToComment: audio,
         );
       }
     }
