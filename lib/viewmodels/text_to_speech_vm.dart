@@ -85,7 +85,6 @@ class TextToSpeechVM extends ChangeNotifier {
     }
   }
 
-
   String _convertSingleBracesToQuoted(String text) {
     if (!text.contains('{')) {
       return text;
@@ -131,8 +130,9 @@ class TextToSpeechVM extends ChangeNotifier {
 
       // Handle the brace group
       if (group.length == 1) {
-        // Single brace - convert to quoted
-        result.write('{');
+        for (int i = 0; i <= 1; i++) {
+          result.write('{');
+        }
       } else {
         // Multiple consecutive braces - keep as is
         for (int _ in group) {

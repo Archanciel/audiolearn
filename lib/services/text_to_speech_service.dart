@@ -6,7 +6,7 @@ import 'logging_service.dart';
 class TextToSpeechService {
   AudioPlayer? _directAudioPlayer;
   FlutterTts? _flutterTts;
-  
+
   // Track speaking state internally
   bool _isSpeaking = false;
   bool get isSpeaking => _isSpeaking;
@@ -26,7 +26,7 @@ class TextToSpeechService {
     // Set up completion handler
     _flutterTts!.setCompletionHandler(() {
       logInfo('TTS completed - calling completion callback');
-      _isSpeaking = false;  // Update internal state
+      _isSpeaking = false; // Update internal state
       if (_onSpeechComplete != null) {
         _onSpeechComplete!();
       }
@@ -35,7 +35,7 @@ class TextToSpeechService {
     // Set up error handler
     _flutterTts!.setErrorHandler((msg) {
       logError('TTS Error: $msg');
-      _isSpeaking = false;  // Update internal state on error
+      _isSpeaking = false; // Update internal state on error
       if (_onSpeechComplete != null) {
         _onSpeechComplete!();
       }
@@ -69,60 +69,79 @@ class TextToSpeechService {
     required double silenceDurationSeconds,
   }) async {
     logInfo('Processing text with actual silence delays: "$text"');
-    
-    // Temporarily disable the completion handler to prevent premature completion
+
+    final originalHandler = _onSpeechComplete;
+
     _flutterTts!.setCompletionHandler(() {
-      // Do nothing during multi-part speech
       logInfo('TTS segment completed (ignored during multi-part speech)');
     });
-    
+
     // Split text by { character
     List<String> parts = text.split('{');
-    
+
     try {
       for (int i = 0; i < parts.length; i++) {
         if (!_isSpeaking) {
-          // Stop processing if TTS was stopped
+          logInfo('TTS stopped, breaking at part ${i + 1}');
           break;
         }
-        
+
         String part = parts[i].trim();
-        
+
         if (part.isNotEmpty) {
           logInfo('Speaking part ${i + 1}: "$part"');
-          
-          // Speak this part
+
           final result = await _flutterTts!.speak(part);
           if (result != 1) {
-            logWarning('⚠️ Problème avec flutter_tts pour la partie ${i + 1}, code: $result');
+            logWarning(
+                '⚠️ Problème avec flutter_tts pour la partie ${i + 1}, code: $result');
           }
-          
-          // Wait for this segment to complete using a simple time-based approach
+
           await _waitForSegmentCompletionSimple(part);
         }
-        
-        // Add actual silence delay if this is not the last part and still speaking
+
+        // CRITICAL FIX: Only add silence delay once per group of consecutive empty segments
         if (i < parts.length - 1 && _isSpeaking) {
-          logInfo('Adding ${silenceDurationSeconds}s actual silence');
-          await Future.delayed(Duration(milliseconds: (silenceDurationSeconds * 1000).round()));
+          // Check if we should add silence delay
+          bool shouldAddSilence = false;
+
+          if (part.isNotEmpty) {
+            // Always add silence after non-empty segments
+            shouldAddSilence = true;
+          } else {
+            // For empty segments, only add silence if the NEXT segment is non-empty
+            // This prevents multiple silence delays for consecutive braces
+            for (int j = i + 1; j < parts.length; j++) {
+              if (parts[j].trim().isNotEmpty) {
+                shouldAddSilence = true;
+                break;
+              }
+            }
+          }
+
+          if (shouldAddSilence) {
+            logInfo('Adding ${silenceDurationSeconds}s actual silence');
+            await Future.delayed(Duration(
+                milliseconds: (silenceDurationSeconds * 1000).round()));
+          } else {
+            logInfo('Skipping silence delay for consecutive empty segment');
+          }
         }
       }
     } finally {
-      // Always restore the original completion handler
       _flutterTts!.setCompletionHandler(() {
         logInfo('TTS completed - calling completion callback');
         _isSpeaking = false;
-        if (_onSpeechComplete != null) {
-          _onSpeechComplete!();
+        if (originalHandler != null) {
+          originalHandler();
         }
       });
-      
-      // Call completion manually if we finished successfully
+
       if (_isSpeaking) {
-        logInfo('Multi-part speech completed successfully');
+        logInfo('Multi-part speech completed - triggering completion');
         _isSpeaking = false;
-        if (_onSpeechComplete != null) {
-          _onSpeechComplete!();
+        if (originalHandler != null) {
+          originalHandler();
         }
       }
     }
@@ -130,21 +149,50 @@ class TextToSpeechService {
 
   // Simple time-based waiting for segment completion
   Future<void> _waitForSegmentCompletionSimple(String text) async {
+    // Skip timing estimation for empty or whitespace-only segments
+    if (text.trim().isEmpty) {
+      logInfo('Skipping timing estimation for empty segment');
+      return;
+    }
+
     // Estimate speaking time based on text length and speech rate
-    // Average speaking rate is about 150-200 words per minute
     int wordCount = text.split(' ').length;
-    int estimatedMs = ((wordCount * 60000) / 180).round(); // 180 WPM
-    
-    // Add minimum wait time and maximum cap
-    estimatedMs = estimatedMs.clamp(500, 15000); // 0.5 to 15 seconds
-    
-    logInfo('Estimated speaking time for segment: ${estimatedMs}ms');
-    
+    int characterCount = text.length;
+
+    // Use both word count and character count for better estimation
+    // THE multiplier VALUE SOLVES A DURABLE PROBLEM THE IA WAS NOT
+    // ABLE TO FIX: THE TTS OF FLUTTER_TTS IS MUCH BETTER NOW.
+    const int multiplier = 47000;
+    int wordBasedMs = ((wordCount * multiplier) / 180).round(); // 180 WPM
+    int charBasedMs =
+        ((characterCount * multiplier) / 900).round(); // ~15 chars per second
+
+    // Take the higher of the two estimates for safety
+    int estimatedMs = wordBasedMs > charBasedMs ? wordBasedMs : charBasedMs;
+
+    // Remove the artificial cap - let longer text take the time it needs
+    // Add minimum wait time but no maximum cap
+    estimatedMs = estimatedMs < 1000 ? 1000 : estimatedMs; // Minimum 1 second
+
+    // Add extra buffer for longer segments to account for TTS processing delays
+    if (wordCount > 50) {
+      estimatedMs += 2000; // Extra 2 seconds for very long segments
+    } else if (wordCount > 20) {
+      estimatedMs += 1000; // Extra 1 second for medium segments
+    }
+
+    logInfo('Segment stats - Words: $wordCount, Chars: $characterCount');
+    logInfo(
+        'Estimated speaking time: ${estimatedMs}ms (${(estimatedMs / 1000).toStringAsFixed(1)}s)');
+
     // Wait for the estimated time
     await Future.delayed(Duration(milliseconds: estimatedMs));
-    
-    // Add a small buffer
-    await Future.delayed(Duration(milliseconds: 200));
+
+    // Add a buffer, but smaller for longer segments to avoid excessive delays
+    int bufferMs = wordCount > 30 ? 300 : 500;
+    await Future.delayed(Duration(milliseconds: bufferMs));
+
+    logInfo('Finished waiting for segment completion');
   }
 
   Future<void> speak({
@@ -206,7 +254,8 @@ class TextToSpeechService {
 
       // Check if text contains silence markers
       if (text.contains('{')) {
-        logInfo('Text contains silence markers, processing with actual delays...');
+        logInfo(
+            'Text contains silence markers, processing with actual delays...');
         await _speakTextWithActualSilence(
           text: text,
           isVoiceMan: isVoiceMan,
@@ -232,7 +281,7 @@ class TextToSpeechService {
         logWarning('Dernier recours avec voix système...');
         _isSpeaking = true; // Set again for fallback attempt
         await _flutterTts!.setLanguage("en-US"); // Anglais par défaut
-        
+
         if (text.contains('{')) {
           await _speakTextWithActualSilence(
             text: text,
