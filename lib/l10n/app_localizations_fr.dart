@@ -2327,4 +2327,8 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get textToSpeech => 'converti';
+
+  @override
+  String get audioTextToSpeechInfoDialogTitle =>
+      'Informations sur l\'audio converti';
 }

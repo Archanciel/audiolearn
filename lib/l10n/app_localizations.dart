@@ -3695,6 +3695,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'converted'**
   String get textToSpeech;
+
+  /// No description provided for @audioTextToSpeechInfoDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Converted Audio Info'**
+  String get audioTextToSpeechInfoDialogTitle;
 }
 
 class _AppLocalizationsDelegate
