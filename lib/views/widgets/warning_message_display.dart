@@ -1362,7 +1362,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
-      case WarningMessageType.audioImportedFromTextToSpeechOperation:
+      case WarningMessageType.audioCreatedFromTextToSpeechOperation:
         final String importedAudioFileName =
             _warningMessageVM.importedAudioFileNames;
         String audioImportedFromTextToSpeechToPlaylistMessage = '';
@@ -1392,6 +1392,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
             message: audioImportedFromTextToSpeechToPlaylistMessage,
             warningMessageVM: _warningMessageVM,
             themeProviderVM: themeProviderVM,
+            warningMode: WarningMode.confirm,
           );
         });
 

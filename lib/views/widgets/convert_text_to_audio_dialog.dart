@@ -247,7 +247,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                         .textToConvertTextFieldHint,
                   ),
                   controller: _textToConvertController,
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.multiline, // Enable clicking on Enter to create a new line
                   onChanged: (text) {
                     _textToConvert = text;
                     textToSpeechVMlistenTrue.updateInputText(text: text);
