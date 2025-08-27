@@ -299,7 +299,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get copyAudioToPlaylist => 'Copier l\'audio vers la playlist ...';
 
   @override
-  String get audioInfoDialogTitle => 'Audio Informations';
+  String get audioInfoDialogTitle => 'Informations sur l\'audio téléchargé';
 
   @override
   String get youtubeChannelLabel => 'Chaîne Youtube';
@@ -2297,13 +2297,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String audioImportedFromTextToSpeechToLocalPlaylist(
       Object importedAudioFileNames, Object toPlaylistTitle) {
-    return 'L\'audio créé par la conversion de texte en MP3\n\n$importedAudioFileNames\n\na été importé vers la playlist locale \"$toPlaylistTitle\".';
+    return 'L\'audio créé par la conversion de texte en MP3\n\n$importedAudioFileNames\n\na été ajouté à la playlist locale \"$toPlaylistTitle\".';
   }
 
   @override
   String audioImportedFromTextToSpeechToYoutubePlaylist(
       Object importedAudioFileNames, Object toPlaylistTitle) {
-    return 'L\'audio créé par la conversion de texte en MP3\n\n$importedAudioFileNames\n\na été importé vers la playlist Youtube \"$toPlaylistTitle\".';
+    return 'L\'audio créé par la conversion de texte en MP3\n\n$importedAudioFileNames\n\na été ajouté à la playlist Youtube \"$toPlaylistTitle\".';
   }
 
   @override
