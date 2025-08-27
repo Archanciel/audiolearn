@@ -27301,6 +27301,75 @@ void main() {
       );
     });
   });
+  group('''Test convert text to audio.''', () {
+    testWidgets(
+        '''Importing one audio test. Verify conversion warning. Then reimporting it and verify
+          the not imported warning. Normally, the imported audio's are not located in a playlist
+          directory !''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      const String selectedPlaylistTitle = 'urgent_actus_17-12-2023';
+      const String localPlaylistTitle = 'local';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'import_audios_integr_test',
+        selectedPlaylistTitle: selectedPlaylistTitle,
+        tapOnPlaylistToggleButton: false,
+      );
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      const String fileName_5 = "bbb.mp3";
+
+      // Setting one selected mp3 file.
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: fileName_5,
+            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_5",
+            size: 155136),
+      ]);
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: localPlaylistTitle,
+        playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
+      );
+
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Audio(s)\n\n\"$fileName_5\"\n\nimported to local playlist \"$localPlaylistTitle\".",
+        isWarningConfirming: true,
+      );
+
+      // Re-import the same audio to verify the not imported warning
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: localPlaylistTitle,
+        playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
+      );
+
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Audio(s)\n\n\"$fileName_5\"\n\nNOT imported to local playlist \"$localPlaylistTitle\" since the playlist directory already contains the audio(s).",
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+  });
 }
 
 Future<void> _verifyCreatedZipFilesContent({
