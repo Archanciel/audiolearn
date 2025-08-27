@@ -1881,6 +1881,10 @@ class AudioDownloadVM extends ChangeNotifier {
           importedFileName: fileName,
         );
 
+        if (doesImportedFileResultFromTextToSpeech) {
+          importedAudio.audioType = AudioType.textToSpeech;  
+        }
+
         targetPlaylist.addImportedAudio(
           importedAudio,
         );

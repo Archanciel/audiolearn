@@ -49,9 +49,16 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
         }
       },
       child: AlertDialog(
-        title: (audio.audioType == AudioType.imported)
-            ? Text(AppLocalizations.of(context)!.audioImportedInfoDialogTitle)
-            : Text(AppLocalizations.of(context)!.audioInfoDialogTitle),
+        title: Text(
+          switch (audio.audioType) {
+            AudioType.imported =>
+              AppLocalizations.of(context)!.audioImportedInfoDialogTitle,
+            AudioType.textToSpeech =>
+              AppLocalizations.of(context)!.audioTextToSpeechInfoDialogTitle,
+            AudioType.downloaded =>
+              AppLocalizations.of(context)!.audioInfoDialogTitle,
+          },
+        ),
         actionsPadding: kDialogActionsPadding,
         content: SingleChildScrollView(
           child: ListBody(
@@ -137,7 +144,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
       createInfoRowFunction(
           valueTextWidgetKey: const Key('enclosingPlaylistTitleKey'),
           context: context,
-            label: AppLocalizations.of(context)!.enclosingPlaylistLabel,
+          label: AppLocalizations.of(context)!.enclosingPlaylistLabel,
           value: (audio.enclosingPlaylist == null)
               ? ''
               : audio.enclosingPlaylist!.title),

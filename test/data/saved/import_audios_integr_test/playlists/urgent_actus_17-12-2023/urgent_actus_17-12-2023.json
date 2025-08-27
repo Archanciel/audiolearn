@@ -31,7 +31,7 @@
             "audioPositionSeconds": 853,
             "audioFileName": "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
             "audioFileSize": 5207540,
-            "isAudioImported": false
+            "audioType": "downloaded"
         },
         {
             "youtubeVideoChannel": "HugoDécrypte - Actus du jour",
@@ -57,7 +57,7 @@
             "audioPositionSeconds": 651,
             "audioFileName": "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
             "audioFileSize": 3976414,
-            "isAudioImported": false
+            "audioType": "downloaded"
         },
         {
             "youtubeVideoChannel": "",
@@ -83,7 +83,7 @@
             "audioPositionSeconds": 0,
             "audioFileName": "250812-162933-DETTE PUBLIQUE - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
             "audioFileSize": 176640,
-            "isAudioImported": true
+            "audioType": "imported"
         },
         {
             "youtubeVideoChannel": "",
@@ -109,7 +109,7 @@
             "audioPositionSeconds": 0,
             "audioFileName": "aaa.mp3",
             "audioFileSize": 175296,
-            "isAudioImported": true
+            "audioType": "imported"
         },
         {
             "youtubeVideoChannel": "",
@@ -135,7 +135,7 @@
             "audioPositionSeconds": 0,
             "audioFileName": "bbb.mp3",
             "audioFileSize": 155136,
-            "isAudioImported": true
+            "audioType": "imported"
         }
     ],
     "playableAudioLst": [
@@ -163,7 +163,7 @@
             "audioPositionSeconds": 0,
             "audioFileName": "bbb.mp3",
             "audioFileSize": 155136,
-            "isAudioImported": true
+            "audioType": "imported"
         },
         {
             "youtubeVideoChannel": "",
@@ -189,7 +189,7 @@
             "audioPositionSeconds": 0,
             "audioFileName": "aaa.mp3",
             "audioFileSize": 175296,
-            "isAudioImported": true
+            "audioType": "imported"
         },
         {
             "youtubeVideoChannel": "",
@@ -215,7 +215,7 @@
             "audioPositionSeconds": 0,
             "audioFileName": "250812-162933-DETTE PUBLIQUE - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
             "audioFileSize": 176640,
-            "isAudioImported": true
+            "audioType": "imported"
         },
         {
             "youtubeVideoChannel": "HugoDécrypte - Actus du jour",
@@ -241,7 +241,7 @@
             "audioPositionSeconds": 5,
             "audioFileName": "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
             "audioFileSize": 183552,
-            "isAudioImported": false
+            "audioType": "downloaded"
         },
         {
             "youtubeVideoChannel": "Crypto Flash ",
@@ -267,11 +267,11 @@
             "audioPositionSeconds": 833,
             "audioFileName": "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
             "audioFileSize": 176640,
-            "isAudioImported": false
+            "audioType": "downloaded"
         }
     ],
     "isSelected": true,
-    "currentOrPastPlayableAudioIndex": 2,
+    "currentOrPastPlayableAudioIndex": 0,
     "audioSortFilterParmsNamePlaylistDownloadView": "dla title up",
     "audioSortFilterParmsNameAudioPlayerView": "pla title down",
     "audioPlayingOrder": "descending"
