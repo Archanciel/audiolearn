@@ -2303,4 +2303,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get textToSpeech => 'converted';
+
+  @override
+  String get audioTextToSpeechInfoDialogTitle => 'Converted Audio Info';
 }
