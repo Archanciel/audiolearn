@@ -281,10 +281,10 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
           case AudioPopupMenuAction.modifyAudioTitle:
             List<HelpItem> audioTitleModificationHelpItemsLst = [
               HelpItem(
-                helpTitle:
-                    AppLocalizations.of(context)!.audioTitleModificationHelpTitle,
-                helpContent:
-                    AppLocalizations.of(context)!.audioTitleModificationHelpContent,
+                helpTitle: AppLocalizations.of(context)!
+                    .audioTitleModificationHelpTitle,
+                helpContent: AppLocalizations.of(context)!
+                    .audioTitleModificationHelpContent,
                 displayHelpItemNumber: false,
               ),
             ];
@@ -818,15 +818,19 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
     }
 
     final DateTime audioDownloadDateTime = audio.audioDownloadDateTime;
-    final String lastSubtitlePart;
+    String lastSubtitlePart = '';
 
-    if (audio.isAudioImported) {
+    if (audio.audioType == AudioType.imported) {
       lastSubtitlePart =
           '$audioFileSizeStr ${AppLocalizations.of(context)!.imported} ${AppLocalizations.of(context)!.on} ${dateFormatVMlistenTrue.formatDate(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
-    } else {
+    } else if (audio.audioType == AudioType.downloaded) {
       lastSubtitlePart =
           '$audioFileSizeStr ${AppLocalizations.of(context)!.atPreposition} $audioDownloadSpeedStr ${AppLocalizations.of(context)!.on} ${dateFormatVMlistenTrue.formatDate(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
+    } else if (audio.audioType == AudioType.textToSpeech) {
+      lastSubtitlePart =
+          '$audioFileSizeStr ${AppLocalizations.of(context)!.textToSpeech} ${AppLocalizations.of(context)!.on} ${dateFormatVMlistenTrue.formatDate(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
     }
+
     return lastSubtitlePart;
   }
 

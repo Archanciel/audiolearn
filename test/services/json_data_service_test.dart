@@ -72,7 +72,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
-        isAudioImported: false,
+        audioType: AudioType.downloaded,
       );
 
       // Save the Audio instance to a file
@@ -127,7 +127,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
-        isAudioImported: true,
+        audioType: AudioType.imported,
       );
 
       // Save the Audio instance to a file
@@ -181,7 +181,7 @@ void main() {
         audioPositionSeconds: 1800,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
-        isAudioImported: true,
+        audioType: AudioType.imported,
       );
 
       // Save the Audio instance to a file
@@ -248,7 +248,7 @@ void main() {
           audioPositionSeconds: 0,
           audioFileName: 'Test Video Title.mp3',
           audioFileSize: 330000000,
-          isAudioImported: false);
+          audioType: AudioType.downloaded);
 
       // Save the Audio instance to a file
       JsonDataService.saveToFile(model: originalAudio, path: filePath);
@@ -315,7 +315,7 @@ void main() {
           audioPositionSeconds: 0,
           audioFileName: 'Test Video Title.mp3',
           audioFileSize: 330000000,
-          isAudioImported: false);
+          audioType: AudioType.downloaded);
 
       Audio audio2 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
@@ -342,7 +342,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
-        isAudioImported: true,
+        audioType: AudioType.imported,
       );
 
       testPlaylist.downloadedAudioLst = [audio1, audio2];
@@ -416,7 +416,7 @@ void main() {
           audioPositionSeconds: 0,
           audioFileName: 'Test Video Title.mp3',
           audioFileSize: 330000000,
-          isAudioImported: false);
+          audioType: AudioType.downloaded);
 
       Audio audio2 = Audio.fullConstructor(
         youtubeVideoChannel: 'one',
@@ -443,7 +443,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
-        isAudioImported: true,
+        audioType: AudioType.imported,
       );
 
       testPlaylist.downloadedAudioLst = [audio1, audio2];
@@ -586,7 +586,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
-        isAudioImported: false,
+        audioType: AudioType.downloaded,
       );
 
       Audio audio2 = Audio.fullConstructor(
@@ -614,7 +614,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
-        isAudioImported: true,
+        audioType: AudioType.imported,
       );
 
       testPlaylist.downloadedAudioLst = [audio1, audio2];
@@ -873,7 +873,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
-        isAudioImported: false,
+        audioType: AudioType.downloaded,
       );
 
       // Save the Audio instance to a file
@@ -919,7 +919,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
-        isAudioImported: false,
+        audioType: AudioType.downloaded,
       );
 
       Audio audioTwo = Audio.fullConstructor(
@@ -947,7 +947,7 @@ void main() {
         audioPositionSeconds: 1800,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
-        isAudioImported: true,
+        audioType: AudioType.imported,
       );
 
       // Prepare test data
@@ -1022,7 +1022,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
-        isAudioImported: false,
+        audioType: AudioType.downloaded,
       );
 
       Audio audio2 = Audio.fullConstructor(
@@ -1050,7 +1050,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
-        isAudioImported: true,
+        audioType: AudioType.imported,
       );
 
       testPlaylistOne.addDownloadedAudio(audio1);
@@ -1092,7 +1092,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
-        isAudioImported: false,
+        audioType: AudioType.downloaded,
       );
 
       Audio audio4 = Audio.fullConstructor(
@@ -1120,7 +1120,7 @@ void main() {
         audioPositionSeconds: 0,
         audioFileName: 'Test Video Title.mp3',
         audioFileSize: 330000000,
-        isAudioImported: true,
+        audioType: AudioType.imported,
       );
 
       testPlaylistTwo.addDownloadedAudio(audio3);
@@ -1327,7 +1327,7 @@ void compareDeserializedWithOriginalAudio({
   expect(deserializedAudio.videoUploadDate.toIso8601String(),
       originalAudio.videoUploadDate.toIso8601String());
 
-  if (!originalAudio.isAudioImported) {
+  if (originalAudio.audioType == AudioType.downloaded) {
     // inMilliseconds is used because the duration is not exactly the same
     // when it is serialized and deserialized since it is stored in the json
     // file as a number of milliseconds

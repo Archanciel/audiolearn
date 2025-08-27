@@ -597,7 +597,7 @@ abstract class AppLocalizations {
   /// No description provided for @audioInfoDialogTitle.
   ///
   /// In en, this message translates to:
-  /// **'Audio Info'**
+  /// **'Downloaded Audio Info'**
   String get audioInfoDialogTitle;
 
   /// No description provided for @youtubeChannelLabel.
@@ -3689,6 +3689,12 @@ abstract class AppLocalizations {
   /// **'{brace_1}A text with a character that introduces a 1-second silence. At the beginning of the text, 2 seconds of silence are added. {brace_2} Before this sentence, 4 seconds of silence are introduced. {brace_3} Here, one second of silence. This character was chosen because it is not normally used in writing.'**
   String convertTextToAudioHelpContent(
       Object brace_1, Object brace_2, Object brace_3);
+
+  /// No description provided for @textToSpeech.
+  ///
+  /// In en, this message translates to:
+  /// **'converted'**
+  String get textToSpeech;
 }
 
 class _AppLocalizationsDelegate

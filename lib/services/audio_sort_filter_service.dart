@@ -1313,7 +1313,7 @@ class AudioSortFilterService {
     // does not contain audio that were downloaded.
     if (!audioSortFilterParameters.filterDownloaded) {
       filteredAudios = filteredAudios.where((audio) {
-        return audio.isAudioImported;
+        return audio.audioType != AudioType.downloaded;
       }).toList();
     }
 
@@ -1322,7 +1322,7 @@ class AudioSortFilterService {
     // only contain audio which were downloaded.
     if (!audioSortFilterParameters.filterImported) {
       filteredAudios = filteredAudios.where((audio) {
-        return !audio.isAudioImported;
+        return audio.audioType == AudioType.downloaded;
       }).toList();
     }
 

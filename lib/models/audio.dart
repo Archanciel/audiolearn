@@ -7,6 +7,12 @@ import 'package:intl/intl.dart';
 import '../constants.dart';
 import 'playlist.dart';
 
+enum AudioType {
+  downloaded,
+  imported,
+  textToSpeech,
+}
+
 /// Contains informations of the audio extracted from the video
 /// referenced in the enclosing playlist. In fact, the audio is
 /// directly downloaded from Youtube.
@@ -118,8 +124,7 @@ class Audio {
 
   bool isAudioMusicQuality = false;
 
-  // true if the audio file was imported from another directory
-  bool isAudioImported = false;
+  AudioType audioType = AudioType.downloaded;
 
   Audio({
     this.youtubeVideoChannel = '',
@@ -163,7 +168,7 @@ class Audio {
     required this.audioPositionSeconds,
     required this.audioFileName,
     required this.audioFileSize,
-    required this.isAudioImported,
+    required this.audioType,
   });
 
   /// Returns a copy of the current Audio instance
@@ -194,7 +199,7 @@ class Audio {
       audioPositionSeconds: audioPositionSeconds,
       audioFileName: audioFileName,
       audioFileSize: audioFileSize,
-      isAudioImported: isAudioImported,
+      audioType: audioType,
     );
   }
 
@@ -237,7 +242,8 @@ class Audio {
       audioPositionSeconds: json['audioPositionSeconds'] ?? 0,
       audioFileName: json['audioFileName'],
       audioFileSize: json['audioFileSize'],
-      isAudioImported: json['isAudioImported'] ?? false,
+      audioType: AudioType.values.firstWhere(
+          (e) => e.toString().split('.').last == json['audioType']),
     );
   }
 
@@ -272,7 +278,7 @@ class Audio {
       'audioPositionSeconds': audioPositionSeconds,
       'audioFileName': audioFileName,
       'audioFileSize': audioFileSize,
-      'isAudioImported': isAudioImported,
+      'audioType': audioType.toString().split('.').last,
     };
   }
 
@@ -282,7 +288,9 @@ class Audio {
       return true;
     }
 
-    return other is Audio && other.enclosingPlaylist == enclosingPlaylist && other.audioFileName == audioFileName;
+    return other is Audio &&
+        other.enclosingPlaylist == enclosingPlaylist &&
+        other.audioFileName == audioFileName;
   }
 
   @override

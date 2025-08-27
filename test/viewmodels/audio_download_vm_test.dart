@@ -1245,7 +1245,7 @@ void main() {
         audioFileName:
             "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher).mp3",
         audioFileSize: 7509275,
-        isAudioImported: true,
+        audioType: AudioType.imported,
       );
 
       Audio importedAudio = targetPlaylistEmpty.playableAudioLst[0];
@@ -1381,7 +1381,7 @@ void main() {
         audioFileName:
             "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher).mp3",
         audioFileSize: 7509275,
-        isAudioImported: true,
+        audioType: AudioType.imported,
       );
 
       Audio importedAudio = targetPlaylistEmpty.playableAudioLst[0];
@@ -2260,7 +2260,7 @@ void _verifyAudioFields(Audio importedAudio, Audio expectedImportedAudio) {
       expectedImportedAudio.audioPositionSeconds);
   expect(importedAudio.audioFileName, expectedImportedAudio.audioFileName);
   expect(importedAudio.audioFileSize, expectedImportedAudio.audioFileSize);
-  expect(importedAudio.isAudioImported, expectedImportedAudio.isAudioImported);
+  expect(importedAudio.audioType, expectedImportedAudio.audioType);
 }
 
 void _verifyImportedFilesPresence({

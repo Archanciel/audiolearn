@@ -49,13 +49,13 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
         }
       },
       child: AlertDialog(
-        title: (audio.isAudioImported)
+        title: (audio.audioType == AudioType.imported)
             ? Text(AppLocalizations.of(context)!.audioImportedInfoDialogTitle)
             : Text(AppLocalizations.of(context)!.audioInfoDialogTitle),
         actionsPadding: kDialogActionsPadding,
         content: SingleChildScrollView(
           child: ListBody(
-            children: (audio.isAudioImported)
+            children: (audio.audioType == AudioType.imported)
                 ? _createImportedAudioInfoLines(
                     context,
                   )
