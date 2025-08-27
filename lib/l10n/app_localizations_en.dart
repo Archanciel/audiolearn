@@ -2273,13 +2273,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String audioImportedFromTextToSpeechToLocalPlaylist(
       Object importedAudioFileNames, Object toPlaylistTitle) {
-    return 'The audio created by the text to MP3 convertion\n\n$importedAudioFileNames\n\nwas imported to local playlist \"$toPlaylistTitle\".';
+    return 'The audio created by the text to MP3 convertion\n\n$importedAudioFileNames\n\nwas added to local playlist \"$toPlaylistTitle\".';
   }
 
   @override
   String audioImportedFromTextToSpeechToYoutubePlaylist(
       Object importedAudioFileNames, Object toPlaylistTitle) {
-    return 'The audio created by the text to MP3 convertion\n\n$importedAudioFileNames\n\nwas imported to Youtube playlist \"$toPlaylistTitle\".';
+    return 'The audio created by the text to MP3 convertion\n\n$importedAudioFileNames\n\nwas added to Youtube playlist \"$toPlaylistTitle\".';
   }
 
   @override
