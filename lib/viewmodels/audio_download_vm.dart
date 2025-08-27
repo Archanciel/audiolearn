@@ -1966,7 +1966,7 @@ class AudioDownloadVM extends ChangeNotifier {
     // date, the constructor audio file name will not correspond to the
     // physical imported audio file name.
     importedAudio.audioFileName = importedFileName;
-    importedAudio.isAudioImported = true;
+    importedAudio.audioType = AudioType.imported;
 
     return importedAudio;
   }
@@ -2090,7 +2090,7 @@ class AudioDownloadVM extends ChangeNotifier {
     );
 
     if (enclosingPlaylist.playlistType == PlaylistType.youtube &&
-        !audio.isAudioImported) {
+        audio.audioType == AudioType.downloaded) {
       if (audio.movedFromPlaylistTitle == null &&
           audio.copiedFromPlaylistTitle == null) {
         // the case if the audio was not moved or copied from

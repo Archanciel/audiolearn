@@ -2383,4 +2383,7 @@ class MockAppLocalizations extends AppLocalizations {
     Object brace_1,
   ) =>
       "Text to convert ($brace_1 = silence)";
+
+  @override
+  String get textToSpeech => "converted";
 }

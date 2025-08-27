@@ -2324,4 +2324,7 @@ class AppLocalizationsFr extends AppLocalizations {
       Object brace_1, Object brace_2, Object brace_3) {
     return '${brace_1}Un texte avec un caractère qui introduit un silence de 1 seconde. Au dàbut du texte, 2 secondes de silence sont ajoutées. $brace_2 Avant cette phrase, 4 secondes de silence sont introduites. $brace_3 Ici, une seconde de silence. Ce caractère a été choisi du fait qu\'il n\'est pas normalement utilisé dans les écritures.';
   }
+
+  @override
+  String get textToSpeech => 'converti';
 }
