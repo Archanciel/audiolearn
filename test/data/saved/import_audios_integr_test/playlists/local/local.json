@@ -31,7 +31,7 @@
             "audioPositionSeconds": 0,
             "audioFileName": "250812-162933-DETTE PUBLIQUE - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
             "audioFileSize": 176640,
-            "isAudioImported": true
+            "audioType": "imported"
         },
         {
             "youtubeVideoChannel": "",
@@ -57,7 +57,7 @@
             "audioPositionSeconds": 0,
             "audioFileName": "aaa.mp3",
             "audioFileSize": 175296,
-            "isAudioImported": true
+            "audioType": "imported"
         }
     ],
     "playableAudioLst": [
@@ -85,7 +85,7 @@
             "audioPositionSeconds": 0,
             "audioFileName": "aaa.mp3",
             "audioFileSize": 175296,
-            "isAudioImported": true
+            "audioType": "imported"
         },
         {
             "youtubeVideoChannel": "",
@@ -111,7 +111,7 @@
             "audioPositionSeconds": 0,
             "audioFileName": "250812-162933-DETTE PUBLIQUE - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
             "audioFileSize": 176640,
-            "isAudioImported": true
+            "audioType": "imported"
         }
     ],
     "isSelected": false,
