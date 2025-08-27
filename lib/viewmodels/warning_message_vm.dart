@@ -199,7 +199,7 @@ enum WarningMessageType {
   // the import audio to playlist menu item and the audio was
   // imported to the target playlist
 
-  audioImportedFromTextToSpeechOperation, // The case if the user
+  audioCreatedFromTextToSpeechOperation, // The case if the user
   // clicks on the convert text to audio menu item and the audio
   // was imported to the target playlist
 
@@ -970,7 +970,7 @@ class WarningMessageVM extends ChangeNotifier {
     );
   }
 
-  void setAudioImportedFromTextToSpeechOperation({
+  void setAudioCreatedFromTextToSpeechOperation({
     required String importedAudioFileName,
     required String importedToPlaylistTitle,
     required PlaylistType importedToPlaylistType,
@@ -980,7 +980,7 @@ class WarningMessageVM extends ChangeNotifier {
     _importedToPlaylistType = importedToPlaylistType;
 
     warningMessageType =
-        WarningMessageType.audioImportedFromTextToSpeechOperation;
+        WarningMessageType.audioCreatedFromTextToSpeechOperation;
 
     notifyListeners();
   }
