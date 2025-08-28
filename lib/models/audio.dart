@@ -243,7 +243,10 @@ class Audio {
       audioFileName: json['audioFileName'],
       audioFileSize: json['audioFileSize'],
       audioType: AudioType.values.firstWhere(
-          (e) => e.toString().split('.').last == json['audioType']),
+        (e) =>
+            e.toString().split('.').last == (json['audioType'] ?? 'downloaded'),
+        orElse: () => AudioType.downloaded,
+      ),
     );
   }
 
