@@ -1882,7 +1882,7 @@ class AudioDownloadVM extends ChangeNotifier {
         );
 
         if (doesImportedFileResultFromTextToSpeech) {
-          importedAudio.audioType = AudioType.textToSpeech;  
+          importedAudio.audioType = AudioType.textToSpeech;
         }
 
         targetPlaylist.addImportedAudio(
@@ -1902,6 +1902,12 @@ class AudioDownloadVM extends ChangeNotifier {
 
         existingAudio.audioDuration = importedAudioDuration;
         existingAudio.fileSize = File(targetFilePathName).lengthSync();
+
+        if (doesImportedFileResultFromTextToSpeech) {
+          // Usefull if you replace an existing audio by a text to speech
+          // generated audio file.
+          existingAudio.audioType = AudioType.textToSpeech;
+        }
       }
 
       if (!doesImportedFileResultFromTextToSpeech) {
