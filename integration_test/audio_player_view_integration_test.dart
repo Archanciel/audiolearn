@@ -6456,7 +6456,7 @@ void main() {
             of: commentListDialogFinder,
             matching: find.text(frenchDateFormatYy.format(DateTime.now())),
           ),
-          findsOneWidget);
+          findsNWidgets(2));
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
