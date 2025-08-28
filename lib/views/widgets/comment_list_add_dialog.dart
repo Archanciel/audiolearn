@@ -1000,7 +1000,7 @@ class _CommentListAddDialogContentState
                 const SizedBox(
                   width: 5,
                 ),
-                (comment.lastUpdateDateTime.day != comment.creationDateTime.day)
+                (comment.lastUpdateDateTime != comment.creationDateTime)
                     ? Tooltip(
                         message: AppLocalizations.of(context)!
                             .commentUpdateDateTooltip,
