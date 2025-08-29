@@ -3701,6 +3701,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Converted Audio Info'**
   String get audioTextToSpeechInfoDialogTitle;
+
+  /// No description provided for @convertedAudioDateTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Converted text first date time'**
+  String get convertedAudioDateTimeLabel;
+
+  /// No description provided for @convertedAudioUrlLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Converted audio URL'**
+  String get convertedAudioUrlLabel;
+
+  /// No description provided for @convertedAudioDescriptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio description'**
+  String get convertedAudioDescriptionLabel;
 }
 
 class _AppLocalizationsDelegate

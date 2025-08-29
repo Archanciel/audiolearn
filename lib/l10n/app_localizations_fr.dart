@@ -2331,4 +2331,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get audioTextToSpeechInfoDialogTitle =>
       'Informations sur l\'audio converti';
+
+  @override
+  String get convertedAudioDateTimeLabel => 'Date//heure prem conversion';
+
+  @override
+  String get convertedAudioUrlLabel => 'URL audio converti';
+
+  @override
+  String get convertedAudioDescriptionLabel => 'Description audio converti';
 }
