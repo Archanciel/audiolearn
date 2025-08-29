@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../../l10n/app_localizations.dart';
 
 import '../../models/playlist.dart';
-import '../../services/sort_filter_parameters.dart';
+import '../../models/sort_filter_parameters.dart';
 import '../../views/screen_mixin.dart';
 import '../../constants.dart';
 import '../../models/audio.dart';

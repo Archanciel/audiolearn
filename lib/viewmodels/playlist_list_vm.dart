@@ -20,7 +20,7 @@ import '../models/playlist.dart';
 import '../services/audio_sort_filter_service.dart';
 import '../services/json_data_service.dart';
 import '../services/settings_data_service.dart';
-import '../services/sort_filter_parameters.dart';
+import '../models/sort_filter_parameters.dart';
 import '../utils/dir_util.dart';
 import '../utils/date_time_expansion.dart';
 import 'audio_download_vm.dart';

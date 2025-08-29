@@ -2,7 +2,7 @@
 
 import 'package:flutter/foundation.dart';
 
-import '../models/audio.dart';
+import 'audio.dart';
 import '../utils/date_time_parser.dart';
 
 // This enum is used to specify how to sort the audio list.

@@ -10,7 +10,7 @@ import '../models/audio.dart';
 import '../models/playlist.dart';
 import '../services/json_data_service.dart';
 import '../services/settings_data_service.dart';
-import '../services/sort_filter_parameters.dart';
+import '../models/sort_filter_parameters.dart';
 import '../utils/duration_expansion.dart';
 import 'comment_vm.dart';
 import 'playlist_list_vm.dart';

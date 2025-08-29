@@ -9,7 +9,7 @@ import '../l10n/app_localizations.dart';
 import '../constants.dart';
 import '../models/audio.dart';
 import '../models/playlist.dart';
-import '../services/sort_filter_parameters.dart';
+import '../models/sort_filter_parameters.dart';
 import '../services/settings_data_service.dart';
 import '../utils/duration_expansion.dart';
 import '../viewmodels/audio_player_vm.dart';

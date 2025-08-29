@@ -11,7 +11,7 @@ import '../../models/audio_file.dart';
 import '../../models/help_item.dart';
 import '../../models/playlist.dart';
 import '../../models/comment.dart' as audiolearn;
-import '../../services/sort_filter_parameters.dart';
+import '../../models/sort_filter_parameters.dart';
 import '../../viewmodels/audio_player_vm.dart';
 import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/text_to_speech_vm.dart';

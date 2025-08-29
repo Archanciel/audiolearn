@@ -17,7 +17,7 @@ import '../../models/audio.dart';
 import '../../models/help_item.dart';
 import '../../models/playlist.dart';
 import '../../services/settings_data_service.dart';
-import '../../services/sort_filter_parameters.dart';
+import '../../models/sort_filter_parameters.dart';
 import '../../utils/date_time_util.dart';
 import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/date_format_vm.dart';
