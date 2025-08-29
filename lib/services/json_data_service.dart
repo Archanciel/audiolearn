@@ -5,7 +5,7 @@ import '../models/audio.dart';
 import '../models/playlist.dart';
 import '../models/comment.dart';
 import '../models/picture.dart';
-import 'sort_filter_parameters.dart';
+import '../models/sort_filter_parameters.dart';
 
 typedef FromJsonFunction<T> = T Function(Map<String, dynamic> jsonDataMap);
 typedef ToJsonFunction<T> = Map<String, dynamic> Function(T model);

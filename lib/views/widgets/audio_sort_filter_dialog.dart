@@ -10,7 +10,7 @@ import '../../models/playlist.dart';
 import '../../utils/button_state_manager.dart';
 import '../../utils/date_time_parser.dart';
 import '../../viewmodels/playlist_list_vm.dart';
-import '../../services/sort_filter_parameters.dart';
+import '../../models/sort_filter_parameters.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
 import '../../models/audio.dart';

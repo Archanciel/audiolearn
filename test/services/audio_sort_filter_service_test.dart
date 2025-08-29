@@ -1,7 +1,7 @@
 import 'package:audiolearn/models/comment.dart';
 import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
-import 'package:audiolearn/services/sort_filter_parameters.dart';
+import 'package:audiolearn/models/sort_filter_parameters.dart';
 import 'package:audiolearn/utils/date_time_parser.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:audiolearn/viewmodels/picture_vm.dart';

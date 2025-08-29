@@ -8,7 +8,7 @@ import 'package:path/path.dart' as path;
 
 import '../constants.dart';
 import '../utils/dir_util.dart';
-import 'sort_filter_parameters.dart';
+import '../models/sort_filter_parameters.dart';
 
 enum SettingType {
   appTheme,

@@ -8,7 +8,7 @@ import 'package:volume_controller/volume_controller.dart';
 import '../l10n/app_localizations.dart';
 
 import '../constants.dart';
-import '../services/sort_filter_parameters.dart';
+import '../models/sort_filter_parameters.dart';
 import '../viewmodels/audio_player_vm.dart';
 import '../viewmodels/theme_provider_vm.dart';
 import '../services/settings_data_service.dart';

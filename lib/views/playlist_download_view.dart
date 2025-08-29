@@ -13,7 +13,7 @@ import '../constants.dart';
 import '../models/audio.dart';
 import '../models/playlist.dart';
 import '../services/settings_data_service.dart';
-import '../services/sort_filter_parameters.dart';
+import '../models/sort_filter_parameters.dart';
 import '../utils/ui_util.dart';
 import '../viewmodels/audio_download_vm.dart';
 import '../viewmodels/playlist_list_vm.dart';

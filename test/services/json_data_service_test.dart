@@ -9,7 +9,7 @@ import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
-import 'package:audiolearn/services/sort_filter_parameters.dart';
+import 'package:audiolearn/models/sort_filter_parameters.dart';
 
 class UnsupportedClass {}
 

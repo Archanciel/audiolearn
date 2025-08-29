@@ -1,6 +1,6 @@
 // dart file located in lib\views
 
-import 'package:audiolearn/services/sort_filter_parameters.dart';
+import 'package:audiolearn/models/sort_filter_parameters.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:audiolearn/viewmodels/picture_vm.dart';

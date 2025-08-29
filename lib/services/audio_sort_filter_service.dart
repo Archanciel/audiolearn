@@ -11,7 +11,7 @@ import '../utils/dir_util.dart';
 import '../viewmodels/comment_vm.dart';
 import '../viewmodels/picture_vm.dart';
 import '../viewmodels/date_format_vm.dart';
-import 'sort_filter_parameters.dart';
+import '../models/sort_filter_parameters.dart';
 
 enum SortFilterParmsVersion {
   versionOne,

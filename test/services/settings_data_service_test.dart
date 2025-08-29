@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:audiolearn/services/sort_filter_parameters.dart';
+import 'package:audiolearn/models/sort_filter_parameters.dart';
 import 'package:audiolearn/utils/dir_util.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter_test/flutter_test.dart';
