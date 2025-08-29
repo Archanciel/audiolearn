@@ -22361,7 +22361,7 @@ void main() {
             // playlist 'Prières du Maître'
 
             String restorableZipFilePathName =
-                '$kApplicationPathWindowsTest${path.separator}Windows Prières initialization.zip';
+                '$kApplicationPathWindowsTest${path.separator}Windows Prières du Maître initialization.zip';
 
             mockFilePicker.setSelectedFiles([
               PlatformFile(
@@ -22436,7 +22436,7 @@ void main() {
             // and modified comments
 
             restorableZipFilePathName =
-                '$kApplicationPathWindowsTest${path.separator}Windows Prières comment restoration.zip';
+                '$kApplicationPathWindowsTest${path.separator}Windows Prières du Maître comment restoration.zip';
 
             mockFilePicker.setSelectedFiles([
               PlatformFile(
@@ -22725,12 +22725,14 @@ void main() {
                   "20/06/25",
                   "Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour !",
                   "Full comment",
-                  "30/06/25",
+                  "29/06/25",
                   "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
                   "Je vivrai d’après l'amour exactement comme l'a enseigné le Christ,",
                   "12/08/24",
                   "\"Je vivrai d’après l'amour exactement comme l'a enseigné le Christ,\nque ma vie s'améliore par l'amour !\nJe vivrai d’après la loi de Dieu,\nque ma vie se transforme, ainsi que Dieu l'a demandé !\"",
-                ]);
+                ],
+                multipleString: "29/06/25",
+                multipleCount: 3);
 
             // Now close the comment list dialog
             await tester.tap(find
@@ -27119,8 +27121,7 @@ void main() {
     testWidgets(
         '''Importing one audio test. Verify conversion warning. Then reimporting it and verify
           the not imported warning. Normally, the imported audio's are not located in a playlist
-          directory !''',
-        (WidgetTester tester) async {
+          directory !''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -27147,7 +27148,8 @@ void main() {
       mockFilePicker.setSelectedFiles([
         PlatformFile(
             name: fileName_5,
-            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_5",
+            path:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_5",
             size: 155136),
       ]);
 
@@ -27209,32 +27211,40 @@ void main() {
       MockFilePicker mockFilePicker = MockFilePicker();
       FilePicker.platform = mockFilePicker;
 
-      const String fileName_1 = "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3";
-      const String fileName_2 = "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3";
-      const String fileName_3 = "250812-162933-DETTE PUBLIQUE - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3";
+      const String fileName_1 =
+          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3";
+      const String fileName_2 =
+          "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3";
+      const String fileName_3 =
+          "250812-162933-DETTE PUBLIQUE - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3";
       const String fileName_4 = "aaa.mp3";
       const String fileName_5 = "bbb.mp3";
 
       mockFilePicker.setSelectedFiles([
         PlatformFile(
             name: fileName_1,
-            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_1",
+            path:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_1",
             size: 176640),
         PlatformFile(
             name: fileName_2,
-            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_2",
+            path:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_2",
             size: 183552),
         PlatformFile(
             name: fileName_3,
-            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_3",
+            path:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_3",
             size: 176640),
         PlatformFile(
             name: fileName_4,
-            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_4",
+            path:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_4",
             size: 175296),
         PlatformFile(
             name: fileName_5,
-            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_5",
+            path:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_5",
             size: 155136),
       ]);
 
@@ -27262,23 +27272,28 @@ void main() {
       mockFilePicker.setSelectedFiles([
         PlatformFile(
             name: fileName_1,
-            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_1",
+            path:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_1",
             size: 176640),
         PlatformFile(
             name: fileName_2,
-            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_2",
+            path:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_2",
             size: 183552),
         PlatformFile(
             name: fileName_3,
-            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_3",
+            path:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_3",
             size: 176640),
         PlatformFile(
             name: fileName_4,
-            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_4",
+            path:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_4",
             size: 175296),
         PlatformFile(
             name: fileName_5,
-            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_5",
+            path:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_5",
             size: 155136),
       ]);
 
@@ -27305,8 +27320,7 @@ void main() {
     testWidgets(
         '''Importing one audio test. Verify conversion warning. Then reimporting it and verify
           the not imported warning. Normally, the imported audio's are not located in a playlist
-          directory !''',
-        (WidgetTester tester) async {
+          directory !''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -27333,7 +27347,8 @@ void main() {
       mockFilePicker.setSelectedFiles([
         PlatformFile(
             name: fileName_5,
-            path: "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_5",
+            path:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_5",
             size: 155136),
       ]);
 
@@ -27418,15 +27433,27 @@ Future<String> _createNewLocalPlaylist({
 void _checkPlaylistCommentListDialogContent({
   required Finder playlistCommentListDialogFinder,
   required List<String> expectedCommentTextsLst,
+  String multipleString = "",
+  int multipleCount = 0,
 }) {
   for (String text in expectedCommentTextsLst) {
-    expect(
-      find.descendant(
-        of: playlistCommentListDialogFinder,
-        matching: find.text(text),
-      ),
-      findsOneWidget,
-    );
+    if (text == multipleString) {
+      expect(
+        find.descendant(
+          of: playlistCommentListDialogFinder,
+          matching: find.text(text),
+        ),
+        findsNWidgets(multipleCount),
+      );
+    } else {
+      expect(
+        find.descendant(
+          of: playlistCommentListDialogFinder,
+          matching: find.text(text),
+        ),
+        findsOneWidget,
+      );
+    }
   }
 }
 
