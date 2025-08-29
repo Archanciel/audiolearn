@@ -27318,9 +27318,8 @@ void main() {
   });
   group('''Test convert text to audio.''', () {
     testWidgets(
-        '''Importing one audio test. Verify conversion warning. Then reimporting it and verify
-          the not imported warning. Normally, the imported audio's are not located in a playlist
-          directory !''', (WidgetTester tester) async {
+        '''On selected playlist, add a text to speech audio. Verify the text to speech dialog appearance.
+          Then enter a text with case ''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -27329,53 +27328,171 @@ void main() {
 
       const String selectedPlaylistTitle = 'urgent_actus_17-12-2023';
       const String localPlaylistTitle = 'local';
+      const String ttsFileName = "aTTS.mp3";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'import_audios_integr_test',
-        selectedPlaylistTitle: selectedPlaylistTitle,
         tapOnPlaylistToggleButton: false,
       );
 
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
-
-      const String fileName_5 = "bbb.mp3";
-
-      // Setting one selected mp3 file.
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: fileName_5,
-            path:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_5",
-            size: 155136),
-      ]);
-
       await IntegrationTestUtil.typeOnPlaylistMenuItem(
         tester: tester,
-        playlistTitle: localPlaylistTitle,
-        playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
+        playlistTitle: selectedPlaylistTitle,
+        playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
       );
+
+      // Verify the dialog title
+      final Text dialogTitle = tester.widget<Text>(
+          find.byKey(const Key('convertTextToAudioDialogTitleKey')));
+      expect(
+        dialogTitle.data,
+        'Convert Text to Audio',
+      );
+
+      // Verify the presence of the help icon button
+      expect(find.byIcon(Icons.help_outline), findsOneWidget);
+
+      // Verify the text to convert title
+      final Text textToConvert =
+          tester.widget<Text>(find.byKey(const Key('textToConvertTitleKey')));
+      expect(
+        textToConvert.data,
+        'Text to convert, { = silence',
+      );
+
+      // Verify the voice selection title
+      final Text conversionVoiceSelection =
+          tester.widget<Text>(find.byKey(const Key('voiceSelectionTitleKey')));
+      expect(
+        conversionVoiceSelection.data,
+        'Voice selection:',
+      );
+
+      // Verify the voice selection checkboxes
+
+      final Finder masculineCheckbox =
+          find.byKey(const Key('masculineVoiceCheckbox'));
+      final Finder feminineCheckbox =
+          find.byKey(const Key('femineVoiceCheckbox'));
+
+      // Initially masculine should be selected
+      expect(
+        (tester.widget(masculineCheckbox) as Checkbox).value,
+        true,
+      );
+      expect(
+        (tester.widget(feminineCheckbox) as Checkbox).value,
+        false,
+      );
+
+      // Tap the feminine checkbox
+      await tester.tap(feminineCheckbox);
+      await tester.pump();
+
+      // Verify state changed to feminine
+      expect(
+        (tester.widget(masculineCheckbox) as Checkbox).value,
+        false,
+      );
+      expect(
+        (tester.widget(feminineCheckbox) as Checkbox).value,
+        true,
+      );
+
+      // Tap masculine checkbox back
+      await tester.tap(masculineCheckbox);
+      await tester.pump();
+
+      // Verify state changed back to masculine
+      expect(
+        (tester.widget(masculineCheckbox) as Checkbox).value,
+        true,
+      );
+      expect(
+        (tester.widget(feminineCheckbox) as Checkbox).value,
+        false,
+      );
+
+      // Enter and then delete a text to convert
+
+      // Verify the presence of the hint text in the TextField
+      expect(find.text('Enter your text here ...'), findsOneWidget);
+
+      // Find the text field and delete button
+      final Finder textField = find.byKey(const Key('textToConvertTextField'));
+      final Finder textFieldDeleteButton =
+          find.byKey(const Key('deleteTextToConvertIconButton'));
+
+      // Verify both widgets exist
+      expect(textField, findsOneWidget);
+      expect(textFieldDeleteButton, findsOneWidget);
+
+      // Enter text in the TextField
+      const testText = 'Ceci est un texte à supprimer.';
+      await tester.enterText(textField, testText);
+      await tester.pump();
+
+      // Verify the text was entered
+      expect(find.text(testText), findsOneWidget);
+
+      // Verify the TextField controller has the text
+      final textFieldWidget = tester.widget<TextField>(textField);
+      expect(textFieldWidget.controller!.text, testText);
+
+      // Tap the delete button
+      await tester.tap(textFieldDeleteButton);
+      await tester.pump();
+
+      // Verify the text field is now empty
+      expect(textFieldWidget.controller!.text, isEmpty);
+      expect(find.text(testText), findsNothing);
+
+      // Verify the TextField is focused after clearing (as per your implementation)
+      expect(
+          tester.binding.focusManager.primaryFocus, textFieldWidget.focusNode);
+
+      // Verify the presence of the hint text in the TextField
+      await tester.pumpAndSettle();
+      expect(find.text('Enter your text here ...'), findsOneWidget);
+
+      // Now enter a text to convert and listen it, verifying its
+      // between 8 and 9 second duration
+
+      const String textToConvertStr = "{{ un {{{ deux { trois.";
+      await tester.enterText(textField, textToConvertStr);
+      await tester.pump();
+
+      // Tap on the listen button
+      final Finder listenButton = find.byKey(const Key('listen_text_button'));
+      expect(listenButton, findsOneWidget);
+      await tester.tap(listenButton);
+      await tester.pumpAndSettle();
+
+      // Verify button changed to Stop button
+      TextButton stopButtonWidget = tester.widget(listenButton);
+      Row stopButtonRow = stopButtonWidget.child as Row;
+      Icon stopIcon = (stopButtonRow.children[0] as Icon);
+      expect(stopIcon.icon, Icons.stop); // Stop icon
+
+      // Add a delay to allow the audio to reach its end and the next audio
+      // to start playing.
+      for (int i = 0; i < 10; i++) {
+        await Future.delayed(const Duration(seconds: 1));
+        await tester.pumpAndSettle();
+      }
+
+      // Final verification - should be Listen button again
+      TextButton finalButtonWidget = tester.widget(listenButton);
+      Row finalButtonRow = finalButtonWidget.child as Row;
+      Icon finalIcon = (finalButtonRow.children[0] as Icon);
+      expect(finalIcon.icon, Icons.volume_up); // Back to Listen icon
 
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Audio(s)\n\n\"$fileName_5\"\n\nimported to local playlist \"$localPlaylistTitle\".",
+            "Audio(s)\n\n\"$ttsFileName\"\n\nimported to local playlist \"$localPlaylistTitle\".",
         isWarningConfirming: true,
-      );
-
-      // Re-import the same audio to verify the not imported warning
-      await IntegrationTestUtil.typeOnPlaylistMenuItem(
-        tester: tester,
-        playlistTitle: localPlaylistTitle,
-        playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
-      );
-
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Audio(s)\n\n\"$fileName_5\"\n\nNOT imported to local playlist \"$localPlaylistTitle\" since the playlist directory already contains the audio(s).",
       );
 
       // Purge the test playlist directory so that the created test
