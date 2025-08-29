@@ -127,6 +127,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
               child: Text(
                 AppLocalizations.of(context)!.convertTextToAudioDialogTitle,
                 style: Theme.of(context).textTheme.headlineSmall,
+                key: const Key('convertTextToAudioDialogTitleKey'),
               ),
             ),
             IconButton(
@@ -188,6 +189,8 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                     Text(
                       AppLocalizations.of(context)!.conversionVoiceSelection,
                       style: kDialogTitlesStyle,
+                                  key: const Key('voiceSelectionTitleKey'),
+
                     ),
                     _buildVoiceSelectionCheckboxes(
                       context: context,
@@ -227,6 +230,8 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                   AppLocalizations.of(context)!.textToConvert('{'),
                   style: kDialogTitlesStyle,
                   maxLines: 2,
+                              key: const Key('textToConvertTitleKey'),
+
                 ),
               ),
             ],
@@ -247,7 +252,8 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                         .textToConvertTextFieldHint,
                   ),
                   controller: _textToConvertController,
-                  keyboardType: TextInputType.multiline, // Enable clicking on Enter to create a new line
+                  keyboardType: TextInputType
+                      .multiline, // Enable clicking on Enter to create a new line
                   onChanged: (text) {
                     _textToConvert = text;
                     textToSpeechVMlistenTrue.updateInputText(text: text);
