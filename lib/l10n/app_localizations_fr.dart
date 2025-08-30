@@ -435,10 +435,17 @@ class AppLocalizationsFr extends AppLocalizations {
   String get renameAudioFileLabel => 'Nom';
 
   @override
+  String get renameAudioFileTooltip =>
+      'Renommer le fichier audio renomme également le fichier de commentaire audio s\'il existe';
+
+  @override
   String get renameAudioFileButton => 'Renommer';
 
   @override
   String get modifyAudioTitleDialogTitle => 'Modifier le titre de l\'audio';
+
+  @override
+  String get modifyAudioTitleTooltip => '';
 
   @override
   String get modifyAudioTitleDialogComment =>
