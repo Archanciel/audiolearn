@@ -130,7 +130,7 @@ class TextToSpeechVM extends ChangeNotifier {
 
       // Handle the brace group
       if (group.length == 1) {
-        for (int i = 0; i <= 1; i++) {
+        for (int i = 0; i < 1; i++) {
           result.write('{');
         }
       } else {
