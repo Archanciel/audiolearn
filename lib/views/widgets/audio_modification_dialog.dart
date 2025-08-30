@@ -82,6 +82,7 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
     String titleStr;
     String commentStr;
     String labelStr;
+    String labelAndTextFieldTooltipStr;
     String modificationButtonStr;
     int flexibleValue;
 
@@ -90,6 +91,8 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
         titleStr = AppLocalizations.of(context)!.renameAudioFileDialogTitle;
         commentStr = AppLocalizations.of(context)!.renameAudioFileDialogComment;
         labelStr = AppLocalizations.of(context)!.renameAudioFileLabel;
+        labelAndTextFieldTooltipStr =
+            AppLocalizations.of(context)!.renameAudioFileTooltip;
         modificationButtonStr =
             AppLocalizations.of(context)!.renameAudioFileButton;
         flexibleValue = 4;
@@ -99,6 +102,8 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
         commentStr =
             AppLocalizations.of(context)!.modifyAudioTitleDialogComment;
         labelStr = AppLocalizations.of(context)!.modifyAudioTitleLabel;
+        labelAndTextFieldTooltipStr =
+            AppLocalizations.of(context)!.modifyAudioTitleTooltip;
         modificationButtonStr =
             AppLocalizations.of(context)!.modifyAudioTitleButton;
         flexibleValue = 6;
@@ -172,6 +177,7 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
                     const Key('audioModificationTextField'),
                 context: context,
                 label: labelStr,
+                labelAndTextFieldTooltip: labelAndTextFieldTooltipStr,
                 controller: _audioModificationTextEditingController,
                 textFieldFocusNode: _focusNodeAudioModificationTextField,
                 editableFieldFlexValue: flexibleValue,

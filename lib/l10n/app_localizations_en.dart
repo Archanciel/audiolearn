@@ -433,10 +433,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get renameAudioFileLabel => 'Name';
 
   @override
+  String get renameAudioFileTooltip =>
+      'Renaming the audio file also renames the audio comment file if it exists';
+
+  @override
   String get renameAudioFileButton => 'Rename';
 
   @override
   String get modifyAudioTitleDialogTitle => 'Modify Audio Title';
+
+  @override
+  String get modifyAudioTitleTooltip => '';
 
   @override
   String get modifyAudioTitleDialogComment =>
@@ -2273,13 +2280,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String audioImportedFromTextToSpeechToLocalPlaylist(
       Object importedAudioFileNames, Object toPlaylistTitle) {
-    return 'The audio created by the text to MP3 convertion\n\n$importedAudioFileNames\n\nwas added to local playlist \"$toPlaylistTitle\".';
+    return 'The audio created by the text to MP3 conversion\n\n$importedAudioFileNames\n\nwas added to local playlist \"$toPlaylistTitle\".';
   }
 
   @override
   String audioImportedFromTextToSpeechToYoutubePlaylist(
       Object importedAudioFileNames, Object toPlaylistTitle) {
-    return 'The audio created by the text to MP3 convertion\n\n$importedAudioFileNames\n\nwas added to Youtube playlist \"$toPlaylistTitle\".';
+    return 'The audio created by the text to MP3 conversion\n\n$importedAudioFileNames\n\nwas added to Youtube playlist \"$toPlaylistTitle\".';
   }
 
   @override

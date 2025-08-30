@@ -2398,4 +2398,11 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get convertedAudioDescriptionLabel => "Audio description";
+
+  @override
+  String get renameAudioFileTooltip =>
+      "Renaming the audio file also renames the audio comment file if it exists";
+
+  @override
+  String get modifyAudioTitleTooltip => "";
 }
