@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:audiolearn/viewmodels/audio_player_vm.dart';
 import 'package:flutter/material.dart';
 import '../services/direct_google_tts_service.dart';
@@ -61,7 +63,10 @@ class TextToSpeechVM extends ChangeNotifier {
 
     // CRITICAL FIX: Don't modify _inputText directly
     // Create a processed copy instead
-    String processedText = _convertSingleBracesToQuoted(_inputText);
+    String processedText = _convertSingleBracesToQuoted(
+      text: _inputText,
+      isForMP3Creation: false,
+    );
 
     _isSpeaking = true;
     notifyListeners();
@@ -85,7 +90,10 @@ class TextToSpeechVM extends ChangeNotifier {
     }
   }
 
-  String _convertSingleBracesToQuoted(String text) {
+  String _convertSingleBracesToQuoted({
+    required String text,
+    required bool isForMP3Creation,
+  }) {
     if (!text.contains('{')) {
       return text;
     }
@@ -128,10 +136,31 @@ class TextToSpeechVM extends ChangeNotifier {
         textIndex++;
       }
 
-      // Handle the brace group
-      // Multiple consecutive braces - keep as is
-      for (int _ in group) {
-        result.write('{');
+      if (!Platform.isWindows) {
+        for (int _ in group) {
+          result.write('{');
+        }
+      } else {
+        // Fix an incomprehensible problem on listening text to speech
+        // on Windows
+        if (isForMP3Creation) {
+          // Multiple consecutive braces - keep as is
+          for (int _ in group) {
+            result.write('{');
+          }
+        } else {
+          // Single brace - convert to quotes
+          if (group.length == 1) {
+            for (int i = 0; i <= 1; i++) {
+              result.write('{');
+            }
+          } else {
+            // Multiple consecutive braces - keep as is
+            for (int _ in group) {
+              result.write('{');
+            }
+          }
+        }
       }
 
       textIndex += group.length;
@@ -164,7 +193,10 @@ class TextToSpeechVM extends ChangeNotifier {
 
       // CRITICAL FIX: Don't modify _inputText directly
       // Create a processed copy instead
-      String processedText = _convertSingleBracesToQuoted(_inputText);
+      String processedText = _convertSingleBracesToQuoted(
+        text: _inputText,
+        isForMP3Creation: true,
+      );
 
       audioFile = await _directGoogleTtsService.convertTextToMP3(
         warningMessageVMlistenFalse: warningMessageVMlistenFalse,
