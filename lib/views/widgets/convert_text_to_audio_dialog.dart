@@ -514,9 +514,12 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                   ),
           child: Text(
             AppLocalizations.of(context)!.createAudioFileButton,
-            style: (themeProviderVM.currentTheme == AppTheme.dark)
-                ? kTextButtonStyleDarkMode
-                : kTextButtonStyleLightMode,
+            style: textToSpeechVMlistenTrue.inputText.trim().isEmpty
+                ? const TextStyle(
+                    fontSize: kTextButtonFontSize) // Disabled style
+                : (themeProviderVM.currentTheme == AppTheme.dark)
+                    ? kTextButtonStyleDarkMode
+                    : kTextButtonStyleLightMode,
           ),
         ),
       ),
