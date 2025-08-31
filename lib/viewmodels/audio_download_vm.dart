@@ -898,6 +898,11 @@ class AudioDownloadVM extends ChangeNotifier {
     required Audio audio,
     required String audioModifiedFileName,
   }) {
+    if (!audioModifiedFileName.endsWith('.mp3')) {
+      // adding the .mp3 extension if the user did not add it
+      audioModifiedFileName = '$audioModifiedFileName.mp3';
+    }
+
     String audioOldFileName = audio.audioFileName;
     String playlistDownloadPath = audio.enclosingPlaylist!.downloadPath;
 
