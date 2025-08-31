@@ -47,6 +47,12 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
   void initState() {
     super.initState();
 
+    // This enable the Modify or Rename button to be disabled when
+    // the text field is empty
+    _audioModificationTextEditingController.addListener(() {
+      setState(() {}); // Rebuild when text changes
+    });
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       switch (widget.audioModificationType) {
         case AudioModificationType.renameAudioFile:
@@ -63,6 +69,7 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
 
   @override
   void dispose() {
+    _audioModificationTextEditingController.removeListener(() {});
     _audioModificationTextEditingController.dispose();
     _focusNodeDialog.dispose();
     _focusNodeAudioModificationTextField.dispose();
@@ -181,6 +188,7 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
                 controller: _audioModificationTextEditingController,
                 textFieldFocusNode: _focusNodeAudioModificationTextField,
                 editableFieldFlexValue: flexibleValue,
+                isCursorAtStart: false, // if true, cursor set at start at every text modification
               ),
             ],
           ),
@@ -188,17 +196,22 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
         actions: [
           TextButton(
             key: const Key('audioModificationButton'),
-            onPressed: () {
-              _handleAudioModification(context);
-
-              Navigator.of(context)
-                  .pop(_audioModificationTextEditingController.text);
-            },
+            onPressed:
+                _audioModificationTextEditingController.text.trim().isEmpty
+                    ? null // This disables the button
+                    : () {
+                        _handleAudioModification(context);
+                        Navigator.of(context)
+                            .pop(_audioModificationTextEditingController.text);
+                      },
             child: Text(
               modificationButtonStr,
-              style: (themeProviderVM.currentTheme == AppTheme.dark)
-                  ? kTextButtonStyleDarkMode
-                  : kTextButtonStyleLightMode,
+              style: _audioModificationTextEditingController.text.trim().isEmpty
+                  ? const TextStyle(
+                      fontSize: kTextButtonFontSize) // Disabled style
+                  : (themeProviderVM.currentTheme == AppTheme.dark)
+                      ? kTextButtonStyleDarkMode
+                      : kTextButtonStyleLightMode,
             ),
           ),
           TextButton(
