@@ -426,17 +426,16 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
             ),
             overlayColor: textButtonTapModification, // Tap feedback color
           ),
-          onPressed: () {
-            (textToSpeechVMlistenTrue.inputText.trim().isEmpty)
-                ? null
-                : (_isAnythingPlaying)
-                    ? _stopAllAudio(
-                        textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
-                      )
-                    : textToSpeechVMlistenTrue.speakText(
-                        isVoiceMan: _isVoiceMan,
-                      );
-          },
+          onPressed: textToSpeechVMlistenTrue.inputText.trim().isEmpty
+              ? null // This will disable the button and apply disabled styling
+              : () {
+                  if (_isAnythingPlaying) {
+                    _stopAllAudio(
+                        textToSpeechVMlistenTrue: textToSpeechVMlistenTrue);
+                  } else {
+                    textToSpeechVMlistenTrue.speakText(isVoiceMan: _isVoiceMan);
+                  }
+                },
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -452,11 +451,12 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                   _isAnythingPlaying
                       ? AppLocalizations.of(context)!.stopListeningTextButton
                       : AppLocalizations.of(context)!.listenTextButton,
-                  style: (themeProviderVM.currentTheme == AppTheme.dark)
-                      ? kTextButtonStyleDarkMode
-                      : kTextButtonStyleLightMode,
-                  overflow:
-                      TextOverflow.ellipsis, // Handle any remaining overflow
+                  style: textToSpeechVMlistenTrue.inputText.trim().isEmpty
+                      ? const TextStyle(
+                          fontSize: kTextButtonFontSize) // Disabled style
+                      : (themeProviderVM.currentTheme == AppTheme.dark)
+                          ? kTextButtonStyleDarkMode
+                          : kTextButtonStyleLightMode,
                 ),
               ),
             ],
