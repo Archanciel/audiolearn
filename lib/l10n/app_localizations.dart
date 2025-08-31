@@ -3654,7 +3654,7 @@ abstract class AppLocalizations {
   /// No description provided for @myMp3FileName.
   ///
   /// In en, this message translates to:
-  /// **'my_name'**
+  /// **'file name'**
   String get myMp3FileName;
 
   /// No description provided for @createMP3.

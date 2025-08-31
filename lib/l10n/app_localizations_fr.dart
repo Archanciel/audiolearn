@@ -2296,7 +2296,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get enterMp3FileName => 'Entrer le nom du fichier MP3';
 
   @override
-  String get myMp3FileName => 'mon_nom';
+  String get myMp3FileName => 'nom de fichier';
 
   @override
   String get createMP3 => 'Créer MP3';

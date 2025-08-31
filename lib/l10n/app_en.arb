@@ -1071,7 +1071,7 @@
   "stopListeningTextButtonTooltip": "Stop listening the text using the selected voice.",
   "mp3FileName": "MP3 File Name",
   "enterMp3FileName": "Enter the MP3 file name",
-  "myMp3FileName": "my_name",
+  "myMp3FileName": "file name",
   "createMP3": "Create MP3",
   "audioImportedFromTextToSpeechToLocalPlaylist": "The audio created by the text to MP3 conversion\n\n{importedAudioFileNames}\n\nwas added to local playlist \"{toPlaylistTitle}\".",
   "audioImportedFromTextToSpeechToYoutubePlaylist": "The audio created by the text to MP3 conversion\n\n{importedAudioFileNames}\n\nwas added to Youtube playlist \"{toPlaylistTitle}\".",
