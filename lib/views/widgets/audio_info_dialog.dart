@@ -58,6 +58,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
             AudioType.textToSpeech =>
               AppLocalizations.of(context)!.audioTextToSpeechInfoDialogTitle,
           },
+          key: const Key('audioInfoDialogTitleKey'),
         ),
         actionsPadding: kDialogActionsPadding,
         content: SingleChildScrollView(
