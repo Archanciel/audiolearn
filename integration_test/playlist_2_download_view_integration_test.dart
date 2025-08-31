@@ -27319,7 +27319,8 @@ void main() {
   group('''Convert text to audio.''', () {
     testWidgets(
         '''On selected playlist, add a text to speech audio. Verify the text to speech dialog appearance.
-          Then enter a text with case ''', (WidgetTester tester) async {
+          Then enter a text with case and listen it, verifying the listen duration after which the Stop
+          button is reset to the Listen button.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -27342,11 +27343,11 @@ void main() {
         playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
       );
 
-      // Verify the dialog title
-      final Text dialogTitle = tester.widget<Text>(
+      // Verify the convert text to audio dialog title
+      final Text convertTextToAudioDialogTitle = tester.widget<Text>(
           find.byKey(const Key('convertTextToAudioDialogTitleKey')));
       expect(
-        dialogTitle.data,
+        convertTextToAudioDialogTitle.data,
         'Convert Text to Audio',
       );
 
@@ -27477,16 +27478,22 @@ void main() {
 
       // Add a delay to allow the audio to reach its end and the next audio
       // to start playing.
-      for (int i = 0; i < 10; i++) {
+      for (int i = 0; i < 11; i++) {
         await Future.delayed(const Duration(seconds: 1));
         await tester.pumpAndSettle();
       }
 
-      // Final verification - should be Listen button again
+      // Final verification - the Stop button changed to Listen button
       TextButton finalButtonWidget = tester.widget(listenButton);
       Row finalButtonRow = finalButtonWidget.child as Row;
       Icon finalIcon = (finalButtonRow.children[0] as Icon);
       expect(finalIcon.icon, Icons.volume_up); // Back to Listen icon
+
+      // Now click on Create MP3 button to create the audio
+      final Finder createMP3Button = find.byKey(const Key('create_audio_file_button'));
+      expect(createMP3Button, findsOneWidget);
+      await tester.tap(createMP3Button);
+      await tester.pumpAndSettle();
 
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
