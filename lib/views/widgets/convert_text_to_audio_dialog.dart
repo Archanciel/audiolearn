@@ -116,6 +116,10 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
       listen: true,
     );
 
+    // This avoids that after reopening the text to audio dialog,
+    // the previous text is still listenable
+    textToSpeechVMlistenTrue.updateInputText(text: _textToConvert);
+
     return Center(
       child: AlertDialog(
         // title:
@@ -189,8 +193,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                     Text(
                       AppLocalizations.of(context)!.conversionVoiceSelection,
                       style: kDialogTitlesStyle,
-                                  key: const Key('voiceSelectionTitleKey'),
-
+                      key: const Key('voiceSelectionTitleKey'),
                     ),
                     _buildVoiceSelectionCheckboxes(
                       context: context,
@@ -230,8 +233,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                   AppLocalizations.of(context)!.textToConvert('{'),
                   style: kDialogTitlesStyle,
                   maxLines: 2,
-                              key: const Key('textToConvertTitleKey'),
-
+                  key: const Key('textToConvertTitleKey'),
                 ),
               ),
             ],
@@ -413,7 +415,8 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
           style: ButtonStyle(
             shape: getButtonRoundedShape(
                 currentTheme: themeProviderVM.currentTheme,
-                isButtonEnabled: true,
+                isButtonEnabled:
+                    textToSpeechVMlistenTrue.inputText.trim().isNotEmpty,
                 context: context),
             padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
               const EdgeInsets.symmetric(
@@ -490,7 +493,8 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
           style: ButtonStyle(
             shape: getButtonRoundedShape(
                 currentTheme: themeProviderVM.currentTheme,
-                isButtonEnabled: true,
+                isButtonEnabled:
+                    textToSpeechVMlistenTrue.inputText.trim().isNotEmpty,
                 context: context),
             padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
               const EdgeInsets.symmetric(
