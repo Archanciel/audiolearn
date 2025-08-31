@@ -546,6 +546,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
             Text(AppLocalizations.of(context)!.enterMp3FileName),
             SizedBox(height: 16),
             TextField(
+              key: const Key('mp3FileNameTextFieldKey'),
               controller: fileNameController,
               decoration: InputDecoration(
                 hintText: AppLocalizations.of(context)!.myMp3FileName,
@@ -558,6 +559,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
         ),
         actions: [
           ElevatedButton(
+            key: const Key('create_mp3_button_key'),
             onPressed: () {
               final name = fileNameController.text.trim();
               if (name.isNotEmpty) {
@@ -567,6 +569,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
             child: Text(AppLocalizations.of(context)!.createMP3),
           ),
           TextButton(
+            key: const Key('cancel_mp3_creation_button_key'),
             onPressed: () => Navigator.of(context).pop(),
             child: Text(AppLocalizations.of(context)!.cancelButton),
           ),
