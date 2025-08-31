@@ -1016,6 +1016,67 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
+    test('Renaming audio file with name not having .mp3 at end', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_download_vm_modify_audio",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+      SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: MockSharedPreferences(),
+      );
+
+      // necessary, otherwise audioDownloadVM won't be able to load
+      // the existing playlists and the test will fail
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+      );
+
+      audioDownloadVM.loadExistingPlaylists();
+
+      Audio audioToRename = audioDownloadVM
+          .listOfPlaylist[0].downloadedAudioLst[0]; // Really short video
+
+      const String newFileName = "new_name_without_mp3";
+      audioDownloadVM.renameAudioFile(
+        audio: audioToRename,
+        audioModifiedFileName: newFileName,
+      );
+
+      // Verify that the renamed file exists
+      const String playListName = "audio_player_view_2_shorts_test";
+      final String renamedAudioFilePath =
+          "$kApplicationPathWindowsTest${path.separator}$playListName${path.separator}$newFileName.mp3";
+      expect(File(renamedAudioFilePath).existsSync(), true);
+
+      // Load Playlist from the file
+      Playlist loadedPlaylist = _loadPlaylist(playListName);
+
+      // Verify that the audio file name was changed
+      // (playabeAudioLst and downloadedAudioLst contain the
+      // same audio, but in inverse order)
+      expect(loadedPlaylist.playableAudioLst[1].audioFileName, "$newFileName.mp3");
+      expect(loadedPlaylist.downloadedAudioLst[0].audioFileName, "$newFileName.mp3");
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
     test('File with new name exist', () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
