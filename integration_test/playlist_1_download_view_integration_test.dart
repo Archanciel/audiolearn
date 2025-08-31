@@ -17140,8 +17140,8 @@ void main() {
       );
     });
     testWidgets(
-        '''Invalid new file name with no mp3 extension. In this case, a warning
-           is displayed and the file is not renamed.''',
+        '''Invalid new file name with no mp3 extension. In this case, the displayed confirmation
+           shows that a MP3 extention was added and that the file was renamed.''',
         (WidgetTester tester) async {
       const String youtubePlaylistTitle =
           'audio_player_view_2_shorts_test'; // Youtube playlist
@@ -17205,17 +17205,17 @@ void main() {
 
       // Verify the initial value of the TextField
 
-      const String initialFileName =
-          '231117-002828-morning _ cinematic video 23-07-01.mp3';
+      const String initialFileNameNoExt =
+          '231117-002828-morning _ cinematic video 23-07-01';
 
-      expect(textField.controller!.text, initialFileName);
+      expect(textField.controller!.text, '$initialFileNameNoExt.mp3');
 
       // Now entering an invalid file name in the file name TextField
-      const String fileNameOfExistingFile = 'Really short video';
+      const String renamedFileNameNoExt = 'Really short video';
 
       await tester.enterText(
         textFieldFinder,
-        fileNameOfExistingFile,
+        renamedFileNameNoExt,
       );
       await tester.pumpAndSettle();
 
@@ -17229,13 +17229,14 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "The audio file name \"$fileNameOfExistingFile\" has no mp3 extension and so is invalid.",
+            "Audio file \"$initialFileNameNoExt.mp3\" renamed to \"$renamedFileNameNoExt.mp3\" as well as comment file \"$initialFileNameNoExt.json\" renamed to \"$renamedFileNameNoExt.json\".",
+        isWarningConfirming: true,
       );
 
-      // Verify that the old name file exists
+      // Verify that the old name file no longer exists
       final String renamedAudioFilePath =
-          "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$youtubePlaylistTitle${path.separator}$initialFileName";
-      expect(File(renamedAudioFilePath).existsSync(), true);
+          "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$youtubePlaylistTitle${path.separator}$initialFileNameNoExt.mp3";
+      expect(File(renamedAudioFilePath).existsSync(), false);
 
       // Check the old file name in the audio info dialog
 
@@ -17250,12 +17251,12 @@ void main() {
       await tester.tap(popupDisplayAudioInfoMenuItemFinder);
       await tester.pumpAndSettle();
 
-      // Verify the audio old file name
+      // Verify the audio new file name
 
       final Text audioFileNameTitleTextWidget =
           tester.widget<Text>(find.byKey(const Key('audioFileNameKey')));
 
-      expect(audioFileNameTitleTextWidget.data, initialFileName);
+      expect(audioFileNameTitleTextWidget.data, '$renamedFileNameNoExt.mp3');
 
       // Tap the Ok button to close the audio info dialog
       await tester.tap(find.byKey(const Key('audio_info_close_button_key')));

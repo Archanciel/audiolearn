@@ -912,15 +912,6 @@ class AudioDownloadVM extends ChangeNotifier {
       return;
     }
 
-    // Ensuring the new audio file name has the .mp3 extension
-    if (!audioModifiedFileName.endsWith('.mp3')) {
-      warningMessageVM.renameFileNameIsInvalid(
-        invalidRenameFileName: audioModifiedFileName,
-      );
-
-      return;
-    }
-
     // Verifying if the new audio file name is already used
     if (File(
             '$playlistDownloadPath${Platform.pathSeparator}$audioModifiedFileName')
