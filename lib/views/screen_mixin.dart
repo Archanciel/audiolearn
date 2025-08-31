@@ -520,7 +520,7 @@ mixin ScreenMixin {
   /// proportion of the label and the TextField can be adjusted by setting
   /// the flexValue parameter. The flexValue parameter is set to 6 for the
   /// modify title dialog and to 4 for the rename file dialog.
-  /// 
+  ///
   /// [labelFlexValue] if set to a value greater than 1, the editable text
   /// field will be smaller than the label text.
   /// [editableFieldFlexValue] if the flex value of the editable text field
