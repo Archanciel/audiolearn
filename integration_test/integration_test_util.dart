@@ -2761,6 +2761,7 @@ class IntegrationTestUtil {
 
   static Future<Finder> verifyAudioInfoDialog({
     required WidgetTester tester,
+    String audioInfoDialogTitle = 'Downloaded Audio Info',
     bool inAudioPlayerView = false,
     String audioEnclosingPlaylistTitle = '',
     String youtubeChannelValue = "Jean-Pierre Schnyder",
@@ -2820,8 +2821,13 @@ class IntegrationTestUtil {
     await tester.tap(popupDisplayAudioInfoMenuItemFinder);
     await tester.pumpAndSettle();
 
-    // Now verifying the display audio info audio moved dialog
-    // elements
+    // Now verifying the display audio info dialog elements
+
+    // Verify the audio info dialog title
+    final Text audioInfoDialogTitleTextWidget =
+        tester.widget<Text>(find.byKey(const Key('audioInfoDialogTitleKey')));
+    expect(audioInfoDialogTitleTextWidget.data, audioInfoDialogTitle);
+
 
     // Verify the audio channel name
 

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:archive/archive.dart';
@@ -27179,6 +27180,14 @@ void main() {
             "Audio(s)\n\n\"$fileName_5\"\n\nNOT imported to local playlist \"$localPlaylistTitle\" since the playlist directory already contains the audio(s).",
       );
 
+      await IntegrationTestUtil.verifyAudioInfoDialog(
+        tester: tester,
+        audioInfoDialogTitle: 'Imported Audio info',
+        audioEnclosingPlaylistTitle: localPlaylistTitle,
+        audioTitle: fileName_5,
+        audioDuration: '0:00:07.2',
+        audioQuality: 'No', // Is spoken quality
+      );
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -27320,7 +27329,8 @@ void main() {
     testWidgets(
         '''On selected playlist, add a text to speech audio. Verify the text to speech dialog appearance.
           Then enter a text with case and listen it, verifying the listen duration after which the Stop
-          button is reset to the Listen button.''', (WidgetTester tester) async {
+          button is reset to the Listen button.''',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -27421,28 +27431,25 @@ void main() {
       expect(find.text('Enter your text here ...'), findsOneWidget);
 
       // Find the text field and delete button
-      final Finder textField = find.byKey(const Key('textToConvertTextField'));
-      final Finder textFieldDeleteButton =
+      final Finder textFieldFinder =
+          find.byKey(const Key('textToConvertTextField'));
+      final Finder textFieldDeleteButtonFFinder =
           find.byKey(const Key('deleteTextToConvertIconButton'));
-
-      // Verify both widgets exist
-      expect(textField, findsOneWidget);
-      expect(textFieldDeleteButton, findsOneWidget);
 
       // Enter text in the TextField
       const testText = 'Ceci est un texte à supprimer.';
-      await tester.enterText(textField, testText);
+      await tester.enterText(textFieldFinder, testText);
       await tester.pump();
 
       // Verify the text was entered
       expect(find.text(testText), findsOneWidget);
 
       // Verify the TextField controller has the text
-      final textFieldWidget = tester.widget<TextField>(textField);
+      final textFieldWidget = tester.widget<TextField>(textFieldFinder);
       expect(textFieldWidget.controller!.text, testText);
 
       // Tap the delete button
-      await tester.tap(textFieldDeleteButton);
+      await tester.tap(textFieldDeleteButtonFFinder);
       await tester.pump();
 
       // Verify the text field is now empty
@@ -27461,12 +27468,11 @@ void main() {
       // between 8 and 9 second duration
 
       const String textToConvertStr = "{{ un {{{ deux { trois.";
-      await tester.enterText(textField, textToConvertStr);
+      await tester.enterText(textFieldFinder, textToConvertStr);
       await tester.pump();
 
       // Tap on the listen button
       final Finder listenButton = find.byKey(const Key('listen_text_button'));
-      expect(listenButton, findsOneWidget);
       await tester.tap(listenButton);
       await tester.pumpAndSettle();
 
@@ -27490,18 +27496,63 @@ void main() {
       expect(finalIcon.icon, Icons.volume_up); // Back to Listen icon
 
       // Now click on Create MP3 button to create the audio
-      final Finder createMP3Button = find.byKey(const Key('create_audio_file_button'));
+      final Finder createMP3Button =
+          find.byKey(const Key('create_audio_file_button'));
       expect(createMP3Button, findsOneWidget);
       await tester.tap(createMP3Button);
+      await tester.pumpAndSettle();
+
+      // Verify the convert text to audio dialog title
+      expect(
+        find.text('MP3 File Name'),
+        findsOneWidget,
+      );
+
+      // Verify the text to convert title
+      expect(
+        find.text('Enter the MP3 file name'),
+        findsOneWidget,
+      );
+
+      // Verify the presence of the hint text in the MP3 file name
+      // TextField
+      expect(find.text('file name'), findsOneWidget);
+      expect(find.text('.mp3'), findsOneWidget);
+
+      const String enteredFileName = 'convertedAudio';
+      final Finder mp3FileNameTextFieldFinder =
+          find.byKey(const Key('textToConvertTextField'));
+
+      await tester.enterText(mp3FileNameTextFieldFinder, enteredFileName);
+      await tester.pump();
+
+      // Verify the text was entered
+      expect(find.text(enteredFileName), findsOneWidget);
+
+      // Tap on the listen button
+      final Finder saveMP3FileButton =
+          find.byKey(const Key('create_mp3_button_key'));
+      await tester.tap(saveMP3FileButton);
+      await Future.delayed(const Duration(seconds: 2));
       await tester.pumpAndSettle();
 
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Audio(s)\n\n\"$ttsFileName\"\n\nimported to local playlist \"$localPlaylistTitle\".",
+            "The audio created by the text to MP3 conversion\n\n\"$enteredFileName.mp3\"\n\nwas added to Youtube playlist \"$selectedPlaylistTitle\".",
         isWarningConfirming: true,
       );
 
+      // Verify that the created audio is present in the selected
+      // playlist
+      await IntegrationTestUtil.verifyAudioInfoDialog(
+        tester: tester,
+        audioEnclosingPlaylistTitle: selectedPlaylistTitle,
+        youtubeChannelValue: "",
+        audioTitle: enteredFileName,
+        audioQuality: 'TTS',
+      );
+      
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
