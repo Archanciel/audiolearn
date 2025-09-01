@@ -271,12 +271,10 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           value: frenchDateTimeFormat.format(audio.audioDownloadDateTime)),
       createInfoRowFunction(
           context: context,
-          label: AppLocalizations.of(context)!.importedAudioUrlLabel,
-          value: audio.videoUrl),
-      createInfoRowFunction(
-          context: context,
-          label: AppLocalizations.of(context)!.importedAudioDescriptionLabel,
-          value: audio.compactVideoDescription),
+          label: AppLocalizations.of(context)!.isPlayableLabel,
+          value: (UiUtil.isAudioPlayable(audio: audio))
+              ? AppLocalizations.of(context)!.yes
+              : AppLocalizations.of(context)!.no),
       createInfoRowFunction(
           valueTextWidgetKey: const Key('enclosingPlaylistTitleKey'),
           context: context,
@@ -314,6 +312,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
               : audio.copiedToPlaylistTitle!),
       createInfoRowFunction(
           context: context,
+          valueTextWidgetKey: const Key('audioDurationKey'),
           label: AppLocalizations.of(context)!.audioDurationLabel,
           value: audio.audioDuration.HHmmss()),
       createInfoRowFunction(
@@ -346,6 +345,13 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
             context: context,
             sizeInBytes: audio.audioFileSize,
           )),
+      createInfoRowFunction(
+          valueTextWidgetKey: const Key('audioInfoQualityKey'),
+          context: context,
+          label: AppLocalizations.of(context)!.isMusicQualityLabel,
+          value: (audio.isAudioMusicQuality)
+              ? AppLocalizations.of(context)!.yes
+              : AppLocalizations.of(context)!.no),
       createInfoRowFunction(
           context: context,
           label: AppLocalizations.of(context)!.audioPlaySpeedLabel,
@@ -378,12 +384,10 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           value: frenchDateTimeFormat.format(audio.audioDownloadDateTime)),
       createInfoRowFunction(
           context: context,
-          label: AppLocalizations.of(context)!.convertedAudioUrlLabel,
-          value: audio.videoUrl),
-      createInfoRowFunction(
-          context: context,
-          label: AppLocalizations.of(context)!.convertedAudioDescriptionLabel,
-          value: audio.compactVideoDescription),
+          label: AppLocalizations.of(context)!.isPlayableLabel,
+          value: (UiUtil.isAudioPlayable(audio: audio))
+              ? AppLocalizations.of(context)!.yes
+              : AppLocalizations.of(context)!.no),
       createInfoRowFunction(
           valueTextWidgetKey: const Key('enclosingPlaylistTitleKey'),
           context: context,
@@ -421,6 +425,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
               : audio.copiedToPlaylistTitle!),
       createInfoRowFunction(
           context: context,
+          valueTextWidgetKey: const Key('audioDurationKey'),
           label: AppLocalizations.of(context)!.audioDurationLabel,
           value: audio.audioDuration.HHmmss()),
       createInfoRowFunction(
@@ -453,6 +458,13 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
             context: context,
             sizeInBytes: audio.audioFileSize,
           )),
+      createInfoRowFunction(
+          valueTextWidgetKey: const Key('audioInfoQualityKey'),
+          context: context,
+          label: AppLocalizations.of(context)!.isMusicQualityLabel,
+          value: (audio.isAudioMusicQuality)
+              ? AppLocalizations.of(context)!.yes
+              : AppLocalizations.of(context)!.no),
       createInfoRowFunction(
           context: context,
           label: AppLocalizations.of(context)!.audioPlaySpeedLabel,
