@@ -2761,7 +2761,9 @@ class IntegrationTestUtil {
 
   static Future<Finder> verifyAudioInfoDialog({
     required WidgetTester tester,
-    String audioInfoDialogTitle = 'Downloaded Audio Info',
+    AudioType audioType = AudioType.downloaded,
+    String compactVideoDescriptionLabel = 'Compact video description',
+    String validVideoTitleLabel = 'Valid video title',
     bool inAudioPlayerView = false,
     String audioEnclosingPlaylistTitle = '',
     String youtubeChannelValue = "Jean-Pierre Schnyder",
@@ -2823,18 +2825,52 @@ class IntegrationTestUtil {
 
     // Now verifying the display audio info dialog elements
 
-    // Verify the audio info dialog title
-    final Text audioInfoDialogTitleTextWidget =
-        tester.widget<Text>(find.byKey(const Key('audioInfoDialogTitleKey')));
-    expect(audioInfoDialogTitleTextWidget.data, audioInfoDialogTitle);
+    // Verifying the presence or absence of the audio info dialog
+    // label. This depends on the audio type.
 
+    switch (audioType) {
+      case AudioType.downloaded:
+        expect(find.text('Downloaded Audio Info'), findsOneWidget);
+        expect(find.text('YouTube channel'), findsOneWidget);
+        expect(find.text('Original video title'), findsOneWidget);
+        expect(find.text('Video upload date'), findsOneWidget);
+        expect(find.text('Audio downl date time'), findsOneWidget);
+        expect(find.text('Playable'), findsOneWidget);
+        expect(find.text('Video URL'), findsOneWidget);
+        expect(find.text('Compact video description'), findsOneWidget);
+        expect(find.text('Valid video title'), findsOneWidget);
 
-    // Verify the audio channel name
+        // Verify the audio channel name
+        Text youtubeChannelTextWidget =
+            tester.widget<Text>(find.byKey(const Key('youtubeChannelKey')));
+        expect(youtubeChannelTextWidget.data, youtubeChannelValue);
 
-    Text youtubeChannelTextWidget =
-        tester.widget<Text>(find.byKey(const Key('youtubeChannelKey')));
+        break;
+      case AudioType.imported:
+        expect(find.text('Imported Audio Info'), findsOneWidget);
+        expect(find.text('YouTube channel'), findsNothing);
+        expect(find.text('Audio title'), findsOneWidget);
+        expect(find.text('Video upload date'), findsNothing);
+        expect(find.text('Imported audio date time'), findsOneWidget);
+        expect(find.text('Playable'), findsOneWidget);
+        expect(find.text('Video URL'), findsNothing);
+        expect(find.text('Compact video description'), findsNothing);
+        expect(find.text('Valid video title'), findsNothing);
 
-    expect(youtubeChannelTextWidget.data, youtubeChannelValue);
+        break;
+      case AudioType.textToSpeech:
+        expect(find.text('Converted Audio Info'), findsOneWidget);
+        expect(find.text('YouTube channel'), findsNothing);
+        expect(find.text('Audio title'), findsOneWidget);
+        expect(find.text('Video upload date'), findsNothing);
+        expect(find.text('Converted text first date time'), findsOneWidget);
+        expect(find.text('Playable'), findsOneWidget);
+        expect(find.text('Video URL'), findsNothing);
+        expect(find.text('Compact video description'), findsNothing);
+        expect(find.text('Valid video title'), findsNothing);
+        
+        break;
+    }
 
     // Verify the enclosing playlist title of the audio
 

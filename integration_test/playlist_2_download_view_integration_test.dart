@@ -27129,13 +27129,13 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
 
-      const String selectedPlaylistTitle = 'urgent_actus_17-12-2023';
+      const String selectedYoutubePlaylistTitle = 'urgent_actus_17-12-2023';
       const String localPlaylistTitle = 'local';
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'import_audios_integr_test',
-        selectedPlaylistTitle: selectedPlaylistTitle,
+        selectedPlaylistTitle: selectedYoutubePlaylistTitle,
         tapOnPlaylistToggleButton: false,
       );
 
@@ -27144,13 +27144,14 @@ void main() {
       FilePicker.platform = mockFilePicker;
 
       const String fileName_5 = "bbb.mp3";
+      const String fileName_5_noExt = "bbb";
 
       // Setting one selected mp3 file.
       mockFilePicker.setSelectedFiles([
         PlatformFile(
             name: fileName_5,
             path:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_5",
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$selectedYoutubePlaylistTitle${path.separator}$fileName_5",
             size: 155136),
       ]);
 
@@ -27182,10 +27183,10 @@ void main() {
 
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
-        audioInfoDialogTitle: 'Imported Audio info',
-        audioEnclosingPlaylistTitle: localPlaylistTitle,
-        audioTitle: fileName_5,
-        audioDuration: '0:00:07.2',
+        audioType: AudioType.imported,
+        audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
+        audioTitle: fileName_5_noExt,
+        audioDuration: '0:00:19',
         audioQuality: 'No', // Is spoken quality
       );
       // Purge the test playlist directory so that the created test
