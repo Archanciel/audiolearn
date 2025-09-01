@@ -608,8 +608,6 @@
   "audioTitleLabel": "Titre audio",
   "chapterAudioTitleLabel": "Chapitre audio",
   "importedAudioDateTimeLabel": "Date/heure import",
-  "importedAudioUrlLabel": "URL audio importé",
-  "importedAudioDescriptionLabel": "Description audio importé",
   "sortFilterParametersAppliedName": "appliqué",
   "lastListenedDateTime": "Date/heure dernière écoute",
   "downloadSingleVideoAudioAtMusicQuality": "Télécharger l'audio de la vidéo à qualité musicale",
@@ -1467,7 +1465,5 @@
   "convertTextToAudioHelpContent": "{brace_1}Un texte avec un caractère qui introduit un silence de 1 seconde. Au dàbut du texte, 2 secondes de silence sont ajoutées. {brace_2} Avant cette phrase, 4 secondes de silence sont introduites. {brace_3} Ici, une seconde de silence. Ce caractère a été choisi du fait qu'il n'est pas normalement utilisé dans les écritures.",
   "textToSpeech": "converti",
   "audioTextToSpeechInfoDialogTitle": "Informations sur l'audio converti",
-  "convertedAudioDateTimeLabel": "Date//heure prem conversion",
-  "convertedAudioUrlLabel": "URL audio converti",
-  "convertedAudioDescriptionLabel": "Description audio converti"
+  "convertedAudioDateTimeLabel": "Date//heure prem conversion"
 }

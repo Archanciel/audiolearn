@@ -2040,18 +2040,6 @@ abstract class AppLocalizations {
   /// **'Imported audio date time'**
   String get importedAudioDateTimeLabel;
 
-  /// No description provided for @importedAudioUrlLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Imported audio URL'**
-  String get importedAudioUrlLabel;
-
-  /// No description provided for @importedAudioDescriptionLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Audio description'**
-  String get importedAudioDescriptionLabel;
-
   /// No description provided for @sortFilterParametersAppliedName.
   ///
   /// In en, this message translates to:
@@ -3719,18 +3707,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Converted text first date time'**
   String get convertedAudioDateTimeLabel;
-
-  /// No description provided for @convertedAudioUrlLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Converted audio URL'**
-  String get convertedAudioUrlLabel;
-
-  /// No description provided for @convertedAudioDescriptionLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Audio description'**
-  String get convertedAudioDescriptionLabel;
 }
 
 class _AppLocalizationsDelegate

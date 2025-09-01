@@ -510,8 +510,6 @@
   "audioTitleLabel": "Audio title",
   "chapterAudioTitleLabel": "Audio chapter",
   "importedAudioDateTimeLabel": "Imported audio date time",
-  "importedAudioUrlLabel": "Imported audio URL",
-  "importedAudioDescriptionLabel": "Audio description",
   "sortFilterParametersAppliedName": "applied",
   "lastListenedDateTime": "Last listened date/time",
   "downloadSingleVideoAudioAtMusicQuality": "Download single video audio at music quality",
@@ -1081,7 +1079,5 @@
   "convertTextToAudioHelpContent": "{brace_1}A text with a character that introduces a 1-second silence. At the beginning of the text, 2 seconds of silence are added. {brace_2} Before this sentence, 4 seconds of silence are introduced. {brace_3} Here, one second of silence. This character was chosen because it is not normally used in writing.",
   "textToSpeech": "converted",
   "audioTextToSpeechInfoDialogTitle": "Converted Audio Info",
-  "convertedAudioDateTimeLabel": "Converted text first date time",
-  "convertedAudioUrlLabel": "Converted audio URL",
-  "convertedAudioDescriptionLabel": "Audio description"
+  "convertedAudioDateTimeLabel": "Converted text first date time"
 }
