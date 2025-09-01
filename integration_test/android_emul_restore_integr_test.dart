@@ -149,9 +149,9 @@ void main() {
         ];
 
         List<String> audioSubTitles = [
-          "0:17:59.0. 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55.",
-          "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35.",
-          "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
+          "0:17:59.0 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55",
+          "0:06:29.0 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35",
+          "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36",
         ];
 
         _verifyRestoredPlaylistAndAudio(
@@ -286,9 +286,9 @@ void main() {
         ];
 
         List<String> audioSubTitles = [
-          "0:17:59.0. 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55.",
-          "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35.",
-          "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
+          "0:17:59.0 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55",
+          "0:06:29.0 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35",
+          "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36",
         ];
 
         _verifyRestoredPlaylistAndAudio(
@@ -426,8 +426,8 @@ void main() {
         ];
 
         List<String> audioSubTitles = [
-          "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35.",
-          "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
+          "0:06:29.0 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35",
+          "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36",
         ];
 
         _verifyRestoredPlaylistAndAudio(
@@ -554,9 +554,9 @@ void main() {
         ];
 
         List<String> audioSubTitles = [
-          "0:17:59.0. 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55.",
-          "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35.",
-          "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
+          "0:17:59.0 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55",
+          "0:06:29.0 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35",
+          "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36",
         ];
 
         _verifyRestoredPlaylistAndAudio(
@@ -691,9 +691,9 @@ void main() {
         ];
 
         List<String> audioSubTitles = [
-          "0:17:59.0. 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55.",
-          "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35.",
-          "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
+          "0:17:59.0 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55",
+          "0:06:29.0 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35",
+          "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36",
         ];
 
         _verifyRestoredPlaylistAndAudio(
@@ -2090,10 +2090,10 @@ void main() {
           ];
 
           List<String> audioSubTitles = [
-            "0:24:21.7. 9.84 MB at 510 KB/sec on 24/02/2025 at 13:27.",
-            "0:22:57.8. 8.72 MB at 203 KB/sec on 24/02/2025 at 13:16.",
-            "0:00:58.7. 359 KB at 89 KB/sec on 13/02/2025 at 10:43.",
-            "0:22:57.8. 8.72 MB at 2.14 MB/sec on 13/02/2025 at 08:30.",
+            "0:24:21.7 9.84 MB at 510 KB/sec on 24/02/2025 at 13:27",
+            "0:22:57.8 8.72 MB at 203 KB/sec on 24/02/2025 at 13:16",
+            "0:00:58.7 359 KB at 89 KB/sec on 13/02/2025 at 10:43",
+            "0:22:57.8 8.72 MB at 2.14 MB/sec on 13/02/2025 at 08:30",
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -2111,7 +2111,7 @@ void main() {
           ];
 
           audioSubTitles = [
-            "0:24:21.8. 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30.",
+            "0:24:21.8 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30",
           ];
 
           await IntegrationTestUtil.selectPlaylist(
@@ -2140,7 +2140,7 @@ void main() {
           //   "0:17:59.0. 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11.",
           //   "1:17:53.6. 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06.",
           //   "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
-          //   "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
+          //   "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36",
           // ];
 
           // const String youtubePlaylistTitle = 'S8 audio';
@@ -2570,10 +2570,10 @@ void main() {
           ];
 
           List<String> audioSubTitles = [
-            "0:24:21.7. 9.84 MB at 510 KB/sec on 24/02/2025 at 13:27.",
-            "0:22:57.8. 8.72 MB at 203 KB/sec on 24/02/2025 at 13:16.",
-            "0:00:58.7. 359 KB at 89 KB/sec on 13/02/2025 at 10:43.",
-            "0:22:57.8. 8.72 MB at 2.14 MB/sec on 13/02/2025 at 08:30.",
+            "0:24:21.7 9.84 MB at 510 KB/sec on 24/02/2025 at 13:27",
+            "0:22:57.8 8.72 MB at 203 KB/sec on 24/02/2025 at 13:16",
+            "0:00:58.7 359 KB at 89 KB/sec on 13/02/2025 at 10:43",
+            "0:22:57.8 8.72 MB at 2.14 MB/sec on 13/02/2025 at 08:30",
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -2591,7 +2591,7 @@ void main() {
           ];
 
           audioSubTitles = [
-            "0:24:21.8. 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30.",
+            "0:24:21.8 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30",
           ];
 
           await IntegrationTestUtil.selectPlaylist(
@@ -2620,7 +2620,7 @@ void main() {
           //   "0:17:59.0. 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11.",
           //   "1:17:53.6. 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06.",
           //   "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
-          //   "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
+          //   "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36",
           // ];
 
           // const String youtubePlaylistTitle = 'S8 audio';
@@ -3085,7 +3085,7 @@ void main() {
           ];
 
           List<String> audioSubTitles = [
-            "0:24:21.8. 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30.",
+            "0:24:21.8 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30",
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -3108,10 +3108,10 @@ void main() {
           ];
 
           audioSubTitles = [
-            "0:24:21.7. 9.84 MB at 510 KB/sec on 24/02/2025 at 13:27.",
-            "0:22:57.8. 8.72 MB at 203 KB/sec on 24/02/2025 at 13:16.",
-            "0:00:58.7. 359 KB at 89 KB/sec on 13/02/2025 at 10:43.",
-            "0:22:57.8. 8.72 MB at 2.14 MB/sec on 13/02/2025 at 08:30.",
+            "0:24:21.7 9.84 MB at 510 KB/sec on 24/02/2025 at 13:27",
+            "0:22:57.8 8.72 MB at 203 KB/sec on 24/02/2025 at 13:16",
+            "0:00:58.7 359 KB at 89 KB/sec on 13/02/2025 at 10:43",
+            "0:22:57.8 8.72 MB at 2.14 MB/sec on 13/02/2025 at 08:30",
           ];
 
           await IntegrationTestUtil.selectPlaylist(
@@ -3140,7 +3140,7 @@ void main() {
           //   "0:17:59.0. 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11.",
           //   "1:17:53.6. 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06.",
           //   "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
-          //   "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
+          //   "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36",
           // ];
 
           // const String youtubePlaylistTitle = 'S8 audio';
@@ -3602,7 +3602,7 @@ void main() {
           ];
 
           List<String> audioSubTitles = [
-            "0:24:21.8. 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30.",
+            "0:24:21.8 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30",
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -3626,7 +3626,7 @@ void main() {
           //   "0:17:59.0. 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11.",
           //   "1:17:53.6. 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06.",
           //   "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
-          //   "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
+          //   "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36",
           // ];
 
           // const String youtubePlaylistTitle = 'S8 audio';
@@ -4050,7 +4050,7 @@ void main() {
           ];
 
           List<String> audioSubTitles = [
-            "0:02:39.6. 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00.",
+            "0:02:39.6 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00",
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -4074,7 +4074,7 @@ void main() {
           ];
 
           audioSubTitles = [
-            "0:24:21.8. 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30.",
+            "0:24:21.8 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30",
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -4322,7 +4322,7 @@ void main() {
           ];
 
           List<String> audioSubTitles = [
-            "0:02:39.6. 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00.",
+            "0:02:39.6 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00",
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -4346,7 +4346,7 @@ void main() {
           ];
 
           audioSubTitles = [
-            "0:24:21.8. 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30.",
+            "0:24:21.8 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30",
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -4539,10 +4539,10 @@ void main() {
         ];
 
         List<String> audioSubTitles = [
-          '0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.',
-          "0:19:05.0. 6.98 MB at 2.28 MB/sec on 07/01/2024 at 08:16.",
-          "0:20:32.0. 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45.",
-          "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45.",
+          '0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16',
+          "0:19:05.0 6.98 MB at 2.28 MB/sec on 07/01/2024 at 08:16",
+          "0:20:32.0 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45",
+          "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
         ];
 
         _verifyRestoredPlaylistAndAudio(
@@ -4711,10 +4711,10 @@ void main() {
         ];
 
         List<String> audioSubTitles = [
-          '0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.',
-          "0:19:05.0. 6.98 MB at 2.28 MB/sec on 07/01/2024 at 08:16.",
-          "0:20:32.0. 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45.",
-          "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45.",
+          '0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16',
+          "0:19:05.0 6.98 MB at 2.28 MB/sec on 07/01/2024 at 08:16",
+          "0:20:32.0 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45",
+          "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
         ];
 
         _verifyRestoredPlaylistAndAudio(
@@ -4879,7 +4879,7 @@ void main() {
         ];
 
         List<String> audioSubTitles = [
-          '0:02:39.6. 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00.',
+          '0:02:39.6 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00',
         ];
 
         _verifyRestoredPlaylistAndAudio(
@@ -5039,7 +5039,7 @@ void main() {
         ];
 
         List<String> audioSubTitles = [
-          '0:02:39.6. 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00.',
+          '0:02:39.6 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00',
         ];
 
         _verifyRestoredPlaylistAndAudio(
