@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:archive/archive.dart';
@@ -27144,7 +27143,7 @@ void main() {
       FilePicker.platform = mockFilePicker;
 
       const String fileName_5 = "bbb.mp3";
-      const String fileName_5_noExt = "bbb";
+      const String fileName = "bbb";
 
       // Setting one selected mp3 file.
       mockFilePicker.setSelectedFiles([
@@ -27185,7 +27184,7 @@ void main() {
         tester: tester,
         audioType: AudioType.imported,
         audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
-        audioTitle: fileName_5_noExt,
+        audioTitle: fileName,
         audioDuration: '0:00:19',
         audioQuality: 'No', // Is spoken quality
       );
@@ -27350,8 +27349,6 @@ void main() {
       );
 
       const String selectedPlaylistTitle = 'urgent_actus_17-12-2023';
-      const String localPlaylistTitle = 'local';
-      const String ttsFileName = "aTTS.mp3";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
