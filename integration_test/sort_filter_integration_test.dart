@@ -1416,8 +1416,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // And verify the order of the playlist audio subtitles
 
           List<String> audioSubTitlesSortedByTitleAscending = [
-            "0:06:29.0. Video upload date: 12/06/2022.",
-            "0:13:39.0. Video upload date: 10/09/2023.",
+            "0:06:29.0 Video upload date: 12/06/2022",
+            "0:13:39.0 Video upload date: 10/09/2023",
           ];
 
           IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
@@ -11379,12 +11379,12 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // And verify the order of the playlist audio subtitles
 
         List<String> audioSubTitlesSortedByTitleAscending = [
-          "0:19:05.0. Video upload date: 05/01/2024.",
-          "0:13:35.0. Video upload date: 03/01/2024.",
-          "0:07:38.0. Video upload date: 03/12/2023.",
-          "0:20:32.0. Video upload date: 01/12/2023.",
-          "0:06:29.0. Video upload date: 23/09/2023.",
-          "0:13:39.0. Video upload date: 10/09/2023.",
+          "0:19:05.0 Video upload date: 05/01/2024",
+          "0:13:35.0 Video upload date: 03/01/2024",
+          "0:07:38.0 Video upload date: 03/12/2023",
+          "0:20:32.0 Video upload date: 01/12/2023",
+          "0:06:29.0 Video upload date: 23/09/2023",
+          "0:13:39.0 Video upload date: 10/09/2023",
         ];
 
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
@@ -11665,13 +11665,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // And verify the order of the playlist audio subtitles
 
         List<String> audioSubTitlesSortedByTitleAscending = [
-          "0:19:05.0. Remaining 00:00:00. Listened on 16/05/2024 at 17:09.",
-          "0:06:29.0. Remaining 00:00:38. Listened on 16/03/2024 at 17:09.",
-          "0:06:29.0. Remaining 00:06:29. Not listened.",
-          "0:07:38.0. Remaining 00:07:38. Not listened.",
-          "0:20:32.0. Remaining 00:10:32. Listened on 16/06/2024 at 17:09.",
-          "0:13:35.0. Remaining 00:11:01. Listened on 16/02/2024 at 17:09.",
-          "0:13:39.0. Remaining 00:13:39. Listened on 16/01/2024 at 17:09.",
+          "0:19:05.0 Remaining 00:00:00 Listened on 16/05/2024 at 17:09",
+          "0:06:29.0 Remaining 00:00:38 Listened on 16/03/2024 at 17:09",
+          "0:06:29.0 Remaining 00:06:29 Not listened",
+          "0:07:38.0 Remaining 00:07:38 Not listened",
+          "0:20:32.0 Remaining 00:10:32 Listened on 16/06/2024 at 17:09",
+          "0:13:35.0 Remaining 00:11:01 Listened on 16/02/2024 at 17:09",
+          "0:13:39.0 Remaining 00:13:39 Listened on 16/01/2024 at 17:09",
         ];
 
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
@@ -11819,13 +11819,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // And verify the order of the playlist audio subtitles
 
         List<String> audioSubTitlesSortedByTitleAscending = [
-          "0:20:32.0. Listened on 16/06/2024 at 17:09.",
-          "0:19:05.0. Listened on 16/05/2024 at 17:09.",
-          "0:06:29.0. Listened on 16/03/2024 at 17:09.",
-          "0:13:35.0. Listened on 16/02/2024 at 17:09.",
-          "0:13:39.0. Listened on 16/01/2024 at 17:09.",
-          "0:07:38.0. Not listened.",
-          "0:06:29.0. Not listened.",
+          "0:20:32.0 Listened on 16/06/2024 at 17:09",
+          "0:19:05.0 Listened on 16/05/2024 at 17:09",
+          "0:06:29.0 Listened on 16/03/2024 at 17:09",
+          "0:13:35.0 Listened on 16/02/2024 at 17:09",
+          "0:13:39.0 Listened on 16/01/2024 at 17:09",
+          "0:07:38.0 Not listened",
+          "0:06:29.0 Not listened",
         ];
 
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
@@ -12239,12 +12239,12 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // And verify the order of the playlist audio subtitles
 
         List<String> audioSubTitlesSortedByTitleAscending = [
-          // "0:20:32.0. 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45. Audio downl duration: 0:00:03.",
-          "0:19:05.0. 6.98 MB at 2.28 MB/sec on 07/01/2024 at 08:16. Audio downl duration: 0:00:03.",
-          "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16. Audio downl duration: 0:00:01.",
-          "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16. Audio downl duration: 0:00:01.",
-          "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45. Audio downl duration: 0:00:01.",
-          "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35. Audio downl duration: 0:00:01.",
+          // "0:20:32.0. 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45 Audio downl duration: 0:00:03.",
+          "0:19:05.0 6.98 MB at 2.28 MB/sec on 07/01/2024 at 08:16 Audio downl duration: 0:00:03",
+          "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16 Audio downl duration: 0:00:01",
+          "0:13:35.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16 Audio downl duration: 0:00:01",
+          "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45 Audio downl duration: 0:00:01",
+          "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35 Audio downl duration: 0:00:01",
         ];
 
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(

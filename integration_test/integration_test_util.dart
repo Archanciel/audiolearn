@@ -2776,6 +2776,7 @@ class IntegrationTestUtil {
     String audioQuality = '',
     String audioVolume = '',
     String audioPlaySpeed = '',
+    Language language = Language.english,
   }) async {
     // Now we want to tap the popup menu of the Audio ListTile
     // "audio learn test short video one" in order to display
@@ -2828,48 +2829,95 @@ class IntegrationTestUtil {
     // Verifying the presence or absence of the audio info dialog
     // label. This depends on the audio type.
 
-    switch (audioType) {
-      case AudioType.downloaded:
-        expect(find.text('Downloaded Audio Info'), findsOneWidget);
-        expect(find.text('YouTube channel'), findsOneWidget);
-        expect(find.text('Original video title'), findsOneWidget);
-        expect(find.text('Video upload date'), findsOneWidget);
-        expect(find.text('Audio downl date time'), findsOneWidget);
-        expect(find.text('Playable'), findsOneWidget);
-        expect(find.text('Video URL'), findsOneWidget);
-        expect(find.text('Compact video description'), findsOneWidget);
-        expect(find.text('Valid video title'), findsOneWidget);
+    if (language == Language.english) {
+      switch (audioType) {
+        case AudioType.downloaded:
+          expect(find.text('Downloaded Audio Info'), findsOneWidget);
+          expect(find.text('Youtube channel'), findsOneWidget);
+          expect(find.text('Original video title'), findsOneWidget);
+          expect(find.text('Video upload date'), findsOneWidget);
+          expect(find.text('Audio downl date time'), findsOneWidget);
+          expect(find.text('Playable'), findsOneWidget);
+          expect(find.text('Video URL'), findsOneWidget);
+          expect(find.text('Compact video description'), findsOneWidget);
+          expect(find.text('Valid video title'), findsOneWidget);
 
-        // Verify the audio channel name
-        Text youtubeChannelTextWidget =
-            tester.widget<Text>(find.byKey(const Key('youtubeChannelKey')));
-        expect(youtubeChannelTextWidget.data, youtubeChannelValue);
+          // Verify the audio channel name
+          Text youtubeChannelTextWidget =
+              tester.widget<Text>(find.byKey(const Key('youtubeChannelKey')));
+          expect(youtubeChannelTextWidget.data, youtubeChannelValue);
 
-        break;
-      case AudioType.imported:
-        expect(find.text('Imported Audio Info'), findsOneWidget);
-        expect(find.text('YouTube channel'), findsNothing);
-        expect(find.text('Audio title'), findsOneWidget);
-        expect(find.text('Video upload date'), findsNothing);
-        expect(find.text('Imported audio date time'), findsOneWidget);
-        expect(find.text('Playable'), findsOneWidget);
-        expect(find.text('Video URL'), findsNothing);
-        expect(find.text('Compact video description'), findsNothing);
-        expect(find.text('Valid video title'), findsNothing);
+          break;
+        case AudioType.imported:
+          expect(find.text('Imported Audio Info'), findsOneWidget);
+          expect(find.text('Youtube channel'), findsNothing);
+          expect(find.text('Audio title'), findsOneWidget);
+          expect(find.text('Video upload date'), findsNothing);
+          expect(find.text('Imported audio date time'), findsOneWidget);
+          expect(find.text('Playable'), findsOneWidget);
+          expect(find.text('Video URL'), findsNothing);
+          expect(find.text('Compact video description'), findsNothing);
+          expect(find.text('Valid video title'), findsNothing);
 
-        break;
-      case AudioType.textToSpeech:
-        expect(find.text('Converted Audio Info'), findsOneWidget);
-        expect(find.text('YouTube channel'), findsNothing);
-        expect(find.text('Audio title'), findsOneWidget);
-        expect(find.text('Video upload date'), findsNothing);
-        expect(find.text('Converted text first date time'), findsOneWidget);
-        expect(find.text('Playable'), findsOneWidget);
-        expect(find.text('Video URL'), findsNothing);
-        expect(find.text('Compact video description'), findsNothing);
-        expect(find.text('Valid video title'), findsNothing);
-        
-        break;
+          break;
+        case AudioType.textToSpeech:
+          expect(find.text('Converted Audio Info'), findsOneWidget);
+          expect(find.text('Youtube channel'), findsNothing);
+          expect(find.text('Audio title'), findsOneWidget);
+          expect(find.text('Video upload date'), findsNothing);
+          expect(find.text('Converted text first date time'), findsOneWidget);
+          expect(find.text('Playable'), findsOneWidget);
+          expect(find.text('Video URL'), findsNothing);
+          expect(find.text('Compact video description'), findsNothing);
+          expect(find.text('Valid video title'), findsNothing);
+
+          break;
+      }
+    } else {
+      // language == Language.french
+      switch (audioType) {
+        case AudioType.downloaded:
+          expect(find.text("Informations sur l'audio téléchargé"), findsOneWidget);
+          expect(find.text('Chaîne Youtube'), findsOneWidget);
+          expect(find.text('Titre vidéo original'), findsOneWidget);
+          expect(find.text('Date mise en ligne'), findsOneWidget);
+          expect(find.text('Date/heure téléch'), findsOneWidget);
+          expect(find.text('Jouable'), findsOneWidget);
+          expect(find.text('URL vidéo'), findsOneWidget);
+          expect(find.text('Description vidéo compacte'), findsOneWidget);
+          expect(find.text('Titre vidéo valide'), findsOneWidget);
+
+          // Verify the audio channel name
+          Text youtubeChannelTextWidget =
+              tester.widget<Text>(find.byKey(const Key('youtubeChannelKey')));
+          expect(youtubeChannelTextWidget.data, youtubeChannelValue);
+
+          break;
+        case AudioType.imported:
+          expect(find.text("Informations sur l'audio importé"), findsOneWidget);
+          expect(find.text('Chaîne Youtube'), findsNothing);
+          expect(find.text('Titre audio'), findsOneWidget);
+          expect(find.text('Date mise en ligne'), findsNothing);
+          expect(find.text('Date/heure import'), findsOneWidget);
+          expect(find.text('Jouable'), findsOneWidget);
+          expect(find.text('URL vidéo'), findsNothing);
+          expect(find.text('Description vidéo compacte'), findsNothing);
+          expect(find.text('Titre vidéo valide'), findsNothing);
+
+          break;
+        case AudioType.textToSpeech:
+          expect(find.text("Informations sur l'audio converti"), findsOneWidget);
+          expect(find.text('Chaîne Youtube'), findsNothing);
+          expect(find.text('Titre audio'), findsOneWidget);
+          expect(find.text('Date mise en ligne'), findsNothing);
+          expect(find.text('Date/heure prem conversion'), findsOneWidget);
+          expect(find.text('Jouable'), findsOneWidget);
+          expect(find.text('URL vidéo'), findsNothing);
+          expect(find.text('Description vidéo compacte'), findsNothing);
+          expect(find.text('Titre vidéo valide'), findsNothing);
+
+          break;
+      }
     }
 
     // Verify the enclosing playlist title of the audio

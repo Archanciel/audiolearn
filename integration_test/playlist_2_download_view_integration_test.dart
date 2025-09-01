@@ -5058,7 +5058,7 @@ void main() {
         String currentAudioTitle =
             '99-audio learn test short video two 23-06-10';
         String currentAudioSubTitle =
-            '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:19.';
+            '0:00:09.8 61 Ko importé le 30/10/2024 à 08:19';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -5159,7 +5159,7 @@ void main() {
         String newAudioToSelectTitle =
             '6-audio learn test short video two 23-06-10';
         String newAudioToSelectSubTitle =
-            '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:23.';
+            '0:00:09.8 61 Ko importé le 30/10/2024 à 08:23';
 
         // Go to audio player view to select another audio
         await _selectNewAudioInAudioPlayerViewAndReturnToPlaylistDownloadView(
@@ -5188,7 +5188,7 @@ void main() {
 
         newAudioToSelectTitle = '7-audio learn test short video two 23-06-10';
         String newAudioSubTitle =
-            '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:22.';
+            '0:00:09.8 61 Ko importé le 30/10/2024 à 08:22';
 
         // Go to audio player view to select another audio
         await _selectNewAudioInAudioPlayerViewAndReturnToPlaylistDownloadView(
@@ -5216,7 +5216,7 @@ void main() {
         );
 
         currentAudioSubTitle =
-            '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:26.';
+            '0:00:09.8 61 Ko importé le 30/10/2024 à 08:26';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -5246,7 +5246,7 @@ void main() {
         String currentAudioTitle =
             '99-audio learn test short video two 23-06-10';
         String currentAudioSubTitle =
-            '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:19.';
+            '0:00:09.8 61 Ko importé le 30/10/2024 à 08:19';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -5259,7 +5259,7 @@ void main() {
         String newAudioToSelectTitle =
             '8-audio learn test short video two 23-06-10';
         String newAudioToSelectSubTitle =
-            '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:21.';
+            '0:00:09.8 61 Ko importé le 30/10/2024 à 08:21';
 
         // Go to audio player view to select another audio
         await _selectNewAudioInAudioPlayerViewAndReturnToPlaylistDownloadView(
@@ -5287,7 +5287,7 @@ void main() {
         );
 
         currentAudioSubTitle =
-            '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:24.';
+            '0:00:09.8 61 Ko importé le 30/10/2024 à 08:24';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -5308,7 +5308,7 @@ void main() {
         );
 
         currentAudioSubTitle =
-            '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:26.';
+            '0:00:09.8 61 Ko importé le 30/10/2024 à 08:26';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -5342,7 +5342,7 @@ void main() {
         String currentAudioTitle =
             '99-audio learn test short video two 23-06-10';
         String currentAudioSubTitle =
-            '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:19.';
+            '0:00:09.8 61 Ko importé le 30/10/2024 à 08:19';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -5402,7 +5402,7 @@ void main() {
             'EMOTIONAL AUDITION! young piano prodigy makes the Judges CRY and gets the GOLDEN BUZZER  FGT 2022';
 
         String newAudioSubTitle =
-            '0:10:14.0. 3.75 Mo à 1.64 Mo/sec le 03/11/2024 à 15:19.';
+            '0:10:14.0 3.75 Mo à 1.64 Mo/sec le 03/11/2024 à 15:19';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -5432,7 +5432,7 @@ void main() {
         String currentAudioTitle =
             '99-audio learn test short video two 23-06-10';
         String currentAudioSubTitle =
-            '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:19.';
+            '0:00:09.8 61 Ko importé le 30/10/2024 à 08:19';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -5492,7 +5492,7 @@ void main() {
         String currentAudioTitle =
             '99-audio learn test short video two 23-06-10';
         String currentAudioSubTitle =
-            '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:19.';
+            '0:00:09.8 61 Ko importé le 30/10/2024 à 08:19';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -5553,7 +5553,7 @@ void main() {
         String currentAudioTitle =
             '99-audio learn test short video two 23-06-10';
         String currentAudioSubTitle =
-            '0:00:09.8. 61 Ko importé le 30/10/2024 à 08:19.';
+            '0:00:09.8 61 Ko importé le 30/10/2024 à 08:19';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -5594,7 +5594,7 @@ void main() {
             'EMOTIONAL AUDITION! young piano prodigy makes the Judges CRY and gets the GOLDEN BUZZER  FGT 2022';
 
         String newAudioSubTitle =
-            '0:10:14.0. 3.75 Mo à 1.64 Mo/sec le 03/11/2024 à 15:19.';
+            '0:10:14.0 3.75 Mo à 1.64 Mo/sec le 03/11/2024 à 15:19';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -6090,7 +6090,7 @@ void main() {
         String currentAudioTitle =
             "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik";
         String currentAudioSubTitle =
-            "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.";
+            "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -6274,7 +6274,7 @@ void main() {
         // of the 'S8 audio' playlist
         currentAudioTitle = "La résilience insulaire par Fiona Roche";
         currentAudioSubTitle =
-            "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16.";
+            "0:13:35.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -6345,7 +6345,7 @@ void main() {
         // Verify the currently selected audio title/subTitle of the
         // 'S8 audio' playlist
         String firstDownloadedAudioSubTitle =
-            "0:20:32.0. 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45.";
+            "0:20:32.0 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -6633,7 +6633,7 @@ void main() {
         // Verify the currently selected audio title/subTitle of the
         // 'S8 audio' playlist
         String partiallyListenedAudioSubTitle =
-            "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45.";
+            "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -6938,7 +6938,7 @@ void main() {
         // Verify the currently selected audio title/subTitle of the
         // 'S8 audio' playlist
         String fullyThenPartiallyListenedAndFinallySelectedAudioSubTitle =
-            "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.";
+            "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -6978,7 +6978,7 @@ void main() {
         // Verify the currently selected audio title/subTitle of the
         // 'S8 audio' playlist
         String partiallyThenFullyListenedAudioSubTitle =
-            "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16.";
+            "0:13:35.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -7287,7 +7287,7 @@ void main() {
         String currentAudioTitle =
             "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik";
         String currentAudioSubTitle =
-            "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.";
+            "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -7593,7 +7593,7 @@ void main() {
         // of the 'S8 audio' playlist
         currentAudioTitle = "La résilience insulaire par Fiona Roche";
         currentAudioSubTitle =
-            "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16.";
+            "0:13:35.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -7646,7 +7646,7 @@ void main() {
         String currentAudioTitle =
             "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik";
         String currentAudioSubTitle =
-            "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.";
+            "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -7881,7 +7881,7 @@ void main() {
         String currentAudioTitle =
             "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik";
         String currentAudioSubTitle =
-            "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.";
+            "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -8140,7 +8140,7 @@ void main() {
         // of the 'S8 audio' playlist
         currentAudioTitle = "La résilience insulaire par Fiona Roche";
         currentAudioSubTitle =
-            "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16.";
+            "0:13:35.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -8181,7 +8181,7 @@ void main() {
         // of the 'S8 audio' playlist
         currentAudioTitle = "morning _ cinematic video";
         currentAudioSubTitle =
-            "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.";
+            "0:00:59.0 360 KB at 283 KB/sec on 10/01/2024 at 18:18";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -8364,7 +8364,7 @@ void main() {
         String currentAudioTitle =
             "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
         String currentAudioSubTitle =
-            "0:20:32.0. 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45.";
+            "0:20:32.0 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -8570,7 +8570,7 @@ void main() {
         String currentAudioTitle =
             "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau";
         String currentAudioSubTitle =
-            "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45.";
+            "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -8865,7 +8865,7 @@ void main() {
         String currentAudioTitle =
             "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
         String currentAudioSubTitle =
-            "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.";
+            "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -8906,7 +8906,7 @@ void main() {
         // of the 'S8 audio' playlist
         currentAudioTitle = "morning _ cinematic video";
         currentAudioSubTitle =
-            "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.";
+            "0:00:59.0 360 KB at 283 KB/sec on 10/01/2024 at 18:18";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -9007,7 +9007,7 @@ void main() {
         String currentAudioTitle =
             "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik";
         String currentAudioSubTitle =
-            "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.";
+            "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -9388,7 +9388,7 @@ void main() {
         // of the 'S8 audio' playlist
         currentAudioTitle = "La résilience insulaire par Fiona Roche";
         currentAudioSubTitle =
-            "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16.";
+            "0:13:35.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -9429,7 +9429,7 @@ void main() {
         // of the 'S8 audio' playlist
         currentAudioTitle = "morning _ cinematic video";
         currentAudioSubTitle =
-            "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.";
+            "0:00:59.0 360 KB at 283 KB/sec on 10/01/2024 at 18:18";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -9589,7 +9589,7 @@ void main() {
           // of the 'S8 audio' playlist
           String currentAudioTitle = "morning _ cinematic video";
           String currentAudioSubTitle =
-              "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.";
+              "0:00:59.0 360 KB at 283 KB/sec on 10/01/2024 at 18:18";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -9707,7 +9707,7 @@ void main() {
           String currentAudioTitle =
               "What place Maria Valtorta takes in your spiritual journey";
           String currentAudioSubTitle =
-              "0:06:01.3. 2.20 MB at 595 KB/sec on 03/06/2025 at 16:48.";
+              "0:06:01.3 2.20 MB at 595 KB/sec on 03/06/2025 at 16:48";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -9815,7 +9815,7 @@ void main() {
           String currentAudioTitle =
               "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik";
           String currentAudioSubTitle =
-              '0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.';
+              '0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16';
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -9930,7 +9930,7 @@ void main() {
               "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
 
           String currentAudioSubTitle =
-              "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.";
+              "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -10020,7 +10020,7 @@ void main() {
         String currentAudioTitle =
             "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik";
         String currentAudioSubTitle =
-            "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.";
+            "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -10234,7 +10234,7 @@ void main() {
         currentAudioTitle =
             "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik";
         currentAudioSubTitle =
-            "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.";
+            "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -10275,7 +10275,7 @@ void main() {
         // title/subTitle of the 'S8 audio' playlist
         currentAudioTitle = "morning _ cinematic video";
         currentAudioSubTitle =
-            "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.";
+            "0:00:59.0 360 KB at 283 KB/sec on 10/01/2024 at 18:18";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -10569,7 +10569,7 @@ void main() {
         String currentAudioTitle =
             "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)";
         String currentAudioSubTitle =
-            "0:20:32.0. 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45.";
+            "0:20:32.0 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -10774,7 +10774,7 @@ void main() {
         String currentAudioTitle =
             "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau";
         String currentAudioSubTitle =
-            "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45.";
+            "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -11064,7 +11064,7 @@ void main() {
         String currentAudioTitle =
             "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
         String currentAudioSubTitle =
-            "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.";
+            "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -11105,7 +11105,7 @@ void main() {
         // of the 'S8 audio' playlist
         currentAudioTitle = "morning _ cinematic video";
         currentAudioSubTitle =
-            "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.";
+            "0:00:59.0 360 KB at 283 KB/sec on 10/01/2024 at 18:18";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -11204,7 +11204,7 @@ void main() {
         String currentAudioTitle =
             "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik";
         String currentAudioSubTitle =
-            "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.";
+            "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -11559,7 +11559,7 @@ void main() {
         // of the 'S8 audio' playlist
         currentAudioTitle = "morning _ cinematic video";
         currentAudioSubTitle =
-            "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.";
+            "0:00:59.0 360 KB at 283 KB/sec on 10/01/2024 at 18:18";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -11720,7 +11720,7 @@ void main() {
           // of the 'S8 audio' playlist
           String currentAudioTitle = "morning _ cinematic video";
           String currentAudioSubTitle =
-              "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.";
+              "0:00:59.0 360 KB at 283 KB/sec on 10/01/2024 at 18:18";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -11834,7 +11834,7 @@ void main() {
           String currentAudioTitle =
               "What place Maria Valtorta takes in your spiritual journey";
           String currentAudioSubTitle =
-              "0:06:01.3. 2.20 MB at 595 KB/sec on 03/06/2025 at 16:48.";
+              "0:06:01.3 2.20 MB at 595 KB/sec on 03/06/2025 at 16:48";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -11944,7 +11944,7 @@ void main() {
           String currentAudioTitle =
               'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik';
           String currentAudioSubTitle =
-              '0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.';
+              '0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16';
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -12056,7 +12056,7 @@ void main() {
           String currentAudioTitle =
               "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
           String currentAudioSubTitle =
-              "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.";
+              "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -16494,9 +16494,9 @@ void main() {
               "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             ];
             List<String> audioSubTitles = [
-              "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.",
-              "0:00:10.0. 61 KB at 20 KB/sec on 10/01/2024 at 18:18.",
-              "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
+              "0:00:59.0 360 KB at 283 KB/sec on 10/01/2024 at 18:18",
+              "0:00:10.0 61 KB at 20 KB/sec on 10/01/2024 at 18:18",
+              "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -16517,10 +16517,10 @@ void main() {
             ];
 
             audioSubTitles = [
-              "0:24:21.7. 9.84 MB at 510 KB/sec on 24/02/2025 at 13:27.",
-              "0:22:57.8. 8.72 MB at 203 KB/sec on 24/02/2025 at 13:16.",
-              "0:00:58.7. 359 KB at 89 KB/sec on 13/02/2025 at 10:43.",
-              "0:22:57.8. 8.72 MB at 2.14 MB/sec on 13/02/2025 at 08:30.",
+              "0:24:21.7 9.84 MB at 510 KB/sec on 24/02/2025 at 13:27",
+              "0:22:57.8 8.72 MB at 203 KB/sec on 24/02/2025 at 13:16",
+              "0:00:58.7 359 KB at 89 KB/sec on 13/02/2025 at 10:43",
+              "0:22:57.8 8.72 MB at 2.14 MB/sec on 13/02/2025 at 08:30",
             ];
 
             await IntegrationTestUtil.selectPlaylist(
@@ -16546,10 +16546,10 @@ void main() {
             ];
 
             audioSubTitles = [
-              "0:17:59.0. 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11.",
-              "1:17:53.6. 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06.",
-              "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
-              "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
+              "0:17:59.0 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11",
+              "1:17:53.6 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06",
+              "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
+              "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36",
             ];
 
             const String youtubePlaylistTitle = 'S8 audio';
@@ -17026,7 +17026,7 @@ void main() {
             ];
 
             List<String> audioSubTitles = [
-              "0:24:21.8. 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30.",
+              "0:24:21.8 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -17047,10 +17047,10 @@ void main() {
             ];
 
             audioSubTitles = [
-              "0:24:21.7. 9.84 MB at 510 KB/sec on 24/02/2025 at 13:27.",
-              "0:22:57.8. 8.72 MB at 203 KB/sec on 24/02/2025 at 13:16.",
-              "0:00:58.7. 359 KB at 89 KB/sec on 13/02/2025 at 10:43.",
-              "0:22:57.8. 8.72 MB at 2.14 MB/sec on 13/02/2025 at 08:30.",
+              "0:24:21.7 9.84 MB at 510 KB/sec on 24/02/2025 at 13:27",
+              "0:22:57.8 8.72 MB at 203 KB/sec on 24/02/2025 at 13:16",
+              "0:00:58.7 359 KB at 89 KB/sec on 13/02/2025 at 10:43",
+              "0:22:57.8 8.72 MB at 2.14 MB/sec on 13/02/2025 at 08:30",
             ];
 
             await IntegrationTestUtil.selectPlaylist(
@@ -17076,10 +17076,10 @@ void main() {
             ];
 
             audioSubTitles = [
-              "0:17:59.0. 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11.",
-              "1:17:53.6. 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06.",
-              "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
-              "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
+              "0:17:59.0 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11",
+              "1:17:53.6 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06",
+              "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
+              "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36",
             ];
 
             const String youtubePlaylistTitle = 'S8 audio';
@@ -17522,9 +17522,9 @@ void main() {
               "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             ];
             List<String> audioSubTitles = [
-              "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.",
-              "0:00:10.0. 61 KB at 20 KB/sec on 10/01/2024 at 18:18.",
-              "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
+              "0:00:59.0 360 KB at 283 KB/sec on 10/01/2024 at 18:18",
+              "0:00:10.0 61 KB at 20 KB/sec on 10/01/2024 at 18:18",
+              "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -17924,9 +17924,9 @@ void main() {
               "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             ];
             List<String> audioSubTitles = [
-              "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.",
-              "0:00:10.0. 61 KB at 20 KB/sec on 10/01/2024 at 18:18.",
-              "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
+              "0:00:59.0 360 KB at 283 KB/sec on 10/01/2024 at 18:18",
+              "0:00:10.0 61 KB at 20 KB/sec on 10/01/2024 at 18:18",
+              "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -17947,10 +17947,10 @@ void main() {
             ];
 
             audioSubTitles = [
-              "0:24:21.7. 9.84 MB at 510 KB/sec on 24/02/2025 at 13:27.",
-              "0:22:57.8. 8.72 MB at 203 KB/sec on 24/02/2025 at 13:16.",
-              "0:00:58.7. 359 KB at 89 KB/sec on 13/02/2025 at 10:43.",
-              "0:22:57.8. 8.72 MB at 2.14 MB/sec on 13/02/2025 at 08:30.",
+              "0:24:21.7 9.84 MB at 510 KB/sec on 24/02/2025 at 13:27",
+              "0:22:57.8 8.72 MB at 203 KB/sec on 24/02/2025 at 13:16",
+              "0:00:58.7 359 KB at 89 KB/sec on 13/02/2025 at 10:43",
+              "0:22:57.8 8.72 MB at 2.14 MB/sec on 13/02/2025 at 08:30",
             ];
 
             await IntegrationTestUtil.selectPlaylist(
@@ -17976,10 +17976,10 @@ void main() {
             ];
 
             audioSubTitles = [
-              "0:17:59.0. 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11.",
-              "1:17:53.6. 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06.",
-              "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
-              "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
+              "0:17:59.0 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11",
+              "1:17:53.6 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06",
+              "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
+              "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36",
             ];
 
             const String youtubePlaylistTitle = 'S8 audio';
@@ -18462,7 +18462,7 @@ void main() {
             ];
 
             List<String> audioSubTitles = [
-              "0:24:21.8. 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30.",
+              "0:24:21.8 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30",
             ];
 
             // Verify that no playlist is selected
@@ -18492,10 +18492,10 @@ void main() {
             ];
 
             audioSubTitles = [
-              "0:24:21.7. 9.84 MB at 510 KB/sec on 24/02/2025 at 13:27.",
-              "0:22:57.8. 8.72 MB at 203 KB/sec on 24/02/2025 at 13:16.",
-              "0:00:58.7. 359 KB at 89 KB/sec on 13/02/2025 at 10:43.",
-              "0:22:57.8. 8.72 MB at 2.14 MB/sec on 13/02/2025 at 08:30.",
+              "0:24:21.7 9.84 MB at 510 KB/sec on 24/02/2025 at 13:27",
+              "0:22:57.8 8.72 MB at 203 KB/sec on 24/02/2025 at 13:16",
+              "0:00:58.7 359 KB at 89 KB/sec on 13/02/2025 at 10:43",
+              "0:22:57.8 8.72 MB at 2.14 MB/sec on 13/02/2025 at 08:30",
             ];
 
             await IntegrationTestUtil.selectPlaylist(
@@ -18521,10 +18521,10 @@ void main() {
             ];
 
             audioSubTitles = [
-              "0:17:59.0. 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11.",
-              "1:17:53.6. 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06.",
-              "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
-              "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.",
+              "0:17:59.0 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11",
+              "1:17:53.6 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06",
+              "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
+              "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36",
             ];
 
             const String youtubePlaylistTitle = 'S8 audio';
@@ -18963,9 +18963,9 @@ void main() {
               "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             ];
             List<String> audioSubTitles = [
-              "0:00:59.0. 360 KB at 283 KB/sec on 10/01/2024 at 18:18.",
-              "0:00:10.0. 61 KB at 20 KB/sec on 10/01/2024 at 18:18.",
-              "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
+              "0:00:59.0 360 KB at 283 KB/sec on 10/01/2024 at 18:18",
+              "0:00:10.0 61 KB at 20 KB/sec on 10/01/2024 at 18:18",
+              "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -19220,9 +19220,9 @@ void main() {
           ];
 
           List<String> audioSubTitles = [
-            '0:02:39.6. 2.59 MB imported on 23/06/2025 at 06:56.',
-            "0:17:59.0. 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55.",
-            "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35.",
+            '0:02:39.6 2.59 MB imported on 23/06/2025 at 06:56',
+            "0:17:59.0 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55",
+            "0:06:29.0 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35",
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -19350,9 +19350,9 @@ void main() {
           ];
 
           List<String> audioSubTitles = [
-            '0:02:39.6. 2.59 MB imported on 23/06/2025 at 06:56.',
-            "0:17:59.0. 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55.",
-            "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35.",
+            '0:02:39.6 2.59 MB imported on 23/06/2025 at 06:56',
+            "0:17:59.0 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55",
+            "0:06:29.0 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35",
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -19528,7 +19528,7 @@ void main() {
           ];
 
           List<String> audioSubTitles = [
-            '0:02:39.6. 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00.',
+            '0:02:39.6 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00',
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -19691,7 +19691,7 @@ void main() {
           ];
 
           List<String> audioSubTitles = [
-            '0:02:39.6. 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00.',
+            '0:02:39.6 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00',
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -19858,10 +19858,10 @@ void main() {
           ];
 
           List<String> audioSubTitles = [
-            '0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.',
-            "0:19:05.0. 6.98 MB at 2.28 MB/sec on 07/01/2024 at 08:16.",
-            "0:20:32.0. 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45.",
-            "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45.",
+            '0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16',
+            "0:19:05.0 6.98 MB at 2.28 MB/sec on 07/01/2024 at 08:16",
+            "0:20:32.0 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45",
+            "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -20033,10 +20033,10 @@ void main() {
           ];
 
           List<String> audioSubTitles = [
-            '0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.',
-            "0:19:05.0. 6.98 MB at 2.28 MB/sec on 07/01/2024 at 08:16.",
-            "0:20:32.0. 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45.",
-            "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45.",
+            '0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16',
+            "0:19:05.0 6.98 MB at 2.28 MB/sec on 07/01/2024 at 08:16",
+            "0:20:32.0 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45",
+            "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -20268,7 +20268,7 @@ void main() {
           ];
 
           List<String> audioSubTitles = [
-            "0:02:39.6. 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00.",
+            "0:02:39.6 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00",
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -20292,7 +20292,7 @@ void main() {
           ];
 
           audioSubTitles = [
-            "0:24:21.8. 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30.",
+            "0:24:21.8 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30",
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -20547,7 +20547,7 @@ void main() {
           ];
 
           List<String> audioSubTitles = [
-            "0:02:39.6. 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00.",
+            "0:02:39.6 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00",
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -20571,7 +20571,7 @@ void main() {
           ];
 
           audioSubTitles = [
-            "0:24:21.8. 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30.",
+            "0:24:21.8 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30",
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -20738,9 +20738,9 @@ void main() {
             ];
 
             List<String> audioSubTitles = [
-              '0:00:24.1. 11 KB at 7 KB/sec on 18/05/2025 at 16:40.',
-              "0:00:58.9. 360 KB at 175 KB/sec on 18/05/2025 at 16:40.",
-              "0:00:09.8. 61 KB at 30 KB/sec on 18/05/2025 at 16:40.",
+              '0:00:24.1 11 KB at 7 KB/sec on 18/05/2025 at 16:40',
+              "0:00:58.9 360 KB at 175 KB/sec on 18/05/2025 at 16:40",
+              "0:00:09.8 61 KB at 30 KB/sec on 18/05/2025 at 16:40",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -21087,9 +21087,9 @@ void main() {
             ];
 
             List<String> audioSubTitles = [
-              '0:00:24.1. 11 KB at 7 KB/sec on 18/05/2025 at 16:40.',
-              "0:00:58.9. 360 KB at 175 KB/sec on 18/05/2025 at 16:40.",
-              "0:00:09.8. 61 KB at 30 KB/sec on 18/05/2025 at 16:40.",
+              '0:00:24.1 11 KB at 7 KB/sec on 18/05/2025 at 16:40',
+              "0:00:58.9 360 KB at 175 KB/sec on 18/05/2025 at 16:40",
+              "0:00:09.8 61 KB at 30 KB/sec on 18/05/2025 at 16:40",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -21438,9 +21438,9 @@ void main() {
             ];
 
             List<String> audioSubTitles = [
-              '0:00:24.1. 11 KB at 7 KB/sec on 18/05/2025 at 16:40.',
-              "0:00:58.9. 360 KB at 175 KB/sec on 18/05/2025 at 16:40.",
-              "0:00:09.8. 61 KB at 30 KB/sec on 18/05/2025 at 16:40.",
+              '0:00:24.1 11 KB at 7 KB/sec on 18/05/2025 at 16:40',
+              "0:00:58.9 360 KB at 175 KB/sec on 18/05/2025 at 16:40",
+              "0:00:09.8 61 KB at 30 KB/sec on 18/05/2025 at 16:40",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -21787,9 +21787,9 @@ void main() {
             ];
 
             List<String> audioSubTitles = [
-              '0:00:24.1. 11 KB at 7 KB/sec on 18/05/2025 at 16:40.',
-              "0:00:58.9. 360 KB at 175 KB/sec on 18/05/2025 at 16:40.",
-              "0:00:09.8. 61 KB at 30 KB/sec on 18/05/2025 at 16:40.",
+              '0:00:24.1 11 KB at 7 KB/sec on 18/05/2025 at 16:40',
+              "0:00:58.9 360 KB at 175 KB/sec on 18/05/2025 at 16:40",
+              "0:00:09.8 61 KB at 30 KB/sec on 18/05/2025 at 16:40",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -22362,7 +22362,7 @@ void main() {
             // playlist 'Prières du Maître'
 
             String restorableZipFilePathName =
-                '$kApplicationPathWindowsTest${path.separator}Windows Prières du Maître initialization.zip';
+                '$kApplicationPathWindowsTest${path.separator}Windows Prières initialization.zip';
 
             mockFilePicker.setSelectedFiles([
               PlatformFile(
@@ -22437,7 +22437,7 @@ void main() {
             // and modified comments
 
             restorableZipFilePathName =
-                '$kApplicationPathWindowsTest${path.separator}Windows Prières du Maître comment restoration.zip';
+                '$kApplicationPathWindowsTest${path.separator}Windows Prières comment restoration.zip';
 
             mockFilePicker.setSelectedFiles([
               PlatformFile(
@@ -23168,9 +23168,9 @@ void main() {
             ];
 
             List<String> audioSubTitles = [
-              '0:00:24.1. 11 KB at 7 KB/sec on 18/05/2025 at 16:40.',
-              "0:00:58.9. 360 KB at 175 KB/sec on 18/05/2025 at 16:40.",
-              "0:00:09.8. 61 KB at 30 KB/sec on 18/05/2025 at 16:40.",
+              '0:00:24.1 11 KB at 7 KB/sec on 18/05/2025 at 16:40',
+              "0:00:58.9 360 KB at 175 KB/sec on 18/05/2025 at 16:40",
+              "0:00:09.8 61 KB at 30 KB/sec on 18/05/2025 at 16:40",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -23517,9 +23517,9 @@ void main() {
             ];
 
             List<String> audioSubTitles = [
-              '0:00:24.1. 11 KB at 7 KB/sec on 18/05/2025 at 16:40.',
-              "0:00:58.9. 360 KB at 175 KB/sec on 18/05/2025 at 16:40.",
-              "0:00:09.8. 61 KB at 30 KB/sec on 18/05/2025 at 16:40.",
+              '0:00:24.1 11 KB at 7 KB/sec on 18/05/2025 at 16:40',
+              "0:00:58.9 360 KB at 175 KB/sec on 18/05/2025 at 16:40",
+              "0:00:09.8 61 KB at 30 KB/sec on 18/05/2025 at 16:40",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -24326,9 +24326,9 @@ void main() {
             ];
 
             List<String> audioSubTitles = [
-              '0:00:24.1. 11 KB at 7 KB/sec on 18/05/2025 at 16:40.',
-              "0:00:58.9. 360 KB at 175 KB/sec on 18/05/2025 at 16:40.",
-              "0:00:09.8. 61 KB at 30 KB/sec on 18/05/2025 at 16:40.",
+              '0:00:24.1 11 KB at 7 KB/sec on 18/05/2025 at 16:40',
+              "0:00:58.9 360 KB at 175 KB/sec on 18/05/2025 at 16:40",
+              "0:00:09.8 61 KB at 30 KB/sec on 18/05/2025 at 16:40",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -24521,9 +24521,9 @@ void main() {
             ];
 
             List<String> audioSubTitles = [
-              '0:00:24.1. 11 KB at 7 KB/sec on 18/05/2025 at 16:40.',
-              "0:00:58.9. 360 KB at 175 KB/sec on 18/05/2025 at 16:40.",
-              "0:00:09.8. 61 KB at 30 KB/sec on 18/05/2025 at 16:40.",
+              '0:00:24.1 11 KB at 7 KB/sec on 18/05/2025 at 16:40',
+              "0:00:58.9 360 KB at 175 KB/sec on 18/05/2025 at 16:40",
+              "0:00:09.8 61 KB at 30 KB/sec on 18/05/2025 at 16:40",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -24677,9 +24677,9 @@ void main() {
           ];
 
           List<String> audioSubTitles = [
-            '0:02:39.6. 2.59 MB imported on 23/06/2025 at 06:56.',
-            "0:17:59.0. 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55.",
-            "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35.",
+            '0:02:39.6 2.59 MB imported on 23/06/2025 at 06:56',
+            "0:17:59.0 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55",
+            "0:06:29.0 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35",
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -24807,9 +24807,9 @@ void main() {
           ];
 
           List<String> audioSubTitles = [
-            '0:02:39.6. 2.59 MB imported on 23/06/2025 at 06:56.',
-            "0:17:59.0. 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55.",
-            "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35.",
+            '0:02:39.6 2.59 MB imported on 23/06/2025 at 06:56',
+            "0:17:59.0 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55",
+            "0:06:29.0 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35",
           ];
 
           _verifyRestoredPlaylistAndAudio(

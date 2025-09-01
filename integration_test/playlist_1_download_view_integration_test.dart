@@ -6105,6 +6105,7 @@ void main() {
         copiedFromPlaylistTitle: '',
         copiedToPlaylistTitle: localAudioTargetOnePlaylistTitle,
         audioDuration: '0:00:24.0',
+        language: Language.french,
       );
 
       // Select the target ListTile Playlist containing the audio moved
@@ -6128,6 +6129,7 @@ void main() {
         copiedFromPlaylistTitle: youtubeAudioSourcePlaylistTitle,
         copiedToPlaylistTitle: '',
         audioDuration: '0:00:24.0',
+        language: Language.french,
       );
 
       // Now verifying that the target audio can access to its copied
@@ -6225,6 +6227,7 @@ void main() {
         copiedFromPlaylistTitle: youtubeAudioSourcePlaylistTitle,
         copiedToPlaylistTitle: localAudioTargetTwoPlaylistTitle,
         audioDuration: '0:00:24.0',
+        language: Language.french,
       );
 
       // Now verifying the copied audio info dialog related content
@@ -6247,6 +6250,7 @@ void main() {
         copiedFromPlaylistTitle: localAudioTargetOnePlaylistTitle,
         copiedToPlaylistTitle: '',
         audioDuration: '0:00:24.0',
+        language: Language.french,
       );
 
       // Purge the test playlist directory so that the created test
@@ -6789,6 +6793,7 @@ void main() {
         copiedFromPlaylistTitle: '',
         copiedToPlaylistTitle: '',
         audioDuration: '0:00:24.0',
+        language: Language.french,
       );
 
       // Now verifying that the moved audio can access to its moved
@@ -6938,6 +6943,7 @@ void main() {
         copiedFromPlaylistTitle: '',
         copiedToPlaylistTitle: '',
         audioDuration: '0:00:24.0',
+        language: Language.french,
       );
 
       // *** Then move again the moved audio from the Youtube playlist
@@ -7022,6 +7028,7 @@ void main() {
         copiedFromPlaylistTitle: '',
         copiedToPlaylistTitle: '',
         audioDuration: '0:00:24.0',
+        language: Language.french,
       );
 
       // Purge the test playlist directory so that the created test
@@ -11065,7 +11072,7 @@ void main() {
           // of the 'S8 audio' playlist
           String currentAudioTitle = "La résilience insulaire par Fiona Roche";
           String currentAudioSubTitle =
-              "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16.";
+              "0:13:35.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -11205,7 +11212,7 @@ void main() {
           // of the 'S8 audio' playlist
           String currentAudioTitle = "La résilience insulaire par Fiona Roche";
           String currentAudioSubTitle =
-              "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16.";
+              "0:13:35.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -11451,7 +11458,7 @@ void main() {
           String currentAudioTitle =
               "La surpopulation mondiale par Jancovici et Barrau";
           String currentAudioSubTitle =
-              "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.";
+              "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -11655,7 +11662,7 @@ void main() {
           String currentAudioTitle =
               "La surpopulation mondiale par Jancovici et Barrau";
           String currentAudioSubTitle =
-              "0:07:38.0. 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36.";
+              "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -11858,7 +11865,7 @@ void main() {
           // of the 'S8 audio' playlist
           String currentAudioTitle = "La résilience insulaire par Fiona Roche";
           String currentAudioSubTitle =
-              "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16.";
+              "0:13:35.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -12007,7 +12014,7 @@ void main() {
           // of the 'S8 audio' playlist
           String currentAudioTitle = "La résilience insulaire par Fiona Roche";
           String currentAudioSubTitle =
-              "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16.";
+              "0:13:35.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -12303,7 +12310,7 @@ void main() {
           // of the 'S8 audio' playlist
           String currentAudioTitle = "La résilience insulaire par Fiona Roche";
           String currentAudioSubTitle =
-              "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16.";
+              "0:13:35.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -12548,7 +12555,7 @@ void main() {
           // of the 'S8 audio' playlist
           String currentAudioTitle = "La résilience insulaire par Fiona Roche";
           String currentAudioSubTitle =
-              "0:13:35.0. 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16.";
+              "0:13:35.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
