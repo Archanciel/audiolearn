@@ -4485,39 +4485,39 @@ void main() {
       const String youtubePlaylistTitle = 'S8 audio';
 
       List<String> audioSubTitles = [
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.",
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45.",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
       ];
 
       List<String> audioSubTitlesWithAudioDownloadDuration = [
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16. Audio downl duration: 0:00:01.",
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45. Audio downl duration: 0:00:01.",
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35. Audio downl duration: 0:00:01.",
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16 Audio downl duration: 0:00:01",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45 Audio downl duration: 0:00:01",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35 Audio downl duration: 0:00:01",
       ];
 
       List<String> audioSubTitlesWithAudioRemainingDuration = [
-        "0:13:39.0. Remaining 00:00:04. Listened on 19/08/2024 at 14:46.",
-        "0:06:29.0. Remaining 00:00:38. Listened on 16/03/2024 at 17:09.",
-        "0:06:29.0. Remaining 00:06:29. Not listened.",
+        "0:13:39.0 Remaining 00:00:04 Listened on 19/08/2024 at 14:46",
+        "0:06:29.0 Remaining 00:00:38 Listened on 16/03/2024 at 17:09",
+        "0:06:29.0 Remaining 00:06:29 Not listened",
       ];
 
       List<String> audioSubTitlesLastListenedDateTimeDescending = [
-        "0:13:39.0. Listened on 19/08/2024 at 14:46.",
-        "0:06:29.0. Listened on 16/03/2024 at 17:09.",
-        "0:06:29.0. Not listened.",
+        "0:13:39.0 Listened on 19/08/2024 at 14:46",
+        "0:06:29.0 Listened on 16/03/2024 at 17:09",
+        "0:06:29.0 Not listened",
       ];
 
       List<String> audioSubTitlesTitleAsc = [
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45.",
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16",
       ];
 
       List<String> audioSubTitlesVideoUploadDate = [
-        "0:06:29.0. Video upload date: 23/09/2023.",
-        "0:13:39.0. Video upload date: 10/09/2023.",
-        "0:06:29.0. Video upload date: 12/06/2022.",
+        "0:06:29.0 Video upload date: 23/09/2023",
+        "0:13:39.0 Video upload date: 10/09/2023",
+        "0:06:29.0 Video upload date: 12/06/2022",
       ];
 
       DateTime now = DateTime.now();
@@ -4554,39 +4554,39 @@ void main() {
       );
 
       audioSubTitles = [
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35.",
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16.",
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45.",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35",
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45",
       ];
 
       audioSubTitlesWithAudioDownloadDuration = [
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16. Audio downl duration: 0:00:01.",
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45. Audio downl duration: 0:00:01.",
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35. Audio downl duration: 0:00:01.",
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16 Audio downl duration: 0:00:01",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45 Audio downl duration: 0:00:01",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35 Audio downl duration: 0:00:01",
       ];
 
       audioSubTitlesWithAudioRemainingDuration = [
-        "0:13:39.0. Remaining 00:00:04. Listened on 08/19/2024 at 14:46.",
-        "0:06:29.0. Remaining 00:00:38. Listened on 03/16/2024 at 17:09.",
-        "0:06:29.0. Remaining 00:06:29. Not listened.",
+        "0:13:39.0 Remaining 00:00:04 Listened on 08/19/2024 at 14:46",
+        "0:06:29.0 Remaining 00:00:38 Listened on 03/16/2024 at 17:09",
+        "0:06:29.0 Remaining 00:06:29 Not listened",
       ];
 
       audioSubTitlesLastListenedDateTimeDescending = [
-        "0:13:39.0. Listened on 08/19/2024 at 14:46.",
-        "0:06:29.0. Listened on 03/16/2024 at 17:09.",
-        "0:06:29.0. Not listened.",
+        "0:13:39.0 Listened on 08/19/2024 at 14:46",
+        "0:06:29.0 Listened on 03/16/2024 at 17:09",
+        "0:06:29.0 Not listened",
       ];
 
       audioSubTitlesTitleAsc = [
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45.",
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35.",
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16.",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35",
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16",
       ];
 
       audioSubTitlesVideoUploadDate = [
-        "0:06:29.0. Video upload date: 09/23/2023.",
-        "0:13:39.0. Video upload date: 09/10/2023.",
-        "0:06:29.0. Video upload date: 06/12/2022.",
+        "0:06:29.0 Video upload date: 09/23/2023",
+        "0:13:39.0 Video upload date: 09/10/2023",
+        "0:06:29.0 Video upload date: 06/12/2022",
       ];
 
       // Verifying initial MM/dd/yyyy date format application
@@ -4621,39 +4621,39 @@ void main() {
       );
 
       audioSubTitles = [
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35.",
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16.",
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45.",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35",
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45",
       ];
 
       audioSubTitlesWithAudioDownloadDuration = [
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16. Audio downl duration: 0:00:01.",
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45. Audio downl duration: 0:00:01.",
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35. Audio downl duration: 0:00:01.",
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16 Audio downl duration: 0:00:01",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45 Audio downl duration: 0:00:01",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35 Audio downl duration: 0:00:01",
       ];
 
       audioSubTitlesWithAudioRemainingDuration = [
-        "0:13:39.0. Remaining 00:00:04. Listened on 2024/08/19 at 14:46.",
-        "0:06:29.0. Remaining 00:00:38. Listened on 2024/03/16 at 17:09.",
-        "0:06:29.0. Remaining 00:06:29. Not listened.",
+        "0:13:39.0 Remaining 00:00:04 Listened on 2024/08/19 at 14:46",
+        "0:06:29.0 Remaining 00:00:38 Listened on 2024/03/16 at 17:09",
+        "0:06:29.0 Remaining 00:06:29 Not listened",
       ];
 
       audioSubTitlesLastListenedDateTimeDescending = [
-        "0:13:39.0. Listened on 2024/08/19 at 14:46.",
-        "0:06:29.0. Listened on 2024/03/16 at 17:09.",
-        "0:06:29.0. Not listened.",
+        "0:13:39.0 Listened on 2024/08/19 at 14:46",
+        "0:06:29.0 Listened on 2024/03/16 at 17:09",
+        "0:06:29.0 Not listened",
       ];
 
       audioSubTitlesTitleAsc = [
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45.",
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35.",
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16.",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35",
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16",
       ];
 
       audioSubTitlesVideoUploadDate = [
-        "0:06:29.0. Video upload date: 2023/09/23.",
-        "0:13:39.0. Video upload date: 2023/09/10.",
-        "0:06:29.0. Video upload date: 2022/06/12.",
+        "0:06:29.0 Video upload date: 2023/09/23",
+        "0:13:39.0 Video upload date: 2023/09/10",
+        "0:06:29.0 Video upload date: 2022/06/12",
       ];
 
       // Verifying initial yyyy/MM/dd date format application
@@ -4688,39 +4688,39 @@ void main() {
       );
 
       audioSubTitles = [
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.",
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45.",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
       ];
 
       audioSubTitlesWithAudioDownloadDuration = [
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16. Audio downl duration: 0:00:01.",
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45. Audio downl duration: 0:00:01.",
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35. Audio downl duration: 0:00:01.",
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16 Audio downl duration: 0:00:01",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45 Audio downl duration: 0:00:01",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35 Audio downl duration: 0:00:01",
       ];
 
       audioSubTitlesWithAudioRemainingDuration = [
-        "0:13:39.0. Remaining 00:00:04. Listened on 19/08/2024 at 14:46.",
-        "0:06:29.0. Remaining 00:00:38. Listened on 16/03/2024 at 17:09.",
-        "0:06:29.0. Remaining 00:06:29. Not listened.",
+        "0:13:39.0 Remaining 00:00:04 Listened on 19/08/2024 at 14:46",
+        "0:06:29.0 Remaining 00:00:38 Listened on 16/03/2024 at 17:09",
+        "0:06:29.0 Remaining 00:06:29 Not listened",
       ];
 
       audioSubTitlesLastListenedDateTimeDescending = [
-        "0:13:39.0. Listened on 19/08/2024 at 14:46.",
-        "0:06:29.0. Listened on 16/03/2024 at 17:09.",
-        "0:06:29.0. Not listened.",
+        "0:13:39.0 Listened on 19/08/2024 at 14:46",
+        "0:06:29.0 Listened on 16/03/2024 at 17:09",
+        "0:06:29.0 Not listened",
       ];
 
       audioSubTitlesTitleAsc = [
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45.",
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16",
       ];
 
       audioSubTitlesVideoUploadDate = [
-        "0:06:29.0. Video upload date: 23/09/2023.",
-        "0:13:39.0. Video upload date: 10/09/2023.",
-        "0:06:29.0. Video upload date: 12/06/2022.",
+        "0:06:29.0 Video upload date: 23/09/2023",
+        "0:13:39.0 Video upload date: 10/09/2023",
+        "0:06:29.0 Video upload date: 12/06/2022",
       ];
 
       // Verifying initial dd/MM/yyyy date format application
@@ -4784,39 +4784,39 @@ void main() {
       const String youtubePlaylistTitle = 'S8 audio';
 
       List<String> audioSubTitles = [
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35.",
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16.",
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45.",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35",
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45",
       ];
 
       List<String> audioSubTitlesWithAudioDownloadDuration = [
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16. Audio downl duration: 0:00:01.",
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45. Audio downl duration: 0:00:01.",
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35. Audio downl duration: 0:00:01.",
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16 Audio downl duration: 0:00:01",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45 Audio downl duration: 0:00:01",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35 Audio downl duration: 0:00:01",
       ];
 
       List<String> audioSubTitlesWithAudioRemainingDuration = [
-        "0:13:39.0. Remaining 00:00:04. Listened on 08/19/2024 at 14:46.",
-        "0:06:29.0. Remaining 00:00:38. Listened on 03/16/2024 at 17:09.",
-        "0:06:29.0. Remaining 00:06:29. Not listened.",
+        "0:13:39.0 Remaining 00:00:04 Listened on 08/19/2024 at 14:46",
+        "0:06:29.0 Remaining 00:00:38 Listened on 03/16/2024 at 17:09",
+        "0:06:29.0 Remaining 00:06:29 Not listened",
       ];
 
       List<String> audioSubTitlesLastListenedDateTimeDescending = [
-        "0:13:39.0. Listened on 08/19/2024 at 14:46.",
-        "0:06:29.0. Listened on 03/16/2024 at 17:09.",
-        "0:06:29.0. Not listened.",
+        "0:13:39.0 Listened on 08/19/2024 at 14:46",
+        "0:06:29.0 Listened on 03/16/2024 at 17:09",
+        "0:06:29.0 Not listened",
       ];
 
       List<String> audioSubTitlesTitleAsc = [
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45.",
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35.",
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16.",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35",
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16",
       ];
 
       List<String> audioSubTitlesVideoUploadDate = [
-        "0:06:29.0. Video upload date: 09/23/2023.",
-        "0:13:39.0. Video upload date: 09/10/2023.",
-        "0:06:29.0. Video upload date: 06/12/2022.",
+        "0:06:29.0 Video upload date: 09/23/2023",
+        "0:13:39.0 Video upload date: 09/10/2023",
+        "0:06:29.0 Video upload date: 06/12/2022",
       ];
 
       // Verifying initial MM/dd/yyyy date format application
@@ -4879,39 +4879,39 @@ void main() {
       const String youtubePlaylistTitle = 'S8 audio';
 
       List<String> audioSubTitles = [
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35.",
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16.",
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45.",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35",
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45",
       ];
 
       List<String> audioSubTitlesWithAudioDownloadDuration = [
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16. Audio downl duration: 0:00:01.",
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45. Audio downl duration: 0:00:01.",
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35. Audio downl duration: 0:00:01.",
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16 Audio downl duration: 0:00:01",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45 Audio downl duration: 0:00:01",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35 Audio downl duration: 0:00:01",
       ];
 
       List<String> audioSubTitlesWithAudioRemainingDuration = [
-        "0:13:39.0. Remaining 00:00:04. Listened on 2024/08/19 at 14:46.",
-        "0:06:29.0. Remaining 00:00:38. Listened on 2024/03/16 at 17:09.",
-        "0:06:29.0. Remaining 00:06:29. Not listened.",
+        "0:13:39.0 Remaining 00:00:04 Listened on 2024/08/19 at 14:46",
+        "0:06:29.0 Remaining 00:00:38 Listened on 2024/03/16 at 17:09",
+        "0:06:29.0 Remaining 00:06:29 Not listened",
       ];
 
       List<String> audioSubTitlesLastListenedDateTimeDescending = [
-        "0:13:39.0. Listened on 2024/08/19 at 14:46.",
-        "0:06:29.0. Listened on 2024/03/16 at 17:09.",
-        "0:06:29.0. Not listened.",
+        "0:13:39.0 Listened on 2024/08/19 at 14:46",
+        "0:06:29.0 Listened on 2024/03/16 at 17:09",
+        "0:06:29.0 Not listened",
       ];
 
       List<String> audioSubTitlesTitleAsc = [
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45.",
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35.",
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16.",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35",
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16",
       ];
 
       List<String> audioSubTitlesVideoUploadDate = [
-        "0:06:29.0. Video upload date: 2023/09/23.",
-        "0:13:39.0. Video upload date: 2023/09/10.",
-        "0:06:29.0. Video upload date: 2022/06/12.",
+        "0:06:29.0 Video upload date: 2023/09/23",
+        "0:13:39.0 Video upload date: 2023/09/10",
+        "0:06:29.0 Video upload date: 2022/06/12",
       ];
 
       // Verifying initial dd/MM/yyyy date format application
@@ -4974,39 +4974,39 @@ void main() {
       const String youtubePlaylistTitle = 'S8 audio';
 
       List<String> audioSubTitles = [
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.",
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45.",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
       ];
 
       List<String> audioSubTitlesWithAudioDownloadDuration = [
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16. Audio downl duration: 0:00:01.",
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45. Audio downl duration: 0:00:01.",
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35. Audio downl duration: 0:00:01.",
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16 Audio downl duration: 0:00:01",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45 Audio downl duration: 0:00:01",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35 Audio downl duration: 0:00:01",
       ];
 
       List<String> audioSubTitlesWithAudioRemainingDuration = [
-        "0:13:39.0. Remaining 00:00:04. Listened on 19/08/2024 at 14:46.",
-        "0:06:29.0. Remaining 00:00:38. Listened on 16/03/2024 at 17:09.",
-        "0:06:29.0. Remaining 00:06:29. Not listened.",
+        "0:13:39.0 Remaining 00:00:04 Listened on 19/08/2024 at 14:46",
+        "0:06:29.0 Remaining 00:00:38 Listened on 16/03/2024 at 17:09",
+        "0:06:29.0 Remaining 00:06:29 Not listened",
       ];
 
       List<String> audioSubTitlesLastListenedDateTimeDescending = [
-        "0:13:39.0. Listened on 19/08/2024 at 14:46.",
-        "0:06:29.0. Listened on 16/03/2024 at 17:09.",
-        "0:06:29.0. Not listened.",
+        "0:13:39.0 Listened on 19/08/2024 at 14:46",
+        "0:06:29.0 Listened on 16/03/2024 at 17:09",
+        "0:06:29.0 Not listened",
       ];
 
       List<String> audioSubTitlesTitleAsc = [
-        "0:06:29.0. 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45.",
-        "0:06:29.0. 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35.",
-        "0:13:39.0. 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16.",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16",
       ];
 
       List<String> audioSubTitlesVideoUploadDate = [
-        "0:06:29.0. Video upload date: 23/09/2023.",
-        "0:13:39.0. Video upload date: 10/09/2023.",
-        "0:06:29.0. Video upload date: 12/06/2022.",
+        "0:06:29.0 Video upload date: 23/09/2023",
+        "0:13:39.0 Video upload date: 10/09/2023",
+        "0:06:29.0 Video upload date: 12/06/2022",
       ];
 
       // Verifying initial dd/MM/yyyy date format application
@@ -27189,6 +27189,17 @@ void main() {
         audioDuration: '0:00:19',
         audioQuality: 'No', // Is spoken quality
       );
+
+      // Verify the imported audio sub title in the selected Youtube
+      // playlist audio list
+      IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+        tester: tester,
+        audioSubTitlesOrderLst: [
+          '0:00:19.3 155 KB imported on 25/08/2025 at 17:53',
+        ],
+        firstAudioListTileIndex: 3,
+      );
+
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -27553,7 +27564,7 @@ void main() {
         audioTitle: enteredFileName,
         audioQuality: 'TTS',
       );
-      
+
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
