@@ -744,7 +744,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
               '${AppLocalizations.of(context)!.listenedOn} ${dateFormatVMlistenTrue.formatDate(lastListenedDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(lastListenedDateTime)}';
         }
 
-        return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)}. $lastSubtitlePart.';
+        return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)} $lastSubtitlePart';
       case SortingOption.audioRemainingDuration:
         final DateTime? lastListenedDateTime = audio.audioPausedDateTime;
         final String lastSubtitlePart;
@@ -755,13 +755,13 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
 
         if (lastListenedDateTime == null) {
           lastSubtitlePart =
-              '${AppLocalizations.of(context)!.remaining} $audioRemainingHHMMSSDuration. ${AppLocalizations.of(context)!.audioStateNotListened}';
+              '${AppLocalizations.of(context)!.remaining} $audioRemainingHHMMSSDuration ${AppLocalizations.of(context)!.audioStateNotListened}';
         } else {
           lastSubtitlePart =
-              '${AppLocalizations.of(context)!.remaining} $audioRemainingHHMMSSDuration. ${AppLocalizations.of(context)!.listenedOn} ${dateFormatVMlistenTrue.formatDate(lastListenedDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(lastListenedDateTime)}';
+              '${AppLocalizations.of(context)!.remaining} $audioRemainingHHMMSSDuration ${AppLocalizations.of(context)!.listenedOn} ${dateFormatVMlistenTrue.formatDate(lastListenedDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(lastListenedDateTime)}';
         }
 
-        return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)}. $lastSubtitlePart.';
+        return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)} $lastSubtitlePart';
       case SortingOption.videoUploadDate:
         final DateTime videoUploadDate = audio.videoUploadDate;
         final String lastSubtitlePart;
@@ -769,7 +769,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
         lastSubtitlePart =
             '${AppLocalizations.of(context)!.videoUploadDate}: ${dateFormatVMlistenTrue.formatDate(videoUploadDate)}';
 
-        return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)}. $lastSubtitlePart.';
+        return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)} $lastSubtitlePart';
       case SortingOption.audioDownloadDuration:
         String lastSubtitlePart = _createDefaultLastSubTitlePart(
           context: context,
@@ -782,14 +782,14 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
         audioDownloadDurationSubtitlePart =
             '${AppLocalizations.of(context)!.audioDownloadDuration}: ${audioDownloadDuration.HHmmss()}';
 
-        return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)}. $lastSubtitlePart. $audioDownloadDurationSubtitlePart.';
+        return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)} $lastSubtitlePart $audioDownloadDurationSubtitlePart';
       default:
         String lastSubtitlePart = _createDefaultLastSubTitlePart(
           context: context,
           dateFormatVMlistenTrue: dateFormatVMlistenTrue,
         );
 
-        return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)}. $lastSubtitlePart.';
+        return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)} $lastSubtitlePart';
     }
   }
 
