@@ -1182,12 +1182,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get importedAudioDateTimeLabel => 'Date/heure import';
 
   @override
-  String get importedAudioUrlLabel => 'URL audio importé';
-
-  @override
-  String get importedAudioDescriptionLabel => 'Description audio importé';
-
-  @override
   String get sortFilterParametersAppliedName => 'appliqué';
 
   @override
@@ -2341,10 +2335,4 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get convertedAudioDateTimeLabel => 'Date//heure prem conversion';
-
-  @override
-  String get convertedAudioUrlLabel => 'URL audio converti';
-
-  @override
-  String get convertedAudioDescriptionLabel => 'Description audio converti';
 }
