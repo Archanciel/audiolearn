@@ -205,7 +205,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
             addRemainingOneDigitTenthOfSecond: true,
           )),
       createInfoRowFunction(
-        valueTextWidgetKey: const Key('audioPositionKey'),
+          valueTextWidgetKey: const Key('audioPositionKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioPositionLabel,
           value: Duration(seconds: audio.audioPositionSeconds).HHmmss()),
@@ -218,7 +218,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
             audio: audio,
           )),
       createInfoRowFunction(
-        valueTextWidgetKey: const Key('lastListenDateTimeKey'),
+          valueTextWidgetKey: const Key('lastListenDateTimeKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioPausedDateTimeLabel,
           value: (audio.audioPausedDateTime != null)
@@ -255,7 +255,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           label: AppLocalizations.of(context)!.audioPlayVolumeLabel,
           value: '${(audio.audioPlayVolume * 100).toStringAsFixed(1)} %'),
       createInfoRowFunction(
-        valueTextWidgetKey: const Key('commentsNumberKey'),
+          valueTextWidgetKey: const Key('commentsNumberKey'),
           context: context,
           label: AppLocalizations.of(context)!.commentsDialogTitle,
           value:
@@ -320,11 +320,14 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
               ? ''
               : audio.copiedToPlaylistTitle!),
       createInfoRowFunction(
-          context: context,
           valueTextWidgetKey: const Key('audioDurationKey'),
+          context: context,
           label: AppLocalizations.of(context)!.audioDurationLabel,
-          value: audio.audioDuration.HHmmss()),
+          value: audio.audioDuration.HHmmss(
+            addRemainingOneDigitTenthOfSecond: true,
+          )),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('audioPositionKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioPositionLabel,
           value: Duration(seconds: audio.audioPositionSeconds).HHmmss()),
@@ -337,6 +340,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
             audio: audio,
           )),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('lastListenDateTimeKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioPausedDateTimeLabel,
           value: (audio.audioPausedDateTime != null)
@@ -348,6 +352,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           label: AppLocalizations.of(context)!.audioFileNameLabel,
           value: audio.audioFileName),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('audioFileSizeKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioFileSizeLabel,
           value: UiUtil.formatLargeSizeToKbOrMb(
@@ -362,14 +367,17 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
               ? AppLocalizations.of(context)!.yes
               : AppLocalizations.of(context)!.no),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('audioPlaySpeedKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioPlaySpeedLabel,
           value: audio.audioPlaySpeed.toString()),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('audioVolumeKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioPlayVolumeLabel,
           value: '${(audio.audioPlayVolume * 100).toStringAsFixed(1)} %'),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('commentsNumberKey'),
           context: context,
           label: AppLocalizations.of(context)!.commentsDialogTitle,
           value:
@@ -434,11 +442,14 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
               ? ''
               : audio.copiedToPlaylistTitle!),
       createInfoRowFunction(
-          context: context,
           valueTextWidgetKey: const Key('audioDurationKey'),
+          context: context,
           label: AppLocalizations.of(context)!.audioDurationLabel,
-          value: audio.audioDuration.HHmmss()),
+          value: audio.audioDuration.HHmmss(
+            addRemainingOneDigitTenthOfSecond: true,
+          )),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('audioPositionKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioPositionLabel,
           value: Duration(seconds: audio.audioPositionSeconds).HHmmss()),
@@ -451,6 +462,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
             audio: audio,
           )),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('lastListenDateTimeKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioPausedDateTimeLabel,
           value: (audio.audioPausedDateTime != null)
@@ -462,6 +474,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           label: AppLocalizations.of(context)!.audioFileNameLabel,
           value: audio.audioFileName),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('audioFileSizeKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioFileSizeLabel,
           value: UiUtil.formatLargeSizeToKbOrMb(
@@ -476,14 +489,17 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
               ? AppLocalizations.of(context)!.yes
               : AppLocalizations.of(context)!.no),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('audioPlaySpeedKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioPlaySpeedLabel,
           value: audio.audioPlaySpeed.toString()),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('audioVolumeKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioPlayVolumeLabel,
           value: '${(audio.audioPlayVolume * 100).toStringAsFixed(1)} %'),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('commentsNumberKey'),
           context: context,
           label: AppLocalizations.of(context)!.commentsDialogTitle,
           value:
