@@ -5214,8 +5214,7 @@ void main() {
           offsetValue: 500.0,
         );
 
-        currentAudioSubTitle =
-            '0:00:09.8 61 Ko importé le 30/10/2024 à 08:26';
+        currentAudioSubTitle = '0:00:09.8 61 Ko importé le 30/10/2024 à 08:26';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -5285,8 +5284,7 @@ void main() {
           offsetValue: 300.0,
         );
 
-        currentAudioSubTitle =
-            '0:00:09.8 61 Ko importé le 30/10/2024 à 08:24';
+        currentAudioSubTitle = '0:00:09.8 61 Ko importé le 30/10/2024 à 08:24';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -5306,8 +5304,7 @@ void main() {
           offsetValue: 100.0,
         );
 
-        currentAudioSubTitle =
-            '0:00:09.8 61 Ko importé le 30/10/2024 à 08:26';
+        currentAudioSubTitle = '0:00:09.8 61 Ko importé le 30/10/2024 à 08:26';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -13068,7 +13065,8 @@ void main() {
 
         await IntegrationTestUtil.verifyAudioInfoDialog(
             tester: tester,
-            validVideoTitleOrAudioTitle: "La surpopulation mondiale par Jancovici et Barrau",
+            validVideoTitleOrAudioTitle:
+                "La surpopulation mondiale par Jancovici et Barrau",
             youtubeChannel: "",
             audioPlaySpeed: "0.7");
 
@@ -13273,7 +13271,8 @@ void main() {
 
         await IntegrationTestUtil.verifyAudioInfoDialog(
             tester: tester,
-            validVideoTitleOrAudioTitle: "La surpopulation mondiale par Jancovici et Barrau",
+            validVideoTitleOrAudioTitle:
+                "La surpopulation mondiale par Jancovici et Barrau",
             youtubeChannel: "",
             audioPlaySpeed: "0.7");
 
@@ -26802,7 +26801,8 @@ void main() {
         tester: tester,
         audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
         youtubeChannel: "Bible en ligne",
-        validVideoTitleOrAudioTitle: "Musique chrétienne 2019 - Le temps (avec paroles)",
+        validVideoTitleOrAudioTitle:
+            "Musique chrétienne 2019 - Le temps (avec paroles)",
         isMusicQuality: false, // Is spoken quality
       );
 
@@ -26876,7 +26876,8 @@ void main() {
         tester: tester,
         audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
         youtubeChannel: "Bible en ligne",
-        validVideoTitleOrAudioTitle: "Musique chrétienne 2019 - Le temps (avec paroles)",
+        validVideoTitleOrAudioTitle:
+            "Musique chrétienne 2019 - Le temps (avec paroles)",
         isMusicQuality: true, // Is music quality
       );
 
@@ -26950,7 +26951,8 @@ void main() {
         tester: tester,
         audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
         youtubeChannel: "Bible en ligne",
-        validVideoTitleOrAudioTitle: "Musique chrétienne 2019 - Le temps (avec paroles)",
+        validVideoTitleOrAudioTitle:
+            "Musique chrétienne 2019 - Le temps (avec paroles)",
         isMusicQuality: true, // Is music quality
       );
 
@@ -27186,7 +27188,8 @@ void main() {
         tester: tester,
         audioType: AudioType.imported,
         validVideoTitleOrAudioTitle: fileNameNoExt,
-        audioDownloadDateTime: '25/08/2025 at 17:53', // this is the imported date time
+        audioDownloadDateTime:
+            '25/08/2025 at 17:53', // this is the imported date time
         isAudioPlayable: true,
         audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
         audioDuration: '0:00:19.3',
@@ -27351,8 +27354,10 @@ void main() {
   group('''Convert text to audio.''', () {
     testWidgets(
         '''On selected playlist, add a text to speech audio. Verify the text to speech dialog appearance.
-          Then enter a text with case and listen it, verifying the listen duration after which the Stop
-          button is reset to the Listen button.''',
+          Then enter a text with case ( { ) characters. Verify the Listen Create MP3 button state. Listen and
+          Stop the texr. Then listen the full text and verify the listen duration after which the Stop
+          button is reset to the Listen button. Then, create the MP3 audio and verify its presence in the
+          playlist audio list. Verify also the audio info dialog content of the converted audio.''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -27360,7 +27365,7 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
 
-      const String selectedPlaylistTitle = 'urgent_actus_17-12-2023';
+      const String selectedYoutubePlaylistTitle = 'urgent_actus_17-12-2023';
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -27368,9 +27373,10 @@ void main() {
         tapOnPlaylistToggleButton: false,
       );
 
+      // Open the convert text to audio dialog
       await IntegrationTestUtil.typeOnPlaylistMenuItem(
         tester: tester,
-        playlistTitle: selectedPlaylistTitle,
+        playlistTitle: selectedYoutubePlaylistTitle,
         playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
       );
 
@@ -27457,6 +27463,16 @@ void main() {
       final Finder textFieldDeleteButtonFFinder =
           find.byKey(const Key('deleteTextToConvertIconButton'));
 
+      // Verify the disabled state of the Listen and Create MP3 buttons
+      await IntegrationTestUtil.verifyWidgetIsDisabled(
+        tester: tester,
+        widgetKeyStr: 'listen_text_button',
+      );
+      await IntegrationTestUtil.verifyWidgetIsDisabled(
+        tester: tester,
+        widgetKeyStr: 'create_audio_file_button',
+      );
+
       // Enter text in the TextField
       const testText = 'Ceci est un texte à supprimer.';
       await tester.enterText(textFieldFinder, testText);
@@ -27468,6 +27484,16 @@ void main() {
       // Verify the TextField controller has the text
       final textFieldWidget = tester.widget<TextField>(textFieldFinder);
       expect(textFieldWidget.controller!.text, testText);
+
+      // Verify the enabled state of the Listen and Create MP3 buttons
+      IntegrationTestUtil.verifyWidgetIsEnabled(
+        tester: tester,
+        widgetKeyStr: 'listen_text_button',
+      );
+      IntegrationTestUtil.verifyWidgetIsEnabled(
+        tester: tester,
+        widgetKeyStr: 'create_audio_file_button',
+      );
 
       // Tap the delete button
       await tester.tap(textFieldDeleteButtonFFinder);
@@ -27484,6 +27510,16 @@ void main() {
       // Verify the presence of the hint text in the TextField
       await tester.pumpAndSettle();
       expect(find.text('Enter your text here ...'), findsOneWidget);
+
+      // Verify the again disabled state of the Listen and Create MP3 buttons
+      await IntegrationTestUtil.verifyWidgetIsDisabled(
+        tester: tester,
+        widgetKeyStr: 'listen_text_button',
+      );
+      await IntegrationTestUtil.verifyWidgetIsDisabled(
+        tester: tester,
+        widgetKeyStr: 'create_audio_file_button',
+      );
 
       // Now enter a text to convert and listen it, verifying its
       // between 8 and 9 second duration
@@ -27560,7 +27596,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "The audio created by the text to MP3 conversion\n\n\"$enteredFileName.mp3\"\n\nwas added to Youtube playlist \"$selectedPlaylistTitle\".",
+            "The audio created by the text to MP3 conversion\n\n\"$enteredFileName.mp3\"\n\nwas added to Youtube playlist \"$selectedYoutubePlaylistTitle\".",
         isWarningConfirming: true,
       );
 
@@ -27568,7 +27604,7 @@ void main() {
       // playlist
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
-        audioEnclosingPlaylistTitle: selectedPlaylistTitle,
+        audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
         youtubeChannel: "",
         validVideoTitleOrAudioTitle: enteredFileName,
         isMusicQuality: false, // Is spoken quality
