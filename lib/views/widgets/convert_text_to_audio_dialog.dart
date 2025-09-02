@@ -60,7 +60,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     with ScreenMixin {
   final TextEditingController _textToConvertController =
       TextEditingController();
-  late String _textToConvert;
+  String _textToConvert = '';
 
   final _textToConvertFocusNode = FocusNode();
 
@@ -117,8 +117,13 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     );
 
     // This avoids that after reopening the text to audio dialog,
-    // the previous text is still listenable
-    textToSpeechVMlistenTrue.updateInputText(text: _textToConvert);
+    // the previous text is still listenable. It is very important
+    // that notify is false, otherwise an exception happens and
+    // the dialog does not work correctly.
+    textToSpeechVMlistenTrue.updateInputText(
+      text: _textToConvert,
+      notify: false,
+    );
 
     return Center(
       child: AlertDialog(
@@ -258,7 +263,10 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                       .multiline, // Enable clicking on Enter to create a new line
                   onChanged: (text) {
                     _textToConvert = text;
-                    textToSpeechVMlistenTrue.updateInputText(text: text);
+                    textToSpeechVMlistenTrue.updateInputText(
+                      text: text,
+                      notify: true,
+                    );
 
                     // setting the Delete button color according to the
                     // TextField content ...
