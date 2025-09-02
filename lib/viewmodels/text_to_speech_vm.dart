@@ -44,9 +44,13 @@ class TextToSpeechVM extends ChangeNotifier {
 
   void updateInputText({
     required String text,
+    required bool notify,
   }) {
     _inputText = text;
-    notifyListeners();
+
+    if (notify) {
+      notifyListeners();
+    }
   }
 
   void updateSilenceDuration({
