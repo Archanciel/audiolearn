@@ -3061,7 +3061,6 @@ class IntegrationTestUtil {
     }
 
     // Verify the 'Audio duration' of the audio
-
     if (audioDuration.isNotEmpty) {
       final Text audioDurationTextWidget =
           tester.widget<Text>(find.byKey(const Key('audioDurationKey')));
