@@ -2762,20 +2762,31 @@ class IntegrationTestUtil {
   static Future<Finder> verifyAudioInfoDialog({
     required WidgetTester tester,
     AudioType audioType = AudioType.downloaded,
-    String compactVideoDescriptionLabel = 'Compact video description',
-    String validVideoTitleLabel = 'Valid video title',
     bool inAudioPlayerView = false,
+    String youtubeChannel = "Jean-Pierre Schnyder",
+    String originalVideoTitle = "",
+    String videoUploadDate = '',
+    String audioDownloadDateTime = '',
+    bool isAudioPlayable = true,
+    String videoUrl = '',
+    required String validVideoTitleOrAudioTitle, // valid video title
     String audioEnclosingPlaylistTitle = '',
-    String youtubeChannelValue = "Jean-Pierre Schnyder",
-    required String audioTitle,
     String movedFromPlaylistTitle = '',
     String movedToPlaylistTitle = '',
     String copiedFromPlaylistTitle = '',
     String copiedToPlaylistTitle = '',
+    String audioDownloadDuration = '',
+    String audioDownloadSpeed = '',
     String audioDuration = '',
-    String audioQuality = '',
-    String audioVolume = '',
+    String audioPosition = '',
+    String audioState = '',
+    String lastListenDateTime = '',
+    String audioFileName = '',
+    String audioFileSSize = '',
+    bool isMusicQuality = false,
     String audioPlaySpeed = '',
+    String audioVolume = '',
+    int audioNumberOfComments = 0,
     Language language = Language.english,
   }) async {
     // Now we want to tap the popup menu of the Audio ListTile
@@ -2783,7 +2794,8 @@ class IntegrationTestUtil {
     // the audio info dialog
 
     // First, find the Audio sublist ListTile Text widget
-    final Finder targetAudioListTileTextWidgetFinder = find.text(audioTitle);
+    final Finder targetAudioListTileTextWidgetFinder =
+        find.text(validVideoTitleOrAudioTitle);
 
     // Then obtain the Audio ListTile widget enclosing the Text widget by
     // finding its ancestor
@@ -2827,7 +2839,7 @@ class IntegrationTestUtil {
     // Now verifying the display audio info dialog elements
 
     // Verifying the presence or absence of the audio info dialog
-    // label. This depends on the audio type.
+    // label's. The label's depend on the audio type.
 
     if (language == Language.english) {
       switch (audioType) {
@@ -2841,11 +2853,6 @@ class IntegrationTestUtil {
           expect(find.text('Video URL'), findsOneWidget);
           expect(find.text('Compact video description'), findsOneWidget);
           expect(find.text('Valid video title'), findsOneWidget);
-
-          // Verify the audio channel name
-          Text youtubeChannelTextWidget =
-              tester.widget<Text>(find.byKey(const Key('youtubeChannelKey')));
-          expect(youtubeChannelTextWidget.data, youtubeChannelValue);
 
           break;
         case AudioType.imported:
@@ -2877,7 +2884,8 @@ class IntegrationTestUtil {
       // language == Language.french
       switch (audioType) {
         case AudioType.downloaded:
-          expect(find.text("Informations sur l'audio téléchargé"), findsOneWidget);
+          expect(
+              find.text("Informations sur l'audio téléchargé"), findsOneWidget);
           expect(find.text('Chaîne Youtube'), findsOneWidget);
           expect(find.text('Titre vidéo original'), findsOneWidget);
           expect(find.text('Date mise en ligne'), findsOneWidget);
@@ -2886,11 +2894,6 @@ class IntegrationTestUtil {
           expect(find.text('URL vidéo'), findsOneWidget);
           expect(find.text('Description vidéo compacte'), findsOneWidget);
           expect(find.text('Titre vidéo valide'), findsOneWidget);
-
-          // Verify the audio channel name
-          Text youtubeChannelTextWidget =
-              tester.widget<Text>(find.byKey(const Key('youtubeChannelKey')));
-          expect(youtubeChannelTextWidget.data, youtubeChannelValue);
 
           break;
         case AudioType.imported:
@@ -2906,7 +2909,8 @@ class IntegrationTestUtil {
 
           break;
         case AudioType.textToSpeech:
-          expect(find.text("Informations sur l'audio converti"), findsOneWidget);
+          expect(
+              find.text("Informations sur l'audio converti"), findsOneWidget);
           expect(find.text('Chaîne Youtube'), findsNothing);
           expect(find.text('Titre audio'), findsOneWidget);
           expect(find.text('Date mise en ligne'), findsNothing);
@@ -2920,12 +2924,81 @@ class IntegrationTestUtil {
       }
     }
 
+    switch (audioType) {
+      case AudioType.downloaded:
+        // Verify the audio channel name
+        Text youtubeChannelTextWidget =
+            tester.widget<Text>(find.byKey(const Key('youtubeChannelKey')));
+        expect(youtubeChannelTextWidget.data, youtubeChannel);
+
+        // Verify the original video title of the audio
+        if (originalVideoTitle.isNotEmpty) {
+          final Text originalVideoTitleTextWidget = tester
+              .widget<Text>(find.byKey(const Key('originalVideoTitleKey')));
+          expect(originalVideoTitleTextWidget.data, originalVideoTitle);
+        }
+
+        // Verify the video upload date of the audio
+        if (videoUploadDate.isNotEmpty) {
+          final Text videoUploadDateTextWidget =
+              tester.widget<Text>(find.byKey(const Key('videoUploadDateKey')));
+          expect(videoUploadDateTextWidget.data, videoUploadDate);
+        }
+
+        // Verify the audio download date time of the audio
+        if (audioDownloadDateTime.isNotEmpty) {
+          final Text audioDownloadDateTimeTextWidget = tester
+              .widget<Text>(find.byKey(const Key('audioDownloadDateTimeKey')));
+          expect(audioDownloadDateTimeTextWidget.data, audioDownloadDateTime);
+        }
+
+        // Verify if the audio is playable or not
+        if (language == Language.english) {
+          // In English, the 'isAudioPlayableKey' Text widget contains
+          // 'Yes' or 'No'
+          final Text isAudioPlayableTextWidget =
+              tester.widget<Text>(find.byKey(const Key('isAudioPlayableKey')));
+          if (isAudioPlayable) {
+            expect(isAudioPlayableTextWidget.data, 'Yes');
+          } else {
+            expect(isAudioPlayableTextWidget.data, 'No');
+          }
+        } else {
+          // In French, the 'isAudioPlayableKey' Text widget contains
+          // 'Oui' or 'Non'
+          final Text isAudioPlayableTextWidget =
+              tester.widget<Text>(find.byKey(const Key('isAudioPlayableKey')));
+          if (isAudioPlayable) {
+            expect(isAudioPlayableTextWidget.data, 'Oui');
+          } else {
+            expect(isAudioPlayableTextWidget.data, 'Non');
+          }
+        }
+
+        // Verify the video URL of the audio
+        if (videoUrl.isNotEmpty) {
+          final Text videoUrlTextWidget =
+              tester.widget<Text>(find.byKey(const Key('videoUrlKey')));
+          expect(videoUrlTextWidget.data, videoUrl);
+        }
+
+        // Verify the valid video title of the audio
+        final Text validVideoTitleTextWidget =
+            tester.widget<Text>(find.byKey(const Key('validVideoTitleKey')));
+        expect(validVideoTitleTextWidget.data, validVideoTitleOrAudioTitle);
+
+        break;
+      case AudioType.imported:
+        break;
+      case AudioType.textToSpeech:
+        break;
+    }
+
     // Verify the enclosing playlist title of the audio
 
-    final Text enclosingPlaylistTitleTextWidget =
-        tester.widget<Text>(find.byKey(const Key('enclosingPlaylistTitleKey')));
-
     if (audioEnclosingPlaylistTitle.isNotEmpty) {
+      final Text enclosingPlaylistTitleTextWidget = tester
+          .widget<Text>(find.byKey(const Key('enclosingPlaylistTitleKey')));
       expect(
         enclosingPlaylistTitleTextWidget.data,
         audioEnclosingPlaylistTitle,
@@ -2936,67 +3009,139 @@ class IntegrationTestUtil {
 
     final Text movedFromPlaylistTitleTextWidget =
         tester.widget<Text>(find.byKey(const Key('movedFromPlaylistTitleKey')));
-
     expect(movedFromPlaylistTitleTextWidget.data, movedFromPlaylistTitle);
 
     // Verify the 'Moved to playlist title' of the audio
 
     final Text movedToPlaylistTitleTextWidget =
         tester.widget<Text>(find.byKey(const Key('movedToPlaylistTitleKey')));
-
     expect(movedToPlaylistTitleTextWidget.data, movedToPlaylistTitle);
 
     // Verify the 'Copied from playlist' title of the audio
 
     final Text copiedFromPlaylistTitleTextWidget = tester
         .widget<Text>(find.byKey(const Key('copiedFromPlaylistTitleKey')));
-
     expect(copiedFromPlaylistTitleTextWidget.data, copiedFromPlaylistTitle);
 
     // Verify the 'Copied to playlist title' of the audio
 
     final Text copiedToPlaylistTitleTextWidget =
         tester.widget<Text>(find.byKey(const Key('copiedToPlaylistTitleKey')));
-
     expect(copiedToPlaylistTitleTextWidget.data, copiedToPlaylistTitle);
 
-    await tester.drag(
-      find.byType(AudioInfoDialog),
-      const Offset(0, -900), // Negative value for vertical drag to scroll down
-    );
-    await tester.pumpAndSettle();
+    if (audioType == AudioType.downloaded) {
+      await tester.drag(
+        find.byType(AudioInfoDialog),
+        const Offset(
+            0, -900), // Negative value for vertical drag to scroll down
+      );
+      await tester.pumpAndSettle();
+
+      // Verify audio download duration
+      if (audioDownloadDuration.isNotEmpty) {
+        final Text audioDownloadDurationTextWidget = tester
+            .widget<Text>(find.byKey(const Key('audioDownloadDurationKey')));
+        expect(audioDownloadDurationTextWidget.data, audioDownloadDuration);
+      }
+
+      // Verify audio download speed
+      if (audioDownloadSpeed.isNotEmpty) {
+        final Text audioDownloadSpeedTextWidget =
+            tester.widget<Text>(find.byKey(const Key('audioDownloadSpeedKey')));
+        expect(audioDownloadSpeedTextWidget.data, audioDownloadSpeed);
+      }
+    }
 
     // Verify the 'Audio duration' of the audio
 
     if (audioDuration.isNotEmpty) {
       final Text audioDurationTextWidget =
           tester.widget<Text>(find.byKey(const Key('audioDurationKey')));
-
       expect(audioDurationTextWidget.data, audioDuration);
     }
 
-    if (audioQuality.isNotEmpty) {
-      // Verify the audio quality of the audio
-      final Text audioQualityTextWidget =
-          tester.widget<Text>(find.byKey(const Key('audioInfoQualityKey')));
-
-      expect(audioQualityTextWidget.data, audioQuality);
+    // Verify the 'Audio position' of the audio
+    if (audioPosition.isNotEmpty) {
+      final Text audioPositionTextWidget =
+          tester.widget<Text>(find.byKey(const Key('audioPositionKey')));
+      expect(audioPositionTextWidget.data, audioPosition);
     }
 
+    // Verify the 'Audio state' of the audio
+    if (audioState.isNotEmpty) {
+      final Text audioStateTextWidget =
+          tester.widget<Text>(find.byKey(const Key('audioStateKey')));
+      expect(audioStateTextWidget.data, audioState);
+    }
+
+    // Verify the 'Last listen date/time' of the audio
+    if (lastListenDateTime.isNotEmpty) {
+      final Text lastListenDateTimeTextWidget =
+          tester.widget<Text>(find.byKey(const Key('lastListenDateTimeKey')));
+      expect(lastListenDateTimeTextWidget.data, lastListenDateTime);
+    }
+
+    // Verify the audio file name of the audio
+    if (audioFileName.isNotEmpty) {
+      final Text audioFileNameTextWidget =
+          tester.widget<Text>(find.byKey(const Key('audioFileNameKey')));
+      expect(audioFileNameTextWidget.data, audioFileName);
+    }
+
+    // Verify the audio file size of the audio
+    if (audioFileSSize.isNotEmpty) {
+      final Text audioFileSizeTextWidget =
+          tester.widget<Text>(find.byKey(const Key('audioFileSizeKey')));
+      expect(audioFileSizeTextWidget.data, audioFileSSize);
+    }
+
+    if (language == Language.english) {
+      if (isMusicQuality) {
+        // Verify the audio quality of the audio
+        final Text audioQualityTextWidget =
+            tester.widget<Text>(find.byKey(const Key('audioInfoQualityKey')));
+        expect(audioQualityTextWidget.data, 'Yes');
+      } else {
+        final Text audioQualityTextWidget =
+            tester.widget<Text>(find.byKey(const Key('audioInfoQualityKey')));
+        expect(audioQualityTextWidget.data, 'No');
+      }
+    } else {
+      // language == Language.french
+      if (isMusicQuality) {
+        // Verify the audio quality of the audio
+        final Text audioQualityTextWidget =
+            tester.widget<Text>(find.byKey(const Key('audioInfoQualityKey')));
+        expect(audioQualityTextWidget.data, 'Oui');
+      } else {
+        final Text audioQualityTextWidget =
+            tester.widget<Text>(find.byKey(const Key('audioInfoQualityKey')));
+        expect(audioQualityTextWidget.data, 'Non');
+      }
+    }
+
+    // Verify the  play speed of the audio
+    if (audioPlaySpeed.isNotEmpty) {
+      final Text audioPlaySpeedTextWidget =
+          tester.widget<Text>(find.byKey(const Key('audioPlaySpeedKey')));
+      expect(audioPlaySpeedTextWidget.data, audioPlaySpeed);
+    }
+
+    // Verify the sound volume of the audio
     if (audioVolume.isNotEmpty) {
-      // Verify the audio volume of the audio
       final Text audioVolumeTextWidget =
           tester.widget<Text>(find.byKey(const Key('audioVolumeKey')));
-
       expect(audioVolumeTextWidget.data, audioVolume);
     }
 
-    if (audioPlaySpeed.isNotEmpty) {
-      // Verify the audio volume of the audio
-      final Text audioPlaySpeedTextWidget =
-          tester.widget<Text>(find.byKey(const Key('audioPlaySpeedKey')));
-
-      expect(audioPlaySpeedTextWidget.data, audioPlaySpeed);
+    // Verify the number of comments of the audio
+    if (audioNumberOfComments > 0) {
+      final Text audioNumberOfCommentsTextWidget = tester
+          .widget<Text>(find.byKey(const Key('commentsNumberKey')));
+      expect(
+        audioNumberOfCommentsTextWidget.data,
+        audioNumberOfComments.toString(),
+      );
     }
 
     // Now find the close button of the audio info dialog
