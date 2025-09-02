@@ -140,6 +140,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           label: AppLocalizations.of(context)!.videoUrlLabel,
           value: audio.videoUrl),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('compactVideoDescriptionKey'),
           context: context,
           label: AppLocalizations.of(context)!.compactVideoDescription,
           value: audio.compactVideoDescription),

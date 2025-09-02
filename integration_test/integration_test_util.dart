@@ -2769,6 +2769,7 @@ class IntegrationTestUtil {
     String audioDownloadDateTime = '',
     bool isAudioPlayable = true,
     String videoUrl = '',
+    String compactVideoDescription = '',
     required String validVideoTitleOrAudioTitle, // valid video title
     String audioEnclosingPlaylistTitle = '',
     String movedFromPlaylistTitle = '',
@@ -2782,11 +2783,11 @@ class IntegrationTestUtil {
     String audioState = '',
     String lastListenDateTime = '',
     String audioFileName = '',
-    String audioFileSSize = '',
+    String audioFileSize = '',
     bool isMusicQuality = false,
     String audioPlaySpeed = '',
     String audioVolume = '',
-    int audioNumberOfComments = 0,
+    int audioCommentNumber = 0,
     Language language = Language.english,
   }) async {
     // Now we want to tap the popup menu of the Audio ListTile
@@ -2982,6 +2983,13 @@ class IntegrationTestUtil {
           expect(videoUrlTextWidget.data, videoUrl);
         }
 
+        // Verify the compact video description of the audio
+        if (compactVideoDescription.isNotEmpty) {
+          final Text compactVideoDescriptionTextWidget = tester
+              .widget<Text>(find.byKey(const Key('compactVideoDescriptionKey')));
+          expect(compactVideoDescriptionTextWidget.data, compactVideoDescription);
+        }
+
         // Verify the valid video title of the audio
         final Text validVideoTitleTextWidget =
             tester.widget<Text>(find.byKey(const Key('validVideoTitleKey')));
@@ -3089,10 +3097,10 @@ class IntegrationTestUtil {
     }
 
     // Verify the audio file size of the audio
-    if (audioFileSSize.isNotEmpty) {
+    if (audioFileSize.isNotEmpty) {
       final Text audioFileSizeTextWidget =
           tester.widget<Text>(find.byKey(const Key('audioFileSizeKey')));
-      expect(audioFileSizeTextWidget.data, audioFileSSize);
+      expect(audioFileSizeTextWidget.data, audioFileSize);
     }
 
     if (language == Language.english) {
@@ -3135,12 +3143,12 @@ class IntegrationTestUtil {
     }
 
     // Verify the number of comments of the audio
-    if (audioNumberOfComments > 0) {
+    if (audioCommentNumber > 0) {
       final Text audioNumberOfCommentsTextWidget = tester
           .widget<Text>(find.byKey(const Key('commentsNumberKey')));
       expect(
         audioNumberOfCommentsTextWidget.data,
-        audioNumberOfComments.toString(),
+        audioCommentNumber.toString(),
       );
     }
 

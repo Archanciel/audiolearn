@@ -5952,7 +5952,8 @@ void main() {
            the local target playlist, then copy it from the target playlist
            to the another target playlist. The purpose of this test is to check
            that the 'Copied from playlist' and 'Copied to playlist' audio info
-           fields are correctly updated.''', (WidgetTester tester) async {
+           fields are correctly updated. The first audio info verification
+           checks all the download audio type info dialog fields.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -6094,17 +6095,36 @@ void main() {
           ["230628-033811-audio learn test short video one 23-06-10.mp3"]);
 
       // Now verifying the copied audio info dialog related content
-      // in the source Youtube playlist
+      // in the source Youtube playlist. This verification tests all
+      // downloadded audio type fields
 
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
-        audioEnclosingPlaylistTitle: youtubeAudioSourcePlaylistTitle,
+        youtubeChannel: 'Jean-Pierre Schnyder',
+        originalVideoTitle: copiedAudioTitle,
+        videoUploadDate: '10/06/2023',
+        audioDownloadDateTime: '28/06/2023 03:38',
+        isAudioPlayable: true,
+        videoUrl: "https://www.youtube.com/watch?v=v7PWb7f_P8M",
+        compactVideoDescription: "Jean-Pierre Schnyder\n\nCette vidéo me sert à tester AudioLearn, l'app Android que je développe et dont le code est disponible sur GitHub. ...",
         validVideoTitleOrAudioTitle: copiedAudioTitle,
+        audioEnclosingPlaylistTitle: youtubeAudioSourcePlaylistTitle,
         movedFromPlaylistTitle: '',
         movedToPlaylistTitle: '',
         copiedFromPlaylistTitle: '',
         copiedToPlaylistTitle: localAudioTargetOnePlaylistTitle,
+        audioDownloadDuration: "0:00:00",
+        audioDownloadSpeed: "321 Ko/sec",
         audioDuration: '0:00:24.0',
+        audioPosition: '0:00:05',
+        audioState: "En pause",
+        lastListenDateTime: '25/08/2024 15:03',
+        audioFileName: '230628-033811-audio learn test short video one 23-06-10.mp3',
+        audioFileSize: '143 Ko',
+        isMusicQuality: false,
+        audioPlaySpeed: '1.5',
+        audioVolume: '50.0 %',
+        audioCommentNumber: 1,
         language: Language.french,
       );
 
