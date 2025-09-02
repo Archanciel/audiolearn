@@ -197,7 +197,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
 
       // Verify that the clear sort/filter audio history menu item is
       // now disabled
-      IntegrationTestUtil.verifyWidgetIsDisabled(
+      await IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: "clear_sort_and_filter_audio_parms_history_menu_item",
       );
@@ -754,7 +754,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Verify that the clear sort/filter audio history menu item is
           // now disabled
-          IntegrationTestUtil.verifyWidgetIsDisabled(
+          await IntegrationTestUtil.verifyWidgetIsDisabled(
             tester: tester,
             widgetKeyStr: "clear_sort_and_filter_audio_parms_history_menu_item",
           );
@@ -812,19 +812,19 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Verify that the left sort history icon button is disabled
-          IntegrationTestUtil.verifyWidgetIsDisabled(
+          await IntegrationTestUtil.verifyWidgetIsDisabled(
             tester: tester,
             widgetKeyStr: "search_history_arrow_left_button",
           );
 
           // Verify that the right sort history icon button is disabled
-          IntegrationTestUtil.verifyWidgetIsDisabled(
+          await IntegrationTestUtil.verifyWidgetIsDisabled(
             tester: tester,
             widgetKeyStr: "search_history_arrow_right_button",
           );
 
           // Verify that the clear sort history icon button is disabled
-          IntegrationTestUtil.verifyWidgetIsDisabled(
+          await IntegrationTestUtil.verifyWidgetIsDisabled(
             tester: tester,
             widgetKeyStr: "search_history_delete_all_button",
           );
@@ -840,19 +840,19 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Verify that the left sort history icon button is still disabled
-          IntegrationTestUtil.verifyWidgetIsDisabled(
+          await IntegrationTestUtil.verifyWidgetIsDisabled(
             tester: tester,
             widgetKeyStr: "search_history_arrow_left_button",
           );
 
           // Verify that the right sort history icon button is still disabled
-          IntegrationTestUtil.verifyWidgetIsDisabled(
+          await IntegrationTestUtil.verifyWidgetIsDisabled(
             tester: tester,
             widgetKeyStr: "search_history_arrow_right_button",
           );
 
           // Verify that the clear sort history icon button is still disabled
-          IntegrationTestUtil.verifyWidgetIsDisabled(
+          await IntegrationTestUtil.verifyWidgetIsDisabled(
             tester: tester,
             widgetKeyStr: "search_history_delete_all_button",
           );
@@ -878,7 +878,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Verify that the right sort history icon button is still disabled
-          IntegrationTestUtil.verifyWidgetIsDisabled(
+          await IntegrationTestUtil.verifyWidgetIsDisabled(
             tester: tester,
             widgetKeyStr: "search_history_arrow_right_button",
           );
@@ -912,7 +912,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Verify that the right sort history icon button is still disabled
-          IntegrationTestUtil.verifyWidgetIsDisabled(
+          await IntegrationTestUtil.verifyWidgetIsDisabled(
             tester: tester,
             widgetKeyStr: "search_history_arrow_right_button",
           );
@@ -940,19 +940,19 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Verify that the left sort history icon button is now disabled
-          IntegrationTestUtil.verifyWidgetIsDisabled(
+          await IntegrationTestUtil.verifyWidgetIsDisabled(
             tester: tester,
             widgetKeyStr: "search_history_arrow_left_button",
           );
 
           // Verify that the right sort history icon button is still disabled
-          IntegrationTestUtil.verifyWidgetIsDisabled(
+          await IntegrationTestUtil.verifyWidgetIsDisabled(
             tester: tester,
             widgetKeyStr: "search_history_arrow_right_button",
           );
 
           // Verify that the clear sort history icon button is now disabled
-          IntegrationTestUtil.verifyWidgetIsDisabled(
+          await IntegrationTestUtil.verifyWidgetIsDisabled(
             tester: tester,
             widgetKeyStr: "search_history_delete_all_button",
           );
