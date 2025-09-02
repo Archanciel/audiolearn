@@ -64,15 +64,15 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
         content: SingleChildScrollView(
           child: ListBody(
             children: switch (audio.audioType) {
-                AudioType.downloaded => _createDownloadedAudioInfoLines(
-                    context,
-                  ),
-                AudioType.imported => _createImportedAudioInfoLines(
-                    context,
-                  ),
-                AudioType.textToSpeech => _createTextToSpeechAudioInfoLines(
-                    context,
-                  ),
+              AudioType.downloaded => _createDownloadedAudioInfoLines(
+                  context,
+                ),
+              AudioType.imported => _createImportedAudioInfoLines(
+                  context,
+                ),
+              AudioType.textToSpeech => _createTextToSpeechAudioInfoLines(
+                  context,
+                ),
             },
           ),
         ),
@@ -128,12 +128,14 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           value: dateFormatVMlistenFalse
               .formatDateTime(audio.audioDownloadDateTime)),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('isAudioPlayableKey'),
           context: context,
           label: AppLocalizations.of(context)!.isPlayableLabel,
           value: (UiUtil.isAudioPlayable(audio: audio))
               ? AppLocalizations.of(context)!.yes
               : AppLocalizations.of(context)!.no),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('videoUrlKey'),
           context: context,
           label: AppLocalizations.of(context)!.videoUrlLabel,
           value: audio.videoUrl),
@@ -182,10 +184,12 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
               ? ''
               : audio.copiedToPlaylistTitle!),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('audioDownloadDurationKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioDownloadDurationLabel,
           value: audio.audioDownloadDuration!.HHmmss()),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('audioDownloadSpeedKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioDownloadSpeedLabel,
           value: formatDownloadSpeed(
@@ -200,6 +204,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
             addRemainingOneDigitTenthOfSecond: true,
           )),
       createInfoRowFunction(
+        valueTextWidgetKey: const Key('audioPositionKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioPositionLabel,
           value: Duration(seconds: audio.audioPositionSeconds).HHmmss()),
@@ -212,6 +217,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
             audio: audio,
           )),
       createInfoRowFunction(
+        valueTextWidgetKey: const Key('lastListenDateTimeKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioPausedDateTimeLabel,
           value: (audio.audioPausedDateTime != null)
@@ -223,6 +229,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           label: AppLocalizations.of(context)!.audioFileNameLabel,
           value: audio.audioFileName),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('audioFileSizeKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioFileSizeLabel,
           value: UiUtil.formatLargeSizeToKbOrMb(
@@ -247,6 +254,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           label: AppLocalizations.of(context)!.audioPlayVolumeLabel,
           value: '${(audio.audioPlayVolume * 100).toStringAsFixed(1)} %'),
       createInfoRowFunction(
+        valueTextWidgetKey: const Key('commentsNumberKey'),
           context: context,
           label: AppLocalizations.of(context)!.commentsDialogTitle,
           value:
@@ -367,6 +375,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
               commentVMlistenFalse.getCommentNumber(audio: audio).toString()),
     ];
   }
+
   /// Creates the list of audio information lines for imported audio.
   List<Widget> _createTextToSpeechAudioInfoLines(BuildContext context) {
     CommentVM commentVMlistenFalse =

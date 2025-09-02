@@ -10313,8 +10313,8 @@ Future<void> _verifyAudioVolume({
   // Verify the audio volume in the audio info dialog
   await IntegrationTestUtil.verifyAudioInfoDialog(
     tester: tester,
-    audioTitle: audioTitle,
-    youtubeChannelValue: '',
+    validVideoTitleOrAudioTitle: audioTitle,
+    youtubeChannel: '',
     copiedToPlaylistTitle: 'local_several_played_unplayed_audios',
     inAudioPlayerView: true,
     audioVolume: audioVolumeStr,

@@ -13029,32 +13029,32 @@ void main() {
 
         await IntegrationTestUtil.verifyAudioInfoDialog(
             tester: tester,
-            audioTitle:
+            validVideoTitleOrAudioTitle:
                 "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-            youtubeChannelValue: "",
+            youtubeChannel: "",
             copiedFromPlaylistTitle: "S8 audio",
             audioPlaySpeed: "0.7");
 
         await IntegrationTestUtil.verifyAudioInfoDialog(
             tester: tester,
-            audioTitle: "Really short video",
-            youtubeChannelValue: "",
+            validVideoTitleOrAudioTitle: "Really short video",
+            youtubeChannel: "",
             copiedFromPlaylistTitle: 'audio_player_view_2_shorts_test',
             audioPlaySpeed: "0.7");
 
         await IntegrationTestUtil.verifyAudioInfoDialog(
             tester: tester,
-            audioTitle: "morning _ cinematic video",
-            youtubeChannelValue: "",
+            validVideoTitleOrAudioTitle: "morning _ cinematic video",
+            youtubeChannel: "",
             copiedFromPlaylistTitle: 'audio_player_view_2_shorts_test',
             copiedToPlaylistTitle: 'S8 audio',
             audioPlaySpeed: "0.7");
 
         await IntegrationTestUtil.verifyAudioInfoDialog(
             tester: tester,
-            audioTitle:
+            validVideoTitleOrAudioTitle:
                 "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-            youtubeChannelValue: "",
+            youtubeChannel: "",
             copiedFromPlaylistTitle: "S8 audio",
             audioPlaySpeed: "0.7");
 
@@ -13068,22 +13068,22 @@ void main() {
 
         await IntegrationTestUtil.verifyAudioInfoDialog(
             tester: tester,
-            audioTitle: "La surpopulation mondiale par Jancovici et Barrau",
-            youtubeChannelValue: "",
+            validVideoTitleOrAudioTitle: "La surpopulation mondiale par Jancovici et Barrau",
+            youtubeChannel: "",
             audioPlaySpeed: "0.7");
 
         await IntegrationTestUtil.verifyAudioInfoDialog(
             tester: tester,
-            audioTitle:
+            validVideoTitleOrAudioTitle:
                 "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-            youtubeChannelValue: "",
+            youtubeChannel: "",
             copiedToPlaylistTitle: "local",
             audioPlaySpeed: "0.7");
 
         await IntegrationTestUtil.verifyAudioInfoDialog(
             tester: tester,
-            audioTitle: "morning _ cinematic video",
-            youtubeChannelValue: "",
+            validVideoTitleOrAudioTitle: "morning _ cinematic video",
+            youtubeChannel: "",
             copiedFromPlaylistTitle: 'local',
             audioPlaySpeed: "0.7");
 
@@ -13234,32 +13234,32 @@ void main() {
 
         await IntegrationTestUtil.verifyAudioInfoDialog(
             tester: tester,
-            audioTitle:
+            validVideoTitleOrAudioTitle:
                 "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-            youtubeChannelValue: "",
+            youtubeChannel: "",
             copiedFromPlaylistTitle: "S8 audio",
             audioPlaySpeed: "0.7");
 
         await IntegrationTestUtil.verifyAudioInfoDialog(
             tester: tester,
-            audioTitle: "Really short video",
-            youtubeChannelValue: "",
+            validVideoTitleOrAudioTitle: "Really short video",
+            youtubeChannel: "",
             copiedFromPlaylistTitle: 'audio_player_view_2_shorts_test',
             audioPlaySpeed: "0.7");
 
         await IntegrationTestUtil.verifyAudioInfoDialog(
             tester: tester,
-            audioTitle: "morning _ cinematic video",
-            youtubeChannelValue: "",
+            validVideoTitleOrAudioTitle: "morning _ cinematic video",
+            youtubeChannel: "",
             copiedFromPlaylistTitle: 'audio_player_view_2_shorts_test',
             copiedToPlaylistTitle: 'S8 audio',
             audioPlaySpeed: "0.7");
 
         await IntegrationTestUtil.verifyAudioInfoDialog(
             tester: tester,
-            audioTitle:
+            validVideoTitleOrAudioTitle:
                 "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-            youtubeChannelValue: "",
+            youtubeChannel: "",
             copiedFromPlaylistTitle: "S8 audio",
             audioPlaySpeed: "0.7");
 
@@ -13273,22 +13273,22 @@ void main() {
 
         await IntegrationTestUtil.verifyAudioInfoDialog(
             tester: tester,
-            audioTitle: "La surpopulation mondiale par Jancovici et Barrau",
-            youtubeChannelValue: "",
+            validVideoTitleOrAudioTitle: "La surpopulation mondiale par Jancovici et Barrau",
+            youtubeChannel: "",
             audioPlaySpeed: "0.7");
 
         await IntegrationTestUtil.verifyAudioInfoDialog(
             tester: tester,
-            audioTitle:
+            validVideoTitleOrAudioTitle:
                 "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-            youtubeChannelValue: "",
+            youtubeChannel: "",
             copiedToPlaylistTitle: "local",
             audioPlaySpeed: "0.7");
 
         await IntegrationTestUtil.verifyAudioInfoDialog(
             tester: tester,
-            audioTitle: "morning _ cinematic video",
-            youtubeChannelValue: "",
+            validVideoTitleOrAudioTitle: "morning _ cinematic video",
+            youtubeChannel: "",
             copiedFromPlaylistTitle: 'local',
             audioPlaySpeed: "0.7");
 
@@ -26569,13 +26569,13 @@ void main() {
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: youtubePlaylistToModifyTitle,
-        audioTitle: 'Really short video',
+        validVideoTitleOrAudioTitle: 'Really short video',
         movedFromPlaylistTitle: '',
         movedToPlaylistTitle: '',
         copiedFromPlaylistTitle: '',
         copiedToPlaylistTitle: '',
         audioDuration: '0:00:09.8',
-        audioQuality: 'Yes', // Is musical quality
+        isMusicQuality: true, // Is musical quality
       );
 
       const String localPlaylistTitle = 'local_audio';
@@ -26678,13 +26678,13 @@ void main() {
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localSpokenPlaylistTitle,
-        audioTitle: 'audio learn test short video two',
+        validVideoTitleOrAudioTitle: 'audio learn test short video two',
         movedFromPlaylistTitle: '',
         movedToPlaylistTitle: '',
         copiedFromPlaylistTitle: '',
         copiedToPlaylistTitle: '',
         audioDuration: '0:00:09.8',
-        audioQuality: 'Yes', // Is musical quality
+        isMusicQuality: true, // Is musical quality
       );
 
       // Re-set the unselected MyValTest playlist audio quality
@@ -26730,13 +26730,13 @@ void main() {
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: youtubePlaylistToModifyTitle,
-        audioTitle: 'morning _ cinematic video',
+        validVideoTitleOrAudioTitle: 'morning _ cinematic video',
         movedFromPlaylistTitle: '',
         movedToPlaylistTitle: '',
         copiedFromPlaylistTitle: '',
         copiedToPlaylistTitle: '',
         audioDuration: '0:00:58.9',
-        audioQuality: 'No', // Is musical quality
+        isMusicQuality: false, // Is musical quality
       );
 
       // Purge the test playlist directory so that the created test
@@ -26801,18 +26801,18 @@ void main() {
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        youtubeChannelValue: "Bible en ligne",
-        audioTitle: "Musique chrétienne 2019 - Le temps (avec paroles)",
-        audioQuality: 'No', // Is spoken quality
+        youtubeChannel: "Bible en ligne",
+        validVideoTitleOrAudioTitle: "Musique chrétienne 2019 - Le temps (avec paroles)",
+        isMusicQuality: false, // Is spoken quality
       );
 
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        youtubeChannelValue: "Bible en ligne",
-        audioTitle:
+        youtubeChannel: "Bible en ligne",
+        validVideoTitleOrAudioTitle:
             "Chanson évangélique  Ta foi en Dieu doit être au-dessus de tout",
-        audioQuality: 'No', // Is spoken quality
+        isMusicQuality: false, // Is spoken quality
       );
 
       // Purge the test playlist directory so that the created test
@@ -26875,18 +26875,18 @@ void main() {
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        youtubeChannelValue: "Bible en ligne",
-        audioTitle: "Musique chrétienne 2019 - Le temps (avec paroles)",
-        audioQuality: 'Yes', // Is music quality
+        youtubeChannel: "Bible en ligne",
+        validVideoTitleOrAudioTitle: "Musique chrétienne 2019 - Le temps (avec paroles)",
+        isMusicQuality: true, // Is music quality
       );
 
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        youtubeChannelValue: "Bible en ligne",
-        audioTitle:
+        youtubeChannel: "Bible en ligne",
+        validVideoTitleOrAudioTitle:
             "Chanson évangélique  Ta foi en Dieu doit être au-dessus de tout",
-        audioQuality: 'Yes', // Is music quality
+        isMusicQuality: true, // Is music quality
       );
 
       // Purge the test playlist directory so that the created test
@@ -26949,18 +26949,18 @@ void main() {
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        youtubeChannelValue: "Bible en ligne",
-        audioTitle: "Musique chrétienne 2019 - Le temps (avec paroles)",
-        audioQuality: 'Yes', // Is music quality
+        youtubeChannel: "Bible en ligne",
+        validVideoTitleOrAudioTitle: "Musique chrétienne 2019 - Le temps (avec paroles)",
+        isMusicQuality: true, // Is music quality
       );
 
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        youtubeChannelValue: "Bible en ligne",
-        audioTitle:
+        youtubeChannel: "Bible en ligne",
+        validVideoTitleOrAudioTitle:
             "Chanson évangélique  Ta foi en Dieu doit être au-dessus de tout",
-        audioQuality: 'Yes', // Is music quality
+        isMusicQuality: true, // Is music quality
       );
 
       // Purge the test playlist directory so that the created test
@@ -27143,7 +27143,7 @@ void main() {
       FilePicker.platform = mockFilePicker;
 
       const String fileName_5 = "bbb.mp3";
-      const String fileName = "bbb";
+      const String fileNameNoExt = "bbb";
 
       // Setting one selected mp3 file.
       mockFilePicker.setSelectedFiles([
@@ -27184,9 +27184,9 @@ void main() {
         tester: tester,
         audioType: AudioType.imported,
         audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
-        audioTitle: fileName,
+        validVideoTitleOrAudioTitle: fileNameNoExt,
         audioDuration: '0:00:19',
-        audioQuality: 'No', // Is spoken quality
+        isMusicQuality: false, // Is spoken quality
       );
 
       // Verify the imported audio sub title in the selected Youtube
@@ -27557,9 +27557,9 @@ void main() {
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: selectedPlaylistTitle,
-        youtubeChannelValue: "",
-        audioTitle: enteredFileName,
-        audioQuality: 'TTS',
+        youtubeChannel: "",
+        validVideoTitleOrAudioTitle: enteredFileName,
+        isMusicQuality: false, // Is spoken quality
       );
 
       // Purge the test playlist directory so that the created test
