@@ -27180,13 +27180,25 @@ void main() {
             "Audio(s)\n\n\"$fileName_5\"\n\nNOT imported to local playlist \"$localPlaylistTitle\" since the playlist directory already contains the audio(s).",
       );
 
+      // Verifying all audio info dialog fields related of the imported audio
+      // type
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioType: AudioType.imported,
-        audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
         validVideoTitleOrAudioTitle: fileNameNoExt,
-        audioDuration: '0:00:19',
+        audioDownloadDateTime: '25/08/2025 at 17:53', // this is the imported date time
+        isAudioPlayable: true,
+        audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
+        audioDuration: '0:00:19.3',
+        audioPosition: '0:00:00',
+        audioState: 'Not listened',
+        lastListenDateTime: '',
+        audioFileName: fileName_5,
+        audioFileSize: '155 KB',
         isMusicQuality: false, // Is spoken quality
+        audioPlaySpeed: '1.25',
+        audioVolume: '50.0 %',
+        audioCommentNumber: 1,
       );
 
       // Verify the imported audio sub title in the selected Youtube
