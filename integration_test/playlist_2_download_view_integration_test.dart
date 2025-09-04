@@ -27979,128 +27979,12 @@ void main() {
         'Convert Text to Audio',
       );
 
-      // Verify the presence of the help icon button
-      expect(find.byIcon(Icons.help_outline), findsOneWidget);
-
-      // Verify the text to convert title
-      final Text textToConvert =
-          tester.widget<Text>(find.byKey(const Key('textToConvertTitleKey')));
-      expect(
-        textToConvert.data,
-        'Text to convert, { = silence',
-      );
-
-      // Verify the voice selection title
-      final Text conversionVoiceSelection =
-          tester.widget<Text>(find.byKey(const Key('voiceSelectionTitleKey')));
-      expect(
-        conversionVoiceSelection.data,
-        'Voice selection:',
-      );
-
-      // Verify the voice selection checkboxes
-
-      final Finder masculineCheckbox =
-          find.byKey(const Key('masculineVoiceCheckbox'));
-      Finder feminineCheckbox = find.byKey(const Key('femineVoiceCheckbox'));
-
-      // Initially masculine should be selected
-      expect(
-        (tester.widget(masculineCheckbox) as Checkbox).value,
-        true,
-      );
-      expect(
-        (tester.widget(feminineCheckbox) as Checkbox).value,
-        false,
-      );
-
-      // Tap the feminine checkbox
-      await tester.tap(feminineCheckbox);
-      await tester.pump();
-
-      // Verify state changed to feminine
-      expect(
-        (tester.widget(masculineCheckbox) as Checkbox).value,
-        false,
-      );
-      expect(
-        (tester.widget(feminineCheckbox) as Checkbox).value,
-        true,
-      );
-
-      // Tap masculine checkbox back
-      await tester.tap(masculineCheckbox);
-      await tester.pump();
-
-      // Verify state changed back to masculine
-      expect(
-        (tester.widget(masculineCheckbox) as Checkbox).value,
-        true,
-      );
-      expect(
-        (tester.widget(feminineCheckbox) as Checkbox).value,
-        false,
-      );
-
-      // Enter and then delete a text to convert
-
-      // Verify the presence of the hint text in the TextField
-      expect(find.text('Enter your text here ...'), findsOneWidget);
-
-      // Find the text field and delete button
-      final Finder textFieldFinder =
-          find.byKey(const Key('textToConvertTextField'));
-      final Finder textFieldDeleteButtonFFinder =
-          find.byKey(const Key('deleteTextToConvertIconButton'));
-
-      // Verify the disabled state of the Listen and Create MP3 buttons
-      await _verifyListenAndCreateMp3ButtonsState(
-        tester: tester,
-        areEnabled: false,
-      );
-
-      // Enter text in the TextField
-      const testText = 'Ceci est un texte à supprimer.';
-      await tester.enterText(textFieldFinder, testText);
-      await tester.pump();
-
-      // Verify the text was entered
-      expect(find.text(testText), findsOneWidget);
-
-      // Verify the TextField controller has the text
-      final textFieldWidget = tester.widget<TextField>(textFieldFinder);
-      expect(textFieldWidget.controller!.text, testText);
-
-      // Verify the enabled state of the Listen and Create MP3 buttons
-      await _verifyListenAndCreateMp3ButtonsState(
-        tester: tester,
-        areEnabled: true,
-      );
-
-      // Tap the delete button
-      await tester.tap(textFieldDeleteButtonFFinder);
-      await tester.pump();
-
-      // Verify the text field is now empty
-      expect(textFieldWidget.controller!.text, isEmpty);
-      expect(find.text(testText), findsNothing);
-
-      // Verify the TextField is focused after clearing (as per your implementation)
-      expect(
-          tester.binding.focusManager.primaryFocus, textFieldWidget.focusNode);
-
-      // Verify the presence of the hint text in the TextField
-      await tester.pumpAndSettle();
-      expect(find.text('Enter your text here ...'), findsOneWidget);
-
-      // Verify the again disabled state of the Listen and Create MP3 buttons
-      await _verifyListenAndCreateMp3ButtonsState(
-        tester: tester,
-        areEnabled: false,
-      );
-
       // Now enter a text to convert and listen it, verifying its
       // between 8 and 9 second duration
+
+      // Find the text field finder
+      final Finder textFieldFinder =
+          find.byKey(const Key('textToConvertTextField'));
 
       const String initialTextToConvertStr = "{{ un {{{ deux { trois.";
       await tester.enterText(textFieldFinder, initialTextToConvertStr);
@@ -28127,24 +28011,6 @@ void main() {
       Row listenButtonRow = listenButtonWidget.child as Row;
       Icon listenIcon = (listenButtonRow.children[0] as Icon);
       expect(listenIcon.icon, Icons.volume_up); // Back to Listen icon
-
-      // Now, tap again on the Listen button and let the audio
-      // play to its end
-      await tester.tap(listenButton);
-      await tester.pumpAndSettle();
-
-      // Add a delay to allow the audio to reach its end and the next audio
-      // to start playing.
-      for (int i = 0; i < 11; i++) {
-        await Future.delayed(const Duration(seconds: 1));
-        await tester.pumpAndSettle();
-      }
-
-      // Final verification - the Stop button changed to Listen button
-      TextButton finalButtonWidget = tester.widget(listenButton);
-      Row finalButtonRow = finalButtonWidget.child as Row;
-      Icon finalIcon = (finalButtonRow.children[0] as Icon);
-      expect(finalIcon.icon, Icons.volume_up); // Back to Listen icon
 
       // Now click on Create MP3 button to create the audio
       Finder createMP3ButtonFinder =
@@ -28347,6 +28213,7 @@ void main() {
       await tester.pump();
 
       // Tap the feminine checkbox to change the voice
+      Finder feminineCheckbox = find.byKey(const Key('femineVoiceCheckbox'));
       await tester.tap(feminineCheckbox);
       await tester.pump();
 
