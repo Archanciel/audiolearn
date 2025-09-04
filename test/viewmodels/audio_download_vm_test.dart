@@ -2361,6 +2361,12 @@ void _verifyImportedFilesPresence({
           .audioFileName,
       importedFileName,
     );
+
+    // Verify the imported audio type
+    Audio importedAudio = targetPlaylist
+        .downloadedAudioLst[
+            targetPlaylistDownloadedAudioListInitialLengh - 1];
+    expect(importedAudio.audioType, AudioType.imported);
   }
 
   expect(
