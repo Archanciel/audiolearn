@@ -27355,7 +27355,7 @@ void main() {
     testWidgets(
         '''On selected playlist, add a text to speech audio. Verify the text to speech dialog appearance.
           Then enter a text with case ( { ) characters. Verify the Listen Create MP3 button state. Listen and
-          Stop the texr. Then listen the full text and verify the listen duration after which the Stop
+          Stop the text. Then listen the full text and verify the listen duration after which the Stop
           button is reset to the Listen button. Then, create the MP3 audio and verify its presence in the
           playlist audio list. Verify also the audio info dialog content of the converted audio.''',
         (WidgetTester tester) async {
@@ -27464,13 +27464,9 @@ void main() {
           find.byKey(const Key('deleteTextToConvertIconButton'));
 
       // Verify the disabled state of the Listen and Create MP3 buttons
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      await _verifyListenAndCreateMp3ButtonsState(
         tester: tester,
-        widgetKeyStr: 'listen_text_button',
-      );
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
-        tester: tester,
-        widgetKeyStr: 'create_audio_file_button',
+        areEnabled: false,
       );
 
       // Enter text in the TextField
@@ -27486,13 +27482,9 @@ void main() {
       expect(textFieldWidget.controller!.text, testText);
 
       // Verify the enabled state of the Listen and Create MP3 buttons
-      IntegrationTestUtil.verifyWidgetIsEnabled(
+      await _verifyListenAndCreateMp3ButtonsState(
         tester: tester,
-        widgetKeyStr: 'listen_text_button',
-      );
-      IntegrationTestUtil.verifyWidgetIsEnabled(
-        tester: tester,
-        widgetKeyStr: 'create_audio_file_button',
+        areEnabled: true,
       );
 
       // Tap the delete button
@@ -27512,13 +27504,9 @@ void main() {
       expect(find.text('Enter your text here ...'), findsOneWidget);
 
       // Verify the again disabled state of the Listen and Create MP3 buttons
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      await _verifyListenAndCreateMp3ButtonsState(
         tester: tester,
-        widgetKeyStr: 'listen_text_button',
-      );
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
-        tester: tester,
-        widgetKeyStr: 'create_audio_file_button',
+        areEnabled: false,
       );
 
       // Now enter a text to convert and listen it, verifying its
@@ -27538,6 +27526,22 @@ void main() {
       Row stopButtonRow = stopButtonWidget.child as Row;
       Icon stopIcon = (stopButtonRow.children[0] as Icon);
       expect(stopIcon.icon, Icons.stop); // Stop icon
+
+      // Now, tap on the Stop button after 1 seconds
+      await Future.delayed(const Duration(seconds: 1));
+      await tester.tap(listenButton);
+      await tester.pumpAndSettle();
+
+      // Verify the Stop button changed back to Listen button
+      TextButton listenButtonWidget = tester.widget(listenButton);
+      Row listenButtonRow = listenButtonWidget.child as Row;
+      Icon listenIcon = (listenButtonRow.children[0] as Icon);
+      expect(listenIcon.icon, Icons.volume_up); // Back to Listen icon
+
+      // Now, tap again on the Listen button and let the audio
+      // play to its end
+      await tester.tap(listenButton);
+      await tester.pumpAndSettle();
 
       // Add a delay to allow the audio to reach its end and the next audio
       // to start playing.
@@ -27576,15 +27580,15 @@ void main() {
       expect(find.text('file name'), findsOneWidget);
       expect(find.text('.mp3'), findsOneWidget);
 
-      const String enteredFileName = 'convertedAudio';
+      const String enteredFileNameNoExt = 'convertedAudio';
       final Finder mp3FileNameTextFieldFinder =
           find.byKey(const Key('textToConvertTextField'));
 
-      await tester.enterText(mp3FileNameTextFieldFinder, enteredFileName);
+      await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
       await tester.pump();
 
       // Verify the text was entered
-      expect(find.text(enteredFileName), findsOneWidget);
+      expect(find.text(enteredFileNameNoExt), findsOneWidget);
 
       // Tap on the listen button
       final Finder saveMP3FileButton =
@@ -27596,18 +27600,48 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "The audio created by the text to MP3 conversion\n\n\"$enteredFileName.mp3\"\n\nwas added to Youtube playlist \"$selectedYoutubePlaylistTitle\".",
+            "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas added to Youtube playlist \"$selectedYoutubePlaylistTitle\".",
         isWarningConfirming: true,
       );
 
-      // Verify that the created audio is present in the selected
-      // playlist
+      // Now close the convert text to audio dialog by tapping
+      // the Cancel button
+      final Finder cancelButton = find.byKey(const Key('convertTextToAudioCancelButton'));
+      await tester.tap(cancelButton);
+      await tester.pumpAndSettle();
+
+      DateTime now = DateTime.now();
+
+      // Verify the converted audio sub title in the selected Youtube
+      // playlist audio list
+      IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+        tester: tester,
+        audioSubTitlesOrderLst: [
+          '0:00:07.0 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+        ],
+        firstAudioListTileIndex: 4,
+      );
+
+      // Verifying all audio info dialog fields related of the
+      // converted audio type
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
+        audioType: AudioType.textToSpeech,
+        validVideoTitleOrAudioTitle: enteredFileNameNoExt,
+        audioDownloadDateTime:
+            '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
+        isAudioPlayable: true,
         audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
-        youtubeChannel: "",
-        validVideoTitleOrAudioTitle: enteredFileName,
+        audioDuration: '0:00:07.0',
+        audioPosition: '0:00:00',
+        audioState: 'Not listened',
+        lastListenDateTime: '',
+        audioFileName: '$enteredFileNameNoExt.mp3',
+        audioFileSize: '56 KB',
         isMusicQuality: false, // Is spoken quality
+        audioPlaySpeed: '1.25',
+        audioVolume: '50.0 %',
+        audioCommentNumber: 1,
       );
 
       // Purge the test playlist directory so that the created test
@@ -27617,6 +27651,31 @@ void main() {
       );
     });
   });
+}
+
+Future<void> _verifyListenAndCreateMp3ButtonsState({
+  required WidgetTester tester,
+  required bool areEnabled,
+}) async {
+  if (areEnabled) {
+    IntegrationTestUtil.verifyWidgetIsEnabled(
+      tester: tester,
+      widgetKeyStr: 'listen_text_button',
+    );
+    IntegrationTestUtil.verifyWidgetIsEnabled(
+      tester: tester,
+      widgetKeyStr: 'create_audio_file_button',
+    );
+  } else {
+    await IntegrationTestUtil.verifyWidgetIsDisabled(
+      tester: tester,
+      widgetKeyStr: 'listen_text_button',
+    );
+    await IntegrationTestUtil.verifyWidgetIsDisabled(
+      tester: tester,
+      widgetKeyStr: 'create_audio_file_button',
+    );
+  }
 }
 
 Future<void> _verifyCreatedZipFilesContent({
