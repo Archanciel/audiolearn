@@ -275,10 +275,12 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           label: AppLocalizations.of(context)!.audioTitleLabel,
           value: audio.validVideoTitle),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('importedAudioDateTimeKey'),
           context: context,
           label: AppLocalizations.of(context)!.importedAudioDateTimeLabel,
           value: frenchDateTimeFormat.format(audio.audioDownloadDateTime)),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('isAudioPlayableKey'),
           context: context,
           label: AppLocalizations.of(context)!.isPlayableLabel,
           value: (UiUtil.isAudioPlayable(audio: audio))
@@ -397,10 +399,12 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           label: AppLocalizations.of(context)!.audioTitleLabel,
           value: audio.validVideoTitle),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('convertedAudioDateTimeKey'),
           context: context,
           label: AppLocalizations.of(context)!.convertedAudioDateTimeLabel,
           value: frenchDateTimeFormat.format(audio.audioDownloadDateTime)),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('isAudioPlayableKey'),
           context: context,
           label: AppLocalizations.of(context)!.isPlayableLabel,
           value: (UiUtil.isAudioPlayable(audio: audio))
