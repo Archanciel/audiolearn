@@ -27357,7 +27357,11 @@ void main() {
           Then enter a text with case ( { ) characters. Verify the Listen Create MP3 button state. Listen and
           Stop the text. Then listen the full text and verify the listen duration after which the Stop
           button is reset to the Listen button. Then, create the MP3 audio and verify its presence in the
-          playlist audio list. Verify also the audio info dialog content of the converted audio.''',
+          playlist audio list. Verify also the audio info dialog content of the converted audio. Then, verify
+          the added comment in relation with the text to audio conversion.
+
+          Finally, redo a text to speech conversion with a different text and save it to the same MP3 file
+          name. Do the same verifications as previously.''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -27511,8 +27515,8 @@ void main() {
       // Now enter a text to convert and listen it, verifying its
       // between 8 and 9 second duration
 
-      String textToConvertStr = "{{ un {{{ deux { trois.";
-      await tester.enterText(textFieldFinder, textToConvertStr);
+      const String initialTextToConvertStr = "{{ un {{{ deux { trois.";
+      await tester.enterText(textFieldFinder, initialTextToConvertStr);
       await tester.pump();
 
       // Tap on the listen button
@@ -27643,6 +27647,94 @@ void main() {
         audioCommentNumber: 1,
       );
 
+      // Now, we verify the created comment showing the converted
+      // audio text
+
+      // First, find the Youtube playlist audio ListTile Text widget
+      Finder audioTitleTileTextWidgetFinder = find.text(enteredFileNameNoExt);
+
+      // Then obtain the audio ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      Finder audioTitleTileWidgetFinder = find.ancestor(
+        of: audioTitleTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now we want to tap the popup menu of the audioTitle ListTile
+
+      // Find the leading menu icon button of the audioTitle ListTile
+      // and tap on it
+      Finder audioTitleTileLeadingMenuIconButton = find.descendant(
+        of: audioTitleTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(audioTitleTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the 'Audio Comments ...' popup menu item and
+      // tap on it
+      Finder audioCommentsPopupMenuItem =
+          find.byKey(const Key("popup_menu_audio_comment"));
+
+      await tester.tap(audioCommentsPopupMenuItem);
+      await tester.pumpAndSettle();
+
+      // Verify that the audio comments list of the dialog has 1 comment
+      // item
+
+      Finder audioCommentsLstFinder = find.byKey(const Key(
+        'audioCommentsListKey',
+      ));
+
+      // Ensure the list has one child widgets
+      expect(
+        tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+        1,
+      );
+
+      List<String> expectedTitles = [
+        'Text',
+      ];
+
+      List<String> expectedContents = [
+        initialTextToConvertStr,
+      ];
+
+      List<String> expectedStartPositions = [
+        '0:00',
+      ];
+
+      List<String> expectedEndPositions = [
+        '0:07',
+      ];
+
+      List<String> expectedCreationDates = [
+        frenchDateFormatYy.format(DateTime.now()), // created comment
+        '04/09/25',
+      ];
+
+      List<String> expectedUpdateDates = [
+        '',
+      ];
+
+      // Verify content of each list item
+      IntegrationTestUtil.verifyCommentsInCommentListDialog(
+          tester: tester,
+          commentListDialogFinder: audioCommentsLstFinder,
+          commentsNumber: 1,
+          expectedTitlesLst: expectedTitles,
+          expectedContentsLst: expectedContents,
+          expectedStartPositionsLst: expectedStartPositions,
+          expectedEndPositionsLst: expectedEndPositions,
+          expectedCreationDatesLst: expectedCreationDates,
+          expectedUpdateDatesLst: expectedUpdateDates);
+
+      // Now close the comment list dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
+
       // Now, reopen the convert text to audio dialog
       await IntegrationTestUtil.typeOnPlaylistMenuItem(
         tester: tester,
@@ -27651,8 +27743,8 @@ void main() {
       );
 
       // Now enter a new text to convert
-      textToConvertStr = "un deux trois.";
-      await tester.enterText(textFieldFinder, textToConvertStr);
+      const String nextTextToConvertStr = "un deux trois.";
+      await tester.enterText(textFieldFinder, nextTextToConvertStr);
       await tester.pump();
 
       // Tap the feminine checkbox to change the voice
@@ -27694,8 +27786,7 @@ void main() {
       );
 
       // Tap on the confirm button to confirm the save operation
-      final Finder confirmButton =
-          find.byKey(const Key('confirmButton'));
+      final Finder confirmButton = find.byKey(const Key('confirmButton'));
       await tester.tap(confirmButton);
       await tester.pumpAndSettle();
 
@@ -27708,7 +27799,6 @@ void main() {
             "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas added to Youtube playlist \"$selectedYoutubePlaylistTitle\".",
         isWarningConfirming: true,
       );
-
 
       // Now close the convert text to audio dialog by tapping
       // the Cancel button
@@ -27724,7 +27814,7 @@ void main() {
         audioSubTitlesOrderLst: [
           '0:00:00.8 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
         ],
-        firstAudioListTileIndex: 4,
+        firstAudioListTileIndex: 3,
       );
 
       // Verifying all audio info dialog fields related of the
@@ -27749,7 +27839,99 @@ void main() {
         audioCommentNumber: 2,
       );
 
+      // Now, we verify the second created comment showing the new
+      // converted audio text
 
+      // First, find the Youtube playlist audio ListTile Text widget
+      audioTitleTileTextWidgetFinder = find.text(enteredFileNameNoExt);
+
+      // Then obtain the audio ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      audioTitleTileWidgetFinder = find.ancestor(
+        of: audioTitleTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now we want to tap the popup menu of the audioTitle ListTile
+
+      // Find the leading menu icon button of the audioTitle ListTile
+      // and tap on it
+      audioTitleTileLeadingMenuIconButton = find.descendant(
+        of: audioTitleTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(audioTitleTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the 'Audio Comments ...' popup menu item and
+      // tap on it
+      audioCommentsPopupMenuItem =
+          find.byKey(const Key("popup_menu_audio_comment"));
+
+      await tester.tap(audioCommentsPopupMenuItem);
+      await tester.pumpAndSettle();
+
+      // Verify that the audio comments list of the dialog has 1 comment
+      // item
+
+      audioCommentsLstFinder = find.byKey(const Key(
+        'audioCommentsListKey',
+      ));
+
+      // Ensure the list has one child widgets
+      expect(
+        tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+        2,
+      );
+
+      expectedTitles = [
+        'Text',
+        'Text',
+      ];
+
+      expectedContents = [
+        initialTextToConvertStr,
+        nextTextToConvertStr,
+      ];
+
+      expectedStartPositions = [
+        '0:00',
+        '0:00',
+      ];
+
+      expectedEndPositions = [
+        '0:07',
+        '0:01',
+      ];
+
+      expectedCreationDates = [
+        frenchDateFormatYy.format(DateTime.now()), // created comment
+        '04/09/25',
+        '04/09/25',
+      ];
+
+      expectedUpdateDates = [
+        '',
+        '',
+      ];
+
+      // Verify content of each list item
+      IntegrationTestUtil.verifyCommentsInCommentListDialog(
+          tester: tester,
+          commentListDialogFinder: audioCommentsLstFinder,
+          commentsNumber: 2,
+          expectedTitlesLst: expectedTitles,
+          expectedContentsLst: expectedContents,
+          expectedStartPositionsLst: expectedStartPositions,
+          expectedEndPositionsLst: expectedEndPositions,
+          expectedCreationDatesLst: expectedCreationDates,
+          expectedUpdateDatesLst: expectedUpdateDates);
+
+      // Now close the comment list dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -27759,6 +27941,8 @@ void main() {
     });
   });
 }
+
+class CommentListAddDialog {}
 
 Future<void> _verifyListenAndCreateMp3ButtonsState({
   required WidgetTester tester,
