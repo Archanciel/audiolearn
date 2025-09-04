@@ -27189,7 +27189,7 @@ void main() {
         audioType: AudioType.imported,
         validVideoTitleOrAudioTitle: fileNameNoExt,
         audioDownloadDateTime:
-            '25/08/2025 at 17:53', // this is the imported date time
+            '25/08/2025 17:53', // this is the imported date time
         isAudioPlayable: true,
         audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
         audioDuration: '0:00:19.3',
@@ -27411,8 +27411,7 @@ void main() {
 
       final Finder masculineCheckbox =
           find.byKey(const Key('masculineVoiceCheckbox'));
-      final Finder feminineCheckbox =
-          find.byKey(const Key('femineVoiceCheckbox'));
+      Finder feminineCheckbox = find.byKey(const Key('femineVoiceCheckbox'));
 
       // Initially masculine should be selected
       expect(
@@ -27512,7 +27511,7 @@ void main() {
       // Now enter a text to convert and listen it, verifying its
       // between 8 and 9 second duration
 
-      const String textToConvertStr = "{{ un {{{ deux { trois.";
+      String textToConvertStr = "{{ un {{{ deux { trois.";
       await tester.enterText(textFieldFinder, textToConvertStr);
       await tester.pump();
 
@@ -27557,10 +27556,10 @@ void main() {
       expect(finalIcon.icon, Icons.volume_up); // Back to Listen icon
 
       // Now click on Create MP3 button to create the audio
-      final Finder createMP3Button =
+      Finder createMP3ButtonFinder =
           find.byKey(const Key('create_audio_file_button'));
-      expect(createMP3Button, findsOneWidget);
-      await tester.tap(createMP3Button);
+      expect(createMP3ButtonFinder, findsOneWidget);
+      await tester.tap(createMP3ButtonFinder);
       await tester.pumpAndSettle();
 
       // Verify the convert text to audio dialog title
@@ -27581,7 +27580,7 @@ void main() {
       expect(find.text('.mp3'), findsOneWidget);
 
       const String enteredFileNameNoExt = 'convertedAudio';
-      final Finder mp3FileNameTextFieldFinder =
+      Finder mp3FileNameTextFieldFinder =
           find.byKey(const Key('textToConvertTextField'));
 
       await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
@@ -27590,9 +27589,8 @@ void main() {
       // Verify the text was entered
       expect(find.text(enteredFileNameNoExt), findsOneWidget);
 
-      // Tap on the listen button
-      final Finder saveMP3FileButton =
-          find.byKey(const Key('create_mp3_button_key'));
+      // Tap on the create mp3 button
+      Finder saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
       await tester.tap(saveMP3FileButton);
       await Future.delayed(const Duration(seconds: 2));
       await tester.pumpAndSettle();
@@ -27606,8 +27604,9 @@ void main() {
 
       // Now close the convert text to audio dialog by tapping
       // the Cancel button
-      final Finder cancelButton = find.byKey(const Key('convertTextToAudioCancelButton'));
-      await tester.tap(cancelButton);
+      Finder cancelButtonFinder =
+          find.byKey(const Key('convertTextToAudioCancelButton'));
+      await tester.tap(cancelButtonFinder);
       await tester.pumpAndSettle();
 
       DateTime now = DateTime.now();
@@ -27643,6 +27642,114 @@ void main() {
         audioVolume: '50.0 %',
         audioCommentNumber: 1,
       );
+
+      // Now, reopen the convert text to audio dialog
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: selectedYoutubePlaylistTitle,
+        playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+      );
+
+      // Now enter a new text to convert
+      textToConvertStr = "un deux trois.";
+      await tester.enterText(textFieldFinder, textToConvertStr);
+      await tester.pump();
+
+      // Tap the feminine checkbox to change the voice
+      await tester.tap(feminineCheckbox);
+      await tester.pump();
+
+      // Now click on Create MP3 button to create the audio
+      createMP3ButtonFinder = find.byKey(const Key('create_audio_file_button'));
+      await tester.tap(createMP3ButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Enter the same mp3 file name as before
+      mp3FileNameTextFieldFinder =
+          find.byKey(const Key('textToConvertTextField'));
+
+      await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+      await tester.pump();
+
+      // Tap on the create mp3 button
+      saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
+      await tester.tap(saveMP3FileButton);
+      await Future.delayed(const Duration(seconds: 2));
+      await tester.pumpAndSettle();
+
+      // Now check the confirm dialog which indicates that the saved
+      // file name already exist and ask to confirm or cancel the
+      // save operation.
+
+      Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
+
+      // Check the value of the confirm dialog title
+      Finder confirmActionDialogTitleText = find.descendant(
+          of: confirmActionDialogFinder,
+          matching: find.byKey(const Key("confirmDialogTitleOneKey")));
+
+      expect(
+        tester.widget<Text>(confirmActionDialogTitleText).data!,
+        "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$selectedYoutubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
+      );
+
+      // Tap on the confirm button to confirm the save operation
+      final Finder confirmButton =
+          find.byKey(const Key('confirmButton'));
+      await tester.tap(confirmButton);
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(seconds: 2));
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas added to Youtube playlist \"$selectedYoutubePlaylistTitle\".",
+        isWarningConfirming: true,
+      );
+
+
+      // Now close the convert text to audio dialog by tapping
+      // the Cancel button
+      cancelButtonFinder =
+          find.byKey(const Key('convertTextToAudioCancelButton'));
+      await tester.tap(cancelButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the converted audio sub title in the selected Youtube
+      // playlist audio list
+      IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+        tester: tester,
+        audioSubTitlesOrderLst: [
+          '0:00:00.8 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+        ],
+        firstAudioListTileIndex: 4,
+      );
+
+      // Verifying all audio info dialog fields related of the
+      // converted audio type
+      await IntegrationTestUtil.verifyAudioInfoDialog(
+        tester: tester,
+        audioType: AudioType.textToSpeech,
+        validVideoTitleOrAudioTitle: enteredFileNameNoExt,
+        audioDownloadDateTime:
+            '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
+        isAudioPlayable: true,
+        audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
+        audioDuration: '0:00:00.8',
+        audioPosition: '0:00:00',
+        audioState: 'Not listened',
+        lastListenDateTime: '',
+        audioFileName: '$enteredFileNameNoExt.mp3',
+        audioFileSize: '6 KB',
+        isMusicQuality: false, // Is spoken quality
+        audioPlaySpeed: '1.25',
+        audioVolume: '50.0 %',
+        audioCommentNumber: 2,
+      );
+
+
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub

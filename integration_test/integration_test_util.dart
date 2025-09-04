@@ -2997,8 +2997,78 @@ class IntegrationTestUtil {
 
         break;
       case AudioType.imported:
+        // Verify the valid video title of the audio
+        final Text validVideoTitleTextWidget =
+            tester.widget<Text>(find.byKey(const Key('importedAudioTitleKey')));
+        expect(validVideoTitleTextWidget.data, validVideoTitleOrAudioTitle);
+
+        // Verify the audio download date time of the audio
+        if (audioDownloadDateTime.isNotEmpty) {
+          final Text audioDownloadDateTimeTextWidget = tester
+              .widget<Text>(find.byKey(const Key('importedAudioDateTimeKey')));
+          expect(audioDownloadDateTimeTextWidget.data, audioDownloadDateTime);
+        }
+
+        // Verify if the audio is playable or not
+        if (language == Language.english) {
+          // In English, the 'isAudioPlayableKey' Text widget contains
+          // 'Yes' or 'No'
+          final Text isAudioPlayableTextWidget =
+              tester.widget<Text>(find.byKey(const Key('isAudioPlayableKey')));
+          if (isAudioPlayable) {
+            expect(isAudioPlayableTextWidget.data, 'Yes');
+          } else {
+            expect(isAudioPlayableTextWidget.data, 'No');
+          }
+        } else {
+          // In French, the 'isAudioPlayableKey' Text widget contains
+          // 'Oui' or 'Non'
+          final Text isAudioPlayableTextWidget =
+              tester.widget<Text>(find.byKey(const Key('isAudioPlayableKey')));
+          if (isAudioPlayable) {
+            expect(isAudioPlayableTextWidget.data, 'Oui');
+          } else {
+            expect(isAudioPlayableTextWidget.data, 'Non');
+          }
+        }
+
         break;
       case AudioType.textToSpeech:
+        // Verify the valid video title of the audio
+        final Text validVideoTitleTextWidget =
+            tester.widget<Text>(find.byKey(const Key('convertedAudioTitleKey')));
+        expect(validVideoTitleTextWidget.data, validVideoTitleOrAudioTitle);
+
+        // Verify the audio download date time of the audio
+        if (audioDownloadDateTime.isNotEmpty) {
+          final Text audioDownloadDateTimeTextWidget = tester
+              .widget<Text>(find.byKey(const Key('convertedAudioDateTimeKey')));
+          expect(audioDownloadDateTimeTextWidget.data, audioDownloadDateTime);
+        }
+
+        // Verify if the audio is playable or not
+        if (language == Language.english) {
+          // In English, the 'isAudioPlayableKey' Text widget contains
+          // 'Yes' or 'No'
+          final Text isAudioPlayableTextWidget =
+              tester.widget<Text>(find.byKey(const Key('isAudioPlayableKey')));
+          if (isAudioPlayable) {
+            expect(isAudioPlayableTextWidget.data, 'Yes');
+          } else {
+            expect(isAudioPlayableTextWidget.data, 'No');
+          }
+        } else {
+          // In French, the 'isAudioPlayableKey' Text widget contains
+          // 'Oui' or 'Non'
+          final Text isAudioPlayableTextWidget =
+              tester.widget<Text>(find.byKey(const Key('isAudioPlayableKey')));
+          if (isAudioPlayable) {
+            expect(isAudioPlayableTextWidget.data, 'Oui');
+          } else {
+            expect(isAudioPlayableTextWidget.data, 'Non');
+          }
+        }
+        
         break;
     }
 
