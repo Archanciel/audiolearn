@@ -1,7 +1,6 @@
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart' as path;
 import '../../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +9,6 @@ import '../../models/audio.dart';
 import '../../models/audio_file.dart';
 import '../../models/help_item.dart';
 import '../../models/playlist.dart';
-import '../../models/comment.dart' as audiolearn;
 import '../../models/sort_filter_parameters.dart';
 import '../../viewmodels/audio_player_vm.dart';
 import '../../viewmodels/comment_vm.dart';
@@ -642,33 +640,13 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
         if (!context.mounted) return;
 
         await audioDownloadVMlistenFalse.importConvertedAudioFileInPlaylist(
-          targetPlaylist: targetPlaylist,
-          filePathNameToImportStr: currentAudioFile.filePath,
-        );
-
-        Audio? audio = targetPlaylist.getAudioByFileNameNoExt(
-            audioFileNameNoExt: currentAudioFile.filePath
-                .split(path.separator)
-                .last
-                .replaceFirst(
-                  '.mp3',
-                  '',
-                ));
-
-        CommentVM commentVMlistenFalse = Provider.of<CommentVM>(
-          context,
-          listen: false,
-        );
-
-        commentVMlistenFalse.addComment(
-          comment: audiolearn.Comment(
-            title: AppLocalizations.of(context)!.speech,
-            content: currentAudioFile.text,
-            commentStartPositionInTenthOfSeconds: 0,
-            commentEndPositionInTenthOfSeconds:
-                audio!.audioDuration.inMilliseconds ~/ 100,
+          commentVMlistenFalse: Provider.of<CommentVM>(
+            context,
+            listen: false,
           ),
-          audioToComment: audio,
+          targetPlaylist: targetPlaylist,
+          currentAudioFile: currentAudioFile,
+          commentTitle: AppLocalizations.of(context)!.speech,
         );
       }
     }

@@ -11,6 +11,8 @@ import 'package:path/path.dart' as path;
 // youtube_explode_dart Playlist class name.
 import 'package:youtube_explode_dart/youtube_explode_dart.dart' as yt;
 
+import '../models/audio_file.dart';
+import '../models/comment.dart';
 import '../services/settings_data_service.dart';
 import '../services/json_data_service.dart';
 import '../models/audio.dart';
@@ -1887,9 +1889,12 @@ class AudioDownloadVM extends ChangeNotifier {
   /// the audio file is imported to the target playlist. In this case,
   /// {doesImportedFileResultFromTextToSpeech} is set to true.
   Future<void> importConvertedAudioFileInPlaylist({
+    required CommentVM commentVMlistenFalse,
     required Playlist targetPlaylist,
-    required String filePathNameToImportStr,
+    required AudioFile currentAudioFile,
+    required String commentTitle,
   }) async {
+    String filePathNameToImportStr = currentAudioFile.filePath;
     String fileName = filePathNameToImportStr.split(path.separator).last;
 
     // Displaying a confirmation of the converted text to audio file imported
@@ -1935,6 +1940,8 @@ class AudioDownloadVM extends ChangeNotifier {
       targetPlaylist.addImportedAudio(
         importedAudio,
       );
+
+      existingAudio = importedAudio;
     } else {
       existingAudio.audioDuration = importedAudioDuration;
       existingAudio.fileSize = File(filePathNameToImportStr).lengthSync();
@@ -1947,6 +1954,18 @@ class AudioDownloadVM extends ChangeNotifier {
     if (audioPlayer != null) {
       audioPlayer.dispose();
     }
+
+        commentVMlistenFalse.addComment(
+          comment: Comment(
+            title: commentTitle,
+            content: currentAudioFile.text,
+            commentStartPositionInTenthOfSeconds: 0,
+            commentEndPositionInTenthOfSeconds:
+                existingAudio.audioDuration.inMilliseconds ~/ 100,
+          ),
+          audioToComment: existingAudio,
+        );
+
 
     JsonDataService.saveToFile(
       model: targetPlaylist,
