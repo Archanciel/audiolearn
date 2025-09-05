@@ -27908,8 +27908,7 @@ void main() {
 
       expectedCreationDates = [
         frenchDateFormatYy.format(DateTime.now()), // created comment
-        '04/09/25',
-        '04/09/25',
+        frenchDateFormatYy.format(DateTime.now()), // created comment
       ];
 
       expectedUpdateDates = [
@@ -28046,6 +28045,8 @@ void main() {
       // Verify the text was entered
       expect(find.text(enteredFileNameNoExt), findsOneWidget);
 
+      DateTime now = DateTime.now();
+
       // Tap on the create mp3 button
       Finder saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
       await tester.tap(saveMP3FileButton);
@@ -28065,8 +28066,6 @@ void main() {
           find.byKey(const Key('convertTextToAudioCancelButton'));
       await tester.tap(cancelButtonFinder);
       await tester.pumpAndSettle();
-
-      DateTime now = DateTime.now();
 
       // Now select the 'local' playlist
       await IntegrationTestUtil.selectPlaylist(
@@ -28380,8 +28379,7 @@ void main() {
 
       expectedCreationDates = [
         frenchDateFormatYy.format(DateTime.now()), // created comment
-        '04/09/25',
-        '04/09/25',
+        frenchDateFormatYy.format(DateTime.now()), // created comment
       ];
 
       expectedUpdateDates = [
