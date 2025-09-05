@@ -1770,15 +1770,9 @@ class AudioDownloadVM extends ChangeNotifier {
   /// This method is called when the user selects the "Import Audio Files ..."
   /// playlist menu item. In this case, a filepicker dialog is displayed
   /// which allows the user to select one or everal audio files to import.
-  ///
-  /// The method is also used when the user selects the "Convert Text to
-  /// Audio ..." playlist menu item. After the text was converted to audio,
-  /// the audio file is imported to the target playlist. In this case,
-  /// {doesImportedFileResultFromTextToSpeech} is set to true.
   Future<void> importAudioFilesInPlaylist({
     required Playlist targetPlaylist,
     required List<String> filePathNameToImportLst,
-    bool doesImportedFileResultFromTextToSpeech = false,
   }) async {
     List<String> filePathNameToImportLstCopy = List<String>.from(
         filePathNameToImportLst); // necessary since the filePathNameToImportLst
@@ -1792,14 +1786,12 @@ class AudioDownloadVM extends ChangeNotifier {
           File('${targetPlaylist.downloadPath}${path.separator}$fileName');
 
       if (targetFile.existsSync()) {
-        if (!doesImportedFileResultFromTextToSpeech) {
-          // the case if the imported audio file already exist in the target
-          // playlist directory
-          rejectedImportedFileNames += "\"$fileName\",\n";
-          filePathNameToImportLst.remove(filePathName);
+        // the case if the imported audio file already exist in the target
+        // playlist directory
+        rejectedImportedFileNames += "\"$fileName\",\n";
+        filePathNameToImportLst.remove(filePathName);
 
-          continue;
-        }
+        continue;
       }
 
       acceptableImportedFileNames += "\"$fileName\",\n";
@@ -1820,24 +1812,13 @@ class AudioDownloadVM extends ChangeNotifier {
     // Displaying a confirmation which lists the audio files which will be
     // imported to the playlist.
     if (acceptableImportedFileNames.isNotEmpty) {
-      if (!doesImportedFileResultFromTextToSpeech) {
-        warningMessageVM.setAudioImportedToPlaylistTitles(
-            importedAudioFileNames: acceptableImportedFileNames.substring(
-                0,
-                acceptableImportedFileNames.length -
-                    2), // removing the last comma and the last line break
-            importedToPlaylistTitle: targetPlaylist.title,
-            importedToPlaylistType: targetPlaylist.playlistType);
-      } else {
-        warningMessageVM.setAudioCreatedFromTextToSpeechOperation(
-          importedAudioFileName: acceptableImportedFileNames.substring(
-            0,
-            acceptableImportedFileNames.length - 2,
-          ), // removing the last comma and the last line break
+      warningMessageVM.setAudioImportedToPlaylistTitles(
+          importedAudioFileNames: acceptableImportedFileNames.substring(
+              0,
+              acceptableImportedFileNames.length -
+                  2), // removing the last comma and the last line break
           importedToPlaylistTitle: targetPlaylist.title,
-          importedToPlaylistType: targetPlaylist.playlistType,
-        );
-      }
+          importedToPlaylistType: targetPlaylist.playlistType);
     }
 
     // AudioPlayer is used to get the audio duration of the
@@ -1851,14 +1832,12 @@ class AudioDownloadVM extends ChangeNotifier {
       String targetFilePathName =
           "${targetPlaylist.downloadPath}${path.separator}$fileName";
 
-      if (!doesImportedFileResultFromTextToSpeech) {
-        // Physically copying the audio file to the target playlist
-        // directory. If the audio file already exist in the
-        // target playlist directory due to the fact it was created
-        // from the text to speech operation, the copy must not be
-        // executed, otherwise _createImportedAudio will fail.
-        File(filePathName).copySync(targetFilePathName);
-      }
+      // Physically copying the audio file to the target playlist
+      // directory. If the audio file already exist in the
+      // target playlist directory due to the fact it was created
+      // from the text to speech operation, the copy must not be
+      // executed, otherwise _createImportedAudio will fail.
+      File(filePathName).copySync(targetFilePathName);
 
       Audio? existingAudio = targetPlaylist.getAudioByFileNameNoExt(
         audioFileNameNoExt: fileName.replaceFirst(
@@ -1877,20 +1856,10 @@ class AudioDownloadVM extends ChangeNotifier {
           importedFileName: fileName,
         );
 
-        if (doesImportedFileResultFromTextToSpeech) {
-          importedAudio.audioType = AudioType.textToSpeech;
-        }
-
         targetPlaylist.addImportedAudio(
           importedAudio,
         );
       } else {
-        // The case if the imported audio file was created from the text to
-        // speech operation. If the MP3 file already existed in the target
-        // playlist directory, it was replaced by the new created MP3 file
-        // and the corresponding Audio is modified. The Audio creation date
-        // time is not modified in order to avoid to modify the order of
-        // playing the audio if their order depends of the default SF parms.
         Duration? importedAudioDuration = await getMp3DurationWithAudioPlayer(
           audioPlayer: audioPlayer,
           filePathName: targetFilePathName,
@@ -1898,25 +1867,9 @@ class AudioDownloadVM extends ChangeNotifier {
 
         existingAudio.audioDuration = importedAudioDuration;
         existingAudio.fileSize = File(targetFilePathName).lengthSync();
-
-        if (doesImportedFileResultFromTextToSpeech) {
-          // Usefull if you replace an existing audio by a text to speech
-          // generated audio file.
-          existingAudio.audioType = AudioType.textToSpeech;
-        }
       }
 
-      if (!doesImportedFileResultFromTextToSpeech) {
-        // This test ensures that when a new audio file generated by
-        // the text to speech operation is handled by this method,
-        // the notifyListeners() is not executed since doing it displays
-        // twice the warning message which indicates that the audio file
-        // was imported after the text to speech operation.
-        //
-        // Instead, the AudioDownloadVM.doNotifyListeners() method is
-        // executed when closing the text to speech dialog.
-        notifyListeners();
-      }
+      notifyListeners();
     }
 
     if (audioPlayer != null) {
