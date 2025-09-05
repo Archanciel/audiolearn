@@ -1782,7 +1782,7 @@ class AudioDownloadVM extends ChangeNotifier {
   }) async {
     List<String> filePathNameToImportLstCopy = List<String>.from(
         filePathNameToImportLst); // necessary since the filePathNameToImportLst
-    //                               may modified
+    //                               may be modified
     String rejectedImportedFileNames = '';
     String acceptableImportedFileNames = '';
 
@@ -1917,6 +1917,78 @@ class AudioDownloadVM extends ChangeNotifier {
         // executed when closing the text to speech dialog.
         notifyListeners();
       }
+    }
+
+    if (audioPlayer != null) {
+      audioPlayer.dispose();
+    }
+
+    JsonDataService.saveToFile(
+      model: targetPlaylist,
+      path: targetPlaylist.getPlaylistDownloadFilePathName(),
+    );
+  }
+
+  /// The method is called  when the user selects the "Convert Text to
+  /// Audio ..." playlist menu item. After the text was converted to audio,
+  /// the audio file is imported to the target playlist. In this case,
+  /// {doesImportedFileResultFromTextToSpeech} is set to true.
+  Future<void> importConvertedAudioFileInPlaylist({
+    required Playlist targetPlaylist,
+    required String filePathNameToImportStr,
+  }) async {
+    String fileName = filePathNameToImportStr.split(path.separator).last;
+
+    // Displaying a confirmation of the converted text to audio file imported
+    // in the playlist.
+    warningMessageVM.setAudioCreatedFromTextToSpeechOperation(
+      importedAudioFileName: '"$fileName"',
+      importedToPlaylistTitle: targetPlaylist.title,
+      importedToPlaylistType: targetPlaylist.playlistType,
+    );
+
+    // AudioPlayer is used to get the audio duration of  the
+    // imported audio files
+    final AudioPlayer? audioPlayer = instanciateAudioPlayer();
+
+    // The case if the imported audio file was created from the text to
+    // speech operation. If the MP3 file already existed in the target
+    // playlist directory, it was replaced by the new created MP3 file
+    // and the corresponding Audio is modified. The Audio creation date
+    // time is not modified in order to avoid to modify the order of
+    // playing the audio if their order depends of the default SF parms.
+    Duration? importedAudioDuration = await getMp3DurationWithAudioPlayer(
+      audioPlayer: audioPlayer,
+      filePathName: filePathNameToImportStr,
+    );
+
+    Audio? existingAudio = targetPlaylist.getAudioByFileNameNoExt(
+      audioFileNameNoExt: fileName.replaceFirst(
+        '.mp3',
+        '',
+      ),
+    );
+
+    if (existingAudio == null) {
+      Audio importedAudio = await _createImportedAudio(
+        targetPlaylist: targetPlaylist,
+        audioPlayer: audioPlayer,
+        targetFilePathName: filePathNameToImportStr,
+        importedFileName: fileName,
+      );
+
+      importedAudio.audioType = AudioType.textToSpeech;
+
+      targetPlaylist.addImportedAudio(
+        importedAudio,
+      );
+    } else {
+      existingAudio.audioDuration = importedAudioDuration;
+      existingAudio.fileSize = File(filePathNameToImportStr).lengthSync();
+
+      // Usefull if you replace an existing audio by a text to speech
+      // generated audio file.
+      existingAudio.audioType = AudioType.textToSpeech;
     }
 
     if (audioPlayer != null) {
