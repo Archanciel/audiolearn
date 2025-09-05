@@ -2393,4 +2393,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get modifyAudioTitleTooltip => "";
+
+  @override
+  String get convertedCheckbox => "Converted";
 }

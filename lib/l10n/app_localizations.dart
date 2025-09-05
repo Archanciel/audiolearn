@@ -3168,6 +3168,12 @@ abstract class AppLocalizations {
   /// **'Imported'**
   String get importedCheckbox;
 
+  /// No description provided for @convertedCheckbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Converted'**
+  String get convertedCheckbox;
+
   /// No description provided for @restoredElementsHelpTitle.
   ///
   /// In en, this message translates to:

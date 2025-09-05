@@ -89,6 +89,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   late bool _filterNotPlayable;
   late bool _filterDownloaded;
   late bool _filterImported;
+  late bool _filterConverted;
 
   final TextEditingController _startFileSizeController =
       TextEditingController();
@@ -263,6 +264,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _filterNotPlayable = audioSortDefaultFilterParameters.filterNotPlayable;
     _filterDownloaded = audioSortDefaultFilterParameters.filterDownloaded;
     _filterImported = audioSortDefaultFilterParameters.filterImported;
+    _filterConverted = audioSortDefaultFilterParameters.filterConverted;
     _startDownloadDateTime =
         audioSortDefaultFilterParameters.downloadDateStartRange;
     _endDownloadDateTime =
@@ -336,6 +338,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _filterNotPlayable = true;
     _filterDownloaded = true;
     _filterImported = true;
+    _filterConverted = true;
     _startDownloadDateTimeController.clear();
     _endDownloadDateTimeController.clear();
     _startUploadDateTimeController.clear();
@@ -383,6 +386,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _filterNotPlayable = audioSortFilterParameters.filterNotPlayable;
     _filterDownloaded = audioSortFilterParameters.filterDownloaded;
     _filterImported = audioSortFilterParameters.filterImported;
+    _filterConverted = audioSortFilterParameters.filterConverted;
     _startDownloadDateTimeController.clear();
     _endDownloadDateTimeController.clear();
     _startUploadDateTimeController.clear();
@@ -826,8 +830,9 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                   _generateAudioSortFilterParametersFromDialogFields();
 
               if (_audioSortFilterParameters ==
-                  AudioSortFilterParameters
-                      .createDefaultAudioSortFilterParameters() && _sortFilterSaveAsUniqueName.isEmpty) {
+                      AudioSortFilterParameters
+                          .createDefaultAudioSortFilterParameters() &&
+                  _sortFilterSaveAsUniqueName.isEmpty) {
                 // here, the user clicks on the Delete button without
                 // having modified the sort/filter parameters. In this case,
                 // the Default sort/filter parameters are not deleted.
@@ -1624,49 +1629,73 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   Widget _buildDownloadedImportedCheckboxes({
     required BuildContext context,
   }) {
-    return Row(
+    return Wrap(
       children: [
-        Text(AppLocalizations.of(context)!.downloadedCheckbox),
-        Checkbox(
-          key: const Key('filterDownloadedCheckbox'),
-          value: _filterDownloaded,
-          onChanged: (bool? newValue) {
-            setState(() {
-              _filterDownloaded = newValue!;
-
-              if (!_filterDownloaded) {
-                // If the downloaded checkbox is unchecked, the
-                // imported checkbox must be checked since it makes
-                // no sense to have both unchecked
-                _filterImported = true;
-              }
-            });
-
-            // now clicking on Enter works since the
-            // Checkbox is not focused anymore
-            _audioTitleSearchSentenceFocusNode.requestFocus();
-          },
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(AppLocalizations.of(context)!.downloadedCheckbox),
+            Checkbox(
+              key: const Key('filterDownloadedCheckbox'),
+              value: _filterDownloaded,
+              onChanged: (bool? newValue) {
+                setState(() {
+                  _filterDownloaded = newValue!;
+                  if (!_filterDownloaded &&
+                      !_filterConverted &&
+                      !_filterImported) {
+                    _filterImported = true;
+                    _filterConverted = true;
+                  }
+                });
+                _audioTitleSearchSentenceFocusNode.requestFocus();
+              },
+            ),
+          ],
         ),
-        Text(AppLocalizations.of(context)!.importedCheckbox),
-        Checkbox(
-          key: const Key('filterImportedCheckbox'),
-          value: _filterImported,
-          onChanged: (bool? newValue) {
-            setState(() {
-              _filterImported = newValue!;
-
-              if (!_filterImported) {
-                // If the imported checkbox is unchecked, the
-                // downloaded checkbox must be checked since it
-                // makesno sense to have both unchecked
-                _filterDownloaded = true;
-              }
-            });
-
-            // now clicking on Enter works since the
-            // Checkbox is not focused anymore
-            _audioTitleSearchSentenceFocusNode.requestFocus();
-          },
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(AppLocalizations.of(context)!.importedCheckbox),
+            Checkbox(
+              key: const Key('filterImportedCheckbox'),
+              value: _filterImported,
+              onChanged: (bool? newValue) {
+                setState(() {
+                  _filterImported = newValue!;
+                  if (!_filterImported &&
+                      !_filterConverted &&
+                      !_filterDownloaded) {
+                    _filterConverted = true;
+                    _filterDownloaded = true;
+                  }
+                });
+                _audioTitleSearchSentenceFocusNode.requestFocus();
+              },
+            ),
+          ],
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(AppLocalizations.of(context)!.convertedCheckbox),
+            Checkbox(
+              key: const Key('filterConvertedCheckbox'),
+              value: _filterConverted,
+              onChanged: (bool? newValue) {
+                setState(() {
+                  _filterConverted = newValue!;
+                  if (!_filterConverted &&
+                      !_filterImported &&
+                      !_filterDownloaded) {
+                    _filterImported = true;
+                    _filterDownloaded = true;
+                  }
+                });
+                _audioTitleSearchSentenceFocusNode.requestFocus();
+              },
+            ),
+          ],
         ),
       ],
     );
@@ -2442,6 +2471,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       'filterNotPlayable': AppLocalizations.of(context)!.notPlayable,
       'filterDownloaded': AppLocalizations.of(context)!.downloadedCheckbox,
       'filterImported': AppLocalizations.of(context)!.importedCheckbox,
+      "filterConverted": AppLocalizations.of(context)!.convertedCheckbox,
       'downloadDateStartRange': AppLocalizations.of(context)!.startDownloadDate,
       'downloadDateEndRange': AppLocalizations.of(context)!.endDownloadDate,
       'uploadDateStartRange': AppLocalizations.of(context)!.startUploadDate,
@@ -2621,6 +2651,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       filterPlayable: _filterPlayable,
       filterDownloaded: _filterDownloaded,
       filterImported: _filterImported,
+      filterConverted: _filterConverted,
       filterNotPlayable: _filterNotPlayable,
       downloadDateStartRange: _startDownloadDateTime,
       downloadDateEndRange: _endDownloadDateTime,
