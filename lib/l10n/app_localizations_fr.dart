@@ -1968,6 +1968,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get importedCheckbox => 'Importé';
 
   @override
+  String get convertedCheckbox => 'Converti';
+
+  @override
   String get restoredElementsHelpTitle => 'Description des éléments restaurés';
 
   @override

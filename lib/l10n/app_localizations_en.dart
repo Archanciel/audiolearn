@@ -1951,6 +1951,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get importedCheckbox => 'Imported';
 
   @override
+  String get convertedCheckbox => 'Converted';
+
+  @override
   String get restoredElementsHelpTitle => 'Restored Elements Description';
 
   @override

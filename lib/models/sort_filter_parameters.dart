@@ -286,6 +286,9 @@ class AudioSortFilterParameters {
   // If true, imported audio are also selected.
   final bool filterImported;
 
+  // If true, converted audio are also selected.
+  final bool filterConverted;
+
   // The start and end range for the download date filter.
   final DateTime? downloadDateStartRange;
   final DateTime? downloadDateEndRange;
@@ -322,6 +325,7 @@ class AudioSortFilterParameters {
     this.filterNotPlayable = true,
     this.filterDownloaded = true,
     this.filterImported = true,
+    this.filterConverted = true,
     this.downloadDateStartRange,
     this.downloadDateEndRange,
     this.uploadDateStartRange,
@@ -358,6 +362,7 @@ class AudioSortFilterParameters {
       filterNotPlayable: json['filterNotPlayable'] ?? true,
       filterDownloaded: json['filterDownloaded'] ?? true,
       filterImported: json['filterImported'] ?? true,
+      filterConverted: json['filterConverted'] ?? true,
       downloadDateStartRange: json['downloadDateStartRange'] == null
           ? null
           : DateTime.parse(json['downloadDateStartRange']),
@@ -399,6 +404,7 @@ class AudioSortFilterParameters {
       'filterNotPlayable': filterNotPlayable,
       'filterDownloaded': filterDownloaded,
       'filterImported': filterImported,
+      'filterConverted': filterConverted,
       'downloadDateStartRange': downloadDateStartRange?.toIso8601String(),
       'downloadDateEndRange': downloadDateEndRange?.toIso8601String(),
       'uploadDateStartRange': uploadDateStartRange?.toIso8601String(),
@@ -436,6 +442,7 @@ class AudioSortFilterParameters {
         other.filterNotPlayable == filterNotPlayable &&
         other.filterDownloaded == filterDownloaded &&
         other.filterImported == filterImported &&
+        other.filterConverted == filterConverted &&
         other.downloadDateStartRange == downloadDateStartRange &&
         other.downloadDateEndRange == downloadDateEndRange &&
         other.uploadDateStartRange == uploadDateStartRange &&
@@ -495,6 +502,7 @@ class AudioSortFilterParameters {
       filterNotPlayable: filterNotPlayable,
       filterDownloaded: filterDownloaded,
       filterImported: filterImported,
+      filterConverted: filterConverted,
       downloadDateStartRange: downloadDateStartRange,
       downloadDateEndRange: downloadDateEndRange,
       uploadDateStartRange: uploadDateStartRange,
