@@ -641,10 +641,9 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
       if (currentAudioFile != null) {
         if (!context.mounted) return;
 
-        await audioDownloadVMlistenFalse.importAudioFilesInPlaylist(
+        await audioDownloadVMlistenFalse.importConvertedAudioFileInPlaylist(
           targetPlaylist: targetPlaylist,
-          filePathNameToImportLst: [currentAudioFile.filePath],
-          doesImportedFileResultFromTextToSpeech: true,
+          filePathNameToImportStr: currentAudioFile.filePath,
         );
 
         Audio? audio = targetPlaylist.getAudioByFileNameNoExt(
