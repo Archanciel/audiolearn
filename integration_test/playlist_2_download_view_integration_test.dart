@@ -13,7 +13,6 @@ import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 import 'package:audiolearn/views/widgets/audio_sort_filter_dialog.dart';
 import 'package:audiolearn/views/widgets/confirm_action_dialog.dart';
-import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
 import 'package:audiolearn/views/widgets/set_value_to_target_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -12302,7 +12301,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
 
-      final Map initialSettingsMap = loadSettingsMap();
+      final Map initialSettingsMap = _loadSettingsMap();
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
@@ -12335,7 +12334,7 @@ void main() {
       // Ensure settings json file has not been modified
       expect(
         initialSettingsMap,
-        loadSettingsMap(),
+        _loadSettingsMap(),
       );
 
       // Purge the test playlist directory so that the created test
@@ -12436,7 +12435,7 @@ void main() {
               '$kApplicationPathWindowsTest${path.separator}newDirectory${path.separator}playlists',
           playlistTitlesInModifiedDir: modifiedDirPlaylistTitles,
           expectedSettingsContent:
-              "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[audio_learn_test_download_2_small_videos, audio_player_view_2_shorts_test, local_3, local_audio_playlist_2]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\newDirectory\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
+              "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[audio_learn_test_download_2_small_videos, audio_player_view_2_shorts_test, local_3, local_audio_playlist_2]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\newDirectory\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"filterConverted\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
           selectedPlaylistTitle: 'local_3',
         );
 
@@ -12473,7 +12472,7 @@ void main() {
               '$kApplicationPathWindowsTest${path.separator}playlists',
           playlistTitlesInModifiedDir: modifiedDirPlaylistTitles,
           expectedSettingsContent:
-              "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[local_empty_download_single_video, local_not_empty_download_single_video, audio_learn_test_download_2_small_videos]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
+              "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[local_empty_download_single_video, local_not_empty_download_single_video, audio_learn_test_download_2_small_videos]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"filterConverted\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
           selectedPlaylistTitle: 'local_not_empty_download_single_video',
         );
 
@@ -12494,7 +12493,7 @@ void main() {
               '$kApplicationPathWindowsTest${path.separator}newDirectory${path.separator}playlists',
           playlistTitlesInModifiedDir: modifiedDirPlaylistTitles,
           expectedSettingsContent:
-              "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[local_3, audio_learn_test_download_2_small_videos, audio_player_view_2_shorts_test, local_audio_playlist_2]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\newDirectory\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
+              "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[local_3, audio_learn_test_download_2_small_videos, audio_player_view_2_shorts_test, local_audio_playlist_2]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\newDirectory\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"filterConverted\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
           selectedPlaylistTitle: playlistSelectedTitle,
         );
 
@@ -15531,7 +15530,7 @@ void main() {
             contains(
                 "Total saved audio number: 3, total size: 15.49 MB and total duration: 0:22:38.0."));
         expect(
-            actualMessage, contains("Save operation real duration: 0:00:00"));
+            actualMessage, contains("Save operation real duration: 0:00:"));
         expect(actualMessage, contains("number of bytes saved per second: "));
         expect(actualMessage, contains("number of created ZIP file(s): 1."));
         expect(
@@ -30110,7 +30109,7 @@ Future<List<String>> enteringFirstAndSecondLetterOfYoutubePlaylistSearchWord({
   return playlistsTitles;
 }
 
-Map loadSettingsMap() {
+Map _loadSettingsMap() {
   final String settingsJsonStr =
       File("$kApplicationPathWindowsTest${path.separator}$kSettingsFileName")
           .readAsStringSync();
@@ -30118,338 +30117,6 @@ Map loadSettingsMap() {
   Map settingsMap = jsonDecode(settingsJsonStr);
 
   return settingsMap;
-}
-
-void modifySelectedPlaylistBeforeStartingApplication({
-  required String playlistToUnselectTitle,
-  required String playlistToSelectTitle,
-}) {
-  final initiallySelectedPlaylistPath = path.join(
-    kApplicationPathWindowsTest,
-    playlistToUnselectTitle,
-  );
-
-  final initiallySelectedPlaylistFilePathName = path.join(
-    initiallySelectedPlaylistPath,
-    '$playlistToUnselectTitle.json',
-  );
-
-  // Load playlist from the json file
-  Playlist initiallySelectedPlaylist = JsonDataService.loadFromFile(
-    jsonPathFileName: initiallySelectedPlaylistFilePathName,
-    type: Playlist,
-  );
-
-  initiallySelectedPlaylist.isSelected = false;
-
-  JsonDataService.saveToFile(
-    model: initiallySelectedPlaylist,
-    path: initiallySelectedPlaylistFilePathName,
-  );
-
-  final nowSelectedPlaylistPath = path.join(
-    kApplicationPathWindowsTest,
-    playlistToSelectTitle,
-  );
-
-  final nowSelectedPlaylistFilePathName = path.join(
-    nowSelectedPlaylistPath,
-    '$playlistToSelectTitle.json',
-  );
-
-  // Load playlist from the json file
-  Playlist nowSelectedPlaylist = JsonDataService.loadFromFile(
-    jsonPathFileName: nowSelectedPlaylistFilePathName,
-    type: Playlist,
-  );
-
-  nowSelectedPlaylist.isSelected = true;
-
-  JsonDataService.saveToFile(
-    model: nowSelectedPlaylist,
-    path: nowSelectedPlaylistFilePathName,
-  );
-}
-
-Future<void> verifyYoutubeSelectedPlaylistButtonsAndCheckbox({
-  required WidgetTester tester,
-  required bool isPlaylistListDisplayed,
-}) async {
-  // Verify that the search icon button is now disabled
-  IntegrationTestUtil.validateSearchIconButton(
-    tester: tester,
-    searchIconButtonState: SearchIconButtonState.disabled,
-  );
-
-  if (isPlaylistListDisplayed) {
-    IntegrationTestUtil.verifyWidgetIsEnabled(
-      tester: tester,
-      widgetKeyStr: 'move_up_playlist_button',
-    );
-
-    IntegrationTestUtil.verifyWidgetIsEnabled(
-      tester: tester,
-      widgetKeyStr: 'move_down_playlist_button',
-    );
-  } else {
-    // Verify that the dropdown button is set to the playlist download
-    // view 'Title asc' sort/filter parms
-    IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
-      tester: tester,
-      dropdownButtonSelectedTitle: 'Title asc',
-    );
-  }
-
-  IntegrationTestUtil.verifyWidgetIsEnabled(
-    tester: tester,
-    widgetKeyStr: 'download_sel_playlists_button',
-  );
-
-  IntegrationTestUtil.verifyWidgetIsEnabled(
-    tester: tester,
-    widgetKeyStr: 'audio_quality_checkbox',
-  );
-
-  IntegrationTestUtil.verifyWidgetIsEnabled(
-    tester: tester,
-    widgetKeyStr: 'audio_popup_menu_button',
-  );
-}
-
-Future<void> verifyLocalSelectedPlaylistButtonsAndCheckbox({
-  required WidgetTester tester,
-  required bool isPlaylistListDisplayed,
-}) async {
-  // Verify that the search icon button is now disabled
-  IntegrationTestUtil.validateSearchIconButton(
-    tester: tester,
-    searchIconButtonState: SearchIconButtonState.disabled,
-  );
-
-  if (isPlaylistListDisplayed) {
-    IntegrationTestUtil.verifyWidgetIsEnabled(
-      tester: tester,
-      widgetKeyStr: 'move_up_playlist_button',
-    );
-
-    IntegrationTestUtil.verifyWidgetIsEnabled(
-      tester: tester,
-      widgetKeyStr: 'move_down_playlist_button',
-    );
-  } else {
-    // Verify that the dropdown button is set to the playlist download
-    // view 'Title asc' sort/filter parms
-    IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
-      tester: tester,
-      dropdownButtonSelectedTitle: 'Title asc',
-    );
-  }
-
-  await IntegrationTestUtil.verifyWidgetIsDisabled(
-    tester: tester,
-    widgetKeyStr: 'download_sel_playlists_button',
-  );
-
-  await IntegrationTestUtil.verifyWidgetIsDisabled(
-    tester: tester,
-    widgetKeyStr: 'audio_quality_checkbox',
-  );
-
-  IntegrationTestUtil.verifyWidgetIsEnabled(
-    tester: tester,
-    widgetKeyStr: 'audio_popup_menu_button',
-  );
-}
-
-Future<void> verifyUndoneListenedAudioPosition({
-  required WidgetTester tester,
-  required String playlistTitle,
-  required String playedCommentAudioTitle,
-  required int playableAudioLstAudioIndex,
-  required String audioPositionStr,
-  required int audioPositionSeconds,
-  required String audioRemainingDurationStr,
-  required bool isPlayingOrPausedWithPositionBetweenAudioStartAndEnd,
-  required DateTime? audioPausedDateTime,
-}) async {
-  // Now we want to tap on the previously played commented audio of
-  // the playlist in order to open the AudioPlayerView displaying
-  // the currently not playing audio
-
-  // First, get the Audio ListTile Text widget finder and tap on it
-  final Finder playedCommentAudioListTileTextWidgetFinder =
-      find.text(playedCommentAudioTitle);
-
-  await tester.tap(playedCommentAudioListTileTextWidgetFinder);
-  await tester.pumpAndSettle(const Duration(milliseconds: 500));
-
-  // Now verify if the displayed audio position and remaining
-  // duration are correct
-
-  Text audioPositionText = tester
-      .widget<Text>(find.byKey(const Key('audioPlayerViewAudioPosition')));
-  expect(audioPositionText.data, audioPositionStr);
-
-  Text audioRemainingDurationText = tester.widget<Text>(
-      find.byKey(const Key('audioPlayerViewAudioRemainingDuration')));
-  expect(audioRemainingDurationText.data, audioRemainingDurationStr);
-
-  IntegrationTestUtil.verifyAudioDataElementsUpdatedInPlaylistJsonFile(
-    audioPlayerSelectedPlaylistTitle: playlistTitle,
-    playableAudioLstAudioIndex: playableAudioLstAudioIndex,
-    audioTitle: playedCommentAudioTitle,
-    audioPositionSeconds: audioPositionSeconds,
-    isPaused: true,
-    isPlayingOrPausedWithPositionBetweenAudioStartAndEnd:
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd,
-    audioPausedDateTime: audioPausedDateTime, // "2024-09-08T14:38:43.283816"
-  );
-}
-
-Future<Finder> openPlaylistCommentDialog({
-  required WidgetTester tester,
-  required String playlistTitle,
-}) async {
-  // First, find the 'S8 audio' playlist sublist ListTile Text widget
-  Finder youtubePlaylistListTileTextWidgetFinder = find.text(playlistTitle);
-
-  // Then obtain the playlist ListTile widget enclosing the Text widget
-  // by finding its ancestor
-  Finder youtubePlaylistListTileWidgetFinder = find.ancestor(
-    of: youtubePlaylistListTileTextWidgetFinder,
-    matching: find.byType(ListTile),
-  );
-
-  // Now we want to tap the popup menu of the 'S8 audio' playlist ListTile
-
-  // Find the leading menu icon button of the playlist ListTile
-  // and tap on it
-  Finder youtubePlaylistListTileLeadingMenuIconButton = find.descendant(
-    of: youtubePlaylistListTileWidgetFinder,
-    matching: find.byIcon(Icons.menu),
-  );
-
-  // Tap the leading menu icon button to open the popup menu
-  await tester.tap(youtubePlaylistListTileLeadingMenuIconButton);
-  await tester.pumpAndSettle();
-
-  // Now find the List comments of playlist audio popup menu
-  // item and tap on it
-  final Finder popupPlaylistAudioCommentsMenuItem =
-      find.byKey(const Key("popup_menu_display_playlist_audio_comments"));
-
-  await tester.tap(popupPlaylistAudioCommentsMenuItem);
-  await tester.pumpAndSettle();
-
-  final Finder playlistCommentListDialogFinder =
-      find.byType(PlaylistCommentListDialog);
-  return playlistCommentListDialogFinder;
-}
-
-Future<Finder> verifyAudioInfoDialog({
-  required WidgetTester tester,
-  required String audioEnclosingPlaylistTitle,
-  required String movedOrCopiedAudioTitle,
-  required String movedFromPlaylistTitle,
-  required String movedToPlaylistTitle,
-  required String copiedFromPlaylistTitle,
-  required String copiedToPlaylistTitle,
-  required String audioDuration,
-}) async {
-  // Now we want to tap the popup menu of the Audio ListTile
-  // "audio learn test short video one" in order to display
-  // the audio info dialog
-
-  // First, find the Audio sublist ListTile Text widget
-  final Finder targetAudioListTileTextWidgetFinder =
-      find.text(movedOrCopiedAudioTitle);
-
-  // Then obtain the Audio ListTile widget enclosing the Text widget by
-  // finding its ancestor
-  final Finder targetAudioListTileWidgetFinder = find.ancestor(
-    of: targetAudioListTileTextWidgetFinder,
-    matching: find.byType(ListTile),
-  );
-
-  // Now find the leading menu icon button of the Audio ListTile and tap
-  // on it
-  final Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
-    of: targetAudioListTileWidgetFinder,
-    matching: find.byIcon(Icons.menu),
-  );
-
-  // Tap the leading menu icon button to open the popup menu
-  await tester.tap(targetAudioListTileLeadingMenuIconButton);
-  await tester.pumpAndSettle();
-
-  // Now find the audio info popup menu item and tap on it
-  final Finder popupDisplayAudioInfoMenuItemFinder =
-      find.byKey(const Key("popup_menu_display_audio_info"));
-
-  await tester.tap(popupDisplayAudioInfoMenuItemFinder);
-  await tester.pumpAndSettle();
-
-  // Now verifying the display audio info audio moved dialog
-  // elements
-
-  // Verify the audio channel name
-
-  Text youtubeChannelTextWidget =
-      tester.widget<Text>(find.byKey(const Key('youtubeChannelKey')));
-
-  expect(youtubeChannelTextWidget.data, "Jean-Pierre Schnyder");
-
-  // Verify the enclosing playlist title of the moved audio
-
-  final Text enclosingPlaylistTitleTextWidget =
-      tester.widget<Text>(find.byKey(const Key('enclosingPlaylistTitleKey')));
-
-  expect(
-    enclosingPlaylistTitleTextWidget.data,
-    audioEnclosingPlaylistTitle,
-  );
-
-  // Verify the 'Moved from playlist' title of the moved audio
-
-  final Text movedFromPlaylistTitleTextWidget =
-      tester.widget<Text>(find.byKey(const Key('movedFromPlaylistTitleKey')));
-
-  expect(movedFromPlaylistTitleTextWidget.data, movedFromPlaylistTitle);
-
-  // Verify the 'Moved to playlist title' of the moved audio
-
-  final Text movedToPlaylistTitleTextWidget =
-      tester.widget<Text>(find.byKey(const Key('movedToPlaylistTitleKey')));
-
-  expect(movedToPlaylistTitleTextWidget.data, movedToPlaylistTitle);
-
-  // Verify the 'Copied from playlist' title of the moved audio
-
-  final Text copiedFromPlaylistTitleTextWidget =
-      tester.widget<Text>(find.byKey(const Key('copiedFromPlaylistTitleKey')));
-
-  expect(copiedFromPlaylistTitleTextWidget.data, copiedFromPlaylistTitle);
-
-  // Verify the 'Copied to playlist title' of the moved audio
-
-  final Text copiedToPlaylistTitleTextWidget =
-      tester.widget<Text>(find.byKey(const Key('copiedToPlaylistTitleKey')));
-
-  expect(copiedToPlaylistTitleTextWidget.data, copiedToPlaylistTitle);
-
-  // Verify the 'Audio duration' of the moved audio
-
-  final Text audioDurationTextWidget =
-      tester.widget<Text>(find.byKey(const Key('audioDurationKey')));
-
-  expect(audioDurationTextWidget.data, audioDuration);
-
-  // Now find the close button of the audio info dialog
-  // and tap on it to close the dialog
-  await tester.tap(find.byKey(const Key('audio_info_close_button_key')));
-  await tester.pumpAndSettle();
-
-  return targetAudioListTileWidgetFinder;
 }
 
 Future<void> _executeSearchWordScrollTest({

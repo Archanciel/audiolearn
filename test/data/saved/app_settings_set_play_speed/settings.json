@@ -46,6 +46,7 @@
             "filterNotPlayable": true,
             "filterDownloaded": true,
             "filterImported": true,
+            "filterConverted": true,
             "downloadDateStartRange": null,
             "downloadDateEndRange": null,
             "uploadDateStartRange": null,
