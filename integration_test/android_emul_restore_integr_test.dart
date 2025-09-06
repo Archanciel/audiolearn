@@ -1618,7 +1618,7 @@ void main() {
         MockFilePicker mockFilePicker = MockFilePicker();
         FilePicker.platform = mockFilePicker;
 
-        const String restorableZipFileName = 'local.zip';
+        const String restorableZipFileName = 'Android local.zip';
 
         mockFilePicker.setSelectedFiles([
           PlatformFile(
@@ -1638,13 +1638,18 @@ void main() {
             'Les plus belles chansons chrétiennes',
             'S8 audio',
             'local',
-            unselectedLocalPlaylistTitle,
           ],
         );
 
         // Tap on the 'OK' button of the confirmation dialog
         await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
         await tester.pumpAndSettle();
+
+        // Now unselect the 'local' playlist
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: unselectedLocalPlaylistTitle,
+        );
 
         // Open the convert text to audio dialog
         await IntegrationTestUtil.typeOnPlaylistMenuItem(
@@ -1758,6 +1763,10 @@ void main() {
           playlistToSelectTitle: unselectedLocalPlaylistTitle,
         );
 
+        // Tap the 'Toggle List' button to close the list of playlist's.
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+
         // Verify the converted audio sub title in the selected Youtube
         // playlist audio list
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
@@ -1765,7 +1774,7 @@ void main() {
           audioSubTitlesOrderLst: [
             '0:00:07.0 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           ],
-          firstAudioListTileIndex: 2,
+          firstAudioListTileIndex: 0,
         );
 
         // Verifying all audio info dialog fields related of the
@@ -1785,9 +1794,10 @@ void main() {
           audioFileName: '$enteredFileNameNoExt.mp3',
           audioFileSize: '56 KB',
           isMusicQuality: false, // Is spoken quality
-          audioPlaySpeed: '1.25',
+          audioPlaySpeed: '1.0',
           audioVolume: '50.0 %',
           audioCommentNumber: 1,
+          doDropDown: true,
         );
 
         // Now, we verify the created comment showing the converted
@@ -1878,6 +1888,10 @@ void main() {
         await tester.tap(find.byKey(const Key('closeDialogTextButton')));
         await tester.pumpAndSettle();
 
+        // Tap the 'Toggle List' button to redisplay the list of playlist's.
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+
         // Now unselect the 'local' playlist
         await IntegrationTestUtil.selectPlaylist(
           tester: tester,
@@ -1965,6 +1979,10 @@ void main() {
           playlistToSelectTitle: unselectedLocalPlaylistTitle,
         );
 
+        // Tap the 'Toggle List' button to close the list of playlist's.
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+        
         // Verify the converted audio sub title in the selected Youtube
         // playlist audio list
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
@@ -1972,7 +1990,7 @@ void main() {
           audioSubTitlesOrderLst: [
             '0:00:00.8 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           ],
-          firstAudioListTileIndex: 2,
+          firstAudioListTileIndex: 0,
         );
 
         // Verifying all audio info dialog fields related of the
@@ -1992,7 +2010,7 @@ void main() {
           audioFileName: '$enteredFileNameNoExt.mp3',
           audioFileSize: '6 KB',
           isMusicQuality: false, // Is spoken quality
-          audioPlaySpeed: '1.25',
+          audioPlaySpeed: '1.0',
           audioVolume: '50.0 %',
           audioCommentNumber: 2,
         );
@@ -2088,6 +2106,10 @@ void main() {
 
         // Now close the comment list dialog
         await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.pumpAndSettle();
+
+        // Tap the 'Toggle List' button to redisplay the list of playlist's.
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
         await tester.pumpAndSettle();
       });
     });

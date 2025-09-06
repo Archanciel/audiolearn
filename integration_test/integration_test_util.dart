@@ -2789,6 +2789,7 @@ class IntegrationTestUtil {
     String audioVolume = '',
     int audioCommentNumber = 0,
     Language language = Language.english,
+    bool doDropDown = false,
   }) async {
     // Now we want to tap the popup menu of the Audio ListTile
     // "audio learn test short video one" in order to display
@@ -3197,7 +3198,16 @@ class IntegrationTestUtil {
       }
     }
 
-    // Verify the  play speed of the audio
+    if (doDropDown) {
+      await tester.drag(
+        find.byType(AudioInfoDialog),
+        const Offset(
+            0, -400), // Positive value for vertical drag to scroll up
+      );
+      await tester.pumpAndSettle();
+    }
+
+    // Verify the play speed of the audio
     if (audioPlaySpeed.isNotEmpty) {
       final Text audioPlaySpeedTextWidget =
           tester.widget<Text>(find.byKey(const Key('audioPlaySpeedKey')));
