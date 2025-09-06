@@ -1,6 +1,4 @@
-import 'dart:convert';
-import 'dart:io';
-
+import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/audio_player_vm.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
@@ -9,17 +7,16 @@ import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 import 'package:audiolearn/views/widgets/confirm_action_dialog.dart';
-import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
+import 'package:audiolearn/views/widgets/convert_text_to_audio_dialog.dart';
 import 'package:audiolearn/views/widgets/set_value_to_target_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:intl/intl.dart';
 import 'package:path/path.dart' as path;
 
 import 'package:audiolearn/constants.dart';
-import 'package:audiolearn/models/playlist.dart';
-import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/utils/dir_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -733,14 +730,14 @@ void main() {
       });
     });
     group(
-        r'''From Android data. Before running the test, execute C:\development\flutter\audiolearn\test\
-       data\saved\Android_emulator_bat\copy_sauvegarde.bat "C:\development\flutter\audiolearn\test\data\
-       saved\test_on_Android_emulator_inkwell_button"''', () {
+        r'''Test playing audio on the playlist download view. From Android data. Before running the test,
+         execute C:\development\flutter\audiolearn\test\data\saved\Android_emulator_bat\setup_test.bat''',
+        () {
       testWidgets(
-          '''Test on the playlist download view the correct audio item inkwell play/pause button change
-            when the current playing audio reaches its end and the next audio starts playing. DDue to
-            the main branch audioplayer version which does not support the integration test action,
-            the test is not executable4 on the main branch.''', (tester) async {
+          '''Play audio on the playlist download view. Verify the correct audio item inkwell play/pause
+            button change when the current playing audio reaches its end and the next audio starts playing.
+            Due to the main branch audioplayer version which does not support the integration test action,
+            the test is not executable on the main branch.''', (tester) async {
         await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
           tester: tester,
           tapOnPlaylistToggleButton: false,
@@ -950,6 +947,1148 @@ void main() {
           expectedIconColor: Colors.white,
           expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
         );
+      });
+    });
+    group('''Convert text to audio.''', () {
+      testWidgets(
+          '''On selected playlist, add a text to speech audio. Verify the text to speech dialog appearance.
+          Then enter a text with case ( { ) characters. Verify the Listen Create MP3 button state. Listen and
+          Stop the text. Then listen the full text and verify the listen duration after which the Stop
+          button is reset to the Listen button. Then, create the MP3 audio and verify its presence in the
+          playlist audio list. Verify also the audio info dialog content of the converted audio. Then, verify
+          the added comment in relation with the text to audio conversion.
+
+          Finally, redo a text to speech conversion with a different text and save it to the same MP3 file
+          name. Do the same verifications as previously.''',
+          (WidgetTester tester) async {
+        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+          tester: tester,
+          tapOnPlaylistToggleButton: false,
+        );
+
+        const String selectedYoutubePlaylistTitle = 'urgent_actus_17-12-2023';
+
+        // Now initializing the application on the Android emulator using
+        // zip restoration.
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        const String restorableZipFileName = 'urgent_actus_17-12-2023.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFileName,
+              path:
+                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+              size: 2655),
+        ]);
+
+        // In order to create the Android emulator application, execute the
+        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+        // without replacing the existing playlists.
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+          playlistTitlesToDelete: [
+            'Les plus belles chansons chrétiennes',
+            'S8 audio',
+            'local',
+            selectedYoutubePlaylistTitle,
+          ],
+        );
+
+        // Tap on the 'OK' button of the confirmation dialog
+        await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+        await tester.pumpAndSettle();
+
+        // Open the convert text to audio dialog
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: selectedYoutubePlaylistTitle,
+          playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+        );
+
+        // Verify the convert text to audio dialog title
+        final Text convertTextToAudioDialogTitle = tester.widget<Text>(
+            find.byKey(const Key('convertTextToAudioDialogTitleKey')));
+        expect(
+          convertTextToAudioDialogTitle.data,
+          'Convert Text to Audio',
+        );
+
+        // Verify the presence of the help icon button
+        expect(find.byIcon(Icons.help_outline), findsOneWidget);
+
+        // Verify the text to convert title
+        final Text textToConvert =
+            tester.widget<Text>(find.byKey(const Key('textToConvertTitleKey')));
+        expect(
+          textToConvert.data,
+          'Text to convert, { = silence',
+        );
+
+        // Verify the voice selection title
+        final Text conversionVoiceSelection = tester
+            .widget<Text>(find.byKey(const Key('voiceSelectionTitleKey')));
+        expect(
+          conversionVoiceSelection.data,
+          'Voice selection:',
+        );
+
+        // Verify the voice selection checkboxes
+
+        final Finder masculineCheckbox =
+            find.byKey(const Key('masculineVoiceCheckbox'));
+        Finder feminineCheckbox = find.byKey(const Key('femineVoiceCheckbox'));
+
+        // Initially masculine should be selected
+        expect(
+          (tester.widget(masculineCheckbox) as Checkbox).value,
+          true,
+        );
+        expect(
+          (tester.widget(feminineCheckbox) as Checkbox).value,
+          false,
+        );
+
+        // Scroll down to make the feminine checkbox visible
+        await tester.drag(
+          find.byType(ConvertTextToAudioDialog),
+          const Offset(
+              0, -100), // Negative value for vertical drag to scroll down
+        );
+        await tester.pumpAndSettle();
+
+        // Tap the feminine checkbox
+        await tester.tap(feminineCheckbox);
+        await tester.pumpAndSettle();
+
+        // Verify state changed to feminine
+        expect(
+          (tester.widget(masculineCheckbox) as Checkbox).value,
+          false,
+        );
+        expect(
+          (tester.widget(feminineCheckbox) as Checkbox).value,
+          true,
+        );
+
+        // Tap masculine checkbox back
+        await tester.tap(masculineCheckbox);
+        await tester.pump();
+
+        // Verify state changed back to masculine
+        expect(
+          (tester.widget(masculineCheckbox) as Checkbox).value,
+          true,
+        );
+        expect(
+          (tester.widget(feminineCheckbox) as Checkbox).value,
+          false,
+        );
+
+        // Enter and then delete a text to convert
+
+        // Verify the presence of the hint text in the TextField
+        expect(find.text('Enter your text here ...'), findsOneWidget);
+
+        // Find the text field and delete button
+        final Finder textFieldFinder =
+            find.byKey(const Key('textToConvertTextField'));
+        final Finder textFieldDeleteButtonFFinder =
+            find.byKey(const Key('deleteTextToConvertIconButton'));
+
+        // Verify the disabled state of the Listen and Create MP3 buttons
+        await _verifyListenAndCreateMp3ButtonsState(
+          tester: tester,
+          areEnabled: false,
+        );
+
+        // Enter text in the TextField
+        const testText = 'Ceci est un texte à supprimer.';
+        await tester.enterText(textFieldFinder, testText);
+        await tester.pumpAndSettle();
+
+        // Verify the text was entered
+        expect(find.text(testText), findsOneWidget);
+
+        // Verify the TextField controller has the text
+        final textFieldWidget = tester.widget<TextField>(textFieldFinder);
+        expect(textFieldWidget.controller!.text, testText);
+
+        // Verify the enabled state of the Listen and Create MP3 buttons
+        await _verifyListenAndCreateMp3ButtonsState(
+          tester: tester,
+          areEnabled: true,
+        );
+
+        // Scroll up to make the text field fully visible
+        await tester.drag(
+          find.byType(ConvertTextToAudioDialog),
+          const Offset(
+              0, 100), // Negative value for vertical drag to scroll down
+        );
+        await tester.pumpAndSettle();
+
+        // Tap the delete button
+        await tester.tap(textFieldDeleteButtonFFinder);
+        await tester.pumpAndSettle();
+
+        // Verify the text field is now empty
+        expect(textFieldWidget.controller!.text, isEmpty);
+        expect(find.text(testText), findsNothing);
+
+        // Verify the TextField is focused after clearing (as per your implementation)
+        expect(tester.binding.focusManager.primaryFocus,
+            textFieldWidget.focusNode);
+
+        // Verify the presence of the hint text in the TextField
+        await tester.pumpAndSettle();
+        expect(find.text('Enter your text here ...'), findsOneWidget);
+
+        // Verify the again disabled state of the Listen and Create MP3 buttons
+        await _verifyListenAndCreateMp3ButtonsState(
+          tester: tester,
+          areEnabled: false,
+        );
+
+        // Now enter a text to convert and listen it, verifying its
+        // between 8 and 9 second duration
+
+        const String initialTextToConvertStr = "{{ un {{{ deux { trois.";
+        await tester.enterText(textFieldFinder, initialTextToConvertStr);
+        await tester.pump();
+
+        // Tap on the listen button
+        final Finder listenButton = find.byKey(const Key('listen_text_button'));
+        await tester.tap(listenButton);
+        await tester.pumpAndSettle();
+
+        // Verify button changed to Stop button
+        TextButton stopButtonWidget = tester.widget(listenButton);
+        Row stopButtonRow = stopButtonWidget.child as Row;
+        Icon stopIcon = (stopButtonRow.children[0] as Icon);
+        expect(stopIcon.icon, Icons.stop); // Stop icon
+
+        // Now, tap on the Stop button after 1 seconds
+        await Future.delayed(const Duration(seconds: 1));
+        await tester.tap(listenButton);
+        await tester.pumpAndSettle();
+
+        // Verify the Stop button changed back to Listen button
+        TextButton listenButtonWidget = tester.widget(listenButton);
+        Row listenButtonRow = listenButtonWidget.child as Row;
+        Icon listenIcon = (listenButtonRow.children[0] as Icon);
+        expect(listenIcon.icon, Icons.volume_up); // Back to Listen icon
+
+        // Now, tap again on the Listen button and let the audio
+        // play to its end
+        await tester.tap(listenButton);
+        await tester.pumpAndSettle();
+
+        // Add a delay to allow the audio to reach its end and the next audio
+        // to start playing.
+        for (int i = 0; i < 11; i++) {
+          await Future.delayed(const Duration(seconds: 1));
+          await tester.pumpAndSettle();
+        }
+
+        // Final verification - the Stop button changed to Listen button
+        TextButton finalButtonWidget = tester.widget(listenButton);
+        Row finalButtonRow = finalButtonWidget.child as Row;
+        Icon finalIcon = (finalButtonRow.children[0] as Icon);
+        expect(finalIcon.icon, Icons.volume_up); // Back to Listen icon
+
+        // Now click on Create MP3 button to create the audio
+        Finder createMP3ButtonFinder =
+            find.byKey(const Key('create_audio_file_button'));
+        expect(createMP3ButtonFinder, findsOneWidget);
+        await tester.tap(createMP3ButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Verify the convert text to audio dialog title
+        expect(
+          find.text('MP3 File Name'),
+          findsOneWidget,
+        );
+
+        // Verify the text to convert title
+        expect(
+          find.text('Enter the MP3 file name'),
+          findsOneWidget,
+        );
+
+        // Verify the presence of the hint text in the MP3 file name
+        // TextField
+        expect(find.text('file name'), findsOneWidget);
+        expect(find.text('.mp3'), findsOneWidget);
+
+        const String enteredFileNameNoExt = 'convertedAudio';
+        Finder mp3FileNameTextFieldFinder =
+            find.byKey(const Key('textToConvertTextField'));
+
+        await tester.enterText(
+            mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+        await tester.pump();
+
+        // Verify the text was entered
+        expect(find.text(enteredFileNameNoExt), findsOneWidget);
+
+        // Tap on the create mp3 button
+        Finder saveMP3FileButton =
+            find.byKey(const Key('create_mp3_button_key'));
+        await tester.tap(saveMP3FileButton);
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
+
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas added to Youtube playlist \"$selectedYoutubePlaylistTitle\".",
+          isWarningConfirming: true,
+        );
+
+        // Now close the convert text to audio dialog by tapping
+        // the Cancel button
+        Finder cancelButtonFinder =
+            find.byKey(const Key('convertTextToAudioCancelButton'));
+        await tester.tap(cancelButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Tap the 'Toggle List' button to close the list of playlist's.
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+
+        DateTime now = DateTime.now();
+
+        // Verify the converted audio sub title in the selected Youtube
+        // playlist audio list
+        IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+          tester: tester,
+          audioSubTitlesOrderLst: [
+            '0:00:07.0 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+          ],
+          firstAudioListTileIndex: 0,
+        );
+
+        // Verifying all audio info dialog fields related of the
+        // converted audio type
+        await IntegrationTestUtil.verifyAudioInfoDialog(
+          tester: tester,
+          audioType: AudioType.textToSpeech,
+          validVideoTitleOrAudioTitle: enteredFileNameNoExt,
+          audioDownloadDateTime:
+              '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
+          isAudioPlayable: true,
+          audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
+          audioDuration: '0:00:07.0',
+          audioPosition: '0:00:00',
+          audioState: 'Not listened',
+          lastListenDateTime: '',
+          audioFileName: '$enteredFileNameNoExt.mp3',
+          audioFileSize: '56 KB',
+          isMusicQuality: false, // Is spoken quality
+          audioPlaySpeed: '1.25',
+          audioVolume: '50.0 %',
+          audioCommentNumber: 1,
+        );
+
+        // Now, we verify the created comment showing the converted
+        // audio text
+
+        // First, find the Youtube playlist audio ListTile Text widget
+        Finder audioTitleTileTextWidgetFinder = find.text(enteredFileNameNoExt);
+
+        // Then obtain the audio ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        Finder audioTitleTileWidgetFinder = find.ancestor(
+          of: audioTitleTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now we want to tap the popup menu of the audioTitle ListTile
+
+        // Find the leading menu icon button of the audioTitle ListTile
+        // and tap on it
+        Finder audioTitleTileLeadingMenuIconButton = find.descendant(
+          of: audioTitleTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(audioTitleTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
+
+        // Now find the 'Audio Comments ...' popup menu item and
+        // tap on it
+        Finder audioCommentsPopupMenuItem =
+            find.byKey(const Key("popup_menu_audio_comment"));
+
+        await tester.tap(audioCommentsPopupMenuItem);
+        await tester.pumpAndSettle();
+
+        // Verify that the audio comments list of the dialog has 1 comment
+        // item
+
+        Finder audioCommentsLstFinder = find.byKey(const Key(
+          'audioCommentsListKey',
+        ));
+
+        // Ensure the list has one child widgets
+        expect(
+          tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+          1,
+        );
+
+        List<String> expectedTitles = [
+          'Text',
+        ];
+
+        List<String> expectedContents = [
+          initialTextToConvertStr,
+        ];
+
+        List<String> expectedStartPositions = [
+          '0:00',
+        ];
+
+        List<String> expectedEndPositions = [
+          '0:07',
+        ];
+
+        List<String> expectedCreationDates = [
+          frenchDateFormatYy.format(DateTime.now()), // created comment
+          '04/09/25',
+        ];
+
+        List<String> expectedUpdateDates = [
+          '',
+        ];
+
+        // Verify content of each list item
+        IntegrationTestUtil.verifyCommentsInCommentListDialog(
+            tester: tester,
+            commentListDialogFinder: audioCommentsLstFinder,
+            commentsNumber: 1,
+            expectedTitlesLst: expectedTitles,
+            expectedContentsLst: expectedContents,
+            expectedStartPositionsLst: expectedStartPositions,
+            expectedEndPositionsLst: expectedEndPositions,
+            expectedCreationDatesLst: expectedCreationDates,
+            expectedUpdateDatesLst: expectedUpdateDates);
+
+        // Now close the comment list dialog
+        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.pumpAndSettle();
+
+        // Tap the 'Toggle List' button to redisplay the list of playlist's.
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+
+        // Now, reopen the convert text to audio dialog
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: selectedYoutubePlaylistTitle,
+          playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+        );
+
+        // Now enter a new text to convert
+        const String nextTextToConvertStr = "un deux trois.";
+        await tester.enterText(textFieldFinder, nextTextToConvertStr);
+        await tester.pump();
+
+        // Tap the feminine checkbox to change the voice
+        await tester.tap(feminineCheckbox);
+        await tester.pump();
+
+        // Now click on Create MP3 button to create the audio
+        createMP3ButtonFinder =
+            find.byKey(const Key('create_audio_file_button'));
+        await tester.tap(createMP3ButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Enter the same mp3 file name as before
+        mp3FileNameTextFieldFinder =
+            find.byKey(const Key('textToConvertTextField'));
+
+        await tester.enterText(
+            mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+        await tester.pump();
+
+        // Tap on the create mp3 button
+        saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
+        await tester.tap(saveMP3FileButton);
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
+
+        // Now check the confirm dialog which indicates that the saved
+        // file name already exist and ask to confirm or cancel the
+        // save operation.
+
+        Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
+
+        // Check the value of the confirm dialog title
+        Finder confirmActionDialogTitleText = find.descendant(
+            of: confirmActionDialogFinder,
+            matching: find.byKey(const Key("confirmDialogTitleOneKey")));
+
+        expect(
+          tester.widget<Text>(confirmActionDialogTitleText).data!,
+          "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$selectedYoutubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
+        );
+
+        // Tap on the confirm button to confirm the save operation
+        final Finder confirmButton = find.byKey(const Key('confirmButton'));
+        await tester.tap(confirmButton);
+        await tester.pumpAndSettle();
+
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
+
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas added to Youtube playlist \"$selectedYoutubePlaylistTitle\".",
+          isWarningConfirming: true,
+        );
+
+        // Now close the convert text to audio dialog by tapping
+        // the Cancel button
+        cancelButtonFinder =
+            find.byKey(const Key('convertTextToAudioCancelButton'));
+        await tester.tap(cancelButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Tap the 'Toggle List' button to close the list of playlist's.
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+
+        // Verify the converted audio sub title in the selected Youtube
+        // playlist audio list
+        IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+          tester: tester,
+          audioSubTitlesOrderLst: [
+            '0:00:00.8 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+          ],
+          firstAudioListTileIndex: 0,
+        );
+
+        // Verifying all audio info dialog fields related of the
+        // converted audio type
+        await IntegrationTestUtil.verifyAudioInfoDialog(
+          tester: tester,
+          audioType: AudioType.textToSpeech,
+          validVideoTitleOrAudioTitle: enteredFileNameNoExt,
+          audioDownloadDateTime:
+              '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
+          isAudioPlayable: true,
+          audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
+          audioDuration: '0:00:00.8',
+          audioPosition: '0:00:00',
+          audioState: 'Not listened',
+          lastListenDateTime: '',
+          audioFileName: '$enteredFileNameNoExt.mp3',
+          audioFileSize: '6 KB',
+          isMusicQuality: false, // Is spoken quality
+          audioPlaySpeed: '1.25',
+          audioVolume: '50.0 %',
+          audioCommentNumber: 2,
+        );
+
+        // Now, we verify the second created comment showing the new
+        // converted audio text
+
+        // First, find the Youtube playlist audio ListTile Text widget
+        audioTitleTileTextWidgetFinder = find.text(enteredFileNameNoExt);
+
+        // Then obtain the audio ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        audioTitleTileWidgetFinder = find.ancestor(
+          of: audioTitleTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now we want to tap the popup menu of the audioTitle ListTile
+
+        // Find the leading menu icon button of the audioTitle ListTile
+        // and tap on it
+        audioTitleTileLeadingMenuIconButton = find.descendant(
+          of: audioTitleTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(audioTitleTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
+
+        // Now find the 'Audio Comments ...' popup menu item and
+        // tap on it
+        audioCommentsPopupMenuItem =
+            find.byKey(const Key("popup_menu_audio_comment"));
+
+        await tester.tap(audioCommentsPopupMenuItem);
+        await tester.pumpAndSettle();
+
+        // Verify that the audio comments list of the dialog has 1 comment
+        // item
+
+        audioCommentsLstFinder = find.byKey(const Key(
+          'audioCommentsListKey',
+        ));
+
+        // Ensure the list has one child widgets
+        expect(
+          tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+          2,
+        );
+
+        expectedTitles = [
+          'Text',
+          'Text',
+        ];
+
+        expectedContents = [
+          initialTextToConvertStr,
+          nextTextToConvertStr,
+        ];
+
+        expectedStartPositions = [
+          '0:00',
+          '0:00',
+        ];
+
+        expectedEndPositions = [
+          '0:07',
+          '0:01',
+        ];
+
+        expectedCreationDates = [
+          frenchDateFormatYy.format(DateTime.now()), // created comment
+          frenchDateFormatYy.format(DateTime.now()), // created comment
+        ];
+
+        expectedUpdateDates = [
+          '',
+          '',
+        ];
+
+        // Verify content of each list item
+        IntegrationTestUtil.verifyCommentsInCommentListDialog(
+            tester: tester,
+            commentListDialogFinder: audioCommentsLstFinder,
+            commentsNumber: 2,
+            expectedTitlesLst: expectedTitles,
+            expectedContentsLst: expectedContents,
+            expectedStartPositionsLst: expectedStartPositions,
+            expectedEndPositionsLst: expectedEndPositions,
+            expectedCreationDatesLst: expectedCreationDates,
+            expectedUpdateDatesLst: expectedUpdateDates);
+
+        // Now close the comment list dialog
+        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.pumpAndSettle();
+
+        // Tap the 'Toggle List' button to redisplay the list of playlist's.
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+      });
+      testWidgets(
+          '''On unselected playlist, add a text to speech audio. Verify the text to speech dialog appearance.
+          Then enter a text with case ( { ) characters. Verify the Listen Create MP3 button state. Listen and
+          Stop the text. Then listen the full text and verify the listen duration after which the Stop
+          button is reset to the Listen button. Then, create the MP3 audio and verify its presence in the
+          playlist audio list. Verify also the audio info dialog content of the converted audio. Then, verify
+          the added comment in relation with the text to audio conversion.
+
+          Finally, redo a text to speech conversion with a different text and save it to the same MP3 file
+          name. Do the same verifications as previously.''',
+          (WidgetTester tester) async {
+        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+          tester: tester,
+          tapOnPlaylistToggleButton: false,
+        );
+
+        const String unselectedLocalPlaylistTitle = 'local';
+        // Now initializing the application on the Android emulator using
+        // zip restoration.
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        const String restorableZipFileName = 'local.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFileName,
+              path:
+                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+              size: 2655),
+        ]);
+
+        // In order to create the Android emulator application, execute the
+        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+        // without replacing the existing playlists.
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+          playlistTitlesToDelete: [
+            'Les plus belles chansons chrétiennes',
+            'S8 audio',
+            'local',
+            unselectedLocalPlaylistTitle,
+          ],
+        );
+
+        // Tap on the 'OK' button of the confirmation dialog
+        await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+        await tester.pumpAndSettle();
+
+        // Open the convert text to audio dialog
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: unselectedLocalPlaylistTitle,
+          playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+        );
+
+        // Verify the convert text to audio dialog title
+        final Text convertTextToAudioDialogTitle = tester.widget<Text>(
+            find.byKey(const Key('convertTextToAudioDialogTitleKey')));
+        expect(
+          convertTextToAudioDialogTitle.data,
+          'Convert Text to Audio',
+        );
+
+        // Now enter a text to convert and listen it, verifying its
+        // between 8 and 9 second duration
+
+        // Find the text field finder
+        final Finder textFieldFinder =
+            find.byKey(const Key('textToConvertTextField'));
+
+        const String initialTextToConvertStr = "{{ un {{{ deux { trois.";
+        await tester.enterText(textFieldFinder, initialTextToConvertStr);
+        await tester.pump();
+
+        // Tap on the listen button
+        final Finder listenButton = find.byKey(const Key('listen_text_button'));
+        await tester.tap(listenButton);
+        await tester.pumpAndSettle();
+
+        // Verify button changed to Stop button
+        TextButton stopButtonWidget = tester.widget(listenButton);
+        Row stopButtonRow = stopButtonWidget.child as Row;
+        Icon stopIcon = (stopButtonRow.children[0] as Icon);
+        expect(stopIcon.icon, Icons.stop); // Stop icon
+
+        // Now, tap on the Stop button after 1 seconds
+        await Future.delayed(const Duration(seconds: 1));
+        await tester.tap(listenButton);
+        await tester.pumpAndSettle();
+
+        // Verify the Stop button changed back to Listen button
+        TextButton listenButtonWidget = tester.widget(listenButton);
+        Row listenButtonRow = listenButtonWidget.child as Row;
+        Icon listenIcon = (listenButtonRow.children[0] as Icon);
+        expect(listenIcon.icon, Icons.volume_up); // Back to Listen icon
+
+        // Now click on Create MP3 button to create the audio
+        Finder createMP3ButtonFinder =
+            find.byKey(const Key('create_audio_file_button'));
+        expect(createMP3ButtonFinder, findsOneWidget);
+        await tester.tap(createMP3ButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Verify the convert text to audio dialog title
+        expect(
+          find.text('MP3 File Name'),
+          findsOneWidget,
+        );
+
+        // Verify the text to convert title
+        expect(
+          find.text('Enter the MP3 file name'),
+          findsOneWidget,
+        );
+
+        // Verify the presence of the hint text in the MP3 file name
+        // TextField
+        expect(find.text('file name'), findsOneWidget);
+        expect(find.text('.mp3'), findsOneWidget);
+
+        const String enteredFileNameNoExt = 'convertedAudio';
+        Finder mp3FileNameTextFieldFinder =
+            find.byKey(const Key('textToConvertTextField'));
+
+        await tester.enterText(
+            mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+        await tester.pump();
+
+        // Verify the text was entered
+        expect(find.text(enteredFileNameNoExt), findsOneWidget);
+
+        DateTime now = DateTime.now();
+
+        // Tap on the create mp3 button
+        Finder saveMP3FileButton =
+            find.byKey(const Key('create_mp3_button_key'));
+        await tester.tap(saveMP3FileButton);
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
+
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas added to local playlist \"$unselectedLocalPlaylistTitle\".",
+          isWarningConfirming: true,
+        );
+
+        // Now close the convert text to audio dialog by tapping
+        // the Cancel button
+        Finder cancelButtonFinder =
+            find.byKey(const Key('convertTextToAudioCancelButton'));
+        await tester.tap(cancelButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Now select the 'local' playlist
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: unselectedLocalPlaylistTitle,
+        );
+
+        // Verify the converted audio sub title in the selected Youtube
+        // playlist audio list
+        IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+          tester: tester,
+          audioSubTitlesOrderLst: [
+            '0:00:07.0 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+          ],
+          firstAudioListTileIndex: 2,
+        );
+
+        // Verifying all audio info dialog fields related of the
+        // converted audio type
+        await IntegrationTestUtil.verifyAudioInfoDialog(
+          tester: tester,
+          audioType: AudioType.textToSpeech,
+          validVideoTitleOrAudioTitle: enteredFileNameNoExt,
+          audioDownloadDateTime:
+              '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
+          isAudioPlayable: true,
+          audioEnclosingPlaylistTitle: unselectedLocalPlaylistTitle,
+          audioDuration: '0:00:07.0',
+          audioPosition: '0:00:00',
+          audioState: 'Not listened',
+          lastListenDateTime: '',
+          audioFileName: '$enteredFileNameNoExt.mp3',
+          audioFileSize: '56 KB',
+          isMusicQuality: false, // Is spoken quality
+          audioPlaySpeed: '1.25',
+          audioVolume: '50.0 %',
+          audioCommentNumber: 1,
+        );
+
+        // Now, we verify the created comment showing the converted
+        // audio text
+
+        // First, find the Youtube playlist audio ListTile Text widget
+        Finder audioTitleTileTextWidgetFinder = find.text(enteredFileNameNoExt);
+
+        // Then obtain the audio ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        Finder audioTitleTileWidgetFinder = find.ancestor(
+          of: audioTitleTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now we want to tap the popup menu of the audioTitle ListTile
+
+        // Find the leading menu icon button of the audioTitle ListTile
+        // and tap on it
+        Finder audioTitleTileLeadingMenuIconButton = find.descendant(
+          of: audioTitleTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(audioTitleTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
+
+        // Now find the 'Audio Comments ...' popup menu item and
+        // tap on it
+        Finder audioCommentsPopupMenuItem =
+            find.byKey(const Key("popup_menu_audio_comment"));
+
+        await tester.tap(audioCommentsPopupMenuItem);
+        await tester.pumpAndSettle();
+
+        // Verify that the audio comments list of the dialog has 1 comment
+        // item
+
+        Finder audioCommentsLstFinder = find.byKey(const Key(
+          'audioCommentsListKey',
+        ));
+
+        // Ensure the list has one child widgets
+        expect(
+          tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+          1,
+        );
+
+        List<String> expectedTitles = [
+          'Text',
+        ];
+
+        List<String> expectedContents = [
+          initialTextToConvertStr,
+        ];
+
+        List<String> expectedStartPositions = [
+          '0:00',
+        ];
+
+        List<String> expectedEndPositions = [
+          '0:07',
+        ];
+
+        List<String> expectedCreationDates = [
+          frenchDateFormatYy.format(DateTime.now()), // created comment
+          '04/09/25',
+        ];
+
+        List<String> expectedUpdateDates = [
+          '',
+        ];
+
+        // Verify content of each list item
+        IntegrationTestUtil.verifyCommentsInCommentListDialog(
+            tester: tester,
+            commentListDialogFinder: audioCommentsLstFinder,
+            commentsNumber: 1,
+            expectedTitlesLst: expectedTitles,
+            expectedContentsLst: expectedContents,
+            expectedStartPositionsLst: expectedStartPositions,
+            expectedEndPositionsLst: expectedEndPositions,
+            expectedCreationDatesLst: expectedCreationDates,
+            expectedUpdateDatesLst: expectedUpdateDates);
+
+        // Now close the comment list dialog
+        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.pumpAndSettle();
+
+        // Now unselect the 'local' playlist
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: unselectedLocalPlaylistTitle,
+        );
+
+        // Now, reopen the convert text to audio dialog
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: unselectedLocalPlaylistTitle,
+          playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+        );
+
+        // Now enter a new text to convert
+        const String nextTextToConvertStr = "un deux trois.";
+        await tester.enterText(textFieldFinder, nextTextToConvertStr);
+        await tester.pump();
+
+        // Tap the feminine checkbox to change the voice
+        Finder feminineCheckbox = find.byKey(const Key('femineVoiceCheckbox'));
+        await tester.tap(feminineCheckbox);
+        await tester.pump();
+
+        // Now click on Create MP3 button to create the audio
+        createMP3ButtonFinder =
+            find.byKey(const Key('create_audio_file_button'));
+        await tester.tap(createMP3ButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Enter the same mp3 file name as before
+        mp3FileNameTextFieldFinder =
+            find.byKey(const Key('textToConvertTextField'));
+
+        await tester.enterText(
+            mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+        await tester.pump();
+
+        // Tap on the create mp3 button
+        saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
+        await tester.tap(saveMP3FileButton);
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
+
+        // Now check the confirm dialog which indicates that the saved
+        // file name already exist and ask to confirm or cancel the
+        // save operation.
+
+        Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
+
+        // Check the value of the confirm dialog title
+        Finder confirmActionDialogTitleText = find.descendant(
+            of: confirmActionDialogFinder,
+            matching: find.byKey(const Key("confirmDialogTitleOneKey")));
+
+        expect(
+          tester.widget<Text>(confirmActionDialogTitleText).data!,
+          "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$unselectedLocalPlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
+        );
+
+        // Tap on the confirm button to confirm the save operation
+        final Finder confirmButton = find.byKey(const Key('confirmButton'));
+        await tester.tap(confirmButton);
+        await tester.pumpAndSettle();
+
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
+
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas added to local playlist \"$unselectedLocalPlaylistTitle\".",
+          isWarningConfirming: true,
+        );
+
+        // Now close the convert text to audio dialog by tapping
+        // the Cancel button
+        cancelButtonFinder =
+            find.byKey(const Key('convertTextToAudioCancelButton'));
+        await tester.tap(cancelButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Now select the 'local' playlist
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: unselectedLocalPlaylistTitle,
+        );
+
+        // Verify the converted audio sub title in the selected Youtube
+        // playlist audio list
+        IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+          tester: tester,
+          audioSubTitlesOrderLst: [
+            '0:00:00.8 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+          ],
+          firstAudioListTileIndex: 2,
+        );
+
+        // Verifying all audio info dialog fields related of the
+        // converted audio type
+        await IntegrationTestUtil.verifyAudioInfoDialog(
+          tester: tester,
+          audioType: AudioType.textToSpeech,
+          validVideoTitleOrAudioTitle: enteredFileNameNoExt,
+          audioDownloadDateTime:
+              '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
+          isAudioPlayable: true,
+          audioEnclosingPlaylistTitle: unselectedLocalPlaylistTitle,
+          audioDuration: '0:00:00.8',
+          audioPosition: '0:00:00',
+          audioState: 'Not listened',
+          lastListenDateTime: '',
+          audioFileName: '$enteredFileNameNoExt.mp3',
+          audioFileSize: '6 KB',
+          isMusicQuality: false, // Is spoken quality
+          audioPlaySpeed: '1.25',
+          audioVolume: '50.0 %',
+          audioCommentNumber: 2,
+        );
+
+        // Now, we verify the second created comment showing the new
+        // converted audio text
+
+        // First, find the Youtube playlist audio ListTile Text widget
+        audioTitleTileTextWidgetFinder = find.text(enteredFileNameNoExt);
+
+        // Then obtain the audio ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        audioTitleTileWidgetFinder = find.ancestor(
+          of: audioTitleTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now we want to tap the popup menu of the audioTitle ListTile
+
+        // Find the leading menu icon button of the audioTitle ListTile
+        // and tap on it
+        audioTitleTileLeadingMenuIconButton = find.descendant(
+          of: audioTitleTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(audioTitleTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
+
+        // Now find the 'Audio Comments ...' popup menu item and
+        // tap on it
+        audioCommentsPopupMenuItem =
+            find.byKey(const Key("popup_menu_audio_comment"));
+
+        await tester.tap(audioCommentsPopupMenuItem);
+        await tester.pumpAndSettle();
+
+        // Verify that the audio comments list of the dialog has 1 comment
+        // item
+
+        audioCommentsLstFinder = find.byKey(const Key(
+          'audioCommentsListKey',
+        ));
+
+        // Ensure the list has one child widgets
+        expect(
+          tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+          2,
+        );
+
+        expectedTitles = [
+          'Text',
+          'Text',
+        ];
+
+        expectedContents = [
+          initialTextToConvertStr,
+          nextTextToConvertStr,
+        ];
+
+        expectedStartPositions = [
+          '0:00',
+          '0:00',
+        ];
+
+        expectedEndPositions = [
+          '0:07',
+          '0:01',
+        ];
+
+        expectedCreationDates = [
+          frenchDateFormatYy.format(DateTime.now()), // created comment
+          frenchDateFormatYy.format(DateTime.now()), // created comment
+        ];
+
+        expectedUpdateDates = [
+          '',
+          '',
+        ];
+
+        // Verify content of each list item
+        IntegrationTestUtil.verifyCommentsInCommentListDialog(
+            tester: tester,
+            commentListDialogFinder: audioCommentsLstFinder,
+            commentsNumber: 2,
+            expectedTitlesLst: expectedTitles,
+            expectedContentsLst: expectedContents,
+            expectedStartPositionsLst: expectedStartPositions,
+            expectedEndPositionsLst: expectedEndPositions,
+            expectedCreationDatesLst: expectedCreationDates,
+            expectedUpdateDatesLst: expectedUpdateDates);
+
+        // Now close the comment list dialog
+        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.pumpAndSettle();
       });
     });
   });
@@ -5104,502 +6243,27 @@ void _verifyRestoredPlaylistAndAudio({
   );
 }
 
-Playlist loadPlaylist(String playListOneName) {
-  return JsonDataService.loadFromFile(
-      jsonPathFileName:
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$playListOneName${path.separator}$playListOneName.json",
-      type: Playlist);
-}
-
-Future<List<String>> enteringFirstAndSecondLetterOfYoutubePlaylistSearchWord({
+Future<void> _verifyListenAndCreateMp3ButtonsState({
   required WidgetTester tester,
+  required bool areEnabled,
 }) async {
-  // Now enter the first letter of the search word
-  await tester.tap(
-    find.byKey(
-      const Key('youtubeUrlOrSearchTextField'),
-    ),
-  );
-  await tester.pumpAndSettle();
-  await tester.enterText(
-    find.byKey(
-      const Key('youtubeUrlOrSearchTextField'),
-    ),
-    'S',
-  );
-  await tester.pumpAndSettle(const Duration(milliseconds: 200));
-
-  // Verify that the search icon button is now enabled but inactive
-  IntegrationTestUtil.validateSearchIconButton(
-    tester: tester,
-    searchIconButtonState: SearchIconButtonState.enabledInactive,
-  );
-
-  // Ensure that since the search icon button was not yet pressed,
-  // the displayed playlist list is the same as the one before entering
-  // the first letter of the search word.
-
-  List<String> playlistsTitles = [
-    "S8 audio",
-    "local",
-    "local_2",
-  ];
-
-  List<String> audioTitles = [
-    "Really short video",
-    "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-    "La résilience insulaire par Fiona Roche",
-    "Les besoins artificiels par R.Keucheyan",
-  ];
-
-  IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
-    tester: tester,
-    playlistTitlesOrderedLst: playlistsTitles,
-    audioTitlesOrderedLst: audioTitles,
-  );
-
-  // Enter the second letter of the 'al' search word. The crazy integration
-  // test does not always update the test field. To fix this bug, first
-  // select the text field and then enter the text.
-
-  // Select the text field
-  await tester.tap(
-    find.byKey(
-      const Key('youtubeUrlOrSearchTextField'),
-    ),
-  );
-  await tester.pumpAndSettle();
-
-  // Enter the second letter of the 'al' search word
-  await tester.enterText(
-    find.byKey(
-      const Key('youtubeUrlOrSearchTextField'),
-    ),
-    'S8',
-  );
-  await tester.pumpAndSettle(const Duration(milliseconds: 200));
-
-  // Verify that the search icon button is now enabled but inactive
-  IntegrationTestUtil.validateSearchIconButton(
-    tester: tester,
-    searchIconButtonState: SearchIconButtonState.enabledInactive,
-  );
-
-  // Ensure that since the search icon button was not yet pressed,
-  // the displayed playlist list is the same as the one before entering
-  // the first letter of the search word.
-  IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
-    tester: tester,
-    playlistTitlesOrderedLst: playlistsTitles,
-    audioTitlesOrderedLst: audioTitles,
-  );
-
-  // Now tap on the search icon button
-  await tester.tap(find.byKey(const Key('search_icon_button')));
-  await tester.pumpAndSettle();
-
-  // Verify that the search icon button is now enabled and active
-  IntegrationTestUtil.validateSearchIconButton(
-    tester: tester,
-    searchIconButtonState: SearchIconButtonState.enabledActive,
-  );
-
-  // Now verify the order of the reduced playlist titles
-
-  playlistsTitles = [
-    "S8 audio",
-  ];
-
-  IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
-    tester: tester,
-    playlistTitlesOrderedLst: playlistsTitles,
-    audioTitlesOrderedLst: audioTitles,
-  );
-
-  return playlistsTitles;
-}
-
-Map loadSettingsMap() {
-  final String settingsJsonStr = File(
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$kSettingsFileName")
-      .readAsStringSync();
-
-  Map settingsMap = jsonDecode(settingsJsonStr);
-
-  return settingsMap;
-}
-
-void modifySelectedPlaylistBeforeStartingApplication({
-  required String playlistToUnselectTitle,
-  required String playlistToSelectTitle,
-}) {
-  final initiallySelectedPlaylistPath = path.join(
-    kPlaylistDownloadRootPathWindowsTest,
-    playlistToUnselectTitle,
-  );
-
-  final initiallySelectedPlaylistFilePathName = path.join(
-    initiallySelectedPlaylistPath,
-    '$playlistToUnselectTitle.json',
-  );
-
-  // Load playlist from the json file
-  Playlist initiallySelectedPlaylist = JsonDataService.loadFromFile(
-    jsonPathFileName: initiallySelectedPlaylistFilePathName,
-    type: Playlist,
-  );
-
-  initiallySelectedPlaylist.isSelected = false;
-
-  JsonDataService.saveToFile(
-    model: initiallySelectedPlaylist,
-    path: initiallySelectedPlaylistFilePathName,
-  );
-
-  final nowSelectedPlaylistPath = path.join(
-    kPlaylistDownloadRootPathWindowsTest,
-    playlistToSelectTitle,
-  );
-
-  final nowSelectedPlaylistFilePathName = path.join(
-    nowSelectedPlaylistPath,
-    '$playlistToSelectTitle.json',
-  );
-
-  // Load playlist from the json file
-  Playlist nowSelectedPlaylist = JsonDataService.loadFromFile(
-    jsonPathFileName: nowSelectedPlaylistFilePathName,
-    type: Playlist,
-  );
-
-  nowSelectedPlaylist.isSelected = true;
-
-  JsonDataService.saveToFile(
-    model: nowSelectedPlaylist,
-    path: nowSelectedPlaylistFilePathName,
-  );
-}
-
-Future<void> verifyYoutubeSelectedPlaylistButtonsAndCheckbox({
-  required WidgetTester tester,
-  required bool isPlaylistListDisplayed,
-}) async {
-  // Verify that the search icon button is now disabled
-  IntegrationTestUtil.validateSearchIconButton(
-    tester: tester,
-    searchIconButtonState: SearchIconButtonState.disabled,
-  );
-
-  if (isPlaylistListDisplayed) {
+  if (areEnabled) {
     IntegrationTestUtil.verifyWidgetIsEnabled(
       tester: tester,
-      widgetKeyStr: 'move_up_playlist_button',
+      widgetKeyStr: 'listen_text_button',
     );
-
     IntegrationTestUtil.verifyWidgetIsEnabled(
       tester: tester,
-      widgetKeyStr: 'move_down_playlist_button',
+      widgetKeyStr: 'create_audio_file_button',
     );
   } else {
-    // Verify that the dropdown button is set to the playlist download
-    // view 'Title asc' sort/filter parms
-    IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+    await IntegrationTestUtil.verifyWidgetIsDisabled(
       tester: tester,
-      dropdownButtonSelectedTitle: 'Title asc',
+      widgetKeyStr: 'listen_text_button',
+    );
+    await IntegrationTestUtil.verifyWidgetIsDisabled(
+      tester: tester,
+      widgetKeyStr: 'create_audio_file_button',
     );
   }
-
-  IntegrationTestUtil.verifyWidgetIsEnabled(
-    tester: tester,
-    widgetKeyStr: 'download_sel_playlists_button',
-  );
-
-  IntegrationTestUtil.verifyWidgetIsEnabled(
-    tester: tester,
-    widgetKeyStr: 'audio_quality_checkbox',
-  );
-
-  IntegrationTestUtil.verifyWidgetIsEnabled(
-    tester: tester,
-    widgetKeyStr: 'audio_popup_menu_button',
-  );
-}
-
-Future<void> verifyLocalSelectedPlaylistButtonsAndCheckbox({
-  required WidgetTester tester,
-  required bool isPlaylistListDisplayed,
-}) async {
-  // Verify that the search icon button is now disabled
-  IntegrationTestUtil.validateSearchIconButton(
-    tester: tester,
-    searchIconButtonState: SearchIconButtonState.disabled,
-  );
-
-  if (isPlaylistListDisplayed) {
-    IntegrationTestUtil.verifyWidgetIsEnabled(
-      tester: tester,
-      widgetKeyStr: 'move_up_playlist_button',
-    );
-
-    IntegrationTestUtil.verifyWidgetIsEnabled(
-      tester: tester,
-      widgetKeyStr: 'move_down_playlist_button',
-    );
-  } else {
-    // Verify that the dropdown button is set to the playlist download
-    // view 'Title asc' sort/filter parms
-    IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
-      tester: tester,
-      dropdownButtonSelectedTitle: 'Title asc',
-    );
-  }
-
-  await IntegrationTestUtil.verifyWidgetIsDisabled(
-    tester: tester,
-    widgetKeyStr: 'download_sel_playlists_button',
-  );
-
-  await IntegrationTestUtil.verifyWidgetIsDisabled(
-    tester: tester,
-    widgetKeyStr: 'audio_quality_checkbox',
-  );
-
-  IntegrationTestUtil.verifyWidgetIsEnabled(
-    tester: tester,
-    widgetKeyStr: 'audio_popup_menu_button',
-  );
-}
-
-Future<void> verifyUndoneListenedAudioPosition({
-  required WidgetTester tester,
-  required String playlistTitle,
-  required String playedCommentAudioTitle,
-  required int playableAudioLstAudioIndex,
-  required String audioPositionStr,
-  required int audioPositionSeconds,
-  required String audioRemainingDurationStr,
-  required bool isPlayingOrPausedWithPositionBetweenAudioStartAndEnd,
-  required DateTime? audioPausedDateTime,
-}) async {
-  // Now we want to tap on the previously played commented audio of
-  // the playlist in order to open the AudioPlayerView displaying
-  // the currently not playing audio
-
-  // First, get the Audio ListTile Text widget finder and tap on it
-  final Finder playedCommentAudioListTileTextWidgetFinder =
-      find.text(playedCommentAudioTitle);
-
-  await tester.tap(playedCommentAudioListTileTextWidgetFinder);
-  await tester.pumpAndSettle(const Duration(milliseconds: 500));
-
-  // Now verify if the displayed audio position and remaining
-  // duration are correct
-
-  Text audioPositionText = tester
-      .widget<Text>(find.byKey(const Key('audioPlayerViewAudioPosition')));
-  expect(audioPositionText.data, audioPositionStr);
-
-  Text audioRemainingDurationText = tester.widget<Text>(
-      find.byKey(const Key('audioPlayerViewAudioRemainingDuration')));
-  expect(audioRemainingDurationText.data, audioRemainingDurationStr);
-
-  IntegrationTestUtil.verifyAudioDataElementsUpdatedInPlaylistJsonFile(
-    audioPlayerSelectedPlaylistTitle: playlistTitle,
-    playableAudioLstAudioIndex: playableAudioLstAudioIndex,
-    audioTitle: playedCommentAudioTitle,
-    audioPositionSeconds: audioPositionSeconds,
-    isPaused: true,
-    isPlayingOrPausedWithPositionBetweenAudioStartAndEnd:
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd,
-    audioPausedDateTime: audioPausedDateTime, // "2024-09-08T14:38:43.283816"
-  );
-}
-
-Future<Finder> openPlaylistCommentDialog({
-  required WidgetTester tester,
-  required String playlistTitle,
-}) async {
-  // First, find the 'S8 audio' playlist sublist ListTile Text widget
-  Finder youtubePlaylistListTileTextWidgetFinder = find.text(playlistTitle);
-
-  // Then obtain the playlist ListTile widget enclosing the Text widget
-  // by finding its ancestor
-  Finder youtubePlaylistListTileWidgetFinder = find.ancestor(
-    of: youtubePlaylistListTileTextWidgetFinder,
-    matching: find.byType(ListTile),
-  );
-
-  // Now we want to tap the popup menu of the 'S8 audio' playlist ListTile
-
-  // Find the leading menu icon button of the playlist ListTile
-  // and tap on it
-  Finder youtubePlaylistListTileLeadingMenuIconButton = find.descendant(
-    of: youtubePlaylistListTileWidgetFinder,
-    matching: find.byIcon(Icons.menu),
-  );
-
-  // Tap the leading menu icon button to open the popup menu
-  await tester.tap(youtubePlaylistListTileLeadingMenuIconButton);
-  await tester.pumpAndSettle();
-
-  // Now find the List comments of playlist audio popup menu
-  // item and tap on it
-  final Finder popupPlaylistAudioCommentsMenuItem =
-      find.byKey(const Key("popup_menu_display_playlist_audio_comments"));
-
-  await tester.tap(popupPlaylistAudioCommentsMenuItem);
-  await tester.pumpAndSettle();
-
-  final Finder playlistCommentListDialogFinder =
-      find.byType(PlaylistCommentListDialog);
-  return playlistCommentListDialogFinder;
-}
-
-Future<void> verifyAudioTitlesColorInPlaylistCommentDialog({
-  required WidgetTester tester,
-  required Finder playlistCommentListDialogFinder,
-}) async {
-  await IntegrationTestUtil.checkAudioTextColor(
-    tester: tester,
-    enclosingWidgetFinder: playlistCommentListDialogFinder,
-    audioTitleOrSubTitle:
-        "Quand Aurélien Barrau va dans une école de management",
-    expectedTitleTextColor:
-        IntegrationTestUtil.currentlyPlayingAudioTitleTextColor,
-    expectedTitleTextBackgroundColor:
-        IntegrationTestUtil.currentlyPlayingAudioTitleTextBackgroundColor,
-  );
-
-  await IntegrationTestUtil.checkAudioTextColor(
-    tester: tester,
-    enclosingWidgetFinder: playlistCommentListDialogFinder,
-    audioTitleOrSubTitle:
-        "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
-    expectedTitleTextColor: IntegrationTestUtil.fullyPlayedAudioTitleColor,
-    expectedTitleTextBackgroundColor: null,
-  );
-
-  await IntegrationTestUtil.checkAudioTextColor(
-    tester: tester,
-    enclosingWidgetFinder: playlistCommentListDialogFinder,
-    audioTitleOrSubTitle:
-        "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-    expectedTitleTextColor:
-        IntegrationTestUtil.partiallyPlayedAudioTitleTextdColor,
-    expectedTitleTextBackgroundColor: null,
-  );
-
-  await IntegrationTestUtil.checkAudioTextColor(
-    tester: tester,
-    enclosingWidgetFinder: playlistCommentListDialogFinder,
-    audioTitleOrSubTitle: "La surpopulation mondiale par Jancovici et Barrau",
-    expectedTitleTextColor: IntegrationTestUtil.unplayedAudioTitleTextColor,
-    expectedTitleTextBackgroundColor: null,
-  );
-}
-
-Future<Finder> verifyAudioInfoDialog({
-  required WidgetTester tester,
-  required String audioEnclosingPlaylistTitle,
-  required String movedOrCopiedAudioTitle,
-  required String movedFromPlaylistTitle,
-  required String movedToPlaylistTitle,
-  required String copiedFromPlaylistTitle,
-  required String copiedToPlaylistTitle,
-  required String audioDuration,
-}) async {
-  // Now we want to tap the popup menu of the Audio ListTile
-  // "audio learn test short video one" in order to display
-  // the audio info dialog
-
-  // First, find the Audio sublist ListTile Text widget
-  final Finder targetAudioListTileTextWidgetFinder =
-      find.text(movedOrCopiedAudioTitle);
-
-  // Then obtain the Audio ListTile widget enclosing the Text widget by
-  // finding its ancestor
-  final Finder targetAudioListTileWidgetFinder = find.ancestor(
-    of: targetAudioListTileTextWidgetFinder,
-    matching: find.byType(ListTile),
-  );
-
-  // Now find the leading menu icon button of the Audio ListTile and tap
-  // on it
-  final Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
-    of: targetAudioListTileWidgetFinder,
-    matching: find.byIcon(Icons.menu),
-  );
-
-  // Tap the leading menu icon button to open the popup menu
-  await tester.tap(targetAudioListTileLeadingMenuIconButton);
-  await tester.pumpAndSettle();
-
-  // Now find the audio info popup menu item and tap on it
-  final Finder popupDisplayAudioInfoMenuItemFinder =
-      find.byKey(const Key("popup_menu_display_audio_info"));
-
-  await tester.tap(popupDisplayAudioInfoMenuItemFinder);
-  await tester.pumpAndSettle();
-
-  // Now verifying the display audio info audio moved dialog
-  // elements
-
-  // Verify the audio channel name
-
-  Text youtubeChannelTextWidget =
-      tester.widget<Text>(find.byKey(const Key('youtubeChannelKey')));
-
-  expect(youtubeChannelTextWidget.data, "Jean-Pierre Schnyder");
-
-  // Verify the enclosing playlist title of the moved audio
-
-  final Text enclosingPlaylistTitleTextWidget =
-      tester.widget<Text>(find.byKey(const Key('enclosingPlaylistTitleKey')));
-
-  expect(
-    enclosingPlaylistTitleTextWidget.data,
-    audioEnclosingPlaylistTitle,
-  );
-
-  // Verify the 'Moved from playlist' title of the moved audio
-
-  final Text movedFromPlaylistTitleTextWidget =
-      tester.widget<Text>(find.byKey(const Key('movedFromPlaylistTitleKey')));
-
-  expect(movedFromPlaylistTitleTextWidget.data, movedFromPlaylistTitle);
-
-  // Verify the 'Moved to playlist title' of the moved audio
-
-  final Text movedToPlaylistTitleTextWidget =
-      tester.widget<Text>(find.byKey(const Key('movedToPlaylistTitleKey')));
-
-  expect(movedToPlaylistTitleTextWidget.data, movedToPlaylistTitle);
-
-  // Verify the 'Copied from playlist' title of the moved audio
-
-  final Text copiedFromPlaylistTitleTextWidget =
-      tester.widget<Text>(find.byKey(const Key('copiedFromPlaylistTitleKey')));
-
-  expect(copiedFromPlaylistTitleTextWidget.data, copiedFromPlaylistTitle);
-
-  // Verify the 'Copied to playlist title' of the moved audio
-
-  final Text copiedToPlaylistTitleTextWidget =
-      tester.widget<Text>(find.byKey(const Key('copiedToPlaylistTitleKey')));
-
-  expect(copiedToPlaylistTitleTextWidget.data, copiedToPlaylistTitle);
-
-  // Verify the 'Audio duration' of the moved audio
-
-  final Text audioDurationTextWidget =
-      tester.widget<Text>(find.byKey(const Key('audioDurationKey')));
-
-  expect(audioDurationTextWidget.data, audioDuration);
-
-  // Now find the close button of the audio info dialog
-  // and tap on it to close the dialog
-  await tester.tap(find.byKey(const Key('audio_info_close_button_key')));
-  await tester.pumpAndSettle();
-
-  return targetAudioListTileWidgetFinder;
 }
