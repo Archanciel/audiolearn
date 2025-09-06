@@ -951,7 +951,7 @@ void main() {
     });
     group('''Import audio's functionality.''', () {
       testWidgets(
-        '''Importing one audio test. Verify conversion warning. Then reimporting it and verify
+          '''Importing one audio test. Verify conversion warning. Then reimporting it and verify
           the not imported warning. Normally, the imported audio's are not located in a playlist
           directory !''', (WidgetTester tester) async {
         await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
@@ -959,7 +959,6 @@ void main() {
           tapOnPlaylistToggleButton: false,
         );
 
-        const String unselectedLocalPlaylistTitle = 'local';
         // Now initializing the application on the Android emulator using
         // zip restoration.
 
@@ -1011,8 +1010,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
-          playlistTitlesToDelete: [
-          ],
+          playlistTitlesToDelete: [],
         );
 
         // Tap on the 'OK' button of the confirmation dialog
@@ -1045,19 +1043,100 @@ void main() {
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
         await tester.pumpAndSettle();
 
+        const String fileNameExt =
+            "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3";
+        const String fileNameNoExt =
+            "250812-162929-L’uniforme arrive en France en 2024 23-12-11";
+
+        // Setting one selected mp3 file.
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: fileNameExt,
+              path:
+                  "$kPlaylistDownloadRootPathAndroidTest${path.separator}$urgentActusPlaylistTitle${path.separator}$fileNameExt",
+              size: 155136),
+        ]);
+
+        const String localPlaylistTitle = 'local';
+        DateTime now = DateTime.now();
+
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: localPlaylistTitle,
+          playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
+        );
+
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Audio(s)\n\n\"$fileNameExt\"\n\nimported to local playlist \"$localPlaylistTitle\".",
+          isWarningConfirming: true,
+        );
+
+        // Re-import the same audio to verify the not imported warning
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: localPlaylistTitle,
+          playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
+        );
+
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Audio(s)\n\n\"$fileNameExt\"\n\nNOT imported to local playlist \"$localPlaylistTitle\" since the playlist directory already contains the audio(s).",
+        );
+
+        // Tap the 'Toggle List' button to hide the list of playlist's.
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
+
+        // Verifying all audio info dialog fields related of the imported audio
+        // type
+        await IntegrationTestUtil.verifyAudioInfoDialog(
+          tester: tester,
+          audioType: AudioType.imported,
+          validVideoTitleOrAudioTitle: fileNameNoExt,
+          audioDownloadDateTime:
+              "${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}", // this is the imported date time
+          isAudioPlayable: true,
+          audioEnclosingPlaylistTitle: localPlaylistTitle,
+          audioDuration: '0:10:51.9',
+          audioPosition: '0:00:00',
+          audioState: 'Not listened',
+          lastListenDateTime: '',
+          audioFileName: fileNameExt,
+          audioFileSize: '3.98 MB',
+          isMusicQuality: false, // Is spoken quality
+          audioPlaySpeed: '1.0',
+          audioVolume: '50.0 %',
+          audioCommentNumber: 0,
+        );
+
+        // Verify the imported audio sub title in the selected Youtube
+        // playlist audio list
+        IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+          tester: tester,
+          audioSubTitlesOrderLst: [
+            "0:10:51.9 3.98 MB imported on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}",
+          ],
+          firstAudioListTileIndex: 0,
+        );
+
+        // Tap the 'Toggle List' button to redisplay the list of playlist's.
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
       });
       testWidgets(
-        '''2 audio's present in the source playlist exist in the playlist which will import
+          '''2 audio's present in the source playlist exist in the playlist which will import
           all audio's of the source playlist. This situation will display 2 warnings, one
           audio import confirmation and one already existing audio's not imported warning.
           Normally, the imported audio's are not located in a playlist !''',
-        (WidgetTester tester) async {
+          (WidgetTester tester) async {
         await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
           tester: tester,
           tapOnPlaylistToggleButton: false,
         );
 
-        const String unselectedLocalPlaylistTitle = 'local';
         // Now initializing the application on the Android emulator using
         // zip restoration.
 
@@ -1109,8 +1188,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
-          playlistTitlesToDelete: [
-          ],
+          playlistTitlesToDelete: [],
         );
 
         // Tap on the 'OK' button of the confirmation dialog
@@ -1142,7 +1220,6 @@ void main() {
         // and tap on it
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
         await tester.pumpAndSettle();
-
       });
     });
     group('''Convert text to audio.''', () {
@@ -2183,7 +2260,7 @@ void main() {
         // Tap the 'Toggle List' button to close the list of playlist's.
         await tester.tap(find.byKey(const Key('playlist_toggle_button')));
         await tester.pumpAndSettle();
-        
+
         // Verify the converted audio sub title in the selected Youtube
         // playlist audio list
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
