@@ -1187,6 +1187,39 @@ class IntegrationTestUtil {
     }
   }
 
+  static Future<bool> isPlaylistSelected({
+    required WidgetTester tester,
+    required String playlistToCheckTitle,
+  }) async {
+    // First, find the source Playlist ListTile Text widget
+    final Finder playlistListTileTextWidgetFinder =
+        find.text(playlistToCheckTitle);
+
+    // Then obtain the source Playlist ListTile widget enclosing the Text widget
+    // by finding its ancestor
+    final Finder playlistListTileWidgetFinder = find.ancestor(
+      of: playlistListTileTextWidgetFinder,
+      matching: find.byType(ListTile),
+    );
+
+    // Now find the Checkbox widget located in the Playlist ListTile
+    final Finder playlistListTileCheckboxWidgetFinder = find.descendant(
+      of: playlistListTileWidgetFinder,
+      matching: find.byType(Checkbox),
+    );
+
+    // Check if the checkbox exists
+    if (playlistListTileCheckboxWidgetFinder.evaluate().isEmpty) {
+      return false; // Checkbox not found
+    }
+
+    // Get the checkbox widget and check its value
+    final Checkbox checkboxWidget =
+        tester.widget<Checkbox>(playlistListTileCheckboxWidgetFinder);
+
+    return checkboxWidget.value ?? false;
+  }
+
   static Future<void> verifyNoPlaylistCheckboxSelected({
     required WidgetTester tester,
   }) async {
@@ -2986,9 +3019,10 @@ class IntegrationTestUtil {
 
         // Verify the compact video description of the audio
         if (compactVideoDescription.isNotEmpty) {
-          final Text compactVideoDescriptionTextWidget = tester
-              .widget<Text>(find.byKey(const Key('compactVideoDescriptionKey')));
-          expect(compactVideoDescriptionTextWidget.data, compactVideoDescription);
+          final Text compactVideoDescriptionTextWidget = tester.widget<Text>(
+              find.byKey(const Key('compactVideoDescriptionKey')));
+          expect(
+              compactVideoDescriptionTextWidget.data, compactVideoDescription);
         }
 
         // Verify the valid video title of the audio
@@ -3036,8 +3070,8 @@ class IntegrationTestUtil {
         break;
       case AudioType.textToSpeech:
         // Verify the valid video title of the audio
-        final Text validVideoTitleTextWidget =
-            tester.widget<Text>(find.byKey(const Key('convertedAudioTitleKey')));
+        final Text validVideoTitleTextWidget = tester
+            .widget<Text>(find.byKey(const Key('convertedAudioTitleKey')));
         expect(validVideoTitleTextWidget.data, validVideoTitleOrAudioTitle);
 
         // Verify the audio download date time of the audio
@@ -3069,7 +3103,7 @@ class IntegrationTestUtil {
             expect(isAudioPlayableTextWidget.data, 'Non');
           }
         }
-        
+
         break;
     }
 
@@ -3201,8 +3235,7 @@ class IntegrationTestUtil {
     if (doDropDown) {
       await tester.drag(
         find.byType(AudioInfoDialog),
-        const Offset(
-            0, -400), // Positive value for vertical drag to scroll up
+        const Offset(0, -400), // Positive value for vertical drag to scroll up
       );
       await tester.pumpAndSettle();
     }
@@ -3223,8 +3256,8 @@ class IntegrationTestUtil {
 
     // Verify the number of comments of the audio
     if (audioCommentNumber > 0) {
-      final Text audioNumberOfCommentsTextWidget = tester
-          .widget<Text>(find.byKey(const Key('commentsNumberKey')));
+      final Text audioNumberOfCommentsTextWidget =
+          tester.widget<Text>(find.byKey(const Key('commentsNumberKey')));
       expect(
         audioNumberOfCommentsTextWidget.data,
         audioCommentNumber.toString(),
