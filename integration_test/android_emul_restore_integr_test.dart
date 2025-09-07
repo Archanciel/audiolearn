@@ -966,7 +966,7 @@ void main() {
         MockFilePicker mockFilePicker = MockFilePicker();
         FilePicker.platform = mockFilePicker;
 
-        String restorableZipFileName = 'Android local.zip';
+        String restorableZipFileName = 'audioLearn_2025-09-07_07_45_02.zip';
 
         mockFilePicker.setSelectedFiles([
           PlatformFile(
@@ -988,29 +988,6 @@ void main() {
             'local',
             'urgent_actus_17-12-2023',
           ],
-        );
-
-        // Tap on the 'OK' button of the confirmation dialog
-        await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-        await tester.pumpAndSettle();
-
-        restorableZipFileName = 'urgent_actus_17-12-2023.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 2655),
-        ]);
-
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          playlistTitlesToDelete: [],
         );
 
         // Tap on the 'OK' button of the confirmation dialog
