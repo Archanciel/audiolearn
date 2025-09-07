@@ -2,13 +2,13 @@
 $OutputEncoding = [System.Text.Encoding]::UTF8
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-$sourceBase = '/storage/emulated/0/Documents/test/audiolearn'
+$sourceBase = '/storage/emulated/0/Documents/test'
 $destBase = 'C:\development\flutter\audiolearn\test\data\audio'
 
 Write-Host 'Finding files...' -ForegroundColor Cyan
 
 # Get all files directly without pre-checking existence
-$allFiles = & adb shell "find /storage/emulated/0/Documents/test/audiolearn -type f" 2>$null
+$allFiles = & adb shell "find /storage/emulated/0/Documents/test -type f" 2>$null
 
 $totalFiles = 0
 $successfulFiles = 0
