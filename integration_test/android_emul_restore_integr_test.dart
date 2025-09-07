@@ -918,7 +918,7 @@ void main() {
 
         // Add a delay to allow the audio to reach its end and the next audio
         // to start playing.
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < 17; i++) {
           await Future.delayed(const Duration(seconds: 1));
           await tester.pumpAndSettle();
         }
@@ -1121,7 +1121,7 @@ void main() {
         MockFilePicker mockFilePicker = MockFilePicker();
         FilePicker.platform = mockFilePicker;
 
-        String restorableZipFileName = 'Android local.zip';
+        String restorableZipFileName = 'audioLearn_2025-09-07_07_45_02.zip';
 
         mockFilePicker.setSelectedFiles([
           PlatformFile(
@@ -1149,31 +1149,8 @@ void main() {
         await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
         await tester.pumpAndSettle();
 
-        restorableZipFileName = 'urgent_actus_17-12-2023.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 2655),
-        ]);
-
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          playlistTitlesToDelete: [],
-        );
-
-        // Tap on the 'OK' button of the confirmation dialog
-        await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-        await tester.pumpAndSettle();
-
         const String restorableMp3ZipFileName =
-            'urgent_actus_17-12-2023_mp3_from_2025-08-12_16_29_25_on_2025-08-15_11_23_41.zip';
+            'audioLearn_mp3_from_2025-08-12_16_29_25_on_2025-09-07_07_46_29.zip';
 
         mockFilePicker.setSelectedFiles([
           PlatformFile(
@@ -1183,20 +1160,121 @@ void main() {
               size: 15366672),
         ]);
 
-        const String urgentActusPlaylistTitle = 'urgent_actus_17-12-2023';
+        // Tap the appbar leading popup menu button
+        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+        await tester.pumpAndSettle();
 
-        await IntegrationTestUtil.typeOnPlaylistMenuItem(
-          tester: tester,
-          playlistTitle: urgentActusPlaylistTitle,
-          playlistMenuKeyStr:
-              'popup_menu_restore_playlist_audio_mp3_files_from_zip',
-          dragToBottom: true, // necessary if Flutter emulator is used
-        );
+        // Now tap on the 'Restore Playlists Audio's MP3 from Zip File ...'
+        // menu item
+        await tester.tap(find.byKey(
+            const Key('appBarMenuRestorePlaylistsAudioMp3FilesFromZip')));
+        await tester.pumpAndSettle();
 
         // Now find the 'Ok' button of the SetValueToTarget dialog
         // and tap on it
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
         await tester.pumpAndSettle();
+
+        const String selectedPlaylistTitle = 'urgent_actus_17-12-2023';
+        const String localPlaylistTitle = 'local';
+
+        const String fileName_1 =
+            "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3";
+        const String fileName_2 =
+            "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3";
+        const String fileName_3 =
+            "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3";
+        const String fileName_4 = "aaa.mp3";
+        const String fileName_5 = "bbb.mp3";
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: fileName_1,
+              path:
+                  "$kPlaylistDownloadRootPathAndroidTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_1",
+              size: 176640),
+          PlatformFile(
+              name: fileName_2,
+              path:
+                  "$kPlaylistDownloadRootPathAndroidTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_2",
+              size: 183552),
+          PlatformFile(
+              name: fileName_3,
+              path:
+                  "$kPlaylistDownloadRootPathAndroidTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_3",
+              size: 176640),
+          PlatformFile(
+              name: fileName_4,
+              path:
+                  "$kPlaylistDownloadRootPathAndroidTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_4",
+              size: 15000),
+          PlatformFile(
+              name: fileName_5,
+              path:
+                  "$kPlaylistDownloadRootPathAndroidTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_5",
+              size: 15000),
+        ]);
+
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: localPlaylistTitle,
+          playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
+        );
+
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Audio(s)\n\n\"$fileName_1\",\n\"$fileName_2\",\n\"$fileName_3\",\n\"$fileName_5\"\n\nimported to local playlist \"$localPlaylistTitle\".",
+          isWarningConfirming: true,
+        );
+
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Audio(s)\n\n\"$fileName_4\"\n\nNOT imported to local playlist \"$localPlaylistTitle\" since the playlist directory already contains the audio(s).",
+        );
+
+        // Re-import the same audio's to verify the not imported warning\
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: fileName_1,
+              path:
+                  "$kPlaylistDownloadRootPathAndroidTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_1",
+              size: 176640),
+          PlatformFile(
+              name: fileName_2,
+              path:
+                  "$kPlaylistDownloadRootPathAndroidTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_2",
+              size: 183552),
+          PlatformFile(
+              name: fileName_3,
+              path:
+                  "$kPlaylistDownloadRootPathAndroidTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_3",
+              size: 176640),
+          PlatformFile(
+              name: fileName_4,
+              path:
+                  "$kPlaylistDownloadRootPathAndroidTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_4",
+              size: 175296),
+          PlatformFile(
+              name: fileName_5,
+              path:
+                  "$kPlaylistDownloadRootPathAndroidTest${path.separator}$selectedPlaylistTitle${path.separator}$fileName_5",
+              size: 155136),
+        ]);
+
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: localPlaylistTitle,
+          playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
+        );
+
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Audio(s)\n\n\"$fileName_1\",\n\"$fileName_2\",\n\"$fileName_3\",\n\"$fileName_4\",\n\"$fileName_5\"\n\nNOT imported to local playlist \"$localPlaylistTitle\" since the playlist directory already contains the audio(s).",
+        );
       });
     });
     group('''Convert text to audio.''', () {
