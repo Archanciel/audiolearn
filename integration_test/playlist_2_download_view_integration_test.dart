@@ -4483,6 +4483,8 @@ void main() {
       const String youtubePlaylistTitle = 'S8 audio';
 
       List<String> audioSubTitles = [
+        "0:00:06.9 55 KB converted on 07/09/2025 at 16:55",
+        "0:00:38.9 311 KB imported on 07/09/2025 at 16:52",
         "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
         "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16",
         "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
@@ -4492,15 +4494,21 @@ void main() {
         "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16 Audio downl duration: 0:00:01",
         "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45 Audio downl duration: 0:00:01",
         "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35 Audio downl duration: 0:00:01",
+        "0:00:06.9 55 KB converted on 07/09/2025 at 16:55 Audio downl duration: 0:00:00",
+        "0:00:38.9 311 KB imported on 07/09/2025 at 16:52 Audio downl duration: 0:00:00",
       ];
 
       List<String> audioSubTitlesWithAudioRemainingDuration = [
+        "0:00:06.9 Remaining 00:00:03 Listened on 07/09/2025 at 17:22",
         "0:13:39.0 Remaining 00:00:04 Listened on 19/08/2024 at 14:46",
+        "0:00:38.9 Remaining 00:00:34 Listened on 07/09/2025 at 17:21",
         "0:06:29.0 Remaining 00:00:38 Listened on 16/03/2024 at 17:09",
         "0:06:29.0 Remaining 00:06:29 Not listened",
       ];
 
       List<String> audioSubTitlesLastListenedDateTimeDescending = [
+        "0:00:06.9 Listened on 07/09/2025 at 17:22",
+        "0:00:38.9 Listened on 07/09/2025 at 17:21",
         "0:13:39.0 Listened on 19/08/2024 at 14:46",
         "0:06:29.0 Listened on 16/03/2024 at 17:09",
         "0:06:29.0 Not listened",
@@ -4508,11 +4516,15 @@ void main() {
 
       List<String> audioSubTitlesTitleAsc = [
         "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
+        "0:00:06.9 55 KB converted on 07/09/2025 at 16:55",
         "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
         "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16",
+        "0:00:38.9 311 KB imported on 07/09/2025 at 16:52",
       ];
 
       List<String> audioSubTitlesVideoUploadDate = [
+        "0:00:06.9 Video upload date: 00/00/0000",
+        "0:00:38.9 Video upload date: 00/00/0000",
         "0:06:29.0 Video upload date: 23/09/2023",
         "0:13:39.0 Video upload date: 10/09/2023",
         "0:06:29.0 Video upload date: 12/06/2022",
@@ -4535,13 +4547,13 @@ void main() {
         playlistTitle: youtubePlaylistTitle,
         videoUploadDate: "12/06/2022",
         audioDownloadDateTime: "08/01/2024 16:35",
-        playlistLastDownloadDateTime: "07/01/2024 16:36",
+        playlistLastDownloadDateTime: "07/09/2025 16:55",
         commentCreationDate: '12/10/24',
         commentUpdateDate: '01/11/24',
         datePickerDateStr: DateFormat('dd/MM/yyyy').format(now),
         savePlaylistsAudioMp3DateFormat: "dd/MM/yyyy",
         savePlaylistsAudioMp3OldestDate: "26/12/2023",
-        latestAudioDownloadDate: "10/01/2024",
+        latestAudioDownloadDate: "07/09/2025",
       );
 
       await _selectDateFormat(
@@ -29594,7 +29606,7 @@ Future<void> _verifyDateFormatApplication({
 
   expect(
       find.text(
-          'This is the latest audio download date/time: $latestAudioDownloadDate 18:18.'),
+          'This is the latest audio download date/time: $latestAudioDownloadDate 16:55.'),
       findsOneWidget);
 
   await tester.tap(find.byKey(const Key('warningDialogOkButton')));
