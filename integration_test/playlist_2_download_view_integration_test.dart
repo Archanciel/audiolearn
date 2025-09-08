@@ -4793,6 +4793,8 @@ void main() {
         latestAudioDownloadDate: "07/09/2025",
       );
 
+      // Setting date format to mm/dd/yyyy before restarting the
+      // application
       await _selectDateFormat(
         tester: tester,
         dateFormatToSelectLowCase: "mm/dd/yyyy",
@@ -4830,6 +4832,8 @@ void main() {
       const String youtubePlaylistTitle = 'S8 audio';
 
       List<String> audioSubTitles = [
+        "0:00:06.9 55 KB converted on 09/07/2025 at 16:55",
+        "0:00:38.9 311 KB imported on 09/07/2025 at 16:52",
         "0:06:29.0 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35",
         "0:13:39.0 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16",
         "0:06:29.0 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45",
@@ -4839,15 +4843,21 @@ void main() {
         "0:13:39.0 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16 Audio downl duration: 0:00:01",
         "0:06:29.0 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45 Audio downl duration: 0:00:01",
         "0:06:29.0 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35 Audio downl duration: 0:00:01",
+        "0:00:06.9 55 KB converted on 09/07/2025 at 16:55 Audio downl duration: 0:00:00",
+        "0:00:38.9 311 KB imported on 09/07/2025 at 16:52 Audio downl duration: 0:00:00",
       ];
 
       List<String> audioSubTitlesWithAudioRemainingDuration = [
+        "0:00:06.9 Remaining 00:00:03 Listened on 09/07/2025 at 17:22",
         "0:13:39.0 Remaining 00:00:04 Listened on 08/19/2024 at 14:46",
+        "0:00:38.9 Remaining 00:00:34 Listened on 09/07/2025 at 17:21",
         "0:06:29.0 Remaining 00:00:38 Listened on 03/16/2024 at 17:09",
         "0:06:29.0 Remaining 00:06:29 Not listened",
       ];
 
       List<String> audioSubTitlesLastListenedDateTimeDescending = [
+        "0:00:06.9 Listened on 09/07/2025 at 17:22",
+        "0:00:38.9 Listened on 09/07/2025 at 17:21",
         "0:13:39.0 Listened on 08/19/2024 at 14:46",
         "0:06:29.0 Listened on 03/16/2024 at 17:09",
         "0:06:29.0 Not listened",
@@ -4855,11 +4865,15 @@ void main() {
 
       List<String> audioSubTitlesTitleAsc = [
         "0:06:29.0 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45",
+        "0:00:06.9 55 KB converted on 09/07/2025 at 16:55",
         "0:06:29.0 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35",
         "0:13:39.0 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16",
+        "0:00:38.9 311 KB imported on 09/07/2025 at 16:52",
       ];
 
       List<String> audioSubTitlesVideoUploadDate = [
+        "0:00:06.9 Video upload date: 00/00/0000",
+        "0:00:38.9 Video upload date: 00/00/0000",
         "0:06:29.0 Video upload date: 09/23/2023",
         "0:13:39.0 Video upload date: 09/10/2023",
         "0:06:29.0 Video upload date: 06/12/2022",
@@ -4880,13 +4894,13 @@ void main() {
         playlistTitle: youtubePlaylistTitle,
         videoUploadDate: "06/12/2022",
         audioDownloadDateTime: "01/08/2024 16:35",
-        playlistLastDownloadDateTime: "01/07/2024 16:36",
+        playlistLastDownloadDateTime: "09/07/2025 16:55",
         commentCreationDate: '10/12/24',
         commentUpdateDate: '11/01/24',
         datePickerDateStr: DateFormat('MM/dd/yyyy').format(now),
         savePlaylistsAudioMp3DateFormat: "MM/dd/yyyy",
         savePlaylistsAudioMp3OldestDate: "12/26/2023",
-        latestAudioDownloadDate: "01/10/2024",
+        latestAudioDownloadDate: "09/07/2025",
       );
 
       await _selectDateFormat(
@@ -4925,6 +4939,8 @@ void main() {
       const String youtubePlaylistTitle = 'S8 audio';
 
       List<String> audioSubTitles = [
+        "0:00:06.9 55 KB converted on 2025/09/07 at 16:55",
+        "0:00:38.9 311 KB imported on 2025/09/07 at 16:52",
         "0:06:29.0 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35",
         "0:13:39.0 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16",
         "0:06:29.0 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45",
@@ -4934,15 +4950,21 @@ void main() {
         "0:13:39.0 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16 Audio downl duration: 0:00:01",
         "0:06:29.0 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45 Audio downl duration: 0:00:01",
         "0:06:29.0 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35 Audio downl duration: 0:00:01",
+        "0:00:06.9 55 KB converted on 2025/09/07 at 16:55 Audio downl duration: 0:00:00",
+        "0:00:38.9 311 KB imported on 2025/09/07 at 16:52 Audio downl duration: 0:00:00",
       ];
 
       List<String> audioSubTitlesWithAudioRemainingDuration = [
+        "0:00:06.9 Remaining 00:00:03 Listened on 2025/09/07 at 17:22",
         "0:13:39.0 Remaining 00:00:04 Listened on 2024/08/19 at 14:46",
+        "0:00:38.9 Remaining 00:00:34 Listened on 2025/09/07 at 17:21",
         "0:06:29.0 Remaining 00:00:38 Listened on 2024/03/16 at 17:09",
         "0:06:29.0 Remaining 00:06:29 Not listened",
       ];
 
       List<String> audioSubTitlesLastListenedDateTimeDescending = [
+        "0:00:06.9 Listened on 2025/09/07 at 17:22",
+        "0:00:38.9 Listened on 2025/09/07 at 17:21",
         "0:13:39.0 Listened on 2024/08/19 at 14:46",
         "0:06:29.0 Listened on 2024/03/16 at 17:09",
         "0:06:29.0 Not listened",
@@ -4950,17 +4972,21 @@ void main() {
 
       List<String> audioSubTitlesTitleAsc = [
         "0:06:29.0 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45",
+        "0:00:06.9 55 KB converted on 2025/09/07 at 16:55",
         "0:06:29.0 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35",
         "0:13:39.0 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16",
+        "0:00:38.9 311 KB imported on 2025/09/07 at 16:52",
       ];
 
       List<String> audioSubTitlesVideoUploadDate = [
+        "0:00:06.9 Video upload date: 0000/00/00",
+        "0:00:38.9 Video upload date: 0000/00/00",
         "0:06:29.0 Video upload date: 2023/09/23",
         "0:13:39.0 Video upload date: 2023/09/10",
         "0:06:29.0 Video upload date: 2022/06/12",
       ];
 
-      // Verifying initial dd/MM/yyyy date format application
+      // Verifying initial yyyy/MM/dd date format application
       await _verifyDateFormatApplication(
         tester: tester,
         audioSubTitles: audioSubTitles,
@@ -4975,13 +5001,13 @@ void main() {
         playlistTitle: youtubePlaylistTitle,
         videoUploadDate: "2022/06/12",
         audioDownloadDateTime: "2024/01/08 16:35",
-        playlistLastDownloadDateTime: "2024/01/07 16:36",
+        playlistLastDownloadDateTime: "2025/09/07 16:55",
         commentCreationDate: '24/10/12',
         commentUpdateDate: '24/11/01',
         datePickerDateStr: DateFormat('yyyy/MM/dd').format(now),
         savePlaylistsAudioMp3DateFormat: "yyyy/MM/dd",
         savePlaylistsAudioMp3OldestDate: "2023/12/26",
-        latestAudioDownloadDate: "2024/01/10",
+        latestAudioDownloadDate: "2025/09/07",
       );
 
       await _selectDateFormat(
@@ -5013,13 +5039,13 @@ void main() {
       await app.main();
       await tester.pumpAndSettle();
 
-      DateTime now = DateTime.now();
-
       // The app was restarted after that 'dd/mm/yyyy' date format was set
 
       const String youtubePlaylistTitle = 'S8 audio';
 
       List<String> audioSubTitles = [
+        "0:00:06.9 55 KB converted on 07/09/2025 at 16:55",
+        "0:00:38.9 311 KB imported on 07/09/2025 at 16:52",
         "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
         "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16",
         "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
@@ -5029,15 +5055,21 @@ void main() {
         "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16 Audio downl duration: 0:00:01",
         "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45 Audio downl duration: 0:00:01",
         "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35 Audio downl duration: 0:00:01",
+        "0:00:06.9 55 KB converted on 07/09/2025 at 16:55 Audio downl duration: 0:00:00",
+        "0:00:38.9 311 KB imported on 07/09/2025 at 16:52 Audio downl duration: 0:00:00",
       ];
 
       List<String> audioSubTitlesWithAudioRemainingDuration = [
+        "0:00:06.9 Remaining 00:00:03 Listened on 07/09/2025 at 17:22",
         "0:13:39.0 Remaining 00:00:04 Listened on 19/08/2024 at 14:46",
+        "0:00:38.9 Remaining 00:00:34 Listened on 07/09/2025 at 17:21",
         "0:06:29.0 Remaining 00:00:38 Listened on 16/03/2024 at 17:09",
         "0:06:29.0 Remaining 00:06:29 Not listened",
       ];
 
       List<String> audioSubTitlesLastListenedDateTimeDescending = [
+        "0:00:06.9 Listened on 07/09/2025 at 17:22",
+        "0:00:38.9 Listened on 07/09/2025 at 17:21",
         "0:13:39.0 Listened on 19/08/2024 at 14:46",
         "0:06:29.0 Listened on 16/03/2024 at 17:09",
         "0:06:29.0 Not listened",
@@ -5045,15 +5077,21 @@ void main() {
 
       List<String> audioSubTitlesTitleAsc = [
         "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
+        "0:00:06.9 55 KB converted on 07/09/2025 at 16:55",
         "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
         "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16",
+        "0:00:38.9 311 KB imported on 07/09/2025 at 16:52",
       ];
 
       List<String> audioSubTitlesVideoUploadDate = [
+        "0:00:06.9 Video upload date: 00/00/0000",
+        "0:00:38.9 Video upload date: 00/00/0000",
         "0:06:29.0 Video upload date: 23/09/2023",
         "0:13:39.0 Video upload date: 10/09/2023",
         "0:06:29.0 Video upload date: 12/06/2022",
       ];
+
+      DateTime now = DateTime.now();
 
       // Verifying initial dd/MM/yyyy date format application
       await _verifyDateFormatApplication(
@@ -5070,13 +5108,13 @@ void main() {
         playlistTitle: youtubePlaylistTitle,
         videoUploadDate: "12/06/2022",
         audioDownloadDateTime: "08/01/2024 16:35",
-        playlistLastDownloadDateTime: "07/01/2024 16:36",
+        playlistLastDownloadDateTime: "07/09/2025 16:55",
         commentCreationDate: '12/10/24',
         commentUpdateDate: '01/11/24',
         datePickerDateStr: DateFormat('dd/MM/yyyy').format(now),
         savePlaylistsAudioMp3DateFormat: "dd/MM/yyyy",
         savePlaylistsAudioMp3OldestDate: "26/12/2023",
-        latestAudioDownloadDate: "10/01/2024",
+        latestAudioDownloadDate: "07/09/2025",
       );
 
       // Purge the test playlist directory so that the created test
