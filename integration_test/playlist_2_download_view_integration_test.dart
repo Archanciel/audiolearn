@@ -4643,6 +4643,8 @@ void main() {
       );
 
       audioSubTitles = [
+        "0:00:06.9 55 KB converted on 2025/09/07 at 16:55",
+        "0:00:38.9 311 KB imported on 2025/09/07 at 16:52",
         "0:06:29.0 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35",
         "0:13:39.0 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16",
         "0:06:29.0 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45",
@@ -4652,15 +4654,21 @@ void main() {
         "0:13:39.0 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16 Audio downl duration: 0:00:01",
         "0:06:29.0 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45 Audio downl duration: 0:00:01",
         "0:06:29.0 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35 Audio downl duration: 0:00:01",
+        "0:00:06.9 55 KB converted on 2025/09/07 at 16:55 Audio downl duration: 0:00:00",
+        "0:00:38.9 311 KB imported on 2025/09/07 at 16:52 Audio downl duration: 0:00:00",
       ];
 
       audioSubTitlesWithAudioRemainingDuration = [
+        "0:00:06.9 Remaining 00:00:03 Listened on 2025/09/07 at 17:22",
         "0:13:39.0 Remaining 00:00:04 Listened on 2024/08/19 at 14:46",
+        "0:00:38.9 Remaining 00:00:34 Listened on 2025/09/07 at 17:21",
         "0:06:29.0 Remaining 00:00:38 Listened on 2024/03/16 at 17:09",
         "0:06:29.0 Remaining 00:06:29 Not listened",
       ];
 
       audioSubTitlesLastListenedDateTimeDescending = [
+        "0:00:06.9 Listened on 2025/09/07 at 17:22",
+        "0:00:38.9 Listened on 2025/09/07 at 17:21",
         "0:13:39.0 Listened on 2024/08/19 at 14:46",
         "0:06:29.0 Listened on 2024/03/16 at 17:09",
         "0:06:29.0 Not listened",
@@ -4668,11 +4676,15 @@ void main() {
 
       audioSubTitlesTitleAsc = [
         "0:06:29.0 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45",
+        "0:00:06.9 55 KB converted on 2025/09/07 at 16:55",
         "0:06:29.0 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35",
         "0:13:39.0 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16",
+        "0:00:38.9 311 KB imported on 2025/09/07 at 16:52",
       ];
 
       audioSubTitlesVideoUploadDate = [
+        "0:00:06.9 Video upload date: 0000/00/00",
+        "0:00:38.9 Video upload date: 0000/00/00",
         "0:06:29.0 Video upload date: 2023/09/23",
         "0:13:39.0 Video upload date: 2023/09/10",
         "0:06:29.0 Video upload date: 2022/06/12",
@@ -4693,13 +4705,13 @@ void main() {
         playlistTitle: youtubePlaylistTitle,
         videoUploadDate: "2022/06/12",
         audioDownloadDateTime: "2024/01/08 16:35",
-        playlistLastDownloadDateTime: "2024/01/07 16:36",
+        playlistLastDownloadDateTime: "2025/09/07 16:55",
         commentCreationDate: '24/10/12',
         commentUpdateDate: '24/11/01',
         datePickerDateStr: DateFormat('yyyy/MM/dd').format(now),
         savePlaylistsAudioMp3DateFormat: "yyyy/MM/dd",
         savePlaylistsAudioMp3OldestDate: "2023/12/26",
-        latestAudioDownloadDate: "2024/01/10",
+        latestAudioDownloadDate: "2025/09/07",
       );
 
       await _selectDateFormat(
