@@ -4530,6 +4530,14 @@ void main() {
         "0:06:29.0 Video upload date: 12/06/2022",
       ];
 
+      List<String> audioSubTitlesWithAudioDownloadSpeed = [
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16 Audio downl duration: 0:00:01",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35 Audio downl duration: 0:00:01",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45 Audio downl duration: 0:00:01",
+        "0:00:06.9 55 KB converted on 07/09/2025 at 16:55",
+        "0:00:38.9 311 KB imported on 07/09/2025 at 16:52",
+      ];
+
       DateTime now = DateTime.now();
 
       // Verifying initial dd/MM/yyyy date format application
