@@ -4531,9 +4531,9 @@ void main() {
       ];
 
       List<String> audioSubTitlesWithAudioDownloadSpeed = [
-        "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16 Audio downl duration: 0:00:01",
-        "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35 Audio downl duration: 0:00:01",
-        "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45 Audio downl duration: 0:00:01",
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
         "0:00:06.9 55 KB converted on 07/09/2025 at 16:55",
         "0:00:38.9 311 KB imported on 07/09/2025 at 16:52",
       ];
@@ -4552,6 +4552,7 @@ void main() {
             audioSubTitlesLastListenedDateTimeDescending,
         audioSubTitlesTitleAsc: audioSubTitlesTitleAsc,
         audioSubTitlesVideoUploadDate: audioSubTitlesVideoUploadDate,
+        audioSubTitlesWithAudioDownloadSpeed: audioSubTitlesWithAudioDownloadSpeed,
         playlistTitle: youtubePlaylistTitle,
         videoUploadDate: "12/06/2022",
         audioDownloadDateTime: "08/01/2024 16:35",
@@ -4619,6 +4620,14 @@ void main() {
         "0:06:29.0 Video upload date: 06/12/2022",
       ];
 
+      audioSubTitlesWithAudioDownloadSpeed = [
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45",
+        "0:00:06.9 55 KB converted on 09/07/2025 at 16:55",
+        "0:00:38.9 311 KB imported on 09/07/2025 at 16:52",
+      ];
+
       // Verifying initial MM/dd/yyyy date format application
       await _verifyDateFormatApplication(
         tester: tester,
@@ -4631,6 +4640,7 @@ void main() {
             audioSubTitlesLastListenedDateTimeDescending,
         audioSubTitlesTitleAsc: audioSubTitlesTitleAsc,
         audioSubTitlesVideoUploadDate: audioSubTitlesVideoUploadDate,
+        audioSubTitlesWithAudioDownloadSpeed: audioSubTitlesWithAudioDownloadSpeed,
         playlistTitle: youtubePlaylistTitle,
         videoUploadDate: "06/12/2022",
         audioDownloadDateTime: "01/08/2024 16:35",
@@ -4698,6 +4708,14 @@ void main() {
         "0:06:29.0 Video upload date: 2022/06/12",
       ];
 
+      audioSubTitlesWithAudioDownloadSpeed = [
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45",
+        "0:00:06.9 55 KB converted on 2025/09/07 at 16:55",
+        "0:00:38.9 311 KB imported on 2025/09/07 at 16:52",
+      ];
+
       // Verifying initial yyyy/MM/dd date format application
       await _verifyDateFormatApplication(
         tester: tester,
@@ -4710,6 +4728,7 @@ void main() {
             audioSubTitlesLastListenedDateTimeDescending,
         audioSubTitlesTitleAsc: audioSubTitlesTitleAsc,
         audioSubTitlesVideoUploadDate: audioSubTitlesVideoUploadDate,
+        audioSubTitlesWithAudioDownloadSpeed: audioSubTitlesWithAudioDownloadSpeed,
         playlistTitle: youtubePlaylistTitle,
         videoUploadDate: "2022/06/12",
         audioDownloadDateTime: "2024/01/08 16:35",
@@ -4777,6 +4796,14 @@ void main() {
         "0:06:29.0 Video upload date: 12/06/2022",
       ];
 
+      audioSubTitlesWithAudioDownloadSpeed = [
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
+        "0:00:06.9 55 KB converted on 07/09/2025 at 16:55",
+        "0:00:38.9 311 KB imported on 07/09/2025 at 16:52",
+      ];
+
       // Verifying initial dd/MM/yyyy date format application
       await _verifyDateFormatApplication(
         tester: tester,
@@ -4789,6 +4816,7 @@ void main() {
             audioSubTitlesLastListenedDateTimeDescending,
         audioSubTitlesTitleAsc: audioSubTitlesTitleAsc,
         audioSubTitlesVideoUploadDate: audioSubTitlesVideoUploadDate,
+        audioSubTitlesWithAudioDownloadSpeed: audioSubTitlesWithAudioDownloadSpeed,
         playlistTitle: youtubePlaylistTitle,
         videoUploadDate: "12/06/2022",
         audioDownloadDateTime: "08/01/2024 16:35",
@@ -4887,6 +4915,14 @@ void main() {
         "0:06:29.0 Video upload date: 06/12/2022",
       ];
 
+      List<String> audioSubTitlesWithAudioDownloadSpeed = [
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45",
+        "0:00:06.9 55 KB converted on 09/07/2025 at 16:55",
+        "0:00:38.9 311 KB imported on 09/07/2025 at 16:52",
+      ];
+
       // Verifying initial MM/dd/yyyy date format application
       await _verifyDateFormatApplication(
         tester: tester,
@@ -4899,6 +4935,7 @@ void main() {
             audioSubTitlesLastListenedDateTimeDescending,
         audioSubTitlesTitleAsc: audioSubTitlesTitleAsc,
         audioSubTitlesVideoUploadDate: audioSubTitlesVideoUploadDate,
+        audioSubTitlesWithAudioDownloadSpeed: audioSubTitlesWithAudioDownloadSpeed,
         playlistTitle: youtubePlaylistTitle,
         videoUploadDate: "06/12/2022",
         audioDownloadDateTime: "01/08/2024 16:35",
@@ -4994,6 +5031,14 @@ void main() {
         "0:06:29.0 Video upload date: 2022/06/12",
       ];
 
+      List<String> audioSubTitlesWithAudioDownloadSpeed = [
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45",
+        "0:00:06.9 55 KB converted on 2025/09/07 at 16:55",
+        "0:00:38.9 311 KB imported on 2025/09/07 at 16:52",
+      ];
+
       // Verifying initial yyyy/MM/dd date format application
       await _verifyDateFormatApplication(
         tester: tester,
@@ -5006,6 +5051,7 @@ void main() {
             audioSubTitlesLastListenedDateTimeDescending,
         audioSubTitlesTitleAsc: audioSubTitlesTitleAsc,
         audioSubTitlesVideoUploadDate: audioSubTitlesVideoUploadDate,
+        audioSubTitlesWithAudioDownloadSpeed: audioSubTitlesWithAudioDownloadSpeed,
         playlistTitle: youtubePlaylistTitle,
         videoUploadDate: "2022/06/12",
         audioDownloadDateTime: "2024/01/08 16:35",
@@ -5099,6 +5145,14 @@ void main() {
         "0:06:29.0 Video upload date: 12/06/2022",
       ];
 
+      List<String> audioSubTitlesWithAudioDownloadSpeed = [
+        "0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16",
+        "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
+        "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
+        "0:00:06.9 55 KB converted on 07/09/2025 at 16:55",
+        "0:00:38.9 311 KB imported on 07/09/2025 at 16:52",
+      ];
+
       DateTime now = DateTime.now();
 
       // Verifying initial dd/MM/yyyy date format application
@@ -5113,6 +5167,7 @@ void main() {
             audioSubTitlesLastListenedDateTimeDescending,
         audioSubTitlesTitleAsc: audioSubTitlesTitleAsc,
         audioSubTitlesVideoUploadDate: audioSubTitlesVideoUploadDate,
+        audioSubTitlesWithAudioDownloadSpeed: audioSubTitlesWithAudioDownloadSpeed,
         playlistTitle: youtubePlaylistTitle,
         videoUploadDate: "12/06/2022",
         audioDownloadDateTime: "08/01/2024 16:35",
@@ -29390,6 +29445,7 @@ Future<void> _verifyDateFormatApplication({
   required List<String> audioSubTitlesLastListenedDateTimeDescending,
   required List<String> audioSubTitlesTitleAsc,
   required List<String> audioSubTitlesVideoUploadDate,
+  required List<String> audioSubTitlesWithAudioDownloadSpeed,
   required String playlistTitle,
   required String videoUploadDate,
   required audioDownloadDateTime,
@@ -29563,6 +29619,14 @@ Future<void> _verifyDateFormatApplication({
     tester: tester,
     sortFilterParms: 'video upl date',
     audioSubTitles: audioSubTitlesVideoUploadDate,
+  );
+
+  // Now, selecting 'downl speed' dropdown button item to
+  // apply this sort/filter parms
+  await _selectApplyAndVerifySortFilterParms(
+    tester: tester,
+    sortFilterParms: 'downl speed',
+    audioSubTitles: audioSubTitlesWithAudioDownloadSpeed,
   );
 
   // Reset 'default' sort/filter parm
