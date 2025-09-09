@@ -4552,7 +4552,8 @@ void main() {
             audioSubTitlesLastListenedDateTimeDescending,
         audioSubTitlesTitleAsc: audioSubTitlesTitleAsc,
         audioSubTitlesVideoUploadDate: audioSubTitlesVideoUploadDate,
-        audioSubTitlesWithAudioDownloadSpeed: audioSubTitlesWithAudioDownloadSpeed,
+        audioSubTitlesWithAudioDownloadSpeed:
+            audioSubTitlesWithAudioDownloadSpeed,
         playlistTitle: youtubePlaylistTitle,
         videoUploadDate: "12/06/2022",
         audioDownloadDateTime: "08/01/2024 16:35",
@@ -4640,7 +4641,8 @@ void main() {
             audioSubTitlesLastListenedDateTimeDescending,
         audioSubTitlesTitleAsc: audioSubTitlesTitleAsc,
         audioSubTitlesVideoUploadDate: audioSubTitlesVideoUploadDate,
-        audioSubTitlesWithAudioDownloadSpeed: audioSubTitlesWithAudioDownloadSpeed,
+        audioSubTitlesWithAudioDownloadSpeed:
+            audioSubTitlesWithAudioDownloadSpeed,
         playlistTitle: youtubePlaylistTitle,
         videoUploadDate: "06/12/2022",
         audioDownloadDateTime: "01/08/2024 16:35",
@@ -4728,7 +4730,8 @@ void main() {
             audioSubTitlesLastListenedDateTimeDescending,
         audioSubTitlesTitleAsc: audioSubTitlesTitleAsc,
         audioSubTitlesVideoUploadDate: audioSubTitlesVideoUploadDate,
-        audioSubTitlesWithAudioDownloadSpeed: audioSubTitlesWithAudioDownloadSpeed,
+        audioSubTitlesWithAudioDownloadSpeed:
+            audioSubTitlesWithAudioDownloadSpeed,
         playlistTitle: youtubePlaylistTitle,
         videoUploadDate: "2022/06/12",
         audioDownloadDateTime: "2024/01/08 16:35",
@@ -4816,7 +4819,8 @@ void main() {
             audioSubTitlesLastListenedDateTimeDescending,
         audioSubTitlesTitleAsc: audioSubTitlesTitleAsc,
         audioSubTitlesVideoUploadDate: audioSubTitlesVideoUploadDate,
-        audioSubTitlesWithAudioDownloadSpeed: audioSubTitlesWithAudioDownloadSpeed,
+        audioSubTitlesWithAudioDownloadSpeed:
+            audioSubTitlesWithAudioDownloadSpeed,
         playlistTitle: youtubePlaylistTitle,
         videoUploadDate: "12/06/2022",
         audioDownloadDateTime: "08/01/2024 16:35",
@@ -4935,7 +4939,8 @@ void main() {
             audioSubTitlesLastListenedDateTimeDescending,
         audioSubTitlesTitleAsc: audioSubTitlesTitleAsc,
         audioSubTitlesVideoUploadDate: audioSubTitlesVideoUploadDate,
-        audioSubTitlesWithAudioDownloadSpeed: audioSubTitlesWithAudioDownloadSpeed,
+        audioSubTitlesWithAudioDownloadSpeed:
+            audioSubTitlesWithAudioDownloadSpeed,
         playlistTitle: youtubePlaylistTitle,
         videoUploadDate: "06/12/2022",
         audioDownloadDateTime: "01/08/2024 16:35",
@@ -5051,7 +5056,8 @@ void main() {
             audioSubTitlesLastListenedDateTimeDescending,
         audioSubTitlesTitleAsc: audioSubTitlesTitleAsc,
         audioSubTitlesVideoUploadDate: audioSubTitlesVideoUploadDate,
-        audioSubTitlesWithAudioDownloadSpeed: audioSubTitlesWithAudioDownloadSpeed,
+        audioSubTitlesWithAudioDownloadSpeed:
+            audioSubTitlesWithAudioDownloadSpeed,
         playlistTitle: youtubePlaylistTitle,
         videoUploadDate: "2022/06/12",
         audioDownloadDateTime: "2024/01/08 16:35",
@@ -5167,7 +5173,8 @@ void main() {
             audioSubTitlesLastListenedDateTimeDescending,
         audioSubTitlesTitleAsc: audioSubTitlesTitleAsc,
         audioSubTitlesVideoUploadDate: audioSubTitlesVideoUploadDate,
-        audioSubTitlesWithAudioDownloadSpeed: audioSubTitlesWithAudioDownloadSpeed,
+        audioSubTitlesWithAudioDownloadSpeed:
+            audioSubTitlesWithAudioDownloadSpeed,
         playlistTitle: youtubePlaylistTitle,
         videoUploadDate: "12/06/2022",
         audioDownloadDateTime: "08/01/2024 16:35",
@@ -15678,8 +15685,7 @@ void main() {
             actualMessage,
             contains(
                 "Total saved audio number: 3, total size: 15.49 MB and total duration: 0:22:38.0."));
-        expect(
-            actualMessage, contains("Save operation real duration: 0:00:"));
+        expect(actualMessage, contains("Save operation real duration: 0:00:"));
         expect(actualMessage, contains("number of bytes saved per second: "));
         expect(actualMessage, contains("number of created ZIP file(s): 1."));
         expect(
@@ -25452,6 +25458,66 @@ void main() {
           );
         });
       });
+    });
+  });
+  group('Restore audio MP3 files from MP3 zip file', () {
+    testWidgets(
+        '''Restore Playlist Audio's MP3 from Zip File ... playlist item menu selecting a unique playlist
+           MP3 zip file. First, on empty app dir, restore unique playlist Windows zip containing 
+           urgent_actus_17-12-2023 playlist and then restore unique playlist MP3 zip file containing the
+           audio's of this playlist. The restored audio's are playable.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the integration test data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}restore_existing_playlists_with_new_audios_android_emulator",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      String restorableZipFilePathName =
+          '$kApplicationPathWindowsTest${path.separator}urgent_actus_17-12-2023.zip';
+
+        await app.main();
+        await tester.pumpAndSettle();
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: restorableZipFilePathName,
+            path: restorableZipFilePathName,
+            size: 7460),
+      ]);
+
+      // Execute the 'Restore Playlists, Comments and Settings from Zip
+      // File ...' menu
+      await IntegrationTestUtil.executeRestorePlaylists(
+        tester: tester,
+        doReplaceExistingPlaylists: true,
+      );
+
+      // Verify the displayed warning confirmation dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Restored 1 playlist saved individually, 0 comment and 0 picture JSON files as well as 3 audio reference(s) and 0 added plus 0 modified comment(s) from "$restorableZipFilePathName".',
+        isWarningConfirming: true,
+        warningTitle: 'CONFIRMATION',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
     });
   });
   group('Manage picture for audio', () {
