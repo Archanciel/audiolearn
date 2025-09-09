@@ -2338,4 +2338,20 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get convertedAudioDateTimeLabel => 'Date//heure prem conversion';
+
+  @override
+  String fromMp3ZipFileUsedToRestoreUniquePlaylist(Object zipFilePathNName) {
+    return 'à partir du fichier zip MP3 de playlist unique \"$zipFilePathNName\"';
+  }
+
+  @override
+  String fromMp3ZipFileUsedToRestoreMultiplePlaylists(Object zipFilePathNName) {
+    return 'à partir du fichier zip MP3 de playlists multiples \"$zipFilePathNName\"';
+  }
+
+  @override
+  String confirmMp3RestorationFromMp3Zip(
+      Object audioNNumber, Object playlistsNumber, Object secondMsgPart) {
+    return 'Restauré $audioNNumber audio(s) MP3 dans $playlistsNumber playlist(s) $secondMsgPart.';
+  }
 }

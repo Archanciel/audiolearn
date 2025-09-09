@@ -3713,6 +3713,25 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Converted text first date time'**
   String get convertedAudioDateTimeLabel;
+
+  /// No description provided for @fromMp3ZipFileUsedToRestoreUniquePlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'from the unique playlist MP3 zip file \"{zipFilePathNName}\"'**
+  String fromMp3ZipFileUsedToRestoreUniquePlaylist(Object zipFilePathNName);
+
+  /// No description provided for @fromMp3ZipFileUsedToRestoreMultiplePlaylists.
+  ///
+  /// In en, this message translates to:
+  /// **'from the multiple playlists MP3 zip file \"{zipFilePathNName}\"'**
+  String fromMp3ZipFileUsedToRestoreMultiplePlaylists(Object zipFilePathNName);
+
+  /// No description provided for @confirmMp3RestorationFromMp3Zip.
+  ///
+  /// In en, this message translates to:
+  /// **'Restored {audioNNumber} audio(s) MP3 in {playlistsNumber} playlist(s) {secondMsgPart}.'**
+  String confirmMp3RestorationFromMp3Zip(
+      Object audioNNumber, Object playlistsNumber, Object secondMsgPart);
 }
 
 class _AppLocalizationsDelegate

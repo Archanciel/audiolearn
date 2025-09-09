@@ -190,6 +190,12 @@ enum WarningMessageType {
   // 'Restore Playlist, Comments and Settings from Zip File' menu
   // item located in the appbar leading popup menu.
 
+  mp3RestorationFromMp3Zip, // The case if the user clicks on the
+  // 'Restore Playlists Audio's MP3 from Zip File ...' menu
+  // item located in the appbar leading popup menu or on the
+  // 'Restore Playlist Audio's MP3 from Zip File ...' menu located
+  // in the playlist popup menu.
+
   audioNotImportedToPlaylist, // The case if the user clicks on
   // the import audio to playlist menu item and the audio was not
   // imported to the target playlist since the target playlist
@@ -923,6 +929,28 @@ class WarningMessageVM extends ChangeNotifier {
     _addedCommentNumber = addedCommentNumber;
 
     warningMessageType = WarningMessageType.restoreAppDataFromZip;
+
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  int _restoredMp3Number = 0;
+  int get restoredMp3Number => _restoredMp3Number;
+  bool _wasIndividualPlaylistMp3ZipUsed = false;
+  bool get wasIndividualPlaylistMp3ZipUsed => _wasIndividualPlaylistMp3ZipUsed;
+
+  void confirmMp3RestorationFromMp3Zip({
+    required String zipFilePathName,
+    required int playlistsNumber,
+    required int restoredMp3Number,
+    required bool wasIndividualPlaylistMp3ZipUsed,
+  }) {
+    _zipFilePathName = zipFilePathName;
+    _playlistsNumber = playlistsNumber;
+    _restoredMp3Number = restoredMp3Number;
+    _wasIndividualPlaylistMp3ZipUsed = wasIndividualPlaylistMp3ZipUsed;
+
+    warningMessageType = WarningMessageType.mp3RestorationFromMp3Zip;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();
