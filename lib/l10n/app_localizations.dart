@@ -735,13 +735,13 @@ abstract class AppLocalizations {
   /// No description provided for @displayPlaylistInfo.
   ///
   /// In en, this message translates to:
-  /// **'Playlist Data ...'**
+  /// **'Playlist Information ...'**
   String get displayPlaylistInfo;
 
   /// No description provided for @playlistInfoDialogTitle.
   ///
   /// In en, this message translates to:
-  /// **'Playlist Info'**
+  /// **'Playlist Information'**
   String get playlistInfoDialogTitle;
 
   /// No description provided for @playlistTitleLabel.
