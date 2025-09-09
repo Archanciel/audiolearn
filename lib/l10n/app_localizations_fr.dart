@@ -369,10 +369,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get copyYoutubePlaylistUrl => 'Copier l\'URL de la playlist Youtube';
 
   @override
-  String get displayPlaylistInfo => 'Données de la playlist ...';
+  String get displayPlaylistInfo => 'Informations sur la playlist ...';
 
   @override
-  String get playlistInfoDialogTitle => 'Playlist Informations';
+  String get playlistInfoDialogTitle => 'Informations sur la playlist';
 
   @override
   String get playlistTitleLabel => 'Titre de la playlist';
