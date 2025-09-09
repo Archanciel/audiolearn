@@ -4732,13 +4732,19 @@ class PlaylistListVM extends ChangeNotifier {
   /// Only copies MP3 files that correspond to Audio objects present in the
   /// playlist.playableAudioLst and that don't already exist in the playlist directory.
   ///
-  /// Returns the number of MP3 files that were successfully restored.
-  Future<int> restorePlaylistsAudioMp3FilesFromZip({
+  /// Returns a dynamic list containing
+  ///   the number of MP3 files that were successfully restored
+  ///   the number of playlists to which a MP3 file was restored
+  ///   if the MP3 zip file was a unique playlist restoration (true) or a multiple
+  ///   playlist restoration (false).
+  Future<List<dynamic>> restorePlaylistsAudioMp3FilesFromZip({
     required String zipFilePathName,
     required List<Playlist> listOfPlaylists,
     bool uniquePlaylistIsRestored = false,
   }) async {
     int restoredAudioCount = 0;
+    List<String> playlistTitlesPresentInMp3ZipFileLst = [];
+    List<String> restoredPlaylistTitlesLst = [];
 
     if (uniquePlaylistIsRestored) {
       _audioMp3RestoreUniquePlaylistName = listOfPlaylists[0].title;
@@ -4748,7 +4754,11 @@ class PlaylistListVM extends ChangeNotifier {
     File zipFile = File(zipFilePathName);
 
     if (!zipFile.existsSync()) {
-      return 0;
+      return [
+        0, // No audio restored
+        0, // No playlist in which audio was restored
+        false, // no sense in this case since the MMP3 zip file does not exist
+      ]; // Zip file does not exist
     }
 
     try {
@@ -4788,6 +4798,10 @@ class PlaylistListVM extends ChangeNotifier {
             String playlistTitle = pathParts[1];
             String audioFileName = pathParts[2];
 
+            if (!playlistTitlesPresentInMp3ZipFileLst.contains(playlistTitle)) {
+              playlistTitlesPresentInMp3ZipFileLst.add(playlistTitle);
+            }
+
             // Find the corresponding playlist
             Playlist? playlist = playlistMap[playlistTitle];
 
@@ -4820,6 +4834,9 @@ class PlaylistListVM extends ChangeNotifier {
                     List<int> fileBytes = file.content as List<int>;
                     await targetFile.writeAsBytes(fileBytes);
 
+                    if (!restoredPlaylistTitlesLst.contains(playlistTitle)) {
+                      restoredPlaylistTitlesLst.add(playlistTitle);
+                    }
                     restoredAudioCount++;
                   } catch (e) {
                     // Log error but continue with other files
@@ -4840,7 +4857,12 @@ class PlaylistListVM extends ChangeNotifier {
       _logger.i('Error processing ZIP file $zipFilePathName: $e');
     }
 
-    return restoredAudioCount;
+    return [
+      restoredAudioCount,
+      restoredPlaylistTitlesLst.length,
+      playlistTitlesPresentInMp3ZipFileLst.length == 1 // true if the MP3 zip file is
+      //                                                  a unique playlist zip file
+    ];
   }
 
   /// Method called when the user clicks on the 'Rewind audio to start' playlist
@@ -4859,9 +4881,8 @@ class PlaylistListVM extends ChangeNotifier {
     // sort/filter parameters applied to the audio player view.
     List<Audio> audioPlayerViewAudioLst =
         getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
-      audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
-      playlist: playlist
-    );
+            audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+            playlist: playlist);
 
     int rewindedAudioNumber = 0;
 

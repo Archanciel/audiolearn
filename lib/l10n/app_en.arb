@@ -1080,5 +1080,8 @@
   "convertTextToAudioHelpContent": "{brace_1}A text with a character that introduces a 1-second silence. At the beginning of the text, 2 seconds of silence are added. {brace_2} Before this sentence, 4 seconds of silence are introduced. {brace_3} Here, one second of silence. This character was chosen because it is not normally used in writing.",
   "textToSpeech": "converted",
   "audioTextToSpeechInfoDialogTitle": "Converted Audio Info",
-  "convertedAudioDateTimeLabel": "Converted text first date time"
+  "convertedAudioDateTimeLabel": "Converted text first date time",
+  "fromMp3ZipFileUsedToRestoreUniquePlaylist": "from the unique playlist MP3 zip file \"{zipFilePathNName}\"",
+  "fromMp3ZipFileUsedToRestoreMultiplePlaylists": "from the multiple playlists MP3 zip file \"{zipFilePathNName}\"",
+  "confirmMp3RestorationFromMp3Zip": "Restored {audioNNumber} audio(s) MP3 in {playlistsNumber} playlist(s) {secondMsgPart}."
 }

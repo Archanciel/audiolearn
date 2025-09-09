@@ -2313,4 +2313,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get convertedAudioDateTimeLabel => 'Converted text first date time';
+
+  @override
+  String fromMp3ZipFileUsedToRestoreUniquePlaylist(Object zipFilePathNName) {
+    return 'from the unique playlist MP3 zip file \"$zipFilePathNName\"';
+  }
+
+  @override
+  String fromMp3ZipFileUsedToRestoreMultiplePlaylists(Object zipFilePathNName) {
+    return 'from the multiple playlists MP3 zip file \"$zipFilePathNName\"';
+  }
+
+  @override
+  String confirmMp3RestorationFromMp3Zip(
+      Object audioNNumber, Object playlistsNumber, Object secondMsgPart) {
+    return 'Restored $audioNNumber audio(s) MP3 in $playlistsNumber playlist(s) $secondMsgPart.';
+  }
 }

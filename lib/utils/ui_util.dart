@@ -170,13 +170,24 @@ class UiUtil {
       return;
     }
 
-    await Provider.of<PlaylistListVM>(
+    List<dynamic> resultLst = await Provider.of<PlaylistListVM>(
       context,
       listen: false,
     ).restorePlaylistsAudioMp3FilesFromZip(
       zipFilePathName: selectedZipFilePathName,
       listOfPlaylists: playlistsLst,
       uniquePlaylistIsRestored: uniquePlaylistIsRestored,
+    );
+
+    int restoredAudioCount = resultLst[0];
+    int restoredPlaylistCount = resultLst[1];
+    bool uniquePlaylistMp3ZipFileWasRestored = resultLst[2];
+
+    warningMessageVMlistenFalse.confirmMp3RestorationFromMp3Zip(
+      zipFilePathName: selectedZipFilePathName,
+      restoredMp3Number: restoredAudioCount,
+      playlistsNumber: restoredPlaylistCount,
+      wasIndividualPlaylistMp3ZipUsed: uniquePlaylistMp3ZipFileWasRestored,
     );
   }
 

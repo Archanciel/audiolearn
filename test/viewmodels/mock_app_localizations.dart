@@ -2396,4 +2396,24 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get convertedCheckbox => "Converted";
+
+  @override
+  String fromMp3ZipFileUsedToRestoreUniquePlaylist(
+    Object zipFilePathNName,
+  ) =>
+      "from the unique playlist MP3 zip file \"$zipFilePathNName\"";
+
+  @override
+  String fromMp3ZipFileUsedToRestoreMultiplePlaylists(
+    Object zipFilePathNName,
+  ) =>
+      "from a multiple playlists MP3 zip file \"$zipFilePathNName\"";
+
+  @override
+  String confirmMp3RestorationFromMp3Zip(
+    Object audioNNumber,
+    Object playlistsNumber,
+    Object secondMsgPart,
+  ) =>
+      "Restored $audioNNumber audio(s) MP3 in $playlistsNumber playlist(s) $secondMsgPart.";
 }
