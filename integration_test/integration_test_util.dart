@@ -367,7 +367,7 @@ class IntegrationTestUtil {
   }) async {
     // Purge the test playlist directory if it exists so that the
     // playlist list is empty
-    DirUtil.deleteFilesInDirAndSubDirs(
+    DirUtil.deleteFilesInDirAndSubDirsWithRetry(
       rootPath: kApplicationPathWindowsTest,
     );
 
