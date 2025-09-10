@@ -14,7 +14,7 @@ enum CopyOrMoveFileResult {
   audioNotKeptInSourcePlaylist,
 }
 
-class DirUtil {  
+class DirUtil {
   static final Logger logger = Logger();
 
   static List<String> readUrlsFromFile(String filePath) {
@@ -297,6 +297,96 @@ class DirUtil {
     }
   }
 
+  /// Delete all the files in the {rootPath} directory and its
+  /// subdirectories. If {deleteSubDirectoriesAsWell} is true,
+  /// the subdirectories and sub subdirectories of {rootPath} are
+  /// deleted as well. The {rootPath} directory itself is not
+  /// deleted.
+  static void deleteFilesInDirAndSubDirsWithRetry({
+    required String rootPath,
+    bool deleteSubDirectoriesAsWell = true,
+    int maxRetries = 5,
+    Duration retryDelay = const Duration(milliseconds: 500),
+  }) {
+    final Directory directory = Directory(rootPath);
+
+    if (!directory.existsSync()) {
+      return; // Directory doesn't exist, nothing to delete
+    }
+
+    // List the contents of the directory and its subdirectories
+    final List<FileSystemEntity> contents = directory.listSync(recursive: true);
+
+    // First, delete all the files with retry logic
+    for (FileSystemEntity entity in contents) {
+      if (entity is File) {
+        _deleteFileWithRetry(
+          entity,
+          maxRetries: maxRetries,
+          retryDelay: retryDelay,
+        );
+      }
+    }
+
+    // Then, delete the directories starting from the innermost ones
+    if (deleteSubDirectoriesAsWell) {
+      final List<Directory> directories =
+          contents.reversed.whereType<Directory>().toList();
+
+      for (Directory dir in directories) {
+        _deleteDirectoryWithRetry(
+          dir,
+          maxRetries: maxRetries,
+          retryDelay: retryDelay,
+        );
+      }
+    }
+  }
+
+  /// Helper method to delete a file with retry logic
+  static void _deleteFileWithRetry(File file,
+      {required int maxRetries, required Duration retryDelay}) {
+    for (int attempt = 0; attempt < maxRetries; attempt++) {
+      try {
+        file.deleteSync();
+        return; // Success
+      } catch (e) {
+        if (attempt == maxRetries - 1) {
+          // Last attempt failed, log and rethrow
+          print(
+              'Failed to delete file ${file.path} after $maxRetries attempts: $e');
+          rethrow;
+        }
+
+        // Wait before retrying with exponential backoff
+        sleep(
+            Duration(milliseconds: retryDelay.inMilliseconds * (attempt + 1)));
+      }
+    }
+  }
+
+  /// Helper method to delete a directory with retry logic
+  static void _deleteDirectoryWithRetry(Directory directory,
+      {required int maxRetries, required Duration retryDelay}) {
+    for (int attempt = 0; attempt < maxRetries; attempt++) {
+      try {
+        directory.deleteSync();
+        return; // Success
+      } catch (e) {
+        if (attempt == maxRetries - 1) {
+          // Last attempt failed, log and rethrow
+          print(
+              'Failed to delete directory ${directory.path} after $maxRetries attempts: $e');
+          rethrow;
+        }
+
+        // Wait before retrying with exponential backoff
+        sleep(
+            Duration(milliseconds: retryDelay.inMilliseconds * (attempt + 1)));
+      }
+    }
+  }
+
   static void deleteFileIfExist({
     required String pathFileName,
   }) {
@@ -362,7 +452,8 @@ class DirUtil {
     }
 
     if (!targetDirectory.existsSync()) {
-      logger.i('Target directory $destinationRootPath does not exist. Creating...');
+      logger.i(
+          'Target directory $destinationRootPath does not exist. Creating...');
       targetDirectory.createSync(recursive: true);
     }
 
