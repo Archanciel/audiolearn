@@ -26969,7 +26969,7 @@ void main() {
       // AudioDownloadVM is used, the download will be simulated and
       // will not take time.
       for (int i = 0; i < 10; i++) {
-        await Future.delayed(const Duration(milliseconds: 700));
+        await Future.delayed(const Duration(milliseconds: 1000));
         await tester.pumpAndSettle();
       }
 
@@ -28216,7 +28216,7 @@ void main() {
           find.byKey(const Key('textToConvertTextField'));
 
       await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Verify the text was entered
       expect(find.text(enteredFileNameNoExt), findsOneWidget);
