@@ -26969,7 +26969,7 @@ void main() {
       // AudioDownloadVM is used, the download will be simulated and
       // will not take time.
       for (int i = 0; i < 10; i++) {
-        await Future.delayed(const Duration(milliseconds: 500));
+        await Future.delayed(const Duration(milliseconds: 700));
         await tester.pumpAndSettle();
       }
 
@@ -27044,7 +27044,7 @@ void main() {
       // AudioDownloadVM is used, the download will be simulated and
       // will not take time.
       for (int i = 0; i < 10; i++) {
-        await Future.delayed(const Duration(milliseconds: 500));
+        await Future.delayed(const Duration(milliseconds: 1000));
         await tester.pumpAndSettle();
       }
 
@@ -27068,7 +27068,7 @@ void main() {
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
+      DirUtil.deleteFilesInDirAndSubDirsWithRetry(
         rootPath: kApplicationPathWindowsTest,
       );
     });
@@ -27119,7 +27119,7 @@ void main() {
       // AudioDownloadVM is used, the download will be simulated and
       // will not take time.
       for (int i = 0; i < 10; i++) {
-        await Future.delayed(const Duration(milliseconds: 500));
+        await Future.delayed(const Duration(milliseconds: 1000));
         await tester.pumpAndSettle();
       }
 
@@ -27143,7 +27143,7 @@ void main() {
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
+      DirUtil.deleteFilesInDirAndSubDirsWithRetry(
         rootPath: kApplicationPathWindowsTest,
       );
     });
@@ -27194,7 +27194,7 @@ void main() {
       // AudioDownloadVM is used, the download will be simulated and
       // will not take time.
       for (int i = 0; i < 5; i++) {
-        await Future.delayed(const Duration(milliseconds: 500));
+        await Future.delayed(const Duration(milliseconds: 700));
         await tester.pumpAndSettle();
       }
 
@@ -27208,7 +27208,7 @@ void main() {
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
+      DirUtil.deleteFilesInDirAndSubDirsWithRetry(
         rootPath: kApplicationPathWindowsTest,
       );
     });
@@ -30012,17 +30012,6 @@ Future<void> _tapOnDownloadURLsFromTextFileMenu({
     playlistTitle: playlistToDownloadInTitle,
     playlistMenuKeyStr: 'popup_menu_download_video_urls_in_playlist',
   );
-
-  // Check the value of the AlertDialog dialog title
-  // Text alertDialogTitle =
-  //     tester.widget(find.byKey(const Key('setValueToTargetDialogTitleKey')));
-  // expect(alertDialogTitle.data,
-  //     "Download video audio to playlist \"$playlistToDownloadInTitle\"");
-
-  // Check the value of the AlertDialog dialog text
-  // Text alertDialogText =
-  //     tester.widget(find.byKey(const Key('setValueToTargetDialogKey')));
-  // expect(alertDialogText.data, "Downloading 2 audio's in selected quality.");
 
   // Check the value of the AlertDialog dialog title and check the
   // value of the AlertDialog dialog text
