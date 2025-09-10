@@ -30014,15 +30014,24 @@ Future<void> _tapOnDownloadURLsFromTextFileMenu({
   );
 
   // Check the value of the AlertDialog dialog title
-  Text alertDialogTitle =
-      tester.widget(find.byKey(const Key('setValueToTargetDialogTitleKey')));
-  expect(alertDialogTitle.data,
-      "Download video audio to playlist \"$playlistToDownloadInTitle\"");
+  // Text alertDialogTitle =
+  //     tester.widget(find.byKey(const Key('setValueToTargetDialogTitleKey')));
+  // expect(alertDialogTitle.data,
+  //     "Download video audio to playlist \"$playlistToDownloadInTitle\"");
 
   // Check the value of the AlertDialog dialog text
-  Text alertDialogText =
-      tester.widget(find.byKey(const Key('setValueToTargetDialogKey')));
-  expect(alertDialogText.data, "Downloading 2 audio's in selected quality.");
+  // Text alertDialogText =
+  //     tester.widget(find.byKey(const Key('setValueToTargetDialogKey')));
+  // expect(alertDialogText.data, "Downloading 2 audio's in selected quality.");
+
+  // Check the value of the AlertDialog dialog title and check the
+  // value of the AlertDialog dialog text
+  await IntegrationTestUtil.verifySetValueToTargetDialog(
+    tester: tester,
+    dialogTitle:
+        "Download video audio to playlist \"$playlistToDownloadInTitle\"",
+    dialogMessage: "Downloading 2 audio's in selected quality.",
+  );
 
   // Verify the checkbox state
   final Checkbox checkboxZeroWidget =
