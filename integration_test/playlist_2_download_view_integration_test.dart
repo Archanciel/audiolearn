@@ -15909,7 +15909,7 @@ void main() {
           tester: tester,
           dialogTitle: 'Set the Download Date',
           dialogMessage:
-          'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+              'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
         );
 
         expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
@@ -16084,7 +16084,7 @@ void main() {
           tester: tester,
           dialogTitle: 'Set the Download Date',
           dialogMessage:
-          'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+              'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
         );
 
         expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
@@ -16266,7 +16266,7 @@ void main() {
           tester: tester,
           dialogTitle: 'Set the Download Date',
           dialogMessage:
-          'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+              'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
         );
 
         expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
@@ -29976,15 +29976,11 @@ Future<void> _tapOnSetAudioQualityMenu({
     playlistMenuKeyStr: 'popup_menu_set_audio_quality',
   );
 
-  // Check the value of the AlertDialog dialog title
-  Text alertDialogTitle =
-      tester.widget(find.byKey(const Key('setValueToTargetDialogTitleKey')));
-  expect(alertDialogTitle.data, 'Playlist Audio Quality');
-
-  // Check the value of the AlertDialog dialog text
-  Text alertDialogText =
-      tester.widget(find.byKey(const Key('setValueToTargetDialogKey')));
-  expect(alertDialogText.data, 'Select audio quality');
+  await IntegrationTestUtil.verifySetValueToTargetDialog(
+    tester: tester,
+    dialogTitle: 'Playlist Audio Quality',
+    dialogMessage: 'Select audio quality',
+  );
 
   if (setMusicQuality) {
     // Tap on the 'musical' quality checkbox to select it
