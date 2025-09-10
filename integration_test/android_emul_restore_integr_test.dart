@@ -800,27 +800,17 @@ void main() {
 
         // Now verifying the confirm dialog message
 
-        expect(
-          tester
-              .widget<Text>(find.byKey(
-                const Key('setValueToTargetDialogTitleKey'),
-              ))
-              .data,
-          'MP3 Restoration',
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'MP3 Restoration',
+          isHelpIconPresent: true,
+          dialogMessage:
+              "Only the MP3 relative to the audio's listed in the playlist which are not already present in the playlist are restorable.",
+          closeDialog: true,
         );
 
-        expect(
-          tester
-              .widget<Text>(find.byKey(
-                const Key('setValueToTargetDialogKey'),
-              ))
-              .data,
-          "Only the MP3 relative to the audio's listed in the playlist which are not already present in the playlist are restorable.",
-        );
-
-        // Now find the 'Ok' button of the SetValueToTarget dialog
-        // and tap on it
-        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        // Tap on the Ok button to close the warning confirmation dialog
+        await tester.tap(find.byKey(const Key('warningDialogOkButton')));
         await tester.pumpAndSettle();
 
         const String thirdAudioTitle =
@@ -1020,6 +1010,10 @@ void main() {
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
         await tester.pumpAndSettle();
 
+        // Tap on the Ok button to close the warning confirmation dialog
+        await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+        await tester.pumpAndSettle();
+
         const String fileNameExt =
             "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3";
         const String fileNameNoExt =
@@ -1175,6 +1169,10 @@ void main() {
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
         await tester.pumpAndSettle();
 
+        // Tap on the Ok button to close the warning confirmation dialog
+        await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+        await tester.pumpAndSettle();
+        
         const String selectedPlaylistTitle = 'urgent_actus_17-12-2023';
         const String localPlaylistTitle = 'local';
 
@@ -2487,22 +2485,11 @@ void main() {
             find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
         await tester.pumpAndSettle();
 
-        expect(
-          tester
-              .widget<Text>(find.byKey(
-                const Key('setValueToTargetDialogTitleKey'),
-              ))
-              .data,
-          'Set the download date',
-        );
-
-        expect(
-          tester
-              .widget<Text>(find.byKey(
-                const Key('setValueToTargetDialogKey'),
-              ))
-              .data,
-          'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'Set the Download Date',
+          dialogMessage:
+              'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
         );
 
         expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
@@ -2656,22 +2643,11 @@ void main() {
             find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
         await tester.pumpAndSettle();
 
-        expect(
-          tester
-              .widget<Text>(find.byKey(
-                const Key('setValueToTargetDialogTitleKey'),
-              ))
-              .data,
-          'Set the download date',
-        );
-
-        expect(
-          tester
-              .widget<Text>(find.byKey(
-                const Key('setValueToTargetDialogKey'),
-              ))
-              .data,
-          'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'Set the Download Date',
+          dialogMessage:
+              'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
         );
 
         expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
@@ -2843,22 +2819,11 @@ void main() {
             find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
         await tester.pumpAndSettle();
 
-        expect(
-          tester
-              .widget<Text>(find.byKey(
-                const Key('setValueToTargetDialogTitleKey'),
-              ))
-              .data,
-          'Set the download date',
-        );
-
-        expect(
-          tester
-              .widget<Text>(find.byKey(
-                const Key('setValueToTargetDialogKey'),
-              ))
-              .data,
-          'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'Set the Download Date',
+          dialogMessage:
+              'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
         );
 
         expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
@@ -2983,22 +2948,11 @@ void main() {
           playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
         );
 
-        expect(
-          tester
-              .widget<Text>(find.byKey(
-                const Key('setValueToTargetDialogTitleKey'),
-              ))
-              .data,
-          'Set the download date',
-        );
-
-        expect(
-          tester
-              .widget<Text>(find.byKey(
-                const Key('setValueToTargetDialogKey'),
-              ))
-              .data,
-          'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'Set the Download Date',
+          dialogMessage:
+              'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
         );
 
         expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
@@ -3149,22 +3103,11 @@ void main() {
           playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
         );
 
-        expect(
-          tester
-              .widget<Text>(find.byKey(
-                const Key('setValueToTargetDialogTitleKey'),
-              ))
-              .data,
-          'Set the download date',
-        );
-
-        expect(
-          tester
-              .widget<Text>(find.byKey(
-                const Key('setValueToTargetDialogKey'),
-              ))
-              .data,
-          'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'Set the Download Date',
+          dialogMessage:
+              'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
         );
 
         expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
@@ -3316,22 +3259,11 @@ void main() {
           playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
         );
 
-        expect(
-          tester
-              .widget<Text>(find.byKey(
-                const Key('setValueToTargetDialogTitleKey'),
-              ))
-              .data,
-          'Set the download date',
-        );
-
-        expect(
-          tester
-              .widget<Text>(find.byKey(
-                const Key('setValueToTargetDialogKey'),
-              ))
-              .data,
-          'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'Set the Download Date',
+          dialogMessage:
+              'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
         );
 
         expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);

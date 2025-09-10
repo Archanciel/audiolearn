@@ -3970,7 +3970,7 @@ class IntegrationTestUtil {
 
     if (closeDialog) {
       // Tap on the Cancel button of the MP3 Restoration dialog
-      await tester.tap(find.byKey(const Key('setValueToTargetCancelButton')));
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
       await tester.pumpAndSettle();
       return;
     }
