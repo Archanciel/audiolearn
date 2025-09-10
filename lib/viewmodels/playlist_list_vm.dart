@@ -3850,6 +3850,16 @@ class PlaylistListVM extends ChangeNotifier {
       }
     }
 
+    // This ensures that after restoring unique or multiple
+    // playlists from a zip file, the Playlist Download View
+    // left audio popup menu is active if a playlist is selected.
+    if (_uniqueSelectedPlaylist != null) {
+      setPlaylistSelection(
+        playlistSelectedOrUnselected: _uniqueSelectedPlaylist,
+        isPlaylistSelected: true,
+      );
+    }
+
     // Return the zip file path name used for restoration.
     return zipFilePathName;
   }
@@ -4860,7 +4870,8 @@ class PlaylistListVM extends ChangeNotifier {
     return [
       restoredAudioCount,
       restoredPlaylistTitlesLst.length,
-      playlistTitlesPresentInMp3ZipFileLst.length == 1 // true if the MP3 zip file is
+      playlistTitlesPresentInMp3ZipFileLst.length ==
+          1 // true if the MP3 zip file is
       //                                                  a unique playlist zip file
     ];
   }
