@@ -897,10 +897,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         ),
         _buildAudioPopupMenuButtonAndMenuItems(
           context: context,
-          playlistListVMlistenFalse: playlistListVMlistenFalse,
+          playlistListVMlistenTrue: playlistListVMlistenTrue,
           warningMessageVMlistenFalse: warningMessageVMlistenFalse,
-          isAudioPopumMenuEnabled:
-              playlistListVMlistenTrue.isOnePlaylistSelected,
         ),
       ],
     );
@@ -1550,21 +1548,20 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   /// the selected playlist and to update the playlist json files.
   Widget _buildAudioPopupMenuButtonAndMenuItems({
     required BuildContext context,
-    required PlaylistListVM playlistListVMlistenFalse,
+    required PlaylistListVM playlistListVMlistenTrue,
     required WarningMessageVM warningMessageVMlistenFalse,
-    required bool isAudioPopumMenuEnabled,
   }) {
     return SizedBox(
       width: kRowButtonGroupWidthSeparator,
       child: PopupMenuButton<PopupMenuButtonType>(
         key: const Key('audio_popup_menu_button'),
-        enabled: isAudioPopumMenuEnabled,
+        enabled: playlistListVMlistenTrue.isOnePlaylistSelected,
         icon: const Icon(Icons.filter_list),
         itemBuilder: (BuildContext context) {
           return [
             PopupMenuItem<PopupMenuButtonType>(
               key: const Key('define_sort_and_filter_audio_menu_item'),
-              enabled: (playlistListVMlistenFalse
+              enabled: (playlistListVMlistenTrue
                   .areButtonsApplicableToAudioEnabled),
               value: PopupMenuButtonType.openSortFilterAudioDialog,
               child: Text(
@@ -1573,7 +1570,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             PopupMenuItem<PopupMenuButtonType>(
               key: const Key(
                   'clear_sort_and_filter_audio_parms_history_menu_item'),
-              enabled: playlistListVMlistenFalse
+              enabled: playlistListVMlistenTrue
                   .getSearchHistoryAudioSortFilterParametersLst()
                   .isNotEmpty,
               value: PopupMenuButtonType.clearSortFilterAudioParmsHistory,
@@ -1584,7 +1581,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               key: const Key(
                   'save_sort_and_filter_audio_parms_in_playlist_item'),
               enabled:
-                  playlistListVMlistenFalse.isSaveSFparmsToPlaylistMenuEnabled(
+                  playlistListVMlistenTrue.isSaveSFparmsToPlaylistMenuEnabled(
                 audioLearnAppViewType:
                     AudioLearnAppViewType.playlistDownloadView,
                 translatedAppliedSortFilterParmsName:
@@ -1601,7 +1598,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             PopupMenuItem<PopupMenuButtonType>(
               key: const Key(
                   'remove_sort_and_filter_audio_parms_from_playlist_item'),
-              enabled: playlistListVMlistenFalse
+              enabled: playlistListVMlistenTrue
                   .isRemoveSFparmsFromPlaylistMenuEnabled(
                 audioLearnAppViewType:
                     AudioLearnAppViewType.playlistDownloadView,
@@ -1632,8 +1629,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     settingsDataService: widget.settingsDataService,
                     warningMessageVM: warningMessageVMlistenFalse,
                     selectedPlaylist:
-                        playlistListVMlistenFalse.uniqueSelectedPlaylist!,
-                    selectedPlaylistAudioLst: playlistListVMlistenFalse
+                        playlistListVMlistenTrue.uniqueSelectedPlaylist!,
+                    selectedPlaylistAudioLst: playlistListVMlistenTrue
                         .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
                       audioLearnAppViewType:
                           AudioLearnAppViewType.playlistDownloadView,
@@ -1656,7 +1653,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                       filterSortAudioAndParmLst[1];
                   String audioSortFilterParametersName =
                       filterSortAudioAndParmLst[2];
-                  playlistListVMlistenFalse
+                  playlistListVMlistenTrue
                       .setSortFilterForSelectedPlaylistPlayableAudiosAndParms(
                     audioLearnAppViewType:
                         AudioLearnAppViewType.playlistDownloadView,
@@ -1678,7 +1675,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 context: context,
                 builder: (BuildContext context) {
                   return ConfirmActionDialog(
-                    actionFunction: playlistListVMlistenFalse
+                    actionFunction: playlistListVMlistenTrue
                         .clearAudioSortFilterSettingsSearchHistory,
                     actionFunctionArgs: const [],
                     dialogTitleOne: AppLocalizations.of(context)!
@@ -1691,7 +1688,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               break;
             case PopupMenuButtonType.saveSortFilterAudioParmsToPlaylist:
               List<dynamic> sortFilterParmsNameAppliedToCurrentPlaylist =
-                  playlistListVMlistenFalse
+                  playlistListVMlistenTrue
                       .getSortFilterParmsNameApplicationValuesToCurrentPlaylist(
                 selectedSortFilterParmsName: _selectedSortFilterParametersName!,
               );
@@ -1716,8 +1713,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 builder: (BuildContext context) {
                   return PlaylistAddRemoveSortFilterOptionsDialog(
                     playlistTitle:
-                        playlistListVMlistenFalse.uniqueSelectedPlaylist!.title,
-                    sortFilterParmsName: playlistListVMlistenFalse
+                        playlistListVMlistenTrue.uniqueSelectedPlaylist!.title,
+                    sortFilterParmsName: playlistListVMlistenTrue
                         .getSelectedPlaylistAudioSortFilterParmsNameForView(
                       audioLearnAppViewType:
                           AudioLearnAppViewType.playlistDownloadView,
@@ -1753,7 +1750,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 // The user clicked on Save, not on Cancel button and at
                 // least one checkbox was selected ...
 
-                playlistListVMlistenFalse
+                playlistListVMlistenTrue
                     .savePlaylistAudioSortFilterParmsToPlaylist(
                   sortFilterParmsNameToSave:
                       forViewLst[0], // sort filter parms name
@@ -1770,9 +1767,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 // when tapping outside the dialog
                 builder: (BuildContext context) {
                   List<dynamic> sortFilterParmsNameAppliedToCurrentPlaylist =
-                      playlistListVMlistenFalse
+                      playlistListVMlistenTrue
                           .getSortFilterParmsNameApplicationValuesToCurrentPlaylist(
-                    selectedSortFilterParmsName: playlistListVMlistenFalse
+                    selectedSortFilterParmsName: playlistListVMlistenTrue
                         .getSelectedPlaylistAudioSortFilterParmsNameForView(
                       audioLearnAppViewType:
                           AudioLearnAppViewType.playlistDownloadView,
@@ -1783,7 +1780,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   );
                   return PlaylistAddRemoveSortFilterOptionsDialog(
                     playlistTitle:
-                        playlistListVMlistenFalse.uniqueSelectedPlaylist!.title,
+                        playlistListVMlistenTrue.uniqueSelectedPlaylist!.title,
                     sortFilterParmsName:
                         sortFilterParmsNameAppliedToCurrentPlaylist[0],
                     isSortFilterParmsNameAlreadyAppliedToPlaylistDownloadView:
@@ -1812,7 +1809,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 // The user clicked on Remove, not on Cancel button and
                 // at least one checkbox was selected ...
 
-                playlistListVMlistenFalse
+                playlistListVMlistenTrue
                     .removeAudioSortFilterParmsFromPlaylist(
                   fromPlaylistDownloadView: isForPlaylistDownloadView,
                   fromAudioPlayerView: isForAudioPlayerView,
