@@ -3931,4 +3931,48 @@ class IntegrationTestUtil {
     await tester.tap(find.text('Ok'));
     await tester.pumpAndSettle();
   }
+
+  static Future<void> verifySetValueToTargetDialog({
+    required WidgetTester tester,
+    String? dialogTitle,
+    bool isHelpIconPresent = false,
+    String? dialogMessage,
+    bool closeDialog = false,
+  }) async {
+    if (dialogTitle != null) {
+      // Verify the displayed dialog title
+      expect(
+        tester
+            .widget<Text>(find.byKey(
+              const Key('setValueToTargetDialogTitleKey'),
+            ))
+            .data,
+        dialogTitle,
+      );
+    }
+
+    if (isHelpIconPresent) {
+      // Verify the presence of the help icon button
+      expect(find.byIcon(Icons.help_outline), findsOneWidget);
+    }
+
+    if (dialogMessage != null) {
+      // Verify the displayed dialog message
+      expect(
+        tester
+            .widget<Text>(find.byKey(
+              const Key('setValueToTargetDialogKey'),
+            ))
+            .data,
+        dialogMessage,
+      );
+    }
+
+    if (closeDialog) {
+      // Tap on the Cancel button of the MP3 Restoration dialog
+      await tester.tap(find.byKey(const Key('setValueToTargetCancelButton')));
+      await tester.pumpAndSettle();
+      return;
+    }
+  }
 }
