@@ -831,12 +831,12 @@ class IntegrationTestUtil {
     required AudioLearnAppViewType audioLearnAppViewType,
   }) async {
     if (isFirstAudioMenuItemDisabled) {
-      await verifyWidgetIsDisabled(
+      verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'define_sort_and_filter_audio_menu_item',
       );
 
-      await verifyWidgetIsDisabled(
+      verifyWidgetIsDisabled(
         // no Sort/filter parameters history are available in test data
         tester: tester,
         widgetKeyStr: 'clear_sort_and_filter_audio_parms_history_menu_item',
@@ -854,7 +854,7 @@ class IntegrationTestUtil {
         widgetKeyStr: 'define_sort_and_filter_audio_menu_item',
       );
 
-      await verifyWidgetIsDisabled(
+      verifyWidgetIsDisabled(
         // no Sort/filter parameters history are available in test data
         tester: tester,
         widgetKeyStr: 'clear_sort_and_filter_audio_parms_history_menu_item',
@@ -913,11 +913,11 @@ class IntegrationTestUtil {
     }
   }
 
-  static Future<void> verifyWidgetIsDisabled({
+  static void verifyWidgetIsDisabled({
     required WidgetTester tester,
     required String widgetKeyStr,
     bool isSaveSortFilterMenuDisabled = false,
-  }) async {
+  }) {
     // Find the widget by its key
     final Finder widgetFinder = find.byKey(Key(widgetKeyStr));
 
@@ -1010,27 +1010,27 @@ class IntegrationTestUtil {
         widgetKeyStr: 'audio_popup_menu_button',
       );
     } else {
-      await verifyWidgetIsDisabled(
+      verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'decreaseAudioVolumeIconButton',
       );
 
-      await verifyWidgetIsDisabled(
+      verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'increaseAudioVolumeIconButton',
       );
 
-      await verifyWidgetIsDisabled(
+      verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'setAudioSpeedTextButton',
       );
 
-      await verifyWidgetIsDisabled(
+      verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'commentsInkWellButton',
       );
 
-      await verifyWidgetIsDisabled(
+      verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );

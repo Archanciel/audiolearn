@@ -10391,7 +10391,7 @@ void main() {
       );
 
       // Verify that the audio menu button is disabled
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -10414,7 +10414,7 @@ void main() {
       // deselected. This is due to the fact that any playlist added
       // by the update playlist JSON file fumctionality is deselected
       // in order that only one playlist is selected after the update.
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -10520,7 +10520,7 @@ void main() {
       );
 
       // Verify that the audio menu button is disabled
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -10543,7 +10543,7 @@ void main() {
       // deselected. This is due to the fact that any playlist added
       // by the update playlist JSON file fumctionality is deselected
       // in order that only one playlist is selected after the update.
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -10643,7 +10643,7 @@ void main() {
       );
 
       // Verify that the audio menu button is disabled
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -10788,7 +10788,7 @@ void main() {
       );
 
       // Verify that the audio menu button is disabled
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -10806,7 +10806,7 @@ void main() {
       );
 
       // Verify that the audio menu button is disabled
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -14045,22 +14045,22 @@ void main() {
       // a selected playlist. So, the selected playlist widgets
       // are disabled. Checking this now:
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'move_up_playlist_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'move_down_playlist_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -14220,22 +14220,22 @@ void main() {
       // a selected playlist. So, the selected playlist widgets
       // are disabled. Checking this now:
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'move_up_playlist_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'move_down_playlist_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -14554,22 +14554,22 @@ void main() {
       // a selected playlist. So, the selected playlist widgets
       // are disabled. Checking this now:
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'move_up_playlist_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'move_down_playlist_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -14722,22 +14722,22 @@ void main() {
       // a selected playlist. So, the selected playlist widgets
       // are disabled. Checking this now:
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'move_up_playlist_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'move_down_playlist_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -14888,7 +14888,7 @@ void main() {
         widgetKeyStr: 'move_down_playlist_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
@@ -15262,7 +15262,7 @@ void main() {
 
       // since a local playlist is selected, the download
       // audio of selected playlist button is disabled
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
@@ -15518,12 +15518,12 @@ void main() {
         widgetKeyStr: 'move_down_playlist_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_quality_checkbox',
       );
@@ -15692,12 +15692,12 @@ void main() {
         widgetKeyStr: 'move_down_playlist_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_quality_checkbox',
       );
@@ -15896,27 +15896,27 @@ void main() {
 
       // since the Youtube playlist was deleted, verify that all
       // buttons are disabled
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'move_up_playlist_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'move_down_playlist_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_quality_checkbox',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -16025,27 +16025,27 @@ void main() {
 
       // since the local playlist was deleted, verify that all
       // buttons are disabled
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'move_up_playlist_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'move_down_playlist_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_quality_checkbox',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_popup_menu_button',
       );
@@ -16142,12 +16142,12 @@ void main() {
         widgetKeyStr: 'move_down_playlist_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'download_sel_playlists_button',
       );
 
-      await IntegrationTestUtil.verifyWidgetIsDisabled(
+      IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
         widgetKeyStr: 'audio_quality_checkbox',
       );
@@ -20706,12 +20706,12 @@ Future<void> _verifyLocalSelectedPlaylistButtonsAndCheckbox({
     );
   }
 
-  await IntegrationTestUtil.verifyWidgetIsDisabled(
+  IntegrationTestUtil.verifyWidgetIsDisabled(
     tester: tester,
     widgetKeyStr: 'download_sel_playlists_button',
   );
 
-  await IntegrationTestUtil.verifyWidgetIsDisabled(
+  IntegrationTestUtil.verifyWidgetIsDisabled(
     tester: tester,
     widgetKeyStr: 'audio_quality_checkbox',
   );
@@ -21000,27 +21000,27 @@ Future<void> _checkAudioCommentUsingAudioItemMenu({
 
 Future<void> _ensureNoButtonIsEnabledSinceNoPlaylistIsSelected(
     WidgetTester tester) async {
-  await IntegrationTestUtil.verifyWidgetIsDisabled(
+  IntegrationTestUtil.verifyWidgetIsDisabled(
     tester: tester,
     widgetKeyStr: 'move_up_playlist_button',
   );
 
-  await IntegrationTestUtil.verifyWidgetIsDisabled(
+  IntegrationTestUtil.verifyWidgetIsDisabled(
     tester: tester,
     widgetKeyStr: 'move_down_playlist_button',
   );
 
-  await IntegrationTestUtil.verifyWidgetIsDisabled(
+  IntegrationTestUtil.verifyWidgetIsDisabled(
     tester: tester,
     widgetKeyStr: 'download_sel_playlists_button',
   );
 
-  await IntegrationTestUtil.verifyWidgetIsDisabled(
+  IntegrationTestUtil.verifyWidgetIsDisabled(
     tester: tester,
     widgetKeyStr: 'audio_quality_checkbox',
   );
 
-  await IntegrationTestUtil.verifyWidgetIsDisabled(
+  IntegrationTestUtil.verifyWidgetIsDisabled(
     tester: tester,
     widgetKeyStr: 'audio_popup_menu_button',
   );
