@@ -12476,13 +12476,12 @@ void main() {
       await app.main();
       await tester.pumpAndSettle();
 
-      // Tap the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // Now open the app settings dialog
-      await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
-      await tester.pumpAndSettle();
+      // Now tap the appbar leading popup menu button Then, the app settings
+      // dialog is opened.
+      await IntegrationTestUtil.typeOnAppbarMenuItem(
+        tester: tester,
+        appbarMenuKeyStr: 'appBarMenuOpenSettingsDialog',
+      );
 
       // And tap on save button
       await tester.tap(find.byKey(const Key('saveButton')));
@@ -12721,13 +12720,12 @@ void main() {
 
         // Set the playlist root path to the modified value
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now open the app settings dialog
-        await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
-        await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the app settings
+        // dialog is opened.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuOpenSettingsDialog',
+        );
 
         // Select the modified dir path. Tapping on the select directory
         // icon button does not open the directory picker dialog. Instead,
@@ -12811,13 +12809,12 @@ void main() {
 
         // Set the app settings playlist audio play speed to 0.7
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now open the app settings dialog
-        await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
-        await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the app settings
+        // dialog is opened.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuOpenSettingsDialog',
+        );
 
         // Tap on the playback speed text button
 
@@ -12841,13 +12838,12 @@ void main() {
 
         // Verify that the app settings playlist audio play speed is now 0.7
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now re-open the app settings dialog
-        await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
-        await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the app settings
+        // dialog is re-opened.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuOpenSettingsDialog',
+        );
 
         // Verify if the play speed is 0.70x
         expect(find.text('0.70x'), findsOneWidget);
@@ -12944,13 +12940,12 @@ void main() {
 
         // Set the app settings playlist audio play speed to 0.7
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now open the app settings dialog
-        await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
-        await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the app settings
+        // dialog is opened.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuOpenSettingsDialog',
+        );
 
         // Tap on the playback speed text button
 
@@ -12978,13 +12973,12 @@ void main() {
 
         // Verify that the app settings playlist audio play speed is now 0.7
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now re-open the app settings dialog
-        await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
-        await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the app settings
+        // dialog is re-opened.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuOpenSettingsDialog',
+        );
 
         // Verify if the play speed is 0.70x
         expect(find.text('0.70x'), findsOneWidget);
@@ -13081,13 +13075,12 @@ void main() {
 
         // Set the app settings playlist audio play speed to 0.7
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now open the app settings dialog
-        await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
-        await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the app settings
+        // dialog is opened.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuOpenSettingsDialog',
+        );
 
         // Tap on the playback speed text button
 
@@ -13116,13 +13109,12 @@ void main() {
 
         // Verify that the app settings playlist audio play speed is now 0.7
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now re-open the app settings dialog
-        await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
-        await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the app settings
+        // dialog is opened.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuOpenSettingsDialog',
+        );
 
         // Verify if the play speed is 0.70x
         expect(find.text('0.70x'), findsOneWidget);
@@ -13283,13 +13275,12 @@ void main() {
 
         // Set the app settings playlist audio play speed to 0.7
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now open the app settings dialog
-        await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
-        await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the app settings
+        // dialog is opened.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuOpenSettingsDialog',
+        );
 
         // Tap on the playback speed text button
 
@@ -13322,13 +13313,12 @@ void main() {
 
         // Verify that the app settings playlist audio play speed is now 0.7
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now re-open the app settings dialog
-        await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
-        await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the app settings
+        // dialog is opened.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuOpenSettingsDialog',
+        );
 
         // Verify if the play speed is 0.70x
         expect(find.text('0.70x'), findsOneWidget);
@@ -13493,13 +13483,12 @@ void main() {
         await app.main();
         await tester.pumpAndSettle();
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now open the app settings dialog
-        await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
-        await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the app settings
+        // dialog is opened.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuOpenSettingsDialog',
+        );
 
         // And reduce the ZIP file size limit to 1 MB
 
@@ -13526,14 +13515,12 @@ void main() {
           pathToSelectStr: kApplicationPathWindowsTest,
         );
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now tap on the 'Save Playlists Audio's MP3 to ZIP File' menu
-        await tester.tap(
-            find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
-        await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the 'Save
+        // Playlists Audio's MP3 to ZIP File' menu is selected.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAudioMp3FilesToZip',
+        );
 
         // Tap on the Ok button to set download date time.
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
@@ -13665,13 +13652,12 @@ void main() {
         await app.main();
         await tester.pumpAndSettle();
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now open the app settings dialog
-        await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
-        await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the
+        // app settings dialog is opened.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuOpenSettingsDialog',
+        );
 
         // And reduce the ZIP file size limit to 2.6 MB
 
@@ -13698,14 +13684,12 @@ void main() {
           pathToSelectStr: kApplicationPathWindowsTest,
         );
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now tap on the 'Save Playlists Audio's MP3 to ZIP File' menu
-        await tester.tap(
-            find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
-        await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the 'Save
+        // Playlists Audio's MP3 to ZIP File' menu is selected.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAudioMp3FilesToZip',
+        );
 
         // Tap on the Ok button to set download date time.
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
@@ -13825,13 +13809,12 @@ void main() {
         await app.main();
         await tester.pumpAndSettle();
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now open the app settings dialog
-        await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
-        await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the
+        // app settings dialog is opened.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuOpenSettingsDialog',
+        );
 
         // And reduce the ZIP file size limit to 2.6 MB
 
@@ -13858,14 +13841,12 @@ void main() {
           pathToSelectStr: kApplicationPathWindowsTest,
         );
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now tap on the 'Save Playlists Audio's MP3 to ZIP File' menu
-        await tester.tap(
-            find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
-        await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the 'Save
+        // Playlists Audio's MP3 to ZIP File' menu is selected.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAudioMp3FilesToZip',
+        );
 
         // Tap on the Ok button to set download date time.
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
@@ -13989,13 +13970,12 @@ void main() {
         await app.main();
         await tester.pumpAndSettle();
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now open the app settings dialog
-        await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
-        await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the
+        // app settings dialog is opened.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuOpenSettingsDialog',
+        );
 
         // And reduce the ZIP file size limit to 1 MB
 
@@ -14158,13 +14138,12 @@ void main() {
         await app.main();
         await tester.pumpAndSettle();
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now open the app settings dialog
-        await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
-        await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the
+        // app settings dialog is opened.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuOpenSettingsDialog',
+        );
 
         // And reduce the ZIP file size limit to 2.6 MB
 
@@ -14315,13 +14294,12 @@ void main() {
         await app.main();
         await tester.pumpAndSettle();
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now open the app settings dialog
-        await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
-        await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the
+        // app settings dialog is opened.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuOpenSettingsDialog',
+        );
 
         // And reduce the ZIP file size limit to 2.6 MB
 
@@ -14494,14 +14472,12 @@ void main() {
         pathToSelectStr: saveZipFilePath,
       );
 
-      // Tap the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // Now tap on the 'Save Playlists and Comments to zip File' menu
-      await tester.tap(
-          find.byKey(const Key('appBarMenuSavePlaylistsAndCommentsToZip')));
-      await tester.pumpAndSettle();
+      // Tap the appbar leading popup menu button Then, the 'Save
+      // Playlists and Comments to zip File' menu is selected.
+      await IntegrationTestUtil.typeOnAppbarMenuItem(
+        tester: tester,
+        appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
+      );
 
       String actualMessage = tester
           .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
@@ -14596,14 +14572,12 @@ void main() {
         pathToSelectStr: '/',
       );
 
-      // Tap the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // Now tap on the 'Save Playlists and Comments to zip File' menu
-      await tester.tap(
-          find.byKey(const Key('appBarMenuSavePlaylistsAndCommentsToZip')));
-      await tester.pumpAndSettle();
+      // Tap the appbar leading popup menu button Then, the 'Save
+      // Playlists and Comments to zip File' menu is selected.
+      await IntegrationTestUtil.typeOnAppbarMenuItem(
+        tester: tester,
+        appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
+      );
 
       // Verify the displayed warning dialog
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
@@ -15004,14 +14978,12 @@ void main() {
         pathToSelectStr: saveZipFilePath,
       );
 
-      // Tap the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // Now tap on the 'Save Playlists and Comments to zip File' menu
-      await tester.tap(
-          find.byKey(const Key('appBarMenuSavePlaylistsAndCommentsToZip')));
-      await tester.pumpAndSettle();
+      // Tap the appbar leading popup menu button Then, the 'Save
+      // Playlists and Comments to zip File' menu is selected.
+      await IntegrationTestUtil.typeOnAppbarMenuItem(
+        tester: tester,
+        appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
+      );
 
       // Verify the displayed warning dialog
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
@@ -15368,14 +15340,12 @@ void main() {
           pathToSelectStr: kApplicationPathWindowsTest,
         );
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now tap on the 'Save Playlists Audio's MP3 to ZIP File' menu
-        await tester.tap(
-            find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
-        await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the 'Save
+        // Playlists Audio's MP3 to ZIP File' menu is selected.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAudioMp3FilesToZip',
+        );
 
         await IntegrationTestUtil.verifySetValueToTargetDialog(
           tester: tester,
@@ -15546,14 +15516,12 @@ void main() {
           pathToSelectStr: kApplicationPathWindowsTest,
         );
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now tap on the 'Save Playlists Audio's MP3 to ZIP File' menu
-        await tester.tap(
-            find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
-        await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the 'Save
+        // Playlists Audio's MP3 to ZIP File' menu is selected.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAudioMp3FilesToZip',
+        );
 
         await IntegrationTestUtil.verifySetValueToTargetDialog(
           tester: tester,
@@ -15747,14 +15715,12 @@ void main() {
           pathToSelectStr: kApplicationPathWindowsTest,
         );
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now tap on the 'Save Playlists Audio's MP3 to ZIP File' menu
-        await tester.tap(
-            find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
-        await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the 'Save
+        // Playlists Audio's MP3 to ZIP File' menu is selected.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAudioMp3FilesToZip',
+        );
 
         await IntegrationTestUtil.verifySetValueToTargetDialog(
           tester: tester,
@@ -25775,7 +25741,8 @@ void main() {
 
       await IntegrationTestUtil.typeOnAppbarMenuItem(
         tester: tester,
-        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',);
+        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
+      );
 
       // Verify the displayed confirmation dialog
       await IntegrationTestUtil.verifySetValueToTargetDialog(
@@ -25913,7 +25880,8 @@ void main() {
 
       await IntegrationTestUtil.typeOnAppbarMenuItem(
         tester: tester,
-        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',);
+        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
+      );
 
       // Verify the displayed confirmation dialog
       await IntegrationTestUtil.verifySetValueToTargetDialog(
@@ -26049,7 +26017,8 @@ void main() {
 
       await IntegrationTestUtil.typeOnAppbarMenuItem(
         tester: tester,
-        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',);
+        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
+      );
 
       // Verify the displayed confirmation dialog
       await IntegrationTestUtil.verifySetValueToTargetDialog(
@@ -26962,15 +26931,12 @@ void main() {
         );
         expect(playPauseButtonFinder, findsOneWidget);
 
-        // Tap on the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Find the 'Audio Comments ...' menu item and tap on it to open the
-        // comment add list dialog
-        await tester
-            .tap(find.byKey(const Key('appbar_popup_menu_audio_comment')));
-        await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the'Audio
+        // Comments ...' menu is selected.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appbar_popup_menu_audio_comment',
+        );
 
         // Now verify that the play/pause button displayed when a picture
         // is present was hidden since the comments dialog was opened.
@@ -29634,17 +29600,14 @@ Future<String> _addPictureToAudioExecutingAudioPlayerViewLeftAppbarMenu({
         size: pictureFileSize),
   ]);
 
-  // Now we want to tap on the audio player view left appbar menu
+  // Now we want to tap on the audio player view left appbar
+  // menu and then tapp on the 'Add Audio Picture' popup menu
+  // item
 
-  await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-  await tester.pumpAndSettle(const Duration(milliseconds: 200));
-
-  // Now find the Add Audio Picture popup menu item and tap on it
-  Finder addPictureMenuItem =
-      find.byKey(const Key("popup_menu_add_audio_picture"));
-
-  await tester.tap(addPictureMenuItem);
-  await tester.pumpAndSettle();
+  await IntegrationTestUtil.typeOnAppbarMenuItem(
+    tester: tester,
+    appbarMenuKeyStr: 'popup_menu_add_audio_picture',
+  );
 
   return pictureFilePathName;
 }
@@ -29688,17 +29651,12 @@ Future<void> _removeAudioPictureInAudioPlayerView({
   required WidgetTester tester,
   required String picturedAudioTitle,
 }) async {
-  // Tap on the audio player view left appbar menu
-
-  await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-  await tester.pumpAndSettle(const Duration(milliseconds: 200));
-
-  // Now find the Remove Audio Picture popup menu item and tap on it
-  Finder removePictureMenuItem =
-      find.byKey(const Key("popup_menu_remove_audio_picture"));
-
-  await tester.tap(removePictureMenuItem);
-  await tester.pumpAndSettle();
+  // Tap on the audio player view left appbar menu. Then,
+  // the Remove Audio Picture menu is selected.
+  await IntegrationTestUtil.typeOnAppbarMenuItem(
+    tester: tester,
+    appbarMenuKeyStr: 'popup_menu_remove_audio_picture',
+  );
 }
 
 Future<void> _changePlaylistRootPath({
@@ -29709,13 +29667,12 @@ Future<void> _changePlaylistRootPath({
   required String expectedSettingsContent,
   required String selectedPlaylistTitle,
 }) async {
-  // Tap the appbar leading popup menu button
-  await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-  await tester.pumpAndSettle();
-
-  // Now open the app settings dialog
-  await tester.tap(find.byKey(const Key('appBarMenuOpenSettingsDialog')));
-  await tester.pumpAndSettle();
+  // Tap the appbar leading popup menu button Then, the
+  // app settings dialog is opened.
+  await IntegrationTestUtil.typeOnAppbarMenuItem(
+    tester: tester,
+    appbarMenuKeyStr: 'appBarMenuOpenSettingsDialog',
+  );
 
   // Select the modified dir path. Tapping on the select directory
   // icon button does not open the directory picker dialog. Instead,
@@ -30400,15 +30357,13 @@ Future<void> _verifyDateFormatApplication({
     pathToSelectStr: kApplicationPathWindowsTest,
   );
 
-  // Tap the appbar leading popup menu button
-  await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-  await tester.pumpAndSettle();
 
-  // Find the 'Save Playlists Audio's MP3 to ZIP File ...' menu
-  // item and tap on it
-  await tester
-      .tap(find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
-  await tester.pumpAndSettle();
+  // Tap the appbar leading popup menu button Then, the 'Save
+  // Playlists Audio's MP3 to ZIP File' menu is selected.
+  await IntegrationTestUtil.typeOnAppbarMenuItem(
+    tester: tester,
+    appbarMenuKeyStr: 'appBarMenuSavePlaylistsAudioMp3FilesToZip',
+  );
 
   expect(find.text('Date/time $savePlaylistsAudioMp3DateFormat hh:mm'),
       findsOneWidget);
@@ -30417,15 +30372,12 @@ Future<void> _verifyDateFormatApplication({
   await tester.tap(find.byKey(const Key('setValueToTargetCancelButton')));
   await tester.pumpAndSettle();
 
-  // Tap the appbar leading popup menu button
-  await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-  await tester.pumpAndSettle();
-
-  // Find the 'Get last Audio download Date' menu
-  // item and tap on it
-  await tester.tap(
-      find.byKey(const Key('appBarMenuObtainMostRecentAudioDownloadDateTime')));
-  await tester.pumpAndSettle();
+  // Tap the appbar leading popup menu button Then, the
+  // 'Get last Audio download Date' menu is selected.
+  await IntegrationTestUtil.typeOnAppbarMenuItem(
+    tester: tester,
+    appbarMenuKeyStr: 'appBarMenuObtainMostRecentAudioDownloadDateTime',
+  );
 
   expect(
       find.text(

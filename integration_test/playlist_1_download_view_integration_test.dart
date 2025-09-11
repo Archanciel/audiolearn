@@ -353,7 +353,8 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Add with comma titled Youtube playlist', (WidgetTester tester) async {
+    testWidgets('Add with comma titled Youtube playlist',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -500,7 +501,8 @@ void main() {
     });
     testWidgets(
         '''Youtube playlist music quality addition and then add it again with same
-           URL to verify the displayed warning message.''', (WidgetTester tester) async {
+           URL to verify the displayed warning message.''',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -1541,7 +1543,8 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Add local playlist with title ended by space', (WidgetTester tester) async {
+    testWidgets('Add local playlist with title ended by space',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -2179,7 +2182,8 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Add Youtube playlist with invalid URL', (WidgetTester tester) async {
+    testWidgets('Add Youtube playlist with invalid URL',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -2924,7 +2928,8 @@ void main() {
     /// the url text field will not be emptied after adding a
     /// local playlist, in contrary of what happens after adding
     /// a Youtube playlist.
-    testWidgets('Select then unselect local playlist', (WidgetTester tester) async {
+    testWidgets('Select then unselect local playlist',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -3892,7 +3897,8 @@ void main() {
     });
   });
   group('Settings update test', () {
-    testWidgets('After moving down a playlist item', (WidgetTester tester) async {
+    testWidgets('After moving down a playlist item',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -5297,7 +5303,8 @@ void main() {
            audio to target playlist and then delete it from target playlist.
            A warning is displayed informing that the audio has comment(s)
            and that those comments will be deleted. Confirm deletion and
-           then move the audio to the same target playlist.''', (WidgetTester tester) async {
+           then move the audio to the same target playlist.''',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -5953,7 +5960,8 @@ void main() {
            to the another target playlist. The purpose of this test is to check
            that the 'Copied from playlist' and 'Copied to playlist' audio info
            fields are correctly updated. The first audio info verification
-           checks all the download audio type info dialog fields.''', (WidgetTester tester) async {
+           checks all the download audio type info dialog fields.''',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -6106,7 +6114,8 @@ void main() {
         audioDownloadDateTime: '28/06/2023 03:38',
         isAudioPlayable: true,
         videoUrl: "https://www.youtube.com/watch?v=v7PWb7f_P8M",
-        compactVideoDescription: "Jean-Pierre Schnyder\n\nCette vidéo me sert à tester AudioLearn, l'app Android que je développe et dont le code est disponible sur GitHub. ...",
+        compactVideoDescription:
+            "Jean-Pierre Schnyder\n\nCette vidéo me sert à tester AudioLearn, l'app Android que je développe et dont le code est disponible sur GitHub. ...",
         validVideoTitleOrAudioTitle: copiedAudioTitle,
         audioEnclosingPlaylistTitle: youtubeAudioSourcePlaylistTitle,
         movedFromPlaylistTitle: '',
@@ -6119,7 +6128,8 @@ void main() {
         audioPosition: '0:00:05',
         audioState: "En pause",
         lastListenDateTime: '25/08/2024 15:03',
-        audioFileName: '230628-033811-audio learn test short video one 23-06-10.mp3',
+        audioFileName:
+            '230628-033811-audio learn test short video one 23-06-10.mp3',
         audioFileSize: '143 Ko',
         isMusicQuality: false,
         audioPlaySpeed: '1.5',
@@ -7304,7 +7314,8 @@ void main() {
       );
     });
     testWidgets('''Move audio not present in source playlist without unchecking
-           the 'keep audio in source playlist' checkbox.''', (WidgetTester tester) async {
+           the 'keep audio in source playlist' checkbox.''',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -7423,7 +7434,8 @@ void main() {
     });
     testWidgets(
         '''Move audio without selecting the target playlist and unchecking
-           the 'keep audio in source playlist' checkbox.''', (WidgetTester tester) async {
+           the 'keep audio in source playlist' checkbox.''',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -7525,7 +7537,8 @@ void main() {
     });
     testWidgets(
         '''Move audio without selecting the target playlist without unchecking
-           the 'keep audio in source playlist' checkbox.''', (WidgetTester tester) async {
+           the 'keep audio in source playlist' checkbox.''',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -9955,7 +9968,8 @@ void main() {
     });
     testWidgets(
         '''Manually delete all application data including the settings.json file
-           and then execute update playlist JSON files''', (WidgetTester tester) async {
+           and then execute update playlist JSON files''',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -10150,7 +10164,8 @@ void main() {
     });
     testWidgets(
         '''Manually delete Youtube playlist directory with playlist expanded
-           list closed after adding it manually.''', (WidgetTester tester) async {
+           list closed after adding it manually.''',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -12475,7 +12490,7 @@ void main() {
 
           // Find the audio list widget using its key
           final Finder listFinder = find.byKey(const Key('audio_list'));
-          
+
           // Perform the scroll action
           await tester.drag(listFinder, const Offset(0, -1000));
           await tester.pumpAndSettle();
@@ -12908,7 +12923,8 @@ void main() {
       });
     });
     group('In audio player view, delete unique audio test', () {
-      testWidgets('''Delete unique audio mp3 only.''', (WidgetTester tester) async {
+      testWidgets('''Delete unique audio mp3 only.''',
+          (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -12973,16 +12989,12 @@ void main() {
         await tester.tap(appScreenNavigationButton);
         await tester.pumpAndSettle();
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle(const Duration(milliseconds: 200));
-
-        // Now find the delete audio popup menu item and tap on it
-        Finder popupDeleteMenuItem =
-            find.byKey(const Key("popup_menu_delete_audio"));
-
-        await tester.tap(popupDeleteMenuItem);
-        await tester.pumpAndSettle();
+        // Tap on the Audio Player View appbar menu and then on 'Delete audio ...'
+        // menu item
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'popup_menu_delete_audio',
+        );
 
         // Now verifying that 'No audio selected' is displayed in the
         // AudioPlayerView screen
@@ -13165,15 +13177,12 @@ void main() {
           audioToSelectTitle: uniqueAudioToDeleteTitle,
         );
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle(const Duration(milliseconds: 200));
-
-        // Now find the delete audio popup menu item and tap on it
-        popupDeleteMenuItem = find.byKey(const Key("popup_menu_delete_audio"));
-
-        await tester.tap(popupDeleteMenuItem);
-        await tester.pumpAndSettle();
+        // Tap on the Audio Player View appbar menu and then on 'Delete audio ...'
+        // menu item
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'popup_menu_delete_audio',
+        );
 
         // Now verifying that 'No audio selected' is displayed in the
         // AudioPlayerView screen
@@ -13276,7 +13285,8 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
-      testWidgets('''Delete unique playing audio mp3 only.''', (WidgetTester tester) async {
+      testWidgets('''Delete unique playing audio mp3 only.''',
+          (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -13338,16 +13348,12 @@ void main() {
         await Future.delayed(const Duration(seconds: 5));
         await tester.pumpAndSettle();
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle(const Duration(milliseconds: 200));
-
-        // Now find the delete audio popup menu item and tap on it
-        Finder popupDeleteMenuItem =
-            find.byKey(const Key("popup_menu_delete_audio"));
-
-        await tester.tap(popupDeleteMenuItem);
-        await tester.pumpAndSettle();
+        // Tap on the Audio Player View appbar menu and then on 'Delete audio ...'
+        // menu item
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'popup_menu_delete_audio',
+        );
 
         // Now verifying that 'No audio selected' is displayed in the
         // AudioPlayerView screen
@@ -13503,20 +13509,12 @@ void main() {
           tester: tester,
         );
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle(const Duration(milliseconds: 200));
-
-        // Now find the delete audio from playlist as well popup menu
-        // item and tap on it. Since the audio is deleted from a local
-        // playlist, no warning is displayed indicating that the audio
-        // will be redownloaded unless it is suppressed from the Youtube
-        // playlist as well !
-        Finder popupDeleteMenuItem = find
-            .byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
-
-        await tester.tap(popupDeleteMenuItem);
-        await tester.pumpAndSettle();
+        // Tap on the Audio Player View appbar menu and then on 'Delete audio
+        // from Playlist as well ...' menu item
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'popup_menu_delete_audio_from_playlist_aswell',
+        );
 
         // Now verifying that 'No audio selected' is displayed in the
         // AudioPlayerView screen
@@ -13907,7 +13905,8 @@ void main() {
     });
   });
   group('Delete existing playlist test', () {
-    testWidgets('Delete selected Youtube playlist', (WidgetTester tester) async {
+    testWidgets('Delete selected Youtube playlist',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -14256,7 +14255,8 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Cancel delete selected Youtube playlist', (WidgetTester tester) async {
+    testWidgets('Cancel delete selected Youtube playlist',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -14757,7 +14757,8 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Cancel delete selected local playlist', (WidgetTester tester) async {
+    testWidgets('Cancel delete selected local playlist',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -15289,7 +15290,8 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Delete non selected local playlist', (WidgetTester tester) async {
+    testWidgets('Delete non selected local playlist',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -15462,7 +15464,8 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Select a local playlist with no audio', (WidgetTester tester) async {
+    testWidgets('Select a local playlist with no audio',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -15548,7 +15551,8 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Select a Youtube playlist with no audio', (WidgetTester tester) async {
+    testWidgets('Select a Youtube playlist with no audio',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -15634,7 +15638,8 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Select a local playlist with audio', (WidgetTester tester) async {
+    testWidgets('Select a local playlist with audio',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -15710,7 +15715,8 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Select a Youtube playlist with audio', (WidgetTester tester) async {
+    testWidgets('Select a Youtube playlist with audio',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -15786,7 +15792,8 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Delete a Youtube playlist with audio', (WidgetTester tester) async {
+    testWidgets('Delete a Youtube playlist with audio',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -15920,7 +15927,8 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Delete a local playlist with 1 audio', (WidgetTester tester) async {
+    testWidgets('Delete a local playlist with 1 audio',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -16048,7 +16056,8 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Delete a unique audio in a local playlist', (WidgetTester tester) async {
+    testWidgets('Delete a unique audio in a local playlist',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -16166,7 +16175,8 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('Delete a unique audio in a Youtube playlist', (WidgetTester tester) async {
+    testWidgets('Delete a unique audio in a Youtube playlist',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -16286,7 +16296,8 @@ void main() {
     });
     group('Open app with or without selected playlist', () {
       group('With playlist list displayed', () {
-        testWidgets('Selected local playlist with no audio', (WidgetTester tester) async {
+        testWidgets('Selected local playlist with no audio',
+            (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -16329,7 +16340,8 @@ void main() {
             rootPath: kApplicationPathWindowsTest,
           );
         });
-        testWidgets('Selected Youtube playlist with no audio', (WidgetTester tester) async {
+        testWidgets('Selected Youtube playlist with no audio',
+            (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -16382,7 +16394,8 @@ void main() {
             rootPath: kApplicationPathWindowsTest,
           );
         });
-        testWidgets('Selected Local playlist with audio', (WidgetTester tester) async {
+        testWidgets('Selected Local playlist with audio',
+            (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -16434,7 +16447,8 @@ void main() {
             rootPath: kApplicationPathWindowsTest,
           );
         });
-        testWidgets('Selected Youtube playlist with audio', (WidgetTester tester) async {
+        testWidgets('Selected Youtube playlist with audio',
+            (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -16489,7 +16503,8 @@ void main() {
         });
       });
       group('With playlist list not displayed', () {
-        testWidgets('Selected local playlist with no audio', (WidgetTester tester) async {
+        testWidgets('Selected local playlist with no audio',
+            (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -16542,7 +16557,8 @@ void main() {
             rootPath: kApplicationPathWindowsTest,
           );
         });
-        testWidgets('Selected Youtube playlist with no audio', (WidgetTester tester) async {
+        testWidgets('Selected Youtube playlist with no audio',
+            (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -16605,7 +16621,8 @@ void main() {
             rootPath: kApplicationPathWindowsTest,
           );
         });
-        testWidgets('Selected Local playlist with audio', (WidgetTester tester) async {
+        testWidgets('Selected Local playlist with audio',
+            (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -16667,7 +16684,8 @@ void main() {
             rootPath: kApplicationPathWindowsTest,
           );
         });
-        testWidgets('Selected Youtube playlist with audio', (WidgetTester tester) async {
+        testWidgets('Selected Youtube playlist with audio',
+            (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -18268,15 +18286,12 @@ void main() {
 
       // Now tap the appbar leading popup menu button which now
       // displays all the usable menu items available on an existing
-      // audio.
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // Find the 'Audio Comments ...' menu item and tap on it to open the
-      // comment add list dialog
-      await tester
-          .tap(find.byKey(const Key('appbar_popup_menu_audio_comment')));
-      await tester.pumpAndSettle();
+      // audio. Then, the 'Audio Comments ...' menu item is used to open
+      // the comment add list dialog
+      await IntegrationTestUtil.typeOnAppbarMenuItem(
+        tester: tester,
+        appbarMenuKeyStr: 'appbar_popup_menu_audio_comment',
+      );
 
       // Verify that the comment dialog is displayed
       expect(find.text('Comments'), findsOneWidget);
@@ -18384,15 +18399,12 @@ void main() {
 
       // Now tap the appbar leading popup menu button which now
       // displays all the usable menu items available on an existing
-      // audio.
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // Find the 'Audio Comments ...' menu item and tap on it to open the
-      // comment add list dialog
-      await tester
-          .tap(find.byKey(const Key('appbar_popup_menu_audio_comment')));
-      await tester.pumpAndSettle();
+      // audio. Then, the 'Audio Comments ...' menu item is used to open
+      // the comment add list dialog
+      await IntegrationTestUtil.typeOnAppbarMenuItem(
+        tester: tester,
+        appbarMenuKeyStr: 'appbar_popup_menu_audio_comment',
+      );
 
       // Now tap on the delete comment icon button to delete the comment
       await tester.tap(find.byKey(const Key('deleteCommentIconButton')));
@@ -18636,15 +18648,12 @@ void main() {
 
       // Now tap the appbar leading popup menu button which now
       // displays all the usable menu items available on an existing
-      // audio.
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // Find the 'Audio Comments ...' menu item and tap on it to open the
-      // comment add list dialog
-      await tester
-          .tap(find.byKey(const Key('appbar_popup_menu_audio_comment')));
-      await tester.pumpAndSettle();
+      // audio. Then, the 'Audio Comments ...' menu item is used to open
+      // the comment add list dialog
+      await IntegrationTestUtil.typeOnAppbarMenuItem(
+        tester: tester,
+        appbarMenuKeyStr: 'appbar_popup_menu_audio_comment',
+      );
 
       // Now tap on the Add comment icon button to open the add edit comment dialog
       await tester
