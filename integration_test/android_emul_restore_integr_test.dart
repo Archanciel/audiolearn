@@ -818,6 +818,7 @@ void main() {
 
         // Find the audio list widget using its key
         final listFinder = find.byKey(const Key('audio_list'));
+        
         // Perform the scroll action
         await tester.drag(listFinder, const Offset(0, -300));
         await tester.pumpAndSettle();
