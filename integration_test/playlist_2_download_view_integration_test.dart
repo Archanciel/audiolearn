@@ -25483,6 +25483,47 @@ void main() {
         isWarningConfirming: true,
       );
 
+      // Now creating a 'Playable' sort filter parmeter
+
+      const String saveAsTitle = 'Playable';
+
+      // Now open the audio popup menu
+      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+      await tester.pumpAndSettle();
+
+      // Find the sort/filter audio menu item and tap on it to
+      // open the audio sort filter dialog
+      await tester
+          .tap(find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+      await tester.pumpAndSettle();
+
+      // Type "Playable" in the 'Save as' TextField
+
+      await tester.enterText(
+          find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+          saveAsTitle);
+      await tester.pumpAndSettle();
+
+      // Scrolling down the sort filter dialog so that the checkboxes
+      // are visible and so accessible by the integration test.
+      // WARNING: Scrolling down must be done before setting sort
+      // options, otherwise, it does not work.
+      await tester.drag(
+        find.byType(AudioSortFilterDialog),
+        const Offset(
+            0, -300), // Negative value for vertical drag to scroll down
+      );
+      await tester.pumpAndSettle();
+
+      // Tap on the 'Not playable' checkbox to unselect it
+      await tester.tap(find.byKey(const Key('filterNotPlayableCheckbox')));
+      await tester.pumpAndSettle();
+
+      // Click on the "Save" button.
+      await tester
+          .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+      await tester.pumpAndSettle();
+
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
