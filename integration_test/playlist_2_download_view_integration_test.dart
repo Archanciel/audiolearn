@@ -25457,42 +25457,13 @@ void main() {
 
       const String saveAsTitle = 'Playable';
 
-      // Now open the audio popup menu
-      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-      await tester.pumpAndSettle();
-
-      // Find the sort/filter audio menu item and tap on it to
-      // open the audio sort filter dialog
-      await tester
-          .tap(find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
-      await tester.pumpAndSettle();
-
-      // Type "Playable" in the 'Save as' TextField
-
-      await tester.enterText(
-          find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
-          saveAsTitle);
-      await tester.pumpAndSettle();
-
-      // Scrolling down the sort filter dialog so that the checkboxes
-      // are visible and so accessible by the integration test.
-      // WARNING: Scrolling down must be done before setting sort
-      // options, otherwise, it does not work.
-      await tester.drag(
-        find.byType(AudioSortFilterDialog),
-        const Offset(
-            0, -300), // Negative value for vertical drag to scroll down
+      // Creating the 'Playable' sort filter parameters which
+      // will be applied and used after restoring the MP3 files
+      // of the playlist
+      await _createPlayableSortFilterParms(
+        tester: tester,
+        saveAsTitle: saveAsTitle,
       );
-      await tester.pumpAndSettle();
-
-      // Tap on the 'Not playable' checkbox to unselect it
-      await tester.tap(find.byKey(const Key('filterNotPlayableCheckbox')));
-      await tester.pumpAndSettle();
-
-      // Click on the "Save" button.
-      await tester
-          .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
-      await tester.pumpAndSettle();
 
       // Verifying the playable audio's number before restoring
       // the MP3 files of the playlist
@@ -25541,6 +25512,147 @@ void main() {
         tester: tester,
         warningDialogMessage:
             "Restored 3 audio(s) MP3 in 1 playlist(s) from the unique playlist MP3 zip file \"$mp3RestorableZipFilePathName\".",
+        isWarningConfirming: true,
+      );
+
+      // Verifying the playable audio's number after restoring
+      // the MP3 files of the playlist
+
+      // Find the audio list widget using its key
+      listFinder = find.byKey(const Key('audio_list'));
+
+      expect(
+        tester
+            .widgetList(find.descendant(
+              of: listFinder,
+              matching: find.byType(ListTile),
+            ))
+            .length,
+        3,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Restore Playlist Audio's MP3 from Zip File ... playlist item menu selecting a multiple
+           playlists MP3 zip file. First, on empty app dir, restore unique playlist Windows zip
+           containing urgent_actus_17-12-2023 playlist and then restore multiple playlist MP3 zip
+           file containing the audio's of this playlist and of another playlist. The restored audio's
+           are playable.''', (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the integration test data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}restore_existing_playlists_with_new_audios_android_emulator",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      const String playlistTitle = 'urgent_actus_17-12-2023';
+
+      String restorableZipFilePathName =
+          '$kApplicationPathWindowsTest${path.separator}$playlistTitle.zip';
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: restorableZipFilePathName,
+            path: restorableZipFilePathName,
+            size: 2632),
+      ]);
+
+      // Execute the 'Restore Playlists, Comments and Settings from Zip
+      // File ...' menu
+      await IntegrationTestUtil.executeRestorePlaylists(
+        tester: tester,
+        doReplaceExistingPlaylists: true,
+      );
+
+      // Verify the displayed warning confirmation dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Restored 1 playlist saved individually, 0 comment and 0 picture JSON files as well as 3 audio reference(s) and 0 added plus 0 modified comment(s) from "$restorableZipFilePathName".',
+        isWarningConfirming: true,
+        warningTitle: 'CONFIRMATION',
+      );
+
+      // Now creating a 'Playable' sort filter parmeter
+      // in order to hide the not playable audio's. After
+      // restoring the MP3 files, all audio's of the playlist
+      // will be playable and so will be displayed.
+
+      const String saveAsTitle = 'Playable';
+
+      // Creating the 'Playable' sort filter parameters which
+      // will be applied and used after restoring the MP3 files
+      // of the playlist
+      await _createPlayableSortFilterParms(
+        tester: tester,
+        saveAsTitle: saveAsTitle,
+      );
+
+      // Verifying the playable audio's number before restoring
+      // the MP3 files of the playlist
+
+      // Find the audio list widget using its key
+      Finder listFinder = find.byKey(const Key('audio_list'));
+
+      expect(
+        tester
+            .widgetList(find.descendant(
+              of: listFinder,
+              matching: find.byType(ListTile),
+            ))
+            .length,
+        0,
+      );
+
+      String mp3RestorableZipFilePathName =
+          '$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-08-12_16_29_25_on_2025-09-07_07_46_29.zip';
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: mp3RestorableZipFilePathName,
+            path: mp3RestorableZipFilePathName,
+            size: 19331059),
+      ]);
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: playlistTitle,
+        playlistMenuKeyStr:
+            'popup_menu_restore_playlist_audio_mp3_files_from_zip',
+      );
+
+      // Verify the displayed confirmation dialog
+      await IntegrationTestUtil.verifySetValueToTargetDialog(
+        tester: tester,
+        dialogTitle: 'MP3 Restoration',
+        dialogMessage:
+            "Only the MP3 relative to the audio's listed in the playlist which are not already present in the playlist are restorable.",
+        closeDialog: true,
+      );
+
+      // Verify the displayed warning confirmation dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Restored 3 audio(s) MP3 in 1 playlist(s) from the multiple playlists MP3 zip file \"$mp3RestorableZipFilePathName\".",
         isWarningConfirming: true,
       );
 
@@ -28671,6 +28783,46 @@ void main() {
       );
     });
   });
+}
+
+Future<void> _createPlayableSortFilterParms({
+  required WidgetTester tester,
+  required String saveAsTitle,
+}) async {
+  // Now open the audio popup menu
+  await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+  await tester.pumpAndSettle();
+
+  // Find the sort/filter audio menu item and tap on it to
+  // open the audio sort filter dialog
+  await tester
+      .tap(find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+  await tester.pumpAndSettle();
+
+  // Type "Playable" in the 'Save as' TextField
+
+  await tester.enterText(
+      find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+      saveAsTitle);
+  await tester.pumpAndSettle();
+
+  // Scrolling down the sort filter dialog so that the checkboxes
+  // are visible and so accessible by the integration test.
+  // WARNING: Scrolling down must be done before setting sort
+  // options, otherwise, it does not work.
+  await tester.drag(
+    find.byType(AudioSortFilterDialog),
+    const Offset(0, -300), // Negative value for vertical drag to scroll down
+  );
+  await tester.pumpAndSettle();
+
+  // Tap on the 'Not playable' checkbox to unselect it
+  await tester.tap(find.byKey(const Key('filterNotPlayableCheckbox')));
+  await tester.pumpAndSettle();
+
+  // Click on the "Save" button.
+  await tester.tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+  await tester.pumpAndSettle();
 }
 
 class CommentListAddDialog {}
