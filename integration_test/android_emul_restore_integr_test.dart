@@ -818,7 +818,7 @@ void main() {
 
         // Find the audio list widget using its key
         final listFinder = find.byKey(const Key('audio_list'));
-        
+
         // Perform the scroll action
         await tester.drag(listFinder, const Offset(0, -300));
         await tester.pumpAndSettle();
@@ -1155,15 +1155,12 @@ void main() {
               size: 15366672),
         ]);
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now tap on the 'Restore Playlists Audio's MP3 from Zip File ...'
-        // menu item
-        await tester.tap(find.byKey(
-            const Key('appBarMenuRestorePlaylistsAudioMp3FilesFromZip')));
-        await tester.pumpAndSettle();
+        // Tap on the appbar menu item 'Restore Playlists Audio Mp3 Files
+        // from Zip ...'
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
+        );
 
         // Now find the 'Ok' button of the SetValueToTarget dialog
         // and tap on it
@@ -1173,7 +1170,7 @@ void main() {
         // Tap on the Ok button to close the warning confirmation dialog
         await tester.tap(find.byKey(const Key('warningDialogOkButton')));
         await tester.pumpAndSettle();
-        
+
         const String selectedPlaylistTitle = 'urgent_actus_17-12-2023';
         const String localPlaylistTitle = 'local';
 
@@ -2477,14 +2474,12 @@ void main() {
           pathToSelectStr: kApplicationPathWindowsTest,
         );
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now tap on the 'Save Playlists Audio's MP3 to ZIP File' menu
-        await tester.tap(
-            find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
-        await tester.pumpAndSettle();
+        // Tap on the appbar menu item 'Save Playlists Audio MP3 Files
+        // to Zip ...'
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAudioMp3FilesToZip',
+        );
 
         await IntegrationTestUtil.verifySetValueToTargetDialog(
           tester: tester,
@@ -2635,14 +2630,12 @@ void main() {
           pathToSelectStr: kApplicationPathWindowsTest,
         );
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now tap on the 'Save Playlists Audio's MP3 to ZIP File' menu
-        await tester.tap(
-            find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
-        await tester.pumpAndSettle();
+        // Tap on the appbar menu item 'Save Playlists Audio's MP3 to ZIP File'
+        // menu
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAudioMp3FilesToZip',
+        );
 
         await IntegrationTestUtil.verifySetValueToTargetDialog(
           tester: tester,
@@ -2811,14 +2804,12 @@ void main() {
           pathToSelectStr: kApplicationPathWindowsTest,
         );
 
-        // Tap the appbar leading popup menu button
-        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-        await tester.pumpAndSettle();
-
-        // Now tap on the 'Save Playlists Audio's MP3 to ZIP File' menu
-        await tester.tap(
-            find.byKey(const Key('appBarMenuSavePlaylistsAudioMp3FilesToZip')));
-        await tester.pumpAndSettle();
+        // Tap on the appbar menu item 'Save Playlists Audio's MP3 to ZIP File'
+        // menu
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAudioMp3FilesToZip',
+        );
 
         await IntegrationTestUtil.verifySetValueToTargetDialog(
           tester: tester,

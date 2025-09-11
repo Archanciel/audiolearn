@@ -213,6 +213,19 @@ class IntegrationTestUtil {
     await tester.pumpAndSettle();
   }
 
+  static Future<void> typeOnAppbarMenuItem({
+    required WidgetTester tester,
+    required String appbarMenuKeyStr,
+  }) async {
+    // Tap the appbar leading popup menu button
+    await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+    await tester.pumpAndSettle();
+
+    // Now tap on the passed menu item key
+    await tester.tap(find.byKey(Key(appbarMenuKeyStr)));
+    await tester.pumpAndSettle();
+  }
+
   static Future<void> typeOnPlaylistSubMenuItem({
     required WidgetTester tester,
     required String playlistTitle,
