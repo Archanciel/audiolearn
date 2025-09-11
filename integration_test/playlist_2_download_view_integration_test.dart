@@ -7053,6 +7053,7 @@ void main() {
         // downloaded audio title
         // Find the audio list widget using its key
         final Finder listFinder = find.byKey(const Key('audio_list'));
+
         // Perform the scroll action
         await tester.drag(listFinder, const Offset(0, 500));
         await tester.pumpAndSettle();
@@ -25449,41 +25450,10 @@ void main() {
         warningTitle: 'CONFIRMATION',
       );
 
-      String mp3RestorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}urgent_actus_17-12-2023_mp3_from_2025-08-12_16_29_25_on_2025-08-15_11_23_41.zip';
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: mp3RestorableZipFilePathName,
-            path: mp3RestorableZipFilePathName,
-            size: 15368672),
-      ]);
-
-      await IntegrationTestUtil.typeOnPlaylistMenuItem(
-        tester: tester,
-        playlistTitle: playlistTitle,
-        playlistMenuKeyStr:
-            'popup_menu_restore_playlist_audio_mp3_files_from_zip',
-      );
-
-      // Verify the displayed confirmation dialog
-      await IntegrationTestUtil.verifySetValueToTargetDialog(
-        tester: tester,
-        dialogTitle: 'MP3 Restoration',
-        dialogMessage:
-            "Only the MP3 relative to the audio's listed in the playlist which are not already present in the playlist are restorable.",
-        closeDialog: true,
-      );
-
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 3 audio(s) MP3 in 1 playlist(s) from the unique playlist MP3 zip file \"$mp3RestorableZipFilePathName\".",
-        isWarningConfirming: true,
-      );
-
       // Now creating a 'Playable' sort filter parmeter
+      // in order to hide the not playable audio's. After
+      // restoring the MP3 files, all audio's of the playlist
+      // will be playable and so will be displayed.
 
       const String saveAsTitle = 'Playable';
 
@@ -25523,6 +25493,72 @@ void main() {
       await tester
           .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
       await tester.pumpAndSettle();
+
+      // Verifying the playable audio's number before restoring
+      // the MP3 files of the playlist
+
+      // Find the audio list widget using its key
+      Finder listFinder = find.byKey(const Key('audio_list'));
+
+      expect(
+        tester
+            .widgetList(find.descendant(
+              of: listFinder,
+              matching: find.byType(ListTile),
+            ))
+            .length,
+        0,
+      );
+
+      String mp3RestorableZipFilePathName =
+          '$kApplicationPathWindowsTest${path.separator}urgent_actus_17-12-2023_mp3_from_2025-08-12_16_29_25_on_2025-08-15_11_23_41.zip';
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: mp3RestorableZipFilePathName,
+            path: mp3RestorableZipFilePathName,
+            size: 15368672),
+      ]);
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: playlistTitle,
+        playlistMenuKeyStr:
+            'popup_menu_restore_playlist_audio_mp3_files_from_zip',
+      );
+
+      // Verify the displayed confirmation dialog
+      await IntegrationTestUtil.verifySetValueToTargetDialog(
+        tester: tester,
+        dialogTitle: 'MP3 Restoration',
+        dialogMessage:
+            "Only the MP3 relative to the audio's listed in the playlist which are not already present in the playlist are restorable.",
+        closeDialog: true,
+      );
+
+      // Verify the displayed warning confirmation dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Restored 3 audio(s) MP3 in 1 playlist(s) from the unique playlist MP3 zip file \"$mp3RestorableZipFilePathName\".",
+        isWarningConfirming: true,
+      );
+
+      // Verifying the playable audio's number after restoring
+      // the MP3 files of the playlist
+
+      // Find the audio list widget using its key
+      listFinder = find.byKey(const Key('audio_list'));
+
+      expect(
+        tester
+            .widgetList(find.descendant(
+              of: listFinder,
+              matching: find.byType(ListTile),
+            ))
+            .length,
+        3,
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
