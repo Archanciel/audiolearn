@@ -3068,6 +3068,146 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               rootPath: kApplicationPathWindowsTest,
             );
           });
+          testWidgets(
+              '''Modify 'Converted' existing named and saved sort/filter parms unchecking the 'Converted'
+                 checkbox and verify the ConfirmActionDialog content.''',
+              (WidgetTester tester) async {
+            // Purge the test playlist directory if it exists so that the
+            // playlist list is empty
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+
+            // Copy the test initial audio data to the app dir
+            DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+              sourceRootPath:
+                  "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
+              destinationRootPath: kApplicationPathWindowsTest,
+            );
+
+            final SettingsDataService settingsDataService = SettingsDataService(
+              sharedPreferences: await SharedPreferences.getInstance(),
+            );
+
+            // Load the settings from the json file. This is necessary
+            // otherwise the ordered playlist titles will remain empty
+            // and the playlist list will not be filled with the
+            // playlists available in the download app test dir
+            await settingsDataService.loadSettingsFromFile(
+                settingsJsonPathFileName:
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+            await app.main();
+            await tester.pumpAndSettle();
+
+            const String saveAsTitle = 'Converted';
+
+            // Now open the audio popup menu
+            await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+            await tester.pumpAndSettle();
+
+            // Find the sort/filter audio menu item and tap on it to
+            // open the audio sort filter dialog
+            await tester.tap(find
+                .byKey(const Key('define_sort_and_filter_audio_menu_item')));
+            await tester.pumpAndSettle();
+
+            // Type "Converted" in the 'Save as' TextField
+
+            await tester.enterText(
+                find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+                saveAsTitle);
+            await tester.pumpAndSettle();
+
+            // Scrolling down the sort filter dialog so that the checkboxes
+            // are visible and so accessible by the integration test.
+            // WARNING: Scrolling down must be done before setting sort
+            // options, otherwise, it does not work.
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -300), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
+            // Tap on the 'Downloaded' checkbox to unselect it
+            await tester.tap(find.byKey(const Key('filterDownloadedCheckbox')));
+            await tester.pumpAndSettle();
+
+            // Tap on the 'Imported' checkbox to unselect it
+            await tester.tap(find.byKey(const Key('filterImportedCheckbox')));
+            await tester.pumpAndSettle();
+
+            // Click on the "Save" button.
+            await tester
+                .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+            await tester.pumpAndSettle();
+
+            // Now tap on the current dropdown button item to open the dropdown
+            // button items list
+
+            final Finder dropDownButtonFinder =
+                find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+            final Finder dropDownButtonTextFinder = find.descendant(
+              of: dropDownButtonFinder,
+              matching: find.byType(Text),
+            );
+
+            await tester.tap(dropDownButtonTextFinder);
+            await tester.pumpAndSettle();
+
+            // And find the 'Converted' sort/filter item
+            final Finder titleAscDropDownTextFinder =
+                find.text(saveAsTitle).last;
+            await tester.tap(titleAscDropDownTextFinder);
+            await tester.pumpAndSettle();
+
+            // Now open the audio popup menu in order to modify the
+            // 'Converted' sort/filter item
+            Finder dropdownItemEditIconButtonFinder = find.byKey(
+                const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+            await tester.tap(dropdownItemEditIconButtonFinder);
+            await tester.pumpAndSettle();
+
+            // Scrolling down the sort filter dialog so that the checkboxes
+            // are visible and so accessible by the integration test.
+            // WARNING: Scrolling down must be done before setting sort
+            // options, otherwise, it does not work.
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -300), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
+            // Tap on the 'Converted' checkbox to unselect it and reselect
+            // the 'Downloaded' and 'Imported' checkboxes
+            await tester.tap(find.byKey(const Key('filterConvertedCheckbox')));
+            await tester.pumpAndSettle();
+
+            // Click on the "Save" button.
+            await tester
+                .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+            await tester.pumpAndSettle();
+
+            // Verifying and closing the confirm dialog
+
+            await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+              tester: tester,
+              confirmDialogTitleOne:
+                  'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
+              confirmDialogMessage:
+                  'Filter options:\n In initial version:\n   Downloaded: unchecked\n In modified version:\n   Downloaded: checked\n In initial version:\n   Imported: unchecked\n In modified version:\n   Imported: checked\n In initial version:\n   Converted: checked\n In modified version:\n   Converted: unchecked',
+              confirmOrCancelAction: true, // Confirm button is tapped
+            );
+
+            // Purge the test playlist directory so that the created test
+            // files are not uploaded to GitHub
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+          });
         });
         group(
             '''Testing in french. Necessary to test in different languages since
