@@ -5529,16 +5529,9 @@ void main() {
 
       // Now move this audio to the 'Empty' playlist
 
-      // Tap the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
-
-      // Now find the move audio popup menu item and tap on it
-      Finder popupMoveMenuItem =
-          find.byKey(const Key("popup_menu_move_audio_to_playlist"));
-
-      await tester.tap(popupMoveMenuItem);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.typeOnAppbarMenuItem(
+        tester: tester,
+        appbarMenuKeyStr: 'popup_menu_move_audio_to_playlist',);
 
       // Check the value of the select one playlist AlertDialog
       // dialog title
@@ -6769,15 +6762,11 @@ void main() {
 
       // Now tap the appbar leading popup menu button which now
       // displays all the usable menu items available on an existing
-      // audio.
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // Find the 'Audio Comments ...' menu item and tap on it to open the
-      // comment add list dialog
-      await tester
-          .tap(find.byKey(const Key('appbar_popup_menu_audio_comment')));
-      await tester.pumpAndSettle();
+      // audio. Find the 'Audio Comments ...' menu item and tap on it
+      // to open the comment add list dialog
+      await IntegrationTestUtil.typeOnAppbarMenuItem(
+        tester: tester,
+        appbarMenuKeyStr: 'appbar_popup_menu_audio_comment',);
 
       // Verify that the comment dialog is displayed
       expect(find.text('Comments'), findsOneWidget);
@@ -6886,15 +6875,11 @@ void main() {
 
       // Now tap the appbar leading popup menu button which now
       // displays all the usable menu items available on an existing
-      // audio.
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // Find the 'Audio Comments ...' menu item and tap on it to open the
-      // comment add list dialog
-      await tester
-          .tap(find.byKey(const Key('appbar_popup_menu_audio_comment')));
-      await tester.pumpAndSettle();
+      // audio. Find the 'Audio Comments ...' menu item and tap on it
+      // to open the comment add list dialog
+      await IntegrationTestUtil.typeOnAppbarMenuItem(
+        tester: tester,
+        appbarMenuKeyStr: 'appbar_popup_menu_audio_comment',);
 
       // Now tap on the delete comment icon button to delete the comment
       await tester.tap(find.byKey(const Key('deleteCommentIconButton')));
@@ -8726,15 +8711,13 @@ void main() {
       await tester.tap(find.byIcon(Icons.play_arrow));
       await tester.pumpAndSettle();
 
-      // Tap on the appbar leading popup menu button
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
-
-      // Find the 'Audio Comments ...' menu item and tap on it to open the
-      // comment add list dialog
-      await tester
-          .tap(find.byKey(const Key('appbar_popup_menu_audio_comment')));
-      await tester.pumpAndSettle();
+      // Now tap the appbar leading popup menu button which now
+      // displays all the usable menu items available on an existing
+      // audio. Find the 'Audio Comments ...' menu item and tap on it
+      // to open the comment add list dialog
+      await IntegrationTestUtil.typeOnAppbarMenuItem(
+        tester: tester,
+        appbarMenuKeyStr: 'appbar_popup_menu_audio_comment',);
 
       await Future.delayed(const Duration(milliseconds: 500));
       await tester.pumpAndSettle();
