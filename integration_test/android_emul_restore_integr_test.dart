@@ -6536,11 +6536,11 @@ Future<void> _verifyListenAndCreateMp3ButtonsState({
       widgetKeyStr: 'create_audio_file_button',
     );
   } else {
-    await IntegrationTestUtil.verifyWidgetIsDisabled(
+    IntegrationTestUtil.verifyWidgetIsDisabled(
       tester: tester,
       widgetKeyStr: 'listen_text_button',
     );
-    await IntegrationTestUtil.verifyWidgetIsDisabled(
+    IntegrationTestUtil.verifyWidgetIsDisabled(
       tester: tester,
       widgetKeyStr: 'create_audio_file_button',
     );

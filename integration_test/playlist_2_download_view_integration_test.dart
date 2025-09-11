@@ -71,7 +71,7 @@ void main() {
 
         // Verify that the download single video button is
         // now disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'downloadSingleVideoButton',
         );
@@ -121,7 +121,7 @@ void main() {
         );
 
         // Verify the presence of the disabled stop button
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr:
               'stopDownloadingButton', // this button is disabled if the
@@ -400,14 +400,14 @@ void main() {
 
         // Verify that the stop text button replaced the
         // delete icon button, but is disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'stopDownloadingButton',
         );
 
         // Verify that the download single video button is
         // now disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'downloadSingleVideoButton',
         );
@@ -879,7 +879,7 @@ void main() {
         );
 
         // Verify the presence of the disabled stop button
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr:
               'stopDownloadingButton', // this button is disabled if the
@@ -1257,7 +1257,7 @@ void main() {
 
         // Verify that the stop text button replaced the
         // delete icon button, but is disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'stopDownloadingButton',
         );
@@ -1367,7 +1367,7 @@ void main() {
 
         // Verify that the download single video button is
         // disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'downloadSingleVideoButton',
         );
@@ -1430,7 +1430,7 @@ void main() {
 
         // Verify that the download single video button is
         // disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'downloadSingleVideoButton',
         );
@@ -1509,7 +1509,7 @@ void main() {
 
         // Verify that the stop text button replaced the
         // delete icon button, but is disabled
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'stopDownloadingButton',
         );
@@ -1580,12 +1580,12 @@ void main() {
           widgetKeyStr: 'move_down_playlist_button',
         );
 
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'download_sel_playlists_button',
         );
 
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'audio_quality_checkbox',
         );
@@ -1660,12 +1660,12 @@ void main() {
           widgetKeyStr: 'move_down_playlist_button',
         );
 
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'download_sel_playlists_button',
         );
 
-        await IntegrationTestUtil.verifyWidgetIsDisabled(
+        IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
           widgetKeyStr: 'audio_quality_checkbox',
         );
@@ -17756,7 +17756,7 @@ void main() {
           'On not empty app dir where no playlist is selected, restore Windows zip.',
           () {
         group(
-            'Restored selected playlist is identical to the before restoration selected playlist.',
+            'Restored selected playlist is identical to the before restoration not selected playlist.',
             () {
           testWidgets(
               '''Replace existing playlist. Restore Windows zip containing 'Empty', 'local',
@@ -17939,12 +17939,24 @@ void main() {
               playlistToSelectTitle: 'local',
             );
 
+            // Verify that the audio menu button is disabled
+            IntegrationTestUtil.verifyWidgetIsDisabled(
+              tester: tester,
+              widgetKeyStr: 'audio_popup_menu_button',
+            );
+
             // Execute the 'Restore Playlists, Comments and Settings from Zip
             // File ...' menu with the 'Replace existing playlists' option
             // selected.
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
+            );
+
+            // Verify that the audio menu button is enabled
+            IntegrationTestUtil.verifyWidgetIsEnabled(
+              tester: tester,
+              widgetKeyStr: 'audio_popup_menu_button',
             );
 
             // Verify the displayed warning confirmation dialog
@@ -18479,11 +18491,25 @@ void main() {
               playlistToSelectTitle: 'local',
             );
 
+            // Verify that the audio menu button is disabled
+            IntegrationTestUtil.verifyWidgetIsDisabled(
+              tester: tester,
+              widgetKeyStr: 'audio_popup_menu_button',
+            );
+
             // Execute the 'Restore Playlists, Comments and Settings from Zip
             // File ...' menu without replacing the existing playlists.
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
+            );
+
+            // Verify that the audio menu button is disabled since the local
+            // playlist selected in the zip file has not replaced the existing
+            // local playlist and so no playlist is selected.
+            IntegrationTestUtil.verifyWidgetIsDisabled(
+              tester: tester,
+              widgetKeyStr: 'audio_popup_menu_button',
             );
 
             // Verify the displayed warning confirmation dialog
@@ -18962,6 +18988,12 @@ void main() {
               playlistToSelectTitle: 'local',
             );
 
+            // Verify that the audio menu button is disabled
+            IntegrationTestUtil.verifyWidgetIsDisabled(
+              tester: tester,
+              widgetKeyStr: 'audio_popup_menu_button',
+            );
+
             // Execute the 'Restore Playlists, Comments and Settings from Zip
             // File ...' menu with the 'Replace existing playlists' option
             // selected.
@@ -18971,6 +19003,12 @@ void main() {
             );
 
             await tester.pumpAndSettle(const Duration(milliseconds: 500));
+
+            // Verify that the audio menu button is enabled
+            IntegrationTestUtil.verifyWidgetIsEnabled(
+              tester: tester,
+              widgetKeyStr: 'audio_popup_menu_button',
+            );
 
             // Verify the displayed warning confirmation dialog
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
@@ -19151,11 +19189,23 @@ void main() {
               playlistToSelectTitle: 'local',
             );
 
+            // Verify that the audio menu button is disabled
+            IntegrationTestUtil.verifyWidgetIsDisabled(
+              tester: tester,
+              widgetKeyStr: 'audio_popup_menu_button',
+            );
+
             // Execute the 'Restore Playlists, Comments and Settings from Zip
             // File ...' menu without replacing the existing playlists.
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
+            );
+
+            // Verify that the audio menu button is enabled
+            IntegrationTestUtil.verifyWidgetIsEnabled(
+              tester: tester,
+              widgetKeyStr: 'audio_popup_menu_button',
             );
 
             // Verify the displayed warning confirmation dialog
@@ -19552,11 +19602,23 @@ void main() {
                 size: 7460),
           ]);
 
+          // Verify that the audio menu button is disabled
+          IntegrationTestUtil.verifyWidgetIsDisabled(
+            tester: tester,
+            widgetKeyStr: 'audio_popup_menu_button',
+          );
+
           // Execute the 'Restore Playlists, Comments and Settings from Zip
           // File ...' menu
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: true,
+          );
+
+          // Verify that the audio menu button is enabled
+          IntegrationTestUtil.verifyWidgetIsEnabled(
+            tester: tester,
+            widgetKeyStr: 'audio_popup_menu_button',
           );
 
           // Verify the displayed warning confirmation dialog
@@ -19715,11 +19777,23 @@ void main() {
                 size: 7460),
           ]);
 
+          // Verify that the audio menu button is disabled
+          IntegrationTestUtil.verifyWidgetIsDisabled(
+            tester: tester,
+            widgetKeyStr: 'audio_popup_menu_button',
+          );
+
           // Execute the 'Restore Playlists, Comments and Settings from Zip
           // File ...' menu
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: true,
+          );
+
+          // Verify that the audio menu button is enabled
+          IntegrationTestUtil.verifyWidgetIsEnabled(
+            tester: tester,
+            widgetKeyStr: 'audio_popup_menu_button',
           );
 
           // Verify the displayed warning confirmation dialog
@@ -19878,11 +19952,23 @@ void main() {
                 size: 7460),
           ]);
 
+          // Verify that the audio menu button is disabled
+          IntegrationTestUtil.verifyWidgetIsDisabled(
+            tester: tester,
+            widgetKeyStr: 'audio_popup_menu_button',
+          );
+
           // Execute the 'Restore Playlists, Comments and Settings from Zip
           // File ...' menu
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
+          );
+
+          // Verify that the audio menu button is enabled
+          IntegrationTestUtil.verifyWidgetIsEnabled(
+            tester: tester,
+            widgetKeyStr: 'audio_popup_menu_button',
           );
 
           // Verify the displayed warning confirmation dialog
@@ -20053,11 +20139,23 @@ void main() {
                 size: 7460),
           ]);
 
+          // Verify that the audio menu button is disabled
+          IntegrationTestUtil.verifyWidgetIsDisabled(
+            tester: tester,
+            widgetKeyStr: 'audio_popup_menu_button',
+          );
+
           // Execute the 'Restore Playlists, Comments and Settings from Zip
           // File ...' menu
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: true,
+          );
+
+          // Verify that the audio menu button is enabled
+          IntegrationTestUtil.verifyWidgetIsEnabled(
+            tester: tester,
+            widgetKeyStr: 'audio_popup_menu_button',
           );
 
           // Verify the displayed warning confirmation dialog
@@ -22877,11 +22975,23 @@ void main() {
                   size: 3138),
             ]);
 
+            // Verify that the audio menu button is disabled
+            IntegrationTestUtil.verifyWidgetIsDisabled(
+              tester: tester,
+              widgetKeyStr: 'audio_popup_menu_button',
+            );
+
             // Execute the 'Restore Playlists, Comments and Settings from Zip
             // File ...' menu
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
+            );
+
+            // Verify that the audio menu button is enabled
+            IntegrationTestUtil.verifyWidgetIsEnabled(
+              tester: tester,
+              widgetKeyStr: 'audio_popup_menu_button',
             );
 
             await Future.delayed(const Duration(milliseconds: 500));
@@ -23013,11 +23123,23 @@ void main() {
                   size: 3138),
             ]);
 
+            // Verify that the audio menu button is disabled
+            IntegrationTestUtil.verifyWidgetIsDisabled(
+              tester: tester,
+              widgetKeyStr: 'audio_popup_menu_button',
+            );
+
             // Execute the 'Restore Playlists, Comments and Settings from Zip
             // File ...' menu
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
+            );
+
+            // Verify that the audio menu button is enabled
+            IntegrationTestUtil.verifyWidgetIsEnabled(
+              tester: tester,
+              widgetKeyStr: 'audio_popup_menu_button',
             );
 
             await Future.delayed(const Duration(milliseconds: 500));
@@ -29219,11 +29341,11 @@ Future<void> _verifyListenAndCreateMp3ButtonsState({
       widgetKeyStr: 'create_audio_file_button',
     );
   } else {
-    await IntegrationTestUtil.verifyWidgetIsDisabled(
+    IntegrationTestUtil.verifyWidgetIsDisabled(
       tester: tester,
       widgetKeyStr: 'listen_text_button',
     );
-    await IntegrationTestUtil.verifyWidgetIsDisabled(
+    IntegrationTestUtil.verifyWidgetIsDisabled(
       tester: tester,
       widgetKeyStr: 'create_audio_file_button',
     );
@@ -29441,7 +29563,7 @@ Future<void> _resetUnselectedPlaylistAudioQualityAndThenSelectPlaylist({
     );
   } else {
     // Verify that the music quality checkbox is disabled
-    await IntegrationTestUtil.verifyWidgetIsDisabled(
+    IntegrationTestUtil.verifyWidgetIsDisabled(
       tester: tester,
       widgetKeyStr: 'audio_quality_checkbox',
     );
@@ -29466,7 +29588,7 @@ Future<void> _verifyPlaylistAudioQuality({
   required PlaylistQuality playlistQuality,
 }) async {
   if (isPlaylistLocal) {
-    await IntegrationTestUtil.verifyWidgetIsDisabled(
+    IntegrationTestUtil.verifyWidgetIsDisabled(
       tester: tester,
       widgetKeyStr: 'audio_quality_checkbox',
     );
@@ -30356,7 +30478,6 @@ Future<void> _verifyDateFormatApplication({
   mockFilePicker.setPathToSelect(
     pathToSelectStr: kApplicationPathWindowsTest,
   );
-
 
   // Tap the appbar leading popup menu button Then, the 'Save
   // Playlists Audio's MP3 to ZIP File' menu is selected.
