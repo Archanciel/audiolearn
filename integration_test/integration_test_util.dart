@@ -213,6 +213,9 @@ class IntegrationTestUtil {
     await tester.pumpAndSettle();
   }
 
+  /// Taps on the appbar leading popup menu button and then on the
+  /// passed menu item key. This works on the Playlist Download View
+  /// as well as on the Audio Player View.
   static Future<void> typeOnAppbarMenuItem({
     required WidgetTester tester,
     required String appbarMenuKeyStr,
@@ -653,13 +656,12 @@ class IntegrationTestUtil {
     required WidgetTester tester,
     bool doRemoveDeletedAudioFiles = true,
   }) async {
-    // Tap the appbar leading popup menu button
-    await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-    await tester.pumpAndSettle();
-
-    // Find the update playlist JSON file menu item and tap on it
-    await tester.tap(find.byKey(const Key('update_playlist_json_dialog_item')));
-    await tester.pumpAndSettle();
+    // Now tap the appbar leading popup menu and then the
+    // 'Update playlist JSON file' menu item
+    await IntegrationTestUtil.typeOnAppbarMenuItem(
+      tester: tester,
+      appbarMenuKeyStr: 'update_playlist_json_dialog_item',
+    );
 
     if (doRemoveDeletedAudioFiles) {
       // Find the 'Remove deleted audio files' checkbox and tap
@@ -704,14 +706,13 @@ class IntegrationTestUtil {
       }
     }
 
-    // Tap the appbar leading popup menu button
-    await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-    await tester.pumpAndSettle();
-
-    // Find the update playlist JSON file menu item and tap on it
-    await tester.tap(find.byKey(
-        const Key('appBarMenuRestorePlaylistsCommentsAndSettingsFromZip')));
-    await tester.pumpAndSettle();
+    // Now tap the appbar leading popup menu and then the
+    // 'Restore Playlist(s), Comments, Pictures and Settings
+    // from ZIP file' menu item
+    await IntegrationTestUtil.typeOnAppbarMenuItem(
+      tester: tester,
+      appbarMenuKeyStr: 'appBarMenuRestorePlaylistsCommentsAndSettingsFromZip',
+    );
 
     if (doReplaceExistingPlaylists) {
       // Find the 'Remove deleted audio files' checkbox and tap
