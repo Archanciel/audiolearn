@@ -25954,6 +25954,142 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
+    testWidgets(
+        '''Restore Playlists Audio's MP3 from Zip File ... appbar item menu selecting a multiple
+           playlists MP3 zip file. First, on empty app dir, restore 2 playlists Windows zip 
+           containing urgent_actus_17-12-2023 and local playlist and then restore multiple playlists MP3 zip
+           file containing the audio's of this playlist. The restored audio's are playable.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the integration test data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}restore_existing_playlists_with_new_audios_android_emulator",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      String restorableZipFilePathName =
+          '$kApplicationPathWindowsTest${path.separator}audioLearn_2025-09-07_07_45_02.zip';
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: restorableZipFilePathName,
+            path: restorableZipFilePathName,
+            size: 2632),
+      ]);
+
+      // Execute the 'Restore Playlists, Comments and Settings from Zip
+      // File ...' menu
+      await IntegrationTestUtil.executeRestorePlaylists(
+        tester: tester,
+        doReplaceExistingPlaylists: true,
+      );
+
+      // Verify the displayed warning confirmation dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Restored 2 playlist, 4 comment and 1 picture JSON files as well as 10 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".',
+        isWarningConfirming: true,
+        warningTitle: 'CONFIRMATION',
+      );
+
+      // Now creating a 'Playable' sort filter parmeter
+      // in order to hide the not playable audio's. After
+      // restoring the MP3 files, all audio's of the playlist
+      // will be playable and so will be displayed.
+
+      const String saveAsTitle = 'Playable';
+
+      // Creating the 'Playable' sort filter parameters which
+      // will be applied and used after restoring the MP3 files
+      // of the playlist
+      await _createAndSavePlayableSortFilterParms(
+        tester: tester,
+        saveAsTitle: saveAsTitle,
+      );
+
+      // Verifying the playable audio's number before restoring
+      // the MP3 files of the playlist
+
+      // Find the audio list widget using its key
+      Finder listFinder = find.byKey(const Key('audio_list'));
+
+      expect(
+        tester
+            .widgetList(find.descendant(
+              of: listFinder,
+              matching: find.byType(ListTile),
+            ))
+            .length,
+        0,
+      );
+
+      String mp3RestorableZipFilePathName =
+          '$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-08-12_16_29_25_on_2025-09-07_07_46_29.zip';
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: mp3RestorableZipFilePathName,
+            path: mp3RestorableZipFilePathName,
+            size: 15368672),
+      ]);
+
+      await IntegrationTestUtil.typeOnAppbarMenuItem(
+        tester: tester,
+        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',);
+
+      // Verify the displayed confirmation dialog
+      await IntegrationTestUtil.verifySetValueToTargetDialog(
+        tester: tester,
+        dialogTitle: 'MP3 Restoration',
+        dialogMessage:
+            "Only the MP3 relative to the audio's listed in the playlists which are not already present in the playlists are restorable.",
+        closeDialog: true,
+      );
+
+      // Verify the displayed warning confirmation dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Restored 6 audio(s) MP3 in 2 playlist(s) from the multiple playlists MP3 zip file \"$mp3RestorableZipFilePathName\".",
+        isWarningConfirming: true,
+      );
+
+      // Verifying the playable audio's number after restoring
+      // the MP3 files of the playlist
+
+      // Find the audio list widget using its key
+      listFinder = find.byKey(const Key('audio_list'));
+
+      expect(
+        tester
+            .widgetList(find.descendant(
+              of: listFinder,
+              matching: find.byType(ListTile),
+            ))
+            .length,
+        1,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
   });
   group('Manage picture for audio', () {
     group('From audio list item in playlist download view', () {
