@@ -12218,6 +12218,7 @@ void main() {
 
           // Find the audio list widget using its key
           final Finder listFinder = find.byKey(const Key('audio_list'));
+
           // Perform the scroll action
           await tester.drag(listFinder, const Offset(0, -1000));
           await tester.pumpAndSettle();
@@ -12474,6 +12475,7 @@ void main() {
 
           // Find the audio list widget using its key
           final Finder listFinder = find.byKey(const Key('audio_list'));
+          
           // Perform the scroll action
           await tester.drag(listFinder, const Offset(0, -1000));
           await tester.pumpAndSettle();
