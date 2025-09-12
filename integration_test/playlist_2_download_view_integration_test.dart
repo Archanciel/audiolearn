@@ -12502,9 +12502,10 @@ void main() {
     group('App playlist root path test', () {
       testWidgets(
           '''Modify playlist root path and then reset it to the initial value. Verify
-           that the playlist sort order was reset to the initial sort order. Then,
-           remodify the path to the previously modified value and verify that the
-           playlist sort order was reset to the new order.''',
+           that the playlist sort order was reset to the initial sort order since the
+           user accepted the previously saved sort order. Then, remodify the path to the
+           previously modified value and verify that the playlist sort order was reset
+           to the new order since the user accepted the previously saved sort order.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
@@ -12584,7 +12585,7 @@ void main() {
           "local_audio_playlist_2",
         ];
 
-        await _changePlaylistRootPath(
+        await _changePlaylistRootPathAndSaveAppSettings(
           tester: tester,
           mockFilePicker: mockFilePicker,
           pathToSelectStr:
@@ -12621,7 +12622,7 @@ void main() {
 
         // Now reset the playlist root path to the initial value
 
-        await _changePlaylistRootPath(
+        await _changePlaylistRootPathAndSaveAppSettings(
           tester: tester,
           mockFilePicker: mockFilePicker,
           pathToSelectStr:
@@ -12630,6 +12631,10 @@ void main() {
           expectedSettingsContent:
               "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[local_empty_download_single_video, local_not_empty_download_single_video, audio_learn_test_download_2_small_videos]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"filterConverted\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
           selectedPlaylistTitle: 'local_not_empty_download_single_video',
+          confirmDialogTitleOne: "Playlist Titles Order Restoration",
+          confirmDialogMessage:
+              "A previous playlist titles order file is available in the selected playlist root path. Do you want to restore this saved order or keep the current playlist titles order? Click on \"Confirm\" to restore the saved order or on \"Cancel\" to keep the current order.",
+          confirmOrCancelAction: true, // Confirm button is tapped
         );
 
         // And finally, set again the playlist root path to the modified
@@ -12642,7 +12647,7 @@ void main() {
           "local_audio_playlist_2",
         ];
 
-        await _changePlaylistRootPath(
+        await _changePlaylistRootPathAndSaveAppSettings(
           tester: tester,
           mockFilePicker: mockFilePicker,
           pathToSelectStr:
@@ -12651,6 +12656,10 @@ void main() {
           expectedSettingsContent:
               "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[local_3, audio_learn_test_download_2_small_videos, audio_player_view_2_shorts_test, local_audio_playlist_2]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\newDirectory\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"filterConverted\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
           selectedPlaylistTitle: playlistSelectedTitle,
+          confirmDialogTitleOne: "Playlist Titles Order Restoration",
+          confirmDialogMessage:
+              "A previous playlist titles order file is available in the selected playlist root path. Do you want to restore this saved order or keep the current playlist titles order? Click on \"Confirm\" to restore the saved order or on \"Cancel\" to keep the current order.",
+          confirmOrCancelAction: true, // Confirm button is tapped
         );
 
         // Purge the test playlist directory so that the created test
@@ -27665,7 +27674,7 @@ void main() {
       // Add a delay to allow the download to finish. Since a mock
       // AudioDownloadVM is used, the download will be simulated and
       // will not take time.
-      for (int i = 0; i < 12; i++) {
+      for (int i = 0; i < 14; i++) {
         await Future.delayed(const Duration(milliseconds: 1000));
         await tester.pumpAndSettle();
       }
@@ -29779,13 +29788,16 @@ Future<void> _removeAudioPictureInAudioPlayerView({
   );
 }
 
-Future<void> _changePlaylistRootPath({
+Future<void> _changePlaylistRootPathAndSaveAppSettings({
   required WidgetTester tester,
   required MockFilePicker mockFilePicker,
   required String pathToSelectStr,
   required List<String> playlistTitlesInModifiedDir,
   required String expectedSettingsContent,
   required String selectedPlaylistTitle,
+  String confirmDialogTitleOne = '',
+  String confirmDialogMessage = '',
+  bool confirmOrCancelAction = true, // true: confirm, false: cancel
 }) async {
   // Tap the appbar leading popup menu button Then, the
   // app settings dialog is opened.
@@ -29822,6 +29834,18 @@ Future<void> _changePlaylistRootPath({
   // And tap on save button
   await tester.tap(find.byKey(const Key('saveButton')));
   await tester.pumpAndSettle();
+
+  if (confirmDialogTitleOne.isNotEmpty) {
+    // Verify the ConfirmActionDialog which asks to the user if he wants
+    // to restore the saved playlist titles order or keep the current
+    // order
+    await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+      tester: tester,
+      confirmDialogTitleOne: confirmDialogTitleOne,
+      confirmDialogMessage: confirmDialogMessage,
+      confirmOrCancelAction: confirmOrCancelAction, // Confirm button is tapped
+    );
+  }
 
   // Verify the modified directory playlist titles
 
