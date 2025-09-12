@@ -652,8 +652,8 @@ void main() {
         modifiedPlaylistOrder,
       );
 
-      settingsDataService.restorePlaylistTitleOrderIfExistAndSaveSettings(
-        directoryContainingPreviouslySavedPlaylistTitleOrder:
+      settingsDataService.restorePlaylistTitlesOrderAndSaveSettings(
+        playlistTitleOrderPathFileName:
             initialPlaylistRootPath,
       );
 
@@ -799,8 +799,8 @@ void main() {
           pathFileName:
               '$initialPlaylistRootPath${path.separator}$kOrderedPlaylistTitlesFileName');
 
-      settingsDataService.restorePlaylistTitleOrderIfExistAndSaveSettings(
-        directoryContainingPreviouslySavedPlaylistTitleOrder:
+      settingsDataService.restorePlaylistTitlesOrderAndSaveSettings(
+        playlistTitleOrderPathFileName:
             initialPlaylistRootPath,
       );
 

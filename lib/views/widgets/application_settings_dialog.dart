@@ -14,6 +14,7 @@ import '../../constants.dart';
 import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import 'audio_set_speed_dialog.dart';
+import 'confirm_action_dialog.dart';
 
 class ApplicationSettingsDialog extends StatefulWidget {
   final SettingsDataService settingsDataService;
@@ -317,10 +318,41 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
       return;
     }
 
-    playlistListVMlistenFalse.updatePlaylistRootPathAndSavePlaylistTitleOrder(
-      actualPlaylistRootPath: settingsDataServicePlaylistRootPath,
-      modifiedPlaylistRootPath: _applicationDialogPlaylistRootPath,
-    );
+    String playlistTitleOrderPathFileName =
+        "$_applicationDialogPlaylistRootPath${path.separator}$kOrderedPlaylistTitlesFileName";
+    final File file = File(playlistTitleOrderPathFileName);
+
+    // if (file.existsSync()) {
+    //   showDialog<void>(
+    //     context: context,
+    //     barrierDismissible:
+    //         false, // This line prevents the dialog from closing when
+    //     //            tapping outside the dialog
+    //     builder: (BuildContext context) {
+    //       return ConfirmActionDialog(
+    //         actionFunction: () {
+    //           playlistListVMlistenFalse
+    //               .updatePlaylistRootPathAndSavePlaylistTitleOrder(
+    //             actualPlaylistRootPath: settingsDataServicePlaylistRootPath,
+    //             modifiedPlaylistRootPath: _applicationDialogPlaylistRootPath,
+    //             playlistTitleOrderPathFileName: playlistTitleOrderPathFileName,
+    //           );
+    //         },
+    //         actionFunctionArgs: [],
+    //         dialogTitleOne:
+    //             AppLocalizations.of(context)!.restorePlaylistTitlesOrderTitle,
+    //         dialogContent: AppLocalizations.of(context)!.restorePlaylistTitlesOrderMessage,
+    //       );
+    //     },
+    //   );
+    // } else {
+      playlistListVMlistenFalse
+          .updatePlaylistRootPathAndSavePlaylistTitleOrder(
+        actualPlaylistRootPath: settingsDataServicePlaylistRootPath,
+        modifiedPlaylistRootPath: _applicationDialogPlaylistRootPath,
+        playlistTitleOrderPathFileName: playlistTitleOrderPathFileName,
+      );
+    // }
   }
 
   Widget _buildSetAudioSpeedTextButton(

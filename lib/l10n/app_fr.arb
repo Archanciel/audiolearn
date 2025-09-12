@@ -1469,5 +1469,7 @@
   "convertedAudioDateTimeLabel": "Date//heure prem conversion",
   "fromMp3ZipFileUsedToRestoreUniquePlaylist": "à partir du fichier zip MP3 de playlist unique \"{zipFilePathNName}\"",
   "fromMp3ZipFileUsedToRestoreMultiplePlaylists": "à partir du fichier zip MP3 de playlists multiples \"{zipFilePathNName}\"", 
-  "confirmMp3RestorationFromMp3Zip": "Restauré {audioNNumber} audio(s) MP3 dans {playlistsNumber} playlist(s) {secondMsgPart}."
+  "confirmMp3RestorationFromMp3Zip": "Restauré {audioNNumber} audio(s) MP3 dans {playlistsNumber} playlist(s) {secondMsgPart}.",
+  "restorePlaylistTitlesOrderTitle": "Restauration de l'ordre des titres de playlist",
+  "restorePlaylistTitlesOrderMessage": "Un fichier d'ordre des titres de playlist précédent est disponible dans le chemin racine de playlist sélectionné. Voulez-vous restaurer cet ordre sauvegardé précédemment ou conserver l'ordre actuel des titres de playlist ? Cliquez sur OK pour restaurer l'ordre sauvegardé ou sur Annuler pour conserver l'ordre actuel."
 }
