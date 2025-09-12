@@ -209,8 +209,8 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
                 children: [
                   TextButton(
                     key: const Key('saveButton'),
-                    onPressed: () {
-                      _handleSaveButton(context);
+                    onPressed: () async {
+                      await _handleSaveButton(context);
                       Navigator.of(context).pop();
                     },
                     child: Text(
@@ -244,7 +244,7 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
     );
   }
 
-  void _handleSaveButton(BuildContext context) {
+  Future<void> _handleSaveButton(BuildContext context) async {
     PlaylistListVM playlistListVMlistenFalse = Provider.of<PlaylistListVM>(
       context,
       listen: false,
@@ -322,37 +322,46 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
         "$_applicationDialogPlaylistRootPath${path.separator}$kOrderedPlaylistTitlesFileName";
     final File file = File(playlistTitleOrderPathFileName);
 
-    // if (file.existsSync()) {
-    //   showDialog<void>(
-    //     context: context,
-    //     barrierDismissible:
-    //         false, // This line prevents the dialog from closing when
-    //     //            tapping outside the dialog
-    //     builder: (BuildContext context) {
-    //       return ConfirmActionDialog(
-    //         actionFunction: () {
-    //           playlistListVMlistenFalse
-    //               .updatePlaylistRootPathAndSavePlaylistTitleOrder(
-    //             actualPlaylistRootPath: settingsDataServicePlaylistRootPath,
-    //             modifiedPlaylistRootPath: _applicationDialogPlaylistRootPath,
-    //             playlistTitleOrderPathFileName: playlistTitleOrderPathFileName,
-    //           );
-    //         },
-    //         actionFunctionArgs: [],
-    //         dialogTitleOne:
-    //             AppLocalizations.of(context)!.restorePlaylistTitlesOrderTitle,
-    //         dialogContent: AppLocalizations.of(context)!.restorePlaylistTitlesOrderMessage,
-    //       );
-    //     },
-    //   );
-    // } else {
-      playlistListVMlistenFalse
-          .updatePlaylistRootPathAndSavePlaylistTitleOrder(
+    if (file.existsSync()) {
+      final result = await showDialog<ConfirmAction>(
+        // Add await and type
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return ConfirmActionDialog(
+            actionFunction: () => ConfirmAction.confirm, // Return ConfirmAction
+            actionFunctionArgs: [],
+            dialogTitleOne:
+                AppLocalizations.of(context)!.restorePlaylistTitlesOrderTitle,
+            dialogContent:
+                AppLocalizations.of(context)!.restorePlaylistTitlesOrderMessage,
+          );
+        },
+      );
+
+      // Handle the result after dialog closes
+      if (result == ConfirmAction.confirm) {
+        playlistListVMlistenFalse
+            .updatePlaylistRootPathAndSavePlaylistTitleOrder(
+          actualPlaylistRootPath: settingsDataServicePlaylistRootPath,
+          modifiedPlaylistRootPath: _applicationDialogPlaylistRootPath,
+          playlistTitleOrderPathFileName: playlistTitleOrderPathFileName,
+        );
+      } else {
+        // Cancel or null result
+        playlistListVMlistenFalse
+            .updatePlaylistRootPathAndSavePlaylistTitleOrder(
+          actualPlaylistRootPath: settingsDataServicePlaylistRootPath,
+          modifiedPlaylistRootPath: _applicationDialogPlaylistRootPath,
+        );
+      }
+      // If result == ConfirmAction.cancel or null, do nothing
+    } else {
+      playlistListVMlistenFalse.updatePlaylistRootPathAndSavePlaylistTitleOrder(
         actualPlaylistRootPath: settingsDataServicePlaylistRootPath,
         modifiedPlaylistRootPath: _applicationDialogPlaylistRootPath,
-        playlistTitleOrderPathFileName: playlistTitleOrderPathFileName,
       );
-    // }
+    }
   }
 
   Widget _buildSetAudioSpeedTextButton(
