@@ -394,19 +394,11 @@ class SettingsDataService {
   /// title order is saved in the initial playlist root path. If after the
   /// change, the user reset the playlist root path to the initial playlist
   /// root path, then the previously saved playlist title order is restored.
-  void restorePlaylistTitleOrderIfExistAndSaveSettings({
-    required String directoryContainingPreviouslySavedPlaylistTitleOrder,
+  void restorePlaylistTitlesOrderAndSaveSettings({
+    required String playlistTitleOrderPathFileName,
   }) {
-    String pathFileName =
-        "$directoryContainingPreviouslySavedPlaylistTitleOrder${path.separator}$kOrderedPlaylistTitlesFileName";
-    final File file = File(pathFileName);
-
-    if (!file.existsSync()) {
-      return;
-    }
-
     final String orderedPlaylistTitlesStr = DirUtil.readStringFromFile(
-      pathFileName: pathFileName,
+      pathFileName: playlistTitleOrderPathFileName,
     );
 
     final List<String> orderedPlaylistTitleLst = orderedPlaylistTitlesStr

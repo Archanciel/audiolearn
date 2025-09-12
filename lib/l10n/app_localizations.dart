@@ -3732,6 +3732,18 @@ abstract class AppLocalizations {
   /// **'Restored {audioNNumber} audio(s) MP3 in {playlistsNumber} playlist(s) {secondMsgPart}.'**
   String confirmMp3RestorationFromMp3Zip(
       Object audioNNumber, Object playlistsNumber, Object secondMsgPart);
+
+  /// No description provided for @restorePlaylistTitlesOrderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist Titles Order Restoration'**
+  String get restorePlaylistTitlesOrderTitle;
+
+  /// No description provided for @restorePlaylistTitlesOrderMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'A previous playlist titles order file is available in the selected playlist root path. Do you want to restore this saved order or keep the current playlist titles order? Click OK to restore the saved order or Cancel to keep the current order.'**
+  String get restorePlaylistTitlesOrderMessage;
 }
 
 class _AppLocalizationsDelegate

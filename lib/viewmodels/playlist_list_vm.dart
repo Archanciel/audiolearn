@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:archive/archive.dart';
-import 'package:audiolearn/viewmodels/date_format_vm.dart';
-import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
@@ -17,12 +15,14 @@ import '../models/audio.dart';
 import '../models/comment.dart';
 import '../models/picture.dart';
 import '../models/playlist.dart';
+import '../models/sort_filter_parameters.dart';
 import '../services/audio_sort_filter_service.dart';
 import '../services/json_data_service.dart';
 import '../services/settings_data_service.dart';
-import '../models/sort_filter_parameters.dart';
 import '../utils/dir_util.dart';
 import '../utils/date_time_expansion.dart';
+import 'date_format_vm.dart';
+import 'picture_vm.dart';
 import 'audio_download_vm.dart';
 import 'audio_player_vm.dart';
 import 'comment_vm.dart';
@@ -4958,6 +4958,7 @@ class PlaylistListVM extends ChangeNotifier {
   void updatePlaylistRootPathAndSavePlaylistTitleOrder({
     required String actualPlaylistRootPath,
     required String modifiedPlaylistRootPath,
+    String playlistTitleOrderPathFileName = '',
   }) {
     // if (!_settingsDataService.isTest && !actualPlaylistRootPath.endsWith(kImposedPlaylistsSubDirName)) {
     // if (!actualPlaylistRootPath.endsWith(kImposedPlaylistsSubDirName)) {
@@ -4984,10 +4985,11 @@ class PlaylistListVM extends ChangeNotifier {
       unselectAddedPlaylist: false,
     );
 
-    _settingsDataService.restorePlaylistTitleOrderIfExistAndSaveSettings(
-      directoryContainingPreviouslySavedPlaylistTitleOrder:
-          modifiedPlaylistRootPath,
-    );
+    if (playlistTitleOrderPathFileName.isNotEmpty) {
+      _settingsDataService.restorePlaylistTitlesOrderAndSaveSettings(
+        playlistTitleOrderPathFileName: playlistTitleOrderPathFileName,
+      );
+    }
 
     // The next instructions are necessary in order to select the
     // playlist which was in selection state before the playlists root path

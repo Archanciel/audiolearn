@@ -2354,4 +2354,12 @@ class AppLocalizationsFr extends AppLocalizations {
       Object audioNNumber, Object playlistsNumber, Object secondMsgPart) {
     return 'Restauré $audioNNumber audio(s) MP3 dans $playlistsNumber playlist(s) $secondMsgPart.';
   }
+
+  @override
+  String get restorePlaylistTitlesOrderTitle =>
+      'Restauration de l\'ordre des titres de playlist';
+
+  @override
+  String get restorePlaylistTitlesOrderMessage =>
+      'Un fichier d\'ordre des titres de playlist précédent est disponible dans le chemin racine de playlist sélectionné. Voulez-vous restaurer cet ordre sauvegardé précédemment ou conserver l\'ordre actuel des titres de playlist ? Cliquez sur OK pour restaurer l\'ordre sauvegardé ou sur Annuler pour conserver l\'ordre actuel.';
 }
