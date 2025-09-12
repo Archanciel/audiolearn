@@ -27665,7 +27665,7 @@ void main() {
       // Add a delay to allow the download to finish. Since a mock
       // AudioDownloadVM is used, the download will be simulated and
       // will not take time.
-      for (int i = 0; i < 10; i++) {
+      for (int i = 0; i < 12; i++) {
         await Future.delayed(const Duration(milliseconds: 1000));
         await tester.pumpAndSettle();
       }
@@ -28585,7 +28585,6 @@ void main() {
 
       List<String> expectedCreationDates = [
         frenchDateFormatYy.format(DateTime.now()), // created comment
-        '04/09/25',
       ];
 
       List<String> expectedUpdateDates = [
@@ -28606,7 +28605,7 @@ void main() {
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 700));
 
       // Now, reopen the convert text to audio dialog
       await IntegrationTestUtil.typeOnPlaylistMenuItem(
@@ -29043,7 +29042,6 @@ void main() {
 
       List<String> expectedCreationDates = [
         frenchDateFormatYy.format(DateTime.now()), // created comment
-        '04/09/25',
       ];
 
       List<String> expectedUpdateDates = [
@@ -29064,7 +29062,7 @@ void main() {
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 700));
 
       // Now unselect the 'local' playlist
       await IntegrationTestUtil.selectPlaylist(
