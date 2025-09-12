@@ -3742,7 +3742,7 @@ abstract class AppLocalizations {
   /// No description provided for @restorePlaylistTitlesOrderMessage.
   ///
   /// In en, this message translates to:
-  /// **'A previous playlist titles order file is available in the selected playlist root path. Do you want to restore this saved order or keep the current playlist titles order? Click OK to restore the saved order or Cancel to keep the current order.'**
+  /// **'A previous playlist titles order file is available in the selected playlist root path. Do you want to restore this saved order or keep the current playlist titles order? Click on \"Confirm\" to restore the saved order or on \"Cancel\" to keep the current order.'**
   String get restorePlaylistTitlesOrderMessage;
 }
 

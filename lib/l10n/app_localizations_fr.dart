@@ -2361,5 +2361,5 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get restorePlaylistTitlesOrderMessage =>
-      'Un fichier d\'ordre des titres de playlist précédent est disponible dans le chemin racine de playlist sélectionné. Voulez-vous restaurer cet ordre sauvegardé précédemment ou conserver l\'ordre actuel des titres de playlist ? Cliquez sur OK pour restaurer l\'ordre sauvegardé ou sur Annuler pour conserver l\'ordre actuel.';
+      'Un fichier d\'ordre des titres de playlist précédent est disponible dans le chemin racine de playlist sélectionné. Voulez-vous restaurer cet ordre sauvegardé précédemment ou conserver l\'ordre actuel des titres de playlist ? Cliquez sur \"Confirmer\" pour restaurer l\'ordre sauvegardé ou sur \"Annuler\" pour conserver l\'ordre actuel.';
 }
