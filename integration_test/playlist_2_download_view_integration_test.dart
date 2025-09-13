@@ -12948,6 +12948,10 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
+      testWidgets(
+          '''Select current playlist root path.''',
+          (WidgetTester tester) async {
+      });
     });
 
     group('App settings set speed test', () {
