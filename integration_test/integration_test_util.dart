@@ -1564,12 +1564,12 @@ class IntegrationTestUtil {
     if (language == Language.english) {
       // Select English
       await tester.tap(find.byKey(const Key('appBarMenuEnglish')));
-      await tester.pumpAndSettle();
     } else {
       // Select French
       await tester.tap(find.byKey(const Key('appBarMenuFrench')));
-      await tester.pumpAndSettle();
     }
+
+    await tester.pumpAndSettle();
   }
 
   static void verifyAudioDataElementsUpdatedInPlaylistJsonFile({
