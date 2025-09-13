@@ -1534,13 +1534,13 @@ class IntegrationTestUtil {
       // Now find the confirm button of the confirm action dialog
       // and tap on it
       await tester.tap(find.byKey(const Key('confirmButton')));
-      await tester.pumpAndSettle();
     } else {
       // Now find the cancel button of the confirm action dialog
       // and tap on it
       await tester.tap(find.byKey(const Key('cancelButton')));
-      await tester.pumpAndSettle();
     }
+
+    await tester.pumpAndSettle();
   }
 
 // A custom finder that finds an IconButton with the specified icon data.
