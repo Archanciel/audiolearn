@@ -4958,7 +4958,7 @@ class PlaylistListVM extends ChangeNotifier {
   void updatePlaylistRootPathAndSavePlaylistTitleOrder({
     required String actualPlaylistRootPath,
     required String modifiedPlaylistRootPath,
-    String playlistTitleOrderPathFileName = '',
+    required String playlistTitleOrderPathFileName,
   }) {
     // if (!_settingsDataService.isTest && !actualPlaylistRootPath.endsWith(kImposedPlaylistsSubDirName)) {
     // if (!actualPlaylistRootPath.endsWith(kImposedPlaylistsSubDirName)) {

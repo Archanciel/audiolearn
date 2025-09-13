@@ -300,6 +300,8 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
     if (settingsDataServicePlaylistRootPath ==
             _applicationDialogPlaylistRootPath ||
         _applicationDialogPlaylistRootPath.isEmpty) {
+      // The modified playlist root path is identical to the
+      // previous one or is empty.
       return;
     }
 
@@ -353,6 +355,8 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
             .updatePlaylistRootPathAndSavePlaylistTitleOrder(
           actualPlaylistRootPath: settingsDataServicePlaylistRootPath,
           modifiedPlaylistRootPath: _applicationDialogPlaylistRootPath,
+          playlistTitleOrderPathFileName: '', // empty string means do not restore the
+          //                                     previously saved playlist title order
         );
       }
       // If result == ConfirmAction.cancel or null, do nothing
@@ -360,6 +364,9 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
       playlistListVMlistenFalse.updatePlaylistRootPathAndSavePlaylistTitleOrder(
         actualPlaylistRootPath: settingsDataServicePlaylistRootPath,
         modifiedPlaylistRootPath: _applicationDialogPlaylistRootPath,
+        playlistTitleOrderPathFileName: '', // empty string means do not restore the
+        //                                     previously saved playlist title order
+        //                                     which does not exist
       );
     }
   }
