@@ -654,7 +654,7 @@ void main() {
 
       settingsDataService.restorePlaylistTitlesOrderAndSaveSettings(
         playlistTitleOrderPathFileName:
-            initialPlaylistRootPath,
+            '$initialPlaylistRootPath${path.separator}$kOrderedPlaylistTitlesFileName',
       );
 
       // Check that the playlist order list has been restored
@@ -799,10 +799,9 @@ void main() {
           pathFileName:
               '$initialPlaylistRootPath${path.separator}$kOrderedPlaylistTitlesFileName');
 
-      settingsDataService.restorePlaylistTitlesOrderAndSaveSettings(
-        playlistTitleOrderPathFileName:
-            initialPlaylistRootPath,
-      );
+      // settingsDataService.restorePlaylistTitlesOrderAndSaveSettings
+      // has been modified and is not now called if the
+      // playlistTitleOrderPathFileName does not exist !
 
       // Check that the playlist order list has NOT been restored
       expect(
