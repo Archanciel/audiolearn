@@ -20,6 +20,7 @@ enum ConfirmAction { cancel, confirm }
 /// displayed in the dialog title. Clicking on the help icon opens a dialog
 /// witch displays the help content contained in the help items.
 class ConfirmActionDialog extends StatefulWidget {
+  static ConfirmAction choosenConfirmAction = ConfirmAction.confirm;
   final Function actionFunction; // The action to execute on confirmation
   final List<dynamic> actionFunctionArgs; // Arguments for the action function
   final String dialogTitleOne; // Title of the dialog
@@ -159,13 +160,17 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
           TextButton(
             key: const Key('confirmButton'),
             onPressed: () {
+              ConfirmActionDialog.choosenConfirmAction = ConfirmAction.confirm;
               _applyConfirm(context);
             },
             child: Text(AppLocalizations.of(context)!.confirmButton),
           ),
           TextButton(
             key: const Key('cancelButtonKey'),
-            onPressed: () => Navigator.of(context).pop(ConfirmAction.cancel),
+            onPressed: () {
+              ConfirmActionDialog.choosenConfirmAction = ConfirmAction.cancel;
+              Navigator.of(context).pop(ConfirmAction.cancel);
+            },
             child: Text(AppLocalizations.of(context)!.cancelButton),
           ),
         ],

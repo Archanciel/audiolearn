@@ -331,7 +331,7 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
         barrierDismissible: false,
         builder: (BuildContext context) {
           return ConfirmActionDialog(
-            actionFunction: () => ConfirmAction.confirm, // Return ConfirmAction
+            actionFunction: () => ConfirmActionDialog.choosenConfirmAction, // Return ConfirmAction
             actionFunctionArgs: [],
             dialogTitleOne:
                 AppLocalizations.of(context)!.restorePlaylistTitlesOrderTitle,
@@ -357,6 +357,7 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
           modifiedPlaylistRootPath: _applicationDialogPlaylistRootPath,
           playlistTitleOrderPathFileName: '', // empty string means do not restore the
           //                                     previously saved playlist title order
+          //                                     since the Cancel button was clicked
         );
       }
       // If result == ConfirmAction.cancel or null, do nothing
