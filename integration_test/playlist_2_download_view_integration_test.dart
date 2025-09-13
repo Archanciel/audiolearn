@@ -12516,7 +12516,7 @@ void main() {
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
-              "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_download_test",
+              "$kDownloadAppTestSavedDataDir${path.separator}modify_playlist_root_path",
           destinationRootPath: kApplicationPathWindowsTest,
         );
 
@@ -12540,32 +12540,9 @@ void main() {
         await app.main();
         await tester.pumpAndSettle();
 
-        // Create a new directory containing playlists to which the playlist
-        // root path will be modified
+        // Verify the initial playlist titles order
 
-        String modifiedPlaylistRootPath =
-            '$kApplicationPathWindowsTest${path.separator}newDirectory${path.separator}playlists';
-
-        DirUtil.createDirIfNotExistSync(
-          pathStr: modifiedPlaylistRootPath,
-        );
-
-        // Fill the new directory with playlists
-        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-          sourceRootPath:
-              "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_delete_integr_test_data",
-          destinationRootPath: modifiedPlaylistRootPath,
-        );
-
-        // Delete the settings.json file from the copied data
-        DirUtil.deleteFileIfExist(
-          pathFileName:
-              "$modifiedPlaylistRootPath${path.separator}$kSettingsFileName",
-        );
-
-        // Verify the initial playlist titles
-
-        List<String> initialPlaylistTitles = [
+        List<String> initialPlaylistTitlesOrder = [
           "local_empty_download_single_video",
           "local_not_empty_download_single_video",
           "audio_learn_test_download_2_small_videos",
@@ -12573,27 +12550,56 @@ void main() {
 
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
-          audioOrPlaylistTitlesOrderedLst: initialPlaylistTitles,
+          audioOrPlaylistTitlesOrderedLst: initialPlaylistTitlesOrder,
+        );
+
+        // Verify playlist selection
+        String initiallySelectedPlaylistTitle =
+            'local_not_empty_download_single_video';
+        expect(
+          await IntegrationTestUtil.isPlaylistSelected(
+            tester: tester,
+            playlistToCheckTitle: initiallySelectedPlaylistTitle,
+          ),
+          true,
         );
 
         // Now, set the playlist root path to the modified value
 
         List<String> modifiedDirPlaylistTitles = [
           "audio_learn_test_download_2_small_videos",
-          "audio_player_view_2_shorts_test",
-          "local_3",
-          "local_audio_playlist_2",
+          "local_empty_download_single_video",
+          "local_not_empty_download_single_video",
         ];
+
+        String modifiedPlaylistRootPath =
+            '$kApplicationPathWindowsTest${path.separator}newDirectory${path.separator}playlists';
 
         await _changePlaylistRootPathAndSaveAppSettings(
           tester: tester,
           mockFilePicker: mockFilePicker,
-          pathToSelectStr:
-              '$kApplicationPathWindowsTest${path.separator}newDirectory${path.separator}playlists',
+          pathToSelectStr: modifiedPlaylistRootPath,
           playlistTitlesInModifiedDir: modifiedDirPlaylistTitles,
           expectedSettingsContent:
               "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[audio_learn_test_download_2_small_videos, audio_player_view_2_shorts_test, local_3, local_audio_playlist_2]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\newDirectory\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"filterConverted\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
           selectedPlaylistTitle: 'local_3',
+        );
+
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: modifiedDirPlaylistTitles,
+        );
+
+        // Verify playlist selection
+        String modifiedDirSelectedPlaylistTitle =
+            "audio_learn_test_download_2_small_videos";
+
+        expect(
+          await IntegrationTestUtil.isPlaylistSelected(
+            tester: tester,
+            playlistToCheckTitle: modifiedDirSelectedPlaylistTitle,
+          ),
+          true,
         );
 
         // Move up twice the selected "local_3" playlist to position
@@ -12948,10 +12954,8 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
-      testWidgets(
-          '''Select current playlist root path.''',
-          (WidgetTester tester) async {
-      });
+      testWidgets('''Select current playlist root path.''',
+          (WidgetTester tester) async {});
     });
 
     group('App settings set speed test', () {
