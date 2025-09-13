@@ -2390,6 +2390,7 @@ void main() {
       playlistListVM.updatePlaylistRootPathAndSavePlaylistTitleOrder(
         actualPlaylistRootPath: initialPlaylistRootPath,
         modifiedPlaylistRootPath: modifiedPlaylistRootPath,
+        playlistTitleOrderPathFileName: "",
       );
 
       const List<String> modifiedOrderedPlaylistTitles = [
@@ -2418,6 +2419,7 @@ void main() {
       playlistListVM.updatePlaylistRootPathAndSavePlaylistTitleOrder(
         actualPlaylistRootPath: modifiedPlaylistRootPath,
         modifiedPlaylistRootPath: initialPlaylistRootPath,
+        playlistTitleOrderPathFileName: "",
       );
 
       // Verify the resetted initial playlist data
