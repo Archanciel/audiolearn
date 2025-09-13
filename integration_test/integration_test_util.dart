@@ -1487,7 +1487,7 @@ class IntegrationTestUtil {
     required String confirmDialogTitleOne,
     String confirmDialogTitleTwo = '',
     required String confirmDialogMessage,
-    required bool confirmOrCancelAction,
+    required bool confirmOrCancelAction, // true=confirm, false=cancel
     bool isHelpIconPresent = false,
   }) async {
     // Verifying the confirm dialog title
@@ -1535,9 +1535,14 @@ class IntegrationTestUtil {
       // and tap on it
       await tester.tap(find.byKey(const Key('confirmButton')));
     } else {
+      // Add a small delay to ensure the dialog is fully rendered.
+      // Otherwise, the tap on the cancel button does not work in
+      // integration tests.
+      await tester.pumpAndSettle(const Duration(milliseconds: 100));
+
       // Now find the cancel button of the confirm action dialog
       // and tap on it
-      await tester.tap(find.byKey(const Key('cancelButton')));
+      await tester.tap(find.byKey(const Key('cancelButtonKey')));
     }
 
     await tester.pumpAndSettle();
