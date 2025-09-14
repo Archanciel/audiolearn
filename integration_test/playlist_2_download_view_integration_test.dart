@@ -12573,7 +12573,8 @@ void main() {
         ];
         final String modifiedPlaylistRootPath =
             '$kApplicationPathWindowsTest${path.separator}newDirectory${path.separator}playlists';
-        String newDirectoryPlaylistsExpectedSettingsContent = "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[audio_learn_test_download_2_small_videos, local_empty_download_single_video, local_not_empty_download_single_video]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\newDirectory\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"filterConverted\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}";
+        String newDirectoryPlaylistsExpectedSettingsContent =
+            "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[audio_learn_test_download_2_small_videos, local_empty_download_single_video, local_not_empty_download_single_video]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\newDirectory\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"filterConverted\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}";
         const String modifiedDirSelectedPlaylistTitle =
             "audio_learn_test_download_2_small_videos";
 
@@ -12584,8 +12585,7 @@ void main() {
           mockFilePicker: mockFilePicker,
           pathToSelectStr: modifiedPlaylistRootPath,
           playlistTitlesOrderInModifiedDir: modifiedDirPlaylistTitlesOrder,
-          expectedSettingsContent:
-              newDirectoryPlaylistsExpectedSettingsContent,
+          expectedSettingsContent: newDirectoryPlaylistsExpectedSettingsContent,
           selectedPlaylistTitle: modifiedDirSelectedPlaylistTitle,
           confirmDialogTitleOne: "Playlist Titles Order Restoration",
           confirmDialogMessage:
@@ -12593,7 +12593,8 @@ void main() {
           confirmOrCancelAction: true, // Confirm button is tapped
         );
 
-        String audioPlaylistsExpectedSettingsContent = "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[local_empty_download_single_video, local_not_empty_download_single_video, audio_learn_test_download_2_small_videos]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"filterConverted\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}";
+        String audioPlaylistsExpectedSettingsContent =
+            "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[local_empty_download_single_video, local_not_empty_download_single_video, audio_learn_test_download_2_small_videos]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"filterConverted\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}";
 
         // With clicking on 'Confirm' button to accept restoring
         // the previous playlist titles order
@@ -12602,8 +12603,7 @@ void main() {
           mockFilePicker: mockFilePicker,
           pathToSelectStr: kPlaylistDownloadRootPathWindowsTest,
           playlistTitlesOrderInModifiedDir: initialPlaylistTitlesOrder,
-          expectedSettingsContent:
-              audioPlaylistsExpectedSettingsContent,
+          expectedSettingsContent: audioPlaylistsExpectedSettingsContent,
           selectedPlaylistTitle: initialSelectedPlaylistTitle,
           confirmDialogTitleOne: "Playlist Titles Order Restoration",
           confirmDialogMessage:
@@ -12613,7 +12613,8 @@ void main() {
 
         // The playlist titles order is the initial one since 'Cancel'
         // will be clicked
-        newDirectoryPlaylistsExpectedSettingsContent = "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[local_empty_download_single_video, local_not_empty_download_single_video, audio_learn_test_download_2_small_videos]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\newDirectory\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"filterConverted\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}";
+        newDirectoryPlaylistsExpectedSettingsContent =
+            "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[local_empty_download_single_video, local_not_empty_download_single_video, audio_learn_test_download_2_small_videos]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\newDirectory\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"filterConverted\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}";
 
         // With clicking on 'Cancel' button to refuse restoring
         // the previous playlist titles order
@@ -12622,8 +12623,7 @@ void main() {
           mockFilePicker: mockFilePicker,
           pathToSelectStr: modifiedPlaylistRootPath,
           playlistTitlesOrderInModifiedDir: initialPlaylistTitlesOrder,
-          expectedSettingsContent:
-              newDirectoryPlaylistsExpectedSettingsContent,
+          expectedSettingsContent: newDirectoryPlaylistsExpectedSettingsContent,
           selectedPlaylistTitle: modifiedDirSelectedPlaylistTitle,
           confirmDialogTitleOne: "Playlist Titles Order Restoration",
           confirmDialogMessage:
@@ -12664,8 +12664,9 @@ void main() {
           'local_empty_download_single_video',
         ];
 
-        audioPlaylistsExpectedSettingsContent = "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[audio_learn_test_download_2_small_videos, local_not_empty_download_single_video, local_empty_download_single_video]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"filterConverted\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}";
-        
+        audioPlaylistsExpectedSettingsContent =
+            "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[audio_learn_test_download_2_small_videos, local_not_empty_download_single_video, local_empty_download_single_video]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"filterConverted\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}";
+
         // Now reset the playlist root path to the initial value
         // with clicking on 'Cancel' button to refuse restoring
         // the previous playlist titles order
@@ -12674,8 +12675,7 @@ void main() {
           mockFilePicker: mockFilePicker,
           pathToSelectStr: kPlaylistDownloadRootPathWindowsTest,
           playlistTitlesOrderInModifiedDir: initialPlaylistTitlesOrder,
-          expectedSettingsContent:
-              audioPlaylistsExpectedSettingsContent,
+          expectedSettingsContent: audioPlaylistsExpectedSettingsContent,
           selectedPlaylistTitle: initialSelectedPlaylistTitle,
           confirmDialogTitleOne: "Playlist Titles Order Restoration",
           confirmDialogMessage:
@@ -12732,24 +12732,24 @@ void main() {
         // Create a new directory containing playlists to which the playlist
         // root path will be modified
 
-        String modifiedPlaylistRootPath =
+        String newDirectoryPlaylistRootPath =
             '$kApplicationPathWindowsTest${path.separator}newDirectory${path.separator}playlists';
 
         DirUtil.createDirIfNotExistSync(
-          pathStr: modifiedPlaylistRootPath,
+          pathStr: newDirectoryPlaylistRootPath,
         );
 
         // Fill the new directory with playlists
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
               "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_delete_integr_test_data",
-          destinationRootPath: modifiedPlaylistRootPath,
+          destinationRootPath: newDirectoryPlaylistRootPath,
         );
 
         // Delete the settings.json file from the copied data
         DirUtil.deleteFileIfExist(
           pathFileName:
-              "$modifiedPlaylistRootPath${path.separator}$kSettingsFileName",
+              "$newDirectoryPlaylistRootPath${path.separator}$kSettingsFileName",
         );
 
         // Verify the initial playlist titles
@@ -12765,23 +12765,35 @@ void main() {
           audioOrPlaylistTitlesOrderedLst: initialPlaylistTitles,
         );
 
+        // Verify playlist selection
+        const String initialSelectedPlaylistTitle =
+            'local_not_empty_download_single_video';
+        expect(
+          await IntegrationTestUtil.isPlaylistSelected(
+            tester: tester,
+            playlistToCheckTitle: initialSelectedPlaylistTitle,
+          ),
+          true,
+        );
+
         // Now, set the playlist root path to the modified value
 
-        List<String> modifiedDirPlaylistTitles = [
+        List<String> newDirectoryPlaylistTitles = [
           "audio_learn_test_download_2_small_videos",
           "audio_player_view_2_shorts_test",
           "local_3",
           "local_audio_playlist_2",
         ];
 
+        String newDirectoryPlaylistsExpectedSettingsContent =
+            "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[audio_learn_test_download_2_small_videos, audio_player_view_2_shorts_test, local_3, local_audio_playlist_2]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\newDirectory\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"filterConverted\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}";
+
         await _changePlaylistRootPathAndSaveAppSettings(
           tester: tester,
           mockFilePicker: mockFilePicker,
-          pathToSelectStr:
-              '$kApplicationPathWindowsTest${path.separator}newDirectory${path.separator}playlists',
-          playlistTitlesOrderInModifiedDir: modifiedDirPlaylistTitles,
-          expectedSettingsContent:
-              "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[audio_learn_test_download_2_small_videos, audio_player_view_2_shorts_test, local_3, local_audio_playlist_2]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\newDirectory\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"filterConverted\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
+          pathToSelectStr: newDirectoryPlaylistRootPath,
+          playlistTitlesOrderInModifiedDir: newDirectoryPlaylistTitles,
+          expectedSettingsContent: newDirectoryPlaylistsExpectedSettingsContent,
           selectedPlaylistTitle: 'local_3',
         );
 
@@ -12794,57 +12806,62 @@ void main() {
         await tester.tap(find.byKey(const Key('move_up_playlist_button')));
         await tester.pumpAndSettle();
 
-        modifiedDirPlaylistTitles = [
+        newDirectoryPlaylistTitles = [
+          'audio_learn_test_download_2_small_videos',
           'local_empty_download_single_video',
           'local_not_empty_download_single_video',
-          'audio_learn_test_download_2_small_videos',
         ];
 
         // Select another playlist
-        String playlistSelectedTitle =
+        String newDirectoryPlaylistSelectedTitle =
             "audio_learn_test_download_2_small_videos";
 
         await IntegrationTestUtil.selectPlaylist(
           tester: tester,
-          playlistToSelectTitle: playlistSelectedTitle,
+          playlistToSelectTitle: newDirectoryPlaylistSelectedTitle,
         );
 
         // Now reset the playlist root path to the initial value
+        // with clicking on 'Cancel' button to refuse restoring
+        // the previous playlist titles order
+
+        String audioPlaylistsExpectedSettingsContent =
+            "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[audio_learn_test_download_2_small_videos, local_empty_download_single_video, local_not_empty_download_single_video]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"filterConverted\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}";
 
         await _changePlaylistRootPathAndSaveAppSettings(
           tester: tester,
           mockFilePicker: mockFilePicker,
-          pathToSelectStr:
-              '$kApplicationPathWindowsTest${path.separator}playlists',
-          playlistTitlesOrderInModifiedDir: modifiedDirPlaylistTitles,
-          expectedSettingsContent:
-              "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[local_empty_download_single_video, local_not_empty_download_single_video, audio_learn_test_download_2_small_videos]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"filterConverted\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
+          pathToSelectStr: kPlaylistDownloadRootPathWindowsTest,
+          playlistTitlesOrderInModifiedDir: newDirectoryPlaylistTitles,
+          expectedSettingsContent: audioPlaylistsExpectedSettingsContent,
           selectedPlaylistTitle: 'local_not_empty_download_single_video',
           confirmDialogTitleOne: "Playlist Titles Order Restoration",
           confirmDialogMessage:
               "A previous playlist titles order file is available in the selected playlist root path. Do you want to restore this saved order or keep the current playlist titles order? Click on \"Confirm\" to restore the saved order or on \"Cancel\" to keep the current order.",
-          confirmOrCancelAction: false, // Confirm button is tapped
+          confirmOrCancelAction: false, // Cancel button is tapped
         );
 
         // And finally, set again the playlist root path to the modified
-        // value
+        // value with clicking on 'Cancel' button to refuse restoring
+        // the previous playlist titles order
 
-        modifiedDirPlaylistTitles = [
-          "local_3",
+        newDirectoryPlaylistTitles = [
           "audio_learn_test_download_2_small_videos",
           "audio_player_view_2_shorts_test",
+          "local_3",
           "local_audio_playlist_2",
         ];
+
+        newDirectoryPlaylistsExpectedSettingsContent =
+            "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[audio_learn_test_download_2_small_videos, audio_player_view_2_shorts_test, local_3, local_audio_playlist_2]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\newDirectory\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"filterConverted\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}";
 
         await _changePlaylistRootPathAndSaveAppSettings(
           tester: tester,
           mockFilePicker: mockFilePicker,
-          pathToSelectStr:
-              '$kApplicationPathWindowsTest${path.separator}newDirectory${path.separator}playlists',
-          playlistTitlesOrderInModifiedDir: modifiedDirPlaylistTitles,
-          expectedSettingsContent:
-              "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[local_3, audio_learn_test_download_2_small_videos, audio_player_view_2_shorts_test, local_audio_playlist_2]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\newDirectory\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"filterConverted\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}",
-          selectedPlaylistTitle: playlistSelectedTitle,
+          pathToSelectStr: newDirectoryPlaylistRootPath,
+          playlistTitlesOrderInModifiedDir: newDirectoryPlaylistTitles,
+          expectedSettingsContent: newDirectoryPlaylistsExpectedSettingsContent,
+          selectedPlaylistTitle: newDirectoryPlaylistSelectedTitle,
           confirmDialogTitleOne: "Playlist Titles Order Restoration",
           confirmDialogMessage:
               "A previous playlist titles order file is available in the selected playlist root path. Do you want to restore this saved order or keep the current playlist titles order? Click on \"Confirm\" to restore the saved order or on \"Cancel\" to keep the current order.",
