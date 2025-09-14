@@ -4285,6 +4285,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///   [2] number of added pictures,
   ///   [3] number of updated comments,
   ///   [4] number of added comments,
+  ///   [5] number of deleted mp3 files.
   Future<List<int>> _mergeZipPlaylistsWithExistingPlaylists({
     required Map<String, String> zipExistingPlaylistJsonContentsMap,
     required Archive archive,
@@ -4294,6 +4295,7 @@ class PlaylistListVM extends ChangeNotifier {
     int addedPicturesCount = 0;
     int updatedCommentsCount = 0;
     int addedCommentsCount = 0;
+    int deletedMp3Count = 0;
     List<int> restoredNumberLst = []; // restored numbers returned list
 
     for (String playlistTitle in zipExistingPlaylistJsonContentsMap.keys) {
@@ -4323,8 +4325,10 @@ class PlaylistListVM extends ChangeNotifier {
       );
 
       // Delete the audio MP3 files for audio which are in the existing playlist
-      // and aren't in the zip playlist.
-      int deletedMp3Number = _deleteAudioMp3ForAudioAvailableInExistingPlaylistAndNotInZipPlaylist(
+      // playable audio list and aren't in the zip playlist playable audio list
+      // and are in the zip playlist downloaded audio list.
+      deletedMp3Count +=
+          _deleteAudioMp3ForAudioAvailableInExistingPlaylistAndNotInZipPlaylist(
         existingPlaylist: existingPlaylist,
         zipPlaylist: zipPlaylist,
         archive: archive,
@@ -4343,6 +4347,7 @@ class PlaylistListVM extends ChangeNotifier {
     restoredNumberLst.add(addedPicturesCount);
     restoredNumberLst.add(updatedCommentsCount);
     restoredNumberLst.add(addedCommentsCount);
+    restoredNumberLst.add(deletedMp3Count);
 
     return restoredNumberLst;
   }
@@ -4507,17 +4512,11 @@ class PlaylistListVM extends ChangeNotifier {
     return restoredNumberLst;
   }
 
-  /// This method adds Audio instances of playlists corresponding to existing playlists which are
-  /// available in the zip file and are not already present in the existing playlists.
-  /// Additionally, the comments and pictures off the added audios are added to the existing
-  /// playlists.
+  /// This method deletes the audio MP3 files for audio which are in the existing playlist
+  /// playable audio list and aren't in the zip playlist playable audio list and are in the
+  /// zip playlist downloaded audio list.
   ///
-  /// The returned list of integers contains:
-  ///   - The number of added audio references.
-  ///   - The number of added comment json files.
-  ///   - The number of added pictures.
-  ///   - The number of updated comments.
-  ///   - The number of added comments.
+  /// Returned the number of deleted audio references and audio MP3.
   int _deleteAudioMp3ForAudioAvailableInExistingPlaylistAndNotInZipPlaylist({
     required Playlist existingPlaylist,
     required Playlist zipPlaylist,
@@ -4526,19 +4525,39 @@ class PlaylistListVM extends ChangeNotifier {
     int deletedAudiosCount = 0;
 
     // Iterate through downloaded audios from the zip playlist.
-    for (Audio existingPlaylistPlayableAudio in existingPlaylist.playableAudioLst) {
-      // Check if this audio already exists in the existing playlist
-      bool audioExists = zipPlaylist.playableAudioLst.any(
+    for (Audio existingPlaylistPlayableAudio
+        in existingPlaylist.playableAudioLst) {
+      // Check if the audio which exists in the existing playlist playable audio list
+      // does not exists in the zip playlist playable audio list and exists in the
+      // zip playlist downloaded audio list. This means that the audio was deleted
+      // from the zip playlist and so its MP3 file must be deleted if it exists.
+      //
+      // If the audio does not exist in the zip playlist downloaded audio list, it
+      // means that the audio was never downloaded in the zip playlist and so its
+      // MP3 file must not be deleted since it was downloaded in the existing playlist.
+      bool audioExistsInZipPlaylistPlayableLst =
+          zipPlaylist.playableAudioLst.any(
         (zipPlayableAudio) =>
-            zipPlayableAudio.audioFileName == existingPlaylistPlayableAudio.audioFileName,
+            zipPlayableAudio.audioFileName ==
+            existingPlaylistPlayableAudio.audioFileName,
+      );
+      bool audioExistsInZipPlaylistDownloadedLst =
+          zipPlaylist.downloadedAudioLst.any(
+        (zipDownloadedAudio) =>
+            zipDownloadedAudio.audioFileName ==
+            existingPlaylistPlayableAudio.audioFileName,
       );
 
-      if (!audioExists) {
-        // This audio doesn't exist in the zip playlist. Its MP3 file
-        // must be deleted if it doesn't exists.
-        DirUtil.deleteFileIfExist(
-          pathFileName: existingPlaylistPlayableAudio.filePathName,
+      if (!audioExistsInZipPlaylistPlayableLst &&
+          audioExistsInZipPlaylistDownloadedLst) {
+        // This means that the audio was deleted in the playlist contained in the
+        // zip file and so it makes sense to delete it physically from the existing
+        // playlist.
+        deleteAudioFile(
+          audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+          audio: existingPlaylistPlayableAudio,
         );
+
         deletedAudiosCount++;
       }
     }
