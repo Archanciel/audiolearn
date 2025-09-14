@@ -13062,6 +13062,12 @@ void main() {
           expectedSettingsContent: audioPlaylistsExpectedSettingsContent,
           selectedPlaylistTitle: initialSelectedPlaylistTitle,
         );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
       });
     });
 
