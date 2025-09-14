@@ -27916,298 +27916,6 @@ void main() {
       );
     });
   });
-  group('Download URLs from Text File tests', () {
-    testWidgets(
-        '''Download URLs in music quality playlist in spoken quality.''',
-        (WidgetTester tester) async {
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'download_urls_from_text_field_test',
-        tapOnPlaylistToggleButton: false,
-      );
-
-      const String localPlaylistTitleInWhichToDownloadURLs =
-          'Chants Bible en ligne music';
-
-      await _verifyPlaylistAudioQuality(
-        tester: tester,
-        playlistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        isPlaylistLocal: true,
-        playlistQuality: PlaylistQuality.music,
-      );
-
-      String urlsTextFileName = 'youtube_bibleenlignefr_urls.txt';
-
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: urlsTextFileName,
-            path:
-                '$kApplicationPathWindowsTest${path.separator}$urlsTextFileName',
-            size: 131),
-      ]);
-
-      // Set playlist audio quality to musical. Then, the application is
-      // restarted ...
-      await _tapOnDownloadURLsFromTextFileMenu(
-        tester: tester,
-        playlistToDownloadInTitle: localPlaylistTitleInWhichToDownloadURLs,
-        initialSpokenCheckboxState: false,
-        initialMusicCheckboxState: true,
-        setMusicQuality: false,
-      );
-
-      // Add a delay to allow the download to finish. Since a mock
-      // AudioDownloadVM is used, the download will be simulated and
-      // will not take time.
-      for (int i = 0; i < 14; i++) {
-        await Future.delayed(const Duration(milliseconds: 1000));
-        await tester.pumpAndSettle();
-      }
-
-      await IntegrationTestUtil.verifyAudioInfoDialog(
-        tester: tester,
-        audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        youtubeChannel: "Bible en ligne",
-        validVideoTitleOrAudioTitle:
-            "Musique chrétienne 2019 - Le temps (avec paroles)",
-        isMusicQuality: false, // Is spoken quality
-      );
-
-      await IntegrationTestUtil.verifyAudioInfoDialog(
-        tester: tester,
-        audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        youtubeChannel: "Bible en ligne",
-        validVideoTitleOrAudioTitle:
-            "Chanson évangélique  Ta foi en Dieu doit être au-dessus de tout",
-        isMusicQuality: false, // Is spoken quality
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets('''Download URLs in spoken quality playlist.''',
-        (WidgetTester tester) async {
-      const String localPlaylistTitleInWhichToDownloadURLs =
-          'Chants Bible en ligne spoken';
-
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'download_urls_from_text_field_test',
-        selectedPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        tapOnPlaylistToggleButton: false,
-      );
-
-      await _verifyPlaylistAudioQuality(
-        tester: tester,
-        playlistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        isPlaylistLocal: true,
-        playlistQuality: PlaylistQuality.voice,
-      );
-
-      String urlsTextFileName = 'youtube_bibleenlignefr_urls.txt';
-
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: urlsTextFileName,
-            path:
-                '$kApplicationPathWindowsTest${path.separator}$urlsTextFileName',
-            size: 131),
-      ]);
-
-      // Set playlist audio quality to musical. Then, the application is
-      // restarted ...
-      await _tapOnDownloadURLsFromTextFileMenu(
-        tester: tester,
-        playlistToDownloadInTitle: localPlaylistTitleInWhichToDownloadURLs,
-        initialSpokenCheckboxState: true,
-        initialMusicCheckboxState: false,
-        setMusicQuality: true,
-      );
-
-      // Add a delay to allow the download to finish. Since a mock
-      // AudioDownloadVM is used, the download will be simulated and
-      // will not take time.
-      for (int i = 0; i < 10; i++) {
-        await Future.delayed(const Duration(milliseconds: 1000));
-        await tester.pumpAndSettle();
-      }
-
-      await IntegrationTestUtil.verifyAudioInfoDialog(
-        tester: tester,
-        audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        youtubeChannel: "Bible en ligne",
-        validVideoTitleOrAudioTitle:
-            "Musique chrétienne 2019 - Le temps (avec paroles)",
-        isMusicQuality: true, // Is music quality
-      );
-
-      await IntegrationTestUtil.verifyAudioInfoDialog(
-        tester: tester,
-        audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        youtubeChannel: "Bible en ligne",
-        validVideoTitleOrAudioTitle:
-            "Chanson évangélique  Ta foi en Dieu doit être au-dessus de tout",
-        isMusicQuality: true, // Is music quality
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirsWithRetry(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets('''Download URLs in spoken quality playlist.''',
-        (WidgetTester tester) async {
-      const String localPlaylistTitleInWhichToDownloadURLs =
-          'Chants Bible en ligne spoken';
-
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'download_urls_from_text_field_test',
-        selectedPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        tapOnPlaylistToggleButton: false,
-      );
-
-      await _verifyPlaylistAudioQuality(
-        tester: tester,
-        playlistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        isPlaylistLocal: true,
-        playlistQuality: PlaylistQuality.voice,
-      );
-
-      String urlsTextFileName = 'youtube_bibleenlignefr_urls.txt';
-
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: urlsTextFileName,
-            path:
-                '$kApplicationPathWindowsTest${path.separator}$urlsTextFileName',
-            size: 131),
-      ]);
-
-      // Set playlist audio quality to musical. Then, the application is
-      // restarted ...
-      await _tapOnDownloadURLsFromTextFileMenu(
-        tester: tester,
-        playlistToDownloadInTitle: localPlaylistTitleInWhichToDownloadURLs,
-        initialSpokenCheckboxState: true,
-        initialMusicCheckboxState: false,
-        setMusicQuality: true,
-      );
-
-      // Add a delay to allow the download to finish. Since a mock
-      // AudioDownloadVM is used, the download will be simulated and
-      // will not take time.
-      for (int i = 0; i < 10; i++) {
-        await Future.delayed(const Duration(milliseconds: 1000));
-        await tester.pumpAndSettle();
-      }
-
-      await IntegrationTestUtil.verifyAudioInfoDialog(
-        tester: tester,
-        audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        youtubeChannel: "Bible en ligne",
-        validVideoTitleOrAudioTitle:
-            "Musique chrétienne 2019 - Le temps (avec paroles)",
-        isMusicQuality: true, // Is music quality
-      );
-
-      await IntegrationTestUtil.verifyAudioInfoDialog(
-        tester: tester,
-        audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        youtubeChannel: "Bible en ligne",
-        validVideoTitleOrAudioTitle:
-            "Chanson évangélique  Ta foi en Dieu doit être au-dessus de tout",
-        isMusicQuality: true, // Is music quality
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirsWithRetry(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Uncheck all checkbox. Download URLs in music quality playlist in spoken quality.''',
-        (WidgetTester tester) async {
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'download_urls_from_text_field_test',
-        tapOnPlaylistToggleButton: false,
-      );
-
-      const String localPlaylistTitleInWhichToDownloadURLs =
-          'Chants Bible en ligne music';
-
-      await _verifyPlaylistAudioQuality(
-        tester: tester,
-        playlistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        isPlaylistLocal: true,
-        playlistQuality: PlaylistQuality.music,
-      );
-
-      String urlsTextFileName = 'youtube_bibleenlignefr_urls.txt';
-
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: urlsTextFileName,
-            path:
-                '$kApplicationPathWindowsTest${path.separator}$urlsTextFileName',
-            size: 131),
-      ]);
-
-      // Set playlist audio quality to musical. Then, the application is
-      // restarted ...
-      await _tapOnDownloadURLsFromTextFileMenu(
-          tester: tester,
-          playlistToDownloadInTitle: localPlaylistTitleInWhichToDownloadURLs,
-          initialSpokenCheckboxState: false,
-          initialMusicCheckboxState: true,
-          setMusicQuality: false,
-          uncheckAllCheckboxes: true);
-
-      // Add a delay to allow the download to finish. Since a mock
-      // AudioDownloadVM is used, the download will be simulated and
-      // will not take time.
-      for (int i = 0; i < 5; i++) {
-        await Future.delayed(const Duration(milliseconds: 700));
-        await tester.pumpAndSettle();
-      }
-
-      expect(find.text("Musique chrétienne 2019 - Le temps (avec paroles)"),
-          findsNothing);
-
-      expect(
-          find.text(
-              "Chanson évangélique  Ta foi en Dieu doit être au-dessus de tout"),
-          findsNothing);
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirsWithRetry(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-  });
   group('Test playlist info modification', () {
     testWidgets(
         '''Verify playlist info. Then delete an audio and verify that the playlist info
@@ -29575,6 +29283,298 @@ void main() {
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+  });
+  group('Download URLs from Text File tests', () {
+    testWidgets(
+        '''Download URLs in music quality playlist in spoken quality.''',
+        (WidgetTester tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'download_urls_from_text_field_test',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      const String localPlaylistTitleInWhichToDownloadURLs =
+          'Chants Bible en ligne music';
+
+      await _verifyPlaylistAudioQuality(
+        tester: tester,
+        playlistTitle: localPlaylistTitleInWhichToDownloadURLs,
+        isPlaylistLocal: true,
+        playlistQuality: PlaylistQuality.music,
+      );
+
+      String urlsTextFileName = 'youtube_bibleenlignefr_urls.txt';
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: urlsTextFileName,
+            path:
+                '$kApplicationPathWindowsTest${path.separator}$urlsTextFileName',
+            size: 131),
+      ]);
+
+      // Set playlist audio quality to musical. Then, the application is
+      // restarted ...
+      await _tapOnDownloadURLsFromTextFileMenu(
+        tester: tester,
+        playlistToDownloadInTitle: localPlaylistTitleInWhichToDownloadURLs,
+        initialSpokenCheckboxState: false,
+        initialMusicCheckboxState: true,
+        setMusicQuality: false,
+      );
+
+      // Add a delay to allow the download to finish. Since a mock
+      // AudioDownloadVM is used, the download will be simulated and
+      // will not take time.
+      for (int i = 0; i < 14; i++) {
+        await Future.delayed(const Duration(milliseconds: 1000));
+        await tester.pumpAndSettle();
+      }
+
+      await IntegrationTestUtil.verifyAudioInfoDialog(
+        tester: tester,
+        audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
+        youtubeChannel: "Bible en ligne",
+        validVideoTitleOrAudioTitle:
+            "Musique chrétienne 2019 - Le temps (avec paroles)",
+        isMusicQuality: false, // Is spoken quality
+      );
+
+      await IntegrationTestUtil.verifyAudioInfoDialog(
+        tester: tester,
+        audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
+        youtubeChannel: "Bible en ligne",
+        validVideoTitleOrAudioTitle:
+            "Chanson évangélique  Ta foi en Dieu doit être au-dessus de tout",
+        isMusicQuality: false, // Is spoken quality
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets('''Download URLs in spoken quality playlist.''',
+        (WidgetTester tester) async {
+      const String localPlaylistTitleInWhichToDownloadURLs =
+          'Chants Bible en ligne spoken';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'download_urls_from_text_field_test',
+        selectedPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
+        tapOnPlaylistToggleButton: false,
+      );
+
+      await _verifyPlaylistAudioQuality(
+        tester: tester,
+        playlistTitle: localPlaylistTitleInWhichToDownloadURLs,
+        isPlaylistLocal: true,
+        playlistQuality: PlaylistQuality.voice,
+      );
+
+      String urlsTextFileName = 'youtube_bibleenlignefr_urls.txt';
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: urlsTextFileName,
+            path:
+                '$kApplicationPathWindowsTest${path.separator}$urlsTextFileName',
+            size: 131),
+      ]);
+
+      // Set playlist audio quality to musical. Then, the application is
+      // restarted ...
+      await _tapOnDownloadURLsFromTextFileMenu(
+        tester: tester,
+        playlistToDownloadInTitle: localPlaylistTitleInWhichToDownloadURLs,
+        initialSpokenCheckboxState: true,
+        initialMusicCheckboxState: false,
+        setMusicQuality: true,
+      );
+
+      // Add a delay to allow the download to finish. Since a mock
+      // AudioDownloadVM is used, the download will be simulated and
+      // will not take time.
+      for (int i = 0; i < 10; i++) {
+        await Future.delayed(const Duration(milliseconds: 1000));
+        await tester.pumpAndSettle();
+      }
+
+      await IntegrationTestUtil.verifyAudioInfoDialog(
+        tester: tester,
+        audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
+        youtubeChannel: "Bible en ligne",
+        validVideoTitleOrAudioTitle:
+            "Musique chrétienne 2019 - Le temps (avec paroles)",
+        isMusicQuality: true, // Is music quality
+      );
+
+      await IntegrationTestUtil.verifyAudioInfoDialog(
+        tester: tester,
+        audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
+        youtubeChannel: "Bible en ligne",
+        validVideoTitleOrAudioTitle:
+            "Chanson évangélique  Ta foi en Dieu doit être au-dessus de tout",
+        isMusicQuality: true, // Is music quality
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirsWithRetry(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets('''Download URLs in spoken quality playlist.''',
+        (WidgetTester tester) async {
+      const String localPlaylistTitleInWhichToDownloadURLs =
+          'Chants Bible en ligne spoken';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'download_urls_from_text_field_test',
+        selectedPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
+        tapOnPlaylistToggleButton: false,
+      );
+
+      await _verifyPlaylistAudioQuality(
+        tester: tester,
+        playlistTitle: localPlaylistTitleInWhichToDownloadURLs,
+        isPlaylistLocal: true,
+        playlistQuality: PlaylistQuality.voice,
+      );
+
+      String urlsTextFileName = 'youtube_bibleenlignefr_urls.txt';
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: urlsTextFileName,
+            path:
+                '$kApplicationPathWindowsTest${path.separator}$urlsTextFileName',
+            size: 131),
+      ]);
+
+      // Set playlist audio quality to musical. Then, the application is
+      // restarted ...
+      await _tapOnDownloadURLsFromTextFileMenu(
+        tester: tester,
+        playlistToDownloadInTitle: localPlaylistTitleInWhichToDownloadURLs,
+        initialSpokenCheckboxState: true,
+        initialMusicCheckboxState: false,
+        setMusicQuality: true,
+      );
+
+      // Add a delay to allow the download to finish. Since a mock
+      // AudioDownloadVM is used, the download will be simulated and
+      // will not take time.
+      for (int i = 0; i < 10; i++) {
+        await Future.delayed(const Duration(milliseconds: 1000));
+        await tester.pumpAndSettle();
+      }
+
+      await IntegrationTestUtil.verifyAudioInfoDialog(
+        tester: tester,
+        audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
+        youtubeChannel: "Bible en ligne",
+        validVideoTitleOrAudioTitle:
+            "Musique chrétienne 2019 - Le temps (avec paroles)",
+        isMusicQuality: true, // Is music quality
+      );
+
+      await IntegrationTestUtil.verifyAudioInfoDialog(
+        tester: tester,
+        audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
+        youtubeChannel: "Bible en ligne",
+        validVideoTitleOrAudioTitle:
+            "Chanson évangélique  Ta foi en Dieu doit être au-dessus de tout",
+        isMusicQuality: true, // Is music quality
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirsWithRetry(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Uncheck all checkbox. Download URLs in music quality playlist in spoken quality.''',
+        (WidgetTester tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'download_urls_from_text_field_test',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      const String localPlaylistTitleInWhichToDownloadURLs =
+          'Chants Bible en ligne music';
+
+      await _verifyPlaylistAudioQuality(
+        tester: tester,
+        playlistTitle: localPlaylistTitleInWhichToDownloadURLs,
+        isPlaylistLocal: true,
+        playlistQuality: PlaylistQuality.music,
+      );
+
+      String urlsTextFileName = 'youtube_bibleenlignefr_urls.txt';
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: urlsTextFileName,
+            path:
+                '$kApplicationPathWindowsTest${path.separator}$urlsTextFileName',
+            size: 131),
+      ]);
+
+      // Set playlist audio quality to musical. Then, the application is
+      // restarted ...
+      await _tapOnDownloadURLsFromTextFileMenu(
+          tester: tester,
+          playlistToDownloadInTitle: localPlaylistTitleInWhichToDownloadURLs,
+          initialSpokenCheckboxState: false,
+          initialMusicCheckboxState: true,
+          setMusicQuality: false,
+          uncheckAllCheckboxes: true);
+
+      // Add a delay to allow the download to finish. Since a mock
+      // AudioDownloadVM is used, the download will be simulated and
+      // will not take time.
+      for (int i = 0; i < 5; i++) {
+        await Future.delayed(const Duration(milliseconds: 700));
+        await tester.pumpAndSettle();
+      }
+
+      expect(find.text("Musique chrétienne 2019 - Le temps (avec paroles)"),
+          findsNothing);
+
+      expect(
+          find.text(
+              "Chanson évangélique  Ta foi en Dieu doit être au-dessus de tout"),
+          findsNothing);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirsWithRetry(
         rootPath: kApplicationPathWindowsTest,
       );
     });
