@@ -4324,6 +4324,12 @@ class PlaylistListVM extends ChangeNotifier {
         archive: archive,
       );
 
+      addedAudiosCount += restoredNumberLst[0];
+      addedCommentJsonFilesCount += restoredNumberLst[1];
+      addedPicturesCount += restoredNumberLst[2];
+      updatedCommentsCount += restoredNumberLst[3]; // Updated comments count
+      addedCommentsCount += restoredNumberLst[4]; // Count added comments
+
       // Delete the audio MP3 files for audio which are in the existing playlist
       // playable audio list and aren't in the zip playlist playable audio list
       // and are in the zip playlist downloaded audio list.
@@ -4333,12 +4339,6 @@ class PlaylistListVM extends ChangeNotifier {
         zipPlaylist: zipPlaylist,
         archive: archive,
       );
-
-      addedAudiosCount += restoredNumberLst[0];
-      addedCommentJsonFilesCount += restoredNumberLst[1];
-      addedPicturesCount += restoredNumberLst[2];
-      updatedCommentsCount += restoredNumberLst[3]; // Updated comments count
-      addedCommentsCount += restoredNumberLst[4]; // Count added comments
     }
 
     restoredNumberLst.clear();
