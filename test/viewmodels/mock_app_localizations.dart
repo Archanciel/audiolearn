@@ -1978,30 +1978,6 @@ class MockAppLocalizations extends AppLocalizations {
   String get importedCheckbox => "Imported";
 
   @override
-  String restoredAppDataFromZip(
-    Object playlistsNumber,
-    Object commentsNumber,
-    Object picturesNumber,
-    Object audiosNumber,
-    Object addedCommentNumber,
-    Object updatedCommentNumber,
-    Object filePathName,
-  ) =>
-      "Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) from \"$filePathName\".";
-
-  @override
-  String restoredUniquePlaylistFromZip(
-    Object playlistsNumber,
-    Object commentsNumber,
-    Object picturesNumber,
-    Object audiosNumber,
-    Object addedCommentNumber,
-    Object updatedCommentNumber,
-    Object filePathName,
-  ) =>
-      "Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) from \"$filePathName\".";
-
-  @override
   String get restoredElementsHelpTitle => "Restored elements description";
 
   @override
@@ -2424,4 +2400,30 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get restorePlaylistTitlesOrderMessage =>
       "A previous playlist titles order file is available in the selected playlist root path. Do you want to restore this saved order or keep the current playlist titles order? Click OK to restore the saved order or Cancel to keep the current order.";
+
+  @override
+  String restoreAppDataFromZip(
+    Object playlistsNumber,
+    Object commentsNumber,
+    Object picturesNumber,
+    Object audiosNumber,
+    Object addedCommentNumber,
+    Object updatedCommentNumber,
+    Object filePathName,
+    Object deletedAudioAndMp3FilesNumber,
+  ) =>
+      "Restored $playlistsNumber playlist, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) and the application settings from \"$filePathName\". Deleted $deletedAudioAndMp3FilesNumber audio(s) and their comment(s) as well as their MP3 file.";
+
+  @override
+  String restoreUniquePlaylistFromZip(
+    Object playlistsNumber,
+    Object commentsNumber,
+    Object picturesNumber,
+    Object audiosNumber,
+    Object addedCommentNumber,
+    Object updatedCommentNumber,
+    Object filePathName,
+    Object deletedAudioAndMp3FilesNumber,
+  ) =>
+      "Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) from \"$filePathName\". Deleted $deletedAudioAndMp3FilesNumber audio(s) and their comment(s) as well as their MP3 file.";
 }

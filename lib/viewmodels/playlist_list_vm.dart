@@ -3822,6 +3822,7 @@ class PlaylistListVM extends ChangeNotifier {
       addedCommentNumber: restoredInfoLst[7],
       pictureJsonFilesNumber: restoredInfoLst[2],
       pictureJpgFilesNumber: restoredInfoLst[3],
+      deletedAudioAndMp3FilesNumber: (restoredInfoLst.length == 9) ? restoredInfoLst[8] : 0,
       wasIndividualPlaylistRestored: wasIndividualPlaylistRestored,
     );
 
@@ -3965,6 +3966,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///  restoredAudioReferencesNumber,
   ///  updated comment number,
   ///  added comment number,
+  ///  number of deleted audio as well as mp3 files.
   /// ]
   Future<List<dynamic>> _restoreFilesFromZip({
     required String zipFilePathName,
@@ -4247,6 +4249,7 @@ class PlaylistListVM extends ChangeNotifier {
     //   [2] number of added pictures,
     //   [3] number of updated comments,
     //   [4] number of added comments,
+    //   [5] number of deleted audio as well as mp3 files.
     List<int> restoredNumberLst = await _mergeZipPlaylistsWithExistingPlaylists(
       zipExistingPlaylistJsonContentsMap: zipExistingPlaylistJsonContentsMap,
       archive: archive,
@@ -4285,7 +4288,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///   [2] number of added pictures,
   ///   [3] number of updated comments,
   ///   [4] number of added comments,
-  ///   [5] number of deleted mp3 files.
+  ///   [5] number of deleted audio as well as mp3 files.
   Future<List<int>> _mergeZipPlaylistsWithExistingPlaylists({
     required Map<String, String> zipExistingPlaylistJsonContentsMap,
     required Archive archive,
@@ -4295,7 +4298,7 @@ class PlaylistListVM extends ChangeNotifier {
     int addedPicturesCount = 0;
     int updatedCommentsCount = 0;
     int addedCommentsCount = 0;
-    int deletedMp3Count = 0;
+    int deletedAudioAndMp3Count = 0;
     List<int> restoredNumberLst = [];
 
     // Collect audio to delete instead of deleting immediately
@@ -4340,7 +4343,7 @@ class PlaylistListVM extends ChangeNotifier {
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
         audio: audio,
       );
-      deletedMp3Count++;
+      deletedAudioAndMp3Count++;
     }
 
     restoredNumberLst.clear();
@@ -4349,7 +4352,7 @@ class PlaylistListVM extends ChangeNotifier {
     restoredNumberLst.add(addedPicturesCount);
     restoredNumberLst.add(updatedCommentsCount);
     restoredNumberLst.add(addedCommentsCount);
-    restoredNumberLst.add(deletedMp3Count);
+    restoredNumberLst.add(deletedAudioAndMp3Count);
 
     return restoredNumberLst;
   }
