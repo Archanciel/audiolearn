@@ -3996,6 +3996,7 @@ class PlaylistListVM extends ChangeNotifier {
       restoredInfoLst.add(restoredAudioReferencesNumber);
       restoredInfoLst.add(0); // adding 0 to the updated comment number
       restoredInfoLst.add(0); // adding 0 to the added comment number
+      restoredInfoLst.add(0); // adding 0 to the deleted audio and mp3 files number
 
       return restoredInfoLst;
     }
@@ -4268,6 +4269,7 @@ class PlaylistListVM extends ChangeNotifier {
         restoredNumberLst[0]); // restored audio references number
     restoredInfoLst.add(restoredNumberLst[3]); // updated comment number
     restoredInfoLst.add(restoredNumberLst[4]); // added comment number
+    restoredInfoLst.add(restoredNumberLst[5]); // adding deleted audio and mp3 files number
 
     return restoredInfoLst;
   }
