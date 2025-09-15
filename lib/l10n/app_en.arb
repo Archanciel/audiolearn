@@ -841,32 +841,6 @@
   "notPictured": "Unpictured",
   "restorePlaylistAndCommentsFromZipMenu": "Restore Playlist(s), Comments, Pictures and Settings from ZIP File ...",
   "restorePlaylistAndCommentsFromZipTooltip": "According to the content of the selected ZIP file, restoring a unique or multiple playlists, their audio comments, pictures and, if awailable, the application settings. The audio files are not included in the ZIP file.",
-  "restoredAppDataFromZip": "Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) and the application settings from \"{filePathName}\".",
-  "@restoredAppDataFromZip": {
-    "description": "Warning message indicating that one or several playlists were restored from ZIP created from appbar menu",
-    "placeholders": {
-      "playlistsNumber": {},
-      "audiosNumber": {},
-      "commentsNumber": {},
-      "updatedCommentNumber": {},
-      "addedCommentNumber": {},
-      "picturesNumber": {},
-      "filePathName": {}
-    }
-  },
-  "restoredUniquePlaylistFromZip": "Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) from \"{filePathName}\".",
-  "@restoredUniquePlaylistFromZip": {
-    "description": "Warning message indicating that a unique playlist was restored from ZIP created from playlist item menu",
-    "placeholders": {
-      "playlistsNumber": {},
-      "audiosNumber": {},
-      "commentsNumber": {},
-      "updatedCommentNumber": {},
-      "addedCommentNumber": {},
-      "picturesNumber": {},
-      "filePathName": {}
-    }
-  },
   "appDataCouldNotBeRestoredFromZip": "Playlist, comment and picture JSON files as well as application settings could not be restored from ZIP.",
   "deleteFilteredAudioFromPlaylistAsWell": "Delete filtered Audio's from Playlist as well ...",
   "deleteFilteredAudioFromPlaylistAsWellConfirmationTitle": "Delete audio's filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\" as well (will be re-downloadable)",
@@ -1085,5 +1059,33 @@
   "fromMp3ZipFileUsedToRestoreMultiplePlaylists": "from the multiple playlists MP3 zip file \"{zipFilePathNName}\"",
   "confirmMp3RestorationFromMp3Zip": "Restored {audioNNumber} audio(s) MP3 in {playlistsNumber} playlist(s) {secondMsgPart}.",
   "restorePlaylistTitlesOrderTitle": "Playlist Titles Order Restoration",
-  "restorePlaylistTitlesOrderMessage": "A previous playlist titles order file is available in the selected playlist root path. Do you want to restore this saved order or keep the current playlist titles order? Click on \"Confirm\" to restore the saved order or on \"Cancel\" to keep the current order."
+  "restorePlaylistTitlesOrderMessage": "A previous playlist titles order file is available in the selected playlist root path. Do you want to restore this saved order or keep the current playlist titles order? Click on \"Confirm\" to restore the saved order or on \"Cancel\" to keep the current order.",
+  "restoreAppDataFromZip": "Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) and the application settings from \"{filePathName}\".\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) as well as their MP3 file.",
+  "@restoreAppDataFromZip": {
+    "description": "Warning message indicating that one or several playlists were restored from ZIP created from appbar menu",
+    "placeholders": {
+      "playlistsNumber": {},
+      "audiosNumber": {},
+      "commentsNumber": {},
+      "updatedCommentNumber": {},
+      "addedCommentNumber": {},
+      "picturesNumber": {},
+      "deletedAudioAndMp3FilesNumber": {},
+      "filePathName": {}
+    }
+  },
+  "restoreUniquePlaylistFromZip": "Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) from \"{filePathName}\".\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) as well as their MP3 file.",
+  "@restoreUniquePlaylistFromZip": {
+    "description": "Warning message indicating that a unique playlist was restored from ZIP created from playlist item menu",
+    "placeholders": {
+      "playlistsNumber": {},
+      "audiosNumber": {},
+      "commentsNumber": {},
+      "updatedCommentNumber": {},
+      "addedCommentNumber": {},
+      "picturesNumber": {},
+      "deletedAudioAndMp3FilesNumber": {},
+      "filePathName": {}
+    }
+  }
 }

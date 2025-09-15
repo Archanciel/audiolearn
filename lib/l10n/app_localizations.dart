@@ -2835,32 +2835,6 @@ abstract class AppLocalizations {
   /// **'According to the content of the selected ZIP file, restoring a unique or multiple playlists, their audio comments, pictures and, if awailable, the application settings. The audio files are not included in the ZIP file.'**
   String get restorePlaylistAndCommentsFromZipTooltip;
 
-  /// Warning message indicating that one or several playlists were restored from ZIP created from appbar menu
-  ///
-  /// In en, this message translates to:
-  /// **'Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) and the application settings from \"{filePathName}\".'**
-  String restoredAppDataFromZip(
-      Object playlistsNumber,
-      Object audiosNumber,
-      Object commentsNumber,
-      Object updatedCommentNumber,
-      Object addedCommentNumber,
-      Object picturesNumber,
-      Object filePathName);
-
-  /// Warning message indicating that a unique playlist was restored from ZIP created from playlist item menu
-  ///
-  /// In en, this message translates to:
-  /// **'Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) from \"{filePathName}\".'**
-  String restoredUniquePlaylistFromZip(
-      Object playlistsNumber,
-      Object audiosNumber,
-      Object commentsNumber,
-      Object updatedCommentNumber,
-      Object addedCommentNumber,
-      Object picturesNumber,
-      Object filePathName);
-
   /// No description provided for @appDataCouldNotBeRestoredFromZip.
   ///
   /// In en, this message translates to:
@@ -3744,6 +3718,34 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A previous playlist titles order file is available in the selected playlist root path. Do you want to restore this saved order or keep the current playlist titles order? Click on \"Confirm\" to restore the saved order or on \"Cancel\" to keep the current order.'**
   String get restorePlaylistTitlesOrderMessage;
+
+  /// Warning message indicating that one or several playlists were restored from ZIP created from appbar menu
+  ///
+  /// In en, this message translates to:
+  /// **'Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) and the application settings from \"{filePathName}\".\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) as well as their MP3 file.'**
+  String restoreAppDataFromZip(
+      Object playlistsNumber,
+      Object audiosNumber,
+      Object commentsNumber,
+      Object updatedCommentNumber,
+      Object addedCommentNumber,
+      Object picturesNumber,
+      Object deletedAudioAndMp3FilesNumber,
+      Object filePathName);
+
+  /// Warning message indicating that a unique playlist was restored from ZIP created from playlist item menu
+  ///
+  /// In en, this message translates to:
+  /// **'Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) from \"{filePathName}\".\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) as well as their MP3 file.'**
+  String restoreUniquePlaylistFromZip(
+      Object playlistsNumber,
+      Object audiosNumber,
+      Object commentsNumber,
+      Object updatedCommentNumber,
+      Object addedCommentNumber,
+      Object picturesNumber,
+      Object deletedAudioAndMp3FilesNumber,
+      Object filePathName);
 }
 
 class _AppLocalizationsDelegate

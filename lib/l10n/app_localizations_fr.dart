@@ -1745,30 +1745,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'En fonction du contenu du fichier ZIP sélectionné, restaure une ou plusieurs playlists, leurs commentaires, photos ainsi que les paramètres de l\'application s\'ils sont inclus dans le fichier ZIP. Les fichiers audio n\'étant pas inclus dans ce fichier, ils ne sont pas restaurés.';
 
   @override
-  String restoredAppDataFromZip(
-      Object playlistsNumber,
-      Object audiosNumber,
-      Object commentsNumber,
-      Object updatedCommentNumber,
-      Object addedCommentNumber,
-      Object picturesNumber,
-      Object filePathName) {
-    return 'Les fichiers JSON de $playlistsNumber playlists, de $commentsNumber commentaires et de $picturesNumber photos ainsi que $audiosNumber références audio et $addedCommentNumber commentaires ajoutés plus $updatedCommentNumber modifiés et les paramètres de l\'application ont été restaurés depuis \"$filePathName\".';
-  }
-
-  @override
-  String restoredUniquePlaylistFromZip(
-      Object playlistsNumber,
-      Object audiosNumber,
-      Object commentsNumber,
-      Object updatedCommentNumber,
-      Object addedCommentNumber,
-      Object picturesNumber,
-      Object filePathName) {
-    return 'Les fichiers JSON de $playlistsNumber playlist sauvegardée individuellement, de $commentsNumber commentaires et de $picturesNumber photos ainsi que $audiosNumber références audio et $addedCommentNumber commentaires ajoutés plus $updatedCommentNumber modifiés ont été restaurés depuis \"$filePathName\".';
-  }
-
-  @override
   String get appDataCouldNotBeRestoredFromZip =>
       'Les fichiers JSON des playlists et des commentaires ainsi que les paramètres de l\'application n\'ont pu être restaurés à partir d\'un ZIP !';
 
@@ -2362,4 +2338,30 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get restorePlaylistTitlesOrderMessage =>
       'Un fichier d\'ordre des titres de playlist précédent est disponible dans le chemin racine de playlist sélectionné. Voulez-vous restaurer cet ordre sauvegardé précédemment ou conserver l\'ordre actuel des titres de playlist ? Cliquez sur \"Confirmer\" pour restaurer l\'ordre sauvegardé ou sur \"Annuler\" pour conserver l\'ordre actuel.';
+
+  @override
+  String restoreAppDataFromZip(
+      Object playlistsNumber,
+      Object audiosNumber,
+      Object commentsNumber,
+      Object updatedCommentNumber,
+      Object addedCommentNumber,
+      Object picturesNumber,
+      Object deletedAudioAndMp3FilesNumber,
+      Object filePathName) {
+    return 'Les fichiers JSON de $playlistsNumber playlists, de $commentsNumber commentaires et de $picturesNumber photos ainsi que $audiosNumber références audio et $addedCommentNumber commentaires ajoutés plus $updatedCommentNumber modifiés et les paramètres de l\'application ont été restaurés depuis \"$filePathName\".\n\n$deletedAudioAndMp3FilesNumber audio(s) et leur(s) commentaire(s) ainsi que leur fichier MP3 file a/ont été supprimé(s).';
+  }
+
+  @override
+  String restoreUniquePlaylistFromZip(
+      Object playlistsNumber,
+      Object audiosNumber,
+      Object commentsNumber,
+      Object updatedCommentNumber,
+      Object addedCommentNumber,
+      Object picturesNumber,
+      Object deletedAudioAndMp3FilesNumber,
+      Object filePathName) {
+    return 'Les fichiers JSON de $playlistsNumber playlist sauvegardée individuellement, de $commentsNumber commentaires et de $picturesNumber photos ainsi que $audiosNumber références audio et $addedCommentNumber commentaires ajoutés plus $updatedCommentNumber modifiés ont été restaurés depuis \"$filePathName\".\n\n$deletedAudioAndMp3FilesNumber audio(s) et leur(s) commentaire(s) ainsi que leur fichier MP3 file a/ont été supprimé(s).';
+  }
 }

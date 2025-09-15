@@ -1125,60 +1125,6 @@
   "notPictured": "Sans ph.",
   "restorePlaylistAndCommentsFromZipMenu": "Restaurer la/les playlist(s), commentaires, photos et settings depuis un fichier ZIP ...",
   "restorePlaylistAndCommentsFromZipTooltip": "En fonction du contenu du fichier ZIP sélectionné, restaure une ou plusieurs playlists, leurs commentaires, photos ainsi que les paramètres de l'application s'ils sont inclus dans le fichier ZIP. Les fichiers audio n'étant pas inclus dans ce fichier, ils ne sont pas restaurés.",
-  "restoredAppDataFromZip": "Les fichiers JSON de {playlistsNumber} playlists, de {commentsNumber} commentaires et de {picturesNumber} photos ainsi que {audiosNumber} références audio et {addedCommentNumber} commentaires ajoutés plus {updatedCommentNumber} modifiés et les paramètres de l'application ont été restaurés depuis \"{filePathName}\".",
-  "@restoredAppDataFromZip": {
-    "description": "Warning message indicating that the default SF parms were not applied to move audio",
-    "placeholders": {
-      "playlistsNumber": {
-        "type": "Object"
-      },
-      "audiosNumber": {
-        "type": "Object"
-      },
-      "commentsNumber": {
-        "type": "Object"
-      },
-      "updatedCommentNumber": {
-        "type": "Object"
-      },
-      "addedCommentNumber": {
-        "type": "Object"
-      },
-      "picturesNumber": {
-        "type": "Object"
-      },
-      "filePathName": {
-        "type": "Object"
-      }
-    }
-  },
-  "restoredUniquePlaylistFromZip": "Les fichiers JSON de {playlistsNumber} playlist sauvegardée individuellement, de {commentsNumber} commentaires et de {picturesNumber} photos ainsi que {audiosNumber} références audio et {addedCommentNumber} commentaires ajoutés plus {updatedCommentNumber} modifiés ont été restaurés depuis \"{filePathName}\".",
-  "@restoredUniquePlaylistFromZip": {
-    "description": "Warning message indicating that the a unique playlist was restored from ZIP created from playlist item menu",
-    "placeholders": {
-      "playlistsNumber": {
-        "type": "Object"
-      },
-      "audiosNumber": {
-        "type": "Object"
-      },
-      "commentsNumber": {
-        "type": "Object"
-      },
-      "updatedCommentNumber": {
-        "type": "Object"
-      },
-      "addedCommentNumber": {
-        "type": "Object"
-      },
-      "picturesNumber": {
-        "type": "Object"
-      },
-      "filePathName": {
-        "type": "Object"
-      }
-    }
-  },
   "appDataCouldNotBeRestoredFromZip": "Les fichiers JSON des playlists et des commentaires ainsi que les paramètres de l'application n'ont pu être restaurés à partir d'un ZIP !",
   "deleteFilteredAudioFromPlaylistAsWell": "Supprimer les audio's filtrés de la playlist également ...",
   "deleteFilteredAudioFromPlaylistAsWellConfirmationTitle": "Supprimer les audio's filtrés par le paramètre \"{sortFilterParmsName}\" de la playlist \"{playlistTitle}\" également (pourront être re-téléchargés)",
@@ -1471,5 +1417,65 @@
   "fromMp3ZipFileUsedToRestoreMultiplePlaylists": "à partir du fichier zip MP3 de playlists multiples \"{zipFilePathNName}\"", 
   "confirmMp3RestorationFromMp3Zip": "Restauré {audioNNumber} audio(s) MP3 dans {playlistsNumber} playlist(s) {secondMsgPart}.",
   "restorePlaylistTitlesOrderTitle": "Restauration de l'ordre des titres de playlist",
-  "restorePlaylistTitlesOrderMessage": "Un fichier d'ordre des titres de playlist précédent est disponible dans le chemin racine de playlist sélectionné. Voulez-vous restaurer cet ordre sauvegardé précédemment ou conserver l'ordre actuel des titres de playlist ? Cliquez sur \"Confirmer\" pour restaurer l'ordre sauvegardé ou sur \"Annuler\" pour conserver l'ordre actuel."
+  "restorePlaylistTitlesOrderMessage": "Un fichier d'ordre des titres de playlist précédent est disponible dans le chemin racine de playlist sélectionné. Voulez-vous restaurer cet ordre sauvegardé précédemment ou conserver l'ordre actuel des titres de playlist ? Cliquez sur \"Confirmer\" pour restaurer l'ordre sauvegardé ou sur \"Annuler\" pour conserver l'ordre actuel.",
+  "restoreAppDataFromZip": "Les fichiers JSON de {playlistsNumber} playlists, de {commentsNumber} commentaires et de {picturesNumber} photos ainsi que {audiosNumber} références audio et {addedCommentNumber} commentaires ajoutés plus {updatedCommentNumber} modifiés et les paramètres de l'application ont été restaurés depuis \"{filePathName}\".\n\n{deletedAudioAndMp3FilesNumber} audio(s) et leur(s) commentaire(s) ainsi que leur fichier MP3 file a/ont été supprimé(s).",
+  "@restoreAppDataFromZip": {
+    "description": "Warning message indicating that the default SF parms were not applied to move audio",
+    "placeholders": {
+      "playlistsNumber": {
+        "type": "Object"
+      },
+      "audiosNumber": {
+        "type": "Object"
+      },
+      "commentsNumber": {
+        "type": "Object"
+      },
+      "updatedCommentNumber": {
+        "type": "Object"
+      },
+      "addedCommentNumber": {
+        "type": "Object"
+      },
+      "picturesNumber": {
+        "type": "Object"
+      },
+      "deletedAudioAndMp3FilesNumber": {
+        "type": "Object"
+      },
+      "filePathName": {
+        "type": "Object"
+      }
+    }
+  },
+  "restoreUniquePlaylistFromZip": "Les fichiers JSON de {playlistsNumber} playlist sauvegardée individuellement, de {commentsNumber} commentaires et de {picturesNumber} photos ainsi que {audiosNumber} références audio et {addedCommentNumber} commentaires ajoutés plus {updatedCommentNumber} modifiés ont été restaurés depuis \"{filePathName}\".\n\n{deletedAudioAndMp3FilesNumber} audio(s) et leur(s) commentaire(s) ainsi que leur fichier MP3 file a/ont été supprimé(s).",
+  "@restoreUniquePlaylistFromZip": {
+    "description": "Warning message indicating that the a unique playlist was restored from ZIP created from playlist item menu",
+    "placeholders": {
+      "playlistsNumber": {
+        "type": "Object"
+      },
+      "audiosNumber": {
+        "type": "Object"
+      },
+      "commentsNumber": {
+        "type": "Object"
+      },
+      "updatedCommentNumber": {
+        "type": "Object"
+      },
+      "addedCommentNumber": {
+        "type": "Object"
+      },
+      "picturesNumber": {
+        "type": "Object"
+      },
+      "deletedAudioAndMp3FilesNumber": {
+        "type": "Object"
+      },
+      "filePathName": {
+        "type": "Object"
+      }
+    }
+  }
 }

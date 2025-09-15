@@ -905,6 +905,8 @@ class WarningMessageVM extends ChangeNotifier {
   int get addedCommentNumber => _addedCommentNumber;
   int _pictureJsonFilesNumber = 0;
   int get pictureJsonFilesNumber => _pictureJsonFilesNumber;
+  int _deletedAudioAndMp3FilesNumber = 0;
+  int get deletedAudioAndMp3FilesNumber => _deletedAudioAndMp3FilesNumber;
   bool _wasIndividualPlaylistRestored = false;
   bool get wasIndividualPlaylistRestored => _wasIndividualPlaylistRestored;
   void confirmRestorationFromZip({
@@ -916,6 +918,7 @@ class WarningMessageVM extends ChangeNotifier {
     required int addedCommentNumber,
     required int pictureJsonFilesNumber,
     required int pictureJpgFilesNumber,
+    required int deletedAudioAndMp3FilesNumber,
     required bool wasIndividualPlaylistRestored,
   }) {
     _zipFilePathName = zipFilePathName;
@@ -927,6 +930,7 @@ class WarningMessageVM extends ChangeNotifier {
     _savedOrRestoredPictureJpgNumber = pictureJpgFilesNumber;
     _wasIndividualPlaylistRestored = wasIndividualPlaylistRestored;
     _addedCommentNumber = addedCommentNumber;
+    _deletedAudioAndMp3FilesNumber = deletedAudioAndMp3FilesNumber;
 
     warningMessageType = WarningMessageType.restoreAppDataFromZip;
 
