@@ -4337,7 +4337,6 @@ class PlaylistListVM extends ChangeNotifier {
           _deleteAudioMp3ForAudioAvailableInExistingPlaylistAndNotInZipPlaylist(
         existingPlaylist: existingPlaylist,
         zipPlaylist: zipPlaylist,
-        archive: archive,
       );
     }
 
@@ -4520,7 +4519,6 @@ class PlaylistListVM extends ChangeNotifier {
   int _deleteAudioMp3ForAudioAvailableInExistingPlaylistAndNotInZipPlaylist({
     required Playlist existingPlaylist,
     required Playlist zipPlaylist,
-    required Archive archive,
   }) {
     int deletedAudiosCount = 0;
 
