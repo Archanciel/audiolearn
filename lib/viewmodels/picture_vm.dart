@@ -666,9 +666,9 @@ class PictureVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Method called by PlaylistListVM. Returns the number of picture files saved to the
-  /// target directory.
-  int savePictureJpgFilesToTargetDirectory({
+  /// Method called by PlaylistListVM. Returns the number of picture files which not already
+  /// exists in the target dir and so was saved to this directory.
+  int saveUnexistingPictureJpgFilesToTargetDirectory({
     required String targetDirectoryPath,
   }) {
     List<String> pictureJpgPathFileNamesLst = DirUtil.listPathFileNamesInDir(
