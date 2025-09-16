@@ -125,7 +125,7 @@ void main() {
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 2 audio reference(s) and 0 added plus 0 modified comment(s) from "$restorableZipFilePathName".\n\nRestored also 2 picture JPG file(s) in the application pictures directory.',
+              'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 2 audio reference(s) and 0 added plus 0 modified comment(s) from "$restorableZipFilePathName".\n\nDeleted 0 audio(s) and their comment(s) as well as their MP3 file.\n\nRestored also 2 picture JPG file(s) in the application pictures directory.',
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );
@@ -262,7 +262,7 @@ void main() {
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              'Restored 0 playlist, 3 comment and 3 picture JSON files as well as 4 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".',
+              'Restored 0 playlist, 3 comment and 3 picture JSON files as well as 4 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".\n\nDeleted 0 audio(s) and their comment(s) as well as their MP3 file.',
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );
@@ -402,7 +402,7 @@ void main() {
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              'Restored 1 playlist saved individually, 3 comment and 1 picture JSON files as well as 22 audio reference(s) and 0 added plus 0 modified comment(s) from "$restorableZipFilePathName".\n\nRestored also 1 picture JPG file(s) in the application pictures directory.',
+              'Restored 1 playlist saved individually, 3 comment and 1 picture JSON files as well as 22 audio reference(s) and 0 added plus 0 modified comment(s) from "$restorableZipFilePathName".\n\nDeleted 0 audio(s) and their comment(s) as well as their MP3 file.\n\nSince the playlist was created, it is positioned at the end of the playlist list.\n\nRestored also 1 picture JPG file(s) in the application pictures directory.',
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );
@@ -530,7 +530,7 @@ void main() {
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 2 audio reference(s) and 0 added plus 0 modified comment(s) from "$restorableZipFilePathName".\n\nRestored also 2 picture JPG file(s) in the application pictures directory.',
+              'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 2 audio reference(s) and 0 added plus 0 modified comment(s) from "$restorableZipFilePathName".\n\nDeleted 0 audio(s) and their comment(s) as well as their MP3 file.\n\nRestored also 2 picture JPG file(s) in the application pictures directory.',
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );
@@ -667,7 +667,7 @@ void main() {
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              'Restored 0 playlist, 3 comment and 3 picture JSON files as well as 4 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".',
+              'Restored 0 playlist, 3 comment and 3 picture JSON files as well as 4 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".\n\nDeleted 0 audio(s) and their comment(s) as well as their MP3 file.',
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );
