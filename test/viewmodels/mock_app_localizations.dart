@@ -2402,7 +2402,7 @@ class MockAppLocalizations extends AppLocalizations {
       "A previous playlist titles order file is available in the selected playlist root path. Do you want to restore this saved order or keep the current playlist titles order? Click OK to restore the saved order or Cancel to keep the current order.";
 
   @override
-  String restoreAppDataFromZip(
+  String restoredAppDataFromZip(
     Object playlistsNumber,
     Object commentsNumber,
     Object picturesNumber,
@@ -2411,11 +2411,12 @@ class MockAppLocalizations extends AppLocalizations {
     Object updatedCommentNumber,
     Object filePathName,
     Object deletedAudioAndMp3FilesNumber,
+    Object addedAtEndOfPlaylistLstMsg,
   ) =>
-      "Restored $playlistsNumber playlist, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) and the application settings from \"$filePathName\". Deleted $deletedAudioAndMp3FilesNumber audio(s) and their comment(s) as well as their MP3 file.";
+      "Restored $playlistsNumber playlist, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) and the application settings from \"$filePathName\".Deleted $deletedAudioAndMp3FilesNumber audio(s) and their comment(s) as well as their MP3 file.$addedAtEndOfPlaylistLstMsg";
 
   @override
-  String restoreUniquePlaylistFromZip(
+  String restoredUniquePlaylistFromZip(
     Object playlistsNumber,
     Object commentsNumber,
     Object picturesNumber,
@@ -2424,6 +2425,13 @@ class MockAppLocalizations extends AppLocalizations {
     Object updatedCommentNumber,
     Object filePathName,
     Object deletedAudioAndMp3FilesNumber,
+    Object addedAtEndOfPlaylistLstMsg,
   ) =>
-      "Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) from \"$filePathName\". Deleted $deletedAudioAndMp3FilesNumber audio(s) and their comment(s) as well as their MP3 file.";
+      "Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) from \"$filePathName\".Deleted $deletedAudioAndMp3FilesNumber audio(s) and their comment(s) as well as their MP3 file.$addedAtEndOfPlaylistLstMsg";
+
+  @override
+  String get newPlaylistsAddedAtEndOfPlaylistLst => "The created playlists are positioned at the end of the playlist list.";
+
+  @override
+  String get uniquePlaylistAddedAtEndOfPlaylistLst => "Since the playlist was created, it is positioned at the end of the playlist list.";
 }

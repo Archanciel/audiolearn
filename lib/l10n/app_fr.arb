@@ -1418,8 +1418,8 @@
   "confirmMp3RestorationFromMp3Zip": "Restauré {audioNNumber} audio(s) MP3 dans {playlistsNumber} playlist(s) {secondMsgPart}.",
   "restorePlaylistTitlesOrderTitle": "Restauration de l'ordre des titres de playlist",
   "restorePlaylistTitlesOrderMessage": "Un fichier d'ordre des titres de playlist précédent est disponible dans le chemin racine de playlist sélectionné. Voulez-vous restaurer cet ordre sauvegardé précédemment ou conserver l'ordre actuel des titres de playlist ? Cliquez sur \"Confirmer\" pour restaurer l'ordre sauvegardé ou sur \"Annuler\" pour conserver l'ordre actuel.",
-  "restoreAppDataFromZip": "Les fichiers JSON de {playlistsNumber} playlists, de {commentsNumber} commentaires et de {picturesNumber} photos ainsi que {audiosNumber} références audio et {addedCommentNumber} commentaires ajoutés plus {updatedCommentNumber} modifiés et les paramètres de l'application ont été restaurés depuis \"{filePathName}\".\n\n{deletedAudioAndMp3FilesNumber} audio(s) et leur(s) commentaire(s) ainsi que leur fichier MP3 file a/ont été supprimé(s).",
-  "@restoreAppDataFromZip": {
+  "restoredAppDataFromZip": "Les fichiers JSON de {playlistsNumber} playlists, de {commentsNumber} commentaires et de {picturesNumber} photos ainsi que {audiosNumber} références audio et {addedCommentNumber} commentaires ajoutés plus {updatedCommentNumber} modifiés et les paramètres de l'application ont été restaurés depuis \"{filePathName}\".\n\n{deletedAudioAndMp3FilesNumber} audio(s) et leur(s) commentaire(s) ainsi que leur fichier MP3 file a/ont été supprimé(s).{addedAtEndOfPlaylistLstMsg}",
+  "@restoredAppDataFromZip": {
     "description": "Warning message indicating that the default SF parms were not applied to move audio",
     "placeholders": {
       "playlistsNumber": {
@@ -1445,11 +1445,14 @@
       },
       "filePathName": {
         "type": "Object"
+      },
+      "addedAtEndOfPlaylistLstMsg": {
+        "type": "Object"
       }
     }
   },
-  "restoreUniquePlaylistFromZip": "Les fichiers JSON de {playlistsNumber} playlist sauvegardée individuellement, de {commentsNumber} commentaires et de {picturesNumber} photos ainsi que {audiosNumber} références audio et {addedCommentNumber} commentaires ajoutés plus {updatedCommentNumber} modifiés ont été restaurés depuis \"{filePathName}\".\n\n{deletedAudioAndMp3FilesNumber} audio(s) et leur(s) commentaire(s) ainsi que leur fichier MP3 file a/ont été supprimé(s).",
-  "@restoreUniquePlaylistFromZip": {
+  "restoredUniquePlaylistFromZip": "Les fichiers JSON de {playlistsNumber} playlist sauvegardée individuellement, de {commentsNumber} commentaires et de {picturesNumber} photos ainsi que {audiosNumber} références audio et {addedCommentNumber} commentaires ajoutés plus {updatedCommentNumber} modifiés ont été restaurés depuis \"{filePathName}\".\n\n{deletedAudioAndMp3FilesNumber} audio(s) et leur(s) commentaire(s) ainsi que leur fichier MP3 a/ont été supprimé(s).{addedAtEndOfPlaylistLstMsg}",
+  "@restoredUniquePlaylistFromZip": {
     "description": "Warning message indicating that the a unique playlist was restored from ZIP created from playlist item menu",
     "placeholders": {
       "playlistsNumber": {
@@ -1475,7 +1478,12 @@
       },
       "filePathName": {
         "type": "Object"
+      },
+      "addedAtEndOfPlaylistLstMsg": {
+        "type": "Object"
       }
     }
-  }
+  },
+  "newPlaylistsAddedAtEndOfPlaylistLst": "\n\nLes playlists créées sont ajoutées à la fin de la liste des playlists.",
+  "uniquePlaylistAddedAtEndOfPlaylistLst": "\n\nPuisque la playlist a été créée, elle est positionnée à la fin de la liste des playlists."
 }

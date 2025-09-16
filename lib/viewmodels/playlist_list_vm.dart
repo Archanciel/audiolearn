@@ -3822,8 +3822,10 @@ class PlaylistListVM extends ChangeNotifier {
       addedCommentNumber: restoredInfoLst[7],
       pictureJsonFilesNumber: restoredInfoLst[2],
       pictureJpgFilesNumber: restoredInfoLst[3],
-      deletedAudioAndMp3FilesNumber: (restoredInfoLst.length == 9) ? restoredInfoLst[8] : 0,
+      deletedAudioAndMp3FilesNumber:
+          (restoredInfoLst.length == 9) ? restoredInfoLst[8] : 0,
       wasIndividualPlaylistRestored: wasIndividualPlaylistRestored,
+      newPlaylistsAddedAtEndOfPlaylistLst: restoredInfoLst[9],
     );
 
     if (doReplaceExistingPlaylists &&
@@ -3957,16 +3959,17 @@ class PlaylistListVM extends ChangeNotifier {
   ///
   /// The returned list contains
   /// [
-  ///  list of restored playlist titles,
-  ///  number of restored comments JSON files,
-  ///  number of restored pictures JSON files,
-  ///  number of restored pictures JPG files,
-  ///  was the zip file created from the playlist item 'Save the Playlist, its Comments,
+  ///  0 list of restored playlist titles,
+  ///  1 number of restored comments JSON files,
+  ///  2 number of restored pictures JSON files,
+  ///  3 number of restored pictures JPG files,
+  ///  4 was the zip file created from the playlist item 'Save the Playlist, its Comments,
   ///    and its Pictures to Zip File' (true, false if multiple playlists are restored),
-  ///  restoredAudioReferencesNumber,
-  ///  updated comment number,
-  ///  added comment number,
-  ///  number of deleted audio as well as mp3 files.
+  ///  5 restoredAudioReferencesNumber,
+  ///  6 updated comment number,
+  ///  7 added comment number,
+  ///  8 number of deleted audio as well as mp3 files,
+  ///  9 were new playlists added at end of non empty playlist list
   /// ]
   Future<List<dynamic>> _restoreFilesFromZip({
     required String zipFilePathName,
@@ -3996,7 +3999,8 @@ class PlaylistListVM extends ChangeNotifier {
       restoredInfoLst.add(restoredAudioReferencesNumber);
       restoredInfoLst.add(0); // adding 0 to the updated comment number
       restoredInfoLst.add(0); // adding 0 to the added comment number
-      restoredInfoLst.add(0); // adding 0 to the deleted audio and mp3 files number
+      restoredInfoLst
+          .add(0); // adding 0 to the deleted audio and mp3 files number
 
       return restoredInfoLst;
     }
@@ -4025,10 +4029,14 @@ class PlaylistListVM extends ChangeNotifier {
     ArchiveFile? archiveFile;
 
     // Will be set to false if the zip file was created from the
-    // appbar 'Save Playlist, Comments, Pictures and Settings to Zip
+    // appbar 'Save Playlists, Comments, Pictures and Settings to Zip
     // File' menu item. In this case, the settings file is included
     // in the zip file.
     bool wasIndividualPlaylistRestored = true;
+
+    // Will be used to indicate that the created playlist(s) were
+    // positioned at the end of the playlist list.
+    bool newPlaylistsAddedAtEndOfPlaylistLst = false;
 
     // Iterate over each file in the archive.
     for (archiveFile in archive) {
@@ -4080,7 +4088,7 @@ class PlaylistListVM extends ChangeNotifier {
 
       if (destinationPathFileName.contains(kSettingsFileName)) {
         // In this case, the zip file was created from the left
-        // appbar 'Save Playlist, Comments, Pictures and Settings
+        // appbar 'Save Playlists, Comments, Pictures and Settings
         // to Zip File' menu item. If the similar menu was selected
         // from the playlist item menu, the settings file does not
         // exist in the zip file.
@@ -4102,6 +4110,14 @@ class PlaylistListVM extends ChangeNotifier {
           final String jsonContent =
               utf8.decode(archiveFile.content as List<int>);
           zipExistingPlaylistJsonContentsMap[playlistTitle] = jsonContent;
+        } else {
+          if (existingPlaylistTitlesLst.isNotEmpty) {
+            // New playlist added to not empty playlist list.
+            // If the playlist list is empty, the new playlist(s)
+            // is//are automatically positioned at the top of the
+            // playlist list.
+            newPlaylistsAddedAtEndOfPlaylistLst = true;
+          }
         }
       }
 
@@ -4269,7 +4285,11 @@ class PlaylistListVM extends ChangeNotifier {
         restoredNumberLst[0]); // restored audio references number
     restoredInfoLst.add(restoredNumberLst[3]); // updated comment number
     restoredInfoLst.add(restoredNumberLst[4]); // added comment number
-    restoredInfoLst.add(restoredNumberLst[5]); // adding deleted audio and mp3 files number
+    restoredInfoLst
+        .add(restoredNumberLst[5]); // adding deleted audio and mp3 files number
+    restoredInfoLst.add(
+        newPlaylistsAddedAtEndOfPlaylistLst); // were new playlists added at
+        //                                       end of non empty playlist list
 
     return restoredInfoLst;
   }
