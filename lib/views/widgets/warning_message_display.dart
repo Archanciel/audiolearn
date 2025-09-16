@@ -1311,29 +1311,63 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
 
           if (_warningMessageVM.zipFilePathName != '') {
             if (!_warningMessageVM.wasIndividualPlaylistRestored) {
-              restoredAppDataFromZipMessage =
-                  AppLocalizations.of(context)!.restoreAppDataFromZip(
-                _warningMessageVM.playlistsNumber,
-                _warningMessageVM.audioReferencesNumber,
-                _warningMessageVM.commentJsonFilesNumber,
-                _warningMessageVM.updatedCommentNumber,
-                _warningMessageVM.addedCommentNumber,
-                _warningMessageVM.pictureJsonFilesNumber,
-                _warningMessageVM.deletedAudioAndMp3FilesNumber,
-                _warningMessageVM.zipFilePathName,
-              );
+              if (_warningMessageVM.newPlaylistsAddedAtEndOfPlaylistLst) {
+                restoredAppDataFromZipMessage =
+                    AppLocalizations.of(context)!.restoredAppDataFromZip(
+                  _warningMessageVM.playlistsNumber,
+                  _warningMessageVM.audioReferencesNumber,
+                  _warningMessageVM.commentJsonFilesNumber,
+                  _warningMessageVM.updatedCommentNumber,
+                  _warningMessageVM.addedCommentNumber,
+                  _warningMessageVM.pictureJsonFilesNumber,
+                  _warningMessageVM.deletedAudioAndMp3FilesNumber,
+                  _warningMessageVM.zipFilePathName,
+                  AppLocalizations.of(context)!
+                      .newPlaylistsAddedAtEndOfPlaylistLst,
+                );
+              } else {
+                restoredAppDataFromZipMessage =
+                    AppLocalizations.of(context)!.restoredAppDataFromZip(
+                  _warningMessageVM.playlistsNumber,
+                  _warningMessageVM.audioReferencesNumber,
+                  _warningMessageVM.commentJsonFilesNumber,
+                  _warningMessageVM.updatedCommentNumber,
+                  _warningMessageVM.addedCommentNumber,
+                  _warningMessageVM.pictureJsonFilesNumber,
+                  _warningMessageVM.deletedAudioAndMp3FilesNumber,
+                  _warningMessageVM.zipFilePathName,
+                  "",
+                );
+              }
             } else {
-              restoredAppDataFromZipMessage =
-                  AppLocalizations.of(context)!.restoreUniquePlaylistFromZip(
-                _warningMessageVM.playlistsNumber,
-                _warningMessageVM.audioReferencesNumber,
-                _warningMessageVM.commentJsonFilesNumber,
-                _warningMessageVM.updatedCommentNumber,
-                _warningMessageVM.addedCommentNumber,
-                _warningMessageVM.pictureJsonFilesNumber,
-                _warningMessageVM.deletedAudioAndMp3FilesNumber,
-                _warningMessageVM.zipFilePathName,
-              );
+              if (_warningMessageVM.newPlaylistsAddedAtEndOfPlaylistLst) {
+                restoredAppDataFromZipMessage =
+                    AppLocalizations.of(context)!.restoredUniquePlaylistFromZip(
+                  _warningMessageVM.playlistsNumber,
+                  _warningMessageVM.audioReferencesNumber,
+                  _warningMessageVM.commentJsonFilesNumber,
+                  _warningMessageVM.updatedCommentNumber,
+                  _warningMessageVM.addedCommentNumber,
+                  _warningMessageVM.pictureJsonFilesNumber,
+                  _warningMessageVM.deletedAudioAndMp3FilesNumber,
+                  _warningMessageVM.zipFilePathName,
+                  AppLocalizations.of(context)!
+                      .uniquePlaylistAddedAtEndOfPlaylistLst,
+                );
+              } else {
+                restoredAppDataFromZipMessage =
+                    AppLocalizations.of(context)!.restoredUniquePlaylistFromZip(
+                  _warningMessageVM.playlistsNumber,
+                  _warningMessageVM.audioReferencesNumber,
+                  _warningMessageVM.commentJsonFilesNumber,
+                  _warningMessageVM.updatedCommentNumber,
+                  _warningMessageVM.addedCommentNumber,
+                  _warningMessageVM.pictureJsonFilesNumber,
+                  _warningMessageVM.deletedAudioAndMp3FilesNumber,
+                  _warningMessageVM.zipFilePathName,
+                  "",
+                );
+              }
             }
             if (_warningMessageVM.savedOrRestoredPictureJpgNumber > 0) {
               restoredAppDataFromZipMessage +=

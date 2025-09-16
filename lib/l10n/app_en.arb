@@ -119,24 +119,24 @@
       "fileName": {}
     }
   },
-  "playlistWithUrlAlreadyInListOfPlaylists": "Playlist \"{title}\" with this URL \"{url}\" is already in the list of playlists and so won't be recreated.",
+  "playlistWithUrlAlreadyInListOfPlaylists": "Playlist \"{title}\" with this URL \"{url}\" is already in the playlist list and so won't be recreated.",
   "@playlistWithUrlAlreadyInListOfPlaylists": {
-    "description": "Warning announcing that the playlist with the URL is already in the list of playlists.",
+    "description": "Warning announcing that the playlist with the URL is already in the playlist list.",
     "placeholders": {
       "url": {},
       "title": {}
     }
   },
-  "localPlaylistWithTitleAlreadyInListOfPlaylists": "Local playlist \"{title}\" already exists in the list of playlists. Therefore, the local playlist with this title won't be created.",
+  "localPlaylistWithTitleAlreadyInListOfPlaylists": "Local playlist \"{title}\" already exists in the playlist list. Therefore, the local playlist with this title won't be created.",
   "@localPlaylistWithTitleAlreadyInListOfPlaylists": {
-    "description": "Warning announcing that the local playlist with the title is already in the list of playlists and so will not be created.",
+    "description": "Warning announcing that the local playlist with the title is already in the playlist list and so will not be created.",
     "placeholders": {
       "title": {}
     }
   },
-  "youtubePlaylistWithTitleAlreadyInListOfPlaylists": "Youtube playlist \"{title}\" already exists in the list of playlists. Therefore, the local playlist with this title won't be created.",
+  "youtubePlaylistWithTitleAlreadyInListOfPlaylists": "Youtube playlist \"{title}\" already exists in the playlist list. Therefore, the local playlist with this title won't be created.",
   "@youtubePlaylistWithTitleAlreadyInListOfPlaylists": {
-    "description": "Warning announcing that the Youtube playlist with the title is already in the list of playlists and so will not be created.",
+    "description": "Warning announcing that the Youtube playlist with the title is already in the playlist list and so will not be created.",
     "placeholders": {
       "title": {}
     }
@@ -617,8 +617,8 @@
   "commentedAudioDeletionCreateSFParmHelpTitle": "Create a valid Sort/Filter Parameter",
   "commentedAudioDeletionCreateSFParmHelpContent": "In the \"Save as\" field, enter a name for the Sort/Filter parameter (e.g., FullyListenedUncom). Uncheck the checkboxes for \"Partially listened\", \"Not listened\" and \"Commented\". Then click on \"Save\".",
   "commentedAudioDeletionSelectSFParmHelpTitle": "Once saved, the Sort/Filter parameter is applied to the playlist, reducing the displayed audio's list.",
-  "commentedAudioDeletionSelectSFParmHelpContent": "Click on the \"Playlists\" button to hide the list of playlists. You’ll see your newly created SF parameter selected in the dropdown menu. You can apply this parameter or another one to any playlist ...",
-  "commentedAudioDeletionApplyingNewSFParmHelpTitle": "Finally, reclick on the \"Playlists\" button to display the list of playlists, open the source playlist menu and click on \"Filtered Audio's Actions ...\" and then on \"Delete filtered Audio's ...\"",
+  "commentedAudioDeletionSelectSFParmHelpContent": "Click on the \"Playlists\" button to hide the playlist list. You’ll see your newly created SF parameter selected in the dropdown menu. You can apply this parameter or another one to any playlist ...",
+  "commentedAudioDeletionApplyingNewSFParmHelpTitle": "Finally, reclick on the \"Playlists\" button to display the playlist list, open the source playlist menu and click on \"Filtered Audio's Actions ...\" and then on \"Delete filtered Audio's ...\"",
   "commentedAudioDeletionApplyingNewSFParmHelpContent": "This time, since a correct SF parameter is applied, no warning will be displayed when deleting the selected uncommented audio.",
   "filteredAudioActions": "Filtered Audio's Actions ...",
   "moveFilteredAudio": "Move filtered Audio's to Playlist ...",
@@ -1060,8 +1060,8 @@
   "confirmMp3RestorationFromMp3Zip": "Restored {audioNNumber} audio(s) MP3 in {playlistsNumber} playlist(s) {secondMsgPart}.",
   "restorePlaylistTitlesOrderTitle": "Playlist Titles Order Restoration",
   "restorePlaylistTitlesOrderMessage": "A previous playlist titles order file is available in the selected playlist root path. Do you want to restore this saved order or keep the current playlist titles order? Click on \"Confirm\" to restore the saved order or on \"Cancel\" to keep the current order.",
-  "restoreAppDataFromZip": "Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) and the application settings from \"{filePathName}\".\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) as well as their MP3 file.",
-  "@restoreAppDataFromZip": {
+  "restoredAppDataFromZip": "Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) and the application settings from \"{filePathName}\".\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) as well as their MP3 file.{addedAtEndOfPlaylistLstMsg}",
+  "@restoredAppDataFromZip": {
     "description": "Warning message indicating that one or several playlists were restored from ZIP created from appbar menu",
     "placeholders": {
       "playlistsNumber": {},
@@ -1071,11 +1071,12 @@
       "addedCommentNumber": {},
       "picturesNumber": {},
       "deletedAudioAndMp3FilesNumber": {},
-      "filePathName": {}
+      "filePathName": {},
+      "addedAtEndOfPlaylistLstMsg": {}
     }
   },
-  "restoreUniquePlaylistFromZip": "Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) from \"{filePathName}\".\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) as well as their MP3 file.",
-  "@restoreUniquePlaylistFromZip": {
+  "restoredUniquePlaylistFromZip": "Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) from \"{filePathName}\".\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) as well as their MP3 file.{addedAtEndOfPlaylistLstMsg}",
+  "@restoredUniquePlaylistFromZip": {
     "description": "Warning message indicating that a unique playlist was restored from ZIP created from playlist item menu",
     "placeholders": {
       "playlistsNumber": {},
@@ -1085,7 +1086,10 @@
       "addedCommentNumber": {},
       "picturesNumber": {},
       "deletedAudioAndMp3FilesNumber": {},
-      "filePathName": {}
+      "filePathName": {},
+      "addedAtEndOfPlaylistLstMsg": {}
     }
-  }
+  },
+  "newPlaylistsAddedAtEndOfPlaylistLst": "\n\nThe created playlists are positioned at the end of the playlist list.",
+  "uniquePlaylistAddedAtEndOfPlaylistLst": "\n\nSince the playlist was created, it is positioned at the end of the playlist list."
 }

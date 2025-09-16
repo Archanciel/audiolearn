@@ -2340,7 +2340,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un fichier d\'ordre des titres de playlist précédent est disponible dans le chemin racine de playlist sélectionné. Voulez-vous restaurer cet ordre sauvegardé précédemment ou conserver l\'ordre actuel des titres de playlist ? Cliquez sur \"Confirmer\" pour restaurer l\'ordre sauvegardé ou sur \"Annuler\" pour conserver l\'ordre actuel.';
 
   @override
-  String restoreAppDataFromZip(
+  String restoredAppDataFromZip(
       Object playlistsNumber,
       Object audiosNumber,
       Object commentsNumber,
@@ -2348,12 +2348,13 @@ class AppLocalizationsFr extends AppLocalizations {
       Object addedCommentNumber,
       Object picturesNumber,
       Object deletedAudioAndMp3FilesNumber,
-      Object filePathName) {
-    return 'Les fichiers JSON de $playlistsNumber playlists, de $commentsNumber commentaires et de $picturesNumber photos ainsi que $audiosNumber références audio et $addedCommentNumber commentaires ajoutés plus $updatedCommentNumber modifiés et les paramètres de l\'application ont été restaurés depuis \"$filePathName\".\n\n$deletedAudioAndMp3FilesNumber audio(s) et leur(s) commentaire(s) ainsi que leur fichier MP3 file a/ont été supprimé(s).';
+      Object filePathName,
+      Object addedAtEndOfPlaylistLstMsg) {
+    return 'Les fichiers JSON de $playlistsNumber playlists, de $commentsNumber commentaires et de $picturesNumber photos ainsi que $audiosNumber références audio et $addedCommentNumber commentaires ajoutés plus $updatedCommentNumber modifiés et les paramètres de l\'application ont été restaurés depuis \"$filePathName\".\n\n$deletedAudioAndMp3FilesNumber audio(s) et leur(s) commentaire(s) ainsi que leur fichier MP3 file a/ont été supprimé(s).$addedAtEndOfPlaylistLstMsg';
   }
 
   @override
-  String restoreUniquePlaylistFromZip(
+  String restoredUniquePlaylistFromZip(
       Object playlistsNumber,
       Object audiosNumber,
       Object commentsNumber,
@@ -2361,7 +2362,16 @@ class AppLocalizationsFr extends AppLocalizations {
       Object addedCommentNumber,
       Object picturesNumber,
       Object deletedAudioAndMp3FilesNumber,
-      Object filePathName) {
-    return 'Les fichiers JSON de $playlistsNumber playlist sauvegardée individuellement, de $commentsNumber commentaires et de $picturesNumber photos ainsi que $audiosNumber références audio et $addedCommentNumber commentaires ajoutés plus $updatedCommentNumber modifiés ont été restaurés depuis \"$filePathName\".\n\n$deletedAudioAndMp3FilesNumber audio(s) et leur(s) commentaire(s) ainsi que leur fichier MP3 file a/ont été supprimé(s).';
+      Object filePathName,
+      Object addedAtEndOfPlaylistLstMsg) {
+    return 'Les fichiers JSON de $playlistsNumber playlist sauvegardée individuellement, de $commentsNumber commentaires et de $picturesNumber photos ainsi que $audiosNumber références audio et $addedCommentNumber commentaires ajoutés plus $updatedCommentNumber modifiés ont été restaurés depuis \"$filePathName\".\n\n$deletedAudioAndMp3FilesNumber audio(s) et leur(s) commentaire(s) ainsi que leur fichier MP3 a/ont été supprimé(s).$addedAtEndOfPlaylistLstMsg';
   }
+
+  @override
+  String get newPlaylistsAddedAtEndOfPlaylistLst =>
+      '\n\nLes playlists créées sont ajoutées à la fin de la liste des playlists.';
+
+  @override
+  String get uniquePlaylistAddedAtEndOfPlaylistLst =>
+      '\n\nPuisque la playlist a été créée, elle est positionnée à la fin de la liste des playlists.';
 }

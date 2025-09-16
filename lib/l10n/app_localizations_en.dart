@@ -238,17 +238,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String playlistWithUrlAlreadyInListOfPlaylists(Object url, Object title) {
-    return 'Playlist \"$title\" with this URL \"$url\" is already in the list of playlists and so won\'t be recreated.';
+    return 'Playlist \"$title\" with this URL \"$url\" is already in the playlist list and so won\'t be recreated.';
   }
 
   @override
   String localPlaylistWithTitleAlreadyInListOfPlaylists(Object title) {
-    return 'Local playlist \"$title\" already exists in the list of playlists. Therefore, the local playlist with this title won\'t be created.';
+    return 'Local playlist \"$title\" already exists in the playlist list. Therefore, the local playlist with this title won\'t be created.';
   }
 
   @override
   String youtubePlaylistWithTitleAlreadyInListOfPlaylists(Object title) {
-    return 'Youtube playlist \"$title\" already exists in the list of playlists. Therefore, the local playlist with this title won\'t be created.';
+    return 'Youtube playlist \"$title\" already exists in the playlist list. Therefore, the local playlist with this title won\'t be created.';
   }
 
   @override
@@ -1407,11 +1407,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commentedAudioDeletionSelectSFParmHelpContent =>
-      'Click on the \"Playlists\" button to hide the list of playlists. You’ll see your newly created SF parameter selected in the dropdown menu. You can apply this parameter or another one to any playlist ...';
+      'Click on the \"Playlists\" button to hide the playlist list. You’ll see your newly created SF parameter selected in the dropdown menu. You can apply this parameter or another one to any playlist ...';
 
   @override
   String get commentedAudioDeletionApplyingNewSFParmHelpTitle =>
-      'Finally, reclick on the \"Playlists\" button to display the list of playlists, open the source playlist menu and click on \"Filtered Audio\'s Actions ...\" and then on \"Delete filtered Audio\'s ...\"';
+      'Finally, reclick on the \"Playlists\" button to display the playlist list, open the source playlist menu and click on \"Filtered Audio\'s Actions ...\" and then on \"Delete filtered Audio\'s ...\"';
 
   @override
   String get commentedAudioDeletionApplyingNewSFParmHelpContent =>
@@ -2315,7 +2315,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'A previous playlist titles order file is available in the selected playlist root path. Do you want to restore this saved order or keep the current playlist titles order? Click on \"Confirm\" to restore the saved order or on \"Cancel\" to keep the current order.';
 
   @override
-  String restoreAppDataFromZip(
+  String restoredAppDataFromZip(
       Object playlistsNumber,
       Object audiosNumber,
       Object commentsNumber,
@@ -2323,12 +2323,13 @@ class AppLocalizationsEn extends AppLocalizations {
       Object addedCommentNumber,
       Object picturesNumber,
       Object deletedAudioAndMp3FilesNumber,
-      Object filePathName) {
-    return 'Restored $playlistsNumber playlist, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) and the application settings from \"$filePathName\".\n\nDeleted $deletedAudioAndMp3FilesNumber audio(s) and their comment(s) as well as their MP3 file.';
+      Object filePathName,
+      Object addedAtEndOfPlaylistLstMsg) {
+    return 'Restored $playlistsNumber playlist, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) and the application settings from \"$filePathName\".\n\nDeleted $deletedAudioAndMp3FilesNumber audio(s) and their comment(s) as well as their MP3 file.$addedAtEndOfPlaylistLstMsg';
   }
 
   @override
-  String restoreUniquePlaylistFromZip(
+  String restoredUniquePlaylistFromZip(
       Object playlistsNumber,
       Object audiosNumber,
       Object commentsNumber,
@@ -2336,7 +2337,16 @@ class AppLocalizationsEn extends AppLocalizations {
       Object addedCommentNumber,
       Object picturesNumber,
       Object deletedAudioAndMp3FilesNumber,
-      Object filePathName) {
-    return 'Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) from \"$filePathName\".\n\nDeleted $deletedAudioAndMp3FilesNumber audio(s) and their comment(s) as well as their MP3 file.';
+      Object filePathName,
+      Object addedAtEndOfPlaylistLstMsg) {
+    return 'Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) from \"$filePathName\".\n\nDeleted $deletedAudioAndMp3FilesNumber audio(s) and their comment(s) as well as their MP3 file.$addedAtEndOfPlaylistLstMsg';
   }
+
+  @override
+  String get newPlaylistsAddedAtEndOfPlaylistLst =>
+      '\n\nThe created playlists are positioned at the end of the playlist list.';
+
+  @override
+  String get uniquePlaylistAddedAtEndOfPlaylistLst =>
+      '\n\nSince the playlist was created, it is positioned at the end of the playlist list.';
 }

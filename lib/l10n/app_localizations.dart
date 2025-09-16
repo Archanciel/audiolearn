@@ -508,22 +508,22 @@ abstract class AppLocalizations {
   /// **'The file name \"{fileName}\" already exists in the same directory and cannot be used.'**
   String renameFileNameAlreadyUsed(Object fileName);
 
-  /// Warning announcing that the playlist with the URL is already in the list of playlists.
+  /// Warning announcing that the playlist with the URL is already in the playlist list.
   ///
   /// In en, this message translates to:
-  /// **'Playlist \"{title}\" with this URL \"{url}\" is already in the list of playlists and so won\'t be recreated.'**
+  /// **'Playlist \"{title}\" with this URL \"{url}\" is already in the playlist list and so won\'t be recreated.'**
   String playlistWithUrlAlreadyInListOfPlaylists(Object url, Object title);
 
-  /// Warning announcing that the local playlist with the title is already in the list of playlists and so will not be created.
+  /// Warning announcing that the local playlist with the title is already in the playlist list and so will not be created.
   ///
   /// In en, this message translates to:
-  /// **'Local playlist \"{title}\" already exists in the list of playlists. Therefore, the local playlist with this title won\'t be created.'**
+  /// **'Local playlist \"{title}\" already exists in the playlist list. Therefore, the local playlist with this title won\'t be created.'**
   String localPlaylistWithTitleAlreadyInListOfPlaylists(Object title);
 
-  /// Warning announcing that the Youtube playlist with the title is already in the list of playlists and so will not be created.
+  /// Warning announcing that the Youtube playlist with the title is already in the playlist list and so will not be created.
   ///
   /// In en, this message translates to:
-  /// **'Youtube playlist \"{title}\" already exists in the list of playlists. Therefore, the local playlist with this title won\'t be created.'**
+  /// **'Youtube playlist \"{title}\" already exists in the playlist list. Therefore, the local playlist with this title won\'t be created.'**
   String youtubePlaylistWithTitleAlreadyInListOfPlaylists(Object title);
 
   /// Warning announcing that downloading the audio's from Youtube failed.
@@ -2375,13 +2375,13 @@ abstract class AppLocalizations {
   /// No description provided for @commentedAudioDeletionSelectSFParmHelpContent.
   ///
   /// In en, this message translates to:
-  /// **'Click on the \"Playlists\" button to hide the list of playlists. You’ll see your newly created SF parameter selected in the dropdown menu. You can apply this parameter or another one to any playlist ...'**
+  /// **'Click on the \"Playlists\" button to hide the playlist list. You’ll see your newly created SF parameter selected in the dropdown menu. You can apply this parameter or another one to any playlist ...'**
   String get commentedAudioDeletionSelectSFParmHelpContent;
 
   /// No description provided for @commentedAudioDeletionApplyingNewSFParmHelpTitle.
   ///
   /// In en, this message translates to:
-  /// **'Finally, reclick on the \"Playlists\" button to display the list of playlists, open the source playlist menu and click on \"Filtered Audio\'s Actions ...\" and then on \"Delete filtered Audio\'s ...\"'**
+  /// **'Finally, reclick on the \"Playlists\" button to display the playlist list, open the source playlist menu and click on \"Filtered Audio\'s Actions ...\" and then on \"Delete filtered Audio\'s ...\"'**
   String get commentedAudioDeletionApplyingNewSFParmHelpTitle;
 
   /// No description provided for @commentedAudioDeletionApplyingNewSFParmHelpContent.
@@ -3722,8 +3722,8 @@ abstract class AppLocalizations {
   /// Warning message indicating that one or several playlists were restored from ZIP created from appbar menu
   ///
   /// In en, this message translates to:
-  /// **'Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) and the application settings from \"{filePathName}\".\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) as well as their MP3 file.'**
-  String restoreAppDataFromZip(
+  /// **'Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) and the application settings from \"{filePathName}\".\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) as well as their MP3 file.{addedAtEndOfPlaylistLstMsg}'**
+  String restoredAppDataFromZip(
       Object playlistsNumber,
       Object audiosNumber,
       Object commentsNumber,
@@ -3731,13 +3731,14 @@ abstract class AppLocalizations {
       Object addedCommentNumber,
       Object picturesNumber,
       Object deletedAudioAndMp3FilesNumber,
-      Object filePathName);
+      Object filePathName,
+      Object addedAtEndOfPlaylistLstMsg);
 
   /// Warning message indicating that a unique playlist was restored from ZIP created from playlist item menu
   ///
   /// In en, this message translates to:
-  /// **'Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) from \"{filePathName}\".\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) as well as their MP3 file.'**
-  String restoreUniquePlaylistFromZip(
+  /// **'Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) from \"{filePathName}\".\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) as well as their MP3 file.{addedAtEndOfPlaylistLstMsg}'**
+  String restoredUniquePlaylistFromZip(
       Object playlistsNumber,
       Object audiosNumber,
       Object commentsNumber,
@@ -3745,7 +3746,20 @@ abstract class AppLocalizations {
       Object addedCommentNumber,
       Object picturesNumber,
       Object deletedAudioAndMp3FilesNumber,
-      Object filePathName);
+      Object filePathName,
+      Object addedAtEndOfPlaylistLstMsg);
+
+  /// No description provided for @newPlaylistsAddedAtEndOfPlaylistLst.
+  ///
+  /// In en, this message translates to:
+  /// **'\n\nThe created playlists are positioned at the end of the playlist list.'**
+  String get newPlaylistsAddedAtEndOfPlaylistLst;
+
+  /// No description provided for @uniquePlaylistAddedAtEndOfPlaylistLst.
+  ///
+  /// In en, this message translates to:
+  /// **'\n\nSince the playlist was created, it is positioned at the end of the playlist list.'**
+  String get uniquePlaylistAddedAtEndOfPlaylistLst;
 }
 
 class _AppLocalizationsDelegate
