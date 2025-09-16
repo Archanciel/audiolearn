@@ -2865,28 +2865,38 @@ class PlaylistListVM extends ChangeNotifier {
   /// the playlistListVM unit test.
   Future<String> savePlaylistsCommentPictureAndSettingsJsonFilesToZip({
     required String targetDirectoryPath,
+    bool addPictureJpgFilesToZip = false,
   }) async {
-    String savedZipFilePathName = await _saveAllJsonFilesToZip(
+    
+    List<dynamic> returnedResults = await _saveAllJsonFilesToZip(
       targetDir: targetDirectoryPath,
+      addPictureJpgFilesToZip: addPictureJpgFilesToZip,
     );
 
-    if (savedZipFilePathName.isEmpty) {
+    if (returnedResults.isEmpty) {
       // The case if the target directory does not exist or is invalid.
       // In this situation, since the passed savedZipFilePathName is empty,
       // a warning message is displayed instead of a confirmation message.
       _warningMessageVM.confirmSavingToZip(
-        zipFilePathName: savedZipFilePathName,
+        zipFilePathName: '',
         savedPictureNumber: 0,
       );
 
-      return savedZipFilePathName;
+      return '';
     }
 
-    // Saving the picture jpg files to the 'pictures' directory
-    // located in the target directory where the zip file is saved.
-    int savedPictureNumber = _pictureVM.saveUnexistingPictureJpgFilesToTargetDirectory(
-      targetDirectoryPath: targetDirectoryPath,
-    );
+    int savedPictureNumber = returnedResults[0];
+
+    if (!addPictureJpgFilesToZip) {
+      // Saving the picture jpg files to the 'pictures' directory
+      // located in the target directory where the zip file is saved.
+      savedPictureNumber =
+          _pictureVM.saveUnexistingPictureJpgFilesToTargetDirectory(
+        targetDirectoryPath: targetDirectoryPath,
+      );
+    }
+
+    String savedZipFilePathName = returnedResults[1] as String;
 
     _warningMessageVM.confirmSavingToZip(
         zipFilePathName: savedZipFilePathName,
@@ -2897,11 +2907,14 @@ class PlaylistListVM extends ChangeNotifier {
     return savedZipFilePathName;
   }
 
-  /// Returns the saved zip file path name, '' if the playlists source dir or the
+  /// Returns a dynamic list containing the number of picture jpg files added to the zip and
+  /// the saved zip file path name. An empty list is returned if the playlists source dir or the
   /// target dir in which to save the zip does not exist.
-  Future<String> _saveAllJsonFilesToZip({
+  Future<List<dynamic>> _saveAllJsonFilesToZip({
     required String targetDir,
+    required bool addPictureJpgFilesToZip,
   }) async {
+    List<dynamic> returnedResults = [];
     String playlistsRootPath = _settingsDataService.get(
         settingType: SettingType.dataLocation,
         settingSubType: DataLocation.playlistRootPath);
@@ -2913,7 +2926,7 @@ class PlaylistListVM extends ChangeNotifier {
     Directory sourceDir = Directory(playlistsRootPath);
 
     if (!sourceDir.existsSync() || targetDir == '/') {
-      return '';
+      return returnedResults; // returning an empty list
     }
 
     // Create a zip encoder
@@ -2963,11 +2976,58 @@ class PlaylistListVM extends ChangeNotifier {
 
       // Read the file and add it to the archive
       List<int> pictureAudioMapBytes = await pictureAudioMapFile.readAsBytes();
+
       archive.addFile(ArchiveFile(
         pictureAudioMapRelativePath,
         pictureAudioMapBytes.length,
         pictureAudioMapBytes,
       ));
+
+      if (addPictureJpgFilesToZip) {
+        // Get the list of JPG files in the application pictures
+        // directory
+        String applicationPicturePath = '$applicationPath${path.separator}$kPictureDirName';
+
+        List<String> pictureJpgPathFileNamesLst = DirUtil
+            .listPathFileNamesInDir(
+          directoryPath: applicationPicturePath,
+          fileExtension: 'jpg',
+        );
+
+        int addedPictureJpgNumberToZip = 0;
+
+        // Add all the JPG files to the archive in the pictures directory
+        for (String pictureJpgPathFileName in pictureJpgPathFileNamesLst) {
+          // Extract the filename from the full path
+          String pictureFileName = DirUtil.getFileNameFromPathFileName(
+            pathFileName: pictureJpgPathFileName,
+          );
+
+          // Read the JPG file
+          File pictureFile = File(pictureJpgPathFileName);
+
+          if (pictureFile.existsSync()) {
+            List<int> pictureBytes = await pictureFile.readAsBytes();
+
+            // Add the JPG file to the archive in the pictures directory
+            String pictureRelativePath =
+                path.join(kPictureDirName, pictureFileName);
+
+            archive.addFile(ArchiveFile(
+              pictureRelativePath,
+              pictureBytes.length,
+              pictureBytes,
+            ));
+
+            addedPictureJpgNumberToZip++;
+          }
+        }
+
+        // returnedResults[1] contains the number of picture jpg files
+        returnedResults.add(addedPictureJpgNumberToZip);
+      } else {
+        returnedResults.add(0);
+      }
     }
 
     // Save the archive to a zip file in the target directory
@@ -2979,7 +3039,9 @@ class PlaylistListVM extends ChangeNotifier {
     File zipFile = File(zipFilePathName);
     zipFile.writeAsBytesSync(ZipEncoder().encode(archive), flush: true);
 
-    return zipFilePathName;
+    returnedResults.add(zipFilePathName);
+
+    return returnedResults;
   }
 
   /// Method called when the user clicks on the 'Save Playlist, Comments, Pictures
@@ -4289,7 +4351,7 @@ class PlaylistListVM extends ChangeNotifier {
         .add(restoredNumberLst[5]); // adding deleted audio and mp3 files number
     restoredInfoLst.add(
         newPlaylistsAddedAtEndOfPlaylistLst); // were new playlists added at
-        //                                       end of non empty playlist list
+    //                                       end of non empty playlist list
 
     return restoredInfoLst;
   }
