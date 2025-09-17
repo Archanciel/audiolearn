@@ -3760,6 +3760,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'\n\nSince the playlist was created, it is positioned at the end of the playlist list.'**
   String get uniquePlaylistAddedAtEndOfPlaylistLst;
+
+  /// No description provided for @playlistsSaveDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlists Backup to ZIP'**
+  String get playlistsSaveDialogTitle;
+
+  /// No description provided for @playlistsSaveExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking the \"Add all JPG pictures to ZIP\" checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.'**
+  String get playlistsSaveExplanation;
+
+  /// No description provided for @addPictureJpgFilesToZip.
+  ///
+  /// In en, this message translates to:
+  /// **'Add all JPG pictures to ZIP'**
+  String get addPictureJpgFilesToZip;
 }
 
 class _AppLocalizationsDelegate

@@ -1091,5 +1091,8 @@
     }
   },
   "newPlaylistsAddedAtEndOfPlaylistLst": "\n\nThe created playlists are positioned at the end of the playlist list.",
-  "uniquePlaylistAddedAtEndOfPlaylistLst": "\n\nSince the playlist was created, it is positioned at the end of the playlist list."
+  "uniquePlaylistAddedAtEndOfPlaylistLst": "\n\nSince the playlist was created, it is positioned at the end of the playlist list.",
+  "playlistsSaveDialogTitle": "Playlists Backup to ZIP",
+  "playlistsSaveExplanation": "Checking the \"Add all JPG pictures to ZIP\" checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.",
+  "addPictureJpgFilesToZip": "Add all JPG pictures to ZIP"
 }

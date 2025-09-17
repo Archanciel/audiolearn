@@ -2374,4 +2374,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get uniquePlaylistAddedAtEndOfPlaylistLst =>
       '\n\nPuisque la playlist a été créée, elle est positionnée à la fin de la liste des playlists.';
+
+  @override
+  String get playlistsSaveDialogTitle => 'Sauvegarde des playlists';
+
+  @override
+  String get playlistsSaveExplanation =>
+      'En cochant la case \"Ajouter toutes les photos JPG au ZIP\", toutes les photos audio de l\'application seront ajoutées au fichier ZIP créé. Cela n\'est utile que si le fichier ZIP doit servir à restaurer une autre application.';
+
+  @override
+  String get addPictureJpgFilesToZip => 'Ajouter toutes les photos JPG au ZIP';
 }
