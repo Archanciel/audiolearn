@@ -14778,6 +14778,17 @@ void main() {
         appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
       );
 
+      await IntegrationTestUtil.verifySetValueToTargetDialog(
+        tester: tester,
+        dialogTitle: 'Playlists Backup to ZIP',
+        dialogMessage:
+            "Checking the \"Add all JPG pictures to ZIP\" checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.",
+      );
+
+      // Tap on the Ok button to set download date time.
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
+
       String actualMessage = tester
           .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
           .data!;
@@ -14877,6 +14888,17 @@ void main() {
         tester: tester,
         appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
       );
+
+      await IntegrationTestUtil.verifySetValueToTargetDialog(
+        tester: tester,
+        dialogTitle: 'Playlists Backup to ZIP',
+        dialogMessage:
+            "Checking the \"Add all JPG pictures to ZIP\" checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.",
+      );
+
+      // Tap on the Ok button to set download date time.
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
 
       // Verify the displayed warning dialog
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
@@ -15283,6 +15305,17 @@ void main() {
         tester: tester,
         appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
       );
+
+      await IntegrationTestUtil.verifySetValueToTargetDialog(
+        tester: tester,
+        dialogTitle: 'Playlists Backup to ZIP',
+        dialogMessage:
+            "Checking the \"Add all JPG pictures to ZIP\" checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.",
+      );
+
+      // Tap on the Ok button to set download date time.
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
 
       // Verify the displayed warning dialog
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
