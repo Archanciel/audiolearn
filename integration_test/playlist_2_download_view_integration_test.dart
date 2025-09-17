@@ -21087,6 +21087,278 @@ void main() {
             rootPath: kApplicationPathWindowsTest,
           );
         });
+        testWidgets(
+            '''Multiple playlists restore from ZIP containing pictures, not replace existing playlist. Restore
+               multiple playlists Windows zip containing 'local' and 'S8 audio' playlists to empty Windows
+               application.''', (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          String restorableZipFilePathName =
+              '$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Windows restore_multiple_playlists_and_pictures.zip';
+
+          // Since we have to use a mock AudioDownloadVM to add the
+          // youtube playlist, we can not use app.main() to start the
+          // app because app.main() uses the real AudioDownloadVM
+          // and we don't want to make the main.dart file dependent
+          // of a mock class. So we have to start the app by hand,
+          // what IntegrationTestUtil.launchExpandablePlaylistListView
+          // does.
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+          WarningMessageVM warningMessageVM = WarningMessageVM();
+
+          // The mockAudioDownloadVM will be later used to simulate
+          // redownloading not playable files after having restored
+          // the playlists, comments and settings from the zip file.
+          MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
+            warningMessageVM: warningMessageVM,
+            settingsDataService: settingsDataService,
+          );
+
+          AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+            warningMessageVM: warningMessageVM,
+            settingsDataService: settingsDataService,
+          );
+
+          PlaylistListVM playlistListVM = PlaylistListVM(
+            warningMessageVM: warningMessageVM,
+            audioDownloadVM: mockAudioDownloadVM,
+            commentVM: CommentVM(),
+            pictureVM: PictureVM(
+              settingsDataService: settingsDataService,
+            ),
+            settingsDataService: settingsDataService,
+          );
+
+          // calling getUpToDateSelectablePlaylists() loads all the
+          // playlist json files from the app dir and so enables
+          // playlistListVM to know which playlists are
+          // selected and which are not
+          playlistListVM.getUpToDateSelectablePlaylists();
+
+          AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+            settingsDataService: settingsDataService,
+            playlistListVM: playlistListVM,
+            commentVM: CommentVM(),
+          );
+
+          DateFormatVM dateFormatVM = DateFormatVM(
+            settingsDataService: settingsDataService,
+          );
+
+          await IntegrationTestUtil
+              .launchIntegrTestAppEnablingInternetAccessWithMock(
+            tester: tester,
+            audioDownloadVM: audioDownloadVM,
+            settingsDataService: settingsDataService,
+            playlistListVM: playlistListVM,
+            warningMessageVM: warningMessageVM,
+            audioPlayerVM: audioPlayerVM,
+            dateFormatVM: dateFormatVM,
+          );
+
+          // Replace the platform instance with your mock
+          MockFilePicker mockFilePicker = MockFilePicker();
+          FilePicker.platform = mockFilePicker;
+
+          mockFilePicker.setSelectedFiles([
+            PlatformFile(
+                name: restorableZipFilePathName,
+                path: restorableZipFilePathName,
+                size: 7460),
+          ]);
+
+          // Verify that the audio menu button is disabled
+          IntegrationTestUtil.verifyWidgetIsDisabled(
+            tester: tester,
+            widgetKeyStr: 'audio_popup_menu_button',
+          );
+
+          // Execute the 'Restore Playlists, Comments and Settings from Zip
+          // File ...' menu
+          await IntegrationTestUtil.executeRestorePlaylists(
+            tester: tester,
+            doReplaceExistingPlaylists: false,
+          );
+
+          // Verify that the audio menu button is enabled
+          IntegrationTestUtil.verifyWidgetIsEnabled(
+            tester: tester,
+            widgetKeyStr: 'audio_popup_menu_button',
+          );
+
+          // Verify the displayed warning confirmation dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                'Restored 2 playlist, 1 comment and 4 picture JSON files as well as 12 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".\n\nDeleted 0 audio(s) and their comment(s) as well as their MP3 file.\n\nRestored also 3 picture JPG file(s) in the application pictures directory.',
+            isWarningConfirming: true,
+            warningTitle: 'CONFIRMATION',
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Multiple playlists restore from ZIP containing pictures, not replace existing playlist. Restore
+               multiple playlists Windows zip containing 'local' and 'S8 audio' playlists to empty Windows
+               application. Then restore again the same ZIP after deleting 1 picture''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          String restorableZipFilePathName =
+              '$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Windows restore_multiple_playlists_and_pictures.zip';
+
+          // Since we have to use a mock AudioDownloadVM to add the
+          // youtube playlist, we can not use app.main() to start the
+          // app because app.main() uses the real AudioDownloadVM
+          // and we don't want to make the main.dart file dependent
+          // of a mock class. So we have to start the app by hand,
+          // what IntegrationTestUtil.launchExpandablePlaylistListView
+          // does.
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            sharedPreferences: await SharedPreferences.getInstance(),
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+          WarningMessageVM warningMessageVM = WarningMessageVM();
+
+          // The mockAudioDownloadVM will be later used to simulate
+          // redownloading not playable files after having restored
+          // the playlists, comments and settings from the zip file.
+          MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
+            warningMessageVM: warningMessageVM,
+            settingsDataService: settingsDataService,
+          );
+
+          AudioDownloadVM audioDownloadVM = AudioDownloadVM(
+            warningMessageVM: warningMessageVM,
+            settingsDataService: settingsDataService,
+          );
+
+          PlaylistListVM playlistListVM = PlaylistListVM(
+            warningMessageVM: warningMessageVM,
+            audioDownloadVM: mockAudioDownloadVM,
+            commentVM: CommentVM(),
+            pictureVM: PictureVM(
+              settingsDataService: settingsDataService,
+            ),
+            settingsDataService: settingsDataService,
+          );
+
+          // calling getUpToDateSelectablePlaylists() loads all the
+          // playlist json files from the app dir and so enables
+          // playlistListVM to know which playlists are
+          // selected and which are not
+          playlistListVM.getUpToDateSelectablePlaylists();
+
+          AudioPlayerVM audioPlayerVM = AudioPlayerVM(
+            settingsDataService: settingsDataService,
+            playlistListVM: playlistListVM,
+            commentVM: CommentVM(),
+          );
+
+          DateFormatVM dateFormatVM = DateFormatVM(
+            settingsDataService: settingsDataService,
+          );
+
+          await IntegrationTestUtil
+              .launchIntegrTestAppEnablingInternetAccessWithMock(
+            tester: tester,
+            audioDownloadVM: audioDownloadVM,
+            settingsDataService: settingsDataService,
+            playlistListVM: playlistListVM,
+            warningMessageVM: warningMessageVM,
+            audioPlayerVM: audioPlayerVM,
+            dateFormatVM: dateFormatVM,
+          );
+
+          // Replace the platform instance with your mock
+          MockFilePicker mockFilePicker = MockFilePicker();
+          FilePicker.platform = mockFilePicker;
+
+          mockFilePicker.setSelectedFiles([
+            PlatformFile(
+                name: restorableZipFilePathName,
+                path: restorableZipFilePathName,
+                size: 7460),
+          ]);
+
+          // Execute the 'Restore Playlists, Comments and Settings from Zip
+          // File ...' menu
+          await IntegrationTestUtil.executeRestorePlaylists(
+            tester: tester,
+            doReplaceExistingPlaylists: false,
+          );
+
+          // Verify the displayed warning confirmation dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                'Restored 2 playlist, 1 comment and 4 picture JSON files as well as 12 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".\n\nDeleted 0 audio(s) and their comment(s) as well as their MP3 file.\n\nRestored also 3 picture JPG file(s) in the application pictures directory.',
+            isWarningConfirming: true,
+            warningTitle: 'CONFIRMATION',
+          );
+
+          DirUtil.deleteFileIfExist(
+            pathFileName:
+                '$kApplicationPathWindowsTest${path.separator}$kPictureDirName${path.separator}20130208_080157.jpg',
+          );
+
+          // Re-execute the 'Restore Playlists, Comments and Settings from Zip
+          // File ...' menu
+          await IntegrationTestUtil.executeRestorePlaylists(
+            tester: tester,
+            doReplaceExistingPlaylists: false,
+          );
+
+          // Verify the displayed warning confirmation dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                'Restored 0 playlist, 0 comment and 0 picture JSON files as well as 0 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".\n\nDeleted 0 audio(s) and their comment(s) as well as their MP3 file.\n\nRestored also 1 picture JPG file(s) in the application pictures directory.',
+            isWarningConfirming: true,
+            warningTitle: 'CONFIRMATION',
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
         group('Redownload Youtube unique playlist from internet.', () {
           testWidgets(
               '''Restore not replace unique playlist. Not replacing existing playlist. Restore
