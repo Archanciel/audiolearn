@@ -1866,6 +1866,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String savedPictureNumberMessageToZip(Object pictureNumber) {
+    return '\n\nEgalement $pictureNumber fichier(s) de photo JPG sauvegardé(s) dans le fichier ZIP.';
+  }
+
+  @override
   String addedToZipPictureNumberMessage(Object pictureNumber) {
     return '\n\nEgalement $pictureNumber fichier(s) de photo JPG sauvegardé(s) dans le fichier ZIP.';
   }

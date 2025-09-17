@@ -920,6 +920,7 @@
   "noOperationMovedOperationType": "moved",
   "noOperationCopiedOperationType": "copied",
   "savedPictureNumberMessage": "\n\nSaved also {pictureNumber} picture JPG file(s) in same directory / pictures.",
+  "savedPictureNumberMessageToZip": "\n\nSaved also {pictureNumber} picture JPG file(s) in the ZIP file.",
   "addedToZipPictureNumberMessage": "\n\nSaved also {pictureNumber} picture JPG file(s) in the ZIP file.",
   "restoredPictureNumberMessage": "\n\nRestored also {pictureNumber} picture JPG file(s) in the application pictures directory.",
   "replaceExistingPlaylists": "Replace existing playlists",

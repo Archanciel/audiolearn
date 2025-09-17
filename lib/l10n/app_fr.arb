@@ -1241,6 +1241,7 @@
   "noOperationMovedOperationType": "déplacé",
   "noOperationCopiedOperationType": "copié",
   "savedPictureNumberMessage": "\n\nEgalement {pictureNumber} fichier(s) de photo JPG sauvegardé(s) dans le même répertoire / pictures.",
+  "savedPictureNumberMessageToZip": "\n\nEgalement {pictureNumber} fichier(s) de photo JPG sauvegardé(s) dans le fichier ZIP.",
   "addedToZipPictureNumberMessage": "\n\nEgalement {pictureNumber} fichier(s) de photo JPG sauvegardé(s) dans le fichier ZIP.",
   "restoredPictureNumberMessage": "\n\nEgalement {pictureNumber} fichier(s) de photo JPG restauré(s) dans le répertoire \"pictures\" de l'application.",
   "replaceExistingPlaylists": "Remplacer les playlists\nexistantes",

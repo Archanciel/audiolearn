@@ -813,14 +813,18 @@ class WarningMessageVM extends ChangeNotifier {
   int get savedOrRestoredPictureJpgNumber => _savedOrRestoredPictureJpgNumber;
   bool _uniquePlaylistIsSaved = false;
   bool get uniquePlaylistIsSaved => _uniquePlaylistIsSaved;
+  bool _addPictureJpgFilesToZip = false;
+  bool get addPictureJpgFilesToZip => _addPictureJpgFilesToZip;
   void confirmSavingToZip({
     required String zipFilePathName,
     required int savedPictureNumber,
     bool uniquePlaylistIsSaved = false,
+    bool addPictureJpgFilesToZip = false,
   }) {
     _zipFilePathName = zipFilePathName;
     _savedOrRestoredPictureJpgNumber = savedPictureNumber;
     _uniquePlaylistIsSaved = uniquePlaylistIsSaved;
+    _addPictureJpgFilesToZip = addPictureJpgFilesToZip;
 
     warningMessageType =
         WarningMessageType.savedUniquePlaylistOrAllPlaylistsAndAppDataToZip;
