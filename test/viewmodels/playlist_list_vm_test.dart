@@ -1024,6 +1024,7 @@ void main() {
       String savedZipFilePathName = await playlistListVM
           .savePlaylistsCommentPictureAndSettingsJsonFilesToZip(
         targetDirectoryPath: kApplicationPathWindowsTest,
+        addPictureJpgFilesToZip: false,
       );
 
       expect(
@@ -1112,6 +1113,7 @@ void main() {
 
       await playlistListVM.savePlaylistsCommentPictureAndSettingsJsonFilesToZip(
         targetDirectoryPath: kApplicationPathWindowsTest,
+        addPictureJpgFilesToZip: false,
       );
 
       List<String> zipLst = DirUtil.listFileNamesInDir(

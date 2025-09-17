@@ -1163,10 +1163,17 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
               );
 
               if (_warningMessageVM.savedOrRestoredPictureJpgNumber > 0) {
-                savedAppDataToZipMessage +=
-                    AppLocalizations.of(context)!.savedPictureNumberMessage(
-                  _warningMessageVM.savedOrRestoredPictureJpgNumber,
-                );
+                if (_warningMessageVM.addPictureJpgFilesToZip) {
+                  savedAppDataToZipMessage += AppLocalizations.of(context)!
+                      .savedPictureNumberMessageToZip(
+                    _warningMessageVM.savedOrRestoredPictureJpgNumber,
+                  );
+                } else {
+                  savedAppDataToZipMessage +=
+                      AppLocalizations.of(context)!.savedPictureNumberMessage(
+                    _warningMessageVM.savedOrRestoredPictureJpgNumber,
+                  );
+                }
               }
             }
 

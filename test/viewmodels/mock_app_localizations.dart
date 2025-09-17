@@ -2441,8 +2441,13 @@ class MockAppLocalizations extends AppLocalizations {
   String get playlistsSaveDialogTitle => "Playlists Backup to ZIP";
 
   @override
-  String get playlistsSaveExplanation => "Checking the "Add all picture JPG files to ZIP" checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.";
+  String get playlistsSaveExplanation =>
+      "Checking the Add all picture JPG files to ZIP checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.";
 
   @override
   String get addPictureJpgFilesToZip => "Add all picture JPG files to ZIP";
+
+  @override
+  String savedPictureNumberMessageToZip(Object pictureNumber,) =>
+      "Saved also $pictureNumber picture JPG file(s) in the ZIP file.";
 }

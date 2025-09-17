@@ -3022,6 +3022,12 @@ abstract class AppLocalizations {
   /// **'\n\nSaved also {pictureNumber} picture JPG file(s) in same directory / pictures.'**
   String savedPictureNumberMessage(Object pictureNumber);
 
+  /// No description provided for @savedPictureNumberMessageToZip.
+  ///
+  /// In en, this message translates to:
+  /// **'\n\nSaved also {pictureNumber} picture JPG file(s) in the ZIP file.'**
+  String savedPictureNumberMessageToZip(Object pictureNumber);
+
   /// No description provided for @addedToZipPictureNumberMessage.
   ///
   /// In en, this message translates to:
