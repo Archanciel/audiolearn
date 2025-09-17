@@ -2430,8 +2430,19 @@ class MockAppLocalizations extends AppLocalizations {
       "Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) from \"$filePathName\".Deleted $deletedAudioAndMp3FilesNumber audio(s) and their comment(s) as well as their MP3 file.$addedAtEndOfPlaylistLstMsg";
 
   @override
-  String get newPlaylistsAddedAtEndOfPlaylistLst => "The created playlists are positioned at the end of the playlist list.";
+  String get newPlaylistsAddedAtEndOfPlaylistLst =>
+      "The created playlists are positioned at the end of the playlist list.";
 
   @override
-  String get uniquePlaylistAddedAtEndOfPlaylistLst => "Since the playlist was created, it is positioned at the end of the playlist list.";
+  String get uniquePlaylistAddedAtEndOfPlaylistLst =>
+      "Since the playlist was created, it is positioned at the end of the playlist list.";
+
+  @override
+  String get playlistsSaveDialogTitle => "Playlists Backup to ZIP";
+
+  @override
+  String get playlistsSaveExplanation => "Checking the "Add all picture JPG files to ZIP" checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.";
+
+  @override
+  String get addPictureJpgFilesToZip => "Add all picture JPG files to ZIP";
 }

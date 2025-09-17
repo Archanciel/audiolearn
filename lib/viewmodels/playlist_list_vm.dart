@@ -2865,7 +2865,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// the playlistListVM unit test.
   Future<String> savePlaylistsCommentPictureAndSettingsJsonFilesToZip({
     required String targetDirectoryPath,
-    bool addPictureJpgFilesToZip = false,
+    required bool addPictureJpgFilesToZip,
   }) async {
     
     List<dynamic> returnedResults = await _saveAllJsonFilesToZip(

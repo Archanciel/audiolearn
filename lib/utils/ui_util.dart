@@ -20,7 +20,7 @@ class StorageUtil {
   /// Check if device has sufficient storage space
   static Future<bool> hasEnoughSpace({required int requiredBytes}) async {
     try {
-       return true;
+      return true;
     } catch (e) {
       return false;
     }
@@ -92,6 +92,7 @@ class UiUtil {
 
   static Future<void> savePlaylistsCommentsPicturesAndAppSettingsToZip({
     required BuildContext context,
+    required bool addPictureJpgFilesToZip,
   }) async {
     String? targetSaveDirectoryPath = await filePickerSelectTargetDir();
 
@@ -104,6 +105,7 @@ class UiUtil {
       listen: false,
     ).savePlaylistsCommentPictureAndSettingsJsonFilesToZip(
       targetDirectoryPath: targetSaveDirectoryPath,
+      addPictureJpgFilesToZip: addPictureJpgFilesToZip,
     );
   }
 
@@ -166,7 +168,7 @@ class UiUtil {
       warningMessageVMlistenFalse.setError(
         errorType: ErrorType.pathError,
       );
-      
+
       return;
     }
 

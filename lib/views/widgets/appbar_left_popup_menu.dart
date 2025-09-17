@@ -823,9 +823,41 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             });
             break;
           case AppBarPopupMenu.savePlaylistsCommentsAndPicturesToZip:
-            await UiUtil.savePlaylistsCommentsPicturesAndAppSettingsToZip(
+            showDialog<List<String>>(
+              barrierDismissible:
+                  false, // Prevents the dialog from closing when tapping outside.
               context: context,
-            );
+              builder: (BuildContext context) {
+                return SetValueToTargetDialog(
+                  dialogTitle: AppLocalizations.of(context)!
+                      .playlistsSaveDialogTitle,
+                  dialogCommentStr: AppLocalizations.of(context)!
+                      .playlistsSaveExplanation,
+                  targetNamesLst: [
+                    AppLocalizations.of(context)!.addPictureJpgFilesToZip,
+                  ],
+                  validationFunctionArgs: [],
+                  canAllCheckBoxBeUnchecked: true,
+                );
+              },
+            ).then((resultStringLst) async {
+              if (resultStringLst == null) {
+                // The case if the Cancel button was pressed.
+                return;
+              }
+
+              bool addPictureJpgFilesToZip = false;
+
+              if (resultStringLst.isNotEmpty) {
+                // The case when 'Replace existing playlists' is set to true.
+                addPictureJpgFilesToZip = true;
+              }
+
+              await UiUtil.savePlaylistsCommentsPicturesAndAppSettingsToZip(
+                context: context,
+                addPictureJpgFilesToZip: addPictureJpgFilesToZip,
+              );
+            });
             break;
           case AppBarPopupMenu.restorePlaylistAndCommentsFromZip:
             final List<HelpItem> restorePlaylistsHelpItemsLst = [
