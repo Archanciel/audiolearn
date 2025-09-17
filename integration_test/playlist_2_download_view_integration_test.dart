@@ -12988,7 +12988,8 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
-      testWidgets('''Select current playlist root path. This does not change anything since
+      testWidgets(
+          '''Select current playlist root path. This does not change anything since
                      the selected path is the current one.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
@@ -13050,7 +13051,7 @@ void main() {
 
         // Now, set the playlist root path to the initial value.
         // Nothing should change.
-        
+
         String audioPlaylistsExpectedSettingsContent =
             "{\"SettingType.appTheme\":{\"SettingType.appTheme\":\"AppTheme.dark\"},\"SettingType.language\":{\"SettingType.language\":\"Language.english\"},\"SettingType.playlists\":{\"Playlists.orderedTitleLst\":\"[local_empty_download_single_video, local_not_empty_download_single_video, audio_learn_test_download_2_small_videos]\",\"Playlists.isMusicQualityByDefault\":\"false\",\"Playlists.playSpeed\":\"1.0\",\"Playlists.arePlaylistsDisplayedInPlaylistDownloadView\":\"true\",\"Playlists.maxSavableAudioMp3FileSizeInMb\":\"525.0\"},\"SettingType.dataLocation\":{\"DataLocation.appSettingsPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\",\"DataLocation.playlistRootPath\":\"C:\\\\development\\\\flutter\\\\audiolearn\\\\test\\\\data\\\\audio\\\\playlists\"},\"SettingType.formatOfDate\":{\"FormatOfDate.formatOfDate\":\"dd/MM/yyyy\"},\"namedAudioSortFilterSettings\":{\"default\":{\"selectedSortItemLst\":[{\"sortingOption\":\"audioDownloadDate\",\"isAscending\":false}],\"filterSentenceLst\":[],\"sentencesCombination\":0,\"ignoreCase\":true,\"searchAsWellInYoutubeChannelName\":true,\"searchAsWellInVideoCompactDescription\":true,\"filterMusicQuality\":true,\"filterSpokenQuality\":true,\"filterFullyListened\":true,\"filterPartiallyListened\":true,\"filterNotListened\":true,\"filterCommented\":true,\"filterNotCommented\":true,\"filterPictured\":true,\"filterNotPictured\":true,\"filterPlayable\":true,\"filterNotPlayable\":true,\"filterDownloaded\":true,\"filterImported\":true,\"filterConverted\":true,\"downloadDateStartRange\":null,\"downloadDateEndRange\":null,\"uploadDateStartRange\":null,\"uploadDateEndRange\":null,\"fileSizeStartRangeMB\":0.0,\"fileSizeEndRangeMB\":0.0,\"durationStartRangeSec\":0,\"durationEndRangeSec\":0}},\"searchHistoryOfAudioSortFilterSettings\":\"[]\"}";
 
@@ -22561,6 +22562,15 @@ void main() {
                   size: 3138),
             ]);
 
+            DirUtil.deleteFileIfExist(
+              pathFileName:
+                  '$kApplicationPathWindowsTest${path.separator}$kPictureDirName${path.separator}Jean-Pierre.jpg',
+            );
+            DirUtil.deleteFileIfExist(
+              pathFileName:
+                  "$kApplicationPathWindowsTest${path.separator}$kPictureDirName${path.separator}Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg",
+            );
+
             // Execute the 'Restore Playlists, Comments and Settings from Zip
             // File ...' menu
             await IntegrationTestUtil.executeRestorePlaylists(
@@ -22575,7 +22585,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 3 audio reference(s) and 0 added plus 0 modified comment(s) from "$restorableZipFilePathName".\n\nDeleted 0 audio(s) and their comment(s) as well as their MP3 file.\n\nSince the playlist was created, it is positioned at the end of the playlist list.',
+                  'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 3 audio reference(s) and 0 added plus 0 modified comment(s) from "$restorableZipFilePathName".\n\nDeleted 0 audio(s) and their comment(s) as well as their MP3 file.\n\nSince the playlist was created, it is positioned at the end of the playlist list.\n\nRestored also 2 picture JPG file(s) in the application pictures directory.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -22697,6 +22707,11 @@ void main() {
                   size: 3138),
             ]);
 
+            DirUtil.deleteFileIfExist(
+              pathFileName:
+                  '$kApplicationPathWindowsTest${path.separator}$kPictureDirName${path.separator}Jean-Pierre.jpg',
+            );
+
             // Execute the 'Restore Playlists, Comments and Settings from Zip
             // File ...' menu
             await IntegrationTestUtil.executeRestorePlaylists(
@@ -22711,7 +22726,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 3 audio reference(s) and 0 added plus 0 modified comment(s) from "$restorableZipFilePathName".\n\nDeleted 0 audio(s) and their comment(s) as well as their MP3 file.\n\nSince the playlist was created, it is positioned at the end of the playlist list.',
+                  'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 3 audio reference(s) and 0 added plus 0 modified comment(s) from "$restorableZipFilePathName".\n\nDeleted 0 audio(s) and their comment(s) as well as their MP3 file.\n\nSince the playlist was created, it is positioned at the end of the playlist list.\n\nRestored also 1 picture JPG file(s) in the application pictures directory.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -25191,6 +25206,27 @@ void main() {
             audioForPictureTitleTwoLst: [
               "S8 audio|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'"
             ],
+          );
+
+          DirUtil.deleteFileIfExist(
+            pathFileName:
+                '$kApplicationPathWindowsTest${path.separator}$kPictureDirName${path.separator}Barrau.jpg',
+          );
+
+          // Execute the 'Restore Playlists, Comments and Settings from Zip
+          // File ...' menu
+          await IntegrationTestUtil.executeRestorePlaylists(
+            tester: tester,
+            doReplaceExistingPlaylists: false,
+          );
+
+          // Verify the displayed warning confirmation dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                'Restored 0 playlist saved individually, 0 comment and 0 picture JSON files as well as 0 audio reference(s) and 0 added plus 0 modified comment(s) from "$restorableZipFilePathName".\n\nDeleted 0 audio(s) and their comment(s) as well as their MP3 file.\n\nRestored also 1 picture JPG file(s) in the application pictures directory.',
+            isWarningConfirming: true,
+            warningTitle: 'CONFIRMATION',
           );
 
           // Purge the test playlist directory so that the created test
