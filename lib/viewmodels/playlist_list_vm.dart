@@ -2867,7 +2867,6 @@ class PlaylistListVM extends ChangeNotifier {
     required String targetDirectoryPath,
     required bool addPictureJpgFilesToZip,
   }) async {
-    
     List<dynamic> returnedResults = await _saveAllJsonFilesToZip(
       targetDir: targetDirectoryPath,
       addPictureJpgFilesToZip: addPictureJpgFilesToZip,
@@ -2900,9 +2899,10 @@ class PlaylistListVM extends ChangeNotifier {
 
     _warningMessageVM.confirmSavingToZip(
         zipFilePathName: savedZipFilePathName,
-        savedPictureNumber:
-            savedPictureNumber); // if the picture number is > 0,
-    // then a picture number sentence is added to the confirmation message.
+        savedPictureNumber: savedPictureNumber, // if the picture number is > 0,
+        // then a picture number sentence is added to the confirmation message.
+        addPictureJpgFilesToZip:
+            addPictureJpgFilesToZip);
 
     return savedZipFilePathName;
   }
@@ -2986,10 +2986,11 @@ class PlaylistListVM extends ChangeNotifier {
       if (addPictureJpgFilesToZip) {
         // Get the list of JPG files in the application pictures
         // directory
-        String applicationPicturePath = '$applicationPath${path.separator}$kPictureDirName';
+        String applicationPicturePath =
+            '$applicationPath${path.separator}$kPictureDirName';
 
-        List<String> pictureJpgPathFileNamesLst = DirUtil
-            .listPathFileNamesInDir(
+        List<String> pictureJpgPathFileNamesLst =
+            DirUtil.listPathFileNamesInDir(
           directoryPath: applicationPicturePath,
           fileExtension: 'jpg',
         );
@@ -3857,18 +3858,6 @@ class PlaylistListVM extends ChangeNotifier {
       getUpToDateSelectablePlaylists();
     }
 
-    // Does not work, so is temporaryly commented out.
-
-    // String? pictureSourceDirectoryPath =
-    //     await FilePicker.platform.getDirectoryPath();
-
-    // // Saving the picture jpg files to the 'pictures' directory
-    // // located in the target directory where the zip file is saved.
-    // int restoredPictureNumber =
-    //     _pictureVM.restorePictureJpgFilesFromSourceDirectory(
-    //   sourceDirectoryPath: pictureSourceDirectoryPath ?? '',
-    // );
-
     // Will be set to false if the zip file was created from the
     // appbar 'Save Playlist, Comments, Pictures and Settings to Zip
     // File' menu item.
@@ -4236,13 +4225,6 @@ class PlaylistListVM extends ChangeNotifier {
         continue;
       }
 
-      // if (destinationPathFileName.contains(kPictureDirName) &&
-      //     outputFile.existsSync()) {
-      //   // If the picture json file already exists, skip it. This
-      //   // useful if a new picture was added before the restoration.
-      //   continue;
-      // }
-
       if (destinationPathFileName.contains(kPictureAudioMapFileName) &&
           outputFile.existsSync()) {
         // If the pictureAudioMap.json file already exists, it is merged
@@ -4272,11 +4254,6 @@ class PlaylistListVM extends ChangeNotifier {
         continue;
       }
 
-      await outputFile.writeAsBytes(
-        archiveFile.content as List<int>,
-        flush: true,
-      );
-
       if (!destinationPathFileName.contains(kSettingsFileName) &&
           !destinationPathFileName.contains(kPictureAudioMapFileName)) {
         // Second condition guarantees that the picture json files
@@ -4285,7 +4262,12 @@ class PlaylistListVM extends ChangeNotifier {
           restoredCommentsJsonNumber++;
         } else if (destinationPathFileName.contains(kPictureDirName)) {
           if (destinationPathFileName.endsWith('.jpg')) {
-            // The jpg file is a physical picture file.
+            if (outputFile.existsSync()) {
+              // This can happen if the picture jpg file is already
+              // present in the picture directory.
+              continue;
+            }
+
             restoredPicturesJpgNumber++;
           } else {
             // The json file is an audio picture reference file.
@@ -4316,6 +4298,11 @@ class PlaylistListVM extends ChangeNotifier {
           }
         }
       }
+
+      await outputFile.writeAsBytes(
+        archiveFile.content as List<int>,
+        flush: true,
+      );
     } // End of for loop iterating over the archive files.
 
     // Add missing audios references + their comments +
