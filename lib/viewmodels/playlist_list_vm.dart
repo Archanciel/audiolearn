@@ -3029,6 +3029,8 @@ class PlaylistListVM extends ChangeNotifier {
       } else {
         returnedResults.add(0);
       }
+    } else {
+      returnedResults.add(0);
     }
 
     // Save the archive to a zip file in the target directory
