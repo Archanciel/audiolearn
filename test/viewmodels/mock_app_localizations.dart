@@ -2448,6 +2448,21 @@ class MockAppLocalizations extends AppLocalizations {
   String get addPictureJpgFilesToZip => "Add all picture JPG files to ZIP";
 
   @override
-  String savedPictureNumberMessageToZip(Object pictureNumber,) =>
+  String savedPictureNumberMessageToZip(
+    Object pictureNumber,
+  ) =>
       "Saved also $pictureNumber picture JPG file(s) in the ZIP file.";
+
+  @override
+  String confirmAudioFromPlaylistDeletionTitle(
+    Object audioTitle,
+  ) =>
+      "Confirm deletion of the audio \"$audioTitle\" from the YYoutube playlist as well";
+
+  @override
+  String confirmAudioFromPlaylistDeletion(
+    Object audioTitle,
+    Object playlistTitle,
+  ) =>
+      "If the deleted audio \"$audioTitle\" remains in the \"$playlistTitle\" Youtube playlist, it will be downloaded again the next time you download the playlist !";
 }

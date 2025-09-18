@@ -2389,4 +2389,15 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get addPictureJpgFilesToZip => 'Ajouter toutes les photos JPG au ZIP';
+
+  @override
+  String confirmAudioFromPlaylistDeletionTitle(Object audioTitle) {
+    return 'Confirmez la suppression de l\'audio \"$audioTitle\" de la playlist Youtube';
+  }
+
+  @override
+  String confirmAudioFromPlaylistDeletion(
+      Object audioTitle, Object playlistTitle) {
+    return 'Supprimez l\'audio \"$audioTitle\" de la playlist \"$playlistTitle\" définie sur le site Youtube, sinon l\'audio sera téléchargé à nouveau lors du prochain téléchargement de la playlist. Ou alors cliquez sur \"Annuler\" et choisissez \"Supprimer l\'audio ...\" au lieu de \"Supprimer l\'audio de la playlist également ...\". Ainsi, l\'audio sera supprimé de la liste des audio\'s jouables, mais restera dans la liste des audio\'s téléchargés, ce qui évitera son re-téléchargement.';
+  }
 }

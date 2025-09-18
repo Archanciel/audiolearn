@@ -491,7 +491,8 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 );
                 break;
               case AudioPopupMenuAction.deleteAudioFromPlaylistAswell:
-                Audio audioToDelete = audioPlayerVMlistenFalse.currentAudio!;
+                final Audio audioToDelete =
+                    audioPlayerVMlistenFalse.currentAudio!;
                 Audio? nextAudio;
                 final PlaylistListVM playlistListVMlistenFalse =
                     Provider.of<PlaylistListVM>(
@@ -542,12 +543,47 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                     }
                   });
                 } else {
-                  nextAudio =
-                      playlistListVMlistenFalse.deleteAudioFromPlaylistAsWell(
-                    audioLearnAppViewType:
-                        AudioLearnAppViewType.audioPlayerView,
-                    audio: audioToDelete,
-                  );
+                  Playlist audioToDeletePlaylist =
+                      audioToDelete.enclosingPlaylist!;
+
+                  if (audioToDeletePlaylist.playlistType ==
+                      PlaylistType.youtube) {
+                    await showDialog<dynamic>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ConfirmActionDialog(
+                          actionFunction: deleteAudioFromPlaylistAsWell,
+                          actionFunctionArgs: [
+                            playlistListVMlistenFalse,
+                            audioToDelete
+                          ],
+                          dialogTitleOne:
+                              _createDeleteAudioFromPlaylistAsWellDialogTitle(
+                            context: context,
+                            audioToDelete: audioToDelete,
+                          ),
+                          dialogContent: AppLocalizations.of(context)!
+                              .confirmAudioFromPlaylistDeletion(
+                            audioToDelete.validVideoTitle,
+                            audioToDeletePlaylist.title,
+                          ),
+                        );
+                      },
+                    ).then((result) {
+                      if (result == ConfirmAction.cancel) {
+                        nextAudio = audioToDelete;
+                      } else {
+                        nextAudio = result as Audio?;
+                      }
+                    });
+                  } else {
+                    nextAudio =
+                        playlistListVMlistenFalse.deleteAudioFromPlaylistAsWell(
+                      audioLearnAppViewType:
+                          AudioLearnAppViewType.playlistDownloadView,
+                      audio: audioToDelete,
+                    );
+                  }
                 }
 
                 // if the passed nextAudio is null, the displayed audio
@@ -655,6 +691,18 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
 
     deleteAudioDialogTitle = AppLocalizations.of(context)!
         .confirmCommentedAudioDeletionTitle(audioToDelete.validVideoTitle);
+
+    return deleteAudioDialogTitle;
+  }
+
+  String _createDeleteAudioFromPlaylistAsWellDialogTitle({
+    required BuildContext context,
+    required Audio audioToDelete,
+  }) {
+    String deleteAudioDialogTitle;
+
+    deleteAudioDialogTitle = AppLocalizations.of(context)!
+        .confirmAudioFromPlaylistDeletionTitle(audioToDelete.validVideoTitle);
 
     return deleteAudioDialogTitle;
   }
@@ -829,10 +877,10 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
               context: context,
               builder: (BuildContext context) {
                 return SetValueToTargetDialog(
-                  dialogTitle: AppLocalizations.of(context)!
-                      .playlistsSaveDialogTitle,
-                  dialogCommentStr: AppLocalizations.of(context)!
-                      .playlistsSaveExplanation,
+                  dialogTitle:
+                      AppLocalizations.of(context)!.playlistsSaveDialogTitle,
+                  dialogCommentStr:
+                      AppLocalizations.of(context)!.playlistsSaveExplanation,
                   targetNamesLst: [
                     AppLocalizations.of(context)!.addPictureJpgFilesToZip,
                   ],
