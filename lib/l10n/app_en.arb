@@ -71,7 +71,7 @@
   "cancelButton": "Cancel",
   "deleteAudio": "Delete Audio ...",
   "deleteAudioFromPlaylistAswell": "Delete Audio from Playlist as well ...",
-  "deleteAudioFromPlaylistAswellWarning": "If the deleted audio video \"{audioTitle}\" remains in the \"{playlistTitle}\" Youtube playlist, it will be downloaded again the next time you download the playlist !",
+  "deleteAudioFromPlaylistAswellWarning": "If the deleted audio \"{audioTitle}\" remains in the \"{playlistTitle}\" Youtube playlist, it will be downloaded again the next time you download the playlist !",
   "warningDialogTitle": "WARNING",
   "updatedPlaylistUrlTitle": "Youtube playlist \"{title}\" URL was updated. The playlist can be downloaded with its new URL.",
   "@updatedPlaylistUrlTitle": {
@@ -1095,5 +1095,7 @@
   "uniquePlaylistAddedAtEndOfPlaylistLst": "\n\nSince the playlist was created, it is positioned at the end of the playlist list.",
   "playlistsSaveDialogTitle": "Playlists Backup to ZIP",
   "playlistsSaveExplanation": "Checking the \"Add all JPG pictures to ZIP\" checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.",
-  "addPictureJpgFilesToZip": "Add all JPG pictures to ZIP"
+  "addPictureJpgFilesToZip": "Add all JPG pictures to ZIP",
+  "confirmAudioFromPlaylistDeletionTitle": "Confirm deletion of the audio \"{audioTitle}\" from the Youtube playlist",
+  "confirmAudioFromPlaylistDeletion": "Delete the audio \"{audioTitle}\" from the playlist \"{playlistTitle}\" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on \"Cancel\" and choose \"Delete Audio ...\" instead of \"Delete Audio from Playlist as well ...\". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download."
 }

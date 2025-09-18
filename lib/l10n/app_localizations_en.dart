@@ -199,7 +199,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String deleteAudioFromPlaylistAswellWarning(
       Object audioTitle, Object playlistTitle) {
-    return 'If the deleted audio video \"$audioTitle\" remains in the \"$playlistTitle\" Youtube playlist, it will be downloaded again the next time you download the playlist !';
+    return 'If the deleted audio \"$audioTitle\" remains in the \"$playlistTitle\" Youtube playlist, it will be downloaded again the next time you download the playlist !';
   }
 
   @override
@@ -2364,4 +2364,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addPictureJpgFilesToZip => 'Add all JPG pictures to ZIP';
+
+  @override
+  String confirmAudioFromPlaylistDeletionTitle(Object audioTitle) {
+    return 'Confirm deletion of the audio \"$audioTitle\" from the Youtube playlist';
+  }
+
+  @override
+  String confirmAudioFromPlaylistDeletion(
+      Object audioTitle, Object playlistTitle) {
+    return 'Delete the audio \"$audioTitle\" from the playlist \"$playlistTitle\" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click \"Cancel\" and choose \"Delete audio ...\" instead of \"Delete audio from playlist as well ...\". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.';
+  }
 }

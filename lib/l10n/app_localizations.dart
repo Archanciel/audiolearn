@@ -461,7 +461,7 @@ abstract class AppLocalizations {
   /// No description provided for @deleteAudioFromPlaylistAswellWarning.
   ///
   /// In en, this message translates to:
-  /// **'If the deleted audio video \"{audioTitle}\" remains in the \"{playlistTitle}\" Youtube playlist, it will be downloaded again the next time you download the playlist !'**
+  /// **'If the deleted audio \"{audioTitle}\" remains in the \"{playlistTitle}\" Youtube playlist, it will be downloaded again the next time you download the playlist !'**
   String deleteAudioFromPlaylistAswellWarning(
       Object audioTitle, Object playlistTitle);
 
@@ -3784,6 +3784,19 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add all JPG pictures to ZIP'**
   String get addPictureJpgFilesToZip;
+
+  /// No description provided for @confirmAudioFromPlaylistDeletionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm deletion of the audio \"{audioTitle}\" from the Youtube playlist'**
+  String confirmAudioFromPlaylistDeletionTitle(Object audioTitle);
+
+  /// No description provided for @confirmAudioFromPlaylistDeletion.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete the audio \"{audioTitle}\" from the playlist \"{playlistTitle}\" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click \"Cancel\" and choose \"Delete audio ...\" instead of \"Delete audio from playlist as well ...\". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.'**
+  String confirmAudioFromPlaylistDeletion(
+      Object audioTitle, Object playlistTitle);
 }
 
 class _AppLocalizationsDelegate

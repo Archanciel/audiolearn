@@ -448,8 +448,10 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                   return ConfirmActionDialog(
                     actionFunction: deleteAudio,
                     actionFunctionArgs: [context, audioToDelete],
-                    dialogTitleOne:
-                        _createDeleteAudioDialogTitle(context, audioToDelete),
+                    dialogTitleOne: _createDeleteCommentedAudioDialogTitle(
+                      context: context,
+                      audioToDelete: audioToDelete,
+                    ),
                     dialogContent: AppLocalizations.of(context)!
                         .confirmCommentedAudioDeletionComment(
                             audioToDeleteCommentLst.length),
@@ -507,8 +509,10 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                       playlistListVMlistenFalse,
                       audioToDelete
                     ],
-                    dialogTitleOne:
-                        _createDeleteAudioDialogTitle(context, audioToDelete),
+                    dialogTitleOne: _createDeleteCommentedAudioDialogTitle(
+                      context: context,
+                      audioToDelete: audioToDelete,
+                    ),
                     dialogContent: AppLocalizations.of(context)!
                         .confirmCommentedAudioDeletionComment(
                             audioToDeleteCommentLst.length),
@@ -522,12 +526,45 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                 }
               });
             } else {
-              nextAudio =
-                  playlistListVMlistenFalse.deleteAudioFromPlaylistAsWell(
-                audioLearnAppViewType:
-                    AudioLearnAppViewType.playlistDownloadView,
-                audio: audioToDelete,
-              );
+              Playlist audioToDeletePlaylist = audioToDelete.enclosingPlaylist!;
+
+              if (audioToDeletePlaylist.playlistType == PlaylistType.youtube) {
+                await showDialog<dynamic>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return ConfirmActionDialog(
+                      actionFunction: deleteAudioFromPlaylistAsWell,
+                      actionFunctionArgs: [
+                        playlistListVMlistenFalse,
+                        audioToDelete
+                      ],
+                      dialogTitleOne:
+                          _createDeleteAudioFromPlaylistAsWellDialogTitle(
+                        context: context,
+                        audioToDelete: audioToDelete,
+                      ),
+                      dialogContent: AppLocalizations.of(context)!
+                          .confirmAudioFromPlaylistDeletion(
+                        audioToDelete.validVideoTitle,
+                        audioToDeletePlaylist.title,
+                      ),
+                    );
+                  },
+                ).then((result) {
+                  if (result == ConfirmAction.cancel) {
+                    nextAudio = audioToDelete;
+                  } else {
+                    nextAudio = result as Audio?;
+                  }
+                });
+              } else {
+                nextAudio =
+                    playlistListVMlistenFalse.deleteAudioFromPlaylistAsWell(
+                  audioLearnAppViewType:
+                      AudioLearnAppViewType.playlistDownloadView,
+                  audio: audioToDelete,
+                );
+              }
             }
 
             await _replaceCurrentAudioByNextAudio(
@@ -623,14 +660,26 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
     }
   }
 
-  String _createDeleteAudioDialogTitle(
-    BuildContext context,
-    Audio audioToDelete,
-  ) {
+  String _createDeleteCommentedAudioDialogTitle({
+    required BuildContext context,
+    required Audio audioToDelete,
+  }) {
     String deleteAudioDialogTitle;
 
     deleteAudioDialogTitle = AppLocalizations.of(context)!
         .confirmCommentedAudioDeletionTitle(audioToDelete.validVideoTitle);
+
+    return deleteAudioDialogTitle;
+  }
+
+  String _createDeleteAudioFromPlaylistAsWellDialogTitle({
+    required BuildContext context,
+    required Audio audioToDelete,
+  }) {
+    String deleteAudioDialogTitle;
+
+    deleteAudioDialogTitle = AppLocalizations.of(context)!
+        .confirmAudioFromPlaylistDeletionTitle(audioToDelete.validVideoTitle);
 
     return deleteAudioDialogTitle;
   }
