@@ -399,6 +399,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
         widget.targetNamesLst.length,
         (int index) {
           return createCheckboxRowFunction(
+            checkBoxLabelKey: Key('checkboxLabel_${index}_key'),
             checkBoxWidgetKey: Key('checkbox_${index}_key'),
             context: context,
             label: widget.targetNamesLst[index],

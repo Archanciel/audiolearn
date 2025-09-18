@@ -577,6 +577,7 @@ mixin ScreenMixin {
   }
 
   Widget createCheckboxRowFunction({
+    Key? checkBoxLabelKey, // key set to the CheckBox label
     Key? checkBoxWidgetKey, // key set to the CheckBox widget
     required BuildContext context,
     required String label,
@@ -594,7 +595,10 @@ mixin ScreenMixin {
                   message: labelTooltip,
                   child: Text(label),
                 )
-              : Text(label),
+              : Text(
+                  key: checkBoxLabelKey,
+                  label,
+                ),
           Checkbox(
             key: checkBoxWidgetKey,
             value: value,

@@ -680,6 +680,7 @@ class IntegrationTestUtil {
     required WidgetTester tester,
     bool doReplaceExistingPlaylists = true,
     List<String> playlistTitlesToDelete = const [],
+    bool verifySetValueToTargetDialog = false,
   }) async {
     if (playlistTitlesToDelete.isNotEmpty) {
       // Delete the playlists which are to be deleted
@@ -706,6 +707,13 @@ class IntegrationTestUtil {
       }
     }
 
+    // Purge the test playlist picture directory if it exists so that
+    // if pictures are present in the restoring playlists ZIP, they
+    // are restored.
+    DirUtil.deleteFilesInDirAndSubDirs(
+      rootPath: kApplicationPicturePathAndroidTest,
+    );
+
     // Now tap the appbar leading popup menu and then the
     // 'Restore Playlist(s), Comments, Pictures and Settings
     // from ZIP file' menu item
@@ -713,6 +721,18 @@ class IntegrationTestUtil {
       tester: tester,
       appbarMenuKeyStr: 'appBarMenuRestorePlaylistsCommentsAndSettingsFromZip',
     );
+
+    if (verifySetValueToTargetDialog) {
+      // Verify the 'Playlists Restoration' dialog
+      await IntegrationTestUtil.verifySetValueToTargetDialog(
+        tester: tester,
+        dialogTitle: 'Playlists Restoration',
+        isHelpIconPresent: true,
+        dialogMessage:
+            "Important: if you've modified your existing playlists (added audio files, comments, or pictures) since creating the ZIP backup, keep this checkbox UNCHECKED. Otherwise, your recent changes will be replaced by the older versions contained in the backup.",
+        checkboxLabel: 'Replace existing playlists',
+      );
+    }
 
     if (doReplaceExistingPlaylists) {
       // Find the 'Remove deleted audio files' checkbox and tap
@@ -3956,6 +3976,7 @@ class IntegrationTestUtil {
     String? dialogTitle,
     bool isHelpIconPresent = false,
     String? dialogMessage,
+    String? checkboxLabel,
     bool closeDialog = false,
   }) async {
     if (dialogTitle != null) {
@@ -3984,6 +4005,18 @@ class IntegrationTestUtil {
             ))
             .data,
         dialogMessage,
+      );
+    }
+
+    if (checkboxLabel != null) {
+      // Verify the displayed dialog message
+      expect(
+        tester
+            .widget<Text>(find.byKey(
+              const Key('checkboxLabel_0_key'),
+            ))
+            .data,
+        checkboxLabel,
       );
     }
 
