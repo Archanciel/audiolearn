@@ -14715,640 +14715,1294 @@ void main() {
   });
   group('Save playlist, comments, pictures and settings to zip file menu test',
       () {
-    testWidgets(
-        '''Successful save. The integration test verifies the confirmation displayed
-           warning''', (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+    group('''Without checking the "Add all JPG pictures to ZIP" checkbox''',
+        () {
+      testWidgets(
+          '''Successful save without checking the "Add all JPG pictures to ZIP" checkbox. The
+           integration test verifies the confirmation displayed warning''',
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_delete_integr_test_data",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_delete_integr_test_data",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
 
-      final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
-      );
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
 
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
 
-      await app.main();
-      await tester.pumpAndSettle();
+        await app.main();
+        await tester.pumpAndSettle();
 
-      // First, set the application language to english
-      await IntegrationTestUtil.setApplicationLanguage(
-        tester: tester,
-        language: Language.english,
-      );
+        // First, set the application language to english
+        await IntegrationTestUtil.setApplicationLanguage(
+          tester: tester,
+          language: Language.english,
+        );
 
-      // Create a new directory to which the zip file will be saved
+        // Create a new directory to which the zip file will be saved
 
-      String saveZipFilePath =
-          '$kApplicationPathWindowsTest${path.separator}appSave';
+        String saveZipFilePath =
+            '$kApplicationPathWindowsTest${path.separator}appSave';
 
-      DirUtil.createDirIfNotExistSync(
-        pathStr: saveZipFilePath,
-      );
+        DirUtil.createDirIfNotExistSync(
+          pathStr: saveZipFilePath,
+        );
 
-      // Setting the path value returned by the FilePicker mock.
-      mockFilePicker.setPathToSelect(
-        pathToSelectStr: saveZipFilePath,
-      );
+        // Setting the path value returned by the FilePicker mock.
+        mockFilePicker.setPathToSelect(
+          pathToSelectStr: saveZipFilePath,
+        );
 
-      // Tap the appbar leading popup menu button Then, the 'Save
-      // Playlists and Comments to zip File' menu is selected.
-      await IntegrationTestUtil.typeOnAppbarMenuItem(
-        tester: tester,
-        appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
-      );
+        // Tap the appbar leading popup menu button Then, the 'Save
+        // Playlists and Comments to zip File' menu is selected.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
+        );
 
-      await IntegrationTestUtil.verifySetValueToTargetDialog(
-        tester: tester,
-        dialogTitle: 'Playlists Backup to ZIP',
-        dialogMessage:
-            "Checking the \"Add all JPG pictures to ZIP\" checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.",
-      );
+        // Does not check the "Add all JPG pictures to ZIP" checkbox
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'Playlists Backup to ZIP',
+          dialogMessage:
+              "Checking the \"Add all JPG pictures to ZIP\" checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.",
+          checkboxLabel: "Add all JPG pictures to ZIP",
+          closeDialog: true,
+        );
 
-      // Tap on the Ok button to set download date time.
-      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-      await tester.pumpAndSettle();
+        String actualMessage = tester
+            .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+            .data!;
 
-      String actualMessage = tester
-          .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
-          .data!;
+        expect(
+          actualMessage,
+          contains(
+            "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_",
+          ),
+        );
 
-      expect(
-        actualMessage,
-        contains(
-          "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_",
-        ),
-      );
+        List<String> zipLst = DirUtil.listFileNamesInDir(
+          directoryPath: saveZipFilePath,
+          fileExtension: 'zip',
+        );
 
-      List<String> zipLst = DirUtil.listFileNamesInDir(
-        directoryPath: saveZipFilePath,
-        fileExtension: 'zip',
-      );
+        List<String> expectedZipContentLst = [
+          "audio_learn_test_download_2_small_videos\\audio_learn_test_download_2_small_videos.json",
+          "audio_learn_test_download_2_small_videos\\comments\\230628-033811-audio learn test short video one 23-06-10.json",
+          "audio_learn_test_download_2_small_videos\\comments\\230628-033813-audio learn test short video two 23-06-10.json",
+          "audio_player_view_2_shorts_test\\audio_player_view_2_shorts_test.json",
+          "local_3\\local_3.json",
+          "local_audio_playlist_2\\local_audio_playlist_2.json",
+          'pictures\\pictureAudioMap.json',
+          "settings.json",
+        ];
 
-      List<String> expectedZipContentLst = [
-        "audio_learn_test_download_2_small_videos\\audio_learn_test_download_2_small_videos.json",
-        "audio_learn_test_download_2_small_videos\\comments\\230628-033811-audio learn test short video one 23-06-10.json",
-        "audio_learn_test_download_2_small_videos\\comments\\230628-033813-audio learn test short video two 23-06-10.json",
-        "audio_player_view_2_shorts_test\\audio_player_view_2_shorts_test.json",
-        "local_3\\local_3.json",
-        "local_audio_playlist_2\\local_audio_playlist_2.json",
-        "settings.json",
-      ];
+        List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
+          zipFilePathName: "$saveZipFilePath${path.separator}${zipLst[0]}",
+        );
 
-      List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
-        zipFilePathName: "$saveZipFilePath${path.separator}${zipLst[0]}",
-      );
+        expect(
+          zipContentLst,
+          expectedZipContentLst,
+        );
 
-      expect(
-        zipContentLst,
-        expectedZipContentLst,
-      );
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Unsuccessful save which happens on the S8 Galaxy smartphone. In the save to ZIP dialod,
+           the "Add all JPG pictures to ZIP" checkbox is not checked. The integration test verifies
+           the displayed warning.''', (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_integr_test_data",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        await app.main();
+        await tester.pumpAndSettle();
+
+        // Create a new directory to which the zip file will be saved
+
+        String saveZipFilePath =
+            '$kApplicationPathWindowsTest${path.separator}appSave';
+
+        DirUtil.createDirIfNotExistSync(
+          pathStr: saveZipFilePath,
+        );
+
+        // Setting the path value returned by the FilePicker mock. This
+        // path value is the one returned on the S8 Galaxy smartphone !
+        mockFilePicker.setPathToSelect(
+          pathToSelectStr: '/',
+        );
+
+        // Tap the appbar leading popup menu button Then, the 'Save
+        // Playlists and Comments to zip File' menu is selected.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
+        );
+
+        // Does not check the "Add all JPG pictures to ZIP" checkbox
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'Playlists Backup to ZIP',
+          dialogMessage:
+              "Checking the \"Add all JPG pictures to ZIP\" checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.",
+          checkboxLabel: "Add all JPG pictures to ZIP",
+          closeDialog: true,
+        );
+
+        // Verify the displayed warning dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Playlist, comment and picture JSON files as well as application settings could not be saved to ZIP.",
+          isWarningConfirming: false,
+        );
+
+        List<String> zipLst = DirUtil.listFileNamesInDir(
+          directoryPath: saveZipFilePath,
+          fileExtension: 'zip',
+        );
+
+        expect(zipLst.isEmpty, true);
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''After picture and comment addition, save to zip file without checking the
+                "Add all JPG pictures to ZIP" checkbox.''',
+          (WidgetTester tester) async {
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'audio_player_zip_comment_picture_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        final String availablePicturesDir =
+            "$kApplicationPathWindowsTest${path.separator}availablePictures";
+
+        final String appPictureAudioMapDir =
+            "$kApplicationPathWindowsTest${path.separator}$kPictureDirName";
+
+        const String localPlaylistTitle = 'local';
+        final String localPlaylistPictureDir =
+            "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$localPlaylistTitle${path.separator}$kPictureDirName";
+        final String localPlaylistPictureJsonFilesDir =
+            "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$localPlaylistTitle${path.separator}$kPictureDirName";
+
+        const String localAudioOneTitle =
+            'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien';
+        const String localAudioOneDurationStr = '40:53';
+
+        const String jesusChristPlaylistTitle = 'Jésus-Christ';
+        final String jesusChristPlaylistPictureJsonFilesDir =
+            "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$jesusChristPlaylistTitle${path.separator}$kPictureDirName";
+
+        const String jesusChristAudioOneTitle =
+            'NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE';
+        const String jesusChristAudioOneDurationStr = '24:07';
+
+        const String pictureOneFileName = "Jésus, mon amour.jpg";
+        const int pictureOneFileSize = 94507;
+        const String pictureTwoFileName = "Jésus je T'adore.jpg";
+        const int pictureTwoFileSize = 154529;
+        const String pictureThreeFileName = "Jésus je T'aime.jpg";
+        const int pictureThreeFileSize = 125867;
+        const String pictureFourFileName = "Jésus l'Amour de ma vie.jpg";
+        const int pictureFourFileSize = 187362;
+
+        // Select the local playlist containing the audio to which we
+        // will add a first picture
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: localPlaylistTitle,
+        );
+
+        // Verify that the appPictureAudioMap dir is  present
+        Directory appPictureAudioMapDirectory =
+            Directory(appPictureAudioMapDir);
+        expect(appPictureAudioMapDirectory.existsSync(), true);
+
+        // Verify that the local playlist picture dir is not present
+        Directory localPlaylistPictureDirDirectory =
+            Directory(localPlaylistPictureDir);
+        expect(localPlaylistPictureDirDirectory.existsSync(), false);
+
+        // First picture addition (to a local playlist audio)
+        await _addPictureToAudioExecutingAudioListItemMenu(
+          tester: tester,
+          mockFilePicker: mockFilePicker,
+          pictureFileName: pictureOneFileName, // "Jésus, mon amour.jpg"
+          pictureSourcePath: availablePicturesDir,
+          pictureFileSize: pictureOneFileSize,
+          audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
+        );
+
+        List<String> audioForPictureTitleLstJesusJeTaime = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01"
+        ];
+
+        List<String> playlistJesusChristAudioOnePictureLstJsonFileName = [
+          "241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.json",
+        ];
+
+        // Now verifying the audio picture first addition result
+
+        List<String> playlistLocalAudioOnePictureLstJsonFileName = [
+          "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
+        ];
+
+        List<String> audioForPictureTitleLstJesusMonAmour = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+        ];
+
+        await IntegrationTestUtil.verifyPictureAddition(
+          tester: tester,
+          applicationPictureDir: appPictureAudioMapDir,
+          playlistPictureJsonFilesDir: localPlaylistPictureJsonFilesDir,
+          audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
+          audioForPictureTitleDurationStr: localAudioOneDurationStr,
+          playlistAudioPictureJsonFileNameLst:
+              playlistLocalAudioOnePictureLstJsonFileName,
+          pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
+          audioForPictureTitleOneLst: audioForPictureTitleLstJesusMonAmour,
+          mustPlayableAudioListBeUsed: false,
+        );
+
+        // Now go back to the playlist download view, select another playlist
+        // and add another picture to a new audio.
+
+        Finder appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Select the Jésus-Christ playlist containing the audio to which we
+        // will add a first picture
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: jesusChristPlaylistTitle,
+        );
+
+        // Second picture addition (to a jésus-christ playlist audio)
+        await _addPictureToAudioExecutingAudioListItemMenu(
+          tester: tester,
+          mockFilePicker: mockFilePicker,
+          pictureFileName: pictureOneFileName, // "Jésus, mon amour.jpg"
+          pictureSourcePath: availablePicturesDir,
+          pictureFileSize: pictureOneFileSize,
+          audioForPictureTitle:
+              jesusChristAudioOneTitle, // NE VOUS METTEZ PLUS JAMAIS EN COLÈRE ...
+        );
+
+        audioForPictureTitleLstJesusMonAmour = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+          "Jésus-Christ|241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12",
+        ];
+
+        // Now verifying the second audio picture addition result
+        await IntegrationTestUtil.verifyPictureAddition(
+          tester: tester,
+          applicationPictureDir: appPictureAudioMapDir,
+          playlistPictureJsonFilesDir: jesusChristPlaylistPictureJsonFilesDir,
+          pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
+          audioForPictureTitle:
+              jesusChristAudioOneTitle, // NE VOUS METTEZ PLUS JAMAIS EN COLÈRE ...
+          audioForPictureTitleDurationStr: jesusChristAudioOneDurationStr,
+          playlistAudioPictureJsonFileNameLst:
+              playlistJesusChristAudioOnePictureLstJsonFileName,
+          audioForPictureTitleOneLst: audioForPictureTitleLstJesusMonAmour,
+          mustPlayableAudioListBeUsed: false,
+        );
+
+        // Go back to the playlist download view, re-select the local playlist
+        // and add another picture to a the audio which already has a picture.
+
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Select the local playlist containing the audio to which we
+        // will add a new picture
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: localPlaylistTitle,
+        );
+
+        // Third picture addition, to the local playlist audio which
+        // already has a picture
+        await _addPictureToAudioExecutingAudioListItemMenu(
+          tester: tester,
+          mockFilePicker: mockFilePicker,
+          pictureFileName: pictureTwoFileName, // "Jésus je T'adore.jpg"
+          pictureSourcePath: availablePicturesDir,
+          pictureFileSize: pictureTwoFileSize,
+          audioForPictureTitle:
+              localAudioOneTitle, // NE VOUS METTEZ PLUS JAMAIS EN COLÈRE ...
+        );
+
+        audioForPictureTitleLstJesusMonAmour = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+          "Jésus-Christ|241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12",
+        ];
+
+        List<String> audioForPictureTitleLstJesusJeTadore = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+        ];
+
+        List<List<Picture>> expectedPlaylistAudioPictureLst = [
+          [
+            Picture(
+              fileName: pictureOneFileName, // "Jésus mon amour.jpg"
+            ),
+            Picture(
+              fileName: pictureTwoFileName, // "Jésus je T'adore.jpg"
+            ),
+          ],
+        ];
+
+        // Now verifying the second audio picture addition result
+        await IntegrationTestUtil.verifyPictureAddition(
+          tester: tester,
+          applicationPictureDir: appPictureAudioMapDir,
+          playlistPictureJsonFilesDir: localPlaylistPictureJsonFilesDir,
+          audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
+          audioForPictureTitleDurationStr: localAudioOneDurationStr,
+          playlistAudioPictureJsonFileNameLst:
+              playlistLocalAudioOnePictureLstJsonFileName,
+          audioPictureJsonFileContentLst: expectedPlaylistAudioPictureLst,
+          pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
+          audioForPictureTitleOneLst: audioForPictureTitleLstJesusMonAmour,
+          pictureFileNameTwo: pictureTwoFileName, // "Jésus je T'adore.jpg"
+          audioForPictureTitleTwoLst: audioForPictureTitleLstJesusJeTadore,
+          mustPlayableAudioListBeUsed: false,
+        );
+
+        // Return to the playlist download view and add another picture
+        // to a the audio which already has two pictures.
+
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Fourth picture addition, to the local playlist audio which
+        // already has two pictures
+        await _addPictureToAudioExecutingAudioListItemMenu(
+          tester: tester,
+          mockFilePicker: mockFilePicker,
+          pictureFileName: pictureThreeFileName, // "Jésus je T'aime.jpg"
+          pictureSourcePath: availablePicturesDir,
+          pictureFileSize: pictureThreeFileSize,
+          audioForPictureTitle:
+              localAudioOneTitle, // NE VOUS METTEZ PLUS JAMAIS EN COLÈRE ...
+        );
+
+        audioForPictureTitleLstJesusMonAmour = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+          "Jésus-Christ|241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12",
+        ];
+
+        audioForPictureTitleLstJesusJeTadore = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+        ];
+
+        audioForPictureTitleLstJesusJeTaime = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+        ];
+
+        expectedPlaylistAudioPictureLst = [
+          [
+            Picture(
+              fileName: pictureOneFileName, // "Jésus mon amour.jpg"
+            ),
+            Picture(
+              fileName: pictureTwoFileName, // "Jésus je T'adore.jpg"
+            ),
+            Picture(
+              fileName: pictureThreeFileName, // "Jésus je T'aime.jpg"
+            ),
+          ],
+        ];
+
+        // Now verifying the third audio picture addition result
+        await IntegrationTestUtil.verifyPictureAddition(
+          tester: tester,
+          applicationPictureDir: appPictureAudioMapDir,
+          playlistPictureJsonFilesDir: localPlaylistPictureJsonFilesDir,
+          audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
+          audioForPictureTitleDurationStr: localAudioOneDurationStr,
+          playlistAudioPictureJsonFileNameLst:
+              playlistLocalAudioOnePictureLstJsonFileName,
+          audioPictureJsonFileContentLst: expectedPlaylistAudioPictureLst,
+          pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
+          audioForPictureTitleOneLst: audioForPictureTitleLstJesusMonAmour,
+          pictureFileNameTwo: pictureTwoFileName, // "Jésus je T'adore.jpg"
+          audioForPictureTitleTwoLst: audioForPictureTitleLstJesusJeTadore,
+          pictureFileNameThree: pictureThreeFileName, // "Jésus je T'aime.jpg"
+          audioForPictureTitleThreeLst: audioForPictureTitleLstJesusJeTaime,
+          mustPlayableAudioListBeUsed: false,
+        );
+
+        // Now go back to the playlist download view and remove the
+        // last added audio picture
+
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Deleting the last added audio picture
+        await _removeAudioPictureExecutingAudioListItemMenu(
+          tester: tester,
+          picturedAudioTitle: localAudioOneTitle,
+        );
+
+        await IntegrationTestUtil.verifyPictureSuppression(
+          tester: tester,
+          applicationPictureDir: appPictureAudioMapDir,
+          playlistPictureDir: localPlaylistPictureDir,
+          audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
+          audioPictureJsonFileName:
+              playlistLocalAudioOnePictureLstJsonFileName[0],
+          deletedPictureFileName:
+              pictureThreeFileName, // "Jésus je T'adore.jpg"
+          pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
+          audioForPictureTitleOneLst: audioForPictureTitleLstJesusMonAmour,
+          pictureFileNameTwo: pictureTwoFileName, // "Jésus je T'adore.jpg"
+          audioForPictureTitleTwoLst: audioForPictureTitleLstJesusJeTadore,
+        );
+
+        // Now go back to the playlist download view and add again a
+        // picture to the same audio whose picture was removed
+
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Third picture addition
+        await _addPictureToAudioExecutingAudioListItemMenu(
+          tester: tester,
+          mockFilePicker: mockFilePicker,
+          pictureFileName: pictureFourFileName, // "Jésus l'Amour de ma vie.jpg"
+          pictureSourcePath: availablePicturesDir,
+          pictureFileSize: pictureFourFileSize,
+          audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
+        );
+
+        List<String> audioForPictureTitleLstJesusLamourDeMaVie = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+        ];
+
+        expectedPlaylistAudioPictureLst = [
+          [
+            Picture(
+              fileName: pictureOneFileName, // "Jésus mon amour.jpg"
+            ),
+            Picture(
+              fileName: pictureTwoFileName, // "Jésus je T'adore.jpg"
+            ),
+            Picture(
+              fileName: pictureFourFileName, // "Jésus l'Amour de ma vie.jpg"
+            ),
+          ],
+        ];
+
+        // Now verifying the third audio picture addition result
+        await IntegrationTestUtil.verifyPictureAddition(
+          tester: tester,
+          applicationPictureDir: appPictureAudioMapDir,
+          playlistPictureJsonFilesDir: localPlaylistPictureJsonFilesDir,
+          audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
+          audioForPictureTitleDurationStr: localAudioOneDurationStr,
+          playlistAudioPictureJsonFileNameLst:
+              playlistLocalAudioOnePictureLstJsonFileName,
+          audioPictureJsonFileContentLst: expectedPlaylistAudioPictureLst,
+          pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
+          audioForPictureTitleOneLst: audioForPictureTitleLstJesusMonAmour,
+          pictureFileNameTwo: pictureTwoFileName, // "Jésus je T'adore.jpg"
+          audioForPictureTitleTwoLst: audioForPictureTitleLstJesusJeTadore,
+          pictureFileNameThree:
+              pictureFourFileName, // "Jésus l'Amour de ma vie.jpg"
+          audioForPictureTitleThreeLst:
+              audioForPictureTitleLstJesusLamourDeMaVie,
+          mustPlayableAudioListBeUsed: true,
+        );
+
+        // Finally, go back to the playlist download view and save
+        // the playlists, comments, pictures and settings to a zip file
+
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        String saveZipFilePath =
+            '$kApplicationPathWindowsTest${path.separator}backupFolder';
+
+        // Setting the path value returned by the FilePicker mock.
+        mockFilePicker.setPathToSelect(
+          pathToSelectStr: saveZipFilePath,
+        );
+
+        // Tap the appbar leading popup menu button Then, the 'Save
+        // Playlists and Comments to zip File' menu is selected.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
+        );
+
+        // Does not check the "Add all JPG pictures to ZIP" checkbox
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'Playlists Backup to ZIP',
+          dialogMessage:
+              "Checking the \"Add all JPG pictures to ZIP\" checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.",
+          checkboxLabel: "Add all JPG pictures to ZIP",
+          closeDialog: true,
+        );
+
+        // Verify the displayed warning dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\".\n\nSaved also 4 picture JPG file(s) in same directory / pictures.",
+          warningDialogMessageAlternative:
+              "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip\".\n\nSaved also 4 picture JPG file(s) in same directory / pictures.",
+          isWarningConfirming: true,
+        );
+
+        List<String> pictureNamesLst = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}backupFolder${path.separator}$kPictureDirName",
+          fileExtension: 'jpg',
+        );
+
+        List<String> expectedPictureNamesLst = [
+          "Jésus je T'adore.jpg",
+          "Jésus je T'aime.jpg",
+          "Jésus l'Amour de ma vie.jpg",
+          "Jésus, mon amour.jpg",
+        ];
+        expect(
+          pictureNamesLst,
+          expectedPictureNamesLst,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
     });
-    testWidgets(
-        '''Unsuccessful save which happens on the S8 Galaxy smartphone. The
-           integration test verifies the displayed warning''',
-        (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
 
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_integr_test_data",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
+    group('''With checking the "Add all JPG pictures to ZIP" checkbox''', () {
+      testWidgets(
+          '''Successful save with checking the "Add all JPG pictures to ZIP" checkbox. The
+           integration test verifies the confirmation displayed warning''',
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
-      );
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_delete_integr_test_data",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
 
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
 
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-      await app.main();
-      await tester.pumpAndSettle();
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
 
-      // Create a new directory to which the zip file will be saved
+        await app.main();
+        await tester.pumpAndSettle();
 
-      String saveZipFilePath =
-          '$kApplicationPathWindowsTest${path.separator}appSave';
+        // First, set the application language to english
+        await IntegrationTestUtil.setApplicationLanguage(
+          tester: tester,
+          language: Language.english,
+        );
 
-      DirUtil.createDirIfNotExistSync(
-        pathStr: saveZipFilePath,
-      );
+        // Create a new directory to which the zip file will be saved
 
-      // Setting the path value returned by the FilePicker mock. This
-      // path value is the one returned on the S8 Galaxy smartphone !
-      mockFilePicker.setPathToSelect(
-        pathToSelectStr: '/',
-      );
+        String saveZipFilePath =
+            '$kApplicationPathWindowsTest${path.separator}appSave';
 
-      // Tap the appbar leading popup menu button Then, the 'Save
-      // Playlists and Comments to zip File' menu is selected.
-      await IntegrationTestUtil.typeOnAppbarMenuItem(
-        tester: tester,
-        appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
-      );
+        DirUtil.createDirIfNotExistSync(
+          pathStr: saveZipFilePath,
+        );
 
-      await IntegrationTestUtil.verifySetValueToTargetDialog(
-        tester: tester,
-        dialogTitle: 'Playlists Backup to ZIP',
-        dialogMessage:
-            "Checking the \"Add all JPG pictures to ZIP\" checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.",
-      );
+        // Setting the path value returned by the FilePicker mock.
+        mockFilePicker.setPathToSelect(
+          pathToSelectStr: saveZipFilePath,
+        );
 
-      // Tap on the Ok button to set download date time.
-      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-      await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the 'Save
+        // Playlists and Comments to zip File' menu is selected.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
+        );
 
-      // Verify the displayed warning dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Playlist, comment and picture JSON files as well as application settings could not be saved to ZIP.",
-        isWarningConfirming: false,
-      );
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'Playlists Backup to ZIP',
+          dialogMessage:
+              "Checking the \"Add all JPG pictures to ZIP\" checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.",
+          checkboxLabel: "Add all JPG pictures to ZIP",
+        );
 
-      List<String> zipLst = DirUtil.listFileNamesInDir(
-        directoryPath: saveZipFilePath,
-        fileExtension: 'zip',
-      );
+        // Check the "Add all JPG pictures to ZIP" checkbox
+        await tester.tap(find.byKey(const Key('checkbox_0_key')));
+        await tester.pumpAndSettle();
 
-      expect(zipLst.isEmpty, true);
+        // Close the dialog with the OK button
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets('''After picture and comment addition, save to zip file.''',
-        (WidgetTester tester) async {
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
+        String actualMessage = tester
+            .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+            .data!;
 
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'audio_player_zip_comment_picture_test',
-        tapOnPlaylistToggleButton: false,
-      );
-
-      final String availablePicturesDir =
-          "$kApplicationPathWindowsTest${path.separator}availablePictures";
-
-      final String appPictureAudioMapDir =
-          "$kApplicationPathWindowsTest${path.separator}$kPictureDirName";
-
-      const String localPlaylistTitle = 'local';
-      final String localPlaylistPictureDir =
-          "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$localPlaylistTitle${path.separator}$kPictureDirName";
-      final String localPlaylistPictureJsonFilesDir =
-          "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$localPlaylistTitle${path.separator}$kPictureDirName";
-
-      const String localAudioOneTitle =
-          'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien';
-      const String localAudioOneDurationStr = '40:53';
-
-      const String jesusChristPlaylistTitle = 'Jésus-Christ';
-      final String jesusChristPlaylistPictureJsonFilesDir =
-          "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$jesusChristPlaylistTitle${path.separator}$kPictureDirName";
-
-      const String jesusChristAudioOneTitle =
-          'NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE';
-      const String jesusChristAudioOneDurationStr = '24:07';
-
-      const String pictureOneFileName = "Jésus, mon amour.jpg";
-      const int pictureOneFileSize = 94507;
-      const String pictureTwoFileName = "Jésus je T'adore.jpg";
-      const int pictureTwoFileSize = 154529;
-      const String pictureThreeFileName = "Jésus je T'aime.jpg";
-      const int pictureThreeFileSize = 125867;
-      const String pictureFourFileName = "Jésus l'Amour de ma vie.jpg";
-      const int pictureFourFileSize = 187362;
-
-      // Select the local playlist containing the audio to which we
-      // will add a first picture
-      await IntegrationTestUtil.selectPlaylist(
-        tester: tester,
-        playlistToSelectTitle: localPlaylistTitle,
-      );
-
-      // Verify that the appPictureAudioMap dir is  present
-      Directory appPictureAudioMapDirectory = Directory(appPictureAudioMapDir);
-      expect(appPictureAudioMapDirectory.existsSync(), true);
-
-      // Verify that the local playlist picture dir is not present
-      Directory localPlaylistPictureDirDirectory =
-          Directory(localPlaylistPictureDir);
-      expect(localPlaylistPictureDirDirectory.existsSync(), false);
-
-      // First picture addition (to a local playlist audio)
-      await _addPictureToAudioExecutingAudioListItemMenu(
-        tester: tester,
-        mockFilePicker: mockFilePicker,
-        pictureFileName: pictureOneFileName, // "Jésus, mon amour.jpg"
-        pictureSourcePath: availablePicturesDir,
-        pictureFileSize: pictureOneFileSize,
-        audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
-      );
-
-      List<String> audioForPictureTitleLstJesusJeTaime = [
-        "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01"
-      ];
-
-      List<String> playlistJesusChristAudioOnePictureLstJsonFileName = [
-        "241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.json",
-      ];
-
-      // Now verifying the audio picture first addition result
-
-      List<String> playlistLocalAudioOnePictureLstJsonFileName = [
-        "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
-      ];
-
-      List<String> audioForPictureTitleLstJesusMonAmour = [
-        "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
-      ];
-
-      await IntegrationTestUtil.verifyPictureAddition(
-        tester: tester,
-        applicationPictureDir: appPictureAudioMapDir,
-        playlistPictureJsonFilesDir: localPlaylistPictureJsonFilesDir,
-        audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
-        audioForPictureTitleDurationStr: localAudioOneDurationStr,
-        playlistAudioPictureJsonFileNameLst:
-            playlistLocalAudioOnePictureLstJsonFileName,
-        pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
-        audioForPictureTitleOneLst: audioForPictureTitleLstJesusMonAmour,
-        mustPlayableAudioListBeUsed: false,
-      );
-
-      // Now go back to the playlist download view, select another playlist
-      // and add another picture to a new audio.
-
-      Finder appScreenNavigationButton =
-          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
-
-      // Select the Jésus-Christ playlist containing the audio to which we
-      // will add a first picture
-      await IntegrationTestUtil.selectPlaylist(
-        tester: tester,
-        playlistToSelectTitle: jesusChristPlaylistTitle,
-      );
-
-      // Second picture addition (to a jésus-christ playlist audio)
-      await _addPictureToAudioExecutingAudioListItemMenu(
-        tester: tester,
-        mockFilePicker: mockFilePicker,
-        pictureFileName: pictureOneFileName, // "Jésus, mon amour.jpg"
-        pictureSourcePath: availablePicturesDir,
-        pictureFileSize: pictureOneFileSize,
-        audioForPictureTitle:
-            jesusChristAudioOneTitle, // NE VOUS METTEZ PLUS JAMAIS EN COLÈRE ...
-      );
-
-      audioForPictureTitleLstJesusMonAmour = [
-        "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
-        "Jésus-Christ|241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12",
-      ];
-
-      // Now verifying the second audio picture addition result
-      await IntegrationTestUtil.verifyPictureAddition(
-        tester: tester,
-        applicationPictureDir: appPictureAudioMapDir,
-        playlistPictureJsonFilesDir: jesusChristPlaylistPictureJsonFilesDir,
-        pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
-        audioForPictureTitle:
-            jesusChristAudioOneTitle, // NE VOUS METTEZ PLUS JAMAIS EN COLÈRE ...
-        audioForPictureTitleDurationStr: jesusChristAudioOneDurationStr,
-        playlistAudioPictureJsonFileNameLst:
-            playlistJesusChristAudioOnePictureLstJsonFileName,
-        audioForPictureTitleOneLst: audioForPictureTitleLstJesusMonAmour,
-        mustPlayableAudioListBeUsed: false,
-      );
-
-      // Go back to the playlist download view, re-select the local playlist
-      // and add another picture to a the audio which already has a picture.
-
-      appScreenNavigationButton =
-          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
-
-      // Select the local playlist containing the audio to which we
-      // will add a new picture
-      await IntegrationTestUtil.selectPlaylist(
-        tester: tester,
-        playlistToSelectTitle: localPlaylistTitle,
-      );
-
-      // Third picture addition, to the local playlist audio which
-      // already has a picture
-      await _addPictureToAudioExecutingAudioListItemMenu(
-        tester: tester,
-        mockFilePicker: mockFilePicker,
-        pictureFileName: pictureTwoFileName, // "Jésus je T'adore.jpg"
-        pictureSourcePath: availablePicturesDir,
-        pictureFileSize: pictureTwoFileSize,
-        audioForPictureTitle:
-            localAudioOneTitle, // NE VOUS METTEZ PLUS JAMAIS EN COLÈRE ...
-      );
-
-      audioForPictureTitleLstJesusMonAmour = [
-        "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
-        "Jésus-Christ|241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12",
-      ];
-
-      List<String> audioForPictureTitleLstJesusJeTadore = [
-        "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
-      ];
-
-      List<List<Picture>> expectedPlaylistAudioPictureLst = [
-        [
-          Picture(
-            fileName: pictureOneFileName, // "Jésus mon amour.jpg"
+        expect(
+          actualMessage,
+          contains(
+            "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_",
           ),
-          Picture(
-            fileName: pictureTwoFileName, // "Jésus je T'adore.jpg"
-          ),
-        ],
-      ];
+        );
 
-      // Now verifying the second audio picture addition result
-      await IntegrationTestUtil.verifyPictureAddition(
-        tester: tester,
-        applicationPictureDir: appPictureAudioMapDir,
-        playlistPictureJsonFilesDir: localPlaylistPictureJsonFilesDir,
-        audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
-        audioForPictureTitleDurationStr: localAudioOneDurationStr,
-        playlistAudioPictureJsonFileNameLst:
-            playlistLocalAudioOnePictureLstJsonFileName,
-        audioPictureJsonFileContentLst: expectedPlaylistAudioPictureLst,
-        pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
-        audioForPictureTitleOneLst: audioForPictureTitleLstJesusMonAmour,
-        pictureFileNameTwo: pictureTwoFileName, // "Jésus je T'adore.jpg"
-        audioForPictureTitleTwoLst: audioForPictureTitleLstJesusJeTadore,
-        mustPlayableAudioListBeUsed: false,
-      );
+        List<String> zipLst = DirUtil.listFileNamesInDir(
+          directoryPath: saveZipFilePath,
+          fileExtension: 'zip',
+        );
 
-      // Return to the playlist download view and add another picture
-      // to a the audio which already has two pictures.
+        List<String> expectedZipContentLst = [
+          "audio_learn_test_download_2_small_videos\\audio_learn_test_download_2_small_videos.json",
+          "audio_learn_test_download_2_small_videos\\comments\\230628-033811-audio learn test short video one 23-06-10.json",
+          "audio_learn_test_download_2_small_videos\\comments\\230628-033813-audio learn test short video two 23-06-10.json",
+          "audio_player_view_2_shorts_test\\audio_player_view_2_shorts_test.json",
+          "local_3\\local_3.json",
+          "settings.json",
+          "pictures\\230628-033811-audio learn test short video one 23-06-10.jpg"
+        ];
 
-      appScreenNavigationButton =
-          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+        List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
+          zipFilePathName: "$saveZipFilePath${path.separator}${zipLst[0]}",
+        );
 
-      // Fourth picture addition, to the local playlist audio which
-      // already has two pictures
-      await _addPictureToAudioExecutingAudioListItemMenu(
-        tester: tester,
-        mockFilePicker: mockFilePicker,
-        pictureFileName: pictureThreeFileName, // "Jésus je T'aime.jpg"
-        pictureSourcePath: availablePicturesDir,
-        pictureFileSize: pictureThreeFileSize,
-        audioForPictureTitle:
-            localAudioOneTitle, // NE VOUS METTEZ PLUS JAMAIS EN COLÈRE ...
-      );
+        expect(
+          zipContentLst,
+          expectedZipContentLst,
+        );
 
-      audioForPictureTitleLstJesusMonAmour = [
-        "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
-        "Jésus-Christ|241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12",
-      ];
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Unsuccessful save which happens on the S8 Galaxy smartphone. In the save to ZIP dialod,
+           the "Add all JPG pictures to ZIP" checkbox is not checked. The integration test verifies
+           the displayed warning.''', (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      audioForPictureTitleLstJesusJeTadore = [
-        "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
-      ];
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_integr_test_data",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
 
-      audioForPictureTitleLstJesusJeTaime = [
-        "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
-      ];
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
 
-      expectedPlaylistAudioPictureLst = [
-        [
-          Picture(
-            fileName: pictureOneFileName, // "Jésus mon amour.jpg"
-          ),
-          Picture(
-            fileName: pictureTwoFileName, // "Jésus je T'adore.jpg"
-          ),
-          Picture(
-            fileName: pictureThreeFileName, // "Jésus je T'aime.jpg"
-          ),
-        ],
-      ];
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-      // Now verifying the third audio picture addition result
-      await IntegrationTestUtil.verifyPictureAddition(
-        tester: tester,
-        applicationPictureDir: appPictureAudioMapDir,
-        playlistPictureJsonFilesDir: localPlaylistPictureJsonFilesDir,
-        audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
-        audioForPictureTitleDurationStr: localAudioOneDurationStr,
-        playlistAudioPictureJsonFileNameLst:
-            playlistLocalAudioOnePictureLstJsonFileName,
-        audioPictureJsonFileContentLst: expectedPlaylistAudioPictureLst,
-        pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
-        audioForPictureTitleOneLst: audioForPictureTitleLstJesusMonAmour,
-        pictureFileNameTwo: pictureTwoFileName, // "Jésus je T'adore.jpg"
-        audioForPictureTitleTwoLst: audioForPictureTitleLstJesusJeTadore,
-        pictureFileNameThree: pictureThreeFileName, // "Jésus je T'aime.jpg"
-        audioForPictureTitleThreeLst: audioForPictureTitleLstJesusJeTaime,
-        mustPlayableAudioListBeUsed: false,
-      );
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
 
-      // Now go back to the playlist download view and remove the
-      // last added audio picture
+        await app.main();
+        await tester.pumpAndSettle();
 
-      appScreenNavigationButton =
-          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+        // Create a new directory to which the zip file will be saved
 
-      // Deleting the last added audio picture
-      await _removeAudioPictureExecutingAudioListItemMenu(
-        tester: tester,
-        picturedAudioTitle: localAudioOneTitle,
-      );
+        String saveZipFilePath =
+            '$kApplicationPathWindowsTest${path.separator}appSave';
 
-      await IntegrationTestUtil.verifyPictureSuppression(
-        tester: tester,
-        applicationPictureDir: appPictureAudioMapDir,
-        playlistPictureDir: localPlaylistPictureDir,
-        audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
-        audioPictureJsonFileName:
-            playlistLocalAudioOnePictureLstJsonFileName[0],
-        deletedPictureFileName: pictureThreeFileName, // "Jésus je T'adore.jpg"
-        pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
-        audioForPictureTitleOneLst: audioForPictureTitleLstJesusMonAmour,
-        pictureFileNameTwo: pictureTwoFileName, // "Jésus je T'adore.jpg"
-        audioForPictureTitleTwoLst: audioForPictureTitleLstJesusJeTadore,
-      );
+        DirUtil.createDirIfNotExistSync(
+          pathStr: saveZipFilePath,
+        );
 
-      // Now go back to the playlist download view and add again a
-      // picture to the same audio whose picture was removed
+        // Setting the path value returned by the FilePicker mock. This
+        // path value is the one returned on the S8 Galaxy smartphone !
+        mockFilePicker.setPathToSelect(
+          pathToSelectStr: '/',
+        );
 
-      appScreenNavigationButton =
-          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button Then, the 'Save
+        // Playlists and Comments to zip File' menu is selected.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
+        );
 
-      // Third picture addition
-      await _addPictureToAudioExecutingAudioListItemMenu(
-        tester: tester,
-        mockFilePicker: mockFilePicker,
-        pictureFileName: pictureFourFileName, // "Jésus l'Amour de ma vie.jpg"
-        pictureSourcePath: availablePicturesDir,
-        pictureFileSize: pictureFourFileSize,
-        audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
-      );
+        // Does not check the "Add all JPG pictures to ZIP" checkbox
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'Playlists Backup to ZIP',
+          dialogMessage:
+              "Checking the \"Add all JPG pictures to ZIP\" checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.",
+          checkboxLabel: "Add all JPG pictures to ZIP",
+          closeDialog: true,
+        );
 
-      List<String> audioForPictureTitleLstJesusLamourDeMaVie = [
-        "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
-      ];
+        // Verify the displayed warning dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Playlist, comment and picture JSON files as well as application settings could not be saved to ZIP.",
+          isWarningConfirming: false,
+        );
 
-      expectedPlaylistAudioPictureLst = [
-        [
-          Picture(
-            fileName: pictureOneFileName, // "Jésus mon amour.jpg"
-          ),
-          Picture(
-            fileName: pictureTwoFileName, // "Jésus je T'adore.jpg"
-          ),
-          Picture(
-            fileName: pictureFourFileName, // "Jésus l'Amour de ma vie.jpg"
-          ),
-        ],
-      ];
+        List<String> zipLst = DirUtil.listFileNamesInDir(
+          directoryPath: saveZipFilePath,
+          fileExtension: 'zip',
+        );
 
-      // Now verifying the third audio picture addition result
-      await IntegrationTestUtil.verifyPictureAddition(
-        tester: tester,
-        applicationPictureDir: appPictureAudioMapDir,
-        playlistPictureJsonFilesDir: localPlaylistPictureJsonFilesDir,
-        audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
-        audioForPictureTitleDurationStr: localAudioOneDurationStr,
-        playlistAudioPictureJsonFileNameLst:
-            playlistLocalAudioOnePictureLstJsonFileName,
-        audioPictureJsonFileContentLst: expectedPlaylistAudioPictureLst,
-        pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
-        audioForPictureTitleOneLst: audioForPictureTitleLstJesusMonAmour,
-        pictureFileNameTwo: pictureTwoFileName, // "Jésus je T'adore.jpg"
-        audioForPictureTitleTwoLst: audioForPictureTitleLstJesusJeTadore,
-        pictureFileNameThree:
-            pictureFourFileName, // "Jésus l'Amour de ma vie.jpg"
-        audioForPictureTitleThreeLst: audioForPictureTitleLstJesusLamourDeMaVie,
-        mustPlayableAudioListBeUsed: true,
-      );
+        expect(zipLst.isEmpty, true);
 
-      // Finally, go back to the playlist download view and save
-      // the playlists, comments, pictures and settings to a zip file
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''After picture and comment addition, save to zip file without checking the
+                "Add all JPG pictures to ZIP" checkbox.''',
+          (WidgetTester tester) async {
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
 
-      appScreenNavigationButton =
-          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'audio_player_zip_comment_picture_test',
+          tapOnPlaylistToggleButton: false,
+        );
 
-      String saveZipFilePath =
-          '$kApplicationPathWindowsTest${path.separator}backupFolder';
+        final String availablePicturesDir =
+            "$kApplicationPathWindowsTest${path.separator}availablePictures";
 
-      // Setting the path value returned by the FilePicker mock.
-      mockFilePicker.setPathToSelect(
-        pathToSelectStr: saveZipFilePath,
-      );
+        final String appPictureAudioMapDir =
+            "$kApplicationPathWindowsTest${path.separator}$kPictureDirName";
 
-      // Tap the appbar leading popup menu button Then, the 'Save
-      // Playlists and Comments to zip File' menu is selected.
-      await IntegrationTestUtil.typeOnAppbarMenuItem(
-        tester: tester,
-        appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
-      );
+        const String localPlaylistTitle = 'local';
+        final String localPlaylistPictureDir =
+            "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$localPlaylistTitle${path.separator}$kPictureDirName";
+        final String localPlaylistPictureJsonFilesDir =
+            "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$localPlaylistTitle${path.separator}$kPictureDirName";
 
-      await IntegrationTestUtil.verifySetValueToTargetDialog(
-        tester: tester,
-        dialogTitle: 'Playlists Backup to ZIP',
-        dialogMessage:
-            "Checking the \"Add all JPG pictures to ZIP\" checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.",
-      );
+        const String localAudioOneTitle =
+            'CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien';
+        const String localAudioOneDurationStr = '40:53';
 
-      // Tap on the Ok button to set download date time.
-      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-      await tester.pumpAndSettle();
+        const String jesusChristPlaylistTitle = 'Jésus-Christ';
+        final String jesusChristPlaylistPictureJsonFilesDir =
+            "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$jesusChristPlaylistTitle${path.separator}$kPictureDirName";
 
-      // Verify the displayed warning dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\".\n\nSaved also 4 picture JPG file(s) in same directory / pictures.",
-        warningDialogMessageAlternative:
-            "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip\".\n\nSaved also 4 picture JPG file(s) in same directory / pictures.",
-        isWarningConfirming: true,
-      );
+        const String jesusChristAudioOneTitle =
+            'NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE';
+        const String jesusChristAudioOneDurationStr = '24:07';
 
-      List<String> pictureNamesLst = DirUtil.listFileNamesInDir(
-        directoryPath:
-            "$kApplicationPathWindowsTest${path.separator}backupFolder${path.separator}$kPictureDirName",
-        fileExtension: 'jpg',
-      );
+        const String pictureOneFileName = "Jésus, mon amour.jpg";
+        const int pictureOneFileSize = 94507;
+        const String pictureTwoFileName = "Jésus je T'adore.jpg";
+        const int pictureTwoFileSize = 154529;
+        const String pictureThreeFileName = "Jésus je T'aime.jpg";
+        const int pictureThreeFileSize = 125867;
+        const String pictureFourFileName = "Jésus l'Amour de ma vie.jpg";
+        const int pictureFourFileSize = 187362;
 
-      List<String> expectedPictureNamesLst = [
-        "Jésus je T'adore.jpg",
-        "Jésus je T'aime.jpg",
-        "Jésus l'Amour de ma vie.jpg",
-        "Jésus, mon amour.jpg",
-      ];
-      expect(
-        pictureNamesLst,
-        expectedPictureNamesLst,
-      );
+        // Select the local playlist containing the audio to which we
+        // will add a first picture
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: localPlaylistTitle,
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        // Verify that the appPictureAudioMap dir is  present
+        Directory appPictureAudioMapDirectory =
+            Directory(appPictureAudioMapDir);
+        expect(appPictureAudioMapDirectory.existsSync(), true);
+
+        // Verify that the local playlist picture dir is not present
+        Directory localPlaylistPictureDirDirectory =
+            Directory(localPlaylistPictureDir);
+        expect(localPlaylistPictureDirDirectory.existsSync(), false);
+
+        // First picture addition (to a local playlist audio)
+        await _addPictureToAudioExecutingAudioListItemMenu(
+          tester: tester,
+          mockFilePicker: mockFilePicker,
+          pictureFileName: pictureOneFileName, // "Jésus, mon amour.jpg"
+          pictureSourcePath: availablePicturesDir,
+          pictureFileSize: pictureOneFileSize,
+          audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
+        );
+
+        List<String> audioForPictureTitleLstJesusJeTaime = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01"
+        ];
+
+        List<String> playlistJesusChristAudioOnePictureLstJsonFileName = [
+          "241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12.json",
+        ];
+
+        // Now verifying the audio picture first addition result
+
+        List<String> playlistLocalAudioOnePictureLstJsonFileName = [
+          "250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01.json",
+        ];
+
+        List<String> audioForPictureTitleLstJesusMonAmour = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+        ];
+
+        await IntegrationTestUtil.verifyPictureAddition(
+          tester: tester,
+          applicationPictureDir: appPictureAudioMapDir,
+          playlistPictureJsonFilesDir: localPlaylistPictureJsonFilesDir,
+          audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
+          audioForPictureTitleDurationStr: localAudioOneDurationStr,
+          playlistAudioPictureJsonFileNameLst:
+              playlistLocalAudioOnePictureLstJsonFileName,
+          pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
+          audioForPictureTitleOneLst: audioForPictureTitleLstJesusMonAmour,
+          mustPlayableAudioListBeUsed: false,
+        );
+
+        // Now go back to the playlist download view, select another playlist
+        // and add another picture to a new audio.
+
+        Finder appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Select the Jésus-Christ playlist containing the audio to which we
+        // will add a first picture
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: jesusChristPlaylistTitle,
+        );
+
+        // Second picture addition (to a jésus-christ playlist audio)
+        await _addPictureToAudioExecutingAudioListItemMenu(
+          tester: tester,
+          mockFilePicker: mockFilePicker,
+          pictureFileName: pictureOneFileName, // "Jésus, mon amour.jpg"
+          pictureSourcePath: availablePicturesDir,
+          pictureFileSize: pictureOneFileSize,
+          audioForPictureTitle:
+              jesusChristAudioOneTitle, // NE VOUS METTEZ PLUS JAMAIS EN COLÈRE ...
+        );
+
+        audioForPictureTitleLstJesusMonAmour = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+          "Jésus-Christ|241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12",
+        ];
+
+        // Now verifying the second audio picture addition result
+        await IntegrationTestUtil.verifyPictureAddition(
+          tester: tester,
+          applicationPictureDir: appPictureAudioMapDir,
+          playlistPictureJsonFilesDir: jesusChristPlaylistPictureJsonFilesDir,
+          pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
+          audioForPictureTitle:
+              jesusChristAudioOneTitle, // NE VOUS METTEZ PLUS JAMAIS EN COLÈRE ...
+          audioForPictureTitleDurationStr: jesusChristAudioOneDurationStr,
+          playlistAudioPictureJsonFileNameLst:
+              playlistJesusChristAudioOnePictureLstJsonFileName,
+          audioForPictureTitleOneLst: audioForPictureTitleLstJesusMonAmour,
+          mustPlayableAudioListBeUsed: false,
+        );
+
+        // Go back to the playlist download view, re-select the local playlist
+        // and add another picture to a the audio which already has a picture.
+
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Select the local playlist containing the audio to which we
+        // will add a new picture
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: localPlaylistTitle,
+        );
+
+        // Third picture addition, to the local playlist audio which
+        // already has a picture
+        await _addPictureToAudioExecutingAudioListItemMenu(
+          tester: tester,
+          mockFilePicker: mockFilePicker,
+          pictureFileName: pictureTwoFileName, // "Jésus je T'adore.jpg"
+          pictureSourcePath: availablePicturesDir,
+          pictureFileSize: pictureTwoFileSize,
+          audioForPictureTitle:
+              localAudioOneTitle, // NE VOUS METTEZ PLUS JAMAIS EN COLÈRE ...
+        );
+
+        audioForPictureTitleLstJesusMonAmour = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+          "Jésus-Christ|241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12",
+        ];
+
+        List<String> audioForPictureTitleLstJesusJeTadore = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+        ];
+
+        List<List<Picture>> expectedPlaylistAudioPictureLst = [
+          [
+            Picture(
+              fileName: pictureOneFileName, // "Jésus mon amour.jpg"
+            ),
+            Picture(
+              fileName: pictureTwoFileName, // "Jésus je T'adore.jpg"
+            ),
+          ],
+        ];
+
+        // Now verifying the second audio picture addition result
+        await IntegrationTestUtil.verifyPictureAddition(
+          tester: tester,
+          applicationPictureDir: appPictureAudioMapDir,
+          playlistPictureJsonFilesDir: localPlaylistPictureJsonFilesDir,
+          audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
+          audioForPictureTitleDurationStr: localAudioOneDurationStr,
+          playlistAudioPictureJsonFileNameLst:
+              playlistLocalAudioOnePictureLstJsonFileName,
+          audioPictureJsonFileContentLst: expectedPlaylistAudioPictureLst,
+          pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
+          audioForPictureTitleOneLst: audioForPictureTitleLstJesusMonAmour,
+          pictureFileNameTwo: pictureTwoFileName, // "Jésus je T'adore.jpg"
+          audioForPictureTitleTwoLst: audioForPictureTitleLstJesusJeTadore,
+          mustPlayableAudioListBeUsed: false,
+        );
+
+        // Return to the playlist download view and add another picture
+        // to a the audio which already has two pictures.
+
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Fourth picture addition, to the local playlist audio which
+        // already has two pictures
+        await _addPictureToAudioExecutingAudioListItemMenu(
+          tester: tester,
+          mockFilePicker: mockFilePicker,
+          pictureFileName: pictureThreeFileName, // "Jésus je T'aime.jpg"
+          pictureSourcePath: availablePicturesDir,
+          pictureFileSize: pictureThreeFileSize,
+          audioForPictureTitle:
+              localAudioOneTitle, // NE VOUS METTEZ PLUS JAMAIS EN COLÈRE ...
+        );
+
+        audioForPictureTitleLstJesusMonAmour = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+          "Jésus-Christ|241210-073532-NE VOUS METTEZ PLUS JAMAIS EN COLÈRE _ SAGESSE CHRÉTIENNE 24-11-12",
+        ];
+
+        audioForPictureTitleLstJesusJeTadore = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+        ];
+
+        audioForPictureTitleLstJesusJeTaime = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+        ];
+
+        expectedPlaylistAudioPictureLst = [
+          [
+            Picture(
+              fileName: pictureOneFileName, // "Jésus mon amour.jpg"
+            ),
+            Picture(
+              fileName: pictureTwoFileName, // "Jésus je T'adore.jpg"
+            ),
+            Picture(
+              fileName: pictureThreeFileName, // "Jésus je T'aime.jpg"
+            ),
+          ],
+        ];
+
+        // Now verifying the third audio picture addition result
+        await IntegrationTestUtil.verifyPictureAddition(
+          tester: tester,
+          applicationPictureDir: appPictureAudioMapDir,
+          playlistPictureJsonFilesDir: localPlaylistPictureJsonFilesDir,
+          audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
+          audioForPictureTitleDurationStr: localAudioOneDurationStr,
+          playlistAudioPictureJsonFileNameLst:
+              playlistLocalAudioOnePictureLstJsonFileName,
+          audioPictureJsonFileContentLst: expectedPlaylistAudioPictureLst,
+          pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
+          audioForPictureTitleOneLst: audioForPictureTitleLstJesusMonAmour,
+          pictureFileNameTwo: pictureTwoFileName, // "Jésus je T'adore.jpg"
+          audioForPictureTitleTwoLst: audioForPictureTitleLstJesusJeTadore,
+          pictureFileNameThree: pictureThreeFileName, // "Jésus je T'aime.jpg"
+          audioForPictureTitleThreeLst: audioForPictureTitleLstJesusJeTaime,
+          mustPlayableAudioListBeUsed: false,
+        );
+
+        // Now go back to the playlist download view and remove the
+        // last added audio picture
+
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Deleting the last added audio picture
+        await _removeAudioPictureExecutingAudioListItemMenu(
+          tester: tester,
+          picturedAudioTitle: localAudioOneTitle,
+        );
+
+        await IntegrationTestUtil.verifyPictureSuppression(
+          tester: tester,
+          applicationPictureDir: appPictureAudioMapDir,
+          playlistPictureDir: localPlaylistPictureDir,
+          audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
+          audioPictureJsonFileName:
+              playlistLocalAudioOnePictureLstJsonFileName[0],
+          deletedPictureFileName:
+              pictureThreeFileName, // "Jésus je T'adore.jpg"
+          pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
+          audioForPictureTitleOneLst: audioForPictureTitleLstJesusMonAmour,
+          pictureFileNameTwo: pictureTwoFileName, // "Jésus je T'adore.jpg"
+          audioForPictureTitleTwoLst: audioForPictureTitleLstJesusJeTadore,
+        );
+
+        // Now go back to the playlist download view and add again a
+        // picture to the same audio whose picture was removed
+
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        // Third picture addition
+        await _addPictureToAudioExecutingAudioListItemMenu(
+          tester: tester,
+          mockFilePicker: mockFilePicker,
+          pictureFileName: pictureFourFileName, // "Jésus l'Amour de ma vie.jpg"
+          pictureSourcePath: availablePicturesDir,
+          pictureFileSize: pictureFourFileSize,
+          audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
+        );
+
+        List<String> audioForPictureTitleLstJesusLamourDeMaVie = [
+          "local|250103-125311-CETTE SOEUR GUÉRIT DES MILLIERS DE PERSONNES AU NOM DE JÉSUS !  Émission Carrément Bien 24-07-01",
+        ];
+
+        expectedPlaylistAudioPictureLst = [
+          [
+            Picture(
+              fileName: pictureOneFileName, // "Jésus mon amour.jpg"
+            ),
+            Picture(
+              fileName: pictureTwoFileName, // "Jésus je T'adore.jpg"
+            ),
+            Picture(
+              fileName: pictureFourFileName, // "Jésus l'Amour de ma vie.jpg"
+            ),
+          ],
+        ];
+
+        // Now verifying the third audio picture addition result
+        await IntegrationTestUtil.verifyPictureAddition(
+          tester: tester,
+          applicationPictureDir: appPictureAudioMapDir,
+          playlistPictureJsonFilesDir: localPlaylistPictureJsonFilesDir,
+          audioForPictureTitle: localAudioOneTitle, // CETTE SOEUR GUÉRIT ...
+          audioForPictureTitleDurationStr: localAudioOneDurationStr,
+          playlistAudioPictureJsonFileNameLst:
+              playlistLocalAudioOnePictureLstJsonFileName,
+          audioPictureJsonFileContentLst: expectedPlaylistAudioPictureLst,
+          pictureFileNameOne: pictureOneFileName, // "Jésus mon amour.jpg"
+          audioForPictureTitleOneLst: audioForPictureTitleLstJesusMonAmour,
+          pictureFileNameTwo: pictureTwoFileName, // "Jésus je T'adore.jpg"
+          audioForPictureTitleTwoLst: audioForPictureTitleLstJesusJeTadore,
+          pictureFileNameThree:
+              pictureFourFileName, // "Jésus l'Amour de ma vie.jpg"
+          audioForPictureTitleThreeLst:
+              audioForPictureTitleLstJesusLamourDeMaVie,
+          mustPlayableAudioListBeUsed: true,
+        );
+
+        // Finally, go back to the playlist download view and save
+        // the playlists, comments, pictures and settings to a zip file
+
+        appScreenNavigationButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(appScreenNavigationButton);
+        await tester.pumpAndSettle();
+
+        String saveZipFilePath =
+            '$kApplicationPathWindowsTest${path.separator}backupFolder';
+
+        // Setting the path value returned by the FilePicker mock.
+        mockFilePicker.setPathToSelect(
+          pathToSelectStr: saveZipFilePath,
+        );
+
+        // Tap the appbar leading popup menu button Then, the 'Save
+        // Playlists and Comments to zip File' menu is selected.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
+        );
+
+        // Does not check the "Add all JPG pictures to ZIP" checkbox
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'Playlists Backup to ZIP',
+          dialogMessage:
+              "Checking the \"Add all JPG pictures to ZIP\" checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.",
+          checkboxLabel: "Add all JPG pictures to ZIP",
+          closeDialog: true,
+        );
+
+        // Verify the displayed warning dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\".\n\nSaved also 4 picture JPG file(s) in same directory / pictures.",
+          warningDialogMessageAlternative:
+              "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip\".\n\nSaved also 4 picture JPG file(s) in same directory / pictures.",
+          isWarningConfirming: true,
+        );
+
+        List<String> pictureNamesLst = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}backupFolder${path.separator}$kPictureDirName",
+          fileExtension: 'jpg',
+        );
+
+        List<String> expectedPictureNamesLst = [
+          "Jésus je T'adore.jpg",
+          "Jésus je T'aime.jpg",
+          "Jésus l'Amour de ma vie.jpg",
+          "Jésus, mon amour.jpg",
+        ];
+        expect(
+          pictureNamesLst,
+          expectedPictureNamesLst,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
     });
     testWidgets(
         '''Save unique Youtube playlist containing pictures to zip file.''',
@@ -15396,7 +16050,7 @@ void main() {
         playlistMenuKeyStr: 'popup_menu_save_playlist_comments_pictures_to_zip',
       );
 
-      // Verify the displayed warning dialog
+      // Verify the displayed warning confirmation dialog
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
