@@ -4021,7 +4021,7 @@ class IntegrationTestUtil {
     }
 
     if (closeDialog) {
-      // Tap on the Cancel button of the MP3 Restoration dialog
+      // Tap on the Ok button of the MP3 Restoration dialog
       await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
       await tester.pumpAndSettle();
       return;
