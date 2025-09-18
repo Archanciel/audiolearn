@@ -15450,6 +15450,13 @@ void main() {
           ),
         );
 
+        expect(
+          actualMessage,
+          contains(
+            "\n\nSaved also 1 picture JPG file(s) in the ZIP file.",
+          ),
+        );
+
         List<String> zipLst = DirUtil.listFileNamesInDir(
           directoryPath: saveZipFilePath,
           fileExtension: 'zip',
@@ -15461,6 +15468,8 @@ void main() {
           "audio_learn_test_download_2_small_videos\\comments\\230628-033813-audio learn test short video two 23-06-10.json",
           "audio_player_view_2_shorts_test\\audio_player_view_2_shorts_test.json",
           "local_3\\local_3.json",
+          "local_audio_playlist_2\\local_audio_playlist_2.json",
+          "pictures\\pictureAudioMap.json",
           "settings.json",
           "pictures\\230628-033811-audio learn test short video one 23-06-10.jpg"
         ];
@@ -15482,8 +15491,8 @@ void main() {
       });
       testWidgets(
           '''Unsuccessful save which happens on the S8 Galaxy smartphone. In the save to ZIP dialod,
-           the "Add all JPG pictures to ZIP" checkbox is not checked. The integration test verifies
-           the displayed warning.''', (WidgetTester tester) async {
+           the "Add all JPG pictures to ZIP" checkbox is checked. The integration test verifies the
+           displayed warning.''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -15539,15 +15548,21 @@ void main() {
           appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
         );
 
-        // Does not check the "Add all JPG pictures to ZIP" checkbox
         await IntegrationTestUtil.verifySetValueToTargetDialog(
           tester: tester,
           dialogTitle: 'Playlists Backup to ZIP',
           dialogMessage:
               "Checking the \"Add all JPG pictures to ZIP\" checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.",
           checkboxLabel: "Add all JPG pictures to ZIP",
-          closeDialog: true,
         );
+
+        // Check the "Add all JPG pictures to ZIP" checkbox
+        await tester.tap(find.byKey(const Key('checkbox_0_key')));
+        await tester.pumpAndSettle();
+
+        // Close the dialog with the OK button
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
 
         // Verify the displayed warning dialog
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
@@ -15571,8 +15586,8 @@ void main() {
         );
       });
       testWidgets(
-          '''After picture and comment addition, save to zip file without checking the
-                "Add all JPG pictures to ZIP" checkbox.''',
+          '''After picture and comment addition, save to zip file with checking the
+             "Add all JPG pictures to ZIP" checkbox.''',
           (WidgetTester tester) async {
         // Replace the platform instance with your mock
         MockFilePicker mockFilePicker = MockFilePicker();
@@ -15960,23 +15975,29 @@ void main() {
           appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
         );
 
-        // Does not check the "Add all JPG pictures to ZIP" checkbox
         await IntegrationTestUtil.verifySetValueToTargetDialog(
           tester: tester,
           dialogTitle: 'Playlists Backup to ZIP',
           dialogMessage:
               "Checking the \"Add all JPG pictures to ZIP\" checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.",
           checkboxLabel: "Add all JPG pictures to ZIP",
-          closeDialog: true,
         );
+
+        // Check the "Add all JPG pictures to ZIP" checkbox
+        await tester.tap(find.byKey(const Key('checkbox_0_key')));
+        await tester.pumpAndSettle();
+
+        // Close the dialog with the OK button
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
 
         // Verify the displayed warning dialog
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\".\n\nSaved also 4 picture JPG file(s) in same directory / pictures.",
+              "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\".\n\nSaved also 4 picture JPG file(s) in the ZIP file.",
           warningDialogMessageAlternative:
-              "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip\".\n\nSaved also 4 picture JPG file(s) in same directory / pictures.",
+              "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip\".\n\nSaved also 4 picture JPG file(s) in the ZIP file.",
           isWarningConfirming: true,
         );
 
@@ -15986,7 +16007,44 @@ void main() {
           fileExtension: 'jpg',
         );
 
-        List<String> expectedPictureNamesLst = [
+        // Since the picture files were added to the creted save ZIP file,
+        // the picture dir in the backupFolder should be empty
+        List<String> expectedPictureNamesLst = [];
+        expect(
+          pictureNamesLst,
+          expectedPictureNamesLst,
+        );
+
+        // Now re-tap the appbar leading popup menu button Then, the 'Save
+        // Playlists and Comments to zip File' menu is selected.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
+        );
+
+        // This time, do not check the "Add all JPG pictures to ZIP" checkbox
+        // and close the dialog with the OK button
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'Playlists Backup to ZIP',
+          dialogMessage:
+              "Checking the \"Add all JPG pictures to ZIP\" checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.",
+          checkboxLabel: "Add all JPG pictures to ZIP",
+          closeDialog: true,
+        );
+
+        // Verify that the picture files were now saved to the pictures
+        // dir in the backupFolder
+
+        pictureNamesLst = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}backupFolder${path.separator}$kPictureDirName",
+          fileExtension: 'jpg',
+        );
+
+        // Since the picture files were added to the creted save ZIP file,
+        // the picture dir in the backupFolder should be empty
+        expectedPictureNamesLst = [
           "Jésus je T'adore.jpg",
           "Jésus je T'aime.jpg",
           "Jésus l'Amour de ma vie.jpg",
