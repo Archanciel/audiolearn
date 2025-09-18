@@ -111,6 +111,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          verifySetValueToTargetDialog: true,
         );
 
         // Must be used on Android emulator, otherwise the confirmation
@@ -248,6 +249,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          verifySetValueToTargetDialog: true,
         );
 
         // Must be used on Android emulator, otherwise the confirmation
@@ -516,6 +518,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          verifySetValueToTargetDialog: true,
         );
 
         // Must be used on Android emulator, otherwise the confirmation
@@ -653,6 +656,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          verifySetValueToTargetDialog: true,
         );
 
         // Must be used on Android emulator, otherwise the confirmation

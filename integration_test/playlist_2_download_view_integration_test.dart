@@ -16845,6 +16845,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
+              verifySetValueToTargetDialog: true,
             );
 
             await tester.pumpAndSettle(const Duration(milliseconds: 500));
@@ -17378,6 +17379,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
+              verifySetValueToTargetDialog: true,
             );
 
             await tester.pumpAndSettle(const Duration(milliseconds: 500));
@@ -19945,6 +19947,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: true,
+            verifySetValueToTargetDialog: true,
           );
 
           // Verify that the audio menu button is enabled
@@ -20120,6 +20123,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: true,
+            verifySetValueToTargetDialog: true,
           );
 
           // Verify that the audio menu button is enabled
@@ -23652,6 +23656,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
+              verifySetValueToTargetDialog: true,
             );
 
             await Future.delayed(const Duration(milliseconds: 500));
@@ -23800,6 +23805,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
+              verifySetValueToTargetDialog: true,
             );
 
             await Future.delayed(const Duration(milliseconds: 500));
@@ -24281,6 +24287,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
+              verifySetValueToTargetDialog: true,
             );
 
             await Future.delayed(const Duration(milliseconds: 500));
@@ -25443,6 +25450,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
+            verifySetValueToTargetDialog: true,
           );
 
           // Verify the displayed warning confirmation dialog
@@ -25807,6 +25815,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
+            verifySetValueToTargetDialog: true,
           );
 
           // Verify the displayed warning confirmation dialog
