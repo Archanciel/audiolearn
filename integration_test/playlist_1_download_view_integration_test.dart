@@ -757,7 +757,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Playlist "$youtubeNewPlaylistTitle" with this URL "$youtubePlaylistUrl" is already in the list of playlists and so won\'t be recreated.',
+            'Playlist "$youtubeNewPlaylistTitle" with this URL "$youtubePlaylistUrl" is already in the playlist list and so won\'t be recreated.',
         isWarningConfirming: false,
       );
 
@@ -1463,7 +1463,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Local playlist \"$localPlaylistTitle\" already exists in the list of playlists. Therefore, the local playlist with this title won't be created.",
+            "Local playlist \"$localPlaylistTitle\" already exists in the playlist list. Therefore, the local playlist with this title won't be created.",
         isWarningConfirming: false,
       );
 
@@ -1740,7 +1740,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Youtube playlist \"$localPlaylistTitle\" already exists in the list of playlists. Therefore, the local playlist with this title won't be created.",
+            "Youtube playlist \"$localPlaylistTitle\" already exists in the playlist list. Therefore, the local playlist with this title won't be created.",
         isWarningConfirming: false,
       );
 
@@ -5508,35 +5508,15 @@ void main() {
 
       // Since the copied audio contains comment(s), deleting it
       // causes a confirm action dialog to be displayed.
-
-      // Checking the confirm dialog
-
-      Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
-
-      // Check the value of the confirm dialog title
-      Finder confirmActionDialogTitleText = find.descendant(
-          of: confirmActionDialogFinder,
-          matching: find.byKey(const Key("confirmDialogTitleOneKey")));
-
-      expect(
-        tester.widget<Text>(confirmActionDialogTitleText).data!,
-        "Confirmez la suppression de l'audio commenté \"audio learn test short video one\"",
-      );
-
-      // Check the value of the confirm dialog message
-      Finder confirmActionDialogMessageText = find.descendant(
-          of: confirmActionDialogFinder,
-          matching: find.byKey(const Key("confirmationDialogMessageKey")));
-
-      expect(
-        tester.widget<Text>(confirmActionDialogMessageText).data!,
-        "L'audio contient 1 commentaire(s) qui seront également supprimés. Confirmer la suppression ?",
-      );
-
-      // Confirm the deletion of the audio and close the confirm
-      // dialog by tapping on the Confirm button
-      await tester.tap(find.byKey(const Key('confirmButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyConfirmActionDialog(
+        tester: tester,
+        confirmActionDialogTitle:
+            "Confirmez la suppression de l'audio commenté \"audio learn test short video one\"",
+        confirmActionDialogMessagePossibleLst: [
+          "L'audio contient 1 commentaire(s) qui seront également supprimés. Confirmer la suppression ?",
+        ],
+        closeDialogWithConfirmButton: true,
+      ); // Process the tap immediately
 
       // Now verify that the target playlist directory no longer
       // contains the audio file copied from the source playlist
@@ -5829,33 +5809,15 @@ void main() {
 
       // Since the copied audio contains comment(s), deleting it
       // causes a confirm action dialog to be displayed.
-
-      Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
-
-      // Check the value of the confirm dialog title
-      Finder confirmActionDialogTitleText = find.descendant(
-          of: confirmActionDialogFinder,
-          matching: find.byKey(const Key("confirmDialogTitleOneKey")));
-
-      expect(
-        tester.widget<Text>(confirmActionDialogTitleText).data!,
-        "Confirmez la suppression de l'audio commenté \"audio learn test short video one\"",
-      );
-
-      // Check the value of the confirm dialog message
-      Finder confirmActionDialogMessageText = find.descendant(
-          of: confirmActionDialogFinder,
-          matching: find.byKey(const Key("confirmationDialogMessageKey")));
-
-      expect(
-        tester.widget<Text>(confirmActionDialogMessageText).data!,
-        "L'audio contient 1 commentaire(s) qui seront également supprimés. Confirmer la suppression ?",
-      );
-
-      // Confirm the deletion of the audio and close the confirm
-      // dialog by tapping on the Confirm button
-      await tester.tap(find.byKey(const Key('confirmButton')));
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyConfirmActionDialog(
+        tester: tester,
+        confirmActionDialogTitle:
+            "Confirmez la suppression de l'audio commenté \"audio learn test short video one\"",
+        confirmActionDialogMessagePossibleLst: [
+          "L'audio contient 1 commentaire(s) qui seront également supprimés. Confirmer la suppression ?",
+        ],
+        closeDialogWithConfirmButton: true,
+      ); // Process the tap immediately
 
       // Now verify that the target playlist directory no longer
       // contains the audio file copied from the source playlist
@@ -9647,7 +9609,7 @@ void main() {
       // Now test that the manually added urgent_actus Youtube playlist is
       // displayed
 
-      // Tap the 'Toggle List' button to show the list of playlists. If the
+      // Tap the 'Toggle List' button to show the playlist list. If the
       // list is not opened, checking that a ListTile with the title of
       // the manually added playlist was added to the ListView will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -9767,7 +9729,7 @@ void main() {
       // Test that the manually added test local smartphone playlist is
       // displayed
 
-      // Tap the 'Toggle List' button to show the list of playlists. If the
+      // Tap the 'Toggle List' button to show the playlist list. If the
       // list is not opened, checking that a ListTile with the title of
       // the manually added playlist was added to the ListView will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -9889,7 +9851,7 @@ void main() {
       // Test that the manually added Youtube_test Youtube smartphone
       // playlist is displayed
 
-      // Tap the 'Toggle List' button to show the list of playlists. If the
+      // Tap the 'Toggle List' button to show the playlist list. If the
       // list is not opened, checking that a ListTile with the title of
       // the manually added playlist was added to the ListView will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -9999,7 +9961,7 @@ void main() {
       await app.main();
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to show the list of playlists. If the
+      // Tap the 'Toggle List' button to show the playlist list. If the
       // list is not opened, checking that a ListTile with the title of
       // the manually added playlist was added to the ListView will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -10090,7 +10052,7 @@ void main() {
       // Now test that the manually added urgent_actus Youtube playlist is
       // displayed
 
-      // Tap the 'Toggle List' button to show the list of playlists. If the
+      // Tap the 'Toggle List' button to show the playlist list. If the
       // list is not opened, checking that a ListTile with the title of
       // the manually added playlist was added to the ListView will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -10210,7 +10172,7 @@ void main() {
       // Now test that the manually added urgent_actus Youtube playlist is
       // displayed
 
-      // Tap the 'Toggle List' button to show the list of playlists. If the
+      // Tap the 'Toggle List' button to show the playlist list. If the
       // list is not opened, checking that a ListTile with the title of
       // the manually added playlist was added to the ListView will fail
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -10262,7 +10224,7 @@ void main() {
         expect(audioListTileTextWidgetFinder, findsOneWidget);
       }
 
-      // Tap the 'Toggle List' button to hide the list of playlists.
+      // Tap the 'Toggle List' button to hide the playlist list.
       // Since the urgent_actus Youtube playlist is selected, the
       // urgent_actus playlist audio list is be displayed in the
       // AudioPlayerView screen and then right popup menu is active.
@@ -10338,7 +10300,7 @@ void main() {
       await app.main();
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to show the list of playlists.
+      // Tap the 'Toggle List' button to show the playlist list.
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
@@ -10461,7 +10423,7 @@ void main() {
       await app.main();
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to show the list of playlists.
+      // Tap the 'Toggle List' button to show the playlist list.
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
@@ -10486,7 +10448,7 @@ void main() {
         widgetTester: tester,
       );
 
-      // Now tap the 'Toggle List' button to hide the list of playlists so
+      // Now tap the 'Toggle List' button to hide the playlist list so
       // that only the S8 audio Youtube playlist audio list is displayed
       // in the AudioPlayerView screen FAILS TEST
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -10590,7 +10552,7 @@ void main() {
       await app.main();
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to show the list of playlists.
+      // Tap the 'Toggle List' button to show the playlist list.
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
@@ -10729,7 +10691,7 @@ void main() {
       await app.main();
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to show the list of playlists.
+      // Tap the 'Toggle List' button to show the playlist list.
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
@@ -10754,7 +10716,7 @@ void main() {
         widgetTester: tester,
       );
 
-      // Now tap the 'Toggle List' button to hide the list of playlists so
+      // Now tap the 'Toggle List' button to hide the playlist list so
       // that only the S8 audio Youtube playlist audio list is displayed
       // in the AudioPlayerView screen FAILS TEST
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
@@ -11026,7 +10988,7 @@ void main() {
               .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
 
           expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
-              'Confirm deletion of the commented audio "$commentedAudioTitleToDelete"');
+              'Confirm deletion of the audio "$commentedAudioTitleToDelete" from the Youtube playlist');
 
           // Verifying the confirm dialog message
 
@@ -11035,7 +10997,7 @@ void main() {
                   find.byKey(const Key('confirmationDialogMessageKey')));
 
           expect(deleteFilteredAudioConfirmDialogMessageTextWidget.data,
-              'The audio contains 1 comment(s) which will be deleted as well. Confirm deletion ?');
+              'Delete the audio "$commentedAudioTitleToDelete" from the playlist "$youtubePlaylistTitle" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on "Cancel" and choose "Delete Audio ..." instead of "Delete Audio from Playlist as well ...". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.');
 
           // Now find the confirm button of the delete filtered audio confirm
           // dialog and tap on it
@@ -11265,7 +11227,7 @@ void main() {
         });
         testWidgets(
             '''Defined SF parms 'applied' is applied. Then, click on the menu icon of
-           the commented audio "Les besoins artificiels par R.Keucheyan" and select
+           of the audio "Les besoins artificiels par R.Keucheyan" and select
            'Delete Audio ...'. Verify the displayed warning. Then click on the
            'Confirm' button. Verify the suppression of the audio mp3 file as well
            as its comment file. Verify also the updated playlist playable audio
@@ -11411,7 +11373,7 @@ void main() {
               .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
 
           expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
-              'Confirm deletion of the commented audio "$commentedAudioTitleToDelete"');
+              'Confirm deletion of the audio "$commentedAudioTitleToDelete" from the Youtube playlist');
 
           // Verifying the confirm dialog message
 
@@ -11420,7 +11382,7 @@ void main() {
                   find.byKey(const Key('confirmationDialogMessageKey')));
 
           expect(deleteFilteredAudioConfirmDialogMessageTextWidget.data,
-              'The audio contains 1 comment(s) which will be deleted as well. Confirm deletion ?');
+              'Delete the audio "$commentedAudioTitleToDelete" from the playlist "$youtubePlaylistTitle" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on "Cancel" and choose "Delete Audio ..." instead of "Delete Audio from Playlist as well ...". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.');
 
           // Now find the confirm button of the delete filtered audio confirm
           // dialog and tap on it
@@ -11811,7 +11773,7 @@ void main() {
               .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
 
           expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
-              'Confirm deletion of the commented audio "$commentedAudioTitleToDelete"');
+              'Confirm deletion of the audio "$commentedAudioTitleToDelete" from the Youtube playlist');
 
           // Verifying the confirm dialog message
 
@@ -11820,7 +11782,7 @@ void main() {
                   find.byKey(const Key('confirmationDialogMessageKey')));
 
           expect(deleteFilteredAudioConfirmDialogMessageTextWidget.data,
-              'The audio contains 1 comment(s) which will be deleted as well. Confirm deletion ?');
+              'Delete the audio "$commentedAudioTitleToDelete" from the playlist "$youtubePlaylistTitle" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on "Cancel" and choose "Delete Audio ..." instead of "Delete Audio from Playlist as well ...". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.');
 
           // Now find the confirm button of the delete filtered audio confirm
           // dialog and tap on it
@@ -12067,7 +12029,7 @@ void main() {
         });
         testWidgets(
             '''Saved defined SF parms 'Title asc' is applied. Then, click on the menu
-           icon of the commented audio "Les besoins artificiels par R.Keucheyan"
+           icon of the audio "Les besoins artificiels par R.Keucheyan"
            and select 'Delete Audio from Playlist as well ...'. Verify the displayed
            warning. Then click on the 'Confirm' button. Verify the suppression of
            the audio mp3 file as well as its comment file. Verify also the updated
@@ -12257,7 +12219,7 @@ void main() {
               .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
 
           expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
-              'Confirm deletion of the commented audio "$commentedAudioTitleToDelete"');
+              'Confirm deletion of the audio "$commentedAudioTitleToDelete" from the Youtube playlist');
 
           // Verifying the confirm dialog message
 
@@ -12266,7 +12228,7 @@ void main() {
                   find.byKey(const Key('confirmationDialogMessageKey')));
 
           expect(deleteFilteredAudioConfirmDialogMessageTextWidget.data,
-              'The audio contains 1 comment(s) which will be deleted as well. Confirm deletion ?');
+              'Delete the audio "$commentedAudioTitleToDelete" from the playlist "$youtubePlaylistTitle" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on "Cancel" and choose "Delete Audio ..." instead of "Delete Audio from Playlist as well ...". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.');
 
           // Now find the confirm button of the delete filtered audio confirm
           // dialog and tap on it
@@ -18803,7 +18765,7 @@ void main() {
       testWidgets('''One comment full play color verification. Play one comment
            completely. Then close the playlist comment dialog and reopen it.
            Verify that the played comment color was not changed, which means
-           that the commented audio position change due to the comment play was
+           that of the audio position change due to the comment play was
            undone. Verify as well that the current audio change caused by the
            played comment audio was undone as well.''',
           (WidgetTester tester) async {
@@ -18893,7 +18855,7 @@ void main() {
           '''One comment pause on partial play color verification. Play one comment
            partially, clicking on pause button after 1.5 seconds. Then close the
            playlist comment dialog and reopen it. Verify that the played comment
-           color was not changed, which means that the commented audio position
+           color was not changed, which means that of the audio position
            change due to the comment play was undone. Verify as well that the
            current audio change caused by the played comment audio was undone as
            well.''', (WidgetTester tester) async {
@@ -18983,7 +18945,7 @@ void main() {
           '''One comment close on partial play color verification. Play one
            comment partially, clicking on close playlist comment dialog button
            after 1.5 seconds. Then reopen the dialog. Verify that the played comment
-           color was not changed, which means that the commented audio position
+           color was not changed, which means that of the audio position
            change due to the comment play was undone. Verify as well that the
            current audio change caused by the played comment audio was undone as
            well.''', (WidgetTester tester) async {
@@ -19082,7 +19044,7 @@ void main() {
       testWidgets('''One comment partially play color verification. Play comment
            completely. Then close the playlist comment dialog and reopen it.
            Verify that the played comment color was not changed, which means
-           that the commented audio position change due to the comment play was
+           that of the audio position change due to the comment play was
            undone. Verify as well that the current audio change caused by the
            played comment audio was undone as well.''',
           (WidgetTester tester) async {
@@ -19172,7 +19134,7 @@ void main() {
           '''One comment pause on partial play color verification. Play one comment
            partially, clicking on pause button after 1.5 seconds. Then close the
            playlist comment dialog and reopen it. Verify that the played comment
-           color was not changed, which means that the commented audio position
+           color was not changed, which means that of the audio position
            change due to the comment play was undone. Verify as well that the
            current audio change caused by the played comment audio was undone as
            well.''', (WidgetTester tester) async {
@@ -19262,7 +19224,7 @@ void main() {
           '''One comment close on partial play color verification. Play one
            comment partially, clicking on close playlist comment dialog button
            after 1.5 seconds. Then reopen the dialog. Verify that the played comment
-           color was not changed, which means that the commented audio position
+           color was not changed, which means that of the audio position
            change due to the comment play was undone. Verify as well that the
            current audio change caused by the played comment audio was undone as
            well.''', (WidgetTester tester) async {
@@ -19361,7 +19323,7 @@ void main() {
       testWidgets('''One comment full play color verification. Play one comment
            completely. Then close the playlist comment dialog and reopen it.
            Verify that the played comment color was not changed, which means
-           that the commented audio position change due to the comment play was
+           that of the audio position change due to the comment play was
            undone. Verify as well that the current audio change caused by the
            played comment audio was undone as well.''',
           (WidgetTester tester) async {
@@ -19455,7 +19417,7 @@ void main() {
           '''One comment pause on partial play color verification. Play one comment
            partially, clicking on pause button after 1.5 seconds. Then close the
            playlist comment dialog and reopen it. Verify that the played comment
-           color was not changed, which means that the commented audio position
+           color was not changed, which means that of the audio position
            change due to the comment play was undone. Verify as well that the
            current audio change caused by the played comment audio was undone as
            well.''', (WidgetTester tester) async {
@@ -19549,7 +19511,7 @@ void main() {
           '''One comment close on partial play color verification. Play one
            comment partially, clicking on close playlist comment dialog button
            after 1.5 seconds. Then reopen the dialog. Verify that the played comment
-           color was not changed, which means that the commented audio position
+           color was not changed, which means that of the audio position
            change due to the comment play was undone. Verify as well that the
            current audio change caused by the played comment audio was undone as
            well.''', (WidgetTester tester) async {

@@ -5,6 +5,7 @@ import 'package:audiolearn/models/picture.dart';
 import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:audiolearn/views/my_home_page.dart';
 import 'package:audiolearn/views/widgets/audio_info_dialog.dart';
+import 'package:audiolearn/views/widgets/confirm_action_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -4025,6 +4026,58 @@ class IntegrationTestUtil {
       await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
       await tester.pumpAndSettle();
       return;
+    }
+  }
+
+  static Future<void> verifyConfirmActionDialog({
+    required WidgetTester tester,
+    required String confirmActionDialogTitle,
+    required List<String> confirmActionDialogMessagePossibleLst,
+    bool useContains = false,
+    required bool closeDialogWithConfirmButton,
+  }) async {
+    // Now check the confirm dialog which indicates the estimated
+    // save audio mp3 to zip duration and accept save execution.
+
+    Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
+
+    // Check the value of the confirm dialog title
+    Finder confirmActionDialogTitleText = find.descendant(
+        of: confirmActionDialogFinder,
+        matching: find.byKey(const Key("confirmDialogTitleOneKey")));
+
+    expect(
+      tester.widget<Text>(confirmActionDialogTitleText).data!,
+      confirmActionDialogTitle,
+    );
+
+    // Check the value of the confirm dialog message
+    Finder confirmActionDialogMessageText = find.descendant(
+        of: confirmActionDialogFinder,
+        matching: find.byKey(const Key("confirmationDialogMessageKey")));
+    if (useContains && confirmActionDialogMessagePossibleLst.length == 1) {
+      expect(
+        tester.widget<Text>(confirmActionDialogMessageText).data!,
+        contains(
+          confirmActionDialogMessagePossibleLst[0],
+        ),
+      );
+    } else {
+      expect(
+        tester.widget<Text>(confirmActionDialogMessageText).data!,
+        anyOf(confirmActionDialogMessagePossibleLst
+            .map((msg) => equals(msg))
+            .toList()),
+      );
+    }
+    if (closeDialogWithConfirmButton) {
+      // Tap on the confirm button of the confirm action dialog
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pump(); // Process the tap immediately
+    } else {
+      // Tap on the cancel button of the confirm action dialog
+      await tester.tap(find.byKey(const Key('cancelButtonKey')));
+      await tester.pump(); // Process the tap immediately
     }
   }
 }

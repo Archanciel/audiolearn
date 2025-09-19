@@ -16410,35 +16410,15 @@ void main() {
 
         // Now check the confirm dialog which indicates the estimated
         // save audio mp3 to zip duration and accept save execution.
-
-        Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
-
-        // Check the value of the confirm dialog title
-        Finder confirmActionDialogTitleText = find.descendant(
-            of: confirmActionDialogFinder,
-            matching: find.byKey(const Key("confirmDialogTitleOneKey")));
-
-        expect(
-          tester.widget<Text>(confirmActionDialogTitleText).data!,
-          "Prevision of the Save Duration",
-        );
-
-        // Check the value of the confirm dialog message
-        Finder confirmActionDialogMessageText = find.descendant(
-            of: confirmActionDialogFinder,
-            matching: find.byKey(const Key("confirmationDialogMessageKey")));
-
-        expect(
-          tester.widget<Text>(confirmActionDialogMessageText).data!,
-          contains(
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmActionDialogTitle: "Prevision of the Save Duration",
+          confirmActionDialogMessagePossibleLst: [
             "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:",
-          ),
-        );
-
-        // Confirm the saving of the audio mp3 files and close the
-        // confirm dialog by tapping on the Confirm button.
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pump(); // Process the tap immediately
+          ],
+          useContains: true,
+          closeDialogWithConfirmButton: true,
+        ); // Process the tap immediately
 
         // Only works if tester.pump() is used instead of
         // tester.pumpAndSettle()
@@ -16607,40 +16587,15 @@ void main() {
 
         // Now check the confirm dialog which indicates the estimated
         // save audio mp3 to zip duration and accept save execution.
-
-        Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
-
-        // Check the value of the confirm dialog title
-        Finder confirmActionDialogTitleText = find.descendant(
-            of: confirmActionDialogFinder,
-            matching: find.byKey(const Key("confirmDialogTitleOneKey")));
-
-        expect(
-          tester.widget<Text>(confirmActionDialogTitleText).data!,
-          "Prevision of the Save Duration",
-        );
-
-        // Check the value of the confirm dialog message
-        Finder confirmActionDialogMessageText = find.descendant(
-            of: confirmActionDialogFinder,
-            matching: find.byKey(const Key("confirmationDialogMessageKey")));
-
-        expect(
-          tester.widget<Text>(confirmActionDialogMessageText).data!,
-          anyOf([
-            equals(
-              "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:01.",
-            ),
-            equals(
-              "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02.",
-            ),
-          ]),
-        );
-
-        // Confirm the saving of the audio mp3 files and close the
-        // confirm dialog by tapping on the Confirm button.
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pump(); // Process the tap immediately
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmActionDialogTitle: "Prevision of the Save Duration",
+          confirmActionDialogMessagePossibleLst: [
+            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:01",
+            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02"
+          ],
+          closeDialogWithConfirmButton: true,
+        ); // Process the tap immediately
 
         // Only works if tester.pump() is used instead of
         // tester.pumpAndSettle()
@@ -16807,33 +16762,14 @@ void main() {
 
         // Now check the confirm dialog which indicates the estimated
         // save audio mp3 to zip duration and accept save execution.
-
-        Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
-
-        // Check the value of the confirm dialog title
-        Finder confirmActionDialogTitleText = find.descendant(
-            of: confirmActionDialogFinder,
-            matching: find.byKey(const Key("confirmDialogTitleOneKey")));
-
-        expect(
-          tester.widget<Text>(confirmActionDialogTitleText).data!,
-          "Prevision of the Save Duration",
-        );
-
-        // Check the value of the confirm dialog message
-        Finder confirmActionDialogMessageText = find.descendant(
-            of: confirmActionDialogFinder,
-            matching: find.byKey(const Key("confirmationDialogMessageKey")));
-
-        expect(
-          tester.widget<Text>(confirmActionDialogMessageText).data!,
-          "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:00.",
-        );
-
-        // Confirm the saving of the audio mp3 files and close the
-        // confirm dialog by tapping on the Confirm button.
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmActionDialogTitle: "Prevision of the Save Duration",
+          confirmActionDialogMessagePossibleLst: [
+            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:00.",
+          ],
+          closeDialogWithConfirmButton: true,
+        ); // Process the tap immediately
 
         // Verify the displayed warning dialog
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
@@ -16935,35 +16871,15 @@ void main() {
 
         // Now check the confirm dialog which indicates the estimated
         // save audio mp3 to zip duration and accept save execution.
-
-        Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
-
-        // Check the value of the confirm dialog title
-        Finder confirmActionDialogTitleText = find.descendant(
-            of: confirmActionDialogFinder,
-            matching: find.byKey(const Key("confirmDialogTitleOneKey")));
-
-        expect(
-          tester.widget<Text>(confirmActionDialogTitleText).data!,
-          "Prevision of the Save Duration",
-        );
-
-        // Check the value of the confirm dialog message
-        Finder confirmActionDialogMessageText = find.descendant(
-            of: confirmActionDialogFinder,
-            matching: find.byKey(const Key("confirmationDialogMessageKey")));
-
-        expect(
-          tester.widget<Text>(confirmActionDialogMessageText).data!,
-          contains(
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmActionDialogTitle: "Prevision of the Save Duration",
+          confirmActionDialogMessagePossibleLst: [
             "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:",
-          ),
-        );
-
-        // Confirm the saving of the audio mp3 files and close the
-        // confirm dialog by tapping on the Confirm button.
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pump(); // Process the tap immediately
+          ],
+          useContains: true,
+          closeDialogWithConfirmButton: true,
+        ); // Process the tap immediately
 
         // Only works if tester.pump() is used instead of
         // tester.pumpAndSettle()
@@ -17132,40 +17048,15 @@ void main() {
 
         // Now check the confirm dialog which indicates the estimated
         // save audio mp3 to zip duration and accept save execution.
-
-        Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
-
-        // Check the value of the confirm dialog title
-        Finder confirmActionDialogTitleText = find.descendant(
-            of: confirmActionDialogFinder,
-            matching: find.byKey(const Key("confirmDialogTitleOneKey")));
-
-        expect(
-          tester.widget<Text>(confirmActionDialogTitleText).data!,
-          "Prevision of the Save Duration",
-        );
-
-        // Check the value of the confirm dialog message
-        Finder confirmActionDialogMessageText = find.descendant(
-            of: confirmActionDialogFinder,
-            matching: find.byKey(const Key("confirmationDialogMessageKey")));
-
-        expect(
-          tester.widget<Text>(confirmActionDialogMessageText).data!,
-          anyOf([
-            equals(
-              "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:01.",
-            ),
-            equals(
-              "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02.",
-            ),
-          ]),
-        );
-
-        // Confirm the saving of the audio mp3 files and close the
-        // confirm dialog by tapping on the Confirm button.
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmActionDialogTitle: "Prevision of the Save Duration",
+          confirmActionDialogMessagePossibleLst: [
+            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:01.",
+            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02.",
+          ],
+          closeDialogWithConfirmButton: true,
+        ); // Process the tap immediately
 
         Text warningDialogTitle =
             tester.widget(find.byKey(const Key('warningDialogTitle')).last);
@@ -17314,33 +17205,14 @@ void main() {
 
         // Now check the confirm dialog which indicates the estimated
         // save audio mp3 to zip duration and accept save execution.
-
-        Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
-
-        // Check the value of the confirm dialog title
-        Finder confirmActionDialogTitleText = find.descendant(
-            of: confirmActionDialogFinder,
-            matching: find.byKey(const Key("confirmDialogTitleOneKey")));
-
-        expect(
-          tester.widget<Text>(confirmActionDialogTitleText).data!,
-          "Prevision of the Save Duration",
-        );
-
-        // Check the value of the confirm dialog message
-        Finder confirmActionDialogMessageText = find.descendant(
-            of: confirmActionDialogFinder,
-            matching: find.byKey(const Key("confirmationDialogMessageKey")));
-
-        expect(
-          tester.widget<Text>(confirmActionDialogMessageText).data!,
-          "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:00.",
-        );
-
-        // Confirm the saving of the audio mp3 files and close the
-        // confirm dialog by tapping on the Confirm button.
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmActionDialogTitle: "Prevision of the Save Duration",
+          confirmActionDialogMessagePossibleLst: [
+            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:00.",
+          ],
+          closeDialogWithConfirmButton: true,
+        ); // Process the tap immediately
 
         // Verify the displayed warning dialog
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
@@ -29984,23 +29856,13 @@ void main() {
       // Now check the confirm dialog which indicates that the saved
       // file name already exist and ask to confirm or cancel the
       // save operation.
-
-      Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
-
-      // Check the value of the confirm dialog title
-      Finder confirmActionDialogTitleText = find.descendant(
-          of: confirmActionDialogFinder,
-          matching: find.byKey(const Key("confirmDialogTitleOneKey")));
-
-      expect(
-        tester.widget<Text>(confirmActionDialogTitleText).data!,
-        "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$selectedYoutubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
-      );
-
-      // Tap on the confirm button to confirm the save operation
-      final Finder confirmButton = find.byKey(const Key('confirmButton'));
-      await tester.tap(confirmButton);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyConfirmActionDialog(
+        tester: tester,
+        confirmActionDialogTitle:
+            "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$selectedYoutubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
+        confirmActionDialogMessagePossibleLst: [],
+        closeDialogWithConfirmButton: true,
+      ); // Process the tap immediately
 
       await Future.delayed(const Duration(seconds: 2));
       await tester.pumpAndSettle();
@@ -30448,23 +30310,13 @@ void main() {
       // Now check the confirm dialog which indicates that the saved
       // file name already exist and ask to confirm or cancel the
       // save operation.
-
-      Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
-
-      // Check the value of the confirm dialog title
-      Finder confirmActionDialogTitleText = find.descendant(
-          of: confirmActionDialogFinder,
-          matching: find.byKey(const Key("confirmDialogTitleOneKey")));
-
-      expect(
-        tester.widget<Text>(confirmActionDialogTitleText).data!,
-        "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$unselectedLocalPlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
-      );
-
-      // Tap on the confirm button to confirm the save operation
-      final Finder confirmButton = find.byKey(const Key('confirmButton'));
-      await tester.tap(confirmButton);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.verifyConfirmActionDialog(
+        tester: tester,
+        confirmActionDialogTitle:
+            "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$unselectedLocalPlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
+        confirmActionDialogMessagePossibleLst: [],
+        closeDialogWithConfirmButton: true,
+      ); // Process the tap immediately
 
       await Future.delayed(const Duration(seconds: 2));
       await tester.pumpAndSettle();
