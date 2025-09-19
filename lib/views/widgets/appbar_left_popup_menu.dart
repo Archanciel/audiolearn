@@ -457,6 +457,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                         actionFunctionArgs: [
                           context,
                           audioToDelete,
+                          AudioLearnAppViewType.audioPlayerView,
                         ],
                         dialogTitleOne:
                             UiUtil.createDeleteCommentedAudioDialogTitle(
@@ -496,6 +497,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   context: context,
                   playlistListVMlistenFalse: playlistListVMlistenFalse,
                   audioToDelete: audio,
+                  audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
                 );
                 break;
               case AudioPopupMenuAction.redownloadDeletedAudio:
