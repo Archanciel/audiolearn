@@ -447,8 +447,13 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                 builder: (BuildContext context) {
                   return ConfirmActionDialog(
                     actionFunction: UiUtil.deleteAudio,
-                    actionFunctionArgs: [context, audioToDelete],
-                    dialogTitleOne: UiUtil.createDeleteCommentedAudioDialogTitle(
+                    actionFunctionArgs: [
+                      context,
+                      audioToDelete,
+                      AudioLearnAppViewType.playlistDownloadView,
+                    ],
+                    dialogTitleOne:
+                        UiUtil.createDeleteCommentedAudioDialogTitle(
                       context: context,
                       audioToDelete: audioToDelete,
                     ),
@@ -487,6 +492,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
               context: context,
               playlistListVMlistenFalse: playlistListVMlistenFalse,
               audioToDelete: audio,
+              audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
             );
             break;
           case AudioPopupMenuAction.redownloadDeletedAudio:

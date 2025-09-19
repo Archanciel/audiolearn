@@ -337,6 +337,7 @@ class UiUtil {
     required BuildContext context,
     required PlaylistListVM playlistListVMlistenFalse,
     required Audio audioToDelete,
+    required AudioLearnAppViewType audioLearnAppViewType,
   }) async {
     Audio? nextAudio;
     Playlist audioToDeletePlaylist = audioToDelete.enclosingPlaylist!;
@@ -344,6 +345,8 @@ class UiUtil {
         playlistListVMlistenFalse.getAudioComments(
       audio: audioToDelete,
     );
+    
+    // audioLearnAppViewType = AudioLearnAppViewType.playlistDownloadView;
 
     if (audioToDeletePlaylist.playlistType == PlaylistType.youtube) {
       await showDialog<dynamic>(
@@ -356,6 +359,7 @@ class UiUtil {
               playlistListVMlistenFalse,
               audioToDelete,
               audioToDeleteCommentLst,
+              audioLearnAppViewType,
             ],
             dialogTitleOne: _createDeleteAudioFromPlaylistAsWellDialogTitle(
               context: context,
@@ -383,7 +387,11 @@ class UiUtil {
           builder: (BuildContext context) {
             return ConfirmActionDialog(
               actionFunction: UiUtil.deleteAudioFromPlaylistAsWell,
-              actionFunctionArgs: [playlistListVMlistenFalse, audioToDelete],
+              actionFunctionArgs: [
+                playlistListVMlistenFalse,
+                audioToDelete,
+                audioLearnAppViewType,
+              ],
               dialogTitleOne: UiUtil.createDeleteCommentedAudioDialogTitle(
                 context: context,
                 audioToDelete: audioToDelete,
@@ -408,8 +416,12 @@ class UiUtil {
           context: context,
           builder: (BuildContext context) {
             return ConfirmActionDialog(
-              actionFunction: deleteAudioFromPlaylistAsWell,
-              actionFunctionArgs: [playlistListVMlistenFalse, audioToDelete],
+              actionFunction: UiUtil.deleteAudioFromPlaylistAsWell,
+              actionFunctionArgs: [
+                playlistListVMlistenFalse,
+                audioToDelete,
+                audioLearnAppViewType,
+              ],
               dialogTitleOne: UiUtil.createDeleteCommentedAudioDialogTitle(
                 context: context,
                 audioToDelete: audioToDelete,
@@ -432,6 +444,7 @@ class UiUtil {
           playlistListVMlistenFalse,
           audioToDelete,
           audioToDeleteCommentLst,
+          audioLearnAppViewType,
         );
       }
     }
@@ -490,12 +503,13 @@ class UiUtil {
   static Audio? deleteAudio(
     BuildContext context,
     Audio audio,
+    AudioLearnAppViewType audioLearnAppViewType,
   ) {
     return Provider.of<PlaylistListVM>(
       context,
       listen: false,
     ).deleteAudioFile(
-      audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+      audioLearnAppViewType: audioLearnAppViewType,
       audio: audio,
     );
   }
@@ -507,9 +521,10 @@ class UiUtil {
   static Audio? deleteAudioFromPlaylistAsWell(
     PlaylistListVM playlistListVMlistenFalse,
     Audio audio,
+    AudioLearnAppViewType audioLearnAppViewType,
   ) {
     return playlistListVMlistenFalse.deleteAudioFromPlaylistAsWell(
-      audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+      audioLearnAppViewType: audioLearnAppViewType,
       audio: audio,
     );
   }
@@ -522,6 +537,7 @@ class UiUtil {
     PlaylistListVM playlistListVMlistenFalse,
     Audio audio,
     List<Comment> audioToDeleteCommentLst,
+    AudioLearnAppViewType audioLearnAppViewType,
   ) {
     if (audioToDeleteCommentLst.isNotEmpty) {
       // The audio has comments, so it cannot be deleted from the
@@ -530,7 +546,7 @@ class UiUtil {
       return null;
     }
     return playlistListVMlistenFalse.deleteAudioFromPlaylistAsWell(
-      audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+      audioLearnAppViewType: audioLearnAppViewType,
       audio: audio,
     );
   }
