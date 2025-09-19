@@ -373,7 +373,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
 
                   // if the passed nextAudio is null, the displayed audio
                   // title will be "No selected audio"
-                  await _replaceCurrentAudioByNextAudio(
+                  await UiUtil.replaceCurrentAudioByNextAudio(
                     context: context,
                     nextAudio: nextAudio,
                   );
@@ -453,14 +453,15 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                     context: context,
                     builder: (BuildContext context) {
                       return ConfirmActionDialog(
-                        actionFunction: deleteAudio,
+                        actionFunction: UiUtil.deleteAudio,
                         actionFunctionArgs: [
                           context,
                           audioToDelete,
                         ],
-                        dialogTitleOne: _createDeleteAudioDialogTitle(
-                          context,
-                          audioToDelete,
+                        dialogTitleOne:
+                            UiUtil.createDeleteCommentedAudioDialogTitle(
+                          context: context,
+                          audioToDelete: audioToDelete,
                         ),
                         dialogContent: AppLocalizations.of(context)!
                             .confirmCommentedAudioDeletionComment(
@@ -485,112 +486,16 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
 
                 // if the passed nextAudio is null, the displayed audio
                 // title will be "No selected audio"
-                await _replaceCurrentAudioByNextAudio(
+                await UiUtil.replaceCurrentAudioByNextAudio(
                   context: context,
                   nextAudio: nextAudio,
                 );
                 break;
               case AudioPopupMenuAction.deleteAudioFromPlaylistAswell:
-                final Audio audioToDelete =
-                    audioPlayerVMlistenFalse.currentAudio!;
-                Audio? nextAudio;
-                final PlaylistListVM playlistListVMlistenFalse =
-                    Provider.of<PlaylistListVM>(
-                  context,
-                  listen: false,
-                );
-
-                final List<Comment> audioToDeleteCommentLst =
-                    playlistListVMlistenFalse.getAudioComments(
-                  audio: audioToDelete,
-                );
-
-                if (audioToDeleteCommentLst.isNotEmpty) {
-                  // await must be applied to showDialog() so that the nextAudio
-                  // variable is assigned according to the result returned by the
-                  // dialog. Otherwise, _replaceCurrentAudioByNextAudio() will be
-                  // called before the dialog is closed and the nextAudio variable
-                  // will be null, which will result in the audio title displayed
-                  // in the audio player view to be "No selected audio" !
-                  //
-                  // If the audio has comments, the ConfirmActionDialog is
-                  // displayed. Otherwise, the audio is deleted from the
-                  // playlist download and playable audio list.
-                  await showDialog<dynamic>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return ConfirmActionDialog(
-                        actionFunction: deleteAudioFromPlaylistAsWell,
-                        actionFunctionArgs: [
-                          playlistListVMlistenFalse,
-                          audioToDelete,
-                        ],
-                        dialogTitleOne: _createDeleteAudioDialogTitle(
-                          context,
-                          audioToDelete,
-                        ),
-                        dialogContent: AppLocalizations.of(context)!
-                            .confirmCommentedAudioDeletionComment(
-                          audioToDeleteCommentLst.length,
-                        ),
-                      );
-                    },
-                  ).then((result) {
-                    if (result == ConfirmAction.cancel) {
-                      nextAudio = audioToDelete;
-                    } else {
-                      nextAudio = result as Audio?;
-                    }
-                  });
-                } else {
-                  Playlist audioToDeletePlaylist =
-                      audioToDelete.enclosingPlaylist!;
-
-                  if (audioToDeletePlaylist.playlistType ==
-                      PlaylistType.youtube) {
-                    await showDialog<dynamic>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return ConfirmActionDialog(
-                          actionFunction: deleteAudioFromPlaylistAsWell,
-                          actionFunctionArgs: [
-                            playlistListVMlistenFalse,
-                            audioToDelete
-                          ],
-                          dialogTitleOne:
-                              _createDeleteAudioFromPlaylistAsWellDialogTitle(
-                            context: context,
-                            audioToDelete: audioToDelete,
-                          ),
-                          dialogContent: AppLocalizations.of(context)!
-                              .confirmAudioFromPlaylistDeletion(
-                            audioToDelete.validVideoTitle,
-                            audioToDeletePlaylist.title,
-                          ),
-                        );
-                      },
-                    ).then((result) {
-                      if (result == ConfirmAction.cancel) {
-                        nextAudio = audioToDelete;
-                      } else {
-                        nextAudio = result as Audio?;
-                      }
-                    });
-                  } else {
-                    nextAudio =
-                        playlistListVMlistenFalse.deleteAudioFromPlaylistAsWell(
-                      audioLearnAppViewType:
-                          AudioLearnAppViewType.playlistDownloadView,
-                      audio: audioToDelete,
-                    );
-                  }
-                }
-
-                // if the passed nextAudio is null, the displayed audio
-                // title will be "No selected audio"
-                await _replaceCurrentAudioByNextAudio(
+                await UiUtil.handleDeleteAudioFromPlaylistAsWell(
                   context: context,
-                  nextAudio: nextAudio,
+                  playlistListVMlistenFalse: playlistListVMlistenFalse,
+                  audioToDelete: audio,
                 );
                 break;
               case AudioPopupMenuAction.redownloadDeletedAudio:
@@ -625,86 +530,6 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
         );
       },
     );
-  }
-
-  /// Public method passed to the ConfirmActionDialog to be executd
-  /// when the Confirm button is pressed. The method deletes the audio
-  /// file and its comments.
-  Audio? deleteAudio(
-    BuildContext context,
-    Audio audio,
-  ) {
-    return Provider.of<PlaylistListVM>(
-      context,
-      listen: false,
-    ).deleteAudioFile(
-      audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
-      audio: audio,
-    );
-  }
-
-  /// Public method passed to the ConfirmActionDialog to be executd
-  /// when the Confirm button is pressed. The method deletes the audio
-  /// file and its comments as well as the audio reference in the playlist
-  /// json file.
-  Audio? deleteAudioFromPlaylistAsWell(
-    PlaylistListVM playlistListVMlistenFalse,
-    Audio audio,
-  ) {
-    return playlistListVMlistenFalse.deleteAudioFromPlaylistAsWell(
-      audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
-      audio: audio,
-    );
-  }
-
-  /// Replaces the current audio by the next audio in the audio player
-  /// view. If the next audio is null, the audio title displayed in the
-  /// audio player view will be "No selected audio".
-  Future<void> _replaceCurrentAudioByNextAudio({
-    required BuildContext context,
-    required Audio? nextAudio,
-  }) async {
-    AudioPlayerVM audioPlayerVMlistenedFalse = Provider.of<AudioPlayerVM>(
-      context,
-      listen: false,
-    );
-
-    if (nextAudio != null) {
-      // Required so that the audio title displayed in the
-      // audio player view is updated with the modified title.
-      await audioPlayerVMlistenedFalse.setCurrentAudio(
-        audio: nextAudio,
-      );
-    } else {
-      // Calling handleNoPlayableAudioAvailable() is necessary
-      // to update the audio title in the audio player view to
-      // "No selected audio"
-      await audioPlayerVMlistenedFalse.handleNoPlayableAudioAvailable();
-    }
-  }
-
-  String _createDeleteAudioDialogTitle(
-    BuildContext context,
-    Audio audioToDelete,
-  ) {
-    String deleteAudioDialogTitle;
-
-    deleteAudioDialogTitle = AppLocalizations.of(context)!
-        .confirmCommentedAudioDeletionTitle(audioToDelete.validVideoTitle);
-
-    return deleteAudioDialogTitle;
-  }
-
-  String _createDeleteAudioFromPlaylistAsWellDialogTitle({
-    required BuildContext context,
-    required Audio audioToDelete,
-  }) {
-    String deleteAudioDialogTitle;
-
-    deleteAudioDialogTitle = AppLocalizations.of(context)!
-        .confirmAudioFromPlaylistDeletionTitle(audioToDelete.validVideoTitle);
-
-    return deleteAudioDialogTitle;
   }
 
   PopupMenuButton<AppBarPopupMenu> _playListDownloadViewPopupMenuButton(

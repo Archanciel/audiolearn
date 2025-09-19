@@ -439,16 +439,16 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
               //
               // Await must be applied to showDialog() so that the nextAudio
               // variable is assigned according to the result returned by the
-              // dialog. Otherwise, _replaceCurrentAudioByNextAudio() will be
+              // dialog. Otherwise, UiUtil.replaceCurrentAudioByNextAudio() will be
               // called before the dialog is closed and the nextAudio variable
               // will remains null.
               await showDialog<dynamic>(
                 context: context,
                 builder: (BuildContext context) {
                   return ConfirmActionDialog(
-                    actionFunction: deleteAudio,
+                    actionFunction: UiUtil.deleteAudio,
                     actionFunctionArgs: [context, audioToDelete],
-                    dialogTitleOne: _createDeleteCommentedAudioDialogTitle(
+                    dialogTitleOne: UiUtil.createDeleteCommentedAudioDialogTitle(
                       context: context,
                       audioToDelete: audioToDelete,
                     ),
@@ -472,7 +472,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
               );
             }
 
-            await _replaceCurrentAudioByNextAudio(
+            await UiUtil.replaceCurrentAudioByNextAudio(
               context: context,
               nextAudio: nextAudio,
             );
@@ -483,122 +483,11 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
             playlistListVMlistenFalse.updateCurrentAudio();
             break;
           case AudioPopupMenuAction.deleteAudioFromPlaylistAswell:
-            final Audio audioToDelete = audio;
-            Audio? nextAudio;
-            Playlist audioToDeletePlaylist = audioToDelete.enclosingPlaylist!;
-            final List<Comment> audioToDeleteCommentLst =
-                playlistListVMlistenFalse.getAudioComments(
-              audio: audioToDelete,
-            );
-
-            if (audioToDeletePlaylist.playlistType == PlaylistType.youtube) {
-              await showDialog<dynamic>(
-                context: context,
-                builder: (BuildContext context) {
-                  return ConfirmActionDialog(
-                    actionFunction:
-                        deleteAudioFromPlaylistAsWellIfNoCommentExist,
-                    actionFunctionArgs: [
-                      playlistListVMlistenFalse,
-                      audioToDelete,
-                      audioToDeleteCommentLst,
-                    ],
-                    dialogTitleOne:
-                        _createDeleteAudioFromPlaylistAsWellDialogTitle(
-                      context: context,
-                      audioToDelete: audioToDelete,
-                    ),
-                    dialogContent: AppLocalizations.of(context)!
-                        .confirmAudioFromPlaylistDeletion(
-                      audioToDelete.validVideoTitle,
-                      audioToDeletePlaylist.title,
-                    ),
-                  );
-                },
-              ).then((result) {
-                if (result == ConfirmAction.cancel) {
-                  nextAudio = audioToDelete;
-                } else {
-                  nextAudio = result as Audio?;
-                }
-              });
-
-              // Handle commented audio for YouTube playlists
-              if (audioToDeleteCommentLst.isNotEmpty &&
-                  nextAudio != audioToDelete) {
-                await showDialog<dynamic>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return ConfirmActionDialog(
-                      actionFunction: deleteAudioFromPlaylistAsWell,
-                      actionFunctionArgs: [
-                        playlistListVMlistenFalse,
-                        audioToDelete
-                      ],
-                      dialogTitleOne: _createDeleteCommentedAudioDialogTitle(
-                        context: context,
-                        audioToDelete: audioToDelete,
-                      ),
-                      dialogContent: AppLocalizations.of(context)!
-                          .confirmCommentedAudioDeletionComment(
-                              audioToDeleteCommentLst.length),
-                    );
-                  },
-                ).then((result) {
-                  if (result == ConfirmAction.cancel) {
-                    nextAudio = audioToDelete;
-                  } else {
-                    nextAudio = result as Audio?;
-                  }
-                });
-              }
-            } else {
-              // The playlist is local
-              if (audioToDeleteCommentLst.isNotEmpty) {
-                await showDialog<dynamic>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return ConfirmActionDialog(
-                      actionFunction: deleteAudioFromPlaylistAsWell,
-                      actionFunctionArgs: [
-                        playlistListVMlistenFalse,
-                        audioToDelete
-                      ],
-                      dialogTitleOne: _createDeleteCommentedAudioDialogTitle(
-                        context: context,
-                        audioToDelete: audioToDelete,
-                      ),
-                      dialogContent: AppLocalizations.of(context)!
-                          .confirmCommentedAudioDeletionComment(
-                              audioToDeleteCommentLst.length),
-                    );
-                  },
-                ).then((result) {
-                  if (result == ConfirmAction.cancel) {
-                    nextAudio = audioToDelete;
-                  } else {
-                    nextAudio = result as Audio?;
-                  }
-                });
-              } else {
-                // For local playlists without comments, handle deletion directly
-                nextAudio = await deleteAudioFromPlaylistAsWellIfNoCommentExist(
-                  playlistListVMlistenFalse,
-                  audioToDelete,
-                  audioToDeleteCommentLst,
-                );
-              }
-            }
-
-            await _replaceCurrentAudioByNextAudio(
+            await UiUtil.handleDeleteAudioFromPlaylistAsWell(
               context: context,
-              nextAudio: nextAudio,
+              playlistListVMlistenFalse: playlistListVMlistenFalse,
+              audioToDelete: audio,
             );
-
-            // This method only calls the PlaylistListVM notifyListeners()
-            // method so that the playlist download view current audio is
-            // updated to the next audio in the playlist playable audio list.
-            playlistListVMlistenFalse.updateCurrentAudio();
             break;
           case AudioPopupMenuAction.redownloadDeletedAudio:
             // You cannot await here, but you can trigger an
@@ -626,106 +515,6 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
         }
       }
     });
-  }
-
-  /// Public method passed to the ConfirmActionDialog to be executd
-  /// when the Confirm button is pressed. The method deletes the audio
-  /// file and its comments.
-  Audio? deleteAudio(
-    BuildContext context,
-    Audio audio,
-  ) {
-    return Provider.of<PlaylistListVM>(
-      context,
-      listen: false,
-    ).deleteAudioFile(
-      audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
-      audio: audio,
-    );
-  }
-
-  /// Public method passed to the ConfirmActionDialog to be executd
-  /// when the Confirm button is pressed. The method deletes the audio
-  /// file and its comments as well as the audio reference in the playlist
-  /// json file.
-  Audio? deleteAudioFromPlaylistAsWell(
-    PlaylistListVM playlistListVMlistenFalse,
-    Audio audio,
-  ) {
-    return playlistListVMlistenFalse.deleteAudioFromPlaylistAsWell(
-      audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
-      audio: audio,
-    );
-  }
-
-  /// Public method passed to the ConfirmActionDialog to be executd
-  /// when the Confirm button is pressed. The method deletes the audio
-  /// file and its comments as well as the audio reference in the playlist
-  /// json file.
-  Audio? deleteAudioFromPlaylistAsWellIfNoCommentExist(
-    PlaylistListVM playlistListVMlistenFalse,
-    Audio audio,
-    List<Comment> audioToDeleteCommentLst,
-  ) {
-    if (audioToDeleteCommentLst.isNotEmpty) {
-      // The audio has comments, so it cannot be deleted from the
-      // playlist json file without that a user confirmation was
-      // obtained.
-      return null;
-    }
-    return playlistListVMlistenFalse.deleteAudioFromPlaylistAsWell(
-      audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
-      audio: audio,
-    );
-  }
-
-  /// Replaces the current audio by the next audio in the audio player
-  /// view.
-  Future<void> _replaceCurrentAudioByNextAudio({
-    required BuildContext context,
-    required Audio? nextAudio,
-  }) async {
-    AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
-      context,
-      listen: false,
-    );
-
-    if (nextAudio != null) {
-      // Required so that the audio title displayed in the
-      // audio player view is updated with the modified title.
-      await audioPlayerVMlistenFalse.setCurrentAudio(
-        audio: nextAudio,
-      );
-    } else {
-      // Calling handleNoPlayableAudioAvailable() is necessary
-      // to update the audio title in the audio player view to
-      // "No selected audio"
-      await audioPlayerVMlistenFalse.handleNoPlayableAudioAvailable();
-    }
-  }
-
-  String _createDeleteCommentedAudioDialogTitle({
-    required BuildContext context,
-    required Audio audioToDelete,
-  }) {
-    String deleteAudioDialogTitle;
-
-    deleteAudioDialogTitle = AppLocalizations.of(context)!
-        .confirmCommentedAudioDeletionTitle(audioToDelete.validVideoTitle);
-
-    return deleteAudioDialogTitle;
-  }
-
-  String _createDeleteAudioFromPlaylistAsWellDialogTitle({
-    required BuildContext context,
-    required Audio audioToDelete,
-  }) {
-    String deleteAudioDialogTitle;
-
-    deleteAudioDialogTitle = AppLocalizations.of(context)!
-        .confirmAudioFromPlaylistDeletionTitle(audioToDelete.validVideoTitle);
-
-    return deleteAudioDialogTitle;
   }
 
   /// Method called when the user clicks on the audio list item play icon button.
