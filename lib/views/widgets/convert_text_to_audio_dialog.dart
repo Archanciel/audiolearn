@@ -20,20 +20,6 @@ import '../../viewmodels/theme_provider_vm.dart';
 import 'confirm_action_dialog.dart';
 import 'help_dialog.dart';
 
-enum CalledFrom {
-  playlistDownloadView,
-  playlistDownloadViewAudioMenu,
-  audioPlayerView,
-  audioPlayerViewAudioMenu,
-}
-
-enum DateTimeType {
-  startDownloadDateTime,
-  endDownloadDateTime,
-  startUploadDateTime,
-  endUploadDateTime,
-}
-
 class ConvertTextToAudioDialog extends StatefulWidget {
   final Playlist targetPlaylist;
   final FocusNode focusNode;
