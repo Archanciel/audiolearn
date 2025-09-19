@@ -199,7 +199,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String deleteAudioFromPlaylistAswellWarning(
       Object audioTitle, Object playlistTitle) {
-    return 'If the deleted audio \"$audioTitle\" remains in the \"$playlistTitle\" Youtube playlist, it will be downloaded again the next time you download the playlist !';
+    return 'If the deleted audio \"$audioTitle\" remains in the \"$playlistTitle\" playlist located on Youtube, it will be downloaded again the next time you download the playlist !';
   }
 
   @override

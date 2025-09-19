@@ -199,7 +199,7 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String deleteAudioFromPlaylistAswellWarning(
       Object audioTitle, Object playlistTitle) {
-    return 'Supprimer l\'audio \"$audioTitle\" de la playlist Youtube \"$playlistTitle\", sinon l\'audio sera téléchargé à nouveau lors du prochain téléchargement de la playlist.';
+    return 'Supprimez l\'audio \"$audioTitle\" de la playlist \"$playlistTitle\" se trouvant sur Youtube, sinon l\'audio sera téléchargé à nouveau lors du prochain téléchargement de la playlist.';
   }
 
   @override

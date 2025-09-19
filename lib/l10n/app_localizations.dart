@@ -461,7 +461,7 @@ abstract class AppLocalizations {
   /// No description provided for @deleteAudioFromPlaylistAswellWarning.
   ///
   /// In en, this message translates to:
-  /// **'If the deleted audio \"{audioTitle}\" remains in the \"{playlistTitle}\" Youtube playlist, it will be downloaded again the next time you download the playlist !'**
+  /// **'If the deleted audio \"{audioTitle}\" remains in the \"{playlistTitle}\" playlist located on Youtube, it will be downloaded again the next time you download the playlist !'**
   String deleteAudioFromPlaylistAswellWarning(
       Object audioTitle, Object playlistTitle);
 

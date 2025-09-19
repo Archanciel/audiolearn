@@ -71,7 +71,7 @@
   "cancelButton": "Cancel",
   "deleteAudio": "Delete Audio ...",
   "deleteAudioFromPlaylistAswell": "Delete Audio from Playlist as well ...",
-  "deleteAudioFromPlaylistAswellWarning": "If the deleted audio \"{audioTitle}\" remains in the \"{playlistTitle}\" Youtube playlist, it will be downloaded again the next time you download the playlist !",
+  "deleteAudioFromPlaylistAswellWarning": "If the deleted audio \"{audioTitle}\" remains in the \"{playlistTitle}\" playlist located on Youtube, it will be downloaded again the next time you download the playlist !",
   "warningDialogTitle": "WARNING",
   "updatedPlaylistUrlTitle": "Youtube playlist \"{title}\" URL was updated. The playlist can be downloaded with its new URL.",
   "@updatedPlaylistUrlTitle": {
