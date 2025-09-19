@@ -485,37 +485,34 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
           case AudioPopupMenuAction.deleteAudioFromPlaylistAswell:
             final Audio audioToDelete = audio;
             Audio? nextAudio;
+            Playlist audioToDeletePlaylist = audioToDelete.enclosingPlaylist!;
             final List<Comment> audioToDeleteCommentLst =
                 playlistListVMlistenFalse.getAudioComments(
               audio: audioToDelete,
             );
 
-            if (audioToDeleteCommentLst.isNotEmpty) {
-              // Await must be applied to showDialog() so that the nextAudio
-              // variable is assigned according to the result returned by the
-              // dialog. Otherwise, _replaceCurrentAudioByNextAudio() will be
-              // called before the dialog is closed and the nextAudio variable
-              // will remains null.
-              //
-              // If the audio has comments, the ConfirmActionDialog is
-              // displayed. Otherwise, the audio is deleted from the
-              // playlist download and playable audio list.
+            if (audioToDeletePlaylist.playlistType == PlaylistType.youtube) {
               await showDialog<dynamic>(
                 context: context,
                 builder: (BuildContext context) {
                   return ConfirmActionDialog(
-                    actionFunction: deleteAudioFromPlaylistAsWell,
+                    actionFunction:
+                        deleteAudioFromPlaylistAsWellIfNoCommentExist,
                     actionFunctionArgs: [
                       playlistListVMlistenFalse,
-                      audioToDelete
+                      audioToDelete,
+                      audioToDeleteCommentLst,
                     ],
-                    dialogTitleOne: _createDeleteCommentedAudioDialogTitle(
+                    dialogTitleOne:
+                        _createDeleteAudioFromPlaylistAsWellDialogTitle(
                       context: context,
                       audioToDelete: audioToDelete,
                     ),
                     dialogContent: AppLocalizations.of(context)!
-                        .confirmCommentedAudioDeletionComment(
-                            audioToDeleteCommentLst.length),
+                        .confirmAudioFromPlaylistDeletion(
+                      audioToDelete.validVideoTitle,
+                      audioToDeletePlaylist.title,
+                    ),
                   );
                 },
               ).then((result) {
@@ -525,10 +522,10 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                   nextAudio = result as Audio?;
                 }
               });
-            } else {
-              Playlist audioToDeletePlaylist = audioToDelete.enclosingPlaylist!;
 
-              if (audioToDeletePlaylist.playlistType == PlaylistType.youtube) {
+              // Handle commented audio for YouTube playlists
+              if (audioToDeleteCommentLst.isNotEmpty &&
+                  nextAudio != audioToDelete) {
                 await showDialog<dynamic>(
                   context: context,
                   builder: (BuildContext context) {
@@ -538,16 +535,42 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                         playlistListVMlistenFalse,
                         audioToDelete
                       ],
-                      dialogTitleOne:
-                          _createDeleteAudioFromPlaylistAsWellDialogTitle(
+                      dialogTitleOne: _createDeleteCommentedAudioDialogTitle(
                         context: context,
                         audioToDelete: audioToDelete,
                       ),
                       dialogContent: AppLocalizations.of(context)!
-                          .confirmAudioFromPlaylistDeletion(
-                        audioToDelete.validVideoTitle,
-                        audioToDeletePlaylist.title,
+                          .confirmCommentedAudioDeletionComment(
+                              audioToDeleteCommentLst.length),
+                    );
+                  },
+                ).then((result) {
+                  if (result == ConfirmAction.cancel) {
+                    nextAudio = audioToDelete;
+                  } else {
+                    nextAudio = result as Audio?;
+                  }
+                });
+              }
+            } else {
+              // The playlist is local
+              if (audioToDeleteCommentLst.isNotEmpty) {
+                await showDialog<dynamic>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return ConfirmActionDialog(
+                      actionFunction: deleteAudioFromPlaylistAsWell,
+                      actionFunctionArgs: [
+                        playlistListVMlistenFalse,
+                        audioToDelete
+                      ],
+                      dialogTitleOne: _createDeleteCommentedAudioDialogTitle(
+                        context: context,
+                        audioToDelete: audioToDelete,
                       ),
+                      dialogContent: AppLocalizations.of(context)!
+                          .confirmCommentedAudioDeletionComment(
+                              audioToDeleteCommentLst.length),
                     );
                   },
                 ).then((result) {
@@ -558,11 +581,11 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                   }
                 });
               } else {
-                nextAudio =
-                    playlistListVMlistenFalse.deleteAudioFromPlaylistAsWell(
-                  audioLearnAppViewType:
-                      AudioLearnAppViewType.playlistDownloadView,
-                  audio: audioToDelete,
+                // For local playlists without comments, handle deletion directly
+                nextAudio = await deleteAudioFromPlaylistAsWellIfNoCommentExist(
+                  playlistListVMlistenFalse,
+                  audioToDelete,
+                  audioToDeleteCommentLst,
                 );
               }
             }
@@ -629,6 +652,27 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
     PlaylistListVM playlistListVMlistenFalse,
     Audio audio,
   ) {
+    return playlistListVMlistenFalse.deleteAudioFromPlaylistAsWell(
+      audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+      audio: audio,
+    );
+  }
+
+  /// Public method passed to the ConfirmActionDialog to be executd
+  /// when the Confirm button is pressed. The method deletes the audio
+  /// file and its comments as well as the audio reference in the playlist
+  /// json file.
+  Audio? deleteAudioFromPlaylistAsWellIfNoCommentExist(
+    PlaylistListVM playlistListVMlistenFalse,
+    Audio audio,
+    List<Comment> audioToDeleteCommentLst,
+  ) {
+    if (audioToDeleteCommentLst.isNotEmpty) {
+      // The audio has comments, so it cannot be deleted from the
+      // playlist json file without that a user confirmation was
+      // obtained.
+      return null;
+    }
     return playlistListVMlistenFalse.deleteAudioFromPlaylistAsWell(
       audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
       audio: audio,
