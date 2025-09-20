@@ -2138,20 +2138,6 @@ class AudioDownloadVM extends ChangeNotifier {
       model: enclosingPlaylist,
       path: enclosingPlaylist.getPlaylistDownloadFilePathName(),
     );
-
-    if (enclosingPlaylist.playlistType == PlaylistType.youtube &&
-        audio.audioType == AudioType.downloaded) {
-      if (audio.movedFromPlaylistTitle == null &&
-          audio.copiedFromPlaylistTitle == null) {
-        // the case if the audio was not moved or copied from
-        // another playlist, but was downloaded from the
-        // Youtube playlist
-        warningMessageVM.setDeleteAudioFromPlaylistAswellTitle(
-            deleteAudioFromPlaylistAswellTitle: enclosingPlaylist.title,
-            deleteAudioFromPlaylistAswellAudioVideoTitle:
-                audio.originalVideoTitle);
-      }
-    }
   }
 
   /// Method called by PlaylistListVM when the user selects the update playlist

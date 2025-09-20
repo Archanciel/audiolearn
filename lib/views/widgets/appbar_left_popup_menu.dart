@@ -498,6 +498,10 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   playlistListVMlistenFalse: playlistListVMlistenFalse,
                   audioToDelete: audio,
                   audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+                  warningMessageVM: Provider.of<WarningMessageVM>(
+                    context,
+                    listen: false,
+                  ),
                 );
                 break;
               case AudioPopupMenuAction.redownloadDeletedAudio:

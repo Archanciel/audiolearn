@@ -493,6 +493,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
               playlistListVMlistenFalse: playlistListVMlistenFalse,
               audioToDelete: audio,
               audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+              warningMessageVM: warningMessageVM,
             );
             break;
           case AudioPopupMenuAction.redownloadDeletedAudio:
