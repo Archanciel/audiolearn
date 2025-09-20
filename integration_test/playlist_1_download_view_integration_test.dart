@@ -5516,7 +5516,7 @@ void main() {
           "L'audio contient 1 commentaire(s) qui seront également supprimés. Confirmer la suppression ?",
         ],
         closeDialogWithConfirmButton: true,
-      ); // Process the tap immediately
+      );
 
       // Now verify that the target playlist directory no longer
       // contains the audio file copied from the source playlist
@@ -5817,7 +5817,7 @@ void main() {
           "L'audio contient 1 commentaire(s) qui seront également supprimés. Confirmer la suppression ?",
         ],
         closeDialogWithConfirmButton: true,
-      ); 
+      );
 
       // Now verify that the target playlist directory no longer
       // contains the audio file copied from the source playlist
@@ -8294,9 +8294,20 @@ void main() {
       await tester.tap(popupDisplayAudioInfoMenuItemFinder);
       await tester.pumpAndSettle();
 
-      // Now verifying the deleted audio was physically deleted from
-      // the playlist directory. No warning was displayed.
+      // Now verifying the confirm action dialog title and message
+      // and confirm the deletion
+      await IntegrationTestUtil.verifyConfirmActionDialog(
+        tester: tester,
+        confirmActionDialogTitle:
+            "Confirmez la suppression de l'audio \"$copiedAudioTitle\" de la playlist Youtube",
+        confirmActionDialogMessagePossibleLst: [
+          "Supprimez l'audio \"$copiedAudioTitle\" de la playlist \"$youtubeAudioTargetPlaylistTitle\" définie sur le site Youtube, sinon l'audio sera téléchargé à nouveau lors du prochain téléchargement de la playlist. Ou alors cliquez sur \"Annuler\" et choisissez \"Supprimer l'audio ...\" au lieu de \"Supprimer l'audio de la playlist également ...\". Ainsi, l'audio sera supprimé de la liste des audio's jouables, mais restera dans la liste des audio's téléchargés, ce qui évitera son re-téléchargement.",
+        ],
+        closeDialogWithConfirmButton: true,
+      );
 
+      // Now verifying the deleted audio was physically deleted from
+      // the playlist directory.
       targetPlaylistMp3Lst = DirUtil.listFileNamesInDir(
         directoryPath:
             '$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$youtubeAudioTargetPlaylistTitle',
@@ -8666,6 +8677,18 @@ void main() {
 
       await tester.tap(popupDisplayAudioInfoMenuItemFinder);
       await tester.pumpAndSettle();
+
+      // Now verifying the confirm action dialog title and message
+      // and confirm the deletion
+      await IntegrationTestUtil.verifyConfirmActionDialog(
+        tester: tester,
+        confirmActionDialogTitle:
+            "Confirmez la suppression de l'audio \"$copiedAudioTitle\" de la playlist Youtube",
+        confirmActionDialogMessagePossibleLst: [
+          "Supprimez l'audio \"$copiedAudioTitle\" de la playlist \"$youtubeAudioTargetPlaylistTitle\" définie sur le site Youtube, sinon l'audio sera téléchargé à nouveau lors du prochain téléchargement de la playlist. Ou alors cliquez sur \"Annuler\" et choisissez \"Supprimer l'audio ...\" au lieu de \"Supprimer l'audio de la playlist également ...\". Ainsi, l'audio sera supprimé de la liste des audio's jouables, mais restera dans la liste des audio's téléchargés, ce qui évitera son re-téléchargement.",
+        ],
+        closeDialogWithConfirmButton: true,
+      );
 
       // Now verifying the deleted audio was physically deleted from
       // the playlist directory. No warning was displayed.
@@ -10976,33 +10999,24 @@ void main() {
           await tester.pumpAndSettle();
 
           // Now find the delete audio popup menu item and tap on it
-          final Finder popupCopyMenuItem =
+          final Finder popupDeleteMenuItem =
               find.byKey(const Key("popup_menu_delete_audio"));
 
-          await tester.tap(popupCopyMenuItem);
+          await tester.tap(popupDeleteMenuItem);
           await tester.pumpAndSettle();
 
-          // Verifying the confirm dialog title
-
-          final Text deleteFilteredAudioConfirmDialogTitleWidget = tester
-              .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
-
-          expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
-              'Confirm deletion of the audio "$commentedAudioTitleToDelete" from the Youtube playlist');
-
-          // Verifying the confirm dialog message
-
-          final Text deleteFilteredAudioConfirmDialogMessageTextWidget =
-              tester.widget<Text>(
-                  find.byKey(const Key('confirmationDialogMessageKey')));
-
-          expect(deleteFilteredAudioConfirmDialogMessageTextWidget.data,
-              'Delete the audio "$commentedAudioTitleToDelete" from the playlist "$youtubePlaylistTitle" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on "Cancel" and choose "Delete Audio ..." instead of "Delete Audio from Playlist as well ...". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.');
-
-          // Now find the confirm button of the delete filtered audio confirm
-          // dialog and tap on it
-          await tester.tap(find.byKey(const Key('confirmButton')));
-          await tester.pumpAndSettle();
+          // Now verifying the confirm action dialog title and message
+          // and confirm the deletion
+          await IntegrationTestUtil.verifyConfirmActionDialog(
+            tester: tester,
+            confirmActionDialogTitle:
+                'Confirm deletion of the commented audio "$commentedAudioTitleToDelete"',
+            confirmActionDialogMessagePossibleLst: [
+              'The audio contains 1 comment(s) which will be deleted as well. Confirm deletion ?',
+            ],
+            closeDialogWithConfirmButton: true,
+            usePumpAndSettle: true,
+          );
 
           // Verify that the applyed Sort/Filter parms name is displayed
           // after the selected playlist title
@@ -11367,27 +11381,18 @@ void main() {
           await tester.tap(popupCopyMenuItem);
           await tester.pumpAndSettle();
 
-          // Verifying the confirm dialog title
-
-          final Text deleteFilteredAudioConfirmDialogTitleWidget = tester
-              .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
-
-          expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
-              'Confirm deletion of the audio "$commentedAudioTitleToDelete" from the Youtube playlist');
-
-          // Verifying the confirm dialog message
-
-          final Text deleteFilteredAudioConfirmDialogMessageTextWidget =
-              tester.widget<Text>(
-                  find.byKey(const Key('confirmationDialogMessageKey')));
-
-          expect(deleteFilteredAudioConfirmDialogMessageTextWidget.data,
-              'Delete the audio "$commentedAudioTitleToDelete" from the playlist "$youtubePlaylistTitle" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on "Cancel" and choose "Delete Audio ..." instead of "Delete Audio from Playlist as well ...". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.');
-
-          // Now find the confirm button of the delete filtered audio confirm
-          // dialog and tap on it
-          await tester.tap(find.byKey(const Key('confirmButton')));
-          await tester.pumpAndSettle();
+          // Now verifying the confirm action dialog title and message
+          // and confirm the deletion
+          await IntegrationTestUtil.verifyConfirmActionDialog(
+            tester: tester,
+            confirmActionDialogTitle:
+                'Confirm deletion of the commented audio "$commentedAudioTitleToDelete"',
+            confirmActionDialogMessagePossibleLst: [
+              'The audio contains 1 comment(s) which will be deleted as well. Confirm deletion ?',
+            ],
+            closeDialogWithConfirmButton: true,
+            usePumpAndSettle: true,
+          );
 
           // Verify that the applyed Sort/Filter parms name is displayed
           // after the selected playlist title
@@ -11767,33 +11772,37 @@ void main() {
           await tester.tap(popupCopyMenuItem);
           await tester.pumpAndSettle();
 
-          // Verifying the confirm dialog title
+          // Now verifying the confirm action dialog title and message
+          // and confirm the deletion
+          await IntegrationTestUtil.verifyConfirmActionDialog(
+            tester: tester,
+            confirmActionDialogTitle:
+                'Confirm deletion of the audio "$commentedAudioTitleToDelete" from the Youtube playlist',
+            confirmActionDialogMessagePossibleLst: [
+              'Delete the audio "$commentedAudioTitleToDelete" from the playlist "$youtubePlaylistTitle" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on "Cancel" and choose "Delete Audio ..." instead of "Delete Audio from Playlist as well ...". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.',
+            ],
+            closeDialogWithConfirmButton: true,
+            usePumpAndSettle: true,
+          );
 
-          final Text deleteFilteredAudioConfirmDialogTitleWidget = tester
-              .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
-
-          expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
-              'Confirm deletion of the audio "$commentedAudioTitleToDelete" from the Youtube playlist');
-
-          // Verifying the confirm dialog message
-
-          final Text deleteFilteredAudioConfirmDialogMessageTextWidget =
-              tester.widget<Text>(
-                  find.byKey(const Key('confirmationDialogMessageKey')));
-
-          expect(deleteFilteredAudioConfirmDialogMessageTextWidget.data,
-              'Delete the audio "$commentedAudioTitleToDelete" from the playlist "$youtubePlaylistTitle" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on "Cancel" and choose "Delete Audio ..." instead of "Delete Audio from Playlist as well ...". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.');
-
-          // Now find the confirm button of the delete filtered audio confirm
-          // dialog and tap on it
-          await tester.tap(find.byKey(const Key('confirmButton')));
-          await tester.pumpAndSettle();
+          // Now verifying the confirm action dialog title and message
+          // and confirm the deletion
+          await IntegrationTestUtil.verifyConfirmActionDialog(
+            tester: tester,
+            confirmActionDialogTitle:
+                'Confirm deletion of the commented audio "$commentedAudioTitleToDelete"',
+            confirmActionDialogMessagePossibleLst: [
+              'The audio contains 1 comment(s) which will be deleted as well. Confirm deletion ?',
+            ],
+            closeDialogWithConfirmButton: true,
+            usePumpAndSettle: true,
+          );
 
           // Now verifying the warning dialog
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'If the deleted audio video "$commentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !',
+                'If the deleted audio \"$commentedAudioTitleToDelete\" remains in the \"$youtubePlaylistTitle\" playlist located on Youtube, it will be downloaded again the next time you download the playlist !',
             isWarningConfirming: false,
           );
 
@@ -11951,11 +11960,24 @@ void main() {
           await tester.tap(popupCopyMenuItem);
           await tester.pumpAndSettle();
 
+          // Now verifying the confirm action dialog title and message
+          // and confirm the deletion
+          await IntegrationTestUtil.verifyConfirmActionDialog(
+            tester: tester,
+            confirmActionDialogTitle:
+                'Confirm deletion of the audio "$uncommentedAudioTitleToDelete" from the Youtube playlist',
+            confirmActionDialogMessagePossibleLst: [
+              'Delete the audio "$uncommentedAudioTitleToDelete" from the playlist "$youtubePlaylistTitle" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on "Cancel" and choose "Delete Audio ..." instead of "Delete Audio from Playlist as well ...". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.',
+            ],
+            closeDialogWithConfirmButton: true,
+            usePumpAndSettle: true,
+          );
+
           // Now verifying the warning dialog
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'If the deleted audio video "$uncommentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !',
+                'If the deleted audio \"$uncommentedAudioTitleToDelete\" remains in the \"$youtubePlaylistTitle\" playlist located on Youtube, it will be downloaded again the next time you download the playlist !',
             isWarningConfirming: false,
           );
 
@@ -12213,33 +12235,37 @@ void main() {
           await tester.tap(popupCopyMenuItem);
           await tester.pumpAndSettle();
 
-          // Verifying the confirm dialog title
+          // Now verifying the confirm action dialog title and message
+          // and confirm the deletion
+          await IntegrationTestUtil.verifyConfirmActionDialog(
+            tester: tester,
+            confirmActionDialogTitle:
+                'Confirm deletion of the audio "$commentedAudioTitleToDelete" from the Youtube playlist',
+            confirmActionDialogMessagePossibleLst: [
+              'Delete the audio "$commentedAudioTitleToDelete" from the playlist "$youtubePlaylistTitle" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on "Cancel" and choose "Delete Audio ..." instead of "Delete Audio from Playlist as well ...". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.',
+            ],
+            closeDialogWithConfirmButton: true,
+            usePumpAndSettle: true,
+          );
 
-          final Text deleteFilteredAudioConfirmDialogTitleWidget = tester
-              .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
-
-          expect(deleteFilteredAudioConfirmDialogTitleWidget.data,
-              'Confirm deletion of the audio "$commentedAudioTitleToDelete" from the Youtube playlist');
-
-          // Verifying the confirm dialog message
-
-          final Text deleteFilteredAudioConfirmDialogMessageTextWidget =
-              tester.widget<Text>(
-                  find.byKey(const Key('confirmationDialogMessageKey')));
-
-          expect(deleteFilteredAudioConfirmDialogMessageTextWidget.data,
-              'Delete the audio "$commentedAudioTitleToDelete" from the playlist "$youtubePlaylistTitle" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on "Cancel" and choose "Delete Audio ..." instead of "Delete Audio from Playlist as well ...". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.');
-
-          // Now find the confirm button of the delete filtered audio confirm
-          // dialog and tap on it
-          await tester.tap(find.byKey(const Key('confirmButton')));
-          await tester.pumpAndSettle();
+          // Now verifying the confirm action dialog title and message
+          // and confirm the deletion
+          await IntegrationTestUtil.verifyConfirmActionDialog(
+            tester: tester,
+            confirmActionDialogTitle:
+                'Confirm deletion of the commented audio "$commentedAudioTitleToDelete"',
+            confirmActionDialogMessagePossibleLst: [
+              'The audio contains 1 comment(s) which will be deleted as well. Confirm deletion ?',
+            ],
+            closeDialogWithConfirmButton: true,
+            usePumpAndSettle: true,
+          );
 
           // Now verifying the warning dialog
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'If the deleted audio video "$commentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !',
+                'If the deleted audio \"$commentedAudioTitleToDelete\" remains in the \"$youtubePlaylistTitle\" playlist located on Youtube, it will be downloaded again the next time you download the playlist !',
             isWarningConfirming: false,
           );
 
@@ -12494,11 +12520,24 @@ void main() {
           await tester.tap(popupCopyMenuItem);
           await tester.pumpAndSettle();
 
+          // Now verifying the confirm action dialog title and message
+          // and confirm the deletion
+          await IntegrationTestUtil.verifyConfirmActionDialog(
+            tester: tester,
+            confirmActionDialogTitle:
+                'Confirm deletion of the audio "$uncommentedAudioTitleToDelete" from the Youtube playlist',
+            confirmActionDialogMessagePossibleLst: [
+              'Delete the audio "$uncommentedAudioTitleToDelete" from the playlist "$youtubePlaylistTitle" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on "Cancel" and choose "Delete Audio ..." instead of "Delete Audio from Playlist as well ...". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.',
+            ],
+            closeDialogWithConfirmButton: true,
+            usePumpAndSettle: true,
+          );
+
           // Now verifying the warning dialog
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'If the deleted audio video "$uncommentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !',
+                'If the deleted audio \"$uncommentedAudioTitleToDelete\" remains in the \"$youtubePlaylistTitle\" playlist located on Youtube, it will be downloaded again the next time you download the playlist !',
             isWarningConfirming: false,
           );
 
@@ -12814,10 +12853,10 @@ void main() {
           // plalist, no warning is displayed indicating that the audio
           // will be redownloaded unless it is suppressed from the Youtube
           // playlist as well !
-          final Finder popupCopyMenuItem = find
+          final Finder popupDeleteMenuItem = find
               .byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
 
-          await tester.tap(popupCopyMenuItem);
+          await tester.tap(popupDeleteMenuItem);
           await tester.pumpAndSettle();
 
           // Now verifying the selected playlist TextField still
@@ -13719,14 +13758,24 @@ void main() {
       await tester.tap(popupDeleteAudioFromPlaylistAsWellMenuItem);
       await tester.pumpAndSettle();
 
-      // Ensure the warning dialog is shown
-      expect(find.byType(WarningMessageDisplayDialog), findsOneWidget);
+      // Now verifying the confirm action dialog title and message
+      // and confirm the deletion
+      await IntegrationTestUtil.verifyConfirmActionDialog(
+        tester: tester,
+        confirmActionDialogTitle:
+            'Confirm deletion of the audio "$audioToDeleteTitle" from the Youtube playlist',
+        confirmActionDialogMessagePossibleLst: [
+          'Delete the audio "$audioToDeleteTitle" from the playlist "$youtubeAudioPlaylistTitle" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on "Cancel" and choose "Delete Audio ..." instead of "Delete Audio from Playlist as well ...". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.',
+        ],
+        closeDialogWithConfirmButton: true,
+        usePumpAndSettle: true,
+      );
 
       // Now verifying the warning dialog
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'If the deleted audio video "$audioToDeleteTitle" remains in the "$youtubeAudioPlaylistTitle" Youtube playlist, it will be downloaded again the next time you download the playlist !',
+            'If the deleted audio \"$audioToDeleteTitle\" remains in the \"$youtubeAudioPlaylistTitle\" playlist located on Youtube, it will be downloaded again the next time you download the playlist !',
         isWarningConfirming: false,
       );
 
@@ -15006,14 +15055,11 @@ void main() {
         confirmActionDialogTitle:
             'Supprimer la playlist Youtube "$youtubePlaylistToDeleteTitle"',
         confirmActionDialogMessagePossibleLst: [
+          "Suppression de la playlist, de ses 2 fichiers audio, de ses 3 commentaire(s) audio, de ses 0 photo(s) audio ainsi que de son fichier JSON et de son répertoire."
         ],
         closeDialogWithConfirmButton: true,
-      ); 
-
-      // Now find the confirm button of the delete playlist confirm
-      // dialog and tap on it
-      await tester.tap(find.byKey(const Key('confirmButton')));
-      await tester.pumpAndSettle();
+        usePumpAndSettle: true,
+      );
 
       // Reload the settings from the json file.
       await settingsDataService.loadSettingsFromFile(
