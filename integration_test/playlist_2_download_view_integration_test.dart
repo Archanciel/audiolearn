@@ -16417,7 +16417,7 @@ void main() {
           ],
           useContains: true,
           closeDialogWithConfirmButton: true,
-        ); // Process the tap immediately
+        );
 
         // Only works if tester.pump() is used instead of
         // tester.pumpAndSettle()
@@ -16594,7 +16594,7 @@ void main() {
             "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02"
           ],
           closeDialogWithConfirmButton: true,
-        ); // Process the tap immediately
+        );
 
         // Only works if tester.pump() is used instead of
         // tester.pumpAndSettle()
@@ -16768,7 +16768,7 @@ void main() {
             "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:00.",
           ],
           closeDialogWithConfirmButton: true,
-        ); // Process the tap immediately
+        );
 
         // Verify the displayed warning dialog
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
@@ -16878,7 +16878,7 @@ void main() {
           ],
           useContains: true,
           closeDialogWithConfirmButton: true,
-        ); // Process the tap immediately
+        );
 
         // Only works if tester.pump() is used instead of
         // tester.pumpAndSettle()
@@ -17055,7 +17055,7 @@ void main() {
             "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02.",
           ],
           closeDialogWithConfirmButton: true,
-        ); // Process the tap immediately
+        );
 
         Text warningDialogTitle =
             tester.widget(find.byKey(const Key('warningDialogTitle')).last);
@@ -17211,7 +17211,7 @@ void main() {
             "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:00.",
           ],
           closeDialogWithConfirmButton: true,
-        ); // Process the tap immediately
+        );
 
         // Verify the displayed warning dialog
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
@@ -29861,7 +29861,7 @@ void main() {
             "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$selectedYoutubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
         confirmActionDialogMessagePossibleLst: [],
         closeDialogWithConfirmButton: true,
-      ); // Process the tap immediately
+      );
 
       await Future.delayed(const Duration(seconds: 2));
       await tester.pumpAndSettle();
@@ -30315,7 +30315,7 @@ void main() {
             "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$unselectedLocalPlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
         confirmActionDialogMessagePossibleLst: [],
         closeDialogWithConfirmButton: true,
-      ); // Process the tap immediately
+      );
 
       await Future.delayed(const Duration(seconds: 2));
       await tester.pumpAndSettle();
