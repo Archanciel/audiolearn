@@ -346,7 +346,7 @@ class UiUtil {
         playlistListVMlistenFalse.getAudioComments(
       audio: audioToDelete,
     );
-    
+
     // audioLearnAppViewType = AudioLearnAppViewType.playlistDownloadView;
 
     if (audioToDeletePlaylist.playlistType == PlaylistType.youtube) {
@@ -455,9 +455,14 @@ class UiUtil {
       nextAudio: nextAudio,
     );
 
-    warningMessageVM.setDeleteAudioFromPlaylistAswellTitle(
-        deleteAudioFromPlaylistAswellTitle: audioToDelete.enclosingPlaylist!.title,
-        deleteAudioFromPlaylistAswellAudioVideoTitle: audioToDelete.originalVideoTitle);
+    Playlist playlist = audioToDelete.enclosingPlaylist!;
+
+    if (playlist.playlistType == PlaylistType.youtube) {
+      warningMessageVM.setDeleteAudioFromPlaylistAswellTitle(
+          deleteAudioFromPlaylistAswellTitle: playlist.title,
+          deleteAudioFromPlaylistAswellAudioVideoTitle:
+              audioToDelete.originalVideoTitle);
+    }
 
     // This method only calls the PlaylistListVM notifyListeners()
     // method so that the playlist download view current audio is
