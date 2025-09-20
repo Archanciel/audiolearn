@@ -87,6 +87,7 @@ void main() {
             'local',
             'urgent_actus_17-12-2023',
           ],
+          onAndroid: true,
         );
 
         Finder okButtonFinder = find.byKey(const Key('warningDialogOkButton'));
@@ -111,6 +112,7 @@ void main() {
           tester: tester,
           doReplaceExistingPlaylists: false,
           verifySetValueToTargetDialog: true,
+          onAndroid: true,
         );
 
         // Must be used on Android emulator, otherwise the confirmation
@@ -224,6 +226,7 @@ void main() {
             'local',
             'urgent_actus_17-12-2023',
           ],
+          onAndroid: true,
         );
 
         Finder okButtonFinder = find.byKey(const Key('warningDialogOkButton'));
@@ -249,6 +252,7 @@ void main() {
           tester: tester,
           doReplaceExistingPlaylists: false,
           verifySetValueToTargetDialog: true,
+          onAndroid: true,
         );
 
         // Must be used on Android emulator, otherwise the confirmation
@@ -365,6 +369,7 @@ void main() {
             'local',
             'urgent_actus_17-12-2023',
           ],
+          onAndroid: true,
         );
 
         Finder okButtonFinder = find.byKey(const Key('warningDialogOkButton'));
@@ -389,6 +394,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          onAndroid: true,
         );
 
         // Must be used on Android emulator, otherwise the confirmation
@@ -494,6 +500,7 @@ void main() {
             'local',
             'urgent_actus_17-12-2023',
           ],
+          onAndroid: true,
         );
 
         Finder okButtonFinder = find.byKey(const Key('warningDialogOkButton'));
@@ -518,6 +525,7 @@ void main() {
           tester: tester,
           doReplaceExistingPlaylists: false,
           verifySetValueToTargetDialog: true,
+          onAndroid: true,
         );
 
         // Must be used on Android emulator, otherwise the confirmation
@@ -631,6 +639,7 @@ void main() {
             'local',
             'urgent_actus_17-12-2023',
           ],
+          onAndroid: true,
         );
 
         Finder okButtonFinder = find.byKey(const Key('warningDialogOkButton'));
@@ -656,6 +665,7 @@ void main() {
           tester: tester,
           doReplaceExistingPlaylists: false,
           verifySetValueToTargetDialog: true,
+          onAndroid: true,
         );
 
         // Must be used on Android emulator, otherwise the confirmation
@@ -776,6 +786,7 @@ void main() {
             'local',
             urgentActusPlaylistTitle,
           ],
+          onAndroid: true,
         );
 
         // Tap on the 'OK' button of the confirmation dialog
@@ -982,6 +993,7 @@ void main() {
             'local',
             'urgent_actus_17-12-2023',
           ],
+          onAndroid: true,
         );
 
         // Tap on the 'OK' button of the confirmation dialog
@@ -1141,6 +1153,7 @@ void main() {
             'local',
             'urgent_actus_17-12-2023',
           ],
+          onAndroid: true,
         );
 
         // Tap on the 'OK' button of the confirmation dialog
@@ -1324,6 +1337,7 @@ void main() {
             'local',
             selectedYoutubePlaylistTitle,
           ],
+          onAndroid: true,
         );
 
         // Tap on the 'OK' button of the confirmation dialog
@@ -1959,6 +1973,7 @@ void main() {
             'local',
             'urgent_actus_17-12-2023',
           ],
+          onAndroid: true,
         );
 
         // Tap on the 'OK' button of the confirmation dialog
@@ -3239,6 +3254,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
+            onAndroid: true,
           );
 
           await Future.delayed(const Duration(milliseconds: 500));
@@ -3329,6 +3345,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: true,
+            onAndroid: true,
           );
 
           // Must be used on Android emulator, otherwise the confirmation
@@ -3814,6 +3831,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
+            onAndroid: true,
           );
 
           // Verify the displayed warning confirmation dialog
@@ -4316,6 +4334,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: true,
+            onAndroid: true,
           );
 
           await tester.pumpAndSettle(const Duration(seconds: 1));
@@ -4831,6 +4850,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
+            onAndroid: true,
           );
 
           // Verify the displayed warning confirmation dialog
@@ -5242,6 +5262,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
+            onAndroid: true,
           );
 
           // Verify the displayed warning confirmation dialog
@@ -5278,6 +5299,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
+            onAndroid: true,
           );
 
           // Verify the displayed warning confirmation dialog
@@ -5514,6 +5536,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
+            onAndroid: true,
           );
 
           // Verify the displayed warning confirmation dialog
@@ -5550,6 +5573,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: true,
+            onAndroid: true,
           );
 
           // Verify the displayed warning confirmation dialog
@@ -5783,6 +5807,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          onAndroid: true,
         );
 
         // Verify the displayed warning confirmation dialog
@@ -5955,6 +5980,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: true,
+          onAndroid: true,
         );
 
         // Verify the displayed warning confirmation dialog
@@ -6127,6 +6153,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: true,
+          onAndroid: true,
         );
 
         // Verify the displayed warning confirmation dialog
@@ -6287,6 +6314,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          onAndroid: true,
         );
 
         // Verify the displayed warning confirmation dialog

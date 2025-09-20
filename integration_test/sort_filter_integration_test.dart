@@ -9643,7 +9643,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 1 playlist, 1 comment and 0 picture JSON files as well as 2 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+                'Restored 1 playlist, 1 comment and 0 picture JSON files as well as 2 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".\n\nDeleted 0 audio(s) and their comment(s) as well as their MP3 file.\n\nThe created playlists are positioned at the end of the playlist list.',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -9816,7 +9816,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 1 playlist, 1 comment and 0 picture JSON files as well as 2 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".',
+                'Restored 1 playlist, 1 comment and 0 picture JSON files as well as 2 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\$restorableZipFileName".\n\nDeleted 0 audio(s) and their comment(s) as well as their MP3 file.\n\nThe created playlists are positioned at the end of the playlist list.',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );

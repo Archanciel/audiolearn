@@ -682,6 +682,7 @@ class IntegrationTestUtil {
     bool doReplaceExistingPlaylists = true,
     List<String> playlistTitlesToDelete = const [],
     bool verifySetValueToTargetDialog = false,
+    bool onAndroid = false,
   }) async {
     if (playlistTitlesToDelete.isNotEmpty) {
       // Delete the playlists which are to be deleted
@@ -711,9 +712,15 @@ class IntegrationTestUtil {
     // Purge the test playlist picture directory if it exists so that
     // if pictures are present in the restoring playlists ZIP, they
     // are restored.
-    DirUtil.deleteFilesInDirAndSubDirs(
-      rootPath: kApplicationPicturePathAndroidTest,
-    );
+    if (onAndroid) {
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPicturePathAndroidTest,
+      );
+    } else {
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPicturePathWindowsTest,
+      );
+    }
 
     // Now tap the appbar leading popup menu and then the
     // 'Restore Playlist(s), Comments, Pictures and Settings
@@ -4035,6 +4042,7 @@ class IntegrationTestUtil {
     required List<String> confirmActionDialogMessagePossibleLst,
     bool useContains = false,
     required bool closeDialogWithConfirmButton,
+    bool usePumpAndSettle = false,
   }) async {
     // Now check the confirm dialog which indicates the estimated
     // save audio mp3 to zip duration and accept save execution.
@@ -4073,11 +4081,15 @@ class IntegrationTestUtil {
     if (closeDialogWithConfirmButton) {
       // Tap on the confirm button of the confirm action dialog
       await tester.tap(find.byKey(const Key('confirmButton')));
-      await tester.pump(); // Process the tap immediately
+      (usePumpAndSettle)
+          ? await tester.pumpAndSettle()
+          : await tester.pump(); // Process the tap immediately
     } else {
       // Tap on the cancel button of the confirm action dialog
       await tester.tap(find.byKey(const Key('cancelButtonKey')));
-      await tester.pump(); // Process the tap immediately
+      (usePumpAndSettle)
+          ? await tester.pumpAndSettle()
+          : await tester.pump(); // Process the tap immediately
     }
   }
 }
