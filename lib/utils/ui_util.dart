@@ -338,6 +338,7 @@ class UiUtil {
     required PlaylistListVM playlistListVMlistenFalse,
     required Audio audioToDelete,
     required AudioLearnAppViewType audioLearnAppViewType,
+    required WarningMessageVM warningMessageVM,
   }) async {
     Audio? nextAudio;
     Playlist audioToDeletePlaylist = audioToDelete.enclosingPlaylist!;
@@ -453,6 +454,10 @@ class UiUtil {
       context: context,
       nextAudio: nextAudio,
     );
+
+    warningMessageVM.setDeleteAudioFromPlaylistAswellTitle(
+        deleteAudioFromPlaylistAswellTitle: audioToDelete.enclosingPlaylist!.title,
+        deleteAudioFromPlaylistAswellAudioVideoTitle: audioToDelete.originalVideoTitle);
 
     // This method only calls the PlaylistListVM notifyListeners()
     // method so that the playlist download view current audio is
