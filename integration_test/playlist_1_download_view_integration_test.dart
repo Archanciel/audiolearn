@@ -5817,7 +5817,7 @@ void main() {
           "L'audio contient 1 commentaire(s) qui seront également supprimés. Confirmer la suppression ?",
         ],
         closeDialogWithConfirmButton: true,
-      ); // Process the tap immediately
+      ); 
 
       // Now verify that the target playlist directory no longer
       // contains the audio file copied from the source playlist
@@ -14999,11 +14999,16 @@ void main() {
 
       // Now verifying the confirm dialog message
 
-      final Text deletePlaylistDialogTitleWidget = tester
-          .widget<Text>(find.byKey(const Key('confirmDialogTitleOneKey')));
-
-      expect(deletePlaylistDialogTitleWidget.data,
-          'Supprimer la playlist Youtube "$youtubePlaylistToDeleteTitle"');
+      // Since the copied audio contains comment(s), deleting it
+      // causes a confirm action dialog to be displayed.
+      await IntegrationTestUtil.verifyConfirmActionDialog(
+        tester: tester,
+        confirmActionDialogTitle:
+            'Supprimer la playlist Youtube "$youtubePlaylistToDeleteTitle"',
+        confirmActionDialogMessagePossibleLst: [
+        ],
+        closeDialogWithConfirmButton: true,
+      ); 
 
       // Now find the confirm button of the delete playlist confirm
       // dialog and tap on it
