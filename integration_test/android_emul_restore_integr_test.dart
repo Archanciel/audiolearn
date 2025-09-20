@@ -1756,7 +1756,8 @@ void main() {
         // save operation.
         await IntegrationTestUtil.verifyConfirmActionDialog(
           tester: tester,
-          confirmActionDialogTitle: "",
+          confirmActionDialogTitle:
+              "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$selectedYoutubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
           confirmActionDialogMessagePossibleLst: [
             "",
           ],
@@ -2266,7 +2267,9 @@ void main() {
           tester: tester,
           confirmActionDialogTitle:
               "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$unselectedLocalPlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
-          confirmActionDialogMessagePossibleLst: [],
+          confirmActionDialogMessagePossibleLst: [
+            "",
+          ],
           closeDialogWithConfirmButton: true,
         );
 
@@ -2882,11 +2885,10 @@ void main() {
         // save audio mp3 to zip duration and accept save execution.
         await IntegrationTestUtil.verifyConfirmActionDialog(
           tester: tester,
-          confirmActionDialogTitle:
-          "Prevision of the save duration",
+          confirmActionDialogTitle: "Prevision of the save duration",
           confirmActionDialogMessagePossibleLst: [
-              "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:01.",
-              "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02.",
+            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:01.",
+            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02.",
           ],
           closeDialogWithConfirmButton: true,
         );
@@ -3035,12 +3037,11 @@ void main() {
         // save audio mp3 to zip duration and accept save execution.
         await IntegrationTestUtil.verifyConfirmActionDialog(
           tester: tester,
-          confirmActionDialogTitle:
-          "Prevision of the save duration",
+          confirmActionDialogTitle: "Prevision of the save duration",
           confirmActionDialogMessagePossibleLst: [
-              "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:01.",
-              "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02.",
-              ],
+            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:01.",
+            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02.",
+          ],
           closeDialogWithConfirmButton: true,
         );
 
@@ -3167,10 +3168,9 @@ void main() {
         // save audio mp3 to zip duration and accept save execution.
         await IntegrationTestUtil.verifyConfirmActionDialog(
           tester: tester,
-          confirmActionDialogTitle:
-          "Prevision of the save duration",
+          confirmActionDialogTitle: "Prevision of the save duration",
           confirmActionDialogMessagePossibleLst: [
-          "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:00.",
+            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:00.",
           ],
           closeDialogWithConfirmButton: true,
         );
