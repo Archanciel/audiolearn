@@ -3837,6 +3837,18 @@ class PlaylistListVM extends ChangeNotifier {
     // from the zip file. The dynamic list restoredInfoLst list
     // contains the list of restored playlist titles and the number
     // of restored comments.
+    // The returned list contains:
+    //  0 list of restored playlist titles,
+    //  1 number of restored comments JSON files,
+    //  2 number of restored pictures JSON files,
+    //  3 number of restored pictures JPG files,
+    //  4 was the zip file created from the playlist item 'Save the Playlist, its Comments,
+    //    and its Pictures to Zip File' (true, false if multiple playlists are restored),
+    //  5 restoredAudioReferencesNumber,
+    //  6 updated comment number,
+    //  7 added comment number,
+    //  8 number of deleted audio as well as mp3 files,
+    //  9 were new playlists added at end of non empty playlist list
     List<dynamic> restoredInfoLst = await _restoreFilesFromZip(
       zipFilePathName: zipFilePathName,
       doReplaceExistingPlaylists: doReplaceExistingPlaylists,
@@ -3876,7 +3888,7 @@ class PlaylistListVM extends ChangeNotifier {
       pictureJsonFilesNumber: restoredInfoLst[2],
       pictureJpgFilesNumber: restoredInfoLst[3],
       deletedAudioAndMp3FilesNumber:
-          (restoredInfoLst.length == 9) ? restoredInfoLst[8] : 0,
+          restoredInfoLst[8],
       wasIndividualPlaylistRestored: wasIndividualPlaylistRestored,
       newPlaylistsAddedAtEndOfPlaylistLst: restoredInfoLst[9],
     );
@@ -4054,6 +4066,7 @@ class PlaylistListVM extends ChangeNotifier {
       restoredInfoLst.add(0); // adding 0 to the added comment number
       restoredInfoLst
           .add(0); // adding 0 to the deleted audio and mp3 files number
+      restoredInfoLst.add(false); // newPlaylistsAddedAtEndOfPlaylistLst
 
       return restoredInfoLst;
     }
