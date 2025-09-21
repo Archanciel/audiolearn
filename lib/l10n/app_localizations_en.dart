@@ -2330,7 +2330,7 @@ class AppLocalizationsEn extends AppLocalizations {
       Object deletedAudioAndMp3FilesNumber,
       Object filePathName,
       Object addedAtEndOfPlaylistLstMsg) {
-    return 'Restored $playlistsNumber playlist, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) and the application settings from \"$filePathName\".\n\nDeleted $deletedAudioAndMp3FilesNumber audio(s) and their comment(s) as well as their MP3 file.$addedAtEndOfPlaylistLstMsg';
+    return 'Restored $playlistsNumber playlist, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) and the application settings from \"$filePathName\".\n\nDeleted $deletedAudioAndMp3FilesNumber audio(s) and their comment(s) and picture(s) as well as their MP3 file.$addedAtEndOfPlaylistLstMsg';
   }
 
   @override
@@ -2344,7 +2344,7 @@ class AppLocalizationsEn extends AppLocalizations {
       Object deletedAudioAndMp3FilesNumber,
       Object filePathName,
       Object addedAtEndOfPlaylistLstMsg) {
-    return 'Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) from \"$filePathName\".\n\nDeleted $deletedAudioAndMp3FilesNumber audio(s) and their comment(s) as well as their MP3 file.$addedAtEndOfPlaylistLstMsg';
+    return 'Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) from \"$filePathName\".\n\nDeleted $deletedAudioAndMp3FilesNumber audio(s) and their comment(s) and picture(s) as well as their MP3 file.$addedAtEndOfPlaylistLstMsg';
   }
 
   @override

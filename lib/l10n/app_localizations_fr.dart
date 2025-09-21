@@ -2355,7 +2355,7 @@ class AppLocalizationsFr extends AppLocalizations {
       Object deletedAudioAndMp3FilesNumber,
       Object filePathName,
       Object addedAtEndOfPlaylistLstMsg) {
-    return 'Les fichiers JSON de $playlistsNumber playlists, de $commentsNumber commentaires et de $picturesNumber photos ainsi que $audiosNumber références audio et $addedCommentNumber commentaires ajoutés plus $updatedCommentNumber modifiés et les paramètres de l\'application ont été restaurés depuis \"$filePathName\".\n\n$deletedAudioAndMp3FilesNumber audio(s) et leur(s) commentaire(s) ainsi que leur fichier MP3 file a/ont été supprimé(s).$addedAtEndOfPlaylistLstMsg';
+    return 'Les fichiers JSON de $playlistsNumber playlists, de $commentsNumber commentaires et de $picturesNumber photos ainsi que $audiosNumber références audio et $addedCommentNumber commentaires ajoutés plus $updatedCommentNumber modifiés et les paramètres de l\'application ont été restaurés depuis \"$filePathName\".\n\n$deletedAudioAndMp3FilesNumber audio(s) et leur(s) commentaire(s) et photo(s) ainsi que leur fichier MP3 file a/ont été supprimé(s).$addedAtEndOfPlaylistLstMsg';
   }
 
   @override
@@ -2369,7 +2369,7 @@ class AppLocalizationsFr extends AppLocalizations {
       Object deletedAudioAndMp3FilesNumber,
       Object filePathName,
       Object addedAtEndOfPlaylistLstMsg) {
-    return 'Les fichiers JSON de $playlistsNumber playlist sauvegardée individuellement, de $commentsNumber commentaires et de $picturesNumber photos ainsi que $audiosNumber références audio et $addedCommentNumber commentaires ajoutés plus $updatedCommentNumber modifiés ont été restaurés depuis \"$filePathName\".\n\n$deletedAudioAndMp3FilesNumber audio(s) et leur(s) commentaire(s) ainsi que leur fichier MP3 a/ont été supprimé(s).$addedAtEndOfPlaylistLstMsg';
+    return 'Les fichiers JSON de $playlistsNumber playlist sauvegardée individuellement, de $commentsNumber commentaires et de $picturesNumber photos ainsi que $audiosNumber références audio et $addedCommentNumber commentaires ajoutés plus $updatedCommentNumber modifiés ont été restaurés depuis \"$filePathName\".\n\n$deletedAudioAndMp3FilesNumber audio(s) et leur(s) commentaire(s) et photo(s) ainsi que leur fichier MP3 a/ont été supprimé(s).$addedAtEndOfPlaylistLstMsg';
   }
 
   @override
