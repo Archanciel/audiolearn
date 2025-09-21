@@ -3728,7 +3728,7 @@ abstract class AppLocalizations {
   /// Warning message indicating that one or several playlists were restored from ZIP created from appbar menu
   ///
   /// In en, this message translates to:
-  /// **'Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) and the application settings from \"{filePathName}\".\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) as well as their MP3 file.{addedAtEndOfPlaylistLstMsg}'**
+  /// **'Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) and the application settings from \"{filePathName}\".\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) and picture(s) as well as their MP3 file.{addedAtEndOfPlaylistLstMsg}'**
   String restoredAppDataFromZip(
       Object playlistsNumber,
       Object audiosNumber,
@@ -3743,7 +3743,7 @@ abstract class AppLocalizations {
   /// Warning message indicating that a unique playlist was restored from ZIP created from playlist item menu
   ///
   /// In en, this message translates to:
-  /// **'Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) from \"{filePathName}\".\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) as well as their MP3 file.{addedAtEndOfPlaylistLstMsg}'**
+  /// **'Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) from \"{filePathName}\".\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) and picture(s) as well as their MP3 file.{addedAtEndOfPlaylistLstMsg}'**
   String restoredUniquePlaylistFromZip(
       Object playlistsNumber,
       Object audiosNumber,
