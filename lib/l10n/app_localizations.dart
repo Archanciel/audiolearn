@@ -3034,12 +3034,6 @@ abstract class AppLocalizations {
   /// **'\n\nSaved also {pictureNumber} picture JPG file(s) in the ZIP file.'**
   String addedToZipPictureNumberMessage(Object pictureNumber);
 
-  /// No description provided for @restoredPictureNumberMessage.
-  ///
-  /// In en, this message translates to:
-  /// **'\n\nRestored also {pictureNumber} picture JPG file(s) in the application pictures directory.'**
-  String restoredPictureNumberMessage(Object pictureNumber);
-
   /// No description provided for @replaceExistingPlaylists.
   ///
   /// In en, this message translates to:
@@ -3725,33 +3719,35 @@ abstract class AppLocalizations {
   /// **'A previous playlist titles order file is available in the selected playlist root path. Do you want to restore this saved order or keep the current playlist titles order? Click on \"Confirm\" to restore the saved order or on \"Cancel\" to keep the current order.'**
   String get restorePlaylistTitlesOrderMessage;
 
-  /// Warning message indicating that one or several playlists were restored from ZIP created from appbar menu
+  /// Warning message indicating that a unique playlist was restored from ZIP created from playlist item menu
   ///
   /// In en, this message translates to:
-  /// **'Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) and the application settings from \"{filePathName}\".\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) and picture(s) as well as their MP3 file.{addedAtEndOfPlaylistLstMsg}'**
-  String restoredAppDataFromZip(
+  /// **'Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {addedPictureJpgNumber} picture JPG file(s) in the application pictures directory and {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) from \"{filePathName}\".{deletedAudioAndMp3FilesMsg}{addedAtEndOfPlaylistLstMsg}'**
+  String doRestoreUniquePlaylistFromZip(
       Object playlistsNumber,
       Object audiosNumber,
       Object commentsNumber,
       Object updatedCommentNumber,
       Object addedCommentNumber,
       Object picturesNumber,
-      Object deletedAudioAndMp3FilesNumber,
+      Object addedPictureJpgNumber,
+      Object deletedAudioAndMp3FilesMsg,
       Object filePathName,
       Object addedAtEndOfPlaylistLstMsg);
 
   /// Warning message indicating that a unique playlist was restored from ZIP created from playlist item menu
   ///
   /// In en, this message translates to:
-  /// **'Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) from \"{filePathName}\".\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) and picture(s) as well as their MP3 file.{addedAtEndOfPlaylistLstMsg}'**
-  String restoredUniquePlaylistFromZip(
+  /// **'Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {addedPictureJpgNumber} picture JPG file(s) in the application pictures directory and {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) and the application settings from \"{filePathName}\".{deletedAudioAndMp3FilesMsg}{addedAtEndOfPlaylistLstMsg}'**
+  String doRestoreMultiplePlaylistFromZip(
       Object playlistsNumber,
       Object audiosNumber,
       Object commentsNumber,
       Object updatedCommentNumber,
       Object addedCommentNumber,
       Object picturesNumber,
-      Object deletedAudioAndMp3FilesNumber,
+      Object addedPictureJpgNumber,
+      Object deletedAudioAndMp3FilesMsg,
       Object filePathName,
       Object addedAtEndOfPlaylistLstMsg);
 
@@ -3797,6 +3793,12 @@ abstract class AppLocalizations {
   /// **'Delete the audio \"{audioTitle}\" from the playlist \"{playlistTitle}\" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on \"Cancel\" and choose \"Delete Audio ...\" instead of \"Delete Audio from Playlist as well ...\". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.'**
   String confirmAudioFromPlaylistDeletion(
       Object audioTitle, Object playlistTitle);
+
+  /// No description provided for @deletedAudioAndMp3FilesMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) and picture(s) as well as their MP3 file.'**
+  String deletedAudioAndMp3FilesMessage(Object deletedAudioAndMp3FilesNumber);
 }
 
 class _AppLocalizationsDelegate

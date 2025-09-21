@@ -1861,11 +1861,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String restoredPictureNumberMessage(Object pictureNumber) {
-    return '\n\nRestored also $pictureNumber picture JPG file(s) in the application pictures directory.';
-  }
-
-  @override
   String get replaceExistingPlaylists => 'Replace existing playlists';
 
   @override
@@ -2320,31 +2315,33 @@ class AppLocalizationsEn extends AppLocalizations {
       'A previous playlist titles order file is available in the selected playlist root path. Do you want to restore this saved order or keep the current playlist titles order? Click on \"Confirm\" to restore the saved order or on \"Cancel\" to keep the current order.';
 
   @override
-  String restoredAppDataFromZip(
+  String doRestoreUniquePlaylistFromZip(
       Object playlistsNumber,
       Object audiosNumber,
       Object commentsNumber,
       Object updatedCommentNumber,
       Object addedCommentNumber,
       Object picturesNumber,
-      Object deletedAudioAndMp3FilesNumber,
+      Object addedPictureJpgNumber,
+      Object deletedAudioAndMp3FilesMsg,
       Object filePathName,
       Object addedAtEndOfPlaylistLstMsg) {
-    return 'Restored $playlistsNumber playlist, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) and the application settings from \"$filePathName\".\n\nDeleted $deletedAudioAndMp3FilesNumber audio(s) and their comment(s) and picture(s) as well as their MP3 file.$addedAtEndOfPlaylistLstMsg';
+    return 'Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $addedPictureJpgNumber picture JPG file(s) in the application pictures directory and $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) from \"$filePathName\".$deletedAudioAndMp3FilesMsg$addedAtEndOfPlaylistLstMsg';
   }
 
   @override
-  String restoredUniquePlaylistFromZip(
+  String doRestoreMultiplePlaylistFromZip(
       Object playlistsNumber,
       Object audiosNumber,
       Object commentsNumber,
       Object updatedCommentNumber,
       Object addedCommentNumber,
       Object picturesNumber,
-      Object deletedAudioAndMp3FilesNumber,
+      Object addedPictureJpgNumber,
+      Object deletedAudioAndMp3FilesMsg,
       Object filePathName,
       Object addedAtEndOfPlaylistLstMsg) {
-    return 'Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) from \"$filePathName\".\n\nDeleted $deletedAudioAndMp3FilesNumber audio(s) and their comment(s) and picture(s) as well as their MP3 file.$addedAtEndOfPlaylistLstMsg';
+    return 'Restored $playlistsNumber playlist, $commentsNumber comment and $picturesNumber picture JSON files as well as $addedPictureJpgNumber picture JPG file(s) in the application pictures directory and $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) and the application settings from \"$filePathName\".$deletedAudioAndMp3FilesMsg$addedAtEndOfPlaylistLstMsg';
   }
 
   @override
@@ -2374,5 +2371,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String confirmAudioFromPlaylistDeletion(
       Object audioTitle, Object playlistTitle) {
     return 'Delete the audio \"$audioTitle\" from the playlist \"$playlistTitle\" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on \"Cancel\" and choose \"Delete Audio ...\" instead of \"Delete Audio from Playlist as well ...\". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.';
+  }
+
+  @override
+  String deletedAudioAndMp3FilesMessage(Object deletedAudioAndMp3FilesNumber) {
+    return '\n\nDeleted $deletedAudioAndMp3FilesNumber audio(s) and their comment(s) and picture(s) as well as their MP3 file.';
   }
 }

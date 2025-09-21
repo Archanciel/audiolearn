@@ -11802,7 +11802,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'If the deleted audio \"$commentedAudioTitleToDelete\" remains in the \"$youtubePlaylistTitle\" playlist located on Youtube, it will be downloaded again the next time you download the playlist !',
+                'If the deleted audio "$commentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" playlist located on Youtube, it will be downloaded again the next time you download the playlist !',
             isWarningConfirming: false,
           );
 
@@ -11977,7 +11977,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'If the deleted audio \"$uncommentedAudioTitleToDelete\" remains in the \"$youtubePlaylistTitle\" playlist located on Youtube, it will be downloaded again the next time you download the playlist !',
+                'If the deleted audio "$uncommentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" playlist located on Youtube, it will be downloaded again the next time you download the playlist !',
             isWarningConfirming: false,
           );
 
@@ -12265,7 +12265,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'If the deleted audio \"$commentedAudioTitleToDelete\" remains in the \"$youtubePlaylistTitle\" playlist located on Youtube, it will be downloaded again the next time you download the playlist !',
+                'If the deleted audio "$commentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" playlist located on Youtube, it will be downloaded again the next time you download the playlist !',
             isWarningConfirming: false,
           );
 
@@ -12537,7 +12537,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'If the deleted audio \"$uncommentedAudioTitleToDelete\" remains in the \"$youtubePlaylistTitle\" playlist located on Youtube, it will be downloaded again the next time you download the playlist !',
+                'If the deleted audio "$uncommentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" playlist located on Youtube, it will be downloaded again the next time you download the playlist !',
             isWarningConfirming: false,
           );
 
@@ -13775,7 +13775,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'If the deleted audio \"$audioToDeleteTitle\" remains in the \"$youtubeAudioPlaylistTitle\" playlist located on Youtube, it will be downloaded again the next time you download the playlist !',
+            'If the deleted audio "$audioToDeleteTitle" remains in the "$youtubeAudioPlaylistTitle" playlist located on Youtube, it will be downloaded again the next time you download the playlist !',
         isWarningConfirming: false,
       );
 

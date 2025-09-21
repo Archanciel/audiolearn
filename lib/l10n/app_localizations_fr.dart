@@ -1876,11 +1876,6 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String restoredPictureNumberMessage(Object pictureNumber) {
-    return '\n\nEgalement $pictureNumber fichier(s) de photo JPG restauré(s) dans le répertoire \"pictures\" de l\'application.';
-  }
-
-  @override
   String get replaceExistingPlaylists => 'Remplacer les playlists\nexistantes';
 
   @override
@@ -2345,31 +2340,33 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un fichier d\'ordre des titres de playlist précédent est disponible dans le chemin racine de playlist sélectionné. Voulez-vous restaurer cet ordre sauvegardé précédemment ou conserver l\'ordre actuel des titres de playlist ? Cliquez sur \"Confirmer\" pour restaurer l\'ordre sauvegardé ou sur \"Annuler\" pour conserver l\'ordre actuel.';
 
   @override
-  String restoredAppDataFromZip(
+  String doRestoreUniquePlaylistFromZip(
       Object playlistsNumber,
       Object audiosNumber,
       Object commentsNumber,
       Object updatedCommentNumber,
       Object addedCommentNumber,
       Object picturesNumber,
-      Object deletedAudioAndMp3FilesNumber,
+      Object addedPictureJpgNumber,
+      Object deletedAudioAndMp3FilesMsg,
       Object filePathName,
       Object addedAtEndOfPlaylistLstMsg) {
-    return 'Les fichiers JSON de $playlistsNumber playlists, de $commentsNumber commentaires et de $picturesNumber photos ainsi que $audiosNumber références audio et $addedCommentNumber commentaires ajoutés plus $updatedCommentNumber modifiés et les paramètres de l\'application ont été restaurés depuis \"$filePathName\".\n\n$deletedAudioAndMp3FilesNumber audio(s) et leur(s) commentaire(s) et photo(s) ainsi que leur fichier MP3 file a/ont été supprimé(s).$addedAtEndOfPlaylistLstMsg';
+    return 'Les fichiers JSON de $playlistsNumber playlist sauvegardée individuellement, de $commentsNumber commentaire(s) et de $picturesNumber photo(s) ainsi que $addedPictureJpgNumber fichier(s) photo JPG dans le répertoire \"pictures\" de l\'application et $audiosNumber référence(s) audio et $addedCommentNumber commentaire(s) ajouté(s) plus $updatedCommentNumber modifié(s) ont été restaurés depuis \"$filePathName\".$deletedAudioAndMp3FilesMsg$addedAtEndOfPlaylistLstMsg';
   }
 
   @override
-  String restoredUniquePlaylistFromZip(
+  String doRestoreMultiplePlaylistFromZip(
       Object playlistsNumber,
       Object audiosNumber,
       Object commentsNumber,
       Object updatedCommentNumber,
       Object addedCommentNumber,
       Object picturesNumber,
-      Object deletedAudioAndMp3FilesNumber,
+      Object addedPictureJpgNumber,
+      Object deletedAudioAndMp3FilesMsg,
       Object filePathName,
       Object addedAtEndOfPlaylistLstMsg) {
-    return 'Les fichiers JSON de $playlistsNumber playlist sauvegardée individuellement, de $commentsNumber commentaires et de $picturesNumber photos ainsi que $audiosNumber références audio et $addedCommentNumber commentaires ajoutés plus $updatedCommentNumber modifiés ont été restaurés depuis \"$filePathName\".\n\n$deletedAudioAndMp3FilesNumber audio(s) et leur(s) commentaire(s) et photo(s) ainsi que leur fichier MP3 a/ont été supprimé(s).$addedAtEndOfPlaylistLstMsg';
+    return 'Les fichiers JSON de $playlistsNumber playlist(s), de $commentsNumber commentaire(s) et de $picturesNumber photo(s) ainsi que $addedPictureJpgNumber fichier(s) photo JPG dans le répertoire \"pictures\" de l\'application et $audiosNumber référence(s) audio et $addedCommentNumber commentaire(s) ajouté(s) plus $updatedCommentNumber modifié(s) et les paramètres de l\'application ont été restaurés depuis \"$filePathName\".$deletedAudioAndMp3FilesMsg$addedAtEndOfPlaylistLstMsg';
   }
 
   @override
@@ -2399,5 +2396,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String confirmAudioFromPlaylistDeletion(
       Object audioTitle, Object playlistTitle) {
     return 'Supprimez l\'audio \"$audioTitle\" de la playlist \"$playlistTitle\" définie sur le site Youtube, sinon l\'audio sera téléchargé à nouveau lors du prochain téléchargement de la playlist. Ou alors cliquez sur \"Annuler\" et choisissez \"Supprimer l\'audio ...\" au lieu de \"Supprimer l\'audio de la playlist également ...\". Ainsi, l\'audio sera supprimé de la liste des audio\'s jouables, mais restera dans la liste des audio\'s téléchargés, ce qui évitera son re-téléchargement.';
+  }
+
+  @override
+  String deletedAudioAndMp3FilesMessage(Object deletedAudioAndMp3FilesNumber) {
+    return '\n\n$deletedAudioAndMp3FilesNumber audio(s) et leur(s) commentaire(s) et photo(s) ainsi que leur fichier MP3 a/ont été supprimé(s).';
   }
 }
