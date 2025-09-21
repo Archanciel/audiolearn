@@ -922,7 +922,6 @@
   "savedPictureNumberMessage": "\n\nSaved also {pictureNumber} picture JPG file(s) in same directory / pictures.",
   "savedPictureNumberMessageToZip": "\n\nSaved also {pictureNumber} picture JPG file(s) in the ZIP file.",
   "addedToZipPictureNumberMessage": "\n\nSaved also {pictureNumber} picture JPG file(s) in the ZIP file.",
-  "restoredPictureNumberMessage": "\n\nRestored also {pictureNumber} picture JPG file(s) in the application pictures directory.",
   "replaceExistingPlaylists": "Replace existing playlists",
   "playlistRestorationDialogTitle": "Playlists Restoration",
   "playlistRestorationExplanation": "Important: if you've modified your existing playlists (added audio files, comments, or pictures) since creating the ZIP backup, keep this checkbox UNCHECKED. Otherwise, your recent changes will be replaced by the older versions contained in the backup.",
@@ -1061,23 +1060,8 @@
   "confirmMp3RestorationFromMp3Zip": "Restored {audioNNumber} audio(s) MP3 in {playlistsNumber} playlist(s) {secondMsgPart}.",
   "restorePlaylistTitlesOrderTitle": "Playlist Titles Order Restoration",
   "restorePlaylistTitlesOrderMessage": "A previous playlist titles order file is available in the selected playlist root path. Do you want to restore this saved order or keep the current playlist titles order? Click on \"Confirm\" to restore the saved order or on \"Cancel\" to keep the current order.",
-  "restoredAppDataFromZip": "Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) and the application settings from \"{filePathName}\".\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) and picture(s) as well as their MP3 file.{addedAtEndOfPlaylistLstMsg}",
-  "@restoredAppDataFromZip": {
-    "description": "Warning message indicating that one or several playlists were restored from ZIP created from appbar menu",
-    "placeholders": {
-      "playlistsNumber": {},
-      "audiosNumber": {},
-      "commentsNumber": {},
-      "updatedCommentNumber": {},
-      "addedCommentNumber": {},
-      "picturesNumber": {},
-      "deletedAudioAndMp3FilesNumber": {},
-      "filePathName": {},
-      "addedAtEndOfPlaylistLstMsg": {}
-    }
-  },
-  "restoredUniquePlaylistFromZip": "Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) from \"{filePathName}\".\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) and picture(s) as well as their MP3 file.{addedAtEndOfPlaylistLstMsg}",
-  "@restoredUniquePlaylistFromZip": {
+  "doRestoreUniquePlaylistFromZip": "Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {addedPictureJpgNumber} picture JPG file(s) in the application pictures directory and {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) from \"{filePathName}\".{deletedAudioAndMp3FilesMsg}{addedAtEndOfPlaylistLstMsg}",
+  "@doRestoreUniquePlaylistFromZip": {
     "description": "Warning message indicating that a unique playlist was restored from ZIP created from playlist item menu",
     "placeholders": {
       "playlistsNumber": {},
@@ -1086,7 +1070,24 @@
       "updatedCommentNumber": {},
       "addedCommentNumber": {},
       "picturesNumber": {},
-      "deletedAudioAndMp3FilesNumber": {},
+      "addedPictureJpgNumber": {},
+      "deletedAudioAndMp3FilesMsg": {},
+      "filePathName": {},
+      "addedAtEndOfPlaylistLstMsg": {}
+    }
+  },
+  "doRestoreMultiplePlaylistFromZip": "Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {addedPictureJpgNumber} picture JPG file(s) in the application pictures directory and {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) and the application settings from \"{filePathName}\".{deletedAudioAndMp3FilesMsg}{addedAtEndOfPlaylistLstMsg}",
+  "@doRestoreMultiplePlaylistFromZip": {
+    "description": "Warning message indicating that a unique playlist was restored from ZIP created from playlist item menu",
+    "placeholders": {
+      "playlistsNumber": {},
+      "audiosNumber": {},
+      "commentsNumber": {},
+      "updatedCommentNumber": {},
+      "addedCommentNumber": {},
+      "picturesNumber": {},
+      "addedPictureJpgNumber": {},
+      "deletedAudioAndMp3FilesMsg": {},
       "filePathName": {},
       "addedAtEndOfPlaylistLstMsg": {}
     }
@@ -1097,5 +1098,6 @@
   "playlistsSaveExplanation": "Checking the \"Add all JPG pictures to ZIP\" checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.",
   "addPictureJpgFilesToZip": "Add all JPG pictures to ZIP",
   "confirmAudioFromPlaylistDeletionTitle": "Confirm deletion of the audio \"{audioTitle}\" from the Youtube playlist",
-  "confirmAudioFromPlaylistDeletion": "Delete the audio \"{audioTitle}\" from the playlist \"{playlistTitle}\" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on \"Cancel\" and choose \"Delete Audio ...\" instead of \"Delete Audio from Playlist as well ...\". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download."
+  "confirmAudioFromPlaylistDeletion": "Delete the audio \"{audioTitle}\" from the playlist \"{playlistTitle}\" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on \"Cancel\" and choose \"Delete Audio ...\" instead of \"Delete Audio from Playlist as well ...\". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.",
+  "deletedAudioAndMp3FilesMessage": "\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) and picture(s) as well as their MP3 file."
 }

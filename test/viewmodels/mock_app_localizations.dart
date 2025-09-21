@@ -1890,12 +1890,6 @@ class MockAppLocalizations extends AppLocalizations {
       "Saved also $pictureNumber picture jpg file(s) in same directory.";
 
   @override
-  String restoredPictureNumberMessage(
-    Object pictureNumber,
-  ) =>
-      "Restored also $pictureNumber picture jpg file(s).";
-
-  @override
   String get replaceExistingPlaylists => "Replace existing playlists";
 
   @override
@@ -2402,34 +2396,6 @@ class MockAppLocalizations extends AppLocalizations {
       "A previous playlist titles order file is available in the selected playlist root path. Do you want to restore this saved order or keep the current playlist titles order? Click OK to restore the saved order or Cancel to keep the current order.";
 
   @override
-  String restoredAppDataFromZip(
-    Object playlistsNumber,
-    Object commentsNumber,
-    Object picturesNumber,
-    Object audiosNumber,
-    Object addedCommentNumber,
-    Object updatedCommentNumber,
-    Object filePathName,
-    Object deletedAudioAndMp3FilesNumber,
-    Object addedAtEndOfPlaylistLstMsg,
-  ) =>
-      "Restored $playlistsNumber playlist, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) and the application settings from \"$filePathName\".Deleted $deletedAudioAndMp3FilesNumber audio(s) and their comment(s) as well as their MP3 file.$addedAtEndOfPlaylistLstMsg";
-
-  @override
-  String restoredUniquePlaylistFromZip(
-    Object playlistsNumber,
-    Object commentsNumber,
-    Object picturesNumber,
-    Object audiosNumber,
-    Object addedCommentNumber,
-    Object updatedCommentNumber,
-    Object filePathName,
-    Object deletedAudioAndMp3FilesNumber,
-    Object addedAtEndOfPlaylistLstMsg,
-  ) =>
-      "Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) from \"$filePathName\".Deleted $deletedAudioAndMp3FilesNumber audio(s) and their comment(s) as well as their MP3 file.$addedAtEndOfPlaylistLstMsg";
-
-  @override
   String get newPlaylistsAddedAtEndOfPlaylistLst =>
       "The created playlists are positioned at the end of the playlist list.";
 
@@ -2465,4 +2431,40 @@ class MockAppLocalizations extends AppLocalizations {
     Object playlistTitle,
   ) =>
       "If the deleted audio \"$audioTitle\" remains in the \"$playlistTitle\" Youtube playlist, it will be downloaded again the next time you download the playlist !";
+
+  @override
+  String deletedAudioAndMp3FilesMessage(
+    Object deletedAudioAndMp3FilesNumber,
+  ) =>
+      "Deleted $deletedAudioAndMp3FilesNumber audio(s) and their comment(s) and picture(s) as well as their MP3 file.";
+
+  @override
+  String doRestoreUniquePlaylistFromZip(
+    Object playlistsNumber,
+    Object commentsNumber,
+    Object picturesNumber,
+    Object addedPictureJpgNumber,
+    Object audiosNumber,
+    Object addedCommentNumber,
+    Object updatedCommentNumber,
+    Object filePathName,
+    Object deletedAudioAndMp3FilesMsg,
+    Object addedAtEndOfPlaylistLstMsg,
+  ) =>
+      "Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $addedPictureJpgNumber picture JPG file(s) in the application pictures directory and $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) from \"$filePathName\".$deletedAudioAndMp3FilesMsg$addedAtEndOfPlaylistLstMsg";
+
+  @override
+  String doRestoreMultiplePlaylistFromZip(
+    Object playlistsNumber,
+    Object commentsNumber,
+    Object picturesNumber,
+    Object addedPictureJpgNumber,
+    Object audiosNumber,
+    Object addedCommentNumber,
+    Object updatedCommentNumber,
+    Object filePathName,
+    Object deletedAudioAndMp3FilesMsg,
+    Object addedAtEndOfPlaylistLstMsg,
+  ) =>
+      "Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $addedPictureJpgNumber picture JPG file(s) in the application pictures directory and $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) from \"$filePathName\".$deletedAudioAndMp3FilesMsg$addedAtEndOfPlaylistLstMsg";
 }

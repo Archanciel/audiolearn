@@ -1243,7 +1243,6 @@
   "savedPictureNumberMessage": "\n\nEgalement {pictureNumber} fichier(s) de photo JPG sauvegardé(s) dans le même répertoire / pictures.",
   "savedPictureNumberMessageToZip": "\n\nEgalement {pictureNumber} fichier(s) de photo JPG sauvegardé(s) dans le fichier ZIP.",
   "addedToZipPictureNumberMessage": "\n\nEgalement {pictureNumber} fichier(s) de photo JPG sauvegardé(s) dans le fichier ZIP.",
-  "restoredPictureNumberMessage": "\n\nEgalement {pictureNumber} fichier(s) de photo JPG restauré(s) dans le répertoire \"pictures\" de l'application.",
   "replaceExistingPlaylists": "Remplacer les playlists\nexistantes",
   "playlistRestorationDialogTitle": "Restauration des playlists",
   "playlistRestorationExplanation": "Important: si vous avez apporté des modifications à vos playlists existantes (ajout de fichiers audio, de commentaires ou d'images) depuis la création de la sauvegarde ZIP, gardez cette case DÉCOCHÉE. Sinon, vos modifications récentes seront remplacées par les versions antérieures contenues dans la sauvegarde.",
@@ -1419,41 +1418,8 @@
   "confirmMp3RestorationFromMp3Zip": "Restauré {audioNNumber} audio(s) MP3 dans {playlistsNumber} playlist(s) {secondMsgPart}.",
   "restorePlaylistTitlesOrderTitle": "Restauration de l'ordre des titres de playlist",
   "restorePlaylistTitlesOrderMessage": "Un fichier d'ordre des titres de playlist précédent est disponible dans le chemin racine de playlist sélectionné. Voulez-vous restaurer cet ordre sauvegardé précédemment ou conserver l'ordre actuel des titres de playlist ? Cliquez sur \"Confirmer\" pour restaurer l'ordre sauvegardé ou sur \"Annuler\" pour conserver l'ordre actuel.",
-  "restoredAppDataFromZip": "Les fichiers JSON de {playlistsNumber} playlists, de {commentsNumber} commentaires et de {picturesNumber} photos ainsi que {audiosNumber} références audio et {addedCommentNumber} commentaires ajoutés plus {updatedCommentNumber} modifiés et les paramètres de l'application ont été restaurés depuis \"{filePathName}\".\n\n{deletedAudioAndMp3FilesNumber} audio(s) et leur(s) commentaire(s) et photo(s) ainsi que leur fichier MP3 file a/ont été supprimé(s).{addedAtEndOfPlaylistLstMsg}",
-  "@restoredAppDataFromZip": {
-    "description": "Warning message indicating that the default SF parms were not applied to move audio",
-    "placeholders": {
-      "playlistsNumber": {
-        "type": "Object"
-      },
-      "audiosNumber": {
-        "type": "Object"
-      },
-      "commentsNumber": {
-        "type": "Object"
-      },
-      "updatedCommentNumber": {
-        "type": "Object"
-      },
-      "addedCommentNumber": {
-        "type": "Object"
-      },
-      "picturesNumber": {
-        "type": "Object"
-      },
-      "deletedAudioAndMp3FilesNumber": {
-        "type": "Object"
-      },
-      "filePathName": {
-        "type": "Object"
-      },
-      "addedAtEndOfPlaylistLstMsg": {
-        "type": "Object"
-      }
-    }
-  },
-  "restoredUniquePlaylistFromZip": "Les fichiers JSON de {playlistsNumber} playlist sauvegardée individuellement, de {commentsNumber} commentaires et de {picturesNumber} photos ainsi que {audiosNumber} références audio et {addedCommentNumber} commentaires ajoutés plus {updatedCommentNumber} modifiés ont été restaurés depuis \"{filePathName}\".\n\n{deletedAudioAndMp3FilesNumber} audio(s) et leur(s) commentaire(s) et photo(s) ainsi que leur fichier MP3 a/ont été supprimé(s).{addedAtEndOfPlaylistLstMsg}",
-  "@restoredUniquePlaylistFromZip": {
+  "doRestoreUniquePlaylistFromZip": "Les fichiers JSON de {playlistsNumber} playlist sauvegardée individuellement, de {commentsNumber} commentaire(s) et de {picturesNumber} photo(s) ainsi que {addedPictureJpgNumber} fichier(s) photo JPG dans le répertoire \"pictures\" de l'application et {audiosNumber} référence(s) audio et {addedCommentNumber} commentaire(s) ajouté(s) plus {updatedCommentNumber} modifié(s) ont été restaurés depuis \"{filePathName}\".{deletedAudioAndMp3FilesMsg}{addedAtEndOfPlaylistLstMsg}",
+  "@doRestoreUniquePlaylistFromZip": {
     "description": "Warning message indicating that the a unique playlist was restored from ZIP created from playlist item menu",
     "placeholders": {
       "playlistsNumber": {
@@ -1474,7 +1440,46 @@
       "picturesNumber": {
         "type": "Object"
       },
-      "deletedAudioAndMp3FilesNumber": {
+      "addedPictureJpgNumber": {
+        "type": "Object"
+      },
+      "deletedAudioAndMp3FilesMsg": {
+        "type": "Object"
+      },
+      "filePathName": {
+        "type": "Object"
+      },
+      "addedAtEndOfPlaylistLstMsg": {
+        "type": "Object"
+      }
+    }
+  },
+  "doRestoreMultiplePlaylistFromZip": "Les fichiers JSON de {playlistsNumber} playlist(s), de {commentsNumber} commentaire(s) et de {picturesNumber} photo(s) ainsi que {addedPictureJpgNumber} fichier(s) photo JPG dans le répertoire \"pictures\" de l'application et {audiosNumber} référence(s) audio et {addedCommentNumber} commentaire(s) ajouté(s) plus {updatedCommentNumber} modifié(s) et les paramètres de l'application ont été restaurés depuis \"{filePathName}\".{deletedAudioAndMp3FilesMsg}{addedAtEndOfPlaylistLstMsg}",
+  "@doRestoreMultiplePlaylistFromZip": {
+    "description": "Warning message indicating that the a unique playlist was restored from ZIP created from playlist item menu",
+    "placeholders": {
+      "playlistsNumber": {
+        "type": "Object"
+      },
+      "audiosNumber": {
+        "type": "Object"
+      },
+      "commentsNumber": {
+        "type": "Object"
+      },
+      "updatedCommentNumber": {
+        "type": "Object"
+      },
+      "addedCommentNumber": {
+        "type": "Object"
+      },
+      "picturesNumber": {
+        "type": "Object"
+      },
+      "addedPictureJpgNumber": {
+        "type": "Object"
+      },
+      "deletedAudioAndMp3FilesMsg": {
         "type": "Object"
       },
       "filePathName": {
@@ -1491,5 +1496,6 @@
   "playlistsSaveExplanation": "En cochant la case \"Ajouter toutes les photos JPG au ZIP\", toutes les photos audio de l'application seront ajoutées au fichier ZIP créé. Cela n'est utile que si le fichier ZIP doit servir à restaurer une autre application.",
   "addPictureJpgFilesToZip": "Ajouter toutes les photos JPG au ZIP",
   "confirmAudioFromPlaylistDeletionTitle": "Confirmez la suppression de l'audio \"{audioTitle}\" de la playlist Youtube",
-  "confirmAudioFromPlaylistDeletion": "Supprimez l'audio \"{audioTitle}\" de la playlist \"{playlistTitle}\" définie sur le site Youtube, sinon l'audio sera téléchargé à nouveau lors du prochain téléchargement de la playlist. Ou alors cliquez sur \"Annuler\" et choisissez \"Supprimer l'audio ...\" au lieu de \"Supprimer l'audio de la playlist également ...\". Ainsi, l'audio sera supprimé de la liste des audio's jouables, mais restera dans la liste des audio's téléchargés, ce qui évitera son re-téléchargement."
+  "confirmAudioFromPlaylistDeletion": "Supprimez l'audio \"{audioTitle}\" de la playlist \"{playlistTitle}\" définie sur le site Youtube, sinon l'audio sera téléchargé à nouveau lors du prochain téléchargement de la playlist. Ou alors cliquez sur \"Annuler\" et choisissez \"Supprimer l'audio ...\" au lieu de \"Supprimer l'audio de la playlist également ...\". Ainsi, l'audio sera supprimé de la liste des audio's jouables, mais restera dans la liste des audio's téléchargés, ce qui évitera son re-téléchargement.",
+  "deletedAudioAndMp3FilesMessage": "\n\n{deletedAudioAndMp3FilesNumber} audio(s) et leur(s) commentaire(s) et photo(s) ainsi que leur fichier MP3 a/ont été supprimé(s)."
 }
