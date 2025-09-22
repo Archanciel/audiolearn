@@ -4499,9 +4499,9 @@ class PlaylistListVM extends ChangeNotifier {
       0,
       0
     ]; // [0] is the number of updated comments,
-    //                                               [1] is the number of added comments,
-    //                                               [2] is the number of added comment
-    //                                                   json file (0 or 1 for an audio).
+    //    [1] is the number of added comments,
+    //    [2] is the number of added comment
+    //        json file (0 or 1 for an audio).
 
     // Iterate through downloaded audios from the zip playlist.
     for (Audio zipAudio in zipPlaylist.downloadedAudioLst) {
