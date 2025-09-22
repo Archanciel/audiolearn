@@ -683,6 +683,7 @@ class IntegrationTestUtil {
     List<String> playlistTitlesToDelete = const [],
     bool verifySetValueToTargetDialog = false,
     bool onAndroid = false,
+    bool doPurgePicturesDir = false,
   }) async {
     if (playlistTitlesToDelete.isNotEmpty) {
       // Delete the playlists which are to be deleted
@@ -712,14 +713,16 @@ class IntegrationTestUtil {
     // Purge the test playlist picture directory if it exists so that
     // if pictures are present in the restoring playlists ZIP, they
     // are restored.
-    if (onAndroid) {
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPicturePathAndroidTest,
-      );
-    } else {
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPicturePathWindowsTest,
-      );
+    if (doPurgePicturesDir) {
+      if (onAndroid) {
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPicturePathAndroidTest,
+        );
+      } else {
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPicturePathWindowsTest,
+        );
+      }
     }
 
     // Now tap the appbar leading popup menu and then the
