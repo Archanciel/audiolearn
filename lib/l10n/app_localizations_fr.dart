@@ -2378,6 +2378,10 @@ class AppLocalizationsFr extends AppLocalizations {
       '\n\nPuisque la playlist a été créée, elle est positionnée à la fin de la liste des playlists.';
 
   @override
+  String get multiplePlaylistsAddedAtEndOfPlaylistLst =>
+      '\n\nPuisque les playlists ont été créées, elles sont positionnées à la fin de la liste des playlists.';
+
+  @override
   String get playlistsSaveDialogTitle => 'Sauvegarde des playlists';
 
   @override

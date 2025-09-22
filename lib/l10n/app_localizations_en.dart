@@ -2353,6 +2353,10 @@ class AppLocalizationsEn extends AppLocalizations {
       '\n\nSince the playlist was created, it is positioned at the end of the playlist list.';
 
   @override
+  String get multiplePlaylistsAddedAtEndOfPlaylistLst =>
+      '\n\nSince the playlists were created, they are positioned at the end of the playlist list.';
+
+  @override
   String get playlistsSaveDialogTitle => 'Playlists Backup to ZIP';
 
   @override

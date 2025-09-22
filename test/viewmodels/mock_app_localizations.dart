@@ -2467,4 +2467,7 @@ class MockAppLocalizations extends AppLocalizations {
     Object addedAtEndOfPlaylistLstMsg,
   ) =>
       "Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $addedPictureJpgNumber picture JPG file(s) in the application pictures directory and $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) from \"$filePathName\".$deletedAudioAndMp3FilesMsg$addedAtEndOfPlaylistLstMsg";
+
+  @override
+  String get multiplePlaylistsAddedAtEndOfPlaylistLst => "Since the playlists were created, they are positioned at the end of the playlist list.";
 }
