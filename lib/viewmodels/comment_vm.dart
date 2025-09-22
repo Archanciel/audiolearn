@@ -317,10 +317,11 @@ class CommentVM extends ChangeNotifier {
           continue;
         }
       } else if (existingCommentsLst.isEmpty){
+        // Comment added to an audio which did not yet have a comment file
         existingCommentsLst.add(updateComment);
         addedCommentJsonFileNumber++;
       } else {
-        // If the comment does not exist, add it
+        // Comment added to an audio which already had a comment file
         existingCommentsLst.add(updateComment);
         addedCommentNumber++;
       }
