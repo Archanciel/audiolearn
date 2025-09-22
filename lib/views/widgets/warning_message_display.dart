@@ -1306,13 +1306,13 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
       case WarningMessageType.restoreAppDataFromZip:
         WidgetsBinding.instance.addPostFrameCallback((_) {
           String restoredAppDataFromZipMessage;
-          int deletedAudioAndMp3FilesNumber = _warningMessageVM.deletedAudioAndMp3FilesNumber;
+          int deletedAudioAndMp3FilesNumber =
+              _warningMessageVM.deletedAudioAndMp3FilesNumber;
           String deletedAudioAndMp3FilesMessage = '';
 
           if (deletedAudioAndMp3FilesNumber > 0) {
             deletedAudioAndMp3FilesMessage =
-                AppLocalizations.of(context)!
-                    .deletedAudioAndMp3FilesMessage(
+                AppLocalizations.of(context)!.deletedAudioAndMp3FilesMessage(
               deletedAudioAndMp3FilesNumber,
             );
           } else {
@@ -1332,9 +1332,10 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
           if (_warningMessageVM.zipFilePathName != '') {
             if (!_warningMessageVM.wasIndividualPlaylistRestored) {
               if (_warningMessageVM.newPlaylistsAddedAtEndOfPlaylistLst) {
-                restoredAppDataFromZipMessage =
-                    AppLocalizations.of(context)!.doRestoreMultiplePlaylistFromZip(
-                  _warningMessageVM.playlistsNumber,
+                int playlistsNumber = _warningMessageVM.playlistsNumber;
+                restoredAppDataFromZipMessage = AppLocalizations.of(context)!
+                    .doRestoreMultiplePlaylistFromZip(
+                  playlistsNumber,
                   _warningMessageVM.audioReferencesNumber,
                   _warningMessageVM.commentJsonFilesNumber,
                   _warningMessageVM.updatedCommentNumber,
@@ -1343,12 +1344,15 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                   _warningMessageVM.savedOrRestoredPictureJpgNumber,
                   deletedAudioAndMp3FilesMessage,
                   _warningMessageVM.zipFilePathName,
-                  AppLocalizations.of(context)!
-                      .uniquePlaylistAddedAtEndOfPlaylistLst,
+                  (playlistsNumber > 1)
+                      ? AppLocalizations.of(context)!
+                          .multiplePlaylistsAddedAtEndOfPlaylistLst
+                      : AppLocalizations.of(context)!
+                          .uniquePlaylistAddedAtEndOfPlaylistLst,
                 );
               } else {
-                restoredAppDataFromZipMessage =
-                    AppLocalizations.of(context)!.doRestoreMultiplePlaylistFromZip(
+                restoredAppDataFromZipMessage = AppLocalizations.of(context)!
+                    .doRestoreMultiplePlaylistFromZip(
                   _warningMessageVM.playlistsNumber,
                   _warningMessageVM.audioReferencesNumber,
                   _warningMessageVM.commentJsonFilesNumber,
@@ -1364,8 +1368,8 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
             } else {
               // Individual playlist is restored
               if (_warningMessageVM.newPlaylistsAddedAtEndOfPlaylistLst) {
-                restoredAppDataFromZipMessage =
-                    AppLocalizations.of(context)!.doRestoreUniquePlaylistFromZip(
+                restoredAppDataFromZipMessage = AppLocalizations.of(context)!
+                    .doRestoreUniquePlaylistFromZip(
                   _warningMessageVM.playlistsNumber,
                   _warningMessageVM.audioReferencesNumber,
                   _warningMessageVM.commentJsonFilesNumber,
@@ -1379,8 +1383,8 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                       .uniquePlaylistAddedAtEndOfPlaylistLst,
                 );
               } else {
-                restoredAppDataFromZipMessage =
-                    AppLocalizations.of(context)!.doRestoreUniquePlaylistFromZip(
+                restoredAppDataFromZipMessage = AppLocalizations.of(context)!
+                    .doRestoreUniquePlaylistFromZip(
                   _warningMessageVM.playlistsNumber,
                   _warningMessageVM.audioReferencesNumber,
                   _warningMessageVM.commentJsonFilesNumber,
