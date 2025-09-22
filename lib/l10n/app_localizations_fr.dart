@@ -2351,7 +2351,7 @@ class AppLocalizationsFr extends AppLocalizations {
       Object deletedAudioAndMp3FilesMsg,
       Object filePathName,
       Object addedAtEndOfPlaylistLstMsg) {
-    return 'Les fichiers JSON de $playlistsNumber playlist sauvegardée individuellement, de $commentsNumber commentaire(s) et de $picturesNumber photo(s) ainsi que $addedPictureJpgNumber fichier(s) photo JPG dans le répertoire \"pictures\" de l\'application et $audiosNumber référence(s) audio et $addedCommentNumber commentaire(s) ajouté(s) plus $updatedCommentNumber modifié(s) ont été restaurés depuis \"$filePathName\".$deletedAudioAndMp3FilesMsg$addedAtEndOfPlaylistLstMsg';
+    return 'Restauration depuis \"$filePathName\" terminée. Les fichiers JSON de $playlistsNumber playlist sauvegardée individuellement, de $commentsNumber commentaire(s) et de $picturesNumber photo(s) ainsi que $addedPictureJpgNumber fichier(s) photo JPG dans le répertoire \"pictures\" de l\'application et $audiosNumber référence(s) audio et $addedCommentNumber commentaire(s) ajouté(s) plus $updatedCommentNumber modifié(s) ont été restaurés.$deletedAudioAndMp3FilesMsg$addedAtEndOfPlaylistLstMsg';
   }
 
   @override
@@ -2366,7 +2366,7 @@ class AppLocalizationsFr extends AppLocalizations {
       Object deletedAudioAndMp3FilesMsg,
       Object filePathName,
       Object addedAtEndOfPlaylistLstMsg) {
-    return 'Les fichiers JSON de $playlistsNumber playlist(s), de $commentsNumber commentaire(s) et de $picturesNumber photo(s) ainsi que $addedPictureJpgNumber fichier(s) photo JPG dans le répertoire \"pictures\" de l\'application et $audiosNumber référence(s) audio et $addedCommentNumber commentaire(s) ajouté(s) plus $updatedCommentNumber modifié(s) et les paramètres de l\'application ont été restaurés depuis \"$filePathName\".$deletedAudioAndMp3FilesMsg$addedAtEndOfPlaylistLstMsg';
+    return 'Restauration depuis \"$filePathName\" terminée. Les fichiers JSON de $playlistsNumber playlist(s), de $commentsNumber commentaire(s) et de $picturesNumber photo(s) ainsi que $addedPictureJpgNumber fichier(s) photo JPG dans le répertoire \"pictures\" de l\'application et $audiosNumber référence(s) audio et $addedCommentNumber commentaire(s) ajouté(s) plus $updatedCommentNumber modifié(s) et les paramètres de l\'application ont été restaurés.$deletedAudioAndMp3FilesMsg$addedAtEndOfPlaylistLstMsg';
   }
 
   @override
