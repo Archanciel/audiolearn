@@ -5531,7 +5531,8 @@ void main() {
 
       await IntegrationTestUtil.typeOnAppbarMenuItem(
         tester: tester,
-        appbarMenuKeyStr: 'popup_menu_move_audio_to_playlist',);
+        appbarMenuKeyStr: 'popup_menu_move_audio_to_playlist',
+      );
 
       // Check the value of the select one playlist AlertDialog
       // dialog title
@@ -6766,7 +6767,8 @@ void main() {
       // to open the comment add list dialog
       await IntegrationTestUtil.typeOnAppbarMenuItem(
         tester: tester,
-        appbarMenuKeyStr: 'appbar_popup_menu_audio_comment',);
+        appbarMenuKeyStr: 'appbar_popup_menu_audio_comment',
+      );
 
       // Verify that the comment dialog is displayed
       expect(find.text('Comments'), findsOneWidget);
@@ -6879,7 +6881,8 @@ void main() {
       // to open the comment add list dialog
       await IntegrationTestUtil.typeOnAppbarMenuItem(
         tester: tester,
-        appbarMenuKeyStr: 'appbar_popup_menu_audio_comment',);
+        appbarMenuKeyStr: 'appbar_popup_menu_audio_comment',
+      );
 
       // Now tap on the delete comment icon button to delete the comment
       await tester.tap(find.byKey(const Key('deleteCommentIconButton')));
@@ -8512,7 +8515,7 @@ void main() {
 
       // Check the modified comment end position in the comment dialog.
 
-      final Finder commentEndTextWidgetFinder =
+      Finder commentEndTextWidgetFinder =
           find.byKey(const Key('commentEndPositionText'));
 
       expect(
@@ -8535,7 +8538,7 @@ void main() {
       );
 
       // Now modify the position in the dialog with tenth of seconds
-      positionTextToEnterWithTenthOfSeconds = '1:15:45.9';
+      positionTextToEnterWithTenthOfSeconds = '2:16:45.3';
       tester
           .widget<TextField>(setValueToTargetDialogEditTextFinder)
           .controller!
@@ -8543,7 +8546,31 @@ void main() {
       await tester.pumpAndSettle();
 
       // Tap on the Ok button to set the new position in the comment
-      // previous dialog without checking any checkbox
+      // previous dialog
+
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
+
+      // Verify the displayed warning or confirn dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "The entered value exceeds the maximal value (1:17:53.7). Please correct it and retry ...",
+        isWarningConfirming: false,
+      );
+
+      // Check the modified comment end position in the comment dialog.
+
+      commentEndTextWidgetFinder =
+          find.byKey(const Key('passedValueFieldTextField'));
+
+      expect(
+        tester.widget<TextField>(commentEndTextWidgetFinder).controller!.text,
+        '1:17:53.7',
+      );
+
+      // Tap on the Ok button to set the new position in the comment
+      // previous dialog
 
       await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
       await tester.pumpAndSettle();
@@ -8558,22 +8585,25 @@ void main() {
         isWarningConfirming: false,
       );
 
-      await simulateEnteringTooBigAndTooSmallAudioPosition(
-          tester: tester,
-          setValueToTargetDialogEditTextFinder:
-              setValueToTargetDialogEditTextFinder,
-          doSetStartOrEndCheckbox: false);
-
-      await simulateEnteringTooBigAndTooSmallAudioPosition(
-          tester: tester,
-          setValueToTargetDialogEditTextFinder:
-              setValueToTargetDialogEditTextFinder,
-          doSetStartOrEndCheckbox: true);
-
-      // Close the define position dialog by tapping on the Cancel button
-      await tester.tap(find.byKey(const Key('setValueToTargetCancelButton')));
+      // Select the second checkbox (End position)
+      await tester.tap(find.byKey(const Key('checkbox_1_key')));
       await tester.pumpAndSettle();
 
+      // Tap on the Ok button to set the new position in the comment
+      // previous dialog
+
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
+
+      commentEndTextWidgetFinder =
+          find.byKey(const Key('commentEndPositionText'));
+
+      expect(
+        tester.widget<Text>(commentEndTextWidgetFinder).data,
+        '1:17:53.7',
+      );
+
+      
       // Tap on the add/edit comment button to save the comment
       await tester.tap(find.byKey(const Key('addOrUpdateCommentTextButton')));
       await tester.pumpAndSettle();
@@ -8717,7 +8747,8 @@ void main() {
       // to open the comment add list dialog
       await IntegrationTestUtil.typeOnAppbarMenuItem(
         tester: tester,
-        appbarMenuKeyStr: 'appbar_popup_menu_audio_comment',);
+        appbarMenuKeyStr: 'appbar_popup_menu_audio_comment',
+      );
 
       await Future.delayed(const Duration(milliseconds: 500));
       await tester.pumpAndSettle();
@@ -10499,6 +10530,12 @@ Future<void> simulateEnteringTooBigAndTooSmallAudioPosition({
     warningDialogMessage:
         "The entered value exceeds the maximal value (1:17:53.7). Please correct it and retry ...",
     isWarningConfirming: false,
+  );
+
+  Finder setValueToTargetDialogFinder = find.byType(SetValueToTargetDialog);
+  setValueToTargetDialogEditTextFinder = find.descendant(
+    of: setValueToTargetDialogFinder,
+    matching: find.byType(TextField),
   );
 
   // Check that the too big invalid value in the set value to target
