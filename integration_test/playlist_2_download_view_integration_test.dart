@@ -30522,10 +30522,8 @@ void main() {
         setMusicQuality: false,
       );
 
-      // Add a delay to allow the download to finish. Since a mock
-      // AudioDownloadVM is used, the download will be simulated and
-      // will not take time.
-      for (int i = 0; i < 14; i++) {
+      // Add a delay to allow the download to finish.
+      for (int i = 0; i < 5; i++) {
         await Future.delayed(const Duration(milliseconds: 1000));
         await tester.pumpAndSettle();
       }
@@ -30533,18 +30531,18 @@ void main() {
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        youtubeChannel: "Bible en ligne",
+        youtubeChannel: "Jean-Pierre Schnyder",
         validVideoTitleOrAudioTitle:
-            "Musique chrétienne 2019 - Le temps (avec paroles)",
+            "audio learn test short video one",
         isMusicQuality: false, // Is spoken quality
       );
 
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        youtubeChannel: "Bible en ligne",
+        youtubeChannel: "Jean-Pierre Schnyder",
         validVideoTitleOrAudioTitle:
-            "Chanson évangélique  Ta foi en Dieu doit être au-dessus de tout",
+            "audio learn test short video two",
         isMusicQuality: false, // Is spoken quality
       );
 
@@ -30597,29 +30595,27 @@ void main() {
         setMusicQuality: true,
       );
 
-      // Add a delay to allow the download to finish. Since a mock
-      // AudioDownloadVM is used, the download will be simulated and
-      // will not take time.
-      for (int i = 0; i < 10; i++) {
-        await Future.delayed(const Duration(milliseconds: 1000));
+      // Add a delay to allow the download to finish.
+      for (int i = 0; i < 5; i++) {
+        await Future.delayed(const Duration(milliseconds: 1500));
         await tester.pumpAndSettle();
       }
 
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        youtubeChannel: "Bible en ligne",
+        youtubeChannel: "Jean-Pierre Schnyder",
         validVideoTitleOrAudioTitle:
-            "Musique chrétienne 2019 - Le temps (avec paroles)",
+            "audio learn test short video one",
         isMusicQuality: true, // Is music quality
       );
 
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        youtubeChannel: "Bible en ligne",
+        youtubeChannel: "Jean-Pierre Schnyder",
         validVideoTitleOrAudioTitle:
-            "Chanson évangélique  Ta foi en Dieu doit être au-dessus de tout",
+            "audio learn test short video two",
         isMusicQuality: true, // Is music quality
       );
 
@@ -30672,29 +30668,27 @@ void main() {
         setMusicQuality: true,
       );
 
-      // Add a delay to allow the download to finish. Since a mock
-      // AudioDownloadVM is used, the download will be simulated and
-      // will not take time.
-      for (int i = 0; i < 10; i++) {
-        await Future.delayed(const Duration(milliseconds: 1000));
+      // Add a delay to allow the download to finish.
+      for (int i = 0; i < 5; i++) {
+        await Future.delayed(const Duration(milliseconds: 1500));
         await tester.pumpAndSettle();
       }
 
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        youtubeChannel: "Bible en ligne",
+        youtubeChannel: "Jean-Pierre Schnyder",
         validVideoTitleOrAudioTitle:
-            "Musique chrétienne 2019 - Le temps (avec paroles)",
+            "audio learn test short video one",
         isMusicQuality: true, // Is music quality
       );
 
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioEnclosingPlaylistTitle: localPlaylistTitleInWhichToDownloadURLs,
-        youtubeChannel: "Bible en ligne",
+        youtubeChannel: "Jean-Pierre Schnyder",
         validVideoTitleOrAudioTitle:
-            "Chanson évangélique  Ta foi en Dieu doit être au-dessus de tout",
+            "audio learn test short video two",
         isMusicQuality: true, // Is music quality
       );
 
@@ -30705,7 +30699,7 @@ void main() {
       );
     });
     testWidgets(
-        '''Uncheck all checkbox. Download URLs in music quality playlist in spoken quality.''',
+        '''Uncheck all checkbox of download audio quality.''',
         (WidgetTester tester) async {
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -30747,20 +30741,22 @@ void main() {
           setMusicQuality: false,
           uncheckAllCheckboxes: true);
 
-      // Add a delay to allow the download to finish. Since a mock
-      // AudioDownloadVM is used, the download will be simulated and
-      // will not take time.
-      for (int i = 0; i < 5; i++) {
-        await Future.delayed(const Duration(milliseconds: 700));
-        await tester.pumpAndSettle();
-      }
+      // Click on the warning dialog OK button
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+      await tester.pumpAndSettle();
 
-      expect(find.text("Musique chrétienne 2019 - Le temps (avec paroles)"),
+      // And click on the Cancel button of the download URLs from text
+      // file dialog
+      await tester
+          .tap(find.byKey(const Key('setValueToTargetCancelButton')));
+      await tester.pumpAndSettle();
+
+      expect(find.text("audio learn test short video one"),
           findsNothing);
 
       expect(
           find.text(
-              "Chanson évangélique  Ta foi en Dieu doit être au-dessus de tout"),
+              "audio learn test short video two"),
           findsNothing);
 
       // Purge the test playlist directory so that the created test
@@ -32266,7 +32262,8 @@ Future<void> _tapOnDownloadURLsFromTextFileMenu({
   }
 
   if (uncheckAllCheckboxes) {
-    // Uncheck all checkboxes
+    // Uncheck all checkboxes. This will cause tapping on the
+    // 'OK' button to not close the dialog
     if (!setMusicQuality) {
       await tester.tap(find.byKey(const Key('checkbox_0_key')));
     } else {
