@@ -1955,17 +1955,16 @@ class AudioDownloadVM extends ChangeNotifier {
       audioPlayer.dispose();
     }
 
-        commentVMlistenFalse.addComment(
-          comment: Comment(
-            title: commentTitle,
-            content: currentAudioFile.text,
-            commentStartPositionInTenthOfSeconds: 0,
-            commentEndPositionInTenthOfSeconds:
-                existingAudio.audioDuration.inMilliseconds ~/ 100,
-          ),
-          audioToComment: existingAudio,
-        );
-
+    commentVMlistenFalse.addComment(
+      comment: Comment(
+        title: commentTitle,
+        content: currentAudioFile.text,
+        commentStartPositionInTenthOfSeconds: 0,
+        commentEndPositionInTenthOfSeconds:
+            existingAudio.audioDuration.inMilliseconds ~/ 100,
+      ),
+      audioToComment: existingAudio,
+    );
 
     JsonDataService.saveToFile(
       model: targetPlaylist,
