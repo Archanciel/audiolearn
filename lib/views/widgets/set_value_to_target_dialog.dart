@@ -265,6 +265,10 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
 
       // the dialog is not closed
       return;
+    } else if (resultLst.length == 1 && widget.isValueStringUsed) {
+      // The case if the entered value was defined as invalid
+      // in the _createResultList() method
+      return;
     }
 
     Navigator.of(context).pop(resultLst);
@@ -355,7 +359,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
 
           _passedValueTextEditingController.text = maxValueLimitStr;
 
-          return [];
+          return [""];
         case InvalidValueState.tooSmall:
           warningMessageVM.setInvalidValueWarning(
             invalidValueState: invalidValueState,
@@ -364,7 +368,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
 
           _passedValueTextEditingController.text = minValueLimitStr;
 
-          return [];
+          return [""];
         default:
           break;
       }

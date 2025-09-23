@@ -28939,7 +28939,7 @@ void main() {
       await Future.delayed(const Duration(milliseconds: 1000));
 
       // Add a delay to allow the download to finish.
-      for (int i = 0; i < 6; i++) {
+      for (int i = 0; i < 7; i++) {
         await Future.delayed(const Duration(seconds: 1));
         await tester.pumpAndSettle();
         // Now tap on Stop button to stop the download
@@ -29053,7 +29053,7 @@ void main() {
       );
 
       // Add a delay to allow the download to finish.
-      await Future.delayed(const Duration(seconds: 5));
+      await Future.delayed(const Duration(seconds: 7));
       await tester.pumpAndSettle();
 
       await IntegrationTestUtil.verifyAudioInfoDialog(
@@ -29103,7 +29103,7 @@ void main() {
       await Future.delayed(const Duration(milliseconds: 1000));
 
       // Add a delay to allow the download to finish.
-      for (int i = 0; i < 6; i++) {
+      for (int i = 0; i < 7; i++) {
         await Future.delayed(const Duration(seconds: 1));
         await tester.pumpAndSettle();
       }
@@ -30523,7 +30523,7 @@ void main() {
       );
 
       // Add a delay to allow the download to finish.
-      for (int i = 0; i < 5; i++) {
+      for (int i = 0; i < 6; i++) {
         await Future.delayed(const Duration(milliseconds: 1000));
         await tester.pumpAndSettle();
       }
