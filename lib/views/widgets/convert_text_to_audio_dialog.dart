@@ -358,12 +358,22 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                   _stopAllAudio(
                     textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
                   );
-                  final AudioDownloadVM audioDownloadVMlistenFalse =
-                      Provider.of<AudioDownloadVM>(
+
+                  // Calling this method ensures that if the user re-converts
+                  // an existing converted audio file, the audio player will
+                  // play the new version of the audio file with the right
+                  // duration and not the old one, which would uncorrectly
+                  // position the audio player view audio slider and set the
+                  // audio end position field incorrectly.
+                  Provider.of<AudioPlayerVM>(
                     context,
                     listen: false,
-                  );
-                  audioDownloadVMlistenFalse.doNotifyListeners();
+                  ).clearCurrentAudio();
+
+                  Provider.of<AudioDownloadVM>(
+                    context,
+                    listen: false,
+                  ).doNotifyListeners();
 
                   Navigator.of(context).pop();
                 },
