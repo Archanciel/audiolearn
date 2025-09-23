@@ -254,6 +254,16 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
 
     if (resultLst.isEmpty && !widget.canAllCheckBoxBeUnchecked) {
       // The case if the user did not check any checkbox
+      WarningMessageVM warningMessageVM = Provider.of<WarningMessageVM>(
+        context,
+        listen: false,
+      );
+
+      warningMessageVM.setNoCheckboxSelected(
+        addAtListToWarningMessage: !widget.isTargetExclusive,
+      );
+
+      // the dialog is not closed
       return;
     }
 
