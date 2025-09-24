@@ -265,10 +265,17 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
 
       // the dialog is not closed
       return;
-    // } else if (resultLst.length == 1 && widget.isValueStringUsed) {
-    //   // The case if the entered value was defined as invalid
-    //   // in the _createResultList() method
-    //   return;
+    } else if (widget.targetNamesLst.isNotEmpty && resultLst.length == 1) {
+      // The case if the SetValueToTargetDialog has checkbox and
+      // if the entered value was defined as invalid in the
+      // _createResultList() method.
+      //
+      // The widget.targetNamesLst.isNotEmpty test is necessary,
+      // otherwise, if the dialog has no checkbox, if the entered
+      // value is invalid, no warning will be displayed. The case
+      // in the functionality of defining a date with invalid format
+      // when saving the audio MP3 to zip file.
+      return;
     }
 
     Navigator.of(context).pop(resultLst);
