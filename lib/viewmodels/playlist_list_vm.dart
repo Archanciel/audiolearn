@@ -3407,6 +3407,14 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Create ZIP files with size limit using streaming approach
     _numberOfCreatedZipFiles = 0;
+
+    if (oldestAudioSavedToZipDownloadDateTime.isBefore(fromAudioDownloadDateTime)) {
+      // The case if the audio is a text to speech audio which was
+      // created before the fromAudioDownloadDateTime but modified
+      // at or after this date and so its mp3 must be saved to zip.
+      oldestAudioSavedToZipDownloadDateTime = fromAudioDownloadDateTime;
+    }
+
     String baseZipFileName =
         "${playlistTitle}_mp3_from_${yearMonthDayDateTimeFormatForFileName.format(oldestAudioSavedToZipDownloadDateTime)}_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}";
 
