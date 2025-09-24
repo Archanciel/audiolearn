@@ -2901,8 +2901,7 @@ class PlaylistListVM extends ChangeNotifier {
         zipFilePathName: savedZipFilePathName,
         savedPictureNumber: savedPictureNumber, // if the picture number is > 0,
         // then a picture number sentence is added to the confirmation message.
-        addPictureJpgFilesToZip:
-            addPictureJpgFilesToZip);
+        addPictureJpgFilesToZip: addPictureJpgFilesToZip);
 
     return savedZipFilePathName;
   }
@@ -3337,10 +3336,38 @@ class PlaylistListVM extends ChangeNotifier {
         continue;
       }
 
-      List<Audio> filteredAudioLst = playlist.playableAudioLst
-          .where((audio) => audio.audioDownloadDateTime
-              .isAtOrAfter(fromAudioDownloadDateTime))
-          .toList();
+      List<Audio> filteredAudioLst = playlist.playableAudioLst.where((audio) {
+        // Include downloaded and imported audios based on download date
+        if (audio.audioType == AudioType.downloaded ||
+            audio.audioType == AudioType.imported) {
+          return audio.audioDownloadDateTime
+              .isAtOrAfter(fromAudioDownloadDateTime);
+        }
+
+        // Include imported audios based on most recent comment creation date
+        if (audio.audioType == AudioType.textToSpeech) {
+          // This enables to put the mp3 of a modified text to speech audio in
+          // a mp3 zip if download date is before or at last created comment
+          // date which is the date of the last modification of the text to
+          // speech audio.
+          
+          // Load comments for this audio
+          List<Comment> comments = _commentVM.loadAudioComments(audio: audio);
+
+          if (comments.isEmpty) {
+            return false; // No comments, so exclude
+          }
+
+          // Find the most recent comment creation date
+          DateTime mostRecentCommentDate = comments
+              .map((comment) => comment.creationDateTime)
+              .reduce((a, b) => a.isAfter(b) ? a : b);
+
+          return mostRecentCommentDate.isAtOrAfter(fromAudioDownloadDateTime);
+        } else {
+          return false; // Exclude other audio types
+        }
+      }).toList();
 
       for (Audio audio in filteredAudioLst) {
         File audioFile = File(audio.filePathName);
@@ -3887,8 +3914,7 @@ class PlaylistListVM extends ChangeNotifier {
       addedCommentNumber: restoredInfoLst[7],
       pictureJsonFilesNumber: restoredInfoLst[2],
       pictureJpgFilesNumber: restoredInfoLst[3],
-      deletedAudioAndMp3FilesNumber:
-          restoredInfoLst[8],
+      deletedAudioAndMp3FilesNumber: restoredInfoLst[8],
       wasIndividualPlaylistRestored: wasIndividualPlaylistRestored,
       newPlaylistsAddedAtEndOfPlaylistLst: restoredInfoLst[9],
     );
