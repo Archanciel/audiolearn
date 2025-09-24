@@ -265,10 +265,10 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
 
       // the dialog is not closed
       return;
-    } else if (resultLst.length == 1 && widget.isValueStringUsed) {
-      // The case if the entered value was defined as invalid
-      // in the _createResultList() method
-      return;
+    // } else if (resultLst.length == 1 && widget.isValueStringUsed) {
+    //   // The case if the entered value was defined as invalid
+    //   // in the _createResultList() method
+    //   return;
     }
 
     Navigator.of(context).pop(resultLst);
@@ -293,7 +293,9 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
 
     if (widget.validationFunctionArgs.isNotEmpty) {
       minValueLimitStr = widget.validationFunctionArgs[0].toString();
-      if (_checkboxesLst[0]) {
+      if (_checkboxesLst.isEmpty) {
+        maxValueLimitStr = minValueLimitStr;
+      } else if (_checkboxesLst[0]) {
         maxValueLimitStr = widget.validationFunctionArgs[1].toString();
       } else {
         maxValueLimitStr = widget.validationFunctionArgs[2].toString();
