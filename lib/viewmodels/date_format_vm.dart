@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_string_interpolations
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -126,7 +128,11 @@ class DateFormatVM extends ChangeNotifier {
     try {
       return DateFormat('$_selectedDateFormat HH:mm').parseStrict(dateTimeStr);
     } catch (_) {
-      return null;
+      try {
+        return DateFormat('$_selectedDateFormat').parseStrict(dateTimeStr);
+      } catch (_) {
+        return null;
+      }
     }
   }
 }
