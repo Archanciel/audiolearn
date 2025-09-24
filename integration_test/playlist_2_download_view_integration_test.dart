@@ -30668,9 +30668,15 @@ void main() {
           setMusicQuality: false,
           uncheckAllCheckboxes: true);
 
-      // Click on the warning dialog OK button
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-      await tester.pumpAndSettle();
+      // Since no checkbox was checked, a warning is displayed ...
+
+      // Verify the displayed warning dialog and close it
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "No checkbox selected. Please select one checkbox before clicking 'Ok', or click 'Cancel' to exit.",
+        isWarningConfirming: false,
+      );
 
       // And click on the Cancel button of the download URLs from text
       // file dialog
