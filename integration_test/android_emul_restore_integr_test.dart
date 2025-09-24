@@ -120,14 +120,11 @@ void main() {
         await Future.delayed(const Duration(milliseconds: 500));
         await tester.pumpAndSettle();
 
-        String restorableZipFilePathName =
-            '/storage/emulated/0/Documents/test/audiolearn/$restorableZipFileName';
-
         // Verify the displayed warning confirmation dialog
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 modified comment(s) from "/storage/emulated/0/Documents/test/audiolearn/Windows S8 audio.zip".',
+              'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 modified comment(s) from "/storage/emulated/0/Documents/test/audiolearn/Windows S8 audio.zip".',
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );
@@ -259,9 +256,6 @@ void main() {
         // dialog is not displayed and can not be verifyed !
         await Future.delayed(const Duration(milliseconds: 500));
         await tester.pumpAndSettle();
-
-        String restorableZipFilePathName =
-            '/storage/emulated/0/Documents/test/audiolearn/$restorableZipFileName';
 
         // Verify the displayed warning confirmation dialog
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
@@ -402,14 +396,11 @@ void main() {
         await Future.delayed(const Duration(milliseconds: 500));
         await tester.pumpAndSettle();
 
-        String restorableZipFilePathName =
-            '/storage/emulated/0/Documents/test/audiolearn/$restorableZipFileName';
-
         // Verify the displayed warning confirmation dialog
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              'Restored 1 playlist saved individually, 3 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 22 audio reference(s) and 0 added plus 0 modified comment(s) from "/storage/emulated/0/Documents/test/audiolearn/Windows Les plus belles chansons chrétiennes.zip".\n\nSince the playlist was created, it is positioned at the end of the playlist list.',
+              'Restored 1 playlist saved individually, 3 comment and 1 picture JSON files as well as 1 picture JPG file(s) in the application pictures directory and 22 audio reference(s) and 0 added plus 0 modified comment(s) from "/storage/emulated/0/Documents/test/audiolearn/Windows Les plus belles chansons chrétiennes.zip".\n\nSince the playlist was created, it is positioned at the end of the playlist list.',
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );
@@ -532,9 +523,6 @@ void main() {
         // dialog is not displayed and can not be verifyed !
         await Future.delayed(const Duration(milliseconds: 500));
         await tester.pumpAndSettle();
-
-        String restorableZipFilePathName =
-            '/storage/emulated/0/Documents/test/audiolearn/$restorableZipFileName';
 
         // Verify the displayed warning confirmation dialog
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
@@ -672,9 +660,6 @@ void main() {
         // dialog is not displayed and can not be verifyed !
         await Future.delayed(const Duration(milliseconds: 500));
         await tester.pumpAndSettle();
-
-        String restorableZipFilePathName =
-            '/storage/emulated/0/Documents/test/audiolearn/$restorableZipFileName';
 
         // Verify the displayed warning confirmation dialog
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
@@ -1418,7 +1403,7 @@ void main() {
 
         // Tap masculine checkbox back
         await tester.tap(masculineCheckbox);
-        await tester.pump();
+        await tester.pumpAndSettle();
 
         // Verify state changed back to masculine
         expect(
