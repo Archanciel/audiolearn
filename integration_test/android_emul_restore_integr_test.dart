@@ -127,7 +127,7 @@ void main() {
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 2 audio reference(s) and 0 added plus 0 modified comment(s) from "$restorableZipFilePathName".\n\nDeleted 0 audio(s) and their comment(s) as well as their MP3 file.\n\nRestored also 2 picture JPG file(s) in the application pictures directory.',
+              'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 modified comment(s) from "/storage/emulated/0/Documents/test/audiolearn/Windows S8 audio.zip".',
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );
@@ -267,7 +267,7 @@ void main() {
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              'Restored 0 playlist, 3 comment and 3 picture JSON files as well as 4 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".\n\nDeleted 0 audio(s) and their comment(s) as well as their MP3 file.',
+              'Restored 0 playlist, 3 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "/storage/emulated/0/Documents/test/audiolearn/Windows 2 existing playlists with new audios.zip".',
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );
@@ -409,7 +409,7 @@ void main() {
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              'Restored 1 playlist saved individually, 3 comment and 1 picture JSON files as well as 22 audio reference(s) and 0 added plus 0 modified comment(s) from "$restorableZipFilePathName".\n\nDeleted 0 audio(s) and their comment(s) as well as their MP3 file.\n\nSince the playlist was created, it is positioned at the end of the playlist list.\n\nRestored also 1 picture JPG file(s) in the application pictures directory.',
+              'Restored 1 playlist saved individually, 3 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 22 audio reference(s) and 0 added plus 0 modified comment(s) from "/storage/emulated/0/Documents/test/audiolearn/Windows Les plus belles chansons chrétiennes.zip".\n\nSince the playlist was created, it is positioned at the end of the playlist list.',
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );
@@ -540,7 +540,7 @@ void main() {
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 2 audio reference(s) and 0 added plus 0 modified comment(s) from "$restorableZipFilePathName".\n\nDeleted 0 audio(s) and their comment(s) as well as their MP3 file.\n\nRestored also 2 picture JPG file(s) in the application pictures directory.',
+              'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 modified comment(s) from "/storage/emulated/0/Documents/test/audiolearn/Android S8 audio.zip".',
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );
@@ -680,7 +680,7 @@ void main() {
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              'Restored 0 playlist, 3 comment and 3 picture JSON files as well as 4 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "$restorableZipFilePathName".\n\nDeleted 0 audio(s) and their comment(s) as well as their MP3 file.',
+              'Restored 0 playlist, 3 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 modified comment(s) and the application settings from "/storage/emulated/0/Documents/test/audiolearn/Android 2 existing playlists with new audios.zip".',
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );
