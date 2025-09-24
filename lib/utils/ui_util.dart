@@ -318,7 +318,8 @@ class UiUtil {
         errorType: ErrorType.dateFormatError,
         errorArgOne: oldestAudioDownloadDateFormattedStr,
       );
-      return [parseDateTimeOrDateStrUsinAppDateFormat];
+
+      return [null];
     }
 
     Duration audioMp3SavingToZipDuration =
