@@ -13,8 +13,10 @@ import 'help_dialog.dart';
 
 enum InvalidValueState {
   none,
-  tooBig,
-  tooSmall,
+  positionTooBig,
+  positionTooSmall,
+  dateFormatInvalid,
+  enteredDateEmpty,
 }
 
 /// A dialog that allows the user to enter a value and select one or more
@@ -90,6 +92,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
   final FocusNode _focusNodeDialog = FocusNode();
   final FocusNode _focusNodePassedValueTextField = FocusNode();
   final List<bool> _checkboxesLst = [];
+  InvalidValueState _invalidValueState = InvalidValueState.none;
 
   @override
   void initState() {
@@ -146,7 +149,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
         if (event is KeyDownEvent) {
           if (event.logicalKey == LogicalKeyboardKey.enter ||
               event.logicalKey == LogicalKeyboardKey.numpadEnter) {
-            executeFinalOperation(context);
+            _executeFinalOperation(context);
           }
         }
       },
@@ -223,7 +226,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
           TextButton(
             key: const Key('setValueToTargetOkButton'),
             onPressed: () {
-              executeFinalOperation(context);
+              _executeFinalOperation(context);
             },
             child: Text(
               'Ok',
@@ -249,7 +252,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
     );
   }
 
-  void executeFinalOperation(BuildContext context) {
+  void _executeFinalOperation(BuildContext context) {
     List<String> resultLst = _createResultList();
 
     if (resultLst.isEmpty && !widget.canAllCheckBoxBeUnchecked) {
@@ -263,22 +266,29 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
         addAtListToWarningMessage: !widget.isTargetExclusive,
       );
 
-      // the dialog is not closed
-      return;
+      return; // the SetValueToTargetDialog is not closed
     } else if (widget.checkboxLabelLst.isNotEmpty && resultLst.length == 1) {
       // The case if the SetValueToTargetDialog has checkbox and
       // if the entered value was defined as invalid in the
       // _createResultList() method.
       //
-      // The widget.targetNamesLst.isNotEmpty test is necessary,
+      // The widget.checkboxLabelLst.isNotEmpty test is necessary,
       // otherwise, if the dialog has no checkbox, if the entered
       // value is invalid, no warning will be displayed. The case
       // in the functionality of defining a date with invalid format
       // when saving the audio MP3 to zip file.
-      return;
+
+      return; // the SetValueToTargetDialog is not closed
+    } else if (_invalidValueState == InvalidValueState.dateFormatInvalid ||
+        _invalidValueState == InvalidValueState.enteredDateEmpty) {
+      // The case if the entered date format was defined as invalid
+      // in the _createResultList() method or is empty.
+
+      return; // the SetValueToTargetDialog is not closed
     }
 
-    Navigator.of(context).pop(resultLst);
+    Navigator.of(context)
+        .pop(resultLst); // the SetValueToTargetDialog is closed
   }
 
   /// Validates the entered value and the selected checkboxes and creates
@@ -311,7 +321,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
 
     // The code below simplifies setting the comment start position
     // to 0 or the comment end position to audio duration.
-    if (enteredStr.isEmpty) {
+    if (enteredStr.isEmpty && _checkboxesLst.isNotEmpty) {
       if (_checkboxesLst[0] == true) {
         enteredStr = minValueLimitStr;
       } else if (_checkboxesLst[1] == true) {
@@ -339,43 +349,68 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
     // two element, the minimal an maximal acceptable duration. The third
     // element, the entered value, is added in the line above.
 
-    InvalidValueState invalidValueState = InvalidValueState.none;
+    _invalidValueState = InvalidValueState.none;
 
     if (widget.validationFunction != null) {
-      invalidValueState = Function.apply(
+      _invalidValueState = Function.apply(
         widget.validationFunction!,
         widget.validationFunctionArgs,
       );
 
-      // Once the validation function has been applied, the 2 entered values
-      // must be removed from the list of arguments, otherwise, the next
-      // time the validation function will be applied, it will fail.
-      widget.validationFunctionArgs.length -= 2;
+      if (_checkboxesLst.isNotEmpty) {
+        // Remove the last added elements:
+        // once the validation function has been applied, the 2 entered values
+        // (enteredStr and _checkboxesLst[0] state) must be removed from the
+        // list of arguments, otherwise, the next time the validation function
+        // will be applied, it will fail.
+        widget.validationFunctionArgs.length -= 2;
+      } else {
+        // Remove the enteredStr.
+        widget.validationFunctionArgs.length -= 1;
+      }
     }
 
-    if (invalidValueState != InvalidValueState.none) {
+    if (_invalidValueState != InvalidValueState.none) {
       WarningMessageVM warningMessageVM = Provider.of<WarningMessageVM>(
         context,
         listen: false,
       );
 
-      switch (invalidValueState) {
-        case InvalidValueState.tooBig:
+      switch (_invalidValueState) {
+        case InvalidValueState.positionTooBig:
           warningMessageVM.setInvalidValueWarning(
-            invalidValueState: invalidValueState,
+            invalidValueState: _invalidValueState,
             maxOrMinValueLimitStr: maxValueLimitStr,
           );
 
           _passedValueTextEditingController.text = maxValueLimitStr;
 
           return [""];
-        case InvalidValueState.tooSmall:
+        case InvalidValueState.positionTooSmall:
           warningMessageVM.setInvalidValueWarning(
-            invalidValueState: invalidValueState,
+            invalidValueState: _invalidValueState,
             maxOrMinValueLimitStr: minValueLimitStr,
           );
 
           _passedValueTextEditingController.text = minValueLimitStr;
+
+          return [""];
+        case InvalidValueState.dateFormatInvalid:
+          warningMessageVM.setError(
+            errorType: ErrorType.dateFormatError,
+            errorArgOne: enteredStr,
+          );
+
+          _passedValueTextEditingController.text = enteredStr;
+
+          return [""];
+        case InvalidValueState.enteredDateEmpty:
+          warningMessageVM.setError(
+            errorType: ErrorType.enteredDateEmpty,
+            errorArgOne: enteredStr,
+          );
+
+          _passedValueTextEditingController.text = enteredStr;
 
           return [""];
         default:
