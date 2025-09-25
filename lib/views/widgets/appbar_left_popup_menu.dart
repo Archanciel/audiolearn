@@ -671,7 +671,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                       .playlistJsonFilesUpdateDialogTitle,
                   dialogCommentStr: AppLocalizations.of(context)!
                       .playlistJsonFilesUpdateExplanation,
-                  targetNamesLst: [
+                  checkboxLabelLst: [
                     AppLocalizations.of(context)!.removeDeletedAudioFiles,
                   ],
                   validationFunctionArgs: [],
@@ -712,7 +712,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                       AppLocalizations.of(context)!.playlistsSaveDialogTitle,
                   dialogCommentStr:
                       AppLocalizations.of(context)!.playlistsSaveExplanation,
-                  targetNamesLst: [
+                  checkboxLabelLst: [
                     AppLocalizations.of(context)!.addPictureJpgFilesToZip,
                   ],
                   validationFunctionArgs: [],
@@ -772,7 +772,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                       .playlistRestorationDialogTitle,
                   dialogCommentStr: AppLocalizations.of(context)!
                       .playlistRestorationExplanation,
-                  targetNamesLst: [
+                  checkboxLabelLst: [
                     AppLocalizations.of(context)!.replaceExistingPlaylists,
                   ],
                   validationFunctionArgs: [],
@@ -883,7 +883,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                     listOfPlaylists: playlistListVMlistenFalse
                         .getUpToDateSelectablePlaylists(),
                   ),
-                  targetNamesLst: [],
+                  checkboxLabelLst: [],
                   validationFunctionArgs: [],
                   isCursorAtStart: true,
                   helpItemsLst: savePlaylistsMp3HelpItemsLst,
@@ -981,7 +981,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                       .audioMp3RestorationDialogTitle,
                   dialogCommentStr: AppLocalizations.of(context)!
                       .audioMp3RestorationExplanation,
-                  targetNamesLst: [],
+                  checkboxLabelLst: [],
                   validationFunctionArgs: [],
                   canAllCheckBoxBeUnchecked: true,
                   helpItemsLst: restorePlaylistsHelpItemsLst,

@@ -432,7 +432,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                       .downloadAudioFromVideoUrlsInPlaylist(
                     videoUrls.length.toString(),
                   ),
-                  targetNamesLst: [
+                  checkboxLabelLst: [
                     AppLocalizations.of(context)!.playlistQualityAudio,
                     AppLocalizations.of(context)!.playlistQualityMusic,
                   ],
@@ -541,7 +541,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                       .setPlaylistAudioQualityDialogTitle,
                   dialogCommentStr:
                       AppLocalizations.of(context)!.selectAudioQuality,
-                  targetNamesLst: [
+                  checkboxLabelLst: [
                     AppLocalizations.of(context)!.playlistQualityAudio,
                     AppLocalizations.of(context)!.playlistQualityMusic,
                   ],
@@ -669,7 +669,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                       .getOldestAudioDownloadDateFormattedStr(
                     listOfPlaylists: [playlist], // only one playlist
                   ),
-                  targetNamesLst: [],
+                  checkboxLabelLst: [],
                   validationFunctionArgs: [],
                   isCursorAtStart: true,
                   helpItemsLst: savePlaylistMp3HelpItemsLst,
@@ -759,7 +759,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                       .audioMp3UniquePlaylistRestorationDialogTitle,
                   dialogCommentStr: AppLocalizations.of(context)!
                       .audioMp3UniquePlaylistRestorationExplanation,
-                  targetNamesLst: [],
+                  checkboxLabelLst: [],
                   validationFunctionArgs: [],
                   canAllCheckBoxBeUnchecked: true,
                   helpItemsLst: restorePlaylistsHelpItemsLst,
