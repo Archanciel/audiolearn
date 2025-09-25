@@ -363,10 +363,9 @@ class UiUtil {
               audioToDeleteCommentLst,
               audioLearnAppViewType,
             ],
-            dialogTitleOne: _createDeleteAudioFromPlaylistAsWellDialogTitle(
-              context: context,
-              audioToDelete: audioToDelete,
-            ),
+            dialogTitleOne: AppLocalizations.of(context)!
+                .confirmAudioFromPlaylistDeletionTitle(
+                    audioToDelete.validVideoTitle),
             dialogContent:
                 AppLocalizations.of(context)!.confirmAudioFromPlaylistDeletion(
               audioToDelete.validVideoTitle,
@@ -560,17 +559,5 @@ class UiUtil {
       audioLearnAppViewType: audioLearnAppViewType,
       audio: audio,
     );
-  }
-
-  static String _createDeleteAudioFromPlaylistAsWellDialogTitle({
-    required BuildContext context,
-    required Audio audioToDelete,
-  }) {
-    String deleteAudioDialogTitle;
-
-    deleteAudioDialogTitle = AppLocalizations.of(context)!
-        .confirmAudioFromPlaylistDeletionTitle(audioToDelete.validVideoTitle);
-
-    return deleteAudioDialogTitle;
   }
 }
