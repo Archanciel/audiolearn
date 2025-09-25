@@ -1037,12 +1037,7 @@ Future<void> main() async {
       // confirm dialog
       await tester
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
-      await tester.pumpAndSettle();
-
-      // Add a delay to allow the update playlist URL to finish. 1
-      // second is ok
-      await Future.delayed(const Duration(seconds: 1));
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(seconds: 1));
 
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
@@ -1170,12 +1165,7 @@ Future<void> main() async {
       // confirm dialog
       await tester
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
-      await tester.pumpAndSettle();
-
-      // Add a delay to allow the update playlist URL to finish. 1
-      // second is ok
-      await Future.delayed(const Duration(seconds: 1));
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(seconds: 2));
 
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
@@ -1194,6 +1184,7 @@ Future<void> main() async {
           const Key('clearPlaylistUrlOrSearchButtonKey'),
         ),
       );
+      await tester.pumpAndSettle();
 
       Playlist recreatedPlaylist = audioDownloadVM.listOfPlaylist[0];
 
@@ -1214,7 +1205,7 @@ Future<void> main() async {
       await tester.pumpAndSettle();
 
       // Add a delay to allow the download to finish.
-      for (int i = 0; i < 5; i++) {
+      for (int i = 0; i < 7; i++) {
         await Future.delayed(const Duration(seconds: 2));
         await tester.pumpAndSettle();
       }
