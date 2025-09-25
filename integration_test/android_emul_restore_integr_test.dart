@@ -1277,8 +1277,8 @@ void main() {
     group('''Convert text to audio.''', () {
       testWidgets(
           '''On selected playlist, add a text to speech audio. Verify the text to speech dialog appearance.
-          Then enter a text with case ( { ) characters. Verify the Listen Create MP3 button state. Listen and
-          Stop the text. Then listen the full text and verify the listen duration after which the Stop
+          Then enter a text with case ( { ) characters. Verify the Listen Create MP3 button state. Listen
+          and Stop the text. Then listen the full text and verify the listen duration after which the Stop
           button is reset to the Listen button. Then, create the MP3 audio and verify its presence in the
           playlist audio list. Verify also the audio info dialog content of the converted audio. Then, verify
           the added comment in relation with the text to audio conversion.
