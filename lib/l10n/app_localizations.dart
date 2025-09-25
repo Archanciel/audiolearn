@@ -3250,6 +3250,12 @@ abstract class AppLocalizations {
   /// **'{dateStr} does not respect the date or date/time format.'**
   String invalidDateFormatErrorMessage(Object dateStr);
 
+  /// No description provided for @emptyDateErrorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Defining an empty date or date/time download date is not possible.'**
+  String get emptyDateErrorMessage;
+
   /// No description provided for @savingUniquePlaylistAudioMp3.
   ///
   /// In en, this message translates to:

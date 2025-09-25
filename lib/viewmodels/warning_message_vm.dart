@@ -233,6 +233,8 @@ enum ErrorType {
 
   dateFormatError, // Error in the date format.
 
+  enteredDateEmpty, // The case if the entered date is empty.
+
   insufficientStorageSpace, // Error in the storage space.
 
   pathError, // Error in the path.
@@ -402,7 +404,7 @@ class WarningMessageVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  InvalidValueState _invalidValueState = InvalidValueState.tooBig;
+  InvalidValueState _invalidValueState = InvalidValueState.positionTooBig;
   InvalidValueState get invalidValueState => _invalidValueState;
 
   String _valueLimitStr = '';

@@ -747,9 +747,9 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
         DateTimeUtil.convertToTenthsOfSeconds(timeString: enteredTimeStr);
 
     if (enteredTimeInTenthsOfSeconds > maxDurationInTenthsOfSeconds) {
-      return InvalidValueState.tooBig;
+      return InvalidValueState.positionTooBig;
     } else if (enteredTimeInTenthsOfSeconds < minDurationInTenthsOfSeconds) {
-      return InvalidValueState.tooSmall;
+      return InvalidValueState.positionTooSmall;
     } else {
       // the case if the entered value is valid
       return InvalidValueState.none;

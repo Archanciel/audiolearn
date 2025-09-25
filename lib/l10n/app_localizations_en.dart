@@ -1997,6 +1997,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get emptyDateErrorMessage =>
+      'Defining an empty date or date/time download date is not possible.';
+
+  @override
   String savingUniquePlaylistAudioMp3(Object playlistTitle) {
     return 'Saving $playlistTitle audio files to ZIP ...';
   }

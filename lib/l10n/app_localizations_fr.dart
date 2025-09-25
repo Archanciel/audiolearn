@@ -2015,6 +2015,10 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get emptyDateErrorMessage =>
+      'Definir une date ou date heure:minute de téléchargement vide n\'est pas possible.';
+
+  @override
   String savingUniquePlaylistAudioMp3(Object playlistTitle) {
     return 'Sauvegarde des fichiers audio de la playlist $playlistTitle ...';
   }
