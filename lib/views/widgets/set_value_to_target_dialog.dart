@@ -25,7 +25,7 @@ class SetValueToTargetDialog extends StatefulWidget {
   final String passedValueStr;
   final String passedValueFieldLabel;
   final String passedValueFieldTooltip;
-  final List<String> targetNamesLst;
+  final List<String> checkboxLabelLst;
   final List<HelpItem> helpItemsLst;
 
   // If isTargetExclusive is true, only one checkbox can be selected.
@@ -49,7 +49,7 @@ class SetValueToTargetDialog extends StatefulWidget {
   /// If the [passedValueFieldLabel] and the [passedValueStr] are not passed and so
   /// remains both empty, the dialog will not display the passed value field.
   ///
-  /// The [targetNamesLst] contains the names of the checkboxes that will be displayed.
+  /// The [checkboxLabelLst] contains the names of the checkboxes that will be displayed.
   ///
   /// If the [isTargetExclusive] is set to true, only one checkbox can be selected.
   /// If the [isTargetExclusive] is set to false, multiple checkboxes can be selected.
@@ -67,7 +67,7 @@ class SetValueToTargetDialog extends StatefulWidget {
     this.passedValueFieldLabel = '',
     this.passedValueFieldTooltip = '',
     this.passedValueStr = '',
-    required this.targetNamesLst,
+    required this.checkboxLabelLst,
     this.validationFunction,
     required this.validationFunctionArgs,
     this.isTargetExclusive = true,
@@ -95,7 +95,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
   void initState() {
     super.initState();
 
-    for (int i = 0; i < widget.targetNamesLst.length; i++) {
+    for (int i = 0; i < widget.checkboxLabelLst.length; i++) {
       if (i == widget.checkboxIndexSetToTrue) {
         _checkboxesLst.add(true);
       } else {
@@ -265,7 +265,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
 
       // the dialog is not closed
       return;
-    } else if (widget.targetNamesLst.isNotEmpty && resultLst.length == 1) {
+    } else if (widget.checkboxLabelLst.isNotEmpty && resultLst.length == 1) {
       // The case if the SetValueToTargetDialog has checkbox and
       // if the entered value was defined as invalid in the
       // _createResultList() method.
@@ -398,7 +398,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
       }
     }
 
-    if (widget.targetNamesLst.isNotEmpty && !isAnyCheckboxChecked) {
+    if (widget.checkboxLabelLst.isNotEmpty && !isAnyCheckboxChecked) {
       WarningMessageVM warningMessageVM = Provider.of<WarningMessageVM>(
         context,
         listen: false,
@@ -419,13 +419,13 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List<Widget>.generate(
-        widget.targetNamesLst.length,
+        widget.checkboxLabelLst.length,
         (int index) {
           return createCheckboxRowFunction(
             checkBoxLabelKey: Key('checkboxLabel_${index}_key'),
             checkBoxWidgetKey: Key('checkbox_${index}_key'),
             context: context,
-            label: widget.targetNamesLst[index],
+            label: widget.checkboxLabelLst[index],
             value: _checkboxesLst[index],
             onChangedFunction: (bool? value) {
               setState(() {

@@ -634,13 +634,14 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                         passedValueFieldTooltip: AppLocalizations.of(context)!
                             .commentPositionTooltip,
                         passedValueStr: currentAudioPositionStr,
-                        targetNamesLst: [
+                        checkboxLabelLst: [
                           AppLocalizations.of(context)!.commentStartPosition,
                           AppLocalizations.of(context)!.commentEndPosition,
                         ],
                         validationFunction: validateEnteredValueFunction,
                         validationFunctionArgs: [
-                          // This duration string is used if the user empties the position field.
+                          // This duration string is used if the user empties the position field
+                          // and check the 'Start' position checkbox.
                           '0:00.0',
                           // Uses the total duration from audioPlayerVM.
                           (audioPlayerVMlistenFalse.currentAudioTotalDuration -
@@ -648,6 +649,8 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                               .HHmmssZeroHH(
                             addRemainingOneDigitTenthOfSecond: true,
                           ),
+                          // This duration string is used if the user empties the position field
+                          // and check the 'End' position checkbox.
                           audioPlayerVMlistenFalse.currentAudioTotalDuration
                               .HHmmssZeroHH(
                             addRemainingOneDigitTenthOfSecond: true,
