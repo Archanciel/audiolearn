@@ -267,7 +267,10 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
       );
 
       return; // the SetValueToTargetDialog is not closed
-    } else if (widget.checkboxLabelLst.isNotEmpty && resultLst.length == 1) {
+    } else if (widget.checkboxLabelLst.isNotEmpty &&
+        resultLst.length == 1 &&
+        resultLst[0] == "") { // [""] is returned in case of invalid value
+        //                       detected in the _createResultList() method.
       // The case if the SetValueToTargetDialog has checkbox and
       // if the entered value was defined as invalid in the
       // _createResultList() method.
