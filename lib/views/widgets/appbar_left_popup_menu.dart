@@ -884,46 +884,47 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                         .getUpToDateSelectablePlaylists(),
                   ),
                   checkboxLabelLst: [],
-                  validationFunctionArgs: [],
+                  validationFunction: validateDateTimeFormat,
+                  validationFunctionArgs: [
+                    dateFormatVMlistenFalse,
+                  ],
                   isCursorAtStart: true,
                   helpItemsLst: savePlaylistsMp3HelpItemsLst,
                 );
               },
             ).then((resultStringLst) async {
-              if (resultStringLst == null) {
-                // The case if the Cancel button was pressed.
+              if (resultStringLst == null ||
+                  resultStringLst.isEmpty ||
+                  resultStringLst[0] == '') {
+                // The case if the Cancel button was pressed or if the
+                // date/time field was emptied.
                 return;
               }
-
-              final WarningMessageVM warningMessageVMlistenFalse =
-                  Provider.of<WarningMessageVM>(
-                context,
-                listen: false,
-              );
 
               String oldestAudioDownloadDateFormattedStr = resultStringLst[0];
 
               final List<Playlist> listOfSelectablePlaylists =
                   playlistListVMlistenFalse.listOfSelectablePlaylists;
 
-              List<dynamic> resultsLst =
-                  await UiUtil.obtainAudioMp3SavingToZipDuration(
-                playlistListVMlistenFalse: playlistListVMlistenFalse,
-                dateFormatVMlistenFalse: dateFormatVMlistenFalse,
-                warningMessageVMlistenFalse: warningMessageVMlistenFalse,
-                playlistsLst: listOfSelectablePlaylists, // only one playlist
-                oldestAudioDownloadDateFormattedStr:
-                    oldestAudioDownloadDateFormattedStr,
+              // Parse the validated date
+              DateTime? parseDateTimeOrDateStrUsinAppDateFormat =
+                  dateFormatVMlistenFalse.parseDateTimeStrUsinAppDateFormat(
+                dateTimeStr: oldestAudioDownloadDateFormattedStr,
               );
 
-              if (resultsLst[0] == null) {
-                // The case if the date format is invalid.
-                return;
-              }
+              parseDateTimeOrDateStrUsinAppDateFormat ??=
+                  dateFormatVMlistenFalse.parseDateStrUsinAppDateFormat(
+                dateStr: oldestAudioDownloadDateFormattedStr,
+              );
 
-              DateTime parseDateTimeOrDateStrUsinAppDateFormat =
-                  resultsLst[0]! as DateTime;
-              Duration audioMp3SavingToZipDuration = resultsLst[1] as Duration;
+              // Get duration estimation
+              Duration audioMp3SavingToZipDuration =
+                  await playlistListVMlistenFalse
+                      .evaluateSavingAudioMp3FileToZipDuration(
+                listOfPlaylists: listOfSelectablePlaylists,
+                fromAudioDownloadDateTime:
+                    parseDateTimeOrDateStrUsinAppDateFormat!,
+              );
 
               showDialog<void>(
                 context: context,
@@ -938,7 +939,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                         listOfPlaylists: listOfSelectablePlaylists,
                         targetDir: targetSaveDirectoryPath!,
                         fromAudioDownloadDateTime:
-                            parseDateTimeOrDateStrUsinAppDateFormat,
+                            parseDateTimeOrDateStrUsinAppDateFormat!,
                         zipFileSizeLimitInMb: settingsDataService.get(
                               settingType: SettingType.playlists,
                               settingSubType:
@@ -1030,5 +1031,31 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
         }
       },
     );
+  }
+
+  InvalidValueState validateDateTimeFormat(
+    DateFormatVM dateFormatVM,
+    String enteredDateTimeStr,
+  ) {
+    if (enteredDateTimeStr.isEmpty) {
+      return InvalidValueState.enteredDateEmpty;
+    }
+    
+    // Try to parse as date time first
+    DateTime? parsedDateTime = dateFormatVM.parseDateTimeStrUsinAppDateFormat(
+      dateTimeStr: enteredDateTimeStr,
+    );
+
+    // If that fails, try to parse as date only
+    parsedDateTime ??= dateFormatVM.parseDateStrUsinAppDateFormat(
+      dateStr: enteredDateTimeStr,
+    );
+
+    if (parsedDateTime == null) {
+      return InvalidValueState
+          .dateFormatInvalid; // This will prevent the dialog from closing
+    }
+
+    return InvalidValueState.none;
   }
 }

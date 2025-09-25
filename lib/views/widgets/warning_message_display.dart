@@ -164,6 +164,18 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
             });
 
             return const SizedBox.shrink();
+          case ErrorType.enteredDateEmpty:
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              _displayWarningDialog(
+                context: _context,
+                message: AppLocalizations.of(context)!
+                    .emptyDateErrorMessage,
+                warningMessageVM: _warningMessageVM,
+                themeProviderVM: themeProviderVM,
+              );
+            });
+
+            return const SizedBox.shrink();
           case ErrorType.insufficientStorageSpace:
             WidgetsBinding.instance.addPostFrameCallback((_) {
               _displayWarningDialog(
@@ -284,7 +296,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
       case WarningMessageType.invalidValueWarning:
         String invalidValueWarningParmOne;
 
-        if (_warningMessageVM.invalidValueState == InvalidValueState.tooBig) {
+        if (_warningMessageVM.invalidValueState == InvalidValueState.positionTooBig) {
           invalidValueWarningParmOne =
               AppLocalizations.of(context)!.invalidValueTooBig;
         } else {
