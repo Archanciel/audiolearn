@@ -2307,16 +2307,18 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String audioImportedFromTextToSpeechToLocalPlaylist(
     Object importedAudioFileNames,
+    Object replacedOrAAdded,
     Object toPlaylistTitle,
   ) =>
-      "The audio created by the text to MP3 convertion$importedAudioFileNames was imported to local playlist \"$toPlaylistTitle\".";
+      "The audio created by the text to MP3 convertion$importedAudioFileNames was $replacedOrAAdded local playlist \"$toPlaylistTitle\".";
 
   @override
   String audioImportedFromTextToSpeechToYoutubePlaylist(
     Object importedAudioFileNames,
+    Object replacedOrAAdded,
     Object toPlaylistTitle,
   ) =>
-      "The audio created by the text to MP3 convertion$importedAudioFileNames was imported to Youtube playlist \"$toPlaylistTitle\".";
+      "The audio created by the text to MP3 convertion$importedAudioFileNames was $replacedOrAAdded Youtube playlist \"$toPlaylistTitle\".";
 
   @override
   String replaceExistingAudioInPlaylist(
@@ -2475,4 +2477,10 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get emptyDateErrorMessage =>
       "Defining an empty date or date/time download date is not possible.";
+
+  @override
+  String get addedTo => "added to";
+
+  @override
+  String get replacedIn => "replaced in";
 }

@@ -2256,15 +2256,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String audioImportedFromTextToSpeechToLocalPlaylist(
-      Object importedAudioFileNames, Object toPlaylistTitle) {
-    return 'The audio created by the text to MP3 conversion\n\n$importedAudioFileNames\n\nwas added to local playlist \"$toPlaylistTitle\".';
+      Object importedAudioFileNames,
+      Object replacedOrAdded,
+      Object toPlaylistTitle) {
+    return 'The audio created by the text to MP3 conversion\n\n$importedAudioFileNames\n\nwas $replacedOrAdded local playlist \"$toPlaylistTitle\".';
   }
 
   @override
   String audioImportedFromTextToSpeechToYoutubePlaylist(
-      Object importedAudioFileNames, Object toPlaylistTitle) {
-    return 'The audio created by the text to MP3 conversion\n\n$importedAudioFileNames\n\nwas added to Youtube playlist \"$toPlaylistTitle\".';
+      Object importedAudioFileNames,
+      Object replacedOrAdded,
+      Object toPlaylistTitle) {
+    return 'The audio created by the text to MP3 conversion\n\n$importedAudioFileNames\n\nwas $replacedOrAdded Youtube playlist \"$toPlaylistTitle\".';
   }
+
+  @override
+  String get addedTo => 'added to';
+
+  @override
+  String get replacedIn => 'replaced in';
 
   @override
   String replaceExistingAudioInPlaylist(Object fileName, Object playlistTitle) {

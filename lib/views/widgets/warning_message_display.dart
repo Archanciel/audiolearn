@@ -1468,24 +1468,34 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
 
         return const SizedBox.shrink();
       case WarningMessageType.audioCreatedFromTextToSpeechOperation:
-        final String importedAudioFileName =
-            _warningMessageVM.importedAudioFileNames;
+        final String convertedAudioFileName =
+            _warningMessageVM.convertedAudioFileName;
         String audioImportedFromTextToSpeechToPlaylistMessage = '';
+        String replacedOrAddedStr = '';
 
-        if (importedAudioFileName.isNotEmpty) {
-          if (_warningMessageVM.importedToPlaylistType == PlaylistType.local) {
+        if (_warningMessageVM.wasConvertedAudioAdded) {
+          replacedOrAddedStr =
+              AppLocalizations.of(context)!.addedTo;
+        } else {
+          replacedOrAddedStr = AppLocalizations.of(context)!.replacedIn;
+        }
+
+        if (convertedAudioFileName.isNotEmpty) {
+          if (_warningMessageVM.targetPlaylistType == PlaylistType.local) {
             audioImportedFromTextToSpeechToPlaylistMessage =
                 AppLocalizations.of(context)!
                     .audioImportedFromTextToSpeechToLocalPlaylist(
-              importedAudioFileName,
-              _warningMessageVM.importedToPlaylistTitle,
+              convertedAudioFileName,
+              replacedOrAddedStr,
+              _warningMessageVM.targetPlaylistTitle,
             );
           } else {
             audioImportedFromTextToSpeechToPlaylistMessage =
                 AppLocalizations.of(context)!
                     .audioImportedFromTextToSpeechToYoutubePlaylist(
-              importedAudioFileName,
-              _warningMessageVM.importedToPlaylistTitle,
+              convertedAudioFileName,
+              replacedOrAddedStr,
+              _warningMessageVM.targetPlaylistTitle,
             );
           }
         }
