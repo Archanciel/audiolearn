@@ -1013,14 +1013,23 @@ class WarningMessageVM extends ChangeNotifier {
     );
   }
 
+  String _convertedAudioFileName = '';
+  String get convertedAudioFileName => _convertedAudioFileName;
+  bool _wasConvertedAudioAdded = true; // if false, the converted audio was replaced
+  bool get wasConvertedAudioAdded => _wasConvertedAudioAdded;
+  late PlaylistType _targetPlaylistType;
+  PlaylistType get targetPlaylistType => _targetPlaylistType;
+
   void setAudioCreatedFromTextToSpeechOperation({
-    required String importedAudioFileName,
-    required String importedToPlaylistTitle,
-    required PlaylistType importedToPlaylistType,
+    required String convertedAudioFileName,
+    required String targetPlaylistTitle,
+    required PlaylistType targetPlaylistType,
+    required bool wasConvertedAudioAdded, // if false, the converted audio was replaced
   }) {
-    _importedAudioFileNames = importedAudioFileName;
-    _importedToPlaylistTitle = importedToPlaylistTitle;
-    _importedToPlaylistType = importedToPlaylistType;
+    _convertedAudioFileName = convertedAudioFileName;
+    _targetPlaylistTitle = targetPlaylistTitle;
+    _targetPlaylistType = targetPlaylistType;
+    _wasConvertedAudioAdded = wasConvertedAudioAdded;
 
     warningMessageType =
         WarningMessageType.audioCreatedFromTextToSpeechOperation;

@@ -643,6 +643,9 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
           targetPlaylist: targetPlaylist,
           currentAudioFile: currentAudioFile,
           commentTitle: AppLocalizations.of(context)!.speech,
+          wasConvertedAudioAdded:
+              existingAudio == null, // if false (existingAudio != null),
+          //                            the converted audio was replaced
         );
       }
     }

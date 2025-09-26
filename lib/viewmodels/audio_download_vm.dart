@@ -1893,6 +1893,7 @@ class AudioDownloadVM extends ChangeNotifier {
     required Playlist targetPlaylist,
     required AudioFile currentAudioFile,
     required String commentTitle,
+    required bool wasConvertedAudioAdded,
   }) async {
     String filePathNameToImportStr = currentAudioFile.filePath;
     String fileName = filePathNameToImportStr.split(path.separator).last;
@@ -1900,9 +1901,10 @@ class AudioDownloadVM extends ChangeNotifier {
     // Displaying a confirmation of the converted text to audio file imported
     // in the playlist.
     warningMessageVM.setAudioCreatedFromTextToSpeechOperation(
-      importedAudioFileName: '"$fileName"',
-      importedToPlaylistTitle: targetPlaylist.title,
-      importedToPlaylistType: targetPlaylist.playlistType,
+      convertedAudioFileName: '"$fileName"',
+      targetPlaylistTitle: targetPlaylist.title,
+      targetPlaylistType: targetPlaylist.playlistType,
+      wasConvertedAudioAdded: wasConvertedAudioAdded,
     );
 
     // AudioPlayer is used to get the audio duration of  the
