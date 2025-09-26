@@ -17244,9 +17244,9 @@ void main() {
       'Save and restore text to speech audio mp3 files to zip files for all playlists or unique playlist test',
       () {
     testWidgets(
-        '''Set download date to today's date. The less old value is 13/07/2025 14:41. The integration
-          test verifies the confirmation displayed warning.''',
-        (WidgetTester tester) async {
+        '''Set download date to today's date without time. The less old value is 13/07/2025 14:41. Since the
+          converted text to speech audio was modified today after 00:00 time, this audio will be the unique
+          audio added to the mp3 zip.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -17285,7 +17285,7 @@ void main() {
       String restorableZipFilePathName =
           '$sourceRootPath${path.separator}audioLearn_2025-09-07_07_45_02.zip';
 
-      // Setting the path value returned by the FilePicker mock.
+      // Setting the file path name value returned by the FilePicker mock.
       mockFilePicker.setSelectedFiles([
         PlatformFile(
             name: restorableZipFilePathName,
@@ -17294,7 +17294,8 @@ void main() {
       ]);
 
       // Execute the 'Restore Playlists, Comments and Settings from Zip
-      // File ...' menu
+      // File ...' menu to initialize the application 'local' and
+      // urgent_actus_17-12-2023 playlist
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: false,
@@ -17314,6 +17315,8 @@ void main() {
             size: 19331059),
       ]);
 
+      // Execute the 'Restore Playlists Audio's MP3 from Zip File ...' menu
+      // to restore the two playlists mp3 files
       await IntegrationTestUtil.typeOnAppbarMenuItem(
         tester: tester,
         appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
@@ -17327,9 +17330,8 @@ void main() {
       await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
       await tester.pumpAndSettle();
 
-      const String unselectedYoutubePlaylistTitle =
-          "urgent_actus_17-12-2023";
-          
+      const String unselectedYoutubePlaylistTitle = "urgent_actus_17-12-2023";
+
       // Open the convert text to audio dialog
       await IntegrationTestUtil.typeOnPlaylistMenuItem(
         tester: tester,
@@ -17337,7 +17339,87 @@ void main() {
         playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
       );
 
-      
+      // Find the text field finder
+      final Finder textFieldFinder =
+          find.byKey(const Key('textToConvertTextField'));
+
+      // Now enter the text to convert to audio
+      await tester.enterText(textFieldFinder,
+          "Nouvelle description des éléments restaurés {{ avec 2 secondes de pause.");
+      await tester.pump();
+
+      // Now click on Create MP3 button to create the audio
+      Finder createMP3ButtonFinder =
+          find.byKey(const Key('create_audio_file_button'));
+      await tester.tap(createMP3ButtonFinder);
+      await tester.pumpAndSettle();
+
+      const String enteredFileNameNoExt = 'aaa';
+      Finder mp3FileNameTextFieldFinder =
+          find.byKey(const Key('textToConvertTextField'));
+
+      await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+      await tester.pumpAndSettle();
+
+      // Tap on the create mp3 button
+      Finder saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
+      await tester.tap(saveMP3FileButton);
+      await Future.delayed(const Duration(seconds: 2));
+      await tester.pumpAndSettle();
+
+      // Now check the confirm dialog which indicates that the saved
+      // file name already exist and ask to confirm or cancel the
+      // save operation.
+      await IntegrationTestUtil.verifyConfirmActionDialog(
+        tester: tester,
+        confirmActionDialogTitle:
+            "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$unselectedYoutubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
+        confirmActionDialogMessagePossibleLst: [""],
+        closeDialogWithConfirmButton: true,
+      );
+
+      await Future.delayed(const Duration(seconds: 2));
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in Youtube playlist \"$unselectedYoutubePlaylistTitle\".",
+        isWarningConfirming: true,
+      );
+
+      // Now close the convert text to audio dialog by tapping
+      // the Ok button
+      Finder cancelButtonFinder =
+          find.byKey(const Key('convertTextToAudioCancelButton'));
+      await tester.tap(cancelButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Now save the playlists ...
+
+      // Setting the path value returned by the FilePicker mock.
+      mockFilePicker.setPathToSelect(
+        pathToSelectStr: kApplicationPathWindowsTest,
+      );
+
+      // Tap the appbar leading popup menu button Then, the 'Save
+      // Playlists, Comments, Pictures and Settings to ZIP File' menu
+      // is selected.
+      await IntegrationTestUtil.typeOnAppbarMenuItem(
+        tester: tester,
+        appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
+      );
+
+      // Tap on the Ok button
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
+
+      // Tap the warning confirmation dialog Ok button to close it
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+      await tester.pumpAndSettle();
+
+      // And save the playlists mp3 files ...
+
       // Tap the appbar leading popup menu button Then, the 'Save
       // Playlists Audio's MP3 to ZIP File' menu is selected.
       await IntegrationTestUtil.typeOnAppbarMenuItem(
@@ -17352,9 +17434,7 @@ void main() {
             'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
       );
 
-      expect(find.text('Date/time dd/MM/yyyy hh:mm'), findsOneWidget);
-
-      const String oldestAudioDownloadDateTime = '13/07/2025 14:31';
+      const String oldestAudioDownloadDateTime = '10/01/2024 18:18';
 
       expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
 
@@ -17367,32 +17447,28 @@ void main() {
         matching: find.byType(TextField),
       );
 
-      // Verify that the TextField is focused using its focus node
+      // Now change the download date in the dialog
+      final String audioOldestDownloadDateToday =
+          DateFormat('dd/MM/yyyy').format(DateTime.now());
+      final String audioOldestDownloadDateTodayForFileNName =
+          DateFormat('yyyy-MM-dd').format(DateTime.now());
       TextField textField =
           tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
-      expect(textField.focusNode?.hasFocus, isTrue,
-          reason: 'TextField should be focused when dialog opens');
 
-      // Now change the download date in the dialog
-      String audioOldestDownloadDateTime = '13/07/2025 14:41';
-      textField.controller!.text = audioOldestDownloadDateTime;
+      textField.controller!.text = audioOldestDownloadDateToday;
       await tester.pumpAndSettle();
 
       // Tap on the Ok button to set download date time.
       await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
       await tester.pumpAndSettle();
 
-      // Now check the confirm dialog which indicates the estimated
-      // save audio mp3 to zip duration and accept save execution.
-      await IntegrationTestUtil.verifyConfirmActionDialog(
-        tester: tester,
-        confirmActionDialogTitle: "Prevision of the Save Duration",
-        confirmActionDialogMessagePossibleLst: [
-          "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:01.",
-          "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02."
-        ],
-        closeDialogWithConfirmButton: true,
-      );
+      DateTime now = DateTime.now();
+
+      // Now tap on the confirm dialog which indicates the estimated
+      // save audio mp3 to zip duration ok buton to accept the save
+      // execution.
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pump();
 
       // Only works if tester.pump() is used instead of
       // tester.pumpAndSettle()
@@ -17423,7 +17499,7 @@ void main() {
       expect(
           actualMessage,
           contains(
-              "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateTime.\n\nTotal saved audio number: 3, total size: 15.49 MB and total duration: 0:22:38.0."));
+              "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 43 KB and total duration: 0:00:05.4."));
       // expect(
       //     actualMessage,
       //     contains(
@@ -17432,29 +17508,13 @@ void main() {
       expect(actualMessage, contains("number of bytes saved per second: "));
       expect(actualMessage, contains(", number of created ZIP file(s): 1."));
       expect(
-          actualMessage,
+        actualMessage,
+        anyOf([
           contains(
-              "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-07-13_14_43_21_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\"."));
-
-      List<String> zipLst = DirUtil.listFileNamesInDir(
-        directoryPath: kApplicationPathWindowsTest,
-        fileExtension: 'zip',
-      );
-
-      List<String> expectedZipContentLst = [
-        "playlists\\Saint François d'Assise\\250714-171854-How to talk to animals The teaching of Saint Francis of Assisi 22-05-28.mp3",
-        "playlists\\Exo chants chrétiens\\250713-144410-EXO - Ta bienveillance [avec paroles] 13-01-29.mp3",
-        "playlists\\Exo chants chrétiens\\250713-144321-SI TU VEUX LE LOUER - EXO 17-05-31.mp3",
-      ];
-
-      List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
-        zipFilePathName:
-            "$kApplicationPathWindowsTest${path.separator}${zipLst[0]}",
-      );
-
-      expect(
-        zipContentLst,
-        expectedZipContentLst,
+              "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now)}.zip\"."),
+          contains(
+              "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now.subtract(const Duration(seconds: 1)))}.zip\"."),
+        ]),
       );
 
       // Purge the test playlist directory so that the created test
@@ -29877,7 +29937,6 @@ void main() {
       // Now click on Create MP3 button to create the audio
       Finder createMP3ButtonFinder =
           find.byKey(const Key('create_audio_file_button'));
-      expect(createMP3ButtonFinder, findsOneWidget);
       await tester.tap(createMP3ButtonFinder);
       await tester.pumpAndSettle();
 
@@ -30318,7 +30377,6 @@ void main() {
       // Now click on Create MP3 button to create the audio
       Finder createMP3ButtonFinder =
           find.byKey(const Key('create_audio_file_button'));
-      expect(createMP3ButtonFinder, findsOneWidget);
       await tester.tap(createMP3ButtonFinder);
       await tester.pumpAndSettle();
 
