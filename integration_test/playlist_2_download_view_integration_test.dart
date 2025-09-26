@@ -17244,9 +17244,15 @@ void main() {
       'Save and restore text to speech audio mp3 files to zip files for all playlists or unique playlist test',
       () {
     testWidgets(
-        '''Set download date to today's date without time. The less old value is 13/07/2025 14:41. Since the
-          converted text to speech audio was modified today after 00:00 time, this audio will be the unique
-          audio added to the mp3 zip.''', (WidgetTester tester) async {
+        '''Set download date to today's date without time. The less old value awailable by default is 10/01/2024
+          18:18 and will be changed to today's date without time. Since the converted text to speech audio was
+          modified today after 00:00 time, this audio will be the unique audio added to the created mp3 zip.
+          
+          Then delete the 2 playlists and restore again using audioLearn_2025-09-07_07_45_02.zip as well as
+          audioLearn_mp3_from_2025-09-07_07_37_32_on_2025-09-24_13_54_22.zip. Then verify the restored 'aaa'
+          converted audio duration. Then restore using the two last created zip (playlists and mp3) and verify that
+          the version of the 'aaa' converted audio was correctly updated.''',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -30236,8 +30242,8 @@ void main() {
       await tester.tap(audioCommentsPopupMenuItem);
       await tester.pumpAndSettle();
 
-      // Verify that the audio comments list of the dialog has 1 comment
-      // item
+      // Verify that the audio comments list of the dialog has 2 comment
+      // items
 
       audioCommentsLstFinder = find.byKey(const Key(
         'audioCommentsListKey',
@@ -30695,8 +30701,8 @@ void main() {
       await tester.tap(audioCommentsPopupMenuItem);
       await tester.pumpAndSettle();
 
-      // Verify that the audio comments list of the dialog has 1 comment
-      // item
+      // Verify that the audio comments list of the dialog has 2 comment
+      // items
 
       audioCommentsLstFinder = find.byKey(const Key(
         'audioCommentsListKey',
