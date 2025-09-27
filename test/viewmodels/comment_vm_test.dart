@@ -265,7 +265,7 @@ void main() {
       );
 
       commentVM.addComment(
-        comment: testCommentOne,
+        addedComment: testCommentOne,
         audioToComment: audio,
       );
 
@@ -289,7 +289,7 @@ void main() {
       );
 
       commentVM.addComment(
-        comment: testCommentTwo,
+        addedComment: testCommentTwo,
         audioToComment: audio,
       );
 
@@ -347,7 +347,7 @@ void main() {
       );
 
       commentVM.addComment(
-        comment: testCommentOne,
+        addedComment: testCommentOne,
         audioToComment: audio,
       );
 

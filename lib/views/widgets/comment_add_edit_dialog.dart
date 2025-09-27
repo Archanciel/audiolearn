@@ -294,7 +294,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
           onPressed: () async {
             if (widget.isAddMode) {
               commentVMlistenFalse.addComment(
-                comment: Comment(
+                addedComment: Comment(
                   title: _titleController.text,
                   content: _commentController.text,
                   commentStartPositionInTenthOfSeconds: (commentVMlistenFalse

@@ -1958,7 +1958,7 @@ class AudioDownloadVM extends ChangeNotifier {
     }
 
     commentVMlistenFalse.addComment(
-      comment: Comment(
+      addedComment: Comment(
         title: commentTitle,
         content: currentAudioFile.text,
         commentStartPositionInTenthOfSeconds: 0,
