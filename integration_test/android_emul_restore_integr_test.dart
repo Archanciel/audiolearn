@@ -185,7 +185,7 @@ void main() {
         );
       });
       testWidgets(
-          '''Multiple playlist restore, not replace existing playlists. Restore multiple playlists Windows
+          '''Multiple playlists restore, not replace existing playlists. Restore multiple playlists Windows
              zip containing 'S8 audio' and 'local' playlists to Android application which contain 'S8 audio'
              and 'local' playlists. The restored 'S8 audio' and 'local' playlists contains additional audio's
              to which comments and pictures are associated.''', (tester) async {
@@ -589,7 +589,7 @@ void main() {
         );
       });
       testWidgets(
-          '''Multiple playlist restore, not replace existing playlists. Restore multiple playlists Android
+          '''Multiple playlists restore, not replace existing playlists. Restore multiple playlists Android
              zip containing 'S8 audio' and 'local' playlists to Android application which contain 'S8 audio'
              and 'local' playlists. The restored 'S8 audio' and 'local' playlists contains additional audio's
              to which comments and pictures are associated.''', (tester) async {
