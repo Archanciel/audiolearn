@@ -14,7 +14,7 @@ class Comment {
     required this.content,
     required this.commentStartPositionInTenthOfSeconds,
     this.commentEndPositionInTenthOfSeconds = 0,
-  })  : id = "${title}_${commentStartPositionInTenthOfSeconds.toString()}",
+  })  : id = "${title}_${DateTime.now().microsecondsSinceEpoch.toString()}",
         creationDateTime =
             DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now()) {
     lastUpdateDateTime = creationDateTime;
