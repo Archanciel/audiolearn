@@ -3350,7 +3350,7 @@ class PlaylistListVM extends ChangeNotifier {
           // a mp3 zip if download date is before or at last created comment
           // date which is the date of the last modification of the text to
           // speech audio.
-
+          
           // Load comments for this audio
           List<Comment> comments = _commentVM.loadAudioComments(audio: audio);
 
@@ -3408,8 +3408,7 @@ class PlaylistListVM extends ChangeNotifier {
     // Create ZIP files with size limit using streaming approach
     _numberOfCreatedZipFiles = 0;
 
-    if (oldestAudioSavedToZipDownloadDateTime
-        .isBefore(fromAudioDownloadDateTime)) {
+    if (oldestAudioSavedToZipDownloadDateTime.isBefore(fromAudioDownloadDateTime)) {
       // The case if the audio is a text to speech audio which was
       // created before the fromAudioDownloadDateTime but modified
       // at or after this date and so its mp3 must be saved to zip.
@@ -4363,7 +4362,7 @@ class PlaylistListVM extends ChangeNotifier {
     //   [0] number of added audio references,
     //   [1] number of added comment json files,
     //   [2] number of added pictures,
-    //   [3] number of updated comments,
+    //   [3] number of modified comments,
     //   [4] number of added comments,
     //   [5] number of deleted audio as well as mp3 files.
     List<int> restoredNumberLst = await _mergeZipPlaylistsWithExistingPlaylists(
@@ -4407,7 +4406,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///   [0] number of added audio references,
   ///   [1] number of added comment json files,
   ///   [2] number of added pictures,
-  ///   [3] number of updated comments,
+  ///   [3] number of modified comments,
   ///   [4] number of added comments,
   ///   [5] number of deleted audio as well as mp3 files.
   Future<List<int>> _mergeZipPlaylistsWithExistingPlaylists({
@@ -4518,7 +4517,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///   - The number of added audio references.
   ///   - The number of added comment json files.
   ///   - The number of added pictures.
-  ///   - The number of updated comments.
+  ///   - The number of modified comments.
   ///   - The number of added comments.
   Future<List<int>> _addNewAudioReferencesAvailableInZipPlaylist({
     required Playlist existingPlaylist,
@@ -4533,7 +4532,7 @@ class PlaylistListVM extends ChangeNotifier {
       0,
       0,
       0
-    ]; // [0] is the number of updated comments,
+    ]; // [0] is the number of modified comments,
     //    [1] is the number of added comments,
     //    [2] is the number of added comment
     //        json file (0 or 1 for an audio).
@@ -4662,7 +4661,7 @@ class PlaylistListVM extends ChangeNotifier {
     restoredNumberLst.add(addedCommentJsonFilesCount);
     restoredNumberLst.add(addedPicturesCount);
     restoredNumberLst
-        .add(commentUpdateNumberLst[0]); // Number of updated comments
+        .add(commentUpdateNumberLst[0]); // Number of modified comments
     restoredNumberLst
         .add(commentUpdateNumberLst[1]); // Number of added comments
 

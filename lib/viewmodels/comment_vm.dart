@@ -98,7 +98,7 @@ class CommentVM extends ChangeNotifier {
   }
 
   void addComment({
-    required Comment comment,
+    required Comment addedComment,
     required Audio audioToComment,
   }) {
     List<Comment> commentLst = loadAudioComments(
@@ -119,7 +119,7 @@ class CommentVM extends ChangeNotifier {
       );
     }
 
-    commentLst.add(comment);
+    commentLst.add(addedComment);
 
     _sortAndSaveCommentLst(
       commentLst: commentLst,
