@@ -3350,7 +3350,7 @@ class PlaylistListVM extends ChangeNotifier {
           // a mp3 zip if download date is before or at last created comment
           // date which is the date of the last modification of the text to
           // speech audio.
-          
+
           // Load comments for this audio
           List<Comment> comments = _commentVM.loadAudioComments(audio: audio);
 
@@ -3408,7 +3408,8 @@ class PlaylistListVM extends ChangeNotifier {
     // Create ZIP files with size limit using streaming approach
     _numberOfCreatedZipFiles = 0;
 
-    if (oldestAudioSavedToZipDownloadDateTime.isBefore(fromAudioDownloadDateTime)) {
+    if (oldestAudioSavedToZipDownloadDateTime
+        .isBefore(fromAudioDownloadDateTime)) {
       // The case if the audio is a text to speech audio which was
       // created before the fromAudioDownloadDateTime but modified
       // at or after this date and so its mp3 must be saved to zip.
@@ -5041,7 +5042,7 @@ class PlaylistListVM extends ChangeNotifier {
       restoredPlaylistTitlesLst.length,
       playlistTitlesPresentInMp3ZipFileLst.length ==
           1 // true if the MP3 zip file is
-      //                                                  a unique playlist zip file
+      //       a unique playlist zip file
     ];
   }
 
