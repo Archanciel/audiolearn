@@ -17593,6 +17593,30 @@ void main() {
         firstAudioListTileIndex: 3,
       );
 
+      // Now we want to tap on the 'aaa' audio in order to open the
+      // AudioPlayerView displaying the audio. The purpose is to
+      // verify that the duration of the audio is indeed 8.6 seconds
+      // as indicated in the audio subtitle on the audio list displayed
+      // on the plalist download view.  
+
+      // First, get the 'aaa' audio ListTile Text widget finder and
+      // tap on it
+
+      final Finder aaaAudioListTileTextWidgetFinder = find.text('aaa');
+
+      await tester.tap(aaaAudioListTileTextWidgetFinder);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+
+      String aaaAudioTitleText = (tester
+              .widget<Text>(find.byKey(const Key('audioPlayerViewCurrentAudioTitle'))))
+          .data!;
+
+      String aaaAudioDurationStr = _extractDuration(aaaAudioTitleText);
+
+      expect(aaaAudioDurationStr, '0:00:08.6');
+
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
