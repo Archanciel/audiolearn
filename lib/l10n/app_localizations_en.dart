@@ -2340,7 +2340,7 @@ class AppLocalizationsEn extends AppLocalizations {
       Object deletedAudioAndMp3FilesMsg,
       Object filePathName,
       Object addedAtEndOfPlaylistLstMsg) {
-    return 'Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $addedPictureJpgNumber picture JPG file(s) in the application pictures directory and $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) from \"$filePathName\".$deletedAudioAndMp3FilesMsg$addedAtEndOfPlaylistLstMsg';
+    return 'Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $addedPictureJpgNumber picture JPG file(s) in the application pictures directory and $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) in existing audio comment file(s) from \"$filePathName\".$deletedAudioAndMp3FilesMsg$addedAtEndOfPlaylistLstMsg';
   }
 
   @override
@@ -2355,7 +2355,7 @@ class AppLocalizationsEn extends AppLocalizations {
       Object deletedAudioAndMp3FilesMsg,
       Object filePathName,
       Object addedAtEndOfPlaylistLstMsg) {
-    return 'Restored $playlistsNumber playlist, $commentsNumber comment and $picturesNumber picture JSON files as well as $addedPictureJpgNumber picture JPG file(s) in the application pictures directory and $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) and the application settings from \"$filePathName\".$deletedAudioAndMp3FilesMsg$addedAtEndOfPlaylistLstMsg';
+    return 'Restored $playlistsNumber playlist, $commentsNumber comment and $picturesNumber picture JSON files as well as $addedPictureJpgNumber picture JPG file(s) in the application pictures directory and $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) in existing audio comment file(s) and the application settings from \"$filePathName\".$deletedAudioAndMp3FilesMsg$addedAtEndOfPlaylistLstMsg';
   }
 
   @override
