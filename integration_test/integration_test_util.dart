@@ -4035,7 +4035,7 @@ class IntegrationTestUtil {
       // Tap on the Ok button of dialog
       await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
       await tester.pumpAndSettle();
-      
+
       return;
     }
   }
@@ -4094,6 +4094,48 @@ class IntegrationTestUtil {
       (usePumpAndSettle)
           ? await tester.pumpAndSettle()
           : await tester.pump(); // Process the tap immediately
+    }
+  }
+
+  /// {multipleString} and {multipleCount} are optional parameters to verify a string
+  /// which appears multiple times in the dialog.
+  /// For example, in the playlist comment list dialog, the {expectedCommentTextsLst}
+  /// can be expectedCommentTextsLst: [
+  ///   "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+  ///   "All",
+  ///   "23/06/25",
+  ///   "Marie-France",
+  ///   "One",
+  ///   "29/06/25",
+  ///   "Two",
+  ///   "29/06/25",
+  /// ],
+  /// with "29/06/25" present twice in the list.
+  /// In this case, we set {multipleString} to "29/06/25" and {multipleCount} to 2.
+  static void checkPlaylistCommentListDialogContent({
+    required Finder playlistCommentListDialogFinder,
+    required List<String> expectedCommentTextsLst,
+    String multipleString = "",
+    int multipleCount = 0,
+  }) {
+    for (String text in expectedCommentTextsLst) {
+      if (text == multipleString) {
+        expect(
+          find.descendant(
+            of: playlistCommentListDialogFinder,
+            matching: find.text(text),
+          ),
+          findsNWidgets(multipleCount),
+        );
+      } else {
+        expect(
+          find.descendant(
+            of: playlistCommentListDialogFinder,
+            matching: find.text(text),
+          ),
+          findsOneWidget,
+        );
+      }
     }
   }
 }
