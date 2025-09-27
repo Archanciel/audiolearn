@@ -17597,7 +17597,7 @@ void main() {
       // AudioPlayerView displaying the audio. The purpose is to
       // verify that the duration of the audio is indeed 8.6 seconds
       // as indicated in the audio subtitle on the audio list displayed
-      // on the plalist download view.  
+      // on the plalist download view.
 
       // First, get the 'aaa' audio ListTile Text widget finder and
       // tap on it
@@ -17609,8 +17609,8 @@ void main() {
         tester: tester,
       );
 
-      String aaaAudioTitleText = (tester
-              .widget<Text>(find.byKey(const Key('audioPlayerViewCurrentAudioTitle'))))
+      String aaaAudioTitleText = (tester.widget<Text>(
+              find.byKey(const Key('audioPlayerViewCurrentAudioTitle'))))
           .data!;
 
       String aaaAudioDurationStr = _extractDuration(aaaAudioTitleText);
@@ -17977,7 +17977,7 @@ void main() {
       // AudioPlayerView displaying the audio. The purpose is to
       // verify that the duration of the audio is indeed 8.6 seconds
       // as indicated in the audio subtitle on the audio list displayed
-      // on the plalist download view.  
+      // on the plalist download view.
 
       // First, get the 'aaa' audio ListTile Text widget finder and
       // tap on it
@@ -17989,8 +17989,8 @@ void main() {
         tester: tester,
       );
 
-      String aaaAudioTitleText = (tester
-              .widget<Text>(find.byKey(const Key('audioPlayerViewCurrentAudioTitle'))))
+      String aaaAudioTitleText = (tester.widget<Text>(
+              find.byKey(const Key('audioPlayerViewCurrentAudioTitle'))))
           .data!;
 
       String aaaAudioDurationStr = _extractDuration(aaaAudioTitleText);
@@ -24536,7 +24536,7 @@ void main() {
               6,
             );
 
-            _checkPlaylistCommentListDialogContent(
+            IntegrationTestUtil.checkPlaylistCommentListDialogContent(
                 playlistCommentListDialogFinder:
                     playlistCommentListDialogFinder,
                 expectedCommentTextsLst: [
@@ -24611,7 +24611,7 @@ void main() {
               8,
             );
 
-            _checkPlaylistCommentListDialogContent(
+            IntegrationTestUtil.checkPlaylistCommentListDialogContent(
                 playlistCommentListDialogFinder:
                     playlistCommentListDialogFinder,
                 expectedCommentTextsLst: [
@@ -24731,7 +24731,7 @@ void main() {
               6,
             );
 
-            _checkPlaylistCommentListDialogContent(
+            IntegrationTestUtil.checkPlaylistCommentListDialogContent(
                 playlistCommentListDialogFinder:
                     playlistCommentListDialogFinder,
                 expectedCommentTextsLst: [
@@ -24772,7 +24772,7 @@ void main() {
               5,
             );
 
-            _checkPlaylistCommentListDialogContent(
+            IntegrationTestUtil.checkPlaylistCommentListDialogContent(
                 playlistCommentListDialogFinder:
                     playlistCommentListDialogFinder,
                 expectedCommentTextsLst: [
@@ -24841,7 +24841,7 @@ void main() {
               8,
             );
 
-            _checkPlaylistCommentListDialogContent(
+            IntegrationTestUtil.checkPlaylistCommentListDialogContent(
                 playlistCommentListDialogFinder:
                     playlistCommentListDialogFinder,
                 expectedCommentTextsLst: [
@@ -24886,7 +24886,7 @@ void main() {
               6,
             );
 
-            _checkPlaylistCommentListDialogContent(
+            IntegrationTestUtil.checkPlaylistCommentListDialogContent(
                 playlistCommentListDialogFinder:
                     playlistCommentListDialogFinder,
                 expectedCommentTextsLst: [
@@ -27127,7 +27127,7 @@ void main() {
             6,
           );
 
-          _checkPlaylistCommentListDialogContent(
+          IntegrationTestUtil.checkPlaylistCommentListDialogContent(
               playlistCommentListDialogFinder: playlistCommentListDialogFinder,
               expectedCommentTextsLst: [
                 "JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
@@ -27199,7 +27199,7 @@ void main() {
             8,
           );
 
-          _checkPlaylistCommentListDialogContent(
+          IntegrationTestUtil.checkPlaylistCommentListDialogContent(
               playlistCommentListDialogFinder: playlistCommentListDialogFinder,
               expectedCommentTextsLst: [
                 "JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
@@ -27229,11 +27229,12 @@ void main() {
           );
         });
         testWidgets(
-            '''Multiple playlists restore, not replace existing playlists. Restore multiple playlist Android
-              zip containing 'Prières du Maître' and 'local' playlists. Then restore to Windows application
-              the multiple playlists Android zip containing the corresponding playlists with new and modified
-              comments. The two modified comments will update or not the existing comment according to their
-              modification date.''', (WidgetTester tester) async {
+            '''With added and modified comments, multiple playlists restore, not replace existing playlists.
+              Restore multiple playlist Android zip containing 'Prières du Maître' and 'local' playlists. Then
+              restore to Windows application the multiple playlists Android zip containing the corresponding
+              playlists with added and modified comments. The two modified comments will update or not the existing
+              comment according to their  modification date.''',
+            (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -27267,8 +27268,8 @@ void main() {
           await app.main();
           await tester.pumpAndSettle();
 
-          // Install the initial version of the unique saved
-          // playlist 'Prières du Maître'
+          // Install the initial version of the two saved
+          // playlist 'Prières du Maître' and 'local'
 
           String restorableZipFilePathName =
               '$kApplicationPathWindowsTest${path.separator}Android Prières and local initialization.zip';
@@ -27315,7 +27316,7 @@ void main() {
             6,
           );
 
-          _checkPlaylistCommentListDialogContent(
+          IntegrationTestUtil.checkPlaylistCommentListDialogContent(
               playlistCommentListDialogFinder: playlistCommentListDialogFinder,
               expectedCommentTextsLst: [
                 "JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
@@ -27352,16 +27353,21 @@ void main() {
             5,
           );
 
-          _checkPlaylistCommentListDialogContent(
-              playlistCommentListDialogFinder: playlistCommentListDialogFinder,
-              expectedCommentTextsLst: [
-                "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-                "All",
-                "23/06/25",
-                "Marie-France",
-                "One",
-                "Two",
-              ]);
+          IntegrationTestUtil.checkPlaylistCommentListDialogContent(
+            playlistCommentListDialogFinder: playlistCommentListDialogFinder,
+            expectedCommentTextsLst: [
+              "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+              "All",
+              "23/06/25",
+              "Marie-France",
+              "One",
+              "29/06/25",
+              "Two",
+              "29/06/25",
+            ],
+            multipleString: "29/06/25",
+            multipleCount: 2,
+          );
 
           // Now close the comment list dialog
           await tester.tap(find
@@ -27417,7 +27423,7 @@ void main() {
             8,
           );
 
-          _checkPlaylistCommentListDialogContent(
+          IntegrationTestUtil.checkPlaylistCommentListDialogContent(
               playlistCommentListDialogFinder: playlistCommentListDialogFinder,
               expectedCommentTextsLst: [
                 "JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
@@ -27456,7 +27462,7 @@ void main() {
             6,
           );
 
-          _checkPlaylistCommentListDialogContent(
+          IntegrationTestUtil.checkPlaylistCommentListDialogContent(
               playlistCommentListDialogFinder: playlistCommentListDialogFinder,
               expectedCommentTextsLst: [
                 "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
@@ -31619,33 +31625,6 @@ Future<String> _createNewLocalPlaylist({
   await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
   await tester.pumpAndSettle();
   return newPlaylistTitle;
-}
-
-void _checkPlaylistCommentListDialogContent({
-  required Finder playlistCommentListDialogFinder,
-  required List<String> expectedCommentTextsLst,
-  String multipleString = "",
-  int multipleCount = 0,
-}) {
-  for (String text in expectedCommentTextsLst) {
-    if (text == multipleString) {
-      expect(
-        find.descendant(
-          of: playlistCommentListDialogFinder,
-          matching: find.text(text),
-        ),
-        findsNWidgets(multipleCount),
-      );
-    } else {
-      expect(
-        find.descendant(
-          of: playlistCommentListDialogFinder,
-          matching: find.text(text),
-        ),
-        findsOneWidget,
-      );
-    }
-  }
 }
 
 Future<void> _verifyTargetListTitles({
