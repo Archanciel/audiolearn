@@ -17244,7 +17244,7 @@ void main() {
       'Save and restore text to speech audio mp3 files to zip files for all playlists or unique playlist test',
       () {
     testWidgets(
-        '''Set download date to today's date without time. The less old value awailable by default is 10/01/2024
+        '''Not replace existing playlists. Set download date to today's date without time. The less old value awailable by default is 10/01/2024
           18:18 and will be changed to today's date without time. Since the converted text to speech audio was
           modified today after 00:00 time, this audio will be the unique audio added to the created mp3 zip.
           
@@ -17288,53 +17288,15 @@ void main() {
       await app.main();
       await tester.pumpAndSettle();
 
-      String restorableZipFilePathName =
-          '$sourceRootPath${path.separator}audioLearn_2025-09-07_07_45_02.zip';
-
-      // Setting the file path name value returned by the FilePicker mock.
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: restorableZipFilePathName,
-            path: restorableZipFilePathName,
-            size: 6703),
-      ]);
-
-      // Execute the 'Restore Playlists, Comments and Settings from Zip
-      // File ...' menu to initialize the application 'local' and
-      // urgent_actus_17-12-2023 playlist
-      await IntegrationTestUtil.executeRestorePlaylists(
+      // Restoring the initial 'local' and "urgent_actus_17-12-2023" playlists and their mp3 files
+      await _restorePaylistsAndTheirMp3(
         tester: tester,
-        doReplaceExistingPlaylists: false,
+        sourceRootPath: kApplicationPathWindowsTest,
+        restorablePlaylistsZipFileName: 'audioLearn_2025-09-07_07_45_02.zip',
+        restorableMp3ZipFileName:
+            'audioLearn_mp3_from_2025-08-12_16_29_25_on_2025-09-07_07_46_29.zip',
+        mockFilePicker: mockFilePicker,
       );
-
-      // Tap the warning confirmation dialog Ok button to close it
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-      await tester.pumpAndSettle();
-
-      String mp3RestorableZipFilePathName =
-          '$sourceRootPath${path.separator}audioLearn_mp3_from_2025-08-12_16_29_25_on_2025-09-07_07_46_29.zip';
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: mp3RestorableZipFilePathName,
-            path: mp3RestorableZipFilePathName,
-            size: 19331059),
-      ]);
-
-      // Execute the 'Restore Playlists Audio's MP3 from Zip File ...' menu
-      // to restore the two playlists mp3 files
-      await IntegrationTestUtil.typeOnAppbarMenuItem(
-        tester: tester,
-        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
-      );
-
-      // Tap on the MP3 Restoration SetValueToTargetDialog
-      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-      await tester.pumpAndSettle();
-
-      // Tap the warning confirmation dialog Ok button to close it
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-      await tester.pumpAndSettle();
 
       const String unselectedYoutubePlaylistTitle = "urgent_actus_17-12-2023";
 
@@ -17351,7 +17313,7 @@ void main() {
 
       // Now enter the text to convert to audio
       await tester.enterText(textFieldFinder,
-          "Nouvelle description des éléments restaurés {{ avec 2 secondes de pause.");
+          "Nouvelle description des éléments restaurés {{{{ avec 4 secondes de pause. Et une fin de phrase.");
       await tester.pump();
 
       // Now click on Create MP3 button to create the audio
@@ -17419,6 +17381,11 @@ void main() {
       // Tap on the Ok button
       await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
       await tester.pumpAndSettle();
+
+      String? warningDialogMessage = tester
+          .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+          .data;
+      String playlistsNewSavedZipFileName = _extractZipFileName(warningDialogMessage!);
 
       // Tap the warning confirmation dialog Ok button to close it
       await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
@@ -17505,7 +17472,7 @@ void main() {
       expect(
           actualMessage,
           contains(
-              "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 43 KB and total duration: 0:00:05.4."));
+              "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68 KB and total duration: 0:00:08.6."));
       // expect(
       //     actualMessage,
       //     contains(
@@ -17521,6 +17488,463 @@ void main() {
           contains(
               "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now.subtract(const Duration(seconds: 1)))}.zip\"."),
         ]),
+      );
+
+      String playlistsMp3NewSavedZipFileName = _extractMp3ZipFileName(actualMessage);
+
+      // Tap the warning confirmation dialog Ok button to close it
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+      await tester.pumpAndSettle();
+
+      // Now delete the two 'local' and "urgent_actus_17-12-2023" playlists
+      // (their mp3 files are also deleted)
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: 'local',
+          playlistMenuKeyStr: 'popup_menu_delete_playlist');
+
+      // Now find the confirm button of the delete playlist confirm
+      // dialog and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: 'urgent_actus_17-12-2023',
+          playlistMenuKeyStr: 'popup_menu_delete_playlist');
+
+      // Now find the confirm button of the delete playlist confirm
+      // dialog and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      // Restoring the initial 'local' and "urgent_actus_17-12-2023" playlists and their mp3 files
+      await _restorePaylistsAndTheirMp3(
+        tester: tester,
+        sourceRootPath: kApplicationPathWindowsTest,
+        restorablePlaylistsZipFileName: 'audioLearn_2025-09-07_07_45_02.zip',
+        restorableMp3ZipFileName:
+            'audioLearn_mp3_from_2025-08-12_16_29_25_on_2025-09-07_07_46_29.zip',
+        mockFilePicker: mockFilePicker,
+      );
+
+      // Select the "urgent_actus_17-12-2023" playlist
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: unselectedYoutubePlaylistTitle,
+      );
+
+      // Now verify that the restored converted audio 'aaa' has a
+      // duration of 1.8 seconds
+
+      // Find the audio list widget using its key
+      Finder listFinder = find.byKey(const Key('audio_list'));
+      // Perform the scroll action
+      await tester.drag(
+          listFinder,
+          const Offset(
+              0, 300)); // Positive value for vertical drag to scroll up
+      await tester.pumpAndSettle();
+
+      // Verify the converted audio sub title in the selected Youtube
+      // playlist audio list
+      IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+        tester: tester,
+        audioSubTitlesOrderLst: [
+//          '0:00:01.8 14 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+          '0:00:01.8 14 KB converted on 07/09/2025 at 07:37',
+        ],
+        firstAudioListTileIndex: 3,
+      );
+
+      // Now restoring the last saved 'local' and "urgent_actus_17-12-2023" playlists and
+      // their mp3 files without replacing existing playlists
+      await _restorePaylistsAndTheirMp3(
+        tester: tester,
+        sourceRootPath: kApplicationPathWindowsTest,
+        restorablePlaylistsZipFileName: playlistsNewSavedZipFileName,
+        restorableMp3ZipFileName:
+            playlistsMp3NewSavedZipFileName,
+        mockFilePicker: mockFilePicker,
+        doReplaceExistingPlaylists: false,
+      );
+
+      // Now verify that the restored converted audio 'aaa' has a
+      // duration of 1.8 seconds
+
+      // Find the audio list widget using its key
+      listFinder = find.byKey(const Key('audio_list'));
+      // Perform the scroll action
+      await tester.drag(
+          listFinder,
+          const Offset(
+              0, 300)); // Positive value for vertical drag to scroll up
+      await tester.pumpAndSettle();
+
+      // Verify the converted audio sub title in the selected Youtube
+      // playlist audio list
+      IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+        tester: tester,
+        audioSubTitlesOrderLst: [
+          '0:00:08.6 68 KB converted on 07/09/2025 at 07:37',
+        ],
+        firstAudioListTileIndex: 3,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Replace existing playlists. Set download date to today's date without time. The less old value awailable by default is 10/01/2024
+          18:18 and will be changed to today's date without time. Since the converted text to speech audio was
+          modified today after 00:00 time, this audio will be the unique audio added to the created mp3 zip.
+          
+          Then delete the 2 playlists and restore again using audioLearn_2025-09-07_07_45_02.zip as well as
+          audioLearn_mp3_from_2025-09-07_07_37_32_on_2025-09-24_13_54_22.zip. Then verify the restored 'aaa'
+          converted audio duration. Then restore using the two last created zip (playlists and mp3) and verify that
+          the version of the 'aaa' converted audio was correctly updated.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      final String sourceRootPath =
+          "$kDownloadAppTestSavedDataDir${path.separator}restore_existing_playlists_with_new_audios_android_emulator";
+
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath: sourceRootPath,
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      // Restoring the initial 'local' and "urgent_actus_17-12-2023" playlists and their mp3 files
+      await _restorePaylistsAndTheirMp3(
+        tester: tester,
+        sourceRootPath: kApplicationPathWindowsTest,
+        restorablePlaylistsZipFileName: 'audioLearn_2025-09-07_07_45_02.zip',
+        restorableMp3ZipFileName:
+            'audioLearn_mp3_from_2025-08-12_16_29_25_on_2025-09-07_07_46_29.zip',
+        mockFilePicker: mockFilePicker,
+      );
+
+      const String unselectedYoutubePlaylistTitle = "urgent_actus_17-12-2023";
+
+      // Open the convert text to audio dialog
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: unselectedYoutubePlaylistTitle,
+        playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+      );
+
+      // Find the text field finder
+      final Finder textFieldFinder =
+          find.byKey(const Key('textToConvertTextField'));
+
+      // Now enter the text to convert to audio
+      await tester.enterText(textFieldFinder,
+          "Nouvelle description des éléments restaurés {{{{ avec 4 secondes de pause. Et une fin de phrase.");
+      await tester.pump();
+
+      // Now click on Create MP3 button to create the audio
+      Finder createMP3ButtonFinder =
+          find.byKey(const Key('create_audio_file_button'));
+      await tester.tap(createMP3ButtonFinder);
+      await tester.pumpAndSettle();
+
+      const String enteredFileNameNoExt = 'aaa';
+      Finder mp3FileNameTextFieldFinder =
+          find.byKey(const Key('textToConvertTextField'));
+
+      await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+      await tester.pumpAndSettle();
+
+      // Tap on the create mp3 button
+      Finder saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
+      await tester.tap(saveMP3FileButton);
+      await Future.delayed(const Duration(seconds: 2));
+      await tester.pumpAndSettle();
+
+      // Now check the confirm dialog which indicates that the saved
+      // file name already exist and ask to confirm or cancel the
+      // save operation.
+      await IntegrationTestUtil.verifyConfirmActionDialog(
+        tester: tester,
+        confirmActionDialogTitle:
+            "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$unselectedYoutubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
+        confirmActionDialogMessagePossibleLst: [""],
+        closeDialogWithConfirmButton: true,
+      );
+
+      await Future.delayed(const Duration(seconds: 2));
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in Youtube playlist \"$unselectedYoutubePlaylistTitle\".",
+        isWarningConfirming: true,
+      );
+
+      // Now close the convert text to audio dialog by tapping
+      // the Ok button
+      Finder cancelButtonFinder =
+          find.byKey(const Key('convertTextToAudioCancelButton'));
+      await tester.tap(cancelButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Now save the playlists ...
+
+      // Setting the path value returned by the FilePicker mock.
+      mockFilePicker.setPathToSelect(
+        pathToSelectStr: kApplicationPathWindowsTest,
+      );
+
+      // Tap the appbar leading popup menu button Then, the 'Save
+      // Playlists, Comments, Pictures and Settings to ZIP File' menu
+      // is selected.
+      await IntegrationTestUtil.typeOnAppbarMenuItem(
+        tester: tester,
+        appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
+      );
+
+      // Tap on the Ok button
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
+
+      String? warningDialogMessage = tester
+          .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+          .data;
+      String playlistsNewSavedZipFileName = _extractZipFileName(warningDialogMessage!);
+
+      // Tap the warning confirmation dialog Ok button to close it
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+      await tester.pumpAndSettle();
+
+      // And save the playlists mp3 files ...
+
+      // Tap the appbar leading popup menu button Then, the 'Save
+      // Playlists Audio's MP3 to ZIP File' menu is selected.
+      await IntegrationTestUtil.typeOnAppbarMenuItem(
+        tester: tester,
+        appbarMenuKeyStr: 'appBarMenuSavePlaylistsAudioMp3FilesToZip',
+      );
+
+      await IntegrationTestUtil.verifySetValueToTargetDialog(
+        tester: tester,
+        dialogTitle: 'Set the Download Date',
+        dialogMessage:
+            'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+      );
+
+      const String oldestAudioDownloadDateTime = '10/01/2024 18:18';
+
+      expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
+
+      Finder setValueToTargetDialogFinder = find.byType(SetValueToTargetDialog);
+
+      // This finder obtained as descendant of its enclosing dialog does
+      // enable to change the value of the TextField
+      Finder setValueToTargetDialogEditTextFinder = find.descendant(
+        of: setValueToTargetDialogFinder,
+        matching: find.byType(TextField),
+      );
+
+      // Now change the download date in the dialog
+      final String audioOldestDownloadDateToday =
+          DateFormat('dd/MM/yyyy').format(DateTime.now());
+      final String audioOldestDownloadDateTodayForFileNName =
+          DateFormat('yyyy-MM-dd').format(DateTime.now());
+      TextField textField =
+          tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
+
+      textField.controller!.text = audioOldestDownloadDateToday;
+      await tester.pumpAndSettle();
+
+      // Tap on the Ok button to set download date time.
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
+
+      DateTime now = DateTime.now();
+
+      // Now tap on the confirm dialog which indicates the estimated
+      // save audio mp3 to zip duration ok buton to accept the save
+      // execution.
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pump();
+
+      // Only works if tester.pump() is used instead of
+      // tester.pumpAndSettle()
+      expect(
+        find.text("Saving multiple playlists audio files to ZIP ..."),
+        findsOneWidget,
+      );
+      expect(
+        tester
+            .widget<Text>(find.byKey(const Key('saving_please_wait')).last)
+            .data!,
+        contains(
+          "Should approxim. take ",
+        ),
+      );
+
+      // Wait for completion
+      await tester.pumpAndSettle();
+
+      Text warningDialogTitle =
+          tester.widget(find.byKey(const Key('warningDialogTitle')).last);
+
+      expect(warningDialogTitle.data, 'CONFIRMATION');
+
+      String actualMessage = tester
+          .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+          .data!;
+      expect(
+          actualMessage,
+          contains(
+              "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68 KB and total duration: 0:00:08.6."));
+      // expect(
+      //     actualMessage,
+      //     contains(
+      //         "Total saved audio number: 3, total size: 15.49 MB and total duration: 0:22:38.0."));
+      expect(actualMessage, contains("Save operation real duration: 0:00:"));
+      expect(actualMessage, contains("number of bytes saved per second: "));
+      expect(actualMessage, contains(", number of created ZIP file(s): 1."));
+      expect(
+        actualMessage,
+        anyOf([
+          contains(
+              "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now)}.zip\"."),
+          contains(
+              "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now.subtract(const Duration(seconds: 1)))}.zip\"."),
+        ]),
+      );
+
+      String playlistsMp3NewSavedZipFileName = _extractMp3ZipFileName(actualMessage);
+
+      // Tap the warning confirmation dialog Ok button to close it
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+      await tester.pumpAndSettle();
+
+      // Now delete the two 'local' and "urgent_actus_17-12-2023" playlists
+      // (their mp3 files are also deleted)
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: 'local',
+          playlistMenuKeyStr: 'popup_menu_delete_playlist');
+
+      // Now find the confirm button of the delete playlist confirm
+      // dialog and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: 'urgent_actus_17-12-2023',
+          playlistMenuKeyStr: 'popup_menu_delete_playlist');
+
+      // Now find the confirm button of the delete playlist confirm
+      // dialog and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      // Restoring the initial 'local' and "urgent_actus_17-12-2023" playlists and their mp3 files
+      await _restorePaylistsAndTheirMp3(
+        tester: tester,
+        sourceRootPath: kApplicationPathWindowsTest,
+        restorablePlaylistsZipFileName: 'audioLearn_2025-09-07_07_45_02.zip',
+        restorableMp3ZipFileName:
+            'audioLearn_mp3_from_2025-08-12_16_29_25_on_2025-09-07_07_46_29.zip',
+        mockFilePicker: mockFilePicker,
+      );
+
+      // Select the "urgent_actus_17-12-2023" playlist
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: unselectedYoutubePlaylistTitle,
+      );
+
+      // Now verify that the restored converted audio 'aaa' has a
+      // duration of 1.8 seconds
+
+      // Find the audio list widget using its key
+      Finder listFinder = find.byKey(const Key('audio_list'));
+      // Perform the scroll action
+      await tester.drag(
+          listFinder,
+          const Offset(
+              0, 300)); // Positive value for vertical drag to scroll up
+      await tester.pumpAndSettle();
+
+      // Verify the converted audio sub title in the selected Youtube
+      // playlist audio list
+      IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+        tester: tester,
+        audioSubTitlesOrderLst: [
+//          '0:00:01.8 14 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+          '0:00:01.8 14 KB converted on 07/09/2025 at 07:37',
+        ],
+        firstAudioListTileIndex: 3,
+      );
+
+      // Now restoring the last saved 'local' and "urgent_actus_17-12-2023" playlists and
+      // their mp3 files with replacing existing playlists
+      await _restorePaylistsAndTheirMp3(
+        tester: tester,
+        sourceRootPath: kApplicationPathWindowsTest,
+        restorablePlaylistsZipFileName: playlistsNewSavedZipFileName,
+        restorableMp3ZipFileName:
+            playlistsMp3NewSavedZipFileName,
+        mockFilePicker: mockFilePicker,
+        doReplaceExistingPlaylists: true,
+      );
+
+      // Now verify that the restored converted audio 'aaa' has a
+      // duration of 1.8 seconds
+
+      // Find the audio list widget using its key
+      listFinder = find.byKey(const Key('audio_list'));
+      // Perform the scroll action
+      await tester.drag(
+          listFinder,
+          const Offset(
+              0, 300)); // Positive value for vertical drag to scroll up
+      await tester.pumpAndSettle();
+
+      // Verify the converted audio sub title in the selected Youtube
+      // playlist audio list
+      IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+        tester: tester,
+        audioSubTitlesOrderLst: [
+          '0:00:08.6 68 KB converted on 07/09/2025 at 07:37',
+        ],
+        firstAudioListTileIndex: 3,
       );
 
       // Purge the test playlist directory so that the created test
@@ -17542,7 +17966,7 @@ void main() {
             'Restored selected playlist is identical to the before restoration selected playlist.',
             () {
           testWidgets(
-              '''Replace existing playlist. Restore Windows zip containing 'Empty', 'local',
+              '''Replace existing playlists. Restore Windows zip containing 'Empty', 'local',
               'local_comment', 'local_delete_comment' and 'S8 audio' playlists in which 'local'
               is selected to Windows application containing 'A restaurer' and 'local' playlists
               in which 'local' is selected.
@@ -18081,7 +18505,7 @@ void main() {
             );
           });
           testWidgets(
-              '''Not replace existing playlist. Restore Windows zip containing 'Empty', 'local',
+              '''Not replace existing playlists. Restore Windows zip containing 'Empty', 'local',
               'local_comment', 'local_delete_comment' and 'S8 audio' playlists in which 'local'
               is selected to Windows application containing 'A restaurer' and 'local' playlists
               in which 'local' is selected.
@@ -18616,7 +19040,7 @@ void main() {
             'Restored selected playlist is different from the before restoration selected playlist.',
             () {
           testWidgets(
-              '''Replace existing playlist. Restore Windows zip containing 'Empty', 'local',
+              '''Replace existing playlists. Restore Windows zip containing 'Empty', 'local',
               'local_comment', 'local_delete_comment' and 'S8 audio' playlists in which 'S8 audio'
               is selected to Windows application containing 'A restaurer' and 'local' playlists
               in which 'local' is selected. After restoration, 'local' remains selected and 'S8 audio'
@@ -18809,7 +19233,7 @@ void main() {
             );
           });
           testWidgets(
-              '''Not replace existing playlist. Restore Windows zip containing 'Empty', 'local',
+              '''Not replace existing playlists. Restore Windows zip containing 'Empty', 'local',
               'local_comment', 'local_delete_comment' and 'S8 audio' playlists in which 'S8 audio'
               is selected to Windows application containing 'A restaurer' and 'local' playlists
               in which 'local' is selected. After restoration, 'local' remains selected and 'S8 audio'
@@ -18973,7 +19397,7 @@ void main() {
             'Restored selected playlist is identical to the before restoration not selected playlist.',
             () {
           testWidgets(
-              '''Replace existing playlist. Restore Windows zip containing 'Empty', 'local',
+              '''Replace existing playlists. Restore Windows zip containing 'Empty', 'local',
               'local_comment', 'local_delete_comment' and 'S8 audio' playlists in which 'local'
               is selected to Windows application containing 'A restaurer' and 'local' playlists
               in which the 'local' playlist was unselected. After restoration, since 'local' was
@@ -19524,7 +19948,7 @@ void main() {
             );
           });
           testWidgets(
-              '''Not replace existing playlist. Restore Windows zip containing 'Empty', 'local',
+              '''Not replace existing playlists. Restore Windows zip containing 'Empty', 'local',
               'local_comment', 'local_delete_comment' and 'S8 audio' playlists in which 'local'
               is selected to Windows application containing 'A restaurer' and 'local' playlists
               in which the 'local' playlist was unselected. After restoration, although 'local'
@@ -20087,7 +20511,7 @@ void main() {
             'Restored selected playlist is different from the before restoration selected playlist.',
             () {
           testWidgets(
-              '''Replace existing playlist. Restore Windows zip containing 'Empty', 'local',
+              '''Replace existing playlists. Restore Windows zip containing 'Empty', 'local',
               'local_comment', 'local_delete_comment' and 'S8 audio' playlists in which 'S8 audio'
               is selected to Windows application containing 'A restaurer' and 'local' playlists in
               which 'local' was unselected. After restoration, 'S8 audio' will be selected since it
@@ -20288,7 +20712,7 @@ void main() {
             );
           });
           testWidgets(
-              '''Not replace existing playlist. Restore Windows zip containing 'Empty', 'local',
+              '''Not replace existing playlists. Restore Windows zip containing 'Empty', 'local',
               'local_comment', 'local_delete_comment' and 'S8 audio' playlists in which 'S8 audio'
               is selected to Windows application containing 'A restaurer' and 'local' playlists
               in which 'local' was unselected. After restoration, 'S8 audio' will be selected since
@@ -20587,7 +21011,7 @@ void main() {
           );
         });
         testWidgets(
-            '''Multiple playlist restore, not replace existing playlists. Restore multiple playlists Windows
+            '''Multiple playlists restore, not replace existing playlists. Restore multiple playlists Windows
              zip containing 'S8 audio' and 'local' playlists to Windows application which contain 'S8 audio'
              and 'local' playlists. The restored 'S8 audio' and 'local' playlists contains additional audio's
              to which comments and pictures are associated.''',
@@ -22005,7 +22429,7 @@ void main() {
           );
         });
         testWidgets(
-            '''Multiple playlists restore from ZIP containing pictures, not replace existing playlist. Restore
+            '''Multiple playlists restore from ZIP containing pictures, not replace existing playlists. Restore
                multiple playlists Windows zip containing 'local' and 'S8 audio' playlists to empty Windows
                application.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
@@ -22136,7 +22560,7 @@ void main() {
           );
         });
         testWidgets(
-            '''Multiple playlists restore from ZIP containing pictures, not replace existing playlist. Restore
+            '''Multiple playlists restore from ZIP containing pictures, not replace existing playlists. Restore
                multiple playlists Windows zip containing 'local' and 'S8 audio' playlists to empty Windows
                application. Then restore again the same ZIP after deleting 1 picture''',
             (WidgetTester tester) async {
@@ -24168,7 +24592,7 @@ void main() {
             );
           });
           testWidgets(
-              '''Multiple playlists restore, not replace existing playlists. Restore multiple playlist Windows
+              '''Multiple playlists restore, not replace existing playlists. Restore multiple playlists Windows
               zip containing 'Prières du Maître' and 'local' playlists. Then restore to Windows application
               the multiple playlists Windows zip containing the corresponding playlists with new and modified
               comments. The two modified comments will update or not the existing comment according to their
@@ -26429,7 +26853,7 @@ void main() {
           );
         });
         testWidgets(
-            '''Multiple playlist restore, not replace existing playlists. Restore multiple playlists Android
+            '''Multiple playlists restore, not replace existing playlists. Restore multiple playlists Android
              zip containing 'S8 audio' and 'local' playlists to Windows application which contain 'S8 audio'
              and 'local' playlists. The restored 'S8 audio' and 'local' playlists contains additional audio's
              to which comments and pictures are associated.''',
@@ -30980,6 +31404,63 @@ void main() {
   });
 }
 
+Future<void> _restorePaylistsAndTheirMp3({
+  required WidgetTester tester,
+  required String sourceRootPath,
+  required String restorablePlaylistsZipFileName,
+  required String restorableMp3ZipFileName,
+  required MockFilePicker mockFilePicker,
+  bool doReplaceExistingPlaylists = false,
+}) async {
+  String restorableZipFilePathName =
+      '$sourceRootPath${path.separator}$restorablePlaylistsZipFileName';
+
+  // Setting the file path name value returned by the FilePicker mock.
+  mockFilePicker.setSelectedFiles([
+    PlatformFile(
+        name: restorableZipFilePathName,
+        path: restorableZipFilePathName,
+        size: 6703),
+  ]);
+
+  // Execute the 'Restore Playlists, Comments and Settings from Zip
+  // File ...' menu to initialize the application 'local' and
+  // urgent_actus_17-12-2023 playlist
+  await IntegrationTestUtil.executeRestorePlaylists(
+    tester: tester,
+    doReplaceExistingPlaylists: doReplaceExistingPlaylists,
+  );
+
+  // Tap the warning confirmation dialog Ok button to close it
+  await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+  await tester.pumpAndSettle();
+
+  String mp3RestorableZipFilePathName =
+      '$sourceRootPath${path.separator}$restorableMp3ZipFileName';
+
+  mockFilePicker.setSelectedFiles([
+    PlatformFile(
+        name: mp3RestorableZipFilePathName,
+        path: mp3RestorableZipFilePathName,
+        size: 19331059),
+  ]);
+
+  // Execute the 'Restore Playlists Audio's MP3 from Zip File ...' menu
+  // to restore the two playlists mp3 files
+  await IntegrationTestUtil.typeOnAppbarMenuItem(
+    tester: tester,
+    appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
+  );
+
+  // Tap on the MP3 Restoration SetValueToTargetDialog
+  await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+  await tester.pumpAndSettle();
+
+  // Tap the warning confirmation dialog Ok button to close it
+  await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+  await tester.pumpAndSettle();
+}
+
 Future<void> _createAndSavePlayableSortFilterParms({
   required WidgetTester tester,
   required String saveAsTitle,
@@ -32503,6 +32984,19 @@ void _verifyAllNowUnplayedAudioPlayPauseIconColor({
       expectedIconBackgroundColor: Colors.black,
     );
   }
+}
+
+String _extractZipFileName(String confirmationMessage) {
+  final RegExp zipFileRegex =
+      RegExp(r'audioLearn_\d{4}-\d{2}-\d{2}_\d{2}_\d{2}_\d{2}\.zip');
+  final Match? match = zipFileRegex.firstMatch(confirmationMessage);
+  return match?.group(0) ?? '';
+}
+
+String _extractMp3ZipFileName(String confirmationMessage) {
+  final RegExp mp3ZipRegex = RegExp(r'audioLearn_mp3_from_\d{4}-\d{2}-\d{2}_\d{2}_\d{2}_\d{2}_on_\d{4}-\d{2}-\d{2}_\d{2}_\d{2}_\d{2}\.zip');
+  final Match? match = mp3ZipRegex.firstMatch(confirmationMessage);
+  return match?.group(0) ?? '';
 }
 
 Future<List<String>> _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord({
