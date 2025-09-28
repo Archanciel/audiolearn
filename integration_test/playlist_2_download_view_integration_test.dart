@@ -17554,7 +17554,6 @@ void main() {
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
         tester: tester,
         audioSubTitlesOrderLst: [
-//          '0:00:01.8 14 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           '0:00:01.8 14 KB converted on 07/09/2025 at 07:37',
         ],
         firstAudioListTileIndex: 3,
@@ -17569,11 +17568,14 @@ void main() {
         restorableMp3ZipFileName: playlistsMp3NewSavedZipFileName,
         mockFilePicker: mockFilePicker,
         doReplaceExistingPlaylists: false,
-        restoreMp3ConfirmationMessage: "Restored 1 audio(s) MP3 in 1 playlist(s) from the multiple playlists MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistsMp3NewSavedZipFileName\".",
+        restorePlaylistsConfirmationMessage:
+            'Restored 0 playlist, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 1 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "$kApplicationPathWindowsTest${path.separator}$playlistsNewSavedZipFileName".',
+        restoreMp3ConfirmationMessage:
+            "Restored 1 audio(s) MP3 in 1 playlist(s) from the multiple playlists MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistsMp3NewSavedZipFileName\".",
       );
 
       // Now verify that the restored converted audio 'aaa' has a
-      // duration of 1.8 seconds
+      // duration of 8.6 seconds
 
       // Find the audio list widget using its key
       listFinder = find.byKey(const Key('audio_list'));
@@ -17935,7 +17937,6 @@ void main() {
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
         tester: tester,
         audioSubTitlesOrderLst: [
-//          '0:00:01.8 14 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           '0:00:01.8 14 KB converted on 07/09/2025 at 07:37',
         ],
         firstAudioListTileIndex: 3,
@@ -17950,11 +17951,14 @@ void main() {
         restorableMp3ZipFileName: playlistsMp3NewSavedZipFileName,
         mockFilePicker: mockFilePicker,
         doReplaceExistingPlaylists: true,
-        restoreMp3ConfirmationMessage: "Restored 1 audio(s) MP3 in 1 playlist(s) from the multiple playlists MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistsMp3NewSavedZipFileName\".",
+        restorePlaylistsConfirmationMessage:
+            'Restored 2 playlist, 0 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 10 audio reference(s) and 1 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "$kApplicationPathWindowsTest${path.separator}$playlistsNewSavedZipFileName".',
+        restoreMp3ConfirmationMessage:
+            "Restored 1 audio(s) MP3 in 1 playlist(s) from the multiple playlists MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistsMp3NewSavedZipFileName\".",
       );
 
       // Now verify that the restored converted audio 'aaa' has a
-      // duration of 1.8 seconds
+      // duration of 8.6 seconds
 
       // Find the audio list widget using its key
       listFinder = find.byKey(const Key('audio_list'));
@@ -31472,6 +31476,7 @@ Future<void> _restorePaylistsAndTheirMp3({
   required String restorableMp3ZipFileName,
   required MockFilePicker mockFilePicker,
   bool doReplaceExistingPlaylists = false,
+  String restorePlaylistsConfirmationMessage = '',
   String restoreMp3ConfirmationMessage = '',
 }) async {
   String restorableZipFilePathName =
@@ -31493,9 +31498,19 @@ Future<void> _restorePaylistsAndTheirMp3({
     doReplaceExistingPlaylists: doReplaceExistingPlaylists,
   );
 
-  // Tap the warning confirmation dialog Ok button to close it
-  await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-  await tester.pumpAndSettle();
+  if (restorePlaylistsConfirmationMessage.isNotEmpty) {
+    // Verify the displayed confirmation dialog and confirm the
+    // restoration
+    await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      tester: tester,
+      warningDialogMessage: restorePlaylistsConfirmationMessage,
+      isWarningConfirming: true,
+    );
+  } else {
+    // Tap the warning confirmation dialog Ok button to close it
+    await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+    await tester.pumpAndSettle();
+  }
 
   String mp3RestorableZipFilePathName =
       '$sourceRootPath${path.separator}$restorableMp3ZipFileName';
@@ -31523,9 +31538,9 @@ Future<void> _restorePaylistsAndTheirMp3({
     // restoration
     await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
       tester: tester,
-      warningDialogMessage:
-        restoreMp3ConfirmationMessage,
-      isWarningConfirming: true,);
+      warningDialogMessage: restoreMp3ConfirmationMessage,
+      isWarningConfirming: true,
+    );
   } else {
     // Tap the warning confirmation dialog Ok button to close it
     await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
