@@ -5025,6 +5025,17 @@ class PlaylistListVM extends ChangeNotifier {
                   );
 
                   if (existingAudio.audioType == AudioType.textToSpeech) {
+                    // If the existing audio is a text-to-speech audio,
+                    // the most recent comment end position is used to
+                    // check if the audio restored from the zip file
+                    // has the same duration as the last comment end position.
+                    // If it is the case, the existing audio is replaced by
+                    // the audio restored from the zip file.
+                    //
+                    // The most recent comment was added by restoring the
+                    // multiple playlists, comments, pictures and settings
+                    // from a zip file or restoring a unique playlist, comments
+                    // and picture from a zip file.
                     Comment? lastComment = _commentVM.getLastCommentOfAudio(
                       audio: existingAudio,
                     );
@@ -5040,6 +5051,7 @@ class PlaylistListVM extends ChangeNotifier {
                           audioDurationAndSizeLst[0] as Duration;
                       int audioDurationInTenthOfSeconds =
                           (audioDuration.inMilliseconds / 100).round();
+
                       if (commentEndPositionInTenthOfSeconds ==
                           audioDurationInTenthOfSeconds) {
                         restoredAudioCount = await _addMp3FileToPlaylist(
@@ -5112,7 +5124,8 @@ class PlaylistListVM extends ChangeNotifier {
 
       if (isTextToSpeechMp3) {
         // If the restored MP3 file is a text-to-speech audio,
-        // update its audio type in the playlist's playableAudioLst
+        // update its duration and size in the playlist's
+        // playableAudioLst audio instance.
         Audio? restoredAudio;
         try {
           restoredAudio = playlist.playableAudioLst.firstWhere(
