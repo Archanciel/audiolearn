@@ -2041,7 +2041,12 @@ class AudioDownloadVM extends ChangeNotifier {
     return duration ?? Duration.zero;
   }
 
-  Future<Duration?> getAudioMp3Duration({
+  /// This method is return a list containing
+  /// [
+  ///   0 - the audio mp3 duration
+  ///   1 - the audio mp3 file size in bytes
+  /// ]
+  Future<List<dynamic>> getAudioMp3DurationAndSize({
     required ArchiveFile audioMp3ArchiveFile,
     required String playlistDownloadPath,
   }) async {
@@ -2064,20 +2069,28 @@ class AudioDownloadVM extends ChangeNotifier {
       await tempFile.writeAsBytes(audioMp3ArchiveFile.content as List<int>);
 
       // Get the duration using the temporary file path
-      Duration? audioMp3Duration = await getMp3DurationWithAudioPlayer(
+      Duration audioMp3Duration = await getMp3DurationWithAudioPlayer(
         audioPlayer: audioPlayer,
         filePathName: tempFile.path,
       );
+
+      int fileSize = await tempFile.length();
 
       // Clean up the temporary file
       if (await tempFile.exists()) {
         await tempFile.delete();
       }
 
-      return audioMp3Duration;
+      return [
+        audioMp3Duration,
+        fileSize,
+      ];
     } catch (e) {
       // Handle any errors during file operations
-      return null;
+      return [
+        Duration.zero,
+        0,
+      ];
     }
   }
 

@@ -5031,27 +5031,29 @@ class PlaylistListVM extends ChangeNotifier {
                     if (lastComment != null) {
                       int commentEndPositionInTenthOfSeconds =
                           lastComment.commentEndPositionInTenthOfSeconds;
-                      Duration? audioDuration =
-                          await _audioDownloadVM.getAudioMp3Duration(
+                      List<dynamic> audioDurationAndSizeLst =
+                          await _audioDownloadVM.getAudioMp3DurationAndSize(
                         audioMp3ArchiveFile: archiveFile,
                         playlistDownloadPath: playlist.downloadPath,
                       );
-                      if (audioDuration != null) {
-                        int audioDurationInTenthOfSeconds =
-                            (audioDuration.inMilliseconds / 100).round();
-                        if (commentEndPositionInTenthOfSeconds ==
-                            audioDurationInTenthOfSeconds) {
-                          restoredAudioCount = await _addMp3FileToPlaylist(
-                            archiveFile: archiveFile,
-                            targetFile: targetFile,
-                            playlist: playlist,
-                            playlistTitle: playlistTitle,
-                            audioFileName: audioFileName,
-                            restoredPlaylistTitlesLst:
-                                restoredPlaylistTitlesLst,
-                            restoredAudioCount: restoredAudioCount,
-                          );
-                        }
+                      Duration audioDuration =
+                          audioDurationAndSizeLst[0] as Duration;
+                      int audioDurationInTenthOfSeconds =
+                          (audioDuration.inMilliseconds / 100).round();
+                      if (commentEndPositionInTenthOfSeconds ==
+                          audioDurationInTenthOfSeconds) {
+                        restoredAudioCount = await _addMp3FileToPlaylist(
+                          archiveFile: archiveFile,
+                          targetFile: targetFile,
+                          playlist: playlist,
+                          playlistTitle: playlistTitle,
+                          audioFileName: audioFileName,
+                          restoredPlaylistTitlesLst: restoredPlaylistTitlesLst,
+                          restoredAudioCount: restoredAudioCount,
+                          isTextToSpeechMp3: true,
+                          audioDuration: audioDuration,
+                          audioFileSize: audioDurationAndSizeLst[1] as int,
+                        );
                       }
                     }
                   }
@@ -5086,6 +5088,9 @@ class PlaylistListVM extends ChangeNotifier {
     required String audioFileName,
     required List<String> restoredPlaylistTitlesLst,
     required int restoredAudioCount,
+    bool isTextToSpeechMp3 = false,
+    Duration audioDuration = const Duration(),
+    int audioFileSize = 0,
   }) async {
     try {
       // Ensure the playlist directory exists
@@ -5104,6 +5109,24 @@ class PlaylistListVM extends ChangeNotifier {
       }
 
       restoredAudioCount++;
+
+      if (isTextToSpeechMp3) {
+        // If the restored MP3 file is a text-to-speech audio,
+        // update its audio type in the playlist's playableAudioLst
+        Audio? restoredAudio;
+        try {
+          restoredAudio = playlist.playableAudioLst.firstWhere(
+            (audio) => audio.audioFileName == audioFileName,
+          );
+        } catch (e) {
+          // Audio not found, nothing to update
+        }
+
+        if (restoredAudio != null) {
+          restoredAudio.audioDuration = audioDuration;
+          restoredAudio.audioFileSize = audioFileSize;
+        }
+      }
     } catch (e) {
       // Log error but continue with other files
       _logger.i(
