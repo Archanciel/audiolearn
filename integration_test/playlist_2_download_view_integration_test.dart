@@ -17245,9 +17245,10 @@ void main() {
       () {
     group('Handling multiple playlists', () {
       testWidgets(
-          '''Not replace existing playlists. Set download date to today's date without time. The less old value awailable by default is 10/01/2024
-          18:18 and will be changed to today's date without time. Since the converted text to speech audio was
-          modified today after 00:00 time, this audio will be the unique audio added to the created mp3 zip.
+          '''Not replace existing playlists. Set download date to today's date without time. The less old value
+          awailable by default is 10/01/2024 18:18 and will be changed to today's date without time. Since the
+          converted text to speech audio was modified today after 00:00 time, this audio will be the unique audio
+          added to the created mp3 zip.
           
           Then delete the 2 playlists and restore again using audioLearn_2025-09-07_07_45_02.zip as well as
           audioLearn_mp3_from_2025-09-07_07_37_32_on_2025-09-24_13_54_22.zip. Then verify the restored 'aaa'
@@ -17652,9 +17653,10 @@ void main() {
         );
       });
       testWidgets(
-          '''Replace existing playlists. Set download date to today's date without time. The less old value awailable by default is 10/01/2024
-          18:18 and will be changed to today's date without time. Since the converted text to speech audio was
-          modified today after 00:00 time, this audio will be the unique audio added to the created mp3 zip.
+          '''Replace existing playlists. Set download date to today's date without time. The less old value
+          awailable by default is 10/01/2024 18:18 and will be changed to today's date without time. Since the
+          converted text to speech audio was modified today after 00:00 time, this audio will be the unique audio
+          added to the created mp3 zip.
           
           Then delete the 2 playlists and restore again using audioLearn_2025-09-07_07_45_02.zip as well as
           audioLearn_mp3_from_2025-09-07_07_37_32_on_2025-09-24_13_54_22.zip. Then verify the restored 'aaa'
@@ -28079,7 +28081,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Restored 3 audio(s) MP3 in 1 playlist(s) from the multiple playlists MP3 zip file \"$mp3RestorableZipFilePathName\".",
+            "Restored 3 audio(s) MP3 in 1 playlist(s) from the unique playlist MP3 zip file \"$mp3RestorableZipFilePathName\".",
         isWarningConfirming: true,
       );
 
