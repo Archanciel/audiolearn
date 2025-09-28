@@ -5086,9 +5086,8 @@ class PlaylistListVM extends ChangeNotifier {
     return [
       restoredAudioCount,
       restoredPlaylistTitlesLst.length,
-      playlistTitlesPresentInMp3ZipFileLst.length ==
-          1 // true if the MP3 zip file is
-      //       a unique playlist zip file
+      uniquePlaylistIsRestored // true if the MP3 zip file is
+      //                          a unique playlist zip file
     ];
   }
 
