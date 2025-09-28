@@ -3350,7 +3350,7 @@ class PlaylistListVM extends ChangeNotifier {
           // a mp3 zip if download date is before or at last created comment
           // date which is the date of the last modification of the text to
           // speech audio.
-          
+
           // Load comments for this audio
           List<Comment> comments = _commentVM.loadAudioComments(audio: audio);
 
@@ -3408,7 +3408,8 @@ class PlaylistListVM extends ChangeNotifier {
     // Create ZIP files with size limit using streaming approach
     _numberOfCreatedZipFiles = 0;
 
-    if (oldestAudioSavedToZipDownloadDateTime.isBefore(fromAudioDownloadDateTime)) {
+    if (oldestAudioSavedToZipDownloadDateTime
+        .isBefore(fromAudioDownloadDateTime)) {
       // The case if the audio is a text to speech audio which was
       // created before the fromAudioDownloadDateTime but modified
       // at or after this date and so its mp3 must be saved to zip.
@@ -4918,7 +4919,10 @@ class PlaylistListVM extends ChangeNotifier {
   ///   playlist restoration (false).
   Future<List<dynamic>> restorePlaylistsAudioMp3FilesFromZip({
     required String zipFilePathName,
-    required List<Playlist> listOfPlaylists,
+    required List<Playlist>
+        listOfPlaylists, // Contains all application playlists
+    //                                          or only one playlist if restoring a
+    //                                          unique playlist
     bool uniquePlaylistIsRestored = false,
   }) async {
     int restoredAudioCount = 0;
@@ -4936,8 +4940,9 @@ class PlaylistListVM extends ChangeNotifier {
       return [
         0, // No audio restored
         0, // No playlist in which audio was restored
-        false, // no sense in this case since the MMP3 zip file does not exist
-      ]; // Zip file does not exist
+        false, // No sense in this case since the MP3
+        //        zip file does not exist
+      ];
     }
 
     try {
@@ -4945,7 +4950,9 @@ class PlaylistListVM extends ChangeNotifier {
       List<int> zipBytes = await zipFile.readAsBytes();
       Archive archive = ZipDecoder().decodeBytes(zipBytes);
 
-      // Create a map of playlist titles to playlists for efficient lookup
+      // Create a map of playlist titles to playlists for
+      // efficient lookup
+
       Map<String, Playlist> playlistMap = {};
 
       for (Playlist playlist in listOfPlaylists) {
@@ -4956,12 +4963,12 @@ class PlaylistListVM extends ChangeNotifier {
       notifyListeners();
 
       // Process each file in the archive
-      for (ArchiveFile file in archive) {
+      for (ArchiveFile archiveFile in archive) {
         // Skip directories
-        if (file.isFile && file.name.endsWith('.mp3')) {
+        if (archiveFile.isFile && archiveFile.name.endsWith('.mp3')) {
           // Enables restoring MP3 from zip files created on Windows
           // or on Android.
-          final String sanitizedArchiveFilePathName = file.name
+          final String sanitizedArchiveFilePathName = archiveFile.name
               .replaceAll(
                   '\\', '/') // First convert all backslashes to forward slashes
               .split('/')
@@ -5002,25 +5009,51 @@ class PlaylistListVM extends ChangeNotifier {
 
                 // Only copy if the file doesn't already exist
                 if (!targetFile.existsSync()) {
-                  try {
-                    // Ensure the playlist directory exists
-                    Directory playlistDir = Directory(playlist.downloadPath);
-                    if (!playlistDir.existsSync()) {
-                      await playlistDir.create(recursive: true);
-                    }
+                  restoredAudioCount = await _addMp3FileToPlaylist(
+                    archiveFile: archiveFile,
+                    targetFile: targetFile,
+                    playlist: playlist,
+                    playlistTitle: playlistTitle,
+                    audioFileName: audioFileName,
+                    restoredPlaylistTitlesLst: restoredPlaylistTitlesLst,
+                    restoredAudioCount: restoredAudioCount,
+                  );
+                } else {
+                  // File already exists
+                  Audio existingAudio = playlist.playableAudioLst.firstWhere(
+                    (audio) => audio.audioFileName == audioFileName,
+                  );
 
-                    // Extract and write the file
-                    List<int> fileBytes = file.content as List<int>;
-                    await targetFile.writeAsBytes(fileBytes);
-
-                    if (!restoredPlaylistTitlesLst.contains(playlistTitle)) {
-                      restoredPlaylistTitlesLst.add(playlistTitle);
+                  if (existingAudio.audioType == AudioType.textToSpeech) {
+                    Comment? lastComment = _commentVM.getLastCommentOfAudio(
+                      audio: existingAudio,
+                    );
+                    if (lastComment != null) {
+                      int commentEndPositionInTenthOfSeconds =
+                          lastComment.commentEndPositionInTenthOfSeconds;
+                      Duration? audioDuration =
+                          await _audioDownloadVM.getAudioMp3Duration(
+                        audioMp3ArchiveFile: archiveFile,
+                        playlistDownloadPath: playlist.downloadPath,
+                      );
+                      if (audioDuration != null) {
+                        int audioDurationInTenthOfSeconds =
+                            (audioDuration.inMilliseconds / 100).round();
+                        if (commentEndPositionInTenthOfSeconds ==
+                            audioDurationInTenthOfSeconds) {
+                          restoredAudioCount = await _addMp3FileToPlaylist(
+                            archiveFile: archiveFile,
+                            targetFile: targetFile,
+                            playlist: playlist,
+                            playlistTitle: playlistTitle,
+                            audioFileName: audioFileName,
+                            restoredPlaylistTitlesLst:
+                                restoredPlaylistTitlesLst,
+                            restoredAudioCount: restoredAudioCount,
+                          );
+                        }
+                      }
                     }
-                    restoredAudioCount++;
-                  } catch (e) {
-                    // Log error but continue with other files
-                    _logger.i(
-                        'Error restoring file $audioFileName to playlist $playlistTitle: $e');
                   }
                 }
               }
@@ -5043,6 +5076,41 @@ class PlaylistListVM extends ChangeNotifier {
           1 // true if the MP3 zip file is
       //       a unique playlist zip file
     ];
+  }
+
+  Future<int> _addMp3FileToPlaylist({
+    required ArchiveFile archiveFile,
+    required File targetFile,
+    required Playlist playlist,
+    required String playlistTitle,
+    required String audioFileName,
+    required List<String> restoredPlaylistTitlesLst,
+    required int restoredAudioCount,
+  }) async {
+    try {
+      // Ensure the playlist directory exists
+      Directory playlistDir = Directory(playlist.downloadPath);
+
+      if (!playlistDir.existsSync()) {
+        await playlistDir.create(recursive: true);
+      }
+
+      // Extract and write the file
+      List<int> fileBytes = archiveFile.content as List<int>;
+      await targetFile.writeAsBytes(fileBytes);
+
+      if (!restoredPlaylistTitlesLst.contains(playlistTitle)) {
+        restoredPlaylistTitlesLst.add(playlistTitle);
+      }
+
+      restoredAudioCount++;
+    } catch (e) {
+      // Log error but continue with other files
+      _logger.i(
+          'Error restoring file $audioFileName to playlist $playlistTitle: $e');
+    }
+
+    return restoredAudioCount;
   }
 
   /// Method called when the user clicks on the 'Rewind audio to start' playlist

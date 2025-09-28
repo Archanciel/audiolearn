@@ -89,6 +89,25 @@ class CommentVM extends ChangeNotifier {
     );
   }
 
+  Comment? getLastCommentOfAudio({
+    required Audio audio,
+  }) {
+    List<Comment> commentLst = loadAudioComments(
+      audio: audio,
+    );
+
+    if (commentLst.isNotEmpty) {
+      commentLst.sort(
+        (a, b) => b.lastUpdateDateTime
+            .compareTo(a.lastUpdateDateTime),
+      );
+
+      return commentLst.first;
+    }
+
+    return null;
+  }
+  
   int getCommentNumber({
     required Audio audio,
   }) {

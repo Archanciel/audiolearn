@@ -1,3 +1,4 @@
+import 'package:archive/archive.dart';
 import 'package:audiolearn/constants.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:collection/collection.dart';
@@ -2038,6 +2039,46 @@ class AudioDownloadVM extends ChangeNotifier {
     duration = await audioPlayer.getDuration();
 
     return duration ?? Duration.zero;
+  }
+
+  Future<Duration?> getAudioMp3Duration({
+    required ArchiveFile audioMp3ArchiveFile,
+    required String playlistDownloadPath,
+  }) async {
+    // AudioPlayer is used to get the audio duration of the
+    // imported audio files
+    final AudioPlayer? audioPlayer = instanciateAudioPlayer();
+    try {
+      // Create a temporary file from the ArchiveFile data
+      final Directory tempDir = Directory(_settingsDataService.get(
+          settingType: SettingType.dataLocation,
+          settingSubType: DataLocation.playlistRootPath));
+
+      // Use path.basename to extract filename cross-platform
+      final String tempFileName = path.basename(audioMp3ArchiveFile.name);
+
+      // Use path.join for cross-platform path joining
+      final File tempFile = File(path.join(tempDir.path, tempFileName));
+
+      // Write the archive file content to the temporary file
+      await tempFile.writeAsBytes(audioMp3ArchiveFile.content as List<int>);
+
+      // Get the duration using the temporary file path
+      Duration? audioMp3Duration = await getMp3DurationWithAudioPlayer(
+        audioPlayer: audioPlayer,
+        filePathName: tempFile.path,
+      );
+
+      // Clean up the temporary file
+      if (await tempFile.exists()) {
+        await tempFile.delete();
+      }
+
+      return audioMp3Duration;
+    } catch (e) {
+      // Handle any errors during file operations
+      return null;
+    }
   }
 
   /// Physically deletes the audio file from the audio playlist
