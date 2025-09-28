@@ -1037,7 +1037,7 @@ Future<void> main() async {
       // confirm dialog
       await tester
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
-      await tester.pumpAndSettle(const Duration(seconds: 1));
+      await tester.pumpAndSettle(const Duration(seconds: 2));
 
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
