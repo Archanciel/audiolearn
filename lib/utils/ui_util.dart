@@ -350,7 +350,8 @@ class UiUtil {
 
     // audioLearnAppViewType = AudioLearnAppViewType.playlistDownloadView;
 
-    if (audioToDeletePlaylist.playlistType == PlaylistType.youtube) {
+    if (audioToDeletePlaylist.playlistType == PlaylistType.youtube &&
+        audioToDelete.audioType == AudioType.downloaded) {
       await showDialog<dynamic>(
         context: context,
         builder: (BuildContext context) {
@@ -411,7 +412,8 @@ class UiUtil {
         });
       }
     } else {
-      // The playlist is local
+      // The playlist is local or the audio is imported or converted
+      // text to speech
       if (audioToDeleteCommentLst.isNotEmpty) {
         await showDialog<dynamic>(
           context: context,
@@ -457,7 +459,8 @@ class UiUtil {
 
     Playlist playlist = audioToDelete.enclosingPlaylist!;
 
-    if (playlist.playlistType == PlaylistType.youtube) {
+    if (playlist.playlistType == PlaylistType.youtube &&
+        audioToDelete.audioType == AudioType.downloaded) {
       warningMessageVM.setDeleteAudioFromPlaylistAswellTitle(
           deleteAudioFromPlaylistAswellTitle: playlist.title,
           deleteAudioFromPlaylistAswellAudioVideoTitle:
