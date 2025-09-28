@@ -17569,6 +17569,7 @@ void main() {
         restorableMp3ZipFileName: playlistsMp3NewSavedZipFileName,
         mockFilePicker: mockFilePicker,
         doReplaceExistingPlaylists: false,
+        restoreMp3ConfirmationMessage: "Restored 1 audio(s) MP3 in 1 playlist(s) from the multiple playlists MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistsMp3NewSavedZipFileName\".",
       );
 
       // Now verify that the restored converted audio 'aaa' has a
@@ -17615,7 +17616,7 @@ void main() {
 
       String aaaAudioDurationStr = _extractDuration(aaaAudioTitleText);
 
-      expect(aaaAudioDurationStr, '0:00:08.6');
+      expect(aaaAudioDurationStr, '0:09');
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -17949,6 +17950,7 @@ void main() {
         restorableMp3ZipFileName: playlistsMp3NewSavedZipFileName,
         mockFilePicker: mockFilePicker,
         doReplaceExistingPlaylists: true,
+        restoreMp3ConfirmationMessage: "Restored 1 audio(s) MP3 in 1 playlist(s) from the multiple playlists MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistsMp3NewSavedZipFileName\".",
       );
 
       // Now verify that the restored converted audio 'aaa' has a
@@ -17995,7 +17997,7 @@ void main() {
 
       String aaaAudioDurationStr = _extractDuration(aaaAudioTitleText);
 
-      expect(aaaAudioDurationStr, '0:00:08.6');
+      expect(aaaAudioDurationStr, '0:09');
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -31470,6 +31472,7 @@ Future<void> _restorePaylistsAndTheirMp3({
   required String restorableMp3ZipFileName,
   required MockFilePicker mockFilePicker,
   bool doReplaceExistingPlaylists = false,
+  String restoreMp3ConfirmationMessage = '',
 }) async {
   String restorableZipFilePathName =
       '$sourceRootPath${path.separator}$restorablePlaylistsZipFileName';
@@ -31515,9 +31518,19 @@ Future<void> _restorePaylistsAndTheirMp3({
   await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
   await tester.pumpAndSettle();
 
-  // Tap the warning confirmation dialog Ok button to close it
-  await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-  await tester.pumpAndSettle();
+  if (restoreMp3ConfirmationMessage.isNotEmpty) {
+    // Verify the displayed confirmation dialog and confirm the
+    // restoration
+    await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      tester: tester,
+      warningDialogMessage:
+        restoreMp3ConfirmationMessage,
+      isWarningConfirming: true,);
+  } else {
+    // Tap the warning confirmation dialog Ok button to close it
+    await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+    await tester.pumpAndSettle();
+  }
 }
 
 Future<void> _createAndSavePlayableSortFilterParms({
