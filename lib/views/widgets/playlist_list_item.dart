@@ -670,7 +670,10 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                     listOfPlaylists: [playlist], // only one playlist
                   ),
                   checkboxLabelLst: [],
-                  validationFunctionArgs: [],
+                  validationFunction: validateDateTimeFormat,
+                  validationFunctionArgs: [
+                    dateFormatVMlistenFalse,
+                  ],
                   isCursorAtStart: true,
                   helpItemsLst: savePlaylistMp3HelpItemsLst,
                 );
@@ -1387,5 +1390,31 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
     }
 
     return '';
+  }
+
+  InvalidValueState validateDateTimeFormat(
+    DateFormatVM dateFormatVM,
+    String enteredDateTimeStr,
+  ) {
+    if (enteredDateTimeStr.isEmpty) {
+      return InvalidValueState.enteredDateEmpty;
+    }
+    
+    // Try to parse as date time first
+    DateTime? parsedDateTime = dateFormatVM.parseDateTimeStrUsinAppDateFormat(
+      dateTimeStr: enteredDateTimeStr,
+    );
+
+    // If that fails, try to parse as date only
+    parsedDateTime ??= dateFormatVM.parseDateStrUsinAppDateFormat(
+      dateStr: enteredDateTimeStr,
+    );
+
+    if (parsedDateTime == null) {
+      return InvalidValueState
+          .dateFormatInvalid; // This will prevent the dialog from closing
+    }
+
+    return InvalidValueState.none;
   }
 }
