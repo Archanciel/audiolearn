@@ -16794,6 +16794,329 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
+      testWidgets(
+          '''Empty the download date. The integration test verifies the displayed error warning indicating
+            that an empty download date is not possible.''',
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}save_audio_mp3_to_zip",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        await app.main();
+        await tester.pumpAndSettle();
+
+        // First, set the application language to english
+        await IntegrationTestUtil.setApplicationLanguage(
+          tester: tester,
+          language: Language.english,
+        );
+
+        // Setting the path value returned by the FilePicker mock.
+        mockFilePicker.setPathToSelect(
+          pathToSelectStr: kApplicationPathWindowsTest,
+        );
+
+        // Tap the appbar leading popup menu button Then, the 'Save
+        // Playlists Audio's MP3 to ZIP File' menu is selected.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAudioMp3FilesToZip',
+        );
+
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'Set the Download Date',
+          dialogMessage:
+              'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+        );
+
+        Finder setValueToTargetDialogFinder =
+            find.byType(SetValueToTargetDialog);
+
+        // This finder obtained as descendant of its enclosing dialog does
+        // enable to change the value of the TextField
+        Finder setValueToTargetDialogEditTextFinder = find.descendant(
+          of: setValueToTargetDialogFinder,
+          matching: find.byType(TextField),
+        );
+
+        TextField textField =
+            tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
+
+        // Now empty the download date in the dialog
+        textField.controller!.text = '';
+        await tester.pumpAndSettle();
+
+        // Tap on the Ok button to set download date time.
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
+
+        // Verify the displayed error warning dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Defining an empty date or date/time download date is not possible.",
+        );
+
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'Set the Download Date',
+          dialogMessage:
+              'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+        );
+
+        // Tap on the cancel button of the set value to target dialog
+        await tester.tap(find.byKey(const Key('setValueToTargetCancelButton')));
+        await tester.pumpAndSettle();
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Set incorrect download date format. The integration test verifies the displayed error warning indicating
+            that an unacceptable download date/time format is not possible.''',
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}save_audio_mp3_to_zip",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        await app.main();
+        await tester.pumpAndSettle();
+
+        // First, set the application language to english
+        await IntegrationTestUtil.setApplicationLanguage(
+          tester: tester,
+          language: Language.english,
+        );
+
+        // Setting the path value returned by the FilePicker mock.
+        mockFilePicker.setPathToSelect(
+          pathToSelectStr: kApplicationPathWindowsTest,
+        );
+
+        // Tap the appbar leading popup menu button Then, the 'Save
+        // Playlists Audio's MP3 to ZIP File' menu is selected.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAudioMp3FilesToZip',
+        );
+
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'Set the Download Date',
+          dialogMessage:
+              'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+        );
+
+        Finder setValueToTargetDialogFinder =
+            find.byType(SetValueToTargetDialog);
+
+        // This finder obtained as descendant of its enclosing dialog does
+        // enable to change the value of the TextField
+        Finder setValueToTargetDialogEditTextFinder = find.descendant(
+          of: setValueToTargetDialogFinder,
+          matching: find.byType(TextField),
+        );
+
+        TextField textField =
+            tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
+
+        // Now empty the download date in the dialog
+        const String invalidDateFormat = '2909/2025';
+        textField.controller!.text = invalidDateFormat;
+        await tester.pumpAndSettle();
+
+        // Tap on the Ok button to set download date time.
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
+
+        // Verify the displayed error warning dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "$invalidDateFormat does not respect the date or date/time format.",
+        );
+
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'Set the Download Date',
+          dialogMessage:
+              'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+        );
+
+        // Tap on the cancel button of the set value to target dialog
+        await tester.tap(find.byKey(const Key('setValueToTargetCancelButton')));
+        await tester.pumpAndSettle();
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Set incorrect download date/time format. The integration test verifies the displayed error warning indicating
+            that an unacceptable download date/time format is not possible.''',
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}save_audio_mp3_to_zip",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        await app.main();
+        await tester.pumpAndSettle();
+
+        // First, set the application language to english
+        await IntegrationTestUtil.setApplicationLanguage(
+          tester: tester,
+          language: Language.english,
+        );
+
+        // Setting the path value returned by the FilePicker mock.
+        mockFilePicker.setPathToSelect(
+          pathToSelectStr: kApplicationPathWindowsTest,
+        );
+
+        // Tap the appbar leading popup menu button Then, the 'Save
+        // Playlists Audio's MP3 to ZIP File' menu is selected.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAudioMp3FilesToZip',
+        );
+
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'Set the Download Date',
+          dialogMessage:
+              'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+        );
+
+        Finder setValueToTargetDialogFinder =
+            find.byType(SetValueToTargetDialog);
+
+        // This finder obtained as descendant of its enclosing dialog does
+        // enable to change the value of the TextField
+        Finder setValueToTargetDialogEditTextFinder = find.descendant(
+          of: setValueToTargetDialogFinder,
+          matching: find.byType(TextField),
+        );
+
+        TextField textField =
+            tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
+
+        // Now empty the download date in the dialog
+        const String invalidDateTimeFormat = '29/09/2025 1508';
+        textField.controller!.text = invalidDateTimeFormat;
+        await tester.pumpAndSettle();
+
+        // Tap on the Ok button to set download date time.
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
+
+        // Verify the displayed error warning dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "$invalidDateTimeFormat does not respect the date or date/time format.",
+        );
+
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'Set the Download Date',
+          dialogMessage:
+              'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+        );
+
+        // Tap on the cancel button of the set value to target dialog
+        await tester.tap(find.byKey(const Key('setValueToTargetCancelButton')));
+        await tester.pumpAndSettle();
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
     });
     group('Save unique playlist audio mp3 files to zip file menu test', () {
       testWidgets(
@@ -18362,18 +18685,17 @@ void main() {
         // Now restoring the last saved "urgent_actus_17-12-2023" playlist
         // and its mp3 files without replacing the existing playlist
         await _restorePaylistsAndTheirMp3(
-          tester: tester,
-          sourceRootPath: kApplicationPathWindowsTest,
-          restorablePlaylistsZipFileName: '$youtubePlaylistTitle.zip',
-          restorableMp3ZipFileName: playlistMp3NewSavedZipFileName,
-          mockFilePicker: mockFilePicker,
-          doReplaceExistingPlaylists: false,
-          restorePlaylistsConfirmationMessage:
-              'Restored 0 playlist saved individually, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 1 added plus 0 modified comment(s) in existing audio comment file(s) from "$kApplicationPathWindowsTest${path.separator}$youtubePlaylistTitle.zip".',
-          restoreMp3ConfirmationMessage:
-              "Restored 1 audio(s) MP3 in 1 playlist from the unique playlist MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistMp3NewSavedZipFileName\".",
-          restoreMp3FromUniquePlaylistTitle: youtubePlaylistTitle
-        );
+            tester: tester,
+            sourceRootPath: kApplicationPathWindowsTest,
+            restorablePlaylistsZipFileName: '$youtubePlaylistTitle.zip',
+            restorableMp3ZipFileName: playlistMp3NewSavedZipFileName,
+            mockFilePicker: mockFilePicker,
+            doReplaceExistingPlaylists: false,
+            restorePlaylistsConfirmationMessage:
+                'Restored 0 playlist saved individually, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 1 added plus 0 modified comment(s) in existing audio comment file(s) from "$kApplicationPathWindowsTest${path.separator}$youtubePlaylistTitle.zip".',
+            restoreMp3ConfirmationMessage:
+                "Restored 1 audio(s) MP3 in 1 playlist from the unique playlist MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistMp3NewSavedZipFileName\".",
+            restoreMp3FromUniquePlaylistTitle: youtubePlaylistTitle);
 
         // Now verify that the restored converted audio 'aaa' has a
         // duration of 8.6 seconds
@@ -18752,18 +19074,17 @@ void main() {
         // Now restoring the last saved "urgent_actus_17-12-2023" playlist
         // and its mp3 files with replacing the existing playlist
         await _restorePaylistsAndTheirMp3(
-          tester: tester,
-          sourceRootPath: kApplicationPathWindowsTest,
-          restorablePlaylistsZipFileName: '$youtubePlaylistTitle.zip',
-          restorableMp3ZipFileName: playlistMp3NewSavedZipFileName,
-          mockFilePicker: mockFilePicker,
-          doReplaceExistingPlaylists: true,
-          restorePlaylistsConfirmationMessage:
-              'Restored 1 playlist saved individually, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 1 added plus 0 modified comment(s) in existing audio comment file(s) from "$kApplicationPathWindowsTest${path.separator}$youtubePlaylistTitle.zip".',
-          restoreMp3ConfirmationMessage:
-              "Restored 1 audio(s) MP3 in 1 playlist from the unique playlist MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistMp3NewSavedZipFileName\".",
-          restoreMp3FromUniquePlaylistTitle: youtubePlaylistTitle
-        );
+            tester: tester,
+            sourceRootPath: kApplicationPathWindowsTest,
+            restorablePlaylistsZipFileName: '$youtubePlaylistTitle.zip',
+            restorableMp3ZipFileName: playlistMp3NewSavedZipFileName,
+            mockFilePicker: mockFilePicker,
+            doReplaceExistingPlaylists: true,
+            restorePlaylistsConfirmationMessage:
+                'Restored 1 playlist saved individually, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 1 added plus 0 modified comment(s) in existing audio comment file(s) from "$kApplicationPathWindowsTest${path.separator}$youtubePlaylistTitle.zip".',
+            restoreMp3ConfirmationMessage:
+                "Restored 1 audio(s) MP3 in 1 playlist from the unique playlist MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistMp3NewSavedZipFileName\".",
+            restoreMp3FromUniquePlaylistTitle: youtubePlaylistTitle);
 
         // Now verify that the restored converted audio 'aaa' has a
         // duration of 8.6 seconds
@@ -32360,8 +32681,7 @@ Future<void> _restorePaylistsAndTheirMp3({
       tester: tester,
       appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
     );
-  }
-  else {
+  } else {
     // Execute the 'Restore Playlist Audio's MP3 from Zip File ...' menu
     // to restore the 'local' playlist mp3 files
     await IntegrationTestUtil.typeOnPlaylistMenuItem(
