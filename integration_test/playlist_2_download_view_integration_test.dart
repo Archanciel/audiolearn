@@ -17651,7 +17651,7 @@ void main() {
         );
       });
       testWidgets(
-          '''Replace existing playlist. Set download date to today's date without time. The less old value
+          '''Replace existing playlists. Set download date to today's date without time. The less old value
           awailable by default is 10/01/2024 18:18 and will be changed to today's date without time. Since the
           converted text to speech audio was modified today after 00:00 time, this audio will be the unique audio
           added to the created mp3 zip.
@@ -18449,7 +18449,7 @@ void main() {
         );
       });
       testWidgets(
-          '''Replace existing playlists. Set download date to today's date without time. The less old value
+          '''Replace existing playlist. Set download date to today's date without time. The less old value
           awailable by default is 10/01/2024 18:18 and will be changed to today's date without time. Since the
           converted text to speech audio was modified today after 00:00 time, this audio will be the unique audio
           added to the created mp3 zip.
@@ -18494,22 +18494,22 @@ void main() {
         await app.main();
         await tester.pumpAndSettle();
 
-        // Restoring the initial 'local' and "urgent_actus_17-12-2023" playlists and their mp3 files
+        const String youtubePlaylistTitle = "urgent_actus_17-12-2023";
+
+        // Restoring the initial "urgent_actus_17-12-2023" playlist and its mp3 files
         await _restorePaylistsAndTheirMp3(
           tester: tester,
           sourceRootPath: kApplicationPathWindowsTest,
-          restorablePlaylistsZipFileName: 'audioLearn_2025-09-07_07_45_02.zip',
+          restorablePlaylistsZipFileName: '$youtubePlaylistTitle.zip',
           restorableMp3ZipFileName:
-              'audioLearn_mp3_from_2025-08-12_16_29_25_on_2025-09-07_07_46_29.zip',
+              '${youtubePlaylistTitle}_mp3_from_2025-08-12_16_29_25_on_2025-09-28_21_50_57.zip',
           mockFilePicker: mockFilePicker,
         );
-
-        const String unselectedYoutubePlaylistTitle = "urgent_actus_17-12-2023";
 
         // Open the convert text to audio dialog
         await IntegrationTestUtil.typeOnPlaylistMenuItem(
           tester: tester,
-          playlistTitle: unselectedYoutubePlaylistTitle,
+          playlistTitle: youtubePlaylistTitle,
           playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
         );
 
@@ -18549,7 +18549,7 @@ void main() {
         await IntegrationTestUtil.verifyConfirmActionDialog(
           tester: tester,
           confirmActionDialogTitle:
-              "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$unselectedYoutubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
+              "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$youtubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
           confirmActionDialogMessagePossibleLst: [""],
           closeDialogWithConfirmButton: true,
         );
@@ -18560,7 +18560,7 @@ void main() {
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in Youtube playlist \"$unselectedYoutubePlaylistTitle\".",
+              "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in Youtube playlist \"$youtubePlaylistTitle\".",
           isWarningConfirming: true,
         );
 
@@ -18571,52 +18571,50 @@ void main() {
         await tester.tap(cancelButtonFinder);
         await tester.pumpAndSettle();
 
-        // Now save the playlists ...
+        // Now save the playlist ...
+
+        // But first rename the existing unique playlist zip file so
+        // that it is not overwritten by the next save operation
+        final String initialUniquePlaylistZipFileName =
+            '$youtubePlaylistTitle.zip';
+        final String renamedInitialUniquePlaylistZipFileName =
+            '${youtubePlaylistTitle}_initial.zip';
+        File('$kApplicationPathWindowsTest${path.separator}$initialUniquePlaylistZipFileName')
+            .renameSync(
+                '$kApplicationPathWindowsTest${path.separator}$renamedInitialUniquePlaylistZipFileName');
 
         // Setting the path value returned by the FilePicker mock.
         mockFilePicker.setPathToSelect(
           pathToSelectStr: kApplicationPathWindowsTest,
         );
 
-        // Tap the appbar leading popup menu button Then, the 'Save
-        // Playlists, Comments, Pictures and Settings to ZIP File' menu
-        // is selected.
-        await IntegrationTestUtil.typeOnAppbarMenuItem(
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
           tester: tester,
-          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
+          playlistTitle: youtubePlaylistTitle,
+          playlistMenuKeyStr:
+              'popup_menu_save_playlist_comments_pictures_to_zip',
         );
-
-        // Tap on the Ok button
-        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-        await tester.pumpAndSettle();
-
-        String? warningDialogMessage = tester
-            .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
-            .data;
-        String playlistsNewSavedZipFileName =
-            _extractZipFileName(warningDialogMessage!);
 
         // Tap the warning confirmation dialog Ok button to close it
         await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
         await tester.pumpAndSettle();
 
-        // And save the playlists mp3 files ...
+        // And save the playlist mp3 files ...
 
-        // Tap the appbar leading popup menu button Then, the 'Save
-        // Playlists Audio's MP3 to ZIP File' menu is selected.
-        await IntegrationTestUtil.typeOnAppbarMenuItem(
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
           tester: tester,
-          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAudioMp3FilesToZip',
+          playlistTitle: youtubePlaylistTitle,
+          playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
         );
 
         await IntegrationTestUtil.verifySetValueToTargetDialog(
           tester: tester,
           dialogTitle: 'Set the Download Date',
           dialogMessage:
-              'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+              'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
         );
 
-        const String oldestAudioDownloadDateTime = '10/01/2024 18:18';
+        const String oldestAudioDownloadDateTime = '12/08/2025 16:29';
 
         expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
 
@@ -18656,7 +18654,7 @@ void main() {
         // Only works if tester.pump() is used instead of
         // tester.pumpAndSettle()
         expect(
-          find.text("Saving multiple playlists audio files to ZIP ..."),
+          find.text("Saving $youtubePlaylistTitle audio files to ZIP ..."),
           findsOneWidget,
         );
         expect(
@@ -18682,7 +18680,7 @@ void main() {
         expect(
             actualMessage,
             contains(
-                "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68 KB and total duration: 0:00:08.6."));
+                "Saved to ZIP file(s) unique playlist audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68 KB and total duration: 0:00:08.6."));
         expect(actualMessage, contains("Save operation real duration: 0:00:"));
         expect(actualMessage, contains("number of bytes saved per second: "));
         expect(actualMessage, contains(", number of created ZIP file(s): 1."));
@@ -18690,27 +18688,27 @@ void main() {
           actualMessage,
           anyOf([
             contains(
-                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now)}.zip\"."),
+                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}${youtubePlaylistTitle}_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now)}.zip\"."),
             contains(
-                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now.subtract(const Duration(seconds: 1)))}.zip\"."),
+                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}${youtubePlaylistTitle}_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now.subtract(const Duration(seconds: 1)))}.zip\"."),
           ]),
         );
 
-        String playlistsMp3NewSavedZipFileName = _extractMp3ZipFileName(
+        String playlistMp3NewSavedZipFileName = _extractMp3ZipFileName(
           confirmationMessage: actualMessage,
-          zipStartFileName: 'audioLearn',
+          zipStartFileName: youtubePlaylistTitle,
         );
 
         // Tap the warning confirmation dialog Ok button to close it
         await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
         await tester.pumpAndSettle();
 
-        // Now delete the two 'local' and "urgent_actus_17-12-2023" playlists
-        // (their mp3 files are also deleted)
+        // Now delete the "urgent_actus_17-12-2023" playlist (their
+        // mp3 files are also deleted)
 
         await IntegrationTestUtil.typeOnPlaylistMenuItem(
             tester: tester,
-            playlistTitle: 'local',
+            playlistTitle: youtubePlaylistTitle,
             playlistMenuKeyStr: 'popup_menu_delete_playlist');
 
         // Now find the confirm button of the delete playlist confirm
@@ -18718,30 +18716,15 @@ void main() {
         await tester.tap(find.byKey(const Key('confirmButton')));
         await tester.pumpAndSettle();
 
-        await IntegrationTestUtil.typeOnPlaylistMenuItem(
-            tester: tester,
-            playlistTitle: 'urgent_actus_17-12-2023',
-            playlistMenuKeyStr: 'popup_menu_delete_playlist');
-
-        // Now find the confirm button of the delete playlist confirm
-        // dialog and tap on it
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
-
-        // Restoring the initial 'local' and "urgent_actus_17-12-2023" playlists and their mp3 files
+        // Restoring the initial "urgent_actus_17-12-2023" playlist and its mp3 files
         await _restorePaylistsAndTheirMp3(
           tester: tester,
           sourceRootPath: kApplicationPathWindowsTest,
-          restorablePlaylistsZipFileName: 'audioLearn_2025-09-07_07_45_02.zip',
+          restorablePlaylistsZipFileName:
+              renamedInitialUniquePlaylistZipFileName,
           restorableMp3ZipFileName:
-              'audioLearn_mp3_from_2025-08-12_16_29_25_on_2025-09-07_07_46_29.zip',
+              '${youtubePlaylistTitle}_mp3_from_2025-08-12_16_29_25_on_2025-09-28_21_50_57.zip',
           mockFilePicker: mockFilePicker,
-        );
-
-        // Select the "urgent_actus_17-12-2023" playlist
-        await IntegrationTestUtil.selectPlaylist(
-          tester: tester,
-          playlistToSelectTitle: unselectedYoutubePlaylistTitle,
         );
 
         // Now verify that the restored converted audio 'aaa' has a
@@ -18763,22 +18746,23 @@ void main() {
           audioSubTitlesOrderLst: [
             '0:00:01.8 14 KB converted on 07/09/2025 at 07:37',
           ],
-          firstAudioListTileIndex: 3,
+          firstAudioListTileIndex: 1,
         );
 
-        // Now restoring the last saved 'local' and "urgent_actus_17-12-2023" playlists and
-        // their mp3 files with replacing existing playlists
+        // Now restoring the last saved "urgent_actus_17-12-2023" playlist
+        // and its mp3 files with replacing the existing playlist
         await _restorePaylistsAndTheirMp3(
           tester: tester,
           sourceRootPath: kApplicationPathWindowsTest,
-          restorablePlaylistsZipFileName: playlistsNewSavedZipFileName,
-          restorableMp3ZipFileName: playlistsMp3NewSavedZipFileName,
+          restorablePlaylistsZipFileName: '$youtubePlaylistTitle.zip',
+          restorableMp3ZipFileName: playlistMp3NewSavedZipFileName,
           mockFilePicker: mockFilePicker,
           doReplaceExistingPlaylists: true,
           restorePlaylistsConfirmationMessage:
-              'Restored 2 playlist, 0 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 10 audio reference(s) and 1 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "$kApplicationPathWindowsTest${path.separator}$playlistsNewSavedZipFileName".',
+              'Restored 1 playlist saved individually, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 1 added plus 0 modified comment(s) in existing audio comment file(s) from "$kApplicationPathWindowsTest${path.separator}$youtubePlaylistTitle.zip".',
           restoreMp3ConfirmationMessage:
-              "Restored 1 audio(s) MP3 in 1 playlist(s) from the multiple playlists MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistsMp3NewSavedZipFileName\".",
+              "Restored 1 audio(s) MP3 in 1 playlist from the unique playlist MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistMp3NewSavedZipFileName\".",
+          restoreMp3FromUniquePlaylistTitle: youtubePlaylistTitle
         );
 
         // Now verify that the restored converted audio 'aaa' has a
@@ -18800,7 +18784,7 @@ void main() {
           audioSubTitlesOrderLst: [
             '0:00:08.6 68 KB converted on 07/09/2025 at 07:37',
           ],
-          firstAudioListTileIndex: 3,
+          firstAudioListTileIndex: 1,
         );
 
         // Now we want to tap on the 'aaa' audio in order to open the
