@@ -12925,12 +12925,12 @@ void main() {
     });
     group('From Youtube playlist, deleting a non downloaded type audio', () {
       testWidgets(
-          '''Delete imported commented audio from Youtube playlist. Click on the menu icon of the
-           commented audio "Les besoins artificiels par R.Keucheyan" and select
-           'Delete Audio from Playlist as well ...'. Verify the displayed warning.
-           Then click on the 'Confirm' button. Verify the suppression of the audio
-           mp3 file as well as its comment file. Verify also the updated playlist
-           playable audio list.''', (WidgetTester tester) async {
+          '''Delete imported commented audio from Youtube playlist. Click on the menu icon
+           of the imported and commented audio "DETTE PUBLIQUE - LA RÉALITÉ DERRIÈRE LES
+           DISCOURS CATASTROPHISTES" and select 'Delete Audio from Playlist as well ...'.
+           Verify the displayed warning. Then click on the 'Confirm' button. Verify the
+           suppression of the audio mp3 file as well as its comment file. Verify also the
+           updated playlist downloaded and playable audio list.''', (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'import_audios_integr_test',
@@ -12941,7 +12941,7 @@ void main() {
 
         // Verify the presence of the audio file which will be later deleted
 
-        String audioFileNameToDelete =
+        const String audioFileNameToDelete =
             "250812-162933-DETTE PUBLIQUE - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3";
 
         final String youtubePlaylistDirectoryPath = "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023";
@@ -12960,7 +12960,7 @@ void main() {
         // Verify the presence of the audio comment files which will be later
         // deleted
 
-        String audioCommentFileNameToDelete =
+        const String audioCommentFileNameToDelete =
             "250812-162933-DETTE PUBLIQUE - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.json";
 
         List<String> listCommentJsonFileNames = DirUtil.listFileNamesInDir(
@@ -13033,6 +13033,19 @@ void main() {
 
         expect(
           listMp3FileNames.contains(audioFileNameToDelete),
+          false,
+        );
+
+        // Verify that the audio comment file was deleted as well
+
+        List<String> listCommentedFileNames  = DirUtil.listFileNamesInDir(
+          directoryPath:
+              '$youtubePlaylistDirectoryPath${path.separator}$kCommentDirName',
+          fileExtension: 'json',
+        );
+
+        expect(
+          listCommentedFileNames.contains(audioCommentFileNameToDelete),
           false,
         );
 
