@@ -12923,6 +12923,210 @@ void main() {
         });
       });
     });
+    group('From Youtube playlist, deleting a non downloaded type audio', () {
+      testWidgets(
+          '''Delete imported commented audio from Youtube playlist. Click on the menu icon of the
+           commented audio "Les besoins artificiels par R.Keucheyan" and select
+           'Delete Audio from Playlist as well ...'. Verify the displayed warning.
+           Then click on the 'Confirm' button. Verify the suppression of the audio
+           mp3 file as well as its comment file. Verify also the updated playlist
+           playable audio list.''', (WidgetTester tester) async {
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'delete_filtered_audio_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        const String youtubePlaylistTitle = 'S8 audio';
+
+        String defaultSortFilterParmName =
+            'default'; // SF parm when opening the app
+
+        // Verify the presence of the audio file which will be later deleted
+
+        String audioFileNameToDelete =
+            "240107-094520-Les besoins artificiels par R.Keucheyan 24-01-05.mp3";
+
+        List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}S8 audio",
+          fileExtension: 'mp3',
+        );
+
+        expect(
+          listMp3FileNames.contains(audioFileNameToDelete),
+          true,
+        );
+
+        // Verify the presence of the audio comment files which will be later
+        // deleted
+
+        String audioCommentFileNameToDelete =
+            "240107-094520-Les besoins artificiels par R.Keucheyan 24-01-05.json";
+
+        List<String> listCommentJsonFileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
+          fileExtension: 'json',
+        );
+
+        expect(
+          listCommentJsonFileNames.contains(audioCommentFileNameToDelete),
+          true,
+        );
+
+        String commentedAudioTitleToDelete =
+            "Les besoins artificiels par R.Keucheyan";
+
+        // First, find the Audio sublist ListTile Text widget
+        final Finder commentedAudioTitleToDeleteListTileTextWidgetFinder =
+            find.text(commentedAudioTitleToDelete);
+
+        // Then obtain the Audio ListTile widget enclosing the Text widget by
+        // finding its ancestor
+        final Finder commentedAudioTitleToDeleteListTileWidgetFinder =
+            find.ancestor(
+          of: commentedAudioTitleToDeleteListTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now find the leading menu icon button of the Audio ListTile
+        // and tap on it
+        final Finder commentedAudioTitleToDeleteListTileLeadingMenuIconButton =
+            find.descendant(
+          of: commentedAudioTitleToDeleteListTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester
+            .tap(commentedAudioTitleToDeleteListTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
+
+        // Now find the delete audio from playlist as well popup menu item
+        // and tap on it
+        final Finder popupCopyMenuItem = find
+            .byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
+
+        await tester.tap(popupCopyMenuItem);
+        await tester.pumpAndSettle();
+
+        // Now verifying the confirm action dialog title and message
+        // and confirm the deletion
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmActionDialogTitle:
+              'Confirm deletion of the audio "$commentedAudioTitleToDelete" from the Youtube playlist',
+          confirmActionDialogMessagePossibleLst: [
+            'Delete the audio "$commentedAudioTitleToDelete" from the playlist "$youtubePlaylistTitle" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on "Cancel" and choose "Delete Audio ..." instead of "Delete Audio from Playlist as well ...". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.',
+          ],
+          closeDialogWithConfirmButton: true,
+          usePumpAndSettle: true,
+        );
+
+        // Now verifying the confirm action dialog title and message
+        // and confirm the deletion
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmActionDialogTitle:
+              'Confirm deletion of the commented audio "$commentedAudioTitleToDelete"',
+          confirmActionDialogMessagePossibleLst: [
+            'The audio contains 1 comment(s) which will be deleted as well. Confirm deletion ?',
+          ],
+          closeDialogWithConfirmButton: true,
+          usePumpAndSettle: true,
+        );
+
+        // Now verifying the warning dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              'If the deleted audio "$commentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" playlist located on Youtube, it will be downloaded again the next time you download the playlist !',
+          isWarningConfirming: false,
+        );
+
+        // Verify that the applyed Sort/Filter parms name is displayed
+        // after the selected playlist title
+
+        Text selectedSortFilterParmsName = tester
+            .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+        expect(
+          selectedSortFilterParmsName.data,
+          defaultSortFilterParmName,
+        );
+
+        // Verify that the audio file was deleted
+
+        listMp3FileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}S8 audio",
+          fileExtension: 'mp3',
+        );
+
+        expect(
+          listMp3FileNames.contains(audioFileNameToDelete),
+          false,
+        );
+
+        // Verify that the audio comment files were deleted
+
+        listCommentJsonFileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
+          fileExtension: 'json',
+        );
+
+        expect(
+          listCommentJsonFileNames.contains(audioCommentFileNameToDelete),
+          false,
+        );
+
+        // Verify the 'S8 audio' playlist json file
+
+        Playlist loadedPlaylist = _loadPlaylist(youtubePlaylistTitle);
+
+        expect(loadedPlaylist.downloadedAudioLst.length, 17);
+
+        List<String> downloadedAudioLst = loadedPlaylist.downloadedAudioLst
+            .map((Audio audio) => audio.validVideoTitle)
+            .toList();
+
+        expect(
+          downloadedAudioLst.contains(commentedAudioTitleToDelete),
+          false,
+        );
+
+        List<String> playableAudioLst = loadedPlaylist.playableAudioLst
+            .map((Audio audio) => audio.validVideoTitle)
+            .toList();
+
+        expect(
+          playableAudioLst.contains(commentedAudioTitleToDelete),
+          false,
+        );
+
+        // Setting to this variables the currently selected audio title/subTitle
+        // of the 'S8 audio' playlist
+        String currentAudioTitle = "La résilience insulaire par Fiona Roche";
+        String currentAudioSubTitle =
+            "0:13:35.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
+
+        // Verify that the current audio is displayed with the correct
+        // title and subtitle color
+        await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+          tester: tester,
+          currentAudioTitle: currentAudioTitle,
+          currentAudioSubTitle: currentAudioSubTitle,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+    });
     group('In audio player view, delete unique audio test', () {
       testWidgets('''Delete unique audio mp3 only.''',
           (WidgetTester tester) async {
