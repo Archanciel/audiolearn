@@ -342,6 +342,7 @@ class UiUtil {
     required WarningMessageVM warningMessageVM,
   }) async {
     Audio? nextAudio;
+    bool wasCancelButtonPressed = false;
     Playlist audioToDeletePlaylist = audioToDelete.enclosingPlaylist!;
     final List<Comment> audioToDeleteCommentLst =
         playlistListVMlistenFalse.getAudioComments(
@@ -377,6 +378,7 @@ class UiUtil {
       ).then((result) {
         if (result == ConfirmAction.cancel) {
           nextAudio = audioToDelete;
+          wasCancelButtonPressed = true;
         } else {
           nextAudio = result as Audio?;
         }
@@ -406,12 +408,13 @@ class UiUtil {
         ).then((result) {
           if (result == ConfirmAction.cancel) {
             nextAudio = audioToDelete;
+            wasCancelButtonPressed = true;
           } else {
             nextAudio = result as Audio?;
           }
         });
       }
-    } else {
+    } else if (wasCancelButtonPressed == false) {
       // The playlist is local or the audio is imported or converted
       // text to speech
       if (audioToDeleteCommentLst.isNotEmpty) {
@@ -450,6 +453,10 @@ class UiUtil {
           audioLearnAppViewType,
         );
       }
+    }
+
+    if (wasCancelButtonPressed) {
+      return;
     }
 
     await UiUtil.replaceCurrentAudioByNextAudio(
