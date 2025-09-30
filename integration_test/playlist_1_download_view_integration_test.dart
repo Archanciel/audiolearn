@@ -10915,9 +10915,9 @@ void main() {
       );
     });
   });
-  group('Delete unique audio test', () {
+  group('Delete one audio test', () {
     group('In playlist download view', () {
-      group('Using SF parms, delete unique audio test', () {
+      group('Using SF parms, delete one audio test', () {
         testWidgets(
             '''SF parms 'default' is applied. Then, click on the menu icon of the
            commented audio "Les besoins artificiels par R.Keucheyan" and select
@@ -11682,7 +11682,7 @@ void main() {
         });
       });
       group(
-          '''From playlist as well. Using SF parms, delete unique audio test from
+          '''From playlist as well. Using SF parms, delete one audio test from
              playlist as well''', () {
         testWidgets(
             '''SF parms 'default' is applied. Then, click on the menu icon of the
@@ -12610,9 +12610,9 @@ void main() {
           );
         });
       });
-      group('In playlist download view, delete unique audio test', () {
+      group('In playlist download view, delete one audio test', () {
         testWidgets(
-            '''Delete unique audio mp3 only and then switch to AudioPlayerView
+            '''Delete one audio mp3 only and then switch to AudioPlayerView
            screen.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
@@ -12777,7 +12777,7 @@ void main() {
           );
         });
         testWidgets(
-            '''Delete unique audio from playlist as well and then switch to
+            '''Delete one audio from playlist as well and then switch to
            AudioPlayerView screen.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
@@ -12933,23 +12933,22 @@ void main() {
            playable audio list.''', (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
-          savedTestDataDirName: 'delete_filtered_audio_test',
+          savedTestDataDirName: 'import_audios_integr_test',
           tapOnPlaylistToggleButton: false,
         );
 
-        const String youtubePlaylistTitle = 'S8 audio';
-
-        String defaultSortFilterParmName =
-            'default'; // SF parm when opening the app
+        const String youtubePlaylistTitle = 'urgent_actus_17-12-2023';
 
         // Verify the presence of the audio file which will be later deleted
 
         String audioFileNameToDelete =
-            "240107-094520-Les besoins artificiels par R.Keucheyan 24-01-05.mp3";
+            "250812-162933-DETTE PUBLIQUE - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3";
+
+        final String youtubePlaylistDirectoryPath = "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023";
 
         List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
           directoryPath:
-              "$kApplicationPathWindowsTest${path.separator}S8 audio",
+              youtubePlaylistDirectoryPath,
           fileExtension: 'mp3',
         );
 
@@ -12962,11 +12961,11 @@ void main() {
         // deleted
 
         String audioCommentFileNameToDelete =
-            "240107-094520-Les besoins artificiels par R.Keucheyan 24-01-05.json";
+            "250812-162933-DETTE PUBLIQUE - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.json";
 
         List<String> listCommentJsonFileNames = DirUtil.listFileNamesInDir(
           directoryPath:
-              "$kApplicationPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
+              "$youtubePlaylistDirectoryPath${path.separator}$kCommentDirName",
           fileExtension: 'json',
         );
 
@@ -12975,12 +12974,12 @@ void main() {
           true,
         );
 
-        String commentedAudioTitleToDelete =
-            "Les besoins artificiels par R.Keucheyan";
+        String importedCommentedAudioTitleToDelete =
+            "DETTE PUBLIQUE - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES";
 
         // First, find the Audio sublist ListTile Text widget
         final Finder commentedAudioTitleToDeleteListTileTextWidgetFinder =
-            find.text(commentedAudioTitleToDelete);
+            find.text(importedCommentedAudioTitleToDelete);
 
         // Then obtain the Audio ListTile widget enclosing the Text widget by
         // finding its ancestor
@@ -13016,20 +13015,7 @@ void main() {
         await IntegrationTestUtil.verifyConfirmActionDialog(
           tester: tester,
           confirmActionDialogTitle:
-              'Confirm deletion of the audio "$commentedAudioTitleToDelete" from the Youtube playlist',
-          confirmActionDialogMessagePossibleLst: [
-            'Delete the audio "$commentedAudioTitleToDelete" from the playlist "$youtubePlaylistTitle" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on "Cancel" and choose "Delete Audio ..." instead of "Delete Audio from Playlist as well ...". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.',
-          ],
-          closeDialogWithConfirmButton: true,
-          usePumpAndSettle: true,
-        );
-
-        // Now verifying the confirm action dialog title and message
-        // and confirm the deletion
-        await IntegrationTestUtil.verifyConfirmActionDialog(
-          tester: tester,
-          confirmActionDialogTitle:
-              'Confirm deletion of the commented audio "$commentedAudioTitleToDelete"',
+              'Confirm deletion of the commented audio "$importedCommentedAudioTitleToDelete"',
           confirmActionDialogMessagePossibleLst: [
             'The audio contains 1 comment(s) which will be deleted as well. Confirm deletion ?',
           ],
@@ -13037,30 +13023,11 @@ void main() {
           usePumpAndSettle: true,
         );
 
-        // Now verifying the warning dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-          tester: tester,
-          warningDialogMessage:
-              'If the deleted audio "$commentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" playlist located on Youtube, it will be downloaded again the next time you download the playlist !',
-          isWarningConfirming: false,
-        );
-
-        // Verify that the applyed Sort/Filter parms name is displayed
-        // after the selected playlist title
-
-        Text selectedSortFilterParmsName = tester
-            .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
-
-        expect(
-          selectedSortFilterParmsName.data,
-          defaultSortFilterParmName,
-        );
-
         // Verify that the audio file was deleted
 
         listMp3FileNames = DirUtil.listFileNamesInDir(
           directoryPath:
-              "$kApplicationPathWindowsTest${path.separator}S8 audio",
+              youtubePlaylistDirectoryPath,
           fileExtension: 'mp3',
         );
 
@@ -13073,7 +13040,7 @@ void main() {
 
         listCommentJsonFileNames = DirUtil.listFileNamesInDir(
           directoryPath:
-              "$kApplicationPathWindowsTest${path.separator}S8 audio${path.separator}$kCommentDirName",
+              "$youtubePlaylistDirectoryPath${path.separator}$kCommentDirName",
           fileExtension: 'json',
         );
 
@@ -13082,18 +13049,19 @@ void main() {
           false,
         );
 
-        // Verify the 'S8 audio' playlist json file
+        // Verify the 'urgent_actus_17-12-2023' playlist json file
 
-        Playlist loadedPlaylist = _loadPlaylist(youtubePlaylistTitle);
+        Playlist loadedPlaylist = _loadPlaylistFromPlaylistsDir(youtubePlaylistTitle);
 
-        expect(loadedPlaylist.downloadedAudioLst.length, 17);
+        expect(loadedPlaylist.downloadedAudioLst.length, 4);
+        expect(loadedPlaylist.playableAudioLst.length, 4);
 
         List<String> downloadedAudioLst = loadedPlaylist.downloadedAudioLst
             .map((Audio audio) => audio.validVideoTitle)
             .toList();
 
         expect(
-          downloadedAudioLst.contains(commentedAudioTitleToDelete),
+          downloadedAudioLst.contains(importedCommentedAudioTitleToDelete),
           false,
         );
 
@@ -13102,15 +13070,15 @@ void main() {
             .toList();
 
         expect(
-          playableAudioLst.contains(commentedAudioTitleToDelete),
+          playableAudioLst.contains(importedCommentedAudioTitleToDelete),
           false,
         );
 
         // Setting to this variables the currently selected audio title/subTitle
         // of the 'S8 audio' playlist
-        String currentAudioTitle = "La résilience insulaire par Fiona Roche";
+        String currentAudioTitle = "L’uniforme arrive en France en 2024";
         String currentAudioSubTitle =
-            "0:13:35.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
+            "0:00:22.9 183 KB at 127 KB/sec on 12/08/2025 at 16:29";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -13127,8 +13095,8 @@ void main() {
         );
       });
     });
-    group('In audio player view, delete unique audio test', () {
-      testWidgets('''Delete unique audio mp3 only.''',
+    group('In audio player view, delete one audio test', () {
+      testWidgets('''Delete one audio mp3 only.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
@@ -13307,7 +13275,7 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
-      testWidgets('''On no selected playlist, delete unique audio mp3 only.''',
+      testWidgets('''On no selected playlist, delete one audio mp3 only.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
@@ -13659,7 +13627,7 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
-      testWidgets('''From playlist as well, delete unique audio mp3.''',
+      testWidgets('''From playlist as well, delete one audio mp3.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
@@ -20797,6 +20765,13 @@ Playlist _loadPlaylist(String playListOneName) {
   return JsonDataService.loadFromFile(
       jsonPathFileName:
           "$kApplicationPathWindowsTest${path.separator}$playListOneName${path.separator}$playListOneName.json",
+      type: Playlist);
+}
+
+Playlist _loadPlaylistFromPlaylistsDir(String playListOneName) {
+  return JsonDataService.loadFromFile(
+      jsonPathFileName:
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$playListOneName${path.separator}$playListOneName.json",
       type: Playlist);
 }
 
