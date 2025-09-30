@@ -11681,8 +11681,7 @@ void main() {
           );
         });
       });
-      group(
-          '''From playlist as well. Using SF parms, delete one audio test from
+      group('''From playlist as well. Using SF parms, delete one audio test from
              playlist as well''', () {
         testWidgets(
             '''SF parms 'default' is applied. Then, click on the menu icon of the
@@ -12776,8 +12775,7 @@ void main() {
             rootPath: kApplicationPathWindowsTest,
           );
         });
-        testWidgets(
-            '''Delete one audio from playlist as well and then switch to
+        testWidgets('''Delete one audio from playlist as well and then switch to
            AudioPlayerView screen.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
@@ -12928,9 +12926,10 @@ void main() {
           '''Delete imported commented audio from Youtube playlist. Click on the menu icon
            of the imported and commented audio "DETTE PUBLIQUE - LA RÉALITÉ DERRIÈRE LES
            DISCOURS CATASTROPHISTES" and select 'Delete Audio from Playlist as well ...'.
-           Verify the displayed warning. Then click on the 'Confirm' button. Verify the
-           suppression of the audio mp3 file as well as its comment file. Verify also the
-           updated playlist downloaded and playable audio list.''', (WidgetTester tester) async {
+           Verify the displayed confirmation dialog. Then click on the 'Confirm' button. Verify
+           the suppression of the audio mp3 file as well as its comment file. Verify also the
+           updated playlist downloaded and playable audio list.''',
+          (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'import_audios_integr_test',
@@ -12944,11 +12943,11 @@ void main() {
         const String audioFileNameToDelete =
             "250812-162933-DETTE PUBLIQUE - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3";
 
-        final String youtubePlaylistDirectoryPath = "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023";
+        final String youtubePlaylistDirectoryPath =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023";
 
         List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
-          directoryPath:
-              youtubePlaylistDirectoryPath,
+          directoryPath: youtubePlaylistDirectoryPath,
           fileExtension: 'mp3',
         );
 
@@ -13026,8 +13025,7 @@ void main() {
         // Verify that the audio file was deleted
 
         listMp3FileNames = DirUtil.listFileNamesInDir(
-          directoryPath:
-              youtubePlaylistDirectoryPath,
+          directoryPath: youtubePlaylistDirectoryPath,
           fileExtension: 'mp3',
         );
 
@@ -13038,7 +13036,7 @@ void main() {
 
         // Verify that the audio comment file was deleted as well
 
-        List<String> listCommentedFileNames  = DirUtil.listFileNamesInDir(
+        List<String> listCommentedFileNames = DirUtil.listFileNamesInDir(
           directoryPath:
               '$youtubePlaylistDirectoryPath${path.separator}$kCommentDirName',
           fileExtension: 'json',
@@ -13064,7 +13062,8 @@ void main() {
 
         // Verify the 'urgent_actus_17-12-2023' playlist json file
 
-        Playlist loadedPlaylist = _loadPlaylistFromPlaylistsDir(youtubePlaylistTitle);
+        Playlist loadedPlaylist =
+            _loadPlaylistFromPlaylistsDir(youtubePlaylistTitle);
 
         expect(loadedPlaylist.downloadedAudioLst.length, 4);
         expect(loadedPlaylist.playableAudioLst.length, 4);
@@ -13084,6 +13083,164 @@ void main() {
 
         expect(
           playableAudioLst.contains(importedCommentedAudioTitleToDelete),
+          false,
+        );
+
+        // Setting to this variables the currently selected audio title/subTitle
+        // of the 'S8 audio' playlist
+        String currentAudioTitle = "L’uniforme arrive en France en 2024";
+        String currentAudioSubTitle =
+            "0:00:22.9 183 KB at 127 KB/sec on 12/08/2025 at 16:29";
+
+        // Verify that the current audio is displayed with the correct
+        // title and subtitle color
+        await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
+          tester: tester,
+          currentAudioTitle: currentAudioTitle,
+          currentAudioSubTitle: currentAudioSubTitle,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Delete imported uncommented audio from Youtube playlist. First, delete the
+           DETTE PUBLIQUE - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES.json file.
+           Then click on the menu icon of the imported and uncommented audio "DETTE PUBLIQUE
+           - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES" and select 'Delete Audio from
+           Playlist as well ...'. Verify that the confirmation dialog is not displayed. Then
+           verify the suppression of the audio mp3 file. Verify also the updated playlist
+           downloaded and playable audio list.''', (WidgetTester tester) async {
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'import_audios_integr_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        const String youtubePlaylistTitle = 'urgent_actus_17-12-2023';
+
+        // Verify the presence of the audio file which will be later deleted
+
+        const String audioFileNameToDelete =
+            "250812-162933-DETTE PUBLIQUE - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3";
+
+        final String youtubePlaylistDirectoryPath =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023";
+
+        List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
+          directoryPath: youtubePlaylistDirectoryPath,
+          fileExtension: 'mp3',
+        );
+
+        expect(
+          listMp3FileNames.contains(audioFileNameToDelete),
+          true,
+        );
+
+        // Now delete the audio comment file so that deleting this imported
+        // uncommented audio is tested
+
+        const String audioCommentFileNameToDelete =
+            "250812-162933-DETTE PUBLIQUE - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.json";
+
+        DirUtil.deleteFileIfExist(
+          pathFileName:
+              "$youtubePlaylistDirectoryPath${path.separator}$kCommentDirName${path.separator}$audioCommentFileNameToDelete",
+        );
+
+        String importedUncommentedAudioTitleToDelete =
+            "DETTE PUBLIQUE - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES";
+
+        // First, find the Audio sublist ListTile Text widget
+        final Finder
+            importedUncommentedAudioTitleToDeleteListTileTextWidgetFinder =
+            find.text(importedUncommentedAudioTitleToDelete);
+
+        // Then obtain the Audio ListTile widget enclosing the Text widget by
+        // finding its ancestor
+        final Finder importedUncommentedAudioTitleToDeleteListTileWidgetFinder =
+            find.ancestor(
+          of: importedUncommentedAudioTitleToDeleteListTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now find the leading menu icon button of the Audio ListTile
+        // and tap on it
+        final Finder
+            importedUncommentedAudioTitleToDeleteListTileLeadingMenuIconButton =
+            find.descendant(
+          of: importedUncommentedAudioTitleToDeleteListTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(
+            importedUncommentedAudioTitleToDeleteListTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
+
+        // Now find the delete audio from playlist as well popup menu item
+        // and tap on it
+        final Finder popupCopyMenuItem = find
+            .byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
+
+        await tester.tap(popupCopyMenuItem);
+        await tester.pumpAndSettle();
+
+        // Now verifying that the confirm action dialog is not displayed
+        Finder confirmActionDialogFinder = find.byType(ConfirmActionDialog);
+        expect(confirmActionDialogFinder, findsNothing);
+
+        // Verify that the audio file was deleted
+
+        listMp3FileNames = DirUtil.listFileNamesInDir(
+          directoryPath: youtubePlaylistDirectoryPath,
+          fileExtension: 'mp3',
+        );
+
+        expect(
+          listMp3FileNames.contains(audioFileNameToDelete),
+          false,
+        );
+
+        // Verify that the audio comment file was deleted as well
+
+        List<String> listCommentedFileNames = DirUtil.listFileNamesInDir(
+          directoryPath:
+              '$youtubePlaylistDirectoryPath${path.separator}$kCommentDirName',
+          fileExtension: 'json',
+        );
+
+        expect(
+          listCommentedFileNames.contains(audioCommentFileNameToDelete),
+          false,
+        );
+
+        // Verify the 'urgent_actus_17-12-2023' playlist json file
+
+        Playlist loadedPlaylist =
+            _loadPlaylistFromPlaylistsDir(youtubePlaylistTitle);
+
+        expect(loadedPlaylist.downloadedAudioLst.length, 4);
+        expect(loadedPlaylist.playableAudioLst.length, 4);
+
+        List<String> downloadedAudioLst = loadedPlaylist.downloadedAudioLst
+            .map((Audio audio) => audio.validVideoTitle)
+            .toList();
+
+        expect(
+          downloadedAudioLst.contains(importedUncommentedAudioTitleToDelete),
+          false,
+        );
+
+        List<String> playableAudioLst = loadedPlaylist.playableAudioLst
+            .map((Audio audio) => audio.validVideoTitle)
+            .toList();
+
+        expect(
+          playableAudioLst.contains(importedUncommentedAudioTitleToDelete),
           false,
         );
 
