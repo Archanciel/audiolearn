@@ -31474,9 +31474,9 @@ void main() {
   });
   group('''Import audio's functionality.''', () {
     testWidgets(
-        '''Importing one audio test. Verify conversion warning. Then reimporting it and verify
-          the not imported warning. Normally, the imported audio's are not located in a playlist
-          directory !''', (WidgetTester tester) async {
+        '''Importing one text to speech audio test. Verify conversion warning. Then reimporting
+          it and verify the not imported warning. Normally, the imported audio's are not located
+          in a playlist directory !''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -31509,6 +31509,8 @@ void main() {
             size: 155136),
       ]);
 
+      DateTime importDateTime = DateTime.now();
+
       await IntegrationTestUtil.typeOnPlaylistMenuItem(
         tester: tester,
         playlistTitle: localPlaylistTitle,
@@ -31535,16 +31537,21 @@ void main() {
             "Audio(s)\n\n\"$fileName_5\"\n\nNOT imported to local playlist \"$localPlaylistTitle\" since the playlist directory already contains the audio(s).",
       );
 
+      // Select the local playlist to verify that the imported audio is present
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: localPlaylistTitle,
+      );
+
       // Verifying all audio info dialog fields related of the imported audio
-      // type
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioType: AudioType.imported,
         validVideoTitleOrAudioTitle: fileNameNoExt,
         audioDownloadDateTime:
-            '25/08/2025 17:53', // this is the imported date time
+            '${DateFormat('dd/MM/yyyy').format(importDateTime)} ${DateFormat('HH:mm').format(importDateTime)}', // this is the imported date time
         isAudioPlayable: true,
-        audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
+        audioEnclosingPlaylistTitle: localPlaylistTitle,
         audioDuration: '0:00:19.3',
         audioPosition: '0:00:00',
         audioState: 'Not listened',
@@ -31554,7 +31561,7 @@ void main() {
         isMusicQuality: false, // Is spoken quality
         audioPlaySpeed: '1.25',
         audioVolume: '50.0 %',
-        audioCommentNumber: 1,
+        audioCommentNumber: 0,
       );
 
       // Verify the imported audio sub title in the selected Youtube
@@ -31562,9 +31569,9 @@ void main() {
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
         tester: tester,
         audioSubTitlesOrderLst: [
-          '0:00:19.3 155 KB imported on 25/08/2025 at 17:53',
+          '0:00:19.3 155 KB imported on ${DateFormat('dd/MM/yyyy').format(importDateTime)} at ${DateFormat('HH:mm').format(importDateTime)}', // this is the imported date time
         ],
-        firstAudioListTileIndex: 3,
+        firstAudioListTileIndex: 2,
       );
 
       // Purge the test playlist directory so that the created test
@@ -31575,8 +31582,8 @@ void main() {
     });
     testWidgets(
         '''2 audio's present in the source playlist exist in the playlist which will import
-          all audio's of the source playlist. This situation will display 2 warnings, one
-          audio import confirmation and one already existing audio's not imported warning.
+          all audio's of the source playlist. This situation will display 2 warnings, a
+          audio import confirmation and a already existing audio's not imported warning.
           Normally, the imported audio's are not located in a playlist !''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the

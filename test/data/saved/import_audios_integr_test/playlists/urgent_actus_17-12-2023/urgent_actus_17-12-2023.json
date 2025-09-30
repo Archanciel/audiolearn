@@ -109,7 +109,7 @@
             "audioPositionSeconds": 0,
             "audioFileName": "aaa.mp3",
             "audioFileSize": 175296,
-            "audioType": "imported"
+            "audioType": "textToSpeech"
         },
         {
             "youtubeVideoChannel": "",
@@ -135,7 +135,7 @@
             "audioPositionSeconds": 0,
             "audioFileName": "bbb.mp3",
             "audioFileSize": 155136,
-            "audioType": "imported"
+            "audioType": "textToSpeech"
         }
     ],
     "playableAudioLst": [
@@ -163,7 +163,7 @@
             "audioPositionSeconds": 0,
             "audioFileName": "bbb.mp3",
             "audioFileSize": 155136,
-            "audioType": "imported"
+            "audioType": "textToSpeech"
         },
         {
             "youtubeVideoChannel": "",
@@ -189,7 +189,7 @@
             "audioPositionSeconds": 0,
             "audioFileName": "aaa.mp3",
             "audioFileSize": 175296,
-            "audioType": "imported"
+            "audioType": "textToSpeech"
         },
         {
             "youtubeVideoChannel": "",
