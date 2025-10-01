@@ -10917,7 +10917,7 @@ void main() {
   });
   group('Delete audio test', () {
     group('In playlist download view', () {
-      group('Using SF parms, delete one audio test', () {
+      group('Using SF parms, delete an audio test', () {
         testWidgets(
             '''SF parms 'default' is applied. Then, click on the menu icon of the
            commented audio "Les besoins artificiels par R.Keucheyan" and select
@@ -11681,7 +11681,7 @@ void main() {
           );
         });
       });
-      group('''From playlist as well. Using SF parms, delete one audio test from
+      group('''From playlist as well. Using SF parms, delete an audio test from
              playlist as well''', () {
         testWidgets(
             '''SF parms 'default' is applied. Then, click on the menu icon of the
@@ -12609,9 +12609,9 @@ void main() {
           );
         });
       });
-      group('In playlist download view, delete one audio test', () {
+      group('In playlist download view, delete an audio test', () {
         testWidgets(
-            '''Delete one audio mp3 only and then switch to AudioPlayerView
+            '''Delete an audio mp3 only and then switch to AudioPlayerView
            screen.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
@@ -12775,7 +12775,7 @@ void main() {
             rootPath: kApplicationPathWindowsTest,
           );
         });
-        testWidgets('''Delete one audio from playlist as well and then switch to
+        testWidgets('''Delete an audio from playlist as well and then switch to
            AudioPlayerView screen.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
@@ -13607,7 +13607,7 @@ void main() {
         );
       });
     });
-    group('In audio player view, delete one audio test', () {
+    group('In audio player view, delete an audio test', () {
       testWidgets('''Delete one audio mp3 only.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
@@ -13787,7 +13787,7 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
-      testWidgets('''On no selected playlist, delete one audio mp3 only.''',
+      testWidgets('''On no selected playlist, delete an audio mp3 only.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
@@ -14139,7 +14139,7 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
-      testWidgets('''From playlist as well, delete one audio mp3.''',
+      testWidgets('''From playlist as well, delete an audio mp3.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
