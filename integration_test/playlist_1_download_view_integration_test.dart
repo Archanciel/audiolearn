@@ -11681,8 +11681,9 @@ void main() {
           );
         });
       });
-      group('''From playlist as well. Using SF parms, delete an audio test from
-             playlist as well''', () {
+      group(
+          '''From playlist as well. Using SF parms, delete an audio from playlist
+             as well test''', () {
         testWidgets(
             '''SF parms 'default' is applied. Then, click on the menu icon of the
            commented audio "Les besoins artificiels par R.Keucheyan" and select
@@ -13809,12 +13810,6 @@ void main() {
           true,
         );
 
-        // Verify the presence of the audio comment files which will be later
-        // deleted
-
-        const String audioCommentFileNameToDelete =
-            "250812-162933-DETTE PUBLIQUE - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.json";
-
         String importedCommentedAudioTitleToDelete =
             "DETTE PUBLIQUE - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES";
 
@@ -14165,7 +14160,8 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
-      testWidgets('''On playlist with no selected audio, delete an audio after its selection.''',
+      testWidgets(
+          '''On playlist with no selected audio, delete an audio after its selection.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
@@ -14522,7 +14518,7 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
-      testWidgets('''From playlist as well, delete an audio in local playlist.''',
+      testWidgets('''From local playlist as well, delete an audio.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
@@ -14672,6 +14668,113 @@ void main() {
           playlistTitlesOrderedLst: playlistsTitles,
           audioTitlesOrderedLst: audioTitles,
         );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''From Youtube playlist as well, delete the commented audio "Les besoins artificiels
+              par R.Keucheyan". Verify the displayed warning. Then click on the 'Confirm' button.
+              Verify the suppression of the audio
+              mp3 file as well as its comment file. Verify also the updated playlist
+              playable audio list.''', (WidgetTester tester) async {
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'delete_filtered_audio_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        const String youtubePlaylistTitle = 'S8 audio';
+
+        String commentedAudioTitleToDelete =
+            "Les besoins artificiels par R.Keucheyan";
+
+        // First, find the Audio sublist ListTile Text widget
+        final Finder commentedAudioTitleToDeleteListTileTextWidgetFinder =
+            find.text(commentedAudioTitleToDelete);
+
+        // Type on the audio title to open the audio player view
+        await tester.tap(commentedAudioTitleToDeleteListTileTextWidgetFinder);
+        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+          tester: tester,
+        );
+
+        // Tap on the Audio Player View appbar menu and then on 'Delete audio
+        // from Playlist as well ...' menu item
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'popup_menu_delete_audio_from_playlist_aswell',
+        );
+
+        // Now verifying the confirm action dialog title and message
+        // and confirm the deletion
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmActionDialogTitle:
+              'Confirm deletion of the audio "$commentedAudioTitleToDelete" from the Youtube playlist',
+          confirmActionDialogMessagePossibleLst: [
+            'Delete the audio "$commentedAudioTitleToDelete" from the playlist "$youtubePlaylistTitle" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on "Cancel" and choose "Delete Audio ..." instead of "Delete Audio from Playlist as well ...". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.',
+          ],
+          closeDialogWithConfirmButton: true,
+          usePumpAndSettle: true,
+        );
+
+        // Now verifying the confirm action dialog title and message
+        // and confirm the deletion
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmActionDialogTitle:
+              'Confirm deletion of the commented audio "$commentedAudioTitleToDelete"',
+          confirmActionDialogMessagePossibleLst: [
+            'The audio contains 1 comment(s) which will be deleted as well. Confirm deletion ?',
+          ],
+          closeDialogWithConfirmButton: true,
+          usePumpAndSettle: true,
+        );
+
+        // Now verifying the warning dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              'If the deleted audio "$commentedAudioTitleToDelete" remains in the "$youtubePlaylistTitle" playlist located on Youtube, it will be downloaded again the next time you download the playlist !',
+          isWarningConfirming: false,
+        );
+
+        // Verify the 'S8 audio' playlist json file
+
+        Playlist loadedPlaylist = _loadPlaylist(youtubePlaylistTitle);
+
+        expect(loadedPlaylist.downloadedAudioLst.length, 17);
+
+        List<String> downloadedAudioLst = loadedPlaylist.downloadedAudioLst
+            .map((Audio audio) => audio.validVideoTitle)
+            .toList();
+
+        expect(
+          downloadedAudioLst.contains(commentedAudioTitleToDelete),
+          false,
+        );
+
+        List<String> playableAudioLst = loadedPlaylist.playableAudioLst
+            .map((Audio audio) => audio.validVideoTitle)
+            .toList();
+
+        expect(
+          playableAudioLst.contains(commentedAudioTitleToDelete),
+          false,
+        );
+
+        // Setting to this variables the currently selected audio title
+        // in the audio player view
+        String currentAudioTitleWithDuration =
+            "La résilience insulaire par Fiona Roche\n13:35";
+
+        // Verify that the current audio is displayed with the correct
+        // title with duration
+        expect(find.text(currentAudioTitleWithDuration), findsOneWidget);
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
