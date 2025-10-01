@@ -4040,6 +4040,9 @@ class IntegrationTestUtil {
     }
   }
 
+  /// if {closeDialogWithConfirmButton} is true, the confirm button of the confirm action
+  /// dialog is tapped to close the dialog. If false, the cancel button is tapped to close
+  /// the dialog.
   static Future<void> verifyConfirmActionDialog({
     required WidgetTester tester,
     required String confirmActionDialogTitle,
