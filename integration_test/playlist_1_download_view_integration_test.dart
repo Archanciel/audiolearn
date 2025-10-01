@@ -14870,6 +14870,102 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
+      testWidgets(
+          '''From Youtube playlist as well, delete the converted and commented audio "aaa".
+           Verify the displayed confirmation dialog. Then click on the 'Confirm' button. Verify
+           the suppression of the audio mp3 file as well as its comment file. Verify the updated
+           playlist downloaded and playable audio list. Verify also the new current audio title
+           with duration displayed in the playable audio list.''', 
+          (WidgetTester tester) async {
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'import_audios_integr_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        const String youtubePlaylistTitle = 'urgent_actus_17-12-2023';
+
+        // Drag up to make sure that the audio to delete is visible
+        // Find the audio list widget using its key
+        final Finder listFinder = find.byKey(const Key('audio_list'));
+
+        // Perform the scroll action
+        await tester.drag(listFinder, const Offset(0, 100));
+        await tester.pumpAndSettle();
+
+        String convertedCommentedAudioTitleToDelete =
+            "aaa";
+
+        // First, find the Audio sublist ListTile Text widget
+        final Finder convertedCommentedAudioTitleToDeleteListTileTextWidgetFinder =
+            find.text(convertedCommentedAudioTitleToDelete);
+
+        // Type on the audio title to open the audio player view
+        await tester.tap(convertedCommentedAudioTitleToDeleteListTileTextWidgetFinder);
+        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+          tester: tester,
+        );
+
+        // Tap on the Audio Player View appbar menu and then on 'Delete audio
+        // from Playlist as well ...' menu item
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'popup_menu_delete_audio_from_playlist_aswell',
+        );
+
+        // Now verifying the confirm action dialog title and message
+        // and confirm the deletion
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmActionDialogTitle:
+              'Confirm deletion of the commented audio "$convertedCommentedAudioTitleToDelete"',
+          confirmActionDialogMessagePossibleLst: [
+            'The audio contains 1 comment(s) which will be deleted as well. Confirm deletion ?',
+          ],
+          closeDialogWithConfirmButton: true,
+          usePumpAndSettle: true,
+        );
+
+        // Verify the 'urgent_actus_17-12-2023' playlist json file
+
+        Playlist loadedPlaylist =
+            _loadPlaylistFromPlaylistsDir(youtubePlaylistTitle);
+
+        expect(loadedPlaylist.downloadedAudioLst.length, 4);
+        expect(loadedPlaylist.playableAudioLst.length, 4);
+
+        List<String> downloadedAudioLst = loadedPlaylist.downloadedAudioLst
+            .map((Audio audio) => audio.validVideoTitle)
+            .toList();
+
+        expect(
+          downloadedAudioLst.contains(convertedCommentedAudioTitleToDelete),
+          false,
+        );
+
+        List<String> playableAudioLst = loadedPlaylist.playableAudioLst
+            .map((Audio audio) => audio.validVideoTitle)
+            .toList();
+
+        expect(
+          playableAudioLst.contains(convertedCommentedAudioTitleToDelete),
+          false,
+        );
+
+        // Setting to this variables the currently selected audio title/subTitle
+        // of the 'S8 audio' playlist
+        String noAudioSelectedTitle = "No audio selected";
+
+        // Verify that the current audio is displayed with the correct
+        // title with duration
+        expect(find.text(noAudioSelectedTitle), findsOneWidget);
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
     });
   });
   group('Bug fix tests', () {
