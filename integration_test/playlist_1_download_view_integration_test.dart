@@ -12611,7 +12611,7 @@ void main() {
       });
       group('In playlist download view, delete an audio test', () {
         testWidgets(
-            '''Delete an audio mp3 only and then switch to AudioPlayerView
+            '''Delete an audio only and then switch to AudioPlayerView
            screen.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
@@ -13988,7 +13988,7 @@ void main() {
       });
     });
     group('In audio player view, delete an audio test', () {
-      testWidgets('''Delete one audio mp3 only.''',
+      testWidgets('''Delete an audio.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
@@ -14350,7 +14350,7 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
-      testWidgets('''Delete unique playing audio mp3 only.''',
+      testWidgets('''Delete unique playing audio only.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
@@ -14519,7 +14519,7 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
-      testWidgets('''From playlist as well, delete an audio mp3.''',
+      testWidgets('''From playlist as well, delete an audio.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
