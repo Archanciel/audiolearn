@@ -2400,10 +2400,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get playlistsSaveExplanation =>
-      'En cochant la case \"Ajouter toutes les photos JPG au ZIP\", toutes les photos audio de l\'application seront ajoutées au fichier ZIP créé. Cela n\'est utile que si le fichier ZIP doit servir à restaurer une autre application.';
+      'En cochant la case \"Ajouter toutes les photos JPG\", toutes les photos audio de l\'application seront ajoutées au fichier ZIP créé. Cela n\'est utile que si le fichier ZIP doit servir à restaurer une autre application.';
 
   @override
-  String get addPictureJpgFilesToZip => 'Ajouter toutes les photos JPG au ZIP';
+  String get addPictureJpgFilesToZip => 'Ajouter toutes les photos JPG';
 
   @override
   String confirmAudioFromPlaylistDeletionTitle(Object audioTitle) {
