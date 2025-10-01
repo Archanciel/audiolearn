@@ -12610,8 +12610,7 @@ void main() {
         });
       });
       group('In playlist download view, delete an audio test', () {
-        testWidgets(
-            '''Delete an audio only and then switch to AudioPlayerView
+        testWidgets('''Delete an audio only and then switch to AudioPlayerView
            screen.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
@@ -13988,8 +13987,7 @@ void main() {
       });
     });
     group('In audio player view, delete an audio test', () {
-      testWidgets('''Delete an audio.''',
-          (WidgetTester tester) async {
+      testWidgets('''Delete an audio.''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -14167,7 +14165,7 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
-      testWidgets('''On no selected playlist, delete an audio mp3 only.''',
+      testWidgets('''On playlist with no selected audio, delete an audio after its selection.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
@@ -14206,7 +14204,7 @@ void main() {
         await tester.tap(find.byKey(const Key('playlist_toggle_button')));
         await tester.pumpAndSettle();
 
-        // Select the no selected playlist containing the unique audio
+        // Select the not selected local playlist containing the unique audio
         // to delete
 
         await IntegrationTestUtil.selectPlaylist(
@@ -14222,8 +14220,13 @@ void main() {
         await tester.tap(appScreenNavigationButton);
         await tester.pumpAndSettle();
 
+        // Tap the appbar leading popup menu button. Nothing is
+        // displayed since no audio is selected
+        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+        await tester.pumpAndSettle();
+
         // Since no audio is selected, verify that the left appbar
-        // menu is not displayed
+        // menu is not displayable
 
         Finder popupDeleteMenuItem =
             find.byKey(const Key("popup_menu_delete_audio"));
@@ -14242,8 +14245,8 @@ void main() {
           audioToSelectTitle: uniqueAudioToDeleteTitle,
         );
 
-        // Tap on the Audio Player View appbar menu and then on 'Delete audio ...'
-        // menu item
+        // Tap on the Audio Player View appbar menu and then on
+        // 'Delete audio ...' menu item
         await IntegrationTestUtil.typeOnAppbarMenuItem(
           tester: tester,
           appbarMenuKeyStr: 'popup_menu_delete_audio',
@@ -14413,8 +14416,8 @@ void main() {
         await Future.delayed(const Duration(seconds: 5));
         await tester.pumpAndSettle();
 
-        // Tap on the Audio Player View appbar menu and then on 'Delete audio ...'
-        // menu item
+        // Tap on the Audio Player View appbar menu and then on
+        // 'Delete audio ...' menu item
         await IntegrationTestUtil.typeOnAppbarMenuItem(
           tester: tester,
           appbarMenuKeyStr: 'popup_menu_delete_audio',
@@ -14519,7 +14522,7 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
-      testWidgets('''From playlist as well, delete an audio.''',
+      testWidgets('''From playlist as well, delete an audio in local playlist.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
