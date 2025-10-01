@@ -512,10 +512,6 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
   }) {
     return Consumer<ThemeProviderVM>(
       builder: (context, themeProviderVM, child) {
-        _audioPlaySpeed =
-            audioPlayerVMlistenFalse.currentAudio?.audioPlaySpeed ??
-                _audioPlaySpeed;
-
         return ValueListenableBuilder<double>(
           valueListenable:
               audioPlayerVMlistenFalse.currentAudioPlayVolumeNotifier,
