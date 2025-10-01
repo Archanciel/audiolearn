@@ -14676,11 +14676,11 @@ void main() {
         );
       });
       testWidgets(
-          '''From Youtube playlist as well, delete the commented audio "Les besoins artificiels
-              par R.Keucheyan". Verify the displayed warning. Then click on the 'Confirm' button.
-              Verify the suppression of the audio
-              mp3 file as well as its comment file. Verify also the updated playlist
-              playable audio list.''', (WidgetTester tester) async {
+          '''From Youtube playlist as well, delete the downloaded and commented audio "Les besoins
+            artificiels par R.Keucheyan". Verify the displayed confirm action dialogs, clicking on the
+            'Confirm' button. Verify as well the final warning. Then verify the suppression of the audio
+            mp3 file as well as its comment file. Verify also the new current audio title with duration
+            displayed in the playable audio list.''', (WidgetTester tester) async {
         await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
           savedTestDataDirName: 'delete_filtered_audio_test',
