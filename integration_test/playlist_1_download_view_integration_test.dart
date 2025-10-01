@@ -13269,8 +13269,7 @@ void main() {
 
         // Verify the presence of the audio file which will be later deleted
 
-        const String audioFileNameToDelete =
-            "aaa.mp3";
+        const String audioFileNameToDelete = "aaa.mp3";
 
         final String youtubePlaylistDirectoryPath =
             "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle";
@@ -13288,8 +13287,7 @@ void main() {
         // Verify the presence of the audio comment files which will be later
         // deleted
 
-        const String audioCommentFileNameToDelete =
-            "aaa.json";
+        const String audioCommentFileNameToDelete = "aaa.json";
 
         List<String> listCommentJsonFileNames = DirUtil.listFileNamesInDir(
           directoryPath:
@@ -13310,11 +13308,11 @@ void main() {
         await tester.drag(listFinder, const Offset(0, 100));
         await tester.pumpAndSettle();
 
-        String convertedCommentedAudioTitleToDelete =
-            "aaa";
+        String convertedCommentedAudioTitleToDelete = "aaa";
 
         // First, find the Audio sublist ListTile Text widget
-        final Finder convertedCommentedAudioTitleToDeleteListTileTextWidgetFinder =
+        final Finder
+            convertedCommentedAudioTitleToDeleteListTileTextWidgetFinder =
             find.text(convertedCommentedAudioTitleToDelete);
 
         // Then obtain the Audio ListTile widget enclosing the Text widget by
@@ -13324,18 +13322,19 @@ void main() {
           of: convertedCommentedAudioTitleToDeleteListTileTextWidgetFinder,
           matching: find.byType(ListTile),
         );
-        
+
         // Now find the leading menu icon button of the Audio ListTile
         // and tap on it
-        final Finder convertedCommentedAudioTitleToDeleteListTileLeadingMenuIconButton =
+        final Finder
+            convertedCommentedAudioTitleToDeleteListTileLeadingMenuIconButton =
             find.descendant(
           of: convertedCommentedAudioTitleToDeleteListTileWidgetFinder,
           matching: find.byIcon(Icons.menu),
         );
 
         // Tap the leading menu icon button to open the popup menu
-        await tester
-            .tap(convertedCommentedAudioTitleToDeleteListTileLeadingMenuIconButton);
+        await tester.tap(
+            convertedCommentedAudioTitleToDeleteListTileLeadingMenuIconButton);
         await tester.pumpAndSettle();
 
         // Now find the delete audio from playlist as well popup menu item
@@ -13460,8 +13459,7 @@ void main() {
 
         // Verify the presence of the audio file which will be later deleted
 
-        const String audioFileNameToDelete =
-            "aaa.mp3";
+        const String audioFileNameToDelete = "aaa.mp3";
 
         final String youtubePlaylistDirectoryPath =
             "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle";
@@ -13479,8 +13477,7 @@ void main() {
         // Now delete the audio comment file so that deleting this imported
         // uncommented audio is tested
 
-        const String audioCommentFileNameToDelete =
-            "aaa.json";
+        const String audioCommentFileNameToDelete = "aaa.json";
 
         DirUtil.deleteFileIfExist(
           pathFileName:
@@ -13495,32 +13492,34 @@ void main() {
         await tester.drag(listFinder, const Offset(0, 100));
         await tester.pumpAndSettle();
 
-        String convertedUncommentedAudioTitleToDelete =
-            "aaa";
+        String convertedUncommentedAudioTitleToDelete = "aaa";
 
         // First, find the Audio sublist ListTile Text widget
-        final Finder convertedUncommentedAudioTitleToDeleteListTileTextWidgetFinder =
+        final Finder
+            convertedUncommentedAudioTitleToDeleteListTileTextWidgetFinder =
             find.text(convertedUncommentedAudioTitleToDelete);
 
         // Then obtain the Audio ListTile widget enclosing the Text widget by
         // finding its ancestor
-        final Finder convertedUncommentedAudioTitleToDeleteListTileWidgetFinder =
+        final Finder
+            convertedUncommentedAudioTitleToDeleteListTileWidgetFinder =
             find.ancestor(
           of: convertedUncommentedAudioTitleToDeleteListTileTextWidgetFinder,
           matching: find.byType(ListTile),
         );
-        
+
         // Now find the leading menu icon button of the Audio ListTile
         // and tap on it
-        final Finder convertedUncommentedAudioTitleToDeleteListTileLeadingMenuIconButton =
+        final Finder
+            convertedUncommentedAudioTitleToDeleteListTileLeadingMenuIconButton =
             find.descendant(
           of: convertedUncommentedAudioTitleToDeleteListTileWidgetFinder,
           matching: find.byIcon(Icons.menu),
         );
 
         // Tap the leading menu icon button to open the popup menu
-        await tester
-            .tap(convertedUncommentedAudioTitleToDeleteListTileLeadingMenuIconButton);
+        await tester.tap(
+            convertedUncommentedAudioTitleToDeleteListTileLeadingMenuIconButton);
         await tester.pumpAndSettle();
 
         // Now find the delete audio from playlist as well popup menu item
@@ -13606,6 +13605,92 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
+    });
+    testWidgets(
+        '''Cancel delete downloaded uncommented audio from Youtube playlist. This verifies a
+            bug correction on UiUtil done on 30/09/2025.''',
+        (WidgetTester tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'import_audios_integr_test',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      const String youtubePlaylistTitle = 'urgent_actus_17-12-2023';
+
+      final String youtubePlaylistDirectoryPath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}$youtubePlaylistTitle";
+
+      // Now delete the audio comment file so that canceling deletion
+      // of this downloaded uncommented audio is tested
+
+      const String audioCommentFileNameToDelete =
+          "250812-162929-L’uniforme arrive en France en 2024 23-12-11.json";
+
+      DirUtil.deleteFileIfExist(
+        pathFileName:
+            "$youtubePlaylistDirectoryPath${path.separator}$kCommentDirName${path.separator}$audioCommentFileNameToDelete",
+      );
+
+      String downloadedUncommentedAudioTitleToDelete =
+          "L’uniforme arrive en France en 2024";
+
+      // First, find the Audio sublist ListTile Text widget
+      final Finder
+          downloadedUncommentedAudioTitleToDeleteListTileTextWidgetFinder =
+          find.text(downloadedUncommentedAudioTitleToDelete);
+
+      // Then obtain the Audio ListTile widget enclosing the Text widget by
+      // finding its ancestor
+      final Finder downloadedUncommentedAudioTitleToDeleteListTileWidgetFinder =
+          find.ancestor(
+        of: downloadedUncommentedAudioTitleToDeleteListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the leading menu icon button of the Audio ListTile
+      // and tap on it
+      final Finder
+          downloadedUncommentedAudioTitleToDeleteListTileLeadingMenuIconButton =
+          find.descendant(
+        of: downloadedUncommentedAudioTitleToDeleteListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(
+          downloadedUncommentedAudioTitleToDeleteListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the delete audio from playlist as well popup menu item
+      // and tap on it
+      final Finder popupCopyMenuItem =
+          find.byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
+
+      await tester.tap(popupCopyMenuItem);
+      await tester.pumpAndSettle();
+
+      // Now verifying the confirm action dialog title and message
+      // and confirm the deletion
+      await IntegrationTestUtil.verifyConfirmActionDialog(
+        tester: tester,
+        confirmActionDialogTitle:
+            'Confirm deletion of the audio "$downloadedUncommentedAudioTitleToDelete" from the Youtube playlist',
+        confirmActionDialogMessagePossibleLst: [
+          'Delete the audio "$downloadedUncommentedAudioTitleToDelete" from the playlist "$youtubePlaylistTitle" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on "Cancel" and choose "Delete Audio ..." instead of "Delete Audio from Playlist as well ...". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.',
+        ],
+        closeDialogWithConfirmButton: false, // Cancel the deletion
+        usePumpAndSettle: true,
+      );
+
+      // Ensure the warning dialog is not displayed (bug fix)
+      expect(find.byKey(const Key('warningDialogTitle')), findsNothing);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
     });
     group('In audio player view, delete an audio test', () {
       testWidgets('''Delete one audio mp3 only.''',
