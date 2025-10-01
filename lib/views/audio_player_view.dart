@@ -290,7 +290,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     return ValueListenableBuilder<String?>(
       valueListenable: audioPlayerVMlistenFalse.currentAudioTitleNotifier,
       builder: (context, currentAudioTitle, child) {
-       // Obtaining the audio picture file when the current audio
+        // Obtaining the audio picture file when the current audio
         // is title changed, which is the case when a new audio is
         // selected in the audio playable list dialog ensures that
         // the displayed audio picture is correct.
@@ -652,16 +652,21 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                         audioPlayerVMlistenFalse.currentAudioPlaySpeedNotifier,
                     builder: (context, currentSpeed, child) {
                       String currentSpeedStr;
+                      Audio? currentAudio =
+                          audioPlayerVMlistenFalse.currentAudio;
 
-                      if (audioPlayerVMlistenFalse
-                          .wasPlaySpeedNotifierChanged) {
-                        currentSpeedStr = '${currentSpeed.toStringAsFixed(2)}x';
-                        audioPlayerVMlistenFalse.wasPlaySpeedNotifierChanged =
-                            false;
+                      // Before this change, several audio player view integration
+                      // set speed tests were failing.
+                      if (currentAudio != null) {
+                        // Update _audioPlaySpeed when the current audio changes
+                        // to keep it in sync with the current audio play speed.
+                        _audioPlaySpeed = currentAudio.audioPlaySpeed;
                       } else {
-                        currentSpeedStr =
-                            '${_audioPlaySpeed.toStringAsFixed(2)}x';
+                        _audioPlaySpeed = currentSpeed;
                       }
+
+                      currentSpeedStr =
+                          '${_audioPlaySpeed.toStringAsFixed(2)}x';
 
                       return Text(
                         key: const Key('audioSpeedButtonText'),
@@ -1041,7 +1046,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 onTap: () {
                   if (audioPlayerVMlistenFalse
                       .getPlayableAudiosApplyingSortFilterParameters(
-                        audioLearnAppViewType:  AudioLearnAppViewType.audioPlayerView,
+                        audioLearnAppViewType:
+                            AudioLearnAppViewType.audioPlayerView,
                       )
                       .isEmpty) {
                     return;
