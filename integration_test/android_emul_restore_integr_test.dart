@@ -1088,7 +1088,7 @@ void main() {
         // playlist audio list
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
-          audioSubTitlesOrderLst: [
+          audioSubTitlesAcceptableLst: [
             "0:10:51.9 3.98 MB imported on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}",
           ],
           firstAudioListTileIndex: 0,
@@ -1593,7 +1593,7 @@ void main() {
         // playlist audio list
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
-          audioSubTitlesOrderLst: [
+          audioSubTitlesAcceptableLst: [
             '0:00:07.0 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 0,
@@ -1787,7 +1787,7 @@ void main() {
         // playlist audio list
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
-          audioSubTitlesOrderLst: [
+          audioSubTitlesAcceptableLst: [
             '0:00:00.8 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 0,
@@ -2095,7 +2095,7 @@ void main() {
         // playlist audio list
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
-          audioSubTitlesOrderLst: [
+          audioSubTitlesAcceptableLst: [
             '0:00:07.0 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 0,
@@ -2303,7 +2303,7 @@ void main() {
         // playlist audio list
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
-          audioSubTitlesOrderLst: [
+          audioSubTitlesAcceptableLst: [
             '0:00:00.8 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 0,
@@ -6384,7 +6384,7 @@ void _verifyRestoredPlaylistAndAudio({
 
   IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
     tester: tester,
-    audioSubTitlesOrderLst: audioSubTitles,
+    audioSubTitlesAcceptableLst: audioSubTitles,
     firstAudioListTileIndex: playlistsTitles.length,
   );
 }
