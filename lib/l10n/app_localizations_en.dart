@@ -1042,7 +1042,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commentPositionExplanation =>
-      'The proposed comment position corresponds to the current audio position. Modify it if needed and select to which position it must be applied.';
+      'The proposed comment position corresponds to the current audio position. Modify it if needed and select to which position it must be applied. Look in help the usefulness of emptying the position field.';
+
+  @override
+  String get commentPositionHelpTitle => 'Quick Entry Tip';
+
+  @override
+  String get commentPositionHelpContent =>
+      'If you clear the position field and then:\n\n• Check \"Start\" and click \"Ok\", the comment start position will be set to 0:00.\n• Check \"End\" and click \"Ok\", the end position will be set to the total audio duration.\n\nThis avoids manually entering these common values.';
 
   @override
   String get commentStartPosition => 'Start';

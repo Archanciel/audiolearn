@@ -2483,4 +2483,11 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get replacedIn => "replaced in";
+
+  @override
+  String get commentPositionHelpTitle =>
+      "Usefulness of emptying the position field";
+
+  @override
+  String get commentPositionHelpContent => "Explanation";
 }
