@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../constants.dart';
 import '../../models/audio.dart';
 import '../../models/comment.dart';
+import '../../models/help_item.dart';
 import '../../services/settings_data_service.dart';
 import '../../utils/date_time_util.dart';
 import '../../viewmodels/audio_player_vm.dart';
@@ -619,6 +620,16 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                   overlayColor: textButtonTapModification, // Tap feedback color
                 ),
                 onPressed: () {
+                  final List<HelpItem> savePlaylistsMp3HelpItemsLst = [
+                    HelpItem(
+                      helpTitle: AppLocalizations.of(context)!
+                          .commentPositionHelpTitle,
+                      helpContent: AppLocalizations.of(context)!
+                          .commentPositionHelpContent,
+                      displayHelpItemNumber: false,
+                    ),
+                  ];
+
                   showDialog<List<String>>(
                     barrierDismissible:
                         false, // Prevents the dialog from closing when tapping outside.
@@ -645,7 +656,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                           '0:00.0',
                           // Uses the total duration from audioPlayerVM.
                           (audioPlayerVMlistenFalse.currentAudioTotalDuration -
-                                  const Duration(milliseconds: 2000)) 
+                                  const Duration(milliseconds: 2000))
                               .HHmmssZeroHH(
                             addRemainingOneDigitTenthOfSecond: true,
                           ),
@@ -656,6 +667,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                             addRemainingOneDigitTenthOfSecond: true,
                           ),
                         ],
+                        helpItemsLst: savePlaylistsMp3HelpItemsLst,
                       );
                     },
                   ).then((resultStringLst) {
@@ -733,14 +745,14 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
         DateTimeUtil.convertToTenthsOfSeconds(timeString: minDurationStr);
 
     int maxDurationInTenthsOfSeconds;
-    
+
     if (isStartCheckBoxChecked) {
-      maxDurationInTenthsOfSeconds =
-        DateTimeUtil.convertToTenthsOfSeconds(timeString: maxStartDurationStr);
+      maxDurationInTenthsOfSeconds = DateTimeUtil.convertToTenthsOfSeconds(
+          timeString: maxStartDurationStr);
     } else {
       // If the end position checkbox is checked, we use the max end duration.
       maxDurationInTenthsOfSeconds =
-        DateTimeUtil.convertToTenthsOfSeconds(timeString: maxEndDurationStr);
+          DateTimeUtil.convertToTenthsOfSeconds(timeString: maxEndDurationStr);
     }
 
     int enteredTimeInTenthsOfSeconds =
@@ -795,7 +807,8 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
     await audioPlayerVM.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
       // data used by the AudioPlayerVM Timer
-      commentEndPositionInTenthOfSeconds: commentVMlistenFalse.currentCommentEndPosition.inMilliseconds ~/ 100,
+      commentEndPositionInTenthOfSeconds:
+          commentVMlistenFalse.currentCommentEndPosition.inMilliseconds ~/ 100,
     );
   }
 
@@ -812,13 +825,14 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
 
     if (modifiedCommentStartPosition < const Duration(milliseconds: 0)) {
       modifiedCommentStartPosition = const Duration(milliseconds: 0);
-    } else if (modifiedCommentStartPosition > audioDuration - const Duration(milliseconds: 2000)) {
-      modifiedCommentStartPosition = audioDuration  -
-            const Duration(milliseconds: 2000); // will play comment starting
-        //                                         2 sec before audio end position.
-        //                                         This will avoid a problem caused
-        //                                         by playing a comment whose position
-        //                                         is almost at the audio end position.
+    } else if (modifiedCommentStartPosition >
+        audioDuration - const Duration(milliseconds: 2000)) {
+      modifiedCommentStartPosition = audioDuration -
+          const Duration(milliseconds: 2000); // will play comment starting
+      //                                         2 sec before audio end position.
+      //                                         This will avoid a problem caused
+      //                                         by playing a comment whose position
+      //                                         is almost at the audio end position.
     }
 
     commentVMlistenFalse.currentCommentStartPosition =
@@ -832,7 +846,8 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
     await audioPlayerVM.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
       // data used by the AudioPlayerVM Timer
-      commentEndPositionInTenthOfSeconds: commentVMlistenFalse.currentCommentEndPosition.inMilliseconds ~/ 100,
+      commentEndPositionInTenthOfSeconds:
+          commentVMlistenFalse.currentCommentEndPosition.inMilliseconds ~/ 100,
     );
   }
 
@@ -864,7 +879,8 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
     await audioPlayerVM.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
       // data used by the AudioPlayerVM Timer
-      commentEndPositionInTenthOfSeconds: commentVMlistenFalse.currentCommentEndPosition.inMilliseconds ~/ 100,
+      commentEndPositionInTenthOfSeconds:
+          commentVMlistenFalse.currentCommentEndPosition.inMilliseconds ~/ 100,
     );
   }
 }

@@ -1050,7 +1050,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get commentPositionExplanation =>
-      'La position suggérée pour le commentaire correspond au point de lecture actuel de l\'audio. Vous pouvez ajuster cette valeur si nécessaire et choisir à quelle position de commentaire elle doit être appliquée.';
+      'La position suggérée pour le commentaire correspond au point de lecture actuel de l\'audio. Vous pouvez ajuster cette valeur si nécessaire et choisir à quelle position de commentaire elle doit être appliquée. Voir dans l\'aide l\'utilité de vider le champ de position.';
+
+  @override
+  String get commentPositionHelpTitle => 'Astuce de saisie rapide';
+
+  @override
+  String get commentPositionHelpContent =>
+      'Si vous videz le champ de position puis:\n\n• Cochez \"Début\" et cliquez sur \"Ok\", la position de début du commentaire sera 0:00.\n• Cochez \"Fin\" et cliquez sur \"Ok\", la position de fin sera définie à la durée totale de l\'audio.\n\nCela évite de saisir manuellement ces valeurs courantes.';
 
   @override
   String get commentStartPosition => 'Début';

@@ -1840,8 +1840,20 @@ abstract class AppLocalizations {
   /// No description provided for @commentPositionExplanation.
   ///
   /// In en, this message translates to:
-  /// **'The proposed comment position corresponds to the current audio position. Modify it if needed and select to which position it must be applied.'**
+  /// **'The proposed comment position corresponds to the current audio position. Modify it if needed and select to which position it must be applied. Look in help the usefulness of emptying the position field.'**
   String get commentPositionExplanation;
+
+  /// No description provided for @commentPositionHelpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Entry Tip'**
+  String get commentPositionHelpTitle;
+
+  /// No description provided for @commentPositionHelpContent.
+  ///
+  /// In en, this message translates to:
+  /// **'If you clear the position field and then:\n\n• Check \"Start\" and click \"Ok\", the comment start position will be set to 0:00.\n• Check \"End\" and click \"Ok\", the end position will be set to the total audio duration.\n\nThis avoids manually entering these common values.'**
+  String get commentPositionHelpContent;
 
   /// No description provided for @commentStartPosition.
   ///
