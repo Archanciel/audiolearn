@@ -18211,7 +18211,7 @@ void main() {
         // playlist audio list
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
-          audioSubTitlesOrderLst: [
+          audioSubTitlesAcceptableLst: [
             '0:00:01.8 14 KB converted on 07/09/2025 at 07:37',
           ],
           firstAudioListTileIndex: 3,
@@ -18248,7 +18248,7 @@ void main() {
         // playlist audio list
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
-          audioSubTitlesOrderLst: [
+          audioSubTitlesAcceptableLst: [
             '0:00:08.6 68 KB converted on 07/09/2025 at 07:37',
           ],
           firstAudioListTileIndex: 3,
@@ -18617,7 +18617,7 @@ void main() {
         // playlist audio list
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
-          audioSubTitlesOrderLst: [
+          audioSubTitlesAcceptableLst: [
             '0:00:01.8 14 KB converted on 07/09/2025 at 07:37',
           ],
           firstAudioListTileIndex: 3,
@@ -18654,7 +18654,7 @@ void main() {
         // playlist audio list
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
-          audioSubTitlesOrderLst: [
+          audioSubTitlesAcceptableLst: [
             '0:00:08.6 68 KB converted on 07/09/2025 at 07:37',
           ],
           firstAudioListTileIndex: 3,
@@ -19008,7 +19008,7 @@ void main() {
         // playlist audio list
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
-          audioSubTitlesOrderLst: [
+          audioSubTitlesAcceptableLst: [
             '0:00:01.8 14 KB converted on 07/09/2025 at 07:37',
           ],
           firstAudioListTileIndex: 1,
@@ -19045,7 +19045,7 @@ void main() {
         // playlist audio list
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
-          audioSubTitlesOrderLst: [
+          audioSubTitlesAcceptableLst: [
             '0:00:08.6 68 KB converted on 07/09/2025 at 07:37',
           ],
           firstAudioListTileIndex: 1,
@@ -19397,7 +19397,7 @@ void main() {
         // playlist audio list
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
-          audioSubTitlesOrderLst: [
+          audioSubTitlesAcceptableLst: [
             '0:00:01.8 14 KB converted on 07/09/2025 at 07:37',
           ],
           firstAudioListTileIndex: 1,
@@ -19434,7 +19434,7 @@ void main() {
         // playlist audio list
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
-          audioSubTitlesOrderLst: [
+          audioSubTitlesAcceptableLst: [
             '0:00:08.6 68 KB converted on 07/09/2025 at 07:37',
           ],
           firstAudioListTileIndex: 1,
@@ -31568,7 +31568,7 @@ void main() {
       // playlist audio list
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
         tester: tester,
-        audioSubTitlesOrderLst: [
+        audioSubTitlesAcceptableLst: [
           '0:00:19.3 155 KB imported on ${DateFormat('dd/MM/yyyy').format(importDateTime)} at ${DateFormat('HH:mm').format(importDateTime)}', // this is the imported date time
         ],
         firstAudioListTileIndex: 2,
@@ -31952,6 +31952,8 @@ void main() {
       // Verify the text was entered
       expect(find.text(enteredFileNameNoExt), findsOneWidget);
 
+      DateTime now = DateTime.now();
+
       // Tap on the create mp3 button
       Finder saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
       await tester.tap(saveMP3FileButton);
@@ -31972,16 +31974,25 @@ void main() {
       await tester.tap(cancelButtonFinder);
       await tester.pumpAndSettle();
 
-      DateTime now = DateTime.now();
-
       // Verify the converted audio sub title in the selected Youtube
       // playlist audio list
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
         tester: tester,
-        audioSubTitlesOrderLst: [
+        audioSubTitlesAcceptableLst: [
+          '0:00:07.0 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
           '0:00:07.0 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
         ],
         firstAudioListTileIndex: 4,
+      );
+
+      // Go to the audio player view and verify the audio position
+      // and duration of the converted audio
+      await _inAudioPlayerViewVerifyAudioPositionAndDuration(
+        tester: tester,
+        audioTitle: enteredFileNameNoExt,
+        audioStartPosition: '0:00',
+        audioEndPosition: '0:07',
+        audioDuration: '0:07',
       );
 
       // Verifying all audio info dialog fields related of the
@@ -32121,6 +32132,8 @@ void main() {
       await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
       await tester.pump();
 
+      now = DateTime.now();
+
       // Tap on the create mp3 button
       saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
       await tester.tap(saveMP3FileButton);
@@ -32159,10 +32172,21 @@ void main() {
       // playlist audio list
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
         tester: tester,
-        audioSubTitlesOrderLst: [
+        audioSubTitlesAcceptableLst: [
+          '0:00:00.8 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
           '0:00:00.8 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
         ],
         firstAudioListTileIndex: 3,
+      );
+
+      // Go to the audio player view and verify the audio position
+      // and duration of the converted audio
+      await _inAudioPlayerViewVerifyAudioPositionAndDuration(
+        tester: tester,
+        audioTitle: enteredFileNameNoExt,
+        audioStartPosition: '0:00',
+        audioEndPosition: '0:01',
+        audioDuration: '0:01',
       );
 
       // Verifying all audio info dialog fields related of the
@@ -32424,7 +32448,8 @@ void main() {
       // playlist audio list
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
         tester: tester,
-        audioSubTitlesOrderLst: [
+        audioSubTitlesAcceptableLst: [
+          '0:00:07.0 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
           '0:00:07.0 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
         ],
         firstAudioListTileIndex: 2,
@@ -32618,7 +32643,8 @@ void main() {
       // playlist audio list
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
         tester: tester,
-        audioSubTitlesOrderLst: [
+        audioSubTitlesAcceptableLst: [
+          '0:00:00.8 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
           '0:00:00.8 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
         ],
         firstAudioListTileIndex: 2,
@@ -32957,6 +32983,49 @@ void main() {
       );
     });
   });
+}
+
+Future<void> _inAudioPlayerViewVerifyAudioPositionAndDuration({
+  required WidgetTester tester,
+  required String audioTitle,
+  required String audioStartPosition,
+  required String audioEndPosition,
+  required String audioDuration,
+}) async {
+  // First, find the Audio sublist ListTile Text widget
+  Finder convertedCommentedAudioTitleListTileTextWidgetFinder =
+      find.text(audioTitle);
+
+  // Type on the audio title to open the audio player view
+  await tester.tap(convertedCommentedAudioTitleListTileTextWidgetFinder);
+  await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+    tester: tester,
+  );
+
+  // Verify start and end positions and the audio duration in the
+  // audio player view
+
+  Text audioPositionText = tester
+      .widget<Text>(find.byKey(const Key('audioPlayerViewAudioPosition')));
+  expect(audioPositionText.data, audioStartPosition);
+
+  Text audioRemainingDurationText = tester.widget<Text>(
+      find.byKey(const Key('audioPlayerViewAudioRemainingDuration')));
+  expect(audioRemainingDurationText.data, audioEndPosition);
+
+  String aaaAudioTitleText = (tester.widget<Text>(
+          find.byKey(const Key('audioPlayerViewCurrentAudioTitle'))))
+      .data!;
+
+  String aaaAudioDurationStr = _extractDuration(aaaAudioTitleText);
+
+  expect(aaaAudioDurationStr, audioDuration);
+
+  // Go back to the playlist download view
+  final Finder appScreenNavigationButton =
+      find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+  await tester.tap(appScreenNavigationButton);
+  await tester.pumpAndSettle();
 }
 
 Future<void> _restorePaylistsAndTheirMp3({
@@ -33385,7 +33454,7 @@ void _verifyRestoredPlaylistAndAudio({
 
   IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
     tester: tester,
-    audioSubTitlesOrderLst: audioSubTitles,
+    audioSubTitlesAcceptableLst: audioSubTitles,
     firstAudioListTileIndex: playlistsTitles.length,
   );
 }
@@ -33968,7 +34037,7 @@ Future<void> _verifyDateFormatApplication({
 }) async {
   IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
     tester: tester,
-    audioSubTitlesOrderLst: audioSubTitles,
+    audioSubTitlesAcceptableLst: audioSubTitles,
   );
 
   // Now we want to tap the popup menu of the Audio ListTile
@@ -34289,7 +34358,7 @@ Future<void> _selectApplyAndVerifySortFilterParms({
   // to the sortFilterParms sort order selected parms
   IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
     tester: tester,
-    audioSubTitlesOrderLst: audioSubTitles,
+    audioSubTitlesAcceptableLst: audioSubTitles,
   );
 }
 
