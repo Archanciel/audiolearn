@@ -29954,6 +29954,13 @@ void main() {
       );
     });
   });
+  group('Advanced restoration from source playlist to target playlist test.',
+      () {
+    testWidgets(
+        '''After restoring initial audiolearn target application containing 2 playlists as well as
+          their mp3, restore the source playlist in which 2 audio's present in zhe target playlist''', (WidgetTester tester) async {});
+  });
+
   group('Manage picture for audio', () {
     group('From audio list item in playlist download view', () {
       testWidgets(
