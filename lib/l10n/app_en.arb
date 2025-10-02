@@ -1053,7 +1053,7 @@
   "replacedIn": "replaced in",
   "replaceExistingAudioInPlaylist": "The file \"{fileName}.mp3\" already exists in the playlist \"{playlistTitle}\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
   "speech": "Text",
-  "convertTextToAudioHelpTitle": "How to use the {brace_1} character",
+  "convertTextToAudioHelpTitle": "Using the {brace_1} character which adds 1 second of silence",
   "convertTextToAudioHelpContent": "{brace_1}A text with a character that introduces a 1-second silence. At the beginning of the text, 2 seconds of silence are added. {brace_2} Before this sentence, 4 seconds of silence are introduced. {brace_3} Here, one second of silence. This character was chosen because it is not normally used in writing.",
   "textToSpeech": "converted",
   "audioTextToSpeechInfoDialogTitle": "Converted Audio Info",
