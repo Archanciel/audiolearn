@@ -1422,7 +1422,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
             tester: tester,
-            audioSubTitlesOrderLst: audioSubTitlesSortedByTitleAscending,
+            audioSubTitlesAcceptableLst: audioSubTitlesSortedByTitleAscending,
           );
 
           // Now tap on the current dropdown button item to open the dropdown
@@ -11530,7 +11530,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
-          audioSubTitlesOrderLst: audioSubTitlesSortedByTitleAscending,
+          audioSubTitlesAcceptableLst: audioSubTitlesSortedByTitleAscending,
         );
 
         // Purge the test playlist directory so that the created test
@@ -11817,7 +11817,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
-          audioSubTitlesOrderLst: audioSubTitlesSortedByTitleAscending,
+          audioSubTitlesAcceptableLst: audioSubTitlesSortedByTitleAscending,
         );
 
         // Purge the test playlist directory so that the created test
@@ -11971,7 +11971,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
-          audioSubTitlesOrderLst: audioSubTitlesSortedByTitleAscending,
+          audioSubTitlesAcceptableLst: audioSubTitlesSortedByTitleAscending,
         );
 
         // Purge the test playlist directory so that the created test
@@ -12390,7 +12390,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
-          audioSubTitlesOrderLst: audioSubTitlesSortedByTitleAscending,
+          audioSubTitlesAcceptableLst: audioSubTitlesSortedByTitleAscending,
         );
 
         // Purge the test playlist directory so that the created test

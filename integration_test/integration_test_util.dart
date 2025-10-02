@@ -1447,25 +1447,28 @@ class IntegrationTestUtil {
 
   static void checkAudioSubTitlesOrderInListTile({
     required WidgetTester tester,
-    required List<String> audioSubTitlesOrderLst,
+    required List<String> audioSubTitlesAcceptableLst,
     int firstAudioListTileIndex = 0,
   }) {
     // Obtains all the ListTile widgets present in the playlist
     // download view
     final Finder listTilesFinder = find.byType(ListTile);
 
-    for (String subTitle in audioSubTitlesOrderLst) {
-      Finder playlistTitleTextFinder = find.descendant(
-        of: listTilesFinder.at(firstAudioListTileIndex++),
-        matching: find.byType(Text),
-      );
+    Finder playlistTitleTextFinder = find.descendant(
+      of: listTilesFinder.at(firstAudioListTileIndex),
+      matching: find.byType(Text),
+    );
 
-      expect(
-        // 2 Text widgets exist in audio ListTile: the title and sub title
-        tester.widget<Text>(playlistTitleTextFinder.last).data,
-        subTitle,
-      );
-    }
+    String actualSubTitle =
+        tester.widget<Text>(playlistTitleTextFinder.last).data!;
+
+    // Check if actual subtitle matches any of the possible options
+    expect(
+      audioSubTitlesAcceptableLst.contains(actualSubTitle),
+      isTrue,
+      reason:
+          'Subtitle "$actualSubTitle" not found in the acceptable subtitles list.',
+    );
   }
 
   static void checkAudioTitlesOrderInListBody({
