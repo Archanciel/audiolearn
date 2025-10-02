@@ -2310,7 +2310,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String convertTextToAudioHelpTitle(Object brace_1) {
-    return 'Utilisation du caractère $brace_1';
+    return 'Utilisation du caractère $brace_1 qui ajoute 1 seconde de silence';
   }
 
   @override

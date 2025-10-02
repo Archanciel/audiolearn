@@ -3682,7 +3682,7 @@ abstract class AppLocalizations {
   /// No description provided for @convertTextToAudioHelpTitle.
   ///
   /// In en, this message translates to:
-  /// **'How to use the {brace_1} character'**
+  /// **'Using the {brace_1} character which adds 1 second of silence'**
   String convertTextToAudioHelpTitle(Object brace_1);
 
   /// No description provided for @convertTextToAudioHelpContent.
