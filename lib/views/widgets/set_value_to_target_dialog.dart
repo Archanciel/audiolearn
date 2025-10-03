@@ -32,7 +32,7 @@ class SetValueToTargetDialog extends StatefulWidget {
 
   // If isTargetExclusive is true, only one checkbox can be selected.
   // If isTargetExclusive is false, multiple checkboxes can be selected.
-  final bool isTargetExclusive;
+  final bool isCheckboxExclusive;
 
   final int checkboxIndexSetToTrue; // The index of the checkbox set to true
   final bool isPassedValueEditable;
@@ -53,8 +53,8 @@ class SetValueToTargetDialog extends StatefulWidget {
   ///
   /// The [checkboxLabelLst] contains the names of the checkboxes that will be displayed.
   ///
-  /// If the [isTargetExclusive] is set to true, only one checkbox can be selected.
-  /// If the [isTargetExclusive] is set to false, multiple checkboxes can be selected.
+  /// If the [isCheckboxExclusive] is set to true, only one checkbox can be selected.
+  /// If the [isCheckboxExclusive] is set to false, multiple checkboxes can be selected.
   ///
   /// In order to pre-select a checkbox, the [checkboxIndexSetToTrue] must be set to the
   /// index of the checkbox that should be selected.
@@ -72,7 +72,7 @@ class SetValueToTargetDialog extends StatefulWidget {
     required this.checkboxLabelLst,
     this.validationFunction,
     required this.validationFunctionArgs,
-    this.isTargetExclusive = true,
+    this.isCheckboxExclusive = true,
     this.checkboxIndexSetToTrue = -1,
     this.isPassedValueEditable = true,
     this.canAllCheckBoxBeUnchecked = false,
@@ -263,7 +263,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
       );
 
       warningMessageVM.setNoCheckboxSelected(
-        addAtListToWarningMessage: !widget.isTargetExclusive,
+        addAtListToWarningMessage: !widget.isCheckboxExclusive,
       );
 
       return; // the SetValueToTargetDialog is not closed
@@ -443,7 +443,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
       );
 
       warningMessageVM.setNoCheckboxSelected(
-        addAtListToWarningMessage: !widget.isTargetExclusive,
+        addAtListToWarningMessage: !widget.isCheckboxExclusive,
       );
 
       // the dialog is not closed
@@ -467,7 +467,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
             value: _checkboxesLst[index],
             onChangedFunction: (bool? value) {
               setState(() {
-                if (value != null && value && widget.isTargetExclusive) {
+                if (value != null && value && widget.isCheckboxExclusive) {
                   for (int i = 0; i < _checkboxesLst.length; i++) {
                     _checkboxesLst[i] = false;
                   }
