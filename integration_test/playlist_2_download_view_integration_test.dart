@@ -29958,7 +29958,9 @@ void main() {
       () {
     testWidgets(
         '''After restoring initial audiolearn target application containing 2 playlists as well as
-          their mp3, restore the source playlist in which 2 audio's present in zhe target playlist''', (WidgetTester tester) async {});
+          their restoring their mp3, restore the source playlist in which 2 audio's present in the
+          target playlist were deleted and in which 2 converted audio's were generated.''',
+        (WidgetTester tester) async {});
   });
 
   group('Manage picture for audio', () {
