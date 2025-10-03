@@ -2427,4 +2427,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String deletedAudioAndMp3FilesMessage(Object deletedAudioAndMp3FilesNumber) {
     return '\n\n$deletedAudioAndMp3FilesNumber audio(s) et leur(s) commentaire(s) et photo(s) ainsi que leur fichier MP3 a/ont été supprimé(s).';
   }
+
+  @override
+  String deletedExistingPlaylistsMessage(Object deletedExistingPlaylistNumber) {
+    return '\n\n$deletedExistingPlaylistNumber playlist(s) supprimée(s) car absente(s) du fichier ZIP de restauration et non créée(s) ou modifiée(s) après la création du ZIP.';
+  }
 }

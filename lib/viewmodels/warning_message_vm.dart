@@ -918,6 +918,8 @@ class WarningMessageVM extends ChangeNotifier {
   bool _newPlaylistsAddedAtEndOfPlaylistLst = false;
   bool get newPlaylistsAddedAtEndOfPlaylistLst =>
       _newPlaylistsAddedAtEndOfPlaylistLst;
+  int _deletedExistingPlaylistsNumber = 0;
+  int get deletedExistingPlaylistsNumber => _deletedExistingPlaylistsNumber;
   void confirmRestorationFromZip({
     required String zipFilePathName,
     required int playlistsNumber,
@@ -930,6 +932,7 @@ class WarningMessageVM extends ChangeNotifier {
     required int deletedAudioAndMp3FilesNumber,
     required bool wasIndividualPlaylistRestored,
     required bool newPlaylistsAddedAtEndOfPlaylistLst,
+    required int deletedExistingPlaylistsNumber,
   }) {
     _zipFilePathName = zipFilePathName;
     _playlistsNumber = playlistsNumber;
@@ -942,6 +945,7 @@ class WarningMessageVM extends ChangeNotifier {
     _addedCommentNumber = addedCommentNumber;
     _deletedAudioAndMp3FilesNumber = deletedAudioAndMp3FilesNumber;
     _newPlaylistsAddedAtEndOfPlaylistLst = newPlaylistsAddedAtEndOfPlaylistLst;
+    _deletedExistingPlaylistsNumber = deletedExistingPlaylistsNumber;
 
     warningMessageType = WarningMessageType.restoreAppDataFromZip;
 
@@ -1015,7 +1019,8 @@ class WarningMessageVM extends ChangeNotifier {
 
   String _convertedAudioFileName = '';
   String get convertedAudioFileName => _convertedAudioFileName;
-  bool _wasConvertedAudioAdded = true; // if false, the converted audio was replaced
+  bool _wasConvertedAudioAdded =
+      true; // if false, the converted audio was replaced
   bool get wasConvertedAudioAdded => _wasConvertedAudioAdded;
   late PlaylistType _targetPlaylistType;
   PlaylistType get targetPlaylistType => _targetPlaylistType;
@@ -1024,7 +1029,8 @@ class WarningMessageVM extends ChangeNotifier {
     required String convertedAudioFileName,
     required String targetPlaylistTitle,
     required PlaylistType targetPlaylistType,
-    required bool wasConvertedAudioAdded, // if false, the converted audio was replaced
+    required bool
+        wasConvertedAudioAdded, // if false, the converted audio was replaced
   }) {
     _convertedAudioFileName = convertedAudioFileName;
     _targetPlaylistTitle = targetPlaylistTitle;
