@@ -3885,6 +3885,7 @@ class PlaylistListVM extends ChangeNotifier {
     //  7 added comment number,
     //  8 number of deleted audio as well as mp3 files,
     //  9 were new playlists added at end of non empty playlist list
+    //  10 deleted existing playlists number
     List<dynamic> restoredInfoLst = await _restoreFilesFromZip(
       zipFilePathName: zipFilePathName,
       doReplaceExistingPlaylists: doReplaceExistingPlaylists,
@@ -3926,6 +3927,7 @@ class PlaylistListVM extends ChangeNotifier {
       deletedAudioAndMp3FilesNumber: restoredInfoLst[8],
       wasIndividualPlaylistRestored: wasIndividualPlaylistRestored,
       newPlaylistsAddedAtEndOfPlaylistLst: restoredInfoLst[9],
+      deletedExistingPlaylistsNumber: restoredInfoLst[10],
     );
 
     if (doReplaceExistingPlaylists &&
@@ -4070,6 +4072,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///  7 added comment number,
   ///  8 number of deleted audio as well as mp3 files,
   ///  9 were new playlists added at end of non empty playlist list
+  ///  10 deleted existing playlists number
   /// ]
   Future<List<dynamic>> _restoreFilesFromZip({
     required String zipFilePathName,
@@ -4080,6 +4083,7 @@ class PlaylistListVM extends ChangeNotifier {
         _listOfSelectablePlaylists.map((playlist) => playlist.title).toList();
     List<dynamic> restoredInfoLst = []; // restored info returned list
     List<String> restoredPlaylistTitlesLst = [];
+    List<String> playlistInZipTitleLst = [];
     int restoredCommentsJsonNumber = 0;
     int restoredPicturesJsonNumber = 0;
     int restoredPicturesJpgNumber = 0;
@@ -4102,6 +4106,7 @@ class PlaylistListVM extends ChangeNotifier {
       restoredInfoLst
           .add(0); // adding 0 to the deleted audio and mp3 files number
       restoredInfoLst.add(false); // newPlaylistsAddedAtEndOfPlaylistLst
+      restoredInfoLst.add(0); // deleted existing playlists number
 
       return restoredInfoLst;
     }
@@ -4202,15 +4207,16 @@ class PlaylistListVM extends ChangeNotifier {
           !destinationPathFileName.contains(kCommentDirName) &&
           !destinationPathFileName.contains(kPictureDirName)) {
         // This is a playlist JSON file.
-        String playlistTitle =
+        String playlistInZipTitle =
             path.basenameWithoutExtension(destinationPathFileName);
+        playlistInZipTitleLst.add(playlistInZipTitle);
 
-        if (existingPlaylistTitlesLst.contains(playlistTitle)) {
+        if (existingPlaylistTitlesLst.contains(playlistInZipTitle)) {
           // This playlist already exists in the application. As
           // consequence, store JSON content for later processing.
           final String jsonContent =
               utf8.decode(archiveFile.content as List<int>);
-          zipExistingPlaylistJsonContentsMap[playlistTitle] = jsonContent;
+          zipExistingPlaylistJsonContentsMap[playlistInZipTitle] = jsonContent;
         } else {
           if (existingPlaylistTitlesLst.isNotEmpty) {
             // New playlist added to not empty playlist list.
@@ -4355,6 +4361,16 @@ class PlaylistListVM extends ChangeNotifier {
       );
     } // End of for loop iterating over the archive files.
 
+    int deletedExistingPlaylistsNumber =
+        _deleteExistingPlaylistsNotContainedInZip(
+      existingPlaylistTitlesLst: existingPlaylistTitlesLst,
+      playlistInZipTitleLst: playlistInZipTitleLst,
+      restoreZipDateTime:
+          _getZipCreationDateFromFileName(path.basename(zipFilePathName)) ??
+              zipFile.lastModifiedSync(),
+      playlistRootPath: playlistRootPath,
+    );
+
     // Add missing audios references + their comments +
     // their pictures from the zip playlists to the existing
     // playlists.
@@ -4389,8 +4405,81 @@ class PlaylistListVM extends ChangeNotifier {
     restoredInfoLst.add(
         newPlaylistsAddedAtEndOfPlaylistLst); // were new playlists added at
     //                                       end of non empty playlist list
+    restoredInfoLst.add(deletedExistingPlaylistsNumber);
 
     return restoredInfoLst;
+  }
+
+  /// When restoring playlists from a zip file this method deletes existing playlists
+  /// which are not contained in the zip file. However, a playlist is only deleted
+  /// if the newest audio download date time of its audio's is before the zip file
+  /// creation date time.
+  ///
+  /// The method returns the number of deleted existing playlists.
+  int _deleteExistingPlaylistsNotContainedInZip({
+    required List<String> existingPlaylistTitlesLst,
+    required List<String> playlistInZipTitleLst,
+    required DateTime restoreZipDateTime,
+    required String playlistRootPath,
+  }) {
+    int deletedExistingPlaylistsNumber = 0;
+
+    for (String existingPlaylistTitle in existingPlaylistTitlesLst) {
+      if (!playlistInZipTitleLst.contains(existingPlaylistTitle)) {
+        // This existing playlist is not contained in the zip file
+        // and so must be deleted.
+        Playlist? existingPlaylistNotContainedInZipFile;
+
+        try {
+          existingPlaylistNotContainedInZipFile =
+              _listOfSelectablePlaylists.firstWhere(
+                  (playlist) => playlist.title == existingPlaylistTitle);
+        } catch (e) {
+          continue;
+        }
+
+        DateTime newestAudioDownloadDateTime = DateTime(2020, 1, 1);
+
+        // Iterate through passed playlists
+        for (Audio audio
+            in existingPlaylistNotContainedInZipFile.playableAudioLst) {
+          if (audio.audioDownloadDateTime
+              .isAfter(newestAudioDownloadDateTime)) {
+            newestAudioDownloadDateTime = audio.audioDownloadDateTime;
+          }
+        }
+
+        if (newestAudioDownloadDateTime.isBefore(restoreZipDateTime)) {
+          deletePlaylist(
+            playlistToDelete: existingPlaylistNotContainedInZipFile,
+          );
+          deletedExistingPlaylistsNumber++;
+        }
+      }
+    }
+
+    notifyListeners();
+
+    return deletedExistingPlaylistsNumber;
+  }
+
+  DateTime? _getZipCreationDateFromFileName(String zipFileName) {
+    // Matches any zip with the timestamp pattern
+    final RegExp dateRegex =
+        RegExp(r'(\d{4})-(\d{2})-(\d{2})_(\d{2})_(\d{2})_(\d{2})\.zip');
+    final Match? match = dateRegex.firstMatch(zipFileName);
+
+    if (match != null) {
+      return DateTime(
+        int.parse(match.group(1)!),
+        int.parse(match.group(2)!),
+        int.parse(match.group(3)!),
+        int.parse(match.group(4)!),
+        int.parse(match.group(5)!),
+        int.parse(match.group(6)!),
+      );
+    }
+    return null;
   }
 
   /// When restoring playlists from a zip file in situation where the playlists

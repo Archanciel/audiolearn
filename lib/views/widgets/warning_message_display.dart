@@ -1321,6 +1321,8 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
           int deletedAudioAndMp3FilesNumber =
               _warningMessageVM.deletedAudioAndMp3FilesNumber;
           String deletedAudioAndMp3FilesMessage = '';
+          int deletedExistingPlaylistsNumber =
+              _warningMessageVM.deletedExistingPlaylistsNumber;
 
           if (deletedAudioAndMp3FilesNumber > 0) {
             deletedAudioAndMp3FilesMessage =
@@ -1329,6 +1331,14 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
             );
           } else {
             deletedAudioAndMp3FilesMessage = '';
+          }
+
+          if (deletedExistingPlaylistsNumber > 0) {
+            deletedAudioAndMp3FilesMessage +=
+                AppLocalizations.of(context)!
+                    .deletedExistingPlaylistsMessage(
+              deletedExistingPlaylistsNumber,
+            );
           }
 
           List<HelpItem> restoredAppDataFromZipHelpItemsLst = [

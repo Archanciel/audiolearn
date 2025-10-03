@@ -3839,6 +3839,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) and picture(s) as well as their MP3 file.'**
   String deletedAudioAndMp3FilesMessage(Object deletedAudioAndMp3FilesNumber);
+
+  /// No description provided for @deletedExistingPlaylistsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'\n\nDeleted {deletedExistingPlaylistNumber} playlist(s) no longer present in the restore ZIP file and not created or modified after the ZIP creation.'**
+  String deletedExistingPlaylistsMessage(Object deletedExistingPlaylistNumber);
 }
 
 class _AppLocalizationsDelegate
