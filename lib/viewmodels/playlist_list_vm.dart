@@ -4415,6 +4415,8 @@ class PlaylistListVM extends ChangeNotifier {
   /// if the newest audio download date time of its audio's is before the zip file
   /// creation date time.
   ///
+  /// This method is called whatever the doReplaceExistingPlaylists checkbox value.
+  /// 
   /// The method returns the number of deleted existing playlists.
   int _deleteExistingPlaylistsNotContainedInZip({
     required List<String> existingPlaylistTitlesLst,
