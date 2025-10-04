@@ -911,8 +911,8 @@ class WarningMessageVM extends ChangeNotifier {
   int get addedCommentNumber => _addedCommentNumber;
   int _pictureJsonFilesNumber = 0;
   int get pictureJsonFilesNumber => _pictureJsonFilesNumber;
-  int _deletedAudioAndMp3FilesNumber = 0;
-  int get deletedAudioAndMp3FilesNumber => _deletedAudioAndMp3FilesNumber;
+  List<String> _deletedAudioTitlesLst = [];
+  List<String> get deletedAudioTitlesLst => _deletedAudioTitlesLst;
   bool _wasIndividualPlaylistRestored = false;
   bool get wasIndividualPlaylistRestored => _wasIndividualPlaylistRestored;
   bool _newPlaylistsAddedAtEndOfPlaylistLst = false;
@@ -929,7 +929,7 @@ class WarningMessageVM extends ChangeNotifier {
     required int addedCommentNumber,
     required int pictureJsonFilesNumber,
     required int pictureJpgFilesNumber,
-    required int deletedAudioAndMp3FilesNumber,
+    required List<String> deletedAudioTitlesLst,
     required bool wasIndividualPlaylistRestored,
     required bool newPlaylistsAddedAtEndOfPlaylistLst,
     required List<String> deletedExistingPlaylistTitlesLst,
@@ -943,7 +943,7 @@ class WarningMessageVM extends ChangeNotifier {
     _savedOrRestoredPictureJpgNumber = pictureJpgFilesNumber;
     _wasIndividualPlaylistRestored = wasIndividualPlaylistRestored;
     _addedCommentNumber = addedCommentNumber;
-    _deletedAudioAndMp3FilesNumber = deletedAudioAndMp3FilesNumber;
+    _deletedAudioTitlesLst = deletedAudioTitlesLst;
     _newPlaylistsAddedAtEndOfPlaylistLst = newPlaylistsAddedAtEndOfPlaylistLst;
     _deletedExistingPlaylistTitlesLst = deletedExistingPlaylistTitlesLst;
 

@@ -2424,8 +2424,9 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String deletedAudioAndMp3FilesMessage(Object deletedAudioAndMp3FilesNumber) {
-    return '\n\n$deletedAudioAndMp3FilesNumber audio(s) et leur(s) commentaire(s) et photo(s) ainsi que leur fichier MP3 a/ont été supprimé(s).';
+  String deletedAudioAndMp3FilesMessage(
+      Object deletedAudioAndMp3FilesNumber, Object deletedAudioTitles) {
+    return '\n\n$deletedAudioAndMp3FilesNumber audio(s)\n  \"$deletedAudioTitles\"\net leur(s) commentaire(s) et photo(s) ainsi que leur fichier MP3 a/ont été supprimé(s).';
   }
 
   @override

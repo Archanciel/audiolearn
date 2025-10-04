@@ -1318,25 +1318,28 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
       case WarningMessageType.restoreAppDataFromZip:
         WidgetsBinding.instance.addPostFrameCallback((_) {
           String restoredAppDataFromZipMessage;
-          int deletedAudioAndMp3FilesNumber =
-              _warningMessageVM.deletedAudioAndMp3FilesNumber;
-          String deletedAudioAndMp3FilesMessage = '';
+          List<String> deletedAudioTitlesLst =
+              _warningMessageVM.deletedAudioTitlesLst;
+          String deletedAudioAndPlaylistMessage = '';
           List<String> deletedExistingPlaylistTitlesLst =
               _warningMessageVM.deletedExistingPlaylistTitlesLst;
 
-          if (deletedAudioAndMp3FilesNumber > 0) {
-            deletedAudioAndMp3FilesMessage =
+          if (deletedAudioTitlesLst.isNotEmpty) {
+            String deletedAudioTitlesStr =
+                deletedAudioTitlesLst.join('",\n  "');
+            deletedAudioAndPlaylistMessage =
                 AppLocalizations.of(context)!.deletedAudioAndMp3FilesMessage(
-              deletedAudioAndMp3FilesNumber,
+              deletedAudioTitlesLst.length,
+              deletedAudioTitlesStr,
             );
           } else {
-            deletedAudioAndMp3FilesMessage = '';
+            deletedAudioAndPlaylistMessage = '';
           }
 
           if (deletedExistingPlaylistTitlesLst.isNotEmpty) {
             String deletedPlaylistsTitlesStr =
                 deletedExistingPlaylistTitlesLst.join('",\n  "');
-            deletedAudioAndMp3FilesMessage +=
+            deletedAudioAndPlaylistMessage +=
                 AppLocalizations.of(context)!
                     .deletedExistingPlaylistsMessage(
               deletedExistingPlaylistTitlesLst.length,
@@ -1367,7 +1370,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                   _warningMessageVM.addedCommentNumber,
                   _warningMessageVM.pictureJsonFilesNumber,
                   _warningMessageVM.savedOrRestoredPictureJpgNumber,
-                  deletedAudioAndMp3FilesMessage,
+                  deletedAudioAndPlaylistMessage,
                   _warningMessageVM.zipFilePathName,
                   (playlistsNumber > 1)
                       ? AppLocalizations.of(context)!
@@ -1385,7 +1388,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                   _warningMessageVM.addedCommentNumber,
                   _warningMessageVM.pictureJsonFilesNumber,
                   _warningMessageVM.savedOrRestoredPictureJpgNumber,
-                  deletedAudioAndMp3FilesMessage,
+                  deletedAudioAndPlaylistMessage,
                   _warningMessageVM.zipFilePathName,
                   "",
                 );
@@ -1402,7 +1405,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                   _warningMessageVM.addedCommentNumber,
                   _warningMessageVM.pictureJsonFilesNumber,
                   _warningMessageVM.savedOrRestoredPictureJpgNumber,
-                  deletedAudioAndMp3FilesMessage,
+                  deletedAudioAndPlaylistMessage,
                   _warningMessageVM.zipFilePathName,
                   AppLocalizations.of(context)!
                       .uniquePlaylistAddedAtEndOfPlaylistLst,
@@ -1417,7 +1420,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                   _warningMessageVM.addedCommentNumber,
                   _warningMessageVM.pictureJsonFilesNumber,
                   _warningMessageVM.savedOrRestoredPictureJpgNumber,
-                  deletedAudioAndMp3FilesMessage,
+                  deletedAudioAndPlaylistMessage,
                   _warningMessageVM.zipFilePathName,
                   "",
                 );
