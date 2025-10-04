@@ -918,8 +918,8 @@ class WarningMessageVM extends ChangeNotifier {
   bool _newPlaylistsAddedAtEndOfPlaylistLst = false;
   bool get newPlaylistsAddedAtEndOfPlaylistLst =>
       _newPlaylistsAddedAtEndOfPlaylistLst;
-  int _deletedExistingPlaylistsNumber = 0;
-  int get deletedExistingPlaylistsNumber => _deletedExistingPlaylistsNumber;
+  List<String> _deletedExistingPlaylistTitlesLst = [];
+  List<String> get deletedExistingPlaylistTitlesLst => _deletedExistingPlaylistTitlesLst;
   void confirmRestorationFromZip({
     required String zipFilePathName,
     required int playlistsNumber,
@@ -932,7 +932,7 @@ class WarningMessageVM extends ChangeNotifier {
     required int deletedAudioAndMp3FilesNumber,
     required bool wasIndividualPlaylistRestored,
     required bool newPlaylistsAddedAtEndOfPlaylistLst,
-    required int deletedExistingPlaylistsNumber,
+    required List<String> deletedExistingPlaylistTitlesLst,
   }) {
     _zipFilePathName = zipFilePathName;
     _playlistsNumber = playlistsNumber;
@@ -945,7 +945,7 @@ class WarningMessageVM extends ChangeNotifier {
     _addedCommentNumber = addedCommentNumber;
     _deletedAudioAndMp3FilesNumber = deletedAudioAndMp3FilesNumber;
     _newPlaylistsAddedAtEndOfPlaylistLst = newPlaylistsAddedAtEndOfPlaylistLst;
-    _deletedExistingPlaylistsNumber = deletedExistingPlaylistsNumber;
+    _deletedExistingPlaylistTitlesLst = deletedExistingPlaylistTitlesLst;
 
     warningMessageType = WarningMessageType.restoreAppDataFromZip;
 

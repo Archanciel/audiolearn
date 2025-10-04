@@ -2492,6 +2492,9 @@ class MockAppLocalizations extends AppLocalizations {
   String get commentPositionHelpContent => "Explanation";
 
   @override
-  String deletedExistingPlaylistsMessage(Object deletedExistingPlaylistNumber,) =>
-      "Deleted $deletedExistingPlaylistNumber playlist(s) no longer present in the restore ZIP file and not created or modified after the ZIP creation.";
+  String deletedExistingPlaylistsMessage(
+    Object deletedExistingPlaylistNumber,
+    Object deletedExistingPlaylistTitles,
+  ) =>
+      "Deleted $deletedExistingPlaylistNumber playlist(s)\n{deletedExistingPlaylistTitles}no longer present in the restore ZIP file and not created or modified after the ZIP creation.";
 }

@@ -1,5 +1,5 @@
-import 'dart:async';
 import 'dart:convert';
+import 'dart:core';
 import 'dart:io';
 
 import 'package:archive/archive.dart';
@@ -3885,7 +3885,7 @@ class PlaylistListVM extends ChangeNotifier {
     //  7 added comment number,
     //  8 number of deleted audio as well as mp3 files,
     //  9 were new playlists added at end of non empty playlist list
-    //  10 deleted existing playlists number
+  ///  10 deleted existing playlist title list
     List<dynamic> restoredInfoLst = await _restoreFilesFromZip(
       zipFilePathName: zipFilePathName,
       doReplaceExistingPlaylists: doReplaceExistingPlaylists,
@@ -3927,7 +3927,7 @@ class PlaylistListVM extends ChangeNotifier {
       deletedAudioAndMp3FilesNumber: restoredInfoLst[8],
       wasIndividualPlaylistRestored: wasIndividualPlaylistRestored,
       newPlaylistsAddedAtEndOfPlaylistLst: restoredInfoLst[9],
-      deletedExistingPlaylistsNumber: restoredInfoLst[10],
+      deletedExistingPlaylistTitlesLst: restoredInfoLst[10],
     );
 
     if (doReplaceExistingPlaylists &&
@@ -4072,7 +4072,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///  7 added comment number,
   ///  8 number of deleted audio as well as mp3 files,
   ///  9 were new playlists added at end of non empty playlist list
-  ///  10 deleted existing playlists number
+  ///  10 deleted existing playlist title list
   /// ]
   Future<List<dynamic>> _restoreFilesFromZip({
     required String zipFilePathName,
@@ -4361,10 +4361,10 @@ class PlaylistListVM extends ChangeNotifier {
       );
     } // End of for loop iterating over the archive files.
 
-    int deletedExistingPlaylistsNumber = 0;
+    List<String> deletedExistingPlaylistTitlesLst = [];
 
     if (!wasIndividualPlaylistRestored) {
-      deletedExistingPlaylistsNumber =
+      deletedExistingPlaylistTitlesLst =
           _deleteExistingPlaylistsNotContainedInZip(
         existingPlaylistTitlesLst: existingPlaylistTitlesLst,
         playlistInZipTitleLst: playlistInZipTitleLst,
@@ -4409,7 +4409,7 @@ class PlaylistListVM extends ChangeNotifier {
     restoredInfoLst.add(
         newPlaylistsAddedAtEndOfPlaylistLst); // were new playlists added at
     //                                       end of non empty playlist list
-    restoredInfoLst.add(deletedExistingPlaylistsNumber);
+    restoredInfoLst.add(deletedExistingPlaylistTitlesLst);
 
     return restoredInfoLst;
   }
@@ -4423,14 +4423,14 @@ class PlaylistListVM extends ChangeNotifier {
   /// false. It is only called when restoring multiple playlists and not unique playlist
   /// from a zip file.
   ///
-  /// The method returns the number of deleted existing playlists.
-  int _deleteExistingPlaylistsNotContainedInZip({
+  /// The method returns a list containing the deleted existing playlist titles.
+  List<String> _deleteExistingPlaylistsNotContainedInZip({
     required List<String> existingPlaylistTitlesLst,
     required List<String> playlistInZipTitleLst,
     required DateTime restoreZipDateTime,
     required String playlistRootPath,
   }) {
-    int deletedExistingPlaylistsNumber = 0;
+    List<String> deletedExistingPlaylistTitlesLst = [];
 
     for (String existingPlaylistTitle in existingPlaylistTitlesLst) {
       if (!playlistInZipTitleLst.contains(existingPlaylistTitle)) {
@@ -4461,14 +4461,14 @@ class PlaylistListVM extends ChangeNotifier {
           deletePlaylist(
             playlistToDelete: existingPlaylistNotContainedInZipFile,
           );
-          deletedExistingPlaylistsNumber++;
+          deletedExistingPlaylistTitlesLst.add(existingPlaylistTitle);
         }
       }
     }
 
     notifyListeners();
 
-    return deletedExistingPlaylistsNumber;
+    return deletedExistingPlaylistTitlesLst;
   }
 
   DateTime? _getZipCreationDateFromFileName(String zipFileName) {
