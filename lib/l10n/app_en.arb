@@ -1105,6 +1105,6 @@
   "addPictureJpgFilesToZip": "Add all JPG pictures to ZIP",
   "confirmAudioFromPlaylistDeletionTitle": "Confirm deletion of the audio \"{audioTitle}\" from the Youtube playlist",
   "confirmAudioFromPlaylistDeletion": "Delete the audio \"{audioTitle}\" from the playlist \"{playlistTitle}\" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on \"Cancel\" and choose \"Delete Audio ...\" instead of \"Delete Audio from Playlist as well ...\". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.",
-  "deletedAudioAndMp3FilesMessage": "\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s) and their comment(s) and picture(s) as well as their MP3 file.",
+  "deletedAudioAndMp3FilesMessage": "\n\nDeleted {deletedAudioAndMp3FilesNumber} audio(s)\n  \"{deletedAudioTitles}\"\nand their comment(s) and picture(s) as well as their MP3 file.",
   "deletedExistingPlaylistsMessage": "\n\nDeleted {deletedExistingPlaylistNumber} playlist(s)\n  \"{deletedExistingPlaylistTitles}\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation."
 }

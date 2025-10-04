@@ -2437,8 +2437,9 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String deletedAudioAndMp3FilesMessage(
     Object deletedAudioAndMp3FilesNumber,
+    Object deletedAudioTitles,
   ) =>
-      "Deleted $deletedAudioAndMp3FilesNumber audio(s) and their comment(s) and picture(s) as well as their MP3 file.";
+      "Deleted $deletedAudioAndMp3FilesNumber audio(s)$deletedAudioTitles and their comment(s) and picture(s) as well as their MP3 file.";
 
   @override
   String doRestoreUniquePlaylistFromZip(

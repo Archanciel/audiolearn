@@ -3883,7 +3883,7 @@ class PlaylistListVM extends ChangeNotifier {
     //  5 restoredAudioReferencesNumber,
     //  6 updated comment number,
     //  7 added comment number,
-    //  8 number of deleted audio as well as mp3 files,
+    //  8 deleted audio titles list,
     //  9 were new playlists added at end of non empty playlist list
   ///  10 deleted existing playlist title list
     List<dynamic> restoredInfoLst = await _restoreFilesFromZip(
@@ -3924,7 +3924,7 @@ class PlaylistListVM extends ChangeNotifier {
       addedCommentNumber: restoredInfoLst[7],
       pictureJsonFilesNumber: restoredInfoLst[2],
       pictureJpgFilesNumber: restoredInfoLst[3],
-      deletedAudioAndMp3FilesNumber: restoredInfoLst[8],
+      deletedAudioTitlesLst: restoredInfoLst[8],
       wasIndividualPlaylistRestored: wasIndividualPlaylistRestored,
       newPlaylistsAddedAtEndOfPlaylistLst: restoredInfoLst[9],
       deletedExistingPlaylistTitlesLst: restoredInfoLst[10],
@@ -4070,7 +4070,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///  5 restoredAudioReferencesNumber,
   ///  6 updated comment number,
   ///  7 added comment number,
-  ///  8 number of deleted audio as well as mp3 files,
+  ///  8 deleted audio titles list,
   ///  9 were new playlists added at end of non empty playlist list
   ///  10 deleted existing playlist title list
   /// ]
@@ -4104,9 +4104,9 @@ class PlaylistListVM extends ChangeNotifier {
       restoredInfoLst.add(0); // adding 0 to the updated comment number
       restoredInfoLst.add(0); // adding 0 to the added comment number
       restoredInfoLst
-          .add(0); // adding 0 to the deleted audio and mp3 files number
+          .add([]); // adding [] to deleted audio titles list
       restoredInfoLst.add(false); // newPlaylistsAddedAtEndOfPlaylistLst
-      restoredInfoLst.add(0); // deleted existing playlists number
+      restoredInfoLst.add([]); // deleted existing playlist titles list
 
       return restoredInfoLst;
     }
@@ -4385,8 +4385,8 @@ class PlaylistListVM extends ChangeNotifier {
     //   [2] number of added pictures,
     //   [3] number of modified comments,
     //   [4] number of added comments,
-    //   [5] number of deleted audio as well as mp3 files.
-    List<int> restoredNumberLst = await _mergeZipPlaylistsWithExistingPlaylists(
+    //   [5] deleted audio titles list.
+    List<dynamic> restoredNumberLst = await _mergeZipPlaylistsWithExistingPlaylists(
       zipExistingPlaylistJsonContentsMap: zipExistingPlaylistJsonContentsMap,
       archive: archive,
     );
@@ -4500,14 +4500,14 @@ class PlaylistListVM extends ChangeNotifier {
   ///   1. The audio was deleted from the existing playlist.
   ///   2. The audio was added to the playlist saved in the zip file.
   ///
-  /// The returned list of integers contains:
+  /// The returned list dynamic contains:
   ///   [0] number of added audio references,
   ///   [1] number of added comment json files,
   ///   [2] number of added pictures,
   ///   [3] number of modified comments,
   ///   [4] number of added comments,
-  ///   [5] number of deleted audio as well as mp3 files.
-  Future<List<int>> _mergeZipPlaylistsWithExistingPlaylists({
+  ///   [5] deleted audio titles list.
+  Future<List<dynamic>> _mergeZipPlaylistsWithExistingPlaylists({
     required Map<String, String> zipExistingPlaylistJsonContentsMap,
     required Archive archive,
   }) async {
@@ -4516,8 +4516,8 @@ class PlaylistListVM extends ChangeNotifier {
     int addedPicturesCount = 0;
     int updatedCommentsCount = 0;
     int addedCommentsCount = 0;
-    int deletedAudioAndMp3Count = 0;
-    List<int> restoredNumberLst = [];
+    List<String> deletedAudioTitlesLst = [];
+    List<dynamic> restoredResultsLst = [];
 
     // Collect audio to delete instead of deleting immediately
     List<Audio> audioToDeleteLater = [];
@@ -4537,17 +4537,17 @@ class PlaylistListVM extends ChangeNotifier {
 
       Playlist zipPlaylist = Playlist.fromJson(zipPlaylistJson);
 
-      restoredNumberLst = await _addNewAudioReferencesAvailableInZipPlaylist(
+      List<int> resultLst = await _addNewAudioReferencesAvailableInZipPlaylist(
         existingPlaylist: existingPlaylist,
         zipPlaylist: zipPlaylist,
         archive: archive,
       );
 
-      addedAudiosCount += restoredNumberLst[0];
-      addedCommentJsonFilesCount += restoredNumberLst[1];
-      addedPicturesCount += restoredNumberLst[2];
-      updatedCommentsCount += restoredNumberLst[3];
-      addedCommentsCount += restoredNumberLst[4];
+      addedAudiosCount += resultLst[0];
+      addedCommentJsonFilesCount += resultLst[1];
+      addedPicturesCount += resultLst[2];
+      updatedCommentsCount += resultLst[3];
+      addedCommentsCount += resultLst[4];
 
       // Collect audio to delete instead of deleting immediately
       List<Audio> audioToDelete =
@@ -4561,18 +4561,19 @@ class PlaylistListVM extends ChangeNotifier {
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
         audio: audio,
       );
-      deletedAudioAndMp3Count++;
+      
+      deletedAudioTitlesLst.add(audio.validVideoTitle);
     }
 
-    restoredNumberLst.clear();
-    restoredNumberLst.add(addedAudiosCount);
-    restoredNumberLst.add(addedCommentJsonFilesCount);
-    restoredNumberLst.add(addedPicturesCount);
-    restoredNumberLst.add(updatedCommentsCount);
-    restoredNumberLst.add(addedCommentsCount);
-    restoredNumberLst.add(deletedAudioAndMp3Count);
+    restoredResultsLst.clear();
+    restoredResultsLst.add(addedAudiosCount);
+    restoredResultsLst.add(addedCommentJsonFilesCount);
+    restoredResultsLst.add(addedPicturesCount);
+    restoredResultsLst.add(updatedCommentsCount);
+    restoredResultsLst.add(addedCommentsCount);
+    restoredResultsLst.add(deletedAudioTitlesLst);
 
-    return restoredNumberLst;
+    return restoredResultsLst;
   }
 
   /// This method returns the audio which are in the existing playlist playable audio list and aren't
