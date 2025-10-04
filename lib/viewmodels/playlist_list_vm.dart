@@ -4361,15 +4361,19 @@ class PlaylistListVM extends ChangeNotifier {
       );
     } // End of for loop iterating over the archive files.
 
-    int deletedExistingPlaylistsNumber =
-        _deleteExistingPlaylistsNotContainedInZip(
-      existingPlaylistTitlesLst: existingPlaylistTitlesLst,
-      playlistInZipTitleLst: playlistInZipTitleLst,
-      restoreZipDateTime:
-          _getZipCreationDateFromFileName(path.basename(zipFilePathName)) ??
-              zipFile.lastModifiedSync(),
-      playlistRootPath: playlistRootPath,
-    );
+    int deletedExistingPlaylistsNumber = 0;
+
+    if (!wasIndividualPlaylistRestored) {
+      deletedExistingPlaylistsNumber =
+          _deleteExistingPlaylistsNotContainedInZip(
+        existingPlaylistTitlesLst: existingPlaylistTitlesLst,
+        playlistInZipTitleLst: playlistInZipTitleLst,
+        restoreZipDateTime:
+            _getZipCreationDateFromFileName(path.basename(zipFilePathName)) ??
+                zipFile.lastModifiedSync(),
+        playlistRootPath: playlistRootPath,
+      );
+    }
 
     // Add missing audios references + their comments +
     // their pictures from the zip playlists to the existing
@@ -4415,8 +4419,10 @@ class PlaylistListVM extends ChangeNotifier {
   /// if the newest audio download date time of its audio's is before the zip file
   /// creation date time.
   ///
-  /// This method is called whatever the doReplaceExistingPlaylists checkbox value.
-  /// 
+  /// This method is called with doReplaceExistingPlaylists checkbox set to true or
+  /// false. It is only called when restoring multiple playlists and not unique playlist
+  /// from a zip file.
+  ///
   /// The method returns the number of deleted existing playlists.
   int _deleteExistingPlaylistsNotContainedInZip({
     required List<String> existingPlaylistTitlesLst,
