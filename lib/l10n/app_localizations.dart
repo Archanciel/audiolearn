@@ -3843,8 +3843,9 @@ abstract class AppLocalizations {
   /// No description provided for @deletedExistingPlaylistsMessage.
   ///
   /// In en, this message translates to:
-  /// **'\n\nDeleted {deletedExistingPlaylistNumber} playlist(s) no longer present in the restore ZIP file and not created or modified after the ZIP creation.'**
-  String deletedExistingPlaylistsMessage(Object deletedExistingPlaylistNumber);
+  /// **'\n\nDeleted {deletedExistingPlaylistNumber} playlist(s)\n  \"{deletedExistingPlaylistTitles}\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.'**
+  String deletedExistingPlaylistsMessage(Object deletedExistingPlaylistNumber,
+      Object deletedExistingPlaylistTitles);
 }
 
 class _AppLocalizationsDelegate

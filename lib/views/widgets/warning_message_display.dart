@@ -1321,8 +1321,8 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
           int deletedAudioAndMp3FilesNumber =
               _warningMessageVM.deletedAudioAndMp3FilesNumber;
           String deletedAudioAndMp3FilesMessage = '';
-          int deletedExistingPlaylistsNumber =
-              _warningMessageVM.deletedExistingPlaylistsNumber;
+          List<String> deletedExistingPlaylistTitlesLst =
+              _warningMessageVM.deletedExistingPlaylistTitlesLst;
 
           if (deletedAudioAndMp3FilesNumber > 0) {
             deletedAudioAndMp3FilesMessage =
@@ -1333,11 +1333,14 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
             deletedAudioAndMp3FilesMessage = '';
           }
 
-          if (deletedExistingPlaylistsNumber > 0) {
+          if (deletedExistingPlaylistTitlesLst.isNotEmpty) {
+            String deletedPlaylistsTitlesStr =
+                deletedExistingPlaylistTitlesLst.join('",\n  "');
             deletedAudioAndMp3FilesMessage +=
                 AppLocalizations.of(context)!
                     .deletedExistingPlaylistsMessage(
-              deletedExistingPlaylistsNumber,
+              deletedExistingPlaylistTitlesLst.length,
+              deletedPlaylistsTitlesStr,
             );
           }
 

@@ -2404,7 +2404,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String deletedExistingPlaylistsMessage(Object deletedExistingPlaylistNumber) {
-    return '\n\nDeleted $deletedExistingPlaylistNumber playlist(s) no longer present in the restore ZIP file and not created or modified after the ZIP creation.';
+  String deletedExistingPlaylistsMessage(Object deletedExistingPlaylistNumber,
+      Object deletedExistingPlaylistTitles) {
+    return '\n\nDeleted $deletedExistingPlaylistNumber playlist(s)\n  \"$deletedExistingPlaylistTitles\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.';
   }
 }
