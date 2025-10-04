@@ -29957,10 +29957,105 @@ void main() {
   group('Advanced restoration from source playlist to target playlist test.',
       () {
     testWidgets(
-        '''After restoring initial audiolearn target application containing 2 playlists as well as
-          their restoring their mp3, restore the source playlist in which 2 audio's present in the
-          target playlist were deleted and in which 2 converted audio's were generated.''',
-        (WidgetTester tester) async {});
+        '''After restoring initial audiolearn target application containing 4 playlists as well as
+          restoring their mp3, restore the source playlist in which 2 audio's present in the
+          target playlists were deleted and in which 2 playlists were deleted.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}restore_sing_or_mult_playlists_with_delete_audio_mp3",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      // Install the initial version of the four saved
+      // playlists
+
+      String restorableZipFilePathName =
+          '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_app_with_pictures.zip';
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: restorableZipFilePathName,
+            path: restorableZipFilePathName,
+            size: 2782168),
+      ]);
+
+      // Execute the 'Restore Playlists, Comments and Settings
+      // from Zip File ...' menu to install the initial version
+      // of the unique saved playlist 'Prières du Maître'
+      await IntegrationTestUtil.executeRestorePlaylists(
+        tester: tester,
+        doReplaceExistingPlaylists: false,
+      );
+
+      // Close the displayed warning confirmation dialog
+      await tester.tap(find.byKey(const Key('okButtonKey')).last);
+      await tester.pumpAndSettle();
+
+
+
+      String mp3RestorableZipFilePathName =
+          '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_mp3.zip';
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: mp3RestorableZipFilePathName,
+            path: mp3RestorableZipFilePathName,
+            size: 18374505),
+      ]);
+
+      await IntegrationTestUtil.typeOnAppbarMenuItem(
+        tester: tester,
+        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
+      );
+
+      // Clése the displayed confirmation dialog
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
+
+      // Verify the displayed warning confirmation dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Restored 11 audio(s) MP3 in 4 playlist(s) from the multiple playlists MP3 zip file \"$mp3RestorableZipFilePathName\".",
+        isWarningConfirming: true,
+      );
+
+
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
   });
 
   group('Manage picture for audio', () {
