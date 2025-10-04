@@ -30046,9 +30046,45 @@ void main() {
         isWarningConfirming: true,
       );
 
+      // Verify the restored MP3 files in the playlists not deleted
+
+      List<String> expectedUrgentActusMp3Lst = [
+        "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+        "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
+        "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+        "aaa.mp3",
+        "bbb.mp3",
+      ];
+
+      expect(
+        DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023",
+          fileExtension: 'mp3',
+        ),
+        expectedUrgentActusMp3Lst,
+      );
+
+      List<String> expectedLocalMp3Lst = [
+        "240110-181805-Really short video 23-07-01.mp3",
+        "240110-181810-morning _ cinematic video 23-07-01.mp3",
+        "aaa.mp3",
+        "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
+      ];
+
+      expect(
+        DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
+          fileExtension: 'mp3',
+        ),
+        expectedLocalMp3Lst,
+      );
+
       // Restore the source playlist in which 2 audio's
       // present in the target playlists were deleted and
-      // in which 2 playlists were deleted
+      // in which 2 playlists not present in the ZIP were
+      // deleted
 
       restorableZipFilePathName =
           '$kApplicationPathWindowsTest${path.separator}restore_audioLearn_2_deleted_playlists_2_deleted_audios_with_pictures_2025-10-04_11_52_58.zip';
@@ -30072,14 +30108,44 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Restored 0 playlist, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.\n\nDeleted 2 playlist(s)\n  \"local_1\",\n  \"local_2\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.", 
+            "Restored 0 playlist, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.\n\nDeleted 2 playlist(s)\n  \"local_1\",\n  \"local_2\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.",
         isWarningConfirming: true,
         warningTitle: 'CONFIRMATION',
       );
 
+      // Verify the MP3 files in the playlists not deleted after
+      // 2 audio's were deleted
 
+      expectedUrgentActusMp3Lst = [
+        "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+        "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+        "aaa.mp3",
+        "bbb.mp3",
+      ];
 
+      expect(
+        DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023",
+          fileExtension: 'mp3',
+        ),
+        expectedUrgentActusMp3Lst,
+      );
 
+      expectedLocalMp3Lst = [
+        "240110-181805-Really short video 23-07-01.mp3",
+        "240110-181810-morning _ cinematic video 23-07-01.mp3",
+        "aaa.mp3",
+      ];
+
+      expect(
+        DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
+          fileExtension: 'mp3',
+        ),
+        expectedLocalMp3Lst,
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
