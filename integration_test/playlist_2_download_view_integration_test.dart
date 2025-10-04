@@ -29958,8 +29958,8 @@ void main() {
       () {
     testWidgets(
         '''After restoring initial audiolearn target application containing 4 playlists as well as
-          restoring their mp3, restore the source playlist in which 2 audio's present in the
-          target playlists were deleted and in which 2 playlists were deleted.''',
+          restoring their mp3, restore the source playlist in which 2 audio's present in the target
+          playlists were deleted and in which 2 playlists were deleted.''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -30016,10 +30016,8 @@ void main() {
       );
 
       // Close the displayed warning confirmation dialog
-      await tester.tap(find.byKey(const Key('okButtonKey')).last);
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
       await tester.pumpAndSettle();
-
-
 
       String mp3RestorableZipFilePathName =
           '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_mp3.zip';
@@ -30036,7 +30034,7 @@ void main() {
         appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
       );
 
-      // Clése the displayed confirmation dialog
+      // Tap on the MP3 Restoration SetValueToTargetDialog Ok button
       await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
       await tester.pumpAndSettle();
 
@@ -30047,6 +30045,39 @@ void main() {
             "Restored 11 audio(s) MP3 in 4 playlist(s) from the multiple playlists MP3 zip file \"$mp3RestorableZipFilePathName\".",
         isWarningConfirming: true,
       );
+
+      // Restore the source playlist in which 2 audio's
+      // present in the target playlists were deleted and
+      // in which 2 playlists were deleted
+
+      restorableZipFilePathName =
+          '$kApplicationPathWindowsTest${path.separator}restore_audioLearn_2_deleted_playlists_2_deleted_audios_with_pictures_2025-10-04_11_52_58.zip';
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: restorableZipFilePathName,
+            path: restorableZipFilePathName,
+            size: 2782168),
+      ]);
+
+      // Execute the 'Restore Playlists, Comments and Settings
+      // from Zip File ...' menu to install the initial version
+      // of the unique saved playlist 'Prières du Maître'
+      await IntegrationTestUtil.executeRestorePlaylists(
+        tester: tester,
+        doReplaceExistingPlaylists: false,
+      );
+
+      // Verify the displayed warning confirmation dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Restored 0 playlist, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.\n\nDeleted 2 playlist(s)\n  \"local_1\",\n  \"local_2\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.", 
+        isWarningConfirming: true,
+        warningTitle: 'CONFIRMATION',
+      );
+
+
 
 
 
