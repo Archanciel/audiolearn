@@ -1496,8 +1496,8 @@
     }
   },
   "newPlaylistsAddedAtEndOfPlaylistLst": "\n\nLes playlists créées sont ajoutées à la fin de la liste des playlists.",
-  "uniquePlaylistAddedAtEndOfPlaylistLst": "\n\nPuisque la playlist a été créée, elle est positionnée à la fin de la liste des playlists.",
-  "multiplePlaylistsAddedAtEndOfPlaylistLst": "\n\nPuisque les playlists ont été créées, elles sont positionnées à la fin de la liste des playlists.",
+  "uniquePlaylistAddedAtEndOfPlaylistLst": "\n\nPuisque la playlist\n  \"{addedPlaylistTitles}\"\na été créée, elle est positionnée à la fin de la liste des playlists.",
+  "multiplePlaylistsAddedAtEndOfPlaylistLst": "\n\nPuisque les playlists\n  \"{addedPlaylistTitles}\"\nont été créées, elles sont positionnées à la fin de la liste des playlists.",
   "playlistsSaveDialogTitle": "Sauvegarde des playlists",
   "playlistsSaveExplanation": "En cochant la case \"Ajouter toutes les photos JPG\", toutes les photos audio de l'application seront ajoutées au fichier ZIP créé. Cela n'est utile que si le fichier ZIP doit servir à restaurer une autre application.",
   "addPictureJpgFilesToZip": "Ajouter toutes les photos JPG",
