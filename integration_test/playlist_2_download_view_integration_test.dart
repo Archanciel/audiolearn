@@ -29959,7 +29959,10 @@ void main() {
     testWidgets(
         '''After restoring initial audiolearn target application containing 4 playlists as well as
           restoring their mp3, restore the source playlist in which 2 audio's present in the target
-          playlists were deleted and in which 2 playlists were deleted.''',
+          playlists were deleted and in which 2 playlists were deleted. Finally, re-restore the initial
+          audiolearn target application containing 4 playlists as well as restoring their mp3 to
+          verify that after 2 audio's and 2 playlists were deletd, it is possible to restore the
+          initial audiolearn application. ''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -30097,8 +30100,7 @@ void main() {
       ]);
 
       // Execute the 'Restore Playlists, Comments and Settings
-      // from Zip File ...' menu to install the initial
-      // audiolearn version
+      // from Zip File ...' menu
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: false,
@@ -30147,16 +30149,9 @@ void main() {
         expectedLocalMp3Lst,
       );
 
-
-
-
-
-
-
-
       // Execute the 'Restore Playlists, Comments and Settings
-      // from Zip File ...' menu to re-install the initial version
-      // of the unique saved playlist 'Prières du Maître'
+      // from Zip File ...' menu to re-install the initial
+      // version of the application playlists
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: false,
@@ -30189,7 +30184,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Restored 11 audio(s) MP3 in 4 playlist(s) from the multiple playlists MP3 zip file \"$mp3RestorableZipFilePathName\".",
+            "Restored 0 audio(s) MP3 in 0 playlist(s) from the multiple playlists MP3 zip file \"$mp3RestorableZipFilePathName\".",
         isWarningConfirming: true,
       );
 
@@ -30197,7 +30192,6 @@ void main() {
 
       expectedUrgentActusMp3Lst = [
         "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-        "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
         "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
         "aaa.mp3",
         "bbb.mp3",
@@ -30216,7 +30210,6 @@ void main() {
         "240110-181805-Really short video 23-07-01.mp3",
         "240110-181810-morning _ cinematic video 23-07-01.mp3",
         "aaa.mp3",
-        "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
       ];
 
       expect(
@@ -30227,17 +30220,6 @@ void main() {
         ),
         expectedLocalMp3Lst,
       );
-
-
-
-
-
-
-
-
-
-
-
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
