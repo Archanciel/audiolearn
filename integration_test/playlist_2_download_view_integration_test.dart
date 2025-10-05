@@ -30242,9 +30242,9 @@ void main() {
       );
     });
     testWidgets(
-        '''After restoring initial audiolearn target application containing 4 playlists as well as
-          restoring their mp3, restore the source playlist in which 2 audio's present in the target
-          playlists were deleted and in which 2 playlists were deleted. Finally, re-restore the initial
+        '''Restore the source playlist in which 2 audio's present in the target playlists were deleted
+          and in which 2 playlists were deleted after restoring initial audiolearn target application
+          containing 4 playlists as well as restoring their mp3, . Finally, re-restore the initial
           audiolearn target application containing 4 playlists WITH setting the "Replace existing
           playlists" checkbox to TRUE as well as re-restore their mp3 to verify that after 2 audio's
           and 2 playlists were deletd, IT IS NOW POSSIBLE to restore totally the initial audiolearn
@@ -30813,6 +30813,427 @@ void main() {
         "240110-181805-Really short video 23-07-01.mp3",
         "240110-181810-morning _ cinematic video 23-07-01.mp3",
         "aaa.mp3",
+      ];
+
+      expect(
+        DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
+          fileExtension: 'mp3',
+        ),
+        expectedLocalMp3Lst,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Restore the unique playlist zip in which 1 audio's present in the corresponding target
+          playlist was deleted after restoring initial audiolearn target application containing 4
+          playlists as well as restoring their mp3.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}restore_sing_or_mult_playlists_with_delete_audio_mp3",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      // Install the initial version of the four saved
+      // playlists
+
+      String restorableZipFilePathName =
+          '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_app_with_pictures.zip';
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: restorableZipFilePathName,
+            path: restorableZipFilePathName,
+            size: 2782168),
+      ]);
+
+      // Execute the 'Restore Playlists, Comments and Settings
+      // from Zip File ...' menu to install the initial
+      // audiolearn version
+      await IntegrationTestUtil.executeRestorePlaylists(
+        tester: tester,
+        doReplaceExistingPlaylists: false,
+      );
+
+      // Close the displayed warning confirmation dialog
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+      await tester.pumpAndSettle();
+
+      String mp3RestorableZipFilePathName =
+          '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_mp3.zip';
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: mp3RestorableZipFilePathName,
+            path: mp3RestorableZipFilePathName,
+            size: 18374505),
+      ]);
+
+      await IntegrationTestUtil.typeOnAppbarMenuItem(
+        tester: tester,
+        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
+      );
+
+      // Tap on the MP3 Restoration SetValueToTargetDialog Ok button
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
+
+      // Verify the displayed warning confirmation dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Restored 11 audio(s) MP3 in 4 playlist(s) from the multiple playlists MP3 zip file \"$mp3RestorableZipFilePathName\".",
+        isWarningConfirming: true,
+      );
+
+      // Verify the restored MP3 files in the playlists not deleted
+
+      List<String> expectedUrgentActusMp3Lst = [
+        "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+        "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
+        "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+        "aaa.mp3",
+        "bbb.mp3",
+      ];
+
+      expect(
+        DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023",
+          fileExtension: 'mp3',
+        ),
+        expectedUrgentActusMp3Lst,
+      );
+
+      List<String> expectedLocalMp3Lst = [
+        "240110-181805-Really short video 23-07-01.mp3",
+        "240110-181810-morning _ cinematic video 23-07-01.mp3",
+        "aaa.mp3",
+        "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
+      ];
+
+      expect(
+        DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
+          fileExtension: 'mp3',
+        ),
+        expectedLocalMp3Lst,
+      );
+
+      // Restore the unique playlist ZIP in which 1 audio
+      // present in the corresponding target playlist was
+      // deleted
+
+      restorableZipFilePathName =
+          '$kApplicationPathWindowsTest${path.separator}restore_urgent_actus_17-12-2023_with_1_deleted_audio.zip';
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: restorableZipFilePathName,
+            path: restorableZipFilePathName,
+            size: 2782168),
+      ]);
+
+      // Execute the 'Restore Playlists, Comments and Settings
+      // from Zip File ...' menu
+      await IntegrationTestUtil.executeRestorePlaylists(
+        tester: tester,
+        doReplaceExistingPlaylists: false,
+      );
+
+      // Verify the displayed warning confirmation dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Restored 0 playlist saved individually, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from \"$restorableZipFilePathName\".\n\nDeleted 1 audio(s)\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.",
+        isWarningConfirming: true,
+        warningTitle: 'CONFIRMATION',
+      );
+
+      // Verify the MP3 files in the playlists not deleted after
+      // 1 audio was deleted
+
+      expectedUrgentActusMp3Lst = [
+        "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+        "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+        "aaa.mp3",
+        "bbb.mp3",
+      ];
+
+      expect(
+        DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023",
+          fileExtension: 'mp3',
+        ),
+        expectedUrgentActusMp3Lst,
+      );
+
+      expectedLocalMp3Lst = [
+        "240110-181805-Really short video 23-07-01.mp3",
+        "240110-181810-morning _ cinematic video 23-07-01.mp3",
+        "aaa.mp3",
+        "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
+      ];
+
+      expect(
+        DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
+          fileExtension: 'mp3',
+        ),
+        expectedLocalMp3Lst,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Restore the source playlist with 2 new comments and 2 new pictures in which 2 audio's present
+          in the target playlists were deleted and 2 audio's were added after restoring initial audiolearn
+          target application containing 4 playlists as well as restoring their mp3.''',
+        (WidgetTester tester) async {
+// TODO: verify comments and pictures addition like done with mp3
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}restore_sing_or_mult_playlists_with_delete_audio_mp3",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      // Install the initial version of the four saved
+      // playlists
+
+      String restorableZipFilePathName =
+          '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_app_with_pictures.zip';
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: restorableZipFilePathName,
+            path: restorableZipFilePathName,
+            size: 2782168),
+      ]);
+
+      // Execute the 'Restore Playlists, Comments and Settings
+      // from Zip File ...' menu to install the initial
+      // audiolearn version
+      await IntegrationTestUtil.executeRestorePlaylists(
+        tester: tester,
+        doReplaceExistingPlaylists: false,
+      );
+
+      // Close the displayed warning confirmation dialog
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+      await tester.pumpAndSettle();
+
+      String mp3RestorableZipFilePathName =
+          '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_mp3.zip';
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: mp3RestorableZipFilePathName,
+            path: mp3RestorableZipFilePathName,
+            size: 18374505),
+      ]);
+
+      await IntegrationTestUtil.typeOnAppbarMenuItem(
+        tester: tester,
+        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
+      );
+
+      // Tap on the MP3 Restoration SetValueToTargetDialog Ok button
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
+
+      // Verify the displayed warning confirmation dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Restored 11 audio(s) MP3 in 4 playlist(s) from the multiple playlists MP3 zip file \"$mp3RestorableZipFilePathName\".",
+        isWarningConfirming: true,
+      );
+
+      // Verify the restored MP3 files in the playlists not deleted
+
+      List<String> expectedUrgentActusMp3Lst = [
+        "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+        "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
+        "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+        "aaa.mp3",
+        "bbb.mp3",
+      ];
+
+      expect(
+        DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023",
+          fileExtension: 'mp3',
+        ),
+        expectedUrgentActusMp3Lst,
+      );
+
+      List<String> expectedLocalMp3Lst = [
+        "240110-181805-Really short video 23-07-01.mp3",
+        "240110-181810-morning _ cinematic video 23-07-01.mp3",
+        "aaa.mp3",
+        "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
+      ];
+
+      expect(
+        DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
+          fileExtension: 'mp3',
+        ),
+        expectedLocalMp3Lst,
+      );
+
+      // Restore the source playlist in which 2 audio's present
+      // in the target playlists were deleted and 2 audio's
+      // were added
+
+      restorableZipFilePathName =
+          '$kApplicationPathWindowsTest${path.separator}restore_audioLearn_app_with_pictures_comments_and_2_deleted_2_added_audios.zip';
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: restorableZipFilePathName,
+            path: restorableZipFilePathName,
+            size: 5211721),
+      ]);
+
+      // Execute the 'Restore Playlists, Comments and Settings
+      // from Zip File ...' menu
+      await IntegrationTestUtil.executeRestorePlaylists(
+        tester: tester,
+        doReplaceExistingPlaylists: false,
+      );
+
+      // Verify the displayed warning confirmation dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Restored 0 playlist, 2 comment and 1 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 1 added plus 1 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.",
+        isWarningConfirming: true,
+        warningTitle: 'CONFIRMATION',
+      );
+
+      mp3RestorableZipFilePathName =
+          '$kApplicationPathWindowsTest${path.separator}restore_audioLearn_mp3.zip';
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: mp3RestorableZipFilePathName,
+            path: mp3RestorableZipFilePathName,
+            size: 6784843),
+      ]);
+
+      await IntegrationTestUtil.typeOnAppbarMenuItem(
+        tester: tester,
+        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
+      );
+
+      // Tap on the MP3 Restoration SetValueToTargetDialog Ok button
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
+
+      // Verify the displayed warning confirmation dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Restored 2 audio(s) MP3 in 2 playlist(s) from the multiple playlists MP3 zip file \"$mp3RestorableZipFilePathName\".",
+        isWarningConfirming: true,
+      );
+
+      // Verify the MP3 files in the playlists not deleted after
+      // 2 audio's were deleted
+
+      expectedUrgentActusMp3Lst = [
+        "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+        "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+        "aaa.mp3",
+        "bbb.mp3",
+        "converted.mp3",
+      ];
+
+      expect(
+        DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023",
+          fileExtension: 'mp3',
+        ),
+        expectedUrgentActusMp3Lst,
+      );
+
+      expectedLocalMp3Lst = [
+        "240110-181805-Really short video 23-07-01.mp3",
+        "240110-181810-morning _ cinematic video 23-07-01.mp3",
+        "aaa.mp3",
+        "converted_local.mp3",
       ];
 
       expect(
