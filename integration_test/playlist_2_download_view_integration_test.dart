@@ -30008,8 +30008,8 @@ void main() {
       ]);
 
       // Execute the 'Restore Playlists, Comments and Settings
-      // from Zip File ...' menu to install the initial version
-      // of the unique saved playlist 'Prières du Maître'
+      // from Zip File ...' menu to install the initial
+      // audiolearn version
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: false,
@@ -30097,8 +30097,8 @@ void main() {
       ]);
 
       // Execute the 'Restore Playlists, Comments and Settings
-      // from Zip File ...' menu to install the initial version
-      // of the unique saved playlist 'Prières du Maître'
+      // from Zip File ...' menu to install the initial
+      // audiolearn version
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: false,
@@ -30146,6 +30146,98 @@ void main() {
         ),
         expectedLocalMp3Lst,
       );
+
+
+
+
+
+
+
+
+      // Execute the 'Restore Playlists, Comments and Settings
+      // from Zip File ...' menu to re-install the initial version
+      // of the unique saved playlist 'Prières du Maître'
+      await IntegrationTestUtil.executeRestorePlaylists(
+        tester: tester,
+        doReplaceExistingPlaylists: false,
+      );
+
+      // Close the displayed warning confirmation dialog
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+      await tester.pumpAndSettle();
+
+      mp3RestorableZipFilePathName =
+          '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_mp3.zip';
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: mp3RestorableZipFilePathName,
+            path: mp3RestorableZipFilePathName,
+            size: 18374505),
+      ]);
+
+      await IntegrationTestUtil.typeOnAppbarMenuItem(
+        tester: tester,
+        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
+      );
+
+      // Tap on the MP3 Restoration SetValueToTargetDialog Ok button
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
+
+      // Verify the displayed warning confirmation dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Restored 11 audio(s) MP3 in 4 playlist(s) from the multiple playlists MP3 zip file \"$mp3RestorableZipFilePathName\".",
+        isWarningConfirming: true,
+      );
+
+      // Verify the restored MP3 files in the playlists not deleted
+
+      expectedUrgentActusMp3Lst = [
+        "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+        "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
+        "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+        "aaa.mp3",
+        "bbb.mp3",
+      ];
+
+      expect(
+        DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023",
+          fileExtension: 'mp3',
+        ),
+        expectedUrgentActusMp3Lst,
+      );
+
+      expectedLocalMp3Lst = [
+        "240110-181805-Really short video 23-07-01.mp3",
+        "240110-181810-morning _ cinematic video 23-07-01.mp3",
+        "aaa.mp3",
+        "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
+      ];
+
+      expect(
+        DirUtil.listFileNamesInDir(
+          directoryPath:
+              "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
+          fileExtension: 'mp3',
+        ),
+        expectedLocalMp3Lst,
+      );
+
+
+
+
+
+
+
+
+
+
+
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
