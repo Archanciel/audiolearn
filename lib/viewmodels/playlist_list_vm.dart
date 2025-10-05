@@ -3917,7 +3917,7 @@ class PlaylistListVM extends ChangeNotifier {
     // Display a confirmation message to the user.
     _warningMessageVM.confirmRestorationFromZip(
       zipFilePathName: zipFilePathName,
-      playlistsNumber: restoredInfoLst[0].length,
+      playlistTitlesLst: restoredInfoLst[0],
       audioReferencesNumber: restoredInfoLst[5],
       commentJsonFilesNumber: restoredInfoLst[1],
       updatedCommentNumber: restoredInfoLst[6],

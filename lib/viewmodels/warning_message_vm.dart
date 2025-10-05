@@ -899,8 +899,8 @@ class WarningMessageVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  int _playlistsNumber = 0;
-  int get playlistsNumber => _playlistsNumber;
+  List<String> _playlistTitlesLst = [];
+  List<String> get playlistTitlesLst => _playlistTitlesLst;
   int _audioReferencesNumber = 0;
   int get audioReferencesNumber => _audioReferencesNumber;
   int _commentJsonFilesNumber = 0;
@@ -922,7 +922,7 @@ class WarningMessageVM extends ChangeNotifier {
   List<String> get deletedExistingPlaylistTitlesLst => _deletedExistingPlaylistTitlesLst;
   void confirmRestorationFromZip({
     required String zipFilePathName,
-    required int playlistsNumber,
+    required List<String> playlistTitlesLst,
     required int audioReferencesNumber,
     required int commentJsonFilesNumber,
     required int updatedCommentNumber,
@@ -935,7 +935,7 @@ class WarningMessageVM extends ChangeNotifier {
     required List<String> deletedExistingPlaylistTitlesLst,
   }) {
     _zipFilePathName = zipFilePathName;
-    _playlistsNumber = playlistsNumber;
+    _playlistTitlesLst = playlistTitlesLst;
     _audioReferencesNumber = audioReferencesNumber;
     _commentJsonFilesNumber = commentJsonFilesNumber;
     _updatedCommentNumber = updatedCommentNumber;
@@ -957,6 +957,8 @@ class WarningMessageVM extends ChangeNotifier {
   int get restoredMp3Number => _restoredMp3Number;
   bool _wasIndividualPlaylistMp3ZipUsed = false;
   bool get wasIndividualPlaylistMp3ZipUsed => _wasIndividualPlaylistMp3ZipUsed;
+  int _playlistsNumber = 0;
+  int get playlistsNumber => _playlistsNumber;
 
   void confirmMp3RestorationFromMp3Zip({
     required String zipFilePathName,

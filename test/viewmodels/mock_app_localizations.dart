@@ -2402,10 +2402,6 @@ class MockAppLocalizations extends AppLocalizations {
       "The created playlists are positioned at the end of the playlist list.";
 
   @override
-  String get uniquePlaylistAddedAtEndOfPlaylistLst =>
-      "Since the playlist was created, it is positioned at the end of the playlist list.";
-
-  @override
   String get playlistsSaveDialogTitle => "Playlists Backup to ZIP";
 
   @override
@@ -2472,10 +2468,6 @@ class MockAppLocalizations extends AppLocalizations {
       "Restored $playlistsNumber playlist saved individually, $commentsNumber comment and $picturesNumber picture JSON files as well as $addedPictureJpgNumber picture JPG file(s) in the application pictures directory and $audiosNumber audio reference(s) and $addedCommentNumber added plus $updatedCommentNumber modified comment(s) from \"$filePathName\".$deletedAudioAndMp3FilesMsg$addedAtEndOfPlaylistLstMsg";
 
   @override
-  String get multiplePlaylistsAddedAtEndOfPlaylistLst =>
-      "Since the playlists were created, they are positioned at the end of the playlist list.";
-
-  @override
   String get emptyDateErrorMessage =>
       "Defining an empty date or date/time download date is not possible.";
 
@@ -2498,4 +2490,12 @@ class MockAppLocalizations extends AppLocalizations {
     Object deletedExistingPlaylistTitles,
   ) =>
       "Deleted $deletedExistingPlaylistNumber playlist(s)\n{deletedExistingPlaylistTitles}no longer present in the restore ZIP file and not created or modified after the ZIP creation.";
+
+  @override
+  String uniquePlaylistAddedAtEndOfPlaylistLst(Object addedPlaylistTitles,) =>
+      "Since the playlist  \"$addedPlaylistTitles\"was created, it is positioned at the end of the playlist list.";
+
+  @override
+  String multiplePlaylistsAddedAtEndOfPlaylistLst(Object addedPlaylistTitles,) =>
+      "Since the playlists  \"$addedPlaylistTitles\"were created, they are positioned at the end of the playlist list.";
 }
