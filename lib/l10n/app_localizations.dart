@@ -3794,14 +3794,14 @@ abstract class AppLocalizations {
   /// No description provided for @uniquePlaylistAddedAtEndOfPlaylistLst.
   ///
   /// In en, this message translates to:
-  /// **'\n\nSince the playlist was created, it is positioned at the end of the playlist list.'**
-  String get uniquePlaylistAddedAtEndOfPlaylistLst;
+  /// **'\n\nSince the playlist\n  \"{addedPlaylistTitles}\"\nwas created, it is positioned at the end of the playlist list.'**
+  String uniquePlaylistAddedAtEndOfPlaylistLst(Object addedPlaylistTitles);
 
   /// No description provided for @multiplePlaylistsAddedAtEndOfPlaylistLst.
   ///
   /// In en, this message translates to:
-  /// **'\n\nSince the playlists were created, they are positioned at the end of the playlist list.'**
-  String get multiplePlaylistsAddedAtEndOfPlaylistLst;
+  /// **'\n\nSince the playlists\n  \"{addedPlaylistTitles}\"\nwere created, they are positioned at the end of the playlist list.'**
+  String multiplePlaylistsAddedAtEndOfPlaylistLst(Object addedPlaylistTitles);
 
   /// No description provided for @playlistsSaveDialogTitle.
   ///

@@ -168,8 +168,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               _displayWarningDialog(
                 context: _context,
-                message: AppLocalizations.of(context)!
-                    .emptyDateErrorMessage,
+                message: AppLocalizations.of(context)!.emptyDateErrorMessage,
                 warningMessageVM: _warningMessageVM,
                 themeProviderVM: themeProviderVM,
               );
@@ -296,7 +295,8 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
       case WarningMessageType.invalidValueWarning:
         String invalidValueWarningParmOne;
 
-        if (_warningMessageVM.invalidValueState == InvalidValueState.positionTooBig) {
+        if (_warningMessageVM.invalidValueState ==
+            InvalidValueState.positionTooBig) {
           invalidValueWarningParmOne =
               AppLocalizations.of(context)!.invalidValueTooBig;
         } else {
@@ -1318,10 +1318,10 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
       case WarningMessageType.restoreAppDataFromZip:
         WidgetsBinding.instance.addPostFrameCallback((_) {
           String restoredAppDataFromZipMessage;
-          List<String> deletedAudioTitlesLst =
+          final List<String> deletedAudioTitlesLst =
               _warningMessageVM.deletedAudioTitlesLst;
           String deletedAudioAndPlaylistMessage = '';
-          List<String> deletedExistingPlaylistTitlesLst =
+          final List<String> deletedExistingPlaylistTitlesLst =
               _warningMessageVM.deletedExistingPlaylistTitlesLst;
 
           if (deletedAudioTitlesLst.isNotEmpty) {
@@ -1340,11 +1340,33 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
             String deletedPlaylistsTitlesStr =
                 deletedExistingPlaylistTitlesLst.join('",\n  "');
             deletedAudioAndPlaylistMessage +=
-                AppLocalizations.of(context)!
-                    .deletedExistingPlaylistsMessage(
+                AppLocalizations.of(context)!.deletedExistingPlaylistsMessage(
               deletedExistingPlaylistTitlesLst.length,
               deletedPlaylistsTitlesStr,
             );
+          }
+
+          final List<String> playlistTitlesLst =
+              _warningMessageVM.playlistTitlesLst;
+          final int playlistsNumber = playlistTitlesLst.length;
+          String newPlaylistsAddedAtEndOfPlaylistLstMessage = '';
+
+          if (_warningMessageVM.newPlaylistsAddedAtEndOfPlaylistLst) {
+            String newPlaylistsTitlesStr = playlistTitlesLst.join('",\n  "');
+
+            if (playlistsNumber > 1) {
+              newPlaylistsAddedAtEndOfPlaylistLstMessage =
+                  AppLocalizations.of(context)!
+                      .multiplePlaylistsAddedAtEndOfPlaylistLst(
+                newPlaylistsTitlesStr,
+              );
+            } else {
+              newPlaylistsAddedAtEndOfPlaylistLstMessage =
+                  AppLocalizations.of(context)!
+                      .uniquePlaylistAddedAtEndOfPlaylistLst(
+                newPlaylistsTitlesStr,
+              );
+            }
           }
 
           List<HelpItem> restoredAppDataFromZipHelpItemsLst = [
@@ -1360,7 +1382,6 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
           if (_warningMessageVM.zipFilePathName != '') {
             if (!_warningMessageVM.wasIndividualPlaylistRestored) {
               if (_warningMessageVM.newPlaylistsAddedAtEndOfPlaylistLst) {
-                int playlistsNumber = _warningMessageVM.playlistsNumber;
                 restoredAppDataFromZipMessage = AppLocalizations.of(context)!
                     .doRestoreMultiplePlaylistFromZip(
                   playlistsNumber,
@@ -1372,16 +1393,12 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                   _warningMessageVM.savedOrRestoredPictureJpgNumber,
                   deletedAudioAndPlaylistMessage,
                   _warningMessageVM.zipFilePathName,
-                  (playlistsNumber > 1)
-                      ? AppLocalizations.of(context)!
-                          .multiplePlaylistsAddedAtEndOfPlaylistLst
-                      : AppLocalizations.of(context)!
-                          .uniquePlaylistAddedAtEndOfPlaylistLst,
+                  newPlaylistsAddedAtEndOfPlaylistLstMessage,
                 );
               } else {
                 restoredAppDataFromZipMessage = AppLocalizations.of(context)!
                     .doRestoreMultiplePlaylistFromZip(
-                  _warningMessageVM.playlistsNumber,
+                  playlistsNumber,
                   _warningMessageVM.audioReferencesNumber,
                   _warningMessageVM.commentJsonFilesNumber,
                   _warningMessageVM.updatedCommentNumber,
@@ -1390,7 +1407,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                   _warningMessageVM.savedOrRestoredPictureJpgNumber,
                   deletedAudioAndPlaylistMessage,
                   _warningMessageVM.zipFilePathName,
-                  "",
+                  newPlaylistsAddedAtEndOfPlaylistLstMessage,
                 );
               }
             } else {
@@ -1398,7 +1415,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
               if (_warningMessageVM.newPlaylistsAddedAtEndOfPlaylistLst) {
                 restoredAppDataFromZipMessage = AppLocalizations.of(context)!
                     .doRestoreUniquePlaylistFromZip(
-                  _warningMessageVM.playlistsNumber,
+                  playlistsNumber,
                   _warningMessageVM.audioReferencesNumber,
                   _warningMessageVM.commentJsonFilesNumber,
                   _warningMessageVM.updatedCommentNumber,
@@ -1407,13 +1424,12 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                   _warningMessageVM.savedOrRestoredPictureJpgNumber,
                   deletedAudioAndPlaylistMessage,
                   _warningMessageVM.zipFilePathName,
-                  AppLocalizations.of(context)!
-                      .uniquePlaylistAddedAtEndOfPlaylistLst,
+                  newPlaylistsAddedAtEndOfPlaylistLstMessage,
                 );
               } else {
                 restoredAppDataFromZipMessage = AppLocalizations.of(context)!
                     .doRestoreUniquePlaylistFromZip(
-                  _warningMessageVM.playlistsNumber,
+                  playlistsNumber,
                   _warningMessageVM.audioReferencesNumber,
                   _warningMessageVM.commentJsonFilesNumber,
                   _warningMessageVM.updatedCommentNumber,
@@ -1422,7 +1438,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                   _warningMessageVM.savedOrRestoredPictureJpgNumber,
                   deletedAudioAndPlaylistMessage,
                   _warningMessageVM.zipFilePathName,
-                  "",
+                  newPlaylistsAddedAtEndOfPlaylistLstMessage,
                 );
               }
             }
@@ -1490,8 +1506,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         String replacedOrAddedStr = '';
 
         if (_warningMessageVM.wasConvertedAudioAdded) {
-          replacedOrAddedStr =
-              AppLocalizations.of(context)!.addedTo;
+          replacedOrAddedStr = AppLocalizations.of(context)!.addedTo;
         } else {
           replacedOrAddedStr = AppLocalizations.of(context)!.replacedIn;
         }
