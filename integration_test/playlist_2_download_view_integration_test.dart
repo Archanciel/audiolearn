@@ -31011,15 +31011,44 @@ void main() {
       // Verify the restored picture files in the application
       // pictures directory
 
+      final String appPicturesDir =
+          "$kApplicationPathWindowsTest${path.separator}$kPictureDirName";
+
       IntegrationTestUtil.verifyFilesPresence(
         expectedFileNamesLst: [
           "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg",
           "Dieu-le-Père.jpg",
           "Screenshot_20250903_202601.jpg",
         ],
-        directoryPath:
-            "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
+        directoryPath: appPicturesDir,
         fileExtension: 'jpg',
+      );
+
+      // Verify the picture application json map content
+
+      List<String> pictureFileNamesLstOne = [
+        "local|Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+        "urgent_actus_17-12-2023|aaa"
+      ];
+      List<String> audioForPictureTitleLstTwo = [
+        "urgent_actus_17-12-2023|250812-162929-L’uniforme arrive en France en 2024 23-12-11",
+        "urgent_actus_17-12-2023|250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13"
+      ];
+      List<String> audioForPictureTitleLstThree = [
+        "local|240110-181805-Really short video 23-07-01",
+        "urgent_actus_17-12-2023|250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07"
+      ];
+
+      // Now verifying the audio picture addition result
+      IntegrationTestUtil.verifyApplicationPictureJsonMap(
+        applicationPictureDir: appPicturesDir,
+        pictureFileNameOne: "Dieu-le-Père.jpg",
+        audioForPictureTitleOneLst: pictureFileNamesLstOne,
+        pictureFileNameTwo:
+            "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg",
+        audioForPictureTitleTwoLst: audioForPictureTitleLstTwo,
+        pictureFileNameThree: "Screenshot_20250903_202601.jpg",
+        audioForPictureTitleThreeLst: audioForPictureTitleLstThree,
       );
 
       // Verify the restored picture json files of the
@@ -31173,6 +31202,41 @@ void main() {
         directoryPath:
             "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
         fileExtension: 'jpg',
+      );
+
+      // Verify the picture application json map content
+
+      pictureFileNamesLstOne = [
+        "urgent_actus_17-12-2023|aaa",
+      ];
+      audioForPictureTitleLstTwo = [
+        "urgent_actus_17-12-2023|250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13"
+      ];
+      audioForPictureTitleLstThree = [
+        "local|240110-181805-Really short video 23-07-01",
+        "urgent_actus_17-12-2023|250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07"
+      ];
+      List<String> audioForPictureTitleLstFour = [
+        "local|240110-181810-morning _ cinematic video 23-07-01"
+      ];
+      List<String> audioForPictureTitleLstFive = [
+        "urgent_actus_17-12-2023|converted"
+      ];
+
+      // Now verifying the audio picture addition result
+      IntegrationTestUtil.verifyApplicationPictureJsonMap(
+        applicationPictureDir: appPicturesDir,
+        pictureFileNameOne: "Dieu-le-Père.jpg",
+        audioForPictureTitleOneLst: pictureFileNamesLstOne,
+        pictureFileNameTwo:
+            "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg",
+        audioForPictureTitleTwoLst: audioForPictureTitleLstTwo,
+        pictureFileNameThree: "Screenshot_20250903_202601.jpg",
+        audioForPictureTitleThreeLst: audioForPictureTitleLstThree,
+        pictureFileNameFour: "canari.jpg",
+        audioForPictureTitleFourLst: audioForPictureTitleLstFour,
+        pictureFileNameFive: "DesertCross.jpg",
+        audioForPictureTitleFiveLst: audioForPictureTitleLstFive,
       );
 
       // Verify the restored picture json files of the
