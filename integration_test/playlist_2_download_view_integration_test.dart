@@ -31170,7 +31170,7 @@ void main() {
       // were added
 
       restorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}restore_audioLearn_app_with_pictures_comments_and_2_deleted_2_added_audios.zip';
+          '$kApplicationPathWindowsTest${path.separator}restore_audioLearn_app_with_pictures_comments_and_2_deleted_2_added_audios_and_2_deleted_playlists.zip';
 
       mockFilePicker.setSelectedFiles([
         PlatformFile(
@@ -31190,7 +31190,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Restored 0 playlist, 2 comment and 1 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 1 added plus 1 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.",
+            "Restored 0 playlist, 2 comment and 1 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 1 added plus 1 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.\n\nDeleted 2 playlist(s)\n  \"local_1\",\n  \"local_2\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.",
         isWarningConfirming: true,
         warningTitle: 'CONFIRMATION',
       );
