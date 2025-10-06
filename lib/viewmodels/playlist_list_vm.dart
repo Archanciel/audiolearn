@@ -4141,7 +4141,12 @@ class PlaylistListVM extends ChangeNotifier {
     bool wasIndividualPlaylistRestored = true;
 
     // Will be used to indicate that the created playlist(s) were
-    // positioned at the end of the playlist list.
+    // positioned at the end of the playlist list. If it is true,
+    // the confirmation message built in WarningMessageDisplayDialog
+    // displayed to the user lists the title of the added playlist(s).
+    //
+    // Set to true if a new playlist is not added to an empty playlist
+    // list.
     bool newPlaylistsAddedAtEndOfPlaylistLst = false;
 
     // Iterate over each file in the archive.
