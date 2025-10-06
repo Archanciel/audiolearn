@@ -1902,7 +1902,7 @@ class IntegrationTestUtil {
     // Read the application picture json file and verify its
     // content
 
-    _verifyApplicationPictureJsonMap(
+    verifyApplicationPictureJsonMap(
       applicationPictureDir: applicationPictureDir,
       pictureFileNameOne: pictureFileNameOne,
       audioForPictureTitleOneLst: audioForPictureTitleOneLst,
@@ -1979,7 +1979,7 @@ class IntegrationTestUtil {
     );
   }
 
-  static void _verifyApplicationPictureJsonMap({
+  static void verifyApplicationPictureJsonMap({
     required String applicationPictureDir,
     required String pictureFileNameOne,
     List<String> audioForPictureTitleOneLst = const [],
@@ -1989,6 +1989,8 @@ class IntegrationTestUtil {
     List<String> audioForPictureTitleThreeLst = const [],
     String pictureFileNameFour = '',
     List<String> audioForPictureTitleFourLst = const [],
+    String pictureFileNameFive = '',
+    List<String> audioForPictureTitleFiveLst = const [],
   }) {
     Map<String, List<String>> applicationPictureJsonMap = _readPictureAudioMap(
       applicationPicturePath: applicationPictureDir,
@@ -2030,12 +2032,23 @@ class IntegrationTestUtil {
 
     pictureAudioLst = applicationPictureJsonMap[pictureFileNameFour] ?? [];
 
-    if (audioForPictureTitleThreeLst.isNotEmpty) {
+    if (audioForPictureTitleFourLst.isNotEmpty) {
       // Verify that the picture audio list contains the audio title
       // and the audio duration
       expect(
         pictureAudioLst,
         audioForPictureTitleFourLst,
+      );
+    }
+
+    pictureAudioLst = applicationPictureJsonMap[pictureFileNameFive] ?? [];
+
+    if (audioForPictureTitleFiveLst.isNotEmpty) {
+      // Verify that the picture audio list contains the audio title
+      // and the audio duration
+      expect(
+        pictureAudioLst,
+        audioForPictureTitleFiveLst,
       );
     }
   }
@@ -2178,7 +2191,7 @@ class IntegrationTestUtil {
     // Now read the application picture json file and verify its
     // content
 
-    _verifyApplicationPictureJsonMap(
+    verifyApplicationPictureJsonMap(
       applicationPictureDir: applicationPictureDir,
       pictureFileNameOne: pictureFileNameOne,
       audioForPictureTitleOneLst: audioForPictureTitleOneLst,
@@ -2518,7 +2531,7 @@ class IntegrationTestUtil {
         "The file '$pictureAudioMapFileName' should exist.",
       );
 
-      _verifyApplicationPictureJsonMap(
+      verifyApplicationPictureJsonMap(
         applicationPictureDir: applicationPictureDir,
         pictureFileNameOne: pictureFileNameOne,
         audioForPictureTitleOneLst: audioForPictureTitleOneLst,
@@ -2601,7 +2614,7 @@ class IntegrationTestUtil {
         "The file '$pictureAudioMapFileName' should exist.",
       );
 
-      _verifyApplicationPictureJsonMap(
+      verifyApplicationPictureJsonMap(
         applicationPictureDir:
             "$kApplicationPathAndroidTest${path.separator}$kPictureDirName",
         pictureFileNameOne: pictureFileNameOne,
