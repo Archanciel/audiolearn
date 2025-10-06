@@ -30056,37 +30056,32 @@ void main() {
 
       // Verify the restored MP3 files in the playlists not deleted
 
-      List<String> expectedUrgentActusMp3Lst = [
-        "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-        "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
-        "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-        "aaa.mp3",
-        "bbb.mp3",
-      ];
+      final String urgentActuPath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023";
+      final String localPath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}local";
 
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023",
-          fileExtension: 'mp3',
-        ),
-        expectedUrgentActusMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+          "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
+          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+          "aaa.mp3",
+          "bbb.mp3",
+        ],
+        directoryPath: urgentActuPath,
+        fileExtension: 'mp3',
       );
 
-      List<String> expectedLocalMp3Lst = [
-        "240110-181805-Really short video 23-07-01.mp3",
-        "240110-181810-morning _ cinematic video 23-07-01.mp3",
-        "aaa.mp3",
-        "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
-      ];
-
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
-          fileExtension: 'mp3',
-        ),
-        expectedLocalMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "240110-181805-Really short video 23-07-01.mp3",
+          "240110-181810-morning _ cinematic video 23-07-01.mp3",
+          "aaa.mp3",
+          "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
+        ],
+        directoryPath: localPath,
+        fileExtension: 'mp3',
       );
 
       // Restore the source playlist in which 2 audio's
@@ -30122,36 +30117,25 @@ void main() {
 
       // Verify the MP3 files in the playlists not deleted after
       // 2 audio's were deleted
-
-      expectedUrgentActusMp3Lst = [
-        "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-        "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-        "aaa.mp3",
-        "bbb.mp3",
-      ];
-
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023",
-          fileExtension: 'mp3',
-        ),
-        expectedUrgentActusMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+          "aaa.mp3",
+          "bbb.mp3",
+        ],
+        directoryPath: urgentActuPath,
+        fileExtension: 'mp3',
       );
 
-      expectedLocalMp3Lst = [
-        "240110-181805-Really short video 23-07-01.mp3",
-        "240110-181810-morning _ cinematic video 23-07-01.mp3",
-        "aaa.mp3",
-      ];
-
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
-          fileExtension: 'mp3',
-        ),
-        expectedLocalMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "240110-181805-Really short video 23-07-01.mp3",
+          "240110-181810-morning _ cinematic video 23-07-01.mp3",
+          "aaa.mp3",
+        ],
+        directoryPath: localPath,
+        fileExtension: 'mp3',
       );
 
       // Re-install the initial version of the four saved
@@ -30208,35 +30192,25 @@ void main() {
 
       // Verify the restored MP3 files in the playlists not deleted
 
-      expectedUrgentActusMp3Lst = [
-        "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-        "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-        "aaa.mp3",
-        "bbb.mp3",
-      ];
-
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023",
-          fileExtension: 'mp3',
-        ),
-        expectedUrgentActusMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+          "aaa.mp3",
+          "bbb.mp3",
+        ],
+        directoryPath: urgentActuPath,
+        fileExtension: 'mp3',
       );
 
-      expectedLocalMp3Lst = [
-        "240110-181805-Really short video 23-07-01.mp3",
-        "240110-181810-morning _ cinematic video 23-07-01.mp3",
-        "aaa.mp3",
-      ];
-
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
-          fileExtension: 'mp3',
-        ),
-        expectedLocalMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "240110-181805-Really short video 23-07-01.mp3",
+          "240110-181810-morning _ cinematic video 23-07-01.mp3",
+          "aaa.mp3",
+        ],
+        directoryPath: localPath,
+        fileExtension: 'mp3',
       );
 
       // Purge the test playlist directory so that the created test
@@ -30340,37 +30314,32 @@ void main() {
 
       // Verify the restored MP3 files in the playlists not deleted
 
-      List<String> expectedUrgentActusMp3Lst = [
-        "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-        "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
-        "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-        "aaa.mp3",
-        "bbb.mp3",
-      ];
+      final String urgentActuPath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023";
+      final String localPath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}local";
 
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023",
-          fileExtension: 'mp3',
-        ),
-        expectedUrgentActusMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+          "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
+          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+          "aaa.mp3",
+          "bbb.mp3",
+        ],
+        directoryPath: urgentActuPath,
+        fileExtension: 'mp3',
       );
 
-      List<String> expectedLocalMp3Lst = [
-        "240110-181805-Really short video 23-07-01.mp3",
-        "240110-181810-morning _ cinematic video 23-07-01.mp3",
-        "aaa.mp3",
-        "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
-      ];
-
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
-          fileExtension: 'mp3',
-        ),
-        expectedLocalMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "240110-181805-Really short video 23-07-01.mp3",
+          "240110-181810-morning _ cinematic video 23-07-01.mp3",
+          "aaa.mp3",
+          "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
+        ],
+        directoryPath: localPath,
+        fileExtension: 'mp3',
       );
 
       // Restore the source playlist in which 2 audio's
@@ -30407,35 +30376,25 @@ void main() {
       // Verify the MP3 files in the playlists not deleted after
       // 2 audio's were deleted
 
-      expectedUrgentActusMp3Lst = [
-        "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-        "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-        "aaa.mp3",
-        "bbb.mp3",
-      ];
-
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023",
-          fileExtension: 'mp3',
-        ),
-        expectedUrgentActusMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+          "aaa.mp3",
+          "bbb.mp3",
+        ],
+        directoryPath: urgentActuPath,
+        fileExtension: 'mp3',
       );
 
-      expectedLocalMp3Lst = [
-        "240110-181805-Really short video 23-07-01.mp3",
-        "240110-181810-morning _ cinematic video 23-07-01.mp3",
-        "aaa.mp3",
-      ];
-
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
-          fileExtension: 'mp3',
-        ),
-        expectedLocalMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "240110-181805-Really short video 23-07-01.mp3",
+          "240110-181810-morning _ cinematic video 23-07-01.mp3",
+          "aaa.mp3",
+        ],
+        directoryPath: localPath,
+        fileExtension: 'mp3',
       );
 
       // Re-install the initial version of the four saved
@@ -30498,37 +30457,27 @@ void main() {
 
       // Verify the restored MP3 files in the playlists not deleted
 
-      expectedUrgentActusMp3Lst = [
-        "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-        "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
-        "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-        "aaa.mp3",
-        "bbb.mp3",
-      ];
-
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023",
-          fileExtension: 'mp3',
-        ),
-        expectedUrgentActusMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+          "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
+          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+          "aaa.mp3",
+          "bbb.mp3",
+        ],
+        directoryPath: urgentActuPath,
+        fileExtension: 'mp3',
       );
 
-      expectedLocalMp3Lst = [
-        "240110-181805-Really short video 23-07-01.mp3",
-        "240110-181810-morning _ cinematic video 23-07-01.mp3",
-        "aaa.mp3",
-        "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
-      ];
-
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
-          fileExtension: 'mp3',
-        ),
-        expectedLocalMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "240110-181805-Really short video 23-07-01.mp3",
+          "240110-181810-morning _ cinematic video 23-07-01.mp3",
+          "aaa.mp3",
+          "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
+        ],
+        directoryPath: localPath,
+        fileExtension: 'mp3',
       );
 
       // Purge the test playlist directory so that the created test
@@ -30725,37 +30674,32 @@ void main() {
 
       // Verify the restored MP3 files in the playlists not deleted
 
-      List<String> expectedUrgentActusMp3Lst = [
-        "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-        "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
-        "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-        "aaa.mp3",
-        "bbb.mp3",
-      ];
+      final String urgentActuPath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023";
+      final String localPath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}local";
 
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023",
-          fileExtension: 'mp3',
-        ),
-        expectedUrgentActusMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+          "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
+          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+          "aaa.mp3",
+          "bbb.mp3",
+        ],
+        directoryPath: urgentActuPath,
+        fileExtension: 'mp3',
       );
 
-      List<String> expectedLocalMp3Lst = [
-        "240110-181805-Really short video 23-07-01.mp3",
-        "240110-181810-morning _ cinematic video 23-07-01.mp3",
-        "aaa.mp3",
-        "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
-      ];
-
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
-          fileExtension: 'mp3',
-        ),
-        expectedLocalMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "240110-181805-Really short video 23-07-01.mp3",
+          "240110-181810-morning _ cinematic video 23-07-01.mp3",
+          "aaa.mp3",
+          "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
+        ],
+        directoryPath: localPath,
+        fileExtension: 'mp3',
       );
 
       // Restore the source playlist in which 2 audio's
@@ -30793,35 +30737,25 @@ void main() {
       // Verify the MP3 files in the playlists not deleted after
       // 2 audio's were deleted
 
-      expectedUrgentActusMp3Lst = [
-        "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-        "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-        "aaa.mp3",
-        "bbb.mp3",
-      ];
-
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023",
-          fileExtension: 'mp3',
-        ),
-        expectedUrgentActusMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+          "aaa.mp3",
+          "bbb.mp3",
+        ],
+        directoryPath: urgentActuPath,
+        fileExtension: 'mp3',
       );
 
-      expectedLocalMp3Lst = [
-        "240110-181805-Really short video 23-07-01.mp3",
-        "240110-181810-morning _ cinematic video 23-07-01.mp3",
-        "aaa.mp3",
-      ];
-
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
-          fileExtension: 'mp3',
-        ),
-        expectedLocalMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "240110-181805-Really short video 23-07-01.mp3",
+          "240110-181810-morning _ cinematic video 23-07-01.mp3",
+          "aaa.mp3",
+        ],
+        directoryPath: localPath,
+        fileExtension: 'mp3',
       );
 
       // Purge the test playlist directory so that the created test
@@ -30922,37 +30856,32 @@ void main() {
 
       // Verify the restored MP3 files in the playlists not deleted
 
-      List<String> expectedUrgentActusMp3Lst = [
-        "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-        "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
-        "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-        "aaa.mp3",
-        "bbb.mp3",
-      ];
+      final String urgentActuPath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023";
+      final String localPath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}local";
 
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023",
-          fileExtension: 'mp3',
-        ),
-        expectedUrgentActusMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+          "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
+          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+          "aaa.mp3",
+          "bbb.mp3",
+        ],
+        directoryPath: urgentActuPath,
+        fileExtension: 'mp3',
       );
 
-      List<String> expectedLocalMp3Lst = [
-        "240110-181805-Really short video 23-07-01.mp3",
-        "240110-181810-morning _ cinematic video 23-07-01.mp3",
-        "aaa.mp3",
-        "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
-      ];
-
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
-          fileExtension: 'mp3',
-        ),
-        expectedLocalMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "240110-181805-Really short video 23-07-01.mp3",
+          "240110-181810-morning _ cinematic video 23-07-01.mp3",
+          "aaa.mp3",
+          "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
+        ],
+        directoryPath: localPath,
+        fileExtension: 'mp3',
       );
 
       // Restore the unique playlist ZIP in which 1 audio
@@ -30988,36 +30917,26 @@ void main() {
       // Verify the MP3 files in the playlists not deleted after
       // 1 audio was deleted
 
-      expectedUrgentActusMp3Lst = [
-        "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-        "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-        "aaa.mp3",
-        "bbb.mp3",
-      ];
-
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023",
-          fileExtension: 'mp3',
-        ),
-        expectedUrgentActusMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+          "aaa.mp3",
+          "bbb.mp3",
+        ],
+        directoryPath: urgentActuPath,
+        fileExtension: 'mp3',
       );
 
-      expectedLocalMp3Lst = [
-        "240110-181805-Really short video 23-07-01.mp3",
-        "240110-181810-morning _ cinematic video 23-07-01.mp3",
-        "aaa.mp3",
-        "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
-      ];
-
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
-          fileExtension: 'mp3',
-        ),
-        expectedLocalMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "240110-181805-Really short video 23-07-01.mp3",
+          "240110-181810-morning _ cinematic video 23-07-01.mp3",
+          "aaa.mp3",
+          "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
+        ],
+        directoryPath: localPath,
+        fileExtension: 'mp3',
       );
 
       // Purge the test playlist directory so that the created test
@@ -31028,9 +30947,9 @@ void main() {
     });
     testWidgets(
         '''Restore the source playlist with 2 new comments and 2 new pictures in which 2 audio's present
-          in the target playlists were deleted and 2 audio's were added after restoring initial audiolearn
-          target application containing 4 playlists as well as restoring their mp3.''',
-        (WidgetTester tester) async {
+          in the target playlists were deleted and 2 audio's were added as well as 2 playlists were deleted.
+          This is done after restoring initial audiolearn target application containing 4 playlists as well
+          as restoring their mp3.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -31092,7 +31011,7 @@ void main() {
       // Verify the restored picture files in the application
       // pictures directory
 
-      verifyFilesPresence(
+      IntegrationTestUtil.verifyFilesPresence(
         expectedFileNamesLst: [
           "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg",
           "Dieu-le-Père.jpg",
@@ -31101,6 +31020,60 @@ void main() {
         directoryPath:
             "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
         fileExtension: 'jpg',
+      );
+
+      // Verify the restored picture json files of the
+      // urgent_actus_17-12-2023 playlist
+
+      final String urgentActuPath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023";
+
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.json",
+          "250812-162929-L’uniforme arrive en France en 2024 23-12-11.json",
+          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.json",
+          "aaa.json",
+        ],
+        directoryPath: "$urgentActuPath${path.separator}$kPictureDirName",
+        fileExtension: 'json',
+      );
+
+      // Verify the restored picture json files of the local playlist
+
+      final String localPath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}local";
+
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "240110-181805-Really short video 23-07-01.json",
+          "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.json",
+        ],
+        directoryPath: "$localPath${path.separator}$kPictureDirName",
+        fileExtension: 'json',
+      );
+
+      // Verify the restored comment files of the
+      // urgent_actus_17-12-2023 playlist
+
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "aaa.json",
+          "bbb.json",
+        ],
+        directoryPath: "$urgentActuPath${path.separator}$kCommentDirName",
+        fileExtension: 'json',
+      );
+
+      // Verify the restored comment files of the local playlist
+
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "aaa.json",
+          "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.json",
+        ],
+        directoryPath: "$localPath${path.separator}$kCommentDirName",
+        fileExtension: 'json',
       );
 
       String mp3RestorableZipFilePathName =
@@ -31132,42 +31105,33 @@ void main() {
 
       // Verify the restored MP3 files in the playlists not deleted
 
-      List<String> expectedUrgentActusMp3Lst = [
-        "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-        "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
-        "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-        "aaa.mp3",
-        "bbb.mp3",
-      ];
-
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023",
-          fileExtension: 'mp3',
-        ),
-        expectedUrgentActusMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+          "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
+          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+          "aaa.mp3",
+          "bbb.mp3",
+        ],
+        directoryPath: urgentActuPath,
+        fileExtension: 'mp3',
       );
 
-      List<String> expectedLocalMp3Lst = [
-        "240110-181805-Really short video 23-07-01.mp3",
-        "240110-181810-morning _ cinematic video 23-07-01.mp3",
-        "aaa.mp3",
-        "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
-      ];
-
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
-          fileExtension: 'mp3',
-        ),
-        expectedLocalMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "240110-181805-Really short video 23-07-01.mp3",
+          "240110-181810-morning _ cinematic video 23-07-01.mp3",
+          "aaa.mp3",
+          "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
+        ],
+        directoryPath: localPath,
+        fileExtension: 'mp3',
       );
 
       // Restore the source playlist in which 2 audio's present
-      // in the target playlists were deleted and 2 audio's
-      // were added
+      // in the target playlists were deleted, 2 audio's were added
+      // and in which 2 playlists ("local_1", "local_2") not
+      // present in the ZIP were deleted
 
       restorableZipFilePathName =
           '$kApplicationPathWindowsTest${path.separator}restore_audioLearn_app_with_pictures_comments_and_2_deleted_2_added_audios_and_2_deleted_playlists.zip';
@@ -31193,6 +31157,70 @@ void main() {
             "Restored 0 playlist, 2 comment and 1 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 1 added plus 1 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.\n\nDeleted 2 playlist(s)\n  \"local_1\",\n  \"local_2\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.",
         isWarningConfirming: true,
         warningTitle: 'CONFIRMATION',
+      );
+
+      // Verify the restored picture files in the application
+      // pictures directory
+
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg",
+          "canari.jpg",
+          "DesertCross.jpg",
+          "Dieu-le-Père.jpg",
+          "Screenshot_20250903_202601.jpg",
+        ],
+        directoryPath:
+            "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
+        fileExtension: 'jpg',
+      );
+
+      // Verify the restored picture json files of the
+      // urgent_actus_17-12-2023 playlist
+
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.json",
+          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.json",
+          "aaa.json",
+          "converted.json",
+        ],
+        directoryPath: "$urgentActuPath${path.separator}$kPictureDirName",
+        fileExtension: 'json',
+      );
+
+      // Verify the restored picture json files of the local playlist
+
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "240110-181805-Really short video 23-07-01.json",
+        ],
+        directoryPath: "$localPath${path.separator}$kPictureDirName",
+        fileExtension: 'json',
+      );
+
+      // Verify the restored comment files of the
+      // urgent_actus_17-12-2023 playlist
+
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "aaa.json",
+          "bbb.json",
+          "converted.json",
+        ],
+        directoryPath: "$urgentActuPath${path.separator}$kCommentDirName",
+        fileExtension: 'json',
+      );
+
+      // Verify the restored comment files of the local playlist
+
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "aaa.json",
+          "converted_local.json",
+        ],
+        directoryPath: "$localPath${path.separator}$kCommentDirName",
+        fileExtension: 'json',
       );
 
       mp3RestorableZipFilePathName =
@@ -31225,37 +31253,27 @@ void main() {
       // Verify the MP3 files in the playlists not deleted after
       // 2 audio's were deleted
 
-      expectedUrgentActusMp3Lst = [
-        "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-        "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-        "aaa.mp3",
-        "bbb.mp3",
-        "converted.mp3",
-      ];
-
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023",
-          fileExtension: 'mp3',
-        ),
-        expectedUrgentActusMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+          "aaa.mp3",
+          "bbb.mp3",
+          "converted.mp3",
+        ],
+        directoryPath: urgentActuPath,
+        fileExtension: 'mp3',
       );
 
-      expectedLocalMp3Lst = [
-        "240110-181805-Really short video 23-07-01.mp3",
-        "240110-181810-morning _ cinematic video 23-07-01.mp3",
-        "aaa.mp3",
-        "converted_local.mp3",
-      ];
-
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
-          fileExtension: 'mp3',
-        ),
-        expectedLocalMp3Lst,
+      IntegrationTestUtil.verifyFilesPresence(
+        expectedFileNamesLst: [
+          "240110-181805-Really short video 23-07-01.mp3",
+          "240110-181810-morning _ cinematic video 23-07-01.mp3",
+          "aaa.mp3",
+          "converted_local.mp3",
+        ],
+        directoryPath: localPath,
+        fileExtension: 'mp3',
       );
 
       // Purge the test playlist directory so that the created test
@@ -34295,22 +34313,6 @@ void main() {
       );
     });
   });
-}
-
-void verifyFilesPresence({
-  required List<String> expectedFileNamesLst,
-  required String directoryPath,
-  required String fileExtension,
-}) {
-  List<String>;
-
-  expect(
-    DirUtil.listFileNamesInDir(
-      directoryPath: directoryPath,
-      fileExtension: fileExtension,
-    ),
-    expectedFileNamesLst,
-  );
 }
 
 Future<void> _inAudioPlayerViewVerifyAudioPositionAndDuration({

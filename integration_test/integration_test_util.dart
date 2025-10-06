@@ -4144,4 +4144,20 @@ class IntegrationTestUtil {
       }
     }
   }
+
+  static void verifyFilesPresence({
+    required List<String> expectedFileNamesLst,
+    required String directoryPath,
+    required String fileExtension,
+  }) {
+    List<String>;
+
+    expect(
+      DirUtil.listFileNamesInDir(
+        directoryPath: directoryPath,
+        fileExtension: fileExtension,
+      ),
+      expectedFileNamesLst,
+    );
+  }
 }
