@@ -29963,8 +29963,7 @@ void main() {
           audiolearn target application containing 4 playlists without setting the "Replace existing
           playlists" checkbox to true as well as re-restore their mp3 to verify that after 2 audio's
           and 2 playlists were deletd, it is not possible to restore totally the initial audiolearn
-          application.''',
-        (WidgetTester tester) async {
+          application.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -30019,9 +30018,14 @@ void main() {
         doReplaceExistingPlaylists: false,
       );
 
-      // Close the displayed warning confirmation dialog
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-      await tester.pumpAndSettle();
+      // Verify the displayed warning confirmation dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            'Restored 4 playlist, 6 comment and 6 picture JSON files as well as 3 picture JPG file(s) in the application pictures directory and 11 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "$restorableZipFilePathName".',
+        isWarningConfirming: true,
+        warningTitle: 'CONFIRMATION',
+      );
 
       String mp3RestorableZipFilePathName =
           '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_mp3.zip';
@@ -30248,8 +30252,7 @@ void main() {
           audiolearn target application containing 4 playlists WITH setting the "Replace existing
           playlists" checkbox to TRUE as well as re-restore their mp3 to verify that after 2 audio's
           and 2 playlists were deletd, IT IS NOW POSSIBLE to restore totally the initial audiolearn
-          application.''',
-        (WidgetTester tester) async {
+          application.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -30536,8 +30539,7 @@ void main() {
     });
     testWidgets(
         '''Test error restoring initial audiolearn target application with selecting its mp3 restorition
-          ZIP instead of its playlists ZIP.''',
-        (WidgetTester tester) async {
+          ZIP instead of its playlists ZIP.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -30603,8 +30605,7 @@ void main() {
 
       // Verify the restored MP3 files in the playlists not deleted
 
-      List<String> expectedUrgentActusMp3Lst = [
-      ];
+      List<String> expectedUrgentActusMp3Lst = [];
 
       expect(
         DirUtil.listFileNamesInDir(
@@ -30615,8 +30616,7 @@ void main() {
         expectedUrgentActusMp3Lst,
       );
 
-      List<String> expectedLocalMp3Lst = [
-      ];
+      List<String> expectedLocalMp3Lst = [];
 
       expect(
         DirUtil.listFileNamesInDir(
@@ -31031,7 +31031,6 @@ void main() {
           in the target playlists were deleted and 2 audio's were added after restoring initial audiolearn
           target application containing 4 playlists as well as restoring their mp3.''',
         (WidgetTester tester) async {
-// TODO: verify comments and pictures addition like done with mp3
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -31089,6 +31088,20 @@ void main() {
       // Close the displayed warning confirmation dialog
       await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
       await tester.pumpAndSettle();
+
+      // Verify the restored picture files in the application
+      // pictures directory
+
+      verifyFilesPresence(
+        expectedFileNamesLst: [
+          "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg",
+          "Dieu-le-Père.jpg",
+          "Screenshot_20250903_202601.jpg",
+        ],
+        directoryPath:
+            "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
+        fileExtension: 'jpg',
+      );
 
       String mp3RestorableZipFilePathName =
           '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_mp3.zip';
@@ -34282,6 +34295,22 @@ void main() {
       );
     });
   });
+}
+
+void verifyFilesPresence({
+  required List<String> expectedFileNamesLst,
+  required String directoryPath,
+  required String fileExtension,
+}) {
+  List<String>;
+
+  expect(
+    DirUtil.listFileNamesInDir(
+      directoryPath: directoryPath,
+      fileExtension: fileExtension,
+    ),
+    expectedFileNamesLst,
+  );
 }
 
 Future<void> _inAudioPlayerViewVerifyAudioPositionAndDuration({
