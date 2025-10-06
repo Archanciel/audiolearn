@@ -2027,7 +2027,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String savingAudioToZipTime(Object evaluatedSaveTime) {
-    return 'Saving the audio MP3 files will take this estimated duration (hh:mm:ss): $evaluatedSaveTime.';
+    return 'Saving the audio MP3 in one or several ZIP files will take this estimated duration (hh:mm:ss): $evaluatedSaveTime.';
   }
 
   @override
