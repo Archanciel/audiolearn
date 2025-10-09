@@ -141,10 +141,10 @@ packages:
     dependency: transitive
     description:
       name: build
-      sha256: "825fed4d63050252a0b6e74f2d75844c4a85b664814be6993bd3493fb5239779"
+      sha256: dfb67ccc9a78c642193e0c2d94cb9e48c2c818b3178a86097d644acdcde6a8d9
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.1"
+    version: "4.0.2"
   build_config:
     dependency: transitive
     description:
@@ -364,10 +364,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_plugin_android_lifecycle
-      sha256: b0694b7fb1689b0e6cc193b3f1fcac6423c4f93c74fb20b806c6b6f196db0c31
+      sha256: c2fe1001710127dfa7da89977a08d591398370d099aacdaa6d44da7eb14b8476
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.30"
+    version: "2.0.31"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -552,10 +552,10 @@ packages:
     dependency: "direct main"
     description:
       name: logger
-      sha256: "55d6c23a6c15db14920e037fe7e0dc32e7cdaf3b64b4b25df2d541b5b6b81c0c"
+      sha256: a7967e31b703831a893bbc3c3dd11db08126fe5f369b5c648a36f821979f5be3
       url: "https://pub.dev"
     source: hosted
-    version: "2.6.1"
+    version: "2.6.2"
   logging:
     dependency: transitive
     description:
@@ -664,10 +664,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider_android
-      sha256: "993381400e94d18469750e5b9dcb8206f15bc09f9da86b9e44a9b0092a0066db"
+      sha256: "3b4c1fc3aa55ddc9cd4aa6759984330d5c8e66aa7702a6223c61540dc6380c37"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.18"
+    version: "2.2.19"
   path_provider_foundation:
     dependency: transitive
     description:
@@ -880,10 +880,10 @@ packages:
     dependency: transitive
     description:
       name: shared_preferences_android
-      sha256: "0b0f98d535319cb5cdd4f65783c2a54ee6d417a2f093dbb18be3e36e4c3d181f"
+      sha256: "34266009473bf71d748912da4bf62d439185226c03e01e2d9687bc65bbfcb713"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.14"
+    version: "2.4.15"
   shared_preferences_foundation:
     dependency: transitive
     description:
@@ -957,10 +957,10 @@ packages:
     dependency: transitive
     description:
       name: source_gen
-      sha256: ccf30b0c9fbcd79d8b6f5bfac23199fb354938436f62475e14aea0f29ee0f800
+      sha256: "9098ab86015c4f1d8af6486b547b11100e73b193e1899015033cb3e14ad20243"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.1"
+    version: "4.0.2"
   source_span:
     dependency: transitive
     description:
@@ -1069,10 +1069,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_android
-      sha256: c0fb544b9ac7efa10254efaf00a951615c362d1ea1877472f8f6c0fa00fcf15b
+      sha256: "5c8b6c2d89a78f5a1cca70a73d9d5f86c701b36b42f9c9dac7bad592113c28e9"
       url: "https://pub.dev"
     source: hosted
-    version: "6.3.23"
+    version: "6.3.24"
   url_launcher_ios:
     dependency: transitive
     description:
@@ -1197,10 +1197,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: "66814138c3562338d05613a6e368ed8cfb237ad6d64a9e9334be3f309acfca03"
+      sha256: d7cb55e04cd34096cd3a79b3330245f54cb96a370a1c27adb3c84b917de8b08e
       url: "https://pub.dev"
     source: hosted
-    version: "5.14.0"
+    version: "5.15.0"
   window_manager:
     dependency: "direct main"
     description:
