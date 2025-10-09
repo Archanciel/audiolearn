@@ -9643,16 +9643,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 1 playlist, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\audioLearn_2025-03-24_11_30.zip".\n\nSince the playlist was created, it is positioned at the end of the playlist list.',
+                'Restored 1 playlist, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\audioLearn_2025-03-24_11_30.zip".\n\nDeleted 3 playlist(s)\n  "audio_learn_actus",\n  "audio_learn_spiritualité",\n  "IA"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlist\n  "MaValTest"\nwas created, it is positioned at the end of the playlist list.',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
-          );
-
-          // Select MaValTest playlist
-
-          await IntegrationTestUtil.selectPlaylist(
-            tester: tester,
-            playlistToSelectTitle: playlistToRedownloadTitle,
           );
 
           // Type on the Playlists button to hide the playlist view
@@ -9679,8 +9672,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Add a delay to allow the download to finish.
-          for (int i = 0; i < 5; i++) {
-            await Future.delayed(const Duration(seconds: 1));
+          for (int i = 0; i < 10; i++) {
+            await Future.delayed(const Duration(seconds: 2));
             await tester.pumpAndSettle();
           }
 
@@ -9816,16 +9809,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 1 playlist, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\audioLearn_2025-03-24_11_30.zip".\n\nSince the playlist was created, it is positioned at the end of the playlist list.',
+                'Restored 1 playlist, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\audioLearn_2025-03-24_11_30.zip".\n\nDeleted 3 playlist(s)\n  "audio_learn_actus",\n  "audio_learn_spiritualité",\n  "IA"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlist\n  "MaValTest"\nwas created, it is positioned at the end of the playlist list.',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
-          );
-
-          // Select MaValTest playlist
-
-          await IntegrationTestUtil.selectPlaylist(
-            tester: tester,
-            playlistToSelectTitle: playlistToRedownloadTitle,
           );
 
           // Type on the Playlists button to hide the playlist view

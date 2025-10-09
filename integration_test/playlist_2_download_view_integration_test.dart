@@ -19693,7 +19693,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 5 playlist, 5 comment and 6 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nSince the playlists were created, they are positioned at the end of the playlist list.',
+                  'Restored 5 playlist, 5 comment and 6 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -19703,7 +19703,6 @@ void main() {
             // displayed audio titles and subtitles.
 
             List<String> playlistsTitles = [
-              "A restaurer",
               "local",
               "Empty",
               "local_comment",
@@ -19727,35 +19726,6 @@ void main() {
             _verifyRestoredPlaylistAndAudio(
               tester: tester,
               selectedPlaylistTitle: 'local',
-              playlistsTitles: playlistsTitles,
-              audioTitles: audioTitles,
-              audioSubTitles: audioSubTitles,
-            );
-
-            // Verify 'A restaurer' playlist
-
-            audioTitles = [
-              "Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage!",
-              "L'histoire secrète derrière la progression de l'IA",
-              "Le 21 juillet 1913 _ Prières et méditations, La Mère",
-              "Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...)",
-            ];
-
-            audioSubTitles = [
-              "0:24:21.7 9.84 MB at 510 KB/sec on 24/02/2025 at 13:27",
-              "0:22:57.8 8.72 MB at 203 KB/sec on 24/02/2025 at 13:16",
-              "0:00:58.7 359 KB at 89 KB/sec on 13/02/2025 at 10:43",
-              "0:22:57.8 8.72 MB at 2.14 MB/sec on 13/02/2025 at 08:30",
-            ];
-
-            await IntegrationTestUtil.selectPlaylist(
-              tester: tester,
-              playlistToSelectTitle: 'A restaurer',
-            );
-
-            _verifyRestoredPlaylistAndAudio(
-              tester: tester,
-              selectedPlaylistTitle: 'A restaurer',
               playlistsTitles: playlistsTitles,
               audioTitles: audioTitles,
               audioSubTitles: audioSubTitles,
@@ -19789,50 +19759,6 @@ void main() {
               playlistsTitles: playlistsTitles,
               audioTitles: audioTitles,
               audioSubTitles: audioSubTitles,
-            );
-
-            // Verify the content of the 'A restaurer' playlist dir
-            // and comments and pictures dir after restoration.
-            IntegrationTestUtil.verifyPlaylistDirectoryContents(
-              playlistTitle: 'A restaurer',
-              expectedAudioFiles: [
-                "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.mp3",
-                "250213-104308-Le 21 juillet 1913 _ Prières et méditations, La Mère 25-02-13.mp3",
-                "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.mp3",
-                "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.mp3",
-              ],
-              expectedCommentFiles: [
-                "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.json",
-                "250213-104308-Le 21 juillet 1913 _ Prières et méditations, La Mère 25-02-13.json",
-                "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.json",
-                "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json",
-              ],
-              expectedPictureFiles: [
-                "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.json",
-                "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.json",
-                "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json",
-              ],
-              playlistRootDir: playlistRootDirName,
-              doesPictureAudioMapFileNameExist: true,
-              applicationPictureDir:
-                  "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
-              pictureFileNameOne: "Sam Altman.jpg",
-              audioForPictureTitleOneLst: [
-                "A restaurer|250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12",
-                "A restaurer|250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12"
-              ],
-              pictureFileNameTwo: "Jésus mon Amour.jpg",
-              audioForPictureTitleTwoLst: [
-                "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
-              ],
-              pictureFileNameThree: "Jésus je T'adore.jpg",
-              audioForPictureTitleThreeLst: [
-                "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
-              ],
-              pictureFileNameFour: "Jésus le Dieu vivant.jpg",
-              audioForPictureTitleFourLst: [
-                "local|240110-181810-morning _ cinematic video 23-07-01"
-              ],
             );
 
             // Verify the content of the 'local' playlist dir
@@ -19873,17 +19799,8 @@ void main() {
               doesPictureAudioMapFileNameExist: true,
               applicationPictureDir:
                   "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
-              pictureFileNameOne: "Sam Altman.jpg",
+              pictureFileNameOne: "Jésus je T'adore.jpg",
               audioForPictureTitleOneLst: [
-                "A restaurer|250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12",
-                "A restaurer|250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12"
-              ],
-              pictureFileNameTwo: "Jésus mon Amour.jpg",
-              audioForPictureTitleTwoLst: [
-                "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
-              ],
-              pictureFileNameThree: "Jésus je T'adore.jpg",
-              audioForPictureTitleThreeLst: [
                 "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
               ],
             );
@@ -20231,7 +20148,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 4 playlist, 5 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 6 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nSince the playlists were created, they are positioned at the end of the playlist list.',
+                  'Restored 4 playlist, 5 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 6 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -20241,7 +20158,6 @@ void main() {
             // displayed audio titles and subtitles.
 
             List<String> playlistsTitles = [
-              "A restaurer",
               "local",
               "Empty",
               "local_comment",
@@ -20262,35 +20178,6 @@ void main() {
             _verifyRestoredPlaylistAndAudio(
               tester: tester,
               selectedPlaylistTitle: 'local',
-              playlistsTitles: playlistsTitles,
-              audioTitles: audioTitles,
-              audioSubTitles: audioSubTitles,
-            );
-
-            // Verify 'A restaurer' playlist
-
-            audioTitles = [
-              "Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage!",
-              "L'histoire secrète derrière la progression de l'IA",
-              "Le 21 juillet 1913 _ Prières et méditations, La Mère",
-              "Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...)",
-            ];
-
-            audioSubTitles = [
-              "0:24:21.7 9.84 MB at 510 KB/sec on 24/02/2025 at 13:27",
-              "0:22:57.8 8.72 MB at 203 KB/sec on 24/02/2025 at 13:16",
-              "0:00:58.7 359 KB at 89 KB/sec on 13/02/2025 at 10:43",
-              "0:22:57.8 8.72 MB at 2.14 MB/sec on 13/02/2025 at 08:30",
-            ];
-
-            await IntegrationTestUtil.selectPlaylist(
-              tester: tester,
-              playlistToSelectTitle: 'A restaurer',
-            );
-
-            _verifyRestoredPlaylistAndAudio(
-              tester: tester,
-              selectedPlaylistTitle: 'A restaurer',
               playlistsTitles: playlistsTitles,
               audioTitles: audioTitles,
               audioSubTitles: audioSubTitles,
@@ -20324,46 +20211,6 @@ void main() {
               playlistsTitles: playlistsTitles,
               audioTitles: audioTitles,
               audioSubTitles: audioSubTitles,
-            );
-
-            // Verify the content of the 'A restaurer' playlist dir
-            // and comments and pictures dir after restoration.
-            IntegrationTestUtil.verifyPlaylistDirectoryContents(
-              playlistTitle: 'A restaurer',
-              expectedAudioFiles: [
-                "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.mp3",
-                "250213-104308-Le 21 juillet 1913 _ Prières et méditations, La Mère 25-02-13.mp3",
-                "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.mp3",
-                "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.mp3",
-              ],
-              expectedCommentFiles: [
-                "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.json",
-                "250213-104308-Le 21 juillet 1913 _ Prières et méditations, La Mère 25-02-13.json",
-                "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.json",
-                "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json",
-              ],
-              expectedPictureFiles: [
-                "250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12.json",
-                "250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12.json",
-                "250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json",
-              ],
-              playlistRootDir: playlistRootDirName,
-              doesPictureAudioMapFileNameExist: true,
-              applicationPictureDir:
-                  "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
-              pictureFileNameOne: "Sam Altman.jpg",
-              audioForPictureTitleOneLst: [
-                "A restaurer|250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12",
-                "A restaurer|250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12"
-              ],
-              pictureFileNameTwo: "Jésus mon Amour.jpg",
-              audioForPictureTitleTwoLst: [
-                "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
-              ],
-              pictureFileNameThree: "Jésus je T'adore.jpg",
-              audioForPictureTitleThreeLst: [
-                "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
-              ],
             );
 
             // Verify the content of the 'local' playlist dir
@@ -20404,17 +20251,8 @@ void main() {
               doesPictureAudioMapFileNameExist: true,
               applicationPictureDir:
                   "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
-              pictureFileNameOne: "Sam Altman.jpg",
+              pictureFileNameOne: "Jésus je T'adore.jpg",
               audioForPictureTitleOneLst: [
-                "A restaurer|250213-083024-Sam Altman prédit la FIN de 99% des développeurs humains (c'estpour2025...) 25-02-12",
-                "A restaurer|250224-131619-L'histoire secrète derrière la progression de l'IA 25-02-12"
-              ],
-              pictureFileNameTwo: "Jésus mon Amour.jpg",
-              audioForPictureTitleTwoLst: [
-                "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
-              ],
-              pictureFileNameThree: "Jésus je T'adore.jpg",
-              audioForPictureTitleThreeLst: [
                 "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
               ],
             );
@@ -20709,7 +20547,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 5 playlist, 5 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn S8 audio selected.zip".\n\nSince the playlists were created, they are positioned at the end of the playlist list.',
+                  'Restored 5 playlist, 5 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn S8 audio selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -20732,7 +20570,6 @@ void main() {
             );
 
             List<String> playlistsTitles = [
-              "A restaurer",
               "local",
               "Empty",
               "local_comment",
@@ -20899,7 +20736,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 4 playlist, 5 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 6 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn S8 audio selected.zip".\n\nSince the playlists were created, they are positioned at the end of the playlist list.',
+                  'Restored 4 playlist, 5 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 6 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn S8 audio selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -20910,15 +20747,6 @@ void main() {
               tester: tester,
               playlistTitle: 'local',
               isSelected: true,
-            );
-
-            // Verify that the after restoration selected playlist is not
-            // 'S8 audio'. The 'S8 audio' playlist was selected in the
-            // restoration zip file.
-            IntegrationTestUtil.verifyPlaylistSelection(
-              tester: tester,
-              playlistTitle: 'A restaurer',
-              isSelected: false,
             );
 
             // Purge the test playlist directory so that the created test
@@ -21140,7 +20968,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 5 playlist, 5 comment and 6 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nSince the playlists were created, they are positioned at the end of the playlist list.',
+                  'Restored 5 playlist, 5 comment and 6 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -21150,7 +20978,6 @@ void main() {
             // displayed audio titles and subtitles.
 
             List<String> playlistsTitles = [
-              "A restaurer",
               "local",
               "Empty",
               "local_comment",
@@ -22191,7 +22018,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 5 playlist, 5 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn S8 audio selected.zip".\n\nSince the playlists were created, they are positioned at the end of the playlist list.',
+                  'Restored 5 playlist, 5 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn S8 audio selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
