@@ -9652,7 +9652,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle();
 
-          // Select the 'Not playable' sort/filter parms
+          // Select the 'Not playable' sort/filter parms in order to redownload
+          // the not playable audio's
           await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
             tester: tester,
             sortFilterParmsName: notPlayableSortFilterParmsName,
@@ -9672,7 +9673,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Add a delay to allow the download to finish.
-          for (int i = 0; i < 10; i++) {
+          for (int i = 0; i < 5; i++) {
             await Future.delayed(const Duration(seconds: 2));
             await tester.pumpAndSettle();
           }
@@ -9681,6 +9682,20 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           int remainingNotPlayableAudioNumber = 0;
+
+          // Type on the Playlists button to hide the playlist view
+          // await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          // await tester.pumpAndSettle();
+
+          // Verify that the dropdown button has been updated with the
+          // 'default' sort/filter parms selected
+          // const String defaultTitle = 'default';
+          // // Select the 'Not playable' sort/filter parms in order to redownload
+          // // the not playable audio's
+          // await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
+          //   tester: tester,
+          //   sortFilterParmsName: defaultTitle,
+          // );
 
           final Finder warningMessageDisplayDialogFinder =
               find.byType(WarningMessageDisplayDialog);
@@ -9740,14 +9755,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             );
 
             String playlistDownloadPath =
-                audioDownloadVM.listOfPlaylist[3].downloadPath;
+                audioDownloadVM.listOfPlaylist[0].downloadPath;
 
             // Verifying that the playlist json file was correctly modified.
             IntegrationTestUtil
                 .verifyPlaylistDataElementsUpdatedInPlaylistJsonFile(
-              selectedPlaylistTitle: playlistToRedownloadTitle,
+              selectedPlaylistTitle: playlistToRedownloadTitle, // MaValTest
               audioSortFilterParmsNamePlaylistDownloadView:
-                  notPlayableSortFilterParmsName, // The playlist download view is not affected
+                  notPlayableSortFilterParmsName, // The playlist download view is affected
               audioSortFilterParmsNameAudioPlayerView: "",
               audioPlayingOrder: AudioPlayingOrder.ascending,
               playlistDownloadPath: playlistDownloadPath,
@@ -9895,7 +9910,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           String playlistDownloadPath =
-              audioDownloadVM.listOfPlaylist[3].downloadPath;
+              audioDownloadVM.listOfPlaylist[0].downloadPath;
 
           // Verifying that the playlist json file was correctly modified.
           IntegrationTestUtil
