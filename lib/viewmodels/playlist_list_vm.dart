@@ -3344,7 +3344,7 @@ class PlaylistListVM extends ChangeNotifier {
               .isAtOrAfter(fromAudioDownloadDateTime);
         }
 
-        // Include imported audios based on most recent comment creation date
+        // Include converted audios based on most recent comment creation date
         if (audio.audioType == AudioType.textToSpeech) {
           // This enables to put the mp3 of a modified text to speech audio in
           // a mp3 zip if download date is before or at last created comment
@@ -3355,7 +3355,11 @@ class PlaylistListVM extends ChangeNotifier {
           List<Comment> comments = _commentVM.loadAudioComments(audio: audio);
 
           if (comments.isEmpty) {
-            return false; // No comments, so exclude
+            return audio.audioDownloadDateTime
+              .isAtOrAfter(fromAudioDownloadDateTime); // No comments, so use the
+              // audio download date to decide the mp3 inclusion. This date is the
+              // text to speech audio creation date. This avoids to exclude the text
+              // to speech audio mp3 if its created comment was deleted.
           }
 
           // Find the most recent comment creation date
