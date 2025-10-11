@@ -26121,7 +26121,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Local restore- short - test - playlist.zip".\n\nSince the playlist was created, it is positioned at the end of the playlist list.',
+                  'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Local restore- short - test - playlist.zip".\n\nSince the playlist\n  "Local restore- short - test - playlist"\nwas created, it is positioned at the end of the playlist list.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -26270,7 +26270,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Local restore- short - test - playlist.zip".\n\nSince the playlist was created, it is positioned at the end of the playlist list.',
+                  'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Local restore- short - test - playlist.zip".\n\nSince the playlist\n  "Local restore- short - test - playlist"\nwas created, it is positioned at the end of the playlist list.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -27113,7 +27113,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Local restore- short - test - playlist.zip".\n\nSince the playlist was created, it is positioned at the end of the playlist list.',
+                  'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Local restore- short - test - playlist.zip".\n\nSince the playlist\n  "Local restore- short - test - playlist"\nwas created, it is positioned at the end of the playlist list.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -27161,7 +27161,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Prières du Maître.zip".\n\nSince the playlist was created, it is positioned at the end of the playlist list.',
+                  'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Prières du Maître.zip".\n\nDeleted 2 playlist(s)\n  "Restore- short - test - playlist",\n  "Local restore- short - test - playlist"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlist\n  "Prières du Maître"\nwas created, it is positioned at the end of the playlist list.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -27170,17 +27170,9 @@ void main() {
             // still selected
             IntegrationTestUtil.verifyPlaylistSelection(
               tester: tester,
-              playlistTitle: uniqueYoutubePlaylistTitle,
+              playlistTitle: notIndividuallySavedPlaylistTitle,
               isSelected: true,
             );
-
-            // Ensure that the restored playlist is not
-            // selected, although it is selected in the
-            // playlist zip file
-            IntegrationTestUtil.verifyPlaylistSelection(
-                tester: tester,
-                playlistTitle: notIndividuallySavedPlaylistTitle,
-                isSelected: false);
 
             // Now execute the 'Update Playlist JSON Files'
             // appbar menu
@@ -27193,17 +27185,9 @@ void main() {
             // still selected
             IntegrationTestUtil.verifyPlaylistSelection(
               tester: tester,
-              playlistTitle: uniqueYoutubePlaylistTitle,
+              playlistTitle: notIndividuallySavedPlaylistTitle,
               isSelected: true,
             );
-
-            // Ensure that the restored playlist is not
-            // selected, although it is selected in the
-            // playlist zip file
-            IntegrationTestUtil.verifyPlaylistSelection(
-                tester: tester,
-                playlistTitle: notIndividuallySavedPlaylistTitle,
-                isSelected: false);
 
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
@@ -27328,7 +27312,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Local restore- short - test - playlist.zip".\n\nSince the playlist was created, it is positioned at the end of the playlist list.',
+                  'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Local restore- short - test - playlist.zip".\n\nSince the playlist\n  "Local restore- short - test - playlist"\nwas created, it is positioned at the end of the playlist list.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -27376,17 +27360,9 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Prières du Maître.zip".\n\nSince the playlist was created, it is positioned at the end of the playlist list.',
+                  'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Prières du Maître.zip".\n\nDeleted 2 playlist(s)\n  "Restore- short - test - playlist",\n  "Local restore- short - test - playlist"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlist\n  "Prières du Maître"\nwas created, it is positioned at the end of the playlist list.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
-            );
-
-            // Verifying that the first restored playlist is
-            // still selected
-            IntegrationTestUtil.verifyPlaylistSelection(
-              tester: tester,
-              playlistTitle: uniqueYoutubePlaylistTitle,
-              isSelected: true,
             );
 
             // Ensure that the restored playlist is not
@@ -27395,7 +27371,7 @@ void main() {
             IntegrationTestUtil.verifyPlaylistSelection(
                 tester: tester,
                 playlistTitle: notIndividuallySavedPlaylistTitle,
-                isSelected: false);
+                isSelected: true);
 
             // Now execute the 'Update Playlist JSON Files'
             // appbar menu
@@ -27404,21 +27380,13 @@ void main() {
               doRemoveDeletedAudioFiles: false,
             );
 
-            // Verifying that the first restored playlist is
-            // still selected
-            IntegrationTestUtil.verifyPlaylistSelection(
-              tester: tester,
-              playlistTitle: uniqueYoutubePlaylistTitle,
-              isSelected: true,
-            );
-
-            // Ensure that the restored playlist is not
-            // selected, although it is selected in the
+            // Ensure that the restored playlist is 
+            // selected, since it is selected in the
             // playlist zip file
             IntegrationTestUtil.verifyPlaylistSelection(
                 tester: tester,
                 playlistTitle: notIndividuallySavedPlaylistTitle,
-                isSelected: false);
+                isSelected: true);
 
             final SettingsDataService settingsDataService = SettingsDataService(
               sharedPreferences: await SharedPreferences.getInstance(),
