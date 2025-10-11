@@ -16413,7 +16413,7 @@ void main() {
           tester: tester,
           confirmActionDialogTitle: "Prevision of the Save Duration",
           confirmActionDialogMessagePossibleLst: [
-            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:",
+            "Saving the audio MP3 in one or several ZIP file(s) will take this estimated duration (hh:mm:ss): 0:00:",
           ],
           useContains: true,
           closeDialogWithConfirmButton: true,
@@ -17198,7 +17198,7 @@ void main() {
           tester: tester,
           confirmActionDialogTitle: "Prevision of the Save Duration",
           confirmActionDialogMessagePossibleLst: [
-            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:",
+            "Saving the audio MP3 in one or several ZIP file(s) will take this estimated duration (hh:mm:ss): 0:00:",
           ],
           useContains: true,
           closeDialogWithConfirmButton: true,
@@ -17375,8 +17375,8 @@ void main() {
           tester: tester,
           confirmActionDialogTitle: "Prevision of the Save Duration",
           confirmActionDialogMessagePossibleLst: [
-            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:01.",
-            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02.",
+            "Saving the audio MP3 in one or several ZIP file(s) will take this estimated duration (hh:mm:ss): 0:00:01.",
+            "Saving the audio MP3 in one or several ZIP file(s) will take this estimated duration (hh:mm:ss): 0:00:02.",
           ],
           closeDialogWithConfirmButton: true,
           usePumpAndSettle: true,
@@ -17533,7 +17533,7 @@ void main() {
           tester: tester,
           confirmActionDialogTitle: "Prevision of the Save Duration",
           confirmActionDialogMessagePossibleLst: [
-            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:00.",
+            "Saving the audio MP3 in one or several ZIP file(s) will take this estimated duration (hh:mm:ss): 0:00:00.",
           ],
           closeDialogWithConfirmButton: true,
           usePumpAndSettle: true,
@@ -23229,54 +23229,26 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 2 playlist, 5 comment and 4 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 5 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows audioLearn_2025-05-11_13_16.zip".\n\nSince the playlists were created, they are positioned at the end of the playlist list.',
+                'Restored 2 playlist, 5 comment and 4 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 5 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows audioLearn_2025-05-11_13_16.zip".\n\nDeleted 1 playlist(s)\n  "Prières du Maître"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "A restaurer",\n  "local"\nwere created, they are positioned at the end of the playlist list.',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
 
           // Verify that after the second restoration the selected
-          // playlist is still 'Prières du Maître'.
-          IntegrationTestUtil.verifyPlaylistSelection(
-            tester: tester,
-            playlistTitle: 'Prières du Maître',
-            isSelected: true,
-          );
-
-          // Verify that the after the second restoration the selected
-          // is not 'A restaurer'. The 'A restaurer' playlist was selected
-          // in the restoration zip file.
+          // playlist is 'A restaurer'.
           IntegrationTestUtil.verifyPlaylistSelection(
             tester: tester,
             playlistTitle: 'A restaurer',
-            isSelected: false,
+            isSelected: true,
           );
 
           // Verifying the restored playlists list as well as their
           // displayed audio titles and subtitles.
 
           List<String> playlistsTitles = [
-            "Prières du Maître",
             "A restaurer",
             "local",
           ];
-
-          // Verify 'Prières du Maître' playlist
-
-          List<String> audioTitles = [
-            "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-          ];
-
-          List<String> audioSubTitles = [
-            "0:02:39.6 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00",
-          ];
-
-          _verifyRestoredPlaylistAndAudio(
-            tester: tester,
-            selectedPlaylistTitle: 'Prières du Maître',
-            playlistsTitles: playlistsTitles,
-            audioTitles: audioTitles,
-            audioSubTitles: audioSubTitles,
-          );
 
           // Now verify 'local' playlist
 
@@ -23286,11 +23258,11 @@ void main() {
             playlistToSelectTitle: 'local',
           );
 
-          audioTitles = [
+          List<String> audioTitles = [
             "Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage!",
           ];
 
-          audioSubTitles = [
+          List<String> audioSubTitles = [
             "0:24:21.8 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30",
           ];
 
@@ -23332,7 +23304,6 @@ void main() {
                 "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
             pictureFileNameOne: 'Jésus le Dieu vivant.jpg',
             audioForPictureTitleOneLst: [
-              "Prières du Maître|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
               "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
               "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
             ],
@@ -23508,54 +23479,26 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 2 playlist, 5 comment and 4 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 5 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows audioLearn_2025-05-11_13_16.zip".\n\nSince the playlists were created, they are positioned at the end of the playlist list.',
+                'Restored 2 playlist, 5 comment and 4 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 5 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows audioLearn_2025-05-11_13_16.zip".\n\nDeleted 1 playlist(s)\n  "Prières du Maître"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "A restaurer",\n  "local"\nwere created, they are positioned at the end of the playlist list.',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
 
           // Verify that after the second restoration the selected
-          // playlist is still 'Prières du Maître'.
-          IntegrationTestUtil.verifyPlaylistSelection(
-            tester: tester,
-            playlistTitle: 'Prières du Maître',
-            isSelected: true,
-          );
-
-          // Verify that the after the second restoration the selected
-          // is not 'A restaurer'. The 'A restaurer' playlist was selected
-          // in the restoration zip file.
+          // playlist is 'A restaurer'.
           IntegrationTestUtil.verifyPlaylistSelection(
             tester: tester,
             playlistTitle: 'A restaurer',
-            isSelected: false,
+            isSelected: true,
           );
 
           // Verifying the restored playlists list as well as their
           // displayed audio titles and subtitles.
 
           List<String> playlistsTitles = [
-            "Prières du Maître",
             "A restaurer",
             "local",
           ];
-
-          // Verify 'Prières du Maître' playlist
-
-          List<String> audioTitles = [
-            "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-          ];
-
-          List<String> audioSubTitles = [
-            "0:02:39.6 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00",
-          ];
-
-          _verifyRestoredPlaylistAndAudio(
-            tester: tester,
-            selectedPlaylistTitle: 'Prières du Maître',
-            playlistsTitles: playlistsTitles,
-            audioTitles: audioTitles,
-            audioSubTitles: audioSubTitles,
-          );
 
           // Now verify 'local' playlist
 
@@ -23565,11 +23508,11 @@ void main() {
             playlistToSelectTitle: 'local',
           );
 
-          audioTitles = [
+          List<String> audioTitles = [
             "Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage!",
           ];
 
-          audioSubTitles = [
+          List<String> audioSubTitles = [
             "0:24:21.8 8.92 MB at 1.62 MB/sec on 13/02/2025 at 08:30",
           ];
 
@@ -23611,7 +23554,6 @@ void main() {
                 "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
             pictureFileNameOne: 'Jésus le Dieu vivant.jpg',
             audioForPictureTitleOneLst: [
-              "Prières du Maître|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
               "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
               "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
             ],
