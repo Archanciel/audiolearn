@@ -3295,7 +3295,7 @@ abstract class AppLocalizations {
   /// No description provided for @savingAudioToZipTime.
   ///
   /// In en, this message translates to:
-  /// **'Saving the audio MP3 in one or several ZIP files will take this estimated duration (hh:mm:ss): {evaluatedSaveTime}.'**
+  /// **'Saving the audio MP3 in one or several ZIP file(s) will take this estimated duration (hh:mm:ss): {evaluatedSaveTime}.'**
   String savingAudioToZipTime(Object evaluatedSaveTime);
 
   /// No description provided for @savingAudioToZipTimeTitle.
