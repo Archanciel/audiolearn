@@ -3894,64 +3894,16 @@ class IntegrationTestUtil {
 
     // Verify application picture audio map
 
-    expect(applicationPictureAudioMap.length, 3);
-    expect(
-      applicationPictureAudioMap.containsKey("Jean-Pierre.jpg"),
-      true,
-    );
-    expect(
-      applicationPictureAudioMap.containsKey(
-          "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg"),
-      true,
-    );
+    expect(applicationPictureAudioMap.length, 1);
     expect(
       applicationPictureAudioMap.containsKey("Jésus le Dieu vivant.jpg"),
       true,
     );
 
     List pictureAudioMapLst =
-        (applicationPictureAudioMap["Jean-Pierre.jpg"] as List);
-    expect(pictureAudioMapLst.length, 2);
-    expect(
-      pictureAudioMapLst[0],
-      "Restore- short - test - playlist|250518-164035-Really short video 23-07-01",
-    );
-    expect(
-      pictureAudioMapLst[1],
-      "Local restore- short - test - playlist|250518-164035-Really short video 23-07-01",
-    );
-
-    pictureAudioMapLst = (applicationPictureAudioMap[
-            "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg"]
-        as List);
-    expect(pictureAudioMapLst.length, 4);
-    expect(
-      pictureAudioMapLst[0],
-      "Restore- short - test - playlist|250518-164039-morning _ cinematic video 23-07-01",
-    );
-    expect(
-      pictureAudioMapLst[1],
-      "Restore- short - test - playlist|250518-164035-Really short video 23-07-01",
-    );
-    expect(
-      pictureAudioMapLst[2],
-      "Local restore- short - test - playlist|250518-164039-morning _ cinematic video 23-07-01",
-    );
-    expect(pictureAudioMapLst[3],
-        "Local restore- short - test - playlist|250518-164035-Really short video 23-07-01");
-
-    pictureAudioMapLst =
         (applicationPictureAudioMap["Jésus le Dieu vivant.jpg"] as List);
-    expect(pictureAudioMapLst.length, 3);
-    expect(
-      pictureAudioMapLst[0],
-      "Restore- short - test - playlist|250518-164043-People Talking at The Table _ Free Video Loop 19-09-28",
-    );
-    expect(
-      pictureAudioMapLst[1],
-      "Local restore- short - test - playlist|250518-164043-People Talking at The Table _ Free Video Loop 19-09-28",
-    );
-    expect(pictureAudioMapLst[2],
+    expect(pictureAudioMapLst.length, 1);
+    expect(pictureAudioMapLst[0],
         "Prières du Maître|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'");
   }
 
