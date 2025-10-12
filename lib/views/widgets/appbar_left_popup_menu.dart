@@ -805,9 +805,10 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             if (Platform.isAndroid) {
               // On Android, use the predefined path - no file picker needed
               Directory? externalDir = await getExternalStorageDirectory();
+
               if (externalDir != null) {
                 Directory mp3Dir =
-                    Directory('${externalDir.path}/downloads/AudioLearn');
+                    Directory('storage/9016-4EF8/Sauvegarde/mp3');
                 if (!await mp3Dir.exists()) {
                   await mp3Dir.create(recursive: true);
                 }
@@ -822,6 +823,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 warningMessageVMlistenFalse.setError(
                   errorType: ErrorType.androidStorageAccessError,
                 );
+
                 return;
               }
             } else {
@@ -1040,7 +1042,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
     if (enteredDateTimeStr.isEmpty) {
       return InvalidValueState.enteredDateEmpty;
     }
-    
+
     // Try to parse as date time first
     DateTime? parsedDateTime = dateFormatVM.parseDateTimeStrUsinAppDateFormat(
       dateTimeStr: enteredDateTimeStr,
