@@ -595,7 +595,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               Directory? externalDir = await getExternalStorageDirectory();
               if (externalDir != null) {
                 Directory mp3Dir =
-                    Directory('${externalDir.path}/downloads/AudioLearn');
+                    Directory('storage/9016-4EF8/Sauvegarde/mp3');
                 if (!await mp3Dir.exists()) {
                   await mp3Dir.create(recursive: true);
                 }
