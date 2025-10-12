@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/utils/dir_util.dart';
 import 'package:audiolearn/utils/duration_expansion.dart';
@@ -7,6 +9,7 @@ import 'package:audiolearn/viewmodels/audio_player_vm.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import '../../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -198,10 +201,9 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
           key: const Key('popup_menu_convert_text_to_audio_in_playlist'),
           value: PlaylistPopupMenuAction.convertTextToAudioInPlaylist,
           child: Tooltip(
-            message: AppLocalizations.of(context)!
-                .playlistConvertTextToAudioMenuTooltip,
-            child: Text(
-                AppLocalizations.of(context)!.playlistConvertTextToAudioMenu),
+            message:
+                AppLocalizations.of(context)!.playlistConvertTextToAudioMenuTooltip,
+            child: Text(AppLocalizations.of(context)!.playlistConvertTextToAudioMenu),
           ),
         ),
         PopupMenuItem<PlaylistPopupMenuAction>(
@@ -277,8 +279,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
           ),
         ),
         PopupMenuItem<PlaylistPopupMenuAction>(
-          key:
-              const Key('popup_menu_restore_playlist_audio_mp3_files_from_zip'),
+          key: const Key('popup_menu_restore_playlist_audio_mp3_files_from_zip'),
           value: PlaylistPopupMenuAction.restorePlaylistAudioMp3FilesFromZip,
           child: Tooltip(
             message: AppLocalizations.of(context)!
@@ -364,46 +365,47 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             );
             break;
           case PlaylistPopupMenuAction.convertTextToAudioInPlaylist:
-            // Using FocusNode to enable clicking on Enter to close
-            // the dialog
-            final FocusNode focusNode = FocusNode();
-            showDialog<List<dynamic>>(
-              context: context,
-              barrierDismissible: false, // This line prevents the dialog from
-              // closing when tapping outside the dialog
-              builder: (BuildContext context) {
-                return ConvertTextToAudioDialog(
-                  settingsDataService: settingsDataService,
-                  warningMessageVMlistenFalse: warningMessageVMlistenFalse,
-                  targetPlaylist: playlist,
-                  focusNode: focusNode,
-                );
-              },
-            ).then((filterSortAudioAndParmLst) {
-              if (filterSortAudioAndParmLst != null) {
-                // user clicked on Save or Apply button on sort and filter
-                // dialog opened by the popup menu button item
-                List<Audio> returnedAudioList = filterSortAudioAndParmLst[0];
-                AudioSortFilterParameters audioSortFilterParameters =
-                    filterSortAudioAndParmLst[1];
-                String audioSortFilterParametersName =
-                    filterSortAudioAndParmLst[2];
-                playlistListVMlistenFalse
-                    .setSortFilterForSelectedPlaylistPlayableAudiosAndParms(
-                  audioLearnAppViewType:
-                      AudioLearnAppViewType.playlistDownloadView,
-                  sortFilteredSelectedPlaylistPlayableAudio: returnedAudioList,
-                  audioSortFilterParms: audioSortFilterParameters,
-                  audioSortFilterParmsName: audioSortFilterParametersName,
-                  translatedAppliedSortFilterParmsName:
-                      AppLocalizations.of(context)!
-                          .sortFilterParametersAppliedName,
-                );
-                // _wasSortFilterAudioSettingsApplied = true;
-              }
-            });
-            focusNode.requestFocus();
-            break;
+              // Using FocusNode to enable clicking on Enter to close
+              // the dialog
+              final FocusNode focusNode = FocusNode();
+              showDialog<List<dynamic>>(
+                context: context,
+                barrierDismissible: false, // This line prevents the dialog from
+                // closing when tapping outside the dialog
+                builder: (BuildContext context) {
+                  return ConvertTextToAudioDialog(
+                    settingsDataService: settingsDataService,
+                    warningMessageVMlistenFalse: warningMessageVMlistenFalse,
+                    targetPlaylist: playlist,
+                    focusNode: focusNode,
+                  );
+                },
+              ).then((filterSortAudioAndParmLst) {
+                if (filterSortAudioAndParmLst != null) {
+                  // user clicked on Save or Apply button on sort and filter
+                  // dialog opened by the popup menu button item
+                  List<Audio> returnedAudioList = filterSortAudioAndParmLst[0];
+                  AudioSortFilterParameters audioSortFilterParameters =
+                      filterSortAudioAndParmLst[1];
+                  String audioSortFilterParametersName =
+                      filterSortAudioAndParmLst[2];
+                  playlistListVMlistenFalse
+                      .setSortFilterForSelectedPlaylistPlayableAudiosAndParms(
+                    audioLearnAppViewType:
+                        AudioLearnAppViewType.playlistDownloadView,
+                    sortFilteredSelectedPlaylistPlayableAudio:
+                        returnedAudioList,
+                    audioSortFilterParms: audioSortFilterParameters,
+                    audioSortFilterParmsName: audioSortFilterParametersName,
+                    translatedAppliedSortFilterParmsName:
+                        AppLocalizations.of(context)!
+                            .sortFilterParametersAppliedName,
+                  );
+                  // _wasSortFilterAudioSettingsApplied = true;
+                }
+              });
+              focusNode.requestFocus();
+              break;
           case PlaylistPopupMenuAction.downloadVideoUrlsFromTextFileInPlaylist:
             String selectedFilePathName =
                 await _filePickerSelectVideoUrlsTextFile();
@@ -586,11 +588,38 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             );
             break;
           case PlaylistPopupMenuAction.savePlaylistAudioMp3FilesToZip:
-            String? targetSaveDirectoryPath =
-                await UiUtil.filePickerSelectTargetDir();
+            String? targetSaveDirectoryPath;
 
-            if (targetSaveDirectoryPath == null) {
-              return;
+            if (Platform.isAndroid) {
+              // On Android, use the predefined path - no file picker needed
+              Directory? externalDir = await getExternalStorageDirectory();
+              if (externalDir != null) {
+                Directory mp3Dir =
+                    Directory('${externalDir.path}/downloads/AudioLearn');
+                if (!await mp3Dir.exists()) {
+                  await mp3Dir.create(recursive: true);
+                }
+                targetSaveDirectoryPath = mp3Dir.path;
+              } else {
+                // Handle error case
+                final WarningMessageVM warningMessageVMlistenFalse =
+                    Provider.of<WarningMessageVM>(
+                  context,
+                  listen: false,
+                );
+                warningMessageVMlistenFalse.setError(
+                  errorType: ErrorType.androidStorageAccessError,
+                );
+                return;
+              }
+            } else {
+              // On other platforms, use the file picker
+              targetSaveDirectoryPath =
+                  await UiUtil.filePickerSelectTargetDir();
+
+              if (targetSaveDirectoryPath == null) {
+                return;
+              }
             }
 
             final PlaylistListVM playlistListVMlistenFalse =
@@ -687,14 +716,14 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                       await playlistListVMlistenFalse
                           .savePlaylistsAudioMp3FilesToZip(
                         listOfPlaylists: [playlist],
-                        targetDir: targetSaveDirectoryPath,
+                        targetDir: targetSaveDirectoryPath!,
                         fromAudioDownloadDateTime:
                             parseDateTimeOrDateStrUsinAppDateFormat,
                         zipFileSizeLimitInMb: settingsDataService.get(
-                              settingType: SettingType.playlists,
-                              settingSubType:
-                                  Playlists.maxSavableAudioMp3FileSizeInMb,
-                            ) ??
+                          settingType: SettingType.playlists,
+                          settingSubType:
+                              Playlists.maxSavableAudioMp3FileSizeInMb,
+                        ) ??
                             kMp3ZipFileSizeLimitInMb,
                         uniquePlaylistIsSaved: true,
                       );
@@ -1370,7 +1399,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
     if (enteredDateTimeStr.isEmpty) {
       return InvalidValueState.enteredDateEmpty;
     }
-
+    
     // Try to parse as date time first
     DateTime? parsedDateTime = dateFormatVM.parseDateTimeStrUsinAppDateFormat(
       dateTimeStr: enteredDateTimeStr,
