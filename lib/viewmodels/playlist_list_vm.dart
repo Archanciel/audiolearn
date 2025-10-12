@@ -3316,8 +3316,7 @@ class PlaylistListVM extends ChangeNotifier {
     if (Platform.isAndroid) {
       Directory? externalDir = await getExternalStorageDirectory();
       if (externalDir != null) {
-        Directory mp3Dir =
-            Directory('${externalDir.path}/downloads/AudioLearn');
+        Directory mp3Dir = Directory('storage/9016-4EF8/Sauvegarde/mp3');
         if (!await mp3Dir.exists()) {
           await mp3Dir.create(recursive: true);
         }
@@ -3355,11 +3354,11 @@ class PlaylistListVM extends ChangeNotifier {
           List<Comment> comments = _commentVM.loadAudioComments(audio: audio);
 
           if (comments.isEmpty) {
-            return audio.audioDownloadDateTime
-              .isAtOrAfter(fromAudioDownloadDateTime); // No comments, so use the
-              // audio download date to decide the mp3 inclusion. This date is the
-              // text to speech audio creation date. This avoids to exclude the text
-              // to speech audio mp3 if its created comment was deleted.
+            return audio.audioDownloadDateTime.isAtOrAfter(
+                fromAudioDownloadDateTime); // No comments, so use the
+            // audio download date to decide the mp3 inclusion. This date is the
+            // text to speech audio creation date. This avoids to exclude the text
+            // to speech audio mp3 if its created comment was deleted.
           }
 
           // Find the most recent comment creation date
@@ -3889,7 +3888,7 @@ class PlaylistListVM extends ChangeNotifier {
     //  7 added comment number,
     //  8 deleted audio titles list,
     //  9 were new playlists added at end of non empty playlist list
-  ///  10 deleted existing playlist title list
+    ///  10 deleted existing playlist title list
     List<dynamic> restoredInfoLst = await _restoreFilesFromZip(
       zipFilePathName: zipFilePathName,
       doReplaceExistingPlaylists: doReplaceExistingPlaylists,
@@ -4107,8 +4106,7 @@ class PlaylistListVM extends ChangeNotifier {
       restoredInfoLst.add(restoredAudioReferencesNumber);
       restoredInfoLst.add(0); // adding 0 to the updated comment number
       restoredInfoLst.add(0); // adding 0 to the added comment number
-      restoredInfoLst
-          .add([]); // adding [] to deleted audio titles list
+      restoredInfoLst.add([]); // adding [] to deleted audio titles list
       restoredInfoLst.add(false); // newPlaylistsAddedAtEndOfPlaylistLst
       restoredInfoLst.add([]); // deleted existing playlist titles list
 
@@ -4395,7 +4393,8 @@ class PlaylistListVM extends ChangeNotifier {
     //   [3] number of modified comments,
     //   [4] number of added comments,
     //   [5] deleted audio titles list.
-    List<dynamic> restoredNumberLst = await _mergeZipPlaylistsWithExistingPlaylists(
+    List<dynamic> restoredNumberLst =
+        await _mergeZipPlaylistsWithExistingPlaylists(
       zipExistingPlaylistJsonContentsMap: zipExistingPlaylistJsonContentsMap,
       archive: archive,
     );
@@ -4570,7 +4569,7 @@ class PlaylistListVM extends ChangeNotifier {
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
         audio: audio,
       );
-      
+
       deletedAudioTitlesLst.add(audio.validVideoTitle);
     }
 
