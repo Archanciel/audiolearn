@@ -3809,7 +3809,7 @@ class PlaylistListVM extends ChangeNotifier {
     // big on Android.
     double evaluatedSeconds = (savedAudiosFileSize /
                 (savedAudioBytesNumberToZipInOneMicroSecond * 1200000));
-    evaluatedSeconds /= 3.4; // the estimated seconds are 3.4 times too big
+    evaluatedSeconds /= 3.55; // the estimated seconds are 3.9 times too big
                 
     _savingAudioMp3FileToZipDuration = Duration(
         seconds: evaluatedSeconds
