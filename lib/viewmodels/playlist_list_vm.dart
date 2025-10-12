@@ -3262,8 +3262,8 @@ class PlaylistListVM extends ChangeNotifier {
     return savedMp3InfoLst;
   }
 
-  /// Returns the list described in the main method or [] if no audio file was downloaded at or after
-  /// the passed [fromAudioDownloadDateTime].
+  /// Returns the list described in the main method or [] if no audio file was downloaded at or
+  /// after the passed [fromAudioDownloadDateTime].
   ///
   /// The returned list contains
   /// [
