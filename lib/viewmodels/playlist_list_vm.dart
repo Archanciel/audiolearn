@@ -3178,7 +3178,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// [uniquePlaylistIsSaved] parameter is set to true.
   ///
   /// This method saves the audio MP3 files located in the passed playlist(s) which were downloaded
-  /// at or after the passed [fromAudioDownloadDateTime] in ZIP file(s) located in the passed [targetDir].
+  /// at or after the passed [fromAudioDownloadDateTime] in ZIP file(s) located in the passed [targetDirStrOnWindows].
   ///
   /// Since creating a MP3 ZIP file on an Android device can't exceed a certain size, the passed
   /// [zipFileSizeLimitInMb] parameter value is used to limit the size of each created ZIP file.
@@ -3199,19 +3199,19 @@ class PlaylistListVM extends ChangeNotifier {
   /// ]
   Future<List<dynamic>> savePlaylistsAudioMp3FilesToZip({
     required List<Playlist> listOfPlaylists,
-    required String targetDir,
+    String targetDirStrOnWindows = '',
     required DateTime fromAudioDownloadDateTime,
     required double zipFileSizeLimitInMb,
     bool uniquePlaylistIsSaved = false,
   }) async {
-    if (targetDir == '/') {
+    if (targetDirStrOnWindows == '/') {
       return [];
     }
 
     List<dynamic> savedMp3InfoLst =
         await _saveAllAudioMp3FilesToZipWithZipSizeLimit(
       listOfPlaylists: listOfPlaylists,
-      targetDirStr: targetDir,
+      targetDirStrOnWindows: targetDirStrOnWindows,
       fromAudioDownloadDateTime: fromAudioDownloadDateTime,
       zipFileSizeLimitInMb: zipFileSizeLimitInMb,
       uniquePlaylistIsSaved: uniquePlaylistIsSaved,
@@ -3278,7 +3278,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// ]
   Future<List<dynamic>> _saveAllAudioMp3FilesToZipWithZipSizeLimit({
     required List<Playlist> listOfPlaylists,
-    required String targetDirStr,
+    required String targetDirStrOnWindows,
     required DateTime fromAudioDownloadDateTime,
     required double zipFileSizeLimitInMb,
     required bool uniquePlaylistIsSaved,
@@ -3318,6 +3318,7 @@ class PlaylistListVM extends ChangeNotifier {
       if (externalDir != null) {
         Directory mp3Dir =
             Directory('${externalDir.path}/downloads/AudioLearn');
+        // Directory mp3Dir = Directory('storage/9016-4EF8/Sauvegarde/mp3');
         if (!await mp3Dir.exists()) {
           await mp3Dir.create(recursive: true);
         }
@@ -3326,7 +3327,7 @@ class PlaylistListVM extends ChangeNotifier {
         throw Exception('Could not access external storage');
       }
     } else {
-      actualTargetDir = targetDirStr;
+      actualTargetDir = targetDirStrOnWindows;
     }
 
     // Collect all audio files that need to be saved (WITHOUT loading them into memory)
@@ -3355,11 +3356,11 @@ class PlaylistListVM extends ChangeNotifier {
           List<Comment> comments = _commentVM.loadAudioComments(audio: audio);
 
           if (comments.isEmpty) {
-            return audio.audioDownloadDateTime
-              .isAtOrAfter(fromAudioDownloadDateTime); // No comments, so use the
-              // audio download date to decide the mp3 inclusion. This date is the
-              // text to speech audio creation date. This avoids to exclude the text
-              // to speech audio mp3 if its created comment was deleted.
+            return audio.audioDownloadDateTime.isAtOrAfter(
+                fromAudioDownloadDateTime); // No comments, so use the
+            // audio download date to decide the mp3 inclusion. This date is the
+            // text to speech audio creation date. This avoids to exclude the text
+            // to speech audio mp3 if its created comment was deleted.
           }
 
           // Find the most recent comment creation date
@@ -3808,12 +3809,11 @@ class PlaylistListVM extends ChangeNotifier {
     // the savedAudioBytesNumberToZipInOneMicroSecond is 1.2 times too
     // big on Android.
     double evaluatedSeconds = (savedAudiosFileSize /
-                (savedAudioBytesNumberToZipInOneMicroSecond * 1200000));
+        (savedAudioBytesNumberToZipInOneMicroSecond * 1200000));
     evaluatedSeconds /= 3.57; // the estimated seconds are 3.57 times too big
-                
-    _savingAudioMp3FileToZipDuration = Duration(
-        seconds: evaluatedSeconds
-            .ceil());
+
+    _savingAudioMp3FileToZipDuration =
+        Duration(seconds: evaluatedSeconds.ceil());
 
     return _savingAudioMp3FileToZipDuration;
   }
@@ -3892,7 +3892,7 @@ class PlaylistListVM extends ChangeNotifier {
     //  7 added comment number,
     //  8 deleted audio titles list,
     //  9 were new playlists added at end of non empty playlist list
-  ///  10 deleted existing playlist title list
+    ///  10 deleted existing playlist title list
     List<dynamic> restoredInfoLst = await _restoreFilesFromZip(
       zipFilePathName: zipFilePathName,
       doReplaceExistingPlaylists: doReplaceExistingPlaylists,
@@ -4110,8 +4110,7 @@ class PlaylistListVM extends ChangeNotifier {
       restoredInfoLst.add(restoredAudioReferencesNumber);
       restoredInfoLst.add(0); // adding 0 to the updated comment number
       restoredInfoLst.add(0); // adding 0 to the added comment number
-      restoredInfoLst
-          .add([]); // adding [] to deleted audio titles list
+      restoredInfoLst.add([]); // adding [] to deleted audio titles list
       restoredInfoLst.add(false); // newPlaylistsAddedAtEndOfPlaylistLst
       restoredInfoLst.add([]); // deleted existing playlist titles list
 
@@ -4398,7 +4397,8 @@ class PlaylistListVM extends ChangeNotifier {
     //   [3] number of modified comments,
     //   [4] number of added comments,
     //   [5] deleted audio titles list.
-    List<dynamic> restoredNumberLst = await _mergeZipPlaylistsWithExistingPlaylists(
+    List<dynamic> restoredNumberLst =
+        await _mergeZipPlaylistsWithExistingPlaylists(
       zipExistingPlaylistJsonContentsMap: zipExistingPlaylistJsonContentsMap,
       archive: archive,
     );
@@ -4573,7 +4573,7 @@ class PlaylistListVM extends ChangeNotifier {
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
         audio: audio,
       );
-      
+
       deletedAudioTitlesLst.add(audio.validVideoTitle);
     }
 

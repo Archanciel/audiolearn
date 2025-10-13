@@ -803,27 +803,10 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             String? targetSaveDirectoryPath;
 
             if (Platform.isAndroid) {
-              // On Android, use the predefined path - no file picker needed
-              Directory? externalDir = await getExternalStorageDirectory();
-              if (externalDir != null) {
-                Directory mp3Dir =
-                    Directory('${externalDir.path}/downloads/AudioLearn');
-                if (!await mp3Dir.exists()) {
-                  await mp3Dir.create(recursive: true);
-                }
-                targetSaveDirectoryPath = mp3Dir.path;
-              } else {
-                // Handle error case
-                final WarningMessageVM warningMessageVMlistenFalse =
-                    Provider.of<WarningMessageVM>(
-                  context,
-                  listen: false,
-                );
-                warningMessageVMlistenFalse.setError(
-                  errorType: ErrorType.androidStorageAccessError,
-                );
-                return;
-              }
+              // On Android, use the predefined path - no file picker needed.
+              // The target directory is determined in the playlist list VM
+              // savePlaylistsAudioMp3FilesToZip() method.
+              targetSaveDirectoryPath = '';
             } else {
               // On other platforms, use the file picker
               targetSaveDirectoryPath =
@@ -937,7 +920,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                       await playlistListVMlistenFalse
                           .savePlaylistsAudioMp3FilesToZip(
                         listOfPlaylists: listOfSelectablePlaylists,
-                        targetDir: targetSaveDirectoryPath!,
+                        targetDirStrOnWindows: targetSaveDirectoryPath!,
                         fromAudioDownloadDateTime:
                             parseDateTimeOrDateStrUsinAppDateFormat!,
                         zipFileSizeLimitInMb: settingsDataService.get(
