@@ -6,7 +6,6 @@ import 'package:audiolearn/utils/ui_util.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
 import '../../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -918,7 +917,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   return ConfirmActionDialog(
                     actionFunction: () async {
                       await playlistListVMlistenFalse
-                          .savePlaylistsAudioMp3FilesToZip(
+                          .savePlaylistsAudioMp3FilesToZipWithPublicCopy(
                         listOfPlaylists: listOfSelectablePlaylists,
                         targetDirStrOnWindows: targetSaveDirectoryPath!,
                         fromAudioDownloadDateTime:

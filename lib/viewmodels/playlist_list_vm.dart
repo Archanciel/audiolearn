@@ -3714,6 +3714,197 @@ class PlaylistListVM extends ChangeNotifier {
     return parts;
   }
 
+/// Copies the generated MP3 ZIP file(s) to the public Downloads directory
+/// where they are accessible by Android file explorers.
+///
+/// Parameters:
+/// - [baseZipFileName]: The base name of the ZIP file (without part numbers)
+/// - [numberOfZipFiles]: The number of ZIP files created
+/// - [sourceDir]: The directory where the ZIP files were originally created
+///
+/// Returns a list containing:
+/// [
+///   success (bool),
+///   public directory path (String),
+///   list of copied file names (List containing String's),
+///   error message if any (String)
+/// ]
+Future<List<dynamic>> copyMp3ZipFilesToPublicDownloads({
+  required String baseZipFileName,
+  required int numberOfZipFiles,
+  required String sourceDir,
+}) async {
+  List<String> copiedFileNames = [];
+  String errorMessage = '';
+  
+  try {
+    if (!Platform.isAndroid) {
+      // On non-Android platforms, no need to copy
+      return [true, sourceDir, [], 'Not needed on this platform'];
+    }
+
+    // Get the public Downloads directory
+    Directory? downloadsDir;
+    
+    // Try to get the downloads directory using the standard Android path
+    String publicDownloadsPath = '/storage/emulated/0/Download';
+    downloadsDir = Directory(publicDownloadsPath);
+    
+    // Verify the directory exists and is accessible
+    if (!await downloadsDir.exists()) {
+      // Fallback: try alternative path
+      publicDownloadsPath = '/storage/emulated/0/Downloads';
+      downloadsDir = Directory(publicDownloadsPath);
+      
+      if (!await downloadsDir.exists()) {
+        errorMessage = 'Could not access public Downloads directory';
+        return [false, '', [], errorMessage];
+      }
+    }
+    
+    // Create an AudioLearn subdirectory in Downloads if it doesn't exist
+    String audioLearnDownloadsPath = path.join(publicDownloadsPath, 'Mp3ZipFiles');
+    Directory audioLearnDir = Directory(audioLearnDownloadsPath);
+    
+    if (!await audioLearnDir.exists()) {
+      await audioLearnDir.create(recursive: true);
+    }
+    
+    // Copy the ZIP file(s)
+    for (int i = 1; i <= numberOfZipFiles; i++) {
+      String sourceFileName;
+      
+      if (numberOfZipFiles == 1) {
+        sourceFileName = '$baseZipFileName.zip';
+      } else {
+        sourceFileName = '${baseZipFileName}_part$i.zip';
+      }
+      
+      String sourceFilePath = path.join(sourceDir, sourceFileName);
+      File sourceFile = File(sourceFilePath);
+      
+      if (await sourceFile.exists()) {
+        String targetFilePath = path.join(audioLearnDownloadsPath, sourceFileName);
+        
+        // Copy the file
+        await sourceFile.copy(targetFilePath);
+        copiedFileNames.add(sourceFileName);
+        
+        // Optional: Delete the source file after successful copy
+        // Uncomment the next line if you want to move instead of copy
+        // await sourceFile.delete();
+      } else {
+        errorMessage += 'Source file not found: $sourceFileName\n';
+      }
+    }
+    
+    if (copiedFileNames.isEmpty) {
+      return [false, audioLearnDownloadsPath, [], errorMessage];
+    }
+    
+    // Update the UI to show saving is complete
+    _isSavingMp3 = false;
+    notifyListeners();
+    
+    return [true, audioLearnDownloadsPath, copiedFileNames, ''];
+    
+  } catch (e) {
+    errorMessage = 'Error copying ZIP files: $e';
+    _logger.e(errorMessage);
+    
+    _isSavingMp3 = false;
+    notifyListeners();
+    
+    return [false, '', [], errorMessage];
+  }
+}
+
+/// Enhanced version of savePlaylistsAudioMp3FilesToZip that automatically
+/// copies the ZIP files to the public Downloads directory on Android.
+///
+/// This method wraps the existing savePlaylistsAudioMp3FilesToZip and adds
+/// the public directory copy functionality.
+Future<List<dynamic>> savePlaylistsAudioMp3FilesToZipWithPublicCopy({
+  required List<Playlist> listOfPlaylists,
+  String targetDirStrOnWindows = '',
+  required DateTime fromAudioDownloadDateTime,
+  required double zipFileSizeLimitInMb,
+  bool uniquePlaylistIsSaved = false,
+}) async {
+  // Call the original method to create the ZIP files
+  List<dynamic> savedMp3InfoLst = await savePlaylistsAudioMp3FilesToZip(
+    listOfPlaylists: listOfPlaylists,
+    targetDirStrOnWindows: targetDirStrOnWindows,
+    fromAudioDownloadDateTime: fromAudioDownloadDateTime,
+    zipFileSizeLimitInMb: zipFileSizeLimitInMb,
+    uniquePlaylistIsSaved: uniquePlaylistIsSaved,
+  );
+  
+  // If no files were saved, return early
+  if (savedMp3InfoLst.isEmpty || savedMp3InfoLst[0] == '') {
+    return savedMp3InfoLst;
+  }
+  
+  // Extract information from the result
+  String zipFilePathName = savedMp3InfoLst[0];
+  int numberOfCreatedZipFiles = savedMp3InfoLst[6];
+  
+  // Extract base file name from the full path
+  String baseFileName = path.basenameWithoutExtension(zipFilePathName);
+  
+  // Remove the "part 1 to X" suffix if present
+  if (baseFileName.contains('_part')) {
+    baseFileName = baseFileName.split('_part')[0];
+  }
+  
+  String sourceDir = path.dirname(zipFilePathName);
+  
+  // Copy to public Downloads directory on Android
+  if (Platform.isAndroid) {
+    List<dynamic> copyResult = await copyMp3ZipFilesToPublicDownloads(
+      baseZipFileName: baseFileName,
+      numberOfZipFiles: numberOfCreatedZipFiles,
+      sourceDir: sourceDir,
+    );
+    
+    bool copySuccess = copyResult[0];
+    String publicDirPath = copyResult[1];
+    List<String> copiedFileNames = copyResult[2];
+    String errorMessage = copyResult[3];
+    
+    if (copySuccess && copiedFileNames.isNotEmpty) {
+      // Update the confirmation message to include the public directory path
+      DateFormatVM dateFormatVM = DateFormatVM(
+        settingsDataService: _settingsDataService,
+      );
+      
+      // Show confirmation with the public directory location
+      _warningMessageVM.confirmSavingAudioMp3ToZip(
+        zipFilePathName: path.join(publicDirPath, copiedFileNames[0]),
+        fromAudioDownloadDateTime:
+            dateFormatVM.formatDateTime(fromAudioDownloadDateTime),
+        savedAudioMp3Number: savedMp3InfoLst[1],
+        savedTotalAudioFileSize: savedMp3InfoLst[2],
+        savedTotalAudioDuration: savedMp3InfoLst[3],
+        savingAudioToZipOperationDuration: savedMp3InfoLst[4],
+        realNumberOfBytesSavedToZipPerSecond: savedMp3InfoLst[5],
+        uniquePlaylistIsSaved: uniquePlaylistIsSaved,
+        numberOfCreatedZipFiles: numberOfCreatedZipFiles,
+        excludedTooLargeAudioFilesLst: savedMp3InfoLst[7],
+      );
+      
+      // Update the return value with the public directory path
+      savedMp3InfoLst[0] = numberOfCreatedZipFiles > 1
+          ? path.join(publicDirPath, '${baseFileName}_part 1 to $numberOfCreatedZipFiles.zip')
+          : path.join(publicDirPath, '$baseFileName.zip');
+    } else if (errorMessage.isNotEmpty) {
+      _logger.w('Could not copy to public Downloads: $errorMessage');
+      // Still return success since the files are in the app directory
+    }
+  }
+  
+  return savedMp3InfoLst;
+}
   String getOldestAudioDownloadDateFormattedStr({
     required List<Playlist> listOfPlaylists,
   }) {
