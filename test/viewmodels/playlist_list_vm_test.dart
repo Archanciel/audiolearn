@@ -1207,7 +1207,7 @@ void main() {
         List<dynamic> savedMp3InfoLst =
             await playlistListVM.savePlaylistsAudioMp3FilesToZip(
           listOfPlaylists: playlistListVM.listOfSelectablePlaylists,
-          targetDir: kApplicationPathWindowsTest,
+          targetDirStrOnWindows: kApplicationPathWindowsTest,
           fromAudioDownloadDateTime: fromDateTime,
           zipFileSizeLimitInMb: kMp3ZipFileSizeLimitInMb,
         );
@@ -1308,7 +1308,7 @@ void main() {
         List<dynamic> savedMp3InfoLst =
             await playlistListVM.savePlaylistsAudioMp3FilesToZip(
           listOfPlaylists: playlistListVM.listOfSelectablePlaylists,
-          targetDir: kApplicationPathWindowsTest,
+          targetDirStrOnWindows: kApplicationPathWindowsTest,
           fromAudioDownloadDateTime: fromDateTime,
           zipFileSizeLimitInMb: kMp3ZipFileSizeLimitInMb,
         );
@@ -1422,7 +1422,7 @@ void main() {
         List<dynamic> savedMp3InfoLst =
             await playlistListVM.savePlaylistsAudioMp3FilesToZip(
           listOfPlaylists: [playlistLst[4]], // S8 audio
-          targetDir: kApplicationPathWindowsTest,
+          targetDirStrOnWindows: kApplicationPathWindowsTest,
           fromAudioDownloadDateTime: fromDateTime,
           zipFileSizeLimitInMb: kMp3ZipFileSizeLimitInMb,
           uniquePlaylistIsSaved: true,
@@ -1536,7 +1536,7 @@ void main() {
         List<dynamic> savedMp3InfoLst =
             await playlistListVM.savePlaylistsAudioMp3FilesToZip(
           listOfPlaylists: [playlistLst[1]], // S8 audio
-          targetDir: kApplicationPathWindowsTest,
+          targetDirStrOnWindows: kApplicationPathWindowsTest,
           fromAudioDownloadDateTime: fromDateTime,
           zipFileSizeLimitInMb: kMp3ZipFileSizeLimitInMb,
           uniquePlaylistIsSaved: true,
