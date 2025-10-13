@@ -9,7 +9,6 @@ import 'package:audiolearn/viewmodels/audio_player_vm.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
 import '../../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -697,7 +696,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   return ConfirmActionDialog(
                     actionFunction: () async {
                       await playlistListVMlistenFalse
-                          .savePlaylistsAudioMp3FilesToZip(
+                          .savePlaylistsAudioMp3FilesToZipWithPublicCopy(
                         listOfPlaylists: [playlist],
                         targetDirStrOnWindows: targetSaveDirectoryPath!,
                         fromAudioDownloadDateTime:
