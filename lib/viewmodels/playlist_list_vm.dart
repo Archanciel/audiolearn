@@ -3318,7 +3318,7 @@ class PlaylistListVM extends ChangeNotifier {
       if (externalDir != null) {
         Directory mp3Dir =
             Directory('${externalDir.path}/downloads/AudioLearn');
-        // Directory mp3Dir = Directory('storage/9016-4EF8/Sauvegarde/mp3');
+        // Directory mp3Dir = Directory('storage/9016-4EF8/Sauvegarde/mp3'); // not working
         if (!await mp3Dir.exists()) {
           await mp3Dir.create(recursive: true);
         }
