@@ -3217,48 +3217,6 @@ class PlaylistListVM extends ChangeNotifier {
       uniquePlaylistIsSaved: uniquePlaylistIsSaved,
     );
 
-    DateFormatVM dateFormatVM = DateFormatVM(
-      settingsDataService: _settingsDataService,
-    );
-
-    if (savedMp3InfoLst.isEmpty) {
-      // The case if no audio file was downloaded at or after the
-      // passed fromAudioDownloadDateTime. In this case, a warning
-      // message is displayed instead of a confirmation message.
-
-      const Duration zeroDuration = Duration(seconds: 0);
-
-      _warningMessageVM.confirmSavingAudioMp3ToZip(
-        zipFilePathName: '',
-        fromAudioDownloadDateTime:
-            dateFormatVM.formatDateTime(fromAudioDownloadDateTime),
-        savedAudioMp3Number: 0,
-        savedTotalAudioFileSize: 0,
-        savedTotalAudioDuration: zeroDuration,
-        savingAudioToZipOperationDuration: zeroDuration,
-        realNumberOfBytesSavedToZipPerSecond: 0,
-        uniquePlaylistIsSaved: uniquePlaylistIsSaved,
-        numberOfCreatedZipFiles: 0,
-        excludedTooLargeAudioFilesLst: [],
-      );
-
-      return savedMp3InfoLst;
-    }
-
-    _warningMessageVM.confirmSavingAudioMp3ToZip(
-      zipFilePathName: savedMp3InfoLst[0],
-      fromAudioDownloadDateTime:
-          dateFormatVM.formatDateTime(fromAudioDownloadDateTime),
-      savedAudioMp3Number: savedMp3InfoLst[1],
-      savedTotalAudioFileSize: savedMp3InfoLst[2],
-      savedTotalAudioDuration: savedMp3InfoLst[3],
-      savingAudioToZipOperationDuration: savedMp3InfoLst[4],
-      realNumberOfBytesSavedToZipPerSecond: savedMp3InfoLst[5],
-      uniquePlaylistIsSaved: uniquePlaylistIsSaved,
-      numberOfCreatedZipFiles: savedMp3InfoLst[6], // New parameter
-      excludedTooLargeAudioFilesLst: savedMp3InfoLst[7],
-    );
-
     return savedMp3InfoLst;
   }
 
@@ -3948,6 +3906,12 @@ class PlaylistListVM extends ChangeNotifier {
       if (moveSuccess && movedFileNames.isNotEmpty) {
         _logger.i('Successfully moved to public directory: $publicDirPath');
 
+        // Update the return value with the public directory path
+        savedMp3InfoLst[0] = numberOfCreatedZipFiles > 1
+            ? path.join(publicDirPath,
+                '${baseFileName}_part 1 to $numberOfCreatedZipFiles.zip')
+            : path.join(publicDirPath, '$baseFileName.zip');
+
         // Update the confirmation message to include the public directory path
         DateFormatVM dateFormatVM = DateFormatVM(
           settingsDataService: _settingsDataService,
@@ -3955,7 +3919,7 @@ class PlaylistListVM extends ChangeNotifier {
 
         // Show confirmation with the public directory location
         _warningMessageVM.confirmSavingAudioMp3ToZip(
-          zipFilePathName: path.join(publicDirPath, movedFileNames[0]),
+          zipFilePathName: savedMp3InfoLst[0],
           fromAudioDownloadDateTime:
               dateFormatVM.formatDateTime(fromAudioDownloadDateTime),
           savedAudioMp3Number: savedMp3InfoLst[1],
@@ -3967,12 +3931,6 @@ class PlaylistListVM extends ChangeNotifier {
           numberOfCreatedZipFiles: numberOfCreatedZipFiles,
           excludedTooLargeAudioFilesLst: savedMp3InfoLst[7],
         );
-
-        // Update the return value with the public directory path
-        savedMp3InfoLst[0] = numberOfCreatedZipFiles > 1
-            ? path.join(publicDirPath,
-                '${baseFileName}_part 1 to $numberOfCreatedZipFiles.zip')
-            : path.join(publicDirPath, '$baseFileName.zip');
       } else if (errorMessage.isNotEmpty) {
         _logger.w('Could not move to public Downloads: $errorMessage');
         // Still return success since the files are in the app directory
