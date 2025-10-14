@@ -3217,6 +3217,50 @@ class PlaylistListVM extends ChangeNotifier {
       uniquePlaylistIsSaved: uniquePlaylistIsSaved,
     );
 
+    DateFormatVM dateFormatVM = DateFormatVM(
+      settingsDataService: _settingsDataService,
+    );
+
+    if (savedMp3InfoLst.isEmpty) {
+      // The case if no audio file was downloaded at or after the
+      // passed fromAudioDownloadDateTime. In this case, a warning
+      // message is displayed instead of a confirmation message.
+
+      const Duration zeroDuration = Duration(seconds: 0);
+
+      _warningMessageVM.confirmSavingAudioMp3ToZip(
+        zipFilePathName: '',
+        fromAudioDownloadDateTime:
+            dateFormatVM.formatDateTime(fromAudioDownloadDateTime),
+        savedAudioMp3Number: 0,
+        savedTotalAudioFileSize: 0,
+        savedTotalAudioDuration: zeroDuration,
+        savingAudioToZipOperationDuration: zeroDuration,
+        realNumberOfBytesSavedToZipPerSecond: 0,
+        uniquePlaylistIsSaved: uniquePlaylistIsSaved,
+        numberOfCreatedZipFiles: 0,
+        excludedTooLargeAudioFilesLst: [],
+      );
+
+      return savedMp3InfoLst;
+    }
+
+    if (!Platform.isAndroid) {
+      _warningMessageVM.confirmSavingAudioMp3ToZip(
+        zipFilePathName: savedMp3InfoLst[0],
+        fromAudioDownloadDateTime:
+            dateFormatVM.formatDateTime(fromAudioDownloadDateTime),
+        savedAudioMp3Number: savedMp3InfoLst[1],
+        savedTotalAudioFileSize: savedMp3InfoLst[2],
+        savedTotalAudioDuration: savedMp3InfoLst[3],
+        savingAudioToZipOperationDuration: savedMp3InfoLst[4],
+        realNumberOfBytesSavedToZipPerSecond: savedMp3InfoLst[5],
+        uniquePlaylistIsSaved: uniquePlaylistIsSaved,
+        numberOfCreatedZipFiles: savedMp3InfoLst[6], // New parameter
+        excludedTooLargeAudioFilesLst: savedMp3InfoLst[7],
+      );
+    }
+    
     return savedMp3InfoLst;
   }
 
