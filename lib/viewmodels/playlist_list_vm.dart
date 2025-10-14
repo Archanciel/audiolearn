@@ -3714,8 +3714,11 @@ class PlaylistListVM extends ChangeNotifier {
     return parts;
   }
 
-  /// Copies the generated MP3 ZIP file(s) to the public Downloads directory
+  /// Moves the generated MP3 ZIP file(s) to the public Downloads directory
   /// where they are accessible by Android file explorers.
+  ///
+  /// The files are copied to the public directory and then deleted from the
+  /// source directory (move operation).
   ///
   /// Parameters:
   /// - [baseZipFileName]: The base name of the ZIP file (without part numbers)
@@ -3726,7 +3729,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// [
   ///   success (bool),
   ///   public directory path (String),
-  ///   list of copied file names (List containing String's),
+  ///   list of moved file names (List of String's),
   ///   error message if any (String)
   /// ]
   Future<List<dynamic>> copyMp3ZipFilesToPublicDownloads({
@@ -3734,44 +3737,73 @@ class PlaylistListVM extends ChangeNotifier {
     required int numberOfZipFiles,
     required String sourceDir,
   }) async {
-    List<String> copiedFileNames = [];
+    List<String> movedFileNames = [];
     String errorMessage = '';
+    String publicPath = '';
 
     try {
       if (!Platform.isAndroid) {
-        // On non-Android platforms, no need to copy
+        // On non-Android platforms, no need to move
         return [true, sourceDir, [], 'Not needed on this platform'];
       }
 
-      // Get the public Downloads directory
+      // Try multiple possible Downloads directory paths
+      List<String> possiblePaths = [
+        '/storage/emulated/0/Download',
+        '/storage/emulated/0/Downloads',
+        '/sdcard/Download',
+        '/sdcard/Downloads',
+      ];
+
       Directory? downloadsDir;
+      String publicDownloadsPath = '';
 
-      // Try to get the downloads directory using the standard Android path
-      String publicDownloadsPath = '/storage/emulated/0/Download';
-      downloadsDir = Directory(publicDownloadsPath);
+      // Find the first accessible Downloads directory
+      for (String tryPath in possiblePaths) {
+        Directory testDir = Directory(tryPath);
+        if (await testDir.exists()) {
+          try {
+            // Test if we can actually write to this directory
+            File testFile = File(path.join(tryPath, '.test_write_permission'));
+            await testFile.writeAsString('test');
+            await testFile.delete();
 
-      // Verify the directory exists and is accessible
-      if (!await downloadsDir.exists()) {
-        // Fallback: try alternative path
-        publicDownloadsPath = '/storage/emulated/0/Downloads';
-        downloadsDir = Directory(publicDownloadsPath);
-
-        if (!await downloadsDir.exists()) {
-          errorMessage = 'Could not access public Downloads directory';
-          return [false, '', [], errorMessage];
+            downloadsDir = testDir;
+            publicDownloadsPath = tryPath;
+            _logger.i(
+                'Found accessible Downloads directory: $publicDownloadsPath');
+            break;
+          } catch (e) {
+            _logger.w('Directory exists but not writable: $tryPath - $e');
+            continue;
+          }
         }
       }
 
-      // Create an AudioLearn subdirectory in Downloads if it doesn't exist
+      if (downloadsDir == null || publicDownloadsPath.isEmpty) {
+        errorMessage =
+            'Could not find accessible public Downloads directory. Tried: ${possiblePaths.join(", ")}';
+        _logger.e(errorMessage);
+        return [false, '', [], errorMessage];
+      }
+
+      // Create Mp3ZipFiles subdirectory in Downloads
       String audioLearnDownloadsPath =
           path.join(publicDownloadsPath, 'Mp3ZipFiles');
       Directory audioLearnDir = Directory(audioLearnDownloadsPath);
 
       if (!await audioLearnDir.exists()) {
-        await audioLearnDir.create(recursive: true);
+        try {
+          await audioLearnDir.create(recursive: true);
+          _logger.i('Created directory: $audioLearnDownloadsPath');
+        } catch (e) {
+          errorMessage = 'Failed to create Mp3ZipFiles directory: $e';
+          _logger.e(errorMessage);
+          return [false, '', [], errorMessage];
+        }
       }
 
-      // Copy the ZIP file(s)
+      // Move the ZIP file(s) (copy then delete source)
       for (int i = 1; i <= numberOfZipFiles; i++) {
         String sourceFileName;
 
@@ -3784,33 +3816,69 @@ class PlaylistListVM extends ChangeNotifier {
         String sourceFilePath = path.join(sourceDir, sourceFileName);
         File sourceFile = File(sourceFilePath);
 
+        _logger.i('Attempting to move: $sourceFilePath');
+
         if (await sourceFile.exists()) {
           String targetFilePath =
               path.join(audioLearnDownloadsPath, sourceFileName);
+          File targetFile = File(targetFilePath);
 
-          // Copy the file
-          await sourceFile.copy(targetFilePath);
-          copiedFileNames.add(sourceFileName);
+          try {
+            // Delete target if it already exists to avoid conflicts
+            if (await targetFile.exists()) {
+              await targetFile.delete();
+              _logger.i('Deleted existing target file: $targetFilePath');
+            }
 
-          // Optional: Delete the source file after successful copy
-          // Uncomment the next line if you want to move instead of copy
-          // await sourceFile.delete();
+            // Copy the file to public Downloads
+            await sourceFile.copy(targetFilePath);
+            _logger.i('Copied to: $targetFilePath');
+
+            // Verify the copy was successful by checking file size
+            int sourceSize = await sourceFile.length();
+            int targetSize = await targetFile.length();
+
+            if (sourceSize == targetSize) {
+              // Delete the source file after successful copy (move operation)
+              await sourceFile.delete();
+              _logger.i('Deleted source file: $sourceFilePath');
+
+              movedFileNames.add(sourceFileName);
+              publicPath = audioLearnDownloadsPath;
+            } else {
+              errorMessage +=
+                  'File size mismatch for $sourceFileName (source: $sourceSize, target: $targetSize)\n';
+              _logger.e('File size mismatch for $sourceFileName');
+              // Don't delete source if sizes don't match
+            }
+          } catch (e) {
+            errorMessage += 'Failed to move $sourceFileName: $e\n';
+            _logger.e('Error moving file $sourceFileName: $e');
+          }
         } else {
-          errorMessage += 'Source file not found: $sourceFileName\n';
+          errorMessage +=
+              'Source file not found: $sourceFileName at $sourceFilePath\n';
+          _logger.w('Source file not found: $sourceFilePath');
         }
       }
 
-      if (copiedFileNames.isEmpty) {
-        return [false, audioLearnDownloadsPath, [], errorMessage];
+      if (movedFileNames.isEmpty) {
+        String finalError =
+            errorMessage.isEmpty ? 'No files were moved' : errorMessage;
+        _logger.e('Move operation failed: $finalError');
+        return [false, publicPath, [], finalError];
       }
+
+      _logger.i(
+          'Successfully moved ${movedFileNames.length} file(s) to $publicPath');
 
       // Update the UI to show saving is complete
       _isSavingMp3 = false;
       notifyListeners();
 
-      return [true, audioLearnDownloadsPath, copiedFileNames, ''];
+      return [true, publicPath, movedFileNames, ''];
     } catch (e) {
-      errorMessage = 'Error copying ZIP files: $e';
+      errorMessage = 'Error moving ZIP files: $e';
       _logger.e(errorMessage);
 
       _isSavingMp3 = false;
@@ -3821,10 +3889,11 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   /// Enhanced version of savePlaylistsAudioMp3FilesToZip that automatically
-  /// copies the ZIP files to the public Downloads directory on Android.
+  /// moves the ZIP files to the public Downloads directory on Android.
   ///
   /// This method wraps the existing savePlaylistsAudioMp3FilesToZip and adds
-  /// the public directory copy functionality.
+  /// the public directory move functionality. The files are moved (not copied)
+  /// to free up space in the app's private directory.
   Future<List<dynamic>> savePlaylistsAudioMp3FilesToZipWithPublicCopy({
     required List<Playlist> listOfPlaylists,
     String targetDirStrOnWindows = '',
@@ -3860,20 +3929,25 @@ class PlaylistListVM extends ChangeNotifier {
 
     String sourceDir = path.dirname(zipFilePathName);
 
-    // Copy to public Downloads directory on Android
+    _logger.i(
+        'Attempting to move $numberOfCreatedZipFiles ZIP file(s) from $sourceDir');
+
+    // Move to public Downloads directory on Android
     if (Platform.isAndroid) {
-      List<dynamic> copyResult = await copyMp3ZipFilesToPublicDownloads(
+      List<dynamic> moveResult = await copyMp3ZipFilesToPublicDownloads(
         baseZipFileName: baseFileName,
         numberOfZipFiles: numberOfCreatedZipFiles,
         sourceDir: sourceDir,
       );
 
-      bool copySuccess = copyResult[0];
-      String publicDirPath = copyResult[1];
-      List<String> copiedFileNames = copyResult[2];
-      String errorMessage = copyResult[3];
+      bool moveSuccess = moveResult[0];
+      String publicDirPath = moveResult[1];
+      List<String> movedFileNames = moveResult[2];
+      String errorMessage = moveResult[3];
 
-      if (copySuccess && copiedFileNames.isNotEmpty) {
+      if (moveSuccess && movedFileNames.isNotEmpty) {
+        _logger.i('Successfully moved to public directory: $publicDirPath');
+
         // Update the confirmation message to include the public directory path
         DateFormatVM dateFormatVM = DateFormatVM(
           settingsDataService: _settingsDataService,
@@ -3881,7 +3955,7 @@ class PlaylistListVM extends ChangeNotifier {
 
         // Show confirmation with the public directory location
         _warningMessageVM.confirmSavingAudioMp3ToZip(
-          zipFilePathName: path.join(publicDirPath, copiedFileNames[0]),
+          zipFilePathName: path.join(publicDirPath, movedFileNames[0]),
           fromAudioDownloadDateTime:
               dateFormatVM.formatDateTime(fromAudioDownloadDateTime),
           savedAudioMp3Number: savedMp3InfoLst[1],
@@ -3900,7 +3974,7 @@ class PlaylistListVM extends ChangeNotifier {
                 '${baseFileName}_part 1 to $numberOfCreatedZipFiles.zip')
             : path.join(publicDirPath, '$baseFileName.zip');
       } else if (errorMessage.isNotEmpty) {
-        _logger.w('Could not copy to public Downloads: $errorMessage');
+        _logger.w('Could not move to public Downloads: $errorMessage');
         // Still return success since the files are in the app directory
       }
     }
