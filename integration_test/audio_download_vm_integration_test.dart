@@ -1298,7 +1298,7 @@ Future<void> main() async {
 
       // Add a delay to allow the update playlist URL to finish. 1
       // second is ok
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 2));
       await tester.pumpAndSettle();
 
       // Verify the displayed warning dialog
@@ -1376,7 +1376,7 @@ Future<void> main() async {
 
       // Add a delay to allow the update playlist URL to finish. 1
       // second is ok
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 2));
       await tester.pumpAndSettle();
 
       // Verify the displayed warning dialog
