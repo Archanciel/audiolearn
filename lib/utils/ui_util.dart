@@ -198,16 +198,13 @@ class UiUtil {
         wasIndividualPlaylistMp3ZipUsed: uniquePlaylistMp3ZipFileWasRestored,
       );
     } else {
-      // String selectedZipFilePathName = await filePickerSelectZipFilePathName();
+      // Restoring mp3 files for unique or multiple playlists from multiple
+      // mp3 zip files located in a directory selected by the user.
       String? mp3ZipDirectoryPath = await filePickerSelectTargetDir();
 
       if (mp3ZipDirectoryPath == null) {
         return;
       }
-
-      // if (selectedZipFilePathName.isEmpty) {
-      //   return;
-      // }
 
       if (mp3ZipDirectoryPath == 'INSUFFICIENT_STORAGE_SPACE') {
         warningMessageVMlistenFalse.setError(
@@ -222,24 +219,24 @@ class UiUtil {
         return;
       }
 
-      List<dynamic> resultLst = await Provider.of<PlaylistListVM>(
+      await Provider.of<PlaylistListVM>(
         context,
         listen: false,
-      ).restorePlaylistsAudioMp3FilesFromMultipleZips(
+      ).restoreAndConfirmFromMultipleZips(
         zipDirectoryPath: mp3ZipDirectoryPath,
         listOfPlaylists: playlistsLst,
       );
 
-      int restoredAudioCount = resultLst[0];
-      int restoredPlaylistCount = resultLst[1];
-      bool uniquePlaylistMp3ZipFileWasRestored = resultLst[2];
+      // int restoredAudioCount = resultLst[0];
+      // int restoredPlaylistCount = resultLst[1];
+      // bool uniquePlaylistMp3ZipFileWasRestored = resultLst[2];
 
-      warningMessageVMlistenFalse.confirmMp3RestorationFromMp3Zip(
-        zipFilePathName: mp3ZipDirectoryPath,
-        restoredMp3Number: restoredAudioCount,
-        playlistsNumber: restoredPlaylistCount,
-        wasIndividualPlaylistMp3ZipUsed: uniquePlaylistMp3ZipFileWasRestored,
-      );
+      // warningMessageVMlistenFalse.confirmMp3RestorationFromMp3Zip(
+      //   zipFilePathName: mp3ZipDirectoryPath,
+      //   restoredMp3Number: restoredAudioCount,
+      //   playlistsNumber: restoredPlaylistCount,
+      //   wasIndividualPlaylistMp3ZipUsed: uniquePlaylistMp3ZipFileWasRestored,
+      // );
     }
   }
 

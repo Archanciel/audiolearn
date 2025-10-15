@@ -186,6 +186,12 @@ enum WarningMessageType {
   // item located in the appbar leading popup menu or on the 'Save Playlist
   // Audio MP3 to Zip File' menu item located in the playlist popup menu.
 
+  restoringAudioMp3FromMultipleZips, // The case if the user
+  // clicks on the 'Save Playlists Audio MP3 to Zip File' menu
+  // item located in the appbar leading popup menu or on the 'Save Playlist
+  // Audio MP3 to Zip File' menu item located in the playlist popup menu and
+  // selects a directory containing multiple zip files.
+
   restoreAppDataFromZip, // The case if the user clicks on the
   // 'Restore Playlist, Comments and Settings from Zip File' menu
   // item located in the appbar leading popup menu.
@@ -898,47 +904,33 @@ class WarningMessageVM extends ChangeNotifier {
     // Causes the display warning message widget to be displayed.
     notifyListeners();
   }
+
+  int _numberOfUsedZipFiles = 0;
+  int get numberOfUsedZipFiles => _numberOfUsedZipFiles;
+  List<String> _usedZipFileNames = [];
+  List<String> get usedZipFileNames => _usedZipFileNames;
+
   /// Displays a confirmation message after restoring MP3 files from multiple ZIP files.
   void confirmRestoringAudioMp3FromMultipleZips({
-    required String zipDirectoryPath,
+    required String multipleZipsDirectoryPath,
     required int totalRestoredAudioCount,
     required int restoredPlaylistCount,
     required int processedZipCount,
     required List<String> processedZipFileNames,
     required List<String> restoredPlaylistTitles,
   }) {
-    // if (totalRestoredAudioCount == 0) {
-      // No files were restored
-    //   setWarning(
-    //     warningType: WarningType.noMp3FilesRestored,
-    //     warningMessageText:
-    //         'No MP3 files were restored from $processedZipCount ZIP file(s) in:\n'
-    //         '$zipDirectoryPath\n\n'
-    //         'Possible reasons:\n'
-    //         '- All MP3 files already exist in playlists\n'
-    //         '- No matching audio references found in playlists\n'
-    //         '- ZIP files contain no valid MP3 files',
-    //   );
-    // } else {
-    //   // Files were successfully restored
-    //   String zipFilesList = processedZipFileNames.join('\n  • ');
-    //   String playlistsList = restoredPlaylistTitles.join('\n  • ');
+    _zipFilePathName = multipleZipsDirectoryPath;
+    _restoredMp3Number = totalRestoredAudioCount;
+    _playlistsNumber = restoredPlaylistCount;
+    _numberOfUsedZipFiles = processedZipCount;
+    _usedZipFileNames =
+        processedZipFileNames; // Reusing this list to store processed ZIP file names.
+    _playlistTitlesLst = restoredPlaylistTitles;
 
-    //   String message =
-    //       'Successfully restored $totalRestoredAudioCount MP3 file(s)\n'
-    //       'to $restoredPlaylistCount playlist(s)\n'
-    //       'from $processedZipCount ZIP file(s):\n\n'
-    //       'Processed ZIP files:\n  • $zipFilesList\n\n'
-    //       'Playlists updated:\n  • $playlistsList\n\n'
-    //       'Location: $zipDirectoryPath';
+    warningMessageType = WarningMessageType.restoringAudioMp3FromMultipleZips;
 
-    //   setInfo(
-    //     infoType: InfoType.mp3FilesRestored,
-    //     infoMessageText: message,
-    //   );
-    // }
-
-    // notifyListeners();
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
   }
 
   List<String> _playlistTitlesLst = [];
@@ -961,7 +953,8 @@ class WarningMessageVM extends ChangeNotifier {
   bool get newPlaylistsAddedAtEndOfPlaylistLst =>
       _newPlaylistsAddedAtEndOfPlaylistLst;
   List<String> _deletedExistingPlaylistTitlesLst = [];
-  List<String> get deletedExistingPlaylistTitlesLst => _deletedExistingPlaylistTitlesLst;
+  List<String> get deletedExistingPlaylistTitlesLst =>
+      _deletedExistingPlaylistTitlesLst;
   void confirmRestorationFromZip({
     required String zipFilePathName,
     required List<String> playlistTitlesLst,
