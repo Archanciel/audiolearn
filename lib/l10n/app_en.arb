@@ -997,7 +997,7 @@
       "zipTooLargeFileInfo": {}
     }
   },
-  "restorePlaylistsAudioMp3FilesFromZipMenu": "Restore Playlists Audio's MP3 from ZIP File ...",
+  "restorePlaylistsAudioMp3FilesFromZipMenu": "Restore Playlists Audio's MP3 from ZIP Files in Dir ...",
   "restorePlaylistsAudioMp3FilesFromZipTooltip": "Restoring audio's MP3 not yet present in the playlists from a saved ZIP file. Only the MP3 relative to the audio's listed in the playlists are restorable.",
   "audioMp3RestorationDialogTitle": "MP3 Restoration",
   "audioMp3RestorationExplanation": "Only the MP3 relative to the audio's listed in the playlists which are not already present in the playlists are restorable.",
@@ -1062,6 +1062,7 @@
   "convertedAudioDateTimeLabel": "Converted text first date time",
   "fromMp3ZipFileUsedToRestoreUniquePlaylist": "playlist from the unique playlist MP3 zip file \"{zipFilePathNName}\"",
   "fromMp3ZipFileUsedToRestoreMultiplePlaylists": "playlist(s) from the multiple playlists MP3 zip file \"{zipFilePathNName}\"",
+  "fromMultipleMp3ZipFileUsedToRestoreMultiplePlaylists": "playlist(s) from the multiple playlists MP3 zip files contained in dir \"{zipFilePathNName}\"",
   "confirmMp3RestorationFromMp3Zip": "Restored {audioNNumber} audio(s) MP3 in {playlistsNumber} {secondMsgPart}.",
   "restorePlaylistTitlesOrderTitle": "Playlist Titles Order Restoration",
   "restorePlaylistTitlesOrderMessage": "A previous playlist titles order file is available in the selected playlist root path. Do you want to restore this saved order or keep the current playlist titles order? Click on \"Confirm\" to restore the saved order or on \"Cancel\" to keep the current order.",

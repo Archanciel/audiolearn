@@ -1327,7 +1327,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
             );
           } else {
             fromMp3ZipFileMessage = AppLocalizations.of(context)!
-                .fromMp3ZipFileUsedToRestoreMultiplePlaylists(
+                .fromMultipleMp3ZipFileUsedToRestoreMultiplePlaylists(
               _warningMessageVM.zipFilePathName,
             );
           }
