@@ -898,6 +898,48 @@ class WarningMessageVM extends ChangeNotifier {
     // Causes the display warning message widget to be displayed.
     notifyListeners();
   }
+  /// Displays a confirmation message after restoring MP3 files from multiple ZIP files.
+  void confirmRestoringAudioMp3FromMultipleZips({
+    required String zipDirectoryPath,
+    required int totalRestoredAudioCount,
+    required int restoredPlaylistCount,
+    required int processedZipCount,
+    required List<String> processedZipFileNames,
+    required List<String> restoredPlaylistTitles,
+  }) {
+    // if (totalRestoredAudioCount == 0) {
+      // No files were restored
+    //   setWarning(
+    //     warningType: WarningType.noMp3FilesRestored,
+    //     warningMessageText:
+    //         'No MP3 files were restored from $processedZipCount ZIP file(s) in:\n'
+    //         '$zipDirectoryPath\n\n'
+    //         'Possible reasons:\n'
+    //         '- All MP3 files already exist in playlists\n'
+    //         '- No matching audio references found in playlists\n'
+    //         '- ZIP files contain no valid MP3 files',
+    //   );
+    // } else {
+    //   // Files were successfully restored
+    //   String zipFilesList = processedZipFileNames.join('\n  • ');
+    //   String playlistsList = restoredPlaylistTitles.join('\n  • ');
+
+    //   String message =
+    //       'Successfully restored $totalRestoredAudioCount MP3 file(s)\n'
+    //       'to $restoredPlaylistCount playlist(s)\n'
+    //       'from $processedZipCount ZIP file(s):\n\n'
+    //       'Processed ZIP files:\n  • $zipFilesList\n\n'
+    //       'Playlists updated:\n  • $playlistsList\n\n'
+    //       'Location: $zipDirectoryPath';
+
+    //   setInfo(
+    //     infoType: InfoType.mp3FilesRestored,
+    //     infoMessageText: message,
+    //   );
+    // }
+
+    // notifyListeners();
+  }
 
   List<String> _playlistTitlesLst = [];
   List<String> get playlistTitlesLst => _playlistTitlesLst;
