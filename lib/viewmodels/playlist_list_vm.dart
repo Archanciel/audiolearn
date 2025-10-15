@@ -3260,7 +3260,7 @@ class PlaylistListVM extends ChangeNotifier {
         excludedTooLargeAudioFilesLst: savedMp3InfoLst[7],
       );
     }
-    
+
     return savedMp3InfoLst;
   }
 
@@ -5288,6 +5288,7 @@ class PlaylistListVM extends ChangeNotifier {
     return restoredPicturesCount;
   }
 
+
   /// Restores MP3 audio files from a ZIP file to their respective playlist directories.
   /// Only copies MP3 files that correspond to Audio objects present in the
   /// playlist.playableAudioLst and that don't already exist in the playlist directory.
@@ -5469,6 +5470,262 @@ class PlaylistListVM extends ChangeNotifier {
       uniquePlaylistIsRestored // true if the MP3 zip file is
       //                          a unique playlist zip file
     ];
+  }
+
+  /// Restores MP3 audio files from multiple ZIP files located in a directory.
+  /// All ZIP files in the specified directory are processed.
+  ///
+  /// Only copies MP3 files that correspond to Audio objects present in the
+  /// playlist.playableAudioLst and that don't already exist in the playlist directory.
+  ///
+  /// Parameters:
+  /// - [zipDirectoryPath]: The directory path containing one or more ZIP files
+  /// - [listOfPlaylists]: List of all application playlists
+  ///
+  /// Returns a dynamic list containing:
+  /// [
+  ///   total number of MP3 files that were successfully restored (int),
+  ///   number of playlists to which MP3 files were restored (int),
+  ///   number of ZIP files processed (int),
+  ///   list of processed ZIP file names (List of String's),
+  ///   list of playlist titles that received restored files (List of String's)
+  /// ]
+  Future<List<dynamic>> restorePlaylistsAudioMp3FilesFromMultipleZips({
+    required String zipDirectoryPath,
+    required List<Playlist> listOfPlaylists,
+  }) async {
+    int totalRestoredAudioCount = 0;
+    Set<String> restoredPlaylistTitlesSet = {};
+    List<String> processedZipFileNames = [];
+    int processedZipCount = 0;
+
+    try {
+      // Check if the directory exists
+      Directory zipDirectory = Directory(zipDirectoryPath);
+
+      if (!await zipDirectory.exists()) {
+        _logger.e('ZIP directory does not exist: $zipDirectoryPath');
+        return [0, 0, 0, [], []];
+      }
+
+      // Find all ZIP files in the directory
+      List<FileSystemEntity> entities = await zipDirectory.list().toList();
+      List<File> zipFiles = entities
+          .whereType<File>()
+          .where((file) => file.path.toLowerCase().endsWith('.zip'))
+          .toList();
+
+      if (zipFiles.isEmpty) {
+        _logger.w('No ZIP files found in directory: $zipDirectoryPath');
+        return [0, 0, 0, [], []];
+      }
+
+      _logger.i('Found ${zipFiles.length} ZIP file(s) in $zipDirectoryPath');
+
+      // Create a map of playlist titles to playlists for efficient lookup
+      Map<String, Playlist> playlistMap = {};
+      for (Playlist playlist in listOfPlaylists) {
+        playlistMap[playlist.title] = playlist;
+      }
+
+      _isRestoringMp3 = true;
+      notifyListeners();
+
+      // Process each ZIP file
+      for (File zipFile in zipFiles) {
+        String zipFileName = path.basename(zipFile.path);
+        _logger.i('Processing ZIP file: $zipFileName');
+
+        try {
+          // Read and decode the ZIP file
+          List<int> zipBytes = await zipFile.readAsBytes();
+          Archive archive = ZipDecoder().decodeBytes(zipBytes);
+
+          int zipRestoredCount = 0;
+
+          // Process each file in the archive
+          for (ArchiveFile archiveFile in archive) {
+            // Skip directories
+            if (!archiveFile.isFile || !archiveFile.name.endsWith('.mp3')) {
+              continue;
+            }
+
+            // Normalize path separators (handles both Windows and Android zips)
+            final String sanitizedArchiveFilePathName = archiveFile.name
+                .replaceAll('\\', '/')
+                .split('/')
+                .map((segment) => segment.trim())
+                .join('/');
+
+            // Extract playlist name and audio file name from the path
+            // Expected path format: playlists/PlaylistTitle/audioFileName.mp3
+            List<String> pathParts = sanitizedArchiveFilePathName.split('/');
+
+            if (pathParts.length >= 3 &&
+                pathParts[0] == kImposedPlaylistsSubDirName) {
+              String playlistTitle = pathParts[1];
+              String audioFileName = pathParts[2];
+
+              // Find the corresponding playlist
+              Playlist? playlist = playlistMap[playlistTitle];
+
+              if (playlist == null) {
+                _logger.w(
+                    'Playlist not found: $playlistTitle (from $zipFileName)');
+                continue;
+              }
+
+              // Check if this audio file corresponds to an Audio in playableAudioLst
+              Audio? targetAudio;
+              for (Audio audio in playlist.playableAudioLst) {
+                if (audio.audioFileName == audioFileName) {
+                  targetAudio = audio;
+                  break;
+                }
+              }
+
+              if (targetAudio == null) {
+                _logger.d('Audio not in playableAudioLst: $audioFileName');
+                continue;
+              }
+
+              // Create the target file path
+              String targetFilePath =
+                  path.join(playlist.downloadPath, audioFileName);
+              File targetFile = File(targetFilePath);
+
+              // Only restore if the file doesn't already exist
+              if (!targetFile.existsSync()) {
+                int addResult = await _addMp3FileToPlaylist(
+                  archiveFile: archiveFile,
+                  targetFile: targetFile,
+                  playlist: playlist,
+                  playlistTitle: playlistTitle,
+                  audioFileName: audioFileName,
+                  restoredPlaylistTitlesLst: [], // Not used in this context
+                  restoredAudioCount: 0, // Not used in this context
+                );
+
+                if (addResult > 0) {
+                  zipRestoredCount++;
+                  totalRestoredAudioCount++;
+                  restoredPlaylistTitlesSet.add(playlistTitle);
+                  _logger.d('Restored: $audioFileName to $playlistTitle');
+                }
+              } else {
+                // Handle text-to-speech audio replacement logic
+                if (targetAudio.audioType == AudioType.textToSpeech) {
+                  Comment? lastComment = _commentVM.getLastCommentOfAudio(
+                    audio: targetAudio,
+                  );
+
+                  if (lastComment != null) {
+                    int commentEndPositionInTenthOfSeconds =
+                        lastComment.commentEndPositionInTenthOfSeconds;
+
+                    List<dynamic> audioDurationAndSizeLst =
+                        await _audioDownloadVM.getAudioMp3DurationAndSize(
+                      audioMp3ArchiveFile: archiveFile,
+                      playlistDownloadPath: playlist.downloadPath,
+                    );
+
+                    Duration audioDuration =
+                        audioDurationAndSizeLst[0] as Duration;
+                    int audioDurationInTenthOfSeconds =
+                        (audioDuration.inMilliseconds / 100).round();
+
+                    if (commentEndPositionInTenthOfSeconds ==
+                        audioDurationInTenthOfSeconds) {
+                      int addResult = await _addMp3FileToPlaylist(
+                        archiveFile: archiveFile,
+                        targetFile: targetFile,
+                        playlist: playlist,
+                        playlistTitle: playlistTitle,
+                        audioFileName: audioFileName,
+                        restoredPlaylistTitlesLst: [],
+                        restoredAudioCount: 0,
+                        isTextToSpeechMp3: true,
+                        audioDuration: audioDuration,
+                        audioFileSize: audioDurationAndSizeLst[1] as int,
+                      );
+
+                      if (addResult > 0) {
+                        zipRestoredCount++;
+                        totalRestoredAudioCount++;
+                        restoredPlaylistTitlesSet.add(playlistTitle);
+                        _logger.d('Replaced text-to-speech: $audioFileName');
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          processedZipFileNames.add(zipFileName);
+          processedZipCount++;
+          _logger
+              .i('Completed $zipFileName: $zipRestoredCount file(s) restored');
+        } catch (e) {
+          _logger.e('Error processing ZIP file $zipFileName: $e');
+          // Continue with next ZIP file
+        }
+      }
+
+      _isRestoringMp3 = false;
+      notifyListeners();
+
+      _logger.i(
+          'Restoration complete: $totalRestoredAudioCount file(s) from $processedZipCount ZIP(s)');
+
+      return [
+        totalRestoredAudioCount,
+        restoredPlaylistTitlesSet.length,
+        processedZipCount,
+        processedZipFileNames,
+        restoredPlaylistTitlesSet.toList(),
+      ];
+    } catch (e) {
+      _logger.e('Error in restorePlaylistsAudioMp3FilesFromMultipleZips: $e');
+
+      _isRestoringMp3 = false;
+      notifyListeners();
+
+      return [0, 0, 0, [], []];
+    }
+  }
+
+  /// Convenience method that calls restorePlaylistsAudioMp3FilesFromMultipleZips
+  /// and displays a confirmation message to the user.
+  ///
+  /// This wraps the core restoration logic and handles UI feedback.
+  Future<void> restoreAndConfirmFromMultipleZips({
+    required String zipDirectoryPath,
+    required List<Playlist> listOfPlaylists,
+  }) async {
+    List<dynamic> resultLst =
+        await restorePlaylistsAudioMp3FilesFromMultipleZips(
+      zipDirectoryPath: zipDirectoryPath,
+      listOfPlaylists: listOfPlaylists,
+    );
+
+    int totalRestoredAudioCount = resultLst[0];
+    int restoredPlaylistCount = resultLst[1];
+    int processedZipCount = resultLst[2];
+    List<String> processedZipFileNames = resultLst[3];
+    List<String> restoredPlaylistTitles = resultLst[4];
+
+    // Display confirmation message via WarningMessageVM
+    _warningMessageVM.confirmRestoringAudioMp3FromMultipleZips(
+      zipDirectoryPath: zipDirectoryPath,
+      totalRestoredAudioCount: totalRestoredAudioCount,
+      restoredPlaylistCount: restoredPlaylistCount,
+      processedZipCount: processedZipCount,
+      processedZipFileNames: processedZipFileNames,
+      restoredPlaylistTitles: restoredPlaylistTitles,
+    );
+
+    notifyListeners();
   }
 
   Future<int> _addMp3FileToPlaylist({
