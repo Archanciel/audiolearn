@@ -25611,7 +25611,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows Local restore- short - test - playlist.zip".\n\nSince the playlist\n  "Local restore- short - test - playlist"\nwas created, it is positioned at the end of the playlist list.',
+                  'Restored 1 playlist saved individually, 3 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières initialization.zip".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -25628,7 +25628,7 @@ void main() {
             Finder playlistCommentListFinder =
                 find.byKey(const Key('playlistCommentsListKey'));
 
-            // Ensure the list has 6 child widgets
+            // Ensure the list has 6 child widgets for 3 comments
             expect(
               tester
                   .widget<ListBody>(playlistCommentListFinder)
