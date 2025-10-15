@@ -2063,7 +2063,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get restorePlaylistsAudioMp3FilesFromZipMenu =>
-      'Restore Playlists Audio\'s MP3 from ZIP File ...';
+      'Restore Playlists Audio\'s MP3 from ZIP Files in Dir ...';
 
   @override
   String get restorePlaylistsAudioMp3FilesFromZipTooltip =>
@@ -2319,6 +2319,12 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String fromMp3ZipFileUsedToRestoreMultiplePlaylists(Object zipFilePathNName) {
     return 'playlist(s) from the multiple playlists MP3 zip file \"$zipFilePathNName\"';
+  }
+
+  @override
+  String fromMultipleMp3ZipFileUsedToRestoreMultiplePlaylists(
+      Object zipFilePathNName) {
+    return 'playlist(s) from the multiple playlists MP3 zip files contained in dir \"$zipFilePathNName\"';
   }
 
   @override

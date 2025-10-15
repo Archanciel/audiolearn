@@ -3337,7 +3337,7 @@ abstract class AppLocalizations {
   /// No description provided for @restorePlaylistsAudioMp3FilesFromZipMenu.
   ///
   /// In en, this message translates to:
-  /// **'Restore Playlists Audio\'s MP3 from ZIP File ...'**
+  /// **'Restore Playlists Audio\'s MP3 from ZIP Files in Dir ...'**
   String get restorePlaylistsAudioMp3FilesFromZipMenu;
 
   /// No description provided for @restorePlaylistsAudioMp3FilesFromZipTooltip.
@@ -3733,6 +3733,13 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'playlist(s) from the multiple playlists MP3 zip file \"{zipFilePathNName}\"'**
   String fromMp3ZipFileUsedToRestoreMultiplePlaylists(Object zipFilePathNName);
+
+  /// No description provided for @fromMultipleMp3ZipFileUsedToRestoreMultiplePlaylists.
+  ///
+  /// In en, this message translates to:
+  /// **'playlist(s) from the multiple playlists MP3 zip files contained in dir \"{zipFilePathNName}\"'**
+  String fromMultipleMp3ZipFileUsedToRestoreMultiplePlaylists(
+      Object zipFilePathNName);
 
   /// No description provided for @confirmMp3RestorationFromMp3Zip.
   ///
