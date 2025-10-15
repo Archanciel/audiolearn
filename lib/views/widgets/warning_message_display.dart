@@ -1315,6 +1315,40 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
+      case WarningMessageType.restoringAudioMp3FromMultipleZips:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          String restoredAppDataFromZipMessage = '';
+          String fromMp3ZipFileMessage = '';
+
+          if (_warningMessageVM.wasIndividualPlaylistMp3ZipUsed) {
+            fromMp3ZipFileMessage = AppLocalizations.of(context)!
+                .fromMp3ZipFileUsedToRestoreUniquePlaylist(
+              _warningMessageVM.zipFilePathName,
+            );
+          } else {
+            fromMp3ZipFileMessage = AppLocalizations.of(context)!
+                .fromMp3ZipFileUsedToRestoreMultiplePlaylists(
+              _warningMessageVM.zipFilePathName,
+            );
+          }
+
+          restoredAppDataFromZipMessage =
+              AppLocalizations.of(context)!.confirmMp3RestorationFromMp3Zip(
+            _warningMessageVM.restoredMp3Number,
+            _warningMessageVM.playlistsNumber,
+            fromMp3ZipFileMessage,
+          );
+
+          _displayWarningDialog(
+            context: _context,
+            message: restoredAppDataFromZipMessage,
+            warningMessageVM: _warningMessageVM,
+            themeProviderVM: themeProviderVM,
+            warningMode: WarningMode.confirm,
+          );
+        });
+
+        return const SizedBox.shrink();
       case WarningMessageType.restoreAppDataFromZip:
         WidgetsBinding.instance.addPostFrameCallback((_) {
           String restoredAppDataFromZipMessage;

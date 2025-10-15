@@ -5717,7 +5717,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Display confirmation message via WarningMessageVM
     _warningMessageVM.confirmRestoringAudioMp3FromMultipleZips(
-      zipDirectoryPath: zipDirectoryPath,
+      multipleZipsDirectoryPath: zipDirectoryPath,
       totalRestoredAudioCount: totalRestoredAudioCount,
       restoredPlaylistCount: restoredPlaylistCount,
       processedZipCount: processedZipCount,
