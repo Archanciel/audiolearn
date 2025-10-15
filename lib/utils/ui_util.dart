@@ -165,6 +165,19 @@ class UiUtil {
         return;
       }
 
+      if (selectedZipFilePathName == 'INSUFFICIENT_STORAGE_SPACE') {
+        warningMessageVMlistenFalse.setError(
+          errorType: ErrorType.insufficientStorageSpace,
+        );
+        return;
+      } else if (selectedZipFilePathName == 'PATH_ERROR') {
+        warningMessageVMlistenFalse.setError(
+          errorType: ErrorType.pathError,
+        );
+
+        return;
+      }
+
       List<dynamic> resultLst = await Provider.of<PlaylistListVM>(
         context,
         listen: false,
@@ -175,16 +188,15 @@ class UiUtil {
       );
 
       int restoredAudioCount = resultLst[0];
-      bool uniquePlaylistMp3ZipFileWasRestored = resultLst[1];
+      int restoredPlaylistCount = resultLst[1];
+      bool uniquePlaylistMp3ZipFileWasRestored = resultLst[2];
 
       warningMessageVMlistenFalse.confirmMp3RestorationFromMp3Zip(
         zipFilePathName: selectedZipFilePathName,
         restoredMp3Number: restoredAudioCount,
-        playlistsNumber: (restoredAudioCount > 0) ? 1 : 0,
+        playlistsNumber: restoredPlaylistCount,
         wasIndividualPlaylistMp3ZipUsed: uniquePlaylistMp3ZipFileWasRestored,
       );
-
-      return;
     } else {
       // String selectedZipFilePathName = await filePickerSelectZipFilePathName();
       String? mp3ZipDirectoryPath = await filePickerSelectTargetDir();
