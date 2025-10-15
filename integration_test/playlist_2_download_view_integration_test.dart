@@ -16590,8 +16590,8 @@ void main() {
           tester: tester,
           confirmActionDialogTitle: "Prevision of the Save Duration",
           confirmActionDialogMessagePossibleLst: [
-            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:01.",
-            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:02."
+            "Saving the audio MP3 in one or several ZIP file(s) will take this estimated duration (hh:mm:ss): 0:00:01.",
+            "Saving the audio MP3 in one or several ZIP file(s) will take this estimated duration (hh:mm:ss): 0:00:02."
           ],
           closeDialogWithConfirmButton: true,
         );
@@ -16765,7 +16765,7 @@ void main() {
           tester: tester,
           confirmActionDialogTitle: "Prevision of the Save Duration",
           confirmActionDialogMessagePossibleLst: [
-            "Saving the audio MP3 files will take this estimated duration (hh:mm:ss): 0:00:00.",
+            "Saving the audio MP3 in one or several ZIP file(s) will take this estimated duration (hh:mm:ss): 0:00:00.",
           ],
           closeDialogWithConfirmButton: true,
           usePumpAndSettle: true,
