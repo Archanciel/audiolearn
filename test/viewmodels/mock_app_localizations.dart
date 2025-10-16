@@ -2504,7 +2504,7 @@ class MockAppLocalizations extends AppLocalizations {
       "Since the playlists  \"$addedPlaylistTitles\"were created, they are positioned at the end of the playlist list.";
 
   @override
-  String fromMp3ZipFileUsedToRestoreMultiplePlaylists(
+  String fromMultipleMp3ZipFileUsedToRestoreMultiplePlaylists(
     Object zipFilePathNName,
   ) =>
       "playlist(s) from the multiple playlists MP3 zip file \"$zipFilePathNName\"";

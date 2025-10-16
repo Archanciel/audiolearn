@@ -5485,9 +5485,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// Returns a dynamic list containing:
   /// [
   ///   total number of MP3 files that were successfully restored (int),
-  ///   number of playlists to which MP3 files were restored (int),
   ///   number of ZIP files processed (int),
-  ///   list of processed ZIP file names (List of String's),
   ///   list of playlist titles that received restored files (List of String's)
   /// ]
   Future<List<dynamic>> restorePlaylistsAudioMp3FilesFromMultipleZips({
@@ -5495,8 +5493,7 @@ class PlaylistListVM extends ChangeNotifier {
     required List<Playlist> listOfPlaylists,
   }) async {
     int totalRestoredAudioCount = 0;
-    Set<String> restoredPlaylistTitlesSet = {};
-    List<String> processedZipFileNames = [];
+   Set<String> restoredPlaylistTitlesSet = {};
     int processedZipCount = 0;
 
     try {
@@ -5662,7 +5659,6 @@ class PlaylistListVM extends ChangeNotifier {
             }
           }
 
-          processedZipFileNames.add(zipFileName);
           processedZipCount++;
           _logger
               .i('Completed $zipFileName: $zipRestoredCount file(s) restored');
@@ -5680,9 +5676,7 @@ class PlaylistListVM extends ChangeNotifier {
 
       return [
         totalRestoredAudioCount,
-        restoredPlaylistTitlesSet.length,
         processedZipCount,
-        processedZipFileNames,
         restoredPlaylistTitlesSet.toList(),
       ];
     } catch (e) {
@@ -5710,18 +5704,14 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     int totalRestoredAudioCount = resultLst[0];
-    int restoredPlaylistCount = resultLst[1];
-    int processedZipCount = resultLst[2];
-    List<String> processedZipFileNames = resultLst[3];
-    List<String> restoredPlaylistTitles = resultLst[4];
+    int processedZipCount = resultLst[1];
+    List<String> restoredPlaylistTitles = resultLst[2];
 
     // Display confirmation message via WarningMessageVM
     _warningMessageVM.confirmRestoringAudioMp3FromMultipleZips(
       multipleZipsDirectoryPath: zipDirectoryPath,
       totalRestoredAudioCount: totalRestoredAudioCount,
-      restoredPlaylistCount: restoredPlaylistCount,
       processedZipCount: processedZipCount,
-      processedZipFileNames: processedZipFileNames,
       restoredPlaylistTitles: restoredPlaylistTitles,
     );
 

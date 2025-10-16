@@ -907,24 +907,18 @@ class WarningMessageVM extends ChangeNotifier {
 
   int _numberOfUsedZipFiles = 0;
   int get numberOfUsedZipFiles => _numberOfUsedZipFiles;
-  List<String> _usedZipFileNames = [];
-  List<String> get usedZipFileNames => _usedZipFileNames;
 
   /// Displays a confirmation message after restoring MP3 files from multiple ZIP files.
   void confirmRestoringAudioMp3FromMultipleZips({
     required String multipleZipsDirectoryPath,
     required int totalRestoredAudioCount,
-    required int restoredPlaylistCount,
     required int processedZipCount,
-    required List<String> processedZipFileNames,
     required List<String> restoredPlaylistTitles,
   }) {
     _zipFilePathName = multipleZipsDirectoryPath;
     _restoredMp3Number = totalRestoredAudioCount;
-    _playlistsNumber = restoredPlaylistCount;
+    _playlistsNumber = restoredPlaylistTitles.length;
     _numberOfUsedZipFiles = processedZipCount;
-    _usedZipFileNames =
-        processedZipFileNames; // Reusing this list to store processed ZIP file names.
     _playlistTitlesLst = restoredPlaylistTitles;
 
     warningMessageType = WarningMessageType.restoringAudioMp3FromMultipleZips;

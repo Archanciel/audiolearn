@@ -156,28 +156,59 @@ class UiUtil {
     required WarningMessageVM warningMessageVMlistenFalse,
     bool uniquePlaylistIsRestored = false,
   }) async {
+    String? mp3ZipDirectoryPath;
+    String selectedZipFilePathName = '';
+
+    // Use the corrected method with dialog
+    Map<String, String> selectedDirOrFile =
+        await filePickerSelectFileOrDirectory(
+      context: context,
+      dialogTitle: 'Restore MP3 Files',
+      fileButtonText: 'Select Single ZIP File',
+      directoryButtonText: 'Select Directory with ZIPs',
+    );
+
+    if (selectedDirOrFile['type'] == 'file') {
+      selectedZipFilePathName = selectedDirOrFile['path'] ?? '';
+    } else if (selectedDirOrFile['type'] == 'directory') {
+      mp3ZipDirectoryPath = selectedDirOrFile['path'];
+    } else if (selectedDirOrFile['type'] == 'cancelled') {
+      return;
+    } else if (selectedDirOrFile['type'] == 'error') {
+      String errorPath = selectedDirOrFile['path'] ?? '';
+
+      if (errorPath == 'INSUFFICIENT_STORAGE_SPACE') {
+        warningMessageVMlistenFalse.setError(
+          errorType: ErrorType.insufficientStorageSpace,
+        );
+      } else if (errorPath == 'PATH_ERROR') {
+        warningMessageVMlistenFalse.setError(
+          errorType: ErrorType.pathError,
+        );
+      } else {
+        warningMessageVMlistenFalse.setError(
+          errorType: ErrorType.pathError,
+          errorArgOne: errorPath,
+        );
+      }
+      return;
+    }
+
     if (uniquePlaylistIsRestored && playlistsLst.length == 1) {
-      // If only one playlist is selected, we assume that the user
-      // wants to restore the mp3 files for that playlist only.
-      String selectedZipFilePathName = await filePickerSelectZipFilePathName();
+      if (mp3ZipDirectoryPath != null) {
+        // Restore from multiple ZIP files in a directory
+        await restoreFromMultipleZipFilesIInDirectory(
+            context: context,
+            mp3ZipDirectoryPath: mp3ZipDirectoryPath,
+            playlistsLst: playlistsLst);
+        return;
+      }
 
       if (selectedZipFilePathName.isEmpty) {
         return;
       }
 
-      if (selectedZipFilePathName == 'INSUFFICIENT_STORAGE_SPACE') {
-        warningMessageVMlistenFalse.setError(
-          errorType: ErrorType.insufficientStorageSpace,
-        );
-        return;
-      } else if (selectedZipFilePathName == 'PATH_ERROR') {
-        warningMessageVMlistenFalse.setError(
-          errorType: ErrorType.pathError,
-        );
-
-        return;
-      }
-
+      // Restore from single ZIP file for one playlist
       List<dynamic> resultLst = await Provider.of<PlaylistListVM>(
         context,
         listen: false,
@@ -198,45 +229,133 @@ class UiUtil {
         wasIndividualPlaylistMp3ZipUsed: uniquePlaylistMp3ZipFileWasRestored,
       );
     } else {
-      // Restoring mp3 files for unique or multiple playlists from multiple
-      // mp3 zip files located in a directory selected by the user.
-      String? mp3ZipDirectoryPath = await filePickerSelectTargetDir();
+      // Restore from multiple ZIP files in a directory
+      await restoreFromMultipleZipFilesIInDirectory(
+          context: context,
+          mp3ZipDirectoryPath: mp3ZipDirectoryPath,
+          playlistsLst: playlistsLst);
+    }
+  }
 
-      if (mp3ZipDirectoryPath == null) {
-        return;
+  static Future<void> restoreFromMultipleZipFilesIInDirectory({
+    required BuildContext context,
+    String? mp3ZipDirectoryPath,
+    required List<Playlist> playlistsLst,
+  }) async {
+    // Restore from multiple ZIP files in a directory
+    if (mp3ZipDirectoryPath == null) {
+      logger.e('No directory selected');
+      return;
+    }
+
+    await Provider.of<PlaylistListVM>(
+      context,
+      listen: false,
+    ).restoreAndConfirmFromMultipleZips(
+      zipDirectoryPath: mp3ZipDirectoryPath,
+      listOfPlaylists: playlistsLst,
+    );
+    return;
+  }
+
+  /// Allows the user to select either a file or a directory.
+  /// Shows a dialog first to let the user choose what type to select.
+  ///
+  /// Returns a Map containing:
+  /// {
+  ///   'type': 'file' | 'directory' | 'cancelled',
+  ///   'path': String (the selected path, or empty if cancelled)
+  /// }
+  static Future<Map<String, String>> filePickerSelectFileOrDirectory({
+    required BuildContext context,
+    String dialogTitle = 'Select File or Directory',
+    String fileButtonText = 'Select ZIP File',
+    String directoryButtonText = 'Select Directory',
+    List<String>? allowedExtensions, // e.g., ['zip']
+  }) async {
+    // Show dialog to let user choose
+    String? userChoice = await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(dialogTitle),
+          content: Text('What would you like to select?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop('file'),
+              child: Text(fileButtonText),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop('directory'),
+              child: Text(directoryButtonText),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop('cancel'),
+              child: Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
+
+    // Handle user's choice
+    if (userChoice == null || userChoice == 'cancel') {
+      return {'type': 'cancelled', 'path': ''};
+    }
+
+    if (userChoice == 'directory') {
+      // Select directory
+      String? directoryPath = await FilePicker.platform.getDirectoryPath();
+      if (directoryPath != null && directoryPath.isNotEmpty) {
+        return {'type': 'directory', 'path': directoryPath};
+      } else {
+        return {'type': 'cancelled', 'path': ''};
+      }
+    } else {
+      // Select file
+      try {
+        FilePickerResult? result = await FilePicker.platform.pickFiles(
+          type: allowedExtensions != null ? FileType.custom : FileType.any,
+          allowedExtensions: allowedExtensions,
+          allowMultiple: false,
+          withData: false,
+          initialDirectory: Platform.isAndroid ? '/storage/emulated/0' : null,
+        );
+
+        if (result != null && result.files.isNotEmpty) {
+          String? filePath = result.files.first.path;
+          if (filePath != null && filePath.isNotEmpty) {
+            // Verify the file exists
+            File selectedFile = File(filePath);
+            if (await selectedFile.exists()) {
+              return {'type': 'file', 'path': filePath};
+            } else {
+              logger.e('Selected file does not exist: $filePath');
+            }
+          }
+        }
+      } on PlatformException catch (e) {
+        if (e.code == 'unknown_path') {
+          try {
+            Directory tempDir = await getTemporaryDirectory();
+            File testFile = File('${tempDir.path}/storage_test.tmp');
+            await testFile.writeAsString('test');
+            await testFile.delete();
+            logger.e('Failed to retrieve file path: ${e.message}');
+            return {'type': 'error', 'path': 'PATH_ERROR'};
+          } catch (storageError) {
+            logger
+                .e('Insufficient storage space detected during file selection');
+            return {'type': 'error', 'path': 'INSUFFICIENT_STORAGE_SPACE'};
+          }
+        } else {
+          logger.e('Platform exception: ${e.code} - ${e.message}');
+        }
+      } catch (e) {
+        logger.e('Error selecting file: $e');
       }
 
-      if (mp3ZipDirectoryPath == 'INSUFFICIENT_STORAGE_SPACE') {
-        warningMessageVMlistenFalse.setError(
-          errorType: ErrorType.insufficientStorageSpace,
-        );
-        return;
-      } else if (mp3ZipDirectoryPath == 'PATH_ERROR') {
-        warningMessageVMlistenFalse.setError(
-          errorType: ErrorType.pathError,
-        );
-
-        return;
-      }
-
-      await Provider.of<PlaylistListVM>(
-        context,
-        listen: false,
-      ).restoreAndConfirmFromMultipleZips(
-        zipDirectoryPath: mp3ZipDirectoryPath,
-        listOfPlaylists: playlistsLst,
-      );
-
-      // int restoredAudioCount = resultLst[0];
-      // int restoredPlaylistCount = resultLst[1];
-      // bool uniquePlaylistMp3ZipFileWasRestored = resultLst[2];
-
-      // warningMessageVMlistenFalse.confirmMp3RestorationFromMp3Zip(
-      //   zipFilePathName: mp3ZipDirectoryPath,
-      //   restoredMp3Number: restoredAudioCount,
-      //   playlistsNumber: restoredPlaylistCount,
-      //   wasIndividualPlaylistMp3ZipUsed: uniquePlaylistMp3ZipFileWasRestored,
-      // );
+      return {'type': 'cancelled', 'path': ''};
     }
   }
 
