@@ -5501,7 +5501,7 @@ class PlaylistListVM extends ChangeNotifier {
       Directory zipDirectory = Directory(zipDirectoryPath);
 
       if (!await zipDirectory.exists()) {
-        _logger.e('ZIP directory does not exist: $zipDirectoryPath');
+        _logger.e('ZIP directory does not exist: "$zipDirectoryPath"');
         return emptyDynamicLst;
       }
 
