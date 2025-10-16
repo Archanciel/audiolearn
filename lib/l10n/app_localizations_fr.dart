@@ -2442,4 +2442,17 @@ class AppLocalizationsFr extends AppLocalizations {
       Object deletedExistingPlaylistTitles) {
     return '\n\n$deletedExistingPlaylistNumber playlist(s)\n  \"$deletedExistingPlaylistTitles\"\nsupprimée(s) car absente(s) du fichier ZIP de restauration et non créée(s) ou modifiée(s) après la création du ZIP.';
   }
+
+  @override
+  String get selectFileOrDirTitle => 'Restaurer les fichiers MP3';
+
+  @override
+  String get selectQuestion => 'Que souhaitez-vous sélectionner ?';
+
+  @override
+  String get selectZipFile => 'un fichier ZIP individuel';
+
+  @override
+  String get selectDirectory =>
+      'un répertoire contenant de\nmultiples fichiers ZIP';
 }
