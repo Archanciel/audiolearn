@@ -24170,7 +24170,7 @@ void main() {
               tester: tester,
               warningDialogMessage:
                   "The audio \"$audioTitle\" was redownloaded in the playlist \"$uniquePlaylistTitle\".",
-                  warningDialogMessageAlternative: "",
+              warningDialogMessageAlternative: "",
               isWarningConfirming: true,
             );
 
@@ -27380,7 +27380,7 @@ void main() {
               doRemoveDeletedAudioFiles: false,
             );
 
-            // Ensure that the restored playlist is 
+            // Ensure that the restored playlist is
             // selected, since it is selected in the
             // playlist zip file
             IntegrationTestUtil.verifyPlaylistSelection(
@@ -28947,6 +28947,22 @@ void main() {
         closeDialog: true,
       );
 
+      // Verify the select ZIP or dir dialog title
+      Text dialogTitle =
+          tester.widget(find.byKey(const Key('selectFileOrDirDialogTitle')).last);
+
+      expect(dialogTitle.data, 'Restore MP3 Files');
+
+      // Verify the select ZIP or dir dialog content
+      Text dialogContent =
+          tester.widget(find.byKey(const Key('selectFileOrDirDialogContent')).last);
+
+      expect(dialogContent.data, 'What would you like to select ?');
+
+      // Now tap on the 'Select Zip File' button
+      await tester.tap(find.byKey(const Key('selectFileButton')));
+      await tester.pumpAndSettle();
+
       // Verify the displayed warning confirmation dialog
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
@@ -29088,6 +29104,10 @@ void main() {
         closeDialog: true,
       );
 
+      // Now tap on the 'Select Zip File' button
+      await tester.tap(find.byKey(const Key('selectFileButton')));
+      await tester.pumpAndSettle();
+
       // Verify the displayed warning confirmation dialog
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
@@ -29226,6 +29246,10 @@ void main() {
             "Only the MP3 relative to the audio's listed in the playlists which are not already present in the playlists are restorable.",
         closeDialog: true,
       );
+
+      // Now tap on the 'Select Zip File' button
+      await tester.tap(find.byKey(const Key('selectFileButton')));
+      await tester.pumpAndSettle();
 
       // Verify the displayed warning confirmation dialog
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
@@ -29366,6 +29390,10 @@ void main() {
         closeDialog: true,
       );
 
+      // Now tap on the 'Select Zip File' button
+      await tester.tap(find.byKey(const Key('selectFileButton')));
+      await tester.pumpAndSettle();
+
       // Verify the displayed warning confirmation dialog
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
@@ -29502,6 +29530,10 @@ void main() {
             "Only the MP3 relative to the audio's listed in the playlists which are not already present in the playlists are restorable.",
         closeDialog: true,
       );
+
+      // Now tap on the 'Select Zip File' button
+      await tester.tap(find.byKey(const Key('selectFileButton')));
+      await tester.pumpAndSettle();
 
       // Verify the displayed warning confirmation dialog
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
