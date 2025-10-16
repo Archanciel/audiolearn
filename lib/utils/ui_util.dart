@@ -304,10 +304,17 @@ class UiUtil {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(dialogTitle),
-          content: Text(dialogQuestion),
+          title: Text(
+            key: const Key('selectFileOrDirDialogTitle'),
+            dialogTitle,
+          ),
+          content: Text(
+            key: const Key('selectFileOrDirDialogContent'),
+            dialogQuestion,
+          ),
           actions: [
             TextButton(
+              key: const Key('selectFileButton'),
               onPressed: () => Navigator.of(context).pop('file'),
               child: Text(
                 fileButtonText,
@@ -315,6 +322,7 @@ class UiUtil {
               ),
             ),
             TextButton(
+              key: const Key('selectDirectoryButton'),
               onPressed: () => Navigator.of(context).pop('directory'),
               child: Text(
                 directoryButtonText,
@@ -322,6 +330,7 @@ class UiUtil {
               ),
             ),
             TextButton(
+              key: const Key('cancelButton'),
               onPressed: () => Navigator.of(context).pop('cancel'),
               child: Text(AppLocalizations.of(context)!.cancelButton),
             ),
