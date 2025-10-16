@@ -3854,6 +3854,30 @@ abstract class AppLocalizations {
   /// **'\n\nDeleted {deletedExistingPlaylistNumber} playlist(s)\n  \"{deletedExistingPlaylistTitles}\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.'**
   String deletedExistingPlaylistsMessage(Object deletedExistingPlaylistNumber,
       Object deletedExistingPlaylistTitles);
+
+  /// No description provided for @selectFileOrDirTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore MP3 Files'**
+  String get selectFileOrDirTitle;
+
+  /// No description provided for @selectQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'What would you like to select ?'**
+  String get selectQuestion;
+
+  /// No description provided for @selectZipFile.
+  ///
+  /// In en, this message translates to:
+  /// **'A Single ZIP File'**
+  String get selectZipFile;
+
+  /// No description provided for @selectDirectory.
+  ///
+  /// In en, this message translates to:
+  /// **'A Directory with ZIP\'s'**
+  String get selectDirectory;
 }
 
 class _AppLocalizationsDelegate

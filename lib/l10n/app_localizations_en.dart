@@ -2417,4 +2417,16 @@ class AppLocalizationsEn extends AppLocalizations {
       Object deletedExistingPlaylistTitles) {
     return '\n\nDeleted $deletedExistingPlaylistNumber playlist(s)\n  \"$deletedExistingPlaylistTitles\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.';
   }
+
+  @override
+  String get selectFileOrDirTitle => 'Restore MP3 Files';
+
+  @override
+  String get selectQuestion => 'What would you like to select ?';
+
+  @override
+  String get selectZipFile => 'A Single ZIP File';
+
+  @override
+  String get selectDirectory => 'A Directory with ZIP\'s';
 }

@@ -2508,4 +2508,16 @@ class MockAppLocalizations extends AppLocalizations {
     Object zipFilePathNName,
   ) =>
       "playlist(s) from the multiple playlists MP3 zip file \"$zipFilePathNName\"";
+
+  @override
+  String get selectFileOrDirTitle => "Restore MP3 Files";
+
+  @override
+  String get selectZipFile => "Select Single ZIP File";
+
+  @override
+  String get selectDirectory => "Select Directory with ZIPs";
+
+  @override
+  String get selectQuestion => "What would you like to select ?";
 }
