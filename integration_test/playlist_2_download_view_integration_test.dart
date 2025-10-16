@@ -29223,15 +29223,15 @@ void main() {
         0,
       );
 
-      String mp3RestorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}urgent_actus_17-12-2023_mp3_from_2025-08-12_16_29_25_on_2025-08-15_11_23_41.zip';
+      String mp3RestorableZipDirectory =
+          kApplicationPathWindowsTest;
 
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: mp3RestorableZipFilePathName,
-            path: mp3RestorableZipFilePathName,
-            size: 15368672),
-      ]);
+      // Setting the directory to select in the mock file
+      // picker. This directory contains multiple playlists
+      // MP3 zip files
+      mockFilePicker.setPathToSelect(
+        pathToSelectStr:  mp3RestorableZipDirectory,
+      );
 
       await IntegrationTestUtil.typeOnAppbarMenuItem(
         tester: tester,
@@ -29247,15 +29247,11 @@ void main() {
         closeDialog: true,
       );
 
-      // Now tap on the 'Select Zip File' button
-      await tester.tap(find.byKey(const Key('selectFileButton')));
-      await tester.pumpAndSettle();
-
       // Verify the displayed warning confirmation dialog
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Restored 3 audio(s) MP3 in 1 playlist(s) from the multiple playlists MP3 zip file \"$mp3RestorableZipFilePathName\".",
+            "Restored 4 audio(s) MP3 in 1 playlist(s) from the multiple playlists MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
         isWarningConfirming: true,
       );
 
@@ -29272,7 +29268,7 @@ void main() {
               matching: find.byType(ListTile),
             ))
             .length,
-        3,
+        4,
       );
 
       // Purge the test playlist directory so that the created test
