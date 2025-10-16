@@ -5288,7 +5288,6 @@ class PlaylistListVM extends ChangeNotifier {
     return restoredPicturesCount;
   }
 
-
   /// Restores MP3 audio files from a ZIP file to their respective playlist directories.
   /// Only copies MP3 files that correspond to Audio objects present in the
   /// playlist.playableAudioLst and that don't already exist in the playlist directory.
@@ -5493,8 +5492,9 @@ class PlaylistListVM extends ChangeNotifier {
     required List<Playlist> listOfPlaylists,
   }) async {
     int totalRestoredAudioCount = 0;
-   Set<String> restoredPlaylistTitlesSet = {};
+    Set<String> restoredPlaylistTitlesSet = {};
     int processedZipCount = 0;
+    List<dynamic> emptyDynamicLst = [0, 0, []];
 
     try {
       // Check if the directory exists
@@ -5502,7 +5502,7 @@ class PlaylistListVM extends ChangeNotifier {
 
       if (!await zipDirectory.exists()) {
         _logger.e('ZIP directory does not exist: $zipDirectoryPath');
-        return [0, 0, 0, [], []];
+        return emptyDynamicLst;
       }
 
       // Find all ZIP files in the directory
@@ -5514,7 +5514,7 @@ class PlaylistListVM extends ChangeNotifier {
 
       if (zipFiles.isEmpty) {
         _logger.w('No ZIP files found in directory: $zipDirectoryPath');
-        return [0, 0, 0, [], []];
+        return emptyDynamicLst;
       }
 
       _logger.i('Found ${zipFiles.length} ZIP file(s) in $zipDirectoryPath');
@@ -5705,7 +5705,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     int totalRestoredAudioCount = resultLst[0];
     int processedZipCount = resultLst[1];
-    List<String> restoredPlaylistTitles = resultLst[2];
+    List<String> restoredPlaylistTitles = resultLst[2].isNotEmpty ? resultLst[2] as List<String> : [];
 
     // Display confirmation message via WarningMessageVM
     _warningMessageVM.confirmRestoringAudioMp3FromMultipleZips(
