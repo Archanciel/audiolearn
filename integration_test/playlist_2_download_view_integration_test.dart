@@ -29139,10 +29139,11 @@ void main() {
       );
     });
     testWidgets(
-        '''Restore Playlists Audio's MP3 from Zip File ... appbar item menu selecting a unique
-           playlist MP3 zip file. First, on empty app dir, restore unique playlist Windows zip 
-           containing urgent_actus_17-12-2023 playlist and then restore unique playlist MP3 zip
-           file containing the audio's of this playlist. The restored audio's are playable.''',
+        '''Restore Playlists Audio's MP3 from Zip File ... appbar item menu selecting a directory
+           containing multiple MP3 zip files. First, on empty app dir, restore unique playlist
+           Windows zip containing urgent_actus_17-12-2023 playlist and then restore MP3 zip files
+           containing the audio's of this playlist and of other playlists. The restored audio's are
+           playable.''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -29278,10 +29279,10 @@ void main() {
       );
     });
     testWidgets(
-        '''Restore Playlists Audio's MP3 from Zip File ... appbar item menu selecting a multiple
-           playlists MP3 zip file. First, on empty app dir, restore unique playlist Windows zip 
-           containing urgent_actus_17-12-2023 playlist and then restore multiple playlists MP3 zip
-           file containing the audio's of this playlist. The restored audio's are playable.''',
+        '''Restore Playlists Audio's MP3 from Zip File ... appbar item menu selecting a directory containing
+           multiple MP3 zip files. First, on empty app dir, restore unique playlist Windows zip ontaining
+           urgent_actus_17-12-2023 playlist and then restore multiple playlists MP3 zip files containing the
+           audio's of this playlist as well as other playlists. The restored audio's are playable.''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -29362,15 +29363,15 @@ void main() {
         0,
       );
 
-      String mp3RestorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-08-12_16_29_25_on_2025-09-07_07_46_29.zip';
+      String mp3RestorableZipDirectory =
+          kApplicationPathWindowsTest;
 
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: mp3RestorableZipFilePathName,
-            path: mp3RestorableZipFilePathName,
-            size: 15368672),
-      ]);
+      // Setting the directory to select in the mock file
+      // picker. This directory contains multiple playlists
+      // MP3 zip files
+      mockFilePicker.setPathToSelect(
+        pathToSelectStr:  mp3RestorableZipDirectory,
+      );
 
       await IntegrationTestUtil.typeOnAppbarMenuItem(
         tester: tester,
@@ -29386,15 +29387,11 @@ void main() {
         closeDialog: true,
       );
 
-      // Now tap on the 'Select Zip File' button
-      await tester.tap(find.byKey(const Key('selectFileButton')));
-      await tester.pumpAndSettle();
-
       // Verify the displayed warning confirmation dialog
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Restored 4 audio(s) MP3 in 1 playlist(s) from the multiple playlists MP3 zip file \"$mp3RestorableZipFilePathName\".",
+            "Restored 4 audio(s) MP3 in 1 playlist(s) from the multiple playlists MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
         isWarningConfirming: true,
       );
 
@@ -29421,10 +29418,11 @@ void main() {
       );
     });
     testWidgets(
-        '''Restore Playlists Audio's MP3 from Zip File ... appbar item menu selecting a multiple
-           playlists MP3 zip file. First, on empty app dir, restore 2 playlists Windows zip 
-           containing urgent_actus_17-12-2023 and local playlist and then restore multiple playlists MP3 zip
-           file containing the audio's of this playlist. The restored audio's are playable.''',
+        '''Restore Playlists Audio's MP3 from Zip File ... appbar item menu selecting a selecting a
+           directory containing multiple MP3 zip files. First, on empty app dir, restore 2 playlists
+           Windows zip containing urgent_actus_17-12-2023 and local playlist and then restore multiple
+           playlists MP3 zip files containing the audio's of this playlist. The restored audio's are
+           playable.''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -29503,15 +29501,16 @@ void main() {
         0,
       );
 
-      String mp3RestorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-08-12_16_29_25_on_2025-09-07_07_46_29.zip';
 
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: mp3RestorableZipFilePathName,
-            path: mp3RestorableZipFilePathName,
-            size: 15368672),
-      ]);
+      String mp3RestorableZipDirectory =
+          kApplicationPathWindowsTest;
+
+      // Setting the directory to select in the mock file
+      // picker. This directory contains multiple playlists
+      // MP3 zip files
+      mockFilePicker.setPathToSelect(
+        pathToSelectStr:  kApplicationPathWindowsTest,
+      );
 
       await IntegrationTestUtil.typeOnAppbarMenuItem(
         tester: tester,
@@ -29527,15 +29526,11 @@ void main() {
         closeDialog: true,
       );
 
-      // Now tap on the 'Select Zip File' button
-      await tester.tap(find.byKey(const Key('selectFileButton')));
-      await tester.pumpAndSettle();
-
       // Verify the displayed warning confirmation dialog
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Restored 6 audio(s) MP3 in 2 playlist(s) from the multiple playlists MP3 zip file \"$mp3RestorableZipFilePathName\".",
+            "Restored 6 audio(s) MP3 in 2 playlist(s) from the multiple playlists MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
         isWarningConfirming: true,
       );
 
