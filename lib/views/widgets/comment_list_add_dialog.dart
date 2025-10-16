@@ -134,8 +134,14 @@ class CommentDeleteConfirmActionDialog extends StatelessWidget {
     final bool isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
     return AlertDialog(
-      title: Text(dialogTitleOne),
-      content: Text(dialogContent),
+      title: Text(
+        key: const Key('dialogTitle'),
+        dialogTitleOne,
+      ),
+      content: Text(
+        key: const Key('dialogContent'),
+        dialogContent,
+      ),
       actions: <Widget>[
         TextButton(
           key: const Key('confirmButton'),
