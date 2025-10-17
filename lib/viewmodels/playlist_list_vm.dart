@@ -5297,7 +5297,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///   the number of playlists to which a MP3 file was restored
   ///   if the MP3 zip file was a unique playlist restoration (true) or a multiple
   ///   playlist restoration (false).
-  Future<List<dynamic>> restorePlaylistsAudioMp3FilesFromZip({
+  Future<List<dynamic>> restorePlaylistsAudioMp3FilesFromUniqueZip({
     required String zipFilePathName,
     required List<Playlist>
         listOfPlaylists, // Contains all application playlists
@@ -5415,7 +5415,14 @@ class PlaylistListVM extends ChangeNotifier {
                     // The most recent comment was added by restoring the
                     // multiple playlists, comments, pictures and settings
                     // from a zip file or restoring a unique playlist, comments
-                    // and picture from a zip file.
+                    // and picture from a zip file. Without first restoring
+                    // the multiple playlists, comments, pictures and settings
+                    // from a zip file or restoring a unique playlist before
+                    // restoring the MP3 files from a zip file, the last comment
+                    // end position cannot be used to determine if the audio
+                    // restored from the zip file has the same duration as the
+                    // last comment end position and so the text to speech audio
+                    // will not be replaced to the lasr generated one.
                     Comment? lastComment = _commentVM.getLastCommentOfAudio(
                       audio: existingAudio,
                     );
@@ -5440,7 +5447,8 @@ class PlaylistListVM extends ChangeNotifier {
                           playlist: playlist,
                           playlistTitle: playlistTitle,
                           audioFileName: audioFileName,
-                          restoredPlaylistTitlesLst: restoredPlaylistTitlesLst,
+                          restoredPlaylistTitlesLst: restoredPlaylistTitlesLst, // this list is updated in
+                          //                                                       _addMp3FileToPlaylist() !
                           restoredAudioCount: restoredAudioCount,
                           isTextToSpeechMp3: true,
                           audioDuration: audioDuration,
