@@ -5450,9 +5450,9 @@ class PlaylistListVM extends ChangeNotifier {
                               .round();
 
                       if ((commentEndPositionInTenthOfSeconds ==
-                          audioInZipDurationInTenthOfSeconds) &&
-                        (existingAudioDurationInTenthOfSeconds !=
-                            audioInZipDurationInTenthOfSeconds)) {
+                              audioInZipDurationInTenthOfSeconds) &&
+                          (existingAudioDurationInTenthOfSeconds !=
+                              audioInZipDurationInTenthOfSeconds)) {
                         restoredAudioCount = await _addMp3FileToPlaylist(
                           audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                           archiveFile: archiveFile,
@@ -5672,8 +5672,29 @@ class PlaylistListVM extends ChangeNotifier {
                     int audioInZipDurationInTenthOfSeconds =
                         (audioInZipDuration.inMilliseconds / 100).round();
 
-                    if (commentEndPositionInTenthOfSeconds ==
-                        audioInZipDurationInTenthOfSeconds) {
+                    AudioPlayer? audioPlayer =
+                        _audioDownloadVM.instanciateAudioPlayer();
+
+                    Duration existingAudioMp3Duration =
+                        await _audioDownloadVM.getMp3DurationWithAudioPlayer(
+                      audioPlayer: audioPlayer, // RÉUTILISER ICI
+                      filePathName: targetAudio.filePathName,
+                    );
+
+                    if (audioPlayer != null) {
+                      // Dispose the audio player after using it, otherwise an
+                      // exception prevents to access to the audio file to restore
+                      // it in _addMp3FileToPlaylist.
+                      await audioPlayer.dispose();
+                    }
+
+                    int existingAudioDurationInTenthOfSeconds =
+                        (existingAudioMp3Duration.inMilliseconds / 100).round();
+
+                    if ((commentEndPositionInTenthOfSeconds ==
+                            audioInZipDurationInTenthOfSeconds) &&
+                        (existingAudioDurationInTenthOfSeconds !=
+                            audioInZipDurationInTenthOfSeconds)) {
                       int addResult = await _addMp3FileToPlaylist(
                         audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                         archiveFile: archiveFile,
