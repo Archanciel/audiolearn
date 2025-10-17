@@ -5298,11 +5298,12 @@ class PlaylistListVM extends ChangeNotifier {
   ///   if the MP3 zip file was a unique playlist restoration (true) or a multiple
   ///   playlist restoration (false).
   Future<List<dynamic>> restorePlaylistsAudioMp3FilesFromUniqueZip({
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required String zipFilePathName,
     required List<Playlist>
         listOfPlaylists, // Contains all application playlists
-    //                                          or only one playlist if restoring a
-    //                                          unique playlist
+    //                      or only one playlist if restoring a
+    //                      unique playlist
     bool uniquePlaylistIsRestored = false,
   }) async {
     int restoredAudioCount = 0;
@@ -5390,6 +5391,7 @@ class PlaylistListVM extends ChangeNotifier {
                 // Only copy if the file doesn't already exist
                 if (!targetFile.existsSync()) {
                   restoredAudioCount = await _addMp3FileToPlaylist(
+                    audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                     archiveFile: archiveFile,
                     targetFile: targetFile,
                     playlist: playlist,
@@ -5442,12 +5444,14 @@ class PlaylistListVM extends ChangeNotifier {
                       if (commentEndPositionInTenthOfSeconds ==
                           audioDurationInTenthOfSeconds) {
                         restoredAudioCount = await _addMp3FileToPlaylist(
+                          audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                           archiveFile: archiveFile,
                           targetFile: targetFile,
                           playlist: playlist,
                           playlistTitle: playlistTitle,
                           audioFileName: audioFileName,
-                          restoredPlaylistTitlesLst: restoredPlaylistTitlesLst, // this list is updated in
+                          restoredPlaylistTitlesLst:
+                              restoredPlaylistTitlesLst, // this list is updated in
                           //                                                       _addMp3FileToPlaylist() !
                           restoredAudioCount: restoredAudioCount,
                           isTextToSpeechMp3: true,
@@ -5468,7 +5472,8 @@ class PlaylistListVM extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       // Log error and return current count
-      _logger.i('Error processing ZIP file $zipFilePathName: $e');
+      _logger.i(
+          'In restorePlaylistsAudioMp3FilesFromUniqueZip(), error processing ZIP file $zipFilePathName: $e');
     }
 
     return [
@@ -5496,6 +5501,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///   list of playlist titles that received restored files (List of String's)
   /// ]
   Future<List<dynamic>> restorePlaylistsAudioMp3FilesFromMultipleZips({
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required String zipDirectoryPath,
     required List<Playlist> listOfPlaylists,
   }) async {
@@ -5602,6 +5608,7 @@ class PlaylistListVM extends ChangeNotifier {
               // Only restore if the file doesn't already exist
               if (!targetFile.existsSync()) {
                 int addResult = await _addMp3FileToPlaylist(
+                  audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                   archiveFile: archiveFile,
                   targetFile: targetFile,
                   playlist: playlist,
@@ -5642,6 +5649,7 @@ class PlaylistListVM extends ChangeNotifier {
                     if (commentEndPositionInTenthOfSeconds ==
                         audioDurationInTenthOfSeconds) {
                       int addResult = await _addMp3FileToPlaylist(
+                        audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                         archiveFile: archiveFile,
                         targetFile: targetFile,
                         playlist: playlist,
@@ -5702,18 +5710,21 @@ class PlaylistListVM extends ChangeNotifier {
   ///
   /// This wraps the core restoration logic and handles UI feedback.
   Future<void> restoreAndConfirmFromMultipleZips({
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required String zipDirectoryPath,
     required List<Playlist> listOfPlaylists,
   }) async {
     List<dynamic> resultLst =
         await restorePlaylistsAudioMp3FilesFromMultipleZips(
+      audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
       zipDirectoryPath: zipDirectoryPath,
       listOfPlaylists: listOfPlaylists,
     );
 
     int totalRestoredAudioCount = resultLst[0];
     int processedZipCount = resultLst[1];
-    List<String> restoredPlaylistTitles = resultLst[2].isNotEmpty ? resultLst[2] as List<String> : [];
+    List<String> restoredPlaylistTitles =
+        resultLst[2].isNotEmpty ? resultLst[2] as List<String> : [];
 
     // Display confirmation message via WarningMessageVM
     _warningMessageVM.confirmRestoringAudioMp3FromMultipleZips(
@@ -5727,6 +5738,7 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   Future<int> _addMp3FileToPlaylist({
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required ArchiveFile archiveFile,
     required File targetFile,
     required Playlist playlist,
@@ -5747,6 +5759,13 @@ class PlaylistListVM extends ChangeNotifier {
       }
 
       // Extract and write the file
+
+      // This is necessary, otherwise if the restored audio has been
+      // played, then executing await targetFile.writeAsBytes(fileBytes)
+      // causes an error because the audio player has the file opened in
+      // it.
+      await audioPlayerVMlistenFalse.initializeAudioPlayer();
+
       List<int> fileBytes = archiveFile.content as List<int>;
       await targetFile.writeAsBytes(fileBytes);
 
@@ -5777,7 +5796,7 @@ class PlaylistListVM extends ChangeNotifier {
     } catch (e) {
       // Log error but continue with other files
       _logger.i(
-          'Error restoring file $audioFileName to playlist $playlistTitle: $e');
+          'In _addMp3FileToPlaylist(), error restoring file $audioFileName to playlist $playlistTitle: $e');
     }
 
     return restoredAudioCount;
