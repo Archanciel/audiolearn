@@ -5424,25 +5424,25 @@ class PlaylistListVM extends ChangeNotifier {
                     // end position cannot be used to determine if the audio
                     // restored from the zip file has the same duration as the
                     // last comment end position and so the text to speech audio
-                    // will not be replaced to the lasr generated one.
+                    // will not be replaced to the last generated one.
                     Comment? lastComment = _commentVM.getLastCommentOfAudio(
                       audio: existingAudio,
                     );
                     if (lastComment != null) {
                       int commentEndPositionInTenthOfSeconds =
                           lastComment.commentEndPositionInTenthOfSeconds;
-                      List<dynamic> audioDurationAndSizeLst =
+                      List<dynamic> audioInZipDurationAndSizeLst =
                           await _audioDownloadVM.getAudioMp3DurationAndSize(
                         audioMp3ArchiveFile: archiveFile,
                         playlistDownloadPath: playlist.downloadPath,
                       );
-                      Duration audioDuration =
-                          audioDurationAndSizeLst[0] as Duration;
-                      int audioDurationInTenthOfSeconds =
-                          (audioDuration.inMilliseconds / 100).round();
+                      Duration audioInZipDuration =
+                          audioInZipDurationAndSizeLst[0] as Duration;
+                      int audioInZipDurationInTenthOfSeconds =
+                          (audioInZipDuration.inMilliseconds / 100).round();
 
                       if (commentEndPositionInTenthOfSeconds ==
-                          audioDurationInTenthOfSeconds) {
+                          audioInZipDurationInTenthOfSeconds) {
                         restoredAudioCount = await _addMp3FileToPlaylist(
                           audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                           archiveFile: archiveFile,
@@ -5455,8 +5455,8 @@ class PlaylistListVM extends ChangeNotifier {
                           //                                                       _addMp3FileToPlaylist() !
                           restoredAudioCount: restoredAudioCount,
                           isTextToSpeechMp3: true,
-                          audioDuration: audioDuration,
-                          audioFileSize: audioDurationAndSizeLst[1] as int,
+                          audioDuration: audioInZipDuration,
+                          audioFileSize: audioInZipDurationAndSizeLst[1] as int,
                         );
                       }
                     }
@@ -5627,6 +5627,24 @@ class PlaylistListVM extends ChangeNotifier {
               } else {
                 // Handle text-to-speech audio replacement logic
                 if (targetAudio.audioType == AudioType.textToSpeech) {
+                  // If the existing audio is a text-to-speech audio,
+                  // the most recent comment end position is used to
+                  // check if the audio restored from the zip file
+                  // has the same duration as the last comment end position.
+                  // If it is the case, the existing audio is replaced by
+                  // the audio restored from the zip file.
+                  //
+                  // The most recent comment was added by restoring the
+                  // multiple playlists, comments, pictures and settings
+                  // from a zip file or restoring a unique playlist, comments
+                  // and picture from a zip file. Without first restoring
+                  // the multiple playlists, comments, pictures and settings
+                  // from a zip file or restoring a unique playlist before
+                  // restoring the MP3 files from a zip file, the last comment
+                  // end position cannot be used to determine if the audio
+                  // restored from the zip file has the same duration as the
+                  // last comment end position and so the text to speech audio
+                  // will not be replaced to the last generated one.
                   Comment? lastComment = _commentVM.getLastCommentOfAudio(
                     audio: targetAudio,
                   );
@@ -5635,19 +5653,19 @@ class PlaylistListVM extends ChangeNotifier {
                     int commentEndPositionInTenthOfSeconds =
                         lastComment.commentEndPositionInTenthOfSeconds;
 
-                    List<dynamic> audioDurationAndSizeLst =
+                    List<dynamic> audioInZipDurationAndSizeLst =
                         await _audioDownloadVM.getAudioMp3DurationAndSize(
                       audioMp3ArchiveFile: archiveFile,
                       playlistDownloadPath: playlist.downloadPath,
                     );
 
-                    Duration audioDuration =
-                        audioDurationAndSizeLst[0] as Duration;
-                    int audioDurationInTenthOfSeconds =
-                        (audioDuration.inMilliseconds / 100).round();
+                    Duration audioInZipDuration =
+                        audioInZipDurationAndSizeLst[0] as Duration;
+                    int audioInZipDurationInTenthOfSeconds =
+                        (audioInZipDuration.inMilliseconds / 100).round();
 
                     if (commentEndPositionInTenthOfSeconds ==
-                        audioDurationInTenthOfSeconds) {
+                        audioInZipDurationInTenthOfSeconds) {
                       int addResult = await _addMp3FileToPlaylist(
                         audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                         archiveFile: archiveFile,
@@ -5658,8 +5676,8 @@ class PlaylistListVM extends ChangeNotifier {
                         restoredPlaylistTitlesLst: [],
                         restoredAudioCount: 0,
                         isTextToSpeechMp3: true,
-                        audioDuration: audioDuration,
-                        audioFileSize: audioDurationAndSizeLst[1] as int,
+                        audioDuration: audioInZipDuration,
+                        audioFileSize: audioInZipDurationAndSizeLst[1] as int,
                       );
 
                       if (addResult > 0) {
@@ -5763,8 +5781,8 @@ class PlaylistListVM extends ChangeNotifier {
       // This is necessary, otherwise if the restored audio has been
       // played, then executing await targetFile.writeAsBytes(fileBytes)
       // causes an error because the audio player has the file opened in
-      // it.
-      await audioPlayerVMlistenFalse.initializeAudioPlayer();
+      // it. But this only required with AudioPlayer 5.2.1 !
+      // await audioPlayerVMlistenFalse.initializeAudioPlayer();
 
       List<int> fileBytes = archiveFile.content as List<int>;
       await targetFile.writeAsBytes(fileBytes);
