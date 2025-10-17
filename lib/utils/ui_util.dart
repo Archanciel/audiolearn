@@ -201,16 +201,10 @@ class UiUtil {
       listen: false,
     );
 
-    AudioPlayerVM audioPlayerVMlistenFalse = Provider.of<AudioPlayerVM>(
-      context,
-      listen: false,
-    );
-
     if (uniquePlaylistIsRestored && playlistsLst.length == 1) {
       if (mp3ZipDirectoryPath != null) {
         // Restore from multiple ZIP files contained in a directory
         await playlistListVMlistenFalse.restoreAndConfirmFromMultipleZips(
-          audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
           zipDirectoryPath: mp3ZipDirectoryPath,
           listOfPlaylists: playlistsLst,
         );
@@ -224,7 +218,6 @@ class UiUtil {
       // Restore from single ZIP file for one playlist
       List<dynamic> resultLst = await playlistListVMlistenFalse
           .restorePlaylistsAudioMp3FilesFromUniqueZip(
-            audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
         zipFilePathName: selectedZipFilePathName,
         listOfPlaylists: playlistsLst,
         uniquePlaylistIsRestored: uniquePlaylistIsRestored,
@@ -245,7 +238,6 @@ class UiUtil {
       // ZIP file or from multiple mp3 zip files located in a directory.
       if (mp3ZipDirectoryPath != null) {
         await playlistListVMlistenFalse.restoreAndConfirmFromMultipleZips(
-          audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
           zipDirectoryPath: mp3ZipDirectoryPath,
           listOfPlaylists: playlistsLst,
         );
@@ -259,7 +251,6 @@ class UiUtil {
       // Restore from single ZIP file for one or multiple playlists
       List<dynamic> resultLst = await playlistListVMlistenFalse
           .restorePlaylistsAudioMp3FilesFromUniqueZip(
-            audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
         zipFilePathName: selectedZipFilePathName,
         listOfPlaylists: playlistsLst,
         uniquePlaylistIsRestored: uniquePlaylistIsRestored,

@@ -5299,7 +5299,6 @@ class PlaylistListVM extends ChangeNotifier {
   ///   if the MP3 zip file was a unique playlist restoration (true) or a multiple
   ///   playlist restoration (false).
   Future<List<dynamic>> restorePlaylistsAudioMp3FilesFromUniqueZip({
-    required AudioPlayerVM audioPlayerVMlistenFalse,
     required String zipFilePathName,
     required List<Playlist> listOfPlaylists,
     bool uniquePlaylistIsRestored = false,
@@ -5377,7 +5376,6 @@ class PlaylistListVM extends ChangeNotifier {
 
                 if (!targetFile.existsSync()) {
                   restoredAudioCount = await _addMp3FileToPlaylist(
-                    audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                     archiveFile: archiveFile,
                     targetFile: targetFile,
                     playlist: playlist,
@@ -5454,7 +5452,6 @@ class PlaylistListVM extends ChangeNotifier {
                           (existingAudioDurationInTenthOfSeconds !=
                               audioInZipDurationInTenthOfSeconds)) {
                         restoredAudioCount = await _addMp3FileToPlaylist(
-                          audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                           archiveFile: archiveFile,
                           targetFile: targetFile,
                           playlist: playlist,
@@ -5509,7 +5506,6 @@ class PlaylistListVM extends ChangeNotifier {
   ///   list of playlist titles that received restored files (List of String's)
   /// ]
   Future<List<dynamic>> restorePlaylistsAudioMp3FilesFromMultipleZips({
-    required AudioPlayerVM audioPlayerVMlistenFalse,
     required String zipDirectoryPath,
     required List<Playlist> listOfPlaylists,
   }) async {
@@ -5616,7 +5612,6 @@ class PlaylistListVM extends ChangeNotifier {
               // Only restore if the file doesn't already exist
               if (!targetFile.existsSync()) {
                 int addResult = await _addMp3FileToPlaylist(
-                  audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                   archiveFile: archiveFile,
                   targetFile: targetFile,
                   playlist: playlist,
@@ -5696,7 +5691,6 @@ class PlaylistListVM extends ChangeNotifier {
                         (existingAudioDurationInTenthOfSeconds !=
                             audioInZipDurationInTenthOfSeconds)) {
                       int addResult = await _addMp3FileToPlaylist(
-                        audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                         archiveFile: archiveFile,
                         targetFile: targetFile,
                         playlist: playlist,
@@ -5757,13 +5751,11 @@ class PlaylistListVM extends ChangeNotifier {
   ///
   /// This wraps the core restoration logic and handles UI feedback.
   Future<void> restoreAndConfirmFromMultipleZips({
-    required AudioPlayerVM audioPlayerVMlistenFalse,
     required String zipDirectoryPath,
     required List<Playlist> listOfPlaylists,
   }) async {
     List<dynamic> resultLst =
         await restorePlaylistsAudioMp3FilesFromMultipleZips(
-      audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
       zipDirectoryPath: zipDirectoryPath,
       listOfPlaylists: listOfPlaylists,
     );
@@ -5785,7 +5777,6 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   Future<int> _addMp3FileToPlaylist({
-    required AudioPlayerVM audioPlayerVMlistenFalse,
     required ArchiveFile archiveFile,
     required File targetFile,
     required Playlist playlist,
