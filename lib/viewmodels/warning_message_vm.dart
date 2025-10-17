@@ -989,7 +989,7 @@ class WarningMessageVM extends ChangeNotifier {
   int _playlistsNumber = 0;
   int get playlistsNumber => _playlistsNumber;
 
-  void confirmMp3RestorationFromMp3Zip({
+  void confirmMp3RestorationFromUniqueZip({
     required String zipFilePathName,
     required int playlistsNumber,
     required int restoredMp3Number,
