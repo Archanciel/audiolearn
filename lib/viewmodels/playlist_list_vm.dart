@@ -3,6 +3,7 @@ import 'dart:core';
 import 'dart:io';
 
 import 'package:archive/archive.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
@@ -5300,10 +5301,7 @@ class PlaylistListVM extends ChangeNotifier {
   Future<List<dynamic>> restorePlaylistsAudioMp3FilesFromUniqueZip({
     required AudioPlayerVM audioPlayerVMlistenFalse,
     required String zipFilePathName,
-    required List<Playlist>
-        listOfPlaylists, // Contains all application playlists
-    //                      or only one playlist if restoring a
-    //                      unique playlist
+    required List<Playlist> listOfPlaylists,
     bool uniquePlaylistIsRestored = false,
   }) async {
     int restoredAudioCount = 0;
@@ -5318,12 +5316,7 @@ class PlaylistListVM extends ChangeNotifier {
     File zipFile = File(zipFilePathName);
 
     if (!zipFile.existsSync()) {
-      return [
-        0, // No audio restored
-        0, // No playlist in which audio was restored
-        false, // No sense in this case since the MP3
-        //        zip file does not exist
-      ];
+      return [0, 0, false];
     }
 
     try {
@@ -5331,9 +5324,7 @@ class PlaylistListVM extends ChangeNotifier {
       List<int> zipBytes = await zipFile.readAsBytes();
       Archive archive = ZipDecoder().decodeBytes(zipBytes);
 
-      // Create a map of playlist titles to playlists for
-      // efficient lookup
-
+      // Create a map of playlist titles to playlists for efficient lookup
       Map<String, Playlist> playlistMap = {};
 
       for (Playlist playlist in listOfPlaylists) {
@@ -5347,17 +5338,14 @@ class PlaylistListVM extends ChangeNotifier {
       for (ArchiveFile archiveFile in archive) {
         // Skip directories
         if (archiveFile.isFile && archiveFile.name.endsWith('.mp3')) {
-          // Enables restoring MP3 from zip files created on Windows
-          // or on Android.
+          // ... code existant pour extraire playlistTitle et audioFileName ...
+
           final String sanitizedArchiveFilePathName = archiveFile.name
-              .replaceAll(
-                  '\\', '/') // First convert all backslashes to forward slashes
+              .replaceAll('\\', '/')
               .split('/')
               .map((segment) => segment.trim())
               .join('/');
 
-          // Extract playlist name and audio file name from the path
-          // Expected path format: playlists/PlaylistTitle/audioFileName.mp3
           List<String> pathParts = sanitizedArchiveFilePathName.split('/');
 
           if (pathParts.length >= 3 &&
@@ -5383,12 +5371,10 @@ class PlaylistListVM extends ChangeNotifier {
               }
 
               if (shouldRestore) {
-                // Create the target file path
                 String targetFilePath =
                     path.join(playlist.downloadPath, audioFileName);
                 File targetFile = File(targetFilePath);
 
-                // Only copy if the file doesn't already exist
                 if (!targetFile.existsSync()) {
                   restoredAudioCount = await _addMp3FileToPlaylist(
                     audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
@@ -5428,6 +5414,7 @@ class PlaylistListVM extends ChangeNotifier {
                     Comment? lastComment = _commentVM.getLastCommentOfAudio(
                       audio: existingAudio,
                     );
+
                     if (lastComment != null) {
                       int commentEndPositionInTenthOfSeconds =
                           lastComment.commentEndPositionInTenthOfSeconds;
@@ -5436,13 +5423,36 @@ class PlaylistListVM extends ChangeNotifier {
                         audioMp3ArchiveFile: archiveFile,
                         playlistDownloadPath: playlist.downloadPath,
                       );
+
                       Duration audioInZipDuration =
                           audioInZipDurationAndSizeLst[0] as Duration;
                       int audioInZipDurationInTenthOfSeconds =
                           (audioInZipDuration.inMilliseconds / 100).round();
 
-                      if (commentEndPositionInTenthOfSeconds ==
-                          audioInZipDurationInTenthOfSeconds) {
+                      AudioPlayer? audioPlayer =
+                          _audioDownloadVM.instanciateAudioPlayer();
+
+                      Duration existingAudioMp3Duration =
+                          await _audioDownloadVM.getMp3DurationWithAudioPlayer(
+                        audioPlayer: audioPlayer, // RÉUTILISER ICI
+                        filePathName: existingAudio.filePathName,
+                      );
+
+                      if (audioPlayer != null) {
+                        // Dispose the audio player after using it, otherwise an
+                        // exception prevents to access to the audio file to restore
+                        // it in _addMp3FileToPlaylist.
+                        await audioPlayer.dispose();
+                      }
+
+                      int existingAudioDurationInTenthOfSeconds =
+                          (existingAudioMp3Duration.inMilliseconds / 100)
+                              .round();
+
+                      if ((commentEndPositionInTenthOfSeconds ==
+                          audioInZipDurationInTenthOfSeconds) &&
+                        (existingAudioDurationInTenthOfSeconds !=
+                            audioInZipDurationInTenthOfSeconds)) {
                         restoredAudioCount = await _addMp3FileToPlaylist(
                           audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
                           archiveFile: archiveFile,
@@ -5452,7 +5462,7 @@ class PlaylistListVM extends ChangeNotifier {
                           audioFileName: audioFileName,
                           restoredPlaylistTitlesLst:
                               restoredPlaylistTitlesLst, // this list is updated in
-                          //                                                       _addMp3FileToPlaylist() !
+                          //                                _addMp3FileToPlaylist() !
                           restoredAudioCount: restoredAudioCount,
                           isTextToSpeechMp3: true,
                           audioDuration: audioInZipDuration,
@@ -5471,7 +5481,6 @@ class PlaylistListVM extends ChangeNotifier {
       _isRestoringMp3 = false;
       notifyListeners();
     } catch (e) {
-      // Log error and return current count
       _logger.i(
           'In restorePlaylistsAudioMp3FilesFromUniqueZip(), error processing ZIP file $zipFilePathName: $e');
     }
@@ -5479,8 +5488,7 @@ class PlaylistListVM extends ChangeNotifier {
     return [
       restoredAudioCount,
       restoredPlaylistTitlesLst.length,
-      uniquePlaylistIsRestored // true if the MP3 zip file is
-      //                          a unique playlist zip file
+      uniquePlaylistIsRestored,
     ];
   }
 
