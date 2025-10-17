@@ -199,7 +199,7 @@ class UiUtil {
     if (uniquePlaylistIsRestored && playlistsLst.length == 1) {
       if (mp3ZipDirectoryPath != null) {
         // Restore from multiple ZIP files contained in a directory
-        await restoreFromMultipleZipFilesIInDirectory(
+        await restoreFromMultipleZipFilesInDirectory(
             context: context,
             mp3ZipDirectoryPath: mp3ZipDirectoryPath,
             playlistsLst: playlistsLst);
@@ -271,7 +271,7 @@ class UiUtil {
     }
   }
 
-  static Future<void> restoreFromMultipleZipFilesIInDirectory({
+  static Future<void> restoreFromMultipleZipFilesInDirectory({
     required BuildContext context,
     String? mp3ZipDirectoryPath,
     required List<Playlist> playlistsLst,
