@@ -2324,7 +2324,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String fromMultipleMp3ZipFileUsedToRestoreMultiplePlaylists(
       Object zipFilePathNName) {
-    return 'playlist(s) from the multiple playlists MP3 zip files contained in dir \"$zipFilePathNName\"';
+    return 'playlist(s) from the multiple MP3 zip files contained in dir \"$zipFilePathNName\"';
   }
 
   @override
@@ -2429,4 +2429,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get selectDirectory => 'A Directory with ZIP\'s';
+
+  @override
+  String get dateFormatddMMyyyy => 'dd/MM/yyyy';
+
+  @override
+  String get dateFormatMMddyyyy => 'MM/dd/yyyy';
+
+  @override
+  String get dateFormatyyyyMMdd => 'yyyy/MM/dd';
 }

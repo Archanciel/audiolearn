@@ -3737,7 +3737,7 @@ abstract class AppLocalizations {
   /// No description provided for @fromMultipleMp3ZipFileUsedToRestoreMultiplePlaylists.
   ///
   /// In en, this message translates to:
-  /// **'playlist(s) from the multiple playlists MP3 zip files contained in dir \"{zipFilePathNName}\"'**
+  /// **'playlist(s) from the multiple MP3 zip files contained in dir \"{zipFilePathNName}\"'**
   String fromMultipleMp3ZipFileUsedToRestoreMultiplePlaylists(
       Object zipFilePathNName);
 
@@ -3878,6 +3878,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A Directory with ZIP\'s'**
   String get selectDirectory;
+
+  /// No description provided for @dateFormatddMMyyyy.
+  ///
+  /// In en, this message translates to:
+  /// **'dd/MM/yyyy'**
+  String get dateFormatddMMyyyy;
+
+  /// No description provided for @dateFormatMMddyyyy.
+  ///
+  /// In en, this message translates to:
+  /// **'MM/dd/yyyy'**
+  String get dateFormatMMddyyyy;
+
+  /// No description provided for @dateFormatyyyyMMdd.
+  ///
+  /// In en, this message translates to:
+  /// **'yyyy/MM/dd'**
+  String get dateFormatyyyyMMdd;
 }
 
 class _AppLocalizationsDelegate

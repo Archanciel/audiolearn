@@ -2520,4 +2520,13 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get selectQuestion => "What would you like to select ?";
+
+  @override
+  String get dateFormatddMMyyyy => "dd/MM/yyyy";
+
+  @override
+  String get dateFormatMMddyyyy => "MM/dd/yyyy";
+
+  @override
+  String get dateFormatyyyyMMdd => "yyyy/MM/dd";
 }

@@ -760,4 +760,24 @@ class UiUtil {
       audio: audio,
     );
   }
+
+  static String obtainTranslatedDateFormat({
+    required BuildContext context,
+    required DateFormatVM dateFormatVMlistenFalse,
+  }) {
+    String selectedDateFormat = dateFormatVMlistenFalse.selectedDateFormat;
+    String translatedDateFormatStr = '';
+
+    if (selectedDateFormat == 'dd/MM/yyyy') {
+      translatedDateFormatStr =
+          AppLocalizations.of(context)!.dateFormatddMMyyyy;
+    } else if (selectedDateFormat == 'MM/dd/yyyy') {
+      translatedDateFormatStr =
+          AppLocalizations.of(context)!.dateFormatMMddyyyy;
+    } else if (selectedDateFormat == 'yyyy/MM/dd') {
+      translatedDateFormatStr =
+          AppLocalizations.of(context)!.dateFormatyyyyMMdd;
+    }
+    return translatedDateFormatStr;
+  }
 }

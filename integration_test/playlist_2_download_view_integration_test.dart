@@ -4567,7 +4567,6 @@ void main() {
 
       await _selectDateFormat(
         tester: tester,
-        dateFormatToSelectLowCase: "mm/dd/yyyy",
         dateFormatToSelect: "MM/dd/yyyy",
         previouslySelectedDateFormat: "dd/MM/yyyy",
       );
@@ -4656,7 +4655,6 @@ void main() {
 
       await _selectDateFormat(
         tester: tester,
-        dateFormatToSelectLowCase: "yyyy/mm/dd",
         dateFormatToSelect: "yyyy/MM/dd",
         previouslySelectedDateFormat: "MM/dd/yyyy",
       );
@@ -4745,7 +4743,6 @@ void main() {
 
       await _selectDateFormat(
         tester: tester,
-        dateFormatToSelectLowCase: "dd/mm/yyyy",
         dateFormatToSelect: "dd/MM/yyyy",
         previouslySelectedDateFormat: "yyyy/MM/dd",
       );
@@ -4832,11 +4829,10 @@ void main() {
         latestAudioDownloadDate: "07/09/2025",
       );
 
-      // Setting date format to mm/dd/yyyy before restarting the
+      // Setting date format to MM/dd/yyyy before restarting the
       // application
       await _selectDateFormat(
         tester: tester,
-        dateFormatToSelectLowCase: "mm/dd/yyyy",
         dateFormatToSelect: "MM/dd/yyyy",
         previouslySelectedDateFormat: "dd/MM/yyyy",
       );
@@ -4866,7 +4862,7 @@ void main() {
 
       DateTime now = DateTime.now();
 
-      // The app was restarted after that 'mm/dd/yyyy' date format was set
+      // The app was restarted after that 'MM/dd/yyyy' date format was set
 
       const String youtubePlaylistTitle = 'S8 audio';
 
@@ -4954,7 +4950,6 @@ void main() {
 
       await _selectDateFormat(
         tester: tester,
-        dateFormatToSelectLowCase: "yyyy/mm/dd",
         dateFormatToSelect: "yyyy/MM/dd",
         previouslySelectedDateFormat: "MM/dd/yyyy",
       );
@@ -4983,7 +4978,7 @@ void main() {
 
       DateTime now = DateTime.now();
 
-      // The app was restarted after that 'yyyy/mm/dd' date format was set
+      // The app was restarted after that 'yyyy/MM/dd' date format was set
 
       const String youtubePlaylistTitle = 'S8 audio';
 
@@ -5071,7 +5066,6 @@ void main() {
 
       await _selectDateFormat(
         tester: tester,
-        dateFormatToSelectLowCase: "dd/mm/yyyy",
         dateFormatToSelect: "dd/MM/yyyy",
         previouslySelectedDateFormat: "yyyy/MM/dd",
       );
@@ -5098,7 +5092,7 @@ void main() {
       await app.main();
       await tester.pumpAndSettle();
 
-      // The app was restarted after that 'dd/mm/yyyy' date format was set
+      // The app was restarted after that 'dd/MM/yyyy' date format was set
 
       const String youtubePlaylistTitle = 'S8 audio';
 
@@ -34999,7 +34993,6 @@ Future<void> _selectNewAudioInAudioPlayerViewAndReturnToPlaylistDownloadView({
 
 Future<void> _selectDateFormat({
   required WidgetTester tester,
-  required String dateFormatToSelectLowCase,
   required String dateFormatToSelect,
   required String previouslySelectedDateFormat,
 }) async {
@@ -35018,7 +35011,7 @@ Future<void> _selectDateFormat({
   // Find the RadioListTile date format to select
 
   Finder radioListTile = find.ancestor(
-    of: find.textContaining(dateFormatToSelectLowCase),
+    of: find.textContaining(dateFormatToSelect),
     matching: find.byType(ListTile),
   );
   // Tap the target dateformat RadioListTile to select it
