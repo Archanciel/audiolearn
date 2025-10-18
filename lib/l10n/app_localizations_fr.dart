@@ -2082,7 +2082,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get restorePlaylistsAudioMp3FilesFromZipMenu =>
-      'Restaurer les audio\'s MP3 des playlists depuis les fichiers ZIP dans le répertoire ...';
+      'Restaurer les audio\'s MP3 des playlists depuis les fichiers ZIP dans un répertoire ...';
 
   @override
   String get restorePlaylistsAudioMp3FilesFromZipTooltip =>
@@ -2349,7 +2349,7 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String fromMultipleMp3ZipFileUsedToRestoreMultiplePlaylists(
       Object zipFilePathNName) {
-    return 'playlist(s) à partir des fichiers zip MP3 de playlists multiples contenus dans le répertoire \"$zipFilePathNName\"';
+    return 'playlist(s) à partir des fichiers zip MP3 multiples contenus dans le répertoire \"$zipFilePathNName\"';
   }
 
   @override
@@ -2455,4 +2455,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get selectDirectory =>
       'un répertoire contenant de\nmultiples fichiers ZIP';
+
+  @override
+  String get dateFormatddMMyyyy => 'jj/MM/aaaa';
+
+  @override
+  String get dateFormatMMddyyyy => 'MM/jj/aaaa';
+
+  @override
+  String get dateFormatyyyyMMdd => 'aaaa/MM/jj';
 }

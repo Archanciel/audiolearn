@@ -1355,7 +1355,7 @@
       }
     }
   },
-  "restorePlaylistsAudioMp3FilesFromZipMenu": "Restaurer les audio's MP3 des playlists depuis les fichiers ZIP dans le répertoire ...",
+  "restorePlaylistsAudioMp3FilesFromZipMenu": "Restaurer les audio's MP3 des playlists depuis les fichiers ZIP dans un répertoire ...",
   "restorePlaylistsAudioMp3FilesFromZipTooltip": "Restaure les audio's MP3 des playlists à partir d'un fichier ZIP préalablement sauvé. Seuls les fichiers MP3 qui correspondent aux audio's listés dans les playlists et qui ne sont pas déjà présents dans ces playlists sont restaurés.",
   "audioMp3RestorationDialogTitle": "Restauration des MP3",
   "audioMp3RestorationExplanation": "Seuls les fichiers MP3 qui correspondent aux audio's listés dans les playlists et qui ne sont pas déjà présents dans les playlists sont restaurés.",
@@ -1420,7 +1420,7 @@
   "convertedAudioDateTimeLabel": "Date//heure prem conversion",
   "fromMp3ZipFileUsedToRestoreUniquePlaylist": "playlist à partir du fichier zip MP3 de playlist unique \"{zipFilePathNName}\"",
   "fromMp3ZipFileUsedToRestoreMultiplePlaylists": "playlist(s) à partir du fichier zip MP3 de playlists multiples \"{zipFilePathNName}\"", 
-  "fromMultipleMp3ZipFileUsedToRestoreMultiplePlaylists": "playlist(s) à partir des fichiers zip MP3 de playlists multiples contenus dans le répertoire \"{zipFilePathNName}\"", 
+  "fromMultipleMp3ZipFileUsedToRestoreMultiplePlaylists": "playlist(s) à partir des fichiers zip MP3 multiples contenus dans le répertoire \"{zipFilePathNName}\"", 
   "confirmMp3RestorationFromMp3Zip": "Restauré {audioNNumber} audio(s) MP3 dans {playlistsNumber} {secondMsgPart}.",
   "restorePlaylistTitlesOrderTitle": "Restauration de l'ordre des titres de playlist",
   "restorePlaylistTitlesOrderMessage": "Un fichier d'ordre des titres de playlist précédent est disponible dans le chemin racine de playlist sélectionné. Voulez-vous restaurer cet ordre sauvegardé précédemment ou conserver l'ordre actuel des titres de playlist ? Cliquez sur \"Confirmer\" pour restaurer l'ordre sauvegardé ou sur \"Annuler\" pour conserver l'ordre actuel.",
@@ -1509,5 +1509,8 @@
   "selectFileOrDirTitle": "Restaurer les fichiers MP3",
   "selectQuestion": "Que souhaitez-vous sélectionner ?",
   "selectZipFile": "un fichier ZIP individuel",
-  "selectDirectory": "un répertoire contenant de\nmultiples fichiers ZIP"
+  "selectDirectory": "un répertoire contenant de\nmultiples fichiers ZIP",
+  "dateFormatddMMyyyy": "jj/MM/aaaa",
+  "dateFormatMMddyyyy": "MM/jj/aaaa",
+  "dateFormatyyyyMMdd": "aaaa/MM/jj"
 }

@@ -850,14 +850,17 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   false, // Prevents the dialog from closing when tapping outside.
               context: context,
               builder: (BuildContext context) {
+                String translatedDateFormatStr = UiUtil.obtainTranslatedDateFormat(
+                    context: context,
+                    dateFormatVMlistenFalse: dateFormatVMlistenFalse);
+
                 return SetValueToTargetDialog(
                   dialogTitle: AppLocalizations.of(context)!
                       .setAudioDownloadFromDateTimeTitle,
                   dialogCommentStr: AppLocalizations.of(context)!
                       .audioDownloadFromDateTimeAllPlaylistsExplanation,
                   passedValueFieldLabel: AppLocalizations.of(context)!
-                      .audioDownloadFromDateTimeLabel(
-                          dateFormatVMlistenFalse.selectedDateFormat),
+                      .audioDownloadFromDateTimeLabel(translatedDateFormatStr),
                   passedValueFieldTooltip: AppLocalizations.of(context)!
                       .audioDownloadFromDateTimeAllPlaylistsTooltip,
                   passedValueStr: playlistListVMlistenFalse
@@ -1022,7 +1025,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
     if (enteredDateTimeStr.isEmpty) {
       return InvalidValueState.enteredDateEmpty;
     }
-    
+
     // Try to parse as date time first
     DateTime? parsedDateTime = dateFormatVM.parseDateTimeStrUsinAppDateFormat(
       dateTimeStr: enteredDateTimeStr,

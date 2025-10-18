@@ -1062,7 +1062,7 @@
   "convertedAudioDateTimeLabel": "Converted text first date time",
   "fromMp3ZipFileUsedToRestoreUniquePlaylist": "playlist from the unique playlist MP3 zip file \"{zipFilePathNName}\"",
   "fromMp3ZipFileUsedToRestoreMultiplePlaylists": "playlist(s) from the multiple playlists MP3 zip file \"{zipFilePathNName}\"",
-  "fromMultipleMp3ZipFileUsedToRestoreMultiplePlaylists": "playlist(s) from the multiple playlists MP3 zip files contained in dir \"{zipFilePathNName}\"",
+  "fromMultipleMp3ZipFileUsedToRestoreMultiplePlaylists": "playlist(s) from the multiple MP3 zip files contained in dir \"{zipFilePathNName}\"",
   "confirmMp3RestorationFromMp3Zip": "Restored {audioNNumber} audio(s) MP3 in {playlistsNumber} {secondMsgPart}.",
   "restorePlaylistTitlesOrderTitle": "Playlist Titles Order Restoration",
   "restorePlaylistTitlesOrderMessage": "A previous playlist titles order file is available in the selected playlist root path. Do you want to restore this saved order or keep the current playlist titles order? Click on \"Confirm\" to restore the saved order or on \"Cancel\" to keep the current order.",
@@ -1111,5 +1111,8 @@
   "selectFileOrDirTitle": "Restore MP3 Files",
   "selectQuestion": "What would you like to select ?",
   "selectZipFile": "A Single ZIP File",
-  "selectDirectory": "A Directory with ZIP's"
+  "selectDirectory": "A Directory with ZIP's",
+  "dateFormatddMMyyyy": "dd/MM/yyyy",
+  "dateFormatMMddyyyy": "MM/dd/yyyy",
+  "dateFormatyyyyMMdd": "yyyy/MM/dd"
 }

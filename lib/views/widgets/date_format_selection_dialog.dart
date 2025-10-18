@@ -50,9 +50,9 @@ class _DateFormatSelectionDialogState extends State<DateFormatSelectionDialog>
       // formatted date. This is useful if the current date day is
       // equal to the current date month (e.g. 01/01/2024 !.
       _nowDateFormatList = [
-        '${DateFormat(DateFormatVM.dateFormatLst[0]).format(now)}\n(${DateFormatVM.dateFormatLowCaseLst[0]})',
-        '${DateFormat(DateFormatVM.dateFormatLst[1]).format(now)}\n(${DateFormatVM.dateFormatLowCaseLst[1]})',
-        '${DateFormat(DateFormatVM.dateFormatLst[2]).format(now)}\n(${DateFormatVM.dateFormatLowCaseLst[2]})',
+        '${DateFormat(DateFormatVM.dateFormatLst[0]).format(now)}\n(${AppLocalizations.of(context)!.dateFormatddMMyyyy})',
+        '${DateFormat(DateFormatVM.dateFormatLst[1]).format(now)}\n(${AppLocalizations.of(context)!.dateFormatMMddyyyy})',
+        '${DateFormat(DateFormatVM.dateFormatLst[2]).format(now)}\n(${AppLocalizations.of(context)!.dateFormatyyyyMMdd})',
       ];
     });
   }

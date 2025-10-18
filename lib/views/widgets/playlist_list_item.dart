@@ -637,6 +637,10 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   false, // Prevents the dialog from closing when tapping outside.
               context: context,
               builder: (BuildContext context) {
+                String translatedDateFormatStr = UiUtil.obtainTranslatedDateFormat(
+                    context: context,
+                    dateFormatVMlistenFalse: dateFormatVMlistenFalse);
+                
                 return SetValueToTargetDialog(
                   dialogTitle: AppLocalizations.of(context)!
                       .setAudioDownloadFromDateTimeTitle,
@@ -644,7 +648,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                       .audioDownloadFromDateTimeUniquePlaylistExplanation,
                   passedValueFieldLabel: AppLocalizations.of(context)!
                       .audioDownloadFromDateTimeLabel(
-                          dateFormatVMlistenFalse.selectedDateFormat),
+                          translatedDateFormatStr),
                   passedValueFieldTooltip: AppLocalizations.of(context)!
                       .audioDownloadFromDateTimeUniquePlaylistTooltip,
                   passedValueStr: playlistListVMlistenFalse
