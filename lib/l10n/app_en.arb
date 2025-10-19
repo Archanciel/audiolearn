@@ -997,11 +997,11 @@
       "zipTooLargeFileInfo": {}
     }
   },
-  "restorePlaylistsAudioMp3FilesFromZipMenu": "Restore Playlists Audio's MP3 from ZIP Files in Dir ...",
+  "restorePlaylistsAudioMp3FilesFromZipMenu": "Restore Playlists Audio's MP3 from one or several ZIP File(s)  ...",
   "restorePlaylistsAudioMp3FilesFromZipTooltip": "Restoring audio's MP3 not yet present in the playlists from a saved ZIP file. Only the MP3 relative to the audio's listed in the playlists are restorable.",
   "audioMp3RestorationDialogTitle": "MP3 Restoration",
   "audioMp3RestorationExplanation": "Only the MP3 relative to the audio's listed in the playlists which are not already present in the playlists are restorable.",
-  "restorePlaylistAudioMp3FilesFromZipMenu": "Restore Playlist Audio's MP3 from ZIP File ...",
+  "restorePlaylistAudioMp3FilesFromZipMenu": "Restore Playlist Audio's MP3 from one or several ZIP File(s) ...",
   "restorePlaylistAudioMp3FilesFromZipTooltip": "Restoring audio's MP3 not yet present in the playlist from a saved ZIP file. Only the MP3 relative to the audio's listed in the playlist are restorable.",
   "audioMp3UniquePlaylistRestorationDialogTitle": "MP3 Restoration",
   "audioMp3UniquePlaylistRestorationExplanation": "Only the MP3 relative to the audio's listed in the playlist which are not already present in the playlist are restorable.",

@@ -2082,7 +2082,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get restorePlaylistsAudioMp3FilesFromZipMenu =>
-      'Restaurer les audio\'s MP3 des playlists depuis les fichiers ZIP dans un répertoire ...';
+      'Restaurer les audio\'s MP3 des playlists depuis un ou plusieurs fichier(s) ZIP ...';
 
   @override
   String get restorePlaylistsAudioMp3FilesFromZipTooltip =>
@@ -2097,7 +2097,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get restorePlaylistAudioMp3FilesFromZipMenu =>
-      'Restaurer les audio\'s MP3 de la playlist depuis un fichier ZIP ...';
+      'Restaurer les audio\'s MP3 de la playlist depuis un ou plusieurs fichier(s) ZIP ...';
 
   @override
   String get restorePlaylistAudioMp3FilesFromZipTooltip =>
