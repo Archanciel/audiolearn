@@ -529,7 +529,7 @@ void main() {
           tester: tester,
           warningDialogMessage:
               'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "/storage/emulated/0/Documents/test/audiolearn/Android S8 audio.zip".',
-          warningDialogMessageAlternative: 
+          warningDialogMessageAlternative:
               'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "/storage/emulated/0/Documents/test/audiolearn/Android S8 audio.zip".',
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
@@ -810,6 +810,10 @@ void main() {
           closeDialog: true,
         );
 
+        // Now tap on the 'A Single ZIP File' button
+        await tester.tap(find.byKey(const Key('selectFileButton')));
+        await tester.pumpAndSettle();
+
         // Tap on the Ok button to close the warning confirmation dialog
         await tester.tap(find.byKey(const Key('warningDialogOkButton')));
         await tester.pumpAndSettle();
@@ -1013,6 +1017,10 @@ void main() {
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
         await tester.pumpAndSettle();
 
+        // Now tap on the 'A Single ZIP File' button
+        await tester.tap(find.byKey(const Key('selectFileButton')));
+        await tester.pumpAndSettle();
+
         // Tap on the Ok button to close the warning confirmation dialog
         await tester.tap(find.byKey(const Key('warningDialogOkButton')));
         await tester.pumpAndSettle();
@@ -1168,6 +1176,10 @@ void main() {
         // Now find the 'Ok' button of the SetValueToTarget dialog
         // and tap on it
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
+
+        // Now tap on the 'A Single ZIP File' button
+        await tester.tap(find.byKey(const Key('selectFileButton')));
         await tester.pumpAndSettle();
 
         // Tap on the Ok button to close the warning confirmation dialog
