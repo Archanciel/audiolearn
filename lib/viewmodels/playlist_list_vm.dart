@@ -4647,7 +4647,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     if (!wasIndividualPlaylistRestored) {
       deletedExistingPlaylistTitlesLst =
-          _deleteExistingPlaylistsNotContainedInZip(
+          await _deleteExistingPlaylistsNotContainedInZip(
         existingPlaylistTitlesLst: existingPlaylistTitlesLst,
         playlistInZipTitleLst: playlistInZipTitleLst,
         restoreZipDateTime:
@@ -4707,12 +4707,12 @@ class PlaylistListVM extends ChangeNotifier {
   /// from a zip file.
   ///
   /// The method returns a list containing the deleted existing playlist titles.
-  List<String> _deleteExistingPlaylistsNotContainedInZip({
+  Future<List<String>> _deleteExistingPlaylistsNotContainedInZip({
     required List<String> existingPlaylistTitlesLst,
     required List<String> playlistInZipTitleLst,
     required DateTime restoreZipDateTime,
     required String playlistRootPath,
-  }) {
+  }) async {
     List<String> deletedExistingPlaylistTitlesLst = [];
 
     for (String existingPlaylistTitle in existingPlaylistTitlesLst) {
@@ -4729,7 +4729,18 @@ class PlaylistListVM extends ChangeNotifier {
           continue;
         }
 
-        DateTime newestAudioDownloadDateTime = DateTime(2020, 1, 1);
+        FileStat fileStat = await File(
+                "${existingPlaylistNotContainedInZipFile.downloadPath}${path.separator}${existingPlaylistNotContainedInZipFile.title}.json")
+            .stat();
+
+        if (fileStat.changed.isAtOrAfter(restoreZipDateTime)) {
+          // The existing playlist json file was created after the
+          // zip file creation date time. As consequence, do not
+          // delete the existing playlist.
+          continue;
+        }
+
+        DateTime newestAudioDateTime = DateTime(2020, 1, 1);
 
         // Iterate through passed playlists
         for (Audio audio
@@ -4744,17 +4755,17 @@ class PlaylistListVM extends ChangeNotifier {
 
             if (lastComment != null) {
               if (lastComment.lastUpdateDateTime
-                  .isAfter(newestAudioDownloadDateTime)) {
-                newestAudioDownloadDateTime = lastComment.lastUpdateDateTime;
+                  .isAfter(newestAudioDateTime)) {
+                newestAudioDateTime = lastComment.lastUpdateDateTime;
               }
             }
           } else if (audio.audioDownloadDateTime
-              .isAfter(newestAudioDownloadDateTime)) {
-            newestAudioDownloadDateTime = audio.audioDownloadDateTime;
+              .isAfter(newestAudioDateTime)) {
+            newestAudioDateTime = audio.audioDownloadDateTime;
           }
         }
 
-        if (newestAudioDownloadDateTime.isBefore(restoreZipDateTime)) {
+        if (newestAudioDateTime.isBefore(restoreZipDateTime)) {
           deletePlaylist(
             playlistToDelete: existingPlaylistNotContainedInZipFile,
           );
