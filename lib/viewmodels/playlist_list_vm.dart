@@ -4700,7 +4700,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// When restoring playlists from a zip file this method deletes existing playlists
   /// which are not contained in the zip file. However, a playlist is only deleted
   /// if the newest audio download date time of its audio's is before the zip file
-  /// creation date time.
+  /// creation date time or if the last text to speech comment .
   ///
   /// This method is called with doReplaceExistingPlaylists checkbox set to true or
   /// false. It is only called when restoring multiple playlists and not unique playlist
@@ -4734,7 +4734,21 @@ class PlaylistListVM extends ChangeNotifier {
         // Iterate through passed playlists
         for (Audio audio
             in existingPlaylistNotContainedInZipFile.playableAudioLst) {
-          if (audio.audioDownloadDateTime
+          if (audio.audioType == AudioType.textToSpeech) {
+            // If the existing audio is a text-to-speech audio,
+            // its newest date time is the last comment update
+            // date time
+            Comment? lastComment = _commentVM.getLastCommentOfAudio(
+              audio: audio,
+            );
+
+            if (lastComment != null) {
+              if (lastComment.lastUpdateDateTime
+                  .isAfter(newestAudioDownloadDateTime)) {
+                newestAudioDownloadDateTime = lastComment.lastUpdateDateTime;
+              }
+            }
+          } else if (audio.audioDownloadDateTime
               .isAfter(newestAudioDownloadDateTime)) {
             newestAudioDownloadDateTime = audio.audioDownloadDateTime;
           }
