@@ -5750,7 +5750,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// and displays a confirmation message to the user.
   ///
   /// This wraps the core restoration logic and handles UI feedback.
-  Future<void> restoreAndConfirmFromMultipleZips({
+  Future<void> restoreAndConfirmPlaylistsAudioMp3FilesFromMultipleZips({
     required String zipDirectoryPath,
     required List<Playlist> listOfPlaylists,
   }) async {

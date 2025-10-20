@@ -204,7 +204,7 @@ class UiUtil {
     if (uniquePlaylistIsRestored && playlistsLst.length == 1) {
       if (mp3ZipDirectoryPath != null) {
         // Restore from multiple ZIP files contained in a directory
-        await playlistListVMlistenFalse.restoreAndConfirmFromMultipleZips(
+        await playlistListVMlistenFalse.restoreAndConfirmPlaylistsAudioMp3FilesFromMultipleZips(
           zipDirectoryPath: mp3ZipDirectoryPath,
           listOfPlaylists: playlistsLst,
         );
@@ -237,7 +237,7 @@ class UiUtil {
       // Restoring mp3 files for unique or multiple playlists from a single
       // ZIP file or from multiple mp3 zip files located in a directory.
       if (mp3ZipDirectoryPath != null) {
-        await playlistListVMlistenFalse.restoreAndConfirmFromMultipleZips(
+        await playlistListVMlistenFalse.restoreAndConfirmPlaylistsAudioMp3FilesFromMultipleZips(
           zipDirectoryPath: mp3ZipDirectoryPath,
           listOfPlaylists: playlistsLst,
         );
