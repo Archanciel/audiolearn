@@ -28886,6 +28886,59 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
+    testWidgets(
+        '''Multiple playlists restore, replace existing playlist. Restore multiple playlists Windows
+           zip containing 'audio_learn_emi'. The two playlists 'textToSpeech' and 'new_updated_copy' are
+           deleted.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'restoring_playlists_with_deletion',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      String restorableZipFilePathName =
+          '$kApplicationPathWindowsTest${path.separator}audioLearn_2025-10-20_13_41_28.zip';
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: restorableZipFilePathName,
+            path: restorableZipFilePathName,
+            size: 7460),
+      ]);
+
+      // Execute the 'Restore Playlists, Comments and Settings from Zip
+      // File ...' menu
+      await IntegrationTestUtil.executeRestorePlaylists(
+        tester: tester,
+        doReplaceExistingPlaylists: true,
+      );
+
+      // Verify the displayed warning confirmation dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Restored 1 playlist, 48 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 163 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 playlist(s)\n  \"new_updated_copy\",\n  \"textToSpeech\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.",
+        isWarningConfirming: true,
+        warningTitle: 'CONFIRMATION',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
   });
 
   group('Restore audio MP3 files from MP3 zip file', () {
