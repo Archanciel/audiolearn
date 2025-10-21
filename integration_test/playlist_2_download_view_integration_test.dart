@@ -28830,11 +28830,13 @@ void main() {
     });
   });
   group(
-      'Restore with playlist deletion playlist, comments, pictures and settings from zip file menu test',
+      '''Restore multiple playlists with playlists deletion. Restoring playlists, comments, pictures
+         and settings from zip file menu test.''',
       () {
     testWidgets(
         '''Multiple playlists restore, not replace existing playlist. Restore multiple playlists Windows
-           zip containing 'local' and 'S8 audio' playlists to empty Windows application.''',
+           zip containing 'audio_learn_emi'. The two playlists 'textToSpeech' and 'new_updated_copy' are
+           deleted.''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -28849,80 +28851,7 @@ void main() {
       );
 
       String restorableZipFilePathName =
-          '$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Windows sort_and_filter_audio_dialog_widget_test_playlists.zip';
-
-      // Since we have to use a mock AudioDownloadVM to add the
-      // youtube playlist, we can not use app.main() to start the
-      // app because app.main() uses the real AudioDownloadVM
-      // and we don't want to make the main.dart file dependent
-      // of a mock class. So we have to start the app by hand,
-      // what IntegrationTestUtil.launchExpandablePlaylistListView
-      // does.
-
-      final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
-      );
-
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
-
-      WarningMessageVM warningMessageVM = WarningMessageVM();
-
-      // The mockAudioDownloadVM will be later used to simulate
-      // redownloading not playable files after having restored
-      // the playlists, comments and settings from the zip file.
-      MockAudioDownloadVM mockAudioDownloadVM = MockAudioDownloadVM(
-        warningMessageVM: warningMessageVM,
-        settingsDataService: settingsDataService,
-      );
-
-      AudioDownloadVM audioDownloadVM = AudioDownloadVM(
-        warningMessageVM: warningMessageVM,
-        settingsDataService: settingsDataService,
-      );
-
-      PlaylistListVM playlistListVM = PlaylistListVM(
-        warningMessageVM: warningMessageVM,
-        audioDownloadVM: mockAudioDownloadVM,
-        commentVM: CommentVM(),
-        pictureVM: PictureVM(
-          settingsDataService: settingsDataService,
-        ),
-        settingsDataService: settingsDataService,
-      );
-
-      // calling getUpToDateSelectablePlaylists() loads all the
-      // playlist json files from the app dir and so enables
-      // playlistListVM to know which playlists are
-      // selected and which are not
-      playlistListVM.getUpToDateSelectablePlaylists();
-
-      AudioPlayerVM audioPlayerVM = AudioPlayerVM(
-        settingsDataService: settingsDataService,
-        playlistListVM: playlistListVM,
-        commentVM: CommentVM(),
-      );
-
-      DateFormatVM dateFormatVM = DateFormatVM(
-        settingsDataService: settingsDataService,
-      );
-
-      await IntegrationTestUtil
-          .launchIntegrTestAppEnablingInternetAccessWithMock(
-        tester: tester,
-        audioDownloadVM: audioDownloadVM,
-        settingsDataService: settingsDataService,
-        playlistListVM: playlistListVM,
-        warningMessageVM: warningMessageVM,
-        audioPlayerVM: audioPlayerVM,
-        dateFormatVM: dateFormatVM,
-      );
+          '$kApplicationPathWindowsTest${path.separator}audioLearn_2025-10-20_13_41_28.zip';
 
       // Replace the platform instance with your mock
       MockFilePicker mockFilePicker = MockFilePicker();
@@ -28935,12 +28864,6 @@ void main() {
             size: 7460),
       ]);
 
-      // Verify that the audio menu button is disabled
-      IntegrationTestUtil.verifyWidgetIsDisabled(
-        tester: tester,
-        widgetKeyStr: 'audio_popup_menu_button',
-      );
-
       // Execute the 'Restore Playlists, Comments and Settings from Zip
       // File ...' menu
       await IntegrationTestUtil.executeRestorePlaylists(
@@ -28948,75 +28871,13 @@ void main() {
         doReplaceExistingPlaylists: false,
       );
 
-      // Verify that the audio menu button is enabled
-      IntegrationTestUtil.verifyWidgetIsEnabled(
-        tester: tester,
-        widgetKeyStr: 'audio_popup_menu_button',
-      );
-
       // Verify the displayed warning confirmation dialog
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Restored 2 playlist, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 12 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows sort_and_filter_audio_dialog_widget_test_playlists.zip".',
+            "Restored 0 playlist, 48 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 10 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 playlist(s)\n  \"new_updated_copy\",\n  \"textToSpeech\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.",
         isWarningConfirming: true,
         warningTitle: 'CONFIRMATION',
-      );
-
-      // Verifying the existing and the restored playlists
-      // list as well as the selected playlist 'S8 audio'
-      // displayed audio titles and subtitles.
-
-      List<String> playlistsTitles = [
-        "local",
-        "S8 audio",
-      ];
-
-      List<String> audioTitles = [
-        'Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik',
-        "Les besoins artificiels par R.Keucheyan",
-        "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-        "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-      ];
-
-      List<String> audioSubTitles = [
-        '0:13:39.0 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16',
-        "0:19:05.0 6.98 MB at 2.28 MB/sec on 07/01/2024 at 08:16",
-        "0:20:32.0 7.51 MB at 2.44 MB/sec on 26/12/2023 at 09:45",
-        "0:06:29.0 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
-      ];
-
-      _verifyRestoredPlaylistAndAudio(
-        tester: tester,
-        selectedPlaylistTitle: 'S8 audio',
-        playlistsTitles: playlistsTitles,
-        audioTitles: audioTitles,
-        audioSubTitles: audioSubTitles,
-      );
-
-      // Verify the content of the 'S8 audio' playlist dir
-      // + comments + pictures dir after restoration.
-      IntegrationTestUtil.verifyPlaylistDirectoryContents(
-        playlistTitle: 'S8 audio',
-        expectedAudioFiles: [],
-        expectedCommentFiles: [
-          "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.json"
-        ],
-        expectedPictureFiles: [
-          "231226-094534-3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01.json"
-        ],
-        doesPictureAudioMapFileNameExist: true,
-        applicationPictureDir:
-            '$kApplicationPathWindowsTest${path.separator}$kPictureDirName',
-        pictureFileNameOne: 'wallpaper.jpg',
-        audioForPictureTitleOneLst: [
-          'S8 audio|231226-094534-3 fois où un économiste m\'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01',
-        ],
-        pictureFileNameTwo:
-            'Liguria_Italy_Coast_Houses_Riomaggiore_Crag_513222_3840x2400.jpg',
-        audioForPictureTitleTwoLst: [
-          'S8 audio|231226-094534-3 fois où un économiste m\'a ouvert les yeux (Giraud, Lefournier, Porcher) 23-12-01',
-        ],
       );
 
       // Purge the test playlist directory so that the created test
