@@ -4647,7 +4647,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     if (!wasIndividualPlaylistRestored) {
       deletedExistingPlaylistTitlesLst =
-          await _deleteExistingPlaylistsNotContainedInZip(
+          await _deleteExistingPlaylistsNotContainedInMultiplePlaylistsZip(
         existingPlaylistTitlesLst: existingPlaylistTitlesLst,
         playlistInZipTitleLst: playlistInZipTitleLst,
         restoreZipDateTime:
@@ -4707,7 +4707,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// from a zip file.
   ///
   /// The method returns a list containing the deleted existing playlist titles.
-  Future<List<String>> _deleteExistingPlaylistsNotContainedInZip({
+  Future<List<String>> _deleteExistingPlaylistsNotContainedInMultiplePlaylistsZip({
     required List<String> existingPlaylistTitlesLst,
     required List<String> playlistInZipTitleLst,
     required DateTime restoreZipDateTime,
@@ -4734,7 +4734,7 @@ class PlaylistListVM extends ChangeNotifier {
                 "${existingPlaylistNotContainedInZipFile.downloadPath}${path.separator}${existingPlaylistNotContainedInZipFile.title}.json")
             .stat();
 
-        if (fileStat.changed.isAtOrAfter(restoreZipDateTime)) {
+        if (fileStat.modified.isAtOrAfter(restoreZipDateTime)) {
           // The existing playlist json file was created after the
           // zip file creation date time. As consequence, do not
           // delete the existing playlist.
