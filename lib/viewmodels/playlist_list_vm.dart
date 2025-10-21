@@ -4718,7 +4718,8 @@ class PlaylistListVM extends ChangeNotifier {
     for (String existingPlaylistTitle in existingPlaylistTitlesLst) {
       if (!playlistInZipTitleLst.contains(existingPlaylistTitle)) {
         // This existing playlist is not contained in the zip file
-        // and so must be deleted.
+        // and so will be deleted if it was no created or modified
+        // at or after the restore zip file creation date time.
         Playlist? existingPlaylistNotContainedInZipFile;
 
         try {
