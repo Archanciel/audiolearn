@@ -16578,6 +16578,9 @@ void main() {
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
         await tester.pumpAndSettle();
 
+        // Before the operation that creates the ZIP
+        DateTime beforeOperation = DateTime.now();
+
         // Now check the confirm dialog which indicates the estimated
         // save audio mp3 to zip duration and accept save execution.
         await IntegrationTestUtil.verifyConfirmActionDialog(
@@ -16589,6 +16592,9 @@ void main() {
           ],
           closeDialogWithConfirmButton: true,
         );
+
+        // After getting the result
+        DateTime afterOperation = DateTime.now();
 
         // Only works if tester.pump() is used instead of
         // tester.pumpAndSettle()
@@ -16627,10 +16633,36 @@ void main() {
         expect(actualMessage, contains("Save operation real duration: 0:00:"));
         expect(actualMessage, contains("number of bytes saved per second: "));
         expect(actualMessage, contains(", number of created ZIP file(s): 1."));
+
+        // expect(
+        //     actualMessage,
+        //     contains(
+        //       anyOf([
+        //         "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-07-13_14_43_21_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip\".",
+        //         "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-07-13_14_43_21_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\".",
+        //         "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-07-13_14_43_21_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 2)))}.zip\".",
+        //       ]),
+        //     ));
+
+        // Extract the timestamp from the actual message
+        RegExp zipPathRegex = RegExp(
+            r'ZIP file path name: ".*audioLearn_mp3_from_2025-07-13_14_43_21_on_(\d{4}-\d{2}-\d{2}_\d{2}_\d{2}_\d{2})\.zip"\.');
+        Match? match = zipPathRegex.firstMatch(actualMessage);
+
+        expect(match, isNotNull, reason: 'ZIP path not found in message');
+
+        String timestampStr = match!.group(1)!; // e.g., "2025-10-22_08_10_05"
+        DateTime actualTimestamp =
+            DateFormat('yyyy-MM-dd_HH_mm_ss').parse(timestampStr);
+
+        // Verify the timestamp is within the expected range
         expect(
-            actualMessage,
-            contains(
-                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-07-13_14_43_21_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\"."));
+            actualTimestamp
+                .isAfter(beforeOperation.subtract(Duration(seconds: 1))),
+            isTrue);
+        expect(
+            actualTimestamp.isBefore(afterOperation.add(Duration(seconds: 1))),
+            isTrue);
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
           directoryPath: kApplicationPathWindowsTest,
@@ -23223,16 +23255,16 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 2 playlist, 5 comment and 4 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 5 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows audioLearn_2025-05-11_13_16.zip".\n\nDeleted 1 playlist(s)\n  "Prières du Maître"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "A restaurer",\n  "local"\nwere created, they are positioned at the end of the playlist list.',
+                'Restored 2 playlist, 5 comment and 4 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 5 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows audioLearn_2025-05-11_13_16.zip".\n\nSince the playlists\n  "A restaurer",\n  "local"\nwere created, they are positioned at the end of the playlist list.',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
 
           // Verify that after the second restoration the selected
-          // playlist is 'A restaurer'.
+          // playlist is still 'Prières du Maître'.
           IntegrationTestUtil.verifyPlaylistSelection(
             tester: tester,
-            playlistTitle: 'A restaurer',
+            playlistTitle: 'Prières du Maître',
             isSelected: true,
           );
 
@@ -23240,6 +23272,7 @@ void main() {
           // displayed audio titles and subtitles.
 
           List<String> playlistsTitles = [
+            "Prières du Maître",
             "A restaurer",
             "local",
           ];
@@ -23298,6 +23331,7 @@ void main() {
                 "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
             pictureFileNameOne: 'Jésus le Dieu vivant.jpg',
             audioForPictureTitleOneLst: [
+              "Prières du Maître|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
               "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
               "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
             ],
@@ -23473,16 +23507,16 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 2 playlist, 5 comment and 4 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 5 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows audioLearn_2025-05-11_13_16.zip".\n\nDeleted 1 playlist(s)\n  "Prières du Maître"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "A restaurer",\n  "local"\nwere created, they are positioned at the end of the playlist list.',
+                'Restored 2 playlist, 5 comment and 4 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 5 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows audioLearn_2025-05-11_13_16.zip".\n\nSince the playlists\n  "A restaurer",\n  "local"\nwere created, they are positioned at the end of the playlist list.',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
 
           // Verify that after the second restoration the selected
-          // playlist is 'A restaurer'.
+          // playlist is 'Prières du Maître'.
           IntegrationTestUtil.verifyPlaylistSelection(
             tester: tester,
-            playlistTitle: 'A restaurer',
+            playlistTitle: 'Prières du Maître',
             isSelected: true,
           );
 
@@ -23490,6 +23524,7 @@ void main() {
           // displayed audio titles and subtitles.
 
           List<String> playlistsTitles = [
+            "Prières du Maître",
             "A restaurer",
             "local",
           ];
@@ -23548,6 +23583,7 @@ void main() {
                 "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
             pictureFileNameOne: 'Jésus le Dieu vivant.jpg',
             audioForPictureTitleOneLst: [
+              "Prières du Maître|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
               "A restaurer|250224-132737-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
               "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09",
             ],
@@ -27128,9 +27164,6 @@ void main() {
                 playlistTitle: uniqueLocalPlaylistTitle,
                 isSelected: false);
 
-            const String notIndividuallySavedPlaylistTitle =
-                'Prières du Maître';
-
             restorableZipFilePathName =
                 "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Android Prières du Maître.zip";
 
@@ -27155,7 +27188,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Prières du Maître.zip".\n\nDeleted 2 playlist(s)\n  "Restore- short - test - playlist",\n  "Local restore- short - test - playlist"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlist\n  "Prières du Maître"\nwas created, it is positioned at the end of the playlist list.',
+                  'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Prières du Maître.zip".\n\nSince the playlist\n  "Prières du Maître"\nwas created, it is positioned at the end of the playlist list.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -27164,7 +27197,7 @@ void main() {
             // still selected
             IntegrationTestUtil.verifyPlaylistSelection(
               tester: tester,
-              playlistTitle: notIndividuallySavedPlaylistTitle,
+              playlistTitle: uniqueYoutubePlaylistTitle,
               isSelected: true,
             );
 
@@ -27179,7 +27212,7 @@ void main() {
             // still selected
             IntegrationTestUtil.verifyPlaylistSelection(
               tester: tester,
-              playlistTitle: notIndividuallySavedPlaylistTitle,
+              playlistTitle: uniqueYoutubePlaylistTitle,
               isSelected: true,
             );
 
@@ -27198,10 +27231,13 @@ void main() {
 
             // Verify the pictureAudioMap json content after playlist
             // deletion
-            IntegrationTestUtil.verifyPictureAudioMapAfterPlaylistRestoration(
+            _verifyPictureAudioMapAfterPlaylistRestoration(
               pictureVM: PictureVM(
                 settingsDataService: settingsDataService,
               ),
+              pictureAudioMapLength: 3,
+              pictureAudioMapKey: "Jésus le Dieu vivant.jpg",
+              pictureAudioMapKeyLstLength: 3,
             );
 
             // Purge the test playlist directory so that the created test
@@ -27354,7 +27390,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Prières du Maître.zip".\n\nDeleted 2 playlist(s)\n  "Restore- short - test - playlist",\n  "Local restore- short - test - playlist"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlist\n  "Prières du Maître"\nwas created, it is positioned at the end of the playlist list.',
+                  'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Prières du Maître.zip".\n\nSince the playlist\n  "Prières du Maître"\nwas created, it is positioned at the end of the playlist list.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -27364,7 +27400,7 @@ void main() {
             // playlist zip file
             IntegrationTestUtil.verifyPlaylistSelection(
                 tester: tester,
-                playlistTitle: notIndividuallySavedPlaylistTitle,
+                playlistTitle: uniqueYoutubePlaylistTitle,
                 isSelected: true);
 
             // Now execute the 'Update Playlist JSON Files'
@@ -27379,7 +27415,7 @@ void main() {
             // playlist zip file
             IntegrationTestUtil.verifyPlaylistSelection(
                 tester: tester,
-                playlistTitle: notIndividuallySavedPlaylistTitle,
+                playlistTitle: uniqueYoutubePlaylistTitle,
                 isSelected: true);
 
             final SettingsDataService settingsDataService = SettingsDataService(
@@ -27397,10 +27433,13 @@ void main() {
 
             // Verify the pictureAudioMap json content after playlist
             // deletion
-            IntegrationTestUtil.verifyPictureAudioMapAfterPlaylistRestoration(
+            _verifyPictureAudioMapAfterPlaylistRestoration(
               pictureVM: PictureVM(
                 settingsDataService: settingsDataService,
               ),
+              pictureAudioMapLength: 3,
+              pictureAudioMapKey: "Jésus le Dieu vivant.jpg",
+              pictureAudioMapKeyLstLength: 3,
             );
 
             // Purge the test playlist directory so that the created test
@@ -29459,7 +29498,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Restored 4 audio(s) MP3 in 1 playlist(s) from the multiple playlists MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
+            "Restored 4 audio(s) MP3 in 1 playlist(s) from the multiple MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
         isWarningConfirming: true,
       );
 
@@ -29601,7 +29640,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Restored 4 audio(s) MP3 in 1 playlist(s) from the multiple playlists MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
+            "Restored 4 audio(s) MP3 in 1 playlist(s) from the multiple MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
         isWarningConfirming: true,
       );
 
@@ -29741,7 +29780,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Restored 6 audio(s) MP3 in 2 playlist(s) from the multiple playlists MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
+            "Restored 6 audio(s) MP3 in 2 playlist(s) from the multiple MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
         isWarningConfirming: true,
       );
 
@@ -29928,7 +29967,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Restored 0 playlist, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.\n\nDeleted 2 playlist(s)\n  \"local_1\",\n  \"local_2\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.",
+            "Restored 0 playlist, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.",
         isWarningConfirming: true,
         warningTitle: 'CONFIRMATION',
       );
@@ -30008,7 +30047,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Restored 2 audio(s) MP3 in 2 playlist(s) from the multiple playlists MP3 zip file \"$mp3RestorableZipFilePathName\".",
+            "Restored 0 audio(s) MP3 in 0 playlist(s) from the multiple playlists MP3 zip file \"$mp3RestorableZipFilePathName\".",
         isWarningConfirming: true,
       );
 
@@ -30194,7 +30233,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Restored 0 playlist, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.\n\nDeleted 2 playlist(s)\n  \"local_1\",\n  \"local_2\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.",
+            "Restored 0 playlist, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.",
         isWarningConfirming: true,
         warningTitle: 'CONFIRMATION',
       );
@@ -30249,7 +30288,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Restored 4 playlist, 3 comment and 6 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 11 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nSince the playlists\n  \"local\",\n  \"local_1\",\n  \"local_2\",\n  \"urgent_actus_17-12-2023\"\nwere created, they are positioned at the end of the playlist list.",
+            "Restored 4 playlist, 1 comment and 6 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 11 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".",
         isWarningConfirming: true,
         warningTitle: 'CONFIRMATION',
       );
@@ -30281,7 +30320,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Restored 4 audio(s) MP3 in 4 playlist(s) from the multiple playlists MP3 zip file \"$mp3RestorableZipFilePathName\".",
+            "Restored 2 audio(s) MP3 in 2 playlist(s) from the multiple playlists MP3 zip file \"$mp3RestorableZipFilePathName\".",
         isWarningConfirming: true,
       );
 
@@ -30563,7 +30602,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Restored 2 playlist, 2 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.\n\nDeleted 2 playlist(s)\n  \"local_1\",\n  \"local_2\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  \"local_3\",\n  \"local_4\"\nwere created, they are positioned at the end of the playlist list.",
+            "Restored 2 playlist, 2 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.\n\nSince the playlists\n  \"local_3\",\n  \"local_4\"\nwere created, they are positioned at the end of the playlist list.",
         isWarningConfirming: true,
         warningTitle: 'CONFIRMATION',
       );
@@ -31025,7 +31064,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Restored 0 playlist, 2 comment and 1 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 1 added plus 1 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.\n\nDeleted 2 playlist(s)\n  \"local_1\",\n  \"local_2\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.",
+            "Restored 0 playlist, 2 comment and 1 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 1 added plus 1 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.",
         isWarningConfirming: true,
         warningTitle: 'CONFIRMATION',
       );
@@ -34344,6 +34383,10 @@ Future<void> _restorePaylistsAndTheirMp3({
   await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
   await tester.pumpAndSettle();
 
+  // Now tap on the 'A Single ZIP File' button
+  await tester.tap(find.byKey(const Key('selectFileButton')));
+  await tester.pumpAndSettle();
+
   if (restoreMp3ConfirmationMessage.isNotEmpty) {
     // Verify the displayed confirmation dialog and confirm the
     // restoration
@@ -36173,4 +36216,38 @@ Future<void> _executeSearchWordScrollTest({
     verifyIfCheckboxIsChecked: true,
     tapOnCheckbox: false,
   );
+}
+
+void _verifyPictureAudioMapAfterPlaylistRestoration({
+  required PictureVM pictureVM,
+  required int pictureAudioMapLength,
+  required String pictureAudioMapKey,
+  required int pictureAudioMapKeyLstLength,
+}) {
+  // Load the application picture audio map from the
+  // application picture audio map json file.
+  Map<String, List<String>> applicationPictureAudioMap =
+      pictureVM.readAppPictureAudioMap();
+
+  // Verify application picture audio map
+
+  expect(applicationPictureAudioMap.length, pictureAudioMapLength);
+  expect(
+    applicationPictureAudioMap.containsKey(pictureAudioMapKey),
+    true,
+  );
+
+  List pictureAudioMapLst =
+      (applicationPictureAudioMap["Jésus le Dieu vivant.jpg"] as List);
+  expect(pictureAudioMapLst.length, pictureAudioMapKeyLstLength);
+  expect(
+    pictureAudioMapLst[0],
+    "Restore- short - test - playlist|250518-164043-People Talking at The Table _ Free Video Loop 19-09-28",
+  );
+  expect(
+    pictureAudioMapLst[1],
+    "Local restore- short - test - playlist|250518-164043-People Talking at The Table _ Free Video Loop 19-09-28",
+  );
+  expect(pictureAudioMapLst[2],
+      "Prières du Maître|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'");
 }
