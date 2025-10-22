@@ -3884,29 +3884,6 @@ class IntegrationTestUtil {
     expect(playlistListVM.getSelectedPlaylists().length, 0);
   }
 
-  static void verifyPictureAudioMapAfterPlaylistRestoration({
-    required PictureVM pictureVM,
-  }) {
-    // Load the application picture audio map from the
-    // application picture audio map json file.
-    Map<String, List<String>> applicationPictureAudioMap =
-        pictureVM.readAppPictureAudioMap();
-
-    // Verify application picture audio map
-
-    expect(applicationPictureAudioMap.length, 1);
-    expect(
-      applicationPictureAudioMap.containsKey("Jésus le Dieu vivant.jpg"),
-      true,
-    );
-
-    List pictureAudioMapLst =
-        (applicationPictureAudioMap["Jésus le Dieu vivant.jpg"] as List);
-    expect(pictureAudioMapLst.length, 1);
-    expect(pictureAudioMapLst[0],
-        "Prières du Maître|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'");
-  }
-
   /// {audioSpeed} can only be one of the following values: 0.7, 1.0, 1.25, 1.5.
   static Future<void> setAudioSpeed({
     required WidgetTester tester,
