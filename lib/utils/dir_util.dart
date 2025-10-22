@@ -829,84 +829,296 @@ class DirUtil {
     return filePaths;
   }
 
+  /// Sets the creation time of a file in Windows.
+  /// Returns true if successful, false otherwise.
   static Future<bool> setFileCreationTime({
     required String filePathName,
     required DateTime creationTime,
   }) async {
+    if (!File(filePathName).existsSync()) {
+      print('Error: File does not exist: $filePathName');
+      return false;
+    }
+
     try {
-      String creationTimeStr =
-          '${creationTime.month}/${creationTime.day}/${creationTime.year} ${creationTime.hour}:${creationTime.minute}:${creationTime.second}';
+      // Escape the path for PowerShell
+      String escapedPath = _escapePowerShellPath(filePathName);
+      String timeStr = _formatDateTimeForPowerShell(creationTime);
 
       final result = await Process.run(
         'powershell',
         [
+          '-NoProfile',
+          '-ExecutionPolicy',
+          'Bypass',
           '-Command',
-          '(Get-Item "$filePathName").CreationTime = "$creationTimeStr"'
+          '\$file = Get-Item -LiteralPath "$escapedPath"; '
+              '\$file.CreationTime = [DateTime]::Parse("$timeStr"); '
+              'Write-Host "Success"'
         ],
       );
 
-      return result.exitCode == 0;
+      if (result.exitCode == 0 &&
+          result.stdout.toString().contains('Success')) {
+        // Verify the change was applied
+        DateTime? actualTime = getFileCreationDate(filePathName);
+        if (actualTime != null) {
+          // Allow 1 second difference due to precision
+          return actualTime.difference(creationTime).inSeconds.abs() <= 1;
+        }
+      }
+
+      if (result.exitCode != 0) {
+        print('PowerShell error: ${result.stderr}');
+      }
+
+      return false;
     } catch (e) {
       print('Error setting file creation time: $e');
       return false;
     }
   }
 
+  /// Sets the modification time of a file in Windows.
+  /// Returns true if successful, false otherwise.
   static Future<bool> setFileModificationTime({
     required String filePathName,
     required DateTime modificationTime,
   }) async {
+    if (!File(filePathName).existsSync()) {
+      print('Error: File does not exist: $filePathName');
+      return false;
+    }
+
     try {
-      String modTimeStr =
-          '${modificationTime.month}/${modificationTime.day}/${modificationTime.year} ${modificationTime.hour}:${modificationTime.minute}:${modificationTime.second}';
+      String escapedPath = _escapePowerShellPath(filePathName);
+      String timeStr = _formatDateTimeForPowerShell(modificationTime);
 
       final result = await Process.run(
         'powershell',
         [
+          '-NoProfile',
+          '-ExecutionPolicy',
+          'Bypass',
           '-Command',
-          '(Get-Item "$filePathName").LastWriteTime = "$modTimeStr"'
+          '\$file = Get-Item -LiteralPath "$escapedPath"; '
+              '\$file.LastWriteTime = [DateTime]::Parse("$timeStr"); '
+              'Write-Host "Success"'
         ],
       );
 
-      return result.exitCode == 0;
+      if (result.exitCode == 0 &&
+          result.stdout.toString().contains('Success')) {
+        // Verify the change was applied
+        DateTime? actualTime = getFileModificationDate(filePathName);
+        if (actualTime != null) {
+          return actualTime.difference(modificationTime).inSeconds.abs() <= 1;
+        }
+      }
+
+      if (result.exitCode != 0) {
+        print('PowerShell error: ${result.stderr}');
+      }
+
+      return false;
     } catch (e) {
       print('Error setting file modification time: $e');
       return false;
     }
   }
 
+  /// Sets the access time of a file in Windows.
+  /// Returns true if successful, false otherwise.
+  static Future<bool> setFileAccessTime({
+    required String filePathName,
+    required DateTime accessTime,
+  }) async {
+    if (!File(filePathName).existsSync()) {
+      print('Error: File does not exist: $filePathName');
+      return false;
+    }
+
+    try {
+      String escapedPath = _escapePowerShellPath(filePathName);
+      String timeStr = _formatDateTimeForPowerShell(accessTime);
+
+      final result = await Process.run(
+        'powershell',
+        [
+          '-NoProfile',
+          '-ExecutionPolicy',
+          'Bypass',
+          '-Command',
+          '\$file = Get-Item -LiteralPath "$escapedPath"; '
+              '\$file.LastAccessTime = [DateTime]::Parse("$timeStr"); '
+              'Write-Host "Success"'
+        ],
+      );
+
+      return result.exitCode == 0 &&
+          result.stdout.toString().contains('Success');
+    } catch (e) {
+      print('Error setting file access time: $e');
+      return false;
+    }
+  }
+
+  /// Sets all file times (creation, modification, and optionally access time) at once.
+  /// This is more efficient than calling individual methods.
+  /// Returns true if all operations succeeded, false otherwise.
   static Future<bool> setAllFileTimes({
     required String filePathName,
     required DateTime creationTime,
     required DateTime modificationTime,
     DateTime? accessTime,
   }) async {
+    if (!File(filePathName).existsSync()) {
+      print('Error: File does not exist: $filePathName');
+      return false;
+    }
+
     try {
-      String creationTimeStr = _formatDateTime(creationTime);
-      String modTimeStr = _formatDateTime(modificationTime);
-      String accessTimeStr =
-          accessTime != null ? _formatDateTime(accessTime) : modTimeStr;
+      String escapedPath = _escapePowerShellPath(filePathName);
+      String creationTimeStr = _formatDateTimeForPowerShell(creationTime);
+      String modTimeStr = _formatDateTimeForPowerShell(modificationTime);
+      String accessTimeStr = accessTime != null
+          ? _formatDateTimeForPowerShell(accessTime)
+          : modTimeStr;
 
       final command = '''
-      \$file = Get-Item "$filePathName"
-      \$file.CreationTime = "$creationTimeStr"
-      \$file.LastWriteTime = "$modTimeStr"
-      \$file.LastAccessTime = "$accessTimeStr"
-    ''';
+        \$file = Get-Item -LiteralPath "$escapedPath"
+        \$file.CreationTime = [DateTime]::Parse("$creationTimeStr")
+        \$file.LastWriteTime = [DateTime]::Parse("$modTimeStr")
+        \$file.LastAccessTime = [DateTime]::Parse("$accessTimeStr")
+        Write-Host "Success"
+      ''';
 
       final result = await Process.run(
         'powershell',
-        ['-Command', command],
+        [
+          '-NoProfile',
+          '-ExecutionPolicy',
+          'Bypass',
+          '-Command',
+          command,
+        ],
       );
 
-      return result.exitCode == 0;
+      if (result.exitCode == 0 &&
+          result.stdout.toString().contains('Success')) {
+        // Verify the changes were applied
+        DateTime? actualCreation = getFileCreationDate(filePathName);
+        DateTime? actualModification = getFileModificationDate(filePathName);
+
+        if (actualCreation != null && actualModification != null) {
+          bool creationOk =
+              actualCreation.difference(creationTime).inSeconds.abs() <= 1;
+          bool modificationOk =
+              actualModification.difference(modificationTime).inSeconds.abs() <=
+                  1;
+
+          if (!creationOk) {
+            print(
+                'Warning: Creation time verification failed. Expected: $creationTime, Got: $actualCreation');
+          }
+          if (!modificationOk) {
+            print(
+                'Warning: Modification time verification failed. Expected: $modificationTime, Got: $actualModification');
+          }
+
+          return creationOk && modificationOk;
+        }
+      }
+
+      if (result.exitCode != 0) {
+        print('PowerShell error: ${result.stderr}');
+      }
+
+      return false;
     } catch (e) {
       print('Error setting file times: $e');
       return false;
     }
   }
 
-  static String _formatDateTime(DateTime dateTime) {
-    return '${dateTime.month}/${dateTime.day}/${dateTime.year} ${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}:${dateTime.second.toString().padLeft(2, '0')}';
+  /// Gets the creation date of a file.
+  /// Returns null if the file doesn't exist or an error occurs.
+  static DateTime? getFileCreationDate(String filePathName) {
+    try {
+      File file = File(filePathName);
+
+      if (!file.existsSync()) {
+        return null;
+      }
+
+      return file.statSync().changed;
+    } catch (e) {
+      print('Error getting file creation date: $e');
+      return null;
+    }
+  }
+
+  /// Gets the modification date of a file.
+  /// Returns null if the file doesn't exist or an error occurs.
+  static DateTime? getFileModificationDate(String filePathName) {
+    try {
+      File file = File(filePathName);
+
+      if (!file.existsSync()) {
+        return null;
+      }
+
+      return file.statSync().modified;
+    } catch (e) {
+      print('Error getting file modification date: $e');
+      return null;
+    }
+  }
+
+  /// Gets the access date of a file.
+  /// Returns null if the file doesn't exist or an error occurs.
+  static DateTime? getFileAccessDate(String filePathName) {
+    try {
+      File file = File(filePathName);
+
+      if (!file.existsSync()) {
+        return null;
+      }
+
+      return file.statSync().accessed;
+    } catch (e) {
+      print('Error getting file access date: $e');
+      return null;
+    }
+  }
+
+  /// Formats a DateTime for PowerShell in ISO 8601 format.
+  /// This format is unambiguous and works across all locales.
+  static String _formatDateTimeForPowerShell(DateTime dateTime) {
+    // Use ISO 8601 format which PowerShell can parse reliably
+    return dateTime.toIso8601String();
+  }
+
+  /// Escapes a file path for use in PowerShell commands.
+  /// Handles backslashes and special characters properly.
+  static String _escapePowerShellPath(String path) {
+    // Replace single backslashes with double backslashes for PowerShell
+    // and escape any single quotes
+    return path.replaceAll("'", "''");
+  }
+
+  /// Prints all date information for a file (useful for debugging).
+  static void printFileDates(String filePathName) {
+    if (!File(filePathName).existsSync()) {
+      print('File does not exist: $filePathName');
+      return;
+    }
+
+    print('\n=== File Date Information ===');
+    print('File: $filePathName');
+    print('Creation Time:     ${getFileCreationDate(filePathName)}');
+    print('Modification Time: ${getFileModificationDate(filePathName)}');
+    print('Access Time:       ${getFileAccessDate(filePathName)}');
+    print('=============================\n');
   }
 }

@@ -27363,9 +27363,6 @@ void main() {
                 playlistTitle: uniqueLocalPlaylistTitle,
                 isSelected: false);
 
-            const String notIndividuallySavedPlaylistTitle =
-                'Prières du Maître';
-
             restorableZipFilePathName =
                 "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Android Prières du Maître.zip";
 
@@ -28898,14 +28895,13 @@ void main() {
       String textToSpeechJsonFilePathName =
           '$kApplicationPathWindowsTest${path.separator}appCopy${path.separator}playlists${path.separator}textToSpeech${path.separator}textToSpeech.json';
 
-      DirUtil.setFileCreationTime(
-        filePathName: textToSpeechJsonFilePathName,
-        creationTime: DateTime(2025, 10, 20, 12, 40, 16),
-      );
+      DateTime textToSpeechJsonDateTime = DateTime(2025, 10, 20, 12, 40, 16);
 
-      DirUtil.setFileModificationTime(
+      await DirUtil.setAllFileTimes(
         filePathName: textToSpeechJsonFilePathName,
-        modificationTime: DateTime(2025, 10, 20, 12, 40, 16),
+        creationTime: textToSpeechJsonDateTime,
+        modificationTime: textToSpeechJsonDateTime,
+        accessTime: textToSpeechJsonDateTime,
       );
 
       String restorableZipFilePathName =
@@ -28962,22 +28958,21 @@ void main() {
 
       // Ensuring that the 'textToSpeech' playlist json file has
       // an older modification date than the zip file to be restored.
-      // In this situation, even if we replace existing playlists,
+      // In this situation, even if we do not replace existing playlists,
       // the 'textToSpeech' playlist will be deleted because its
       // modification date is older than the zip file to be restored
       // which does not contain it.
-      
+
       String textToSpeechJsonFilePathName =
           '$kApplicationPathWindowsTest${path.separator}appCopy${path.separator}playlists${path.separator}textToSpeech${path.separator}textToSpeech.json';
 
-      DirUtil.setFileCreationTime(
-        filePathName: textToSpeechJsonFilePathName,
-        creationTime: DateTime(2025, 10, 20, 12, 40, 16),
-      );
+      DateTime textToSpeechJsonDateTime = DateTime(2025, 10, 20, 12, 40, 16);
 
-      DirUtil.setFileModificationTime(
+      await DirUtil.setAllFileTimes(
         filePathName: textToSpeechJsonFilePathName,
-        modificationTime: DateTime(2025, 10, 20, 12, 40, 16),
+        creationTime: textToSpeechJsonDateTime,
+        modificationTime: textToSpeechJsonDateTime,
+        accessTime: textToSpeechJsonDateTime,
       );
 
       String restorableZipFilePathName =
