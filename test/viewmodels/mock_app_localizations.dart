@@ -2529,4 +2529,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get dateFormatyyyyMMdd => "yyyy/MM/dd";
+
+  @override
+  String get deleteExistingPlaylists => "Delete existing playlists not in ZIP";
 }

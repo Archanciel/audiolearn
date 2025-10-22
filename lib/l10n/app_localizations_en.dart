@@ -1871,6 +1871,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get replaceExistingPlaylists => 'Replace existing playlists';
 
   @override
+  String get deleteExistingPlaylists => 'Delete existing playlists not in ZIP';
+
+  @override
   String get playlistRestorationDialogTitle => 'Playlists Restoration';
 
   @override

@@ -47,6 +47,7 @@ class SetValueToTargetDialog extends StatefulWidget {
   final bool isValueStringUsed; // Indicates if the passed value field is used.
   //                               Is used to determine if clicking on Enter
   //                               should close the dialog or not.
+  final bool areCheckboxesOnRow;
 
   /// If the [passedValueFieldLabel] and the [passedValueStr] are not passed and so
   /// remains both empty, the dialog will not display the passed value field.
@@ -78,6 +79,7 @@ class SetValueToTargetDialog extends StatefulWidget {
     this.canAllCheckBoxBeUnchecked = false,
     this.isCursorAtStart = false,
     this.helpItemsLst = const [],
+    this.areCheckboxesOnRow = true, // if false, checkboxes are on column
   }) : isValueStringUsed =
             passedValueFieldLabel.isNotEmpty && passedValueStr.isNotEmpty;
 
@@ -269,8 +271,9 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
       return; // the SetValueToTargetDialog is not closed
     } else if (widget.checkboxLabelLst.isNotEmpty &&
         resultLst.length == 1 &&
-        resultLst[0] == "") { // [""] is returned in case of invalid value
-        //                       detected in the _createResultList() method.
+        resultLst[0] == "") {
+      // [""] is returned in case of invalid value
+      //                       detected in the _createResultList() method.
       // The case if the SetValueToTargetDialog has checkbox and
       // if the entered value was defined as invalid in the
       // _createResultList() method.
@@ -454,7 +457,35 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
   }
 
   Widget _createCheckboxList(BuildContext context) {
-    return Row(
+    if (widget.areCheckboxesOnRow) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: List<Widget>.generate(
+          widget.checkboxLabelLst.length,
+          (int index) {
+            return createCheckboxRowFunction(
+              checkBoxLabelKey: Key('checkboxLabel_${index}_key'),
+              checkBoxWidgetKey: Key('checkbox_${index}_key'),
+              context: context,
+              label: widget.checkboxLabelLst[index],
+              value: _checkboxesLst[index],
+              onChangedFunction: (bool? value) {
+                setState(() {
+                  if (value != null && value && widget.isCheckboxExclusive) {
+                    for (int i = 0; i < _checkboxesLst.length; i++) {
+                      _checkboxesLst[i] = false;
+                    }
+                  }
+                  _checkboxesLst[index] = value ?? false;
+                });
+              },
+            );
+          },
+        ),
+      );
+    }
+
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List<Widget>.generate(
         widget.checkboxLabelLst.length,
@@ -475,6 +506,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
                 _checkboxesLst[index] = value ?? false;
               });
             },
+            isCheckboxCentered: true, // Center checkboxes in column
           );
         },
       ),
