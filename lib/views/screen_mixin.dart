@@ -584,11 +584,14 @@ mixin ScreenMixin {
     String labelTooltip = '',
     required bool value,
     required ValueChanged<bool?> onChangedFunction,
+    bool isCheckboxCentered = false,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: (isCheckboxCentered)
+            ? MainAxisAlignment.center
+            : MainAxisAlignment.start,
         children: [
           labelTooltip.isNotEmpty
               ? Tooltip(

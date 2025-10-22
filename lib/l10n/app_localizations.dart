@@ -3052,6 +3052,12 @@ abstract class AppLocalizations {
   /// **'Replace existing playlists'**
   String get replaceExistingPlaylists;
 
+  /// No description provided for @deleteExistingPlaylists.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete existing playlists not in ZIP'**
+  String get deleteExistingPlaylists;
+
   /// No description provided for @playlistRestorationDialogTitle.
   ///
   /// In en, this message translates to:

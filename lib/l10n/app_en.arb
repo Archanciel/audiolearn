@@ -925,6 +925,7 @@
   "savedPictureNumberMessageToZip": "\n\nSaved also {pictureNumber} picture JPG file(s) in the ZIP file.",
   "addedToZipPictureNumberMessage": "\n\nSaved also {pictureNumber} picture JPG file(s) in the ZIP file.",
   "replaceExistingPlaylists": "Replace existing playlists",
+  "deleteExistingPlaylists": "Delete existing playlists not in ZIP",
   "playlistRestorationDialogTitle": "Playlists Restoration",
   "playlistRestorationExplanation": "Important: if you've modified your existing playlists (added audio files, comments, or pictures) since creating the ZIP backup, keep this checkbox UNCHECKED. Otherwise, your recent changes will be replaced by the older versions contained in the backup.",
   "playlistRestorationHelpTitle": "Playlist Restoration Function",

@@ -773,10 +773,13 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                       .playlistRestorationExplanation,
                   checkboxLabelLst: [
                     AppLocalizations.of(context)!.replaceExistingPlaylists,
+                    AppLocalizations.of(context)!.deleteExistingPlaylists,
                   ],
                   validationFunctionArgs: [],
+                  isCheckboxExclusive: false,
                   canAllCheckBoxBeUnchecked: true,
                   helpItemsLst: restorePlaylistsHelpItemsLst,
+                  areCheckboxesOnRow: false, // Display checkboxes on column
                 );
               },
             ).then((resultStringLst) async {
