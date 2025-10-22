@@ -28887,6 +28887,27 @@ void main() {
         tapOnPlaylistToggleButton: false,
       );
 
+
+      // Ensuring that the 'textToSpeech' playlist json file has
+      // an older modification date than the zip file to be restored.
+      // In this situation, even if we do not replace existing playlists,
+      // the 'textToSpeech' playlist will be deleted because its
+      // modification date is older than the zip file to be restored
+      // which does not contain it.
+
+      String textToSpeechJsonFilePathName =
+          '$kApplicationPathWindowsTest${path.separator}appCopy${path.separator}playlists${path.separator}textToSpeech${path.separator}textToSpeech.json';
+
+      DirUtil.setFileCreationTime(
+        filePathName: textToSpeechJsonFilePathName,
+        creationTime: DateTime(2025, 10, 20, 12, 40, 16),
+      );
+
+      DirUtil.setFileModificationTime(
+        filePathName: textToSpeechJsonFilePathName,
+        modificationTime: DateTime(2025, 10, 20, 12, 40, 16),
+      );
+
       String restorableZipFilePathName =
           '$kApplicationPathWindowsTest${path.separator}audioLearn_2025-10-20_13_41_28.zip';
 
@@ -28937,6 +28958,26 @@ void main() {
         tester: tester,
         savedTestDataDirName: 'restoring_playlists_with_deletion',
         tapOnPlaylistToggleButton: false,
+      );
+
+      // Ensuring that the 'textToSpeech' playlist json file has
+      // an older modification date than the zip file to be restored.
+      // In this situation, even if we replace existing playlists,
+      // the 'textToSpeech' playlist will be deleted because its
+      // modification date is older than the zip file to be restored
+      // which does not contain it.
+      
+      String textToSpeechJsonFilePathName =
+          '$kApplicationPathWindowsTest${path.separator}appCopy${path.separator}playlists${path.separator}textToSpeech${path.separator}textToSpeech.json';
+
+      DirUtil.setFileCreationTime(
+        filePathName: textToSpeechJsonFilePathName,
+        creationTime: DateTime(2025, 10, 20, 12, 40, 16),
+      );
+
+      DirUtil.setFileModificationTime(
+        filePathName: textToSpeechJsonFilePathName,
+        modificationTime: DateTime(2025, 10, 20, 12, 40, 16),
       );
 
       String restorableZipFilePathName =

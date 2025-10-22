@@ -828,4 +828,85 @@ class DirUtil {
 
     return filePaths;
   }
+
+  static Future<bool> setFileCreationTime({
+    required String filePathName,
+    required DateTime creationTime,
+  }) async {
+    try {
+      String creationTimeStr =
+          '${creationTime.month}/${creationTime.day}/${creationTime.year} ${creationTime.hour}:${creationTime.minute}:${creationTime.second}';
+
+      final result = await Process.run(
+        'powershell',
+        [
+          '-Command',
+          '(Get-Item "$filePathName").CreationTime = "$creationTimeStr"'
+        ],
+      );
+
+      return result.exitCode == 0;
+    } catch (e) {
+      print('Error setting file creation time: $e');
+      return false;
+    }
+  }
+
+  static Future<bool> setFileModificationTime({
+    required String filePathName,
+    required DateTime modificationTime,
+  }) async {
+    try {
+      String modTimeStr =
+          '${modificationTime.month}/${modificationTime.day}/${modificationTime.year} ${modificationTime.hour}:${modificationTime.minute}:${modificationTime.second}';
+
+      final result = await Process.run(
+        'powershell',
+        [
+          '-Command',
+          '(Get-Item "$filePathName").LastWriteTime = "$modTimeStr"'
+        ],
+      );
+
+      return result.exitCode == 0;
+    } catch (e) {
+      print('Error setting file modification time: $e');
+      return false;
+    }
+  }
+
+  static Future<bool> setAllFileTimes({
+    required String filePathName,
+    required DateTime creationTime,
+    required DateTime modificationTime,
+    DateTime? accessTime,
+  }) async {
+    try {
+      String creationTimeStr = _formatDateTime(creationTime);
+      String modTimeStr = _formatDateTime(modificationTime);
+      String accessTimeStr =
+          accessTime != null ? _formatDateTime(accessTime) : modTimeStr;
+
+      final command = '''
+      \$file = Get-Item "$filePathName"
+      \$file.CreationTime = "$creationTimeStr"
+      \$file.LastWriteTime = "$modTimeStr"
+      \$file.LastAccessTime = "$accessTimeStr"
+    ''';
+
+      final result = await Process.run(
+        'powershell',
+        ['-Command', command],
+      );
+
+      return result.exitCode == 0;
+    } catch (e) {
+      print('Error setting file times: $e');
+      return false;
+    }
+  }
+
+  static String _formatDateTime(DateTime dateTime) {
+    return '${dateTime.month}/${dateTime.day}/${dateTime.year} ${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}:${dateTime.second.toString().padLeft(2, '0')}';
+  }
 }
