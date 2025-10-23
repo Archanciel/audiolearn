@@ -679,7 +679,8 @@ class IntegrationTestUtil {
 
   static Future<void> executeRestorePlaylists({
     required WidgetTester tester,
-    bool doReplaceExistingPlaylists = true,
+    required bool doReplaceExistingPlaylists,
+    required bool doDeleteExistingPlaylists,
     List<String> playlistTitlesToDelete = const [],
     bool verifySetValueToTargetDialog = false,
     bool onAndroid = false,

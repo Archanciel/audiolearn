@@ -81,6 +81,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylists: false,
           playlistTitlesToDelete: [
             'Les plus belles chansons chrétiennes',
             'S8 audio',
@@ -111,6 +112,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylists: false,
           verifySetValueToTargetDialog: true,
           onAndroid: true,
         );
@@ -217,6 +219,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylists: false,
           playlistTitlesToDelete: [
             'Les plus belles chansons chrétiennes',
             'S8 audio',
@@ -248,6 +251,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylists: false,
           verifySetValueToTargetDialog: true,
           onAndroid: true,
         );
@@ -357,6 +361,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylists: false,
           playlistTitlesToDelete: [
             'Les plus belles chansons chrétiennes',
             'S8 audio',
@@ -388,6 +393,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylists: false,
           onAndroid: true,
         );
 
@@ -485,6 +491,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylists: false,
           playlistTitlesToDelete: [
             'Les plus belles chansons chrétiennes',
             'S8 audio',
@@ -515,6 +522,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylists: false,
           verifySetValueToTargetDialog: true,
           onAndroid: true,
         );
@@ -623,6 +631,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylists: false,
           playlistTitlesToDelete: [
             'Les plus belles chansons chrétiennes',
             'S8 audio',
@@ -654,6 +663,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylists: false,
           verifySetValueToTargetDialog: true,
           onAndroid: true,
         );
@@ -767,6 +777,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylists: false,
           playlistTitlesToDelete: [
             'Les plus belles chansons chrétiennes',
             'S8 audio',
@@ -978,6 +989,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylists: false,
           playlistTitlesToDelete: [
             'Les plus belles chansons chrétiennes',
             'S8 audio',
@@ -1142,6 +1154,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylists: false,
           playlistTitlesToDelete: [
             'Les plus belles chansons chrétiennes',
             'S8 audio',
@@ -1330,6 +1343,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylists: false,
           playlistTitlesToDelete: [
             'Les plus belles chansons chrétiennes',
             'S8 audio',
@@ -1966,6 +1980,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylists: false,
           playlistTitlesToDelete: [
             'Les plus belles chansons chrétiennes',
             'S8 audio',
@@ -3253,6 +3268,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
+            doDeleteExistingPlaylists: false,
             onAndroid: true,
           );
 
@@ -3344,6 +3360,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: true,
+            doDeleteExistingPlaylists: false,
             onAndroid: true,
           );
 
@@ -3830,6 +3847,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
+            doDeleteExistingPlaylists: false,
             onAndroid: true,
           );
 
@@ -4333,6 +4351,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: true,
+            doDeleteExistingPlaylists: false,
             onAndroid: true,
           );
 
@@ -4849,6 +4868,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
+            doDeleteExistingPlaylists: false,
             onAndroid: true,
           );
 
@@ -5261,6 +5281,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
+            doDeleteExistingPlaylists: false,
             onAndroid: true,
           );
 
@@ -5298,6 +5319,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
+            doDeleteExistingPlaylists: false,
             onAndroid: true,
           );
 
@@ -5535,6 +5557,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
+            doDeleteExistingPlaylists: false,
             onAndroid: true,
           );
 
@@ -5572,6 +5595,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: true,
+            doDeleteExistingPlaylists: false,
             onAndroid: true,
           );
 
@@ -5806,6 +5830,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylists: false,
           onAndroid: true,
         );
 
@@ -5979,6 +6004,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: true,
+          doDeleteExistingPlaylists: false,
           onAndroid: true,
         );
 
@@ -6152,6 +6178,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: true,
+          doDeleteExistingPlaylists: false,
           onAndroid: true,
         );
 
@@ -6313,6 +6340,7 @@ void main() {
         await IntegrationTestUtil.executeRestorePlaylists(
           tester: tester,
           doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylists: false,
           onAndroid: true,
         );
 

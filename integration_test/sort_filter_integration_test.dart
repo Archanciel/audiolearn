@@ -9636,6 +9636,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Execute the 'Restore Playlists, Comments and Settings from Zip
           // File ...' menu
           await IntegrationTestUtil.executeRestorePlaylists(
+            doReplaceExistingPlaylists: true,
+            doDeleteExistingPlaylists: false,
             tester: tester,
           );
 
@@ -9817,6 +9819,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Execute the 'Restore Playlists, Comments and Settings from Zip
           // File ...' menu
           await IntegrationTestUtil.executeRestorePlaylists(
+            doReplaceExistingPlaylists: true,
+            doDeleteExistingPlaylists: false,
             tester: tester,
           );
 
