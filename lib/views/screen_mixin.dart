@@ -586,29 +586,26 @@ mixin ScreenMixin {
     required ValueChanged<bool?> onChangedFunction,
     bool isCheckboxCentered = false,
   }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Row(
-        mainAxisAlignment: (isCheckboxCentered)
-            ? MainAxisAlignment.center
-            : MainAxisAlignment.start,
-        children: [
-          labelTooltip.isNotEmpty
-              ? Tooltip(
-                  message: labelTooltip,
-                  child: Text(label),
-                )
-              : Text(
-                  key: checkBoxLabelKey,
-                  label,
-                ),
-          Checkbox(
-            key: checkBoxWidgetKey,
-            value: value,
-            onChanged: onChangedFunction,
-          )
-        ],
-      ),
+    return Row(
+      mainAxisAlignment: (isCheckboxCentered)
+          ? MainAxisAlignment.center
+          : MainAxisAlignment.start,
+      children: [
+        labelTooltip.isNotEmpty
+            ? Tooltip(
+                message: labelTooltip,
+                child: Text(label),
+              )
+            : Text(
+                key: checkBoxLabelKey,
+                label,
+              ),
+        Checkbox(
+          key: checkBoxWidgetKey,
+          value: value,
+          onChanged: onChangedFunction,
+        )
+      ],
     );
   }
 
