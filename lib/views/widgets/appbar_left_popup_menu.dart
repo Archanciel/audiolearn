@@ -789,15 +789,26 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
               }
 
               bool doReplaceExistingPlaylists = false;
+              bool doDeleteExistingPlaylists = false;
 
-              if (resultStringLst.isNotEmpty) {
-                // The case when 'Replace existing playlists' is set to true.
+              if (resultStringLst.length == 2) {
+                // The case when 'Replace existing playlists' and
+                // 'Delete existing playlists' are set to true.
                 doReplaceExistingPlaylists = true;
+                doDeleteExistingPlaylists = true;
+              } else if (resultStringLst.length == 1) {
+                // The case when only one of the two checkboxes is checked
+                if (resultStringLst[0] == '0') {
+                  doReplaceExistingPlaylists = true;
+                } else if (resultStringLst[0] == '1') {
+                  doDeleteExistingPlaylists = true;
+                }
               }
 
               await UiUtil.restorePlaylistsCommentsAndAppSettingsFromZip(
                 context: context,
                 doReplaceExistingPlaylists: doReplaceExistingPlaylists,
+                doDeleteExistingPlaylists: doDeleteExistingPlaylists,
               );
             });
             break;
@@ -853,9 +864,10 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   false, // Prevents the dialog from closing when tapping outside.
               context: context,
               builder: (BuildContext context) {
-                String translatedDateFormatStr = UiUtil.obtainTranslatedDateFormat(
-                    context: context,
-                    dateFormatVMlistenFalse: dateFormatVMlistenFalse);
+                String translatedDateFormatStr =
+                    UiUtil.obtainTranslatedDateFormat(
+                        context: context,
+                        dateFormatVMlistenFalse: dateFormatVMlistenFalse);
 
                 return SetValueToTargetDialog(
                   dialogTitle: AppLocalizations.of(context)!
