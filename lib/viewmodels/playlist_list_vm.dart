@@ -4140,6 +4140,7 @@ class PlaylistListVM extends ChangeNotifier {
   Future<String> restorePlaylistsCommentsAndSettingsJsonFilesFromZip({
     required String zipFilePathName,
     required bool doReplaceExistingPlaylists,
+    required bool doDeleteExistingPlaylists,
   }) async {
     String selectedPlaylistBeforeRestoreTitle = '';
 
@@ -4167,6 +4168,7 @@ class PlaylistListVM extends ChangeNotifier {
     List<dynamic> restoredInfoLst = await _restoreFilesFromZip(
       zipFilePathName: zipFilePathName,
       doReplaceExistingPlaylists: doReplaceExistingPlaylists,
+      doDeleteExistingPlaylists: doDeleteExistingPlaylists,
     );
 
     // Combining the restored app settings with the current app
@@ -4355,6 +4357,7 @@ class PlaylistListVM extends ChangeNotifier {
   Future<List<dynamic>> _restoreFilesFromZip({
     required String zipFilePathName,
     required bool doReplaceExistingPlaylists,
+    required bool doDeleteExistingPlaylists,
   }) async {
     Map<String, String> zipExistingPlaylistJsonContentsMap = {};
     List<String> existingPlaylistTitlesLst =
@@ -4645,7 +4648,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     List<String> deletedExistingPlaylistTitlesLst = [];
 
-    if (!wasIndividualPlaylistRestored) {
+    if (!wasIndividualPlaylistRestored && doDeleteExistingPlaylists) {
       deletedExistingPlaylistTitlesLst =
           await _deleteExistingPlaylistsNotContainedInMultiplePlaylistsZip(
         existingPlaylistTitlesLst: existingPlaylistTitlesLst,
@@ -4707,7 +4710,8 @@ class PlaylistListVM extends ChangeNotifier {
   /// from a zip file.
   ///
   /// The method returns a list containing the deleted existing playlist titles.
-  Future<List<String>> _deleteExistingPlaylistsNotContainedInMultiplePlaylistsZip({
+  Future<List<String>>
+      _deleteExistingPlaylistsNotContainedInMultiplePlaylistsZip({
     required List<String> existingPlaylistTitlesLst,
     required List<String> playlistInZipTitleLst,
     required DateTime restoreZipDateTime,
@@ -4755,13 +4759,11 @@ class PlaylistListVM extends ChangeNotifier {
             );
 
             if (lastComment != null) {
-              if (lastComment.lastUpdateDateTime
-                  .isAfter(newestAudioDateTime)) {
+              if (lastComment.lastUpdateDateTime.isAfter(newestAudioDateTime)) {
                 newestAudioDateTime = lastComment.lastUpdateDateTime;
               }
             }
-          } else if (audio.audioDownloadDateTime
-              .isAfter(newestAudioDateTime)) {
+          } else if (audio.audioDownloadDateTime.isAfter(newestAudioDateTime)) {
             newestAudioDateTime = audio.audioDownloadDateTime;
           }
         }
