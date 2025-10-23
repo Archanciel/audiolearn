@@ -19712,7 +19712,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylists: true,
               verifySetValueToTargetDialog: true,
             );
 
@@ -20168,7 +20168,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylists: true,
               verifySetValueToTargetDialog: true,
             );
 
@@ -20569,7 +20569,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylists: true,
             );
 
             await tester.pumpAndSettle(const Duration(seconds: 1));
@@ -20761,7 +20761,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylists: true,
             );
 
             // Verify the displayed warning confirmation dialog
@@ -20988,7 +20988,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylists: true,
             );
 
             // Verify that the audio menu button is enabled
@@ -21461,7 +21461,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylists: true,
             );
 
             // Verify the displayed warning confirmation dialog
@@ -21881,7 +21881,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylists: true,
             );
 
             await tester.pumpAndSettle(const Duration(milliseconds: 500));
@@ -22081,7 +22081,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylists: true,
             );
 
             // Verify that the audio menu button is enabled
@@ -29001,7 +29001,7 @@ void main() {
     });
     testWidgets(
         '''Multiple playlists restore, not replace existing playlist, not delete existing playlist. Restore multiple playlists Windows
-           zip containing 'audio_learn_emi'. The two playlists 'textToSpeech' and 'new_updated_copy' are
+           zip containing 'audio_learn_emi'. The two playlists 'textToSpeech' and 'new_updated_copy' are not
            deleted.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -29060,7 +29060,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Restored 0 playlist, 48 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 10 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 playlist(s)\n  \"new_updated_copy\",\n  \"textToSpeech\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.",
+            "Restored 0 playlist, 48 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 10 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".",
         isWarningConfirming: true,
         warningTitle: 'CONFIRMATION',
       );
@@ -29125,7 +29125,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: true,
-        doDeleteExistingPlaylists: false,
+        doDeleteExistingPlaylists: true,
       );
 
       // Verify the displayed warning confirmation dialog
@@ -29133,6 +29133,78 @@ void main() {
         tester: tester,
         warningDialogMessage:
             "Restored 1 playlist, 48 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 163 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 playlist(s)\n  \"new_updated_copy\",\n  \"textToSpeech\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.",
+        isWarningConfirming: true,
+        warningTitle: 'CONFIRMATION',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Multiple playlists restore, replace existing playlist. Restore multiple playlists Windows
+           zip containing 'audio_learn_emi'. The two playlists 'textToSpeech' and 'new_updated_copy' are
+           not deleted.''', (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'restoring_playlists_with_deletion',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      // Ensuring that the 'textToSpeech' playlist json file has
+      // an older modification date than the zip file to be restored.
+      // In this situation, even if we do not replace existing playlists,
+      // the 'textToSpeech' playlist will be deleted because its
+      // modification date is older than the zip file to be restored
+      // which does not contain it.
+
+      String textToSpeechJsonFilePathName =
+          '$kApplicationPathWindowsTest${path.separator}appCopy${path.separator}playlists${path.separator}textToSpeech${path.separator}textToSpeech.json';
+
+      DateTime textToSpeechJsonDateTime = DateTime(2025, 10, 20, 12, 40, 16);
+
+      await DirUtil.setAllFileTimes(
+        filePathName: textToSpeechJsonFilePathName,
+        creationTime: textToSpeechJsonDateTime,
+        modificationTime: textToSpeechJsonDateTime,
+        accessTime: textToSpeechJsonDateTime,
+      );
+
+      String restorableZipFilePathName =
+          '$kApplicationPathWindowsTest${path.separator}audioLearn_2025-10-20_13_41_28.zip';
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: restorableZipFilePathName,
+            path: restorableZipFilePathName,
+            size: 7460),
+      ]);
+
+      // Execute the 'Restore Playlists, Comments and Settings from Zip
+      // File ...' menu
+      await IntegrationTestUtil.executeRestorePlaylists(
+        tester: tester,
+        doReplaceExistingPlaylists: true,
+        doDeleteExistingPlaylists: false,
+      );
+
+      // Verify the displayed warning confirmation dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Restored 1 playlist, 48 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 163 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".",
         isWarningConfirming: true,
         warningTitle: 'CONFIRMATION',
       );
@@ -34523,8 +34595,8 @@ Future<void> _restorePaylistsAndTheirMp3({
   // urgent_actus_17-12-2023 playlist
   await IntegrationTestUtil.executeRestorePlaylists(
     tester: tester,
-    doReplaceExistingPlaylists: false,
-    doDeleteExistingPlaylists: false,
+    doReplaceExistingPlaylists: doReplaceExistingPlaylists,
+    doDeleteExistingPlaylists: doDeleteExistingPlaylists,
   );
 
   if (restorePlaylistsConfirmationMessage.isNotEmpty) {

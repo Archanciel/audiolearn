@@ -753,6 +753,13 @@ class IntegrationTestUtil {
       await tester.pumpAndSettle();
     }
 
+    if (doDeleteExistingPlaylists) {
+      // Find the 'Remove deleted audio files' checkbox and tap
+      // on it
+      await tester.tap(find.byKey(const Key('checkbox_1_key')));
+      await tester.pumpAndSettle();
+    }
+
     // Tap on the Ok button to launch the restoration.
     await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
     await tester.pumpAndSettle(const Duration(seconds: 1));
