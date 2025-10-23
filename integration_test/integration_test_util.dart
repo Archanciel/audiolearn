@@ -741,7 +741,7 @@ class IntegrationTestUtil {
         dialogTitle: 'Playlists Restoration',
         isHelpIconPresent: true,
         dialogMessage:
-            "Important: if you've modified your existing playlists (added audio files, comments, or pictures) since creating the ZIP backup, keep this checkbox UNCHECKED. Otherwise, your recent changes will be replaced by the older versions contained in the backup.",
+            "Important: if you've modified your existing playlists (added audio files, comments, or pictures) since creating the ZIP backup, keep the 'Replace existing playlists' checkbox UNCHECKED. Otherwise, your recent changes will be replaced by the older versions contained in the backup.",
         checkboxLabel: 'Replace existing playlists',
       );
     }

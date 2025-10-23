@@ -1878,7 +1878,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get playlistRestorationExplanation =>
-      'Important: if you\'ve modified your existing playlists (added audio files, comments, or pictures) since creating the ZIP backup, keep this checkbox UNCHECKED. Otherwise, your recent changes will be replaced by the older versions contained in the backup.';
+      'Important: if you\'ve modified your existing playlists (added audio files, comments, or pictures) since creating the ZIP backup, keep the \'Replace existing playlists\' checkbox UNCHECKED. Otherwise, your recent changes will be replaced by the older versions contained in the backup.';
 
   @override
   String get playlistRestorationHelpTitle => 'Playlist Restoration Function';
