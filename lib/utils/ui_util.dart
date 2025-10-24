@@ -204,6 +204,8 @@ class UiUtil {
     );
 
     if (uniquePlaylistIsRestored && playlistsLst.length == 1) {
+      // 'Restore Playlist Audio's MP3 from one or several ZIP File(s) ...'
+      // playlist item menu
       if (mp3ZipDirectoryPath != null) {
         // Restore from multiple ZIP files contained in a directory
         await playlistListVMlistenFalse.restoreAndConfirmPlaylistsAudioMp3FilesFromMultipleZips(
@@ -236,6 +238,9 @@ class UiUtil {
         wasIndividualPlaylistMp3ZipUsed: uniquePlaylistMp3ZipFileWasRestored,
       );
     } else {
+      // 'Restore Playlist Audio's MP3 from one or several ZIP File(s) ...'
+      // left appbar menu
+
       // Restoring mp3 files for unique or multiple playlists from a single
       // ZIP file or from multiple mp3 zip files located in a directory.
       if (mp3ZipDirectoryPath != null) {
