@@ -3067,7 +3067,7 @@ abstract class AppLocalizations {
   /// No description provided for @playlistRestorationExplanation.
   ///
   /// In en, this message translates to:
-  /// **'Important: if you\'ve modified your existing playlists (added audio files, comments, or pictures) since creating the ZIP backup, keep the \'Replace existing playlists\' checkbox UNCHECKED. Otherwise, your recent changes will be replaced by the older versions contained in the backup.'**
+  /// **'Important: if you\'ve modified your existing playlists (added audio files, comments, or pictures) since creating the ZIP backup, keep the \'Replace existing playlists\' checkbox UNCHECKED. Otherwise, your recent changes will be replaced by the older versions contained in the backup.\n\nPlaylists not in the ZIP will only be deleted if they existed BEFORE the backup was created. Any playlists created or modified AFTER the backup date are automatically protected and will be kept, even if the delete checkbox is checked.'**
   String get playlistRestorationExplanation;
 
   /// No description provided for @playlistRestorationHelpTitle.
