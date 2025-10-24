@@ -921,6 +921,12 @@ class WarningMessageVM extends ChangeNotifier {
     _numberOfUsedZipFiles = processedZipCount;
     _playlistTitlesLst = restoredPlaylistTitles;
 
+    if (restoredPlaylistTitles.isNotEmpty) {
+      _wasIndividualPlaylistMp3ZipUsed = restoredPlaylistTitles.length == 1;
+    } else {
+      _wasIndividualPlaylistMp3ZipUsed = false;
+    }
+
     warningMessageType = WarningMessageType.restoringAudioMp3FromMultipleZips;
 
     // Causes the display warning message widget to be displayed.
