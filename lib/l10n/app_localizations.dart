@@ -3731,13 +3731,13 @@ abstract class AppLocalizations {
   /// No description provided for @fromMp3ZipFileUsedToRestoreUniquePlaylist.
   ///
   /// In en, this message translates to:
-  /// **'playlist from the unique playlist MP3 zip file \"{zipFilePathNName}\"'**
+  /// **'playlist from the MP3 zip file \"{zipFilePathNName}\"'**
   String fromMp3ZipFileUsedToRestoreUniquePlaylist(Object zipFilePathNName);
 
   /// No description provided for @fromMp3ZipFileUsedToRestoreMultiplePlaylists.
   ///
   /// In en, this message translates to:
-  /// **'playlist(s) from the multiple playlists MP3 zip file \"{zipFilePathNName}\"'**
+  /// **'playlist(s) from one or several MP3 zip files contained in directory \"{zipFilePathNName}\"'**
   String fromMp3ZipFileUsedToRestoreMultiplePlaylists(Object zipFilePathNName);
 
   /// No description provided for @fromMultipleMp3ZipFileUsedToRestoreMultiplePlaylists.
