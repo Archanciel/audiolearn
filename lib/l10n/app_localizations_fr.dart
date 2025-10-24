@@ -2342,7 +2342,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String fromMp3ZipFileUsedToRestoreUniquePlaylist(Object zipFilePathNName) {
-    return 'playlist à partir du fichier zip MP3 de playlist unique \"$zipFilePathNName\"';
+    return 'playlist à partir du fichier zip MP3 \"$zipFilePathNName\"';
   }
 
   @override
@@ -2353,7 +2353,7 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String fromMultipleMp3ZipFileUsedToRestoreMultiplePlaylists(
       Object zipFilePathNName) {
-    return 'playlist(s) à partir des fichiers zip MP3 multiples contenus dans le répertoire \"$zipFilePathNName\"';
+    return 'playlist(s) à partir du ou des fichiers zip MP3 contenus dans le répertoire \"$zipFilePathNName\"';
   }
 
   @override

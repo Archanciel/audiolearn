@@ -2316,12 +2316,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String fromMp3ZipFileUsedToRestoreUniquePlaylist(Object zipFilePathNName) {
-    return 'playlist from the unique playlist MP3 zip file \"$zipFilePathNName\"';
+    return 'playlist from the MP3 zip file \"$zipFilePathNName\"';
   }
 
   @override
   String fromMp3ZipFileUsedToRestoreMultiplePlaylists(Object zipFilePathNName) {
-    return 'playlist(s) from the multiple playlists MP3 zip file \"$zipFilePathNName\"';
+    return 'playlist(s) from one or several MP3 zip files contained in directory \"$zipFilePathNName\"';
   }
 
   @override
