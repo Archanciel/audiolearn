@@ -1366,7 +1366,6 @@
   "audioMp3UniquePlaylistRestorationExplanation": "Seuls les fichiers MP3 qui correspondent aux audio's listés dans la playlist et qui ne sont pas déjà présents dans cette playlist sont restaurés.",
   "playlistInvalidRootPathWarning": "Le répertoire défini \"{playlistRootPath}\" est invalide du fait que le nom du répertoire final '{wrongName}' devant contenir les playlists est différent de 'playlists'. Veuillez renommer le nouveau répertoire contenant les playlists et rééffectuer son changement",
   "restoringUniquePlaylistAudioMp3": "Restoration des fichiers audio de la playlist {playlistTitle} ...",
-  "restoringMultiplePlaylistsAudioMp3": "Restoration des fichiers audio de multiples playlists ...",
   "playlistsMp3RestorationHelpTitle": "Fonction de restauration MP3 des playlists",
   "playlistsMp3RestorationHelpContent": "Cette fonction est utile dans la situation où les playlists ont été restaurées depuis un fichier ZIP qui ne contenait que les fichiers JSON des playlists, des commentaires et des photos et donc ne contenait pas les fichiers audio MP3.",
   "uniquePlaylistMp3RestorationHelpTitle": "Fonction de restauration MP3 de la playlist",
