@@ -30064,473 +30064,635 @@ void main() {
     });
   });
   group(
-      '''Restore audio MP3 files from single zip file or directory with zip's''',
+      '''Restore audio MP3 files from directory with zip or single zip file's''',
       () {
-    testWidgets(
-        '''Left appbar menu, directory with zip's, 1 playlist audio MP3 files restoration.''',
-        (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+    group('''From directory with zip''', () {
+      testWidgets(
+          '''Left appbar menu, directory with zip's, 1 playlist audio MP3 files restoration.''',
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      // Copy the integration test data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}restoring_audio_mp3_selecting_zip_or_dir",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
+        // Copy the integration test data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}restoring_audio_mp3_selecting_zip_or_dir",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
 
-      // Delete the 'Prières du Maître' playlist MP3 files to be able
-      // to restore them
-      DirUtil.deleteMp3FilesInDir(
-        filePath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}Prières du Maître',
-      );
+        // Delete the 'Prières du Maître' playlist MP3 files to be able
+        // to restore them
+        DirUtil.deleteMp3FilesInDir(
+          filePath:
+              '$kPlaylistDownloadRootPathWindowsTest${path.separator}Prières du Maître',
+        );
 
-      await app.main();
-      await tester.pumpAndSettle();
+        await app.main();
+        await tester.pumpAndSettle();
 
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
 
-      String mp3RestorableZipDirectory =
-          '$kApplicationPathWindowsTest${path.separator}Mp3ZipFiles';
-      ;
+        String mp3RestorableZipDirectory =
+            '$kApplicationPathWindowsTest${path.separator}Mp3ZipFiles';
+        ;
 
-      // Setting the directory to select in the mock file
-      // picker. This directory contains multiple playlists
-      // MP3 zip files
-      mockFilePicker.setPathToSelect(
-        pathToSelectStr: mp3RestorableZipDirectory,
-      );
+        // Setting the directory to select in the mock file
+        // picker. This directory contains multiple playlists
+        // MP3 zip files
+        mockFilePicker.setPathToSelect(
+          pathToSelectStr: mp3RestorableZipDirectory,
+        );
 
-      await IntegrationTestUtil.typeOnAppbarMenuItem(
-        tester: tester,
-        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
-      );
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
+        );
 
-      // Verify the displayed confirmation dialog
-      await IntegrationTestUtil.verifySetValueToTargetDialog(
-        tester: tester,
-        dialogTitle: 'MP3 Restoration',
-        dialogMessage:
-            "Only the MP3 relative to the audio's listed in the playlists which are not already present in the playlists are restorable.",
-        closeDialog: true,
-      );
+        // Verify the displayed confirmation dialog
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'MP3 Restoration',
+          dialogMessage:
+              "Only the MP3 relative to the audio's listed in the playlists which are not already present in the playlists are restorable.",
+          closeDialog: true,
+        );
 
-      // Now tap on the 'A Directory with ZIPs' button
-      await tester.tap(find.byKey(const Key('selectDirectoryButton')));
-      await tester.pumpAndSettle();
+        // Now tap on the 'A Directory with ZIPs' button
+        await tester.tap(find.byKey(const Key('selectDirectoryButton')));
+        await tester.pumpAndSettle();
 
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 22 audio(s) MP3 in 1 playlist(s) from the multiple MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
-        isWarningConfirming: true,
-      );
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 22 audio(s) MP3 in 1 playlist(s) from the multiple MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
+          isWarningConfirming: true,
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Playlist item menu, directory with zip's, 1 playlist audio MP3 files restoration.''',
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        // Copy the integration test data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}restoring_audio_mp3_selecting_zip_or_dir",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
+
+        // Delete the 'Prières du Maître' playlist MP3 files to be able
+        // to restore them
+        DirUtil.deleteMp3FilesInDir(
+          filePath:
+              '$kPlaylistDownloadRootPathWindowsTest${path.separator}Prières du Maître',
+        );
+
+        await app.main();
+        await tester.pumpAndSettle();
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        String mp3RestorableZipDirectory =
+            '$kApplicationPathWindowsTest${path.separator}Mp3ZipFiles';
+        ;
+
+        // Setting the directory to select in the mock file
+        // picker. This directory contains multiple playlists
+        // MP3 zip files
+        mockFilePicker.setPathToSelect(
+          pathToSelectStr: mp3RestorableZipDirectory,
+        );
+
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: 'Prières du Maître',
+          playlistMenuKeyStr:
+              'popup_menu_restore_playlist_audio_mp3_files_from_zip',
+        );
+
+        // Verify the displayed confirmation dialog
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'MP3 Restoration',
+          dialogMessage:
+              "Only the MP3 relative to the audio's listed in the playlist which are not already present in the playlist are restorable.",
+          closeDialog: true,
+        );
+
+        // Now tap on the 'A Directory with ZIPs' button
+        await tester.tap(find.byKey(const Key('selectDirectoryButton')));
+        await tester.pumpAndSettle();
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 22 audio(s) MP3 in 1 playlist(s) from the multiple MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
+          isWarningConfirming: true,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Left appbar menu, directory with zip's, 2 playlists audio MP3 files restoration.''',
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        // Copy the integration test data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}restoring_audio_mp3_selecting_zip_or_dir",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
+
+        // Delete the 'Prières du Maître' and 'IA' playlist MP3 files to be
+        // able to restore them
+
+        DirUtil.deleteMp3FilesInDir(
+          filePath:
+              '$kPlaylistDownloadRootPathWindowsTest${path.separator}Prières du Maître',
+        );
+
+        DirUtil.deleteMp3FilesInDir(
+          filePath: '$kPlaylistDownloadRootPathWindowsTest${path.separator}IA',
+        );
+
+        await app.main();
+        await tester.pumpAndSettle();
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        String mp3RestorableZipDirectory =
+            '$kApplicationPathWindowsTest${path.separator}Mp3ZipFiles';
+        ;
+
+        // Setting the directory to select in the mock file
+        // picker. This directory contains multiple playlists
+        // MP3 zip files
+        mockFilePicker.setPathToSelect(
+          pathToSelectStr: mp3RestorableZipDirectory,
+        );
+
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
+        );
+
+        // Verify the displayed confirmation dialog
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'MP3 Restoration',
+          dialogMessage:
+              "Only the MP3 relative to the audio's listed in the playlists which are not already present in the playlists are restorable.",
+          closeDialog: true,
+        );
+
+        // Now tap on the 'A Directory with ZIPs' button
+        await tester.tap(find.byKey(const Key('selectDirectoryButton')));
+        await tester.pumpAndSettle();
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 24 audio(s) MP3 in 2 playlist(s) from the multiple MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
+          isWarningConfirming: true,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Playlist item menu, directory with zip's, 1 playlist audio MP3 files restoration after deleting 2
+           playlists mp3 files.''', (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        // Copy the integration test data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}restoring_audio_mp3_selecting_zip_or_dir",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
+
+        // Delete the 'Prières du Maître' and 'IA' playlist MP3 files to be
+        // able to restore them
+
+        DirUtil.deleteMp3FilesInDir(
+          filePath:
+              '$kPlaylistDownloadRootPathWindowsTest${path.separator}Prières du Maître',
+        );
+
+        DirUtil.deleteMp3FilesInDir(
+          filePath: '$kPlaylistDownloadRootPathWindowsTest${path.separator}IA',
+        );
+
+        await app.main();
+        await tester.pumpAndSettle();
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        String mp3RestorableZipDirectory =
+            '$kApplicationPathWindowsTest${path.separator}Mp3ZipFiles';
+        ;
+
+        // Setting the directory to select in the mock file
+        // picker. This directory contains multiple playlists
+        // MP3 zip files
+        mockFilePicker.setPathToSelect(
+          pathToSelectStr: mp3RestorableZipDirectory,
+        );
+
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: 'Prières du Maître',
+          playlistMenuKeyStr:
+              'popup_menu_restore_playlist_audio_mp3_files_from_zip',
+        );
+
+        // Verify the displayed confirmation dialog
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'MP3 Restoration',
+          dialogMessage:
+              "Only the MP3 relative to the audio's listed in the playlist which are not already present in the playlist are restorable.",
+          closeDialog: true,
+        );
+
+        // Now tap on the 'A Directory with ZIPs' button
+        await tester.tap(find.byKey(const Key('selectDirectoryButton')));
+        await tester.pumpAndSettle();
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 22 audio(s) MP3 in 1 playlist(s) from the multiple MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
+          isWarningConfirming: true,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
     });
-    testWidgets(
-        '''Playlist item menu, directory with zip's, 1 playlist audio MP3 files restoration.''',
-        (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+    group('''From single zip file's''', () {
+      testWidgets(
+          '''Left appbar menu, a single zip file, 1 playlist audio MP3 files restoration.''',
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      // Copy the integration test data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}restoring_audio_mp3_selecting_zip_or_dir",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
+        // Copy the integration test data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}restoring_audio_mp3_selecting_zip_or_dir",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
 
-      // Delete the 'Prières du Maître' playlist MP3 files to be able
-      // to restore them
-      DirUtil.deleteMp3FilesInDir(
-        filePath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}Prières du Maître',
-      );
+        // Delete the 'Prières du Maître' playlist MP3 files to be able
+        // to restore them
+        DirUtil.deleteMp3FilesInDir(
+          filePath:
+              '$kPlaylistDownloadRootPathWindowsTest${path.separator}Prières du Maître',
+        );
 
-      await app.main();
-      await tester.pumpAndSettle();
+        await app.main();
+        await tester.pumpAndSettle();
 
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
 
-      String mp3RestorableZipDirectory =
-          '$kApplicationPathWindowsTest${path.separator}Mp3ZipFiles';
-      ;
+        String mp3RestorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}Prières du Maître_mp3_from_2025-02-11_09_00_11_on_2025-10-24_14_20_20.zip';
+        ;
 
-      // Setting the directory to select in the mock file
-      // picker. This directory contains multiple playlists
-      // MP3 zip files
-      mockFilePicker.setPathToSelect(
-        pathToSelectStr: mp3RestorableZipDirectory,
-      );
+        // Setting the directory to select in the mock file
+        // picker. This directory contains multiple playlists
+        // MP3 zip files
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: mp3RestorableZipFilePathName,
+              path: mp3RestorableZipFilePathName,
+              size: 15365504),
+        ]);
 
-      await IntegrationTestUtil.typeOnPlaylistMenuItem(
-        tester: tester,
-        playlistTitle: 'Prières du Maître',
-        playlistMenuKeyStr: 'popup_menu_restore_playlist_audio_mp3_files_from_zip',
-      );
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
+        );
 
-      // Verify the displayed confirmation dialog
-      await IntegrationTestUtil.verifySetValueToTargetDialog(
-        tester: tester,
-        dialogTitle: 'MP3 Restoration',
-        dialogMessage:
-            "Only the MP3 relative to the audio's listed in the playlist which are not already present in the playlist are restorable.",
-        closeDialog: true,
-      );
+        // Verify the displayed confirmation dialog
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'MP3 Restoration',
+          dialogMessage:
+              "Only the MP3 relative to the audio's listed in the playlists which are not already present in the playlists are restorable.",
+          closeDialog: true,
+        );
 
-      // Now tap on the 'A Directory with ZIPs' button
-      await tester.tap(find.byKey(const Key('selectDirectoryButton')));
-      await tester.pumpAndSettle();
+        // Now tap on the 'A Single ZIP File' button
+        await tester.tap(find.byKey(const Key('selectFileButton')));
+        await tester.pumpAndSettle();
 
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 22 audio(s) MP3 in 1 playlist(s) from the multiple MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
-        isWarningConfirming: true,
-      );
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 22 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
+          isWarningConfirming: true,
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Left appbar menu, directory with zip's, 2 playlists audio MP3 files restoration.''',
-        (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Left appbar menu, a single zip file, 1 playlist audio MP3 files restoration after deleting 2
+           playlists mp3 files.''', (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      // Copy the integration test data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}restoring_audio_mp3_selecting_zip_or_dir",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
+        // Copy the integration test data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}restoring_audio_mp3_selecting_zip_or_dir",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
 
-      // Delete the 'Prières du Maître' and 'IA' playlist MP3 files to be
-      // able to restore them
+        // Delete the 'Prières du Maître' and 'IA' playlist MP3 files to be
+        // able to restore them
 
-      DirUtil.deleteMp3FilesInDir(
-        filePath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}Prières du Maître',
-      );
+        DirUtil.deleteMp3FilesInDir(
+          filePath:
+              '$kPlaylistDownloadRootPathWindowsTest${path.separator}Prières du Maître',
+        );
 
-      DirUtil.deleteMp3FilesInDir(
-        filePath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}IA',
-      );
+        DirUtil.deleteMp3FilesInDir(
+          filePath: '$kPlaylistDownloadRootPathWindowsTest${path.separator}IA',
+        );
 
-      await app.main();
-      await tester.pumpAndSettle();
+        await app.main();
+        await tester.pumpAndSettle();
 
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
 
-      String mp3RestorableZipDirectory =
-          '$kApplicationPathWindowsTest${path.separator}Mp3ZipFiles';
-      ;
+        String mp3RestorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}Prières du Maître_mp3_from_2025-02-11_09_00_11_on_2025-10-24_14_20_20.zip';
+        ;
 
-      // Setting the directory to select in the mock file
-      // picker. This directory contains multiple playlists
-      // MP3 zip files
-      mockFilePicker.setPathToSelect(
-        pathToSelectStr: mp3RestorableZipDirectory,
-      );
+        // Setting the directory to select in the mock file
+        // picker. This directory contains multiple playlists
+        // MP3 zip files
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: mp3RestorableZipFilePathName,
+              path: mp3RestorableZipFilePathName,
+              size: 15365504),
+        ]);
 
-      await IntegrationTestUtil.typeOnAppbarMenuItem(
-        tester: tester,
-        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
-      );
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
+        );
 
-      // Verify the displayed confirmation dialog
-      await IntegrationTestUtil.verifySetValueToTargetDialog(
-        tester: tester,
-        dialogTitle: 'MP3 Restoration',
-        dialogMessage:
-            "Only the MP3 relative to the audio's listed in the playlists which are not already present in the playlists are restorable.",
-        closeDialog: true,
-      );
+        // Verify the displayed confirmation dialog
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'MP3 Restoration',
+          dialogMessage:
+              "Only the MP3 relative to the audio's listed in the playlists which are not already present in the playlists are restorable.",
+          closeDialog: true,
+        );
 
-      // Now tap on the 'A Directory with ZIPs' button
-      await tester.tap(find.byKey(const Key('selectDirectoryButton')));
-      await tester.pumpAndSettle();
+        // Now tap on the 'A Single ZIP File' button
+        await tester.tap(find.byKey(const Key('selectFileButton')));
+        await tester.pumpAndSettle();
 
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 24 audio(s) MP3 in 2 playlist(s) from the multiple MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
-        isWarningConfirming: true,
-      );
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 22 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
+          isWarningConfirming: true,
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Playlist item menu, directory with zip's, 1 playlist audio MP3 files restoration after deleting 2
-           playlists mp3 files.''',
-        (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Playlist item menu, a single zip file, 1 playlist audio MP3 files restoration.''',
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      // Copy the integration test data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}restoring_audio_mp3_selecting_zip_or_dir",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
+        // Copy the integration test data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}restoring_audio_mp3_selecting_zip_or_dir",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
 
-      // Delete the 'Prières du Maître' and 'IA' playlist MP3 files to be
-      // able to restore them
+        // Delete the 'Prières du Maître' playlist MP3 files to be able
+        // to restore them
+        DirUtil.deleteMp3FilesInDir(
+          filePath:
+              '$kPlaylistDownloadRootPathWindowsTest${path.separator}Prières du Maître',
+        );
 
-      DirUtil.deleteMp3FilesInDir(
-        filePath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}Prières du Maître',
-      );
+        await app.main();
+        await tester.pumpAndSettle();
 
-      DirUtil.deleteMp3FilesInDir(
-        filePath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}IA',
-      );
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
 
-      await app.main();
-      await tester.pumpAndSettle();
+        String mp3RestorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}Prières du Maître_mp3_from_2025-02-11_09_00_11_on_2025-10-24_14_20_20.zip';
+        ;
 
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
+        // Setting the directory to select in the mock file
+        // picker. This directory contains multiple playlists
+        // MP3 zip files
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: mp3RestorableZipFilePathName,
+              path: mp3RestorableZipFilePathName,
+              size: 15365504),
+        ]);
 
-      String mp3RestorableZipDirectory =
-          '$kApplicationPathWindowsTest${path.separator}Mp3ZipFiles';
-      ;
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: 'Prières du Maître',
+          playlistMenuKeyStr:
+              'popup_menu_restore_playlist_audio_mp3_files_from_zip',
+        );
 
-      // Setting the directory to select in the mock file
-      // picker. This directory contains multiple playlists
-      // MP3 zip files
-      mockFilePicker.setPathToSelect(
-        pathToSelectStr: mp3RestorableZipDirectory,
-      );
+        // Verify the displayed confirmation dialog
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'MP3 Restoration',
+          dialogMessage:
+              "Only the MP3 relative to the audio's listed in the playlist which are not already present in the playlist are restorable.",
+          closeDialog: true,
+        );
 
-      await IntegrationTestUtil.typeOnPlaylistMenuItem(
-        tester: tester,
-        playlistTitle: 'Prières du Maître',
-        playlistMenuKeyStr: 'popup_menu_restore_playlist_audio_mp3_files_from_zip',
-      );
+        // Now tap on the 'A Single ZIP File' button
+        await tester.tap(find.byKey(const Key('selectFileButton')));
+        await tester.pumpAndSettle();
 
-      // Verify the displayed confirmation dialog
-      await IntegrationTestUtil.verifySetValueToTargetDialog(
-        tester: tester,
-        dialogTitle: 'MP3 Restoration',
-        dialogMessage:
-            "Only the MP3 relative to the audio's listed in the playlist which are not already present in the playlist are restorable.",
-        closeDialog: true,
-      );
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 22 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
+          isWarningConfirming: true,
+        );
 
-      // Now tap on the 'A Directory with ZIPs' button
-      await tester.tap(find.byKey(const Key('selectDirectoryButton')));
-      await tester.pumpAndSettle();
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Playlist item menu, a single zip file, 1 playlist audio MP3 files restoration after deleting 2
+           playlists mp3 files.''', (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 22 audio(s) MP3 in 1 playlist(s) from the multiple MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
-        isWarningConfirming: true,
-      );
+        // Copy the integration test data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}restoring_audio_mp3_selecting_zip_or_dir",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Left appbar menu, a single zip file, 1 playlist audio MP3 files restoration.''',
-        (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        // Delete the 'Prières du Maître' and 'IA' playlist MP3 files to be
+        // able to restore them
 
-      // Copy the integration test data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}restoring_audio_mp3_selecting_zip_or_dir",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
+        DirUtil.deleteMp3FilesInDir(
+          filePath:
+              '$kPlaylistDownloadRootPathWindowsTest${path.separator}Prières du Maître',
+        );
 
-      // Delete the 'Prières du Maître' playlist MP3 files to be able
-      // to restore them
-      DirUtil.deleteMp3FilesInDir(
-        filePath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}Prières du Maître',
-      );
+        DirUtil.deleteMp3FilesInDir(
+          filePath: '$kPlaylistDownloadRootPathWindowsTest${path.separator}IA',
+        );
 
-      await app.main();
-      await tester.pumpAndSettle();
+        await app.main();
+        await tester.pumpAndSettle();
 
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
 
-      String mp3RestorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}Prières du Maître_mp3_from_2025-02-11_09_00_11_on_2025-10-24_14_20_20.zip';
-      ;
+        String mp3RestorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}Prières du Maître_mp3_from_2025-02-11_09_00_11_on_2025-10-24_14_20_20.zip';
+        ;
 
-      // Setting the directory to select in the mock file
-      // picker. This directory contains multiple playlists
-      // MP3 zip files
-      mockFilePicker.setSelectedFiles([
-              PlatformFile(
-                  name: mp3RestorableZipFilePathName,
-                  path: mp3RestorableZipFilePathName,
-                  size: 15365504),
-            ]);
+        // Setting the directory to select in the mock file
+        // picker. This directory contains multiple playlists
+        // MP3 zip files
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: mp3RestorableZipFilePathName,
+              path: mp3RestorableZipFilePathName,
+              size: 15365504),
+        ]);
 
-      await IntegrationTestUtil.typeOnAppbarMenuItem(
-        tester: tester,
-        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
-      );
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: 'Prières du Maître',
+          playlistMenuKeyStr:
+              'popup_menu_restore_playlist_audio_mp3_files_from_zip',
+        );
 
-      // Verify the displayed confirmation dialog
-      await IntegrationTestUtil.verifySetValueToTargetDialog(
-        tester: tester,
-        dialogTitle: 'MP3 Restoration',
-        dialogMessage:
-            "Only the MP3 relative to the audio's listed in the playlists which are not already present in the playlists are restorable.",
-        closeDialog: true,
-      );
+        // Verify the displayed confirmation dialog
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'MP3 Restoration',
+          dialogMessage:
+              "Only the MP3 relative to the audio's listed in the playlist which are not already present in the playlist are restorable.",
+          closeDialog: true,
+        );
 
-      // Now tap on the 'A Single ZIP File' button
-      await tester.tap(find.byKey(const Key('selectFileButton')));
-      await tester.pumpAndSettle();
+        // Now tap on the 'A Single ZIP File' button
+        await tester.tap(find.byKey(const Key('selectFileButton')));
+        await tester.pumpAndSettle();
 
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 22 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
-        isWarningConfirming: true,
-      );
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 22 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
+          isWarningConfirming: true,
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Left appbar menu, a single zip file, 1 playlist audio MP3 files restoration after deleting 2
-           playlists mp3 files.''',
-        (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-
-      // Copy the integration test data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}restoring_audio_mp3_selecting_zip_or_dir",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
-
-      // Delete the 'Prières du Maître' and 'IA' playlist MP3 files to be
-      // able to restore them
-
-      DirUtil.deleteMp3FilesInDir(
-        filePath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}Prières du Maître',
-      );
-
-      DirUtil.deleteMp3FilesInDir(
-        filePath:
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}IA',
-      );
-
-      await app.main();
-      await tester.pumpAndSettle();
-
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
-
-      String mp3RestorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}Prières du Maître_mp3_from_2025-02-11_09_00_11_on_2025-10-24_14_20_20.zip';
-      ;
-
-      // Setting the directory to select in the mock file
-      // picker. This directory contains multiple playlists
-      // MP3 zip files
-      mockFilePicker.setSelectedFiles([
-              PlatformFile(
-                  name: mp3RestorableZipFilePathName,
-                  path: mp3RestorableZipFilePathName,
-                  size: 15365504),
-            ]);
-
-      await IntegrationTestUtil.typeOnAppbarMenuItem(
-        tester: tester,
-        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
-      );
-
-      // Verify the displayed confirmation dialog
-      await IntegrationTestUtil.verifySetValueToTargetDialog(
-        tester: tester,
-        dialogTitle: 'MP3 Restoration',
-        dialogMessage:
-            "Only the MP3 relative to the audio's listed in the playlists which are not already present in the playlists are restorable.",
-        closeDialog: true,
-      );
-
-      // Now tap on the 'A Single ZIP File' button
-      await tester.tap(find.byKey(const Key('selectFileButton')));
-      await tester.pumpAndSettle();
-
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 22 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
-        isWarningConfirming: true,
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
     });
   });
   group('Advanced restoration from source playlist to target playlist test.',
