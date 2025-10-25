@@ -3731,7 +3731,7 @@ abstract class AppLocalizations {
   /// No description provided for @fromMp3ZipFileUsedToRestoreUniquePlaylist.
   ///
   /// In en, this message translates to:
-  /// **'playlist from the MP3 zip file \"{zipFilePathNName}\"'**
+  /// **'playlist(s) from the MP3 zip file \"{zipFilePathNName}\"'**
   String fromMp3ZipFileUsedToRestoreUniquePlaylist(Object zipFilePathNName);
 
   /// No description provided for @fromMp3ZipFileUsedToRestoreMultiplePlaylists.
