@@ -259,9 +259,9 @@ class PlaylistListVM extends ChangeNotifier {
   String _audioMp3SaveUniquePlaylistName = '';
   String get audioMp3SaveUniquePlaylistName => _audioMp3SaveUniquePlaylistName;
 
-  String _audioMp3RestoreUniquePlaylistName = '';
-  String get audioMp3RestoreUniquePlaylistName =>
-      _audioMp3RestoreUniquePlaylistName;
+  String _audioMp3RestorationCurrentPlaylistName = '';
+  String get audioMp3RestorationCurrentPlaylistName =>
+      _audioMp3RestorationCurrentPlaylistName;
 
   Duration _savingAudioMp3FileToZipDuration = Duration.zero;
   Duration get savingAudioMp3FileToZipDuration =>
@@ -5336,7 +5336,8 @@ class PlaylistListVM extends ChangeNotifier {
     List<String> restoredPlaylistTitlesLst = [];
 
     if (uniquePlaylistIsRestored) {
-      _audioMp3RestoreUniquePlaylistName = listOfPlaylists[0].title;
+      // Used to show the restored unique playlist name in the audio download view
+      _audioMp3RestorationCurrentPlaylistName = listOfPlaylists[0].title;
     }
 
     // Check if zip file exists
@@ -5639,6 +5640,10 @@ class PlaylistListVM extends ChangeNotifier {
 
               // Only restore if the file doesn't already exist
               if (!targetFile.existsSync()) {
+                // Used to show the restored current playlist name in the audio download view
+                _audioMp3RestorationCurrentPlaylistName = playlist.title;
+                notifyListeners();
+
                 int addResult = await _addMp3FileToPlaylist(
                   archiveFile: archiveFile,
                   targetFile: targetFile,
@@ -5718,6 +5723,10 @@ class PlaylistListVM extends ChangeNotifier {
                             audioInZipDurationInTenthOfSeconds) &&
                         (existingAudioDurationInTenthOfSeconds !=
                             audioInZipDurationInTenthOfSeconds)) {
+                      // Used to show the restored current playlist name in the audio download view
+                      _audioMp3RestorationCurrentPlaylistName = playlist.title;
+                      notifyListeners();
+
                       int addResult = await _addMp3FileToPlaylist(
                         archiveFile: archiveFile,
                         targetFile: targetFile,

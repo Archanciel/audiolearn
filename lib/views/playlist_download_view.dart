@@ -668,21 +668,19 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     return Consumer<PlaylistListVM>(
       builder: (context, playlistListVMlistenTrue, child) {
         if (playlistListVMlistenTrue.isRestoringMp3) {
-          String audioMp3RestoreUniquePlaylistName =
-              playlistListVMlistenTrue.audioMp3RestoreUniquePlaylistName;
+          String audioMp3RestorationCurrentPlaylistName =
+              playlistListVMlistenTrue.audioMp3RestorationCurrentPlaylistName;
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   key: const Key('restoring_playlists_audio_mp3_to_zip'),
-                  (audioMp3RestoreUniquePlaylistName.isNotEmpty)
-                      ? AppLocalizations.of(context)!
-                          .restoringUniquePlaylistAudioMp3(
-                          audioMp3RestoreUniquePlaylistName,
-                        )
-                      : AppLocalizations.of(context)!
-                          .restoringMultiplePlaylistsAudioMp3,
+                  AppLocalizations.of(context)!.restoringUniquePlaylistAudioMp3(
+                    audioMp3RestorationCurrentPlaylistName,
+                  ),
+                  textAlign: TextAlign.center, // Centered multi lines text
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10.0),
@@ -1561,8 +1559,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           return [
             PopupMenuItem<PopupMenuButtonType>(
               key: const Key('define_sort_and_filter_audio_menu_item'),
-              enabled: (playlistListVMlistenTrue
-                  .areButtonsApplicableToAudioEnabled),
+              enabled:
+                  (playlistListVMlistenTrue.areButtonsApplicableToAudioEnabled),
               value: PopupMenuButtonType.openSortFilterAudioDialog,
               child: Text(
                   AppLocalizations.of(context)!.defineSortFilterAudiosMenu),
@@ -1809,8 +1807,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 // The user clicked on Remove, not on Cancel button and
                 // at least one checkbox was selected ...
 
-                playlistListVMlistenTrue
-                    .removeAudioSortFilterParmsFromPlaylist(
+                playlistListVMlistenTrue.removeAudioSortFilterParmsFromPlaylist(
                   fromPlaylistDownloadView: isForPlaylistDownloadView,
                   fromAudioPlayerView: isForAudioPlayerView,
                 );
