@@ -3401,12 +3401,6 @@ abstract class AppLocalizations {
   /// **'Restoring {playlistTitle} audio files from ZIP ...'**
   String restoringUniquePlaylistAudioMp3(Object playlistTitle);
 
-  /// No description provided for @restoringMultiplePlaylistsAudioMp3.
-  ///
-  /// In en, this message translates to:
-  /// **'Restoring multiple playlists audio files from ZIP ...'**
-  String get restoringMultiplePlaylistsAudioMp3;
-
   /// No description provided for @playlistsMp3RestorationHelpTitle.
   ///
   /// In en, this message translates to:

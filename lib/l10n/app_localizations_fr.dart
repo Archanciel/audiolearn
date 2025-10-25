@@ -2127,10 +2127,6 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get restoringMultiplePlaylistsAudioMp3 =>
-      'Restoration des fichiers audio de multiples playlists ...';
-
-  @override
   String get playlistsMp3RestorationHelpTitle =>
       'Fonction de restauration MP3 des playlists';
 
