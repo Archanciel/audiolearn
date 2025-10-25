@@ -1419,7 +1419,7 @@
   "textToSpeech": "converti",
   "audioTextToSpeechInfoDialogTitle": "Informations sur l'audio converti",
   "convertedAudioDateTimeLabel": "Date//heure prem conversion",
-  "fromMp3ZipFileUsedToRestoreUniquePlaylist": "playlist à partir du fichier zip MP3 \"{zipFilePathNName}\"",
+  "fromMp3ZipFileUsedToRestoreUniquePlaylist": "playlist(s) à partir du fichier zip MP3 \"{zipFilePathNName}\"",
   "fromMp3ZipFileUsedToRestoreMultiplePlaylists": "playlist(s) à partir du fichier zip MP3 de playlists multiples \"{zipFilePathNName}\"", 
   "fromMultipleMp3ZipFileUsedToRestoreMultiplePlaylists": "playlist(s) à partir du ou des fichiers zip MP3 contenus dans le répertoire \"{zipFilePathNName}\"", 
   "confirmMp3RestorationFromMp3Zip": "Restauré {audioNNumber} audio(s) MP3 dans {playlistsNumber} {secondMsgPart}.",
