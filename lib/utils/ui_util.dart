@@ -208,7 +208,8 @@ class UiUtil {
       // playlist item menu
       if (mp3ZipDirectoryPath != null) {
         // Restore from multiple ZIP files contained in a directory
-        await playlistListVMlistenFalse.restoreAndConfirmPlaylistsAudioMp3FilesFromMultipleZips(
+        await playlistListVMlistenFalse
+            .restoreAndConfirmPlaylistsAudioMp3FilesFromMultipleZips(
           zipDirectoryPath: mp3ZipDirectoryPath,
           listOfPlaylists: playlistsLst,
         );
@@ -244,7 +245,8 @@ class UiUtil {
       // Restoring mp3 files for unique or multiple playlists from a single
       // ZIP file or from multiple mp3 zip files located in a directory.
       if (mp3ZipDirectoryPath != null) {
-        await playlistListVMlistenFalse.restoreAndConfirmPlaylistsAudioMp3FilesFromMultipleZips(
+        await playlistListVMlistenFalse
+            .restoreAndConfirmPlaylistsAudioMp3FilesFromMultipleZips(
           zipDirectoryPath: mp3ZipDirectoryPath,
           listOfPlaylists: playlistsLst,
         );
@@ -271,7 +273,12 @@ class UiUtil {
         zipFilePathName: selectedZipFilePathName,
         restoredMp3Number: restoredAudioCount,
         playlistsNumber: restoredPlaylistCount,
-        wasIndividualPlaylistMp3ZipUsed: uniquePlaylistMp3ZipFileWasRestored,
+        wasIndividualPlaylistMp3ZipUsed: uniquePlaylistMp3ZipFileWasRestored ||
+            // Without this condition, the warning message would not be correct:
+            // "fromMp3ZipFileUsedToRestoreMultiplePlaylists" will be used instead of
+            // "fromMp3ZipFileUsedToRestoreUniquePlaylist" which is required when
+            // 'A Single File' was selected
+            selectedZipFilePathName.contains('.zip'),
       );
     }
   }
