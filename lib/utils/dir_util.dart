@@ -397,7 +397,9 @@ class DirUtil {
     }
   }
 
-  static void deleteMp3FilesInDir(String filePath) {
+  static void deleteMp3FilesInDir({
+    required String filePath,
+  }) {
     final directory = Directory(filePath);
 
     if (!directory.existsSync()) {
