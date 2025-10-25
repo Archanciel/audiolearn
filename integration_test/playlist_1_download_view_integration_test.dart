@@ -8759,7 +8759,7 @@ void main() {
       // playlist directory
 
       DirUtil.deleteMp3FilesInDir(
-        youtubePlaylistPath,
+        filePath: youtubePlaylistPath,
       );
 
       // *** Updating the Youtube playlist
@@ -8968,7 +8968,7 @@ void main() {
       // playlist directory
 
       DirUtil.deleteMp3FilesInDir(
-        localPlaylistPath,
+        filePath: localPlaylistPath,
       );
 
       // *** Updating the local playlist
@@ -9547,7 +9547,7 @@ void main() {
       // playlist directory
 
       DirUtil.deleteMp3FilesInDir(
-        s8AudioYoutubePlaylistPath,
+        filePath: s8AudioYoutubePlaylistPath,
       );
 
       // Test that the S8 Audio Youtube playlist is still showing the
