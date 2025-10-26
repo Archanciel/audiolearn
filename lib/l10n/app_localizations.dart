@@ -1642,7 +1642,7 @@ abstract class AppLocalizations {
   /// No description provided for @applyToAlreadyDownloadedAudio.
   ///
   /// In en, this message translates to:
-  /// **'Apply to already downloaded\nor imported audio'**
+  /// **'Apply to already downloaded,\nimported or converted audio'**
   String get applyToAlreadyDownloadedAudio;
 
   /// No description provided for @applyToAlreadyDownloadedAudioTooltip.
@@ -3055,7 +3055,7 @@ abstract class AppLocalizations {
   /// No description provided for @deleteExistingPlaylists.
   ///
   /// In en, this message translates to:
-  /// **'Delete existing playlists not\nin ZIP'**
+  /// **'Delete existing playlists not\ncontained in ZIP'**
   String get deleteExistingPlaylists;
 
   /// No description provided for @playlistRestorationDialogTitle.
