@@ -1660,7 +1660,7 @@ abstract class AppLocalizations {
   /// No description provided for @applyToExistingPlaylist.
   ///
   /// In en, this message translates to:
-  /// **'Apply to existing\nplaylists'**
+  /// **'Apply to existing playlists'**
   String get applyToExistingPlaylist;
 
   /// No description provided for @applyToExistingPlaylistTooltip.

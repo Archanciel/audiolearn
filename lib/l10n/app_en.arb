@@ -437,7 +437,7 @@
   "applyToAlreadyDownloadedAudio": "Apply to already downloaded,\nimported or converted audio",
   "applyToAlreadyDownloadedAudioTooltip": "Apply the playback speed to audio's in all existing playlists. If not set, apply it only to newly added playlists.",
   "applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip": "Apply the playback speed to audio's in the current playlist. If not set, apply it only to newly downloaded or imported audio.",
-  "applyToExistingPlaylist": "Apply to existing\nplaylists",
+  "applyToExistingPlaylist": "Apply to existing playlists",
   "applyToExistingPlaylistTooltip": "Apply the playback speed to all existing playlists. If not set, apply it only to newly added playlists.",
   "playlistRootpathLabel": "Playlists root path",
   "closeTextButton": "Close",
