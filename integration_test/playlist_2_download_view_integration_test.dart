@@ -29463,7 +29463,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Restored 3 audio(s) MP3 in 1 playlist from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
+            "Restored 3 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
         isWarningConfirming: true,
       );
 
@@ -29609,7 +29609,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Restored 4 audio(s) MP3 in 1 playlist from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
+            "Restored 4 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
         isWarningConfirming: true,
       );
 
@@ -34345,6 +34345,7 @@ void main() {
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
         tester: tester,
         audioSubTitlesAcceptableLst: [
+          '0:00:00.8 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 2)))}',
           '0:00:00.8 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
           '0:00:00.8 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
         ],
