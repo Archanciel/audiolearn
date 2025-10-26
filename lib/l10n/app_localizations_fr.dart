@@ -931,7 +931,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get applyToAlreadyDownloadedAudio =>
-      'Appliquer aux audio déjà\ntéléchargés ou importés';
+      'Appliquer aux audio déjà\ntéléchargés, importés ou\nconvertis';
 
   @override
   String get applyToAlreadyDownloadedAudioTooltip =>
@@ -1887,7 +1887,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get deleteExistingPlaylists =>
-      'Supprimer les playlists existantes\nnon présentes dans le ZIP';
+      'Supprimer les playlists\nexistantes non présentes\ndans le fichier ZIP';
 
   @override
   String get playlistRestorationDialogTitle => 'Restauration des playlists';
