@@ -246,6 +246,7 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
               _applyToExistingPlaylist = value ?? false;
             });
           },
+          isCheckboxCentered: true,
         ),
       ],
     );
@@ -289,6 +290,7 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
               }
             });
           },
+          isCheckboxCentered: true,
         ),
       ],
     );
