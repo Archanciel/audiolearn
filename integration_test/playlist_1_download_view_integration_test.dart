@@ -7169,6 +7169,252 @@ void main() {
       );
     });
     testWidgets(
+        '''Move imported audio from Youtube to local playlist unchecking keep audio
+           in source playlist checkbox. Since the audio was not downloaded from the
+           Youtube playlist, this doesn't display any warning indicating that the
+           audio reference in the Youtube playlist should be removed otherwise it will
+           be downloaded again the next time the user will download this playlist.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      const String localAudioPlaylistTitle = 'local_audio_playlist_2';
+      const String movedAudioTitle = '231117-002828-morning _ cinematic video 23-07-01';
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$kSettingsFileName");
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Now we want to tap the popup menu of the Audio ListTile
+      // "audio learn test short video one"
+
+      // First, find the Audio sublist ListTile Text widget
+      final Finder sourceAudioListTileTextWidgetFinder =
+          find.text(movedAudioTitle);
+
+      // Then obtain the Audio ListTile widget enclosing the Text widget by
+      // finding its ancestor
+      final Finder sourceAudioListTileWidgetFinder = find.ancestor(
+        of: sourceAudioListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the leading menu icon button of the Audio ListTile and tap
+      // on it
+      final Finder sourceAudioListTileLeadingMenuIconButton = find.descendant(
+        of: sourceAudioListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(sourceAudioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the move audio popup menu item and tap on it
+      final Finder popupMoveMenuItem =
+          find.byKey(const Key("popup_menu_move_audio_to_playlist"));
+
+      await tester.tap(popupMoveMenuItem);
+      await tester.pumpAndSettle();
+
+      // Check the value of the select one playlist AlertDialog
+      // dialog title
+      Text alertDialogTitle = tester
+          .widget(find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
+      expect(alertDialogTitle.data, 'Sélectionnez une playlist');
+
+      // Find the RadioListTile target playlist to which the audio
+      // will be moved
+
+      final Finder radioListTile = find
+          .ancestor(
+            of: find.text(localAudioPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
+
+      // Tap the target playlist RadioListTile to select it
+      await tester.tap(radioListTile);
+      await tester.pumpAndSettle();
+
+      // Now uncheck the keep audio in source playlist checkbox
+      await tester.tap(
+          find.byKey(const Key('keepAudioDataInSourcePlaylistCheckboxKey')));
+      await tester.pumpAndSettle();
+
+      // Now find the confirm button and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      // Now verifying the confirm warning dialog message
+
+      final Text warningDialogMessageTextWidget =
+          tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
+
+      expect(warningDialogMessageTextWidget.data,
+          "L'audio \"$movedAudioTitle\" a été déplacé de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\".");
+
+      // Now find the ok button of the confirm warning dialog
+      // and tap on it
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.pumpAndSettle();
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Move converted audio from Youtube to local playlist unchecking keep audio
+           in source playlist checkbox. Since the audio was not downloaded from the
+           Youtube playlist, this doesn't display any warning indicating that the
+           audio reference in the Youtube playlist should be removed otherwise it will
+           be downloaded again the next time the user will download this playlist.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      const String localAudioPlaylistTitle = 'local_audio_playlist_2';
+      const String movedAudioTitle = 'tts';
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$kSettingsFileName");
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Now we want to tap the popup menu of the Audio ListTile
+      // "audio learn test short video one"
+
+      // First, find the Audio sublist ListTile Text widget
+      final Finder sourceAudioListTileTextWidgetFinder =
+          find.text(movedAudioTitle);
+
+      // Then obtain the Audio ListTile widget enclosing the Text widget by
+      // finding its ancestor
+      final Finder sourceAudioListTileWidgetFinder = find.ancestor(
+        of: sourceAudioListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the leading menu icon button of the Audio ListTile and tap
+      // on it
+      final Finder sourceAudioListTileLeadingMenuIconButton = find.descendant(
+        of: sourceAudioListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(sourceAudioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the move audio popup menu item and tap on it
+      final Finder popupMoveMenuItem =
+          find.byKey(const Key("popup_menu_move_audio_to_playlist"));
+
+      await tester.tap(popupMoveMenuItem);
+      await tester.pumpAndSettle();
+
+      // Check the value of the select one playlist AlertDialog
+      // dialog title
+      Text alertDialogTitle = tester
+          .widget(find.byKey(const Key('playlistOneSelectableDialogTitleKey')));
+      expect(alertDialogTitle.data, 'Sélectionnez une playlist');
+
+      // Find the RadioListTile target playlist to which the audio
+      // will be moved
+
+      final Finder radioListTile = find
+          .ancestor(
+            of: find.text(localAudioPlaylistTitle),
+            matching: find.byType(ListTile),
+          )
+          .last;
+
+      // Tap the target playlist RadioListTile to select it
+      await tester.tap(radioListTile);
+      await tester.pumpAndSettle();
+
+      // Now uncheck the keep audio in source playlist checkbox
+      await tester.tap(
+          find.byKey(const Key('keepAudioDataInSourcePlaylistCheckboxKey')));
+      await tester.pumpAndSettle();
+
+      // Now find the confirm button and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      // Now verifying the confirm warning dialog message
+
+      final Text warningDialogMessageTextWidget =
+          tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
+
+      expect(warningDialogMessageTextWidget.data,
+          "L'audio \"$movedAudioTitle\" a été déplacé de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\".");
+
+      // Now find the ok button of the confirm warning dialog
+      // and tap on it
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.pumpAndSettle();
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
         '''Move audio not present in source playlist unchecking the 'keep
            audio in source playlist' checkbox.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
