@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:audiolearn/models/comment.dart';
 import 'package:audiolearn/utils/duration_expansion.dart';
 import 'package:audiolearn/utils/ui_util.dart';
@@ -815,19 +813,10 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
           case AppBarPopupMenu.savePlaylistsAudioMp3FilesToZip:
             String? targetSaveDirectoryPath;
 
-            if (Platform.isAndroid) {
-              // On Android, use the predefined path - no file picker needed.
-              // The target directory is determined in the playlist list VM
-              // savePlaylistsAudioMp3FilesToZip() method.
-              targetSaveDirectoryPath = '';
-            } else {
-              // On other platforms, use the file picker
-              targetSaveDirectoryPath =
-                  await UiUtil.filePickerSelectTargetDir();
+            targetSaveDirectoryPath = await UiUtil.filePickerSelectTargetDir();
 
-              if (targetSaveDirectoryPath == null) {
-                return;
-              }
+            if (targetSaveDirectoryPath == null) {
+              return;
             }
 
             final DateFormatVM dateFormatVMlistenFalse =
@@ -937,7 +926,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                       await playlistListVMlistenFalse
                           .savePlaylistsAudioMp3FilesToZipWithPublicCopy(
                         listOfPlaylists: listOfSelectablePlaylists,
-                        targetDirStrOnWindows: targetSaveDirectoryPath!,
+                        targetSaveDirStr: targetSaveDirectoryPath!,
                         fromAudioDownloadDateTime:
                             parseDateTimeOrDateStrUsinAppDateFormat!,
                         zipFileSizeLimitInMb: settingsDataService.get(
