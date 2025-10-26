@@ -30099,7 +30099,6 @@ void main() {
 
         String mp3RestorableZipDirectory =
             '$kApplicationPathWindowsTest${path.separator}Mp3ZipFiles';
-        ;
 
         // Setting the directory to select in the mock file
         // picker. This directory contains multiple playlists
@@ -30172,7 +30171,6 @@ void main() {
 
         String mp3RestorableZipDirectory =
             '$kApplicationPathWindowsTest${path.separator}Mp3ZipFiles';
-        ;
 
         // Setting the directory to select in the mock file
         // picker. This directory contains multiple playlists
@@ -30252,7 +30250,6 @@ void main() {
 
         String mp3RestorableZipDirectory =
             '$kApplicationPathWindowsTest${path.separator}Mp3ZipFiles';
-        ;
 
         // Setting the directory to select in the mock file
         // picker. This directory contains multiple playlists
@@ -30330,7 +30327,6 @@ void main() {
 
         String mp3RestorableZipDirectory =
             '$kApplicationPathWindowsTest${path.separator}Mp3ZipFiles';
-        ;
 
         // Setting the directory to select in the mock file
         // picker. This directory contains multiple playlists
@@ -30407,7 +30403,6 @@ void main() {
 
         String mp3RestorableZipFilePathName =
             '$kApplicationPathWindowsTest${path.separator}Prières du Maître_mp3_from_2025-02-11_09_00_11_on_2025-10-24_14_20_20.zip';
-        ;
 
         // Setting the directory to select in the mock file
         // picker. This directory contains multiple playlists
@@ -30488,7 +30483,6 @@ void main() {
 
         String mp3RestorableZipFilePathName =
             '$kApplicationPathWindowsTest${path.separator}Prières du Maître_mp3_from_2025-02-11_09_00_11_on_2025-10-24_14_20_20.zip';
-        ;
 
         // Setting the directory to select in the mock file
         // picker. This directory contains multiple playlists
@@ -30564,7 +30558,6 @@ void main() {
 
         String mp3RestorableZipFilePathName =
             '$kApplicationPathWindowsTest${path.separator}Prières du Maître_mp3_from_2025-02-11_09_00_11_on_2025-10-24_14_20_20.zip';
-        ;
 
         // Setting the directory to select in the mock file
         // picker. This directory contains multiple playlists
@@ -30647,7 +30640,6 @@ void main() {
 
         String mp3RestorableZipFilePathName =
             '$kApplicationPathWindowsTest${path.separator}Prières du Maître_mp3_from_2025-02-11_09_00_11_on_2025-10-24_14_20_20.zip';
-        ;
 
         // Setting the directory to select in the mock file
         // picker. This directory contains multiple playlists
