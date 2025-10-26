@@ -931,15 +931,15 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get applyToAlreadyDownloadedAudio =>
-      'Appliquer aux audio déjà\ntéléchargés, importés ou\nconvertis';
+      'Appliquer aux audio\'s déjà\ntéléchargés, importés ou\nconvertis';
 
   @override
   String get applyToAlreadyDownloadedAudioTooltip =>
-      'Appliquer la vitesse de lecture aux audio dans toutes les playlists existantes. Si non défini, l\'appliquer uniquement aux nouvelles playlists ajoutées.';
+      'Appliquer la vitesse de lecture aux audio\'s dans toutes les playlists existantes. Si non défini, l\'appliquer uniquement aux nouvelles playlists ajoutées.';
 
   @override
   String get applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip =>
-      'Appliquer la vitesse de lecture aux audio\'s de la playlist actuelle. Si non défini, l\'appliquer uniquement aux audio nouvellement téléchargés ou importés.';
+      'Appliquer la vitesse de lecture aux audio\'s de la playlist actuelle. Si non défini, l\'appliquer uniquement aux audio\'s nouvellement téléchargés ou importés.';
 
   @override
   String get applyToExistingPlaylist => 'Appliquer aux playlists\nexistantes';
