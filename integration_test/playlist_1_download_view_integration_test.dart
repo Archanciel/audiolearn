@@ -4279,6 +4279,8 @@ void main() {
       expect(sourcePlaylistMp3Lst, [
         "230628-033811-audio learn test short video one 23-06-10.mp3",
         "230628-033813-audio learn test short video two 23-06-10.mp3",
+        '231117-002828-morning _ cinematic video 23-07-01.mp3',
+        'tts.mp3'
       ]);
 
       // Verifying that the source playlist directory still
@@ -4646,6 +4648,8 @@ void main() {
       expect(sourcePlaylistMp3Lst, [
         "230628-033811-audio learn test short video one 23-06-10.mp3",
         "230628-033813-audio learn test short video two 23-06-10.mp3",
+        '231117-002828-morning _ cinematic video 23-07-01.mp3',
+        'tts.mp3'
       ]);
 
       // Verifying that the source playlist directory still
@@ -4837,6 +4841,8 @@ void main() {
       expect(sourcePlaylistMp3Lst, [
         "230628-033811-audio learn test short video one 23-06-10.mp3",
         "230628-033813-audio learn test short video two 23-06-10.mp3",
+        '231117-002828-morning _ cinematic video 23-07-01.mp3',
+        'tts.mp3'
       ]);
 
       // And verify that the target playlist directory now
@@ -5076,6 +5082,8 @@ void main() {
       expect(sourcePlaylistMp3Lst, [
         "230628-033811-audio learn test short video one 23-06-10.mp3",
         "230628-033813-audio learn test short video two 23-06-10.mp3",
+        '231117-002828-morning _ cinematic video 23-07-01.mp3',
+        'tts.mp3'
       ]);
 
       // And verify that the target playlist directory does not
@@ -5424,6 +5432,8 @@ void main() {
       expect(sourcePlaylistMp3Lst, [
         "230628-033811-audio learn test short video one 23-06-10.mp3",
         "230628-033813-audio learn test short video two 23-06-10.mp3",
+        '231117-002828-morning _ cinematic video 23-07-01.mp3',
+        'tts.mp3'
       ]);
 
       // Now verifying that the source playlist directory still
@@ -5754,6 +5764,8 @@ void main() {
       expect(sourcePlaylistMp3Lst, [
         "230628-033811-audio learn test short video one 23-06-10.mp3",
         "230628-033813-audio learn test short video two 23-06-10.mp3",
+        '231117-002828-morning _ cinematic video 23-07-01.mp3',
+        'tts.mp3'
       ]);
 
       // And verify that the target playlist directory now
@@ -6059,7 +6071,9 @@ void main() {
 
       expect(sourcePlaylistMp3Lst, [
         "230628-033811-audio learn test short video one 23-06-10.mp3",
-        "230628-033813-audio learn test short video two 23-06-10.mp3"
+        "230628-033813-audio learn test short video two 23-06-10.mp3",
+        '231117-002828-morning _ cinematic video 23-07-01.mp3',
+        'tts.mp3'
       ]);
       expect(targetPlaylistMp3Lst,
           ["230628-033811-audio learn test short video one 23-06-10.mp3"]);
@@ -6712,8 +6726,11 @@ void main() {
       );
 
       // Contains only the not moved audio
-      expect(sourcePlaylistMp3Lst,
-          ["230628-033813-audio learn test short video two 23-06-10.mp3"]);
+      expect(sourcePlaylistMp3Lst, [
+        "230628-033813-audio learn test short video two 23-06-10.mp3",
+        '231117-002828-morning _ cinematic video 23-07-01.mp3',
+        'tts.mp3'
+      ]);
 
       // Contains only the moved audio
       expect(targetPlaylistMp3Lst,
@@ -7033,7 +7050,8 @@ void main() {
         '''Move downloaded audio from Youtube to local playlist unchecking keep audio
            in source playlist checkbox. This displays a warning indicating that the
            audio reference in the Youtube playlist should be removed otherwise it will
-           be downloaded again the next time the user will download this playlist.''', (WidgetTester tester) async {
+           be downloaded again the next time the user will download this playlist.''',
+        (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -13715,8 +13733,7 @@ void main() {
 
         // Then obtain the Audio ListTile widget enclosing the Text widget by
         // finding its ancestor
-        final Finder
-            downloadedCommentedAudioTitleToDeleteListTileWidgetFinder =
+        final Finder downloadedCommentedAudioTitleToDeleteListTileWidgetFinder =
             find.ancestor(
           of: downloadedCommentedAudioTitleToDeleteListTileTextWidgetFinder,
           matching: find.byType(ListTile),
@@ -15129,8 +15146,7 @@ void main() {
               find.text(importedCommentedAudioTitleToDelete);
 
           // Type on the audio title to open the audio player view
-          await tester.tap(
-              commentedAudioTitleToDeleteListTileTextWidgetFinder);
+          await tester.tap(commentedAudioTitleToDeleteListTileTextWidgetFinder);
           await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
             tester: tester,
           );
