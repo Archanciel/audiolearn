@@ -434,7 +434,7 @@
   "appBarMenuOpenSettingsDialog": "Application Settings ...",
   "appSettingsDialogTitle": "Application Settings",
   "setAudioPlaySpeed": "Set Audio's Play Speed ...",
-  "applyToAlreadyDownloadedAudio": "Apply to already downloaded,\nimported or converted audio",
+  "applyToAlreadyDownloadedAudio": "Apply to already downloaded,\nimported or converted audio's",
   "applyToAlreadyDownloadedAudioTooltip": "Apply the playback speed to audio's in all existing playlists. If not set, apply it only to newly added playlists.",
   "applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip": "Apply the playback speed to audio's in the current playlist. If not set, apply it only to newly downloaded or imported audio.",
   "applyToExistingPlaylist": "Apply to existing playlists",

@@ -925,7 +925,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get applyToAlreadyDownloadedAudio =>
-      'Apply to already downloaded,\nimported or converted audio';
+      'Apply to already downloaded,\nimported or converted audio\'s';
 
   @override
   String get applyToAlreadyDownloadedAudioTooltip =>

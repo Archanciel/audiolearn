@@ -1642,7 +1642,7 @@ abstract class AppLocalizations {
   /// No description provided for @applyToAlreadyDownloadedAudio.
   ///
   /// In en, this message translates to:
-  /// **'Apply to already downloaded,\nimported or converted audio'**
+  /// **'Apply to already downloaded,\nimported or converted audio\'s'**
   String get applyToAlreadyDownloadedAudio;
 
   /// No description provided for @applyToAlreadyDownloadedAudioTooltip.
