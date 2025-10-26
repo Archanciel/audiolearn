@@ -3791,7 +3791,6 @@ class PlaylistListVM extends ChangeNotifier {
         return [false, '', [], errorMessage];
       }
 
-      // Create Mp3ZipFiles subdirectory in Download
       String mp3ZipFilesPath =
           path.join(publicDownloadsPath, targetSaveDirStr);
       Directory audioLearnDir = Directory(mp3ZipFilesPath);
