@@ -1546,7 +1546,8 @@ class AudioDownloadVM extends ChangeNotifier {
 
     if (displayWarningWhenAudioWasMoved) {
       if (!keepAudioInSourcePlaylistDownloadedAudioLst &&
-          fromPlaylist.playlistType == PlaylistType.youtube) {
+          fromPlaylist.playlistType == PlaylistType.youtube &&
+          audioToMove.audioType == AudioType.downloaded) {
         warningMessageVM.audioCopiedOrMovedFromToPlaylist(
           audioValidVideoTitle: audioToMove.validVideoTitle,
           wasOperationSuccessful: true,
