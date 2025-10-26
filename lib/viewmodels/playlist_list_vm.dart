@@ -3737,6 +3737,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// ]
   Future<List<dynamic>> _moveMp3ZipFilesToAccessibleAndroidDirectory({
     required String baseZipFileName,
+    required String targetSaveDirStr,
     required int numberOfZipFiles,
     required String sourceDir,
   }) async {
@@ -3792,7 +3793,7 @@ class PlaylistListVM extends ChangeNotifier {
 
       // Create Mp3ZipFiles subdirectory in Download
       String mp3ZipFilesPath =
-          path.join(publicDownloadsPath, 'Mp3ZipFiles');
+          path.join(publicDownloadsPath, targetSaveDirStr);
       Directory audioLearnDir = Directory(mp3ZipFilesPath);
 
       if (!await audioLearnDir.exists()) {
@@ -3800,7 +3801,7 @@ class PlaylistListVM extends ChangeNotifier {
           await audioLearnDir.create(recursive: true);
           _logger.i('Created directory: $mp3ZipFilesPath');
         } catch (e) {
-          errorMessage = 'Failed to create Mp3ZipFiles directory: $e';
+          errorMessage = 'Failed to create $targetSaveDirStr directory: $e';
           _logger.e(errorMessage);
           return [false, '', [], errorMessage];
         }
@@ -3899,7 +3900,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// to free up space in the app's private directory.
   Future<List<dynamic>> savePlaylistsAudioMp3FilesToZipWithPublicCopy({
     required List<Playlist> listOfPlaylists,
-    String targetDirStrOnWindows = '',
+    required String targetSaveDirStr,
     required DateTime fromAudioDownloadDateTime,
     required double zipFileSizeLimitInMb,
     bool uniquePlaylistIsSaved = false,
@@ -3907,7 +3908,7 @@ class PlaylistListVM extends ChangeNotifier {
     // Call the original method to create the ZIP files
     List<dynamic> savedMp3InfoLst = await savePlaylistsAudioMp3FilesToZip(
       listOfPlaylists: listOfPlaylists,
-      targetDirStrOnWindows: targetDirStrOnWindows,
+      targetDirStrOnWindows: targetSaveDirStr,
       fromAudioDownloadDateTime: fromAudioDownloadDateTime,
       zipFileSizeLimitInMb: zipFileSizeLimitInMb,
       uniquePlaylistIsSaved: uniquePlaylistIsSaved,
@@ -3939,6 +3940,7 @@ class PlaylistListVM extends ChangeNotifier {
     if (Platform.isAndroid) {
       List<dynamic> moveResult = await _moveMp3ZipFilesToAccessibleAndroidDirectory(
         baseZipFileName: baseFileName,
+        targetSaveDirStr: targetSaveDirStr,
         numberOfZipFiles: numberOfCreatedZipFiles,
         sourceDir: sourceDir,
       );
