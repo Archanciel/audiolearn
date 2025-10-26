@@ -3717,11 +3717,11 @@ class PlaylistListVM extends ChangeNotifier {
     return parts;
   }
 
-  /// Moves the generated MP3 ZIP file(s) to the public Downloads directory
-  /// where they are accessible by Android file explorers.
+  /// Moves the generated MP3 ZIP file(s) to a directory where they are
+  /// accessible by Android file explorers.
   ///
-  /// The files are copied to the public directory and then deleted from the
-  /// source directory (move operation).
+  /// The files are copied to the accessible directory and then deleted
+  /// from the source directory (move operation).
   ///
   /// Parameters:
   /// - [baseZipFileName]: The base name of the ZIP file (without part numbers)
@@ -3735,7 +3735,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///   list of moved file names (List of String's),
   ///   error message if any (String)
   /// ]
-  Future<List<dynamic>> copyMp3ZipFilesToPublicDownloads({
+  Future<List<dynamic>> _moveMp3ZipFilesToAccessibleAndroidDirectory({
     required String baseZipFileName,
     required int numberOfZipFiles,
     required String sourceDir,
@@ -3790,15 +3790,15 @@ class PlaylistListVM extends ChangeNotifier {
         return [false, '', [], errorMessage];
       }
 
-      // Create Mp3ZipFiles subdirectory in Downloads
-      String audioLearnDownloadsPath =
+      // Create Mp3ZipFiles subdirectory in Download
+      String mp3ZipFilesPath =
           path.join(publicDownloadsPath, 'Mp3ZipFiles');
-      Directory audioLearnDir = Directory(audioLearnDownloadsPath);
+      Directory audioLearnDir = Directory(mp3ZipFilesPath);
 
       if (!await audioLearnDir.exists()) {
         try {
           await audioLearnDir.create(recursive: true);
-          _logger.i('Created directory: $audioLearnDownloadsPath');
+          _logger.i('Created directory: $mp3ZipFilesPath');
         } catch (e) {
           errorMessage = 'Failed to create Mp3ZipFiles directory: $e';
           _logger.e(errorMessage);
@@ -3823,7 +3823,7 @@ class PlaylistListVM extends ChangeNotifier {
 
         if (await sourceFile.exists()) {
           String targetFilePath =
-              path.join(audioLearnDownloadsPath, sourceFileName);
+              path.join(mp3ZipFilesPath, sourceFileName);
           File targetFile = File(targetFilePath);
 
           try {
@@ -3847,7 +3847,7 @@ class PlaylistListVM extends ChangeNotifier {
               _logger.i('Deleted source file: $sourceFilePath');
 
               movedFileNames.add(sourceFileName);
-              publicPath = audioLearnDownloadsPath;
+              publicPath = mp3ZipFilesPath;
             } else {
               errorMessage +=
                   'File size mismatch for $sourceFileName (source: $sourceSize, target: $targetSize)\n';
@@ -3937,7 +3937,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Move to public Downloads directory on Android
     if (Platform.isAndroid) {
-      List<dynamic> moveResult = await copyMp3ZipFilesToPublicDownloads(
+      List<dynamic> moveResult = await _moveMp3ZipFilesToAccessibleAndroidDirectory(
         baseZipFileName: baseFileName,
         numberOfZipFiles: numberOfCreatedZipFiles,
         sourceDir: sourceDir,
