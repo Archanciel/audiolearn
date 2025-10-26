@@ -7030,11 +7030,10 @@ void main() {
       );
     });
     testWidgets(
-        '''Move audio from Youtube to local playlist unchecking keep audio
-           in source playlist checkbox. This displays a warning indicating
-           that the audio reference in the Youtube playlist should be removed
-           otherwise it will be downloaded again the next time the user
-           will download this playlist.''', (WidgetTester tester) async {
+        '''Move downloaded audio from Youtube to local playlist unchecking keep audio
+           in source playlist checkbox. This displays a warning indicating that the
+           audio reference in the Youtube playlist should be removed otherwise it will
+           be downloaded again the next time the user will download this playlist.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
