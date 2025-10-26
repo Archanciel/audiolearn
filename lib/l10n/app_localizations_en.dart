@@ -936,7 +936,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Apply the playback speed to audio\'s in the current playlist. If not set, apply it only to newly downloaded or imported audio.';
 
   @override
-  String get applyToExistingPlaylist => 'Apply to existing\nplaylists';
+  String get applyToExistingPlaylist => 'Apply to existing playlists';
 
   @override
   String get applyToExistingPlaylistTooltip =>
