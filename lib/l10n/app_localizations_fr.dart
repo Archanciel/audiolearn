@@ -1883,11 +1883,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get replaceExistingPlaylists => 'Remplacer les playlists existantes';
+  String get replaceExistingPlaylists => 'Remplacer les playlists\nexistantes';
 
   @override
   String get deleteExistingPlaylists =>
-      'Supprimer les playlists existantes non\nprésentes dans le fichier ZIP';
+      'Supprimer les playlists existantes\nnon présentes dans le ZIP';
 
   @override
   String get playlistRestorationDialogTitle => 'Restauration des playlists';
