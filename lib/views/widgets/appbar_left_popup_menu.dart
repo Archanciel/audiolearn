@@ -136,16 +136,21 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
         return PopupMenuButton<AudioPopupMenuAction>(
           itemBuilder: (BuildContext context) {
             return [
-              PopupMenuItem<AudioPopupMenuAction>(
-                key: const Key('popup_menu_open_youtube_video'),
-                value: AudioPopupMenuAction.openYoutubeVideo,
-                child: Text(AppLocalizations.of(context)!.openYoutubeVideo),
-              ),
-              PopupMenuItem<AudioPopupMenuAction>(
-                key: const Key('popup_copy_youtube_video_url'),
-                value: AudioPopupMenuAction.copyYoutubeVideoUrl,
-                child: Text(AppLocalizations.of(context)!.copyYoutubeVideoUrl),
-              ),
+              if (audio.audioType == AudioType.downloaded) ...[
+                PopupMenuItem<AudioPopupMenuAction>(
+                  key: const Key('popup_menu_open_youtube_video'),
+                  value: AudioPopupMenuAction.openYoutubeVideo,
+                  child: Text(AppLocalizations.of(context)!.openYoutubeVideo),
+                )
+              ],
+              if (audio.audioType == AudioType.downloaded) ...[
+                PopupMenuItem<AudioPopupMenuAction>(
+                  key: const Key('popup_copy_youtube_video_url'),
+                  value: AudioPopupMenuAction.copyYoutubeVideoUrl,
+                  child:
+                      Text(AppLocalizations.of(context)!.copyYoutubeVideoUrl),
+                )
+              ],
               PopupMenuItem<AudioPopupMenuAction>(
                 key: const Key('popup_menu_display_audio_info'),
                 value: AudioPopupMenuAction.displayAudioInfo,
@@ -204,12 +209,14 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 child: Text(AppLocalizations.of(context)!
                     .deleteAudioFromPlaylistAswell),
               ),
-              PopupMenuItem<AudioPopupMenuAction>(
-                key: const Key('popup_menu_redownload_delete_audio'),
-                value: AudioPopupMenuAction.redownloadDeletedAudio,
-                child:
-                    Text(AppLocalizations.of(context)!.redownloadDeletedAudio),
-              ),
+              if (audio.audioType == AudioType.downloaded) ...[
+                PopupMenuItem<AudioPopupMenuAction>(
+                  key: const Key('popup_menu_redownload_delete_audio'),
+                  value: AudioPopupMenuAction.redownloadDeletedAudio,
+                  child: Text(
+                      AppLocalizations.of(context)!.redownloadDeletedAudio),
+                )
+              ],
             ];
           },
           icon: const Icon(Icons.menu),
