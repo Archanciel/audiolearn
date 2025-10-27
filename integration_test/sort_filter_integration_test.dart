@@ -9650,6 +9650,12 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             warningTitle: 'CONFIRMATION',
           );
 
+          // Select the restored 'MaValTest' playlist
+          await IntegrationTestUtil.selectPlaylist(
+            tester: tester,
+            playlistToSelectTitle: playlistToRedownloadTitle,
+          );
+
           // Type on the Playlists button to hide the playlist view
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle();
@@ -9757,7 +9763,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             );
 
             String playlistDownloadPath =
-                audioDownloadVM.listOfPlaylist[0].downloadPath;
+                audioDownloadVM.listOfPlaylist[3].downloadPath;
 
             // Verifying that the playlist json file was correctly modified.
             IntegrationTestUtil
@@ -9831,6 +9837,12 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 'Restored 1 playlist, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\audioLearn_2025-03-24_11_30.zip".\n\nSince the playlist\n  "MaValTest"\nwas created, it is positioned at the end of the playlist list.',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
+          );
+
+          // Select the restored 'MaValTest' playlist
+          await IntegrationTestUtil.selectPlaylist(
+            tester: tester,
+            playlistToSelectTitle: playlistToRedownloadTitle,
           );
 
           // Type on the Playlists button to hide the playlist view
@@ -9914,7 +9926,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           String playlistDownloadPath =
-              audioDownloadVM.listOfPlaylist[0].downloadPath;
+              audioDownloadVM.listOfPlaylist[3].downloadPath;
 
           // Verifying that the playlist json file was correctly modified.
           IntegrationTestUtil
