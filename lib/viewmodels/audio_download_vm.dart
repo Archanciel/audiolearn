@@ -27,6 +27,7 @@ import 'warning_message_vm.dart';
 List<String> downloadingPlaylistUrls = [];
 
 /// This VM (View Model) class is part of the MVVM architecture.
+/// It was posted on Github on 12-04-2023.
 ///
 /// It is responsible of connecting to Youtube in order to download
 /// the audio of the videos referenced in the Youtube playlists.
