@@ -6528,8 +6528,15 @@ void main() {
         fileExtension: 'mp3',
       );
 
-      expect(targetPlaylistMp3Lst,
-          ["230628-033811-audio learn test short video one 23-06-10.mp3"]);
+      expect(targetPlaylistMp3Lst, [
+        "230628-033811-audio learn test short video one 23-06-10.mp3",
+        "231117-002828-morning _ cinematic video 23-07-01.mp3",
+        "tts.mp3",
+      ]);
+
+      // Tap the 'Toggle List' button to display the playlist list
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
 
       // Find the target ListTile Playlist containing the audio copied
       // from the source playlist
@@ -7189,7 +7196,8 @@ void main() {
       );
 
       const String localAudioPlaylistTitle = 'local_audio_playlist_2';
-      const String movedAudioTitle = '231117-002828-morning _ cinematic video 23-07-01';
+      const String movedImportedAudioTitle =
+          '231117-002828-morning _ cinematic video 23-07-01';
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
@@ -7211,12 +7219,12 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Now we want to tap the popup menu of the Audio ListTile
-      // "audio learn test short video one"
+      // Now we want to tap the popup menu of the imported Audio ListTile
+      // "231117-002828-morning _ cinematic video 23-07-01"
 
       // First, find the Audio sublist ListTile Text widget
       final Finder sourceAudioListTileTextWidgetFinder =
-          find.text(movedAudioTitle);
+          find.text(movedImportedAudioTitle);
 
       // Then obtain the Audio ListTile widget enclosing the Text widget by
       // finding its ancestor
@@ -7278,7 +7286,7 @@ void main() {
           tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
 
       expect(warningDialogMessageTextWidget.data,
-          "L'audio \"$movedAudioTitle\" a été déplacé de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\".");
+          "L'audio \"$movedImportedAudioTitle\" a été déplacé de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\".");
 
       // Now find the ok button of the confirm warning dialog
       // and tap on it
@@ -7312,7 +7320,7 @@ void main() {
       );
 
       const String localAudioPlaylistTitle = 'local_audio_playlist_2';
-      const String movedAudioTitle = 'tts';
+      const String movedConvertedAudioTitle = 'tts';
 
       final SettingsDataService settingsDataService = SettingsDataService(
         sharedPreferences: await SharedPreferences.getInstance(),
@@ -7334,12 +7342,12 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Now we want to tap the popup menu of the Audio ListTile
-      // "audio learn test short video one"
+      // Now we want to tap the popup menu of the converted Audio ListTile
+      // "tts"
 
       // First, find the Audio sublist ListTile Text widget
       final Finder sourceAudioListTileTextWidgetFinder =
-          find.text(movedAudioTitle);
+          find.text(movedConvertedAudioTitle);
 
       // Then obtain the Audio ListTile widget enclosing the Text widget by
       // finding its ancestor
@@ -7401,7 +7409,7 @@ void main() {
           tester.widget<Text>(find.byKey(const Key('warningDialogMessage')));
 
       expect(warningDialogMessageTextWidget.data,
-          "L'audio \"$movedAudioTitle\" a été déplacé de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\".");
+          "L'audio \"$movedConvertedAudioTitle\" a été déplacé de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\".");
 
       // Now find the ok button of the confirm warning dialog
       // and tap on it
@@ -8121,8 +8129,15 @@ void main() {
         fileExtension: 'mp3',
       );
 
-      expect(targetPlaylistMp3Lst,
-          ["230628-033811-audio learn test short video one 23-06-10.mp3"]);
+      expect(targetPlaylistMp3Lst, [
+        "230628-033811-audio learn test short video one 23-06-10.mp3",
+        "231117-002828-morning _ cinematic video 23-07-01.mp3",
+        "tts.mp3",
+      ]);
+
+      // Tap the 'Toggle List' button to display the playlist list
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
 
       // Find the target ListTile Playlist containing the audio moved
       // from the source playlist
@@ -22463,6 +22478,418 @@ void main() {
       );
     });
   });
+  group('Check presence or absence of audio menu test', () {
+    testWidgets(
+        '''Check presence in a Youtube playlist of the downloaded audio menu items.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      const String movedAudioTitle = 'audio learn test short video one';
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$kSettingsFileName");
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Now we want to tap the popup menu of the  downloadedAudio
+      // ListTile "audio learn test short video one" to verify the
+      // presence or absence of the audio menu items
+
+      await _checkPresenceOrAbsenceOfAudioMenuItems(
+        tester: tester,
+        audioTitle: movedAudioTitle,
+        audioType: AudioType.downloaded,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Check absence in a Youtube playlist of the imported audio menu items.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      const String importedAudioTitle =
+          '231117-002828-morning _ cinematic video 23-07-01';
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$kSettingsFileName");
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Now we want to tap the popup menu of the imported Audio
+      // ListTile "231117-002828-morning _ cinematic video 23-07-01"
+      // to verify the presence or absence of the audio menu items
+
+      await _checkPresenceOrAbsenceOfAudioMenuItems(
+        tester: tester,
+        audioTitle: importedAudioTitle,
+        audioType: AudioType.imported,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Check absence in a Youtube playlist of the converted audio menu items.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      const String convertedAudioTitle = 'tts';
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$kSettingsFileName");
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Now we want to tap the popup menu of the converted Audio
+      // ListTile "tts" to verify the presence or absence of the
+      // audio menu items
+
+      await _checkPresenceOrAbsenceOfAudioMenuItems(
+        tester: tester,
+        audioTitle: convertedAudioTitle,
+        audioType: AudioType.textToSpeech,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Check presence in a local playlist of the downloaded audio menu items.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      const String movedAudioTitle = 'audio learn test short video one';
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$kSettingsFileName");
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Select the 'new_local' playlist
+
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: 'new_local',
+      );
+
+      // Now we want to tap the popup menu of the downloadedAudio
+      // ListTile "audio learn test short video one" to verify the
+      // presence or absence of the audio menu items
+
+      await _checkPresenceOrAbsenceOfAudioMenuItems(
+        tester: tester,
+        audioTitle: movedAudioTitle,
+        audioType: AudioType.downloaded,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Check absence in a local playlist of the imported audio menu items.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      const String importedAudioTitle =
+          '231117-002828-morning _ cinematic video 23-07-01';
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$kSettingsFileName");
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Select the 'new_local' playlist
+
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: 'new_local',
+      );
+
+      // Now we want to tap the popup menu of the imported Audio
+      // ListTile "231117-002828-morning _ cinematic video 23-07-01"
+      // to verify the presence or absence of the audio menu items
+
+      await _checkPresenceOrAbsenceOfAudioMenuItems(
+        tester: tester,
+        audioTitle: importedAudioTitle,
+        audioType: AudioType.imported,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Check absence in a local playlist of the converted audio menu items.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}copy_move_audio_integr_test_data",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      const String convertedAudioTitle = 'tts';
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        sharedPreferences: await SharedPreferences.getInstance(),
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$kSettingsFileName");
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Select the 'new_local' playlist
+
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: 'new_local',
+      );
+
+      // Now we want to tap the popup menu of the converted Audio
+      // ListTile "tts" to verify the presence or absence of the
+      // audio menu items
+
+      await _checkPresenceOrAbsenceOfAudioMenuItems(
+        tester: tester,
+        audioTitle: convertedAudioTitle,
+        audioType: AudioType.textToSpeech,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+  });
+}
+
+Future<void> _checkPresenceOrAbsenceOfAudioMenuItems({
+  required WidgetTester tester,
+  required String audioTitle,
+  required AudioType audioType,
+}) async {
+  // First, find the Audio sublist ListTile Text widget
+  final Finder sourceAudioListTileTextWidgetFinder = find.text(audioTitle);
+
+  // Then obtain the Audio ListTile widget enclosing the Text widget by
+  // finding its ancestor
+  final Finder sourceAudioListTileWidgetFinder = find.ancestor(
+    of: sourceAudioListTileTextWidgetFinder,
+    matching: find.byType(ListTile),
+  );
+
+  // Now find the leading menu icon button of the Audio ListTile and tap
+  // on it
+  final Finder sourceAudioListTileLeadingMenuIconButton = find.descendant(
+    of: sourceAudioListTileWidgetFinder,
+    matching: find.byIcon(Icons.menu),
+  );
+
+  // Tap the leading menu icon button to open the popup menu
+  await tester.tap(sourceAudioListTileLeadingMenuIconButton);
+  await tester.pumpAndSettle();
+
+  // Now verify if the 'Open Youtube Video' menu item is present
+  // or absent depending on the audio type
+
+  final Finder openYoutubeVideoMenuItem =
+      find.byKey(const Key("popup_menu_open_youtube_video"));
+
+  if (audioType == AudioType.downloaded) {
+    expect(openYoutubeVideoMenuItem, findsOneWidget);
+  } else {
+    expect(openYoutubeVideoMenuItem, findsNothing);
+  }
+
+  // Now verify if the 'Copy Youtube Video URL' menu item is present
+  // or absent depending on the audio type
+
+  final Finder copyYoutubeVideoUrlMenuItem =
+      find.byKey(const Key("popup_copy_youtube_video_url"));
+
+  if (audioType == AudioType.downloaded) {
+    expect(copyYoutubeVideoUrlMenuItem, findsOneWidget);
+  } else {
+    expect(copyYoutubeVideoUrlMenuItem, findsNothing);
+  }
+
+  // Now verify if the 'Redownload deleted Audio' menu item is present
+  // or absent depending on the audio type
+
+  final Finder redownloadDeletedAudioMenuItem =
+      find.byKey(const Key("popup_menu_redownload_delete_audio"));
+
+  if (audioType == AudioType.downloaded) {
+    expect(redownloadDeletedAudioMenuItem, findsOneWidget);
+  } else {
+    expect(redownloadDeletedAudioMenuItem, findsNothing);
+  }
 }
 
 Playlist _loadPlaylist(String playListOneName) {

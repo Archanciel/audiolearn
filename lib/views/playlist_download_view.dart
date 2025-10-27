@@ -629,6 +629,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   key: const Key('saving_playlists_audio_mp3_to_zip'),
@@ -639,6 +640,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                         )
                       : AppLocalizations.of(context)!
                           .savingMultiplePlaylistsAudioMp3,
+                  textAlign: TextAlign.center, // Centered multi lines text
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10.0),
