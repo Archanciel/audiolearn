@@ -22478,7 +22478,8 @@ void main() {
       );
     });
   });
-  group('Check presence or absence of audio menu test', () {
+  group('''Check presence or absence of audio download view audio menu items as well
+           as presence or absence of audio player view left appbar menu items.''', () {
     testWidgets(
         '''Check presence in a Youtube playlist of the downloaded audio menu items.''',
         (WidgetTester tester) async {
@@ -22855,6 +22856,37 @@ Future<void> _checkPresenceOrAbsenceOfAudioMenuItems({
   await tester.tap(sourceAudioListTileLeadingMenuIconButton);
   await tester.pumpAndSettle();
 
+  // Now verify the menu items presence or absence depending on
+  // the audio type
+  _checkMenuItems(
+    audioType: audioType,
+  );
+
+  // Close the audio ListTile popup menu by tapping outside
+  await tester.tapAt(const Offset(300, 10));
+  await tester.pumpAndSettle();
+
+  // Now open the audio player view to check its left appbar
+  // menu items
+  await tester.tap(sourceAudioListTileTextWidgetFinder);
+  await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+    tester: tester,
+  );
+
+  // Tap the appbar leading popup menu button
+  await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+  await tester.pumpAndSettle();
+
+  // Now verify the menu items presence or absence depending on
+  // the audio type
+  _checkMenuItems(
+    audioType: audioType,
+  );
+}
+
+void _checkMenuItems({
+  required AudioType audioType,
+}) {
   // Now verify if the 'Open Youtube Video' menu item is present
   // or absent depending on the audio type
 
