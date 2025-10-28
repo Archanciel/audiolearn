@@ -35709,7 +35709,7 @@ Future<String> _addPictureToAudioExecutingAudioPlayerViewLeftAppbarMenu({
   ]);
 
   // Now we want to tap on the audio player view left appbar
-  // menu and then tapp on the 'Add Audio Picture' popup menu
+  // menu and then tap on the 'Add Audio Picture' popup menu
   // item
 
   await IntegrationTestUtil.typeOnAppbarMenuItem(
