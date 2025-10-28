@@ -955,6 +955,160 @@ void main() {
           expectedIconBackgroundColor: kDarkAndLightEnabledIconColor,
         );
       });
+      testWidgets(
+          '''Play audio on the audio player view with comment displayed. Verify that the displayed
+             comment is updated when the next audio starts playing.''',
+          (tester) async {
+        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+          tester: tester,
+          tapOnPlaylistToggleButton: false,
+        );
+
+        // Now initializing the application on the Android emulator using
+        // zip restoration.
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        const String restorableZipFileName = 'urgent_actus_17-12-2023.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFileName,
+              path:
+                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+              size: 2655),
+        ]);
+
+        // In order to create the Android emulator application, execute the
+        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+        // without replacing the existing playlists.
+        const String urgentActusPlaylistTitle = 'urgent_actus_17-12-2023';
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylists: false,
+          playlistTitlesToDelete: [
+            'Les plus belles chansons chrétiennes',
+            'S8 audio',
+            'local',
+            urgentActusPlaylistTitle,
+          ],
+          onAndroid: true,
+        );
+
+        // Tap on the 'OK' button of the confirmation dialog
+        await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+        await tester.pumpAndSettle();
+
+        const String restorableMp3ZipFileName =
+            'urgent_actus_17-12-2023_mp3_from_2025-08-12_16_29_25_on_2025-08-15_11_23_41.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableMp3ZipFileName,
+              path:
+                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableMp3ZipFileName',
+              size: 15366672),
+        ]);
+
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: urgentActusPlaylistTitle,
+          playlistMenuKeyStr:
+              'popup_menu_restore_playlist_audio_mp3_files_from_zip',
+          dragToBottom: true, // necessary if Flutter emulator is used
+        );
+
+        // Tap on the Ok button to close the warning confirmation dialog
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
+
+        // Now tap on the 'A Single ZIP File' button
+        await tester.tap(find.byKey(const Key('selectFileButton')));
+        await tester.pumpAndSettle();
+
+        // Tap on the Ok button to close the warning confirmation dialog
+        await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+        await tester.pumpAndSettle();
+
+        const String thirdAudioTitle =
+            "NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12";
+
+        // Find the audio list widget using its key
+        final listFinder = find.byKey(const Key('audio_list'));
+
+        // Perform the scroll action
+        await tester.drag(listFinder, const Offset(0, -300));
+        await tester.pumpAndSettle();
+
+        Finder thirdAudioListTileInkWellFinder =
+            IntegrationTestUtil.findAudioItemInkWellWidget(
+          audioTitle: thirdAudioTitle,
+        );
+
+        await tester.tap(thirdAudioListTileInkWellFinder);
+        await tester.pumpAndSettle();
+
+        // Tapping three times on the 10 seconds forward icon button
+        // and go back to the playlist download view screen.
+
+        Finder forward10sButtonFinder =
+            find.byKey(const Key('audioPlayerViewForward10sButton'));
+        await tester.tap(forward10sButtonFinder);
+        await tester.pumpAndSettle();
+        await tester.tap(forward10sButtonFinder);
+        await tester.pumpAndSettle();
+        await tester.tap(forward10sButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Click on the comment icon button to display the comment
+        Finder commentIconButtonFinder =
+            find.byKey(const Key('commentsInkWellButton'));
+        await tester.tap(commentIconButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Verify the first audio displayed comment
+
+        // Find the list body containing the comments
+        Finder commentListDialogFinder =
+            find.byKey(const Key('audioCommentsListKey'));
+
+        expect(
+            find.descendant(
+                of: commentListDialogFinder,
+                matching: find.text("New chapter title")),
+            findsOneWidget);
+        expect(
+            find.descendant(
+                of: commentListDialogFinder,
+                matching: find.text("New chapter comment")),
+            findsOneWidget);
+
+        // Add a delay to allow the audio to reach its end and the next audio
+        // to start playing.
+        for (int i = 0; i < 16; i++) {
+          await Future.delayed(const Duration(seconds: 1));
+          await tester.pumpAndSettle();
+        }
+
+        // Verify the second audio displayed comment
+
+        // Find the list body containing the comments
+        commentListDialogFinder = find.byKey(const Key('audioCommentsListKey'));
+
+        expect(
+            find.descendant(
+                of: commentListDialogFinder,
+                matching: find.text("L’uniforme title")),
+            findsOneWidget);
+        expect(
+            find.descendant(
+                of: commentListDialogFinder,
+                matching: find.text("L’uniforme comment")),
+            findsOneWidget);
+      });
     });
     group('''Import audio's functionality.''', () {
       testWidgets(
