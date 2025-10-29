@@ -34817,6 +34817,7 @@ void main() {
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
         tester: tester,
         audioSubTitlesAcceptableLst: [
+          '0:00:00.8 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 2)))}',
           '0:00:00.8 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
           '0:00:00.8 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
         ],
@@ -34944,7 +34945,200 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-  });
+      testWidgets(
+        '''Converting text containing line breaks without checking the 'Remove line breaks'
+           ckeckbox.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      const String selectedYoutubePlaylistTitle = 'urgent_actus_17-12-2023';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'import_audios_integr_test',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      // Open the convert text to audio dialog
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: selectedYoutubePlaylistTitle,
+        playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+      );
+
+      // Verify the convert text to audio dialog title
+      final Text convertTextToAudioDialogTitle = tester.widget<Text>(
+          find.byKey(const Key('convertTextToAudioDialogTitleKey')));
+      expect(
+        convertTextToAudioDialogTitle.data,
+        'Convert Text to Audio',
+      );
+
+      // Enter a text to convert containing line breaks
+
+      // Find the text field and delete button
+      final Finder textFieldFinder =
+          find.byKey(const Key('textToConvertTextField'));
+
+      // Enter text in the TextField
+      const testText = "Ô mon cher Ange gardien ! Je t’adresse cette prièrep\nour te demanderdern\nde rester toujours à mes côtés\net de ne jamais cesser\nd’être mon protecteur, jusqu’à ce que je sois appelé\ndans la Maison du Père, où ensemble nous louerons Dieu\nnotre Seigneur pour toute l’Éternité. Amen.";
+      await tester.enterText(textFieldFinder, testText);
+      await tester.pump();
+
+      // Now click on Create MP3 button to create the audio
+      Finder createMP3ButtonFinder =
+          find.byKey(const Key('create_audio_file_button'));
+      await tester.tap(createMP3ButtonFinder);
+      await tester.pumpAndSettle();
+
+      const String enteredFileNameNoExt = 'convertedAudio';
+      Finder mp3FileNameTextFieldFinder =
+          find.byKey(const Key('textToConvertTextField'));
+
+      await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+      await tester.pump();
+
+      DateTime now = DateTime.now();
+
+      // Tap on the create mp3 button
+      Finder saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
+      await tester.tap(saveMP3FileButton);
+      await Future.delayed(const Duration(seconds: 2));
+      await tester.pumpAndSettle();
+
+      // Close the warning dialog
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+      await tester.pumpAndSettle();
+
+      // Now close the convert text to audio dialog by tapping
+      // the Cancel button
+      Finder cancelButtonFinder =
+          find.byKey(const Key('convertTextToAudioCancelButton'));
+      await tester.tap(cancelButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the converted audio sub title in the selected Youtube
+      // playlist audio list
+      IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+        tester: tester,
+        audioSubTitlesAcceptableLst: [
+          '0:00:14.6 117 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+          '0:00:14.6 117 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+        ],
+        firstAudioListTileIndex: 4,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+      testWidgets(
+        '''Converting text containing line breaks with checking the 'Remove line breaks'
+           ckeckbox.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      const String selectedYoutubePlaylistTitle = 'urgent_actus_17-12-2023';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'import_audios_integr_test',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      // Open the convert text to audio dialog
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: selectedYoutubePlaylistTitle,
+        playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+      );
+
+      // Verify the convert text to audio dialog title
+      final Text convertTextToAudioDialogTitle = tester.widget<Text>(
+          find.byKey(const Key('convertTextToAudioDialogTitleKey')));
+      expect(
+        convertTextToAudioDialogTitle.data,
+        'Convert Text to Audio',
+      );
+
+      // Enter a text to convert containing line breaks
+
+      // Find the text field and delete button
+      final Finder textFieldFinder =
+          find.byKey(const Key('textToConvertTextField'));
+
+      // Enter text in the TextField
+      const testText = "Ô mon cher Ange gardien ! Je t’adresse cette prièrep\nour te demanderdern\nde rester toujours à mes côtés\net de ne jamais cesser\nd’être mon protecteur, jusqu’à ce que je sois appelé\ndans la Maison du Père, où ensemble nous louerons Dieu\nnotre Seigneur pour toute l’Éternité. Amen.";
+      await tester.enterText(textFieldFinder, testText);
+      await tester.pump();
+
+      // Check the 'Remove line breaks' checkbox
+      Finder removeLineBreaksCheckbox =
+          find.byKey(const Key('clearEndLineCheckbox'));
+      await tester.tap(removeLineBreaksCheckbox);
+      await tester.pumpAndSettle();
+
+      // Now click on Create MP3 button to create the audio
+      Finder createMP3ButtonFinder =
+          find.byKey(const Key('create_audio_file_button'));
+      await tester.tap(createMP3ButtonFinder);
+      await tester.pumpAndSettle();
+
+      const String enteredFileNameNoExt = 'convertedAudio';
+      Finder mp3FileNameTextFieldFinder =
+          find.byKey(const Key('textToConvertTextField'));
+
+      await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+      await tester.pump();
+
+      DateTime now = DateTime.now();
+
+      // Tap on the create mp3 button
+      Finder saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
+      await tester.tap(saveMP3FileButton);
+      await Future.delayed(const Duration(seconds: 2));
+      await tester.pumpAndSettle();
+
+      // Close the warning dialog
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+      await tester.pumpAndSettle();
+
+      // Now close the convert text to audio dialog by tapping
+      // the Cancel button
+      Finder cancelButtonFinder =
+          find.byKey(const Key('convertTextToAudioCancelButton'));
+      await tester.tap(cancelButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the converted audio sub title in the selected Youtube
+      // playlist audio list. The duration should be shorter than the
+      // previous conversion since the line break characters were removed.
+      IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+        tester: tester,
+        audioSubTitlesAcceptableLst: [
+          '0:00:13.0 104 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+          '0:00:13.0 104 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+        ],
+        firstAudioListTileIndex: 4,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+});
   group('Download URLs from Text File tests', () {
     testWidgets(
         '''Download URLs in music quality playlist in spoken quality.''',
