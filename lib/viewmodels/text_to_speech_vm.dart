@@ -67,9 +67,10 @@ class TextToSpeechVM extends ChangeNotifier {
     if (_inputText.trim().isEmpty) return;
 
     // According to the clearEndLineChars, the invisible new line
-    // characters are removed or not. If they are not removed, this
+    // characters are removed or not. If they are removed, this
     // will avoid that unwanted pauses are created in the generated
-    // audio.
+    // audio. On Windows, removing them also improves listening the
+    // spoken text.
     String inputText = _removeOrNotEndLineChars(
       clearEndLineChars: clearEndLineChars,
     );
@@ -244,7 +245,8 @@ class TextToSpeechVM extends ChangeNotifier {
 
   /// According to the clearEndLineChars, the invisible new line characters are removed
   /// or not. If they are not removed, this will avoid that unwanted pauses are created
-  /// in the generated audio.
+  /// in the generated audio. On Windows, removing them also improves listening the spoken
+  /// text.
   String _removeOrNotEndLineChars({
     required bool clearEndLineChars,
   }) {
