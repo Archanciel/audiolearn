@@ -61,14 +61,23 @@ class TextToSpeechVM extends ChangeNotifier {
   }
 
   Future<void> speakText({
-    bool isVoiceMan = true,
+    required bool isVoiceMan,
+    required bool clearEndLineChars,
   }) async {
     if (_inputText.trim().isEmpty) return;
+
+    // According to the clearEndLineChars, the invisible new line
+    // characters are removed or not. If they are not removed, this
+    // will avoid that unwanted pauses are created in the generated
+    // audio.
+    String inputText = _removeOrNotEndLineChars(
+      clearEndLineChars: clearEndLineChars,
+    );
 
     // CRITICAL FIX: Don't modify _inputText directly
     // Create a processed copy instead
     String processedText = _convertSingleBracesToQuoted(
-      text: _inputText,
+      text: inputText,
       isForMP3Creation: false,
     );
 
@@ -184,7 +193,8 @@ class TextToSpeechVM extends ChangeNotifier {
     required WarningMessageVM warningMessageVMlistenFalse,
     required String fileName,
     required String mp3FileDirectory,
-    bool isVoiceMan = true,
+    required bool isVoiceMan,
+    required bool clearEndLineChars,
   }) async {
     if (_inputText.trim().isEmpty) return;
 
@@ -192,13 +202,21 @@ class TextToSpeechVM extends ChangeNotifier {
     notifyListeners();
     await audioPlayerVMlistenFalse.releaseCurrentAudioFile();
 
+    // According to the clearEndLineChars, the invisible new line
+    // characters are removed or not. If they are not removed, this
+    // will avoid that unwanted pauses are created in the generated
+    // audio.
+    String inputText = _removeOrNotEndLineChars(
+      clearEndLineChars: clearEndLineChars,
+    );
+
     try {
       AudioFile? audioFile;
 
       // CRITICAL FIX: Don't modify _inputText directly
       // Create a processed copy instead
       String processedText = _convertSingleBracesToQuoted(
-        text: _inputText,
+        text: inputText,
         isForMP3Creation: true,
       );
 
@@ -221,6 +239,20 @@ class TextToSpeechVM extends ChangeNotifier {
     } finally {
       _isConverting = false;
       notifyListeners();
+    }
+  }
+
+  /// According to the clearEndLineChars, the invisible new line characters are removed
+  /// or not. If they are not removed, this will avoid that unwanted pauses are created
+  /// in the generated audio.
+  String _removeOrNotEndLineChars({
+    required bool clearEndLineChars,
+  }) {
+    if (clearEndLineChars) {
+      // Remove line break characters
+      return _inputText.replaceAll(RegExp(r'(\r\n|\r|\n)'), ' ');
+    } else {
+      return _inputText;
     }
   }
 

@@ -1114,5 +1114,7 @@
   "selectDirectory": "A Directory with ZIP's",
   "dateFormatddMMyyyy": "dd/MM/yyyy",
   "dateFormatMMddyyyy": "MM/dd/yyyy",
-  "dateFormatyyyyMMdd": "yyyy/MM/dd"
+  "dateFormatyyyyMMdd": "yyyy/MM/dd",
+  "clearEndLineSelection": "Remove line breaks",
+  "clearEndLineSelectionTooltip": "Line break invisible characters in incorrect locations can cause unwanted pauses in the generated audio. Removing them improves audio quality."
 }

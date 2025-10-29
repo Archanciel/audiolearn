@@ -53,6 +53,9 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
   // Voice selection state
   bool _isVoiceMan = true; // Default to masculine voice
 
+  // Clear end line characters state
+  bool _clearEndLineChars = false; // Default to masculine voice
+
   bool _isAnythingPlaying = false;
 
   @override
@@ -181,10 +184,17 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                     ),
                     Text(
                       AppLocalizations.of(context)!.conversionVoiceSelection,
+                      textAlign: TextAlign.center,
                       style: kDialogTitlesStyle,
                       key: const Key('voiceSelectionTitleKey'),
                     ),
                     _buildVoiceSelectionCheckboxes(
+                      context: context,
+                    ),
+                    const SizedBox(
+                      height: kDialogTextFieldVerticalSeparation,
+                    ),
+                    _buildClearEndLineCharsCheckbox(
                       context: context,
                     ),
                   ],
@@ -208,16 +218,17 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     required BuildContext context,
     required TextToSpeechVM textToSpeechVMlistenTrue,
   }) {
-    return Tooltip(
-      message: AppLocalizations.of(context)!.textToConvertTextFieldTooltip,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Flexible(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Flexible(
+              child: Tooltip(
+                message:
+                    AppLocalizations.of(context)!.textToConvertTextFieldTooltip,
                 child: Text(
                   AppLocalizations.of(context)!.textToConvert('{'),
                   style: kDialogTitlesStyle,
@@ -225,76 +236,75 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                   key: const Key('textToConvertTitleKey'),
                 ),
               ),
-            ],
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Row(
-            children: [
-              Flexible(
-                child: TextField(
-                  key: const Key('textToConvertTextField'),
-                  focusNode: _textToConvertFocusNode,
-                  style: kDialogTextFieldStyle,
-                  maxLines: 18,
-                  decoration: getDialogTextFieldInputDecoration(
-                    hintText: AppLocalizations.of(context)!
-                        .textToConvertTextFieldHint,
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Row(
+          children: [
+            Flexible(
+              child: TextField(
+                key: const Key('textToConvertTextField'),
+                focusNode: _textToConvertFocusNode,
+                style: kDialogTextFieldStyle,
+                maxLines: 18,
+                decoration: getDialogTextFieldInputDecoration(
+                  hintText:
+                      AppLocalizations.of(context)!.textToConvertTextFieldHint,
+                ),
+                controller: _textToConvertController,
+                keyboardType: TextInputType
+                    .multiline, // Enable clicking on Enter to create a new line
+                onChanged: (text) {
+                  _textToConvert = text;
+                  textToSpeechVMlistenTrue.updateInputText(
+                    text: text,
+                    notify: true,
+                  );
+
+                  // setting the Delete button color according to the
+                  // TextField content ...
+                  _textToConvertIconColor = _textToConvert.isNotEmpty
+                      ? kDarkAndLightEnabledIconColor
+                      : kDarkAndLightDisabledIconColor;
+
+                  setState(() {}); // necessary to update Delete button color
+                },
+              ),
+            ),
+            SizedBox(
+              width: kSmallIconButtonWidth,
+              child: IconButton(
+                key: const Key('deleteTextToConvertIconButton'),
+                onPressed: () async {
+                  _clearTextToConvertField();
+                  _textToConvertFocusNode.requestFocus();
+                  setState(() {}); // necessary to update Delete button color
+                },
+                padding: const EdgeInsets.all(0),
+                style: ButtonStyle(
+                  // Highlight button when pressed
+                  padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                    const EdgeInsets.symmetric(
+                        horizontal: kSmallButtonInsidePadding, vertical: 0),
                   ),
-                  controller: _textToConvertController,
-                  keyboardType: TextInputType
-                      .multiline, // Enable clicking on Enter to create a new line
-                  onChanged: (text) {
-                    _textToConvert = text;
-                    textToSpeechVMlistenTrue.updateInputText(
-                      text: text,
-                      notify: true,
-                    );
-
-                    // setting the Delete button color according to the
-                    // TextField content ...
-                    _textToConvertIconColor = _textToConvert.isNotEmpty
-                        ? kDarkAndLightEnabledIconColor
-                        : kDarkAndLightDisabledIconColor;
-
-                    setState(() {}); // necessary to update Delete button color
-                  },
+                  overlayColor: iconButtonTapModification, // Tap feedback color
+                ),
+                icon: Icon(
+                  Icons.clear,
+                  // since in the Dialog the disabled IconButton color
+                  // is not grey, we need to set it manually. Additionally,
+                  // the sentence TextField onChanged callback must execute
+                  // setState() to update the IconButton color
+                  color: _textToConvertIconColor,
                 ),
               ),
-              SizedBox(
-                width: kSmallIconButtonWidth,
-                child: IconButton(
-                  key: const Key('deleteTextToConvertIconButton'),
-                  onPressed: () async {
-                    _clearTextToConvertField();
-                    _textToConvertFocusNode.requestFocus();
-                    setState(() {}); // necessary to update Delete button color
-                  },
-                  padding: const EdgeInsets.all(0),
-                  style: ButtonStyle(
-                    // Highlight button when pressed
-                    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                      const EdgeInsets.symmetric(
-                          horizontal: kSmallButtonInsidePadding, vertical: 0),
-                    ),
-                    overlayColor:
-                        iconButtonTapModification, // Tap feedback color
-                  ),
-                  icon: Icon(
-                    Icons.clear,
-                    // since in the Dialog the disabled IconButton color
-                    // is not grey, we need to set it manually. Additionally,
-                    // the sentence TextField onChanged callback must execute
-                    // setState() to update the IconButton color
-                    color: _textToConvertIconColor,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 
@@ -435,7 +445,10 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                     _stopAllAudio(
                         textToSpeechVMlistenTrue: textToSpeechVMlistenTrue);
                   } else {
-                    textToSpeechVMlistenTrue.speakText(isVoiceMan: _isVoiceMan);
+                    textToSpeechVMlistenTrue.speakText(
+                      isVoiceMan: _isVoiceMan,
+                      clearEndLineChars: _clearEndLineChars,
+                    );
                   }
                 },
           child: Row(
@@ -628,6 +641,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
         fileName: fileName,
         mp3FileDirectory: targetPlaylist.downloadPath,
         isVoiceMan: _isVoiceMan,
+        clearEndLineChars: _clearEndLineChars,
       );
 
       AudioFile? currentAudioFile = textToSpeechVMlistenTrue.currentAudioFile;
@@ -659,6 +673,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     required BuildContext context,
   }) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(AppLocalizations.of(context)!.masculineVoice),
         Checkbox(
@@ -686,6 +701,39 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                 _isVoiceMan = false;
               });
             }
+            // now clicking on Enter works since the
+            // Checkbox is not focused anymore
+            _textToConvertFocusNode.requestFocus();
+          },
+        ),
+      ],
+    );
+  }
+
+  Row _buildClearEndLineCharsCheckbox({
+    required BuildContext context,
+  }) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Tooltip(
+          message: AppLocalizations.of(context)!.clearEndLineSelectionTooltip,
+          child: Text(AppLocalizations.of(context)!.clearEndLineSelection),
+        ),
+        Checkbox(
+          key: const Key('clearEndLineCheckbox'),
+          value: _clearEndLineChars,
+          onChanged: (bool? newValue) {
+            if (newValue == true) {
+              setState(() {
+                _clearEndLineChars = true;
+              });
+            } else {
+              setState(() {
+                _clearEndLineChars = false;
+              });
+            }
+
             // now clicking on Enter works since the
             // Checkbox is not focused anymore
             _textToConvertFocusNode.requestFocus();

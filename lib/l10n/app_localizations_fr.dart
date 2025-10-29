@@ -2464,4 +2464,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get dateFormatyyyyMMdd => 'aaaa/MM/jj';
+
+  @override
+  String get clearEndLineSelection => 'Supprimer les sauts de ligne';
+
+  @override
+  String get clearEndLineSelectionTooltip =>
+      'Les caractères invisibles de saut de ligne à des emplacements incorrects peuvent créer des pauses non désirées dans l\'audio généré. Leur suppression améliore la qualité audio.';
 }

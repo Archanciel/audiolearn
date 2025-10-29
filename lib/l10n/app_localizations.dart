@@ -3896,6 +3896,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'yyyy/MM/dd'**
   String get dateFormatyyyyMMdd;
+
+  /// No description provided for @clearEndLineSelection.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove line breaks'**
+  String get clearEndLineSelection;
+
+  /// No description provided for @clearEndLineSelectionTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Line break invisible characters in incorrect locations can cause unwanted pauses in the generated audio. Removing them improves audio quality.'**
+  String get clearEndLineSelectionTooltip;
 }
 
 class _AppLocalizationsDelegate
