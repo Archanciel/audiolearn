@@ -1512,5 +1512,7 @@
   "selectDirectory": "un répertoire contenant de\nmultiples fichiers ZIP",
   "dateFormatddMMyyyy": "jj/MM/aaaa",
   "dateFormatMMddyyyy": "MM/jj/aaaa",
-  "dateFormatyyyyMMdd": "aaaa/MM/jj"
+  "dateFormatyyyyMMdd": "aaaa/MM/jj",
+  "clearEndLineSelection": "Supprimer les sauts de ligne",
+  "clearEndLineSelectionTooltip": "Les caractères invisibles de saut de ligne à des emplacements incorrects peuvent créer des pauses non désirées dans l'audio généré. Leur suppression améliore la qualité audio."
 }

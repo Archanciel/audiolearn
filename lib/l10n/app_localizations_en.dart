@@ -2438,4 +2438,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dateFormatyyyyMMdd => 'yyyy/MM/dd';
+
+  @override
+  String get clearEndLineSelection => 'Remove line breaks';
+
+  @override
+  String get clearEndLineSelectionTooltip =>
+      'Line break invisible characters in incorrect locations can cause unwanted pauses in the generated audio. Removing them improves audio quality.';
 }

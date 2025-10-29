@@ -2528,4 +2528,11 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get deleteExistingPlaylists => "Delete existing playlists not in ZIP";
+
+  @override
+  String get clearEndLineSelection => "Remove line breaks";
+
+  @override
+  String get clearEndLineSelectionTooltip =>
+      "Line break invisible characters in incorrect locations can cause unwanted pauses in the generated audio. Removing them improves audio quality.";
 }
