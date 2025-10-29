@@ -379,30 +379,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   focusNode: focusNode,
                 );
               },
-            ).then((filterSortAudioAndParmLst) {
-              if (filterSortAudioAndParmLst != null) {
-                // user clicked on Save or Apply button on sort and filter
-                // dialog opened by the popup menu button item
-                List<Audio> returnedAudioList = filterSortAudioAndParmLst[0];
-                AudioSortFilterParameters audioSortFilterParameters =
-                    filterSortAudioAndParmLst[1];
-                String audioSortFilterParametersName =
-                    filterSortAudioAndParmLst[2];
-                playlistListVMlistenFalse
-                    .setSortFilterForSelectedPlaylistPlayableAudiosAndParms(
-                  audioLearnAppViewType:
-                      AudioLearnAppViewType.playlistDownloadView,
-                  sortFilteredSelectedPlaylistPlayableAudio: returnedAudioList,
-                  audioSortFilterParms: audioSortFilterParameters,
-                  audioSortFilterParmsName: audioSortFilterParametersName,
-                  translatedAppliedSortFilterParmsName:
-                      AppLocalizations.of(context)!
-                          .sortFilterParametersAppliedName,
-                );
-                // _wasSortFilterAudioSettingsApplied = true;
-              }
-            });
-            focusNode.requestFocus();
+            );
             break;
           case PlaylistPopupMenuAction.downloadVideoUrlsFromTextFileInPlaylist:
             String selectedFilePathName =
