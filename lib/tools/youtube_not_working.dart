@@ -1,20 +1,22 @@
 import 'dart:io';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
+import 'package:logger/logger.dart';
 
 Future<void> main() async {
+  final Logger logger = Logger();
   final yt = YoutubeExplode();
 
   try {
     // Get the video metadata
     final video = await yt.videos.get('fRh_vgS2dFE');
-    print('Downloading: ${video.title}');
+    logger.i('Downloading: ${video.title}');
 
     // Get the stream manifest
     final manifest = await yt.videos.streams.getManifest('fRh_vgS2dFE');
 
     // Get the best audio stream
     final audioStream = manifest.audioOnly.withHighestBitrate();
-    print('Bitrate: ${audioStream.bitrate}');
+    logger.i('Bitrate: ${audioStream.bitrate}');
 
     // Set up the output directory and file
     final outputDir =
@@ -51,9 +53,9 @@ Future<void> main() async {
     await output.flush();
     await output.close();
 
-    print('Downloaded to: $filePath');
+    logger.i('Downloaded to: $filePath');
   } catch (e) {
-    print('EXCEPTION $e');
+    logger.i('EXCEPTION $e');
     yt.close();
     return;
   }
