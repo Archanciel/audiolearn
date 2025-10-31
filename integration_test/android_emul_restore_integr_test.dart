@@ -1761,7 +1761,7 @@ void main() {
         // Now close the convert text to audio dialog by tapping
         // the Cancel button
         Finder cancelButtonFinder =
-            find.byKey(const Key('convertTextToAudioCancelButton'));
+            find.byKey(const Key('convertTextToAudioCloseButton'));
         await tester.tap(cancelButtonFinder);
         await tester.pumpAndSettle();
 
@@ -1957,7 +1957,7 @@ void main() {
         // Now close the convert text to audio dialog by tapping
         // the Cancel button
         cancelButtonFinder =
-            find.byKey(const Key('convertTextToAudioCancelButton'));
+            find.byKey(const Key('convertTextToAudioCloseButton'));
         await tester.tap(cancelButtonFinder);
         await tester.pumpAndSettle();
 
@@ -2260,7 +2260,7 @@ void main() {
         // Now close the convert text to audio dialog by tapping
         // the Cancel button
         Finder cancelButtonFinder =
-            find.byKey(const Key('convertTextToAudioCancelButton'));
+            find.byKey(const Key('convertTextToAudioCloseButton'));
         await tester.tap(cancelButtonFinder);
         await tester.pumpAndSettle();
 
@@ -2468,7 +2468,7 @@ void main() {
         // Now close the convert text to audio dialog by tapping
         // the Cancel button
         cancelButtonFinder =
-            find.byKey(const Key('convertTextToAudioCancelButton'));
+            find.byKey(const Key('convertTextToAudioCloseButton'));
         await tester.tap(cancelButtonFinder);
         await tester.pumpAndSettle();
 
