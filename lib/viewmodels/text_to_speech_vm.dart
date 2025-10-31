@@ -150,31 +150,8 @@ class TextToSpeechVM extends ChangeNotifier {
         textIndex++;
       }
 
-      if (!Platform.isWindows) {
-        for (int _ in group) {
-          result.write('{');
-        }
-      } else {
-        // Fix an incomprehensible problem on listening text to speech
-        // on Windows
-        if (isForMP3Creation) {
-          // Multiple consecutive braces - keep as is
-          for (int _ in group) {
-            result.write('{');
-          }
-        } else {
-          // Single brace - convert to quotes
-          if (group.length == 1) {
-            for (int i = 0; i <= 1; i++) {
-              result.write('{');
-            }
-          } else {
-            // Multiple consecutive braces - keep as is
-            for (int _ in group) {
-              result.write('{');
-            }
-          }
-        }
+      for (int _ in group) {
+        result.write('{');
       }
 
       textIndex += group.length;
