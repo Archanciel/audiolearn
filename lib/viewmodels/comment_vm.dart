@@ -89,6 +89,17 @@ class CommentVM extends ChangeNotifier {
     );
   }
 
+  /// If the comment file exists, the list of comments it contains is
+  /// returned, else, an empty list is returned.
+  List<Comment> loadCommentsFromFile({
+    required String commentFilePathName,
+  }) {
+    return JsonDataService.loadListFromFile(
+      jsonPathFileName: commentFilePathName,
+      type: Comment,
+    );
+  }
+
   Comment? getLastCommentOfAudio({
     required Audio audio,
   }) {
