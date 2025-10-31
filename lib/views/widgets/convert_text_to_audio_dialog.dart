@@ -350,7 +350,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
             SizedBox(
               height: kNormalButtonHeight,
               child: TextButton(
-                key: const Key('convertTextToAudioCancelButton'),
+                key: const Key('convertTextToAudioCloseButton'),
                 style: ButtonStyle(
                   shape: getButtonRoundedShape(
                       currentTheme: themeProviderVM.currentTheme,
@@ -388,7 +388,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                   Navigator.of(context).pop();
                 },
                 child: Text(
-                  AppLocalizations.of(context)!.cancelButton,
+                  AppLocalizations.of(context)!.closeTextButton,
                   style: (themeProviderVM.currentTheme == AppTheme.dark)
                       ? kTextButtonStyleDarkMode
                       : kTextButtonStyleLightMode,
