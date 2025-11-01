@@ -1102,7 +1102,7 @@ class PlaylistListVM extends ChangeNotifier {
 
   /// This method is called when tapping on the playlist download view selected
   /// playlist download text button. Currently, only one playlist can be selected.
-  Future<void> downloadSelectedPlaylists() async {
+  Future<void> downloadSelectedPlaylist() async {
     List<Playlist> selectedPlaylists = getSelectedPlaylists();
 
     for (Playlist playlist in selectedPlaylists) {

@@ -179,7 +179,7 @@ Future<void> main() async {
 
       // Now typing on the download playlist button to download the
       // 2 video audio's present the created playlist.
-      await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
+      await tester.tap(find.byKey(const Key('download_sel_playlist_button')));
       await tester.pumpAndSettle();
 
       // Add a delay to allow the download to finish.
@@ -345,7 +345,7 @@ Future<void> main() async {
 
       // Now typing on the download playlist button to download the
       // 2 video audio's present the created playlist.
-      await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
+      await tester.tap(find.byKey(const Key('download_sel_playlist_button')));
       await tester.pumpAndSettle();
 
       // Add a delay to allow the download to finish.
@@ -478,7 +478,7 @@ Future<void> main() async {
 
       // Now typing on the download playlist button to download the
       // new video audio's present the recreated playlist.
-      await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
+      await tester.tap(find.byKey(const Key('download_sel_playlist_button')));
       await tester.pumpAndSettle();
 
       // Add a delay to allow the download to finish.
@@ -1073,7 +1073,7 @@ Future<void> main() async {
 
       // Now typing on the download playlist button to download the
       // new video audio's present the recreated playlist.
-      await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
+      await tester.tap(find.byKey(const Key('download_sel_playlist_button')));
       await tester.pumpAndSettle();
 
       // Add a delay to allow the download to finish.
@@ -1201,7 +1201,7 @@ Future<void> main() async {
 
       // Now typing on the download playlist button to download the
       // new video audio's present the recreated playlist.
-      await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
+      await tester.tap(find.byKey(const Key('download_sel_playlist_button')));
       await tester.pumpAndSettle();
 
       // Add a delay to allow the download to finish.

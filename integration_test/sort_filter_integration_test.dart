@@ -9423,7 +9423,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Now typing on the download playlist button to download the
           // 2 video audio's present the playlist.
           await tester
-              .tap(find.byKey(const Key('download_sel_playlists_button')));
+              .tap(find.byKey(const Key('download_sel_playlist_button')));
           await tester.pumpAndSettle();
 
           // Add a delay to allow the download to finish.
@@ -9516,7 +9516,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // Now typing on the download playlist button to download the
           // 2 video audio's present the created playlist.
           await tester
-              .tap(find.byKey(const Key('download_sel_playlists_button')));
+              .tap(find.byKey(const Key('download_sel_playlist_button')));
           await tester.pumpAndSettle();
 
           // Add a delay to allow the download to finish.
