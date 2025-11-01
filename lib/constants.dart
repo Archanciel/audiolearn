@@ -41,19 +41,18 @@ const String kApplicationPicturePath =
     "/storage/emulated/0/Documents/audiolearn/pictures";
 
 // Used for testing on Android
-const String kApplicationPathAndroidTest = "/storage/emulated/0/Documents/test/audiolearn";
+const String kApplicationPathAndroidTest =
+    "/storage/emulated/0/Documents/test/audiolearn";
 const String kPlaylistDownloadRootPathAndroidTest =
     "/storage/emulated/0/Documents/test/audiolearn/$kImposedPlaylistsSubDirName";
 const String kApplicationPicturePathAndroidTest =
     "/storage/emulated/0/Documents/test/audiolearn/pictures";
 
 // Used for Windows app version
-const String kApplicationPathWindows =
-    "C:\\audiolearn";
+const String kApplicationPathWindows = "C:\\audiolearn";
 const String kPlaylistDownloadRootPathWindows =
     "C:\\audiolearn\\$kImposedPlaylistsSubDirName";
-const String kApplicationPicturePathWindows =
-    "C:\\audiolearn\\pictures";
+const String kApplicationPicturePathWindows = "C:\\audiolearn\\pictures";
 
 // Used for testing and debugging on Windows
 const String kApplicationPathWindowsTest =
@@ -70,7 +69,8 @@ const String kSettingsFileName = 'settings.json';
 const String kCommentDirName = 'comments';
 const String kPictureDirName = 'pictures';
 const String kPictureAudioMapFileName = 'pictureAudioMap.json';
-const double kWindowsSystemVolume = 0.45; // 0.86, Default system volume for Windows
+const double kWindowsSystemVolume =
+    0.45; // 0.86, Default system volume for Windows
 
 const String kOrderedPlaylistTitlesFileName = 'savedOrderedPlaylistTitles.txt';
 
@@ -220,3 +220,9 @@ const kAudioExtractorExtractPositionStyle = TextStyle(
 );
 
 const double kMp3ZipFileSizeLimitInMb = 525.0; // 525 required by Android
+
+// Number of seconds to consider that the audio was fully listened:
+// If its current position is greater or equal to its total duration
+// minus fullyListenedBufferSeconds seconds, then the audio is considered
+// as being fully listened.
+const int fullyListenedBufferSeconds = 10;
