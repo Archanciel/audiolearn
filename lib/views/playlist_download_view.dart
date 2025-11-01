@@ -804,7 +804,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             message:
                 AppLocalizations.of(context)!.downloadSelPlaylistsButtonTooltip,
             child: TextButton(
-              key: const Key('download_sel_playlists_button'),
+              key: const Key('download_sel_playlist_button'),
               style: ButtonStyle(
                 shape: getButtonRoundedShape(
                     currentTheme: themeProviderVM.currentTheme,
@@ -830,7 +830,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                           .disableSortedFilteredPlayableAudioLst();
 
                       await playlistListVMlistenFalse
-                          .downloadSelectedPlaylists();
+                          .downloadSelectedPlaylist();
                     }
                   : null,
               child: Row(

@@ -1991,7 +1991,7 @@ void main() {
       // This download fails because YoutubeExplode can not access to
       // internet in integration tests in order to download the
       // audio's.
-      await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
+      await tester.tap(find.byKey(const Key('download_sel_playlist_button')));
       await tester.pumpAndSettle();
 
       // Downloading the Youtube playlist audio can not be done in
@@ -2598,7 +2598,7 @@ void main() {
 
       // Tap the 'Download Playlist' button to download the selected playlist.
       // This download is simulated by the mock audio download VM
-      await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
+      await tester.tap(find.byKey(const Key('download_sel_playlist_button')));
       await tester.pumpAndSettle();
 
       // And verify the downloaded playlist audio titles
@@ -2668,10 +2668,10 @@ void main() {
 
       // Tap the 'Download All' button to download the selected playlist.
       // This download is simulated by the mock audio download VM
-      await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
+      await tester.tap(find.byKey(const Key('download_sel_playlist_button')));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
+      await tester.tap(find.byKey(const Key('download_sel_playlist_button')));
       await tester.pumpAndSettle();
 
       // And verify the downloaded playlist audio titles
@@ -15959,7 +15959,7 @@ void main() {
 
       IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
-        widgetKeyStr: 'download_sel_playlists_button',
+        widgetKeyStr: 'download_sel_playlist_button',
       );
 
       IntegrationTestUtil.verifyWidgetIsDisabled(
@@ -16134,7 +16134,7 @@ void main() {
 
       IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
-        widgetKeyStr: 'download_sel_playlists_button',
+        widgetKeyStr: 'download_sel_playlist_button',
       );
 
       IntegrationTestUtil.verifyWidgetIsDisabled(
@@ -16291,7 +16291,7 @@ void main() {
 
       IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
-        widgetKeyStr: 'download_sel_playlists_button',
+        widgetKeyStr: 'download_sel_playlist_button',
       );
 
       IntegrationTestUtil.verifyWidgetIsEnabled(
@@ -16468,7 +16468,7 @@ void main() {
 
       IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
-        widgetKeyStr: 'download_sel_playlists_button',
+        widgetKeyStr: 'download_sel_playlist_button',
       );
 
       IntegrationTestUtil.verifyWidgetIsDisabled(
@@ -16636,7 +16636,7 @@ void main() {
 
       IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
-        widgetKeyStr: 'download_sel_playlists_button',
+        widgetKeyStr: 'download_sel_playlist_button',
       );
 
       IntegrationTestUtil.verifyWidgetIsDisabled(
@@ -16792,7 +16792,7 @@ void main() {
 
       IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
-        widgetKeyStr: 'download_sel_playlists_button',
+        widgetKeyStr: 'download_sel_playlist_button',
       );
 
       IntegrationTestUtil.verifyWidgetIsEnabled(
@@ -16994,7 +16994,7 @@ void main() {
 
       IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
-        widgetKeyStr: 'download_sel_playlists_button',
+        widgetKeyStr: 'download_sel_playlist_button',
       );
 
       IntegrationTestUtil.verifyWidgetIsEnabled(
@@ -17168,7 +17168,7 @@ void main() {
       // audio of selected playlist button is disabled
       IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
-        widgetKeyStr: 'download_sel_playlists_button',
+        widgetKeyStr: 'download_sel_playlist_button',
       );
 
       IntegrationTestUtil.verifyWidgetIsEnabled(
@@ -17424,7 +17424,7 @@ void main() {
 
       IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
-        widgetKeyStr: 'download_sel_playlists_button',
+        widgetKeyStr: 'download_sel_playlist_button',
       );
 
       IntegrationTestUtil.verifyWidgetIsDisabled(
@@ -17511,7 +17511,7 @@ void main() {
 
       IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
-        widgetKeyStr: 'download_sel_playlists_button',
+        widgetKeyStr: 'download_sel_playlist_button',
       );
 
       IntegrationTestUtil.verifyWidgetIsEnabled(
@@ -17598,7 +17598,7 @@ void main() {
 
       IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
-        widgetKeyStr: 'download_sel_playlists_button',
+        widgetKeyStr: 'download_sel_playlist_button',
       );
 
       IntegrationTestUtil.verifyWidgetIsDisabled(
@@ -17675,7 +17675,7 @@ void main() {
 
       IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
-        widgetKeyStr: 'download_sel_playlists_button',
+        widgetKeyStr: 'download_sel_playlist_button',
       );
 
       IntegrationTestUtil.verifyWidgetIsEnabled(
@@ -17812,7 +17812,7 @@ void main() {
 
       IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
-        widgetKeyStr: 'download_sel_playlists_button',
+        widgetKeyStr: 'download_sel_playlist_button',
       );
 
       IntegrationTestUtil.verifyWidgetIsDisabled(
@@ -17941,7 +17941,7 @@ void main() {
 
       IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
-        widgetKeyStr: 'download_sel_playlists_button',
+        widgetKeyStr: 'download_sel_playlist_button',
       );
 
       IntegrationTestUtil.verifyWidgetIsDisabled(
@@ -18048,7 +18048,7 @@ void main() {
 
       IntegrationTestUtil.verifyWidgetIsDisabled(
         tester: tester,
-        widgetKeyStr: 'download_sel_playlists_button',
+        widgetKeyStr: 'download_sel_playlist_button',
       );
 
       IntegrationTestUtil.verifyWidgetIsDisabled(
@@ -18167,7 +18167,7 @@ void main() {
 
       IntegrationTestUtil.verifyWidgetIsEnabled(
         tester: tester,
-        widgetKeyStr: 'download_sel_playlists_button',
+        widgetKeyStr: 'download_sel_playlist_button',
       );
 
       IntegrationTestUtil.verifyWidgetIsEnabled(
@@ -23019,7 +23019,7 @@ Future<void> _verifyYoutubeSelectedPlaylistButtonsAndCheckbox({
 
   IntegrationTestUtil.verifyWidgetIsEnabled(
     tester: tester,
-    widgetKeyStr: 'download_sel_playlists_button',
+    widgetKeyStr: 'download_sel_playlist_button',
   );
 
   IntegrationTestUtil.verifyWidgetIsEnabled(
@@ -23063,7 +23063,7 @@ Future<void> _verifyLocalSelectedPlaylistButtonsAndCheckbox({
 
   IntegrationTestUtil.verifyWidgetIsDisabled(
     tester: tester,
-    widgetKeyStr: 'download_sel_playlists_button',
+    widgetKeyStr: 'download_sel_playlist_button',
   );
 
   IntegrationTestUtil.verifyWidgetIsDisabled(
@@ -23367,7 +23367,7 @@ Future<void> _ensureNoButtonIsEnabledSinceNoPlaylistIsSelected(
 
   IntegrationTestUtil.verifyWidgetIsDisabled(
     tester: tester,
-    widgetKeyStr: 'download_sel_playlists_button',
+    widgetKeyStr: 'download_sel_playlist_button',
   );
 
   IntegrationTestUtil.verifyWidgetIsDisabled(

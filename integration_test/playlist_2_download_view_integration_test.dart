@@ -1581,7 +1581,7 @@ void main() {
 
         IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
-          widgetKeyStr: 'download_sel_playlists_button',
+          widgetKeyStr: 'download_sel_playlist_button',
         );
 
         IntegrationTestUtil.verifyWidgetIsDisabled(
@@ -1661,7 +1661,7 @@ void main() {
 
         IntegrationTestUtil.verifyWidgetIsDisabled(
           tester: tester,
-          widgetKeyStr: 'download_sel_playlists_button',
+          widgetKeyStr: 'download_sel_playlist_button',
         );
 
         IntegrationTestUtil.verifyWidgetIsDisabled(
@@ -1741,7 +1741,7 @@ void main() {
 
         IntegrationTestUtil.verifyWidgetIsEnabled(
           tester: tester,
-          widgetKeyStr: 'download_sel_playlists_button',
+          widgetKeyStr: 'download_sel_playlist_button',
         );
 
         IntegrationTestUtil.verifyWidgetIsEnabled(
@@ -33370,7 +33370,7 @@ void main() {
 
       // Now typing on the download playlist button to download the
       // an audio.
-      await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
+      await tester.tap(find.byKey(const Key('download_sel_playlist_button')));
       await tester.pumpAndSettle();
 
       await Future.delayed(const Duration(milliseconds: 1000));
@@ -33534,7 +33534,7 @@ void main() {
 
       // Now typing on the download playlist button to download the
       // an audio.
-      await tester.tap(find.byKey(const Key('download_sel_playlists_button')));
+      await tester.tap(find.byKey(const Key('download_sel_playlist_button')));
       await tester.pumpAndSettle();
 
       await Future.delayed(const Duration(milliseconds: 1000));
