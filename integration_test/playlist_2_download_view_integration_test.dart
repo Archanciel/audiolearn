@@ -3951,6 +3951,8 @@ void main() {
         ];
 
         List<String> audioTitles = [
+          "tts",
+          "231117-002828-morning _ cinematic video 23-07-01",
           "audio learn test short video two",
           "audio learn test short video one",
         ];
@@ -29381,7 +29383,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Restored 1 playlist saved individually, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\urgent_actus_17-12-2023.zip".',
+            'Restored 1 playlist saved individually, 4 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\urgent_actus_17-12-2023.zip".',
         isWarningConfirming: true,
         warningTitle: 'CONFIRMATION',
       );
@@ -29539,7 +29541,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Restored 1 playlist saved individually, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\urgent_actus_17-12-2023.zip".',
+            'Restored 1 playlist saved individually, 4 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\urgent_actus_17-12-2023.zip".',
         isWarningConfirming: true,
         warningTitle: 'CONFIRMATION',
       );
@@ -29685,7 +29687,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Restored 1 playlist saved individually, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\urgent_actus_17-12-2023.zip".',
+            'Restored 1 playlist saved individually, 4 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\urgent_actus_17-12-2023.zip".',
         isWarningConfirming: true,
         warningTitle: 'CONFIRMATION',
       );
@@ -29828,7 +29830,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Restored 1 playlist saved individually, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\urgent_actus_17-12-2023.zip".',
+            'Restored 1 playlist saved individually, 4 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\urgent_actus_17-12-2023.zip".',
         isWarningConfirming: true,
         warningTitle: 'CONFIRMATION',
       );
@@ -35650,6 +35652,7 @@ Future<void> _verifyTargetListTitles({
       equals([
         'local_3',
         'local_audio_playlist_2',
+        'new_local',
         'local_two',
       ]));
 
