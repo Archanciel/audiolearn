@@ -1,34 +1,62 @@
+import 'dart:io';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
+import 'package:logger/logger.dart';
 
 Future<void> main() async {
+  final Logger logger = Logger();
   final yt = YoutubeExplode();
 
-  // Get the video metadata.
-  final video = await yt.videos.get('fRh_vgS2dFE');
-  print(video.title); // ^ You can pass both video URLs or video IDs.
+  try {
+    // Get the video metadata
+    final video = await yt.videos.get('fRh_vgS2dFE');
+    logger.i('Downloading: ${video.title}');
 
-  final manifest = await yt.videos.streams.getManifest('fRh_vgS2dFE',
-      // You can also pass a list of preferred clients, otherwise the library will handle it:
-      ytClients: [
-        YoutubeApiClient.ios,
-        YoutubeApiClient.androidVr,
-      ]);
+    // Get the stream manifest
+    final manifest = await yt.videos.streams.getManifest('fRh_vgS2dFE');
 
-  // Print all the available streams.
-  print(manifest);
+    // Get the best audio stream
+    final audioStream = manifest.audioOnly.withHighestBitrate();
+    logger.i('Bitrate: ${audioStream.bitrate}');
 
-  // Get the audio streams.
-  final audio = manifest.audioOnly;
+    // Set up the output directory and file
+    final outputDir =
+        Directory(r'C:\development\flutter\audiolearn\test\data\audio');
 
-  // Download it
-  final stream = yt.videos.streams.get(audio.first);
-  // then pipe the stream to a file...
+    // Create directory if it doesn't exist
+    if (!await outputDir.exists()) {
+      await outputDir.create(recursive: true);
+    }
 
-  // Or you can use the url to stream it directly.
-  audio.first.url; // This is the audio stream url.
+    // Clean the filename (remove invalid characters)
+    final cleanTitle = video.title.replaceAll(RegExp(r'[<>:"/\\|?*]'), '_');
+    final fileName = '$cleanTitle.${audioStream.container.name}';
+    final filePath = '${outputDir.path}\\$fileName';
 
-  // Make sure to handle the file extension properly. Especially m3u8 streams might require further processing.
+    final file = File(filePath);
+    final output = file.openWrite();
 
-  // Close the YoutubeExplode's http client.
-  yt.close();
+    // Download the stream
+    final stream = yt.videos.streams.get(audioStream);
+
+    var len = audioStream.size.totalBytes;
+    var count = 0;
+
+    await for (final data in stream) {
+      count += data.length;
+      output.add(data);
+
+      var progress = ((count / len) * 100).toStringAsFixed(1);
+      stdout.write('\rDownloading: $progress%');
+    }
+
+    stdout.write('\n');
+    await output.flush();
+    await output.close();
+
+    logger.i('Downloaded to: $filePath');
+  } catch (e) {
+    logger.i('EXCEPTION $e');
+    yt.close();
+    return;
+  }
 }
