@@ -12007,6 +12007,168 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
+      testWidgets('''Audio last comment date/time sort. Audio list item subtitle
+          specific to Audio Last comment date/time sort option is verified.''',
+          (WidgetTester tester) async {
+        // Click on 'Sort/filter audio' menu item of Audio popup menu to open
+        // sort filter audio dialog. Then creating a named audio last comment
+        // date/time sort option parms and saving it. Then verifying that a Sort/
+        // filter dropdown button item has been created and is applied to the playlist
+        // download view list of audio. The sorted audio list item title as well
+        // as the subtitle specific to Audio last comment date/time sort option
+        // is verified.
+
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          sharedPreferences: await SharedPreferences.getInstance(),
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the download app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+        await app.main();
+        await tester.pumpAndSettle();
+
+        // Now open the audio popup menu
+        await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+        await tester.pumpAndSettle();
+
+        // Find the sort/filter audio menu item and tap on it to
+        // open the audio sort filter dialog
+        await tester.tap(
+            find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+        await tester.pumpAndSettle();
+
+        // Type "Audio last comment date/time" in the 'Save as' TextField
+
+        String saveAsTitle = 'Audio last comment date/time';
+
+        await tester.enterText(
+            find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+            saveAsTitle);
+        await tester.pumpAndSettle();
+
+        // Now select the 'Last comment date/time' item in the 'Sort by'
+        // dropdown button
+
+        await tester.tap(find.byKey(const Key('sortingOptionDropdownButton')));
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.text('Last comment date/time'));
+        await tester.pumpAndSettle();
+
+        // Then delete the "Audio download date" descending sort option
+
+        // Find the Text with "Audio downl date" which is located in the
+        // selected sort parameters ListView
+        final Finder textFinder = find.descendant(
+          of: find.byKey(const Key('selectedSortingOptionsListView')),
+          matching: find.text('Audio downl date'),
+        );
+
+        // Then find the ListTile ancestor of the 'Audio downl date' Text
+        // widget. The ascending/descending and remove icon buttons are
+        // contained in their ListTile ancestor
+        final Finder listTileFinder = find.ancestor(
+          of: textFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now, within that ListTile, find the sort option delete IconButton
+        // with key 'removeSortingOptionIconButton'
+        final Finder iconButtonFinder = find.descendant(
+          of: listTileFinder,
+          matching: find.byKey(const Key('removeSortingOptionIconButton')),
+        );
+
+        // Tap on the delete icon button to delete the 'Audio downl date'
+        // descending sort option
+        await tester.tap(iconButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Scrolling down the sort filter dialog so that the checkboxes
+        // are visible and so accessible by the integration test.
+        // WARNING: Scrolling down must be done before setting sort
+        // options, otherwise, it does not work.
+        await tester.drag(
+          find.byType(AudioSortFilterDialog),
+          const Offset(
+              0, -300), // Negative value for vertical drag to scroll down
+        );
+        await tester.pumpAndSettle();
+
+        // Tap on the Uncom. checkbox to unselect it
+        await tester.tap(find.byKey(const Key('filterNotCommentedCheckbox')));
+        await tester.pumpAndSettle();
+
+        // Click on the "Save" button. This closes the sort/filter dialog
+        // and updates the sort/filter playlist download view dropdown
+        // button with the newly created sort/filter parms
+        await tester
+            .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+        await tester.pumpAndSettle();
+
+        // Now verify the playlist download view state with the 'Audio last
+        // comment date/time' sort option applied
+
+        // Verify that the dropdown button has been updated with the
+        // 'Last listened date/time' sort/filter parms selected
+        IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+          tester: tester,
+          dropdownButtonSelectedTitle: saveAsTitle,
+        );
+
+        // Verify the order of the playlist audio titles
+
+        List<String> audioTitlesSortedByTitleAscending = [
+          "Les besoins artificiels par R.Keucheyan",
+          "La résilience insulaire par Fiona Roche",
+          "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+        ];
+
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+        );
+
+        // And verify the order of the playlist audio subtitles
+
+        List<String> audioSubTitlesSortedByTitleAscending = [
+          "0:19:05.0 Commented on 02/11/2025 at 15:47",
+          "0:13:35.0 Commented on 02/11/2025 at 15:01",
+          "0:06:29.0 Commented on 02/11/2025 at 15:00",
+          "0:20:32.0 Commented on 02/11/2025 at 15:00",
+        ];
+
+        IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+          tester: tester,
+          audioSubTitlesAcceptableLst: audioSubTitlesSortedByTitleAscending,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
       testWidgets('''Audio file size sort.''', (WidgetTester tester) async {
         // Click on 'Sort/filter audio' menu item of Audio popup menu to open
         // sort filter audio dialog. Then creating a named audio filesize desc
