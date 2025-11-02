@@ -1541,19 +1541,19 @@ abstract class AppLocalizations {
   String
       get playableAudioDialogSortDescriptionTooltipTopRemainingDurationSmaller;
 
-  /// No description provided for @playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeBigger.
+  /// No description provided for @playableAudioDialogSortDescriptionTooltipTopLastListenedDateTimeBigger.
   ///
   /// In en, this message translates to:
   /// **'Audio at the top were listened more recently than those at the bottom.'**
   String
-      get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeBigger;
+      get playableAudioDialogSortDescriptionTooltipTopLastListenedDateTimeBigger;
 
-  /// No description provided for @playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller.
+  /// No description provided for @playableAudioDialogSortDescriptionTooltipTopLastListenedDateTimeSmaller.
   ///
   /// In en, this message translates to:
   /// **'Audio at the top were listened less recently than those at the bottom.'**
   String
-      get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller;
+      get playableAudioDialogSortDescriptionTooltipTopLastListenedDateTimeSmaller;
 
   /// No description provided for @saveAs.
   ///
@@ -3908,6 +3908,38 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Line break invisible characters in incorrect locations can cause unwanted pauses in the generated audio. Removing them improves audio quality.'**
   String get clearEndLineSelectionTooltip;
+
+  /// No description provided for @lastCommentDateTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Last comment date/time'**
+  String get lastCommentDateTime;
+
+  /// No description provided for @playableAudioDialogSortDescriptionTooltipTopLastCommentDateTimeBigger.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio at the top has a last comment created or modified more recently than those at the bottom.'**
+  String
+      get playableAudioDialogSortDescriptionTooltipTopLastCommentDateTimeBigger;
+
+  /// No description provided for @playableAudioDialogSortDescriptionTooltipTopLastCommentDateTimeSmaller.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio at the top has a last comment created or modified less recently than those at the bottom.'**
+  String
+      get playableAudioDialogSortDescriptionTooltipTopLastCommentDateTimeSmaller;
+
+  /// No description provided for @audioStateNoComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Not commented'**
+  String get audioStateNoComment;
+
+  /// No description provided for @commentedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Commented on'**
+  String get commentedOn;
 }
 
 class _AppLocalizationsDelegate

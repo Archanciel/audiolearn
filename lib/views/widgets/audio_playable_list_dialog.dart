@@ -286,10 +286,18 @@ class _AudioPlayableListDialogState extends State<AudioPlayableListDialog>
       case SortingOption.lastListenedDateTime:
         if (sortingItem.isAscending) {
           return AppLocalizations.of(context)!
-              .playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller;
+              .playableAudioDialogSortDescriptionTooltipTopLastListenedDateTimeSmaller;
         } else {
           return AppLocalizations.of(context)!
-              .playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeBigger;
+              .playableAudioDialogSortDescriptionTooltipTopLastListenedDateTimeBigger;
+        }
+      case SortingOption.lastCommentDateTime:
+        if (sortingItem.isAscending) {
+          return AppLocalizations.of(context)!
+              .playableAudioDialogSortDescriptionTooltipTopLastCommentDateTimeSmaller;
+        } else {
+          return AppLocalizations.of(context)!
+              .playableAudioDialogSortDescriptionTooltipTopLastCommentDateTimeBigger;
         }
       default:
         break;
