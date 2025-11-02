@@ -3366,9 +3366,9 @@ class PlaylistListVM extends ChangeNotifier {
             // to speech audio mp3 if its created comment was deleted.
           }
 
-          // Find the most recent comment creation date
+          // Find the most recent comment modification date
           DateTime mostRecentCommentDate = comments
-              .map((comment) => comment.creationDateTime)
+              .map((comment) => comment.lastUpdateDateTime)
               .reduce((a, b) => a.isAfter(b) ? a : b);
 
           return mostRecentCommentDate.isAtOrAfter(fromAudioDownloadDateTime);
