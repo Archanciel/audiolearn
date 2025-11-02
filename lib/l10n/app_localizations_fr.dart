@@ -858,29 +858,27 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get playableAudioDialogSortDescriptionTooltipTopDurationBigger =>
-      'Les audio en haut ont une durée plus longue que ceux d\'en bas.';
+      'Les audio\'s en haut ont une durée plus longue que ceux d\'en bas.';
 
   @override
   String get playableAudioDialogSortDescriptionTooltipTopDurationSmaller =>
-      'Les audio en haut ont une durée plus courte que ceux d\'en bas.';
+      'Les audio\'s en haut ont une durée plus courte que ceux d\'en bas.';
 
   @override
   String get playableAudioDialogSortDescriptionTooltipTopRemainingDurationBigger =>
-      'Les audio en haut ont une durée d\'écoute restante plus longue que ceux d\'en bas.';
+      'Les audio\'s en haut ont une durée d\'écoute restante plus longue que ceux d\'en bas.';
 
   @override
   String get playableAudioDialogSortDescriptionTooltipTopRemainingDurationSmaller =>
-      'Les audio en haut ont une durée d\'écoute restante plus courte que ceux d\'en bas.';
+      'Les audio\'s en haut ont une durée d\'écoute restante plus courte que ceux d\'en bas.';
 
   @override
-  String
-      get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeBigger =>
-          'Les audio en haut ont été écoutés plus récemment que ceux d\'en bas.';
+  String get playableAudioDialogSortDescriptionTooltipTopLastListenedDateTimeBigger =>
+      'Les audio\'s en haut ont été écoutés plus récemment que ceux d\'en bas.';
 
   @override
-  String
-      get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller =>
-          'Les audio en haut ont été écoutés moins récemment que ceux d\'en bas.';
+  String get playableAudioDialogSortDescriptionTooltipTopLastListenedDateTimeSmaller =>
+      'Les audio\'s en haut ont été écoutés moins récemment que ceux d\'en bas.';
 
   @override
   String get saveAs => 'Enregistrer sous:';
@@ -2471,4 +2469,21 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get clearEndLineSelectionTooltip =>
       'Les caractères invisibles de saut de ligne à des emplacements incorrects peuvent créer des pauses non désirées dans l\'audio généré. Leur suppression améliore la qualité audio.';
+
+  @override
+  String get lastCommentDateTime => 'Date/heure dernier commentaire';
+
+  @override
+  String get playableAudioDialogSortDescriptionTooltipTopLastCommentDateTimeBigger =>
+      'Le dernier commentaire des audio\'s en haut a été plus récemment créé ou modifié que le dernier commentaire des audio\'s d\'en bas.';
+
+  @override
+  String get playableAudioDialogSortDescriptionTooltipTopLastCommentDateTimeSmaller =>
+      'Le dernier commentaire des audio\'s en haut a été moins récemment créé ou modifié que le dernier commentaire des audio\'s d\'en bas.';
+
+  @override
+  String get audioStateNoComment => 'Non commenté';
+
+  @override
+  String get commentedOn => 'Commenté le';
 }

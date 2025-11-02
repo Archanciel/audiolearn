@@ -19,6 +19,7 @@ import '../../viewmodels/audio_player_vm.dart';
 import '../../../viewmodels/playlist_list_vm.dart';
 import '../../utils/duration_expansion.dart';
 import '../../constants.dart';
+import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
 import 'confirm_action_dialog.dart';
@@ -639,6 +640,25 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
               '${AppLocalizations.of(context)!.listenedOn} ${dateFormatVMlistenTrue.formatDate(lastListenedDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(lastListenedDateTime)}';
         }
 
+        return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)} $lastSubtitlePart';
+      case SortingOption.lastCommentDateTime:
+        CommentVM commentVM = CommentVM();
+        String lastSubtitlePart;
+
+        // Load comments for this audio
+        List<Comment> comments = commentVM.loadAudioComments(audio: audio);
+
+        if (comments.isEmpty) {
+          lastSubtitlePart = AppLocalizations.of(context)!.audioStateNoComment;
+        } else {
+          // Find the most recent comment modification date
+          DateTime mostRecentCommentDate = comments
+              .map((comment) => comment.lastUpdateDateTime)
+              .reduce((a, b) => a.isAfter(b) ? a : b);
+
+          lastSubtitlePart =
+              '${AppLocalizations.of(context)!.commentedOn} ${dateFormatVMlistenTrue.formatDate(mostRecentCommentDate)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(mostRecentCommentDate)}';
+        }
         return '${audioDuration.HHmmss(addRemainingOneDigitTenthOfSecond: true)} $lastSubtitlePart';
       case SortingOption.audioRemainingDuration:
         final DateTime? lastListenedDateTime = audio.audioPausedDateTime;

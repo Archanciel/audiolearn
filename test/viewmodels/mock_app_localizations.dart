@@ -1095,11 +1095,11 @@ class MockAppLocalizations extends AppLocalizations {
   String get lastListenedDateTime => "Last listened date/time";
 
   @override
-  String get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeBigger =>
+  String get playableAudioDialogSortDescriptionTooltipTopLastListenedDateTimeBigger =>
       "Audio at the top were listened more recently than those at the bottom.";
 
   @override
-  String get playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller =>
+  String get playableAudioDialogSortDescriptionTooltipTopLastListenedDateTimeSmaller =>
       "Audio at the top were listened less recently than those at the bottom.";
 
   @override
@@ -2535,4 +2535,21 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get clearEndLineSelectionTooltip =>
       "Line break invisible characters in incorrect locations can cause unwanted pauses in the generated audio. Removing them improves audio quality.";
+
+  @override
+  String get lastCommentDateTime => "Last comment date/time";
+
+  @override
+  String get playableAudioDialogSortDescriptionTooltipTopLastCommentDateTimeBigger =>
+      "Audio at the top has a last comment created or modified more recently than those at the bottom.";
+
+  @override
+  String get playableAudioDialogSortDescriptionTooltipTopLastCommentDateTimeSmaller =>
+      "Audio at the top has a last comment created or modified less recently than those at the bottom.";
+
+  @override
+  String get audioStateNoComment => "Not commented";
+
+  @override
+  String get commentedOn => "Commented on";
 }

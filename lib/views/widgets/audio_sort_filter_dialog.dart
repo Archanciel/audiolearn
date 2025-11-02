@@ -440,6 +440,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
         return AppLocalizations.of(context)!.audioRemainingDuration;
       case SortingOption.lastListenedDateTime:
         return AppLocalizations.of(context)!.lastListenedDateTime;
+      case SortingOption.lastCommentDateTime:
+        return AppLocalizations.of(context)!.lastCommentDateTime;
       case SortingOption.audioFileSize:
         return AppLocalizations.of(context)!.audioFileSize;
       case SortingOption.audioDownloadSpeed:
@@ -2432,6 +2434,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           AppLocalizations.of(context)!.audioRemainingDuration,
       'lastListenedDateTime':
           AppLocalizations.of(context)!.lastListenedDateTime,
+      'lastCommentDateTime':
+          AppLocalizations.of(context)!.lastCommentDateTime,
       'audioFileSize': AppLocalizations.of(context)!.audioFileSize,
       'audioDownloadSpeed': AppLocalizations.of(context)!.audioDownloadSpeed,
       'audioDownloadDuration':

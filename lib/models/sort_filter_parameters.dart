@@ -2,8 +2,10 @@
 
 import 'package:flutter/foundation.dart';
 
+import '../viewmodels/comment_vm.dart';
 import 'audio.dart';
 import '../utils/date_time_parser.dart';
+import 'comment.dart';
 
 // This enum is used to specify how to sort the audio list.
 // It is used in the AudioSortFilterDialog.
@@ -16,6 +18,7 @@ enum SortingOption {
   audioDuration,
   audioRemainingDuration,
   lastListenedDateTime,
+  lastCommentDateTime,
   audioFileSize,
   audioDownloadSpeed,
   audioDownloadDuration,
@@ -201,6 +204,31 @@ class AudioSortFilterParameters {
         // audio.audioPausedDateTime is null, the audio will be positioned at
         // the end of the descendly sorted list.
         return audio.audioPausedDateTime ?? DateTime(2000);
+      },
+      sortOrder: sortDescending,
+    ),
+    SortingOption.lastCommentDateTime: SortCriteria<Audio>(
+      selectorFunction: (Audio audio) {
+        CommentVM commentVM = CommentVM();
+
+        // Load comments for this audio
+        List<Comment> comments = commentVM.loadAudioComments(audio: audio);
+
+        if (comments.isEmpty) {
+          // Since audio.audioPausedDateTime is nullable, we return a default
+          // date if it is null. This default date is in the past. So, if the
+          // audio.audioPausedDateTime is null, the audio will be positioned at
+          // the end of the descendly sorted list.
+          return audio.audioPausedDateTime ??
+              DateTime(2000); // No comments, so use the
+        }
+
+        // Find the most recent comment modification date
+        DateTime mostRecentCommentDate = comments
+            .map((comment) => comment.lastUpdateDateTime)
+            .reduce((a, b) => a.isAfter(b) ? a : b);
+
+        return mostRecentCommentDate;
       },
       sortOrder: sortDescending,
     ),

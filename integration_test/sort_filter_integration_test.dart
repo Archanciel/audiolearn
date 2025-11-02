@@ -2943,6 +2943,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             await _removeSortingItem(
               tester: tester,
+              sortingItemName: 'Last comment date/time',
+            );
+
+            await _removeSortingItem(
+              tester: tester,
               sortingItemName: 'Audio file size',
             );
 
@@ -2968,7 +2973,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
-                  'Sort by:\n Present only in initial version:\n   Audio downl date asc,\n   Video upload date desc,\n   Audio title asc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Last listened date/time desc,\n   Audio file size desc,\n   Audio downl speed desc,\n   Audio downl duration desc\n Present only in modified version:\n   Audio listenable remaining\n   duration desc',
+                  'Sort by:\n Present only in initial version:\n   Audio downl date asc,\n   Video upload date desc,\n   Audio title asc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Last listened date/time desc,\n   Last comment date/time desc,\n   Audio file size desc,\n   Audio downl speed desc,\n   Audio downl duration desc\n Present only in modified version:\n   Audio listenable remaining\n   duration desc',
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -4356,6 +4361,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             await _removeSortingItem(
               tester: tester,
+              sortingItemName: 'Date/heure dernier commentaire',
+            );
+
+            await _removeSortingItem(
+              tester: tester,
               sortingItemName: 'Taille fichier audio',
             );
 
@@ -4381,7 +4391,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
-                  'Trier par:\n Uniquement en version initiale:\n   Date téléch audio asc,\n   Date mise en ligne vidéo desc,\n   Titre audio asc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Date/heure dernière écoute desc,\n   Taille fichier audio desc,\n   Vitesse téléch audio desc,\n   Durée téléch audio desc\n Uniquement en version modifiée:\n   Durée audio écoutable\n   restante desc',
+                  'Trier par:\n Uniquement en version initiale:\n   Date téléch audio asc,\n   Date mise en ligne vidéo desc,\n   Titre audio asc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Date/heure dernière écoute desc,\n   Date/heure dernier\n   commentaire desc,\n   Taille fichier audio desc,\n   Vitesse téléch audio desc,\n   Durée téléch audio desc\n Uniquement en version modifiée:\n   Durée audio écoutable\n   restante desc',
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 

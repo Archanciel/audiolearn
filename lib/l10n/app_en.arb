@@ -418,8 +418,8 @@
   "playableAudioDialogSortDescriptionTooltipTopDurationSmaller": "Audio at the top have a shorter duration than those at the bottom.",
   "playableAudioDialogSortDescriptionTooltipTopRemainingDurationBigger": "Audio at the top have more remaining listenable duration than those at the bottom.",
   "playableAudioDialogSortDescriptionTooltipTopRemainingDurationSmaller": "Audio at the top have less remaining listenable duration than those at the bottom.",
-  "playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeBigger": "Audio at the top were listened more recently than those at the bottom.",
-  "playableAudioDialogSortDescriptionTooltipTopLastListenedDatrTimeSmaller": "Audio at the top were listened less recently than those at the bottom.",
+  "playableAudioDialogSortDescriptionTooltipTopLastListenedDateTimeBigger": "Audio at the top were listened more recently than those at the bottom.",
+  "playableAudioDialogSortDescriptionTooltipTopLastListenedDateTimeSmaller": "Audio at the top were listened less recently than those at the bottom.",
   "saveAs": "Save as:",
   "sortFilterSaveAsTextFieldTooltip": "Save the sort/filter settings with the specified name. Existing settings with the same name will be updated.",
   "applySortFilterToView": "Apply sort/filter to:",
@@ -1116,5 +1116,10 @@
   "dateFormatMMddyyyy": "MM/dd/yyyy",
   "dateFormatyyyyMMdd": "yyyy/MM/dd",
   "clearEndLineSelection": "Remove line breaks",
-  "clearEndLineSelectionTooltip": "Line break invisible characters in incorrect locations can cause unwanted pauses in the generated audio. Removing them improves audio quality."
+  "clearEndLineSelectionTooltip": "Line break invisible characters in incorrect locations can cause unwanted pauses in the generated audio. Removing them improves audio quality.",
+  "lastCommentDateTime": "Last comment date/time",
+  "playableAudioDialogSortDescriptionTooltipTopLastCommentDateTimeBigger": "Audio at the top has a last comment created or modified more recently than those at the bottom.",
+  "playableAudioDialogSortDescriptionTooltipTopLastCommentDateTimeSmaller": "Audio at the top has a last comment created or modified less recently than those at the bottom.",
+  "audioStateNoComment": "Not commented",
+  "commentedOn": "Commented on"
 }
