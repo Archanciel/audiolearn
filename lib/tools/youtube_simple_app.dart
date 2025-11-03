@@ -6,7 +6,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 import 'package:window_size/window_size.dart';
-import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 void main() {
   setWindowsAppSizeAndPosition(isTest: true);
@@ -66,11 +65,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _urlCtrl = TextEditingController();
-  final _yt = YoutubeExplode();
   Process? _ytDlpProc; // track the external process so Cancel can kill it
 
   String? _targetDir;
-  String? _ytDlpPath; // Optional explicit path to yt-dlp.exe
+  final String _ytDlpPath = 'c:\\YtDlp\\yt-dlp.exe'; // Optional explicit path to yt-dlp.exe
   double _progress = 0.0;
   bool _busy = false;
   String _status = 'Idle';
@@ -79,7 +77,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose() {
     _sub?.cancel();
-    _yt.close();
     _urlCtrl.dispose();
     super.dispose();
   }
@@ -90,16 +87,6 @@ class _HomePageState extends State<HomePage> {
       initialDirectory: _targetDir,
     );
     if (dir != null) setState(() => _targetDir = dir);
-  }
-
-  Future<void> _pickYtDlpExe() async {
-    final r = await FilePicker.platform.pickFiles(
-      dialogTitle: 'Locate yt-dlp.exe (optional)',
-      type: FileType.custom,
-      allowedExtensions: ['exe'],
-    );
-    final path = r?.files.single.path;
-    if (path != null) setState(() => _ytDlpPath = path);
   }
 
   Future<void> _download() async {
@@ -134,69 +121,8 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<bool> _downloadWithYoutubeExplode(String url) async {
-    final video = await _yt.videos.get(url);
-    final manifest = await _yt.videos.streamsClient.getManifest(video.id);
-
-    // Prefer m4a if present, else highest bitrate audioOnly
-    final audioM4a = manifest.audioOnly
-        .where((s) => s.container.name.toLowerCase() == 'm4a')
-        .toList()
-      ..sort((a, b) => a.bitrate.compareTo(b.bitrate));
-    final audio = (audioM4a.isNotEmpty
-        ? audioM4a.last
-        : manifest.audioOnly.sortByBitrate().lastOrNull);
-    if (audio == null) throw 'No audio-only stream found.';
-
-    final title = _safeFileName(video.title);
-    final outPath = p.join(_targetDir!, '$title.${audio.container.name}');
-
-    final file = File(outPath);
-    if (await file.exists()) await file.delete();
-    final sink = file.openWrite();
-
-    _setStatus('Downloading with youtube_explode_dart…');
-    final total = audio.size.totalBytes;
-    var received = 0;
-
-    final stream = _yt.videos.streamsClient.get(audio);
-    final c = Completer<bool>();
-    _sub = stream.listen(
-      (chunk) {
-        sink.add(chunk);
-        received += chunk.length;
-        if (total > 0) setState(() => _progress = received / total);
-      },
-      onDone: () async {
-        await sink.flush();
-        await sink.close();
-        if (await file.length() == 0) {
-          await file.delete().catchError((_) {});
-          c.complete(false); // trigger fallback
-        } else {
-          _setStatus('Completed: ${p.basename(outPath)}');
-          c.complete(true);
-        }
-      },
-      onError: (e, st) async {
-        await sink.flush();
-        await sink.close();
-        if (await file.exists()) {
-          await file.delete().catchError((_) {});
-        }
-        c.completeError(e);
-      },
-      cancelOnError: true,
-    );
-
-    return c.future
-        .timeout(const Duration(minutes: 10), onTimeout: () => false);
-  }
-
   Future<bool> _downloadWithYtDlp(String url) async {
-    final exe = _ytDlpPath ?? _findYtDlpOnPath();
-    if (exe == null)
-      throw 'yt-dlp.exe not found. Click "Locate yt-dlp" or add it to PATH.';
+    final exe = _ytDlpPath;
 
     // Requires ffmpeg.exe to be available (PATH or next to yt-dlp.exe)
     final outTpl = p.join(_targetDir!, '%(title).150s.%(ext)s');
@@ -259,19 +185,6 @@ class _HomePageState extends State<HomePage> {
     throw 'yt-dlp exited with code $code';
   }
 
-  String? _findYtDlpOnPath() {
-    // Try to find yt-dlp.exe in PATH
-    final envPath = Platform.environment['PATH'] ?? '';
-    for (final part in envPath.split(Platform.isWindows ? ';' : ':')) {
-      final candidate = p.join(part.trim(), 'yt-dlp.exe');
-      if (File(candidate).existsSync()) return candidate;
-    }
-    // Try working directory
-    final local = p.join(Directory.current.path, 'yt-dlp.exe');
-    if (File(local).existsSync()) return local;
-    return null;
-  }
-
   void _cancel() {
     // cancel any youtube_explode stream listener if you kept it
     _sub?.cancel();
@@ -298,16 +211,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _setStatus(String s) => setState(() => _status = s);
-
-  String _safeFileName(String input) {
-    final sanitized = input
-        .replaceAll(RegExp(r'[\\/:*?"<>|]'), ' ')
-        .replaceAll(RegExp(r'\s+'), ' ')
-        .trim();
-    return sanitized.isEmpty
-        ? 'audio'
-        : (sanitized.length > 150 ? sanitized.substring(0, 150) : sanitized);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -343,13 +246,8 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 12),
             Row(children: [
               Expanded(
-                  child: Text(_ytDlpPath ?? '(optional) yt-dlp.exe not set',
+                  child: Text(_ytDlpPath,
                       overflow: TextOverflow.ellipsis)),
-              const SizedBox(width: 12),
-              OutlinedButton.icon(
-                  onPressed: _busy ? null : _pickYtDlpExe,
-                  icon: const Icon(Icons.app_shortcut),
-                  label: const Text('Locate yt-dlp')),
             ]),
             const SizedBox(height: 16),
             Row(children: [
