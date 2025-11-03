@@ -4,7 +4,9 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; // Clipboard
 import 'package:path/path.dart' as p;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:window_size/window_size.dart';
 
 void main() {
@@ -33,8 +35,8 @@ Future<void> setWindowsAppSizeAndPosition({
       final Rect windowRect = Rect.fromLTWH(posX, posY, windowWidth, windowHeight);
       setWindowFrame(windowRect);
 
-      // Optional: avoid too-small windows breaking layout
-      setWindowMinSize(const Size(600, 300));
+      // Avoid too-small windows breaking layout
+      setWindowMinSize(const Size(600, 360));
     });
   }
 }
@@ -60,23 +62,39 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // --- Controllers & processes ---
   final _urlCtrl = TextEditingController();
-
-  // Keep a handle on the external process so Cancel can kill it
   Process? _ytDlpProc;
+  StreamSubscription<List<int>>? _sub; // kept for completeness
 
+  // --- State ---
   String? _targetDir;
-
-  // Your preferred hard-coded location (kept), but we also provide a PATH fallback.
   final String _hardcodedYtDlp = r'c:\YtDlp\yt-dlp.exe';
-
   double _progress = 0.0;
   bool _busy = false;
   String _status = 'Idle';
-  String? _lastOutputPath; // final destination path from yt-dlp logs
+  String? _lastOutputPath;
 
-  // (Only relevant if you keep a youtube_explode stream – left for completeness)
-  StreamSubscription<List<int>>? _sub;
+  // --- Quality selector (yt-dlp -> ffmpeg -q:a 0..9) ---
+  // Persisted in SharedPreferences
+  final Map<String, String> _qualityMap = const {
+    'Best (V0)': '0',
+    'High (V2)': '2',
+    'Medium (V5)': '5',
+    'Low (V9)': '9',
+  };
+  String _selectedQualityLabel = 'Best (V0)'; // default
+  String get _selectedQualityValue => _qualityMap[_selectedQualityLabel] ?? '0';
+
+  // --- SharedPreferences keys ---
+  static const String kPrefLastDir = 'last_target_dir';
+  static const String kPrefQualityLabel = 'audio_quality_label';
+
+  @override
+  void initState() {
+    super.initState();
+    _restorePreferences();
+  }
 
   @override
   void dispose() {
@@ -85,12 +103,51 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  Future<void> _restorePreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Restore last target folder if still exists
+    final lastDir = prefs.getString(kPrefLastDir);
+    if (lastDir != null && Directory(lastDir).existsSync()) {
+      setState(() => _targetDir = lastDir);
+    }
+
+    // Restore last quality choice
+    final q = prefs.getString(kPrefQualityLabel);
+    if (q != null && _qualityMap.containsKey(q)) {
+      setState(() => _selectedQualityLabel = q);
+    }
+  }
+
+  Future<void> _persistLastDir(String dir) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(kPrefLastDir, dir);
+  }
+
+  Future<void> _persistQuality() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(kPrefQualityLabel, _selectedQualityLabel);
+  }
+
+  // -------- UI actions --------
+
   Future<void> _pickDirectory() async {
     final dir = await FilePicker.platform.getDirectoryPath(
       dialogTitle: 'Choose target folder',
       initialDirectory: _targetDir,
     );
-    if (dir != null) setState(() => _targetDir = dir);
+    if (dir != null) {
+      setState(() => _targetDir = dir);
+      await _persistLastDir(dir);
+    }
+  }
+
+  Future<void> _pasteFromClipboard() async {
+    final data = await Clipboard.getData(Clipboard.kTextPlain);
+    final text = data?.text?.trim();
+    if (text != null && text.isNotEmpty) {
+      setState(() => _urlCtrl.text = text);
+    }
   }
 
   // -------- Utilities --------
@@ -98,7 +155,7 @@ class _HomePageState extends State<HomePage> {
   void _setStatus(String s) => setState(() => _status = s);
 
   String? _findYtDlpExe() {
-    // 1) Your hardcoded path
+    // 1) Hardcoded path
     if (File(_hardcodedYtDlp).existsSync()) return _hardcodedYtDlp;
 
     // 2) PATH lookup
@@ -126,19 +183,16 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _killProcessHard(Process p) async {
     try {
-      // Try graceful stop first
       p.kill(ProcessSignal.sigint);
       await Future.delayed(const Duration(milliseconds: 250));
 
-      // If still running, force kill (Windows-friendly)
       if (Platform.isWindows) {
-        // /T kills child processes as well, /F is force
         await Process.run('taskkill', ['/PID', p.pid.toString(), '/T', '/F']);
       } else {
         p.kill(ProcessSignal.sigkill);
       }
     } catch (_) {
-      // If anything fails, we just ignore – process will end or user can retry
+      // ignore
     }
   }
 
@@ -168,6 +222,8 @@ class _HomePageState extends State<HomePage> {
       _lastOutputPath = null;
     });
 
+    await _persistQuality();
+
     try {
       final ok = await _downloadWithYtDlp(url);
       setState(() {
@@ -187,7 +243,7 @@ class _HomePageState extends State<HomePage> {
     final exe = _findYtDlpExe();
     if (exe == null) throw 'yt-dlp not found in c:\\YtDlp, PATH, or working directory.';
 
-    // Always create MP3 (uses FFmpeg for post-processing)
+    // Output template; yt-dlp will create .mp3 via post-processing (FFmpeg)
     final outTpl = p.join(_targetDir!, '%(title).150s.%(ext)s');
 
     final args = [
@@ -195,14 +251,14 @@ class _HomePageState extends State<HomePage> {
       '-f', 'bestaudio/best',
       '--extract-audio',
       '--audio-format', 'mp3',
-      '--audio-quality', '0',         // best
+      '--audio-quality', _selectedQualityValue,  // VBR quality 0..9
       '-o', outTpl,
       '--restrict-filenames',
       '--newline',
       url,
     ];
 
-    _setStatus('Downloading and converting to MP3…');
+    _setStatus('Downloading and converting to MP3… (quality ${_selectedQualityLabel})');
     setState(() => _progress = 0.0);
 
     _ytDlpProc = await Process.start(exe, args, runInShell: true);
@@ -213,7 +269,7 @@ class _HomePageState extends State<HomePage> {
     final subs = <StreamSubscription>[];
 
     subs.add(stdoutLines.listen((line) {
-      // 1) Progress during the download phase
+      // 1) Progress
       final m = RegExp(r'\[download\]\s+(\d+(?:\.\d+)?)%').firstMatch(line);
       if (m != null) {
         final pct = double.tryParse(m.group(1)!);
@@ -226,12 +282,12 @@ class _HomePageState extends State<HomePage> {
         _lastOutputPath = destMatch.group(1);
       }
 
-      // 3) Post-processing status (extraction/conversion)
+      // 3) Post-processing stage
       if (line.contains('[ExtractAudio]') || line.contains('[ffmpeg]')) {
-        _setStatus('Converting to MP3…');
+        _setStatus('Converting to MP3… (quality ${_selectedQualityLabel})');
       }
 
-      // 4) Already downloaded case
+      // 4) Already downloaded
       if (line.contains('has already been downloaded')) {
         setState(() => _progress = 1.0);
         _setStatus('File already present; verifying/processing…');
@@ -239,7 +295,7 @@ class _HomePageState extends State<HomePage> {
     }));
 
     subs.add(stderrLines.listen((line) {
-      // yt-dlp often writes warnings/info to stderr – show the latest as status
+      // yt-dlp often writes warnings/info to stderr – expose latest as status
       _setStatus(line);
     }));
 
@@ -288,18 +344,32 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            TextField(
-              controller: _urlCtrl,
-              decoration: const InputDecoration(
-                labelText: 'YouTube URL (video or playlist)',
-                hintText: 'https://www.youtube.com/watch?v=...  or playlist URL',
-                border: OutlineInputBorder(),
-              ),
-              onChanged: (_) => setState(() {}),
+            // URL field + Paste button
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _urlCtrl,
+                    decoration: const InputDecoration(
+                      labelText: 'YouTube URL (video or playlist)',
+                      hintText: 'https://www.youtube.com/watch?v=...  or playlist URL',
+                      border: OutlineInputBorder(),
+                    ),
+                    onChanged: (_) => setState(() {}),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                IconButton(
+                  tooltip: 'Paste from clipboard',
+                  onPressed: _busy ? null : _pasteFromClipboard,
+                  icon: const Icon(Icons.paste),
+                ),
+              ],
             ),
 
             const SizedBox(height: 12),
 
+            // Folder picker + display
             Row(children: [
               Expanded(
                 child: Text(_targetDir ?? 'No target folder chosen',
@@ -315,6 +385,33 @@ class _HomePageState extends State<HomePage> {
 
             const SizedBox(height: 12),
 
+            // Quality selector (persisted)
+            Row(
+              children: [
+                const Text('MP3 quality:'),
+                const SizedBox(width: 12),
+                DropdownButton<String>(
+                  value: _selectedQualityLabel,
+                  items: _qualityMap.keys.map((label) {
+                    return DropdownMenuItem(
+                      value: label,
+                      child: Text(label),
+                    );
+                  }).toList(),
+                  onChanged: _busy
+                      ? null
+                      : (val) {
+                          if (val == null) return;
+                          setState(() => _selectedQualityLabel = val);
+                          _persistQuality();
+                        },
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 8),
+
+            // Show where yt-dlp is found (diagnostic)
             Row(children: [
               Expanded(
                 child: Text(
@@ -326,6 +423,7 @@ class _HomePageState extends State<HomePage> {
 
             const SizedBox(height: 16),
 
+            // Actions
             Row(children: [
               ElevatedButton.icon(
                 onPressed: canDownload ? _download : null,
@@ -342,6 +440,7 @@ class _HomePageState extends State<HomePage> {
 
             const SizedBox(height: 16),
 
+            // Progress + status
             if (_busy || _progress > 0) ...[
               LinearProgressIndicator(value: _progress.clamp(0.0, 1.0)),
               const SizedBox(height: 8),
@@ -356,6 +455,7 @@ class _HomePageState extends State<HomePage> {
 
             const SizedBox(height: 8),
 
+            // Final path + open folder
             if (_lastOutputPath != null) ...[
               Align(
                 alignment: Alignment.centerLeft,
@@ -390,7 +490,7 @@ class _HomePageState extends State<HomePage> {
             const Divider(),
             const Text(
               'Downloads with yt-dlp and converts to MP3 via FFmpeg.\n'
-              'No YouTube API key required.',
+              'No YouTube API key required. Folder & quality are remembered.',
               style: TextStyle(fontSize: 12, color: Colors.black54),
             ),
           ],
