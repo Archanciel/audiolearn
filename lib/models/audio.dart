@@ -303,7 +303,7 @@ class Audio {
     return (audioDuration == Duration.zero)
         ? false
         : (audioPositionSeconds >=
-            audioDuration.inSeconds - fullyListenedBufferSeconds);
+            audioDuration.inSeconds - kFullyListenedBufferSeconds);
   }
 
   bool isPartiallyListened() {

@@ -1023,7 +1023,7 @@ class AudioPlayerVM extends ChangeNotifier {
     if (newAudioPosition > Duration.zero &&
         newAudioPosition <
             (_currentAudio!.audioDuration -
-                Duration(seconds: fullyListenedBufferSeconds))) {
+                Duration(seconds: kFullyListenedBufferSeconds))) {
       _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd =
           true;
     } else {

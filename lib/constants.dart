@@ -225,4 +225,4 @@ const double kMp3ZipFileSizeLimitInMb = 525.0; // 525 required by Android
 // If its current position is greater or equal to its total duration
 // minus fullyListenedBufferSeconds seconds, then the audio is considered
 // as being fully listened.
-const int fullyListenedBufferSeconds = 10;
+const int kFullyListenedBufferSeconds = 10;
