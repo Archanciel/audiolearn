@@ -239,9 +239,13 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         // ZIP informations or nothing.
         _buildDisplayPlaylistsMp3SaveToZipProgressionInfo(),
 
-        // displaying the currently playlist(s) audio MMP3 restored
+        // displaying the currently playlist(s) audio MP3 restored
         // from ZIP informations or nothing.
         _buildDisplayPlaylistsMp3RestoreFromZipProgressionInfo(),
+
+        // displaying the currently audio MP3 ZIP moved to the
+        // selected dir or nothing.
+        _buildDisplayMp3ZipMoveProgressionInfo(),
 
         _buildSecondLine(
             context: context,
@@ -681,6 +685,46 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   key: const Key('restoring_playlists_audio_mp3_to_zip'),
                   AppLocalizations.of(context)!.restoringUniquePlaylistAudioMp3(
                     audioMp3RestorationCurrentPlaylistName,
+                  ),
+                  textAlign: TextAlign.center, // Centered multi lines text
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10.0),
+                LinearProgressIndicator(), // Indeterminate progress bar
+                // const SizedBox(height: 10.0),
+                // Text(
+                //   key: const Key('restoring_please_wait'),
+                //   AppLocalizations.of(context)!.savingApproximativeTime(
+                //       playlistListVMlistenTrue.savingAudioMp3FileToZipDuration
+                //           .HHmmss()),
+                // ),
+              ],
+            ),
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
+    );
+  }
+
+  /// If playlists MP3 are restored from a ZIP file, the restore progression is displayed.
+  /// Otherwise, nothing is displayed.
+  Consumer<PlaylistListVM> _buildDisplayMp3ZipMoveProgressionInfo() {
+    return Consumer<PlaylistListVM>(
+      builder: (context, playlistListVMlistenTrue, child) {
+        if (playlistListVMlistenTrue.isMovingMp3Zip) {
+          String audioMp3MovedCurrentZipName =
+              playlistListVMlistenTrue.audioMp3MovedCurrentZipName;
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  key: const Key('restoring_playlists_audio_mp3_to_zip'),
+                  AppLocalizations.of(context)!.movingAudioMp3Zip(
+                    audioMp3MovedCurrentZipName,
                   ),
                   textAlign: TextAlign.center, // Centered multi lines text
                   style: const TextStyle(fontWeight: FontWeight.bold),
