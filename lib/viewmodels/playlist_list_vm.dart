@@ -256,12 +256,19 @@ class PlaylistListVM extends ChangeNotifier {
   bool _isRestoringMp3 = false;
   bool get isRestoringMp3 => _isRestoringMp3;
 
+  bool _isMovingMp3Zip = false;
+  bool get isMovingMp3Zip => _isMovingMp3Zip;
+
   String _audioMp3SaveUniquePlaylistName = '';
   String get audioMp3SaveUniquePlaylistName => _audioMp3SaveUniquePlaylistName;
 
   String _audioMp3RestorationCurrentPlaylistName = '';
   String get audioMp3RestorationCurrentPlaylistName =>
       _audioMp3RestorationCurrentPlaylistName;
+
+  String _audioMp3MovedCurrentZipName = '';
+  String get audioMp3MovedCurrentZipName =>
+      _audioMp3MovedCurrentZipName;
 
   Duration _savingAudioMp3FileToZipDuration = Duration.zero;
   Duration get savingAudioMp3FileToZipDuration =>
@@ -3173,19 +3180,15 @@ class PlaylistListVM extends ChangeNotifier {
     return savedZipFilePathName;
   }
 
-  /// This method is called when the user clicks on the appbar menu item 'Save Playlists Audio MP3
-  /// Files to Zip File' menu item or on the playlist item 'Save the Playlist Audio MP3 to Zip File'
-  /// menu item. In this case, the [listOfPlaylists] parameter contains only one playlist and the
-  /// [uniquePlaylistIsSaved] parameter is set to true.
-  ///
   /// This method saves the audio MP3 files located in the passed playlist(s) which were downloaded
-  /// at or after the passed [fromAudioDownloadDateTime] in ZIP file(s) located in the passed [targetDirStrOnWindows].
+  /// at or after the passed [fromAudioDownloadDateTime] in ZIP file(s) located in the passed
+  /// [targetDirStrOnWindows].
   ///
   /// Since creating a MP3 ZIP file on an Android device can't exceed a certain size, the passed
   /// [zipFileSizeLimitInMb] parameter value is used to limit the size of each created ZIP file.
-  /// If the total size exceeds this limit, multiple ZIP files will be created with sequential numbering.
-  /// Also, restoring a MP3 ZIP file on an Android device is limited to a certain size. This is the second
-  /// reason for the [zipFileSizeLimitInMb] parameter.
+  /// If the total size exceeds this limit, multiple ZIP files will be created with sequential
+  /// numbering. Also, restoring a MP3 ZIP file on an Android device is limited to a certain size.
+  /// This is the second reason for the [zipFileSizeLimitInMb] parameter.
   ///
   /// The returned list contains
   /// [
@@ -3751,61 +3754,6 @@ class PlaylistListVM extends ChangeNotifier {
         return [true, sourceDir, [], 'Not needed on this platform'];
       }
 
-      // Try multiple possible Downloads directory paths
-      List<String> possiblePaths = [
-        '/storage/emulated/0/Download',
-        '/storage/emulated/0/Downloads',
-        '/sdcard/Download',
-        '/sdcard/Downloads',
-      ];
-
-      Directory? downloadsDir;
-      String publicDownloadsPath = '';
-
-      // Find the first accessible Downloads directory
-      for (String tryPath in possiblePaths) {
-        Directory testDir = Directory(tryPath);
-        if (await testDir.exists()) {
-          try {
-            // Test if we can actually write to this directory
-            File testFile = File(path.join(tryPath, '.test_write_permission'));
-            await testFile.writeAsString('test');
-            await testFile.delete();
-
-            downloadsDir = testDir;
-            publicDownloadsPath = tryPath;
-            _logger.i(
-                'Found accessible Downloads directory: $publicDownloadsPath');
-            break;
-          } catch (e) {
-            _logger.w('Directory exists but not writable: $tryPath - $e');
-            continue;
-          }
-        }
-      }
-
-      if (downloadsDir == null || publicDownloadsPath.isEmpty) {
-        errorMessage =
-            'Could not find accessible public Downloads directory. Tried: ${possiblePaths.join(", ")}';
-        _logger.e(errorMessage);
-        return [false, '', [], errorMessage];
-      }
-
-      String mp3ZipFilesPath =
-          path.join(publicDownloadsPath, targetSaveDirStr);
-      Directory audioLearnDir = Directory(mp3ZipFilesPath);
-
-      if (!await audioLearnDir.exists()) {
-        try {
-          await audioLearnDir.create(recursive: true);
-          _logger.i('Created directory: $mp3ZipFilesPath');
-        } catch (e) {
-          errorMessage = 'Failed to create $targetSaveDirStr directory: $e';
-          _logger.e(errorMessage);
-          return [false, '', [], errorMessage];
-        }
-      }
-
       // Move the ZIP file(s) (copy then delete source)
       for (int i = 1; i <= numberOfZipFiles; i++) {
         String sourceFileName;
@@ -3823,7 +3771,7 @@ class PlaylistListVM extends ChangeNotifier {
 
         if (await sourceFile.exists()) {
           String targetFilePath =
-              path.join(mp3ZipFilesPath, sourceFileName);
+              path.join(targetSaveDirStr, sourceFileName);
           File targetFile = File(targetFilePath);
 
           try {
@@ -3847,7 +3795,7 @@ class PlaylistListVM extends ChangeNotifier {
               _logger.i('Deleted source file: $sourceFilePath');
 
               movedFileNames.add(sourceFileName);
-              publicPath = mp3ZipFilesPath;
+              publicPath = targetSaveDirStr;
             } else {
               errorMessage +=
                   'File size mismatch for $sourceFileName (source: $sourceSize, target: $targetSize)\n';
@@ -3891,12 +3839,18 @@ class PlaylistListVM extends ChangeNotifier {
     }
   }
 
+  /// This method is called when the user clicks on the appbar menu item
+  /// 'Save Playlists Audio MP3 Files to Zip File' menu item or on the playlist
+  /// item 'Save the Playlist Audio MP3 to Zip File' menu item. In this case, the
+  /// [listOfPlaylists] parameter contains only one playlist and the
+  /// [uniquePlaylistIsSaved] parameter is set to true.
+  ///
   /// Enhanced version of savePlaylistsAudioMp3FilesToZip that automatically
-  /// moves the ZIP files to the public Downloads directory on Android.
+  /// moves the ZIP files to a selected public accessible directory on Android.
   ///
   /// This method wraps the existing savePlaylistsAudioMp3FilesToZip and adds
-  /// the public directory move functionality. The files are moved (not copied)
-  /// to free up space in the app's private directory.
+  /// the public accessible directory move functionality. The files are moved
+  /// (not copied) from the app's private directory.
   Future<List<dynamic>> savePlaylistsAudioMp3FilesToZipWithPublicCopy({
     required List<Playlist> listOfPlaylists,
     required String targetSaveDirStr,
@@ -5535,7 +5489,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///   number of ZIP files processed (int),
   ///   list of playlist titles that received restored files (List of String's)
   /// ]
-  Future<List<dynamic>> restorePlaylistsAudioMp3FilesFromMultipleZips({
+  Future<List<dynamic>> _restorePlaylistsAudioMp3FilesFromMultipleZips({
     required String zipDirectoryPath,
     required List<Playlist> listOfPlaylists,
   }) async {
@@ -5793,7 +5747,7 @@ class PlaylistListVM extends ChangeNotifier {
     required List<Playlist> listOfPlaylists,
   }) async {
     List<dynamic> resultLst =
-        await restorePlaylistsAudioMp3FilesFromMultipleZips(
+        await _restorePlaylistsAudioMp3FilesFromMultipleZips(
       zipDirectoryPath: zipDirectoryPath,
       listOfPlaylists: listOfPlaylists,
     );
