@@ -866,6 +866,13 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                   String audioSortFilterParametersName =
                       filterSortAudioAndParmLst[2];
 
+                  if (audioSortFilterParametersName == AppLocalizations.of(context)!
+                            .sortFilterParametersAppliedName) {
+                    // User clicked on Apply button. In this case, the sort filter
+                    // parms name is not defined and not saved to the playlist.
+                    return;
+                  }
+
                   // When defining a sf parms in audio player view, the sf parm
                   // name is set in the playlist json file and the Remove sf parm
                   // from playlist menu is active to enable to remove the sf parm
