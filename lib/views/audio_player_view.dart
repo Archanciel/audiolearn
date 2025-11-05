@@ -21,6 +21,7 @@ import '../viewmodels/theme_provider_vm.dart';
 import 'screen_mixin.dart';
 import 'widgets/confirm_action_dialog.dart';
 import 'widgets/audio_playable_list_dialog.dart';
+import 'widgets/playlist_add_remove_sort_filter_options_dialog.dart';
 import 'widgets/playlist_list_item.dart';
 import 'widgets/audio_set_speed_dialog.dart';
 import 'widgets/audio_sort_filter_dialog.dart';
@@ -788,8 +789,6 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
     );
   }
 
-  /// **REMOVED**: No longer need the timer-based approach since we now use callbacks
-
   /// Builds the audio popup menu button located on the right of the
   /// screen. This button allows the user to sort and filter the
   /// displayed audio list and to save the sort and filter settings to
@@ -816,21 +815,19 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
             ),
             PopupMenuItem<PopupMenuButtonType>(
               key: const Key(
-                  'clear_sort_and_filter_audio_parms_history_menu_item'),
-              enabled: (playlistListVMlistenFalse
-                  .getSearchHistoryAudioSortFilterParametersLst()
-                  .isNotEmpty),
-              value: PopupMenuButtonType.clearSortFilterAudioParmsHistory,
+                  'remove_sort_and_filter_audio_parms_from_playlist_item'),
+              enabled: playlistListVMlistenFalse
+                  .isRemoveSFparmsFromPlaylistMenuEnabled(
+                audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
+                translatedAppliedSortFilterParmsName:
+                    AppLocalizations.of(context)!
+                        .sortFilterParametersAppliedName,
+              ), // this menu item is enabled if a sort filter parms is applied
+              //     to  one or two views of the selected playlist
+              value: PopupMenuButtonType.removeSortFilterAudioParmsFromPlaylist,
               child: Text(AppLocalizations.of(context)!
-                  .clearSortFilterAudiosParmsHistoryMenu),
+                  .removeSortFilterAudiosOptionsFromPlaylistMenu),
             ),
-            // PopupMenuItem<PopupMenuButtonType>(
-            //   key: const Key(
-            //       'save_sort_and_filter_audio_parms_in_playlist_item'),
-            //   value: PopupMenuButtonType.saveSortFilterAudioParmsToPlaylist,
-            //   child: Text(AppLocalizations.of(context)!
-            //       .saveSortFilterAudiosOptionsToPlaylistMenu),
-            // ),
           ];
         },
         onSelected: (PopupMenuButtonType value) {
@@ -866,47 +863,79 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 },
               ).then((filterSortAudioAndParmLst) {
                 if (filterSortAudioAndParmLst != null) {
-                  List<Audio> returnedAudioList = filterSortAudioAndParmLst[0];
-                  AudioSortFilterParameters audioSortFilterParameters =
-                      filterSortAudioAndParmLst[1];
                   String audioSortFilterParametersName =
                       filterSortAudioAndParmLst[2];
+
+                  // When defining a sf parms in audio player view, the sf parm
+                  // name is set in the playlist json file and the Remove sf parm
+                  // from playlist menu is active to enable to remove the sf parm
+                  // from the audio player view audio list
                   playlistListVMlistenFalse
-                      .setSortFilterForSelectedPlaylistPlayableAudiosAndParms(
-                    audioLearnAppViewType:
-                        AudioLearnAppViewType.audioPlayerView,
-                    sortFilteredSelectedPlaylistPlayableAudio:
-                        returnedAudioList,
-                    audioSortFilterParms: audioSortFilterParameters,
-                    audioSortFilterParmsName: audioSortFilterParametersName,
-                    translatedAppliedSortFilterParmsName:
-                        AppLocalizations.of(context)!
-                            .sortFilterParametersAppliedName,
+                      .savePlaylistAudioSortFilterParmsToPlaylist(
+                    sortFilterParmsNameToSave:
+                        audioSortFilterParametersName, // sort filter parms name
+                    forPlaylistDownloadView: false,
+                    forAudioPlayerView: true,
                   );
                 }
               });
               focusNode.requestFocus();
               break;
-            case PopupMenuButtonType.clearSortFilterAudioParmsHistory:
-              showDialog<void>(
+            case PopupMenuButtonType.removeSortFilterAudioParmsFromPlaylist:
+              showDialog<List<dynamic>>(
                 context: context,
+                barrierDismissible:
+                    false, // This line prevents the dialog from closing
+                // when tapping outside the dialog
                 builder: (BuildContext context) {
-                  return ConfirmActionDialog(
-                    actionFunction: playlistListVMlistenFalse
-                        .clearAudioSortFilterSettingsSearchHistory,
-                    actionFunctionArgs: const [],
-                    dialogTitleOne: AppLocalizations.of(context)!
-                        .clearSortFilterAudiosParmsHistoryMenu,
-                    dialogContent: AppLocalizations.of(context)!
-                        .allHistoricalSortFilterParametersDeleteConfirmation,
-                    // Displaying a warning message after having cleared
-                    // the sort and filter audio settings search history
-                    // is not necessary
-                    // warningFunction: warningMessageVMlistenFalse
-                    //     .allHistoricalSortFilterParametersWereDeleted,
+                  List<dynamic> sortFilterParmsNameAppliedToCurrentPlaylist =
+                      playlistListVMlistenFalse
+                          .getSortFilterParmsNameApplicationValuesToCurrentPlaylist(
+                    selectedSortFilterParmsName: playlistListVMlistenFalse
+                        .getSelectedPlaylistAudioSortFilterParmsNameForView(
+                      audioLearnAppViewType:
+                          AudioLearnAppViewType.audioPlayerView,
+                      translatedAppliedSortFilterParmsName:
+                          AppLocalizations.of(context)!
+                              .sortFilterParametersAppliedName,
+                    ),
+                  );
+                  return PlaylistAddRemoveSortFilterOptionsDialog(
+                    playlistTitle:
+                        playlistListVMlistenFalse.uniqueSelectedPlaylist!.title,
+                    sortFilterParmsName:
+                        sortFilterParmsNameAppliedToCurrentPlaylist[0],
+                    isSortFilterParmsNameAlreadyAppliedToPlaylistDownloadView:
+                        sortFilterParmsNameAppliedToCurrentPlaylist[1],
+                    isSortFilterParmsNameAlreadyAppliedToAudioPlayerView:
+                        sortFilterParmsNameAppliedToCurrentPlaylist[2],
+                    isSaveApplied: false, // SF options remove is applied ...
                   );
                 },
-              );
+              ).then((forViewLst) {
+                bool isForPlaylistDownloadView;
+                bool isForAudioPlayerView;
+
+                if (forViewLst == null) {
+                  // the user clicked on Cancel button
+                  return;
+                } else {
+                  isForPlaylistDownloadView = forViewLst[1];
+                  isForAudioPlayerView = forViewLst[2];
+                  if (!isForPlaylistDownloadView && !isForAudioPlayerView) {
+                    // the user did not select any checkbox
+                    return;
+                  }
+                }
+
+                // The user clicked on Remove, not on Cancel button and
+                // at least one checkbox was selected ...
+
+                playlistListVMlistenFalse.removeAudioSortFilterParmsFromPlaylist(
+                  fromPlaylistDownloadView: isForPlaylistDownloadView,
+                  fromAudioPlayerView: isForAudioPlayerView,
+                );
+              });
               break;
             default:
               break;
