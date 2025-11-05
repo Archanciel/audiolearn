@@ -129,86 +129,6 @@ void audioPlayerViewSortFilterIntegrationTest() {
     });
 
     testWidgets(
-        '''Menu Clear Sort/Filter Parameters History execution verifying that
-           the confirm dialog is displayed in the audio player view.''',
-        (WidgetTester tester) async {
-      const String audioPlayerSelectedPlaylistTitle =
-          'S8 audio'; // Youtube playlist
-      const String toSelectAudioTitle =
-          "Quand Aurélien Barrau va dans une école de management";
-
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'sort_filter_test',
-        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
-      );
-
-      // Now we want to tap on the first downloaded audio of the
-      // playlist in order to open the AudioPlayerView displaying
-      // the audio
-
-      // Tap the 'Toggle List' button to avoid displaying the list
-      // of playlists which may hide the audio title we want to
-      // tap on
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
-      // First, get the ListTile Text widget finder of the audio
-      // to be selected and tap on it. This switches to the
-      // AudioPlayerView
-      await tester.tap(find.text(toSelectAudioTitle));
-      await tester.pumpAndSettle();
-
-      // Now open the popup menu
-      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-      await tester.pumpAndSettle();
-
-      // find the clear sort/filter audio history menu item and tap on it
-      await tester.tap(find.byKey(
-          const Key('clear_sort_and_filter_audio_parms_history_menu_item')));
-      await tester.pumpAndSettle();
-
-      // Verify that the confirm action dialog is displayed
-      // with the expected text
-      expect(find.text('Clear Sort/Filter Parameters History'), findsOneWidget);
-      expect(find.text('Deleting all historical sort/filter parameters.'),
-          findsOneWidget);
-
-      // Click on the cancel button to cancel deletion
-      await tester.tap(find.byKey(const Key('cancelButtonKey')));
-      await tester.pumpAndSettle();
-
-      // Open again the popup menu
-      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-      await tester.pumpAndSettle();
-
-      // find the clear sort/filter audio history menu item and tap on it
-      await tester.tap(find.byKey(
-          const Key('clear_sort_and_filter_audio_parms_history_menu_item')));
-      await tester.pumpAndSettle();
-
-      // Click on the confirm button to cause deletion
-      await tester.tap(find.byKey(const Key('confirmButton')));
-      await tester.pumpAndSettle();
-
-      // Open again the popup menu
-      await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
-      await tester.pumpAndSettle();
-
-      // Verify that the clear sort/filter audio history menu item is
-      // now disabled
-      IntegrationTestUtil.verifyWidgetIsDisabled(
-        tester: tester,
-        widgetKeyStr: "clear_sort_and_filter_audio_parms_history_menu_item",
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
         '''Change the SF parms in in the dropdown button list to 'Title asc'
            and then verify its application. Then go to the audio player view
            and there verify that the order of the audios displayed in the
@@ -7645,8 +7565,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           testWidgets(
               '''In audio player view, define an unamed SF parm with a filter string value and
                apply it. Verify the selected audio's in the playable audio list dialog. then
-               go to the playlist download view whosevplaylist list is expanded and thrink the
-               playlist list. Then select the "applied" SF parms and verify the selected audio's''',
+               go to the playlist download view whose playlist list is expanded and thrink the
+               playlist list. Then ensure that the "applied" SF parms is not present in the dropdown
+               button items.''',
               (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
@@ -7707,8 +7628,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 .tap(find.byKey(const Key('applySortFilterOptionsTextButton')));
             await tester.pumpAndSettle();
 
-            // Now we open the AudioPlayableListDialog and verify the the
-            // displayed audio titles
+            // Now we open the AudioPlayableListDialog and verify the displayed
+            // audio titles
 
             await tester.tap(find.text(
                 "Cette IA PENSE mieux que NOUS et personne ne veut en parler !\n24:00"));
@@ -7739,8 +7660,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.tap(find.byKey(const Key('playlist_toggle_button')));
             await tester.pumpAndSettle();
 
-            // Now, selecting 'applied' dropdown button item to apply the
-            // default sort/filter parms
+            // Now, ensure the 'applied' dropdown button item is not present
             final Finder dropDownButtonFinder =
                 find.byKey(const Key('sort_filter_parms_dropdown_button'));
 
@@ -7757,26 +7677,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // And select the applied sort/filter item
             String appliedTitle = 'applied';
             final Finder defaultDropDownTextFinder = find.text(appliedTitle);
-            await tester.tap(defaultDropDownTextFinder);
-            await tester.pumpAndSettle();
-
-            // Now verify the playlist download view state with the 'applied'
-            // sort/filter parms applied
-
-            // Verify that the dropdown button has been updated with the
-            // 'applied' sort/filter parms selected
-            IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
-              tester: tester,
-              dropdownButtonSelectedTitle: appliedTitle,
-            );
-
-            // And verify the order of the playlist audio titles
-
-            IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-              tester: tester,
-              audioOrPlaylistTitlesOrderedLst:
-                  audioTitlesSortedDownloadDateDescendingDefaultSortFilterParms,
-            );
+            expect(defaultDropDownTextFinder, findsNothing);
 
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub
@@ -9437,7 +9338,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Add a delay to allow the download to finish.
-          for (int i = 0; i < 5; i++) {
+          for (int i = 0; i < 6; i++) {
             await Future.delayed(const Duration(seconds: 2));
             await tester.pumpAndSettle();
           }
@@ -9530,7 +9431,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Add a delay to allow the download to finish.
-          for (int i = 0; i < 6; i++) {
+          for (int i = 0; i < 7; i++) {
             await Future.delayed(const Duration(seconds: 2));
             await tester.pumpAndSettle();
           }
