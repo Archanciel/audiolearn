@@ -2552,4 +2552,10 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get commentedOn => "Commented on";
+
+  @override
+  String movingAudioMp3Zip(
+    Object mp3ZipName,
+  ) =>
+      "Moving $mp3ZipName to accessible dir ...";
 }

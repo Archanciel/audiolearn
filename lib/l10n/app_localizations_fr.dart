@@ -2125,6 +2125,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String movingAudioMp3Zip(Object mp3ZipName) {
+    return 'Déplacement de $mp3ZipName dans le répertoire sélectionné ...';
+  }
+
+  @override
   String get playlistsMp3RestorationHelpTitle =>
       'Fonction de restauration MP3 des playlists';
 

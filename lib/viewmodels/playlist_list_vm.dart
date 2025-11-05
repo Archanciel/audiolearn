@@ -267,8 +267,7 @@ class PlaylistListVM extends ChangeNotifier {
       _audioMp3RestorationCurrentPlaylistName;
 
   String _audioMp3MovedCurrentZipName = '';
-  String get audioMp3MovedCurrentZipName =>
-      _audioMp3MovedCurrentZipName;
+  String get audioMp3MovedCurrentZipName => _audioMp3MovedCurrentZipName;
 
   Duration _savingAudioMp3FileToZipDuration = Duration.zero;
   Duration get savingAudioMp3FileToZipDuration =>
@@ -3754,6 +3753,9 @@ class PlaylistListVM extends ChangeNotifier {
         return [true, sourceDir, [], 'Not needed on this platform'];
       }
 
+      _isMovingMp3Zip = true;
+      notifyListeners();
+
       // Move the ZIP file(s) (copy then delete source)
       for (int i = 1; i <= numberOfZipFiles; i++) {
         String sourceFileName;
@@ -3770,8 +3772,11 @@ class PlaylistListVM extends ChangeNotifier {
         _logger.i('Attempting to move: $sourceFilePath');
 
         if (await sourceFile.exists()) {
-          String targetFilePath =
-              path.join(targetSaveDirStr, sourceFileName);
+          // Used to show the moved current MP* ZIP name in the audio download view
+          _audioMp3MovedCurrentZipName = sourceFileName;
+          notifyListeners();
+
+          String targetFilePath = path.join(targetSaveDirStr, sourceFileName);
           File targetFile = File(targetFilePath);
 
           try {
@@ -3824,7 +3829,7 @@ class PlaylistListVM extends ChangeNotifier {
           'Successfully moved ${movedFileNames.length} file(s) to $publicPath');
 
       // Update the UI to show saving is complete
-      _isSavingMp3 = false;
+      _isMovingMp3Zip = false;
       notifyListeners();
 
       return [true, publicPath, movedFileNames, ''];
@@ -3832,7 +3837,7 @@ class PlaylistListVM extends ChangeNotifier {
       errorMessage = 'Error moving ZIP files: $e';
       _logger.e(errorMessage);
 
-      _isSavingMp3 = false;
+      _isMovingMp3Zip = false;
       notifyListeners();
 
       return [false, '', [], errorMessage];
@@ -3891,7 +3896,8 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Move to public Downloads directory on Android
     if (Platform.isAndroid) {
-      List<dynamic> moveResult = await _moveMp3ZipFilesToAccessibleAndroidDirectory(
+      List<dynamic> moveResult =
+          await _moveMp3ZipFilesToAccessibleAndroidDirectory(
         baseZipFileName: baseFileName,
         targetSaveDirStr: targetSaveDirStr,
         numberOfZipFiles: numberOfCreatedZipFiles,
