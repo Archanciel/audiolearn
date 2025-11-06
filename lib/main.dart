@@ -75,8 +75,6 @@ Future<void> main() async {
 Future<void> _setWindowsAppSizeAndPosition({
   required bool isTest,
 }) async {
-  WidgetsFlutterBinding.ensureInitialized();
-
   await getScreenList().then((List<Screen> screens) {
     // Assumez que vous voulez utiliser le premier écran (principal)
     final Screen screen = screens.first;
