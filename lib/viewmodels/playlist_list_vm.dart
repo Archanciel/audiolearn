@@ -250,24 +250,38 @@ class PlaylistListVM extends ChangeNotifier {
 
   final Logger _logger = Logger();
 
+  // Playlist(s) MP3 save progression display on playlist
+  // download view fields. 
+
   bool _isSavingMp3 = false;
   bool get isSavingMp3 => _isSavingMp3;
 
-  bool _isRestoringMp3 = false;
-  bool get isRestoringMp3 => _isRestoringMp3;
+  // Playlist name displayed only if unique playlist is saved
+  String _audioMp3SaveUniquePlaylistName = '';
+  String get audioMp3SaveUniquePlaylistName => _audioMp3SaveUniquePlaylistName;
+
+  // After the playlist(s) MP3 were saved to ZIP's, ZIP's are
+  // moved to the selected save dir. This btakes time and so
+  // the move progression is displayed on the playlist download
+  // view fields. 
 
   bool _isMovingMp3Zip = false;
   bool get isMovingMp3Zip => _isMovingMp3Zip;
 
-  String _audioMp3SaveUniquePlaylistName = '';
-  String get audioMp3SaveUniquePlaylistName => _audioMp3SaveUniquePlaylistName;
+  String _audioMp3MovedCurrentZipName = '';
+  String get audioMp3MovedCurrentZipName => _audioMp3MovedCurrentZipName;
+
+
+  // Playlist(s) MP3 restoration progression display on playlist
+  // download view fields. 
+
+  bool _isRestoringMp3 = false;
+  bool get isRestoringMp3 => _isRestoringMp3;
 
   String _audioMp3RestorationCurrentPlaylistName = '';
   String get audioMp3RestorationCurrentPlaylistName =>
       _audioMp3RestorationCurrentPlaylistName;
 
-  String _audioMp3MovedCurrentZipName = '';
-  String get audioMp3MovedCurrentZipName => _audioMp3MovedCurrentZipName;
 
   Duration _savingAudioMp3FileToZipDuration = Duration.zero;
   Duration get savingAudioMp3FileToZipDuration =>
@@ -3319,11 +3333,10 @@ class PlaylistListVM extends ChangeNotifier {
     String actualTargetDir;
 
     if (Platform.isAndroid) {
-      Directory? externalDir = await getExternalStorageDirectory();
+      Directory? externalDir = await getExternalStorageDirectory(); // Method from path_provider package
       if (externalDir != null) {
         Directory mp3Dir =
             Directory('${externalDir.path}/downloads/AudioLearn');
-        // Directory mp3Dir = Directory('storage/9016-4EF8/Sauvegarde/mp3'); // not working
         if (!await mp3Dir.exists()) {
           await mp3Dir.create(recursive: true);
         }
@@ -3426,6 +3439,8 @@ class PlaylistListVM extends ChangeNotifier {
       oldestAudioSavedToZipDownloadDateTime = fromAudioDownloadDateTime;
     }
 
+    // If Unique playlist is saved, use its title in the base zip file
+    // name. Otherwise, playlistTitle == 'audioLearn'.
     String baseZipFileName =
         "${playlistTitle}_mp3_from_${yearMonthDayDateTimeFormatForFileName.format(oldestAudioSavedToZipDownloadDateTime)}_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}";
 
