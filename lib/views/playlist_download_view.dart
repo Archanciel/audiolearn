@@ -97,41 +97,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             false;
       }
     });
-
-    if (widget.isTest) {
-      setWindowsAppSizeAndPosition(
-        isTest: true, // true increase the test app width on Windows
-      );
-    }
-  }
-
-  /// If app runs on Windows, Linux or MacOS, set the app size
-  /// and position.
-  Future<void> setWindowsAppSizeAndPosition({
-    required bool isTest,
-  }) async {
-    WidgetsFlutterBinding.ensureInitialized();
-
-    if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
-      await getScreenList().then((List<Screen> screens) {
-        // Assumez que vous voulez utiliser le premier écran (principal)
-        final Screen screen = screens.first;
-        final Rect screenRect = screen.visibleFrame;
-
-        // Définissez la largeur et la hauteur de votre fenêtre
-        double windowWidth = (isTest) ? 900 : 730;
-        const double windowHeight = 1300;
-
-        // Calculez la position X pour placer la fenêtre sur le côté droit de l'écran
-        final double posX = screenRect.right - windowWidth + 10;
-        // Optionnellement, ajustez la position Y selon vos préférences
-        final double posY = (screenRect.height - windowHeight) / 2;
-
-        final Rect windowRect =
-            Rect.fromLTWH(posX, posY, windowWidth, windowHeight);
-        setWindowFrame(windowRect);
-      });
-    }
   }
 
   @override
