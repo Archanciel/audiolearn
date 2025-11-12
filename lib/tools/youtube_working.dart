@@ -37,24 +37,39 @@ Future<void> main() async {
     await outputDir.create(recursive: true);
   }
 
-  // Create the output file with proper extension
-  final file =
+  // Download to temporary file first
+  final tempFile =
       File('${outputDir.path}${path.separator}${video.id}.${streamInfo.container.name}');
+  final outputFile = File('${outputDir.path}/${video.id}.mp3');
 
-  // Get the stream
+  // Download the audio
   final stream = yt.videos.streams.get(streamInfo);
-
-  // Open file for writing
-  final fileStream = file.openWrite();
-
-  // Pipe the stream to the file
+  final fileStream = tempFile.openWrite();
   await stream.pipe(fileStream);
-
-  // Close the file stream
   await fileStream.flush();
   await fileStream.close();
 
-  logger.i('Download completed: ${file.path}');
+  logger.i('Download completed: ${tempFile.path}');
+  logger.i('Converting to MP3...');
+
+  // Convert to MP3 using FFmpeg
+  final result = await Process.run('ffmpeg', [
+    '-i', tempFile.path,
+    '-vn', // No video
+    '-ar', '44100', // Audio sampling rate
+    '-ac', '2', // Audio channels
+    '-b:a', '192k', // Audio bitrate
+    outputFile.path,
+    '-y', // Overwrite output file if it exists
+  ]);
+
+  if (result.exitCode == 0) {
+    logger.i('Conversion completed: ${outputFile.path}');
+    // Delete temporary file
+    await tempFile.delete();
+  } else {
+    logger.i('Conversion failed: ${result.stderr}');
+  }
 
   // Close the YoutubeExplode's http client.
   yt.close();
