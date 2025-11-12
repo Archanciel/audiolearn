@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:audiolearn/utils/duration_expansion.dart';
@@ -7,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../l10n/app_localizations.dart';
-import 'package:window_size/window_size.dart';
 
 import '../constants.dart';
 import '../models/audio.dart';
