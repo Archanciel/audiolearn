@@ -67,6 +67,7 @@ dependencies:
   logger: ^2.6.2
   package_info_plus: ^9.0.0
   path_provider: ^2.1.5
+  ffmpeg_kit_flutter_new: ^4.1.0
   flutter_tts: ^4.2.2
 
 
