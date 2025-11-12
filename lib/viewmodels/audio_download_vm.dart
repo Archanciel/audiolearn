@@ -7,10 +7,12 @@ import 'dart:async';
 import 'dart:io';
 import 'package:path/path.dart' as path;
 
-// importing youtube_explode_dart as yt enables to name the app Model
-// playlist class as Playlist so it does not conflict with
+// importing youtube_explode_dart as yt enables to name the app
+// Model playlist class as Playlist so it does not conflict with
 // youtube_explode_dart Playlist class name.
 import 'package:youtube_explode_dart/youtube_explode_dart.dart' as yt;
+import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter_new/return_code.dart';
 
 import '../models/audio_file.dart';
 import '../models/comment.dart';
@@ -21,6 +23,53 @@ import '../models/playlist.dart';
 import '../utils/dir_util.dart';
 import 'comment_vm.dart';
 import 'warning_message_vm.dart';
+
+// ---------- FFmpeg facade (platform-aware) -----------------------------------
+
+class _FfmpegFacade {
+  static Future<bool> convertToMp3({
+    required String inputPath,
+    required String outputPath,
+    String bitrate = '192k',
+  }) async {
+    final cmdArgs = [
+      '-y',
+      '-i',
+      inputPath,
+      '-vn',
+      '-ar',
+      '44100',
+      '-ac',
+      '2',
+      '-c:a',
+      'libmp3lame',
+      '-b:a',
+      bitrate,
+      outputPath,
+    ];
+
+    if (_isMobile) {
+      final cmd = cmdArgs.map(_q).join(' ');
+      final session = await FFmpegKit.execute(cmd);
+      final rc = await session.getReturnCode();
+      return ReturnCode.isSuccess(rc);
+    } else {
+      try {
+        final result = await Process.run('ffmpeg', cmdArgs);
+        return result.exitCode == 0;
+      } catch (_) {
+        return false;
+      }
+    }
+  }
+
+  static bool get _isMobile => Platform.isAndroid || Platform.isIOS;
+
+  static String _q(String s) {
+    if (s.contains(' ')) return '"$s"';
+    return s;
+  }
+}
 
 // global variables used by the AudioDownloadVM in order
 // to avoid multiple downloads of the same playlist
@@ -2443,6 +2492,54 @@ class AudioDownloadVM extends ChangeNotifier {
         .toList();
   }
 
+// Prefer M4A (AAC) then best audioOnly
+  Future<yt.AudioOnlyStreamInfo> _pickBestAudioStream({
+    required yt.StreamManifest manifest,
+    required bool highQuality,
+  }) async {
+    final audioOnly = manifest.audioOnly;
+
+    // Try M4A first (easier to handle)
+    final m4a = audioOnly.where((s) => s.container.name.toLowerCase() == 'm4a');
+    yt.AudioOnlyStreamInfo chosen;
+
+    if (m4a.isNotEmpty) {
+      chosen = highQuality ? m4a.withHighestBitrate() : _withLowestBitrate(m4a);
+    } else {
+      chosen = highQuality
+          ? audioOnly.withHighestBitrate()
+          : _withLowestBitrate(audioOnly);
+    }
+    return chosen;
+  }
+
+  yt.AudioOnlyStreamInfo _withLowestBitrate(
+      Iterable<yt.AudioOnlyStreamInfo> list) {
+    return list.reduce(
+        (a, b) => a.bitrate.bitsPerSecond < b.bitrate.bitsPerSecond ? a : b);
+  }
+
+  Future<yt.StreamManifest> _getManifestWithClients(yt.VideoId id) async {
+    // Retries to absorb transient 403/429
+    const maxAttempts = 3;
+    int attempt = 0;
+    late yt.StreamManifest manifest;
+    while (true) {
+      attempt++;
+      try {
+        // IMPORTANT: use ytClients to avoid recent throttling changes
+        manifest = await _youtubeExplode!.videos.streams.getManifest(
+          id,
+          ytClients: [yt.YoutubeApiClient.ios, yt.YoutubeApiClient.androidVr],
+        );
+        return manifest;
+      } catch (e) {
+        if (attempt >= maxAttempts) rethrow;
+        await Future.delayed(Duration(milliseconds: 400 * attempt));
+      }
+    }
+  }
+
   /// Downloads the audio file from the Youtube video and saves it to the enclosing
   /// playlist directory. Returns true if the audio file was successfully downloaded,
   /// false otherwise.
@@ -2452,23 +2549,57 @@ class AudioDownloadVM extends ChangeNotifier {
   /// case, [redownloading] is set to true and [audio] is _currentDownloadingAudio
   /// which was set in the AudioDownloadVM.redownloadPlaylistFilteredAudio()
   /// method.
+  @override
   Future<bool> _downloadAudioFile({
     required yt.VideoId youtubeVideoId,
     required Audio audio,
     bool redownloading = false,
   }) async {
     if (!redownloading) {
-      // _currentDownloadingAudio must be set to passed audio since
-      // contrary to the redownloading situation, it was not
-      // previously set
       _currentDownloadingAudio = audio;
     }
 
-    final yt.StreamManifest streamManifest;
-
+    yt.StreamManifest manifest;
     try {
-      streamManifest = await _youtubeExplode!.videos.streamsClient.getManifest(
-        youtubeVideoId,
+      manifest = await _getManifestWithClients(youtubeVideoId);
+    } catch (e) {
+      notifyDownloadError(
+        errorType: ErrorType.downloadAudioYoutubeError,
+        errorArgOne: e.toString(),
+        errorArgTwo: audio.originalVideoTitle,
+      );
+      downloadingPlaylistUrls = []; // reset guard
+      return false;
+    }
+
+    // Choose stream (M4A preferred)
+    final yt.AudioOnlyStreamInfo streamInfo = await _pickBestAudioStream(
+        manifest: manifest, highQuality: isHighQuality);
+
+    // Temp file (container extension)
+    final String tmpExt = streamInfo.container.name; // "m4a" or "webm"
+    final String tmpPath = path.join(
+      audio.enclosingPlaylist!.downloadPath,
+      '${audio.validVideoTitle}.$tmpExt',
+    );
+    final File tmpFile = File(tmpPath);
+
+    // Final MP3 destination (Audio.audioFileName points to .mp3)
+    final String mp3Path = audio.filePathName;
+    final File mp3File = File(mp3Path);
+
+    // Size before download (source container)
+    final int srcTotalBytes = streamInfo.size.totalBytes;
+    if (!redownloading) {
+      audio.audioFileSize = srcTotalBytes; // initial info (will be overridden)
+    }
+
+    // Download with progress into tmpFile
+    try {
+      await _downloadToFileWithProgress(
+        stream: _youtubeExplode!.videos.streams.get(streamInfo),
+        targetFile: tmpFile,
+        totalSizeBytes: srcTotalBytes,
       );
     } catch (e) {
       notifyDownloadError(
@@ -2476,120 +2607,82 @@ class AudioDownloadVM extends ChangeNotifier {
         errorArgOne: e.toString(),
         errorArgTwo: audio.originalVideoTitle,
       );
-
-      // emptying the playlist url from the downloadingPlaylistUrls
-      // list since the playlist download has failed
-      downloadingPlaylistUrls = [];
-
       return false;
     }
 
-    final yt.AudioOnlyStreamInfo audioStreamInfo;
-
-    if (isHighQuality) {
-      audioStreamInfo = streamManifest.audioOnly.withHighestBitrate();
-      if (!redownloading) {
-        // if redownloading, the audio quality is already set
-        audio.setAudioToMusicQuality();
-      }
-    } else {
-      audioStreamInfo = streamManifest.audioOnly.reduce(
-          (a, b) => a.bitrate.bitsPerSecond < b.bitrate.bitsPerSecond ? a : b);
-    }
-
-    final int audioFileSize = audioStreamInfo.size.totalBytes;
-
-    if (!redownloading) {
-      // if redownloading, the audio file size is already set
-      audio.audioFileSize = audioFileSize;
-    }
-
-    await _youtubeDownloadAudioFile(
-      audioStreamInfo: audioStreamInfo,
-      audioFilePathName: audio.filePathName,
-      audioFileSize: audioFileSize,
+    // Transcode tmp => mp3
+    final ok = await _FfmpegFacade.convertToMp3(
+      inputPath: tmpFile.path,
+      outputPath: mp3File.path,
+      bitrate: isHighQuality ? '192k' : '128k',
     );
+
+    // Cleanup + set final size
+    try {
+      if (await tmpFile.exists()) await tmpFile.delete();
+    } catch (_) {}
+
+    if (!ok) {
+      notifyDownloadError(
+        errorType: ErrorType.downloadAudioYoutubeError,
+        errorArgOne: 'FFmpeg conversion failed',
+        errorArgTwo: audio.originalVideoTitle,
+      );
+      return false;
+    }
+
+    // Overwrite with final MP3 size
+    try {
+      audio.audioFileSize = await mp3File.length();
+    } catch (_) {}
 
     return true;
   }
 
   /// Downloads the audio file from the Youtube video and saves it
   /// to the enclosing playlist directory.
-  Future<void> _youtubeDownloadAudioFile({
-    required yt.AudioOnlyStreamInfo audioStreamInfo,
-    required String audioFilePathName,
-    required int audioFileSize,
+  Future<void> _downloadToFileWithProgress({
+    required Stream<List<int>> stream,
+    required File targetFile,
+    required int totalSizeBytes,
   }) async {
-    final File file = File(audioFilePathName);
-    final IOSink audioFileSink = file.openWrite();
-    final Stream<List<int>> audioStream =
-        _youtubeExplode!.videos.streamsClient.get(audioStreamInfo);
-    int totalBytesDownloaded = 0;
-    int previousSecondBytesDownloaded = 0;
+    final IOSink sink = targetFile.openWrite();
+    int total = 0;
+    int prevSecond = 0;
 
-    // This avoid that when downloading a next audio file, the displayed
-    // download progress starts at 100 % !
-
+    // reset progress
     _downloadProgress = 0.0;
-
     notifyListeners();
 
-    Duration updateInterval = const Duration(seconds: 1);
-    DateTime lastUpdate = DateTime.now();
-    Timer timer = Timer.periodic(updateInterval, (timer) {
-      if (DateTime.now().difference(lastUpdate) >= updateInterval) {
-        _downloadProgress = totalBytesDownloaded / audioFileSize;
-        _lastSecondDownloadSpeed =
-            totalBytesDownloaded - previousSecondBytesDownloaded;
-
-        notifyListeners();
-
-        if (!_isDownloading) {
-          // Avoids that the playlist download view is rebuilded
-          // an infiite number of times when the download was stopped
-          // due to a Youtube error.
-          timer.cancel();
-        }
-
-        previousSecondBytesDownloaded = totalBytesDownloaded;
-        lastUpdate = DateTime.now();
-      }
+    final Duration tick = const Duration(seconds: 1);
+    DateTime last = DateTime.now();
+    final timer = Timer.periodic(tick, (_) {
+      _downloadProgress = total / totalSizeBytes;
+      _lastSecondDownloadSpeed = total - prevSecond;
+      prevSecond = total;
+      if (_isDownloading) notifyListeners();
     });
 
-    await for (List<int> byteChunk in audioStream) {
-      totalBytesDownloaded += byteChunk.length;
-
-      // Check if the deadline has been exceeded before updating the
-      // progress
-      if (DateTime.now().difference(lastUpdate) >= updateInterval) {
-        _downloadProgress = totalBytesDownloaded / audioFileSize;
-        _lastSecondDownloadSpeed =
-            totalBytesDownloaded - previousSecondBytesDownloaded;
-
+    await for (final chunk in stream) {
+      total += chunk.length;
+      final now = DateTime.now();
+      if (now.difference(last) >= tick) {
+        _downloadProgress = total / totalSizeBytes;
+        _lastSecondDownloadSpeed = total - prevSecond;
+        prevSecond = total;
+        last = now;
         notifyListeners();
-
-        previousSecondBytesDownloaded = totalBytesDownloaded;
-        lastUpdate = DateTime.now();
       }
-
-      audioFileSink.add(byteChunk);
+      sink.add(chunk);
     }
 
-    // Make sure to update the progress one last time to 100% before
-    // finishing
-
+    timer.cancel();
     _downloadProgress = 1.0;
     _lastSecondDownloadSpeed = 0;
-
     notifyListeners();
 
-    // Cancel Timer to avoid unuseful updates
-    timer.cancel();
-
-    await audioFileSink.flush();
-    await audioFileSink.close();
-
-    _lastSecondDownloadSpeed = 0;
+    await sink.flush();
+    await sink.close();
   }
 
   /// Returns a map containing the chapters names and their HH:mm:ss
