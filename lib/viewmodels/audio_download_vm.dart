@@ -35,11 +35,16 @@ List<String> downloadingPlaylistUrls = [];
 /// libmp3lame.
 ///
 /// Mobile (Android/iOS): uses FFmpegKit; Desktop: uses system ffmpeg.
+/// The [bitrate], [sampleRate] and [channels] parameters allow using
+/// a “music profile” (high quality stereo) or a “speech profile”
+/// (lower bitrate mono) depending on the caller needs.
 class _FfmpegFacade {
   static Future<bool> convertToMp3({
     required String inputPath,
     required String outputPath,
     String bitrate = '192k',
+    int sampleRate = 44100,
+    int channels = 2,
   }) async {
     final args = [
       '-y',
@@ -47,9 +52,9 @@ class _FfmpegFacade {
       inputPath,
       '-vn',
       '-ar',
-      '44100',
+      sampleRate.toString(),
       '-ac',
-      '2',
+      channels.toString(),
       '-c:a',
       'libmp3lame',
       '-b:a',
@@ -2538,10 +2543,18 @@ class AudioDownloadVM extends ChangeNotifier {
     }
 
     // Transcode to MP3
+    final bool useMusicQuality = isHighQuality;
+
+    final String targetBitrate = useMusicQuality ? '192k' : '48k';
+    final int sampleRate = useMusicQuality ? 44100 : 22050;
+    final int channels = useMusicQuality ? 2 : 1;
+
     final ok = await _FfmpegFacade.convertToMp3(
       inputPath: tmpFile.path,
       outputPath: mp3File.path,
-      bitrate: isHighQuality ? '192k' : '128k',
+      bitrate: targetBitrate,
+      sampleRate: sampleRate,
+      channels: channels,
     );
 
     // Cleanup temp
