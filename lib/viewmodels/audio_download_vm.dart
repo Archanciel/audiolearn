@@ -2549,7 +2549,6 @@ class AudioDownloadVM extends ChangeNotifier {
   /// case, [redownloading] is set to true and [audio] is _currentDownloadingAudio
   /// which was set in the AudioDownloadVM.redownloadPlaylistFilteredAudio()
   /// method.
-  @override
   Future<bool> _downloadAudioFile({
     required yt.VideoId youtubeVideoId,
     required Audio audio,
