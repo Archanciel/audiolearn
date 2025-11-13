@@ -1,3 +1,4 @@
+// audio_download_vm.dart
 import 'package:archive/archive.dart';
 import 'package:audiolearn/constants.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -11,6 +12,8 @@ import 'package:path/path.dart' as path;
 // Model playlist class as Playlist so it does not conflict with
 // youtube_explode_dart Playlist class name.
 import 'package:youtube_explode_dart/youtube_explode_dart.dart' as yt;
+
+// NEW: FFmpegKit fork (mobile) — conversion on Android/iOS
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
 import 'package:ffmpeg_kit_flutter_new/return_code.dart';
 
@@ -24,15 +27,21 @@ import '../utils/dir_util.dart';
 import 'comment_vm.dart';
 import 'warning_message_vm.dart';
 
-// ---------- FFmpeg facade (platform-aware) -----------------------------------
+// global variables used by the AudioDownloadVM in order
+// to avoid multiple downloads of the same playlist
+List<String> downloadingPlaylistUrls = [];
 
+/// FFmpeg facade (platform-aware). Convert input audio (m4a/webm/…) to MP3 (CBR) using
+/// libmp3lame.
+///
+/// Mobile (Android/iOS): uses FFmpegKit; Desktop: uses system ffmpeg.
 class _FfmpegFacade {
   static Future<bool> convertToMp3({
     required String inputPath,
     required String outputPath,
     String bitrate = '192k',
   }) async {
-    final cmdArgs = [
+    final args = [
       '-y',
       '-i',
       inputPath,
@@ -49,13 +58,13 @@ class _FfmpegFacade {
     ];
 
     if (_isMobile) {
-      final cmd = cmdArgs.map(_q).join(' ');
+      final cmd = args.map(_q).join(' ');
       final session = await FFmpegKit.execute(cmd);
       final rc = await session.getReturnCode();
       return ReturnCode.isSuccess(rc);
     } else {
       try {
-        final result = await Process.run('ffmpeg', cmdArgs);
+        final result = await Process.run('ffmpeg', args);
         return result.exitCode == 0;
       } catch (_) {
         return false;
@@ -65,15 +74,8 @@ class _FfmpegFacade {
 
   static bool get _isMobile => Platform.isAndroid || Platform.isIOS;
 
-  static String _q(String s) {
-    if (s.contains(' ')) return '"$s"';
-    return s;
-  }
+  static String _q(String s) => s.contains(' ') ? '"$s"' : s;
 }
-
-// global variables used by the AudioDownloadVM in order
-// to avoid multiple downloads of the same playlist
-List<String> downloadingPlaylistUrls = [];
 
 /// This VM (View Model) class is part of the MVVM architecture.
 /// It was posted on Github on 12-04-2023.
@@ -122,6 +124,7 @@ class AudioDownloadVM extends ChangeNotifier {
   bool isHighQuality = false;
 
   bool _stopDownloadPressed = false;
+
   // ignore: unnecessary_getters_setters
   bool get isDownloadStopping => _stopDownloadPressed;
 
@@ -133,10 +136,9 @@ class AudioDownloadVM extends ChangeNotifier {
   bool get audioDownloadError => _audioDownloadError;
 
   final WarningMessageVM warningMessageVM;
-
   final SettingsDataService _settingsDataService;
 
-  /// Passing true for {isTest} has the effect that the windows
+  /// {settingsDataService} determine that in test mode the windows
   /// test directory is used as playlist root directory. This
   /// directory is located in the test directory of the project.
   ///
@@ -270,13 +272,8 @@ class AudioDownloadVM extends ChangeNotifier {
         errorType: ErrorType.errorInPlaylistJsonFile,
         errorArgOne: e.toString(),
       );
-
       notifyListeners();
     }
-
-    // notifyListeners();  not necessary since the unique
-    //                     Consumer<AudioDownloadVM> is not concerned
-    //                     by the _listOfPlaylist changes
   }
 
   /// This method is called when the user change a playlist audio quality
@@ -346,7 +343,6 @@ class AudioDownloadVM extends ChangeNotifier {
 
       if (audio != null) {
         String originalAudioFileName = audio.audioFileName;
-
         if (audioToRenameFileName == originalAudioFileName) {
           // This is the case if the audio file has not been
           // redownloaded before the playlist was restored from
@@ -363,7 +359,6 @@ class AudioDownloadVM extends ChangeNotifier {
 
         // Renaming the existing comment file to the original comment
         // file name
-
         final String commentToRenameFilePathName =
             CommentVM.buildCommentFilePathName(
           playlistDownloadPath: playlistDownloadPath,
@@ -379,7 +374,6 @@ class AudioDownloadVM extends ChangeNotifier {
 
         // Renaming the existing picture file to the original picturer
         // file name
-
         final String playlistPicturePath =
             "$playlistDownloadPath${path.separator}$kPictureDirName";
         final String pictureToRenameFileName =
@@ -403,10 +397,8 @@ class AudioDownloadVM extends ChangeNotifier {
         Audio? audio = initialPlaylist.playableAudioLst.firstWhereOrNull(
           (audio) => audio.validVideoTitle == audioTitleInAudioToRenameFileName,
         );
-
         if (audio != null) {
           restoredPlaylist.addDownloadedAudio(audio);
-
           JsonDataService.saveToFile(
             path: restoredPlaylist.getPlaylistDownloadFilePathName(),
             model: restoredPlaylist,
@@ -416,8 +408,8 @@ class AudioDownloadVM extends ChangeNotifier {
     }
   }
 
-  // This method is only called in the situation of restoring from
-  // a zip file.
+  /// This method is only called in the situation of restoring from
+  /// a zip file.
   void _updatePlaylistRootPathIfNecessary({
     required Playlist playlist,
     required bool isPlaylistRestoredFromAndroidToWindows,
@@ -519,7 +511,6 @@ class AudioDownloadVM extends ChangeNotifier {
 
     if (localPlaylistTitle.isNotEmpty) {
       // handling creation of a local playlist
-
       addedPlaylist = Playlist(
         id: localPlaylistTitle, // necessary since the id is used to
         //                         identify the playlist in the list
@@ -580,17 +571,14 @@ class AudioDownloadVM extends ChangeNotifier {
       _youtubeExplode ??= yt.YoutubeExplode();
 
       playlistId = yt.PlaylistId.parsePlaylistId(playlistUrl);
-
       if (playlistId == null) {
         // the case if the String pasted to the url text field
         // is not a valid Youtube playlist url.
         warningMessageVM.invalidPlaylistUrl = playlistUrl;
-
         return null;
       }
 
       String playlistTitle;
-
       if (mockYoutubePlaylistTitle == null) {
         // the method is called by AudioDownloadVM.addPlaylist()
         try {
@@ -600,17 +588,13 @@ class AudioDownloadVM extends ChangeNotifier {
             errorType: ErrorType.noInternet,
             errorArgOne: e.toString(),
           );
-
           return null;
         } catch (e) {
           warningMessageVM.invalidPlaylistUrl = playlistUrl;
-
           return null;
         }
-
         playlistTitle = youtubePlaylist.title;
       } else {
-        // the method is called by MockAudioDownloadVM.addPlaylist()
         playlistTitle = mockYoutubePlaylistTitle;
       }
 
@@ -625,12 +609,10 @@ class AudioDownloadVM extends ChangeNotifier {
         // directory. For this reason, adding such a playlist is refused
         // by the method.
         warningMessageVM.invalidYoutubePlaylistTitle = playlistTitle;
-
         return null;
       } else if (playlistTitle == '') {
         // The case if the Youtube playlist is private
         warningMessageVM.signalPrivatePlaylistAddition();
-
         return null;
       }
 
@@ -643,7 +625,6 @@ class AudioDownloadVM extends ChangeNotifier {
         // playlist title. For this reason, '/' is replaced by
         // '-' in the playlist title.
         youtubePlaylistTitleToCorrect = playlistTitle;
-
         playlistTitle = playlistTitle.replaceAll('/', '-');
         playlistTitle = playlistTitle.replaceAll(':', '-');
         playlistTitle = playlistTitle.replaceAll('\\', '-');
@@ -664,7 +645,6 @@ class AudioDownloadVM extends ChangeNotifier {
           playlistUrl: playlistUrl,
           playlistTitle: playlistTitle,
         );
-
         // since the updated playlist is returned. Since its title
         // is not new, it will not be added to the orderedTitleLst
         // in the SettingsDataService json file, which would cause
@@ -673,7 +653,6 @@ class AudioDownloadVM extends ChangeNotifier {
       }
 
       // Adding the Youtube playlist to the application
-
       addedPlaylist = await _addYoutubePlaylistIfNotExist(
         playlistUrl: playlistUrl,
         playlistQuality: playlistQuality,
@@ -738,18 +717,16 @@ class AudioDownloadVM extends ChangeNotifier {
     return updatedPlaylist;
   }
 
-  /// Downloads the audio of the videos referenced in the passed playlist url. If
-  /// the audio of a video has already been downloaded, it will not be downloaded
-  /// again.
+  /// Downloads all audios of a YouTube playlist (skips already-downloaded).
   Future<void> downloadPlaylistAudio({
     required String playlistUrl,
   }) async {
-    // if the playlist is already being downloaded, then
-    // the method is not executed. This avoids that the
-    // audio of the playlist are downloaded multiple times
-    // if the user clicks multiple times on the download
-    // playlist text button.
     if (downloadingPlaylistUrls.contains(playlistUrl)) {
+      // if the playlist is already being downloaded, then
+      // the method is not executed. This avoids that the
+      // audio of the playlist are downloaded multiple times
+      // if the user clicks multiple times on the download
+      // playlist text button.
       return;
     } else {
       // If another playlist is being downloaded, then the
@@ -763,7 +740,7 @@ class AudioDownloadVM extends ChangeNotifier {
     _stopDownloadPressed = false;
     _youtubeExplode ??= yt.YoutubeExplode();
 
-    // get the Youtube playlist
+    // get the YouTube playlist
     String? playlistId = yt.PlaylistId.parsePlaylistId(playlistUrl);
     yt.Playlist youtubePlaylist;
 
@@ -778,7 +755,6 @@ class AudioDownloadVM extends ChangeNotifier {
       // removing the playlist url from the downloadingPlaylistUrls
       // list since the playlist download has failed
       downloadingPlaylistUrls.remove(playlistUrl);
-
       return;
     } catch (e) {
       notifyDownloadError(
@@ -789,7 +765,6 @@ class AudioDownloadVM extends ChangeNotifier {
       // removing the playlist url from the downloadingPlaylistUrls
       // list since the playlist download has failed
       downloadingPlaylistUrls.remove(playlistUrl);
-
       return;
     }
 
@@ -818,7 +793,6 @@ class AudioDownloadVM extends ChangeNotifier {
     final List<String> downloadedAudioOriginalVideoTitleLst =
         await _getPlaylistDownloadedAudioOriginalVideoTitleLst(
             currentPlaylist: currentPlaylist);
-
     // AudioPlayer is used to get the audio duration of the
     // downloaded audio files
     final AudioPlayer audioPlayer = AudioPlayer();
@@ -835,7 +809,7 @@ class AudioDownloadVM extends ChangeNotifier {
       videoUploadDate ??= DateTime(00, 1, 1);
 
       // using youtubeVideo.description is not correct since it
-      // it is empty !
+      // is empty !
       final String videoDescription =
           (await _youtubeExplode!.videos.get(youtubeVideo.id.value))
               .description;
@@ -857,19 +831,14 @@ class AudioDownloadVM extends ChangeNotifier {
         // in the playlist have been handled.
         if (_isDownloading) {
           _isDownloading = false;
-
           notifyListeners();
         }
-
         continue;
       }
 
-      if (_stopDownloadPressed) {
-        break;
-      }
+      if (_stopDownloadPressed) break;
 
       // Download the audio file
-
       Stopwatch stopwatch = Stopwatch()..start();
 
       if (!_isDownloading) {
@@ -877,9 +846,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
         // This avoid that when downloading a next audio file, the displayed
         // download progress starts at 100 % !
-
         _downloadProgress = 0.0;
-
         notifyListeners();
       }
 
@@ -897,10 +864,14 @@ class AudioDownloadVM extends ChangeNotifier {
       );
 
       try {
-        await _downloadAudioFile(
+        final ok = await _downloadAudioFile(
           youtubeVideoId: youtubeVideo.id,
           audio: audio,
         );
+        if (!ok) {
+          // notifyDownloadError already done in _downloadAudioFile
+          continue;
+        }
       } catch (e) {
         notifyDownloadError(
           errorType: ErrorType.downloadAudioYoutubeError,
@@ -928,7 +899,6 @@ class AudioDownloadVM extends ChangeNotifier {
       // should avoid that the last downloaded audio is
       // re-downloaded
       downloadedAudioOriginalVideoTitleLst.add(audio.validVideoTitle);
-
       notifyListeners();
     }
 
@@ -941,7 +911,6 @@ class AudioDownloadVM extends ChangeNotifier {
     // removing the playlist url from the downloadingPlaylistUrls
     // list since the playlist download has finished
     downloadingPlaylistUrls.remove(playlistUrl);
-
     notifyListeners();
   }
 
@@ -972,7 +941,6 @@ class AudioDownloadVM extends ChangeNotifier {
       warningMessageVM.renameFileNameIsAlreadyUsed(
         invalidRenameFileName: audioModifiedFileName,
       );
-
       return;
     }
 
@@ -991,12 +959,10 @@ class AudioDownloadVM extends ChangeNotifier {
           mp3FileName: audioModifiedFileName,
         ),
       );
-
       return;
     }
 
     // renaming the audio file
-
     if (!DirUtil.renameFile(
       fileToRenameFilePathName: audio.filePathName,
       newFileName: audioModifiedFileName,
@@ -1015,8 +981,7 @@ class AudioDownloadVM extends ChangeNotifier {
       newFileName: audioModifiedFileName,
     );
 
-    // renaming the comment file if it exists
-
+    // renaming the comment file if exists
     if (File(oldCommentFilePathName).existsSync()) {
       DirUtil.renameFile(
         fileToRenameFilePathName: oldCommentFilePathName,
@@ -1088,9 +1053,9 @@ class AudioDownloadVM extends ChangeNotifier {
     if (isPlaylistSelectionChanged) {
       playlist.isSelected = isPlaylistSelected;
 
-      // if the playlist is selected, the audio quality checkbox will be
-      // checked or not according to the selected playlist quality
       if (isPlaylistSelected) {
+        // if the playlist is selected, the audio quality checkbox will be
+        // checked or not according to the selected playlist quality
         isHighQuality = playlist.playlistQuality == PlaylistQuality.music;
       }
 
@@ -1154,13 +1119,6 @@ class AudioDownloadVM extends ChangeNotifier {
       playlistId: playlistId,
     );
 
-    // checking if current Youtube playlist was deleted and recreated
-    // on Youtube.
-    //
-    // The checking must compare the title of the added (recreated)
-    // Youtube playlist with the title of the playlist in the
-    // _listOfPlaylist since the added playlist url and id are
-    // different from their value in the existing playlist.
     int existingPlaylistIndex = _listOfPlaylist
         .indexWhere((element) => element.title == addedPlaylist.title);
 
@@ -1184,7 +1142,6 @@ class AudioDownloadVM extends ChangeNotifier {
     required bool isAudioDownloadHighQuality,
   }) {
     isHighQuality = isAudioDownloadHighQuality;
-
     notifyListeners();
   }
 
@@ -1217,11 +1174,9 @@ class AudioDownloadVM extends ChangeNotifier {
         errorType: ErrorType.noInternet,
         errorArgOne: e.toString(),
       );
-
       return ErrorType.noInternet;
     } catch (e) {
       warningMessageVM.isSingleVideoUrlInvalid = true;
-
       return ErrorType.downloadAudioYoutubeError;
     }
 
@@ -1234,19 +1189,16 @@ class AudioDownloadVM extends ChangeNotifier {
         errorType: ErrorType.noInternet,
         errorArgOne: e.toString(),
       );
-
       return ErrorType.noInternet;
     } catch (e) {
       notifyDownloadError(
         errorType: ErrorType.downloadAudioYoutubeError,
         errorArgOne: e.toString(),
       );
-
       return ErrorType.downloadAudioYoutubeError;
     }
 
     DateTime? videoUploadDate = youtubeVideo.uploadDate;
-
     videoUploadDate ??= DateTime(00, 1, 1);
 
     final String compactVideoDescription = _createCompactVideoDescription(
@@ -1286,7 +1238,6 @@ class AudioDownloadVM extends ChangeNotifier {
             errorArgThree: singleVideoTargetPlaylist.title,
           );
         }
-
         return ErrorType.downloadAudioFileAlreadyOnAudioDirectory;
       } catch (_) {
         // file was not found in the downloaded audio directory
@@ -1300,15 +1251,16 @@ class AudioDownloadVM extends ChangeNotifier {
 
     if (!_isDownloading) {
       _isDownloading = true;
-
       notifyListeners();
     }
 
     try {
-      if (!await _downloadAudioFile(
+      final ok = await _downloadAudioFile(
         youtubeVideoId: youtubeVideo.id,
         audio: audio,
-      )) {
+      );
+
+      if (!ok) {
         // Before this improvement, the failed downloaded audio was
         // added to the target playlist.
         //
@@ -1383,11 +1335,9 @@ class AudioDownloadVM extends ChangeNotifier {
         errorArgOne: e.toString(),
         errorArgTwo: _currentDownloadingAudio.originalVideoTitle,
       );
-
       return ErrorType.noInternet;
     } catch (e) {
       warningMessageVM.isSingleVideoUrlInvalid = true;
-
       return ErrorType.downloadAudioYoutubeError;
     }
 
@@ -1400,7 +1350,6 @@ class AudioDownloadVM extends ChangeNotifier {
         errorType: ErrorType.noInternet,
         errorArgOne: e.toString(),
       );
-
       return ErrorType.noInternet;
     } catch (e) {
       notifyDownloadError(
@@ -1408,7 +1357,6 @@ class AudioDownloadVM extends ChangeNotifier {
         errorArgOne: e.toString(),
         errorArgTwo: _currentDownloadingAudio.originalVideoTitle,
       );
-
       return ErrorType.downloadAudioYoutubeError;
     }
 
@@ -1417,7 +1365,6 @@ class AudioDownloadVM extends ChangeNotifier {
 
     if (!_isDownloading) {
       _isDownloading = true;
-
       notifyListeners();
     }
 
@@ -1426,10 +1373,12 @@ class AudioDownloadVM extends ChangeNotifier {
       // _downloadAudioFile() method was set in the AudioDownloadVM.
       // redownloadPlaylistFilteredAudio() method which calls this
       // method.
-      if (!await _downloadAudioFile(
-          youtubeVideoId: youtubeVideo.id,
-          audio: _currentDownloadingAudio,
-          redownloading: true)) {
+      final ok = await _downloadAudioFile(
+        youtubeVideoId: youtubeVideo.id,
+        audio: _currentDownloadingAudio,
+        redownloading: true,
+      );
+      if (!ok) {
         // Before this improvement, the failed downloaded audio was
         // added to the target playlist.
         //
@@ -1534,10 +1483,8 @@ class AudioDownloadVM extends ChangeNotifier {
             toPlaylistTitle: targetPlaylistTitle,
             toPlaylistType: targetPlaylist.playlistType,
             copyOrMoveFileResult: moveFileResult);
-
         return false;
       }
-
       return false;
     } else if (moveFileResult == CopyOrMoveFileResult.sourceFileNotExist) {
       // the case if the moved audio file does not exist in the source
@@ -1551,7 +1498,6 @@ class AudioDownloadVM extends ChangeNotifier {
           toPlaylistTitle: targetPlaylistTitle,
           toPlaylistType: targetPlaylist.playlistType,
           copyOrMoveFileResult: moveFileResult);
-
       return false;
     }
 
@@ -1669,10 +1615,8 @@ class AudioDownloadVM extends ChangeNotifier {
             toPlaylistTitle: targetPlaylistTitle,
             toPlaylistType: targetPlaylist.playlistType,
             copyOrMoveFileResult: copyFileResult);
-
         return false;
       }
-
       return false;
     } else if (copyFileResult == CopyOrMoveFileResult.sourceFileNotExist) {
       // the case if the copied audio file does not exist in the source
@@ -1686,7 +1630,6 @@ class AudioDownloadVM extends ChangeNotifier {
           toPlaylistTitle: targetPlaylistTitle,
           toPlaylistType: targetPlaylist.playlistType,
           copyOrMoveFileResult: copyFileResult);
-
       return false;
     }
 
@@ -1791,17 +1734,13 @@ class AudioDownloadVM extends ChangeNotifier {
         continue;
       }
 
-      if (_stopDownloadPressed) {
-        break;
-      }
+      if (_stopDownloadPressed) break;
 
       _currentDownloadingAudio = audio;
 
       // This avoid that when downloading a next audio file, the displayed
       // download progress starts at 100 % !
-
       _downloadProgress = 0.0;
-
       notifyListeners();
 
       ErrorType errorType = await redownloadSingleVideoAudio();
@@ -1828,9 +1767,10 @@ class AudioDownloadVM extends ChangeNotifier {
     required Playlist targetPlaylist,
     required List<String> filePathNameToImportLst,
   }) async {
-    List<String> filePathNameToImportLstCopy = List<String>.from(
-        filePathNameToImportLst); // necessary since the filePathNameToImportLst
-    //                               may be modified
+    List<String> filePathNameToImportLstCopy =
+        List<String>.from(filePathNameToImportLst); // necessary since the
+    //                                                 filePathNameToImportLst
+    //                                                 may be modified
     String rejectedImportedFileNames = '';
     String acceptableImportedFileNames = '';
 
@@ -1844,10 +1784,8 @@ class AudioDownloadVM extends ChangeNotifier {
         // playlist directory
         rejectedImportedFileNames += "\"$fileName\",\n";
         filePathNameToImportLst.remove(filePathName);
-
         continue;
       }
-
       acceptableImportedFileNames += "\"$fileName\",\n";
     }
 
@@ -1894,11 +1832,9 @@ class AudioDownloadVM extends ChangeNotifier {
       File(filePathName).copySync(targetFilePathName);
 
       Audio? existingAudio = targetPlaylist.getAudioByFileNameNoExt(
-        audioFileNameNoExt: fileName.replaceFirst(
-          '.mp3',
-          '',
-        ),
+        audioFileNameNoExt: fileName.replaceFirst('.mp3', ''),
       );
+
       // Instantiating the imported audio and adding it to the target
       // playlist downloaded audio list and playable audio list.
 
@@ -1975,10 +1911,7 @@ class AudioDownloadVM extends ChangeNotifier {
     );
 
     Audio? existingAudio = targetPlaylist.getAudioByFileNameNoExt(
-      audioFileNameNoExt: fileName.replaceFirst(
-        '.mp3',
-        '',
-      ),
+      audioFileNameNoExt: fileName.replaceFirst('.mp3', ''),
     );
 
     if (existingAudio == null) {
@@ -2046,7 +1979,6 @@ class AudioDownloadVM extends ChangeNotifier {
     );
 
     DateTime dateTimeNow = DateTime.now();
-
     final String audioTitle = importedFileName.replaceFirst('.mp3', '');
 
     Audio importedAudio = Audio(
@@ -2086,9 +2018,7 @@ class AudioDownloadVM extends ChangeNotifier {
     // Load audio file into audio player
     await audioPlayer!.setSource(DeviceFileSource(filePathName));
 
-    // Get duration
     duration = await audioPlayer.getDuration();
-
     return duration ?? Duration.zero;
   }
 
@@ -2156,8 +2086,9 @@ class AudioDownloadVM extends ChangeNotifier {
   }) {
     DirUtil.deleteFileIfExist(pathFileName: audio.filePathName);
 
-    // since the audio mp3 file has been deleted, the audio is no
+    // Since the audio mp3 file has been deleted, the audio is no
     // longer in the playlist playable audio list
+
     Playlist enclosingPlaylist = audio.enclosingPlaylist!;
 
     enclosingPlaylist.removePlayableAudio(
@@ -2184,6 +2115,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
     // since the audio mp3 files has been deleted, the audio are no
     // longer in the playlist playable audio list
+
     Playlist enclosingPlaylist = audioToDeleteLst[0].enclosingPlaylist!;
 
     enclosingPlaylist.removeAudioLstFromPlayableAudioLstOnly(
@@ -2208,8 +2140,9 @@ class AudioDownloadVM extends ChangeNotifier {
       DirUtil.deleteFileIfExist(pathFileName: audio.filePathName);
     }
 
-    // since the audio mp3 files has been deleted, the audio are no
+    // Since the audio mp3 files has been deleted, the audio are no
     // longer in the playlist playable audio list
+
     Playlist enclosingPlaylist = audioToDeleteLst[0].enclosingPlaylist!;
 
     enclosingPlaylist.removeAudioLstFromDownloadedAndPlayableAudioLsts(
@@ -2376,7 +2309,8 @@ class AudioDownloadVM extends ChangeNotifier {
     List<String> videoDescriptionLinesLst = videoDescription.split('\n');
     String firstThreeLines = videoDescriptionLinesLst.take(3).join('\n');
 
-    // Extraire les noms propres qui ne se trouvent pas dans les 3 premières lignes
+    // Extraire les noms propres qui ne se trouvent pas dans les 3
+    // premières lignes
     String linesAfterFirstThreeLines =
         videoDescriptionLinesLst.skip(3).join('\n');
     linesAfterFirstThreeLines =
@@ -2396,7 +2330,8 @@ class AudioDownloadVM extends ChangeNotifier {
               linesAfterFirstThreeLinesWordsLst[i + 1][0])) {
         consecutiveProperNames.add(
             '${linesAfterFirstThreeLinesWordsLst[i]} ${linesAfterFirstThreeLinesWordsLst[i + 1]}');
-        i++; // Pour ne pas prendre en compte les noms propres suivants qui font déjà partie d'une paire consécutive
+        i++; // Pour ne pas prendre en compte les noms propres suivants qui font déjà
+        //      partie d'une paire consécutive
       }
     }
 
@@ -2417,6 +2352,7 @@ class AudioDownloadVM extends ChangeNotifier {
     // Expression régulière pour vérifier si la lettre est une lettre
     // majuscule valide en anglais ou en français
     RegExp validLetterRegex = RegExp(r'[A-ZÀ-ÿ]');
+
     // Expression régulière pour vérifier si le caractère n'est pas
     // un chiffre
     RegExp notDigitRegex = RegExp(r'\D');
@@ -2425,7 +2361,8 @@ class AudioDownloadVM extends ChangeNotifier {
   }
 
   String _removeTimestampLines(String text) {
-    // Expression régulière pour identifier les lignes de texte de la vidéo formatées comme les timestamps
+    // Expression régulière pour identifier les lignes de texte de
+    // la vidéo formatées comme les timestamps
     RegExp timestampRegex = RegExp(r'^\d{1,2}:\d{2} .+\n', multiLine: true);
 
     // Supprimer les lignes correspondantes
@@ -2492,7 +2429,28 @@ class AudioDownloadVM extends ChangeNotifier {
         .toList();
   }
 
-// Prefer M4A (AAC) then best audioOnly
+  /// Prefer M4A (AAC) then best audioOnly
+  /// Get manifest with mobile clients and simple retries (handles recent YT changes).
+  Future<yt.StreamManifest> _getManifestWithClients(yt.VideoId id) async {
+    const maxAttempts = 3;
+    int attempt = 0;
+    late yt.StreamManifest manifest;
+    while (true) {
+      attempt++;
+      try {
+        manifest = await _youtubeExplode!.videos.streams.getManifest(
+          id,
+          ytClients: [yt.YoutubeApiClient.ios, yt.YoutubeApiClient.androidVr],
+        );
+        return manifest;
+      } catch (e) {
+        if (attempt >= maxAttempts) rethrow;
+        await Future.delayed(Duration(milliseconds: 400 * attempt));
+      }
+    }
+  }
+
+  /// Prefer M4A (AAC) then best audioOnly; choose highest/lowest bitrate per quality.
   Future<yt.AudioOnlyStreamInfo> _pickBestAudioStream({
     required yt.StreamManifest manifest,
     required bool highQuality,
@@ -2519,36 +2477,7 @@ class AudioDownloadVM extends ChangeNotifier {
         (a, b) => a.bitrate.bitsPerSecond < b.bitrate.bitsPerSecond ? a : b);
   }
 
-  Future<yt.StreamManifest> _getManifestWithClients(yt.VideoId id) async {
-    // Retries to absorb transient 403/429
-    const maxAttempts = 3;
-    int attempt = 0;
-    late yt.StreamManifest manifest;
-    while (true) {
-      attempt++;
-      try {
-        // IMPORTANT: use ytClients to avoid recent throttling changes
-        manifest = await _youtubeExplode!.videos.streams.getManifest(
-          id,
-          ytClients: [yt.YoutubeApiClient.ios, yt.YoutubeApiClient.androidVr],
-        );
-        return manifest;
-      } catch (e) {
-        if (attempt >= maxAttempts) rethrow;
-        await Future.delayed(Duration(milliseconds: 400 * attempt));
-      }
-    }
-  }
-
-  /// Downloads the audio file from the Youtube video and saves it to the enclosing
-  /// playlist directory. Returns true if the audio file was successfully downloaded,
-  /// false otherwise.
-  ///
-  /// The method is also called when the user selects the 'Redownload deleted Audio'
-  /// menu item of audio list item or the audio player view left appbar. In this
-  /// case, [redownloading] is set to true and [audio] is _currentDownloadingAudio
-  /// which was set in the AudioDownloadVM.redownloadPlaylistFilteredAudio()
-  /// method.
+  /// Download stream to a temp file with progress; then transcode to MP3.
   Future<bool> _downloadAudioFile({
     required yt.VideoId youtubeVideoId,
     required Audio audio,
@@ -2571,11 +2500,10 @@ class AudioDownloadVM extends ChangeNotifier {
       return false;
     }
 
-    // Choose stream (M4A preferred)
     final yt.AudioOnlyStreamInfo streamInfo = await _pickBestAudioStream(
         manifest: manifest, highQuality: isHighQuality);
 
-    // Temp file (container extension)
+    // Temp file for container (m4a/webm)
     final String tmpExt = streamInfo.container.name; // "m4a" or "webm"
     final String tmpPath = path.join(
       audio.enclosingPlaylist!.downloadPath,
@@ -2587,13 +2515,13 @@ class AudioDownloadVM extends ChangeNotifier {
     final String mp3Path = audio.filePathName;
     final File mp3File = File(mp3Path);
 
-    // Size before download (source container)
+    // Source size (container)
     final int srcTotalBytes = streamInfo.size.totalBytes;
     if (!redownloading) {
-      audio.audioFileSize = srcTotalBytes; // initial info (will be overridden)
+      audio.audioFileSize =
+          srcTotalBytes; // provisional; will be replaced by MP3 size
     }
 
-    // Download with progress into tmpFile
     try {
       await _downloadToFileWithProgress(
         stream: _youtubeExplode!.videos.streams.get(streamInfo),
@@ -2609,14 +2537,14 @@ class AudioDownloadVM extends ChangeNotifier {
       return false;
     }
 
-    // Transcode tmp => mp3
+    // Transcode to MP3
     final ok = await _FfmpegFacade.convertToMp3(
       inputPath: tmpFile.path,
       outputPath: mp3File.path,
       bitrate: isHighQuality ? '192k' : '128k',
     );
 
-    // Cleanup + set final size
+    // Cleanup temp
     try {
       if (await tmpFile.exists()) await tmpFile.delete();
     } catch (_) {}
@@ -2630,16 +2558,22 @@ class AudioDownloadVM extends ChangeNotifier {
       return false;
     }
 
-    // Overwrite with final MP3 size
+    // Overwrite with the final MP3 size
     try {
       audio.audioFileSize = await mp3File.length();
     } catch (_) {}
+
+    // Mark quality if needed
+    if (!redownloading && isHighQuality) {
+      audio.setAudioToMusicQuality();
+    }
 
     return true;
   }
 
   /// Downloads the audio file from the Youtube video and saves it
-  /// to the enclosing playlist directory.
+  /// to the enclosing playlist directory. UUsing generic downloader
+  /// with 1s progress ticks, writing to a file.
   Future<void> _downloadToFileWithProgress({
     required Stream<List<int>> stream,
     required File targetFile,
