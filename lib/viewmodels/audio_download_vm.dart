@@ -2467,15 +2467,19 @@ class AudioDownloadVM extends ChangeNotifier {
     yt.AudioOnlyStreamInfo chosen;
 
     if (m4a.isNotEmpty) {
-      chosen = highQuality ? m4a.withHighestBitrate() : _withLowestBitrate(m4a);
+      chosen = highQuality
+          ? m4a.withHighestBitrate()
+          : _withLowestBitrate(m4a); // Reduces quantity of downloaded data
     } else {
       chosen = highQuality
           ? audioOnly.withHighestBitrate()
-          : _withLowestBitrate(audioOnly);
+          : _withLowestBitrate(
+              audioOnly); // Reduces quantity of downloaded data
     }
     return chosen;
   }
 
+  // Improving reduction of downloaded data quantity for low quality audio
   yt.AudioOnlyStreamInfo _withLowestBitrate(
       Iterable<yt.AudioOnlyStreamInfo> list) {
     return list.reduce(
