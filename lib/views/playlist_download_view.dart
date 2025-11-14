@@ -319,7 +319,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     required PlaylistListVM playlistListVMlistenTrue,
     required AudioDownloadVM audioDownloadVMlistenTrue,
   }) {
-    if (audioDownloadVMlistenTrue.isDownloading) {
+    if (audioDownloadVMlistenTrue.isAudioDownloading) {
       // When an audio is downloading, the list is not scrolled to the
       // current audio item. This enables the newly downloaded audio to
       // be displayed at the top of the audio list.
@@ -457,7 +457,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     int playlistToScrollPosition = 0;
     int noScrollPositionValue = 0; // position value avoiding scrolling down
 
-    if (audioDownloadVMlistenTrue.isDownloading) {
+    if (audioDownloadVMlistenTrue.isAudioDownloading) {
       // When an audio is downloading, the list of playlist must not
       // scrolled to the current playlist, what happens if this test
       // is not performed.
@@ -547,9 +547,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   Consumer<AudioDownloadVM> _buildDisplayDownloadProgressionInfo() {
     return Consumer<AudioDownloadVM>(
       builder: (context, audioDownloadVMlistenTrue, child) {
-        if (audioDownloadVMlistenTrue.isDownloading) {
+        if (audioDownloadVMlistenTrue.isAudioDownloading) {
           String downloadProgressPercent =
-              '${(audioDownloadVMlistenTrue.downloadProgress * 100).toStringAsFixed(1)}%';
+              '${(audioDownloadVMlistenTrue.audioDownloadProgress * 100).toStringAsFixed(1)}%';
           String downloadFileSize = UiUtil.formatLargeSizeToKbOrMb(
             context: context,
             sizeInBytes:
@@ -557,7 +557,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           );
           String downloadSpeed = '${UiUtil.formatLargeSizeToKbOrMb(
             context: context,
-            sizeInBytes: audioDownloadVMlistenTrue.lastSecondDownloadSpeed,
+            sizeInBytes: audioDownloadVMlistenTrue.lastSecondAudioDownloadSpeed,
           )}/sec';
           return Padding(
             padding: const EdgeInsets.all(16.0),
@@ -570,7 +570,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 ),
                 const SizedBox(height: 10.0),
                 LinearProgressIndicator(
-                    value: audioDownloadVMlistenTrue.downloadProgress),
+                    value: audioDownloadVMlistenTrue.audioDownloadProgress),
                 const SizedBox(height: 10.0),
                 Text(
                   '$downloadProgressPercent ${AppLocalizations.of(context)!.ofPreposition} $downloadFileSize ${AppLocalizations.of(context)!.atPreposition} $downloadSpeed',
@@ -730,7 +730,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
     bool arePlaylistDownloadWidgetsEnabled =
         playlistListVMlistenFalse.isButtonDownloadSelPlaylistsEnabled &&
-            !Provider.of<AudioDownloadVM>(context).isDownloading;
+            !Provider.of<AudioDownloadVM>(context).isAudioDownloading;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1843,7 +1843,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     required AudioDownloadVM audioDownloadVMlistenFalse,
     required ThemeProviderVM themeProviderVM,
   }) {
-    bool isAppDownloading = audioDownloadVMlistenFalse.isDownloading &&
+    bool isAppDownloading = audioDownloadVMlistenFalse.isAudioDownloading &&
         !audioDownloadVMlistenFalse.isDownloadStopping;
 
     return ValueListenableBuilder<String?>(

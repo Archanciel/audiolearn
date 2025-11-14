@@ -114,17 +114,26 @@ class AudioDownloadVM extends ChangeNotifier {
   set playlistsRootPath(String playlistsRootPath) =>
       _playlistsRootPath = playlistsRootPath;
 
-  bool _isDownloading = false;
-  bool get isDownloading => _isDownloading;
+  // While the audio is downloading, the download progression is
+  // displayed on the playlist download view. 
 
-  double _downloadProgress = 0.0;
-  double get downloadProgress => _downloadProgress;
+  bool _isAudioDownloading = false;
+  bool get isAudioDownloading => _isAudioDownloading;
 
-  int _lastSecondDownloadSpeed = 0;
-  int get lastSecondDownloadSpeed => _lastSecondDownloadSpeed;
+  double _audioDownloadProgress = 0.0;
+  double get audioDownloadProgress => _audioDownloadProgress;
+
+  int _lastSecondAudioDownloadSpeed = 0;
+  int get lastSecondAudioDownloadSpeed => _lastSecondAudioDownloadSpeed;
 
   late Audio _currentDownloadingAudio;
   Audio get currentDownloadingAudio => _currentDownloadingAudio;
+
+  // After the audio was downloaded, it must be converted to MP3.
+  // This takes time and so the conversion progression is displayed
+  // on the playlist download view. 
+  bool _isAudioConvertedToMp3 = false;
+  bool get isAudioConvertedToMp3 => _isAudioConvertedToMp3;
 
   bool isHighQuality = false;
 
@@ -834,8 +843,8 @@ class AudioDownloadVM extends ChangeNotifier {
         // avoids that the last downloaded audio download
         // informations remain displayed until all videos referenced
         // in the playlist have been handled.
-        if (_isDownloading) {
-          _isDownloading = false;
+        if (_isAudioDownloading) {
+          _isAudioDownloading = false;
           notifyListeners();
         }
         continue;
@@ -846,12 +855,12 @@ class AudioDownloadVM extends ChangeNotifier {
       // Download the audio file
       Stopwatch stopwatch = Stopwatch()..start();
 
-      if (!_isDownloading) {
-        _isDownloading = true;
+      if (!_isAudioDownloading) {
+        _isAudioDownloading = true;
 
         // This avoid that when downloading a next audio file, the displayed
         // download progress starts at 100 % !
-        _downloadProgress = 0.0;
+        _audioDownloadProgress = 0.0;
         notifyListeners();
       }
 
@@ -909,7 +918,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
     audioPlayer.dispose();
 
-    _isDownloading = false;
+    _isAudioDownloading = false;
     _youtubeExplode!.close();
     _youtubeExplode = null;
 
@@ -1079,9 +1088,9 @@ class AudioDownloadVM extends ChangeNotifier {
     String? errorArgTwo,
     String? errorArgThree,
   }) {
-    _isDownloading = false;
-    _downloadProgress = 0.0;
-    _lastSecondDownloadSpeed = 0;
+    _isAudioDownloading = false;
+    _audioDownloadProgress = 0.0;
+    _lastSecondAudioDownloadSpeed = 0;
     _audioDownloadError = true;
 
     warningMessageVM.setError(
@@ -1254,8 +1263,8 @@ class AudioDownloadVM extends ChangeNotifier {
     // The Stopwatch class in Dart is used to measure elapsed time.
     Stopwatch stopwatch = Stopwatch()..start();
 
-    if (!_isDownloading) {
-      _isDownloading = true;
+    if (!_isAudioDownloading) {
+      _isAudioDownloading = true;
       notifyListeners();
     }
 
@@ -1288,7 +1297,7 @@ class AudioDownloadVM extends ChangeNotifier {
     stopwatch.stop();
 
     audio.downloadDuration = stopwatch.elapsed;
-    _isDownloading = false;
+    _isAudioDownloading = false;
     _youtubeExplode!.close();
     _youtubeExplode = null;
 
@@ -1368,8 +1377,8 @@ class AudioDownloadVM extends ChangeNotifier {
     // The Stopwatch class in Dart is used to measure elapsed time.
     Stopwatch stopwatch = Stopwatch()..start();
 
-    if (!_isDownloading) {
-      _isDownloading = true;
+    if (!_isAudioDownloading) {
+      _isAudioDownloading = true;
       notifyListeners();
     }
 
@@ -1405,7 +1414,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
     stopwatch.stop();
 
-    _isDownloading = false;
+    _isAudioDownloading = false;
     _youtubeExplode!.close();
     _youtubeExplode = null;
 
@@ -1745,7 +1754,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
       // This avoid that when downloading a next audio file, the displayed
       // download progress starts at 100 % !
-      _downloadProgress = 0.0;
+      _audioDownloadProgress = 0.0;
       notifyListeners();
 
       ErrorType errorType = await redownloadSingleVideoAudio();
@@ -2601,24 +2610,24 @@ class AudioDownloadVM extends ChangeNotifier {
     int prevSecond = 0;
 
     // reset progress
-    _downloadProgress = 0.0;
+    _audioDownloadProgress = 0.0;
     notifyListeners();
 
     final Duration tick = const Duration(seconds: 1);
     DateTime last = DateTime.now();
     final timer = Timer.periodic(tick, (_) {
-      _downloadProgress = total / totalSizeBytes;
-      _lastSecondDownloadSpeed = total - prevSecond;
+      _audioDownloadProgress = total / totalSizeBytes;
+      _lastSecondAudioDownloadSpeed = total - prevSecond;
       prevSecond = total;
-      if (_isDownloading) notifyListeners();
+      if (_isAudioDownloading) notifyListeners();
     });
 
     await for (final chunk in stream) {
       total += chunk.length;
       final now = DateTime.now();
       if (now.difference(last) >= tick) {
-        _downloadProgress = total / totalSizeBytes;
-        _lastSecondDownloadSpeed = total - prevSecond;
+        _audioDownloadProgress = total / totalSizeBytes;
+        _lastSecondAudioDownloadSpeed = total - prevSecond;
         prevSecond = total;
         last = now;
         notifyListeners();
@@ -2627,8 +2636,8 @@ class AudioDownloadVM extends ChangeNotifier {
     }
 
     timer.cancel();
-    _downloadProgress = 1.0;
-    _lastSecondDownloadSpeed = 0;
+    _audioDownloadProgress = 1.0;
+    _lastSecondAudioDownloadSpeed = 0;
     notifyListeners();
 
     await sink.flush();
