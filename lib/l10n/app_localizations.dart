@@ -3946,6 +3946,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Commented on'**
   String get commentedOn;
+
+  /// No description provided for @convertingDownloadedAudioToMP3.
+  ///
+  /// In en, this message translates to:
+  /// **'Converting downloaded audio to MP3 ...'**
+  String get convertingDownloadedAudioToMP3;
 }
 
 class _AppLocalizationsDelegate

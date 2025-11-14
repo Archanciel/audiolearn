@@ -2558,4 +2558,8 @@ class MockAppLocalizations extends AppLocalizations {
     Object mp3ZipName,
   ) =>
       "Moving $mp3ZipName to accessible dir ...";
+
+  @override
+  String get convertingDownloadedAudioToMP3 =>
+      "Converting downloaded audio to MP3 ...";
 }

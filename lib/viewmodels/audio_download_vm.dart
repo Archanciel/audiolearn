@@ -132,8 +132,8 @@ class AudioDownloadVM extends ChangeNotifier {
   // After the audio was downloaded, it must be converted to MP3.
   // This takes time and so the conversion progression is displayed
   // on the playlist download view. 
-  bool _isAudioConvertedToMp3 = false;
-  bool get isAudioConvertedToMp3 => _isAudioConvertedToMp3;
+  bool _isDownloadedAudioConvertingToMp3 = false;
+  bool get isDownloadedAudioConvertingToMp3 => _isDownloadedAudioConvertingToMp3;
 
   bool isHighQuality = false;
 
@@ -2562,6 +2562,10 @@ class AudioDownloadVM extends ChangeNotifier {
     final int sampleRate = useMusicQuality ? 44100 : 22050;
     final int channels = useMusicQuality ? 2 : 1;
 
+    _isAudioDownloading = false;
+    _isDownloadedAudioConvertingToMp3 = true;
+    notifyListeners();
+
     final ok = await _FfmpegFacade.convertToMp3(
       inputPath: tmpFile.path,
       outputPath: mp3File.path,
@@ -2569,6 +2573,9 @@ class AudioDownloadVM extends ChangeNotifier {
       sampleRate: sampleRate,
       channels: channels,
     );
+
+    _isDownloadedAudioConvertingToMp3 = false;
+    notifyListeners();
 
     // Cleanup temp
     try {

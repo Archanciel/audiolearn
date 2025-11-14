@@ -567,6 +567,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   audioDownloadVMlistenTrue
                       .currentDownloadingAudio.validVideoTitle,
                   style: const TextStyle(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center, // Centered multi lines text
                 ),
                 const SizedBox(height: 10.0),
                 LinearProgressIndicator(
@@ -577,6 +578,29 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 ),
               ],
             ),
+          );
+        } else if (audioDownloadVMlistenTrue.isDownloadedAudioConvertingToMp3) {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(children: [
+              Text(
+                audioDownloadVMlistenTrue
+                    .currentDownloadingAudio.validVideoTitle,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center, // Centered multi lines text
+              ),
+              const SizedBox(height: 10.0),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Text(AppLocalizations.of(context)!.convertingDownloadedAudioToMP3,
+                ),
+                SizedBox(width: 20.0),
+                SizedBox(
+                  width: 24, // taille souhaitée
+                  height: 24,
+                  child: CircularProgressIndicator(),
+                ),
+              ]),
+            ]),
           );
         } else {
           return const SizedBox.shrink();
