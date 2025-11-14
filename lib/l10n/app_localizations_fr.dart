@@ -2494,5 +2494,5 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get convertingDownloadedAudioToMP3 =>
-      'Convertion de l\'audio téléchargé en MP3 ...';
+      'Conversion de l\'audio téléchargé en MP3 ...';
 }

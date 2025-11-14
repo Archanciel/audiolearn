@@ -1521,5 +1521,5 @@
   "playableAudioDialogSortDescriptionTooltipTopLastCommentDateTimeSmaller": "Le dernier commentaire des audio's en haut a été moins récemment créé ou modifié que le dernier commentaire des audio's d'en bas.",
   "audioStateNoComment": "Non commenté",
   "commentedOn": "Commenté le",
-  "convertingDownloadedAudioToMP3":"Convertion de l'audio téléchargé en MP3 ..."
+  "convertingDownloadedAudioToMP3":"Conversion de l'audio téléchargé en MP3 ..."
 }
