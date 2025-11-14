@@ -830,7 +830,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get updatePlaylistPlayableAudioListTooltip =>
-      'If audio\'s were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files to reflect the changes in the application screens.';
+      'If audio\'s were manually deleted from the playlist directory, this functionality updates the playlist JSON file to reflect the changes in the application screen.';
 
   @override
   String get audioPlayedInThisOrderTooltip =>
