@@ -66,10 +66,10 @@ Future<void> main() async {
       expect(audioDownloadVM.listOfPlaylist, []);
 
       // this check fails if the secondsDelay value is too small
-      expect(audioDownloadVM.isDownloading, false);
+      expect(audioDownloadVM.isAudioDownloading, false);
 
-      expect(audioDownloadVM.downloadProgress, 0.0);
-      expect(audioDownloadVM.lastSecondDownloadSpeed, 0);
+      expect(audioDownloadVM.audioDownloadProgress, 0.0);
+      expect(audioDownloadVM.lastSecondAudioDownloadSpeed, 0);
       expect(audioDownloadVM.isHighQuality, false);
 
       // Purge the test playlist directory so that the created test
@@ -200,10 +200,10 @@ Future<void> main() async {
       );
 
       // this check fails if the secondsDelay value is too small
-      expect(audioDownloadVM.isDownloading, false);
+      expect(audioDownloadVM.isAudioDownloading, false);
 
-      expect(audioDownloadVM.downloadProgress, 1.0);
-      expect(audioDownloadVM.lastSecondDownloadSpeed, 0);
+      expect(audioDownloadVM.audioDownloadProgress, 1.0);
+      expect(audioDownloadVM.lastSecondAudioDownloadSpeed, 0);
       expect(audioDownloadVM.isHighQuality, false);
 
       // Checking the data of the audio contained in the downloaded
@@ -367,10 +367,10 @@ Future<void> main() async {
       );
 
       // this check fails if the secondsDelay value is too small
-      expect(audioDownloadVM.isDownloading, false);
+      expect(audioDownloadVM.isAudioDownloading, false);
 
-      expect(audioDownloadVM.downloadProgress, 1.0);
-      expect(audioDownloadVM.lastSecondDownloadSpeed, 0);
+      expect(audioDownloadVM.audioDownloadProgress, 1.0);
+      expect(audioDownloadVM.lastSecondAudioDownloadSpeed, 0);
       expect(audioDownloadVM.isHighQuality, true);
 
       // Checking the data of the audio contained in the downloaded
@@ -503,10 +503,10 @@ Future<void> main() async {
       );
 
       // this check fails if the secondsDelay value is too small
-      expect(audioDownloadVM.isDownloading, false);
+      expect(audioDownloadVM.isAudioDownloading, false);
 
-      expect(audioDownloadVM.downloadProgress, 1.0);
-      expect(audioDownloadVM.lastSecondDownloadSpeed, 0);
+      expect(audioDownloadVM.audioDownloadProgress, 1.0);
+      expect(audioDownloadVM.lastSecondAudioDownloadSpeed, 0);
       expect(audioDownloadVM.isHighQuality, false);
 
       // downloadedAudioLst contains added Audio's
@@ -641,10 +641,10 @@ Future<void> main() async {
       );
 
       // this check fails if the secondsDelay value is too small
-      expect(audioDownloadVM.isDownloading, false);
+      expect(audioDownloadVM.isAudioDownloading, false);
 
-      expect(audioDownloadVM.downloadProgress, 1.0);
-      expect(audioDownloadVM.lastSecondDownloadSpeed, 0);
+      expect(audioDownloadVM.audioDownloadProgress, 1.0);
+      expect(audioDownloadVM.lastSecondAudioDownloadSpeed, 0);
       expect(audioDownloadVM.isHighQuality, false);
 
       // Checking the data of the audio contained in the downloaded
@@ -787,10 +787,10 @@ Future<void> main() async {
       );
 
       // this check fails if the secondsDelay value is too small
-      expect(audioDownloadVM.isDownloading, false);
+      expect(audioDownloadVM.isAudioDownloading, false);
 
-      expect(audioDownloadVM.downloadProgress, 1.0);
-      expect(audioDownloadVM.lastSecondDownloadSpeed, 0);
+      expect(audioDownloadVM.audioDownloadProgress, 1.0);
+      expect(audioDownloadVM.lastSecondAudioDownloadSpeed, 0);
       expect(audioDownloadVM.isHighQuality, true);
 
       // Checking the data of the audio contained in the downloaded
@@ -930,10 +930,10 @@ Future<void> main() async {
       );
 
       // this check fails if the secondsDelay value is too small
-      expect(audioDownloadVM.isDownloading, false);
+      expect(audioDownloadVM.isAudioDownloading, false);
 
-      expect(audioDownloadVM.downloadProgress, 1.0);
-      expect(audioDownloadVM.lastSecondDownloadSpeed, 0);
+      expect(audioDownloadVM.audioDownloadProgress, 1.0);
+      expect(audioDownloadVM.lastSecondAudioDownloadSpeed, 0);
       expect(audioDownloadVM.isHighQuality, false);
 
       // Checking the data of the audio contained in the downloaded

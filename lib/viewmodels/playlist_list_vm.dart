@@ -261,7 +261,7 @@ class PlaylistListVM extends ChangeNotifier {
   String get audioMp3SaveUniquePlaylistName => _audioMp3SaveUniquePlaylistName;
 
   // After the playlist(s) MP3 were saved to ZIP's, ZIP's are
-  // moved to the selected save dir. This btakes time and so
+  // moved to the selected save dir. This takes time and so
   // the move progression is displayed on the playlist download
   // view fields. 
 
