@@ -5,6 +5,9 @@ import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:volume_controller/volume_controller.dart';
+import 'widgets/appbar_left_popup_menu.dart';
+import 'widgets/appbar_right_popup_menu.dart';
+import 'widgets/appbar_title_for_audio_player_view.dart';
 import '../l10n/app_localizations.dart';
 
 import '../constants.dart';
@@ -12,13 +15,11 @@ import '../models/sort_filter_parameters.dart';
 import '../viewmodels/audio_player_vm.dart';
 import '../viewmodels/theme_provider_vm.dart';
 import '../services/settings_data_service.dart';
-import 'widgets/appbar_left_popup_menu.dart';
-import 'widgets/appbar_right_popup_menu.dart';
+import '../services/permission_requester_service.dart';
 import '../views/screen_mixin.dart';
 import '../views/playlist_download_view.dart';
 import '../views/audio_player_view.dart';
 import '../views/widgets/appbar_title_for_playlist_download_view.dart';
-import 'widgets/appbar_title_for_audio_player_view.dart';
 
 /// Before enclosing Scaffold in MyHomePage, this exception was
 /// thrown:
@@ -99,6 +100,9 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
   void initState() {
     super.initState();
 
+    // Asking permissions if needed once the app was launched
+    _requestPermissionsIfNeeded();
+
     _appBarTitleWidgetLst
       ..add(
         AppBarTitleForPlaylistDownloadView(),
@@ -143,6 +147,21 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
     }
 
     super.dispose();
+  }
+
+  Future<void> _requestPermissionsIfNeeded() async {
+    if (!Platform.isAndroid) {
+      // Les permissions gérées par permission_handler ne concernent
+      // que l’Android dans votre cas actuel.
+      return;
+    }
+
+    try {
+      await PermissionRequesterService.requestMultiplePermissions();
+    } catch (e) {
+      // Éviter un crash en cas de problème inattendu
+      debugPrint('Error while requesting permissions: $e');
+    }
   }
 
   Future<void> _restoreOriginalVolume() async {
