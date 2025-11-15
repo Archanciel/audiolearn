@@ -9,10 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:window_size/window_size.dart';
 
 import 'constants.dart';
-import 'services/settings_data_service.dart';
-import 'utils/dir_util.dart';
-import 'views/my_home_page.dart';
-import 'views/screen_mixin.dart';
 import 'viewmodels/picture_vm.dart';
 import 'viewmodels/playlist_list_vm.dart';
 import 'viewmodels/audio_download_vm.dart';
@@ -21,20 +17,26 @@ import 'viewmodels/language_provider_vm.dart';
 import 'viewmodels/text_to_speech_vm.dart';
 import 'viewmodels/theme_provider_vm.dart';
 import 'viewmodels/warning_message_vm.dart';
+import 'services/settings_data_service.dart';
+import 'utils/dir_util.dart';
+import 'views/my_home_page.dart';
+import 'views/screen_mixin.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); // Ensure Flutter bindings are initialized.
 
-  bool isTest = false; // Must be set to false instead of true before
+  bool isTest = true; // Must be set to false instead of true before
   //                     generating the Android as well as the Windows
   //                     version of the app so that the app accesses the
   //                     correct application directory and not the test
   //                     directory. Must also be set to false when
   //                     debugging the application on the smartphone.
 
-  // Obtain or create the application directory
-  final String applicationPath = DirUtil.getApplicationPath(
+  String applicationPath = '';
+
+  // Obtain or create the application directory (no permission request here)
+  applicationPath = DirUtil.getApplicationPath(
     isTest: isTest,
   );
 
@@ -42,17 +44,25 @@ Future<void> main() async {
   if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
     await _setWindowsAppSizeAndPosition(
       isTest: isTest,
+      // isTest: false,
     );
   }
 
-  // We no longer create SettingsDataService here.
-  // We let a Flutter widget handle it (BootstrapApp).
-  runApp(
-    BootstrapApp(
-      isTest: isTest,
-      applicationPath: applicationPath,
-    ),
+  // Setup SettingsDataService
+  final SettingsDataService settingsDataService = SettingsDataService(
+    sharedPreferences: await SharedPreferences.getInstance(),
+    isTest: isTest,
   );
+
+  await settingsDataService.loadSettingsFromFile(
+    settingsJsonPathFileName:
+        '$applicationPath${Platform.pathSeparator}$kSettingsFileName',
+  );
+
+  // Run the app
+  runApp(MainApp(
+    settingsDataService: settingsDataService,
+  ));
 }
 
 /// If app runs on Windows, Linux or MacOS, set the app size
@@ -80,71 +90,6 @@ Future<void> _setWindowsAppSizeAndPosition({
   });
 }
 
-/// Small bootstrap widget that initializes SettingsDataService
-/// (SharedPreferences + reading the JSON file) BEFORE constructing MainApp.
-class BootstrapApp extends StatelessWidget {
-  final bool isTest;
-  final String applicationPath;
-
-  const BootstrapApp({
-    super.key,
-    required this.isTest,
-    required this.applicationPath,
-  });
-
-  Future<SettingsDataService> _initSettings() async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-
-    final settingsDataService = SettingsDataService(
-      sharedPreferences: sharedPreferences,
-      isTest: isTest,
-    );
-
-    await settingsDataService.loadSettingsFromFile(
-      settingsJsonPathFileName:
-          '$applicationPath${Platform.pathSeparator}$kSettingsFileName',
-    );
-
-    return settingsDataService;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<SettingsDataService>(
-      future: _initSettings(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState != ConnectionState.done) {
-          // Petit écran de chargement au tout début
-          return const MaterialApp(
-            home: Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
-          );
-        }
-
-        if (snapshot.hasError) {
-          // En cas de problème de lecture des préférences ou du fichier
-          return MaterialApp(
-            home: Scaffold(
-              body: Center(
-                child: Text(
-                    'Error while initializing settings: ${snapshot.error}'),
-              ),
-            ),
-          );
-        }
-
-        return MainApp(
-          settingsDataService: snapshot.data!,
-        );
-      },
-    );
-  }
-}
-
-/// MainApp reste identique (j’ai seulement remonté ses imports plus haut).
 class MainApp extends StatelessWidget with ScreenMixin {
   final SettingsDataService _settingsDataService;
 
@@ -168,7 +113,8 @@ class MainApp extends StatelessWidget with ScreenMixin {
       settingsDataService: _settingsDataService,
     );
 
-    final TextToSpeechVM textToSpeechVM = TextToSpeechVM();
+    final TextToSpeechVM textToSpeechVM = TextToSpeechVM(
+    );
 
     final PlaylistListVM playlistListVM = PlaylistListVM(
       warningMessageVM: warningMessageVM,
@@ -192,6 +138,14 @@ class MainApp extends StatelessWidget with ScreenMixin {
     // playlistListVM to know which playlists are
     // selected and which are not
     playlistListVM.getUpToDateSelectablePlaylists();
+
+    // must be called after
+    // playlistListVM.getUpToDateSelectablePlaylists()
+    // otherwise the list of selected playlists is empty instead
+    // of containing one selected playlist (as valid now)
+
+    // not necessary
+    // globalAudioPlayerVM.setCurrentAudioFromSelectedPlaylist();
 
     return MultiProvider(
       providers: [
@@ -223,6 +177,7 @@ class MainApp extends StatelessWidget with ScreenMixin {
         builder: (context, themeProvider, languageProvider, child) {
           return MaterialApp(
             title: 'Audio Learn',
+            // title: AppLocalizations.of(context)!.title,
             locale: languageProvider.currentLocale,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
