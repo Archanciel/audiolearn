@@ -8,8 +8,6 @@ import 'package:path/path.dart' as path;
 
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
 
-import '../services/mock_shared_preferences.dart';
-
 void main() {
   group('DateFormatVM test', () {
     test('''Check application of initial format, then change format and test the
@@ -28,7 +26,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -186,7 +183,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -284,7 +280,6 @@ void main() {
       );
 
       SettingsDataService reloadedSettingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -367,7 +362,6 @@ void main() {
 
       SettingsDataService secondReloadedSettingsDataService =
           SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 

@@ -27,7 +27,6 @@ import 'package:audiolearn/views/widgets/playlist_list_item.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/utils/dir_util.dart';
 import 'package:audiolearn/main.dart' as app;
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../test/viewmodels/custom_mock_youtube_explode.dart';
 import '../test/viewmodels/mock_audio_download_vm.dart';
@@ -72,7 +71,6 @@ void main() {
       // of a mock class. So we have to start the app by hand.
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -368,7 +366,6 @@ void main() {
       // of a mock class. So we have to start the app by hand.
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -516,7 +513,6 @@ void main() {
       // of a mock class. So we have to start the app by hand.
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -793,7 +789,6 @@ void main() {
       // of a mock class. So we have to start the app by hand.
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -1062,7 +1057,6 @@ void main() {
       expect(loadedNewPlaylist.downloadPath, newPlaylistPath);
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -1159,7 +1153,6 @@ void main() {
       const String localPlaylistTitle = 'audio_learn_local_playlist_test';
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -1297,7 +1290,6 @@ void main() {
       expect(loadedNewPlaylist.downloadPath, newPlaylistPath);
 
       settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -1609,7 +1601,6 @@ void main() {
       // of a mock class. So we have to start the app by hand.
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -1844,7 +1835,6 @@ void main() {
       // Adding the Youtube playlist
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -2047,7 +2037,6 @@ void main() {
       // of a mock class. So we have to start the app by hand.
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -2197,7 +2186,6 @@ void main() {
       // of a mock class. So we have to start the app by hand.
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -2342,7 +2330,6 @@ void main() {
       // of a mock class. So we have to start the app by hand.
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -2498,7 +2485,6 @@ void main() {
       // Adding the Youtube playlist
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -2740,7 +2726,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -3096,7 +3081,6 @@ void main() {
       const String localAudioPlaylistTitle = 'local_audio_playlist_2';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -3286,7 +3270,6 @@ void main() {
       const String localAudioPlaylistTitle = 'local_audio_playlist_2';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -3488,7 +3471,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -3711,7 +3693,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -3913,7 +3894,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -4117,7 +4097,6 @@ void main() {
       const String copiedAudioTitle = 'audio learn test short video one';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -4740,7 +4719,6 @@ void main() {
       const String copiedAudioTitle = 'audio learn test short video one';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -5123,7 +5101,6 @@ void main() {
       const String copiedAudioTitle = 'audio learn test short video one';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -5238,7 +5215,6 @@ void main() {
       const String copiedAudioTitle = 'audio learn test short video one';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -5332,7 +5308,6 @@ void main() {
       const String copiedAudioTitle = 'audio learn test short video one';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -5664,7 +5639,6 @@ void main() {
       const String copiedAudioTitle = 'audio learn test short video one';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -5956,7 +5930,6 @@ void main() {
       const String copiedAudioTitle = 'audio learn test short video one';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -6296,7 +6269,6 @@ void main() {
           '230628-033811-audio learn test short video one 23-06-10.json';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -6427,7 +6399,6 @@ void main() {
       const String copiedAudioTitle = 'audio learn test short video one';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -6619,7 +6590,6 @@ void main() {
       const String movedAudioTitle = 'audio learn test short video one';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -7076,7 +7046,6 @@ void main() {
       const String movedAudioTitle = 'audio learn test short video one';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -7200,7 +7169,6 @@ void main() {
           '231117-002828-morning _ cinematic video 23-07-01';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -7323,7 +7291,6 @@ void main() {
       const String movedConvertedAudioTitle = 'tts';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -7442,7 +7409,6 @@ void main() {
       const String movedAudioTitle = 'audio learn test short video one';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -7566,7 +7532,6 @@ void main() {
       const String movedAudioTitle = 'audio learn test short video one';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -7685,7 +7650,6 @@ void main() {
       const String movedAudioTitle = 'audio learn test short video one';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -7788,7 +7752,6 @@ void main() {
       const String movedAudioTitle = 'audio learn test short video one';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -7897,7 +7860,6 @@ void main() {
           '230628-033811-audio learn test short video one 23-06-10.json';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -8028,7 +7990,6 @@ void main() {
       const String movedAudioTitle = 'audio learn test short video one';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -8221,7 +8182,6 @@ void main() {
           'audio_player_view_2_shorts_test';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -8644,7 +8604,6 @@ void main() {
           'audio_player_view_2_shorts_test';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -9010,7 +8969,6 @@ void main() {
       const String youtubePlaylistTitle = 'S8 audio';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -9216,7 +9174,6 @@ void main() {
       const String localPlaylistTitle = 'Local_2_audios';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -9413,7 +9370,6 @@ void main() {
       const String youtubePlaylistTitle = 'S8 audio';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -9596,7 +9552,6 @@ void main() {
       const String localPlaylistTitle = 'Local_2_audios';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -9775,7 +9730,6 @@ void main() {
       const String s8AudioYoutubePlaylistTitle = 'S8 audio';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -9999,7 +9953,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -10121,7 +10074,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -10247,7 +10199,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -10323,7 +10274,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -10443,7 +10393,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -10586,7 +10535,6 @@ void main() {
       const String s8AudioYoutubePlaylistTitle = 'S8 audio';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -10709,7 +10657,6 @@ void main() {
       const String s8AudioYoutubePlaylistTitle = 'S8 audio';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -10838,7 +10785,6 @@ void main() {
       const String s8AudioYoutubeEmptyPlaylistTitle = 'S8 audio';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -10977,7 +10923,6 @@ void main() {
       const String s8AudioYoutubeEmptyPlaylistTitle = 'S8 audio';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -12908,7 +12853,6 @@ void main() {
           const String uniqueAudioTitle = 'audio learn test short video one';
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -13072,7 +13016,6 @@ void main() {
           const String uniqueAudioTitle = 'audio learn test short video one';
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -14276,7 +14219,6 @@ void main() {
         const String localAudioPlaylistTitle = 'local_audio_playlist_2';
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -14458,7 +14400,6 @@ void main() {
             'audio learn test short video one';
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -14644,7 +14585,6 @@ void main() {
         const String localAudioPlaylistTitle = 'local_audio_playlist_2';
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -14813,7 +14753,6 @@ void main() {
         const String localAudioPlaylistTitle = 'local_audio_playlist_2';
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -15524,7 +15463,6 @@ void main() {
       String singleVideoUrl = 'https://youtu.be/uv3VQoWSjBE';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -15590,7 +15528,6 @@ void main() {
           '15 minutes de Janco pour retourner un climatosceptique';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -15740,7 +15677,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -15826,7 +15762,6 @@ void main() {
           'audio_learn_test_download_2_small_videos';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -16001,7 +15936,6 @@ void main() {
           'audio_learn_test_download_2_small_videos';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -16176,7 +16110,6 @@ void main() {
           'audio_learn_test_download_2_small_videos';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -16341,7 +16274,6 @@ void main() {
       const String localPlaylistToDeleteTitle = 'local_audio_playlist_2';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -16509,7 +16441,6 @@ void main() {
       const String localPlaylistToDeleteTitle = 'local_audio_playlist_2';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -16677,7 +16608,6 @@ void main() {
       const String localPlaylistToDeleteTitle = 'local_audio_playlist_2';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -16849,7 +16779,6 @@ void main() {
           'audio_player_view_2_shorts_test';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -17030,7 +16959,6 @@ void main() {
       const String localPlaylistToSelectTitle = 'local_audio_playlist_2';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -17212,7 +17140,6 @@ void main() {
       const String localPlaylistToDeleteTitle = 'local_audio_playlist_2';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -17335,7 +17262,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -17384,7 +17310,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -17471,7 +17396,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -17558,7 +17482,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -17635,7 +17558,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -17712,7 +17634,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -17847,7 +17768,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -17976,7 +17896,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -18095,7 +18014,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -18216,7 +18134,6 @@ void main() {
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -18260,7 +18177,6 @@ void main() {
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -18314,7 +18230,6 @@ void main() {
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -18367,7 +18282,6 @@ void main() {
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -18423,7 +18337,6 @@ void main() {
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -18477,7 +18390,6 @@ void main() {
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -18541,7 +18453,6 @@ void main() {
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -18604,7 +18515,6 @@ void main() {
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -22478,8 +22388,10 @@ void main() {
       );
     });
   });
-  group('''Check presence or absence of audio download view audio menu items as well
-           as presence or absence of audio player view left appbar menu items.''', () {
+  group(
+      '''Check presence or absence of audio download view audio menu items as well
+           as presence or absence of audio player view left appbar menu items.''',
+      () {
     testWidgets(
         '''Check presence in a Youtube playlist of the downloaded audio menu items.''',
         (WidgetTester tester) async {
@@ -22499,7 +22411,6 @@ void main() {
       const String movedAudioTitle = 'audio learn test short video one';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -22554,7 +22465,6 @@ void main() {
           '231117-002828-morning _ cinematic video 23-07-01';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -22608,7 +22518,6 @@ void main() {
       const String convertedAudioTitle = 'tts';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -22662,7 +22571,6 @@ void main() {
       const String movedAudioTitle = 'audio learn test short video one';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -22724,7 +22632,6 @@ void main() {
           '231117-002828-morning _ cinematic video 23-07-01';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -22785,7 +22692,6 @@ void main() {
       const String convertedAudioTitle = 'tts';
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 

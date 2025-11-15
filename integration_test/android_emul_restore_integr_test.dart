@@ -18,7 +18,6 @@ import 'package:path/path.dart' as path;
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/utils/dir_util.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../test/viewmodels/mock_audio_download_vm.dart';
 import 'integration_test_util.dart';
@@ -3871,7 +3870,6 @@ void main() {
           // does.
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -4360,7 +4358,6 @@ void main() {
           // does.
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -4878,7 +4875,6 @@ void main() {
           // does.
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -5356,7 +5352,6 @@ void main() {
           // does.
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -5632,7 +5627,6 @@ void main() {
           // does.
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -5912,7 +5906,6 @@ void main() {
         // does.
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -6086,7 +6079,6 @@ void main() {
         // does.
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -6260,7 +6252,6 @@ void main() {
         // does.
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -6422,7 +6413,6 @@ void main() {
         // does.
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 

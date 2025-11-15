@@ -16,7 +16,6 @@ import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/models/audio.dart';
 import 'package:audiolearn/services/audio_sort_filter_service.dart';
-import 'mock_shared_preferences.dart';
 
 void main() {
   Playlist audioPlaylist = Playlist(
@@ -153,9 +152,7 @@ void main() {
       () {
     late AudioSortFilterService audioSortFilterService;
 
-    SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: MockSharedPreferences(),
-    );
+    SettingsDataService settingsDataService = SettingsDataService();
 
     setUp(() async {
       // Load the settings from the json file. This is necessary
@@ -361,9 +358,7 @@ void main() {
       () {
     late AudioSortFilterService audioSortFilterService;
 
-    SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: MockSharedPreferences(),
-    );
+    SettingsDataService settingsDataService = SettingsDataService();
 
     setUp(() async {
       // Load the settings from the json file. This is necessary
@@ -567,9 +562,7 @@ void main() {
       () {
     late AudioSortFilterService audioSortFilterService;
 
-    SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: MockSharedPreferences(),
-    );
+    SettingsDataService settingsDataService = SettingsDataService();
 
     setUp(() async {
       // Load the settings from the json file. This is necessary
@@ -666,9 +659,7 @@ void main() {
       () {
     late AudioSortFilterService audioSortFilterService;
 
-    SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: MockSharedPreferences(),
-    );
+    SettingsDataService settingsDataService = SettingsDataService();
 
     setUp(() async {
       // Load the settings from the json file. This is necessary
@@ -780,9 +771,7 @@ void main() {
       () {
     late AudioSortFilterService audioSortFilterService;
 
-    SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: MockSharedPreferences(),
-    );
+    SettingsDataService settingsDataService = SettingsDataService();
 
     setUp(() async {
       // Load the settings from the json file. This is necessary
@@ -874,9 +863,7 @@ void main() {
   group('''filter test: by file size range or/and audio duration range.''', () {
     late AudioSortFilterService audioSortFilterService;
 
-    SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: MockSharedPreferences(),
-    );
+    SettingsDataService settingsDataService = SettingsDataService();
 
     setUp(() async {
       // Load the settings from the json file. This is necessary
@@ -1005,9 +992,7 @@ void main() {
   group('sort audio lst by one SortingOption', () {
     late AudioSortFilterService audioSortFilterService;
 
-    SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: MockSharedPreferences(),
-    );
+    SettingsDataService settingsDataService = SettingsDataService();
 
     setUp(() async {
       // Load the settings from the json file. This is necessary
@@ -9021,9 +9006,7 @@ void main() {
   group("sort audio lst by multiple SortingOption's", () {
     late AudioSortFilterService audioSortFilterService;
 
-    SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: MockSharedPreferences(),
-    );
+    SettingsDataService settingsDataService = SettingsDataService();
 
     setUp(() async {
       // Load the settings from the json file. This is necessary
@@ -9225,9 +9208,7 @@ void main() {
   group('filterAndSortAudioLst by title and description', () {
     late AudioSortFilterService audioSortFilterService;
 
-    SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: MockSharedPreferences(),
-    );
+    SettingsDataService settingsDataService = SettingsDataService();
 
     setUp(() async {
       // Load the settings from the json file. This is necessary
@@ -9968,9 +9949,7 @@ void main() {
   group('filterAndSortAudioLst by title only', () {
     late AudioSortFilterService audioSortFilterService;
 
-    SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: MockSharedPreferences(),
-    );
+    SettingsDataService settingsDataService = SettingsDataService();
 
     setUp(() async {
       // Load the settings from the json file. This is necessary
@@ -10230,9 +10209,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
 
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
@@ -11193,9 +11170,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
 
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
@@ -11410,9 +11385,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
 
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
@@ -11659,9 +11632,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
 
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
@@ -11843,9 +11814,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
 
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
@@ -12028,9 +11997,7 @@ void main() {
       List<String> commentFileNamesNoExtLst =
           playlistAudiosCommentsMap.keys.toList();
 
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
@@ -12129,9 +12096,7 @@ void main() {
       // audio list of the playlist.
       commentFileNamesNoExtLst.insert(1, "Conversation avec Dieu T5");
 
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
@@ -12223,9 +12188,7 @@ void main() {
       // audio list of the playlist.
       commentFileNamesNoExtLst.insert(1, "Conversation avec Dieu T5");
 
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
@@ -12300,9 +12263,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
 
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
@@ -12367,9 +12328,7 @@ void main() {
           destinationRootPath: kApplicationPathWindowsTest,
         );
 
-        SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: MockSharedPreferences(),
-        );
+        SettingsDataService settingsDataService = SettingsDataService();
 
         // Load the settings from the json file. This is necessary
         // otherwise the ordered playlist titles will remain empty
@@ -12940,9 +12899,7 @@ void main() {
           destinationRootPath: kApplicationPathWindowsTest,
         );
 
-        SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: MockSharedPreferences(),
-        );
+        SettingsDataService settingsDataService = SettingsDataService();
 
         // Load the settings from the json file. This is necessary
         // otherwise the ordered playlist titles will remain empty
@@ -13558,9 +13515,7 @@ void main() {
   group('filter test: on music or spoken quality', () {
     late AudioSortFilterService audioSortFilterService;
 
-    SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: MockSharedPreferences(),
-    );
+    SettingsDataService settingsDataService = SettingsDataService();
 
     setUp(() async {
       // Load the settings from the json file. This is necessary
@@ -13582,10 +13537,10 @@ void main() {
 
       AudioSortFilterParameters audioSortFilterParameters =
           AudioSortFilterParameters(
-        selectedSortItemLst: [],
-        sentencesCombination: SentencesCombination.and,
-        filterMusicQuality: true,
-        filterSpokenQuality: false);
+              selectedSortItemLst: [],
+              sentencesCombination: SentencesCombination.and,
+              filterMusicQuality: true,
+              filterSpokenQuality: false);
 
       List<Audio> actualFilteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
@@ -13604,10 +13559,10 @@ void main() {
 
       AudioSortFilterParameters audioSortFilterParameters =
           AudioSortFilterParameters(
-        selectedSortItemLst: [],
-        sentencesCombination: SentencesCombination.and,
-        filterMusicQuality: false,
-        filterSpokenQuality: true);
+              selectedSortItemLst: [],
+              sentencesCombination: SentencesCombination.and,
+              filterMusicQuality: false,
+              filterSpokenQuality: true);
 
       List<Audio> actualFilteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(

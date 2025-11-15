@@ -11,7 +11,6 @@ import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/utils/dir_util.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
-import '../services/mock_shared_preferences.dart';
 import 'mock_audio_download_vm.dart';
 
 void main() {
@@ -21,7 +20,7 @@ void main() {
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
         settingsDataService:
-            SettingsDataService(sharedPreferences: MockSharedPreferences()),
+            SettingsDataService(),
       );
 
       String videoDescription = '''Ma chaîne YouTube principale
@@ -152,9 +151,7 @@ void main() {
           "C:\\development\\flutter\\audiolearn\\test\\data\\previous_audio\\playlist_downloaded\\local_3");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // Necessary, otherwise audioDownloadVM won't be able to load
       // the existing playlists and the test will fail
@@ -168,14 +165,15 @@ void main() {
       );
 
       // Delete the first audio file from the first playlist
-      String audioFilePathName = "$kApplicationPathWindowsTest${path.separator}$playListOneName${path.separator}${loadedPlaylistOne.downloadedAudioLst[0].audioFileName}";
-      
-      loadedPlaylistOne.downloadedAudioLst[0]
-          .filePathName;
+      String audioFilePathName =
+          "$kApplicationPathWindowsTest${path.separator}$playListOneName${path.separator}${loadedPlaylistOne.downloadedAudioLst[0].audioFileName}";
+
+      loadedPlaylistOne.downloadedAudioLst[0].filePathName;
       DirUtil.deleteFileIfExist(pathFileName: audioFilePathName);
 
       // Delete the second audio file from the second playlist
-      audioFilePathName = audioFilePathName = "$kApplicationPathWindowsTest${path.separator}$playListTwoName${path.separator}${loadedPlaylistTwo.downloadedAudioLst[1].audioFileName}";
+      audioFilePathName = audioFilePathName =
+          "$kApplicationPathWindowsTest${path.separator}$playListTwoName${path.separator}${loadedPlaylistTwo.downloadedAudioLst[1].audioFileName}";
       DirUtil.deleteFileIfExist(pathFileName: audioFilePathName);
 
       // Update the playlist json files with updating the playable
@@ -259,9 +257,7 @@ void main() {
           "C:\\development\\flutter\\audiolearn\\test\\data\\previous_audio\\playlist_downloaded\\local_3");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // Necessary, otherwise audioDownloadVM won't be able to load
       // the existing playlists and the test will fail
@@ -275,14 +271,15 @@ void main() {
       );
 
       // Delete the first audio file from the first playlist
-      String audioFilePathName = "$kApplicationPathWindowsTest${path.separator}$playListOneName${path.separator}${loadedPlaylistOne.downloadedAudioLst[0].audioFileName}";
-      
-      loadedPlaylistOne.downloadedAudioLst[0]
-          .filePathName;
+      String audioFilePathName =
+          "$kApplicationPathWindowsTest${path.separator}$playListOneName${path.separator}${loadedPlaylistOne.downloadedAudioLst[0].audioFileName}";
+
+      loadedPlaylistOne.downloadedAudioLst[0].filePathName;
       DirUtil.deleteFileIfExist(pathFileName: audioFilePathName);
 
       // Delete the second audio file from the second playlist
-      audioFilePathName = audioFilePathName = "$kApplicationPathWindowsTest${path.separator}$playListTwoName${path.separator}${loadedPlaylistTwo.downloadedAudioLst[1].audioFileName}";
+      audioFilePathName = audioFilePathName =
+          "$kApplicationPathWindowsTest${path.separator}$playListTwoName${path.separator}${loadedPlaylistTwo.downloadedAudioLst[1].audioFileName}";
       DirUtil.deleteFileIfExist(pathFileName: audioFilePathName);
 
       // Do notpdate the playlist json files with updating the playable
@@ -350,9 +347,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // necessary, otherwise audioDownloadVM won't be able to load
       // the existing playlists and the test will fail
@@ -498,9 +493,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // necessary, otherwise audioDownloadVM won't be able to load
       // the existing playlists and the test will fail
@@ -559,9 +552,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // necessary, otherwise audioDownloadVM won't be able to load
       // the existing playlists and the test will fail
@@ -672,9 +663,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // necessary, otherwise audioDownloadVM won't be able to load
       // the existing playlists and the test will fail
@@ -765,9 +754,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // necessary, otherwise audioDownloadVM won't be able to load
       // the existing playlists and the test will fail
@@ -867,9 +854,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // necessary, otherwise audioDownloadVM won't be able to load
       // the existing playlists and the test will fail
@@ -969,9 +954,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // necessary, otherwise audioDownloadVM won't be able to load
       // the existing playlists and the test will fail
@@ -1030,9 +1013,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // necessary, otherwise audioDownloadVM won't be able to load
       // the existing playlists and the test will fail
@@ -1068,8 +1049,10 @@ void main() {
       // Verify that the audio file name was changed
       // (playabeAudioLst and downloadedAudioLst contain the
       // same audio, but in inverse order)
-      expect(loadedPlaylist.playableAudioLst[1].audioFileName, "$newFileName.mp3");
-      expect(loadedPlaylist.downloadedAudioLst[0].audioFileName, "$newFileName.mp3");
+      expect(
+          loadedPlaylist.playableAudioLst[1].audioFileName, "$newFileName.mp3");
+      expect(loadedPlaylist.downloadedAudioLst[0].audioFileName,
+          "$newFileName.mp3");
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -1091,9 +1074,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // necessary, otherwise audioDownloadVM won't be able to load
       // the existing playlists and the test will fail
@@ -1157,9 +1138,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // necessary, otherwise audioDownloadVM won't be able to load
       // the existing playlists and the test will fail
@@ -1220,9 +1199,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // necessary, otherwise audioDownloadVM won't be able to load
       // the existing playlists and the test will fail
@@ -1356,9 +1333,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // necessary, otherwise audioDownloadVM won't be able to load
       // the existing playlists and the test will fail
@@ -1489,9 +1464,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // necessary, otherwise audioDownloadVM won't be able to load
       // the existing playlists and the test will fail
@@ -1594,9 +1567,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // necessary, otherwise audioDownloadVM won't be able to load
       // the existing playlists and the test will fail
@@ -1712,9 +1683,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // necessary, otherwise audioDownloadVM won't be able to load
       // the existing playlists and the test will fail
@@ -1735,8 +1704,7 @@ void main() {
       String audioToDeleteTitle = audioToDelete.validVideoTitle;
 
       List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
-        directoryPath:
-            "$kApplicationPathWindowsTest${path.separator}S8 audio",
+        directoryPath: "$kApplicationPathWindowsTest${path.separator}S8 audio",
         fileExtension: 'mp3',
       );
 
@@ -1767,8 +1735,7 @@ void main() {
       );
 
       listMp3FileNames = DirUtil.listFileNamesInDir(
-        directoryPath:
-            "$kApplicationPathWindowsTest${path.separator}S8 audio",
+        directoryPath: "$kApplicationPathWindowsTest${path.separator}S8 audio",
         fileExtension: 'mp3',
       );
 
@@ -1820,9 +1787,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // necessary, otherwise audioDownloadVM won't be able to load
       // the existing playlists and the test will fail
@@ -1843,8 +1808,7 @@ void main() {
       String audioToDeleteTitle = audioToDelete.validVideoTitle;
 
       List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
-        directoryPath:
-            "$kApplicationPathWindowsTest${path.separator}S8 audio",
+        directoryPath: "$kApplicationPathWindowsTest${path.separator}S8 audio",
         fileExtension: 'mp3',
       );
 
@@ -1875,8 +1839,7 @@ void main() {
       );
 
       listMp3FileNames = DirUtil.listFileNamesInDir(
-        directoryPath:
-            "$kApplicationPathWindowsTest${path.separator}S8 audio",
+        directoryPath: "$kApplicationPathWindowsTest${path.separator}S8 audio",
         fileExtension: 'mp3',
       );
 
@@ -1930,9 +1893,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // necessary, otherwise audioDownloadVM won't be able to load
       // the existing playlists and the test will fail
@@ -1957,8 +1918,7 @@ void main() {
       String audioToDeleteThreeTitle = audioToDeleteThree.validVideoTitle;
 
       List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
-        directoryPath:
-            "$kApplicationPathWindowsTest${path.separator}S8 audio",
+        directoryPath: "$kApplicationPathWindowsTest${path.separator}S8 audio",
         fileExtension: 'mp3',
       );
 
@@ -2024,8 +1984,7 @@ void main() {
       );
 
       listMp3FileNames = DirUtil.listFileNamesInDir(
-        directoryPath:
-            "$kApplicationPathWindowsTest${path.separator}S8 audio",
+        directoryPath: "$kApplicationPathWindowsTest${path.separator}S8 audio",
         fileExtension: 'mp3',
       );
 
@@ -2105,9 +2064,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
       WarningMessageVM warningMessageVM = WarningMessageVM();
-      SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
-      );
+      SettingsDataService settingsDataService = SettingsDataService();
 
       // necessary, otherwise audioDownloadVM won't be able to load
       // the existing playlists and the test will fail
@@ -2132,8 +2089,7 @@ void main() {
       String audioToDeleteThreeTitle = audioToDeleteThree.validVideoTitle;
 
       List<String> listMp3FileNames = DirUtil.listFileNamesInDir(
-        directoryPath:
-            "$kApplicationPathWindowsTest${path.separator}S8 audio",
+        directoryPath: "$kApplicationPathWindowsTest${path.separator}S8 audio",
         fileExtension: 'mp3',
       );
 
@@ -2199,8 +2155,7 @@ void main() {
       );
 
       listMp3FileNames = DirUtil.listFileNamesInDir(
-        directoryPath:
-            "$kApplicationPathWindowsTest${path.separator}S8 audio",
+        directoryPath: "$kApplicationPathWindowsTest${path.separator}S8 audio",
         fileExtension: 'mp3',
       );
 
@@ -2364,8 +2319,7 @@ void _verifyImportedFilesPresence({
 
     // Verify the imported audio type
     Audio importedAudio = targetPlaylist
-        .downloadedAudioLst[
-            targetPlaylistDownloadedAudioListInitialLengh - 1];
+        .downloadedAudioLst[targetPlaylistDownloadedAudioListInitialLengh - 1];
     expect(importedAudio.audioType, AudioType.imported);
   }
 

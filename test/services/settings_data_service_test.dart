@@ -7,8 +7,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
 
-import 'mock_shared_preferences.dart';
-
 enum UnsupportedSettingsEnum { unsupported }
 
 void main() {
@@ -24,7 +22,6 @@ void main() {
       }
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -158,7 +155,6 @@ void main() {
 
       // Load from file
       final SettingsDataService loadedSettings = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
       await loadedSettings.loadSettingsFromFile(
@@ -241,7 +237,6 @@ void main() {
       }
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -289,7 +284,6 @@ void main() {
 
       // Load from file
       final SettingsDataService loadedSettings = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
       await loadedSettings.loadSettingsFromFile(
@@ -361,7 +355,6 @@ void main() {
       // }
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -419,7 +412,6 @@ void main() {
 
       // Load from file
       final SettingsDataService loadedSettings = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
       await loadedSettings.loadSettingsFromFile(
@@ -512,7 +504,6 @@ void main() {
       }
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -528,7 +519,6 @@ void main() {
 
       // Load from file
       final SettingsDataService loadedSettings = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -570,7 +560,6 @@ void main() {
       await DirUtil.createDirIfNotExist(pathStr: modifiedPlaylistRootPath);
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -635,7 +624,6 @@ void main() {
 
       // Load from file
       SettingsDataService loadedSettings = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -668,7 +656,6 @@ void main() {
 
       // Load from file
       loadedSettings = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -710,7 +697,6 @@ void main() {
       await DirUtil.createDirIfNotExist(pathStr: modifiedPlaylistRootPath);
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -775,7 +761,6 @@ void main() {
 
       // Load from file
       SettingsDataService loadedSettings = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -814,7 +799,6 @@ void main() {
 
       // Load from file
       loadedSettings = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
