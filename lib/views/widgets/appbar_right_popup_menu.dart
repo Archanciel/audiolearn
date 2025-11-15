@@ -1,7 +1,6 @@
 import 'package:audiolearn/views/widgets/date_format_selection_dialog.dart';
 import 'package:audiolearn/views/widgets/help_main_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants.dart';
@@ -90,15 +89,13 @@ class AppBarRightPopupMenu extends StatelessWidget {
             break;
           case AppBarPopupMenu.about:
             // Get package info asynchronously
-            PackageInfo packageInfo = await PackageInfo.fromPlatform();
-
             showDialog<void>(
               context: context,
               builder: (BuildContext context) {
                 bool isDarkTheme = themeProvider.currentTheme == AppTheme.dark;
                 AboutDialog aboutDialog = AboutDialog(
                   applicationName: kApplicationName,
-                  applicationVersion: packageInfo.version, // ✅ Using version from pubspec.yam
+                  applicationVersion: kApplicationVersion, // ✅ Using version from pubspec.yam
                   applicationIcon:
                       Image.asset('assets/images/ic_launcher_cleaner_72.png'),
                   children: <Widget>[

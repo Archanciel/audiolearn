@@ -31,6 +31,7 @@ enum AudioPopupMenuAction {
 }
 
 const String kApplicationName = "Audio Learn";
+const String kApplicationVersion = "2.4.3";
 const String kImposedPlaylistsSubDirName = 'playlists';
 
 // Used for Android app version
