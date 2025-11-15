@@ -19,7 +19,6 @@ import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 
 import '../../integration_test/integration_test_util.dart';
-import '../services/mock_shared_preferences.dart';
 import 'audio_player_vm_test_version.dart';
 
 void main() {
@@ -41,7 +40,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -257,7 +255,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -330,7 +327,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -406,7 +402,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -479,7 +474,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -559,7 +553,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -630,7 +623,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -706,7 +698,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -779,7 +770,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -826,7 +816,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -869,7 +858,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -921,7 +909,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -992,7 +979,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -1082,7 +1068,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -1169,7 +1154,6 @@ void main() {
         );
 
         SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: MockSharedPreferences(),
           isTest: true,
         );
 
@@ -1270,7 +1254,6 @@ void main() {
         );
 
         SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: MockSharedPreferences(),
           isTest: true,
         );
 
@@ -1383,7 +1366,6 @@ void main() {
         );
 
         SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: MockSharedPreferences(),
           isTest: true,
         );
 
@@ -1497,7 +1479,6 @@ void main() {
         );
 
         SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: MockSharedPreferences(),
           isTest: true,
         );
 
@@ -1616,7 +1597,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -1800,7 +1780,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -2014,7 +1993,6 @@ void main() {
     );
 
     SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: MockSharedPreferences(),
       isTest: true,
     );
 
@@ -2144,7 +2122,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -2240,7 +2217,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -2339,7 +2315,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -2459,7 +2434,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -2587,7 +2561,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -2684,7 +2657,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -2772,7 +2744,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -2860,7 +2831,6 @@ void main() {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -2981,11 +2951,12 @@ Future<void> _verifyAudioPlaySpeed({
       expect(
         audio.audioPlaySpeed,
         downloadedAudioPlaySpeed,
-        reason: "${audio.audioPlaySpeed} of ${audio.validVideoTitle} in ${audio.enclosingPlaylist!.title} downloaded audio list",
+        reason:
+            "${audio.audioPlaySpeed} of ${audio.validVideoTitle} in ${audio.enclosingPlaylist!.title} downloaded audio list",
       );
     }
   }
-} 
+}
 
 void _verifyOrderedTitlesAndPlaylistSelection({
   required SettingsDataService settingsDataService,
@@ -3143,7 +3114,6 @@ Future<void> testMoveAudioAndCommentToPlaylist({
   SettingsDataService settingsDataService;
 
   settingsDataService = SettingsDataService(
-    sharedPreferences: MockSharedPreferences(),
     isTest: true,
   );
 

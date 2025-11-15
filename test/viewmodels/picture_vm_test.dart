@@ -14,12 +14,11 @@ import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart' as path;
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 void main() {
   late PictureVM pictureVM;
   late SettingsDataService settingsDataService;
-  late SharedPreferences sharedPreferences;
 
   // Test data
   final String testAppSettingsPathFileName =
@@ -83,12 +82,8 @@ void main() {
     );
 
     // Setup shared preferences
-    SharedPreferences.setMockInitialValues({});
-    sharedPreferences = await SharedPreferences.getInstance();
-
     // Initialize services and view model
     settingsDataService = SettingsDataService(
-      sharedPreferences: sharedPreferences,
       isTest: true,
     );
     settingsDataService.loadSettingsFromFile(

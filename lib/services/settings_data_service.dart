@@ -3,7 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:shared_preferences/shared_preferences.dart';
+// 
 import 'package:path/path.dart' as path;
 
 import '../constants.dart';
@@ -114,17 +114,9 @@ class SettingsDataService {
       get searchHistoryAudioSortFilterParametersLst =>
           _searchHistoryAudioSortFilterParametersLst;
 
-  // The shared preferences are used to determine if the application is
-  // started for the first time. If so, the json settings file does not
-  // exist and the default settings are used. The shared preferences
-  // are also used to store the isFirstRun value.
-  final SharedPreferences _sharedPreferences;
-
   SettingsDataService({
-    required SharedPreferences sharedPreferences,
     bool isTest = false,
-  })  : _isTest = isTest,
-        _sharedPreferences = sharedPreferences;
+  })  : _isTest = isTest;
 
   dynamic get({
     required SettingType settingType,
@@ -290,17 +282,6 @@ class SettingsDataService {
     final File file = File(settingsJsonPathFileName);
     final bool settingsJsonFileExist = file.existsSync();
 
-    // This test enables to avoid that the supportedLocales.dart unit
-    // tests fail due to the fact that flutter_test.exe remains active
-    // and blocks the possibility for DirUtil to delete the test data
-    // once a unit test is completed.
-    if (!_isTest) {
-      await _checkFirstRun(
-        settingsJsonFile: file,
-        settingsJsonFileExist: settingsJsonFileExist,
-      );
-    }
-
     try {
       if (settingsJsonFileExist) {
         // if settings json file not exist, then the default Settings values
@@ -410,17 +391,6 @@ class SettingsDataService {
         orderedPlaylistTitleLst;
 
     _saveSettings();
-  }
-
-  Future<void> _checkFirstRun({
-    required File settingsJsonFile,
-    required bool settingsJsonFileExist,
-  }) async {
-    bool isFirstRun = (_sharedPreferences.getBool('isFirstRun') ?? true);
-
-    if (isFirstRun) {
-      await _sharedPreferences.setBool('isFirstRun', false);
-    }
   }
 
   void addOrReplaceNamedAudioSortFilterParameters({

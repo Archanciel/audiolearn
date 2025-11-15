@@ -16,7 +16,6 @@ import 'package:path/path.dart' as path;
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 
-import '../services/mock_shared_preferences.dart';
 import 'audio_player_vm_test_version.dart';
 
 /// This unit test does not pass in the Main branch due to the AudioPlayerVM Main branch
@@ -1581,9 +1580,7 @@ Future<SettingsDataService> initializeTestDataAndLoadSettingsDataService({
     );
   }
 
-  SettingsDataService settingsDataService = SettingsDataService(
-    sharedPreferences: MockSharedPreferences(),
-  );
+  SettingsDataService settingsDataService = SettingsDataService();
 
   // Load the settings from the json file. This is necessary
   // otherwise the ordered playlist titles will remain empty

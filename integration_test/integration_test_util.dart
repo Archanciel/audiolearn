@@ -9,7 +9,7 @@ import 'package:audiolearn/views/widgets/confirm_action_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:path/path.dart' as path;
 import 'package:window_size/window_size.dart';
 import 'package:yaml/yaml.dart';
@@ -420,7 +420,6 @@ class IntegrationTestUtil {
     }
 
     final SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: await SharedPreferences.getInstance(),
       isTest: true,
     );
 
@@ -515,7 +514,6 @@ class IntegrationTestUtil {
     bool setAppSizeToAndroidSize = false,
   }) async {
     final SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: await SharedPreferences.getInstance(),
       isTest: true,
     );
 
@@ -2230,21 +2228,12 @@ class IntegrationTestUtil {
   static Future<AudioDownloadVM> launchIntegrTestAppEnablingInternetAccess({
     required WidgetTester tester,
     Locale? forcedLocale,
-    SharedPreferences? mockSharedPreferences,
   }) async {
     SettingsDataService settingsDataService;
 
-    if (mockSharedPreferences != null) {
-      settingsDataService = SettingsDataService(
-        sharedPreferences: mockSharedPreferences,
-        isTest: true,
-      );
-    } else {
-      settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
-        isTest: true,
-      );
-    }
+    settingsDataService = SettingsDataService(
+      isTest: true,
+    );
 
     // load settings from file which does not exist. This
     // will ensure that the default playlist root path is set
@@ -3862,7 +3851,6 @@ class IntegrationTestUtil {
 
   static Future<void> verifyNoPlaylistSelected() async {
     final SettingsDataService settingsDataService = SettingsDataService(
-      sharedPreferences: await SharedPreferences.getInstance(),
       isTest: true,
     );
 

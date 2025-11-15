@@ -9,7 +9,6 @@ import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
 import '../models/audio.dart';
@@ -4238,7 +4237,6 @@ class PlaylistListVM extends ChangeNotifier {
   Future<void> _mergeRestoredFromZipSettingsWithCurrentAppSettings() async {
     final SettingsDataService settingsDataServiceZipVersion =
         SettingsDataService(
-      sharedPreferences: await SharedPreferences.getInstance(),
     );
 
     // Load the restored settings whose corresponding list or map will

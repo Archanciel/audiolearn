@@ -10,7 +10,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:audiolearn/models/playlist.dart';
 import 'package:path/path.dart' as path;
@@ -162,9 +161,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
 
-      final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
-      );
+      final SettingsDataService settingsDataService = SettingsDataService();
 
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
@@ -453,9 +450,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
 
-      final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
-      );
+      final SettingsDataService settingsDataService = SettingsDataService();
 
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
@@ -615,9 +610,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -702,9 +695,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -900,9 +891,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -995,9 +984,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -1098,9 +1085,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -1251,9 +1236,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -1474,9 +1457,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -1584,9 +1565,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -1702,9 +1681,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kApplicationPathWindowsTest,
             );
 
-            final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
-            );
+            final SettingsDataService settingsDataService =
+                SettingsDataService();
 
             // Load the settings from the json file. This is necessary
             // otherwise the ordered playlist titles will remain empty
@@ -1994,9 +1972,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kApplicationPathWindowsTest,
             );
 
-            final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
-            );
+            final SettingsDataService settingsDataService =
+                SettingsDataService();
 
             // Load the settings from the json file. This is necessary
             // otherwise the ordered playlist titles will remain empty
@@ -2080,9 +2057,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kApplicationPathWindowsTest,
             );
 
-            final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
-            );
+            final SettingsDataService settingsDataService =
+                SettingsDataService();
 
             // Load the settings from the json file. This is necessary
             // otherwise the ordered playlist titles will remain empty
@@ -2171,9 +2147,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kApplicationPathWindowsTest,
             );
 
-            final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
-            );
+            final SettingsDataService settingsDataService =
+                SettingsDataService();
 
             // Load the settings from the json file. This is necessary
             // otherwise the ordered playlist titles will remain empty
@@ -2263,9 +2238,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kApplicationPathWindowsTest,
             );
 
-            final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
-            );
+            final SettingsDataService settingsDataService =
+                SettingsDataService();
 
             // Load the settings from the json file. This is necessary
             // otherwise the ordered playlist titles will remain empty
@@ -2395,9 +2369,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kApplicationPathWindowsTest,
             );
 
-            final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
-            );
+            final SettingsDataService settingsDataService =
+                SettingsDataService();
 
             // Load the settings from the json file. This is necessary
             // otherwise the ordered playlist titles will remain empty
@@ -2529,9 +2502,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kApplicationPathWindowsTest,
             );
 
-            final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
-            );
+            final SettingsDataService settingsDataService =
+                SettingsDataService();
 
             // Load the settings from the json file. This is necessary
             // otherwise the ordered playlist titles will remain empty
@@ -2658,9 +2630,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kApplicationPathWindowsTest,
             );
 
-            final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
-            );
+            final SettingsDataService settingsDataService =
+                SettingsDataService();
 
             // Load the settings from the json file. This is necessary
             // otherwise the ordered playlist titles will remain empty
@@ -2785,9 +2756,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kApplicationPathWindowsTest,
             );
 
-            final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
-            );
+            final SettingsDataService settingsDataService =
+                SettingsDataService();
 
             // Load the settings from the json file. This is necessary
             // otherwise the ordered playlist titles will remain empty
@@ -2920,9 +2890,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kApplicationPathWindowsTest,
             );
 
-            final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
-            );
+            final SettingsDataService settingsDataService =
+                SettingsDataService();
 
             // Load the settings from the json file. This is necessary
             // otherwise the ordered playlist titles will remain empty
@@ -3010,9 +2979,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kApplicationPathWindowsTest,
             );
 
-            final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
-            );
+            final SettingsDataService settingsDataService =
+                SettingsDataService();
 
             // Load the settings from the json file. This is necessary
             // otherwise the ordered playlist titles will remain empty
@@ -3157,9 +3125,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kApplicationPathWindowsTest,
             );
 
-            final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
-            );
+            final SettingsDataService settingsDataService =
+                SettingsDataService();
 
             // Load the settings from the json file. This is necessary
             // otherwise the ordered playlist titles will remain empty
@@ -3462,9 +3429,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kApplicationPathWindowsTest,
             );
 
-            final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
-            );
+            final SettingsDataService settingsDataService =
+                SettingsDataService();
 
             // Load the settings from the json file. This is necessary
             // otherwise the ordered playlist titles will remain empty
@@ -3559,9 +3525,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kApplicationPathWindowsTest,
             );
 
-            final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
-            );
+            final SettingsDataService settingsDataService =
+                SettingsDataService();
 
             // Load the settings from the json file. This is necessary
             // otherwise the ordered playlist titles will remain empty
@@ -3655,9 +3620,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kApplicationPathWindowsTest,
             );
 
-            final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
-            );
+            final SettingsDataService settingsDataService =
+                SettingsDataService();
 
             // Load the settings from the json file. This is necessary
             // otherwise the ordered playlist titles will remain empty
@@ -3792,9 +3756,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kApplicationPathWindowsTest,
             );
 
-            final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
-            );
+            final SettingsDataService settingsDataService =
+                SettingsDataService();
 
             // Load the settings from the json file. This is necessary
             // otherwise the ordered playlist titles will remain empty
@@ -3931,9 +3894,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kApplicationPathWindowsTest,
             );
 
-            final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
-            );
+            final SettingsDataService settingsDataService =
+                SettingsDataService();
 
             // Load the settings from the json file. This is necessary
             // otherwise the ordered playlist titles will remain empty
@@ -4065,9 +4027,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kApplicationPathWindowsTest,
             );
 
-            final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
-            );
+            final SettingsDataService settingsDataService =
+                SettingsDataService();
 
             // Load the settings from the json file. This is necessary
             // otherwise the ordered playlist titles will remain empty
@@ -4197,9 +4158,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kApplicationPathWindowsTest,
             );
 
-            final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
-            );
+            final SettingsDataService settingsDataService =
+                SettingsDataService();
 
             // Load the settings from the json file. This is necessary
             // otherwise the ordered playlist titles will remain empty
@@ -4338,9 +4298,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kApplicationPathWindowsTest,
             );
 
-            final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
-            );
+            final SettingsDataService settingsDataService =
+                SettingsDataService();
 
             // Load the settings from the json file. This is necessary
             // otherwise the ordered playlist titles will remain empty
@@ -4448,9 +4407,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           destinationRootPath: kApplicationPathWindowsTest,
         );
 
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-        );
+        final SettingsDataService settingsDataService = SettingsDataService();
 
         // Load the settings from the json file. This is necessary
         // otherwise the ordered playlist titles will remain empty
@@ -4742,9 +4699,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           destinationRootPath: kApplicationPathWindowsTest,
         );
 
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-        );
+        final SettingsDataService settingsDataService = SettingsDataService();
 
         // Load the settings from the json file. This is necessary
         // otherwise the ordered playlist titles will remain empty
@@ -4908,9 +4863,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           destinationRootPath: kApplicationPathWindowsTest,
         );
 
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-        );
+        final SettingsDataService settingsDataService = SettingsDataService();
 
         // Load the settings from the json file. This is necessary
         // otherwise the ordered playlist titles will remain empty
@@ -5024,9 +4977,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           destinationRootPath: kApplicationPathWindowsTest,
         );
 
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-        );
+        final SettingsDataService settingsDataService = SettingsDataService();
 
         // Load the settings from the json file. This is necessary
         // otherwise the ordered playlist titles will remain empty
@@ -5272,9 +5223,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           destinationRootPath: kApplicationPathWindowsTest,
         );
 
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-        );
+        final SettingsDataService settingsDataService = SettingsDataService();
 
         // Load the settings from the json file. This is necessary
         // otherwise the ordered playlist titles will remain empty
@@ -5402,9 +5351,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           destinationRootPath: kApplicationPathWindowsTest,
         );
 
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-        );
+        final SettingsDataService settingsDataService = SettingsDataService();
 
         // Load the settings from the json file. This is necessary
         // otherwise the ordered playlist titles will remain empty
@@ -5674,9 +5621,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           destinationRootPath: kApplicationPathWindowsTest,
         );
 
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-        );
+        final SettingsDataService settingsDataService = SettingsDataService();
 
         // Load the settings from the json file. This is necessary
         // otherwise the ordered playlist titles will remain empty
@@ -5982,9 +5927,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -6287,9 +6230,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -6676,9 +6617,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -6836,9 +6775,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -6951,9 +6888,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -7269,7 +7204,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -7344,7 +7278,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -7419,7 +7352,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -7500,7 +7432,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -7567,8 +7498,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                apply it. Verify the selected audio's in the playable audio list dialog. then
                go to the playlist download view whose playlist list is expanded and thrink the
                playlist list. Then ensure that the "applied" SF parms is not present in the dropdown
-               button items.''',
-              (WidgetTester tester) async {
+               button items.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
             DirUtil.deleteFilesInDirAndSubDirs(
@@ -7583,7 +7513,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -7705,7 +7634,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -7858,9 +7786,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               destinationRootPath: kApplicationPathWindowsTest,
             );
 
-            final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
-            );
+            final SettingsDataService settingsDataService =
+                SettingsDataService();
 
             // Load the settings from the json file. This is necessary
             // otherwise the ordered playlist titles will remain empty
@@ -7934,9 +7861,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               '''After restarting the application, verify that the playlist
                  download view and the audio player view audio order is default.''',
               (WidgetTester tester) async {
-            final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
-            );
+            final SettingsDataService settingsDataService =
+                SettingsDataService();
 
             // Load the settings from the json file. This is necessary
             // otherwise the ordered playlist titles will remain empty
@@ -8036,9 +7962,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -8334,9 +8258,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -8729,9 +8651,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -8907,9 +8827,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           destinationRootPath: kApplicationPathWindowsTest,
         );
 
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-        );
+        final SettingsDataService settingsDataService = SettingsDataService();
 
         // Load the settings from the json file. This is necessary
         // otherwise the ordered playlist titles will remain empty
@@ -9056,9 +8974,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -9193,9 +9109,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                player view. Verify also the playlist json file as well as the
                save ... and remove ... audio popup menu items state.''',
             (WidgetTester tester) async {
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -9881,9 +9795,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -10067,9 +9979,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -10428,9 +10338,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -10602,9 +10510,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -10753,9 +10659,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -10859,9 +10763,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -11049,9 +10951,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -11190,9 +11090,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             destinationRootPath: kApplicationPathWindowsTest,
           );
 
-          final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
-          );
+          final SettingsDataService settingsDataService = SettingsDataService();
 
           // Load the settings from the json file. This is necessary
           // otherwise the ordered playlist titles will remain empty
@@ -11339,9 +11237,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           destinationRootPath: kApplicationPathWindowsTest,
         );
 
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-        );
+        final SettingsDataService settingsDataService = SettingsDataService();
 
         // Load the settings from the json file. This is necessary
         // otherwise the ordered playlist titles will remain empty
@@ -11488,9 +11384,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           destinationRootPath: kApplicationPathWindowsTest,
         );
 
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-        );
+        final SettingsDataService settingsDataService = SettingsDataService();
 
         // Load the settings from the json file. This is necessary
         // otherwise the ordered playlist titles will remain empty
@@ -11625,9 +11519,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           destinationRootPath: kApplicationPathWindowsTest,
         );
 
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-        );
+        final SettingsDataService settingsDataService = SettingsDataService();
 
         // Load the settings from the json file. This is necessary
         // otherwise the ordered playlist titles will remain empty
@@ -11779,9 +11671,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           destinationRootPath: kApplicationPathWindowsTest,
         );
 
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-        );
+        final SettingsDataService settingsDataService = SettingsDataService();
 
         // Load the settings from the json file. This is necessary
         // otherwise the ordered playlist titles will remain empty
@@ -11932,9 +11822,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           destinationRootPath: kApplicationPathWindowsTest,
         );
 
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-        );
+        final SettingsDataService settingsDataService = SettingsDataService();
 
         // Load the settings from the json file. This is necessary
         // otherwise the ordered playlist titles will remain empty
@@ -12091,9 +11979,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           destinationRootPath: kApplicationPathWindowsTest,
         );
 
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-        );
+        final SettingsDataService settingsDataService = SettingsDataService();
 
         // Load the settings from the json file. This is necessary
         // otherwise the ordered playlist titles will remain empty
@@ -12225,9 +12111,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           destinationRootPath: kApplicationPathWindowsTest,
         );
 
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-        );
+        final SettingsDataService settingsDataService = SettingsDataService();
 
         // Load the settings from the json file. This is necessary
         // otherwise the ordered playlist titles will remain empty
@@ -12361,9 +12245,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           destinationRootPath: kApplicationPathWindowsTest,
         );
 
-        final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
-        );
+        final SettingsDataService settingsDataService = SettingsDataService();
 
         // Load the settings from the json file. This is necessary
         // otherwise the ordered playlist titles will remain empty

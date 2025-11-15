@@ -19,7 +19,6 @@ import 'package:audiolearn/viewmodels/language_provider_vm.dart';
 import 'package:audiolearn/viewmodels/theme_provider_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 import 'package:audiolearn/views/playlist_download_view.dart';
-import '../services/mock_shared_preferences.dart';
 import '../viewmodels/mock_app_localizations.dart';
 
 class MockAppLocalizationsDelegate
@@ -46,7 +45,6 @@ void main() async {
         'should render ListView widget, not using MyApp but ListView widget',
         (WidgetTester tester) async {
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
       WarningMessageVM warningMessageVM = WarningMessageVM();
@@ -87,7 +85,6 @@ void main() async {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -154,7 +151,6 @@ void main() async {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -270,7 +266,6 @@ void main() async {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -405,7 +400,6 @@ void main() async {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -552,7 +546,6 @@ void main() async {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -737,7 +730,6 @@ void main() async {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -834,7 +826,6 @@ void main() async {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -932,7 +923,6 @@ void main() async {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -1030,7 +1020,6 @@ void main() async {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 
@@ -1127,7 +1116,6 @@ void main() async {
       );
 
       SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: MockSharedPreferences(),
         isTest: true,
       );
 

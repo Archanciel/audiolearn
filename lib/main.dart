@@ -5,7 +5,6 @@ import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'l10n/app_localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:window_size/window_size.dart';
 
 import 'constants.dart';
@@ -26,7 +25,7 @@ Future<void> main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); // Ensure Flutter bindings are initialized.
 
-  bool isTest = true; // Must be set to false instead of true before
+  bool isTest = false; // Must be set to false instead of true before
   //                     generating the Android as well as the Windows
   //                     version of the app so that the app accesses the
   //                     correct application directory and not the test
@@ -50,7 +49,6 @@ Future<void> main() async {
 
   // Setup SettingsDataService
   final SettingsDataService settingsDataService = SettingsDataService(
-    sharedPreferences: await SharedPreferences.getInstance(),
     isTest: isTest,
   );
 

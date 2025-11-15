@@ -26,9 +26,7 @@ import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/utils/dir_util.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../test/services/mock_shared_preferences.dart';
 import '../test/viewmodels/mock_audio_download_vm.dart';
 import 'integration_test_util.dart';
 import 'mock_file_picker.dart';
@@ -4846,7 +4844,6 @@ void main() {
         set date format to 'yyyy/MM/dd' and restart the application ...''',
         (WidgetTester tester) async {
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -4962,7 +4959,6 @@ void main() {
         effect everywhere in the application where the date format is applied.''',
         (WidgetTester tester) async {
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -5078,7 +5074,6 @@ void main() {
         effect everywhere in the application where the date format is applied.''',
         (WidgetTester tester) async {
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -12456,7 +12451,6 @@ void main() {
       final Map initialSettingsMap = _loadSettingsMap();
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -12516,7 +12510,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -12707,7 +12700,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -12888,7 +12880,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -13001,7 +12992,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -13086,7 +13076,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -13217,7 +13206,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -13352,7 +13340,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -13552,7 +13539,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -13758,7 +13744,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -13927,7 +13912,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -14084,7 +14068,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -14245,7 +14228,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -14413,7 +14395,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -14569,7 +14550,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -14730,7 +14710,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -14846,7 +14825,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -15372,7 +15350,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -15502,7 +15479,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -16349,7 +16325,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -16505,7 +16480,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -16711,7 +16685,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -16840,7 +16813,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -16947,7 +16919,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -17055,7 +17026,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -17165,7 +17135,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -17320,7 +17289,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -17478,7 +17446,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -17607,7 +17574,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -17717,7 +17683,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -17828,7 +17793,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -17954,7 +17918,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -18360,7 +18323,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -18769,7 +18731,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -19158,7 +19119,6 @@ void main() {
         );
 
         final SettingsDataService settingsDataService = SettingsDataService(
-          sharedPreferences: await SharedPreferences.getInstance(),
           isTest: true,
         );
 
@@ -19567,7 +19527,6 @@ void main() {
             // does.
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -20024,7 +19983,6 @@ void main() {
             // does.
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -20482,7 +20440,6 @@ void main() {
             // does.
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -20675,7 +20632,6 @@ void main() {
             // does.
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -20831,7 +20787,6 @@ void main() {
             // does.
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -21305,7 +21260,6 @@ void main() {
             // does.
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -21789,7 +21743,6 @@ void main() {
             // does.
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -21990,7 +21943,6 @@ void main() {
             // does.
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -22146,7 +22098,6 @@ void main() {
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -22277,7 +22228,6 @@ void main() {
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -22413,7 +22363,6 @@ void main() {
           // does.
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -22590,7 +22539,6 @@ void main() {
           // does.
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -22767,7 +22715,6 @@ void main() {
           // does.
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -22955,7 +22902,6 @@ void main() {
           // does.
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -23143,7 +23089,6 @@ void main() {
           // does.
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -23398,7 +23343,6 @@ void main() {
           // does.
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -23652,7 +23596,6 @@ void main() {
           // does.
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -23785,7 +23728,6 @@ void main() {
           // does.
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -23922,7 +23864,6 @@ void main() {
                 "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Windows Restore- short - test - playlist.zip";
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -24273,7 +24214,6 @@ void main() {
                 "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Windows Restore- short - test - playlist.zip";
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -24625,7 +24565,6 @@ void main() {
                 "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Windows Local restore- short - test - playlist.zip";
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -24975,7 +24914,6 @@ void main() {
                 "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Windows Local restore- short - test - playlist.zip";
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -25630,7 +25568,6 @@ void main() {
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -25836,7 +25773,6 @@ void main() {
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -26418,7 +26354,6 @@ void main() {
                 "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Android Restore- short - test - playlist.zip";
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -26768,7 +26703,6 @@ void main() {
                 "$kDownloadAppTestSavedDataDir${path.separator}zip_files_for_restore_tests${path.separator}Android Restore- short - test - playlist.zip";
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -27272,7 +27206,6 @@ void main() {
             );
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -27474,7 +27407,6 @@ void main() {
                 isSelected: true);
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -27529,7 +27461,6 @@ void main() {
             // does.
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -27725,7 +27656,6 @@ void main() {
             // does.
 
             final SettingsDataService settingsDataService = SettingsDataService(
-              sharedPreferences: await SharedPreferences.getInstance(),
               isTest: true,
             );
 
@@ -27929,7 +27859,6 @@ void main() {
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -28083,7 +28012,6 @@ void main() {
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -28222,7 +28150,6 @@ void main() {
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -28413,7 +28340,6 @@ void main() {
           );
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -28679,7 +28605,6 @@ void main() {
           // does.
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -28812,7 +28737,6 @@ void main() {
           // does.
 
           final SettingsDataService settingsDataService = SettingsDataService(
-            sharedPreferences: await SharedPreferences.getInstance(),
             isTest: true,
           );
 
@@ -30713,7 +30637,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -30987,7 +30910,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -31260,7 +31182,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -31359,7 +31280,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -31547,7 +31467,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -31734,7 +31653,6 @@ void main() {
       );
 
       final SettingsDataService settingsDataService = SettingsDataService(
-        sharedPreferences: await SharedPreferences.getInstance(),
         isTest: true,
       );
 
@@ -34947,10 +34865,9 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-      testWidgets(
+    testWidgets(
         '''Converting text containing line breaks without checking the 'Remove line breaks'
-           ckeckbox.''',
-        (WidgetTester tester) async {
+           ckeckbox.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -34987,7 +34904,8 @@ void main() {
           find.byKey(const Key('textToConvertTextField'));
 
       // Enter text in the TextField
-      const testText = "Ô mon cher Ange gardien ! Je t’adresse cette prièrep\nour te demanderdern\nde rester toujours à mes côtés\net de ne jamais cesser\nd’être mon protecteur, jusqu’à ce que je sois appelé\ndans la Maison du Père, où ensemble nous louerons Dieu\nnotre Seigneur pour toute l’Éternité. Amen.";
+      const testText =
+          "Ô mon cher Ange gardien ! Je t’adresse cette prièrep\nour te demanderdern\nde rester toujours à mes côtés\net de ne jamais cesser\nd’être mon protecteur, jusqu’à ce que je sois appelé\ndans la Maison du Père, où ensemble nous louerons Dieu\nnotre Seigneur pour toute l’Éternité. Amen.";
       await tester.enterText(textFieldFinder, testText);
       await tester.pump();
 
@@ -35040,10 +34958,9 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-      testWidgets(
+    testWidgets(
         '''Converting text containing line breaks with checking the 'Remove line breaks'
-           ckeckbox.''',
-        (WidgetTester tester) async {
+           ckeckbox.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -35080,7 +34997,8 @@ void main() {
           find.byKey(const Key('textToConvertTextField'));
 
       // Enter text in the TextField
-      const testText = "Ô mon cher Ange gardien ! Je t’adresse cette prièrep\nour te demanderdern\nde rester toujours à mes côtés\net de ne jamais cesser\nd’être mon protecteur, jusqu’à ce que je sois appelé\ndans la Maison du Père, où ensemble nous louerons Dieu\nnotre Seigneur pour toute l’Éternité. Amen.";
+      const testText =
+          "Ô mon cher Ange gardien ! Je t’adresse cette prièrep\nour te demanderdern\nde rester toujours à mes côtés\net de ne jamais cesser\nd’être mon protecteur, jusqu’à ce que je sois appelé\ndans la Maison du Père, où ensemble nous louerons Dieu\nnotre Seigneur pour toute l’Éternité. Amen.";
       await tester.enterText(textFieldFinder, testText);
       await tester.pump();
 
@@ -35140,7 +35058,7 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-});
+  });
   group('Download URLs from Text File tests', () {
     testWidgets(
         '''Download URLs in music quality playlist in spoken quality.''',
@@ -36375,9 +36293,7 @@ Future<void> _selectDateFormat({
 Future<void> _verifyApplicationSettingsDateFormatValue({
   required String dateFormatValue,
 }) async {
-  SettingsDataService settingsDataService = SettingsDataService(
-    sharedPreferences: MockSharedPreferences(),
-  );
+  SettingsDataService settingsDataService = SettingsDataService();
 
   await settingsDataService.loadSettingsFromFile(
       settingsJsonPathFileName:
