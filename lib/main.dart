@@ -9,7 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:window_size/window_size.dart';
 
 import 'constants.dart';
-import 'services/permission_requester_service.dart';
 import 'viewmodels/picture_vm.dart';
 import 'viewmodels/playlist_list_vm.dart';
 import 'viewmodels/audio_download_vm.dart';
@@ -36,11 +35,7 @@ Future<void> main() async {
 
   String applicationPath = '';
 
-  // Request permissions and then create/get the application directory
-
-  await PermissionRequesterService.requestMultiplePermissions();
-
-  // Obtain or create the application directory
+  // Obtain or create the application directory (no permission request here)
   applicationPath = DirUtil.getApplicationPath(
     isTest: isTest,
   );
