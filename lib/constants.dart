@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+const String kApplicationName = "Audio Learn";
+const String kApplicationVersion = "2.4.5";
+
 enum PopupMenuButtonType {
   openSortFilterAudioDialog,
   clearSortFilterAudioParmsHistory,
@@ -30,8 +33,6 @@ enum AudioPopupMenuAction {
   redownloadDeletedAudio,
 }
 
-const String kApplicationName = "Audio Learn";
-const String kApplicationVersion = "2.4.3";
 const String kImposedPlaylistsSubDirName = 'playlists';
 
 // Used for Android app version
