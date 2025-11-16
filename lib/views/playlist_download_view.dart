@@ -597,7 +597,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 SizedBox(
                   width: 24, // taille souhaitée
                   height: 24,
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                    strokeWidth: 3,
+                  ),
                 ),
               ]),
             ]),
