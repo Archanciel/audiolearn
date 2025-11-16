@@ -64,9 +64,10 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
 
-            // For now, keep shrinking disabled while we stabilise ffmpeg-kit
-            minifyEnabled false
-            shrinkResources false
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                        'proguard-rules.pro'
         }
     }
 }
