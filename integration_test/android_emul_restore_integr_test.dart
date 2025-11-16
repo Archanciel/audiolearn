@@ -1755,7 +1755,7 @@ void main() {
         Finder saveMP3FileButton =
             find.byKey(const Key('create_mp3_button_key'));
         await tester.tap(saveMP3FileButton);
-        await Future.delayed(const Duration(seconds: 2));
+        await Future.delayed(const Duration(seconds: 3));
         await tester.pumpAndSettle();
 
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
@@ -1935,7 +1935,7 @@ void main() {
         // Tap on the create mp3 button
         saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
         await tester.tap(saveMP3FileButton);
-        await Future.delayed(const Duration(seconds: 2));
+        await Future.delayed(const Duration(seconds: 3));
         await tester.pumpAndSettle();
 
         // Now check the confirm dialog which indicates that the saved
@@ -1951,7 +1951,7 @@ void main() {
           closeDialogWithConfirmButton: true,
         );
 
-        await Future.delayed(const Duration(seconds: 2));
+        await Future.delayed(const Duration(seconds: 3));
         await tester.pumpAndSettle();
 
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
