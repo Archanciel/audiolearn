@@ -33419,7 +33419,7 @@ void main() {
         movedToPlaylistTitle: '',
         copiedFromPlaylistTitle: '',
         copiedToPlaylistTitle: '',
-        audioDuration: '0:00:09.8',
+        audioDuration: '0:00:09.9',
         isMusicQuality: true, // Is musical quality
       );
 
@@ -33471,7 +33471,7 @@ void main() {
         movedToPlaylistTitle: '',
         copiedFromPlaylistTitle: '',
         copiedToPlaylistTitle: '',
-        audioDuration: '0:00:58.9',
+        audioDuration: '0:00:58.5',
         isMusicQuality: false, // Is musical quality
       );
 

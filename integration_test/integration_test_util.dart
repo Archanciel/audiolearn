@@ -867,35 +867,72 @@ class IntegrationTestUtil {
     required bool isFirstAudioMenuItemDisabled,
     required AudioLearnAppViewType audioLearnAppViewType,
   }) async {
-    if (isFirstAudioMenuItemDisabled) {
-      verifyWidgetIsDisabled(
-        tester: tester,
-        widgetKeyStr: 'define_sort_and_filter_audio_menu_item',
-      );
+    if (audioLearnAppViewType == AudioLearnAppViewType.playlistDownloadView) {
+      // Tap on the AudioPlayerView icon button to open the audio menu
+      // item
 
-      verifyWidgetIsDisabled(
-        // no Sort/filter parameters history are available in test data
-        tester: tester,
-        widgetKeyStr: 'clear_sort_and_filter_audio_parms_history_menu_item',
-      );
+      if (isFirstAudioMenuItemDisabled) {
+        verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr: 'define_sort_and_filter_audio_menu_item',
+        );
 
-      // The save sort and filter audio parameters in playlist menu item
-      // is currently disabled in the audio player view
-      // verifyWidgetIsDisabled(
-      //   tester: tester,
-      //   widgetKeyStr: 'save_sort_and_filter_audio_parms_in_playlist_item',
-      // );
+        verifyWidgetIsDisabled(
+          // no Sort/filter parameters history are available in test data
+          tester: tester,
+          widgetKeyStr: 'clear_sort_and_filter_audio_parms_history_menu_item',
+        );
+
+        // The save sort and filter audio parameters in playlist menu item
+        // is currently disabled in the audio player view
+        // verifyWidgetIsDisabled(
+        //   tester: tester,
+        //   widgetKeyStr: 'save_sort_and_filter_audio_parms_in_playlist_item',
+        // );
+      } else {
+        verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'define_sort_and_filter_audio_menu_item',
+        );
+
+        verifyWidgetIsDisabled(
+          // no Sort/filter parameters history are available in test data
+          tester: tester,
+          widgetKeyStr: 'clear_sort_and_filter_audio_parms_history_menu_item',
+        );
+      }
     } else {
-      verifyWidgetIsEnabled(
-        tester: tester,
-        widgetKeyStr: 'define_sort_and_filter_audio_menu_item',
-      );
+      // audioLearnAppViewType == AudioLearnAppViewType.audioPlayerView
+      if (isFirstAudioMenuItemDisabled) {
+        verifyWidgetIsDisabled(
+          tester: tester,
+          widgetKeyStr: 'define_sort_and_filter_audio_menu_item',
+        );
 
-      verifyWidgetIsDisabled(
-        // no Sort/filter parameters history are available in test data
-        tester: tester,
-        widgetKeyStr: 'clear_sort_and_filter_audio_parms_history_menu_item',
-      );
+        verifyWidgetIsDisabled(
+          // no Sort/filter parameters history are available in test data
+          tester: tester,
+          widgetKeyStr: 'remove_sort_and_filter_audio_parms_from_playlist_item',
+        );
+
+        // The save sort and filter audio parameters in playlist menu item
+        // is currently disabled in the audio player view
+        // verifyWidgetIsDisabled(
+        //   tester: tester,
+        //   widgetKeyStr: 'save_sort_and_filter_audio_parms_in_playlist_item',
+        // );
+      } else {
+        verifyWidgetIsEnabled(
+          tester: tester,
+          widgetKeyStr: 'define_sort_and_filter_audio_menu_item',
+        );
+
+        verifyWidgetIsDisabled(
+          // no Sort/filter parameters history are available in test data
+          tester: tester,
+          widgetKeyStr: 'remove_sort_and_filter_audio_parms_from_playlist_item',
+        );
+      }
     }
 
     if (audioLearnAppViewType == AudioLearnAppViewType.audioPlayerView) {
