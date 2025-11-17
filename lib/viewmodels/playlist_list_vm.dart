@@ -4676,8 +4676,9 @@ class PlaylistListVM extends ChangeNotifier {
 
   /// When restoring playlists from a zip file this method deletes existing playlists
   /// which are not contained in the zip file. However, a playlist is only deleted
-  /// if the newest audio download date time of its audio's is before the zip file
-  /// creation date time or if the last text to speech comment .
+  /// its creation date time is before the zip file creation date time or if the newest
+  /// audio download date time of its audio's or the last text to speech comment is before
+  /// the zip file creation date time.
   ///
   /// This method is called with doReplaceExistingPlaylists checkbox set to true or
   /// false. It is only called when restoring multiple playlists and not unique playlist
