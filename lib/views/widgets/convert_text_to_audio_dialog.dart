@@ -191,7 +191,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                                       .creatingMp3,
                                   textAlign: TextAlign.center,
                                   style: kDialogTitlesStyle,
-                                  key: const Key('voiceSelectionTitleKey'),
+                                  key: const Key('conversionTextKey'),
                                 ),
                                 SizedBox(width: 20.0),
                                 SizedBox(

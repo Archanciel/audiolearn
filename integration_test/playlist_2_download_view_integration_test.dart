@@ -35058,6 +35058,209 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
+    testWidgets(
+        '''Convert a long text to audio. Verify the displayed conversion progression.
+
+           Finally, redo a text to speech conversion with a different long text and save it to the
+           same MP3 file name. Do the same verifications as previously.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      const String selectedYoutubePlaylistTitle = 'urgent_actus_17-12-2023';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'import_audios_integr_test',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      // Open the convert text to audio dialog
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: selectedYoutubePlaylistTitle,
+        playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+      );
+
+      // Verify the voice selection title
+      final Text conversionVoiceSelection =
+          tester.widget<Text>(find.byKey(const Key('voiceSelectionTitleKey')));
+      expect(
+        conversionVoiceSelection.data,
+        'Voice selection:',
+      );
+
+      // Enter the text to convert
+
+      // Find the text field and delete button
+      final Finder textFieldFinder =
+          find.byKey(const Key('textToConvertTextField'));
+
+      // Enter text in the TextField
+      const testText =
+          '''Ceci est un long texte de test pour vérifier la fonctionnalité
+          de conversion de texte en audio. Le but de ce test est de s'assurer que le texte
+          peut être correctement entré, écouté, et converti en un fichier MP3 sans erreurs.
+          Nous allons également vérifier que les boutons d'écoute et de création de MP3 sont
+          activés et désactivés aux bons moments, et que le champ de texte peut être effacé
+          correctement. Enfin, nous allons tester la lecture du texte converti pour s'assurer
+          que la durée de l'audio correspond à nos attentes.
+          Ceci est un long texte de test pour vérifier la fonctionnalité
+          de conversion de texte en audio. Le but de ce test est de s'assurer que le texte
+          peut être correctement entré, écouté, et converti en un fichier MP3 sans erreurs.
+          Nous allons également vérifier que les boutons d'écoute et de création de MP3 sont
+          activés et désactivés aux bons moments, et que le champ de texte peut être effacé
+          correctement. Enfin, nous allons tester la lecture du texte converti pour s'assurer
+          que la durée de l'audio correspond à nos attentes.''';
+      await tester.enterText(textFieldFinder, testText);
+      await tester.pump();
+
+      // Verify that the text was entered
+      expect(find.text(testText), findsOneWidget);
+
+      // Now click on Create MP3 button to create the audio
+      Finder createMP3ButtonFinder =
+          find.byKey(const Key('create_audio_file_button'));
+      await tester.tap(createMP3ButtonFinder);
+      await tester.pumpAndSettle();
+
+      const String enteredFileNameNoExt = 'convertedAudio';
+      Finder mp3FileNameTextFieldFinder =
+          find.byKey(const Key('textToConvertTextField'));
+
+      await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+      await tester.pumpAndSettle();
+
+      const String conversionTextValue = 'Creating MP3';
+
+      // Tap on the create mp3 button
+      Finder saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
+      await tester.tap(saveMP3FileButton);
+    
+      // Just start the first frame; DO NOT use pumpAndSettle here
+      await tester.pump(const Duration(milliseconds: 50));
+
+      // Wait until the "Creating MP3" text (or key) appears, with timeout
+      await pumpUntilFound(
+        tester: tester,
+        finder: find.byKey(const Key('conversionTextKey')),
+        timeout: const Duration(seconds: 3),
+      );
+
+      // Now assert
+      expect(find.byKey(const Key('conversionTextKey')), findsOneWidget);
+      expect(find.text(conversionTextValue), findsOneWidget);
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas added to Youtube playlist \"$selectedYoutubePlaylistTitle\".",
+        isWarningConfirming: true,
+      );
+
+      // Now close the convert text to audio dialog by tapping
+      // the Close button
+      Finder closeButtonFinder =
+          find.byKey(const Key('convertTextToAudioCloseButton'));
+      await tester.tap(closeButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Now, reopen the convert text to audio dialog
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: selectedYoutubePlaylistTitle,
+        playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+      );
+
+      // Now enter a new text to convert
+      const String nextTextToConvertStr =
+          '''Ceci est un nouveau légèrement plus long texte de test pour vérifier la fonctionnalité
+          de conversion de texte en audio. Le but de ce test est de s'assurer que le texte
+          peut être correctement entré, écouté, et converti en un fichier MP3 sans erreurs.
+          Nous allons également vérifier que les boutons d'écoute et de création de MP3 sont
+          activés et désactivés aux bons moments, et que le champ de texte peut être effacé
+          correctement. Enfin, nous allons tester la lecture du texte converti pour s'assurer
+          que la durée de l'audio correspond à nos attentes.
+          Ceci est un nouveau légèrement plus long texte de test pour vérifier la fonctionnalité
+          de conversion de texte en audio. Le but de ce test est de s'assurer que le texte
+          peut être correctement entré, écouté, et converti en un fichier MP3 sans erreurs.
+          Nous allons également vérifier que les boutons d'écoute et de création de MP3 sont
+          activés et désactivés aux bons moments, et que le champ de texte peut être effacé
+          correctement. Enfin, nous allons tester la lecture du texte converti pour s'assurer
+          que la durée de l'audio correspond à nos attentes.''';
+      await tester.enterText(textFieldFinder, nextTextToConvertStr);
+      await tester.pump();
+
+      // Now click on Create MP3 button to create the audio
+      createMP3ButtonFinder = find.byKey(const Key('create_audio_file_button'));
+
+      createMP3ButtonFinder = find.byKey(const Key('create_audio_file_button'));
+      await tester.tap(createMP3ButtonFinder);
+      await tester.pumpAndSettle();
+
+      mp3FileNameTextFieldFinder =
+          find.byKey(const Key('textToConvertTextField'));
+
+      // Enter the same mp3 file name as before
+      mp3FileNameTextFieldFinder =
+          find.byKey(const Key('textToConvertTextField'));
+
+      await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+      await tester.pump();
+
+      // Tap on the create mp3 button
+      saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
+      await tester.tap(saveMP3FileButton);
+      await Future.delayed(const Duration(seconds: 2));
+      await tester.pumpAndSettle();
+
+      // Now check the confirm dialog which indicates that the saved
+      // file name already exist and ask to confirm or cancel the
+      // save operation.
+      await IntegrationTestUtil.verifyConfirmActionDialog(
+        tester: tester,
+        confirmActionDialogTitle:
+            "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$selectedYoutubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
+        confirmActionDialogMessagePossibleLst: [""],
+        closeDialogWithConfirmButton: true,
+      );
+
+      // Wait until the "Creating MP3" text (or key) appears, with timeout
+      await pumpUntilFound(
+        tester: tester,
+        finder: find.byKey(const Key('conversionTextKey')),
+        timeout: const Duration(seconds: 3),
+      );
+
+      // Now assert
+      expect(find.byKey(const Key('conversionTextKey')), findsOneWidget);
+      expect(find.text(conversionTextValue), findsOneWidget);
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in Youtube playlist \"$selectedYoutubePlaylistTitle\".",
+        isWarningConfirming: true,
+      );
+
+      // Now close the convert text to audio dialog by tapping
+      // the Close button
+      closeButtonFinder =
+          find.byKey(const Key('convertTextToAudioCloseButton'));
+      await tester.tap(closeButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
   });
   group('Download URLs from Text File tests', () {
     testWidgets(
@@ -35270,6 +35473,20 @@ void main() {
       );
     });
   });
+}
+
+Future<void> pumpUntilFound({
+  required WidgetTester tester,
+  required Finder finder,
+  Duration timeout = const Duration(milliseconds: 700),
+  Duration step = const Duration(milliseconds: 100),
+}) async {
+  final end = DateTime.now().add(timeout);
+  while (DateTime.now().isBefore(end)) {
+    await tester.pump(step);
+    if (finder.evaluate().isNotEmpty) return;
+  }
+  throw Exception('Widget was not found before timeout: $finder');
 }
 
 Future<void> _inAudioPlayerViewVerifyAudioPositionAndDuration({
