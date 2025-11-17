@@ -19,7 +19,10 @@ class TextToSpeechVM extends ChangeNotifier {
 
   // Getters
   String get inputText => _inputText;
+
+  // Used to indicate if a conversion is in progress
   bool get isConverting => _isConverting;
+
   AudioFile? get currentAudioFile => _currentAudioFile;
   double get silenceDurationSeconds => _silenceDurationSeconds;
 

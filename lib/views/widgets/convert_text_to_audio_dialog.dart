@@ -182,12 +182,33 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                     const SizedBox(
                       height: kDialogTextFieldVerticalSeparation,
                     ),
-                    Text(
-                      AppLocalizations.of(context)!.conversionVoiceSelection,
-                      textAlign: TextAlign.center,
-                      style: kDialogTitlesStyle,
-                      key: const Key('voiceSelectionTitleKey'),
-                    ),
+                    textToSpeechVMlistenTrue.isConverting
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                                Text(
+                                  AppLocalizations.of(context)!
+                                      .creatingMp3,
+                                  textAlign: TextAlign.center,
+                                  style: kDialogTitlesStyle,
+                                  key: const Key('voiceSelectionTitleKey'),
+                                ),
+                                SizedBox(width: 20.0),
+                                SizedBox(
+                                  width: 24, // taille souhaitée
+                                  height: 24,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 3,
+                                  ),
+                                ),
+                              ])
+                        : Text(
+                            AppLocalizations.of(context)!
+                                .conversionVoiceSelection,
+                            textAlign: TextAlign.center,
+                            style: kDialogTitlesStyle,
+                            key: const Key('voiceSelectionTitleKey'),
+                          ),
                     _buildVoiceSelectionCheckboxes(
                       context: context,
                     ),
