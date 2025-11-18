@@ -8,7 +8,6 @@ import '../../views/screen_mixin.dart';
 import '../../constants.dart';
 import '../../models/audio.dart';
 import '../../services/settings_data_service.dart';
-import '../../utils/ui_util.dart';
 import '../../viewmodels/audio_download_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import 'help_dialog.dart';
@@ -267,23 +266,5 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
       audio: widget.audio,
       modifiedAudioTitle: audioTitle,
     );
-  }
-
-  String formatDownloadSpeed({
-    required BuildContext context,
-    required Audio audio,
-  }) {
-    int audioDownloadSpeed = audio.audioDownloadSpeed;
-    String audioDownloadSpeedStr;
-
-    if (audioDownloadSpeed.isInfinite) {
-      audioDownloadSpeedStr =
-          AppLocalizations.of(context)!.infiniteBytesPerSecond;
-    } else {
-      audioDownloadSpeedStr =
-          '${UiUtil.formatLargeSizeToKbOrMb(context: context, sizeInBytes: audioDownloadSpeed)}/sec';
-    }
-
-    return audioDownloadSpeedStr;
   }
 }
