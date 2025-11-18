@@ -519,7 +519,10 @@
   "renameCommentFileNameAlreadyUsed": "The comment file name \"{fileName}.json\" already exists in the comment directory and so renaming the audio file with the name \"{fileName}.mp3\" is not possible.",
   "renameFileNameInvalid": "The audio file name \"{fileName}\" has no mp3 extension and so is invalid.",
   "renameAudioFileConfirmation": "Audio file \"{oldFileIame}.mp3\" renamed to \"{newFileName}.mp3\".",
-  "renameAudioAndCommentFileConfirmation": "Audio file \"{oldFileIame}.mp3\" renamed to \"{newFileName}.mp3\" as well as comment file \"{oldFileIame}.json\" renamed to \"{newFileName}.json\".",
+  "renameAudioAndAssociatedFilesConfirmation": "Audio file \"{oldFileIame}.mp3\" renamed to \"{newFileName}.mp3\" {secondMessagePart}.",
+  "secondMessagePartCommentOnly": "as well as comment file \"{oldFileIame}.json\" renamed to \"{newFileName}.json\"",
+  "secondMessagePartPictureOnly": "as well as picture file \"{oldFileIame}.json\" renamed to \"{newFileName}.json\"",
+  "secondMessagePartCommentAndPicture": "as well as comment and picture files \"{oldFileIame}.json\" renamed to \"{newFileName}.json\"",
   "forScreen": "For \"{screenName}\" screen",
   "downloadVideoUrlsFromTextFileInPlaylist": "Download URLs from Text File ...",
   "downloadVideoUrlsFromTextFileInPlaylistTooltip": "Download audio's to the playlist from video URLs listed in a text file to select. The text file must contain one video URL per line.",
@@ -1129,5 +1132,6 @@
   "renamePlaylist": "Rename Playlist",
   "renamePlaylistLabel": "Name",
   "renamePlaylistTooltip": "Renaming the playlist ...",
-  "renamePlaylistButton": "Rename"
+  "renamePlaylistButton": "Rename",
+  "renamePictureFileNameAlreadyUsed": "The picture file name \"{fileName}.json\" already exists in the picture directory and so renaming the audio file with the name \"{fileName}.mp3\" is not possible."
 }

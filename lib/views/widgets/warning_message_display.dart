@@ -457,17 +457,45 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
-      case WarningMessageType.renameAudioAndCommentFileConfirm:
+      case WarningMessageType.renameAudioAndAssociatedFilesConfirm:
         String oldFileName = _warningMessageVM.oldFileName;
         String newFileName = _warningMessageVM.newFileName;
+        bool isCommentFileRenamed =
+            _warningMessageVM.isCommentFileRenamed;
+        bool isPictureFileRenamed =
+            _warningMessageVM.isPictureFileRenamed;
+        String secondMessagePart;
+
+        if (isCommentFileRenamed && isPictureFileRenamed) {
+          secondMessagePart = AppLocalizations.of(context)!
+              .secondMessagePartCommentAndPicture(
+            newFileName,
+            oldFileName,
+          );
+        } else if (isCommentFileRenamed) {
+          secondMessagePart = AppLocalizations.of(context)!
+              .secondMessagePartCommentOnly(
+            newFileName,
+            oldFileName,
+          );
+        } else if (isPictureFileRenamed) {
+          secondMessagePart = AppLocalizations.of(context)!
+              .secondMessagePartPictureOnly(
+            newFileName,
+            oldFileName,
+          );
+        } else {
+          secondMessagePart = '';
+        }
 
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _displayWarningDialog(
             context: _context,
             message: AppLocalizations.of(context)!
-                .renameAudioAndCommentFileConfirmation(
+                .renameAudioAndAssociatedFilesConfirmation(
               newFileName,
               oldFileName,
+              secondMessagePart,
             ),
             warningMessageVM: _warningMessageVM,
             themeProviderVM: themeProviderVM,
@@ -484,6 +512,20 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
             context: _context,
             message: AppLocalizations.of(context)!
                 .renameCommentFileNameAlreadyUsed(fileName),
+            warningMessageVM: _warningMessageVM,
+            themeProviderVM: themeProviderVM,
+          );
+        });
+
+        return const SizedBox.shrink();
+      case WarningMessageType.renamePictureFileNameAlreadyUsed:
+        String fileName = _warningMessageVM.renamePictureFileNameAlreadyUsed;
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _displayWarningDialog(
+            context: _context,
+            message: AppLocalizations.of(context)!
+                .renamePictureFileNameAlreadyUsed(fileName),
             warningMessageVM: _warningMessageVM,
             themeProviderVM: themeProviderVM,
           );

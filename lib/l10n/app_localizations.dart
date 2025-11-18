@@ -2094,11 +2094,30 @@ abstract class AppLocalizations {
   /// **'Audio file \"{oldFileIame}.mp3\" renamed to \"{newFileName}.mp3\".'**
   String renameAudioFileConfirmation(Object newFileName, Object oldFileIame);
 
-  /// No description provided for @renameAudioAndCommentFileConfirmation.
+  /// No description provided for @renameAudioAndAssociatedFilesConfirmation.
   ///
   /// In en, this message translates to:
-  /// **'Audio file \"{oldFileIame}.mp3\" renamed to \"{newFileName}.mp3\" as well as comment file \"{oldFileIame}.json\" renamed to \"{newFileName}.json\".'**
-  String renameAudioAndCommentFileConfirmation(
+  /// **'Audio file \"{oldFileIame}.mp3\" renamed to \"{newFileName}.mp3\" {secondMessagePart}.'**
+  String renameAudioAndAssociatedFilesConfirmation(
+      Object newFileName, Object oldFileIame, Object secondMessagePart);
+
+  /// No description provided for @secondMessagePartCommentOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'as well as comment file \"{oldFileIame}.json\" renamed to \"{newFileName}.json\"'**
+  String secondMessagePartCommentOnly(Object newFileName, Object oldFileIame);
+
+  /// No description provided for @secondMessagePartPictureOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'as well as picture file \"{oldFileIame}.json\" renamed to \"{newFileName}.json\"'**
+  String secondMessagePartPictureOnly(Object newFileName, Object oldFileIame);
+
+  /// No description provided for @secondMessagePartCommentAndPicture.
+  ///
+  /// In en, this message translates to:
+  /// **'as well as comment and picture files \"{oldFileIame}.json\" renamed to \"{newFileName}.json\"'**
+  String secondMessagePartCommentAndPicture(
       Object newFileName, Object oldFileIame);
 
   /// No description provided for @forScreen.
@@ -3988,6 +4007,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Rename'**
   String get renamePlaylistButton;
+
+  /// No description provided for @renamePictureFileNameAlreadyUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'The picture file name \"{fileName}.json\" already exists in the picture directory and so renaming the audio file with the name \"{fileName}.mp3\" is not possible.'**
+  String renamePictureFileNameAlreadyUsed(Object fileName);
 }
 
 class _AppLocalizationsDelegate

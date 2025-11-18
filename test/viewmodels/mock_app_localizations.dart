@@ -1136,11 +1136,12 @@ class MockAppLocalizations extends AppLocalizations {
       "Audio file \"$oldFileIame.mp3\" renamed to \"$newFileName.mp3\".";
 
   @override
-  String renameAudioAndCommentFileConfirmation(
+  String renameAudioAndAssociatedFilesConfirmation(
     Object oldFileIame,
     Object newFileName,
+    Object secondMessagePart,
   ) =>
-      "Audio file \"$oldFileIame.mp3\" renamed to \"$newFileName.mp3\" as well as comment file \"$oldFileIame.json\" renamed to \"$newFileName.json\".";
+      "Audio file \"$oldFileIame.mp3\" renamed to \"$newFileName.mp3\" $secondMessagePart.";
 
   @override
   String forScreen(
@@ -2580,4 +2581,31 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get renamePlaylistButton => "Rename";
+
+  @override
+  String renamePictureFileNameAlreadyUsed(
+    Object fileName,
+  ) =>
+      "The picture file name \"$fileName.json\" already exists in the picture directory and so renaming the audio file with the name \"$fileName.mp3\" is not possible.";
+
+  @override
+  String secondMessagePartCommentOnly(
+    Object oldFileIame,
+    Object newFileName,
+  ) =>
+      "as well as comment file \"$oldFileIame.json\" renamed to \"$newFileName.json\"";
+
+  @override
+  String secondMessagePartPictureOnly(
+    Object oldFileIame,
+    Object newFileName,
+  ) =>
+      "as well as picture file \"$oldFileIame.json\" renamed to \"$newFileName.json\"";
+
+  @override
+  String secondMessagePartCommentAndPicture(
+    Object oldFileIame,
+    Object newFileName,
+  ) =>
+      "as well as comment and picture files \"$oldFileIame.json\" renamed to \"$newFileName.json\"";
 }

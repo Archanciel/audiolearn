@@ -105,22 +105,22 @@ class PictureVM extends ChangeNotifier {
     final String playListTitleAndAudioFileNameWithoutExtension =
         "$audioPlaylistTitle|${DirUtil.getFileNameWithoutMp3Extension(mp3FileName: audioFileName)}";
 
-    final Map<String, List<String>> pictureAudioMap = readAppPictureAudioMap();
+    final Map<String, List<String>> applicationPictureAudioMap = readAppPictureAudioMap();
 
-    if (pictureAudioMap.containsKey(pictureFileName)) {
-      final List<String> audioList = pictureAudioMap[pictureFileName]!;
+    if (applicationPictureAudioMap.containsKey(pictureFileName)) {
+      final List<String> audioList = applicationPictureAudioMap[pictureFileName]!;
       if (!audioList.contains(playListTitleAndAudioFileNameWithoutExtension)) {
         audioList.add(playListTitleAndAudioFileNameWithoutExtension);
-        pictureAudioMap[pictureFileName] = audioList;
+        applicationPictureAudioMap[pictureFileName] = audioList;
       }
     } else {
-      pictureAudioMap[pictureFileName] = [
+      applicationPictureAudioMap[pictureFileName] = [
         playListTitleAndAudioFileNameWithoutExtension
       ];
     }
 
     _savePictureAudioMap(
-      pictureAudioMap: pictureAudioMap,
+      pictureAudioMap: applicationPictureAudioMap,
     );
   }
 
@@ -742,5 +742,58 @@ class PictureVM extends ChangeNotifier {
     _savePictureAudioMap(
       pictureAudioMap: applicationPictureAudioMap,
     );
+  }
+
+  /// Returns a string which is the combination of the path of the picture directory
+  /// and the file name to the maybe not yet existing picture file.
+  String buildPictureFilePathName({
+    required String playlistDownloadPath,
+    required String audioFileName,
+  }) {
+    final String createdPictureFileName =
+        audioFileName.replaceAll('.mp3', '.json');
+    final String playlistPicturePath;
+
+    if (playlistDownloadPath.contains('/')) {
+      // run on Android
+      playlistPicturePath = path.posix.join(
+        playlistDownloadPath,
+        kPictureDirName,
+      );
+
+      return path.posix.join(
+        playlistPicturePath,
+        createdPictureFileName,
+      );
+    } else {
+      playlistPicturePath =
+          "$playlistDownloadPath${path.separator}$kPictureDirName";
+
+      return "$playlistPicturePath${path.separator}$createdPictureFileName";
+    }
+  }
+
+  void applyPictureFileRenamedToAppPictureAudioMap({
+    required Audio audioBeforeFileRename,
+    required String audioOldFileName,
+    required String audioModifiedFileName,
+  }) {
+    final Map<String, List<String>> applicationPictureAudioMap =
+        readAppPictureAudioMap();
+    final List<Picture> audioPictureLst =
+        _getAudioPicturesLstInAudioPictureJsonFile(audio: audioBeforeFileRename);
+
+    for (Picture picture in audioPictureLst) {
+      _removePictureAudioAssociationInApplicationPictureAudioMap(
+        pictureFileName: picture.fileName,
+        audioFileName: audioOldFileName,
+        audioPlaylistTitle: audioBeforeFileRename.enclosingPlaylist!.title,
+      );
+      _addPictureAudioAssociationToAppPictureAudioMap(
+        pictureFileName: picture.fileName,
+        audioFileName: audioModifiedFileName,
+        audioPlaylistTitle: audioBeforeFileRename.enclosingPlaylist!.title,
+      );
+    }
   }
 }

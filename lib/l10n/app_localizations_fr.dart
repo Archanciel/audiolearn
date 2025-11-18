@@ -1216,9 +1216,25 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String renameAudioAndCommentFileConfirmation(
+  String renameAudioAndAssociatedFilesConfirmation(
+      Object newFileName, Object oldFileIame, Object secondMessagePart) {
+    return 'Le fichier audio \"$oldFileIame.mp3\" a été renommé \"$newFileName.mp3\" $secondMessagePart.';
+  }
+
+  @override
+  String secondMessagePartCommentOnly(Object newFileName, Object oldFileIame) {
+    return 'ainsi que le fichier de commentaires associé \"$oldFileIame.json\" a été renommé \"$newFileName.json\"';
+  }
+
+  @override
+  String secondMessagePartPictureOnly(Object newFileName, Object oldFileIame) {
+    return 'ainsi que le fichier de photos associé \"$oldFileIame.json\" a été renommé \"$newFileName.json\"';
+  }
+
+  @override
+  String secondMessagePartCommentAndPicture(
       Object newFileName, Object oldFileIame) {
-    return 'Le fichier audio \"$oldFileIame.mp3\" a été renommé \"$newFileName.mp3\" ainsi que le fichier de commentaires associé \"$oldFileIame.json\" a été renommé \"$newFileName.json\".';
+    return 'ainsi que les fichiers de commentaires et de photos associés \"$oldFileIame.json\" ont été renommés \"$newFileName.json\"';
   }
 
   @override
@@ -2513,4 +2529,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get renamePlaylistButton => 'Renommer';
+
+  @override
+  String renamePictureFileNameAlreadyUsed(Object fileName) {
+    return 'Le nom du fichier de photo \"$fileName.json\" est déjà utilisé dans le même répertoire de photos. Il est donc impossible de renommer le fichier audio avec le nom \"$fileName.mp3\".';
+  }
 }
