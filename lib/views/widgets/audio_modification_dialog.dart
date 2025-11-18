@@ -188,7 +188,8 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
                 controller: _audioModificationTextEditingController,
                 textFieldFocusNode: _focusNodeAudioModificationTextField,
                 editableFieldFlexValue: flexibleValue,
-                isCursorAtStart: false, // if true, cursor set at start at every text modification
+                isCursorAtStart:
+                    false, // if true, cursor set at start at every text modification
               ),
             ],
           ),
@@ -244,10 +245,12 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
 
   void _renameAudioFile(BuildContext context) {
     String audioFileName = _audioModificationTextEditingController.text;
-    AudioDownloadVM audioDownloadVM =
-        Provider.of<AudioDownloadVM>(context, listen: false);
+    AudioDownloadVM audioDownloadVMlistenFalse = Provider.of<AudioDownloadVM>(
+      context,
+      listen: false,
+    );
 
-    audioDownloadVM.renameAudioFile(
+    audioDownloadVMlistenFalse.renameAudioFile(
       audio: widget.audio,
       audioModifiedFileName: audioFileName,
     );
@@ -255,10 +258,12 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
 
   void _modifyAudioTitle(BuildContext context) {
     String audioTitle = _audioModificationTextEditingController.text;
-    AudioDownloadVM audioDownloadVM =
-        Provider.of<AudioDownloadVM>(context, listen: false);
+    AudioDownloadVM audioDownloadVMlistenFalse = Provider.of<AudioDownloadVM>(
+      context,
+      listen: false,
+    );
 
-    audioDownloadVM.modifyAudioTitle(
+    audioDownloadVMlistenFalse.modifyAudioTitle(
       audio: widget.audio,
       modifiedAudioTitle: audioTitle,
     );
