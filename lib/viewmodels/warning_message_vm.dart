@@ -56,9 +56,13 @@ enum WarningMessageType {
   // name proposed for renaming a comment file is the name of an existing
   // file.
 
+  renamePictureFileNameAlreadyUsed, // The case if the picture file
+  // name proposed for renaming a picture file is the name of an existing
+  // file.
+
   renameAudioFileConfirm, // The case if an audio file was renamed.
 
-  renameAudioAndCommentFileConfirm, // The case if both audio and comment
+  renameAudioAndAssociatedFilesConfirm, // The case if both audio and comment
   // files were renamed.
 
   addRemoveSortFilterParmsToPlaylistConfirm, // The case if the a sort/filter
@@ -552,6 +556,20 @@ class WarningMessageVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  String _renamePictureFileNameAlreadyUsed = '';
+  String get renamePictureFileNameAlreadyUsed =>
+      _renamePictureFileNameAlreadyUsed;
+
+  void renamePictureFileNameIsAlreadyUsed({
+    required String invalidRenameFileName,
+  }) {
+    _renamePictureFileNameAlreadyUsed = invalidRenameFileName;
+    warningMessageType = WarningMessageType.renamePictureFileNameAlreadyUsed;
+
+    // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
   String _oldFileName = '';
   String get oldFileName => _oldFileName;
   String _newFileName = '';
@@ -569,13 +587,22 @@ class WarningMessageVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  void confirmRenameAudioAndCommentFile({
+  bool _isCommentFileRenamed = false;
+  bool get isCommentFileRenamed => _isCommentFileRenamed;
+  bool _isPictureFileRenamed = false;
+  bool get isPictureFileRenamed => _isPictureFileRenamed;
+
+  void confirmRenameAudioAndAssociatedFiles({
     required String oldFileName,
     required String newFileName,
+    required bool isCommentFileRenamed,
+    required bool isPictureFileRenamed,
   }) {
     _oldFileName = oldFileName;
     _newFileName = newFileName;
-    warningMessageType = WarningMessageType.renameAudioAndCommentFileConfirm;
+    _isCommentFileRenamed = isCommentFileRenamed;
+    _isPictureFileRenamed = isPictureFileRenamed;
+    warningMessageType = WarningMessageType.renameAudioAndAssociatedFilesConfirm;
 
     // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
     notifyListeners();

@@ -617,7 +617,10 @@
   "renameCommentFileNameAlreadyUsed": "Le nom du fichier de commentaires \"{fileName}.json\" est déjà utilisé dans le même répertoire de commentaires. Il est donc impossible de renommer le fichier audio avec le nom \"{fileName}.mp3\".",
   "renameFileNameInvalid": "Le nom du fichier audio \"{fileName}\" n'a pas d'extension mp3 et n'est donc pas valide.",
   "renameAudioFileConfirmation": "Le fichier audio \"{oldFileIame}.mp3\" a été renommé en \"{newFileName}.mp3\".",
-  "renameAudioAndCommentFileConfirmation": "Le fichier audio \"{oldFileIame}.mp3\" a été renommé \"{newFileName}.mp3\" ainsi que le fichier de commentaires associé \"{oldFileIame}.json\" a été renommé \"{newFileName}.json\".",
+  "renameAudioAndAssociatedFilesConfirmation": "Le fichier audio \"{oldFileIame}.mp3\" a été renommé \"{newFileName}.mp3\" {secondMessagePart}.",
+  "secondMessagePartCommentOnly": "ainsi que le fichier de commentaires associé \"{oldFileIame}.json\" a été renommé \"{newFileName}.json\"",
+  "secondMessagePartPictureOnly": "ainsi que le fichier de photos associé \"{oldFileIame}.json\" a été renommé \"{newFileName}.json\"",
+  "secondMessagePartCommentAndPicture": "ainsi que les fichiers de commentaires et de photos associés \"{oldFileIame}.json\" ont été renommés \"{newFileName}.json\"",
   "forScreen": "Pour l'écran \"{screenName}\"",
   "downloadVideoUrlsFromTextFileInPlaylist": "Télécharger les URL depuis un fichier ...",
   "downloadVideoUrlsFromTextFileInPlaylistTooltip": "Téléchargez les audio's dans la playlist à partir des URL vidéo répertoriées dans un fichier texte à sélectionner. Le fichier texte doit contenir une URL par ligne.",
@@ -1527,5 +1530,6 @@
   "renamePlaylist": "Renommer la playlist",
   "renamePlaylistLabel": "Nom",
   "renamePlaylistTooltip": "Renommer la playlist ...",
-  "renamePlaylistButton": "Renommer"
+  "renamePlaylistButton": "Renommer",
+  "renamePictureFileNameAlreadyUsed": "Le nom du fichier de photo \"{fileName}.json\" est déjà utilisé dans le même répertoire de photos. Il est donc impossible de renommer le fichier audio avec le nom \"{fileName}.mp3\"."
 }

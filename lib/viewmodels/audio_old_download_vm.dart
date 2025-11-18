@@ -976,13 +976,15 @@ class AudioDownloadVM extends ChangeNotifier {
 
       // Displaying a warning message to confirm that the audio
       // file and its associated comments file were renamed
-      warningMessageVM.confirmRenameAudioAndCommentFile(
+      warningMessageVM.confirmRenameAudioAndAssociatedFiles(
         oldFileName: DirUtil.getFileNameWithoutMp3Extension(
           mp3FileName: audioOldFileName,
         ),
         newFileName: DirUtil.getFileNameWithoutMp3Extension(
           mp3FileName: audioModifiedFileName,
         ),
+        isCommentFileRenamed: true,
+        isPictureFileRenamed: false,
       );
     } else {
       // Displaying a warning message to confirm that the

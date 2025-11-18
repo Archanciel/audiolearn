@@ -25,6 +25,7 @@ import '../models/audio.dart';
 import '../models/playlist.dart';
 import '../utils/dir_util.dart';
 import 'comment_vm.dart';
+import 'picture_vm.dart';
 import 'warning_message_vm.dart';
 
 // global variables used by the AudioDownloadVM in order
@@ -115,7 +116,7 @@ class AudioDownloadVM extends ChangeNotifier {
       _playlistsRootPath = playlistsRootPath;
 
   // While the audio is downloading, the download progression is
-  // displayed on the playlist download view. 
+  // displayed on the playlist download view.
 
   bool _isAudioDownloading = false;
   bool get isAudioDownloading => _isAudioDownloading;
@@ -131,9 +132,10 @@ class AudioDownloadVM extends ChangeNotifier {
 
   // After the audio was downloaded, it must be converted to MP3.
   // This takes time and so the conversion progression is displayed
-  // on the playlist download view. 
+  // on the playlist download view.
   bool _isDownloadedAudioConvertingToMp3 = false;
-  bool get isDownloadedAudioConvertingToMp3 => _isDownloadedAudioConvertingToMp3;
+  bool get isDownloadedAudioConvertingToMp3 =>
+      _isDownloadedAudioConvertingToMp3;
 
   bool isHighQuality = false;
 
@@ -386,7 +388,7 @@ class AudioDownloadVM extends ChangeNotifier {
           newFileName: originalCommentFileName,
         );
 
-        // Renaming the existing picture file to the original picturer
+        // Renaming the existing picture file to the original picture
         // file name
         final String playlistPicturePath =
             "$playlistDownloadPath${path.separator}$kPictureDirName";
@@ -929,11 +931,13 @@ class AudioDownloadVM extends ChangeNotifier {
   }
 
   /// Rename the passed audio file as well as the associated comment file
-  /// if it exists.
+  /// if it exists and the associated picture file if it exists.
   void renameAudioFile({
     required Audio audio,
     required String audioModifiedFileName,
   }) {
+    final Audio audioBeforeFileRename = audio.copy();
+
     if (!audioModifiedFileName.endsWith('.mp3')) {
       // adding the .mp3 extension if the user did not add it
       audioModifiedFileName = '$audioModifiedFileName.mp3';
@@ -955,24 +959,51 @@ class AudioDownloadVM extends ChangeNotifier {
       warningMessageVM.renameFileNameIsAlreadyUsed(
         invalidRenameFileName: audioModifiedFileName,
       );
+
       return;
     }
 
-    String newCommentFilePathName = CommentVM.buildCommentFilePathName(
+    // building the new comment file path name
+
+    final String newCommentFilePathName = CommentVM.buildCommentFilePathName(
       playlistDownloadPath: playlistDownloadPath,
       audioFileName: audioModifiedFileName,
     );
 
-    String commentNewFileName =
+    final String newCommentFileName =
         newCommentFilePathName.split(Platform.pathSeparator).last;
+    final String audioModifiedFileNameWithoutMp3Extension =
+        DirUtil.getFileNameWithoutMp3Extension(
+      mp3FileName: audioModifiedFileName,
+    );
 
     // Verifying if the new comment file name is already used
     if (File(newCommentFilePathName).existsSync()) {
       warningMessageVM.renameCommentFileNameIsAlreadyUsed(
-        invalidRenameFileName: DirUtil.getFileNameWithoutMp3Extension(
-          mp3FileName: audioModifiedFileName,
-        ),
+        invalidRenameFileName: audioModifiedFileNameWithoutMp3Extension,
       );
+
+      return;
+    }
+
+    PictureVM pictureVM = PictureVM(settingsDataService: _settingsDataService);
+
+    // building the new picture file path name
+
+    final String newPictureFilePathName = pictureVM.buildPictureFilePathName(
+      playlistDownloadPath: playlistDownloadPath,
+      audioFileName: audioModifiedFileName,
+    );
+
+    final String newPictureFileName =
+        newPictureFilePathName.split(Platform.pathSeparator).last;
+
+    // Verifying if the new picture file name is already used
+    if (File(newPictureFilePathName).existsSync()) {
+      warningMessageVM.renamePictureFileNameIsAlreadyUsed(
+        invalidRenameFileName: audioModifiedFileNameWithoutMp3Extension,
+      );
+
       return;
     }
 
@@ -985,32 +1016,66 @@ class AudioDownloadVM extends ChangeNotifier {
     }
 
     Playlist enclosingPlaylist = audio.enclosingPlaylist!;
-    String oldCommentFilePathName = CommentVM.buildCommentFilePathName(
-      playlistDownloadPath: playlistDownloadPath,
-      audioFileName: audioOldFileName,
-    );
 
     enclosingPlaylist.renameDownloadedAndPlayableAudioFile(
       oldFileName: audioOldFileName,
       newFileName: audioModifiedFileName,
     );
 
-    // renaming the comment file if exists
+    bool isCommentFileRenamed = false;
+    bool isPictureFileRenamed = false;
+
+    // renaming the comment file if it exists
+
+    final String oldCommentFilePathName = CommentVM.buildCommentFilePathName(
+      playlistDownloadPath: playlistDownloadPath,
+      audioFileName: audioOldFileName,
+    );
+
     if (File(oldCommentFilePathName).existsSync()) {
       DirUtil.renameFile(
         fileToRenameFilePathName: oldCommentFilePathName,
-        newFileName: commentNewFileName,
+        newFileName: newCommentFileName,
       );
 
-      // Displaying a warning message to confirm that the audio
-      // file and its associated comments file were renamed
-      warningMessageVM.confirmRenameAudioAndCommentFile(
+      isCommentFileRenamed = true;
+    }
+
+    // renaming the picture file if it exists
+
+    final String oldPictureFilePathName = pictureVM.buildPictureFilePathName(
+      playlistDownloadPath: playlistDownloadPath,
+      audioFileName: audioOldFileName,
+    );
+
+    if (File(oldPictureFilePathName).existsSync()) {
+      pictureVM.applyPictureFileRenamedToAppPictureAudioMap(
+        audioBeforeFileRename: audioBeforeFileRename,
+        audioOldFileName: audioOldFileName,
+        audioModifiedFileName: audioModifiedFileName,
+      );
+
+      DirUtil.renameFile(
+        fileToRenameFilePathName: oldPictureFilePathName,
+        newFileName: newPictureFileName,
+      );
+
+      isPictureFileRenamed = true;
+    }
+
+    if (isCommentFileRenamed || isPictureFileRenamed) {
+      // Displaying a warning message to confirm that the
+      // audio file as well as the comment and/or picture
+      // files were renamed
+      warningMessageVM.confirmRenameAudioAndAssociatedFiles(
         oldFileName: DirUtil.getFileNameWithoutMp3Extension(
           mp3FileName: audioOldFileName,
         ),
         newFileName: DirUtil.getFileNameWithoutMp3Extension(
           mp3FileName: audioModifiedFileName,
         ),
+        isCommentFileRenamed: isCommentFileRenamed,
+        isPictureFileRenamed: isPictureFileRenamed,
       );
     } else {
       // Displaying a warning message to confirm that the
