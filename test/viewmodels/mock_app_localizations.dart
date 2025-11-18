@@ -2565,4 +2565,19 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get creatingMp3 => "Creating MP3";
+
+  @override
+  String get renamePlaylist => "Rename Playlist ...";
+
+  @override
+  String get renamePlaylistMenu => "Rename Playlist ...";
+
+  @override
+  String get renamePlaylistLabel => "Name";
+
+  @override
+  String get renamePlaylistTooltip => "Renaming the playlist ...";
+
+  @override
+  String get renamePlaylistButton => "Rename";
 }

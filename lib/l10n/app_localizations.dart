@@ -855,7 +855,7 @@ abstract class AppLocalizations {
   /// No description provided for @renameAudioFileTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Renaming the audio file also renames the audio comment file if it exists'**
+  /// **'Renaming the audio file also renames the audio comment file and the picture audio file if they exist'**
   String get renameAudioFileTooltip;
 
   /// No description provided for @renameAudioFileButton.
@@ -3958,6 +3958,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Creating MP3'**
   String get creatingMp3;
+
+  /// No description provided for @renamePlaylistMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename Playlist ...'**
+  String get renamePlaylistMenu;
+
+  /// No description provided for @renamePlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename Playlist'**
+  String get renamePlaylist;
+
+  /// No description provided for @renamePlaylistLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get renamePlaylistLabel;
+
+  /// No description provided for @renamePlaylistTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Renaming the playlist ...'**
+  String get renamePlaylistTooltip;
+
+  /// No description provided for @renamePlaylistButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get renamePlaylistButton;
 }
 
 class _AppLocalizationsDelegate

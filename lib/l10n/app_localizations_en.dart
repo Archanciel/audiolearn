@@ -434,7 +434,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get renameAudioFileTooltip =>
-      'Renaming the audio file also renames the audio comment file if it exists';
+      'Renaming the audio file also renames the audio comment file and the picture audio file if they exist';
 
   @override
   String get renameAudioFileButton => 'Rename';
@@ -2474,4 +2474,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get creatingMp3 => 'Creating MP3';
+
+  @override
+  String get renamePlaylistMenu => 'Rename Playlist ...';
+
+  @override
+  String get renamePlaylist => 'Rename Playlist';
+
+  @override
+  String get renamePlaylistLabel => 'Name';
+
+  @override
+  String get renamePlaylistTooltip => 'Renaming the playlist ...';
+
+  @override
+  String get renamePlaylistButton => 'Rename';
 }

@@ -603,9 +603,6 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
   /// The subtitle displays the audio duration and the last listened date
   /// and time if the applied sorting option is last listened date time.
   ///
-  /// If the applied sorting option is audio last listened date time, the subtitle
-  /// displays the audio duration and the last listened date and time.
-  ///
   /// If the applied sorting option is audio remaining duration, the subtitle
   /// displays the audio duration, the remaining audio duration and the last
   /// listened date and time if the audio is paused.

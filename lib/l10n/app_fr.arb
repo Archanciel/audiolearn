@@ -253,7 +253,7 @@
   "renameAudioFileDialogTitle": "Renommer le fichier audio",
   "renameAudioFileDialogComment": "",
   "renameAudioFileLabel": "Nom",
-  "renameAudioFileTooltip": "Renommer le fichier audio renomme également le fichier de commentaire audio s'il existe",
+  "renameAudioFileTooltip": "Renommer le fichier audio renomme également le fichier de commentaire audio ainsi que le fichier de photo audio s'ils existent",
   "renameAudioFileButton": "Renommer",
   "modifyAudioTitleDialogTitle": "Modifier le titre de l'audio",
   "modifyAudioTitleTooltip": "",
@@ -1522,5 +1522,10 @@
   "audioStateNoComment": "Non commenté",
   "commentedOn": "Commenté le",
   "convertingDownloadedAudioToMP3":"Conversion de l'audio téléchargé en MP3 ...",
-  "creatingMp3": "Création du MP3"
+  "creatingMp3": "Création du MP3",
+  "renamePlaylistMenu": "Renommer ia playlist ...",
+  "renamePlaylist": "Renommer la playlist",
+  "renamePlaylistLabel": "Nom",
+  "renamePlaylistTooltip": "Renommer la playlist ...",
+  "renamePlaylistButton": "Renommer"
 }
