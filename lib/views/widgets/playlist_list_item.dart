@@ -26,12 +26,14 @@ import 'playlist_comment_list_dialog.dart';
 import 'playlist_info_dialog.dart';
 import 'audio_set_speed_dialog.dart';
 import 'playlist_one_selectable_dialog.dart';
+import 'playlist_rename_dialog.dart';
 import 'set_value_to_target_dialog.dart';
 
 enum PlaylistPopupMenuAction {
   openYoutubePlaylist,
   copyYoutubePlaylistUrl,
   displayPlaylistInfo,
+  renamePlaylist,
   displayPlaylistAudioComments,
   importAudioFilesInPlaylist,
   convertTextToAudioInPlaylist, // New action to convert text to audio
@@ -179,6 +181,11 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
           child: Text(AppLocalizations.of(context)!.displayPlaylistInfo),
         ),
         PopupMenuItem<PlaylistPopupMenuAction>(
+          key: const Key('popup_menu_rename_playlist'),
+          value: PlaylistPopupMenuAction.renamePlaylist,
+          child: Text(AppLocalizations.of(context)!.renamePlaylistMenu),
+        ),
+        PopupMenuItem<PlaylistPopupMenuAction>(
           key: const Key('popup_menu_display_playlist_audio_comments'),
           value: PlaylistPopupMenuAction.displayPlaylistAudioComments,
           child: Text(AppLocalizations.of(context)!.playlistCommentMenu),
@@ -313,6 +320,17 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   playlist: playlist,
                   playlistJsonFileSize: playlistListVMlistenFalse
                       .getPlaylistJsonFileSize(playlist: playlist),
+                );
+              },
+            );
+            break;
+          case PlaylistPopupMenuAction.renamePlaylist:
+            showDialog<void>(
+              context: context,
+              builder: (BuildContext context) {
+                return PlaylistRenameDialog(
+                  settingsDataService: settingsDataService,
+                  playlist: playlist,
                 );
               },
             );

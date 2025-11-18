@@ -229,7 +229,7 @@
   "renameAudioFileDialogTitle": "Rename Audio File",
   "renameAudioFileDialogComment": "",
   "renameAudioFileLabel": "Name",
-  "renameAudioFileTooltip": "Renaming the audio file also renames the audio comment file if it exists",
+  "renameAudioFileTooltip": "Renaming the audio file also renames the audio comment file and the picture audio file if they exist",
   "renameAudioFileButton": "Rename",
   "modifyAudioTitleDialogTitle": "Modify Audio Title",
   "modifyAudioTitleTooltip": "",
@@ -1124,5 +1124,10 @@
   "audioStateNoComment": "Not commented",
   "commentedOn": "Commented on",
   "convertingDownloadedAudioToMP3":"Converting downloaded audio to MP3 ...",
-  "creatingMp3": "Creating MP3"
+  "creatingMp3": "Creating MP3",
+  "renamePlaylistMenu": "Rename Playlist ...",
+  "renamePlaylist": "Rename Playlist",
+  "renamePlaylistLabel": "Name",
+  "renamePlaylistTooltip": "Renaming the playlist ...",
+  "renamePlaylistButton": "Rename"
 }
