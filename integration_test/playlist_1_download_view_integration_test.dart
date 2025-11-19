@@ -317,7 +317,7 @@ void main() {
         find.byType(Material).last, // The popup menu is wrapped in Material
         const Offset(0, -300),
       );
-      
+
       await tester.pumpAndSettle();
 
       // Now find the delete playlist popup menu item and tap on it
@@ -19285,23 +19285,52 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('''Not existing new audio file name and the renamed audio hasn't comment
-                   and has pictures.''', (WidgetTester tester) async {
-      const String youtubePlaylistTitle =
-          'audio_player_view_2_shorts_test'; // Youtube playlist
+    testWidgets(
+        '''Not existing new audio file name and the renamed audio has 1 comment as well
+                   as 2 pictures.''', (WidgetTester tester) async {
+      const String localPlaylistTitle = 'local'; // Youtube playlist
       const String audioTitle = "Really short video";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
-        savedTestDataDirName: '2_youtube_2_local_playlists_integr_test_data',
-        selectedPlaylistTitle: youtubePlaylistTitle,
+        savedTestDataDirName: 'rename_audio_file_test',
       );
 
-      // Deletion of comment file used by another test, but not needed
-      // for this test
-      final String commentFilePath =
-          "$kApplicationPathWindowsTest${path.separator}$youtubePlaylistTitle${path.separator}$kCommentDirName${path.separator}231117-002826-Really short video 23-07-01.json";
-      DirUtil.deleteFileIfExist(pathFileName: commentFilePath);
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        isTest: true,
+      );
+
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      final PictureVM pictureVM = PictureVM(
+        settingsDataService: settingsDataService,
+      );
+
+      // Load the application picture audio map from the
+      // application picture audio map json file.
+      Map<String, List<String>> applicationPictureAudioMap =
+          pictureVM.readAppPictureAudioMap();
+
+      List pictureAudioMapLst =
+          (applicationPictureAudioMap["Liguria_Italy_Coast_Houses_Riomaggiore_Crag_513222_3840x2400.jpg"] as List);
+
+      expect(pictureAudioMapLst.length, 2);
+      expect(
+        pictureAudioMapLst[0],
+        "local|231117-002828-morning _ cinematic video 23-07-01",
+      );
+      expect(
+        pictureAudioMapLst[1],
+        "local|231117-002826-Really short video 23-07-01",
+      );
 
       // First, find the audio sublist ListTile Text widget
 
@@ -19335,20 +19364,7 @@ void main() {
       await tester.tap(popupCopyMenuItem);
       await tester.pumpAndSettle();
 
-      // Verify that the rename audio file dialog is displayed
-      expect(find.byType(AudioModificationDialog), findsOneWidget);
-
-      // Verify the button text
-      final Finder audioModificationButtonFinder =
-          find.byKey(const Key('audioModificationButton'));
-      TextButton audioModificationTextButton =
-          tester.widget<TextButton>(audioModificationButtonFinder);
-      expect((audioModificationTextButton.child! as Text).data, 'Rename');
-
-      // Verify the dialog title
-      expect(find.text('Rename Audio File'), findsOneWidget);
-
-      // Now enter the new file name
+      // Enter the new file name
 
       // Find the TextField using the Key
       final Finder textFieldFinder =
@@ -19365,7 +19381,7 @@ void main() {
 
       // Enter new file name
 
-      const String newFileName = '231117-Really short video 23-07-01';
+      const String newFileName = 'modified-Really short video 23-07-01';
 
       await tester.enterText(
         textFieldFinder,
@@ -19381,19 +19397,47 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Audio file \"$oldFileName.mp3\" renamed to \"$newFileName.mp3\" as well as comment file \"$oldFileName.json\" renamed to \"$newFileName.json\".",
+            "Audio file \"$oldFileName.mp3\" renamed to \"$newFileName.mp3\" as well as comment and picture files \"$oldFileName.json\" renamed to \"$newFileName.json\".",
         isWarningConfirming: true,
       );
 
       // Verify that the renamed audio file exists
       final String renamedAudioFilePath =
-          "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$youtubePlaylistTitle${path.separator}$newFileName.mp3";
+          "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$localPlaylistTitle${path.separator}$newFileName.mp3";
       expect(File(renamedAudioFilePath).existsSync(), true);
 
       // Verify that the renamed comment file exists
       final String renamedCommentFilePath =
-          "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$youtubePlaylistTitle${path.separator}$kCommentDirName${path.separator}$newFileName.json";
+          "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$localPlaylistTitle${path.separator}$kCommentDirName${path.separator}$newFileName.json";
       expect(File(renamedCommentFilePath).existsSync(), true);
+
+      // Verify that the renamed picture file exists
+      final String renamedPictureFilePath =
+          "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$localPlaylistTitle${path.separator}$kPictureDirName${path.separator}$newFileName.json";
+      expect(File(renamedPictureFilePath).existsSync(), true);
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+
+      // Load the application picture audio map from the
+      // application picture audio map json file.
+      applicationPictureAudioMap =
+          pictureVM.readAppPictureAudioMap();
+
+      pictureAudioMapLst =
+          (applicationPictureAudioMap["Liguria_Italy_Coast_Houses_Riomaggiore_Crag_513222_3840x2400.jpg"] as List);
+
+      expect(pictureAudioMapLst.length, 2);
+      expect(
+        pictureAudioMapLst[0],
+        "local|231117-002828-morning _ cinematic video 23-07-01",
+      );
+      expect(
+        pictureAudioMapLst[1],
+        "local|modified-Really short video 23-07-01",
+      );
 
       // Check the new file name in the audio info dialog
 
