@@ -2513,6 +2513,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String playlistWithTitleAlreadyExist(Object title) {
-    return 'A playlist with the title \"$title\" already exist in the playlists list and so the playlist can\'t be renamed to this title.';
+    return 'A playlist with the title \"$title\" already exists in the playlists list and so the playlist can\'t be renamed to this title.';
+  }
+
+  @override
+  String invalidModifiedPlaylistTitle(Object playlistTitle) {
+    return 'The modified playlist title \"$playlistTitle\" can not contain any comma. Please correct the title and retry ...';
   }
 }

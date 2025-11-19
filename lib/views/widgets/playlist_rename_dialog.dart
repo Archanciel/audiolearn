@@ -168,8 +168,9 @@ class _PlaylistRenameDialogState extends State<PlaylistRenameDialog>
                     if (_renamePlaylist(context)) {
                       Navigator.of(context)
                           .pop(_playlistNameTextEditingController.text);
-                    } // else, if playlist title was not changed, does not close the
-                    //   dialog
+                    } // else, if playlist title was not changed or if the title
+                    //   is already used or if the title is invalid, does not
+                    //   close the dialog
                   },
             child: Text(
               AppLocalizations.of(context)!.renamePlaylistButton,
@@ -206,7 +207,7 @@ class _PlaylistRenameDialogState extends State<PlaylistRenameDialog>
 
     return playlistListVMlistendFalse.renamePlaylist(
       playlist: widget.playlist,
-      modifiedPlaylistTitle: _playlistNameTextEditingController.text,
+      modifiedPlaylistTitle: _playlistNameTextEditingController.text.trim(),
     );
   }
 }

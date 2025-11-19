@@ -342,6 +342,20 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
+      case WarningMessageType.invalidModifiedPlaylistTitle:
+        String playlistTitle = _warningMessageVM.invalidModifiedPlaylistTitle;
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _displayWarningDialog(
+            context: _context,
+            message: AppLocalizations.of(context)!
+                .invalidModifiedPlaylistTitle(playlistTitle),
+            warningMessageVM: _warningMessageVM,
+            themeProviderVM: themeProviderVM,
+          );
+        });
+
+        return const SizedBox.shrink();
       case WarningMessageType.invalidYoutubePlaylistTitle:
         String playlistTitle = _warningMessageVM.invalidYoutubePlaylistTitle;
 

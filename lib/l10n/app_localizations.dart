@@ -4017,8 +4017,14 @@ abstract class AppLocalizations {
   /// No description provided for @playlistWithTitleAlreadyExist.
   ///
   /// In en, this message translates to:
-  /// **'A playlist with the title \"{title}\" already exist in the playlists list and so the playlist can\'t be renamed to this title.'**
+  /// **'A playlist with the title \"{title}\" already exists in the playlists list and so the playlist can\'t be renamed to this title.'**
   String playlistWithTitleAlreadyExist(Object title);
+
+  /// No description provided for @invalidModifiedPlaylistTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The modified playlist title \"{playlistTitle}\" can not contain any comma. Please correct the title and retry ...'**
+  String invalidModifiedPlaylistTitle(Object playlistTitle);
 }
 
 class _AppLocalizationsDelegate

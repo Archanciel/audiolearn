@@ -250,7 +250,7 @@ class PlaylistListVM extends ChangeNotifier {
   final Logger _logger = Logger();
 
   // Playlist(s) MP3 save progression display on playlist
-  // download view fields. 
+  // download view fields.
 
   bool _isSavingMp3 = false;
   bool get isSavingMp3 => _isSavingMp3;
@@ -262,7 +262,7 @@ class PlaylistListVM extends ChangeNotifier {
   // After the playlist(s) MP3 were saved to ZIP's, ZIP's are
   // moved to the selected save dir. This takes time and so
   // the move progression is displayed on the playlist download
-  // view fields. 
+  // view fields.
 
   bool _isMovingMp3Zip = false;
   bool get isMovingMp3Zip => _isMovingMp3Zip;
@@ -270,9 +270,8 @@ class PlaylistListVM extends ChangeNotifier {
   String _audioMp3MovedCurrentZipName = '';
   String get audioMp3MovedCurrentZipName => _audioMp3MovedCurrentZipName;
 
-
   // Playlist(s) MP3 restoration progression display on playlist
-  // download view fields. 
+  // download view fields.
 
   bool _isRestoringMp3 = false;
   bool get isRestoringMp3 => _isRestoringMp3;
@@ -280,7 +279,6 @@ class PlaylistListVM extends ChangeNotifier {
   String _audioMp3RestorationCurrentPlaylistName = '';
   String get audioMp3RestorationCurrentPlaylistName =>
       _audioMp3RestorationCurrentPlaylistName;
-
 
   Duration _savingAudioMp3FileToZipDuration = Duration.zero;
   Duration get savingAudioMp3FileToZipDuration =>
@@ -653,7 +651,7 @@ class PlaylistListVM extends ChangeNotifier {
         // this playlist title will be added in the  playlist ordered
         // title list of the SettingsDataService, since the elements
         // of this list are separated by a comma, the playlist title
-        // containing on or more commas will be divided in two or more
+        // containing one or more commas will be divided in two or more
         // titles which will then not be findable in the playlist
         // directory. For this reason, adding such a playlist is refused
         // by the method.
@@ -3332,7 +3330,8 @@ class PlaylistListVM extends ChangeNotifier {
     String actualTargetDir;
 
     if (Platform.isAndroid) {
-      Directory? externalDir = await getExternalStorageDirectory(); // Method from path_provider package
+      Directory? externalDir =
+          await getExternalStorageDirectory(); // Method from path_provider package
       if (externalDir != null) {
         Directory mp3Dir =
             Directory('${externalDir.path}/downloads/AudioLearn');
@@ -4236,8 +4235,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// file restored from the zip file.
   Future<void> _mergeRestoredFromZipSettingsWithCurrentAppSettings() async {
     final SettingsDataService settingsDataServiceZipVersion =
-        SettingsDataService(
-    );
+        SettingsDataService();
 
     // Load the restored settings whose corresponding list or map will
     // be merged with the current app settings.
@@ -6097,33 +6095,41 @@ class PlaylistListVM extends ChangeNotifier {
       return false; // No change
     }
 
+    if (modifiedPlaylistTitle.contains(',')) {
+      // A playlist title containing one or several commas can not
+      // be handled by the application due to the fact that when
+      // this playlist title will be added in the  playlist ordered
+      // title list of the SettingsDataService, since the elements
+      // of this list are separated by a comma, the playlist title
+      // containing one or more commas will be divided in two or more
+      // titles which will then not be findable in the playlist
+      // directory. For this reason, adding such a playlist is refused
+      // by the method.
+      _warningMessageVM.invalidModifiedPlaylistTitle = modifiedPlaylistTitle;
 
-      try {
-        final Playlist playlistWithThisTitleAlreadyExist =
-            _listOfSelectablePlaylists
-                .firstWhere((element) => element.title == modifiedPlaylistTitle);
-        // User clicked on Add button but the playlist with this url
-        // was already downloaded since it is in the selectable playlist
-        // list. Since orElse is not defined, firstWhere throws an exception
-        // if the playlist with this url is not found.
-        _warningMessageVM.setPlaylistWithTitleAlreadyExist(
-            playlistTitle: playlistWithThisTitleAlreadyExist.title);
+      return false;
+    }
 
-        return false;
-      } catch (_) {
-        // Here, the playlist with this url was not found in the application
-        // list of playlists. This means that the Youtube playlist must be
-        // added. Since the _audioDownloadVM.addPlaylist() method is
-        // asynchronous, the code which uses it can not be included on the
-        // firstWhere.onElse: parameter and instead is located after this if
-        // {...} block.
-      }
+    try {
+      final Playlist playlistWithThisTitleAlreadyExist =
+          _listOfSelectablePlaylists
+              .firstWhere((element) => element.title == modifiedPlaylistTitle);
+      // User clicked on Add button but the playlist with this url
+      // was already downloaded since it is in the selectable playlist
+      // list. Since orElse is not defined, firstWhere throws an exception
+      // if the playlist with this url is not found.
+      _warningMessageVM.setPlaylistWithTitleAlreadyExist(
+          playlistTitle: playlistWithThisTitleAlreadyExist.title);
 
-
-
-
-
-
+      return false;
+    } catch (_) {
+      // Here, the playlist with this url was not found in the application
+      // list of playlists. This means that the Youtube playlist must be
+      // added. Since the _audioDownloadVM.addPlaylist() method is
+      // asynchronous, the code which uses it can not be included on the
+      // firstWhere.onElse: parameter and instead is located after this if
+      // {...} block.
+    }
 
     playlist.title = modifiedPlaylistTitle;
 
