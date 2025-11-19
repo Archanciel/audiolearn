@@ -1048,11 +1048,20 @@ class AudioDownloadVM extends ChangeNotifier {
       audioFileName: audioOldFileName,
     );
 
+    final String oldFileNameWithoutMp3Extension =
+        DirUtil.getFileNameWithoutMp3Extension(
+      mp3FileName: audioOldFileName,
+    );
+    final String newFileNameWithoutMp3Extension =
+        DirUtil.getFileNameWithoutMp3Extension(
+      mp3FileName: audioModifiedFileName,
+    );
+
     if (File(oldPictureFilePathName).existsSync()) {
       pictureVM.applyPictureFileRenamedToAppPictureAudioMap(
         audioBeforeFileRename: audioBeforeFileRename,
-        audioOldFileName: audioOldFileName,
-        audioModifiedFileName: audioModifiedFileName,
+        audioOldFileNameWithoutExtension: oldFileNameWithoutMp3Extension,
+        audioModifiedFileNameWithoutExtension: newFileNameWithoutMp3Extension,
       );
 
       DirUtil.renameFile(
@@ -1068,12 +1077,8 @@ class AudioDownloadVM extends ChangeNotifier {
       // audio file as well as the comment and/or picture
       // files were renamed
       warningMessageVM.confirmRenameAudioAndAssociatedFiles(
-        oldFileName: DirUtil.getFileNameWithoutMp3Extension(
-          mp3FileName: audioOldFileName,
-        ),
-        newFileName: DirUtil.getFileNameWithoutMp3Extension(
-          mp3FileName: audioModifiedFileName,
-        ),
+        oldFileName: oldFileNameWithoutMp3Extension,
+        newFileName: newFileNameWithoutMp3Extension,
         isCommentFileRenamed: isCommentFileRenamed,
         isPictureFileRenamed: isPictureFileRenamed,
       );
@@ -1081,12 +1086,8 @@ class AudioDownloadVM extends ChangeNotifier {
       // Displaying a warning message to confirm that the
       // audio file was renamed
       warningMessageVM.confirmRenameAudioFile(
-        oldFileName: DirUtil.getFileNameWithoutMp3Extension(
-          mp3FileName: audioOldFileName,
-        ),
-        newFileName: DirUtil.getFileNameWithoutMp3Extension(
-          mp3FileName: audioModifiedFileName,
-        ),
+        oldFileName: oldFileNameWithoutMp3Extension,
+        newFileName: newFileNameWithoutMp3Extension,
       );
     }
 

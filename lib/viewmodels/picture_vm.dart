@@ -105,10 +105,12 @@ class PictureVM extends ChangeNotifier {
     final String playListTitleAndAudioFileNameWithoutExtension =
         "$audioPlaylistTitle|${DirUtil.getFileNameWithoutMp3Extension(mp3FileName: audioFileName)}";
 
-    final Map<String, List<String>> applicationPictureAudioMap = readAppPictureAudioMap();
+    final Map<String, List<String>> applicationPictureAudioMap =
+        readAppPictureAudioMap();
 
     if (applicationPictureAudioMap.containsKey(pictureFileName)) {
-      final List<String> audioList = applicationPictureAudioMap[pictureFileName]!;
+      final List<String> audioList =
+          applicationPictureAudioMap[pictureFileName]!;
       if (!audioList.contains(playListTitleAndAudioFileNameWithoutExtension)) {
         audioList.add(playListTitleAndAudioFileNameWithoutExtension);
         applicationPictureAudioMap[pictureFileName] = audioList;
@@ -527,6 +529,37 @@ class PictureVM extends ChangeNotifier {
     return wasPictureRemoved;
   }
 
+  /// Removes an association between a picture and an audio in the application
+  /// picture audio map json file.
+  ///
+  /// Returns true if the picture audio association was removed,
+  /// false otherwise.
+  void _renamePictureAudioAssociationInApplicationPictureAudioMap({
+    required String audioPlaylistTitle,
+    required String audioOldFileNameWithoutExtension,
+    required String audioModifiedFileNameWithoutExtension,
+    required String pictureFileName,
+  }) {
+    final String playListTitleAndAudioOldFileNameWithoutExtension =
+        "$audioPlaylistTitle|$audioOldFileNameWithoutExtension";
+    final String playListTitleAndAudioModifiedFileNameWithoutExtension =
+        "$audioPlaylistTitle|$audioModifiedFileNameWithoutExtension";
+    final Map<String, List<String>> applicationPictureAudioMap =
+        readAppPictureAudioMap();
+
+    if (applicationPictureAudioMap.containsKey(pictureFileName)) {
+      final List<String> audioList =
+          applicationPictureAudioMap[pictureFileName]!;
+
+      audioList.remove(playListTitleAndAudioOldFileNameWithoutExtension);
+      audioList.add(playListTitleAndAudioModifiedFileNameWithoutExtension);
+
+      _savePictureAudioMap(
+        pictureAudioMap: applicationPictureAudioMap,
+      );
+    }
+  }
+
   /// Extract the passed playlist picture audio map from the application
   /// picture audio map json file. This method enables to add an application
   /// picture audio map json file to the zip file created for the individual
@@ -775,24 +808,21 @@ class PictureVM extends ChangeNotifier {
 
   void applyPictureFileRenamedToAppPictureAudioMap({
     required Audio audioBeforeFileRename,
-    required String audioOldFileName,
-    required String audioModifiedFileName,
+    required String audioOldFileNameWithoutExtension,
+    required String audioModifiedFileNameWithoutExtension,
   }) {
-    final Map<String, List<String>> applicationPictureAudioMap =
-        readAppPictureAudioMap();
     final List<Picture> audioPictureLst =
-        _getAudioPicturesLstInAudioPictureJsonFile(audio: audioBeforeFileRename);
+        _getAudioPicturesLstInAudioPictureJsonFile(
+            audio: audioBeforeFileRename);
+    final String audioPlaylistTitle =
+        audioBeforeFileRename.enclosingPlaylist!.title;
 
     for (Picture picture in audioPictureLst) {
-      _removePictureAudioAssociationInApplicationPictureAudioMap(
+      _renamePictureAudioAssociationInApplicationPictureAudioMap(
+        audioPlaylistTitle: audioPlaylistTitle,
+        audioOldFileNameWithoutExtension: audioOldFileNameWithoutExtension,
+        audioModifiedFileNameWithoutExtension: audioModifiedFileNameWithoutExtension,
         pictureFileName: picture.fileName,
-        audioFileName: audioOldFileName,
-        audioPlaylistTitle: audioBeforeFileRename.enclosingPlaylist!.title,
-      );
-      _addPictureAudioAssociationToAppPictureAudioMap(
-        pictureFileName: picture.fileName,
-        audioFileName: audioModifiedFileName,
-        audioPlaylistTitle: audioBeforeFileRename.enclosingPlaylist!.title,
       );
     }
   }
