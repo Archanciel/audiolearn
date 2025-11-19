@@ -603,6 +603,21 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
+      case WarningMessageType.playlistWithTitleAlreadyExist:
+        String playlistTitle = _warningMessageVM.playlistWithTitleAlreadyExist;
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _displayWarningDialog(
+            context: _context,
+            message: AppLocalizations.of(context)!
+                .playlistWithTitleAlreadyExist(
+                    playlistTitle),
+            warningMessageVM: _warningMessageVM,
+            themeProviderVM: themeProviderVM,
+          );
+        });
+
+        return const SizedBox.shrink();
       case WarningMessageType.localPlaylistWithTitleAlreadyInListOfPlaylists:
         String playlistTitle =
             _warningMessageVM.localPlaylistAlreadyCreatedTitle;

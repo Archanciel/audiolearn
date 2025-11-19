@@ -4013,6 +4013,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The picture file name \"{fileName}.json\" already exists in the picture directory and so renaming the audio file with the name \"{fileName}.mp3\" is not possible.'**
   String renamePictureFileNameAlreadyUsed(Object fileName);
+
+  /// No description provided for @playlistWithTitleAlreadyExist.
+  ///
+  /// In en, this message translates to:
+  /// **'A playlist with the title \"{title}\" already exist in the playlists list and so the playlist can\'t be renamed to this title.'**
+  String playlistWithTitleAlreadyExist(Object title);
 }
 
 class _AppLocalizationsDelegate

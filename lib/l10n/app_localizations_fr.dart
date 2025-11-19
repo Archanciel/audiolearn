@@ -2534,4 +2534,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String renamePictureFileNameAlreadyUsed(Object fileName) {
     return 'Le nom du fichier de photo \"$fileName.json\" est déjà utilisé dans le même répertoire de photos. Il est donc impossible de renommer le fichier audio avec le nom \"$fileName.mp3\".';
   }
+
+  @override
+  String playlistWithTitleAlreadyExist(Object title) {
+    return 'Une playlist avec le titre \"$title\" existe déjà dans la liste des playlists et donc la playlist ne peut pas être renommée avec ce titre.';
+  }
 }

@@ -6086,4 +6086,52 @@ class PlaylistListVM extends ChangeNotifier {
 
     return playlistAudioPictureNumber;
   }
+
+  bool renamePlaylist({
+    required Playlist playlist,
+    required String modifiedPlaylistTitle,
+  }) {
+    String previousPlaylistTitle = playlist.title;
+
+    if (previousPlaylistTitle == modifiedPlaylistTitle) {
+      return false; // No change
+    }
+
+
+      try {
+        final Playlist playlistWithThisTitleAlreadyExist =
+            _listOfSelectablePlaylists
+                .firstWhere((element) => element.title == modifiedPlaylistTitle);
+        // User clicked on Add button but the playlist with this url
+        // was already downloaded since it is in the selectable playlist
+        // list. Since orElse is not defined, firstWhere throws an exception
+        // if the playlist with this url is not found.
+        _warningMessageVM.setPlaylistWithTitleAlreadyExist(
+            playlistTitle: playlistWithThisTitleAlreadyExist.title);
+
+        return false;
+      } catch (_) {
+        // Here, the playlist with this url was not found in the application
+        // list of playlists. This means that the Youtube playlist must be
+        // added. Since the _audioDownloadVM.addPlaylist() method is
+        // asynchronous, the code which uses it can not be included on the
+        // firstWhere.onElse: parameter and instead is located after this if
+        // {...} block.
+      }
+
+
+
+
+
+
+
+    playlist.title = modifiedPlaylistTitle;
+
+    JsonDataService.saveToFile(
+      model: playlist,
+      path: playlist.getPlaylistDownloadFilePathName(),
+    );
+
+    return true;
+  }
 }

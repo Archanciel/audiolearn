@@ -71,6 +71,9 @@ enum WarningMessageType {
   playlistWithUrlAlreadyInListOfPlaylists, // User clicked on Add
   // button but the playlist with this url was already downloaded.
 
+  playlistWithTitleAlreadyExist, // User clicked on Rename button
+  // but the playlist with this modified title already exists.
+
   localPlaylistWithTitleAlreadyInListOfPlaylists, // User clicked on
   // Add button but the local playlist with this title was already
   // created.
@@ -660,6 +663,20 @@ class WarningMessageVM extends ChangeNotifier {
 
     warningMessageType =
         WarningMessageType.playlistWithUrlAlreadyInListOfPlaylists;
+
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  String _playlistWithTitleAlreadyExist = '';
+  String get playlistWithTitleAlreadyExist => _playlistWithTitleAlreadyExist;
+  void setPlaylistWithTitleAlreadyExist({
+    required String playlistTitle,
+  }) {
+    _playlistWithTitleAlreadyExist = playlistTitle;
+
+    warningMessageType =
+        WarningMessageType.playlistWithTitleAlreadyExist;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();

@@ -1531,5 +1531,6 @@
   "renamePlaylistLabel": "Nom",
   "renamePlaylistTooltip": "Renommer la playlist ...",
   "renamePlaylistButton": "Renommer",
-  "renamePictureFileNameAlreadyUsed": "Le nom du fichier de photo \"{fileName}.json\" est déjà utilisé dans le même répertoire de photos. Il est donc impossible de renommer le fichier audio avec le nom \"{fileName}.mp3\"."
-}
+  "renamePictureFileNameAlreadyUsed": "Le nom du fichier de photo \"{fileName}.json\" est déjà utilisé dans le même répertoire de photos. Il est donc impossible de renommer le fichier audio avec le nom \"{fileName}.mp3\".",
+  "playlistWithTitleAlreadyExist": "Une playlist avec le titre \"{title}\" existe déjà dans la liste des playlists et donc la playlist ne peut pas être renommée avec ce titre."
+}                                   
