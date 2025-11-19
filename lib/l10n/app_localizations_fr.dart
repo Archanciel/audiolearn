@@ -2539,4 +2539,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String playlistWithTitleAlreadyExist(Object title) {
     return 'Une playlist avec le titre \"$title\" existe déjà dans la liste des playlists et donc la playlist ne peut pas être renommée avec ce titre.';
   }
+
+  @override
+  String invalidModifiedPlaylistTitle(Object playlistTitle) {
+    return 'Le titre modifié \"$playlistTitle\" de la playlist ne peut contenir aucune virgule. Corrigez le titre et rééssayez ...';
+  }
 }

@@ -2614,4 +2614,10 @@ class MockAppLocalizations extends AppLocalizations {
     Object title,
   ) =>
       "A playlist with this title \"$title\" already exist in the playlists list and so the playlist can not be renamed to this title.";
+
+  @override
+  String invalidModifiedPlaylistTitle(
+    Object playlistTitle,
+  ) =>
+      "The modified playlist title \"$playlistTitle\" can not contain any comma. Please correct the title and retry ...";
 }

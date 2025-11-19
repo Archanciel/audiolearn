@@ -35,6 +35,9 @@ enum WarningMessageType {
   invalidLocalPlaylistTitle, // The case if local playlist title
   // contains one or more commas.
 
+  invalidModifiedPlaylistTitle, // The case if the modified playlist
+  // title contains one or more commas.
+
   invalidYoutubePlaylistTitle, // The case if Youtube playlist title
   // contains one or more commas.
 
@@ -466,6 +469,16 @@ class WarningMessageVM extends ChangeNotifier {
   set invalidLocalPlaylistTitle(String invalidLocalPlaylistTitle) {
     _invalidLocalPlaylistTitle = invalidLocalPlaylistTitle;
     warningMessageType = WarningMessageType.invalidLocalPlaylistTitle;
+
+    // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  String _invalidModifiedPlaylistTitle = '';
+  String get invalidModifiedPlaylistTitle => _invalidModifiedPlaylistTitle;
+  set invalidModifiedPlaylistTitle(String invalidModifiedPlaylistTitle) {
+    _invalidModifiedPlaylistTitle = invalidModifiedPlaylistTitle;
+    warningMessageType = WarningMessageType.invalidModifiedPlaylistTitle;
 
     // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
     notifyListeners();
