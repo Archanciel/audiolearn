@@ -2510,4 +2510,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String renamePictureFileNameAlreadyUsed(Object fileName) {
     return 'The picture file name \"$fileName.json\" already exists in the picture directory and so renaming the audio file with the name \"$fileName.mp3\" is not possible.';
   }
+
+  @override
+  String playlistWithTitleAlreadyExist(Object title) {
+    return 'A playlist with the title \"$title\" already exist in the playlists list and so the playlist can\'t be renamed to this title.';
+  }
 }

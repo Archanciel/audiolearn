@@ -2608,4 +2608,10 @@ class MockAppLocalizations extends AppLocalizations {
     Object newFileName,
   ) =>
       "as well as comment and picture files \"$oldFileIame.json\" renamed to \"$newFileName.json\"";
+
+  @override
+  String playlistWithTitleAlreadyExist(
+    Object title,
+  ) =>
+      "A playlist with this title \"$title\" already exist in the playlists list and so the playlist can not be renamed to this title.";
 }
