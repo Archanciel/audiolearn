@@ -72,7 +72,7 @@ const String kCommentDirName = 'comments';
 const String kPictureDirName = 'pictures';
 const String kPictureAudioMapFileName = 'pictureAudioMap.json';
 const double kWindowsSystemVolume =
-    0.45; // 0.86, Default system volume for Windows
+    0.55; // 0.86, Default system volume for Windows
 
 const String kOrderedPlaylistTitlesFileName = 'savedOrderedPlaylistTitles.txt';
 
