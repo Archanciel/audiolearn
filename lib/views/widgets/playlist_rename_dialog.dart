@@ -146,7 +146,7 @@ class _PlaylistRenameDialogState extends State<PlaylistRenameDialog>
                   : const SizedBox.shrink(),
               createFlexibleEditableRowFunction(
                 valueTextFieldWidgetKey:
-                    const Key('audioModificationTextField'),
+                    const Key('playlistTitleModificationTextField'),
                 context: context,
                 label: labelStr,
                 labelAndTextFieldTooltip: labelAndTextFieldTooltipStr,
