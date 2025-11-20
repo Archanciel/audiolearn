@@ -535,6 +535,7 @@ class PictureVM extends ChangeNotifier {
   /// Returns true if the picture audio association was removed,
   /// false otherwise.
   void _renamePictureAudioAssociationInApplicationPictureAudioMap({
+    required Map<String, List<String>> applicationPictureAudioMap,
     required String audioPlaylistTitle,
     required String audioOldFileNameWithoutExtension,
     required String audioModifiedFileNameWithoutExtension,
@@ -544,8 +545,6 @@ class PictureVM extends ChangeNotifier {
         "$audioPlaylistTitle|$audioOldFileNameWithoutExtension";
     final String playListTitleAndAudioModifiedFileNameWithoutExtension =
         "$audioPlaylistTitle|$audioModifiedFileNameWithoutExtension";
-    final Map<String, List<String>> applicationPictureAudioMap =
-        readAppPictureAudioMap();
 
     if (applicationPictureAudioMap.containsKey(pictureFileName)) {
       final List<String> audioList =
@@ -811,6 +810,8 @@ class PictureVM extends ChangeNotifier {
     required String audioOldFileNameWithoutExtension,
     required String audioModifiedFileNameWithoutExtension,
   }) {
+    final Map<String, List<String>> applicationPictureAudioMap =
+        readAppPictureAudioMap();
     final List<Picture> audioPictureLst =
         _getAudioPicturesLstInAudioPictureJsonFile(
             audio: audioBeforeFileRename);
@@ -819,11 +820,43 @@ class PictureVM extends ChangeNotifier {
 
     for (Picture picture in audioPictureLst) {
       _renamePictureAudioAssociationInApplicationPictureAudioMap(
+        applicationPictureAudioMap: applicationPictureAudioMap,
         audioPlaylistTitle: audioPlaylistTitle,
         audioOldFileNameWithoutExtension: audioOldFileNameWithoutExtension,
-        audioModifiedFileNameWithoutExtension: audioModifiedFileNameWithoutExtension,
+        audioModifiedFileNameWithoutExtension:
+            audioModifiedFileNameWithoutExtension,
         pictureFileName: picture.fileName,
       );
     }
+  }
+
+  void applyPlaylistRenamedToAppPictureAudioMap({
+    required String previousPlaylistTitle,
+    required String modifiedPlaylistTitle,
+  }) {
+    // Load the current application picture-audio map from disk.
+    final Map<String, List<String>> applicationPictureAudioMap =
+        readAppPictureAudioMap();
+
+    // We only want to change the prefix "<playlistTitle>|..."
+    final String oldPrefix = '$previousPlaylistTitle|';
+    final String newPrefix = '$modifiedPlaylistTitle|';
+
+    // For each picture entry, update the audio info list in place.
+    applicationPictureAudioMap.forEach((pictureFileName, audioInfoList) {
+      for (int i = 0; i < audioInfoList.length; i++) {
+        final String audioInfo = audioInfoList[i];
+
+        if (audioInfo.startsWith(oldPrefix)) {
+          // Replace only the prefix; keep everything after it unchanged.
+          audioInfoList[i] = newPrefix + audioInfo.substring(oldPrefix.length);
+        }
+      }
+    });
+
+    // Persist the updated map back to the JSON file.
+    _savePictureAudioMap(
+      pictureAudioMap: applicationPictureAudioMap,
+    );
   }
 }
