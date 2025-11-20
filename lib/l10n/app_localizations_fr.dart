@@ -2516,7 +2516,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get creatingMp3 => 'Création du MP3';
 
   @override
-  String get renamePlaylistMenu => 'Renommer ia playlist ...';
+  String get renamePlaylistMenu => 'Renommer la playlist ...';
 
   @override
   String get renamePlaylist => 'Renommer la playlist';
