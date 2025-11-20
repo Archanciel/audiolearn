@@ -35140,7 +35140,7 @@ void main() {
       // Tap on the create mp3 button
       Finder saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
       await tester.tap(saveMP3FileButton);
-    
+
       // Just start the first frame; DO NOT use pumpAndSettle here
       await tester.pump(const Duration(milliseconds: 50));
 
@@ -35475,8 +35475,7 @@ void main() {
     });
   });
   group('Rename playlist tests', () {
-   testWidgets(
-        'Rename playlist without changing its name.',
+    testWidgets('Rename playlist without changing its name.',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -35529,6 +35528,79 @@ void main() {
       // Verify the dialog title
       expect(find.text('Rename Playlist'), findsOneWidget);
 
+      // Do not modify the playlist name
+
+      // Find the TextField using the Key
+      final Finder textFieldFinder =
+          find.byKey(const Key('playlistTitleModificationTextField'));
+
+      // Retrieve the TextField widget
+      final TextField textField = tester.widget<TextField>(textFieldFinder);
+
+      // Verify the initial value of the TextField
+
+      expect(textField.controller!.text, playlistToRenametitle);
+
+      // Now tap the rename button
+      await tester.tap(find.byKey(const Key('playlistRenameButton')));
+      await tester.pumpAndSettle();
+
+      // Verify that the rename playlist dialog remains displayed
+      expect(find.byType(PlaylistRenameDialog), findsOneWidget);
+
+      // Verify that the TextField continue displaying the initial
+      // playlist title since the new title is the same as the initial one
+
+      expect(textField.controller!.text, playlistToRenametitle);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Rename playlist with changing its name to an other existing playlist name. This will display
+           a warning and will not rename the playlist.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}rename playlist test",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      _loadSettingsMap();
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      const String playlistToRenametitle = 'local';
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: playlistToRenametitle,
+        playlistMenuKeyStr: 'popup_menu_rename_playlist',
+      );
+
       // Enter the new playlist name
 
       // Find the TextField using the Key
@@ -35544,7 +35616,7 @@ void main() {
 
       // Enter the new playlist title
 
-      const String modifiedPlaylistTitle = playlistToRenametitle;
+      const String modifiedPlaylistTitle = 'local two';
 
       await tester.enterText(
         textFieldFinder,
@@ -35557,12 +35629,12 @@ void main() {
       await tester.pumpAndSettle();
 
       // Ensure the warning dialog is displayed
-      // await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-      //   tester: tester,
-      //   warningDialogMessage:
-      //       "",
-      //   isWarningConfirming: true,
-      // );
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "A playlist with the title \"$modifiedPlaylistTitle\" already exists in the playlists list and so the playlist can't be renamed to this title.",
+        isWarningConfirming: false,
+      );
 
       // Verify that the rename playlist dialog remains displayed
       expect(find.byType(PlaylistRenameDialog), findsOneWidget);
@@ -35570,7 +35642,7 @@ void main() {
       // Verify that the TextField always displays the initial playlist
       // title since the new title is the same as the initial one
 
-      expect(textField.controller!.text, playlistToRenametitle);
+      expect(textField.controller!.text, modifiedPlaylistTitle);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -35578,7 +35650,7 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-   });
+  });
 }
 
 Future<void> pumpUntilFound({
