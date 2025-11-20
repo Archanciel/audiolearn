@@ -6089,7 +6089,7 @@ class PlaylistListVM extends ChangeNotifier {
     required Playlist playlist,
     required String modifiedPlaylistTitle,
   }) {
-    String previousPlaylistTitle = playlist.title;
+    final String previousPlaylistTitle = playlist.title;
 
     if (previousPlaylistTitle == modifiedPlaylistTitle) {
       return false; // No change
@@ -6114,28 +6114,71 @@ class PlaylistListVM extends ChangeNotifier {
       final Playlist playlistWithThisTitleAlreadyExist =
           _listOfSelectablePlaylists
               .firstWhere((element) => element.title == modifiedPlaylistTitle);
-      // User clicked on Add button but the playlist with this url
-      // was already downloaded since it is in the selectable playlist
-      // list. Since orElse is not defined, firstWhere throws an exception
-      // if the playlist with this url is not found.
+      // User clicked on the 'Rename' button of the playlist rename dialog,
+      // but the playlist with the entered modified title already exists in
+      // in the selectable playlist list. This makes impossible to rename the
+      // the playlist with this title.
+      //
+      // Since orElse is not defined, firstWhere throws an exception if no
+      // playlist with this title is found.
       _warningMessageVM.setPlaylistWithTitleAlreadyExist(
           playlistTitle: playlistWithThisTitleAlreadyExist.title);
 
       return false;
     } catch (_) {
-      // Here, the playlist with this url was not found in the application
-      // list of playlists. This means that the Youtube playlist must be
-      // added. Since the _audioDownloadVM.addPlaylist() method is
-      // asynchronous, the code which uses it can not be included on the
-      // firstWhere.onElse: parameter and instead is located after this if
-      // {...} block.
+      // Here, the playlist with the entered modification title was not found
+      // in the application list of playlists. This means that the title is
+      // usable. Since the next code is asynchronous, it can not be included
+      // on the firstWhere.onElse: parameter and instead is located after this
+      // catch {...} block.
+    }
+
+    if (!DirUtil.renameFile(
+      fileToRenameFilePathName:
+          '${playlist.downloadPath}${path.separator}$previousPlaylistTitle.json',
+      newFileName: '$modifiedPlaylistTitle.json',
+    )) {
+      _logger.e(
+          'Error renaming playlist json file from $previousPlaylistTitle to $modifiedPlaylistTitle');
+      return false;
+    }
+
+    final String renamedDirectoryPath = DirUtil.renameDirectory(
+      directoryToRenamePath: playlist.downloadPath,
+      newDirectoryName: modifiedPlaylistTitle,
+    );
+
+    if (renamedDirectoryPath.isEmpty) {
+      // Suppress the renaming playlist json file
+      DirUtil.renameFile(
+        fileToRenameFilePathName:
+            '${playlist.downloadPath}${path.separator}$modifiedPlaylistTitle.json',
+        newFileName: '$previousPlaylistTitle.json',
+      );
+      return false;
     }
 
     playlist.title = modifiedPlaylistTitle;
 
+    if (playlist.playlistType == PlaylistType.local) {
+      playlist.id = modifiedPlaylistTitle;
+    }
+
+    playlist.downloadPath = renamedDirectoryPath;
+
+    _pictureVM.applyPlaylistRenamedToAppPictureAudioMap(
+      previousPlaylistTitle: previousPlaylistTitle,
+      modifiedPlaylistTitle: modifiedPlaylistTitle,
+    );
+
     JsonDataService.saveToFile(
       model: playlist,
       path: playlist.getPlaylistDownloadFilePathName(),
+    );
+
+    updateSettingsAndPlaylistJsonFiles(
+      unselectAddedPlaylist: false,
+      updatePlaylistPlayableAudioList: false,
     );
 
     return true;

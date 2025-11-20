@@ -750,6 +750,41 @@ class DirUtil {
     return true;
   }
 
+  /// Returns '':
+  /// - the directory to rename does not exist; or
+  /// - a directory with the new name already exists.
+  ///
+  /// Otherwise renames the directory and returns the
+  /// renamed directory path.
+  static String renameDirectory({
+    required String directoryToRenamePath,
+    required String newDirectoryName,
+  }) {
+    final existingDir = Directory(directoryToRenamePath);
+
+    // Check if the directory to rename exists
+    if (!existingDir.existsSync()) {
+      return '';
+    }
+
+    final String parent = existingDir.parent.path;
+    final String newPath = path.join(parent, newDirectoryName);
+
+    // Check if destination already exists
+    final newDir = Directory(newPath);
+    if (newDir.existsSync()) {
+      return '';
+    }
+
+    try {
+      existingDir.renameSync(newPath);
+      return newPath;
+    } catch (e) {
+      logger.e( 'Error renaming directory: $e');
+      return '';
+    }
+  }
+
   static void replacePlaylistRootPathInSettingsJsonFiles({
     required String directoryPath,
     required String oldRootPath,
