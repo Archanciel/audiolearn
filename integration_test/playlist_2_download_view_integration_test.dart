@@ -12,6 +12,7 @@ import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 import 'package:audiolearn/views/widgets/audio_sort_filter_dialog.dart';
+import 'package:audiolearn/views/widgets/playlist_rename_dialog.dart';
 import 'package:audiolearn/views/widgets/set_value_to_target_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -35473,6 +35474,111 @@ void main() {
       );
     });
   });
+  group('Rename playlist tests', () {
+   testWidgets(
+        'Rename playlist without changing its name.',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}rename playlist test",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      _loadSettingsMap();
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      const String playlistToRenametitle = 'local';
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: playlistToRenametitle,
+        playlistMenuKeyStr: 'popup_menu_rename_playlist',
+      );
+
+      // Verify that the rename playlist dialog is displayed
+      expect(find.byType(PlaylistRenameDialog), findsOneWidget);
+
+      // Verify the button text
+      final Finder audioModificationButtonFinder =
+          find.byKey(const Key('playlistRenameButton'));
+      TextButton audioModificationTextButton =
+          tester.widget<TextButton>(audioModificationButtonFinder);
+      expect((audioModificationTextButton.child! as Text).data, 'Rename');
+
+      // Verify the dialog title
+      expect(find.text('Rename Playlist'), findsOneWidget);
+
+      // Enter the new playlist name
+
+      // Find the TextField using the Key
+      final Finder textFieldFinder =
+          find.byKey(const Key('playlistTitleModificationTextField'));
+
+      // Retrieve the TextField widget
+      final TextField textField = tester.widget<TextField>(textFieldFinder);
+
+      // Verify the initial value of the TextField
+
+      expect(textField.controller!.text, playlistToRenametitle);
+
+      // Enter the new playlist title
+
+      const String modifiedPlaylistTitle = playlistToRenametitle;
+
+      await tester.enterText(
+        textFieldFinder,
+        modifiedPlaylistTitle,
+      );
+      await tester.pumpAndSettle();
+
+      // Now tap the rename button
+      await tester.tap(find.byKey(const Key('playlistRenameButton')));
+      await tester.pumpAndSettle();
+
+      // Ensure the warning dialog is displayed
+      // await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      //   tester: tester,
+      //   warningDialogMessage:
+      //       "",
+      //   isWarningConfirming: true,
+      // );
+
+      // Verify that the rename playlist dialog remains displayed
+      expect(find.byType(PlaylistRenameDialog), findsOneWidget);
+
+      // Verify that the TextField always displays the initial playlist
+      // title since the new title is the same as the initial one
+
+      expect(textField.controller!.text, playlistToRenametitle);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+   });
 }
 
 Future<void> pumpUntilFound({
