@@ -1891,7 +1891,7 @@ class MockAppLocalizations extends AppLocalizations {
       "Saved also $pictureNumber picture jpg file(s) in same directory.";
 
   @override
-  String get replaceExistingPlaylists => "Replace existing playlists";
+  String get replaceExistingPlaylists => "Replace existing playlist(s)";
 
   @override
   String get playlistRestorationDialogTitle => "Playlists Restoration";

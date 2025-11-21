@@ -3516,7 +3516,7 @@ void main() {
           ]);
 
           // Execute the 'Restore Playlists, Comments and Settings from Zip
-          // File ...' menu with the 'Replace existing playlists' option
+          // File ...' menu with the 'Replace existing playlist(s)' option
           // selected.
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
@@ -4505,7 +4505,7 @@ void main() {
           );
 
           // Execute the 'Restore Playlists, Comments and Settings from Zip
-          // File ...' menu with the 'Replace existing playlists' option
+          // File ...' menu with the 'Replace existing playlist(s)' option
           // selected.
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,

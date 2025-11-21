@@ -799,7 +799,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// selected again.
   ///
   /// Passing the playlist itself was causing a bug in the situation
-  /// where the'Replace existing playlists' checkbox was set to true
+  /// where the'Replace existing playlist(s)' checkbox was set to true
   /// since in this case, the old playlist was replaced by the restored
   /// one and asking _audioDownloadVM.updatePlaylistSelection() to update
   /// the playlist selection state was modifying the old playlist instead
