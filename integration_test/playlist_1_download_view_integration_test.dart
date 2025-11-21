@@ -194,7 +194,7 @@ void main() {
       // Now tap on the delete button to empty the search text
       // field. The reason is due to using debounce in the
       // YoutubeUrlOrSearchTextField widget. If the text field is not
-      // emptied, it avoids that the Youtibe playlist addition warning
+      // emptied, it avoids that the Youtube playlist addition warning
       // dialog is shown twice when the 'Add playlist button' button is
       // tapped.
       await tester.tap(
@@ -652,7 +652,7 @@ void main() {
       // Now tap on the delete button to empty the search text
       // field. The reason is due to using debounce in the
       // YoutubeUrlOrSearchTextField widget. If the text field is not
-      // emptied, it avoids that the Youtibe playlist addition warning
+      // emptied, it avoids that the Youtube playlist addition warning
       // dialog is shown twice when the 'Add playlist button' button is
       // tapped.
       await tester.tap(
@@ -1706,7 +1706,7 @@ void main() {
       // Now tap on the delete button to empty the search text
       // field. The reason is due to using debounce in the
       // YoutubeUrlOrSearchTextField widget. If the text field is not
-      // emptied, it avoids that the Youtibe playlist addition warning
+      // emptied, it avoids that the Youtube playlist addition warning
       // dialog is shown twice when the 'Add playlist button' button is
       // tapped.
       await tester.tap(
@@ -1942,7 +1942,7 @@ void main() {
       // Now tap on the delete button to empty the search text
       // field. The reason is due to using debounce in the
       // YoutubeUrlOrSearchTextField widget. If the text field is not
-      // emptied, it avoids that the Youtibe playlist addition warning
+      // emptied, it avoids that the Youtube playlist addition warning
       // dialog is shown twice when the 'Add playlist button' button is
       // tapped.
       await tester.tap(
@@ -2893,7 +2893,7 @@ void main() {
       // Now tap on the delete button to empty the search text
       // field. The reason is due to using debounce in the
       // YoutubeUrlOrSearchTextField widget. If the text field is not
-      // emptied, it avoids that the Youtibe playlist addition warning
+      // emptied, it avoids that the Youtube playlist addition warning
       // dialog is shown twice when the 'Add playlist button' button is
       // tapped.
       await tester.tap(
