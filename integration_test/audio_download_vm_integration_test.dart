@@ -17,7 +17,7 @@ import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 
 import 'integration_test_util.dart';
 
-const int secondsDelay = 5; // 7 works, but 10 is safer and 15 solves
+const int secondsDelay = 7; // 7 works, but 10 is safer and 15 solves
 //                              the problems of running the integr tests
 const String existingAudioDateOnlyFileNamePrefix = '230610';
 final String todayDownloadDateOnlyFileNamePrefix =
@@ -147,7 +147,7 @@ Future<void> main() async {
       // Now tap on the delete button to empty the search text
       // field. The reason is due to using debounce in the
       // YoutubeUrlOrSearchTextField widget. If the text field is not
-      // emptied, it avoids that the Youtibe playlist addition warning
+      // emptied, it avoids that the Youtube playlist addition warning
       // dialog is shown twice when the 'Add playlist button' button is
       // tapped.
       await tester.tap(
@@ -1048,7 +1048,7 @@ Future<void> main() async {
       // Now tap on the delete button to empty the search text
       // field. The reason is due to using debounce in the
       // YoutubeUrlOrSearchTextField widget. If the text field is not
-      // emptied, it avoids that the Youtibe playlist addition warning
+      // emptied, it avoids that the Youtube playlist addition warning
       // dialog is shown twice when the 'Add playlist button' button is
       // tapped.
       await tester.tap(
