@@ -74,6 +74,7 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
             children: <Widget>[
               createInfoRowFunction(
                   context: context,
+                  valueTextWidgetKey: Key('playlist_title_key'),
                   label: AppLocalizations.of(context)!.playlistTitleLabel,
                   value: playlist.title),
               createInfoRowFunction(
@@ -84,6 +85,7 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                       : AppLocalizations.of(context)!.playlistTypeYoutube),
               createInfoRowFunction(
                   context: context,
+                  valueTextWidgetKey: Key('playlist_id_key'),
                   label: AppLocalizations.of(context)!.playlistIdLabel,
                   value: playlist.id),
               createInfoRowFunction(
@@ -91,12 +93,13 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                   label: AppLocalizations.of(context)!.playlistUrlLabel,
                   value: playlist.url),
               createInfoRowFunction(
+                  valueTextWidgetKey: Key('playlist_download_path_key'),
                   context: context,
                   label:
                       AppLocalizations.of(context)!.playlistDownloadPathLabel,
                   value: playlist.downloadPath),
               createInfoRowFunction(
-                  valueTextWidgetKey: Key('playlist_last_download_date_time'),
+                  valueTextWidgetKey: Key('playlist_last_download_date_time_key'),
                   context: context,
                   label: AppLocalizations.of(context)!
                       .playlistLastDownloadDateTimeLabel,
