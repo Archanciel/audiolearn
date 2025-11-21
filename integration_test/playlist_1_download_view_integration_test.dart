@@ -19416,11 +19416,6 @@ void main() {
           "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$localPlaylistTitle${path.separator}$kPictureDirName${path.separator}$newFileName.json";
       expect(File(renamedPictureFilePath).existsSync(), true);
 
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the download app test dir
-
       // Load the application picture audio map from the
       // application picture audio map json file.
       applicationPictureAudioMap = pictureVM.readAppPictureAudioMap();
@@ -19603,11 +19598,6 @@ void main() {
       final String renamedPictureFilePath =
           "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$localPlaylistTitle${path.separator}$kPictureDirName${path.separator}$newFileName.json";
       expect(File(renamedPictureFilePath).existsSync(), true);
-
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the download app test dir
 
       // Load the application picture audio map from the
       // application picture audio map json file.

@@ -89,6 +89,7 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                   label: AppLocalizations.of(context)!.playlistIdLabel,
                   value: playlist.id),
               createInfoRowFunction(
+                  valueTextWidgetKey: Key('playlist_url_key'),
                   context: context,
                   label: AppLocalizations.of(context)!.playlistUrlLabel,
                   value: playlist.url),
