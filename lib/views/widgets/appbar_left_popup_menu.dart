@@ -732,7 +732,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
               bool addPictureJpgFilesToZip = false;
 
               if (resultStringLst.isNotEmpty) {
-                // The case when 'Replace existing playlists' is set to true.
+                // The case when 'Replace existing playlist(s)' is set to true.
                 addPictureJpgFilesToZip = true;
               }
 
@@ -797,7 +797,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
               bool doDeleteExistingPlaylists = false;
 
               if (resultStringLst.length == 2) {
-                // The case when 'Replace existing playlists' and
+                // The case when 'Replace existing playlist(s)' and
                 // 'Delete existing playlists' are set to true.
                 doReplaceExistingPlaylists = true;
                 doDeleteExistingPlaylists = true;

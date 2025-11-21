@@ -18298,7 +18298,7 @@ void main() {
         );
       });
       testWidgets(
-          '''Replace existing playlists. Set download date to today's date without time. The less old value
+          '''Replace existing playlist(s). Set download date to today's date without time. The less old value
           awailable by default is 10/01/2024 18:18 and will be changed to today's date without time. Since the
           converted text to speech audio was modified today after 00:00 time, this audio will be the unique audio
           added to the created mp3 zip.
@@ -19496,7 +19496,7 @@ void main() {
             'Restored selected playlist is identical to the before restoration selected playlist.',
             () {
           testWidgets(
-              '''Replace existing playlists. Restore Windows zip containing 'Empty', 'local',
+              '''Replace existing playlist(s). Restore Windows zip containing 'Empty', 'local',
               'local_comment', 'local_delete_comment' and 'S8 audio' playlists in which 'local'
               is selected to Windows application containing 'A restaurer' and 'local' playlists
               in which 'local' is selected.
@@ -19669,7 +19669,7 @@ void main() {
             ]);
 
             // Execute the 'Restore Playlists, Comments and Settings from Zip
-            // File ...' menu with the 'Replace existing playlists' option
+            // File ...' menu with the 'Replace existing playlist(s)' option
             // selected.
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
@@ -20408,7 +20408,7 @@ void main() {
             'Restored selected playlist is different from the before restoration selected playlist.',
             () {
           testWidgets(
-              '''Replace existing playlists. Restore Windows zip containing 'Empty', 'local',
+              '''Replace existing playlist(s). Restore Windows zip containing 'Empty', 'local',
               'local_comment', 'local_delete_comment' and 'S8 audio' playlists in which 'S8 audio'
               is selected to Windows application containing 'A restaurer' and 'local' playlists
               in which 'local' is selected. After restoration, 'local' remains selected and 'S8 audio'
@@ -20524,7 +20524,7 @@ void main() {
             );
 
             // Execute the 'Restore Playlists, Comments and Settings from Zip
-            // File ...' menu with the 'Replace existing playlists' option
+            // File ...' menu with the 'Replace existing playlist(s)' option
             // selected.
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
@@ -20755,7 +20755,7 @@ void main() {
             'Restored selected playlist is identical to the before restoration not selected playlist.',
             () {
           testWidgets(
-              '''Replace existing playlists. Restore Windows zip containing 'Empty', 'local',
+              '''Replace existing playlist(s). Restore Windows zip containing 'Empty', 'local',
               'local_comment', 'local_delete_comment' and 'S8 audio' playlists in which 'local'
               is selected to Windows application containing 'A restaurer' and 'local' playlists
               in which the 'local' playlist was unselected. After restoration, since 'local' was
@@ -20941,7 +20941,7 @@ void main() {
             );
 
             // Execute the 'Restore Playlists, Comments and Settings from Zip
-            // File ...' menu with the 'Replace existing playlists' option
+            // File ...' menu with the 'Replace existing playlist(s)' option
             // selected.
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
@@ -21711,7 +21711,7 @@ void main() {
             'Restored selected playlist is different from the before restoration selected playlist.',
             () {
           testWidgets(
-              '''Replace existing playlists. Restore Windows zip containing 'Empty', 'local',
+              '''Replace existing playlist(s). Restore Windows zip containing 'Empty', 'local',
               'local_comment', 'local_delete_comment' and 'S8 audio' playlists in which 'S8 audio'
               is selected to Windows application containing 'A restaurer' and 'local' playlists in
               which 'local' was unselected. After restoration, 'S8 audio' will be selected since it
@@ -21832,7 +21832,7 @@ void main() {
             );
 
             // Execute the 'Restore Playlists, Comments and Settings from Zip
-            // File ...' menu with the 'Replace existing playlists' option
+            // File ...' menu with the 'Replace existing playlist(s)' option
             // selected.
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
@@ -31073,7 +31073,7 @@ void main() {
       );
 
       // Re-install the initial version of the four saved
-      // playlists WITH setting the "Replace existing playlists"
+      // playlists WITH setting the "Replace existing playlist(s)"
       // checkbox to true
 
       restorableZipFilePathName =
