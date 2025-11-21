@@ -1897,7 +1897,8 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get replaceExistingPlaylists => 'Remplacer les playlists\nexistantes';
+  String get replaceExistingPlaylists =>
+      'Remplacer la/les playlist(s)\nexistante(s)';
 
   @override
   String get deleteExistingPlaylists =>
@@ -1908,7 +1909,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get playlistRestorationExplanation =>
-      'Important: si vous avez apporté des modifications à vos playlists existantes (ajout de fichiers audio, de commentaires ou d\'images) depuis la création de la sauvegarde ZIP, gardez la case \'Remplacer les playlists existantes\' DÉCOCHÉE. Sinon, vos modifications récentes seront remplacées par les versions antérieures contenues dans la sauvegarde.\n\nLes playlists absentes du ZIP ne sont supprimées que si elles existaient AVANT la sauvegarde. Les playlists créées ou modifiées APRÈS sont automatiquement protégées, même si la case de suppression est cochée.';
+      'Important: si vous avez apporté des modifications à vos playlists existantes (ajout de fichiers audio, de commentaires ou d\'images) depuis la création de la sauvegarde ZIP, gardez la case \'Remplacer la/les playlist(s) existante(s)\' DÉCOCHÉE. Sinon, vos modifications récentes seront remplacées par les versions antérieures contenues dans la sauvegarde.\n\nLes playlists absentes du ZIP ne sont supprimées que si elles existaient AVANT la sauvegarde. Les playlists créées ou modifiées APRÈS sont automatiquement protégées, même si la case de suppression est cochée.';
 
   @override
   String get playlistRestorationHelpTitle =>
