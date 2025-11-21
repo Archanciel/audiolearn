@@ -4508,9 +4508,6 @@ class PlaylistListVM extends ChangeNotifier {
         if (existingPlaylistTitlesLst.any((title) =>
             RegExp(r'\b' + RegExp.escape(title) + r'\b')
                 .hasMatch(destinationPathFileName))) {
-          // In mode 'not replace', skip the file if it already exists
-          // and do not replace it.
-
           // In mode 'not replace playlist', skip the file if its about
           // the existing playlist and so do not replace it or do not
           // add it if it is not in the playlist.
