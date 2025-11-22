@@ -678,7 +678,7 @@ class IntegrationTestUtil {
   static Future<void> executeRestorePlaylists({
     required WidgetTester tester,
     required bool doReplaceExistingPlaylists,
-    required bool doDeleteExistingPlaylists,
+    required bool doDeleteExistingPlaylistsNotContainedInZip,
     List<String> playlistTitlesToDelete = const [],
     bool verifySetValueToTargetDialog = false,
     bool onAndroid = false,
@@ -709,10 +709,10 @@ class IntegrationTestUtil {
       }
     }
 
-    // Purge the test playlist picture directory if it exists so that
-    // if pictures are present in the restoring playlists ZIP, they
-    // are restored.
     if (doPurgePicturesDir) {
+      // Purge the test playlist picture directory if it exists so that
+      // if pictures are present in the restoring playlists ZIP, they
+      // are restored.
       if (onAndroid) {
         DirUtil.deleteFilesInDirAndSubDirs(
           rootPath: kApplicationPicturePathAndroidTest,
@@ -745,13 +745,13 @@ class IntegrationTestUtil {
     }
 
     if (doReplaceExistingPlaylists) {
-      // Find the 'Remove deleted audio files' checkbox and tap
+      // Find the 'Replace existing playlist(s)' checkbox and tap
       // on it
       await tester.tap(find.byKey(const Key('checkbox_0_key')));
       await tester.pumpAndSettle();
     }
 
-    if (doDeleteExistingPlaylists) {
+    if (doDeleteExistingPlaylistsNotContainedInZip) {
       // Find the 'Remove deleted audio files' checkbox and tap
       // on it
       await tester.tap(find.byKey(const Key('checkbox_1_key')));
