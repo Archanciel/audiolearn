@@ -9462,7 +9462,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // File ...' menu
           await IntegrationTestUtil.executeRestorePlaylists(
             doReplaceExistingPlaylists: true,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
             tester: tester,
           );
 
@@ -9651,7 +9651,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // File ...' menu
           await IntegrationTestUtil.executeRestorePlaylists(
             doReplaceExistingPlaylists: true,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
             tester: tester,
           );
 
