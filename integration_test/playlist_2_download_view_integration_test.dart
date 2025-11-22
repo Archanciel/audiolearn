@@ -19674,7 +19674,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
-              doDeleteExistingPlaylists: true,
+              doDeleteExistingPlaylistsNotContainedInZip: true,
               verifySetValueToTargetDialog: true,
             );
 
@@ -19684,7 +19684,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 5 playlist, 5 comment and 6 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
+                  'Restored 5 playlist, 6 comment and 6 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -20129,7 +20129,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
-              doDeleteExistingPlaylists: true,
+              doDeleteExistingPlaylistsNotContainedInZip: true,
               verifySetValueToTargetDialog: true,
             );
 
@@ -20529,7 +20529,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
-              doDeleteExistingPlaylists: true,
+              doDeleteExistingPlaylistsNotContainedInZip: true,
             );
 
             await tester.pumpAndSettle(const Duration(seconds: 1));
@@ -20720,7 +20720,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
-              doDeleteExistingPlaylists: true,
+              doDeleteExistingPlaylistsNotContainedInZip: true,
             );
 
             // Verify the displayed warning confirmation dialog
@@ -20946,7 +20946,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
-              doDeleteExistingPlaylists: true,
+              doDeleteExistingPlaylistsNotContainedInZip: true,
             );
 
             // Verify that the audio menu button is enabled
@@ -20959,7 +20959,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 5 playlist, 5 comment and 6 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
+                  'Restored 5 playlist, 6 comment and 6 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -21418,7 +21418,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
-              doDeleteExistingPlaylists: true,
+              doDeleteExistingPlaylistsNotContainedInZip: true,
             );
 
             // Verify the displayed warning confirmation dialog
@@ -21837,7 +21837,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
-              doDeleteExistingPlaylists: true,
+              doDeleteExistingPlaylistsNotContainedInZip: true,
             );
 
             await tester.pumpAndSettle(const Duration(milliseconds: 500));
@@ -22036,7 +22036,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
-              doDeleteExistingPlaylists: true,
+              doDeleteExistingPlaylistsNotContainedInZip: true,
             );
 
             // Verify that the audio menu button is enabled
@@ -22132,7 +22132,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
           );
 
           // Verify the displayed warning confirmation dialog
@@ -22262,7 +22262,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
           );
 
           // Verify the displayed warning confirmation dialog
@@ -22449,7 +22449,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: true,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
             verifySetValueToTargetDialog: true,
           );
 
@@ -22625,7 +22625,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: true,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
             verifySetValueToTargetDialog: true,
           );
 
@@ -22801,7 +22801,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
           );
 
           // Verify that the audio menu button is enabled
@@ -22988,7 +22988,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: true,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
           );
 
           // Verify that the audio menu button is enabled
@@ -23177,7 +23177,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
           );
 
           // Verify the displayed warning confirmation dialog
@@ -23214,7 +23214,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
           );
 
           // Verify the displayed warning confirmation dialog
@@ -23430,7 +23430,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
           );
 
           // Verify the displayed warning confirmation dialog
@@ -23467,7 +23467,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: true,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
           );
 
           // Verify the displayed warning confirmation dialog
@@ -23682,7 +23682,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
           );
 
           // Verify that the audio menu button is enabled
@@ -23808,7 +23808,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
           );
 
           // Verify the displayed warning confirmation dialog
@@ -23830,7 +23830,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
           );
 
           // Verify the displayed warning confirmation dialog
@@ -23919,7 +23919,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
             await Future.delayed(const Duration(milliseconds: 500));
@@ -24269,7 +24269,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
             await Future.delayed(const Duration(milliseconds: 500));
@@ -24620,7 +24620,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
             await Future.delayed(const Duration(milliseconds: 500));
@@ -24969,7 +24969,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
             await Future.delayed(const Duration(milliseconds: 500));
@@ -25287,7 +25287,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
             await Future.delayed(const Duration(milliseconds: 500));
@@ -25339,7 +25339,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
             await Future.delayed(const Duration(milliseconds: 500));
@@ -25434,7 +25434,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
             await Future.delayed(const Duration(milliseconds: 500));
@@ -25482,7 +25482,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
             await Future.delayed(const Duration(milliseconds: 500));
@@ -25609,7 +25609,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
             // Verify the displayed warning confirmation dialog
@@ -25689,7 +25689,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
             // Verify the displayed warning confirmation dialog
@@ -25811,7 +25811,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
             // Verify the displayed warning confirmation dialog
@@ -25922,7 +25922,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
             // Verify the displayed warning confirmation dialog
@@ -26028,6 +26028,187 @@ void main() {
             );
           });
         });
+        group(
+            '''On empty app dir, first restore Windows zip containing a unique playlist in which 2 comments
+               are present. Then restore the same unique playlist corresponding to the previously restored
+               playlist contained in another Windows zip. The restored playlist now contains only 1 comment.''',
+            () {
+          testWidgets(
+              '''Second restoration happens with 'Replace playlist(s) set to true.''',
+              (WidgetTester tester) async {
+            // Purge the test playlist directory if it exists so that the
+            // playlist list is empty
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+
+            // Copy the test initial audio data to the app dir
+            DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+              sourceRootPath:
+                  "$kDownloadAppTestSavedDataDir${path.separator}restore_unique_playlist_with_comments",
+              destinationRootPath: kApplicationPathWindowsTest,
+            );
+
+            final SettingsDataService settingsDataService = SettingsDataService(
+              isTest: true,
+            );
+
+            // Load the settings from the json file. This is necessary
+            // otherwise the ordered playlist titles will remain empty
+            // and the playlist list will not be filled with the
+            // playlists available in the app test dir
+            await settingsDataService.loadSettingsFromFile(
+                settingsJsonPathFileName:
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+            // Replace the platform instance with your mock
+            MockFilePicker mockFilePicker = MockFilePicker();
+            FilePicker.platform = mockFilePicker;
+
+            await app.main();
+            await tester.pumpAndSettle();
+
+            // Install the initial version of the unique saved
+            // playlist 'local two' containing 2 comments
+
+            String restorableZipFilePathName =
+                '$kApplicationPathWindowsTest${path.separator}local two_2_comments.zip';
+
+            mockFilePicker.setSelectedFiles([
+              PlatformFile(
+                  name: restorableZipFilePathName,
+                  path: restorableZipFilePathName,
+                  size: 74929),
+            ]);
+
+            // Execute the 'Restore Playlists, Comments and Settings
+            // from Zip File ...' menu to install the initial version
+            // of the unique saved playlist 'local two'
+            await IntegrationTestUtil.executeRestorePlaylists(
+              tester: tester,
+              doReplaceExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
+            );
+
+            // Verify the displayed warning confirmation dialog
+            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+              tester: tester,
+              warningDialogMessage:
+                  'Restored 1 playlist saved individually, 1 comment and 1 picture JSON files as well as 1 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "$restorableZipFilePathName".',
+              isWarningConfirming: true,
+              warningTitle: 'CONFIRMATION',
+            );
+
+            // Verify the restored playlist audio comments
+
+            // First, open the playlist comment dialog
+            Finder playlistCommentListDialogFinder =
+                await IntegrationTestUtil.openPlaylistCommentDialog(
+              tester: tester,
+              playlistTitle: 'local two',
+            );
+
+            Finder playlistCommentListFinder =
+                find.byKey(const Key('playlistCommentsListKey'));
+
+            // Ensure the list has 3 child widgets for 2 comments for
+            // same unique audio
+            expect(
+              tester
+                  .widget<ListBody>(playlistCommentListFinder)
+                  .children
+                  .length,
+              3,
+            );
+
+            IntegrationTestUtil.checkPlaylistCommentListDialogContent(
+                playlistCommentListDialogFinder:
+                    playlistCommentListDialogFinder,
+                expectedCommentTextsLst: [
+                  'Paroles',
+                  'Text',
+                ]);
+
+            // Now close the comment list dialog
+            await tester.tap(find
+                .byKey(const Key('playlistCommentListCloseDialogTextButton')));
+            await tester.pumpAndSettle();
+
+            // Restore the modified version of the unique previsously
+            // restored playlist 'local two' which has 1 comment json
+            // file which contains 1 comment
+
+            restorableZipFilePathName =
+                // If executed on main
+                // '$kApplicationPathWindowsTest${path.separator}Windows Prières du Maître comment restoration.zip';
+                '$kApplicationPathWindowsTest${path.separator}local two_1_comment.zip';
+
+            mockFilePicker.setSelectedFiles([
+              PlatformFile(
+                  name: restorableZipFilePathName,
+                  path: restorableZipFilePathName,
+                  size: 74876),
+            ]);
+
+            // Execute the 'Restore Playlists, Comments and Settings
+            // from Zip File ...' menu to install the modified version
+            // of the unique saved playlist 'Prières du Maître'
+            await IntegrationTestUtil.executeRestorePlaylists(
+              tester: tester,
+              doReplaceExistingPlaylists: true,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
+            );
+
+            // Verify the displayed warning confirmation dialog
+            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+              tester: tester,
+              warningDialogMessage:
+                  'Restored 1 playlist saved individually, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "$restorableZipFilePathName".',
+              isWarningConfirming: true,
+              warningTitle: 'CONFIRMATION',
+            );
+
+            // Verify the restored playlist audio comments
+
+            // First, open the playlist comment dialog
+            playlistCommentListDialogFinder =
+                await IntegrationTestUtil.openPlaylistCommentDialog(
+              tester: tester,
+              playlistTitle: 'local two',
+            );
+
+            playlistCommentListFinder =
+                find.byKey(const Key('playlistCommentsListKey'));
+
+            // Ensure the list has 2 child widgets for 1 comment for
+            // same unique audio
+            expect(
+              tester
+                  .widget<ListBody>(playlistCommentListFinder)
+                  .children
+                  .length,
+              2,
+            );
+
+            IntegrationTestUtil.checkPlaylistCommentListDialogContent(
+                playlistCommentListDialogFinder:
+                    playlistCommentListDialogFinder,
+                expectedCommentTextsLst: [
+                  'Text',
+                ]);
+
+            // Now close the comment list dialog
+            await tester.tap(find
+                .byKey(const Key('playlistCommentListCloseDialogTextButton')));
+            await tester.pumpAndSettle();
+
+            // Purge the test playlist directory so that the created test
+            // files are not uploaded to GitHub
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+          });
+        });
       });
     });
     group('Restore Android zip files to Windows', () {
@@ -26076,7 +26257,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
             // Verify that the audio menu button is enabled
@@ -26125,7 +26306,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
               verifySetValueToTargetDialog: true,
             );
 
@@ -26227,7 +26408,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
             // Verify that the audio menu button is enabled
@@ -26276,7 +26457,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
               verifySetValueToTargetDialog: true,
             );
 
@@ -26409,7 +26590,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
             await Future.delayed(const Duration(milliseconds: 500));
@@ -26758,7 +26939,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
               verifySetValueToTargetDialog: true,
             );
 
@@ -27079,7 +27260,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
             await Future.delayed(const Duration(milliseconds: 500));
@@ -27122,7 +27303,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
             await Future.delayed(const Duration(milliseconds: 500));
@@ -27168,7 +27349,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
             await Future.delayed(const Duration(milliseconds: 500));
@@ -27276,7 +27457,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
             await Future.delayed(const Duration(milliseconds: 500));
@@ -27319,7 +27500,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
             await Future.delayed(const Duration(milliseconds: 500));
@@ -27369,7 +27550,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
             await Future.delayed(const Duration(milliseconds: 500));
@@ -27541,7 +27722,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
             // Verify the displayed warning confirmation dialog
@@ -27736,7 +27917,7 @@ void main() {
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: true,
-              doDeleteExistingPlaylists: false,
+              doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
             // Verify the displayed warning confirmation dialog
@@ -27893,7 +28074,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
             verifySetValueToTargetDialog: true,
           );
 
@@ -27975,7 +28156,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
           );
 
           // Verify the displayed warning confirmation dialog
@@ -28046,7 +28227,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
           );
 
           // Verify the displayed warning confirmation dialog
@@ -28188,7 +28369,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
           );
 
           // Verify the displayed warning confirmation dialog
@@ -28260,7 +28441,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
             verifySetValueToTargetDialog: true,
           );
 
@@ -28379,7 +28560,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
           );
 
           // Verify the displayed warning confirmation dialog
@@ -28488,7 +28669,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
           );
 
           // Verify the displayed warning confirmation dialog
@@ -28691,7 +28872,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
           );
 
           // Verify that the audio menu button is enabled
@@ -28817,7 +28998,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
           );
 
           // Verify the displayed warning confirmation dialog
@@ -28839,7 +29020,7 @@ void main() {
           await IntegrationTestUtil.executeRestorePlaylists(
             tester: tester,
             doReplaceExistingPlaylists: false,
-            doDeleteExistingPlaylists: false,
+            doDeleteExistingPlaylistsNotContainedInZip: false,
           );
 
           // Verify the displayed warning confirmation dialog
@@ -28917,7 +29098,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylists: true,
+        doDeleteExistingPlaylistsNotContainedInZip: true,
       );
 
       // Verify the displayed warning confirmation dialog
@@ -28989,7 +29170,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylists: false,
+        doDeleteExistingPlaylistsNotContainedInZip: false,
       );
 
       // Verify the displayed warning confirmation dialog
@@ -29061,7 +29242,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: true,
-        doDeleteExistingPlaylists: true,
+        doDeleteExistingPlaylistsNotContainedInZip: true,
       );
 
       // Verify the displayed warning confirmation dialog
@@ -29133,7 +29314,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: true,
-        doDeleteExistingPlaylists: false,
+        doDeleteExistingPlaylistsNotContainedInZip: false,
       );
 
       // Verify the displayed warning confirmation dialog
@@ -29185,7 +29366,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylists: false,
+        doDeleteExistingPlaylistsNotContainedInZip: false,
       );
 
       // Verify the displayed warning confirmation dialog
@@ -29237,7 +29418,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: true,
-        doDeleteExistingPlaylists: false,
+        doDeleteExistingPlaylistsNotContainedInZip: false,
       );
 
       // Verify the displayed warning confirmation dialog
@@ -29301,7 +29482,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: true,
-        doDeleteExistingPlaylists: false,
+        doDeleteExistingPlaylistsNotContainedInZip: false,
       );
 
       // Verify the displayed warning confirmation dialog
@@ -29459,7 +29640,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: true,
-        doDeleteExistingPlaylists: false,
+        doDeleteExistingPlaylistsNotContainedInZip: false,
       );
 
       // Verify the displayed warning confirmation dialog
@@ -29605,7 +29786,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: true,
-        doDeleteExistingPlaylists: false,
+        doDeleteExistingPlaylistsNotContainedInZip: false,
       );
 
       // Verify the displayed warning confirmation dialog
@@ -29748,7 +29929,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: true,
-        doDeleteExistingPlaylists: false,
+        doDeleteExistingPlaylistsNotContainedInZip: false,
       );
 
       // Verify the displayed warning confirmation dialog
@@ -29889,7 +30070,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: true,
-        doDeleteExistingPlaylists: false,
+        doDeleteExistingPlaylistsNotContainedInZip: false,
       );
 
       // Verify the displayed warning confirmation dialog
@@ -30675,7 +30856,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylists: false,
+        doDeleteExistingPlaylistsNotContainedInZip: false,
       );
 
       // Verify the displayed warning confirmation dialog
@@ -30768,7 +30949,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylists: false,
+        doDeleteExistingPlaylistsNotContainedInZip: false,
       );
 
       // Verify the displayed warning confirmation dialog
@@ -30822,7 +31003,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylists: false,
+        doDeleteExistingPlaylistsNotContainedInZip: false,
       );
 
       // Close the displayed warning confirmation dialog
@@ -30948,7 +31129,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylists: false,
+        doDeleteExistingPlaylistsNotContainedInZip: false,
       );
 
       // Close the displayed warning confirmation dialog
@@ -31036,7 +31217,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylists: false,
+        doDeleteExistingPlaylistsNotContainedInZip: false,
       );
 
       // Verify the displayed warning confirmation dialog
@@ -31092,7 +31273,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: true,
-        doDeleteExistingPlaylists: false,
+        doDeleteExistingPlaylistsNotContainedInZip: false,
       );
 
       // Verify the displayed warning confirmation dialog
@@ -31220,7 +31401,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylists: false,
+        doDeleteExistingPlaylistsNotContainedInZip: false,
       );
 
       // Verify the displayed warning confirmation dialog
@@ -31318,7 +31499,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylists: false,
+        doDeleteExistingPlaylistsNotContainedInZip: false,
       );
 
       // Close the displayed warning confirmation dialog
@@ -31407,7 +31588,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylists: false,
+        doDeleteExistingPlaylistsNotContainedInZip: false,
       );
 
       // Verify the displayed warning confirmation dialog
@@ -31505,7 +31686,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylists: false,
+        doDeleteExistingPlaylistsNotContainedInZip: false,
       );
 
       // Close the displayed warning confirmation dialog
@@ -31592,7 +31773,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylists: false,
+        doDeleteExistingPlaylistsNotContainedInZip: false,
       );
 
       // Verify the displayed warning confirmation dialog
@@ -31691,7 +31872,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylists: false,
+        doDeleteExistingPlaylistsNotContainedInZip: false,
       );
 
       // Close the displayed warning confirmation dialog
@@ -31871,7 +32052,7 @@ void main() {
       await IntegrationTestUtil.executeRestorePlaylists(
         tester: tester,
         doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylists: false,
+        doDeleteExistingPlaylistsNotContainedInZip: false,
       );
 
       // Verify the displayed warning confirmation dialog
@@ -36396,7 +36577,8 @@ void main() {
 
         // Verify the playlist url
 
-        final String modifiedPlaylistUrl = "https://youtube.com/playlist?list=PLzwWSJNcZTMQUe-Uppm39nTPbHbgnMaOq&si=Z7qORaBB-HxAayXH";
+        final String modifiedPlaylistUrl =
+            "https://youtube.com/playlist?list=PLzwWSJNcZTMQUe-Uppm39nTPbHbgnMaOq&si=Z7qORaBB-HxAayXH";
         final Text playlistUrlTextWidget =
             tester.widget<Text>(find.byKey(const Key('playlist_url_key')));
 
@@ -36436,7 +36618,8 @@ void main() {
         expect(loadedPlaylist.downloadPath, modifiedPlaylistDirPath);
 
         // Verify the loaded playlist url
-        expect(loadedPlaylist.url, "https://youtube.com/playlist?list=PLzwWSJNcZTMQUe-Uppm39nTPbHbgnMaOq&si=Z7qORaBB-HxAayXH");
+        expect(loadedPlaylist.url,
+            "https://youtube.com/playlist?list=PLzwWSJNcZTMQUe-Uppm39nTPbHbgnMaOq&si=Z7qORaBB-HxAayXH");
 
         // Load the application picture audio map from the
         // application picture audio map json file and
@@ -36579,7 +36762,7 @@ Future<void> _restorePaylistsAndTheirMp3({
   await IntegrationTestUtil.executeRestorePlaylists(
     tester: tester,
     doReplaceExistingPlaylists: doReplaceExistingPlaylists,
-    doDeleteExistingPlaylists: doDeleteExistingPlaylists,
+    doDeleteExistingPlaylistsNotContainedInZip: doDeleteExistingPlaylists,
   );
 
   if (restorePlaylistsConfirmationMessage.isNotEmpty) {
