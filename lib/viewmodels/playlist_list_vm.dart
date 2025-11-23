@@ -4644,6 +4644,7 @@ class PlaylistListVM extends ChangeNotifier {
         await _mergeZipPlaylistsWithExistingPlaylists(
       zipExistingPlaylistJsonContentsMap: zipExistingPlaylistJsonContentsMap,
       archive: archive,
+      doReplaceExistingPlaylists: doReplaceExistingPlaylists,
     );
 
     restoredInfoLst.add(restoredPlaylistTitlesLst);
@@ -4791,6 +4792,7 @@ class PlaylistListVM extends ChangeNotifier {
   Future<List<dynamic>> _mergeZipPlaylistsWithExistingPlaylists({
     required Map<String, String> zipExistingPlaylistJsonContentsMap,
     required Archive archive,
+    required bool doReplaceExistingPlaylists,
   }) async {
     int addedAudiosCount = 0;
     int addedCommentJsonFilesCount = 0;
@@ -4822,6 +4824,7 @@ class PlaylistListVM extends ChangeNotifier {
         existingPlaylist: existingPlaylist,
         zipPlaylist: zipPlaylist,
         archive: archive,
+        doReplaceExistingPlaylists: doReplaceExistingPlaylists,
       );
 
       addedAudiosCount += resultLst[0];
@@ -4903,6 +4906,7 @@ class PlaylistListVM extends ChangeNotifier {
     required Playlist existingPlaylist,
     required Playlist zipPlaylist,
     required Archive archive,
+    required bool doReplaceExistingPlaylists,
   }) async {
     int addedAudiosCount = 0;
     int addedCommentJsonFilesCount = 0;
@@ -4962,11 +4966,11 @@ class PlaylistListVM extends ChangeNotifier {
           addedCommentJsonFilesCount++;
         }
 
-        // Restore picture files for this audio if they exist in the zip
         int restoredPicturesForAudio = await _restoreAudioPictureFilesFromZip(
           archive: archive,
           audioToAdd: audioToAdd,
           existingPlaylist: existingPlaylist,
+          doReplaceExistingPlaylists: doReplaceExistingPlaylists,
         );
 
         addedPicturesCount += restoredPicturesForAudio;
@@ -4977,32 +4981,35 @@ class PlaylistListVM extends ChangeNotifier {
           );
         }
       } else {
-        // The audio already exists in the existing
-        // playlist. Check if the comments and pictures should
-        // be restored.
+        // The audio already exists in the existing playlist.
+        // Retrieve the existing audio instance.
+        Audio existingAudio = existingPlaylist.downloadedAudioLst.firstWhere(
+          (audio) => audio.audioFileName == zipAudio.audioFileName,
+        );
+
+        // ------------------ COMMENT RESTORATION ------------------
         String audioCommentFileName =
             zipAudio.audioFileName.replaceAll('.mp3', '.json');
         String zipAudioCommentFilePath = path.join(
-          zipPlaylist.title, // Use the zip playlist title as the root directory
-          // for the audio comment file. This avoid a bug caused if two different
-          // playlists have the same audio file name.
+          zipPlaylist.title, // root dir for the audio comment file in the zip
           kCommentDirName,
           audioCommentFileName,
         );
 
-        // Normalize the zip audio comment file path to ensure consistent formatting
+        // Normalize path
         zipAudioCommentFilePath = zipAudioCommentFilePath
-            .replaceAll('\\', '/') // Convert all backslashes to forward slashes
+            .replaceAll('\\', '/')
             .split('/')
             .map((segment) => segment.trim())
             .join('/');
+
+        List<Comment>? zipAudioCommentsLst;
 
         // Search for the audio comment file in the zip archive
         for (ArchiveFile archiveFile in archive) {
           if (archiveFile.isFile &&
               archiveFile.name
-                  .replaceAll('\\',
-                      '/') // First convert all backslashes to forward slashes
+                  .replaceAll('\\', '/')
                   .split('/')
                   .map((segment) => segment.trim())
                   .join('/')
@@ -5010,19 +5017,13 @@ class PlaylistListVM extends ChangeNotifier {
             // Parse the JSON content from the archive file to get the list of comments
             String jsonContent = utf8.decode(archiveFile.content as List<int>);
             List<dynamic> jsonList = jsonDecode(jsonContent);
-            List<Comment> zipAudioCommentsLst =
+            zipAudioCommentsLst =
                 jsonList.map((json) => Comment.fromJson(json)).toList();
-            Audio existingAudio =
-                existingPlaylist.downloadedAudioLst.firstWhere(
-              (audio) => audio.audioFileName == zipAudio.audioFileName,
-            );
 
-            // Comment file already exists, just update the comments
+            // Merge/update comments (adds + updates)
             List<int> audioCommentUpdateNumberLst =
                 _commentVM.updateAudioComments(
-              commentedAudio:
-                  existingAudio, // Using existing audio in order to access
-              // to the valid audio.enclosingPlaylist!.downloadPath (Android or Windows path).
+              commentedAudio: existingAudio,
               updateCommentsLst: zipAudioCommentsLst,
             );
 
@@ -5032,8 +5033,87 @@ class PlaylistListVM extends ChangeNotifier {
                 audioCommentUpdateNumberLst[1]; // Added comments
             addedCommentJsonFilesCount +=
                 audioCommentUpdateNumberLst[2]; // Added comment json file
+            break;
           }
         }
+
+        // In "Replace existing playlist(s)" mode, if we have a comment file
+        // in the zip for this audio, we also remove comments that are no
+        // longer present in the zip.
+        if (doReplaceExistingPlaylists && zipAudioCommentsLst != null) {
+          final Set<String> zipCommentIds =
+              zipAudioCommentsLst.map((c) => c.id).toSet();
+
+          final List<Comment> finalExistingComments =
+              _commentVM.loadAudioComments(audio: existingAudio)
+                ..removeWhere((c) => !zipCommentIds.contains(c.id))
+                ..sort((a, b) => a.commentStartPositionInTenthOfSeconds
+                    .compareTo(b.commentStartPositionInTenthOfSeconds));
+
+          JsonDataService.saveListToFile(
+            data: finalExistingComments,
+            jsonPathFileName: CommentVM.buildCommentFilePathName(
+              playlistDownloadPath: existingPlaylist.downloadPath,
+              audioFileName: existingAudio.audioFileName,
+            ),
+          );
+        }
+
+        // ------------------ PICTURE RESTORATION / DELETION ------------------
+
+        if (doReplaceExistingPlaylists) {
+          // Check whether the zip contains a picture JSON file for this audio.
+          final String pictureJsonFileName =
+              zipAudio.audioFileName.replaceAll('.mp3', '.json');
+          String zipPictureJsonFilePath = path.join(
+            kPictureDirName,
+            pictureJsonFileName,
+          );
+
+          zipPictureJsonFilePath = zipPictureJsonFilePath
+              .replaceAll('\\', '/')
+              .split('/')
+              .map((segment) => segment.trim())
+              .join('/');
+
+          bool zipHasPictureJson = false;
+
+          for (ArchiveFile archiveFile in archive) {
+            if (archiveFile.isFile &&
+                archiveFile.name
+                    .replaceAll('\\', '/')
+                    .split('/')
+                    .map((segment) => segment.trim())
+                    .join('/')
+                    .endsWith(zipPictureJsonFilePath)) {
+              zipHasPictureJson = true;
+              break;
+            }
+          }
+
+          if (!zipHasPictureJson) {
+            // In "replace" mode, if the zip has no picture JSON for this
+            // audio at all, we must delete any local picture JSON file and
+            // its associations in pictureAudioMap.json.
+            _pictureVM.deleteAudioPictureJsonFileIfExist(
+              audio: existingAudio,
+            );
+          }
+        }
+
+        // In both modes, try to restore picture files from the zip
+        // (this will only add or update missing ones; deletion of obsolete
+        // associations is handled inside _restoreAudioPictureFilesFromZip
+        // when doReplaceExistingPlaylists is true).
+        int restoredPicturesForExistingAudio =
+            await _restoreAudioPictureFilesFromZip(
+          archive: archive,
+          audioToAdd: existingAudio,
+          existingPlaylist: existingPlaylist,
+          doReplaceExistingPlaylists: doReplaceExistingPlaylists,
+        );
+
+        addedPicturesCount += restoredPicturesForExistingAudio;
       }
     }
 
@@ -5204,6 +5284,7 @@ class PlaylistListVM extends ChangeNotifier {
     required Archive archive,
     required Audio audioToAdd,
     required Playlist existingPlaylist,
+    required bool doReplaceExistingPlaylists,
   }) async {
     int restoredPicturesCount = 0;
 
@@ -5217,17 +5298,18 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Normalize the zip picture JSON file path to ensure consistent formatting
     zipPictureJsonFilePath = zipPictureJsonFilePath
-        .replaceAll('\\', '/') // Convert all backslashes to forward slashes
+        .replaceAll('\\', '/')
         .split('/')
         .map((segment) => segment.trim())
         .join('/');
+
+    List<Picture>? pictureLst;
 
     // Search for the picture JSON file in the zip archive
     for (ArchiveFile archiveFile in archive) {
       if (archiveFile.isFile &&
           archiveFile.name
-              .replaceAll(
-                  '\\', '/') // First convert all backslashes to forward slashes
+              .replaceAll('\\', '/')
               .split('/')
               .map((segment) => segment.trim())
               .join('/')
@@ -5236,7 +5318,7 @@ class PlaylistListVM extends ChangeNotifier {
         String jsonContent = utf8.decode(archiveFile.content as List<int>);
         List<dynamic> pictureJsonList = jsonDecode(jsonContent);
 
-        List<Picture> pictureLst =
+        pictureLst =
             pictureJsonList.map((json) => Picture.fromJson(json)).toList();
 
         if (pictureLst.isNotEmpty) {
@@ -5259,26 +5341,51 @@ class PlaylistListVM extends ChangeNotifier {
 
           File targetPictureJsonFile = File(targetPictureJsonFilePath);
 
-          // Only restore if the picture JSON file doesn't already exist
-          if (!targetPictureJsonFile.existsSync()) {
-            await targetPictureJsonFile.writeAsBytes(
-              archiveFile.content as List<int>,
-              flush: true,
+          if (doReplaceExistingPlaylists) {
+            // In "Replace" mode, the zip version is the single source of truth:
+            // overwrite the JSON file so that it matches exactly the pictures
+            // contained in the zip.
+            JsonDataService.saveListToFile(
+              data: pictureLst,
+              jsonPathFileName: targetPictureJsonFilePath,
             );
 
-            // Update the pictureAudioMap.json file for each picture
+            // Ensure pictureAudioMap.json no longer contains associations
+            // for pictures that are no longer present for this audio.
+            _pictureVM.synchronizePictureAudioAssociationsForAudio(
+              playlistTitle: existingPlaylist.title,
+              audioFileName: audioToAdd.audioFileName,
+              currentPictures: pictureLst,
+            );
+
+            // And ensure that all current pictures are associated (idempotent).
             for (Picture picture in pictureLst) {
-              // Associates a picture with an audio file name in the application
-              // picture audio map.
               _pictureVM.addPictureAudioAssociationToAppPictureAudioMap(
                 pictureFileName: picture.fileName,
                 audioFileName: audioToAdd.audioFileName,
                 audioPlaylistTitle: existingPlaylist.title,
               );
             }
+          } else {
+            // "Merge" mode: keep existing JSON if present, only create if missing
+            if (!targetPictureJsonFile.existsSync()) {
+              await targetPictureJsonFile.writeAsBytes(
+                archiveFile.content as List<int>,
+                flush: true,
+              );
+            }
 
-            restoredPicturesCount = pictureLst.length;
+            // Add associations for all pictures in the zip; this is idempotent
+            for (Picture picture in pictureLst) {
+              _pictureVM.addPictureAudioAssociationToAppPictureAudioMap(
+                pictureFileName: picture.fileName,
+                audioFileName: audioToAdd.audioFileName,
+                audioPlaylistTitle: existingPlaylist.title,
+              );
+            }
           }
+
+          restoredPicturesCount = pictureLst.length;
         }
         break;
       }

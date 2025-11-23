@@ -829,6 +829,54 @@ class PictureVM extends ChangeNotifier {
       );
     }
   }
+  
+  /// Synchronizes the application picture-audio map for a single audio
+  /// so that it contains associations only for the pictures listed in
+  /// [currentPictures].
+  ///
+  /// This is used when restoring playlists from a zip file with the
+  /// "Replace existing playlist(s)" option.
+  void synchronizePictureAudioAssociationsForAudio({
+    required String playlistTitle,
+    required String audioFileName,
+    required List<Picture> currentPictures,
+  }) {
+    final Map<String, List<String>> applicationPictureAudioMap =
+        readAppPictureAudioMap();
+
+    final String audioKeyPrefix =
+        '$playlistTitle|${DirUtil.getFileNameWithoutMp3Extension(
+          mp3FileName: audioFileName,
+        )}';
+
+    final Set<String> validPictureFileNames =
+        currentPictures.map((p) => p.fileName).toSet();
+
+    // Remove associations for pictures that are no longer present for this audio.
+    final List<String> keys = applicationPictureAudioMap.keys.toList();
+
+    for (String pictureFileName in keys) {
+      final List<String> audioList =
+          applicationPictureAudioMap[pictureFileName]!;
+
+      final bool containsAudio =
+          audioList.contains(audioKeyPrefix);
+
+      if (containsAudio && !validPictureFileNames.contains(pictureFileName)) {
+        audioList.remove(audioKeyPrefix);
+
+        if (audioList.isEmpty) {
+          applicationPictureAudioMap.remove(pictureFileName);
+        } else {
+          applicationPictureAudioMap[pictureFileName] = audioList;
+        }
+      }
+    }
+
+    _savePictureAudioMap(
+      pictureAudioMap: applicationPictureAudioMap,
+    );
+  }
 
   void applyPlaylistRenamedToAppPictureAudioMap({
     required String previousPlaylistTitle,
