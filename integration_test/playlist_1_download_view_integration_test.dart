@@ -1100,6 +1100,13 @@ void main() {
       await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
       await tester.pumpAndSettle();
 
+      await tester.drag(
+        find.byType(Material).last, // The popup menu is wrapped in Material
+        const Offset(0, -300),
+      );
+
+      await tester.pumpAndSettle();
+
       // Now find the delete playlist popup menu item and tap on it
       final Finder popupDeletePlaylistMenuItem =
           find.byKey(const Key("popup_menu_delete_playlist"));
@@ -1341,6 +1348,13 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      await tester.drag(
+        find.byType(Material).last, // The popup menu is wrapped in Material
+        const Offset(0, -300),
+      );
+
       await tester.pumpAndSettle();
 
       // Now find the delete playlist popup menu item and tap on it
@@ -15834,6 +15848,13 @@ void main() {
       await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
       await tester.pumpAndSettle();
 
+      await tester.drag(
+        find.byType(Material).last, // The popup menu is wrapped in Material
+        const Offset(0, -300),
+      );
+
+      await tester.pumpAndSettle();
+
       // Now find the delete playlist popup menu item and tap on it
       final Finder popupDeletePlaylistMenuItem =
           find.byKey(const Key("popup_menu_delete_playlist"));
@@ -16008,6 +16029,13 @@ void main() {
       await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
       await tester.pumpAndSettle();
 
+      await tester.drag(
+        find.byType(Material).last, // The popup menu is wrapped in Material
+        const Offset(0, -300),
+      );
+
+      await tester.pumpAndSettle();
+
       // Now find the delete playlist popup menu item and tap on it
       final Finder popupDeletePlaylistMenuItem =
           find.byKey(const Key("popup_menu_delete_playlist"));
@@ -16177,6 +16205,13 @@ void main() {
       await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
       await tester.pumpAndSettle();
 
+      await tester.drag(
+        find.byType(Material).last, // The popup menu is wrapped in Material
+        const Offset(0, -300),
+      );
+
+      await tester.pumpAndSettle();
+
       // Now find the delete playlist popup menu item and tap on it
       final Finder popupDeletePlaylistMenuItem =
           find.byKey(const Key("popup_menu_delete_playlist"));
@@ -16339,6 +16374,13 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      await tester.drag(
+        find.byType(Material).last, // The popup menu is wrapped in Material
+        const Offset(0, -300),
+      );
+
       await tester.pumpAndSettle();
 
       // Now find the delete playlist popup menu item and tap on it
@@ -16508,6 +16550,13 @@ void main() {
       await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
       await tester.pumpAndSettle();
 
+      await tester.drag(
+        find.byType(Material).last, // The popup menu is wrapped in Material
+        const Offset(0, -300),
+      );
+
+      await tester.pumpAndSettle();
+
       // Now find the delete playlist popup menu item and tap on it
       final Finder popupDeletePlaylistMenuItem =
           find.byKey(const Key("popup_menu_delete_playlist"));
@@ -16673,6 +16722,13 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      await tester.drag(
+        find.byType(Material).last, // The popup menu is wrapped in Material
+        const Offset(0, -300),
+      );
+
       await tester.pumpAndSettle();
 
       // Now find the delete playlist popup menu item and tap on it
@@ -16859,6 +16915,13 @@ void main() {
       await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
       await tester.pumpAndSettle();
 
+      await tester.drag(
+        find.byType(Material).last, // The popup menu is wrapped in Material
+        const Offset(0, -300),
+      );
+
+      await tester.pumpAndSettle();
+
       // Now find the delete playlist popup menu item and tap on it
       final Finder popupDeletePlaylistMenuItem =
           find.byKey(const Key("popup_menu_delete_playlist"));
@@ -17039,6 +17102,13 @@ void main() {
       await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
       await tester.pumpAndSettle();
 
+      await tester.drag(
+        find.byType(Material).last, // The popup menu is wrapped in Material
+        const Offset(0, -300),
+      );
+
+      await tester.pumpAndSettle();
+
       // Now find the delete playlist popup menu item and tap on it
       final Finder popupDeletePlaylistMenuItem =
           find.byKey(const Key("popup_menu_delete_playlist"));
@@ -17193,6 +17263,13 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      await tester.drag(
+        find.byType(Material).last, // The popup menu is wrapped in Material
+        const Offset(0, -300),
+      );
+
       await tester.pumpAndSettle();
 
       // Now find the delete playlist popup menu item and tap on it
@@ -17707,6 +17784,13 @@ void main() {
       await tester.tap(youtubePlaylistToDeleteListTileLeadingMenuIconButton);
       await tester.pumpAndSettle();
 
+      await tester.drag(
+        find.byType(Material).last, // The popup menu is wrapped in Material
+        const Offset(0, -300),
+      );
+
+      await tester.pumpAndSettle();
+
       // Now find the delete playlist popup menu item and tap on it
       final Finder popupDeletePlaylistMenuItem =
           find.byKey(const Key("popup_menu_delete_playlist"));
@@ -17833,6 +17917,13 @@ void main() {
 
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(localPlaylistToDeleteListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      await tester.drag(
+        find.byType(Material).last, // The popup menu is wrapped in Material
+        const Offset(0, -300),
+      );
+
       await tester.pumpAndSettle();
 
       // Now find the delete playlist popup menu item and tap on it
