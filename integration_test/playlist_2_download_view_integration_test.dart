@@ -19690,7 +19690,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 5 playlist, 5 comment and 6 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
+                  'Restored 5 playlist, 6 comment and 6 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -20965,7 +20965,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 5 playlist, 5 comment and 6 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
+                  'Restored 5 playlist, 6 comment and 6 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
