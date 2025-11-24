@@ -4544,6 +4544,14 @@ class PlaylistListVM extends ChangeNotifier {
 
       if (destinationPathFileName.contains(kPictureAudioMapFileName) &&
           outputFile.existsSync()) {
+        if (!destinationPathFileName.contains(kPictureAudioMapFileName)) {
+          restoredPicturesJsonNumber++;
+          // If the picture json file already exists and
+          // doReplaceExistingPlaylists is true, it is replaced
+          // with the comment json file contained in the restoration
+          // zip file.
+        }
+
         // If the pictureAudioMap.json file already exists, it is merged
         // with the pictureAudioMap.json file contained in the restoration
         // zip file.
@@ -4658,13 +4666,8 @@ class PlaylistListVM extends ChangeNotifier {
     restoredInfoLst.add(
         restoredCommentsJsonNumber + restoredNumberLst[1]); // adding number
     //                                       of restored comments json files
-    if (doReplaceExistingPlaylists) {
-      restoredInfoLst.add(restoredNumberLst[2]);
-    } else {
-      restoredInfoLst.add(
-          restoredPicturesJsonNumber + restoredNumberLst[2]); // adding number
-    } //                                       of restored pictures json files
-
+    restoredInfoLst.add(restoredPicturesJsonNumber); // Number of restored
+    //                                                 pictures json files
     restoredInfoLst.add(restoredPicturesJpgNumber);
     restoredInfoLst.add(wasIndividualPlaylistRestored);
     restoredInfoLst.add(restoredAudioReferencesNumber +
