@@ -4529,6 +4529,13 @@ class PlaylistListVM extends ChangeNotifier {
 
       if (destinationPathFileName.contains(kCommentDirName) &&
           outputFile.existsSync()) {
+        if (doReplaceExistingPlaylists) {
+          restoredCommentsJsonNumber++;
+          // If the comment json file already exists and
+          // doReplaceExistingPlaylists is true, it is replaced
+          // with the comment json file contained in the restoration
+          // zip file.
+        }
         // If the comment json file already exists, skip it. This is
         // useful if a new comment was added before the restoration.
         // Otherwise, the new comment would be lost.
@@ -4651,9 +4658,13 @@ class PlaylistListVM extends ChangeNotifier {
     restoredInfoLst.add(
         restoredCommentsJsonNumber + restoredNumberLst[1]); // adding number
     //                                       of restored comments json files
-    restoredInfoLst.add(
-        restoredPicturesJsonNumber + restoredNumberLst[2]); // adding number
-    //                                       of restored pictures json files
+    if (doReplaceExistingPlaylists) {
+      restoredInfoLst.add(restoredNumberLst[2]);
+    } else {
+      restoredInfoLst.add(
+          restoredPicturesJsonNumber + restoredNumberLst[2]); // adding number
+    } //                                       of restored pictures json files
+
     restoredInfoLst.add(restoredPicturesJpgNumber);
     restoredInfoLst.add(wasIndividualPlaylistRestored);
     restoredInfoLst.add(restoredAudioReferencesNumber +
@@ -5044,11 +5055,11 @@ class PlaylistListVM extends ChangeNotifier {
           final Set<String> zipCommentIds =
               zipAudioCommentsLst.map((c) => c.id).toSet();
 
-          final List<Comment> finalExistingComments =
-              _commentVM.loadAudioComments(audio: existingAudio)
-                ..removeWhere((c) => !zipCommentIds.contains(c.id))
-                ..sort((a, b) => a.commentStartPositionInTenthOfSeconds
-                    .compareTo(b.commentStartPositionInTenthOfSeconds));
+          final List<Comment> finalExistingComments = _commentVM
+              .loadAudioComments(audio: existingAudio)
+            ..removeWhere((c) => !zipCommentIds.contains(c.id))
+            ..sort((a, b) => a.commentStartPositionInTenthOfSeconds
+                .compareTo(b.commentStartPositionInTenthOfSeconds));
 
           JsonDataService.saveListToFile(
             data: finalExistingComments,
@@ -5225,6 +5236,7 @@ class PlaylistListVM extends ChangeNotifier {
         }
 
         // Write the comment file to the target playlist
+
         String targetCommentFilePath = path.join(
           targetCommentDirPath,
           audioCommentFileName,
