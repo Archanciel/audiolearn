@@ -4544,14 +4544,6 @@ class PlaylistListVM extends ChangeNotifier {
 
       if (destinationPathFileName.contains(kPictureAudioMapFileName) &&
           outputFile.existsSync()) {
-        if (!destinationPathFileName.contains(kPictureAudioMapFileName)) {
-          restoredPicturesJsonNumber++;
-          // If the picture json file already exists and
-          // doReplaceExistingPlaylists is true, it is replaced
-          // with the comment json file contained in the restoration
-          // zip file.
-        }
-
         // If the pictureAudioMap.json file already exists, it is merged
         // with the pictureAudioMap.json file contained in the restoration
         // zip file.
