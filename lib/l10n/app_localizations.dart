@@ -3788,13 +3788,14 @@ abstract class AppLocalizations {
   /// Warning message indicating that a unique playlist was restored from ZIP created from playlist item menu
   ///
   /// In en, this message translates to:
-  /// **'Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {addedPictureJpgNumber} picture JPG file(s) in the application pictures directory and {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) in existing audio comment file(s) from \"{filePathName}\".{deletedAudioAndMp3FilesMsg}{addedAtEndOfPlaylistLstMsg}'**
+  /// **'Restored {playlistsNumber} playlist saved individually, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {addedPictureJpgNumber} picture JPG file(s) in the application pictures directory and {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {deletedCommentNumber} deleted plus {updatedCommentNumber} modified comment(s) in existing audio comment file(s) from \"{filePathName}\".{deletedAudioAndMp3FilesMsg}{addedAtEndOfPlaylistLstMsg}'**
   String doRestoreUniquePlaylistFromZip(
       Object playlistsNumber,
       Object audiosNumber,
       Object commentsNumber,
       Object updatedCommentNumber,
       Object addedCommentNumber,
+      Object deletedCommentNumber,
       Object picturesNumber,
       Object addedPictureJpgNumber,
       Object deletedAudioAndMp3FilesMsg,
@@ -3804,13 +3805,14 @@ abstract class AppLocalizations {
   /// Warning message indicating that a unique playlist was restored from ZIP created from playlist item menu
   ///
   /// In en, this message translates to:
-  /// **'Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {addedPictureJpgNumber} picture JPG file(s) in the application pictures directory and {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {updatedCommentNumber} modified comment(s) in existing audio comment file(s) and the application settings from \"{filePathName}\".{deletedAudioAndMp3FilesMsg}{addedAtEndOfPlaylistLstMsg}'**
+  /// **'Restored {playlistsNumber} playlist, {commentsNumber} comment and {picturesNumber} picture JSON files as well as {addedPictureJpgNumber} picture JPG file(s) in the application pictures directory and {audiosNumber} audio reference(s) and {addedCommentNumber} added plus {deletedCommentNumber} deleted plus {updatedCommentNumber} modified comment(s) in existing audio comment file(s) and the application settings from \"{filePathName}\".{deletedAudioAndMp3FilesMsg}{addedAtEndOfPlaylistLstMsg}'**
   String doRestoreMultiplePlaylistFromZip(
       Object playlistsNumber,
       Object audiosNumber,
       Object commentsNumber,
       Object updatedCommentNumber,
       Object addedCommentNumber,
+      Object deletedCommentNumber,
       Object picturesNumber,
       Object addedPictureJpgNumber,
       Object deletedAudioAndMp3FilesMsg,
