@@ -26035,12 +26035,13 @@ void main() {
           });
         });
         group(
-            '''On empty app dir, first restore Windows zip containing a unique playlist in which 2 comments
-               are present. Then restore the same unique playlist corresponding to the previously restored
-               playlist contained in another Windows zip. The restored playlist now contains only 1 comment.''',
+            '''On empty app dir, first restore Windows zip containing 1 or 2 playlist(s) in which 2 comments
+               and pictures are present. Then restore the same playlist(s) corresponding to the previously
+               restored playlist(s) contained in another Windows zip with 'Replace playlist(s) set to true'.
+               The restored playlist(s) now contain only 1 comment and 1 picture.''',
             () {
           testWidgets(
-              '''Second restoration happens with 'Replace playlist(s) set to true.''',
+              '''Unique playlist restoration with comment and picture verification.''',
               (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
@@ -26051,7 +26052,7 @@ void main() {
             // Copy the test initial audio data to the app dir
             DirUtil.copyFilesFromDirAndSubDirsToDirectory(
               sourceRootPath:
-                  "$kDownloadAppTestSavedDataDir${path.separator}restore_unique_playlist_with_comments",
+                  "$kDownloadAppTestSavedDataDir${path.separator}restore_unique_playlist_with_comments_and_pictures",
               destinationRootPath: kApplicationPathWindowsTest,
             );
 
@@ -26078,7 +26079,7 @@ void main() {
             // playlist 'local two' containing 2 comments
 
             String restorableZipFilePathName =
-                '$kApplicationPathWindowsTest${path.separator}local two_2_comments.zip';
+                '$kApplicationPathWindowsTest${path.separator}local two_2_comments_2_pictures.zip';
 
             mockFilePicker.setSelectedFiles([
               PlatformFile(
@@ -26100,25 +26101,27 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 1 playlist saved individually, 1 comment and 1 picture JSON files as well as 1 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "$restorableZipFilePathName".',
+                  'Restored 1 playlist saved individually, 1 comment and 1 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 modified comment(s) in existing audio comment file(s) from "$restorableZipFilePathName".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
 
             // Verify the restored playlist audio comments
 
+            const String playlistTitle = 'local two';
+
             // First, open the playlist comment dialog
             Finder playlistCommentListDialogFinder =
                 await IntegrationTestUtil.openPlaylistCommentDialog(
               tester: tester,
-              playlistTitle: 'local two',
+              playlistTitle: playlistTitle,
             );
 
             Finder playlistCommentListFinder =
                 find.byKey(const Key('playlistCommentsListKey'));
 
             // Ensure the list has 3 child widgets for 2 comments for
-            // same unique audio
+            // the same unique audio
             expect(
               tester
                   .widget<ListBody>(playlistCommentListFinder)
@@ -26140,6 +26143,64 @@ void main() {
                 .byKey(const Key('playlistCommentListCloseDialogTextButton')));
             await tester.pumpAndSettle();
 
+            // Verify the restored playlist directory content
+
+            // Verify the content of the 'A restaurer' playlist dir
+            // and comments and pictures dir before restoring.
+
+            final String playlistRootDirName =
+                '$kPlaylistDownloadRootPathWindowsTest${path.separator}$playlistTitle';
+
+            // Verify the restored playlist audio pictures json file
+            // content
+
+            List<List<Picture>> expectedPlaylistAudioPictureLst = [
+              [
+                Picture(
+                  fileName: "Jancovici.jpg",
+                ),
+                Picture(
+                  fileName: "chateau.jpg", // "Jésus je T'adore.jpg"
+                ),
+              ],
+            ];
+
+            IntegrationTestUtil.verifyAudioPictureJsonFileContent(
+              playlistPictureJsonFilesDir:
+                  "$playlistRootDirName${path.separator}$kPictureDirName",
+              playlistAudioPictureJsonFileNameLst: [
+                "new converted audio.json",
+              ],
+              audioPictureJsonFileContentLst: expectedPlaylistAudioPictureLst,
+              verifyAudioPictureJsonFileContentLength: 2,
+              onlyVerifyAudioFileName: true,
+            );
+
+            IntegrationTestUtil.verifyPlaylistDirectoryContents(
+              playlistTitle: playlistTitle,
+              expectedAudioFiles: [],
+              expectedCommentFiles: [
+                "new converted audio.json",
+              ],
+              expectedPictureFiles: [
+                "new converted audio.json",
+              ],
+              doesPictureAudioMapFileNameExist: true,
+              applicationPictureDir:
+                  "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
+              pictureFileNameOne: "Jancovici.jpg",
+              audioForPictureTitleOneLst: [
+                "$playlistTitle|new converted audio"
+              ],
+              pictureFileNameTwo: "chateau.jpg",
+              audioForPictureTitleTwoLst: [
+                "$playlistTitle|new converted audio"
+              ],
+              verifyPictureAudioMapLength: 2,
+            );
+
+            // Verify the restored picture json file content
+
             // Restore the modified version of the unique previsously
             // restored playlist 'local two' which has 1 comment json
             // file which contains 1 comment
@@ -26147,7 +26208,7 @@ void main() {
             restorableZipFilePathName =
                 // If executed on main
                 // '$kApplicationPathWindowsTest${path.separator}Windows Prières du Maître comment restoration.zip';
-                '$kApplicationPathWindowsTest${path.separator}local two_1_comment.zip';
+                '$kApplicationPathWindowsTest${path.separator}local two_1_comment_1_picture.zip';
 
             mockFilePicker.setSelectedFiles([
               PlatformFile(
@@ -26207,6 +26268,47 @@ void main() {
             await tester.tap(find
                 .byKey(const Key('playlistCommentListCloseDialogTextButton')));
             await tester.pumpAndSettle();
+
+            // Verify the restored playlist audio pictures json file
+            // content
+
+            expectedPlaylistAudioPictureLst = [
+              [
+                Picture(
+                  fileName: "Jancovici.jpg",
+                ),
+              ],
+            ];
+
+            IntegrationTestUtil.verifyAudioPictureJsonFileContent(
+              playlistPictureJsonFilesDir:
+                  "$playlistRootDirName${path.separator}$kPictureDirName",
+              playlistAudioPictureJsonFileNameLst: [
+                "new converted audio.json",
+              ],
+              audioPictureJsonFileContentLst: expectedPlaylistAudioPictureLst,
+              verifyAudioPictureJsonFileContentLength: 1,
+              onlyVerifyAudioFileName: true,
+            );
+
+            IntegrationTestUtil.verifyPlaylistDirectoryContents(
+              playlistTitle: playlistTitle,
+              expectedAudioFiles: [],
+              expectedCommentFiles: [
+                "new converted audio.json",
+              ],
+              expectedPictureFiles: [
+                "new converted audio.json",
+              ],
+              doesPictureAudioMapFileNameExist: true,
+              applicationPictureDir:
+                  "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
+              pictureFileNameOne: "Jancovici.jpg",
+              audioForPictureTitleOneLst: [
+                "$playlistTitle|new converted audio"
+              ],
+              verifyPictureAudioMapLength: 1,
+            );
 
             // Purge the test playlist directory so that the created test
             // files are not uploaded to GitHub

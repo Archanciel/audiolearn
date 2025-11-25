@@ -1957,7 +1957,7 @@ class IntegrationTestUtil {
 
     // Verify that the json files created in the playlist picture
     // directory contain the expected content
-    _verifyAudioPictureJsonFileContent(
+    verifyAudioPictureJsonFileContent(
       playlistPictureJsonFilesDir: playlistPictureJsonFilesDir,
       playlistAudioPictureJsonFileNameLst: playlistAudioPictureJsonFileNameLst,
       audioPictureJsonFileContentLst: audioPictureJsonFileContentLst,
@@ -2034,11 +2034,19 @@ class IntegrationTestUtil {
     List<String> audioForPictureTitleFourLst = const [],
     String pictureFileNameFive = '',
     List<String> audioForPictureTitleFiveLst = const [],
+    int verifyPictureAudioMapLength = -1,
   }) {
     Map<String, List<String>> applicationPictureJsonMap = _readPictureAudioMap(
       applicationPicturePath: applicationPictureDir,
     );
 
+    if (verifyPictureAudioMapLength != -1) {
+      expect(
+        applicationPictureJsonMap.length,
+        verifyPictureAudioMapLength,
+      );
+    }
+    
     List<String> pictureAudioLst =
         applicationPictureJsonMap[pictureFileNameOne] ?? [];
 
@@ -2096,10 +2104,12 @@ class IntegrationTestUtil {
     }
   }
 
-  static void _verifyAudioPictureJsonFileContent({
+  static void verifyAudioPictureJsonFileContent({
     required String playlistPictureJsonFilesDir,
     required List<String> playlistAudioPictureJsonFileNameLst,
     required List<List<Picture>> audioPictureJsonFileContentLst,
+    int verifyAudioPictureJsonFileContentLength = -1,
+    bool onlyVerifyAudioFileName = false,
   }) {
     for (String audioPictureJsonFileName
         in playlistAudioPictureJsonFileNameLst) {
@@ -2109,6 +2119,13 @@ class IntegrationTestUtil {
             "$playlistPictureJsonFilesDir${path.separator}$audioPictureJsonFileName",
         type: Picture,
       ).map((dynamic item) => item as Picture).toList();
+
+      if (verifyAudioPictureJsonFileContentLength != -1) {
+        expect(
+          audioPictureJsonFileContent.length,
+          verifyAudioPictureJsonFileContentLength,
+        );
+      }
 
       if (audioPictureJsonFileContentLst.isNotEmpty) {
         List<Picture> audioPictureJsonFileContentExpected =
@@ -2121,6 +2138,11 @@ class IntegrationTestUtil {
             audioPictureJsonFileContent[i].fileName,
             audioPictureJsonFileContentExpected[i].fileName,
           );
+
+          if (onlyVerifyAudioFileName) {
+            continue;
+          }
+          
           expect(
             audioPictureJsonFileContent[i].additionToAudioDateTime,
             _isDateTimeWithinRange(
@@ -2510,6 +2532,7 @@ class IntegrationTestUtil {
     List<String> audioForPictureTitleFiveLst = const [],
     String pictureFileNameSix = '',
     List<String> audioForPictureTitleSixLst = const [],
+    int verifyPictureAudioMapLength = -1,
   }) {
     String playlistDir;
 
@@ -2566,16 +2589,16 @@ class IntegrationTestUtil {
       );
 
       verifyApplicationPictureJsonMap(
-        applicationPictureDir: applicationPictureDir,
-        pictureFileNameOne: pictureFileNameOne,
-        audioForPictureTitleOneLst: audioForPictureTitleOneLst,
-        pictureFileNameTwo: pictureFileNameTwo,
-        audioForPictureTitleTwoLst: audioForPictureTitleTwoLst,
-        pictureFileNameThree: pictureFileNameThree,
-        audioForPictureTitleThreeLst: audioForPictureTitleThreeLst,
-        pictureFileNameFour: pictureFileNameFour,
-        audioForPictureTitleFourLst: audioForPictureTitleFourLst,
-      );
+          applicationPictureDir: applicationPictureDir,
+          pictureFileNameOne: pictureFileNameOne,
+          audioForPictureTitleOneLst: audioForPictureTitleOneLst,
+          pictureFileNameTwo: pictureFileNameTwo,
+          audioForPictureTitleTwoLst: audioForPictureTitleTwoLst,
+          pictureFileNameThree: pictureFileNameThree,
+          audioForPictureTitleThreeLst: audioForPictureTitleThreeLst,
+          pictureFileNameFour: pictureFileNameFour,
+          audioForPictureTitleFourLst: audioForPictureTitleFourLst,
+          verifyPictureAudioMapLength: verifyPictureAudioMapLength);
     } else {
       assert(
         !File(pictureAudioMapFileName).existsSync(),
