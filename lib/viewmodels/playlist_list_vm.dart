@@ -4137,8 +4137,9 @@ class PlaylistListVM extends ChangeNotifier {
     //  6 updated comment number,
     //  7 added comment number,
     //  8 deleted audio titles list,
-    //  9 were new playlists added at end of non empty playlist list
-    ///  10 deleted existing playlist title list
+    //  9 were new playlists added at end of non empty playlist list,
+    //  10 deleted existing playlist title list,
+    //  11 deleted comment number.
     List<dynamic> restoredInfoLst = await _restoreFilesFromZip(
       zipFilePathName: zipFilePathName,
       doReplaceExistingPlaylists: doReplaceExistingPlaylists,
@@ -4182,7 +4183,7 @@ class PlaylistListVM extends ChangeNotifier {
       wasIndividualPlaylistRestored: wasIndividualPlaylistRestored,
       newPlaylistsAddedAtEndOfPlaylistLst: restoredInfoLst[9],
       deletedExistingPlaylistTitlesLst: restoredInfoLst[10],
-    );
+      deletedCommentNumber: restoredInfoLst[11],);
 
     if (doReplaceExistingPlaylists &&
             selectedPlaylistBeforeRestoreTitle != '' ||
@@ -4325,6 +4326,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///  8 deleted audio titles list,
   ///  9 were new playlists added at end of non empty playlist list
   ///  10 deleted existing playlist title list
+  ///  11 deleted comment number,
   /// ]
   Future<List<dynamic>> _restoreFilesFromZip({
     required String zipFilePathName,
@@ -4485,6 +4487,9 @@ class PlaylistListVM extends ChangeNotifier {
         }
       }
 
+      // Write the file's bytes to the computed destination.
+      final File outputFile = File(destinationPathFileName);
+
       if (!doReplaceExistingPlaylists &&
           !destinationPathFileName.contains(kSettingsFileName) &&
           !destinationPathFileName.contains(kPictureAudioMapFileName)) {
@@ -4511,7 +4516,21 @@ class PlaylistListVM extends ChangeNotifier {
           // In mode 'not replace playlist', skip the file if its about
           // the existing playlist and so do not replace it or do not
           // add it if it is not in the playlist.
-          continue;
+          if (destinationPathFileName.contains(kPictureDirName)) {
+            if (destinationPathFileName.endsWith('.jpg')) {
+              if (outputFile.existsSync()) {
+                // This can happen if the picture jpg file is already
+                // present in the picture directory.
+                continue;
+              }
+
+              restoredPicturesJpgNumber++;
+            } else {
+              // The json file is an audio picture reference file.
+              restoredPicturesJsonNumber++;
+            }
+            continue;
+          }
         }
       }
 
@@ -4523,9 +4542,6 @@ class PlaylistListVM extends ChangeNotifier {
       if (!destinationDir.existsSync()) {
         await destinationDir.create(recursive: true);
       }
-
-      // Write the file's bytes to the computed destination.
-      final File outputFile = File(destinationPathFileName);
 
       if (destinationPathFileName.contains(kCommentDirName) &&
           outputFile.existsSync()) {
@@ -4646,7 +4662,8 @@ class PlaylistListVM extends ChangeNotifier {
     //   [2] number of added pictures,
     //   [3] number of modified comments,
     //   [4] number of added comments,
-    //   [5] deleted audio titles list.
+    //   [5] deleted audio titles list,
+    //   [6] number of deleted comments.
     List<dynamic> restoredNumberLst =
         await _mergeZipPlaylistsWithExistingPlaylists(
       zipExistingPlaylistJsonContentsMap: zipExistingPlaylistJsonContentsMap,
@@ -4672,6 +4689,7 @@ class PlaylistListVM extends ChangeNotifier {
         newPlaylistsAddedAtEndOfPlaylistLst); // were new playlists added at
     //                                       end of non empty playlist list
     restoredInfoLst.add(deletedExistingPlaylistTitlesLst);
+    restoredInfoLst.add(restoredNumberLst[6]); // number of deleted comments
 
     return restoredInfoLst;
   }
@@ -4795,6 +4813,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///   [3] number of modified comments,
   ///   [4] number of added comments,
   ///   [5] deleted audio titles list.
+  ///   [6] number of deleted comments,
   Future<List<dynamic>> _mergeZipPlaylistsWithExistingPlaylists({
     required Map<String, String> zipExistingPlaylistJsonContentsMap,
     required Archive archive,
@@ -4805,6 +4824,7 @@ class PlaylistListVM extends ChangeNotifier {
     int addedPicturesCount = 0;
     int updatedCommentsCount = 0;
     int addedCommentsCount = 0;
+    int deletedCommentsCount = 0;
     List<String> deletedAudioTitlesLst = [];
     List<dynamic> restoredResultsLst = [];
 
@@ -4838,6 +4858,7 @@ class PlaylistListVM extends ChangeNotifier {
       addedPicturesCount += resultLst[2];
       updatedCommentsCount += resultLst[3];
       addedCommentsCount += resultLst[4];
+      deletedCommentsCount += resultLst[5];
 
       // Collect audio to delete instead of deleting immediately
       List<Audio> audioToDelete =
@@ -4862,6 +4883,7 @@ class PlaylistListVM extends ChangeNotifier {
     restoredResultsLst.add(updatedCommentsCount);
     restoredResultsLst.add(addedCommentsCount);
     restoredResultsLst.add(deletedAudioTitlesLst);
+    restoredResultsLst.add(deletedCommentsCount);
 
     return restoredResultsLst;
   }
@@ -4908,6 +4930,7 @@ class PlaylistListVM extends ChangeNotifier {
   ///   - The number of added pictures.
   ///   - The number of modified comments.
   ///   - The number of added comments.
+  ///   - The number of deleted comments.
   Future<List<int>> _addNewAudioReferencesAvailableInZipPlaylist({
     required Playlist existingPlaylist,
     required Playlist zipPlaylist,
@@ -4921,10 +4944,12 @@ class PlaylistListVM extends ChangeNotifier {
     List<int> commentUpdateNumberLst = [
       0,
       0,
+      0,
       0
     ]; // [0] is the number of modified comments,
     //    [1] is the number of added comments,
-    //    [2] is the number of added comment
+    //    [2] is the number of deleted comments,
+    //    [3] is the number of added comment
     //        json file (0 or 1 for an audio).
 
     // Iterate through downloaded audios from the zip playlist.
@@ -5050,9 +5075,21 @@ class PlaylistListVM extends ChangeNotifier {
           final Set<String> zipCommentIds =
               zipAudioCommentsLst.map((c) => c.id).toSet();
 
-          final List<Comment> finalExistingComments = _commentVM
-              .loadAudioComments(audio: existingAudio)
-            ..removeWhere((c) => !zipCommentIds.contains(c.id))
+          // Comments AFTER the merge (updateAudioComments)
+          final List<Comment> existingAfterMerge =
+              _commentVM.loadAudioComments(audio: existingAudio);
+
+          // How many comments will be deleted?
+          final int deletedForThisAudio = existingAfterMerge
+              .where((c) => !zipCommentIds.contains(c.id))
+              .length;
+
+          commentUpdateNumberLst[2] += deletedForThisAudio;
+
+          // Keep only comments still present in the zip
+          final List<Comment> finalExistingComments = existingAfterMerge
+              .where((c) => zipCommentIds.contains(c.id))
+              .toList()
             ..sort((a, b) => a.commentStartPositionInTenthOfSeconds
                 .compareTo(b.commentStartPositionInTenthOfSeconds));
 
@@ -5130,6 +5167,8 @@ class PlaylistListVM extends ChangeNotifier {
         .add(commentUpdateNumberLst[0]); // Number of modified comments
     restoredNumberLst
         .add(commentUpdateNumberLst[1]); // Number of added comments
+    restoredNumberLst
+        .add(commentUpdateNumberLst[2]); // Number of deleted comments
 
     return restoredNumberLst;
   }
