@@ -2142,7 +2142,7 @@ class IntegrationTestUtil {
           if (onlyVerifyAudioFileName) {
             continue;
           }
-          
+
           expect(
             audioPictureJsonFileContent[i].additionToAudioDateTime,
             _isDateTimeWithinRange(
