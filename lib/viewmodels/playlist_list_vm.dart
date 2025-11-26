@@ -4525,7 +4525,7 @@ class PlaylistListVM extends ChangeNotifier {
               }
 
               restoredPicturesJpgNumber++;
-            } else {
+            } else if (!File(destinationPathFileName).existsSync()) {
               // The json file is an audio picture reference file.
               restoredPicturesJsonNumber++;
             }
@@ -4591,7 +4591,7 @@ class PlaylistListVM extends ChangeNotifier {
           !destinationPathFileName.contains(kPictureAudioMapFileName)) {
         // Second condition guarantees that the picture json files
         // number is correctly calculated.
-        if (destinationPathFileName.contains(kCommentDirName)) {
+        if (destinationPathFileName.contains(kCommentDirName) && !File(destinationPathFileName).existsSync()) {
           restoredCommentsJsonNumber++;
         } else if (destinationPathFileName.contains(kPictureDirName)) {
           if (destinationPathFileName.endsWith('.jpg')) {
