@@ -17888,1612 +17888,1628 @@ void main() {
       });
     });
   });
-  group(
-      'Save and restore text to speech audio mp3 files to zip files for all playlists or unique playlist test',
-      () {
-    group('Handling multiple playlists', () {
-      testWidgets(
-          '''Not replace existing playlists. Set download date to today's date without time. The less old value
-          awailable by default is 10/01/2024 18:18 and will be changed to today's date without time. Since the
-          converted text to speech audio was modified today after 00:00 time, this audio will be the unique audio
-          added to the created mp3 zip.
-          
-          Then delete the 2 playlists and restore again using audioLearn_2025-09-07_07_45_02.zip as well as
-          audioLearn_mp3_from_2025-09-07_07_37_32_on_2025-09-24_13_54_22.zip. Then verify the restored 'aaa'
-          converted audio duration. Then restore using the two last created zip (playlists and mp3) and verify that
-          the version of the 'aaa' converted audio was correctly updated.''',
-          (WidgetTester tester) async {
-        // Purge the test playlist directory if it exists so that the
-        // playlist list is empty
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kApplicationPathWindowsTest,
-        );
-
-        // Copy the test initial audio data to the app dir
-        final String sourceRootPath =
-            "$kDownloadAppTestSavedDataDir${path.separator}restore_existing_playlists_with_new_audios_android_emulator";
-
-        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-          sourceRootPath: sourceRootPath,
-          destinationRootPath: kApplicationPathWindowsTest,
-        );
-
-        final SettingsDataService settingsDataService = SettingsDataService(
-          isTest: true,
-        );
-
-        // Load the settings from the json file. This is necessary
-        // otherwise the ordered playlist titles will remain empty
-        // and the playlist list will not be filled with the
-        // playlists available in the app test dir
-        await settingsDataService.loadSettingsFromFile(
-            settingsJsonPathFileName:
-                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        await app.main();
-        await tester.pumpAndSettle();
-
-        // Restoring the initial 'local' and "urgent_actus_17-12-2023" playlists and their mp3 files
-        await _restorePaylistsAndTheirMp3(
-          tester: tester,
-          sourceRootPath: kApplicationPathWindowsTest,
-          restorablePlaylistsZipFileName: 'audioLearn_2025-09-07_07_45_02.zip',
-          restorableMp3ZipFileName:
-              'audioLearn_mp3_from_2025-08-12_16_29_25_on_2025-09-07_07_46_29.zip',
-          mockFilePicker: mockFilePicker,
-        );
-
-        const String unselectedYoutubePlaylistTitle = "urgent_actus_17-12-2023";
-
-        // Open the convert text to audio dialog
-        await IntegrationTestUtil.typeOnPlaylistMenuItem(
-          tester: tester,
-          playlistTitle: unselectedYoutubePlaylistTitle,
-          playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
-        );
-
-        // Find the text field finder
-        final Finder textFieldFinder =
-            find.byKey(const Key('textToConvertTextField'));
-
-        // Now enter the text to convert to audio
-        await tester.enterText(textFieldFinder,
-            "Nouvelle description des éléments restaurés {{{{ avec 4 secondes de pause. Et une fin de phrase.");
-        await tester.pump();
-
-        // Now click on Create MP3 button to create the audio
-        Finder createMP3ButtonFinder =
-            find.byKey(const Key('create_audio_file_button'));
-        await tester.tap(createMP3ButtonFinder);
-        await tester.pumpAndSettle();
-
-        const String enteredFileNameNoExt = 'aaa';
-        Finder mp3FileNameTextFieldFinder =
-            find.byKey(const Key('textToConvertTextField'));
-
-        await tester.enterText(
-            mp3FileNameTextFieldFinder, enteredFileNameNoExt);
-        await tester.pumpAndSettle();
-
-        // Tap on the create mp3 button
-        Finder saveMP3FileButton =
-            find.byKey(const Key('create_mp3_button_key'));
-        await tester.tap(saveMP3FileButton);
-        await Future.delayed(const Duration(seconds: 2));
-        await tester.pumpAndSettle();
-
-        // Now check the confirm dialog which indicates that the saved
-        // file name already exist and ask to confirm or cancel the
-        // save operation.
-        await IntegrationTestUtil.verifyConfirmActionDialog(
-          tester: tester,
-          confirmActionDialogTitle:
-              "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$unselectedYoutubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
-          confirmActionDialogMessagePossibleLst: [""],
-          closeDialogWithConfirmButton: true,
-        );
-
-        await Future.delayed(const Duration(seconds: 2));
-        await tester.pumpAndSettle();
-
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-          tester: tester,
-          warningDialogMessage:
-              "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in Youtube playlist \"$unselectedYoutubePlaylistTitle\".",
-          isWarningConfirming: true,
-        );
-
-        // Now close the convert text to audio dialog by tapping
-        // the Ok button
-        Finder cancelButtonFinder =
-            find.byKey(const Key('convertTextToAudioCloseButton'));
-        await tester.tap(cancelButtonFinder);
-        await tester.pumpAndSettle();
-
-        // Now save the playlists ...
-
-        // Setting the path value returned by the FilePicker mock.
-        mockFilePicker.setPathToSelect(
-          pathToSelectStr: kApplicationPathWindowsTest,
-        );
-
-        // Tap the appbar leading popup menu button Then, the 'Save
-        // Playlists, Comments, Pictures and Settings to ZIP File' menu
-        // is selected.
-        await IntegrationTestUtil.typeOnAppbarMenuItem(
-          tester: tester,
-          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
-        );
-
-        // Tap on the Ok button
-        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-        await tester.pumpAndSettle();
-
-        String? warningDialogMessage = tester
-            .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
-            .data;
-        String playlistsNewSavedZipFileName =
-            _extractZipFileName(warningDialogMessage!);
-
-        // Tap the warning confirmation dialog Ok button to close it
-        await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-        await tester.pumpAndSettle();
-
-        // And save the playlists mp3 files ...
-
-        // Tap the appbar leading popup menu button Then, the 'Save
-        // Playlists Audio's MP3 to ZIP File' menu is selected.
-        await IntegrationTestUtil.typeOnAppbarMenuItem(
-          tester: tester,
-          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAudioMp3FilesToZip',
-        );
-
-        await IntegrationTestUtil.verifySetValueToTargetDialog(
-          tester: tester,
-          dialogTitle: 'Set the Download Date',
-          dialogMessage:
-              'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
-        );
-
-        const String oldestAudioDownloadDateTime = '10/01/2024 18:18';
-
-        expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
-
-        Finder setValueToTargetDialogFinder =
-            find.byType(SetValueToTargetDialog);
-
-        // This finder obtained as descendant of its enclosing dialog does
-        // enable to change the value of the TextField
-        Finder setValueToTargetDialogEditTextFinder = find.descendant(
-          of: setValueToTargetDialogFinder,
-          matching: find.byType(TextField),
-        );
-
-        // Now change the download date in the dialog
-        final String audioOldestDownloadDateToday =
-            DateFormat('dd/MM/yyyy').format(DateTime.now());
-        final String audioOldestDownloadDateTodayForFileNName =
-            DateFormat('yyyy-MM-dd').format(DateTime.now());
-        TextField textField =
-            tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
-
-        textField.controller!.text = audioOldestDownloadDateToday;
-        await tester.pumpAndSettle();
-
-        // Tap on the Ok button to set download date time.
-        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-        await tester.pumpAndSettle();
-
-        DateTime now = DateTime.now();
-
-        // Now tap on the confirm dialog which indicates the estimated
-        // save audio mp3 to zip duration ok buton to accept the save
-        // execution.
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pump();
-
-        // Only works if tester.pump() is used instead of
-        // tester.pumpAndSettle()
-        expect(
-          find.text("Saving multiple playlists audio files to ZIP ..."),
-          findsOneWidget,
-        );
-        expect(
-          tester
-              .widget<Text>(find.byKey(const Key('saving_please_wait')).last)
-              .data!,
-          contains(
-            "Should approxim. take ",
-          ),
-        );
-
-        // Wait for completion
-        await tester.pumpAndSettle();
-
-        Text warningDialogTitle =
-            tester.widget(find.byKey(const Key('warningDialogTitle')).last);
-
-        expect(warningDialogTitle.data, 'CONFIRMATION');
-
-        String actualMessage = tester
-            .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
-            .data!;
-        expect(
-            actualMessage,
-            contains(
-                "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68 KB and total duration: 0:00:08.6."));
-        expect(actualMessage, contains("Save operation real duration: 0:00:"));
-        expect(actualMessage, contains("number of bytes saved per second: "));
-        expect(actualMessage, contains(", number of created ZIP file(s): 1."));
-        expect(
-          actualMessage,
-          anyOf([
-            contains(
-                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now)}.zip\"."),
-            contains(
-                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now.subtract(const Duration(seconds: 1)))}.zip\"."),
-          ]),
-        );
-
-        String playlistsMp3NewSavedZipFileName = _extractMp3ZipFileName(
-          confirmationMessage: actualMessage,
-          zipStartFileName: 'audioLearn',
-        );
-
-        // Tap the warning confirmation dialog Ok button to close it
-        await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-        await tester.pumpAndSettle();
-
-        // Now delete the two 'local' and "urgent_actus_17-12-2023" playlists
-        // (their mp3 files are also deleted)
-
-        await IntegrationTestUtil.typeOnPlaylistMenuItem(
-            tester: tester,
-            playlistTitle: 'local',
-            playlistMenuKeyStr: 'popup_menu_delete_playlist',
-            dragToBottom: true);
-
-        // Now find the confirm button of the delete playlist confirm
-        // dialog and tap on it
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
-
-        await IntegrationTestUtil.typeOnPlaylistMenuItem(
-            tester: tester,
-            playlistTitle: 'urgent_actus_17-12-2023',
-            playlistMenuKeyStr: 'popup_menu_delete_playlist',
-            dragToBottom: true);
-
-        // Now find the confirm button of the delete playlist confirm
-        // dialog and tap on it
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
-
-        // Restoring the initial 'local' and "urgent_actus_17-12-2023" playlists and their mp3 files
-        await _restorePaylistsAndTheirMp3(
-          tester: tester,
-          sourceRootPath: kApplicationPathWindowsTest,
-          restorablePlaylistsZipFileName: 'audioLearn_2025-09-07_07_45_02.zip',
-          restorableMp3ZipFileName:
-              'audioLearn_mp3_from_2025-08-12_16_29_25_on_2025-09-07_07_46_29.zip',
-          mockFilePicker: mockFilePicker,
-        );
-
-        // Select the "urgent_actus_17-12-2023" playlist
-        await IntegrationTestUtil.selectPlaylist(
-          tester: tester,
-          playlistToSelectTitle: unselectedYoutubePlaylistTitle,
-        );
-
-        // Now verify that the restored converted audio 'aaa' has a
-        // duration of 1.8 seconds
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-        // Perform the scroll action
-        await tester.drag(
-            listFinder,
-            const Offset(
-                0, 300)); // Positive value for vertical drag to scroll up
-        await tester.pumpAndSettle();
-
-        // Verify the converted audio sub title in the selected Youtube
-        // playlist audio list
-        IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
-          tester: tester,
-          audioSubTitlesAcceptableLst: [
-            '0:00:01.8 14 KB converted on 07/09/2025 at 07:37',
-          ],
-          firstAudioListTileIndex: 3,
-        );
-
-        // Now restoring the last saved 'local' and "urgent_actus_17-12-2023" playlists and
-        // their mp3 files without replacing existing playlists
-        await _restorePaylistsAndTheirMp3(
-          tester: tester,
-          sourceRootPath: kApplicationPathWindowsTest,
-          restorablePlaylistsZipFileName: playlistsNewSavedZipFileName,
-          restorableMp3ZipFileName: playlistsMp3NewSavedZipFileName,
-          mockFilePicker: mockFilePicker,
-          doReplaceExistingPlaylists: false,
-          restorePlaylistsConfirmationMessage:
-              'Restored 0 playlist, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 1 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "$kApplicationPathWindowsTest${path.separator}$playlistsNewSavedZipFileName".',
-          restoreMp3ConfirmationMessage:
-              "Restored 1 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistsMp3NewSavedZipFileName\".",
-        );
-
-        // Now verify that the restored converted audio 'aaa' has a
-        // duration of 8.6 seconds
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-        // Perform the scroll action
-        await tester.drag(
-            listFinder,
-            const Offset(
-                0, 300)); // Positive value for vertical drag to scroll up
-        await tester.pumpAndSettle();
-
-        // Verify the converted audio sub title in the selected Youtube
-        // playlist audio list
-        IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
-          tester: tester,
-          audioSubTitlesAcceptableLst: [
-            '0:00:08.6 68 KB converted on 07/09/2025 at 07:37',
-          ],
-          firstAudioListTileIndex: 3,
-        );
-
-        // Now we want to tap on the 'aaa' audio in order to open the
-        // AudioPlayerView displaying the audio. The purpose is to
-        // verify that the duration of the audio is indeed 8.6 seconds
-        // as indicated in the audio subtitle on the audio list displayed
-        // on the plalist download view.
-
-        // First, get the 'aaa' audio ListTile Text widget finder and
-        // tap on it
-
-        final Finder aaaAudioListTileTextWidgetFinder = find.text('aaa');
-
-        await tester.tap(aaaAudioListTileTextWidgetFinder);
-        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
-          tester: tester,
-        );
-
-        String aaaAudioTitleText = (tester.widget<Text>(
-                find.byKey(const Key('audioPlayerViewCurrentAudioTitle'))))
-            .data!;
-
-        String aaaAudioDurationStr = _extractDuration(aaaAudioTitleText);
-
-        expect(aaaAudioDurationStr, '0:09');
-
-        // Go back to the playlist download view
-        final Finder appScreenNavigationButton =
-            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-        await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
-
-        await IntegrationTestUtil.verifyAudioInfoDialog(
-          tester: tester,
-          audioType: AudioType.textToSpeech,
-          validVideoTitleOrAudioTitle: 'aaa',
-          audioDownloadDateTime:
-              "07/09/2025 07:37", // this is the imported date time
-          copiedToPlaylistTitle: 'local',
-          audioDuration: '0:00:08.6',
-          audioFileSize: '68 KB',
-          isMusicQuality: false, // Is spoken quality
-          audioPlaySpeed: '1.25',
-          audioVolume: '50.0 %',
-          audioCommentNumber: 2,
-        );
-
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kApplicationPathWindowsTest,
-        );
-      });
-      testWidgets(
-          '''Replace existing playlist(s). Set download date to today's date without time. The less old value
-          awailable by default is 10/01/2024 18:18 and will be changed to today's date without time. Since the
-          converted text to speech audio was modified today after 00:00 time, this audio will be the unique audio
-          added to the created mp3 zip.
-          
-          Then delete the 2 playlists and restore again using audioLearn_2025-09-07_07_45_02.zip as well as
-          audioLearn_mp3_from_2025-09-07_07_37_32_on_2025-09-24_13_54_22.zip. Then verify the restored 'aaa'
-          converted audio duration. Then restore using the two last created zip (playlists and mp3) and verify that
-          the version of the 'aaa' converted audio was correctly updated.''',
-          (WidgetTester tester) async {
-        // Purge the test playlist directory if it exists so that the
-        // playlist list is empty
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kApplicationPathWindowsTest,
-        );
-
-        // Copy the test initial audio data to the app dir
-        final String sourceRootPath =
-            "$kDownloadAppTestSavedDataDir${path.separator}restore_existing_playlists_with_new_audios_android_emulator";
-
-        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-          sourceRootPath: sourceRootPath,
-          destinationRootPath: kApplicationPathWindowsTest,
-        );
-
-        final SettingsDataService settingsDataService = SettingsDataService(
-          isTest: true,
-        );
-
-        // Load the settings from the json file. This is necessary
-        // otherwise the ordered playlist titles will remain empty
-        // and the playlist list will not be filled with the
-        // playlists available in the app test dir
-        await settingsDataService.loadSettingsFromFile(
-            settingsJsonPathFileName:
-                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        await app.main();
-        await tester.pumpAndSettle();
-
-        // Restoring the initial 'local' and "urgent_actus_17-12-2023" playlists and their mp3 files
-        await _restorePaylistsAndTheirMp3(
-          tester: tester,
-          sourceRootPath: kApplicationPathWindowsTest,
-          restorablePlaylistsZipFileName: 'audioLearn_2025-09-07_07_45_02.zip',
-          restorableMp3ZipFileName:
-              'audioLearn_mp3_from_2025-08-12_16_29_25_on_2025-09-07_07_46_29.zip',
-          mockFilePicker: mockFilePicker,
-        );
-
-        const String unselectedYoutubePlaylistTitle = "urgent_actus_17-12-2023";
-
-        // Open the convert text to audio dialog
-        await IntegrationTestUtil.typeOnPlaylistMenuItem(
-          tester: tester,
-          playlistTitle: unselectedYoutubePlaylistTitle,
-          playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
-        );
-
-        // Find the text field finder
-        final Finder textFieldFinder =
-            find.byKey(const Key('textToConvertTextField'));
-
-        // Now enter the text to convert to audio
-        await tester.enterText(textFieldFinder,
-            "Nouvelle description des éléments restaurés {{{{ avec 4 secondes de pause. Et une fin de phrase.");
-        await tester.pump();
-
-        // Now click on Create MP3 button to create the audio
-        Finder createMP3ButtonFinder =
-            find.byKey(const Key('create_audio_file_button'));
-        await tester.tap(createMP3ButtonFinder);
-        await tester.pumpAndSettle();
-
-        const String enteredFileNameNoExt = 'aaa';
-        Finder mp3FileNameTextFieldFinder =
-            find.byKey(const Key('textToConvertTextField'));
-
-        await tester.enterText(
-            mp3FileNameTextFieldFinder, enteredFileNameNoExt);
-        await tester.pumpAndSettle();
-
-        // Tap on the create mp3 button
-        Finder saveMP3FileButton =
-            find.byKey(const Key('create_mp3_button_key'));
-        await tester.tap(saveMP3FileButton);
-        await Future.delayed(const Duration(seconds: 2));
-        await tester.pumpAndSettle();
-
-        // Now check the confirm dialog which indicates that the saved
-        // file name already exist and ask to confirm or cancel the
-        // save operation.
-        await IntegrationTestUtil.verifyConfirmActionDialog(
-          tester: tester,
-          confirmActionDialogTitle:
-              "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$unselectedYoutubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
-          confirmActionDialogMessagePossibleLst: [""],
-          closeDialogWithConfirmButton: true,
-        );
-
-        await Future.delayed(const Duration(seconds: 2));
-        await tester.pumpAndSettle();
-
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-          tester: tester,
-          warningDialogMessage:
-              "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in Youtube playlist \"$unselectedYoutubePlaylistTitle\".",
-          isWarningConfirming: true,
-        );
-
-        // Now close the convert text to audio dialog by tapping
-        // the Ok button
-        Finder cancelButtonFinder =
-            find.byKey(const Key('convertTextToAudioCloseButton'));
-        await tester.tap(cancelButtonFinder);
-        await tester.pumpAndSettle();
-
-        // Now save the playlists ...
-
-        // Setting the path value returned by the FilePicker mock.
-        mockFilePicker.setPathToSelect(
-          pathToSelectStr: kApplicationPathWindowsTest,
-        );
-
-        // Tap the appbar leading popup menu button Then, the 'Save
-        // Playlists, Comments, Pictures and Settings to ZIP File' menu
-        // is selected.
-        await IntegrationTestUtil.typeOnAppbarMenuItem(
-          tester: tester,
-          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
-        );
-
-        // Tap on the Ok button
-        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-        await tester.pumpAndSettle();
-
-        String? warningDialogMessage = tester
-            .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
-            .data;
-        String playlistsNewSavedZipFileName =
-            _extractZipFileName(warningDialogMessage!);
-
-        // Tap the warning confirmation dialog Ok button to close it
-        await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-        await tester.pumpAndSettle();
-
-        // And save the playlists mp3 files ...
-
-        // Tap the appbar leading popup menu button Then, the 'Save
-        // Playlists Audio's MP3 to ZIP File' menu is selected.
-        await IntegrationTestUtil.typeOnAppbarMenuItem(
-          tester: tester,
-          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAudioMp3FilesToZip',
-        );
-
-        await IntegrationTestUtil.verifySetValueToTargetDialog(
-          tester: tester,
-          dialogTitle: 'Set the Download Date',
-          dialogMessage:
-              'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
-        );
-
-        const String oldestAudioDownloadDateTime = '10/01/2024 18:18';
-
-        expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
-
-        Finder setValueToTargetDialogFinder =
-            find.byType(SetValueToTargetDialog);
-
-        // This finder obtained as descendant of its enclosing dialog does
-        // enable to change the value of the TextField
-        Finder setValueToTargetDialogEditTextFinder = find.descendant(
-          of: setValueToTargetDialogFinder,
-          matching: find.byType(TextField),
-        );
-
-        // Now change the download date in the dialog
-        final String audioOldestDownloadDateToday =
-            DateFormat('dd/MM/yyyy').format(DateTime.now());
-        final String audioOldestDownloadDateTodayForFileNName =
-            DateFormat('yyyy-MM-dd').format(DateTime.now());
-        TextField textField =
-            tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
-
-        textField.controller!.text = audioOldestDownloadDateToday;
-        await tester.pumpAndSettle();
-
-        // Tap on the Ok button to set download date time.
-        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-        await tester.pumpAndSettle();
-
-        DateTime now = DateTime.now();
-
-        // Now tap on the confirm dialog which indicates the estimated
-        // save audio mp3 to zip duration ok buton to accept the save
-        // execution.
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pump();
-
-        // Only works if tester.pump() is used instead of
-        // tester.pumpAndSettle()
-        expect(
-          find.text("Saving multiple playlists audio files to ZIP ..."),
-          findsOneWidget,
-        );
-        expect(
-          tester
-              .widget<Text>(find.byKey(const Key('saving_please_wait')).last)
-              .data!,
-          contains(
-            "Should approxim. take ",
-          ),
-        );
-
-        // Wait for completion
-        await tester.pumpAndSettle();
-
-        Text warningDialogTitle =
-            tester.widget(find.byKey(const Key('warningDialogTitle')).last);
-
-        expect(warningDialogTitle.data, 'CONFIRMATION');
-
-        String actualMessage = tester
-            .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
-            .data!;
-        expect(
-            actualMessage,
-            contains(
-                "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68 KB and total duration: 0:00:08.6."));
-        expect(actualMessage, contains("Save operation real duration: 0:00:"));
-        expect(actualMessage, contains("number of bytes saved per second: "));
-        expect(actualMessage, contains(", number of created ZIP file(s): 1."));
-        expect(
-          actualMessage,
-          anyOf([
-            contains(
-                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now)}.zip\"."),
-            contains(
-                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now.subtract(const Duration(seconds: 1)))}.zip\"."),
-          ]),
-        );
-
-        String playlistsMp3NewSavedZipFileName = _extractMp3ZipFileName(
-          confirmationMessage: actualMessage,
-          zipStartFileName: 'audioLearn',
-        );
-
-        // Tap the warning confirmation dialog Ok button to close it
-        await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-        await tester.pumpAndSettle();
-
-        // Now delete the two 'local' and "urgent_actus_17-12-2023" playlists
-        // (their mp3 files are also deleted)
-
-        await IntegrationTestUtil.typeOnPlaylistMenuItem(
-            tester: tester,
-            playlistTitle: 'local',
-            playlistMenuKeyStr: 'popup_menu_delete_playlist',
-            dragToBottom: true);
-
-        // Now find the confirm button of the delete playlist confirm
-        // dialog and tap on it
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
-
-        await IntegrationTestUtil.typeOnPlaylistMenuItem(
-            tester: tester,
-            playlistTitle: 'urgent_actus_17-12-2023',
-            playlistMenuKeyStr: 'popup_menu_delete_playlist',
-            dragToBottom: true);
-
-        // Now find the confirm button of the delete playlist confirm
-        // dialog and tap on it
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
-
-        // Restoring the initial 'local' and "urgent_actus_17-12-2023" playlists and their mp3 files
-        await _restorePaylistsAndTheirMp3(
-          tester: tester,
-          sourceRootPath: kApplicationPathWindowsTest,
-          restorablePlaylistsZipFileName: 'audioLearn_2025-09-07_07_45_02.zip',
-          restorableMp3ZipFileName:
-              'audioLearn_mp3_from_2025-08-12_16_29_25_on_2025-09-07_07_46_29.zip',
-          mockFilePicker: mockFilePicker,
-        );
-
-        // Select the "urgent_actus_17-12-2023" playlist
-        await IntegrationTestUtil.selectPlaylist(
-          tester: tester,
-          playlistToSelectTitle: unselectedYoutubePlaylistTitle,
-        );
-
-        // Now verify that the restored converted audio 'aaa' has a
-        // duration of 1.8 seconds
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-        // Perform the scroll action
-        await tester.drag(
-            listFinder,
-            const Offset(
-                0, 300)); // Positive value for vertical drag to scroll up
-        await tester.pumpAndSettle();
-
-        // Verify the converted audio sub title in the selected Youtube
-        // playlist audio list
-        IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
-          tester: tester,
-          audioSubTitlesAcceptableLst: [
-            '0:00:01.8 14 KB converted on 07/09/2025 at 07:37',
-          ],
-          firstAudioListTileIndex: 3,
-        );
-
-        // Now restoring the last saved 'local' and "urgent_actus_17-12-2023" playlists and
-        // their mp3 files with replacing existing playlists
-        await _restorePaylistsAndTheirMp3(
-          tester: tester,
-          sourceRootPath: kApplicationPathWindowsTest,
-          restorablePlaylistsZipFileName: playlistsNewSavedZipFileName,
-          restorableMp3ZipFileName: playlistsMp3NewSavedZipFileName,
-          mockFilePicker: mockFilePicker,
-          doReplaceExistingPlaylists: true,
-          doDeleteExistingPlaylists: false,
-          restorePlaylistsConfirmationMessage:
-              'Restored 2 playlist, 0 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 10 audio reference(s) and 1 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "$kApplicationPathWindowsTest${path.separator}$playlistsNewSavedZipFileName".',
-          restoreMp3ConfirmationMessage:
-              "Restored 1 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistsMp3NewSavedZipFileName\".",
-        );
-
-        // Now verify that the restored converted audio 'aaa' has a
-        // duration of 8.6 seconds
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-        // Perform the scroll action
-        await tester.drag(
-            listFinder,
-            const Offset(
-                0, 300)); // Positive value for vertical drag to scroll up
-        await tester.pumpAndSettle();
-
-        // Verify the converted audio sub title in the selected Youtube
-        // playlist audio list
-        IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
-          tester: tester,
-          audioSubTitlesAcceptableLst: [
-            '0:00:08.6 68 KB converted on 07/09/2025 at 07:37',
-          ],
-          firstAudioListTileIndex: 3,
-        );
-
-        // Now we want to tap on the 'aaa' audio in order to open the
-        // AudioPlayerView displaying the audio. The purpose is to
-        // verify that the duration of the audio is indeed 8.6 seconds
-        // as indicated in the audio subtitle on the audio list displayed
-        // on the plalist download view.
-
-        // First, get the 'aaa' audio ListTile Text widget finder and
-        // tap on it
-
-        final Finder aaaAudioListTileTextWidgetFinder = find.text('aaa');
-
-        await tester.tap(aaaAudioListTileTextWidgetFinder);
-        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
-          tester: tester,
-        );
-
-        String aaaAudioTitleText = (tester.widget<Text>(
-                find.byKey(const Key('audioPlayerViewCurrentAudioTitle'))))
-            .data!;
-
-        String aaaAudioDurationStr = _extractDuration(aaaAudioTitleText);
-
-        expect(aaaAudioDurationStr, '0:09');
-
-        // Go back to the playlist download view
-        final Finder appScreenNavigationButton =
-            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-        await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
-
-        await IntegrationTestUtil.verifyAudioInfoDialog(
-          tester: tester,
-          audioType: AudioType.textToSpeech,
-          validVideoTitleOrAudioTitle: 'aaa',
-          audioDownloadDateTime:
-              "07/09/2025 07:37", // this is the imported date time
-          copiedToPlaylistTitle: 'local',
-          audioDuration: '0:00:08.6',
-          audioFileSize: '68 KB',
-          isMusicQuality: false, // Is spoken quality
-          audioPlaySpeed: '1.25',
-          audioVolume: '50.0 %',
-          audioCommentNumber: 2,
-        );
-
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kApplicationPathWindowsTest,
-        );
-      });
-    });
-    group('Handling unique playlist', () {
-      testWidgets(
-          '''Not replace existing playlist. Set download date to today's date without time. The less old value
-          awailable by default is 10/01/2024 18:18 and will be changed to today's date without time. Since the
-          converted text to speech audio was modified today after 00:00 time, this audio will be the unique audio
-          added to the created mp3 zip.
-          
-          Then delete the 2 playlists and restore again using audioLearn_2025-09-07_07_45_02.zip as well as
-          audioLearn_mp3_from_2025-09-07_07_37_32_on_2025-09-24_13_54_22.zip. Then verify the restored 'aaa'
-          converted audio duration. Then restore using the two last created zip (playlists and mp3) and verify that
-          the version of the 'aaa' converted audio was correctly updated.''',
-          (WidgetTester tester) async {
-        // Purge the test playlist directory if it exists so that the
-        // playlist list is empty
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kApplicationPathWindowsTest,
-        );
-
-        // Copy the test initial audio data to the app dir
-        final String sourceRootPath =
-            "$kDownloadAppTestSavedDataDir${path.separator}restore_existing_playlists_with_new_audios_android_emulator";
-
-        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-          sourceRootPath: sourceRootPath,
-          destinationRootPath: kApplicationPathWindowsTest,
-        );
-
-        final SettingsDataService settingsDataService = SettingsDataService(
-          isTest: true,
-        );
-
-        // Load the settings from the json file. This is necessary
-        // otherwise the ordered playlist titles will remain empty
-        // and the playlist list will not be filled with the
-        // playlists available in the app test dir
-        await settingsDataService.loadSettingsFromFile(
-            settingsJsonPathFileName:
-                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        await app.main();
-        await tester.pumpAndSettle();
-
-        const String youtubePlaylistTitle = "urgent_actus_17-12-2023";
-
-        // Restoring the initial "urgent_actus_17-12-2023" playlist and its mp3 files
-        await _restorePaylistsAndTheirMp3(
-          tester: tester,
-          sourceRootPath: kApplicationPathWindowsTest,
-          restorablePlaylistsZipFileName: '$youtubePlaylistTitle.zip',
-          restorableMp3ZipFileName:
-              '${youtubePlaylistTitle}_mp3_from_2025-08-12_16_29_25_on_2025-09-28_21_50_57.zip',
-          mockFilePicker: mockFilePicker,
-        );
-
-        // Open the convert text to audio dialog
-        await IntegrationTestUtil.typeOnPlaylistMenuItem(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-          playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
-        );
-
-        // Find the text field finder
-        final Finder textFieldFinder =
-            find.byKey(const Key('textToConvertTextField'));
-
-        // Now enter the text to convert to audio
-        await tester.enterText(textFieldFinder,
-            "Nouvelle description des éléments restaurés {{{{ avec 4 secondes de pause. Et une fin de phrase.");
-        await tester.pump();
-
-        // Now click on Create MP3 button to create the audio
-        Finder createMP3ButtonFinder =
-            find.byKey(const Key('create_audio_file_button'));
-        await tester.tap(createMP3ButtonFinder);
-        await tester.pumpAndSettle();
-
-        const String enteredFileNameNoExt = 'aaa';
-        Finder mp3FileNameTextFieldFinder =
-            find.byKey(const Key('textToConvertTextField'));
-
-        await tester.enterText(
-            mp3FileNameTextFieldFinder, enteredFileNameNoExt);
-        await tester.pumpAndSettle();
-
-        // Tap on the create mp3 button
-        Finder saveMP3FileButton =
-            find.byKey(const Key('create_mp3_button_key'));
-        await tester.tap(saveMP3FileButton);
-        await Future.delayed(const Duration(seconds: 2));
-        await tester.pumpAndSettle();
-
-        // Now check the confirm dialog which indicates that the saved
-        // file name already exist and ask to confirm or cancel the
-        // save operation.
-        await IntegrationTestUtil.verifyConfirmActionDialog(
-          tester: tester,
-          confirmActionDialogTitle:
-              "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$youtubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
-          confirmActionDialogMessagePossibleLst: [""],
-          closeDialogWithConfirmButton: true,
-        );
-
-        await Future.delayed(const Duration(seconds: 2));
-        await tester.pumpAndSettle();
-
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-          tester: tester,
-          warningDialogMessage:
-              "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in Youtube playlist \"$youtubePlaylistTitle\".",
-          isWarningConfirming: true,
-        );
-
-        // Now close the convert text to audio dialog by tapping
-        // the Ok button
-        Finder cancelButtonFinder =
-            find.byKey(const Key('convertTextToAudioCloseButton'));
-        await tester.tap(cancelButtonFinder);
-        await tester.pumpAndSettle();
-
-        // Now save the playlist ...
-
-        // But first rename the existing unique playlist zip file so
-        // that it is not overwritten by the next save operation
-        final String initialUniquePlaylistZipFileName =
-            '$youtubePlaylistTitle.zip';
-        final String renamedInitialUniquePlaylistZipFileName =
-            '${youtubePlaylistTitle}_initial.zip';
-        File('$kApplicationPathWindowsTest${path.separator}$initialUniquePlaylistZipFileName')
-            .renameSync(
-                '$kApplicationPathWindowsTest${path.separator}$renamedInitialUniquePlaylistZipFileName');
-
-        // Setting the path value returned by the FilePicker mock.
-        mockFilePicker.setPathToSelect(
-          pathToSelectStr: kApplicationPathWindowsTest,
-        );
-
-        await IntegrationTestUtil.typeOnPlaylistMenuItem(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-          playlistMenuKeyStr:
-              'popup_menu_save_playlist_comments_pictures_to_zip',
-        );
-
-        // Tap the warning confirmation dialog Ok button to close it
-        await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-        await tester.pumpAndSettle();
-
-        // And save the playlist mp3 files ...
-
-        await IntegrationTestUtil.typeOnPlaylistMenuItem(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-          playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
-        );
-
-        await IntegrationTestUtil.verifySetValueToTargetDialog(
-          tester: tester,
-          dialogTitle: 'Set the Download Date',
-          dialogMessage:
-              'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
-        );
-
-        const String oldestAudioDownloadDateTime = '12/08/2025 16:29';
-
-        expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
-
-        Finder setValueToTargetDialogFinder =
-            find.byType(SetValueToTargetDialog);
-
-        // This finder obtained as descendant of its enclosing dialog does
-        // enable to change the value of the TextField
-        Finder setValueToTargetDialogEditTextFinder = find.descendant(
-          of: setValueToTargetDialogFinder,
-          matching: find.byType(TextField),
-        );
-
-        // Now change the download date in the dialog
-        final String audioOldestDownloadDateToday =
-            DateFormat('dd/MM/yyyy').format(DateTime.now());
-        final String audioOldestDownloadDateTodayForFileNName =
-            DateFormat('yyyy-MM-dd').format(DateTime.now());
-        TextField textField =
-            tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
-
-        textField.controller!.text = audioOldestDownloadDateToday;
-        await tester.pumpAndSettle();
-
-        // Tap on the Ok button to set download date time.
-        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-        await tester.pumpAndSettle();
-
-        DateTime now = DateTime.now();
-
-        // Now tap on the confirm dialog which indicates the estimated
-        // save audio mp3 to zip duration ok buton to accept the save
-        // execution.
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pump();
-
-        // Only works if tester.pump() is used instead of
-        // tester.pumpAndSettle()
-        expect(
-          find.text("Saving $youtubePlaylistTitle audio files to ZIP ..."),
-          findsOneWidget,
-        );
-        expect(
-          tester
-              .widget<Text>(find.byKey(const Key('saving_please_wait')).last)
-              .data!,
-          contains(
-            "Should approxim. take ",
-          ),
-        );
-
-        // Wait for completion
-        await tester.pumpAndSettle();
-
-        Text warningDialogTitle =
-            tester.widget(find.byKey(const Key('warningDialogTitle')).last);
-
-        expect(warningDialogTitle.data, 'CONFIRMATION');
-
-        String actualMessage = tester
-            .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
-            .data!;
-        expect(
-            actualMessage,
-            contains(
-                "Saved to ZIP file(s) unique playlist audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68 KB and total duration: 0:00:08.6."));
-        expect(actualMessage, contains("Save operation real duration: 0:00:"));
-        expect(actualMessage, contains("number of bytes saved per second: "));
-        expect(actualMessage, contains(", number of created ZIP file(s): 1."));
-        expect(
-          actualMessage,
-          anyOf([
-            contains(
-                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}${youtubePlaylistTitle}_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now)}.zip\"."),
-            contains(
-                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}${youtubePlaylistTitle}_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now.subtract(const Duration(seconds: 1)))}.zip\"."),
-          ]),
-        );
-
-        String playlistMp3NewSavedZipFileName = _extractMp3ZipFileName(
-          confirmationMessage: actualMessage,
-          zipStartFileName: youtubePlaylistTitle,
-        );
-
-        // Tap the warning confirmation dialog Ok button to close it
-        await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-        await tester.pumpAndSettle();
-
-        // Now delete the "urgent_actus_17-12-2023" playlist (their
-        // mp3 files are also deleted)
-
-        await IntegrationTestUtil.typeOnPlaylistMenuItem(
-            tester: tester,
-            playlistTitle: youtubePlaylistTitle,
-            playlistMenuKeyStr: 'popup_menu_delete_playlist',
-            dragToBottom: true);
-
-        // Now find the confirm button of the delete playlist confirm
-        // dialog and tap on it
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
-
-        // Restoring the initial "urgent_actus_17-12-2023" playlist and its mp3 files
-        await _restorePaylistsAndTheirMp3(
-          tester: tester,
-          sourceRootPath: kApplicationPathWindowsTest,
-          restorablePlaylistsZipFileName:
-              renamedInitialUniquePlaylistZipFileName,
-          restorableMp3ZipFileName:
-              '${youtubePlaylistTitle}_mp3_from_2025-08-12_16_29_25_on_2025-09-28_21_50_57.zip',
-          mockFilePicker: mockFilePicker,
-        );
-
-        // Now verify that the restored converted audio 'aaa' has a
-        // duration of 1.8 seconds
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-        // Perform the scroll action
-        await tester.drag(
-            listFinder,
-            const Offset(
-                0, 300)); // Positive value for vertical drag to scroll up
-        await tester.pumpAndSettle();
-
-        // Verify the converted audio sub title in the selected Youtube
-        // playlist audio list
-        IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
-          tester: tester,
-          audioSubTitlesAcceptableLst: [
-            '0:00:01.8 14 KB converted on 07/09/2025 at 07:37',
-          ],
-          firstAudioListTileIndex: 1,
-        );
-
-        // Now restoring the last saved "urgent_actus_17-12-2023" playlist
-        // and its mp3 files without replacing the existing playlist
-        await _restorePaylistsAndTheirMp3(
-            tester: tester,
-            sourceRootPath: kApplicationPathWindowsTest,
-            restorablePlaylistsZipFileName: '$youtubePlaylistTitle.zip',
-            restorableMp3ZipFileName: playlistMp3NewSavedZipFileName,
-            mockFilePicker: mockFilePicker,
-            doReplaceExistingPlaylists: false,
-            restorePlaylistsConfirmationMessage:
-                'Restored 0 playlist saved individually, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 1 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "$kApplicationPathWindowsTest${path.separator}$youtubePlaylistTitle.zip".',
-            restoreMp3ConfirmationMessage:
-                "Restored 1 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistMp3NewSavedZipFileName\".",
-            restoreMp3FromUniquePlaylistTitle: youtubePlaylistTitle);
-
-        // Now verify that the restored converted audio 'aaa' has a
-        // duration of 8.6 seconds
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-        // Perform the scroll action
-        await tester.drag(
-            listFinder,
-            const Offset(
-                0, 300)); // Positive value for vertical drag to scroll up
-        await tester.pumpAndSettle();
-
-        // Verify the converted audio sub title in the selected Youtube
-        // playlist audio list
-        IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
-          tester: tester,
-          audioSubTitlesAcceptableLst: [
-            '0:00:08.6 68 KB converted on 07/09/2025 at 07:37',
-          ],
-          firstAudioListTileIndex: 1,
-        );
-
-        // Now we want to tap on the 'aaa' audio in order to open the
-        // AudioPlayerView displaying the audio. The purpose is to
-        // verify that the duration of the audio is indeed 8.6 seconds
-        // as indicated in the audio subtitle on the audio list displayed
-        // on the plalist download view.
-
-        // First, get the 'aaa' audio ListTile Text widget finder and
-        // tap on it
-
-        final Finder aaaAudioListTileTextWidgetFinder = find.text('aaa');
-
-        await tester.tap(aaaAudioListTileTextWidgetFinder);
-        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
-          tester: tester,
-        );
-
-        String aaaAudioTitleText = (tester.widget<Text>(
-                find.byKey(const Key('audioPlayerViewCurrentAudioTitle'))))
-            .data!;
-
-        String aaaAudioDurationStr = _extractDuration(aaaAudioTitleText);
-
-        expect(aaaAudioDurationStr, '0:09');
-
-        // Go back to the playlist download view
-        final Finder appScreenNavigationButton =
-            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-        await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
-
-        await IntegrationTestUtil.verifyAudioInfoDialog(
-          tester: tester,
-          audioType: AudioType.textToSpeech,
-          validVideoTitleOrAudioTitle: 'aaa',
-          audioDownloadDateTime:
-              "07/09/2025 07:37", // this is the imported date time
-          copiedToPlaylistTitle: 'local',
-          audioDuration: '0:00:08.6',
-          audioFileSize: '68 KB',
-          isMusicQuality: false, // Is spoken quality
-          audioPlaySpeed: '1.25',
-          audioVolume: '50.0 %',
-          audioCommentNumber: 2,
-        );
-
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kApplicationPathWindowsTest,
-        );
-      });
-      testWidgets(
-          '''Replace existing playlist. Set download date to today's date without time. The less old value
-          awailable by default is 10/01/2024 18:18 and will be changed to today's date without time. Since the
-          converted text to speech audio was modified today after 00:00 time, this audio will be the unique audio
-          added to the created mp3 zip.
-          
-          Then delete the 2 playlists and restore again using audioLearn_2025-09-07_07_45_02.zip as well as
-          audioLearn_mp3_from_2025-09-07_07_37_32_on_2025-09-24_13_54_22.zip. Then verify the restored 'aaa'
-          converted audio duration. Then restore using the two last created zip (playlists and mp3) and verify that
-          the version of the 'aaa' converted audio was correctly updated.''',
-          (WidgetTester tester) async {
-        // Purge the test playlist directory if it exists so that the
-        // playlist list is empty
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kApplicationPathWindowsTest,
-        );
-
-        // Copy the test initial audio data to the app dir
-        final String sourceRootPath =
-            "$kDownloadAppTestSavedDataDir${path.separator}restore_existing_playlists_with_new_audios_android_emulator";
-
-        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-          sourceRootPath: sourceRootPath,
-          destinationRootPath: kApplicationPathWindowsTest,
-        );
-
-        final SettingsDataService settingsDataService = SettingsDataService(
-          isTest: true,
-        );
-
-        // Load the settings from the json file. This is necessary
-        // otherwise the ordered playlist titles will remain empty
-        // and the playlist list will not be filled with the
-        // playlists available in the app test dir
-        await settingsDataService.loadSettingsFromFile(
-            settingsJsonPathFileName:
-                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        await app.main();
-        await tester.pumpAndSettle();
-
-        const String youtubePlaylistTitle = "urgent_actus_17-12-2023";
-
-        // Restoring the initial "urgent_actus_17-12-2023" playlist and its mp3 files
-        await _restorePaylistsAndTheirMp3(
-          tester: tester,
-          sourceRootPath: kApplicationPathWindowsTest,
-          restorablePlaylistsZipFileName: '$youtubePlaylistTitle.zip',
-          restorableMp3ZipFileName:
-              '${youtubePlaylistTitle}_mp3_from_2025-08-12_16_29_25_on_2025-09-28_21_50_57.zip',
-          mockFilePicker: mockFilePicker,
-        );
-
-        // Open the convert text to audio dialog
-        await IntegrationTestUtil.typeOnPlaylistMenuItem(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-          playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
-        );
-
-        // Find the text field finder
-        final Finder textFieldFinder =
-            find.byKey(const Key('textToConvertTextField'));
-
-        // Now enter the text to convert to audio
-        await tester.enterText(textFieldFinder,
-            "Nouvelle description des éléments restaurés {{{{ avec 4 secondes de pause. Et une fin de phrase.");
-        await tester.pump();
-
-        // Now click on Create MP3 button to create the audio
-        Finder createMP3ButtonFinder =
-            find.byKey(const Key('create_audio_file_button'));
-        await tester.tap(createMP3ButtonFinder);
-        await tester.pumpAndSettle();
-
-        const String enteredFileNameNoExt = 'aaa';
-        Finder mp3FileNameTextFieldFinder =
-            find.byKey(const Key('textToConvertTextField'));
-
-        await tester.enterText(
-            mp3FileNameTextFieldFinder, enteredFileNameNoExt);
-        await tester.pumpAndSettle();
-
-        // Tap on the create mp3 button
-        Finder saveMP3FileButton =
-            find.byKey(const Key('create_mp3_button_key'));
-        await tester.tap(saveMP3FileButton);
-        await Future.delayed(const Duration(seconds: 2));
-        await tester.pumpAndSettle();
-
-        // Now check the confirm dialog which indicates that the saved
-        // file name already exist and ask to confirm or cancel the
-        // save operation.
-        await IntegrationTestUtil.verifyConfirmActionDialog(
-          tester: tester,
-          confirmActionDialogTitle:
-              "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$youtubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
-          confirmActionDialogMessagePossibleLst: [""],
-          closeDialogWithConfirmButton: true,
-        );
-
-        await Future.delayed(const Duration(seconds: 2));
-        await tester.pumpAndSettle();
-
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-          tester: tester,
-          warningDialogMessage:
-              "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in Youtube playlist \"$youtubePlaylistTitle\".",
-          isWarningConfirming: true,
-        );
-
-        // Now close the convert text to audio dialog by tapping
-        // the Ok button
-        Finder cancelButtonFinder =
-            find.byKey(const Key('convertTextToAudioCloseButton'));
-        await tester.tap(cancelButtonFinder);
-        await tester.pumpAndSettle();
-
-        // Now save the playlist ...
-
-        // But first rename the existing unique playlist zip file so
-        // that it is not overwritten by the next save operation
-        final String initialUniquePlaylistZipFileName =
-            '$youtubePlaylistTitle.zip';
-        final String renamedInitialUniquePlaylistZipFileName =
-            '${youtubePlaylistTitle}_initial.zip';
-        File('$kApplicationPathWindowsTest${path.separator}$initialUniquePlaylistZipFileName')
-            .renameSync(
-                '$kApplicationPathWindowsTest${path.separator}$renamedInitialUniquePlaylistZipFileName');
-
-        // Setting the path value returned by the FilePicker mock.
-        mockFilePicker.setPathToSelect(
-          pathToSelectStr: kApplicationPathWindowsTest,
-        );
-
-        await IntegrationTestUtil.typeOnPlaylistMenuItem(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-          playlistMenuKeyStr:
-              'popup_menu_save_playlist_comments_pictures_to_zip',
-        );
-
-        // Tap the warning confirmation dialog Ok button to close it
-        await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-        await tester.pumpAndSettle();
-
-        // And save the playlist mp3 files ...
-
-        await IntegrationTestUtil.typeOnPlaylistMenuItem(
-          tester: tester,
-          playlistTitle: youtubePlaylistTitle,
-          playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
-        );
-
-        await IntegrationTestUtil.verifySetValueToTargetDialog(
-          tester: tester,
-          dialogTitle: 'Set the Download Date',
-          dialogMessage:
-              'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
-        );
-
-        const String oldestAudioDownloadDateTime = '12/08/2025 16:29';
-
-        expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
-
-        Finder setValueToTargetDialogFinder =
-            find.byType(SetValueToTargetDialog);
-
-        // This finder obtained as descendant of its enclosing dialog does
-        // enable to change the value of the TextField
-        Finder setValueToTargetDialogEditTextFinder = find.descendant(
-          of: setValueToTargetDialogFinder,
-          matching: find.byType(TextField),
-        );
-
-        // Now change the download date in the dialog
-        final String audioOldestDownloadDateToday =
-            DateFormat('dd/MM/yyyy').format(DateTime.now());
-        final String audioOldestDownloadDateTodayForFileNName =
-            DateFormat('yyyy-MM-dd').format(DateTime.now());
-        TextField textField =
-            tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
-
-        textField.controller!.text = audioOldestDownloadDateToday;
-        await tester.pumpAndSettle();
-
-        // Tap on the Ok button to set download date time.
-        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-        await tester.pumpAndSettle();
-
-        DateTime now = DateTime.now();
-
-        // Now tap on the confirm dialog which indicates the estimated
-        // save audio mp3 to zip duration ok buton to accept the save
-        // execution.
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pump();
-
-        // Only works if tester.pump() is used instead of
-        // tester.pumpAndSettle()
-        expect(
-          find.text("Saving $youtubePlaylistTitle audio files to ZIP ..."),
-          findsOneWidget,
-        );
-        expect(
-          tester
-              .widget<Text>(find.byKey(const Key('saving_please_wait')).last)
-              .data!,
-          contains(
-            "Should approxim. take ",
-          ),
-        );
-
-        // Wait for completion
-        await tester.pumpAndSettle();
-
-        Text warningDialogTitle =
-            tester.widget(find.byKey(const Key('warningDialogTitle')).last);
-
-        expect(warningDialogTitle.data, 'CONFIRMATION');
-
-        String actualMessage = tester
-            .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
-            .data!;
-        expect(
-            actualMessage,
-            contains(
-                "Saved to ZIP file(s) unique playlist audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68 KB and total duration: 0:00:08.6."));
-        expect(actualMessage, contains("Save operation real duration: 0:00:"));
-        expect(actualMessage, contains("number of bytes saved per second: "));
-        expect(actualMessage, contains(", number of created ZIP file(s): 1."));
-        expect(
-          actualMessage,
-          anyOf([
-            contains(
-                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}${youtubePlaylistTitle}_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now)}.zip\"."),
-            contains(
-                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}${youtubePlaylistTitle}_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now.subtract(const Duration(seconds: 1)))}.zip\"."),
-          ]),
-        );
-
-        String playlistMp3NewSavedZipFileName = _extractMp3ZipFileName(
-          confirmationMessage: actualMessage,
-          zipStartFileName: youtubePlaylistTitle,
-        );
-
-        // Tap the warning confirmation dialog Ok button to close it
-        await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-        await tester.pumpAndSettle();
-
-        // Now delete the "urgent_actus_17-12-2023" playlist (their
-        // mp3 files are also deleted)
-
-        await IntegrationTestUtil.typeOnPlaylistMenuItem(
-            tester: tester,
-            playlistTitle: youtubePlaylistTitle,
-            playlistMenuKeyStr: 'popup_menu_delete_playlist',
-            dragToBottom: true);
-
-        // Now find the confirm button of the delete playlist confirm
-        // dialog and tap on it
-        await tester.tap(find.byKey(const Key('confirmButton')));
-        await tester.pumpAndSettle();
-
-        // Restoring the initial "urgent_actus_17-12-2023" playlist and its mp3 files
-        await _restorePaylistsAndTheirMp3(
-          tester: tester,
-          sourceRootPath: kApplicationPathWindowsTest,
-          restorablePlaylistsZipFileName:
-              renamedInitialUniquePlaylistZipFileName,
-          restorableMp3ZipFileName:
-              '${youtubePlaylistTitle}_mp3_from_2025-08-12_16_29_25_on_2025-09-28_21_50_57.zip',
-          mockFilePicker: mockFilePicker,
-        );
-
-        // Now verify that the restored converted audio 'aaa' has a
-        // duration of 1.8 seconds
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-        // Perform the scroll action
-        await tester.drag(
-            listFinder,
-            const Offset(
-                0, 300)); // Positive value for vertical drag to scroll up
-        await tester.pumpAndSettle();
-
-        // Verify the converted audio sub title in the selected Youtube
-        // playlist audio list
-        IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
-          tester: tester,
-          audioSubTitlesAcceptableLst: [
-            '0:00:01.8 14 KB converted on 07/09/2025 at 07:37',
-          ],
-          firstAudioListTileIndex: 1,
-        );
-
-        // Now restoring the last saved "urgent_actus_17-12-2023" playlist
-        // and its mp3 files with replacing the existing playlist
-        await _restorePaylistsAndTheirMp3(
-            tester: tester,
-            sourceRootPath: kApplicationPathWindowsTest,
-            restorablePlaylistsZipFileName: '$youtubePlaylistTitle.zip',
-            restorableMp3ZipFileName: playlistMp3NewSavedZipFileName,
-            mockFilePicker: mockFilePicker,
-            doReplaceExistingPlaylists: true,
-            doDeleteExistingPlaylists: false,
-            restorePlaylistsConfirmationMessage:
-                'Restored 1 playlist saved individually, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 1 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "$kApplicationPathWindowsTest${path.separator}$youtubePlaylistTitle.zip".',
-            restoreMp3ConfirmationMessage:
-                "Restored 1 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistMp3NewSavedZipFileName\".",
-            restoreMp3FromUniquePlaylistTitle: youtubePlaylistTitle);
-
-        // Now verify that the restored converted audio 'aaa' has a
-        // duration of 8.6 seconds
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-        // Perform the scroll action
-        await tester.drag(
-            listFinder,
-            const Offset(
-                0, 300)); // Positive value for vertical drag to scroll up
-        await tester.pumpAndSettle();
-
-        // Verify the converted audio sub title in the selected Youtube
-        // playlist audio list
-        IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
-          tester: tester,
-          audioSubTitlesAcceptableLst: [
-            '0:00:08.6 68 KB converted on 07/09/2025 at 07:37',
-          ],
-          firstAudioListTileIndex: 1,
-        );
-
-        // Now we want to tap on the 'aaa' audio in order to open the
-        // AudioPlayerView displaying the audio. The purpose is to
-        // verify that the duration of the audio is indeed 8.6 seconds
-        // as indicated in the audio subtitle on the audio list displayed
-        // on the plalist download view.
-
-        // First, get the 'aaa' audio ListTile Text widget finder and
-        // tap on it
-
-        final Finder aaaAudioListTileTextWidgetFinder = find.text('aaa');
-
-        await tester.tap(aaaAudioListTileTextWidgetFinder);
-        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
-          tester: tester,
-        );
-
-        String aaaAudioTitleText = (tester.widget<Text>(
-                find.byKey(const Key('audioPlayerViewCurrentAudioTitle'))))
-            .data!;
-
-        String aaaAudioDurationStr = _extractDuration(aaaAudioTitleText);
-
-        expect(aaaAudioDurationStr, '0:09');
-
-        // Go back to the playlist download view
-        final Finder appScreenNavigationButton =
-            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-        await tester.tap(appScreenNavigationButton);
-        await tester.pumpAndSettle();
-
-        await IntegrationTestUtil.verifyAudioInfoDialog(
-          tester: tester,
-          audioType: AudioType.textToSpeech,
-          validVideoTitleOrAudioTitle: 'aaa',
-          audioDownloadDateTime:
-              "07/09/2025 07:37", // this is the imported date time
-          copiedToPlaylistTitle: 'local',
-          audioDuration: '0:00:08.6',
-          audioFileSize: '68 KB',
-          isMusicQuality: false, // Is spoken quality
-          audioPlaySpeed: '1.25',
-          audioVolume: '50.0 %',
-          audioCommentNumber: 2,
-        );
-
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kApplicationPathWindowsTest,
-        );
-      });
-    });
-  });
 
   group(
       'Restore playlist, comments, pictures and settings from zip file menu test',
       () {
+    group(
+        'Save and restore text to speech audio mp3 files to zip files for all playlists or unique playlist test',
+        () {
+      group('Handling multiple playlists', () {
+        testWidgets(
+            '''Not replace existing playlists. Set download date to today's date without time. The less old value
+          awailable by default is 10/01/2024 18:18 and will be changed to today's date without time. Since the
+          converted text to speech audio was modified today after 00:00 time, this audio will be the unique audio
+          added to the created mp3 zip.
+          
+          Then delete the 2 playlists and restore again using audioLearn_2025-09-07_07_45_02.zip as well as
+          audioLearn_mp3_from_2025-09-07_07_37_32_on_2025-09-24_13_54_22.zip. Then verify the restored 'aaa'
+          converted audio duration. Then restore using the two last created zip (playlists and mp3) and verify that
+          the version of the 'aaa' converted audio was correctly updated.''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          final String sourceRootPath =
+              "$kDownloadAppTestSavedDataDir${path.separator}restore_existing_playlists_with_new_audios_android_emulator";
+
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath: sourceRootPath,
+            destinationRootPath: kApplicationPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+          // Replace the platform instance with your mock
+          MockFilePicker mockFilePicker = MockFilePicker();
+          FilePicker.platform = mockFilePicker;
+
+          await app.main();
+          await tester.pumpAndSettle();
+
+          // Restoring the initial 'local' and "urgent_actus_17-12-2023" playlists and their mp3 files
+          await _restorePaylistsAndTheirMp3(
+            tester: tester,
+            sourceRootPath: kApplicationPathWindowsTest,
+            restorablePlaylistsZipFileName:
+                'audioLearn_2025-09-07_07_45_02.zip',
+            restorableMp3ZipFileName:
+                'audioLearn_mp3_from_2025-08-12_16_29_25_on_2025-09-07_07_46_29.zip',
+            mockFilePicker: mockFilePicker,
+          );
+
+          const String unselectedYoutubePlaylistTitle =
+              "urgent_actus_17-12-2023";
+
+          // Open the convert text to audio dialog
+          await IntegrationTestUtil.typeOnPlaylistMenuItem(
+            tester: tester,
+            playlistTitle: unselectedYoutubePlaylistTitle,
+            playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+          );
+
+          // Find the text field finder
+          final Finder textFieldFinder =
+              find.byKey(const Key('textToConvertTextField'));
+
+          // Now enter the text to convert to audio
+          await tester.enterText(textFieldFinder,
+              "Nouvelle description des éléments restaurés {{{{ avec 4 secondes de pause. Et une fin de phrase.");
+          await tester.pump();
+
+          // Now click on Create MP3 button to create the audio
+          Finder createMP3ButtonFinder =
+              find.byKey(const Key('create_audio_file_button'));
+          await tester.tap(createMP3ButtonFinder);
+          await tester.pumpAndSettle();
+
+          const String enteredFileNameNoExt = 'aaa';
+          Finder mp3FileNameTextFieldFinder =
+              find.byKey(const Key('textToConvertTextField'));
+
+          await tester.enterText(
+              mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+          await tester.pumpAndSettle();
+
+          // Tap on the create mp3 button
+          Finder saveMP3FileButton =
+              find.byKey(const Key('create_mp3_button_key'));
+          await tester.tap(saveMP3FileButton);
+          await Future.delayed(const Duration(seconds: 2));
+          await tester.pumpAndSettle();
+
+          // Now check the confirm dialog which indicates that the saved
+          // file name already exist and ask to confirm or cancel the
+          // save operation.
+          await IntegrationTestUtil.verifyConfirmActionDialog(
+            tester: tester,
+            confirmActionDialogTitle:
+                "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$unselectedYoutubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
+            confirmActionDialogMessagePossibleLst: [""],
+            closeDialogWithConfirmButton: true,
+          );
+
+          await Future.delayed(const Duration(seconds: 2));
+          await tester.pumpAndSettle();
+
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in Youtube playlist \"$unselectedYoutubePlaylistTitle\".",
+            isWarningConfirming: true,
+          );
+
+          // Now close the convert text to audio dialog by tapping
+          // the Ok button
+          Finder cancelButtonFinder =
+              find.byKey(const Key('convertTextToAudioCloseButton'));
+          await tester.tap(cancelButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Now save the playlists ...
+
+          // Setting the path value returned by the FilePicker mock.
+          mockFilePicker.setPathToSelect(
+            pathToSelectStr: kApplicationPathWindowsTest,
+          );
+
+          // Tap the appbar leading popup menu button Then, the 'Save
+          // Playlists, Comments, Pictures and Settings to ZIP File' menu
+          // is selected.
+          await IntegrationTestUtil.typeOnAppbarMenuItem(
+            tester: tester,
+            appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
+          );
+
+          // Tap on the Ok button
+          await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+          await tester.pumpAndSettle();
+
+          String? warningDialogMessage = tester
+              .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+              .data;
+          String playlistsNewSavedZipFileName =
+              _extractZipFileName(warningDialogMessage!);
+
+          // Tap the warning confirmation dialog Ok button to close it
+          await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+          await tester.pumpAndSettle();
+
+          // And save the playlists mp3 files ...
+
+          // Tap the appbar leading popup menu button Then, the 'Save
+          // Playlists Audio's MP3 to ZIP File' menu is selected.
+          await IntegrationTestUtil.typeOnAppbarMenuItem(
+            tester: tester,
+            appbarMenuKeyStr: 'appBarMenuSavePlaylistsAudioMp3FilesToZip',
+          );
+
+          await IntegrationTestUtil.verifySetValueToTargetDialog(
+            tester: tester,
+            dialogTitle: 'Set the Download Date',
+            dialogMessage:
+                'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+          );
+
+          const String oldestAudioDownloadDateTime = '10/01/2024 18:18';
+
+          expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
+
+          Finder setValueToTargetDialogFinder =
+              find.byType(SetValueToTargetDialog);
+
+          // This finder obtained as descendant of its enclosing dialog does
+          // enable to change the value of the TextField
+          Finder setValueToTargetDialogEditTextFinder = find.descendant(
+            of: setValueToTargetDialogFinder,
+            matching: find.byType(TextField),
+          );
+
+          // Now change the download date in the dialog
+          final String audioOldestDownloadDateToday =
+              DateFormat('dd/MM/yyyy').format(DateTime.now());
+          final String audioOldestDownloadDateTodayForFileNName =
+              DateFormat('yyyy-MM-dd').format(DateTime.now());
+          TextField textField =
+              tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
+
+          textField.controller!.text = audioOldestDownloadDateToday;
+          await tester.pumpAndSettle();
+
+          // Tap on the Ok button to set download date time.
+          await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+          await tester.pumpAndSettle();
+
+          DateTime now = DateTime.now();
+
+          // Now tap on the confirm dialog which indicates the estimated
+          // save audio mp3 to zip duration ok buton to accept the save
+          // execution.
+          await tester.tap(find.byKey(const Key('confirmButton')));
+          await tester.pump();
+
+          // Only works if tester.pump() is used instead of
+          // tester.pumpAndSettle()
+          expect(
+            find.text("Saving multiple playlists audio files to ZIP ..."),
+            findsOneWidget,
+          );
+          expect(
+            tester
+                .widget<Text>(find.byKey(const Key('saving_please_wait')).last)
+                .data!,
+            contains(
+              "Should approxim. take ",
+            ),
+          );
+
+          // Wait for completion
+          await tester.pumpAndSettle();
+
+          Text warningDialogTitle =
+              tester.widget(find.byKey(const Key('warningDialogTitle')).last);
+
+          expect(warningDialogTitle.data, 'CONFIRMATION');
+
+          String actualMessage = tester
+              .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+              .data!;
+          expect(
+              actualMessage,
+              contains(
+                  "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68 KB and total duration: 0:00:08.6."));
+          expect(
+              actualMessage, contains("Save operation real duration: 0:00:"));
+          expect(actualMessage, contains("number of bytes saved per second: "));
+          expect(
+              actualMessage, contains(", number of created ZIP file(s): 1."));
+          expect(
+            actualMessage,
+            anyOf([
+              contains(
+                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now)}.zip\"."),
+              contains(
+                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now.subtract(const Duration(seconds: 1)))}.zip\"."),
+            ]),
+          );
+
+          String playlistsMp3NewSavedZipFileName = _extractMp3ZipFileName(
+            confirmationMessage: actualMessage,
+            zipStartFileName: 'audioLearn',
+          );
+
+          // Tap the warning confirmation dialog Ok button to close it
+          await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+          await tester.pumpAndSettle();
+
+          // Now delete the two 'local' and "urgent_actus_17-12-2023" playlists
+          // (their mp3 files are also deleted)
+
+          await IntegrationTestUtil.typeOnPlaylistMenuItem(
+              tester: tester,
+              playlistTitle: 'local',
+              playlistMenuKeyStr: 'popup_menu_delete_playlist',
+              dragToBottom: true);
+
+          // Now find the confirm button of the delete playlist confirm
+          // dialog and tap on it
+          await tester.tap(find.byKey(const Key('confirmButton')));
+          await tester.pumpAndSettle();
+
+          await IntegrationTestUtil.typeOnPlaylistMenuItem(
+              tester: tester,
+              playlistTitle: 'urgent_actus_17-12-2023',
+              playlistMenuKeyStr: 'popup_menu_delete_playlist',
+              dragToBottom: true);
+
+          // Now find the confirm button of the delete playlist confirm
+          // dialog and tap on it
+          await tester.tap(find.byKey(const Key('confirmButton')));
+          await tester.pumpAndSettle();
+
+          // Restoring the initial 'local' and "urgent_actus_17-12-2023" playlists and their mp3 files
+          await _restorePaylistsAndTheirMp3(
+            tester: tester,
+            sourceRootPath: kApplicationPathWindowsTest,
+            restorablePlaylistsZipFileName:
+                'audioLearn_2025-09-07_07_45_02.zip',
+            restorableMp3ZipFileName:
+                'audioLearn_mp3_from_2025-08-12_16_29_25_on_2025-09-07_07_46_29.zip',
+            mockFilePicker: mockFilePicker,
+          );
+
+          // Select the "urgent_actus_17-12-2023" playlist
+          await IntegrationTestUtil.selectPlaylist(
+            tester: tester,
+            playlistToSelectTitle: unselectedYoutubePlaylistTitle,
+          );
+
+          // Now verify that the restored converted audio 'aaa' has a
+          // duration of 1.8 seconds
+
+          // Find the audio list widget using its key
+          Finder listFinder = find.byKey(const Key('audio_list'));
+          // Perform the scroll action
+          await tester.drag(
+              listFinder,
+              const Offset(
+                  0, 300)); // Positive value for vertical drag to scroll up
+          await tester.pumpAndSettle();
+
+          // Verify the converted audio sub title in the selected Youtube
+          // playlist audio list
+          IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+            tester: tester,
+            audioSubTitlesAcceptableLst: [
+              '0:00:01.8 14 KB converted on 07/09/2025 at 07:37',
+            ],
+            firstAudioListTileIndex: 3,
+          );
+
+          // Now restoring the last saved 'local' and "urgent_actus_17-12-2023" playlists and
+          // their mp3 files without replacing existing playlists
+          await _restorePaylistsAndTheirMp3(
+            tester: tester,
+            sourceRootPath: kApplicationPathWindowsTest,
+            restorablePlaylistsZipFileName: playlistsNewSavedZipFileName,
+            restorableMp3ZipFileName: playlistsMp3NewSavedZipFileName,
+            mockFilePicker: mockFilePicker,
+            doReplaceExistingPlaylists: false,
+            restorePlaylistsConfirmationMessage:
+                'Restored 0 playlist, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 1 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "$kApplicationPathWindowsTest${path.separator}$playlistsNewSavedZipFileName".',
+            restoreMp3ConfirmationMessage:
+                "Restored 1 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistsMp3NewSavedZipFileName\".",
+          );
+
+          // Now verify that the restored converted audio 'aaa' has a
+          // duration of 8.6 seconds
+
+          // Find the audio list widget using its key
+          listFinder = find.byKey(const Key('audio_list'));
+          // Perform the scroll action
+          await tester.drag(
+              listFinder,
+              const Offset(
+                  0, 300)); // Positive value for vertical drag to scroll up
+          await tester.pumpAndSettle();
+
+          // Verify the converted audio sub title in the selected Youtube
+          // playlist audio list
+          IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+            tester: tester,
+            audioSubTitlesAcceptableLst: [
+              '0:00:08.6 68 KB converted on 07/09/2025 at 07:37',
+            ],
+            firstAudioListTileIndex: 3,
+          );
+
+          // Now we want to tap on the 'aaa' audio in order to open the
+          // AudioPlayerView displaying the audio. The purpose is to
+          // verify that the duration of the audio is indeed 8.6 seconds
+          // as indicated in the audio subtitle on the audio list displayed
+          // on the plalist download view.
+
+          // First, get the 'aaa' audio ListTile Text widget finder and
+          // tap on it
+
+          final Finder aaaAudioListTileTextWidgetFinder = find.text('aaa');
+
+          await tester.tap(aaaAudioListTileTextWidgetFinder);
+          await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+            tester: tester,
+          );
+
+          String aaaAudioTitleText = (tester.widget<Text>(
+                  find.byKey(const Key('audioPlayerViewCurrentAudioTitle'))))
+              .data!;
+
+          String aaaAudioDurationStr = _extractDuration(aaaAudioTitleText);
+
+          expect(aaaAudioDurationStr, '0:09');
+
+          // Go back to the playlist download view
+          final Finder appScreenNavigationButton =
+              find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+          await tester.tap(appScreenNavigationButton);
+          await tester.pumpAndSettle();
+
+          await IntegrationTestUtil.verifyAudioInfoDialog(
+            tester: tester,
+            audioType: AudioType.textToSpeech,
+            validVideoTitleOrAudioTitle: 'aaa',
+            audioDownloadDateTime:
+                "07/09/2025 07:37", // this is the imported date time
+            copiedToPlaylistTitle: 'local',
+            audioDuration: '0:00:08.6',
+            audioFileSize: '68 KB',
+            isMusicQuality: false, // Is spoken quality
+            audioPlaySpeed: '1.25',
+            audioVolume: '50.0 %',
+            audioCommentNumber: 2,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Replace existing playlist(s). Set download date to today's date without time. The less old value
+          awailable by default is 10/01/2024 18:18 and will be changed to today's date without time. Since the
+          converted text to speech audio was modified today after 00:00 time, this audio will be the unique audio
+          added to the created mp3 zip.
+          
+          Then delete the 2 playlists and restore again using audioLearn_2025-09-07_07_45_02.zip as well as
+          audioLearn_mp3_from_2025-09-07_07_37_32_on_2025-09-24_13_54_22.zip. Then verify the restored 'aaa'
+          converted audio duration. Then restore using the two last created zip (playlists and mp3) and verify that
+          the version of the 'aaa' converted audio was correctly updated.''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          final String sourceRootPath =
+              "$kDownloadAppTestSavedDataDir${path.separator}restore_existing_playlists_with_new_audios_android_emulator";
+
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath: sourceRootPath,
+            destinationRootPath: kApplicationPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+          // Replace the platform instance with your mock
+          MockFilePicker mockFilePicker = MockFilePicker();
+          FilePicker.platform = mockFilePicker;
+
+          await app.main();
+          await tester.pumpAndSettle();
+
+          // Restoring the initial 'local' and "urgent_actus_17-12-2023" playlists and their mp3 files
+          await _restorePaylistsAndTheirMp3(
+            tester: tester,
+            sourceRootPath: kApplicationPathWindowsTest,
+            restorablePlaylistsZipFileName:
+                'audioLearn_2025-09-07_07_45_02.zip',
+            restorableMp3ZipFileName:
+                'audioLearn_mp3_from_2025-08-12_16_29_25_on_2025-09-07_07_46_29.zip',
+            mockFilePicker: mockFilePicker,
+          );
+
+          const String unselectedYoutubePlaylistTitle =
+              "urgent_actus_17-12-2023";
+
+          // Open the convert text to audio dialog
+          await IntegrationTestUtil.typeOnPlaylistMenuItem(
+            tester: tester,
+            playlistTitle: unselectedYoutubePlaylistTitle,
+            playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+          );
+
+          // Find the text field finder
+          final Finder textFieldFinder =
+              find.byKey(const Key('textToConvertTextField'));
+
+          // Now enter the text to convert to audio
+          await tester.enterText(textFieldFinder,
+              "Nouvelle description des éléments restaurés {{{{ avec 4 secondes de pause. Et une fin de phrase.");
+          await tester.pump();
+
+          // Now click on Create MP3 button to create the audio
+          Finder createMP3ButtonFinder =
+              find.byKey(const Key('create_audio_file_button'));
+          await tester.tap(createMP3ButtonFinder);
+          await tester.pumpAndSettle();
+
+          const String enteredFileNameNoExt = 'aaa';
+          Finder mp3FileNameTextFieldFinder =
+              find.byKey(const Key('textToConvertTextField'));
+
+          await tester.enterText(
+              mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+          await tester.pumpAndSettle();
+
+          // Tap on the create mp3 button
+          Finder saveMP3FileButton =
+              find.byKey(const Key('create_mp3_button_key'));
+          await tester.tap(saveMP3FileButton);
+          await Future.delayed(const Duration(seconds: 2));
+          await tester.pumpAndSettle();
+
+          // Now check the confirm dialog which indicates that the saved
+          // file name already exist and ask to confirm or cancel the
+          // save operation.
+          await IntegrationTestUtil.verifyConfirmActionDialog(
+            tester: tester,
+            confirmActionDialogTitle:
+                "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$unselectedYoutubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
+            confirmActionDialogMessagePossibleLst: [""],
+            closeDialogWithConfirmButton: true,
+          );
+
+          await Future.delayed(const Duration(seconds: 2));
+          await tester.pumpAndSettle();
+
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in Youtube playlist \"$unselectedYoutubePlaylistTitle\".",
+            isWarningConfirming: true,
+          );
+
+          // Now close the convert text to audio dialog by tapping
+          // the Ok button
+          Finder cancelButtonFinder =
+              find.byKey(const Key('convertTextToAudioCloseButton'));
+          await tester.tap(cancelButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Now save the playlists ...
+
+          // Setting the path value returned by the FilePicker mock.
+          mockFilePicker.setPathToSelect(
+            pathToSelectStr: kApplicationPathWindowsTest,
+          );
+
+          // Tap the appbar leading popup menu button Then, the 'Save
+          // Playlists, Comments, Pictures and Settings to ZIP File' menu
+          // is selected.
+          await IntegrationTestUtil.typeOnAppbarMenuItem(
+            tester: tester,
+            appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
+          );
+
+          // Tap on the Ok button
+          await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+          await tester.pumpAndSettle();
+
+          String? warningDialogMessage = tester
+              .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+              .data;
+          String playlistsNewSavedZipFileName =
+              _extractZipFileName(warningDialogMessage!);
+
+          // Tap the warning confirmation dialog Ok button to close it
+          await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+          await tester.pumpAndSettle();
+
+          // And save the playlists mp3 files ...
+
+          // Tap the appbar leading popup menu button Then, the 'Save
+          // Playlists Audio's MP3 to ZIP File' menu is selected.
+          await IntegrationTestUtil.typeOnAppbarMenuItem(
+            tester: tester,
+            appbarMenuKeyStr: 'appBarMenuSavePlaylistsAudioMp3FilesToZip',
+          );
+
+          await IntegrationTestUtil.verifySetValueToTargetDialog(
+            tester: tester,
+            dialogTitle: 'Set the Download Date',
+            dialogMessage:
+                'The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+          );
+
+          const String oldestAudioDownloadDateTime = '10/01/2024 18:18';
+
+          expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
+
+          Finder setValueToTargetDialogFinder =
+              find.byType(SetValueToTargetDialog);
+
+          // This finder obtained as descendant of its enclosing dialog does
+          // enable to change the value of the TextField
+          Finder setValueToTargetDialogEditTextFinder = find.descendant(
+            of: setValueToTargetDialogFinder,
+            matching: find.byType(TextField),
+          );
+
+          // Now change the download date in the dialog
+          final String audioOldestDownloadDateToday =
+              DateFormat('dd/MM/yyyy').format(DateTime.now());
+          final String audioOldestDownloadDateTodayForFileNName =
+              DateFormat('yyyy-MM-dd').format(DateTime.now());
+          TextField textField =
+              tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
+
+          textField.controller!.text = audioOldestDownloadDateToday;
+          await tester.pumpAndSettle();
+
+          // Tap on the Ok button to set download date time.
+          await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+          await tester.pumpAndSettle();
+
+          DateTime now = DateTime.now();
+
+          // Now tap on the confirm dialog which indicates the estimated
+          // save audio mp3 to zip duration ok buton to accept the save
+          // execution.
+          await tester.tap(find.byKey(const Key('confirmButton')));
+          await tester.pump();
+
+          // Only works if tester.pump() is used instead of
+          // tester.pumpAndSettle()
+          expect(
+            find.text("Saving multiple playlists audio files to ZIP ..."),
+            findsOneWidget,
+          );
+          expect(
+            tester
+                .widget<Text>(find.byKey(const Key('saving_please_wait')).last)
+                .data!,
+            contains(
+              "Should approxim. take ",
+            ),
+          );
+
+          // Wait for completion
+          await tester.pumpAndSettle();
+
+          Text warningDialogTitle =
+              tester.widget(find.byKey(const Key('warningDialogTitle')).last);
+
+          expect(warningDialogTitle.data, 'CONFIRMATION');
+
+          String actualMessage = tester
+              .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+              .data!;
+          expect(
+              actualMessage,
+              contains(
+                  "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68 KB and total duration: 0:00:08.6."));
+          expect(
+              actualMessage, contains("Save operation real duration: 0:00:"));
+          expect(actualMessage, contains("number of bytes saved per second: "));
+          expect(
+              actualMessage, contains(", number of created ZIP file(s): 1."));
+          expect(
+            actualMessage,
+            anyOf([
+              contains(
+                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now)}.zip\"."),
+              contains(
+                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now.subtract(const Duration(seconds: 1)))}.zip\"."),
+            ]),
+          );
+
+          String playlistsMp3NewSavedZipFileName = _extractMp3ZipFileName(
+            confirmationMessage: actualMessage,
+            zipStartFileName: 'audioLearn',
+          );
+
+          // Tap the warning confirmation dialog Ok button to close it
+          await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+          await tester.pumpAndSettle();
+
+          // Now delete the two 'local' and "urgent_actus_17-12-2023" playlists
+          // (their mp3 files are also deleted)
+
+          await IntegrationTestUtil.typeOnPlaylistMenuItem(
+              tester: tester,
+              playlistTitle: 'local',
+              playlistMenuKeyStr: 'popup_menu_delete_playlist',
+              dragToBottom: true);
+
+          // Now find the confirm button of the delete playlist confirm
+          // dialog and tap on it
+          await tester.tap(find.byKey(const Key('confirmButton')));
+          await tester.pumpAndSettle();
+
+          await IntegrationTestUtil.typeOnPlaylistMenuItem(
+              tester: tester,
+              playlistTitle: 'urgent_actus_17-12-2023',
+              playlistMenuKeyStr: 'popup_menu_delete_playlist',
+              dragToBottom: true);
+
+          // Now find the confirm button of the delete playlist confirm
+          // dialog and tap on it
+          await tester.tap(find.byKey(const Key('confirmButton')));
+          await tester.pumpAndSettle();
+
+          // Restoring the initial 'local' and "urgent_actus_17-12-2023" playlists and their mp3 files
+          await _restorePaylistsAndTheirMp3(
+            tester: tester,
+            sourceRootPath: kApplicationPathWindowsTest,
+            restorablePlaylistsZipFileName:
+                'audioLearn_2025-09-07_07_45_02.zip',
+            restorableMp3ZipFileName:
+                'audioLearn_mp3_from_2025-08-12_16_29_25_on_2025-09-07_07_46_29.zip',
+            mockFilePicker: mockFilePicker,
+          );
+
+          // Select the "urgent_actus_17-12-2023" playlist
+          await IntegrationTestUtil.selectPlaylist(
+            tester: tester,
+            playlistToSelectTitle: unselectedYoutubePlaylistTitle,
+          );
+
+          // Now verify that the restored converted audio 'aaa' has a
+          // duration of 1.8 seconds
+
+          // Find the audio list widget using its key
+          Finder listFinder = find.byKey(const Key('audio_list'));
+          // Perform the scroll action
+          await tester.drag(
+              listFinder,
+              const Offset(
+                  0, 300)); // Positive value for vertical drag to scroll up
+          await tester.pumpAndSettle();
+
+          // Verify the converted audio sub title in the selected Youtube
+          // playlist audio list
+          IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+            tester: tester,
+            audioSubTitlesAcceptableLst: [
+              '0:00:01.8 14 KB converted on 07/09/2025 at 07:37',
+            ],
+            firstAudioListTileIndex: 3,
+          );
+
+          // Now restoring the last saved 'local' and "urgent_actus_17-12-2023" playlists and
+          // their mp3 files with replacing existing playlists
+          await _restorePaylistsAndTheirMp3(
+            tester: tester,
+            sourceRootPath: kApplicationPathWindowsTest,
+            restorablePlaylistsZipFileName: playlistsNewSavedZipFileName,
+            restorableMp3ZipFileName: playlistsMp3NewSavedZipFileName,
+            mockFilePicker: mockFilePicker,
+            doReplaceExistingPlaylists: true,
+            doDeleteExistingPlaylists: false,
+            restorePlaylistsConfirmationMessage:
+                'Restored 2 playlist, 4 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 10 audio reference(s) and 1 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "$kApplicationPathWindowsTest${path.separator}$playlistsNewSavedZipFileName".',
+            restoreMp3ConfirmationMessage:
+                "Restored 1 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistsMp3NewSavedZipFileName\".",
+          );
+
+          // Now verify that the restored converted audio 'aaa' has a
+          // duration of 8.6 seconds
+
+          // Find the audio list widget using its key
+          listFinder = find.byKey(const Key('audio_list'));
+          // Perform the scroll action
+          await tester.drag(
+              listFinder,
+              const Offset(
+                  0, 300)); // Positive value for vertical drag to scroll up
+          await tester.pumpAndSettle();
+
+          // Verify the converted audio sub title in the selected Youtube
+          // playlist audio list
+          IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+            tester: tester,
+            audioSubTitlesAcceptableLst: [
+              '0:00:08.6 68 KB converted on 07/09/2025 at 07:37',
+            ],
+            firstAudioListTileIndex: 3,
+          );
+
+          // Now we want to tap on the 'aaa' audio in order to open the
+          // AudioPlayerView displaying the audio. The purpose is to
+          // verify that the duration of the audio is indeed 8.6 seconds
+          // as indicated in the audio subtitle on the audio list displayed
+          // on the plalist download view.
+
+          // First, get the 'aaa' audio ListTile Text widget finder and
+          // tap on it
+
+          final Finder aaaAudioListTileTextWidgetFinder = find.text('aaa');
+
+          await tester.tap(aaaAudioListTileTextWidgetFinder);
+          await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+            tester: tester,
+          );
+
+          String aaaAudioTitleText = (tester.widget<Text>(
+                  find.byKey(const Key('audioPlayerViewCurrentAudioTitle'))))
+              .data!;
+
+          String aaaAudioDurationStr = _extractDuration(aaaAudioTitleText);
+
+          expect(aaaAudioDurationStr, '0:09');
+
+          // Go back to the playlist download view
+          final Finder appScreenNavigationButton =
+              find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+          await tester.tap(appScreenNavigationButton);
+          await tester.pumpAndSettle();
+
+          await IntegrationTestUtil.verifyAudioInfoDialog(
+            tester: tester,
+            audioType: AudioType.textToSpeech,
+            validVideoTitleOrAudioTitle: 'aaa',
+            audioDownloadDateTime:
+                "07/09/2025 07:37", // this is the imported date time
+            copiedToPlaylistTitle: 'local',
+            audioDuration: '0:00:08.6',
+            audioFileSize: '68 KB',
+            isMusicQuality: false, // Is spoken quality
+            audioPlaySpeed: '1.25',
+            audioVolume: '50.0 %',
+            audioCommentNumber: 2,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+      });
+      group('Handling unique playlist', () {
+        testWidgets(
+            '''Not replace existing playlist. Set download date to today's date without time. The less old value
+          awailable by default is 10/01/2024 18:18 and will be changed to today's date without time. Since the
+          converted text to speech audio was modified today after 00:00 time, this audio will be the unique audio
+          added to the created mp3 zip.
+          
+          Then delete the 2 playlists and restore again using audioLearn_2025-09-07_07_45_02.zip as well as
+          audioLearn_mp3_from_2025-09-07_07_37_32_on_2025-09-24_13_54_22.zip. Then verify the restored 'aaa'
+          converted audio duration. Then restore using the two last created zip (playlists and mp3) and verify that
+          the version of the 'aaa' converted audio was correctly updated.''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          final String sourceRootPath =
+              "$kDownloadAppTestSavedDataDir${path.separator}restore_existing_playlists_with_new_audios_android_emulator";
+
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath: sourceRootPath,
+            destinationRootPath: kApplicationPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+          // Replace the platform instance with your mock
+          MockFilePicker mockFilePicker = MockFilePicker();
+          FilePicker.platform = mockFilePicker;
+
+          await app.main();
+          await tester.pumpAndSettle();
+
+          const String youtubePlaylistTitle = "urgent_actus_17-12-2023";
+
+          // Restoring the initial "urgent_actus_17-12-2023" playlist and its mp3 files
+          await _restorePaylistsAndTheirMp3(
+            tester: tester,
+            sourceRootPath: kApplicationPathWindowsTest,
+            restorablePlaylistsZipFileName: '$youtubePlaylistTitle.zip',
+            restorableMp3ZipFileName:
+                '${youtubePlaylistTitle}_mp3_from_2025-08-12_16_29_25_on_2025-09-28_21_50_57.zip',
+            mockFilePicker: mockFilePicker,
+          );
+
+          // Open the convert text to audio dialog
+          await IntegrationTestUtil.typeOnPlaylistMenuItem(
+            tester: tester,
+            playlistTitle: youtubePlaylistTitle,
+            playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+          );
+
+          // Find the text field finder
+          final Finder textFieldFinder =
+              find.byKey(const Key('textToConvertTextField'));
+
+          // Now enter the text to convert to audio
+          await tester.enterText(textFieldFinder,
+              "Nouvelle description des éléments restaurés {{{{ avec 4 secondes de pause. Et une fin de phrase.");
+          await tester.pump();
+
+          // Now click on Create MP3 button to create the audio
+          Finder createMP3ButtonFinder =
+              find.byKey(const Key('create_audio_file_button'));
+          await tester.tap(createMP3ButtonFinder);
+          await tester.pumpAndSettle();
+
+          const String enteredFileNameNoExt = 'aaa';
+          Finder mp3FileNameTextFieldFinder =
+              find.byKey(const Key('textToConvertTextField'));
+
+          await tester.enterText(
+              mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+          await tester.pumpAndSettle();
+
+          // Tap on the create mp3 button
+          Finder saveMP3FileButton =
+              find.byKey(const Key('create_mp3_button_key'));
+          await tester.tap(saveMP3FileButton);
+          await Future.delayed(const Duration(seconds: 2));
+          await tester.pumpAndSettle();
+
+          // Now check the confirm dialog which indicates that the saved
+          // file name already exist and ask to confirm or cancel the
+          // save operation.
+          await IntegrationTestUtil.verifyConfirmActionDialog(
+            tester: tester,
+            confirmActionDialogTitle:
+                "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$youtubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
+            confirmActionDialogMessagePossibleLst: [""],
+            closeDialogWithConfirmButton: true,
+          );
+
+          await Future.delayed(const Duration(seconds: 2));
+          await tester.pumpAndSettle();
+
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in Youtube playlist \"$youtubePlaylistTitle\".",
+            isWarningConfirming: true,
+          );
+
+          // Now close the convert text to audio dialog by tapping
+          // the Ok button
+          Finder cancelButtonFinder =
+              find.byKey(const Key('convertTextToAudioCloseButton'));
+          await tester.tap(cancelButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Now save the playlist ...
+
+          // But first rename the existing unique playlist zip file so
+          // that it is not overwritten by the next save operation
+          final String initialUniquePlaylistZipFileName =
+              '$youtubePlaylistTitle.zip';
+          final String renamedInitialUniquePlaylistZipFileName =
+              '${youtubePlaylistTitle}_initial.zip';
+          File('$kApplicationPathWindowsTest${path.separator}$initialUniquePlaylistZipFileName')
+              .renameSync(
+                  '$kApplicationPathWindowsTest${path.separator}$renamedInitialUniquePlaylistZipFileName');
+
+          // Setting the path value returned by the FilePicker mock.
+          mockFilePicker.setPathToSelect(
+            pathToSelectStr: kApplicationPathWindowsTest,
+          );
+
+          await IntegrationTestUtil.typeOnPlaylistMenuItem(
+            tester: tester,
+            playlistTitle: youtubePlaylistTitle,
+            playlistMenuKeyStr:
+                'popup_menu_save_playlist_comments_pictures_to_zip',
+          );
+
+          // Tap the warning confirmation dialog Ok button to close it
+          await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+          await tester.pumpAndSettle();
+
+          // And save the playlist mp3 files ...
+
+          await IntegrationTestUtil.typeOnPlaylistMenuItem(
+            tester: tester,
+            playlistTitle: youtubePlaylistTitle,
+            playlistMenuKeyStr:
+                'popup_menu_save_playlist_audio_mp3_files_to_zip',
+          );
+
+          await IntegrationTestUtil.verifySetValueToTargetDialog(
+            tester: tester,
+            dialogTitle: 'Set the Download Date',
+            dialogMessage:
+                'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+          );
+
+          const String oldestAudioDownloadDateTime = '12/08/2025 16:29';
+
+          expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
+
+          Finder setValueToTargetDialogFinder =
+              find.byType(SetValueToTargetDialog);
+
+          // This finder obtained as descendant of its enclosing dialog does
+          // enable to change the value of the TextField
+          Finder setValueToTargetDialogEditTextFinder = find.descendant(
+            of: setValueToTargetDialogFinder,
+            matching: find.byType(TextField),
+          );
+
+          // Now change the download date in the dialog
+          final String audioOldestDownloadDateToday =
+              DateFormat('dd/MM/yyyy').format(DateTime.now());
+          final String audioOldestDownloadDateTodayForFileNName =
+              DateFormat('yyyy-MM-dd').format(DateTime.now());
+          TextField textField =
+              tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
+
+          textField.controller!.text = audioOldestDownloadDateToday;
+          await tester.pumpAndSettle();
+
+          // Tap on the Ok button to set download date time.
+          await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+          await tester.pumpAndSettle();
+
+          DateTime now = DateTime.now();
+
+          // Now tap on the confirm dialog which indicates the estimated
+          // save audio mp3 to zip duration ok buton to accept the save
+          // execution.
+          await tester.tap(find.byKey(const Key('confirmButton')));
+          await tester.pump();
+
+          // Only works if tester.pump() is used instead of
+          // tester.pumpAndSettle()
+          expect(
+            find.text("Saving $youtubePlaylistTitle audio files to ZIP ..."),
+            findsOneWidget,
+          );
+          expect(
+            tester
+                .widget<Text>(find.byKey(const Key('saving_please_wait')).last)
+                .data!,
+            contains(
+              "Should approxim. take ",
+            ),
+          );
+
+          // Wait for completion
+          await tester.pumpAndSettle();
+
+          Text warningDialogTitle =
+              tester.widget(find.byKey(const Key('warningDialogTitle')).last);
+
+          expect(warningDialogTitle.data, 'CONFIRMATION');
+
+          String actualMessage = tester
+              .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+              .data!;
+          expect(
+              actualMessage,
+              contains(
+                  "Saved to ZIP file(s) unique playlist audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68 KB and total duration: 0:00:08.6."));
+          expect(
+              actualMessage, contains("Save operation real duration: 0:00:"));
+          expect(actualMessage, contains("number of bytes saved per second: "));
+          expect(
+              actualMessage, contains(", number of created ZIP file(s): 1."));
+          expect(
+            actualMessage,
+            anyOf([
+              contains(
+                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}${youtubePlaylistTitle}_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now)}.zip\"."),
+              contains(
+                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}${youtubePlaylistTitle}_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now.subtract(const Duration(seconds: 1)))}.zip\"."),
+            ]),
+          );
+
+          String playlistMp3NewSavedZipFileName = _extractMp3ZipFileName(
+            confirmationMessage: actualMessage,
+            zipStartFileName: youtubePlaylistTitle,
+          );
+
+          // Tap the warning confirmation dialog Ok button to close it
+          await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+          await tester.pumpAndSettle();
+
+          // Now delete the "urgent_actus_17-12-2023" playlist (their
+          // mp3 files are also deleted)
+
+          await IntegrationTestUtil.typeOnPlaylistMenuItem(
+              tester: tester,
+              playlistTitle: youtubePlaylistTitle,
+              playlistMenuKeyStr: 'popup_menu_delete_playlist',
+              dragToBottom: true);
+
+          // Now find the confirm button of the delete playlist confirm
+          // dialog and tap on it
+          await tester.tap(find.byKey(const Key('confirmButton')));
+          await tester.pumpAndSettle();
+
+          // Restoring the initial "urgent_actus_17-12-2023" playlist and its mp3 files
+          await _restorePaylistsAndTheirMp3(
+            tester: tester,
+            sourceRootPath: kApplicationPathWindowsTest,
+            restorablePlaylistsZipFileName:
+                renamedInitialUniquePlaylistZipFileName,
+            restorableMp3ZipFileName:
+                '${youtubePlaylistTitle}_mp3_from_2025-08-12_16_29_25_on_2025-09-28_21_50_57.zip',
+            mockFilePicker: mockFilePicker,
+          );
+
+          // Now verify that the restored converted audio 'aaa' has a
+          // duration of 1.8 seconds
+
+          // Find the audio list widget using its key
+          Finder listFinder = find.byKey(const Key('audio_list'));
+          // Perform the scroll action
+          await tester.drag(
+              listFinder,
+              const Offset(
+                  0, 300)); // Positive value for vertical drag to scroll up
+          await tester.pumpAndSettle();
+
+          // Verify the converted audio sub title in the selected Youtube
+          // playlist audio list
+          IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+            tester: tester,
+            audioSubTitlesAcceptableLst: [
+              '0:00:01.8 14 KB converted on 07/09/2025 at 07:37',
+            ],
+            firstAudioListTileIndex: 1,
+          );
+
+          // Now restoring the last saved "urgent_actus_17-12-2023" playlist
+          // and its mp3 files without replacing the existing playlist
+          await _restorePaylistsAndTheirMp3(
+              tester: tester,
+              sourceRootPath: kApplicationPathWindowsTest,
+              restorablePlaylistsZipFileName: '$youtubePlaylistTitle.zip',
+              restorableMp3ZipFileName: playlistMp3NewSavedZipFileName,
+              mockFilePicker: mockFilePicker,
+              doReplaceExistingPlaylists: false,
+              restorePlaylistsConfirmationMessage:
+                  'Restored 0 playlist saved individually, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 1 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "$kApplicationPathWindowsTest${path.separator}$youtubePlaylistTitle.zip".',
+              restoreMp3ConfirmationMessage:
+                  "Restored 1 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistMp3NewSavedZipFileName\".",
+              restoreMp3FromUniquePlaylistTitle: youtubePlaylistTitle);
+
+          // Now verify that the restored converted audio 'aaa' has a
+          // duration of 8.6 seconds
+
+          // Find the audio list widget using its key
+          listFinder = find.byKey(const Key('audio_list'));
+          // Perform the scroll action
+          await tester.drag(
+              listFinder,
+              const Offset(
+                  0, 300)); // Positive value for vertical drag to scroll up
+          await tester.pumpAndSettle();
+
+          // Verify the converted audio sub title in the selected Youtube
+          // playlist audio list
+          IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+            tester: tester,
+            audioSubTitlesAcceptableLst: [
+              '0:00:08.6 68 KB converted on 07/09/2025 at 07:37',
+            ],
+            firstAudioListTileIndex: 1,
+          );
+
+          // Now we want to tap on the 'aaa' audio in order to open the
+          // AudioPlayerView displaying the audio. The purpose is to
+          // verify that the duration of the audio is indeed 8.6 seconds
+          // as indicated in the audio subtitle on the audio list displayed
+          // on the plalist download view.
+
+          // First, get the 'aaa' audio ListTile Text widget finder and
+          // tap on it
+
+          final Finder aaaAudioListTileTextWidgetFinder = find.text('aaa');
+
+          await tester.tap(aaaAudioListTileTextWidgetFinder);
+          await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+            tester: tester,
+          );
+
+          String aaaAudioTitleText = (tester.widget<Text>(
+                  find.byKey(const Key('audioPlayerViewCurrentAudioTitle'))))
+              .data!;
+
+          String aaaAudioDurationStr = _extractDuration(aaaAudioTitleText);
+
+          expect(aaaAudioDurationStr, '0:09');
+
+          // Go back to the playlist download view
+          final Finder appScreenNavigationButton =
+              find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+          await tester.tap(appScreenNavigationButton);
+          await tester.pumpAndSettle();
+
+          await IntegrationTestUtil.verifyAudioInfoDialog(
+            tester: tester,
+            audioType: AudioType.textToSpeech,
+            validVideoTitleOrAudioTitle: 'aaa',
+            audioDownloadDateTime:
+                "07/09/2025 07:37", // this is the imported date time
+            copiedToPlaylistTitle: 'local',
+            audioDuration: '0:00:08.6',
+            audioFileSize: '68 KB',
+            isMusicQuality: false, // Is spoken quality
+            audioPlaySpeed: '1.25',
+            audioVolume: '50.0 %',
+            audioCommentNumber: 2,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Replace existing playlist. Set download date to today's date without time. The less old value
+          awailable by default is 10/01/2024 18:18 and will be changed to today's date without time. Since the
+          converted text to speech audio was modified today after 00:00 time, this audio will be the unique audio
+          added to the created mp3 zip.
+          
+          Then delete the 2 playlists and restore again using audioLearn_2025-09-07_07_45_02.zip as well as
+          audioLearn_mp3_from_2025-09-07_07_37_32_on_2025-09-24_13_54_22.zip. Then verify the restored 'aaa'
+          converted audio duration. Then restore using the two last created zip (playlists and mp3) and verify that
+          the version of the 'aaa' converted audio was correctly updated.''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          final String sourceRootPath =
+              "$kDownloadAppTestSavedDataDir${path.separator}restore_existing_playlists_with_new_audios_android_emulator";
+
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath: sourceRootPath,
+            destinationRootPath: kApplicationPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService(
+            isTest: true,
+          );
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+          // Replace the platform instance with your mock
+          MockFilePicker mockFilePicker = MockFilePicker();
+          FilePicker.platform = mockFilePicker;
+
+          await app.main();
+          await tester.pumpAndSettle();
+
+          const String youtubePlaylistTitle = "urgent_actus_17-12-2023";
+
+          // Restoring the initial "urgent_actus_17-12-2023" playlist and its mp3 files
+          await _restorePaylistsAndTheirMp3(
+            tester: tester,
+            sourceRootPath: kApplicationPathWindowsTest,
+            restorablePlaylistsZipFileName: '$youtubePlaylistTitle.zip',
+            restorableMp3ZipFileName:
+                '${youtubePlaylistTitle}_mp3_from_2025-08-12_16_29_25_on_2025-09-28_21_50_57.zip',
+            mockFilePicker: mockFilePicker,
+          );
+
+          // Open the convert text to audio dialog
+          await IntegrationTestUtil.typeOnPlaylistMenuItem(
+            tester: tester,
+            playlistTitle: youtubePlaylistTitle,
+            playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+          );
+
+          // Find the text field finder
+          final Finder textFieldFinder =
+              find.byKey(const Key('textToConvertTextField'));
+
+          // Now enter the text to convert to audio
+          await tester.enterText(textFieldFinder,
+              "Nouvelle description des éléments restaurés {{{{ avec 4 secondes de pause. Et une fin de phrase.");
+          await tester.pump();
+
+          // Now click on Create MP3 button to create the audio
+          Finder createMP3ButtonFinder =
+              find.byKey(const Key('create_audio_file_button'));
+          await tester.tap(createMP3ButtonFinder);
+          await tester.pumpAndSettle();
+
+          const String enteredFileNameNoExt = 'aaa';
+          Finder mp3FileNameTextFieldFinder =
+              find.byKey(const Key('textToConvertTextField'));
+
+          await tester.enterText(
+              mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+          await tester.pumpAndSettle();
+
+          // Tap on the create mp3 button
+          Finder saveMP3FileButton =
+              find.byKey(const Key('create_mp3_button_key'));
+          await tester.tap(saveMP3FileButton);
+          await Future.delayed(const Duration(seconds: 2));
+          await tester.pumpAndSettle();
+
+          // Now check the confirm dialog which indicates that the saved
+          // file name already exist and ask to confirm or cancel the
+          // save operation.
+          await IntegrationTestUtil.verifyConfirmActionDialog(
+            tester: tester,
+            confirmActionDialogTitle:
+                "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$youtubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
+            confirmActionDialogMessagePossibleLst: [""],
+            closeDialogWithConfirmButton: true,
+          );
+
+          await Future.delayed(const Duration(seconds: 2));
+          await tester.pumpAndSettle();
+
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in Youtube playlist \"$youtubePlaylistTitle\".",
+            isWarningConfirming: true,
+          );
+
+          // Now close the convert text to audio dialog by tapping
+          // the Ok button
+          Finder cancelButtonFinder =
+              find.byKey(const Key('convertTextToAudioCloseButton'));
+          await tester.tap(cancelButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Now save the playlist ...
+
+          // But first rename the existing unique playlist zip file so
+          // that it is not overwritten by the next save operation
+          final String initialUniquePlaylistZipFileName =
+              '$youtubePlaylistTitle.zip';
+          final String renamedInitialUniquePlaylistZipFileName =
+              '${youtubePlaylistTitle}_initial.zip';
+          File('$kApplicationPathWindowsTest${path.separator}$initialUniquePlaylistZipFileName')
+              .renameSync(
+                  '$kApplicationPathWindowsTest${path.separator}$renamedInitialUniquePlaylistZipFileName');
+
+          // Setting the path value returned by the FilePicker mock.
+          mockFilePicker.setPathToSelect(
+            pathToSelectStr: kApplicationPathWindowsTest,
+          );
+
+          await IntegrationTestUtil.typeOnPlaylistMenuItem(
+            tester: tester,
+            playlistTitle: youtubePlaylistTitle,
+            playlistMenuKeyStr:
+                'popup_menu_save_playlist_comments_pictures_to_zip',
+          );
+
+          // Tap the warning confirmation dialog Ok button to close it
+          await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+          await tester.pumpAndSettle();
+
+          // And save the playlist mp3 files ...
+
+          await IntegrationTestUtil.typeOnPlaylistMenuItem(
+            tester: tester,
+            playlistTitle: youtubePlaylistTitle,
+            playlistMenuKeyStr:
+                'popup_menu_save_playlist_audio_mp3_files_to_zip',
+          );
+
+          await IntegrationTestUtil.verifySetValueToTargetDialog(
+            tester: tester,
+            dialogTitle: 'Set the Download Date',
+            dialogMessage:
+                'The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.',
+          );
+
+          const String oldestAudioDownloadDateTime = '12/08/2025 16:29';
+
+          expect(find.text(oldestAudioDownloadDateTime), findsOneWidget);
+
+          Finder setValueToTargetDialogFinder =
+              find.byType(SetValueToTargetDialog);
+
+          // This finder obtained as descendant of its enclosing dialog does
+          // enable to change the value of the TextField
+          Finder setValueToTargetDialogEditTextFinder = find.descendant(
+            of: setValueToTargetDialogFinder,
+            matching: find.byType(TextField),
+          );
+
+          // Now change the download date in the dialog
+          final String audioOldestDownloadDateToday =
+              DateFormat('dd/MM/yyyy').format(DateTime.now());
+          final String audioOldestDownloadDateTodayForFileNName =
+              DateFormat('yyyy-MM-dd').format(DateTime.now());
+          TextField textField =
+              tester.widget<TextField>(setValueToTargetDialogEditTextFinder);
+
+          textField.controller!.text = audioOldestDownloadDateToday;
+          await tester.pumpAndSettle();
+
+          // Tap on the Ok button to set download date time.
+          await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+          await tester.pumpAndSettle();
+
+          DateTime now = DateTime.now();
+
+          // Now tap on the confirm dialog which indicates the estimated
+          // save audio mp3 to zip duration ok buton to accept the save
+          // execution.
+          await tester.tap(find.byKey(const Key('confirmButton')));
+          await tester.pump();
+
+          // Only works if tester.pump() is used instead of
+          // tester.pumpAndSettle()
+          expect(
+            find.text("Saving $youtubePlaylistTitle audio files to ZIP ..."),
+            findsOneWidget,
+          );
+          expect(
+            tester
+                .widget<Text>(find.byKey(const Key('saving_please_wait')).last)
+                .data!,
+            contains(
+              "Should approxim. take ",
+            ),
+          );
+
+          // Wait for completion
+          await tester.pumpAndSettle();
+
+          Text warningDialogTitle =
+              tester.widget(find.byKey(const Key('warningDialogTitle')).last);
+
+          expect(warningDialogTitle.data, 'CONFIRMATION');
+
+          String actualMessage = tester
+              .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+              .data!;
+          expect(
+              actualMessage,
+              contains(
+                  "Saved to ZIP file(s) unique playlist audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68 KB and total duration: 0:00:08.6."));
+          expect(
+              actualMessage, contains("Save operation real duration: 0:00:"));
+          expect(actualMessage, contains("number of bytes saved per second: "));
+          expect(
+              actualMessage, contains(", number of created ZIP file(s): 1."));
+          expect(
+            actualMessage,
+            anyOf([
+              contains(
+                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}${youtubePlaylistTitle}_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now)}.zip\"."),
+              contains(
+                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}${youtubePlaylistTitle}_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now.subtract(const Duration(seconds: 1)))}.zip\"."),
+            ]),
+          );
+
+          String playlistMp3NewSavedZipFileName = _extractMp3ZipFileName(
+            confirmationMessage: actualMessage,
+            zipStartFileName: youtubePlaylistTitle,
+          );
+
+          // Tap the warning confirmation dialog Ok button to close it
+          await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+          await tester.pumpAndSettle();
+
+          // Now delete the "urgent_actus_17-12-2023" playlist (their
+          // mp3 files are also deleted)
+
+          await IntegrationTestUtil.typeOnPlaylistMenuItem(
+              tester: tester,
+              playlistTitle: youtubePlaylistTitle,
+              playlistMenuKeyStr: 'popup_menu_delete_playlist',
+              dragToBottom: true);
+
+          // Now find the confirm button of the delete playlist confirm
+          // dialog and tap on it
+          await tester.tap(find.byKey(const Key('confirmButton')));
+          await tester.pumpAndSettle();
+
+          // Restoring the initial "urgent_actus_17-12-2023" playlist and its mp3 files
+          await _restorePaylistsAndTheirMp3(
+            tester: tester,
+            sourceRootPath: kApplicationPathWindowsTest,
+            restorablePlaylistsZipFileName:
+                renamedInitialUniquePlaylistZipFileName,
+            restorableMp3ZipFileName:
+                '${youtubePlaylistTitle}_mp3_from_2025-08-12_16_29_25_on_2025-09-28_21_50_57.zip',
+            mockFilePicker: mockFilePicker,
+          );
+
+          // Now verify that the restored converted audio 'aaa' has a
+          // duration of 1.8 seconds
+
+          // Find the audio list widget using its key
+          Finder listFinder = find.byKey(const Key('audio_list'));
+          // Perform the scroll action
+          await tester.drag(
+              listFinder,
+              const Offset(
+                  0, 300)); // Positive value for vertical drag to scroll up
+          await tester.pumpAndSettle();
+
+          // Verify the converted audio sub title in the selected Youtube
+          // playlist audio list
+          IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+            tester: tester,
+            audioSubTitlesAcceptableLst: [
+              '0:00:01.8 14 KB converted on 07/09/2025 at 07:37',
+            ],
+            firstAudioListTileIndex: 1,
+          );
+
+          // Now restoring the last saved "urgent_actus_17-12-2023" playlist
+          // and its mp3 files with replacing the existing playlist
+          await _restorePaylistsAndTheirMp3(
+              tester: tester,
+              sourceRootPath: kApplicationPathWindowsTest,
+              restorablePlaylistsZipFileName: '$youtubePlaylistTitle.zip',
+              restorableMp3ZipFileName: playlistMp3NewSavedZipFileName,
+              mockFilePicker: mockFilePicker,
+              doReplaceExistingPlaylists: true,
+              doDeleteExistingPlaylists: false,
+              restorePlaylistsConfirmationMessage:
+                  'Restored 1 playlist saved individually, 4 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 1 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "$kApplicationPathWindowsTest${path.separator}$youtubePlaylistTitle.zip".',
+              restoreMp3ConfirmationMessage:
+                  "Restored 1 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistMp3NewSavedZipFileName\".",
+              restoreMp3FromUniquePlaylistTitle: youtubePlaylistTitle);
+
+          // Now verify that the restored converted audio 'aaa' has a
+          // duration of 8.6 seconds
+
+          // Find the audio list widget using its key
+          listFinder = find.byKey(const Key('audio_list'));
+          // Perform the scroll action
+          await tester.drag(
+              listFinder,
+              const Offset(
+                  0, 300)); // Positive value for vertical drag to scroll up
+          await tester.pumpAndSettle();
+
+          // Verify the converted audio sub title in the selected Youtube
+          // playlist audio list
+          IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+            tester: tester,
+            audioSubTitlesAcceptableLst: [
+              '0:00:08.6 68 KB converted on 07/09/2025 at 07:37',
+            ],
+            firstAudioListTileIndex: 1,
+          );
+
+          // Now we want to tap on the 'aaa' audio in order to open the
+          // AudioPlayerView displaying the audio. The purpose is to
+          // verify that the duration of the audio is indeed 8.6 seconds
+          // as indicated in the audio subtitle on the audio list displayed
+          // on the plalist download view.
+
+          // First, get the 'aaa' audio ListTile Text widget finder and
+          // tap on it
+
+          final Finder aaaAudioListTileTextWidgetFinder = find.text('aaa');
+
+          await tester.tap(aaaAudioListTileTextWidgetFinder);
+          await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+            tester: tester,
+          );
+
+          String aaaAudioTitleText = (tester.widget<Text>(
+                  find.byKey(const Key('audioPlayerViewCurrentAudioTitle'))))
+              .data!;
+
+          String aaaAudioDurationStr = _extractDuration(aaaAudioTitleText);
+
+          expect(aaaAudioDurationStr, '0:09');
+
+          // Go back to the playlist download view
+          final Finder appScreenNavigationButton =
+              find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+          await tester.tap(appScreenNavigationButton);
+          await tester.pumpAndSettle();
+
+          await IntegrationTestUtil.verifyAudioInfoDialog(
+            tester: tester,
+            audioType: AudioType.textToSpeech,
+            validVideoTitleOrAudioTitle: 'aaa',
+            audioDownloadDateTime:
+                "07/09/2025 07:37", // this is the imported date time
+            copiedToPlaylistTitle: 'local',
+            audioDuration: '0:00:08.6',
+            audioFileSize: '68 KB',
+            isMusicQuality: false, // Is spoken quality
+            audioPlaySpeed: '1.25',
+            audioVolume: '50.0 %',
+            audioCommentNumber: 2,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+      });
+    });
     group('Restore Windows zip files to Windows', () {
       group(
           'On not empty app dir where a playlist is selected, restore Windows zip.',
@@ -25704,7 +25720,7 @@ void main() {
               warningDialogMessage:
                   // If executed on main
                   // 'Restored 0 playlist saved individually, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 1 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières du Maître comment restoration.zip".',
-                  'Restored 0 playlist saved individually, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 1 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières comment restoration.zip".',
+                  'Restored 0 playlist saved individually, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 1 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières comment restoration.zip".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -25935,7 +25951,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 0 playlist, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 1 added plus 4 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières and local comment restoration.zip".',
+                  'Restored 0 playlist, 2 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 1 added plus 0 deleted plus 4 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières and local comment restoration.zip".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -25997,13 +26013,13 @@ void main() {
             playlistCommentListFinder =
                 find.byKey(const Key('playlistCommentsListKey'));
 
-            // Ensure the list has 6 child widgets
+            // Ensure the list has 8 child widgets
             expect(
               tester
                   .widget<ListBody>(playlistCommentListFinder)
                   .children
                   .length,
-              6,
+              8,
             );
 
             IntegrationTestUtil.checkPlaylistCommentListDialogContent(
@@ -27191,8 +27207,7 @@ void main() {
             );
 
             IntegrationTestUtil.checkPlaylistCommentListDialogContent(
-                playlistCommentListDialogFinder:
-                    playlistCommentListDialogFinder,
+              playlistCommentListDialogFinder: playlistCommentListDialogFinder,
               expectedCommentTextsLst: [
                 'Paroles',
                 'new converted audio',
@@ -27378,8 +27393,7 @@ void main() {
             );
 
             IntegrationTestUtil.checkPlaylistCommentListDialogContent(
-                playlistCommentListDialogFinder:
-                    playlistCommentListDialogFinder,
+              playlistCommentListDialogFinder: playlistCommentListDialogFinder,
               expectedCommentTextsLst: [
                 'Text',
                 'nouveau audio converti and modified',
@@ -27414,15 +27428,14 @@ void main() {
             );
 
             IntegrationTestUtil.checkPlaylistCommentListDialogContent(
-                playlistCommentListDialogFinder:
-                    playlistCommentListDialogFinder,
+              playlistCommentListDialogFinder: playlistCommentListDialogFinder,
               expectedCommentTextsLst: [
                 'Text modified',
                 'nouveau audio modifié',
                 'New com',
                 'New',
               ],
-);
+            );
 
             // Now close the comment list dialog
             await tester.tap(find
@@ -29782,7 +29795,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 0 playlist saved individually, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 1 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Android Prières comment restoration.zip".',
+                'Restored 0 playlist saved individually, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 1 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Android Prières comment restoration.zip".',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -30373,401 +30386,1835 @@ void main() {
         });
       });
     });
-  });
-  group(
-      '''Restore multiple playlists with playlists deletion. Restoring playlists, comments, pictures
+    group(
+        '''Restore multiple playlists with playlists deletion. Restoring playlists, comments, pictures
          and settings from zip file menu test.''', () {
-    testWidgets(
-        '''Multiple playlists restore, not replace existing playlist, delete existing playlist. Restore
+      testWidgets(
+          '''Multiple playlists restore, not replace existing playlist, delete existing playlist. Restore
            multiple playlists Windows zip containing 'audio_learn_emi'. The two playlists 'textToSpeech'
            and 'new_updated_copy' are deleted.''', (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'restoring_playlists_with_deletion',
-        tapOnPlaylistToggleButton: false,
-      );
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'restoring_playlists_with_deletion',
+          tapOnPlaylistToggleButton: false,
+        );
 
-      // Ensuring that the 'textToSpeech' playlist json file has
-      // an older modification date than the zip file to be restored.
-      // In this situation, even if we do not replace existing playlists,
-      // the 'textToSpeech' playlist will be deleted because its
-      // modification date is older than the zip file to be restored
-      // which does not contain it.
+        // Ensuring that the 'textToSpeech' playlist json file has
+        // an older modification date than the zip file to be restored.
+        // In this situation, even if we do not replace existing playlists,
+        // the 'textToSpeech' playlist will be deleted because its
+        // modification date is older than the zip file to be restored
+        // which does not contain it.
 
-      String textToSpeechJsonFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}appCopy${path.separator}playlists${path.separator}textToSpeech${path.separator}textToSpeech.json';
+        String textToSpeechJsonFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}appCopy${path.separator}playlists${path.separator}textToSpeech${path.separator}textToSpeech.json';
 
-      DateTime textToSpeechJsonDateTime = DateTime(2025, 10, 20, 12, 40, 16);
+        DateTime textToSpeechJsonDateTime = DateTime(2025, 10, 20, 12, 40, 16);
 
-      await DirUtil.setAllFileTimes(
-        filePathName: textToSpeechJsonFilePathName,
-        creationTime: textToSpeechJsonDateTime,
-        modificationTime: textToSpeechJsonDateTime,
-        accessTime: textToSpeechJsonDateTime,
-      );
+        await DirUtil.setAllFileTimes(
+          filePathName: textToSpeechJsonFilePathName,
+          creationTime: textToSpeechJsonDateTime,
+          modificationTime: textToSpeechJsonDateTime,
+          accessTime: textToSpeechJsonDateTime,
+        );
 
-      String restorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}audioLearn_2025-10-20_13_41_28.zip';
+        String restorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}audioLearn_2025-10-20_13_41_28.zip';
 
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
 
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: restorableZipFilePathName,
-            path: restorableZipFilePathName,
-            size: 7460),
-      ]);
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 7460),
+        ]);
 
-      // Execute the 'Restore Playlists, Comments and Settings from Zip
-      // File ...' menu
-      await IntegrationTestUtil.executeRestorePlaylists(
-        tester: tester,
-        doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylistsNotContainedInZip: true,
-      );
+        // Execute the 'Restore Playlists, Comments and Settings from Zip
+        // File ...' menu
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylistsNotContainedInZip: true,
+        );
 
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 0 playlist, 48 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 10 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 playlist(s)\n  \"new_updated_copy\",\n  \"textToSpeech\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.",
-        isWarningConfirming: true,
-        warningTitle: 'CONFIRMATION',
-      );
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 0 playlist, 48 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 playlist(s)\n  \"new_updated_copy\",\n  \"textToSpeech\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.",
+          isWarningConfirming: true,
+          warningTitle: 'CONFIRMATION',
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Multiple playlists restore, not replace existing playlist, not delete existing playlist. Restore multiple playlists Windows
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Multiple playlists restore, not replace existing playlist, not delete existing playlist. Restore multiple playlists Windows
            zip containing 'audio_learn_emi'. The two playlists 'textToSpeech' and 'new_updated_copy' are not
            deleted.''', (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'restoring_playlists_with_deletion',
-        tapOnPlaylistToggleButton: false,
-      );
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'restoring_playlists_with_deletion',
+          tapOnPlaylistToggleButton: false,
+        );
 
-      // Ensuring that the 'textToSpeech' playlist json file has
-      // an older modification date than the zip file to be restored.
-      // In this situation, even if we do not replace existing playlists,
-      // the 'textToSpeech' playlist will be deleted because its
-      // modification date is older than the zip file to be restored
-      // which does not contain it.
+        // Ensuring that the 'textToSpeech' playlist json file has
+        // an older modification date than the zip file to be restored.
+        // In this situation, even if we do not replace existing playlists,
+        // the 'textToSpeech' playlist will be deleted because its
+        // modification date is older than the zip file to be restored
+        // which does not contain it.
 
-      String textToSpeechJsonFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}appCopy${path.separator}playlists${path.separator}textToSpeech${path.separator}textToSpeech.json';
+        String textToSpeechJsonFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}appCopy${path.separator}playlists${path.separator}textToSpeech${path.separator}textToSpeech.json';
 
-      DateTime textToSpeechJsonDateTime = DateTime(2025, 10, 20, 12, 40, 16);
+        DateTime textToSpeechJsonDateTime = DateTime(2025, 10, 20, 12, 40, 16);
 
-      await DirUtil.setAllFileTimes(
-        filePathName: textToSpeechJsonFilePathName,
-        creationTime: textToSpeechJsonDateTime,
-        modificationTime: textToSpeechJsonDateTime,
-        accessTime: textToSpeechJsonDateTime,
-      );
+        await DirUtil.setAllFileTimes(
+          filePathName: textToSpeechJsonFilePathName,
+          creationTime: textToSpeechJsonDateTime,
+          modificationTime: textToSpeechJsonDateTime,
+          accessTime: textToSpeechJsonDateTime,
+        );
 
-      String restorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}audioLearn_2025-10-20_13_41_28.zip';
+        String restorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}audioLearn_2025-10-20_13_41_28.zip';
 
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
 
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: restorableZipFilePathName,
-            path: restorableZipFilePathName,
-            size: 7460),
-      ]);
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 7460),
+        ]);
 
-      // Execute the 'Restore Playlists, Comments and Settings from Zip
-      // File ...' menu
-      await IntegrationTestUtil.executeRestorePlaylists(
-        tester: tester,
-        doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylistsNotContainedInZip: false,
-      );
+        // Execute the 'Restore Playlists, Comments and Settings from Zip
+        // File ...' menu
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylistsNotContainedInZip: false,
+        );
 
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 0 playlist, 48 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 10 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".",
-        isWarningConfirming: true,
-        warningTitle: 'CONFIRMATION',
-      );
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 0 playlist, 48 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".",
+          isWarningConfirming: true,
+          warningTitle: 'CONFIRMATION',
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Multiple playlists restore, replace existing playlist. Restore multiple playlists Windows
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Multiple playlists restore, replace existing playlist. Restore multiple playlists Windows
            zip containing 'audio_learn_emi'. The two playlists 'textToSpeech' and 'new_updated_copy' are
            deleted.''', (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'restoring_playlists_with_deletion',
-        tapOnPlaylistToggleButton: false,
-      );
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'restoring_playlists_with_deletion',
+          tapOnPlaylistToggleButton: false,
+        );
 
-      // Ensuring that the 'textToSpeech' playlist json file has
-      // an older modification date than the zip file to be restored.
-      // In this situation, even if we do not replace existing playlists,
-      // the 'textToSpeech' playlist will be deleted because its
-      // modification date is older than the zip file to be restored
-      // which does not contain it.
+        // Ensuring that the 'textToSpeech' playlist json file has
+        // an older modification date than the zip file to be restored.
+        // In this situation, even if we do not replace existing playlists,
+        // the 'textToSpeech' playlist will be deleted because its
+        // modification date is older than the zip file to be restored
+        // which does not contain it.
 
-      String textToSpeechJsonFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}appCopy${path.separator}playlists${path.separator}textToSpeech${path.separator}textToSpeech.json';
+        String textToSpeechJsonFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}appCopy${path.separator}playlists${path.separator}textToSpeech${path.separator}textToSpeech.json';
 
-      DateTime textToSpeechJsonDateTime = DateTime(2025, 10, 20, 12, 40, 16);
+        DateTime textToSpeechJsonDateTime = DateTime(2025, 10, 20, 12, 40, 16);
 
-      await DirUtil.setAllFileTimes(
-        filePathName: textToSpeechJsonFilePathName,
-        creationTime: textToSpeechJsonDateTime,
-        modificationTime: textToSpeechJsonDateTime,
-        accessTime: textToSpeechJsonDateTime,
-      );
+        await DirUtil.setAllFileTimes(
+          filePathName: textToSpeechJsonFilePathName,
+          creationTime: textToSpeechJsonDateTime,
+          modificationTime: textToSpeechJsonDateTime,
+          accessTime: textToSpeechJsonDateTime,
+        );
 
-      String restorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}audioLearn_2025-10-20_13_41_28.zip';
+        String restorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}audioLearn_2025-10-20_13_41_28.zip';
 
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
 
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: restorableZipFilePathName,
-            path: restorableZipFilePathName,
-            size: 7460),
-      ]);
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 7460),
+        ]);
 
-      // Execute the 'Restore Playlists, Comments and Settings from Zip
-      // File ...' menu
-      await IntegrationTestUtil.executeRestorePlaylists(
-        tester: tester,
-        doReplaceExistingPlaylists: true,
-        doDeleteExistingPlaylistsNotContainedInZip: true,
-      );
+        // Execute the 'Restore Playlists, Comments and Settings from Zip
+        // File ...' menu
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: true,
+          doDeleteExistingPlaylistsNotContainedInZip: true,
+        );
 
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 1 playlist, 48 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 163 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 playlist(s)\n  \"new_updated_copy\",\n  \"textToSpeech\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.",
-        isWarningConfirming: true,
-        warningTitle: 'CONFIRMATION',
-      );
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 1 playlist, 48 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 163 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 playlist(s)\n  \"new_updated_copy\",\n  \"textToSpeech\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.",
+          isWarningConfirming: true,
+          warningTitle: 'CONFIRMATION',
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Multiple playlists restore, replace existing playlist. Restore multiple playlists Windows
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Multiple playlists restore, replace existing playlist. Restore multiple playlists Windows
            zip containing 'audio_learn_emi'. The two playlists 'textToSpeech' and 'new_updated_copy' are
            not deleted.''', (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'restoring_playlists_with_deletion',
-        tapOnPlaylistToggleButton: false,
-      );
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'restoring_playlists_with_deletion',
+          tapOnPlaylistToggleButton: false,
+        );
 
-      // Ensuring that the 'textToSpeech' playlist json file has
-      // an older modification date than the zip file to be restored.
-      // In this situation, even if we do not replace existing playlists,
-      // the 'textToSpeech' playlist will be deleted because its
-      // modification date is older than the zip file to be restored
-      // which does not contain it.
+        // Ensuring that the 'textToSpeech' playlist json file has
+        // an older modification date than the zip file to be restored.
+        // In this situation, even if we do not replace existing playlists,
+        // the 'textToSpeech' playlist will be deleted because its
+        // modification date is older than the zip file to be restored
+        // which does not contain it.
 
-      String textToSpeechJsonFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}appCopy${path.separator}playlists${path.separator}textToSpeech${path.separator}textToSpeech.json';
+        String textToSpeechJsonFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}appCopy${path.separator}playlists${path.separator}textToSpeech${path.separator}textToSpeech.json';
 
-      DateTime textToSpeechJsonDateTime = DateTime(2025, 10, 20, 12, 40, 16);
+        DateTime textToSpeechJsonDateTime = DateTime(2025, 10, 20, 12, 40, 16);
 
-      await DirUtil.setAllFileTimes(
-        filePathName: textToSpeechJsonFilePathName,
-        creationTime: textToSpeechJsonDateTime,
-        modificationTime: textToSpeechJsonDateTime,
-        accessTime: textToSpeechJsonDateTime,
-      );
+        await DirUtil.setAllFileTimes(
+          filePathName: textToSpeechJsonFilePathName,
+          creationTime: textToSpeechJsonDateTime,
+          modificationTime: textToSpeechJsonDateTime,
+          accessTime: textToSpeechJsonDateTime,
+        );
 
-      String restorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}audioLearn_2025-10-20_13_41_28.zip';
+        String restorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}audioLearn_2025-10-20_13_41_28.zip';
 
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
 
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: restorableZipFilePathName,
-            path: restorableZipFilePathName,
-            size: 7460),
-      ]);
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 7460),
+        ]);
 
-      // Execute the 'Restore Playlists, Comments and Settings from Zip
-      // File ...' menu
-      await IntegrationTestUtil.executeRestorePlaylists(
-        tester: tester,
-        doReplaceExistingPlaylists: true,
-        doDeleteExistingPlaylistsNotContainedInZip: false,
-      );
+        // Execute the 'Restore Playlists, Comments and Settings from Zip
+        // File ...' menu
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: true,
+          doDeleteExistingPlaylistsNotContainedInZip: false,
+        );
 
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 1 playlist, 48 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 163 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".",
-        isWarningConfirming: true,
-        warningTitle: 'CONFIRMATION',
-      );
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 1 playlist, 48 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 163 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".",
+          isWarningConfirming: true,
+          warningTitle: 'CONFIRMATION',
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Unique playlists restore, not replace existing playlist. No playlist is deleted.''',
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'restoring_playlists_with_deletion',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        String restorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}audio_learn_emi.zip';
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 7460),
+        ]);
+
+        // Execute the 'Restore Playlists, Comments and Settings from Zip
+        // File ...' menu
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylistsNotContainedInZip: false,
+        );
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 0 playlist saved individually, 48 comment and 0 picture JSON files as well as 1 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from \"$restorableZipFilePathName\".",
+          isWarningConfirming: true,
+          warningTitle: 'CONFIRMATION',
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Unique playlists restore, replace existing playlist. No playlist is deleted.''',
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'restoring_playlists_with_deletion',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        String restorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}audio_learn_emi.zip';
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 7460),
+        ]);
+
+        // Execute the 'Restore Playlists, Comments and Settings from Zip
+        // File ...' menu
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: true,
+          doDeleteExistingPlaylistsNotContainedInZip: false,
+        );
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 1 playlist saved individually, 48 comment and 1 picture JSON files as well as 1 picture JPG file(s) in the application pictures directory and 163 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from \"$restorableZipFilePathName\".",
+          isWarningConfirming: true,
+          warningTitle: 'CONFIRMATION',
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
     });
-    testWidgets(
-        '''Unique playlists restore, not replace existing playlist. No playlist is deleted.''',
-        (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+    group('Advanced restoration from source playlist to target playlist test.',
+        () {
+      testWidgets(
+          '''After restoring initial audiolearn target application containing 4 playlists as well as
+          restoring their mp3, restore the source playlist in which 2 audio's present in the target
+          playlists were deleted and in which 2 playlists were deleted. Finally, re-restore the initial
+          audiolearn target application containing 4 playlists without setting the "Replace existing
+          playlists" checkbox to true as well as re-restore their mp3 to verify that after 2 audio's
+          and 2 playlists were deletd, it is not possible to restore totally the initial audiolearn
+          application.''', (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'restoring_playlists_with_deletion',
-        tapOnPlaylistToggleButton: false,
-      );
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}restore_sing_or_mult_playlists_with_delete_audio_mp3",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
 
-      String restorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}audio_learn_emi.zip';
+        final SettingsDataService settingsDataService = SettingsDataService(
+          isTest: true,
+        );
 
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: restorableZipFilePathName,
-            path: restorableZipFilePathName,
-            size: 7460),
-      ]);
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
 
-      // Execute the 'Restore Playlists, Comments and Settings from Zip
-      // File ...' menu
-      await IntegrationTestUtil.executeRestorePlaylists(
-        tester: tester,
-        doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylistsNotContainedInZip: false,
-      );
+        await app.main();
+        await tester.pumpAndSettle();
 
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 0 playlist saved individually, 48 comment and 0 picture JSON files as well as 1 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 10 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from \"$restorableZipFilePathName\".",
-        isWarningConfirming: true,
-        warningTitle: 'CONFIRMATION',
-      );
+        // Install the initial version of the four saved
+        // playlists
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Unique playlists restore, replace existing playlist. No playlist is deleted.''',
-        (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        String restorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_app_with_pictures.zip';
 
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'restoring_playlists_with_deletion',
-        tapOnPlaylistToggleButton: false,
-      );
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 2782168),
+        ]);
 
-      String restorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}audio_learn_emi.zip';
+        // Execute the 'Restore Playlists, Comments and Settings
+        // from Zip File ...' menu to install the initial
+        // audiolearn version
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylistsNotContainedInZip: false,
+        );
 
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              'Restored 4 playlist, 6 comment and 6 picture JSON files as well as 3 picture JPG file(s) in the application pictures directory and 11 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "$restorableZipFilePathName".',
+          isWarningConfirming: true,
+          warningTitle: 'CONFIRMATION',
+        );
 
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: restorableZipFilePathName,
-            path: restorableZipFilePathName,
-            size: 7460),
-      ]);
+        String mp3RestorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_mp3.zip';
 
-      // Execute the 'Restore Playlists, Comments and Settings from Zip
-      // File ...' menu
-      await IntegrationTestUtil.executeRestorePlaylists(
-        tester: tester,
-        doReplaceExistingPlaylists: true,
-        doDeleteExistingPlaylistsNotContainedInZip: false,
-      );
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: mp3RestorableZipFilePathName,
+              path: mp3RestorableZipFilePathName,
+              size: 18374505),
+        ]);
 
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 1 playlist saved individually, 48 comment and 1 picture JSON files as well as 1 picture JPG file(s) in the application pictures directory and 163 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from \"$restorableZipFilePathName\".",
-        isWarningConfirming: true,
-        warningTitle: 'CONFIRMATION',
-      );
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        // Tap on the MP3 Restoration SetValueToTargetDialog Ok button
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
+
+        // Now tap on the 'A Single ZIP File' button
+        await tester.tap(find.byKey(const Key('selectFileButton')));
+        await tester.pumpAndSettle();
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 11 audio(s) MP3 in 4 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
+          isWarningConfirming: true,
+        );
+
+        // Verify the restored MP3 files in the playlists not deleted
+
+        final String urgentActuPath =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023";
+        final String localPath =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}local";
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+            "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
+            "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+            "aaa.mp3",
+            "bbb.mp3",
+          ],
+          directoryPath: urgentActuPath,
+          fileExtension: 'mp3',
+        );
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "240110-181805-Really short video 23-07-01.mp3",
+            "240110-181810-morning _ cinematic video 23-07-01.mp3",
+            "aaa.mp3",
+            "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
+          ],
+          directoryPath: localPath,
+          fileExtension: 'mp3',
+        );
+
+        // Restore the source playlist in which 2 audio's
+        // present in the target playlists were deleted and
+        // in which 2 playlists ("local_1", "local_2") not
+        // present in the ZIP were deleted
+
+        restorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}restore_audioLearn_2_deleted_playlists_2_deleted_audios_with_pictures_2025-10-04_11_52_58.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 2782168),
+        ]);
+
+        // Execute the 'Restore Playlists, Comments and Settings
+        // from Zip File ...' menu
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylistsNotContainedInZip: false,
+        );
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 0 playlist, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.",
+          isWarningConfirming: true,
+          warningTitle: 'CONFIRMATION',
+        );
+
+        // Verify the MP3 files in the playlists not deleted after
+        // 2 audio's were deleted
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+            "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+            "aaa.mp3",
+            "bbb.mp3",
+          ],
+          directoryPath: urgentActuPath,
+          fileExtension: 'mp3',
+        );
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "240110-181805-Really short video 23-07-01.mp3",
+            "240110-181810-morning _ cinematic video 23-07-01.mp3",
+            "aaa.mp3",
+          ],
+          directoryPath: localPath,
+          fileExtension: 'mp3',
+        );
+
+        // Re-install the initial version of the four saved
+        // playlists
+
+        restorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_app_with_pictures.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 2782168),
+        ]);
+
+        // Execute the 'Restore Playlists, Comments and Settings
+        // from Zip File ...' menu to re-install the initial
+        // audiolearn version
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylistsNotContainedInZip: false,
+        );
+
+        // Close the displayed warning confirmation dialog
+        await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+        await tester.pumpAndSettle();
+
+        mp3RestorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_mp3.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: mp3RestorableZipFilePathName,
+              path: mp3RestorableZipFilePathName,
+              size: 18374505),
+        ]);
+
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
+        );
+
+        // Tap on the MP3 Restoration SetValueToTargetDialog Ok button
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
+
+        // Now tap on the 'A Single ZIP File' button
+        await tester.tap(find.byKey(const Key('selectFileButton')));
+        await tester.pumpAndSettle();
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 0 audio(s) MP3 in 0 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
+          isWarningConfirming: true,
+        );
+
+        // Verify the restored MP3 files in the playlists not deleted
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+            "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+            "aaa.mp3",
+            "bbb.mp3",
+          ],
+          directoryPath: urgentActuPath,
+          fileExtension: 'mp3',
+        );
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "240110-181805-Really short video 23-07-01.mp3",
+            "240110-181810-morning _ cinematic video 23-07-01.mp3",
+            "aaa.mp3",
+          ],
+          directoryPath: localPath,
+          fileExtension: 'mp3',
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Restore the source playlist in which 2 audio's present in the target playlists were deleted
+          and in which 2 playlists were deleted after restoring initial audiolearn target application
+          containing 4 playlists as well as restoring their mp3, . Finally, re-restore the initial
+          audiolearn target application containing 4 playlists WITH setting the "Replace existing
+          playlists" checkbox to TRUE as well as re-restore their mp3 to verify that after 2 audio's
+          and 2 playlists were deletd, IT IS NOW POSSIBLE to restore totally the initial audiolearn
+          application.''', (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}restore_sing_or_mult_playlists_with_delete_audio_mp3",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        await app.main();
+        await tester.pumpAndSettle();
+
+        // Install the initial version of the four saved
+        // playlists
+
+        String restorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_app_with_pictures.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 2782168),
+        ]);
+
+        // Execute the 'Restore Playlists, Comments and Settings
+        // from Zip File ...' menu to install the initial
+        // audiolearn version
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylistsNotContainedInZip: false,
+        );
+
+        // Close the displayed warning confirmation dialog
+        await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+        await tester.pumpAndSettle();
+
+        String mp3RestorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_mp3.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: mp3RestorableZipFilePathName,
+              path: mp3RestorableZipFilePathName,
+              size: 18374505),
+        ]);
+
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
+        );
+
+        // Tap on the MP3 Restoration SetValueToTargetDialog Ok button
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
+
+        // Now tap on the 'A Single ZIP File' button
+        await tester.tap(find.byKey(const Key('selectFileButton')));
+        await tester.pumpAndSettle();
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 11 audio(s) MP3 in 4 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
+          isWarningConfirming: true,
+        );
+
+        // Verify the restored MP3 files in the playlists not deleted
+
+        final String urgentActuPath =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023";
+        final String localPath =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}local";
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+            "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
+            "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+            "aaa.mp3",
+            "bbb.mp3",
+          ],
+          directoryPath: urgentActuPath,
+          fileExtension: 'mp3',
+        );
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "240110-181805-Really short video 23-07-01.mp3",
+            "240110-181810-morning _ cinematic video 23-07-01.mp3",
+            "aaa.mp3",
+            "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
+          ],
+          directoryPath: localPath,
+          fileExtension: 'mp3',
+        );
+
+        // Restore the source playlist in which 2 audio's
+        // present in the target playlists were deleted and
+        // in which 2 playlists ("local_1", "local_2") not
+        // present in the ZIP were deleted
+
+        restorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}restore_audioLearn_2_deleted_playlists_2_deleted_audios_with_pictures_2025-10-04_11_52_58.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 2782168),
+        ]);
+
+        // Execute the 'Restore Playlists, Comments and Settings
+        // from Zip File ...' menu
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylistsNotContainedInZip: false,
+        );
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 0 playlist, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.",
+          isWarningConfirming: true,
+          warningTitle: 'CONFIRMATION',
+        );
+
+        // Verify the MP3 files in the playlists not deleted after
+        // 2 audio's were deleted
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+            "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+            "aaa.mp3",
+            "bbb.mp3",
+          ],
+          directoryPath: urgentActuPath,
+          fileExtension: 'mp3',
+        );
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "240110-181805-Really short video 23-07-01.mp3",
+            "240110-181810-morning _ cinematic video 23-07-01.mp3",
+            "aaa.mp3",
+          ],
+          directoryPath: localPath,
+          fileExtension: 'mp3',
+        );
+
+        // Re-install the initial version of the four saved
+        // playlists WITH setting the "Replace existing playlist(s)"
+        // checkbox to true
+
+        restorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_app_with_pictures.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 2782168),
+        ]);
+
+        // Execute the 'Restore Playlists, Comments and Settings
+        // from Zip File ...' menu to re-install the initial
+        // audiolearn version
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: true,
+          doDeleteExistingPlaylistsNotContainedInZip: false,
+        );
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 4 playlist, 1 comment and 6 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 11 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".",
+          isWarningConfirming: true,
+          warningTitle: 'CONFIRMATION',
+        );
+
+        mp3RestorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_mp3.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: mp3RestorableZipFilePathName,
+              path: mp3RestorableZipFilePathName,
+              size: 18374505),
+        ]);
+
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
+        );
+
+        // Tap on the MP3 Restoration SetValueToTargetDialog Ok button
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
+
+        // Now tap on the 'A Single ZIP File' button
+        await tester.tap(find.byKey(const Key('selectFileButton')));
+        await tester.pumpAndSettle();
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 2 audio(s) MP3 in 2 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
+          isWarningConfirming: true,
+        );
+
+        // Verify the restored MP3 files in the playlists not deleted
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+            "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
+            "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+            "aaa.mp3",
+            "bbb.mp3",
+          ],
+          directoryPath: urgentActuPath,
+          fileExtension: 'mp3',
+        );
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "240110-181805-Really short video 23-07-01.mp3",
+            "240110-181810-morning _ cinematic video 23-07-01.mp3",
+            "aaa.mp3",
+            "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
+          ],
+          directoryPath: localPath,
+          fileExtension: 'mp3',
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Test error restoring initial audiolearn target application with selecting its mp3 restorition
+          ZIP instead of its playlists ZIP.''', (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}restore_sing_or_mult_playlists_with_delete_audio_mp3",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        await app.main();
+        await tester.pumpAndSettle();
+
+        // Install the initial version of the four saved
+        // playlists
+
+        String restorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_mp3.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 2782168),
+        ]);
+
+        // Execute the 'Restore Playlists, Comments and Settings
+        // from Zip File ...' menu to install the initial
+        // audiolearn version
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylistsNotContainedInZip: false,
+        );
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 0 playlist saved individually, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from \"$restorableZipFilePathName\".",
+          isWarningConfirming: true,
+          warningTitle: 'CONFIRMATION',
+        );
+
+        // Verify the restored MP3 files in the playlists not deleted
+
+        List<String> expectedUrgentActusMp3Lst = [];
+
+        expect(
+          DirUtil.listFileNamesInDir(
+            directoryPath:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023",
+            fileExtension: 'mp3',
+          ),
+          expectedUrgentActusMp3Lst,
+        );
+
+        List<String> expectedLocalMp3Lst = [];
+
+        expect(
+          DirUtil.listFileNamesInDir(
+            directoryPath:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
+            fileExtension: 'mp3',
+          ),
+          expectedLocalMp3Lst,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''After restoring initial audiolearn target application containing 4 playlists as well as
+          restoring their mp3, restore the source playlist in which 2 audio's present in the target
+          playlists were deleted, 2 playlists were deleted and 2 playlists were added.''',
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}restore_sing_or_mult_playlists_with_delete_audio_mp3",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        await app.main();
+        await tester.pumpAndSettle();
+
+        // Install the initial version of the four saved
+        // playlists
+
+        String restorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_app_with_pictures.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 2782168),
+        ]);
+
+        // Execute the 'Restore Playlists, Comments and Settings
+        // from Zip File ...' menu to install the initial
+        // audiolearn version
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylistsNotContainedInZip: false,
+        );
+
+        // Close the displayed warning confirmation dialog
+        await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+        await tester.pumpAndSettle();
+
+        String mp3RestorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_mp3.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: mp3RestorableZipFilePathName,
+              path: mp3RestorableZipFilePathName,
+              size: 18374505),
+        ]);
+
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
+        );
+
+        // Tap on the MP3 Restoration SetValueToTargetDialog Ok button
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
+
+        // Now tap on the 'A Single ZIP File' button
+        await tester.tap(find.byKey(const Key('selectFileButton')));
+        await tester.pumpAndSettle();
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 11 audio(s) MP3 in 4 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
+          isWarningConfirming: true,
+        );
+
+        // Verify the restored MP3 files in the playlists not deleted
+
+        final String urgentActuPath =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023";
+        final String localPath =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}local";
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+            "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
+            "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+            "aaa.mp3",
+            "bbb.mp3",
+          ],
+          directoryPath: urgentActuPath,
+          fileExtension: 'mp3',
+        );
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "240110-181805-Really short video 23-07-01.mp3",
+            "240110-181810-morning _ cinematic video 23-07-01.mp3",
+            "aaa.mp3",
+            "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
+          ],
+          directoryPath: localPath,
+          fileExtension: 'mp3',
+        );
+
+        // Restore the source playlist in which 2 audio's
+        // present in the target playlists were deleted and
+        // in which 2 playlists ("local_1", "local_2") not
+        // present in the ZIP were deleted and in which 2
+        // playlists ("local_3", "local_4") were added
+
+        restorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}restore_audioLearn_with_2_new_2_deleted_playlist_2_deleted_audios_2025-10-05_13_16_51.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 2782168),
+        ]);
+
+        // Execute the 'Restore Playlists, Comments and Settings
+        // from Zip File ...' menu
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylistsNotContainedInZip: false,
+        );
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 2 playlist, 2 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.\n\nSince the playlists\n  \"local_3\",\n  \"local_4\"\nwere created, they are positioned at the end of the playlist list.",
+          isWarningConfirming: true,
+          warningTitle: 'CONFIRMATION',
+        );
+
+        // Verify the MP3 files in the playlists not deleted after
+        // 2 audio's were deleted
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+            "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+            "aaa.mp3",
+            "bbb.mp3",
+          ],
+          directoryPath: urgentActuPath,
+          fileExtension: 'mp3',
+        );
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "240110-181805-Really short video 23-07-01.mp3",
+            "240110-181810-morning _ cinematic video 23-07-01.mp3",
+            "aaa.mp3",
+          ],
+          directoryPath: localPath,
+          fileExtension: 'mp3',
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Restore the unique playlist zip in which 1 audio's present in the corresponding target
+          playlist was deleted after restoring initial audiolearn target application containing 4
+          playlists as well as restoring their mp3.''',
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}restore_sing_or_mult_playlists_with_delete_audio_mp3",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        await app.main();
+        await tester.pumpAndSettle();
+
+        // Install the initial version of the four saved
+        // playlists
+
+        String restorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_app_with_pictures.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 2782168),
+        ]);
+
+        // Execute the 'Restore Playlists, Comments and Settings
+        // from Zip File ...' menu to install the initial
+        // audiolearn version
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylistsNotContainedInZip: false,
+        );
+
+        // Close the displayed warning confirmation dialog
+        await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+        await tester.pumpAndSettle();
+
+        String mp3RestorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_mp3.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: mp3RestorableZipFilePathName,
+              path: mp3RestorableZipFilePathName,
+              size: 18374505),
+        ]);
+
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
+        );
+
+        // Tap on the MP3 Restoration SetValueToTargetDialog Ok button
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
+
+        // Now tap on the 'A Single ZIP File' button
+        await tester.tap(find.byKey(const Key('selectFileButton')));
+        await tester.pumpAndSettle();
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 11 audio(s) MP3 in 4 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
+          isWarningConfirming: true,
+        );
+
+        // Verify the restored MP3 files in the playlists not deleted
+
+        final String urgentActuPath =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023";
+        final String localPath =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}local";
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+            "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
+            "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+            "aaa.mp3",
+            "bbb.mp3",
+          ],
+          directoryPath: urgentActuPath,
+          fileExtension: 'mp3',
+        );
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "240110-181805-Really short video 23-07-01.mp3",
+            "240110-181810-morning _ cinematic video 23-07-01.mp3",
+            "aaa.mp3",
+            "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
+          ],
+          directoryPath: localPath,
+          fileExtension: 'mp3',
+        );
+
+        // Restore the unique playlist ZIP in which 1 audio
+        // present in the corresponding target playlist was
+        // deleted
+
+        restorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}restore_urgent_actus_17-12-2023_with_1_deleted_audio.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 2782168),
+        ]);
+
+        // Execute the 'Restore Playlists, Comments and Settings
+        // from Zip File ...' menu
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylistsNotContainedInZip: false,
+        );
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 0 playlist saved individually, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from \"$restorableZipFilePathName\".\n\nDeleted 1 audio(s)\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.",
+          isWarningConfirming: true,
+          warningTitle: 'CONFIRMATION',
+        );
+
+        // Verify the MP3 files in the playlists not deleted after
+        // 1 audio was deleted
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+            "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+            "aaa.mp3",
+            "bbb.mp3",
+          ],
+          directoryPath: urgentActuPath,
+          fileExtension: 'mp3',
+        );
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "240110-181805-Really short video 23-07-01.mp3",
+            "240110-181810-morning _ cinematic video 23-07-01.mp3",
+            "aaa.mp3",
+            "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
+          ],
+          directoryPath: localPath,
+          fileExtension: 'mp3',
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Restore the source playlist with 2 new comments and 2 new pictures in which 2 audio's present
+          in the target playlists were deleted and 2 audio's were added as well as 2 playlists were deleted.
+          This is done after restoring initial audiolearn target application containing 4 playlists as well
+          as restoring their mp3.''', (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}restore_sing_or_mult_playlists_with_delete_audio_mp3",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        await app.main();
+        await tester.pumpAndSettle();
+
+        // Install the initial version of the four saved
+        // playlists
+
+        String restorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_app_with_pictures.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 2782168),
+        ]);
+
+        // Execute the 'Restore Playlists, Comments and Settings
+        // from Zip File ...' menu to install the initial
+        // audiolearn version
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylistsNotContainedInZip: false,
+        );
+
+        // Close the displayed warning confirmation dialog
+        await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+        await tester.pumpAndSettle();
+
+        // Verify the restored picture files in the application
+        // pictures directory
+
+        final String appPicturesDir =
+            "$kApplicationPathWindowsTest${path.separator}$kPictureDirName";
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg",
+            "Dieu-le-Père.jpg",
+            "Screenshot_20250903_202601.jpg",
+          ],
+          directoryPath: appPicturesDir,
+          fileExtension: 'jpg',
+        );
+
+        // Verify the picture application json map content
+
+        List<String> pictureFileNamesLstOne = [
+          "local|Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+          "urgent_actus_17-12-2023|aaa"
+        ];
+        List<String> audioForPictureTitleLstTwo = [
+          "urgent_actus_17-12-2023|250812-162929-L’uniforme arrive en France en 2024 23-12-11",
+          "urgent_actus_17-12-2023|250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13"
+        ];
+        List<String> audioForPictureTitleLstThree = [
+          "local|240110-181805-Really short video 23-07-01",
+          "urgent_actus_17-12-2023|250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07"
+        ];
+
+        // Now verifying the audio picture addition result
+        IntegrationTestUtil.verifyApplicationPictureJsonMap(
+          applicationPictureDir: appPicturesDir,
+          pictureFileNameOne: "Dieu-le-Père.jpg",
+          audioForPictureTitleOneLst: pictureFileNamesLstOne,
+          pictureFileNameTwo:
+              "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg",
+          audioForPictureTitleTwoLst: audioForPictureTitleLstTwo,
+          pictureFileNameThree: "Screenshot_20250903_202601.jpg",
+          audioForPictureTitleThreeLst: audioForPictureTitleLstThree,
+        );
+
+        // Verify the restored picture json files of the
+        // urgent_actus_17-12-2023 playlist
+
+        final String urgentActuPath =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023";
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.json",
+            "250812-162929-L’uniforme arrive en France en 2024 23-12-11.json",
+            "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.json",
+            "aaa.json",
+          ],
+          directoryPath: "$urgentActuPath${path.separator}$kPictureDirName",
+          fileExtension: 'json',
+        );
+
+        // Verify the restored picture json files of the local playlist
+
+        final String localPath =
+            "$kPlaylistDownloadRootPathWindowsTest${path.separator}local";
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "240110-181805-Really short video 23-07-01.json",
+            "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.json",
+          ],
+          directoryPath: "$localPath${path.separator}$kPictureDirName",
+          fileExtension: 'json',
+        );
+
+        // Verify the restored comment files of the
+        // urgent_actus_17-12-2023 playlist
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "aaa.json",
+            "bbb.json",
+          ],
+          directoryPath: "$urgentActuPath${path.separator}$kCommentDirName",
+          fileExtension: 'json',
+        );
+
+        // Verify the restored comment files of the local playlist
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "aaa.json",
+            "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.json",
+          ],
+          directoryPath: "$localPath${path.separator}$kCommentDirName",
+          fileExtension: 'json',
+        );
+
+        String mp3RestorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_mp3.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: mp3RestorableZipFilePathName,
+              path: mp3RestorableZipFilePathName,
+              size: 18374505),
+        ]);
+
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
+        );
+
+        // Tap on the MP3 Restoration SetValueToTargetDialog Ok button
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
+
+        // Now tap on the 'A Single ZIP File' button
+        await tester.tap(find.byKey(const Key('selectFileButton')));
+        await tester.pumpAndSettle();
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 11 audio(s) MP3 in 4 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
+          isWarningConfirming: true,
+        );
+
+        // Verify the restored MP3 files in the playlists not deleted
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+            "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
+            "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+            "aaa.mp3",
+            "bbb.mp3",
+          ],
+          directoryPath: urgentActuPath,
+          fileExtension: 'mp3',
+        );
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "240110-181805-Really short video 23-07-01.mp3",
+            "240110-181810-morning _ cinematic video 23-07-01.mp3",
+            "aaa.mp3",
+            "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
+          ],
+          directoryPath: localPath,
+          fileExtension: 'mp3',
+        );
+
+        // Restore the source playlist in which 2 audio's present
+        // in the target playlists were deleted, 2 audio's were added
+        // and in which 2 playlists ("local_1", "local_2") not
+        // present in the ZIP were deleted
+
+        restorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}restore_audioLearn_app_with_pictures_comments_and_2_deleted_2_added_audios_and_2_deleted_playlists.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 5211721),
+        ]);
+
+        // Execute the 'Restore Playlists, Comments and Settings
+        // from Zip File ...' menu
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylistsNotContainedInZip: false,
+        );
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 0 playlist, 2 comment and 1 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 1 added plus 0 deleted plus 1 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.",
+          isWarningConfirming: true,
+          warningTitle: 'CONFIRMATION',
+        );
+
+        // Verify the restored picture files in the application
+        // pictures directory
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg",
+            "canari.jpg",
+            "DesertCross.jpg",
+            "Dieu-le-Père.jpg",
+            "Screenshot_20250903_202601.jpg",
+          ],
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
+          fileExtension: 'jpg',
+        );
+
+        // Verify the picture application json map content
+
+        pictureFileNamesLstOne = [
+          "urgent_actus_17-12-2023|aaa",
+          "local|aaa",
+        ];
+        audioForPictureTitleLstTwo = [
+          "urgent_actus_17-12-2023|250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13"
+        ];
+        audioForPictureTitleLstThree = [
+          "local|240110-181805-Really short video 23-07-01",
+          "urgent_actus_17-12-2023|250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07"
+        ];
+        List<String> audioForPictureTitleLstFour = [
+          "local|240110-181810-morning _ cinematic video 23-07-01"
+        ];
+        List<String> audioForPictureTitleLstFive = [
+          "urgent_actus_17-12-2023|converted"
+        ];
+
+        // Now verifying the audio picture addition result
+        IntegrationTestUtil.verifyApplicationPictureJsonMap(
+          applicationPictureDir: appPicturesDir,
+          pictureFileNameOne: "Dieu-le-Père.jpg",
+          audioForPictureTitleOneLst: pictureFileNamesLstOne,
+          pictureFileNameTwo:
+              "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg",
+          audioForPictureTitleTwoLst: audioForPictureTitleLstTwo,
+          pictureFileNameThree: "Screenshot_20250903_202601.jpg",
+          audioForPictureTitleThreeLst: audioForPictureTitleLstThree,
+          pictureFileNameFour: "canari.jpg",
+          audioForPictureTitleFourLst: audioForPictureTitleLstFour,
+          pictureFileNameFive: "DesertCross.jpg",
+          audioForPictureTitleFiveLst: audioForPictureTitleLstFive,
+        );
+
+        // Verify the restored picture json files of the
+        // urgent_actus_17-12-2023 playlist
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.json",
+            "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.json",
+            "aaa.json",
+            "converted.json",
+          ],
+          directoryPath: "$urgentActuPath${path.separator}$kPictureDirName",
+          fileExtension: 'json',
+        );
+
+        // Verify the restored picture json files of the local playlist
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "240110-181805-Really short video 23-07-01.json",
+            "aaa.json",
+          ],
+          directoryPath: "$localPath${path.separator}$kPictureDirName",
+          fileExtension: 'json',
+        );
+
+        // Verify the restored comment files of the
+        // urgent_actus_17-12-2023 playlist
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "aaa.json",
+            "bbb.json",
+            "converted.json",
+          ],
+          directoryPath: "$urgentActuPath${path.separator}$kCommentDirName",
+          fileExtension: 'json',
+        );
+
+        // Verify the restored comment files of the local playlist
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "aaa.json",
+            "converted_local.json",
+          ],
+          directoryPath: "$localPath${path.separator}$kCommentDirName",
+          fileExtension: 'json',
+        );
+
+        mp3RestorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}restore_audioLearn_mp3.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: mp3RestorableZipFilePathName,
+              path: mp3RestorableZipFilePathName,
+              size: 6784843),
+        ]);
+
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
+        );
+
+        // Tap on the MP3 Restoration SetValueToTargetDialog Ok button
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
+
+        // Now tap on the 'A Single ZIP File' button
+        await tester.tap(find.byKey(const Key('selectFileButton')));
+        await tester.pumpAndSettle();
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 2 audio(s) MP3 in 2 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
+          isWarningConfirming: true,
+        );
+
+        // Verify the MP3 files in the playlists not deleted after
+        // 2 audio's were deleted
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
+            "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
+            "aaa.mp3",
+            "bbb.mp3",
+            "converted.mp3",
+          ],
+          directoryPath: urgentActuPath,
+          fileExtension: 'mp3',
+        );
+
+        IntegrationTestUtil.verifyFilesPresence(
+          expectedFileNamesLst: [
+            "240110-181805-Really short video 23-07-01.mp3",
+            "240110-181810-morning _ cinematic video 23-07-01.mp3",
+            "aaa.mp3",
+            "converted_local.mp3",
+          ],
+          directoryPath: localPath,
+          fileExtension: 'mp3',
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
     });
   });
 
@@ -32126,1438 +33573,6 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
-    });
-  });
-  group('Advanced restoration from source playlist to target playlist test.',
-      () {
-    testWidgets(
-        '''After restoring initial audiolearn target application containing 4 playlists as well as
-          restoring their mp3, restore the source playlist in which 2 audio's present in the target
-          playlists were deleted and in which 2 playlists were deleted. Finally, re-restore the initial
-          audiolearn target application containing 4 playlists without setting the "Replace existing
-          playlists" checkbox to true as well as re-restore their mp3 to verify that after 2 audio's
-          and 2 playlists were deletd, it is not possible to restore totally the initial audiolearn
-          application.''', (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}restore_sing_or_mult_playlists_with_delete_audio_mp3",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
-
-      final SettingsDataService settingsDataService = SettingsDataService(
-        isTest: true,
-      );
-
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
-
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
-
-      await app.main();
-      await tester.pumpAndSettle();
-
-      // Install the initial version of the four saved
-      // playlists
-
-      String restorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_app_with_pictures.zip';
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: restorableZipFilePathName,
-            path: restorableZipFilePathName,
-            size: 2782168),
-      ]);
-
-      // Execute the 'Restore Playlists, Comments and Settings
-      // from Zip File ...' menu to install the initial
-      // audiolearn version
-      await IntegrationTestUtil.executeRestorePlaylists(
-        tester: tester,
-        doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylistsNotContainedInZip: false,
-      );
-
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            'Restored 4 playlist, 6 comment and 6 picture JSON files as well as 3 picture JPG file(s) in the application pictures directory and 11 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "$restorableZipFilePathName".',
-        isWarningConfirming: true,
-        warningTitle: 'CONFIRMATION',
-      );
-
-      String mp3RestorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_mp3.zip';
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: mp3RestorableZipFilePathName,
-            path: mp3RestorableZipFilePathName,
-            size: 18374505),
-      ]);
-
-      await IntegrationTestUtil.typeOnAppbarMenuItem(
-        tester: tester,
-        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
-      );
-
-      // Tap on the MP3 Restoration SetValueToTargetDialog Ok button
-      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-      await tester.pumpAndSettle();
-
-      // Now tap on the 'A Single ZIP File' button
-      await tester.tap(find.byKey(const Key('selectFileButton')));
-      await tester.pumpAndSettle();
-
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 11 audio(s) MP3 in 4 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
-        isWarningConfirming: true,
-      );
-
-      // Verify the restored MP3 files in the playlists not deleted
-
-      final String urgentActuPath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023";
-      final String localPath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}local";
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-          "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
-          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-          "aaa.mp3",
-          "bbb.mp3",
-        ],
-        directoryPath: urgentActuPath,
-        fileExtension: 'mp3',
-      );
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "240110-181805-Really short video 23-07-01.mp3",
-          "240110-181810-morning _ cinematic video 23-07-01.mp3",
-          "aaa.mp3",
-          "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
-        ],
-        directoryPath: localPath,
-        fileExtension: 'mp3',
-      );
-
-      // Restore the source playlist in which 2 audio's
-      // present in the target playlists were deleted and
-      // in which 2 playlists ("local_1", "local_2") not
-      // present in the ZIP were deleted
-
-      restorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}restore_audioLearn_2_deleted_playlists_2_deleted_audios_with_pictures_2025-10-04_11_52_58.zip';
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: restorableZipFilePathName,
-            path: restorableZipFilePathName,
-            size: 2782168),
-      ]);
-
-      // Execute the 'Restore Playlists, Comments and Settings
-      // from Zip File ...' menu
-      await IntegrationTestUtil.executeRestorePlaylists(
-        tester: tester,
-        doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylistsNotContainedInZip: false,
-      );
-
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 0 playlist, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.",
-        isWarningConfirming: true,
-        warningTitle: 'CONFIRMATION',
-      );
-
-      // Verify the MP3 files in the playlists not deleted after
-      // 2 audio's were deleted
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-          "aaa.mp3",
-          "bbb.mp3",
-        ],
-        directoryPath: urgentActuPath,
-        fileExtension: 'mp3',
-      );
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "240110-181805-Really short video 23-07-01.mp3",
-          "240110-181810-morning _ cinematic video 23-07-01.mp3",
-          "aaa.mp3",
-        ],
-        directoryPath: localPath,
-        fileExtension: 'mp3',
-      );
-
-      // Re-install the initial version of the four saved
-      // playlists
-
-      restorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_app_with_pictures.zip';
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: restorableZipFilePathName,
-            path: restorableZipFilePathName,
-            size: 2782168),
-      ]);
-
-      // Execute the 'Restore Playlists, Comments and Settings
-      // from Zip File ...' menu to re-install the initial
-      // audiolearn version
-      await IntegrationTestUtil.executeRestorePlaylists(
-        tester: tester,
-        doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylistsNotContainedInZip: false,
-      );
-
-      // Close the displayed warning confirmation dialog
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-      await tester.pumpAndSettle();
-
-      mp3RestorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_mp3.zip';
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: mp3RestorableZipFilePathName,
-            path: mp3RestorableZipFilePathName,
-            size: 18374505),
-      ]);
-
-      await IntegrationTestUtil.typeOnAppbarMenuItem(
-        tester: tester,
-        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
-      );
-
-      // Tap on the MP3 Restoration SetValueToTargetDialog Ok button
-      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-      await tester.pumpAndSettle();
-
-      // Now tap on the 'A Single ZIP File' button
-      await tester.tap(find.byKey(const Key('selectFileButton')));
-      await tester.pumpAndSettle();
-
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 0 audio(s) MP3 in 0 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
-        isWarningConfirming: true,
-      );
-
-      // Verify the restored MP3 files in the playlists not deleted
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-          "aaa.mp3",
-          "bbb.mp3",
-        ],
-        directoryPath: urgentActuPath,
-        fileExtension: 'mp3',
-      );
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "240110-181805-Really short video 23-07-01.mp3",
-          "240110-181810-morning _ cinematic video 23-07-01.mp3",
-          "aaa.mp3",
-        ],
-        directoryPath: localPath,
-        fileExtension: 'mp3',
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Restore the source playlist in which 2 audio's present in the target playlists were deleted
-          and in which 2 playlists were deleted after restoring initial audiolearn target application
-          containing 4 playlists as well as restoring their mp3, . Finally, re-restore the initial
-          audiolearn target application containing 4 playlists WITH setting the "Replace existing
-          playlists" checkbox to TRUE as well as re-restore their mp3 to verify that after 2 audio's
-          and 2 playlists were deletd, IT IS NOW POSSIBLE to restore totally the initial audiolearn
-          application.''', (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}restore_sing_or_mult_playlists_with_delete_audio_mp3",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
-
-      final SettingsDataService settingsDataService = SettingsDataService(
-        isTest: true,
-      );
-
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
-
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
-
-      await app.main();
-      await tester.pumpAndSettle();
-
-      // Install the initial version of the four saved
-      // playlists
-
-      String restorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_app_with_pictures.zip';
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: restorableZipFilePathName,
-            path: restorableZipFilePathName,
-            size: 2782168),
-      ]);
-
-      // Execute the 'Restore Playlists, Comments and Settings
-      // from Zip File ...' menu to install the initial
-      // audiolearn version
-      await IntegrationTestUtil.executeRestorePlaylists(
-        tester: tester,
-        doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylistsNotContainedInZip: false,
-      );
-
-      // Close the displayed warning confirmation dialog
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-      await tester.pumpAndSettle();
-
-      String mp3RestorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_mp3.zip';
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: mp3RestorableZipFilePathName,
-            path: mp3RestorableZipFilePathName,
-            size: 18374505),
-      ]);
-
-      await IntegrationTestUtil.typeOnAppbarMenuItem(
-        tester: tester,
-        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
-      );
-
-      // Tap on the MP3 Restoration SetValueToTargetDialog Ok button
-      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-      await tester.pumpAndSettle();
-
-      // Now tap on the 'A Single ZIP File' button
-      await tester.tap(find.byKey(const Key('selectFileButton')));
-      await tester.pumpAndSettle();
-
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 11 audio(s) MP3 in 4 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
-        isWarningConfirming: true,
-      );
-
-      // Verify the restored MP3 files in the playlists not deleted
-
-      final String urgentActuPath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023";
-      final String localPath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}local";
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-          "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
-          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-          "aaa.mp3",
-          "bbb.mp3",
-        ],
-        directoryPath: urgentActuPath,
-        fileExtension: 'mp3',
-      );
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "240110-181805-Really short video 23-07-01.mp3",
-          "240110-181810-morning _ cinematic video 23-07-01.mp3",
-          "aaa.mp3",
-          "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
-        ],
-        directoryPath: localPath,
-        fileExtension: 'mp3',
-      );
-
-      // Restore the source playlist in which 2 audio's
-      // present in the target playlists were deleted and
-      // in which 2 playlists ("local_1", "local_2") not
-      // present in the ZIP were deleted
-
-      restorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}restore_audioLearn_2_deleted_playlists_2_deleted_audios_with_pictures_2025-10-04_11_52_58.zip';
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: restorableZipFilePathName,
-            path: restorableZipFilePathName,
-            size: 2782168),
-      ]);
-
-      // Execute the 'Restore Playlists, Comments and Settings
-      // from Zip File ...' menu
-      await IntegrationTestUtil.executeRestorePlaylists(
-        tester: tester,
-        doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylistsNotContainedInZip: false,
-      );
-
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 0 playlist, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.",
-        isWarningConfirming: true,
-        warningTitle: 'CONFIRMATION',
-      );
-
-      // Verify the MP3 files in the playlists not deleted after
-      // 2 audio's were deleted
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-          "aaa.mp3",
-          "bbb.mp3",
-        ],
-        directoryPath: urgentActuPath,
-        fileExtension: 'mp3',
-      );
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "240110-181805-Really short video 23-07-01.mp3",
-          "240110-181810-morning _ cinematic video 23-07-01.mp3",
-          "aaa.mp3",
-        ],
-        directoryPath: localPath,
-        fileExtension: 'mp3',
-      );
-
-      // Re-install the initial version of the four saved
-      // playlists WITH setting the "Replace existing playlist(s)"
-      // checkbox to true
-
-      restorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_app_with_pictures.zip';
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: restorableZipFilePathName,
-            path: restorableZipFilePathName,
-            size: 2782168),
-      ]);
-
-      // Execute the 'Restore Playlists, Comments and Settings
-      // from Zip File ...' menu to re-install the initial
-      // audiolearn version
-      await IntegrationTestUtil.executeRestorePlaylists(
-        tester: tester,
-        doReplaceExistingPlaylists: true,
-        doDeleteExistingPlaylistsNotContainedInZip: false,
-      );
-
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 4 playlist, 1 comment and 6 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 11 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".",
-        isWarningConfirming: true,
-        warningTitle: 'CONFIRMATION',
-      );
-
-      mp3RestorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_mp3.zip';
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: mp3RestorableZipFilePathName,
-            path: mp3RestorableZipFilePathName,
-            size: 18374505),
-      ]);
-
-      await IntegrationTestUtil.typeOnAppbarMenuItem(
-        tester: tester,
-        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
-      );
-
-      // Tap on the MP3 Restoration SetValueToTargetDialog Ok button
-      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-      await tester.pumpAndSettle();
-
-      // Now tap on the 'A Single ZIP File' button
-      await tester.tap(find.byKey(const Key('selectFileButton')));
-      await tester.pumpAndSettle();
-
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 2 audio(s) MP3 in 2 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
-        isWarningConfirming: true,
-      );
-
-      // Verify the restored MP3 files in the playlists not deleted
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-          "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
-          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-          "aaa.mp3",
-          "bbb.mp3",
-        ],
-        directoryPath: urgentActuPath,
-        fileExtension: 'mp3',
-      );
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "240110-181805-Really short video 23-07-01.mp3",
-          "240110-181810-morning _ cinematic video 23-07-01.mp3",
-          "aaa.mp3",
-          "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
-        ],
-        directoryPath: localPath,
-        fileExtension: 'mp3',
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Test error restoring initial audiolearn target application with selecting its mp3 restorition
-          ZIP instead of its playlists ZIP.''', (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}restore_sing_or_mult_playlists_with_delete_audio_mp3",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
-
-      final SettingsDataService settingsDataService = SettingsDataService(
-        isTest: true,
-      );
-
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
-
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
-
-      await app.main();
-      await tester.pumpAndSettle();
-
-      // Install the initial version of the four saved
-      // playlists
-
-      String restorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_mp3.zip';
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: restorableZipFilePathName,
-            path: restorableZipFilePathName,
-            size: 2782168),
-      ]);
-
-      // Execute the 'Restore Playlists, Comments and Settings
-      // from Zip File ...' menu to install the initial
-      // audiolearn version
-      await IntegrationTestUtil.executeRestorePlaylists(
-        tester: tester,
-        doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylistsNotContainedInZip: false,
-      );
-
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 0 playlist saved individually, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from \"$restorableZipFilePathName\".",
-        isWarningConfirming: true,
-        warningTitle: 'CONFIRMATION',
-      );
-
-      // Verify the restored MP3 files in the playlists not deleted
-
-      List<String> expectedUrgentActusMp3Lst = [];
-
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023",
-          fileExtension: 'mp3',
-        ),
-        expectedUrgentActusMp3Lst,
-      );
-
-      List<String> expectedLocalMp3Lst = [];
-
-      expect(
-        DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$kPlaylistDownloadRootPathWindowsTest${path.separator}local",
-          fileExtension: 'mp3',
-        ),
-        expectedLocalMp3Lst,
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''After restoring initial audiolearn target application containing 4 playlists as well as
-          restoring their mp3, restore the source playlist in which 2 audio's present in the target
-          playlists were deleted, 2 playlists were deleted and 2 playlists were added.''',
-        (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}restore_sing_or_mult_playlists_with_delete_audio_mp3",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
-
-      final SettingsDataService settingsDataService = SettingsDataService(
-        isTest: true,
-      );
-
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
-
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
-
-      await app.main();
-      await tester.pumpAndSettle();
-
-      // Install the initial version of the four saved
-      // playlists
-
-      String restorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_app_with_pictures.zip';
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: restorableZipFilePathName,
-            path: restorableZipFilePathName,
-            size: 2782168),
-      ]);
-
-      // Execute the 'Restore Playlists, Comments and Settings
-      // from Zip File ...' menu to install the initial
-      // audiolearn version
-      await IntegrationTestUtil.executeRestorePlaylists(
-        tester: tester,
-        doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylistsNotContainedInZip: false,
-      );
-
-      // Close the displayed warning confirmation dialog
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-      await tester.pumpAndSettle();
-
-      String mp3RestorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_mp3.zip';
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: mp3RestorableZipFilePathName,
-            path: mp3RestorableZipFilePathName,
-            size: 18374505),
-      ]);
-
-      await IntegrationTestUtil.typeOnAppbarMenuItem(
-        tester: tester,
-        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
-      );
-
-      // Tap on the MP3 Restoration SetValueToTargetDialog Ok button
-      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-      await tester.pumpAndSettle();
-
-      // Now tap on the 'A Single ZIP File' button
-      await tester.tap(find.byKey(const Key('selectFileButton')));
-      await tester.pumpAndSettle();
-
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 11 audio(s) MP3 in 4 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
-        isWarningConfirming: true,
-      );
-
-      // Verify the restored MP3 files in the playlists not deleted
-
-      final String urgentActuPath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023";
-      final String localPath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}local";
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-          "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
-          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-          "aaa.mp3",
-          "bbb.mp3",
-        ],
-        directoryPath: urgentActuPath,
-        fileExtension: 'mp3',
-      );
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "240110-181805-Really short video 23-07-01.mp3",
-          "240110-181810-morning _ cinematic video 23-07-01.mp3",
-          "aaa.mp3",
-          "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
-        ],
-        directoryPath: localPath,
-        fileExtension: 'mp3',
-      );
-
-      // Restore the source playlist in which 2 audio's
-      // present in the target playlists were deleted and
-      // in which 2 playlists ("local_1", "local_2") not
-      // present in the ZIP were deleted and in which 2
-      // playlists ("local_3", "local_4") were added
-
-      restorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}restore_audioLearn_with_2_new_2_deleted_playlist_2_deleted_audios_2025-10-05_13_16_51.zip';
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: restorableZipFilePathName,
-            path: restorableZipFilePathName,
-            size: 2782168),
-      ]);
-
-      // Execute the 'Restore Playlists, Comments and Settings
-      // from Zip File ...' menu
-      await IntegrationTestUtil.executeRestorePlaylists(
-        tester: tester,
-        doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylistsNotContainedInZip: false,
-      );
-
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 2 playlist, 2 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.\n\nSince the playlists\n  \"local_3\",\n  \"local_4\"\nwere created, they are positioned at the end of the playlist list.",
-        isWarningConfirming: true,
-        warningTitle: 'CONFIRMATION',
-      );
-
-      // Verify the MP3 files in the playlists not deleted after
-      // 2 audio's were deleted
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-          "aaa.mp3",
-          "bbb.mp3",
-        ],
-        directoryPath: urgentActuPath,
-        fileExtension: 'mp3',
-      );
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "240110-181805-Really short video 23-07-01.mp3",
-          "240110-181810-morning _ cinematic video 23-07-01.mp3",
-          "aaa.mp3",
-        ],
-        directoryPath: localPath,
-        fileExtension: 'mp3',
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Restore the unique playlist zip in which 1 audio's present in the corresponding target
-          playlist was deleted after restoring initial audiolearn target application containing 4
-          playlists as well as restoring their mp3.''',
-        (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}restore_sing_or_mult_playlists_with_delete_audio_mp3",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
-
-      final SettingsDataService settingsDataService = SettingsDataService(
-        isTest: true,
-      );
-
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
-
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
-
-      await app.main();
-      await tester.pumpAndSettle();
-
-      // Install the initial version of the four saved
-      // playlists
-
-      String restorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_app_with_pictures.zip';
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: restorableZipFilePathName,
-            path: restorableZipFilePathName,
-            size: 2782168),
-      ]);
-
-      // Execute the 'Restore Playlists, Comments and Settings
-      // from Zip File ...' menu to install the initial
-      // audiolearn version
-      await IntegrationTestUtil.executeRestorePlaylists(
-        tester: tester,
-        doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylistsNotContainedInZip: false,
-      );
-
-      // Close the displayed warning confirmation dialog
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-      await tester.pumpAndSettle();
-
-      String mp3RestorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_mp3.zip';
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: mp3RestorableZipFilePathName,
-            path: mp3RestorableZipFilePathName,
-            size: 18374505),
-      ]);
-
-      await IntegrationTestUtil.typeOnAppbarMenuItem(
-        tester: tester,
-        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
-      );
-
-      // Tap on the MP3 Restoration SetValueToTargetDialog Ok button
-      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-      await tester.pumpAndSettle();
-
-      // Now tap on the 'A Single ZIP File' button
-      await tester.tap(find.byKey(const Key('selectFileButton')));
-      await tester.pumpAndSettle();
-
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 11 audio(s) MP3 in 4 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
-        isWarningConfirming: true,
-      );
-
-      // Verify the restored MP3 files in the playlists not deleted
-
-      final String urgentActuPath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023";
-      final String localPath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}local";
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-          "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
-          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-          "aaa.mp3",
-          "bbb.mp3",
-        ],
-        directoryPath: urgentActuPath,
-        fileExtension: 'mp3',
-      );
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "240110-181805-Really short video 23-07-01.mp3",
-          "240110-181810-morning _ cinematic video 23-07-01.mp3",
-          "aaa.mp3",
-          "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
-        ],
-        directoryPath: localPath,
-        fileExtension: 'mp3',
-      );
-
-      // Restore the unique playlist ZIP in which 1 audio
-      // present in the corresponding target playlist was
-      // deleted
-
-      restorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}restore_urgent_actus_17-12-2023_with_1_deleted_audio.zip';
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: restorableZipFilePathName,
-            path: restorableZipFilePathName,
-            size: 2782168),
-      ]);
-
-      // Execute the 'Restore Playlists, Comments and Settings
-      // from Zip File ...' menu
-      await IntegrationTestUtil.executeRestorePlaylists(
-        tester: tester,
-        doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylistsNotContainedInZip: false,
-      );
-
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 0 playlist saved individually, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from \"$restorableZipFilePathName\".\n\nDeleted 1 audio(s)\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.",
-        isWarningConfirming: true,
-        warningTitle: 'CONFIRMATION',
-      );
-
-      // Verify the MP3 files in the playlists not deleted after
-      // 1 audio was deleted
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-          "aaa.mp3",
-          "bbb.mp3",
-        ],
-        directoryPath: urgentActuPath,
-        fileExtension: 'mp3',
-      );
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "240110-181805-Really short video 23-07-01.mp3",
-          "240110-181810-morning _ cinematic video 23-07-01.mp3",
-          "aaa.mp3",
-          "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
-        ],
-        directoryPath: localPath,
-        fileExtension: 'mp3',
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Restore the source playlist with 2 new comments and 2 new pictures in which 2 audio's present
-          in the target playlists were deleted and 2 audio's were added as well as 2 playlists were deleted.
-          This is done after restoring initial audiolearn target application containing 4 playlists as well
-          as restoring their mp3.''', (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-
-      // Copy the test initial audio data to the app dir
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}restore_sing_or_mult_playlists_with_delete_audio_mp3",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
-
-      final SettingsDataService settingsDataService = SettingsDataService(
-        isTest: true,
-      );
-
-      // Load the settings from the json file. This is necessary
-      // otherwise the ordered playlist titles will remain empty
-      // and the playlist list will not be filled with the
-      // playlists available in the app test dir
-      await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
-
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
-
-      await app.main();
-      await tester.pumpAndSettle();
-
-      // Install the initial version of the four saved
-      // playlists
-
-      String restorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_app_with_pictures.zip';
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: restorableZipFilePathName,
-            path: restorableZipFilePathName,
-            size: 2782168),
-      ]);
-
-      // Execute the 'Restore Playlists, Comments and Settings
-      // from Zip File ...' menu to install the initial
-      // audiolearn version
-      await IntegrationTestUtil.executeRestorePlaylists(
-        tester: tester,
-        doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylistsNotContainedInZip: false,
-      );
-
-      // Close the displayed warning confirmation dialog
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-      await tester.pumpAndSettle();
-
-      // Verify the restored picture files in the application
-      // pictures directory
-
-      final String appPicturesDir =
-          "$kApplicationPathWindowsTest${path.separator}$kPictureDirName";
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg",
-          "Dieu-le-Père.jpg",
-          "Screenshot_20250903_202601.jpg",
-        ],
-        directoryPath: appPicturesDir,
-        fileExtension: 'jpg',
-      );
-
-      // Verify the picture application json map content
-
-      List<String> pictureFileNamesLstOne = [
-        "local|Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-        "urgent_actus_17-12-2023|aaa"
-      ];
-      List<String> audioForPictureTitleLstTwo = [
-        "urgent_actus_17-12-2023|250812-162929-L’uniforme arrive en France en 2024 23-12-11",
-        "urgent_actus_17-12-2023|250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13"
-      ];
-      List<String> audioForPictureTitleLstThree = [
-        "local|240110-181805-Really short video 23-07-01",
-        "urgent_actus_17-12-2023|250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07"
-      ];
-
-      // Now verifying the audio picture addition result
-      IntegrationTestUtil.verifyApplicationPictureJsonMap(
-        applicationPictureDir: appPicturesDir,
-        pictureFileNameOne: "Dieu-le-Père.jpg",
-        audioForPictureTitleOneLst: pictureFileNamesLstOne,
-        pictureFileNameTwo:
-            "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg",
-        audioForPictureTitleTwoLst: audioForPictureTitleLstTwo,
-        pictureFileNameThree: "Screenshot_20250903_202601.jpg",
-        audioForPictureTitleThreeLst: audioForPictureTitleLstThree,
-      );
-
-      // Verify the restored picture json files of the
-      // urgent_actus_17-12-2023 playlist
-
-      final String urgentActuPath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}urgent_actus_17-12-2023";
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.json",
-          "250812-162929-L’uniforme arrive en France en 2024 23-12-11.json",
-          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.json",
-          "aaa.json",
-        ],
-        directoryPath: "$urgentActuPath${path.separator}$kPictureDirName",
-        fileExtension: 'json',
-      );
-
-      // Verify the restored picture json files of the local playlist
-
-      final String localPath =
-          "$kPlaylistDownloadRootPathWindowsTest${path.separator}local";
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "240110-181805-Really short video 23-07-01.json",
-          "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.json",
-        ],
-        directoryPath: "$localPath${path.separator}$kPictureDirName",
-        fileExtension: 'json',
-      );
-
-      // Verify the restored comment files of the
-      // urgent_actus_17-12-2023 playlist
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "aaa.json",
-          "bbb.json",
-        ],
-        directoryPath: "$urgentActuPath${path.separator}$kCommentDirName",
-        fileExtension: 'json',
-      );
-
-      // Verify the restored comment files of the local playlist
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "aaa.json",
-          "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.json",
-        ],
-        directoryPath: "$localPath${path.separator}$kCommentDirName",
-        fileExtension: 'json',
-      );
-
-      String mp3RestorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}initial_audioLearn_mp3.zip';
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: mp3RestorableZipFilePathName,
-            path: mp3RestorableZipFilePathName,
-            size: 18374505),
-      ]);
-
-      await IntegrationTestUtil.typeOnAppbarMenuItem(
-        tester: tester,
-        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
-      );
-
-      // Tap on the MP3 Restoration SetValueToTargetDialog Ok button
-      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-      await tester.pumpAndSettle();
-
-      // Now tap on the 'A Single ZIP File' button
-      await tester.tap(find.byKey(const Key('selectFileButton')));
-      await tester.pumpAndSettle();
-
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 11 audio(s) MP3 in 4 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
-        isWarningConfirming: true,
-      );
-
-      // Verify the restored MP3 files in the playlists not deleted
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-          "250812-162929-L’uniforme arrive en France en 2024 23-12-11.mp3",
-          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-          "aaa.mp3",
-          "bbb.mp3",
-        ],
-        directoryPath: urgentActuPath,
-        fileExtension: 'mp3',
-      );
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "240110-181805-Really short video 23-07-01.mp3",
-          "240110-181810-morning _ cinematic video 23-07-01.mp3",
-          "aaa.mp3",
-          "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!.mp3",
-        ],
-        directoryPath: localPath,
-        fileExtension: 'mp3',
-      );
-
-      // Restore the source playlist in which 2 audio's present
-      // in the target playlists were deleted, 2 audio's were added
-      // and in which 2 playlists ("local_1", "local_2") not
-      // present in the ZIP were deleted
-
-      restorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}restore_audioLearn_app_with_pictures_comments_and_2_deleted_2_added_audios_and_2_deleted_playlists.zip';
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: restorableZipFilePathName,
-            path: restorableZipFilePathName,
-            size: 5211721),
-      ]);
-
-      // Execute the 'Restore Playlists, Comments and Settings
-      // from Zip File ...' menu
-      await IntegrationTestUtil.executeRestorePlaylists(
-        tester: tester,
-        doReplaceExistingPlaylists: false,
-        doDeleteExistingPlaylistsNotContainedInZip: false,
-      );
-
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 0 playlist, 2 comment and 1 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 1 added plus 1 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.",
-        isWarningConfirming: true,
-        warningTitle: 'CONFIRMATION',
-      );
-
-      // Verify the restored picture files in the application
-      // pictures directory
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg",
-          "canari.jpg",
-          "DesertCross.jpg",
-          "Dieu-le-Père.jpg",
-          "Screenshot_20250903_202601.jpg",
-        ],
-        directoryPath:
-            "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
-        fileExtension: 'jpg',
-      );
-
-      // Verify the picture application json map content
-
-      pictureFileNamesLstOne = [
-        "urgent_actus_17-12-2023|aaa",
-      ];
-      audioForPictureTitleLstTwo = [
-        "urgent_actus_17-12-2023|250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13"
-      ];
-      audioForPictureTitleLstThree = [
-        "local|240110-181805-Really short video 23-07-01",
-        "urgent_actus_17-12-2023|250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07"
-      ];
-      List<String> audioForPictureTitleLstFour = [
-        "local|240110-181810-morning _ cinematic video 23-07-01"
-      ];
-      List<String> audioForPictureTitleLstFive = [
-        "urgent_actus_17-12-2023|converted"
-      ];
-
-      // Now verifying the audio picture addition result
-      IntegrationTestUtil.verifyApplicationPictureJsonMap(
-        applicationPictureDir: appPicturesDir,
-        pictureFileNameOne: "Dieu-le-Père.jpg",
-        audioForPictureTitleOneLst: pictureFileNamesLstOne,
-        pictureFileNameTwo:
-            "Bora_Bora_2560_1440_Youtube_2 - Voyage vers l'Inde intérieure.jpg",
-        audioForPictureTitleTwoLst: audioForPictureTitleLstTwo,
-        pictureFileNameThree: "Screenshot_20250903_202601.jpg",
-        audioForPictureTitleThreeLst: audioForPictureTitleLstThree,
-        pictureFileNameFour: "canari.jpg",
-        audioForPictureTitleFourLst: audioForPictureTitleLstFour,
-        pictureFileNameFive: "DesertCross.jpg",
-        audioForPictureTitleFiveLst: audioForPictureTitleLstFive,
-      );
-
-      // Verify the restored picture json files of the
-      // urgent_actus_17-12-2023 playlist
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.json",
-          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.json",
-          "aaa.json",
-          "converted.json",
-        ],
-        directoryPath: "$urgentActuPath${path.separator}$kPictureDirName",
-        fileExtension: 'json',
-      );
-
-      // Verify the restored picture json files of the local playlist
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "240110-181805-Really short video 23-07-01.json",
-        ],
-        directoryPath: "$localPath${path.separator}$kPictureDirName",
-        fileExtension: 'json',
-      );
-
-      // Verify the restored comment files of the
-      // urgent_actus_17-12-2023 playlist
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "aaa.json",
-          "bbb.json",
-          "converted.json",
-        ],
-        directoryPath: "$urgentActuPath${path.separator}$kCommentDirName",
-        fileExtension: 'json',
-      );
-
-      // Verify the restored comment files of the local playlist
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "aaa.json",
-          "converted_local.json",
-        ],
-        directoryPath: "$localPath${path.separator}$kCommentDirName",
-        fileExtension: 'json',
-      );
-
-      mp3RestorableZipFilePathName =
-          '$kApplicationPathWindowsTest${path.separator}restore_audioLearn_mp3.zip';
-
-      mockFilePicker.setSelectedFiles([
-        PlatformFile(
-            name: mp3RestorableZipFilePathName,
-            path: mp3RestorableZipFilePathName,
-            size: 6784843),
-      ]);
-
-      await IntegrationTestUtil.typeOnAppbarMenuItem(
-        tester: tester,
-        appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
-      );
-
-      // Tap on the MP3 Restoration SetValueToTargetDialog Ok button
-      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
-      await tester.pumpAndSettle();
-
-      // Now tap on the 'A Single ZIP File' button
-      await tester.tap(find.byKey(const Key('selectFileButton')));
-      await tester.pumpAndSettle();
-
-      // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-        tester: tester,
-        warningDialogMessage:
-            "Restored 2 audio(s) MP3 in 2 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
-        isWarningConfirming: true,
-      );
-
-      // Verify the MP3 files in the playlists not deleted after
-      // 2 audio's were deleted
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
-          "250812-162933-DETTE PUBLIQUE  - LA RÉALITÉ DERRIÈRE LES DISCOURS CATASTROPHISTES 23-11-07.mp3",
-          "aaa.mp3",
-          "bbb.mp3",
-          "converted.mp3",
-        ],
-        directoryPath: urgentActuPath,
-        fileExtension: 'mp3',
-      );
-
-      IntegrationTestUtil.verifyFilesPresence(
-        expectedFileNamesLst: [
-          "240110-181805-Really short video 23-07-01.mp3",
-          "240110-181810-morning _ cinematic video 23-07-01.mp3",
-          "aaa.mp3",
-          "converted_local.mp3",
-        ],
-        directoryPath: localPath,
-        fileExtension: 'mp3',
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
     });
   });
 
