@@ -26592,9 +26592,6 @@ void main() {
               doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
-            restorableZipFilePathName =
-                '$kApplicationPathWindowsTest${path.separator}local one and two 1_comments_1_pictures.zip';
-
             // Verify the displayed warning confirmation dialog
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
@@ -26715,7 +26712,7 @@ void main() {
               verifyPictureAudioMapLength: 1,
             );
 
-            // Verify the restored playlist 'local one' audio pictures json file
+            // Verify the restored playlist 'local two' audio pictures json file
             // content
 
             playlistRootDirName =
@@ -27153,12 +27150,16 @@ void main() {
             );
 
             IntegrationTestUtil.checkPlaylistCommentListDialogContent(
-                playlistCommentListDialogFinder:
-                    playlistCommentListDialogFinder,
-                expectedCommentTextsLst: [
-                  'Paroles',
-                  'Text',
-                ]);
+              playlistCommentListDialogFinder: playlistCommentListDialogFinder,
+              expectedCommentTextsLst: [
+                'Paroles',
+                'new converted audio',
+                'Text',
+                'nouveau audio converti',
+              ],
+              multipleString: 'new converted audio',
+              multipleCount: 2,
+            );
 
             // Now close the comment list dialog
             await tester.tap(find
@@ -27192,10 +27193,15 @@ void main() {
             IntegrationTestUtil.checkPlaylistCommentListDialogContent(
                 playlistCommentListDialogFinder:
                     playlistCommentListDialogFinder,
-                expectedCommentTextsLst: [
-                  'Paroles',
-                  'Text',
-                ]);
+              expectedCommentTextsLst: [
+                'Paroles',
+                'new converted audio',
+                'Text',
+                'nouveau audio converti',
+              ],
+              multipleString: 'new converted audio',
+              multipleCount: 2,
+            );
 
             // Now close the comment list dialog
             await tester.tap(find
@@ -27322,13 +27328,13 @@ void main() {
             restorableZipFilePathName =
                 // If executed on main
                 // '$kApplicationPathWindowsTest${path.separator}Windows Prières du Maître comment restoration.zip';
-                '$kApplicationPathWindowsTest${path.separator}local one and two 1_comments_1_pictures.zip';
+                '$kApplicationPathWindowsTest${path.separator}local one and two deleted_and_modified_and_added_comment_deleted_and_added_picture.zip';
 
             mockFilePicker.setSelectedFiles([
               PlatformFile(
                   name: restorableZipFilePathName,
                   path: restorableZipFilePathName,
-                  size: 74876),
+                  size: 1338352),
             ]);
 
             // Execute the 'Restore Playlists, Comments and Settings
@@ -27340,14 +27346,11 @@ void main() {
               doDeleteExistingPlaylistsNotContainedInZip: false,
             );
 
-            restorableZipFilePathName =
-                '$kApplicationPathWindowsTest${path.separator}local one and two 1_comments_1_pictures.zip';
-
             // Verify the displayed warning confirmation dialog
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 2 playlist, 2 comment and 2 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 2 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "$restorableZipFilePathName".',
+                  'Restored 2 playlist, 2 comment and 2 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 2 added plus 2 deleted plus 2 modified comment(s) in existing audio comment file(s) and the application settings from "$restorableZipFilePathName".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -27371,15 +27374,19 @@ void main() {
                   .widget<ListBody>(playlistCommentListFinder)
                   .children
                   .length,
-              2,
+              3,
             );
 
             IntegrationTestUtil.checkPlaylistCommentListDialogContent(
                 playlistCommentListDialogFinder:
                     playlistCommentListDialogFinder,
-                expectedCommentTextsLst: [
-                  'Text',
-                ]);
+              expectedCommentTextsLst: [
+                'Text',
+                'nouveau audio converti and modified',
+                'New comment',
+                'New created comment',
+              ],
+            );
 
             // Now close the comment list dialog
             await tester.tap(find
@@ -27403,15 +27410,19 @@ void main() {
                   .widget<ListBody>(playlistCommentListFinder)
                   .children
                   .length,
-              2,
+              3,
             );
 
             IntegrationTestUtil.checkPlaylistCommentListDialogContent(
                 playlistCommentListDialogFinder:
                     playlistCommentListDialogFinder,
-                expectedCommentTextsLst: [
-                  'Text',
-                ]);
+              expectedCommentTextsLst: [
+                'Text modified',
+                'nouveau audio modifié',
+                'New com',
+                'New',
+              ],
+);
 
             // Now close the comment list dialog
             await tester.tap(find
@@ -27429,6 +27440,9 @@ void main() {
                 Picture(
                   fileName: "Jancovici.jpg",
                 ),
+                Picture(
+                  fileName: "audio learn developer.jpg",
+                ),
               ],
             ];
 
@@ -27439,7 +27453,7 @@ void main() {
                 "new converted audio.json",
               ],
               audioPictureJsonFileContentLst: expectedPlaylistAudioPictureLst,
-              verifyAudioPictureJsonFileContentLength: 1,
+              verifyAudioPictureJsonFileContentLength: 2,
               onlyVerifyAudioFileName: true,
             );
 
@@ -27460,10 +27474,15 @@ void main() {
                 "$playlistOneTitle|new converted audio",
                 "$playlistTwoTitle|new converted audio",
               ],
-              verifyPictureAudioMapLength: 1,
+              pictureFileNameTwo: "audio learn developer.jpg",
+              audioForPictureTitleTwoLst: [
+                "$playlistOneTitle|new converted audio",
+                "$playlistTwoTitle|new converted audio",
+              ],
+              verifyPictureAudioMapLength: 2,
             );
 
-            // Verify the restored playlist 'local one' audio pictures json file
+            // Verify the restored playlist 'local two' audio pictures json file
             // content
 
             playlistRootDirName =
@@ -27473,6 +27492,9 @@ void main() {
               [
                 Picture(
                   fileName: "Jancovici.jpg",
+                ),
+                Picture(
+                  fileName: "audio learn developer.jpg",
                 ),
               ],
             ];
@@ -27484,7 +27506,7 @@ void main() {
                 "new converted audio.json",
               ],
               audioPictureJsonFileContentLst: expectedPlaylistAudioPictureLst,
-              verifyAudioPictureJsonFileContentLength: 1,
+              verifyAudioPictureJsonFileContentLength: 2,
               onlyVerifyAudioFileName: true,
             );
 
@@ -27505,7 +27527,12 @@ void main() {
                 "$playlistOneTitle|new converted audio",
                 "$playlistTwoTitle|new converted audio",
               ],
-              verifyPictureAudioMapLength: 1,
+              pictureFileNameTwo: "audio learn developer.jpg",
+              audioForPictureTitleTwoLst: [
+                "$playlistOneTitle|new converted audio",
+                "$playlistTwoTitle|new converted audio",
+              ],
+              verifyPictureAudioMapLength: 2,
             );
 
             // Purge the test playlist directory so that the created test
