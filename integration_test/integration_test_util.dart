@@ -4101,7 +4101,7 @@ class IntegrationTestUtil {
     }
   }
 
-  /// {multipleString} and {multipleCount} are optional parameters to verify a string
+  /// [multipleString] and [multipleCount] are optional parameters to verify a string
   /// which appears multiple times in the dialog.
   /// For example, in the playlist comment list dialog, the {expectedCommentTextsLst}
   /// can be expectedCommentTextsLst: [
@@ -4115,7 +4115,7 @@ class IntegrationTestUtil {
   ///   "29/06/25",
   /// ],
   /// with "29/06/25" present twice in the list.
-  /// In this case, we set {multipleString} to "29/06/25" and {multipleCount} to 2.
+  /// In this case, we set [multipleString] to "29/06/25" and [multipleCount] to 2.
   static void checkPlaylistCommentListDialogContent({
     required Finder playlistCommentListDialogFinder,
     required List<String> expectedCommentTextsLst,
