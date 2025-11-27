@@ -20147,7 +20147,8 @@ void main() {
             ]);
 
             // Execute the 'Restore Playlists, Comments and Settings from Zip
-            // File ...' menu without replacing the existing playlists.
+            // File ...' menu without replacing the existing playlists and
+            // with deleting playlist not contained in zip.
             await IntegrationTestUtil.executeRestorePlaylists(
               tester: tester,
               doReplaceExistingPlaylists: false,
@@ -28089,7 +28090,7 @@ void main() {
             // Add a delay to allow the download to finish. Since a mock
             // AudioDownloadVM is used, the download will be simulated and
             // will not take time.
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 5; i++) {
               await Future.delayed(const Duration(seconds: 2));
               await tester.pumpAndSettle();
             }
@@ -30022,7 +30023,7 @@ void main() {
           await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
             tester: tester,
             warningDialogMessage:
-                'Restored 0 playlist, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 1 added plus 4 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Android Prières and local comment restoration.zip".',
+                'Restored 0 playlist, 2 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 1 added plus 0 deleted plus 4 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Android Prières and local comment restoration.zip".',
             isWarningConfirming: true,
             warningTitle: 'CONFIRMATION',
           );
@@ -30082,23 +30083,32 @@ void main() {
           // Ensure the list has 6 child widgets
           expect(
             tester.widget<ListBody>(playlistCommentListFinder).children.length,
-            6,
+            8,
           );
 
           IntegrationTestUtil.checkPlaylistCommentListDialogContent(
-              playlistCommentListDialogFinder: playlistCommentListDialogFinder,
-              expectedCommentTextsLst: [
-                "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-                "Prière",
-                "23/06/25",
-                "Marie-France",
-                "One",
-                "Two",
-                "Before restore",
-                "Three",
-                "0:28",
-                "0:33",
-              ]);
+            playlistCommentListDialogFinder: playlistCommentListDialogFinder,
+            expectedCommentTextsLst: [
+              "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+              "Prière",
+              "23/06/25",
+              "After restore",
+              "Marie-France",
+              "One",
+              "After restore",
+              "Two",
+              "Before restore",
+              "Three",
+              "0:28",
+              "0:33",
+              "After restore",
+              "morning _ cinematic video",
+              "New",
+              "After restoration. Creating new comment for uncommented audio",
+            ],
+            multipleString: "After restore",
+            multipleCount: 3,
+          );
 
           // Now close the comment list dialog
           await tester.tap(find
@@ -31267,7 +31277,7 @@ void main() {
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
           warningDialogMessage:
-              "Restored 4 playlist, 1 comment and 6 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 11 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".",
+              "Restored 4 playlist, 6 comment and 6 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 11 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".",
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );
