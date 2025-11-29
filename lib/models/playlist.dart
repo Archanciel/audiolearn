@@ -211,7 +211,7 @@ class Playlist {
   /// Adds the imported audio to the downloadedAudioLst and to
   /// the playableAudioLst. The imported audio is added to the
   /// lists only if it is not already in the lists.
-  /// 
+  ///
   /// The imported audio is in the downloadedAudioLst if it was
   /// previously imported or downloaded and was deleted (not
   /// deleted from playlist as well)).
@@ -276,6 +276,16 @@ class Playlist {
 
     downloadedAudioLst.add(copiedAudioCopy);
     _insertAudioInPlayableAudioList(copiedAudioCopy);
+  }
+
+  /// Returns true if this playlist contains, in its playableAudioLst,
+  /// an audio whose audioFileName is exactly [audioFileName].
+  bool containsPlayableAudioWithFileName({
+    required String audioFileName,
+  }) {
+    return playableAudioLst.any(
+      (audio) => audio.audioFileName == audioFileName,
+    );
   }
 
   /// This method fixes a bug which caused the currently playing
