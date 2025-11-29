@@ -4527,6 +4527,25 @@ class PlaylistListVM extends ChangeNotifier {
 
               restoredPicturesJpgNumber++;
             } else if (!File(destinationPathFileName).existsSync()) {
+              String playlistTitle = _extractPlaylistTitleFromPictureJsonPath(
+                pictureJsonPathFileName: destinationPathFileName,
+              );
+              Playlist playlist = _listOfSelectablePlaylists.firstWhere(
+                (pl) => pl.title == playlistTitle,
+              );
+              String audioFileName =
+                  "${path.basenameWithoutExtension(destinationPathFileName)}.mp3";
+              Audio? audio = playlist.playableAudioLst.firstWhereOrNull(
+                (a) => a.audioFileName == audioFileName,
+              );
+              
+              if (audio == null) {
+                // The audio corresponding to the picture json file
+                // does not exist in the playlist. So skip restoring
+                // this picture json file.
+                continue;
+              }
+              
               // The json file is an audio picture reference file.
               restoredPicturesJsonNumber++;
             }
@@ -5440,6 +5459,27 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     return restoredPicturesCount;
+  }
+
+  /// Example:
+  ///   "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\local\\pictures\\240701-....json"
+  ///   -> "local"
+  String _extractPlaylistTitleFromPictureJsonPath({
+    required String pictureJsonPathFileName,
+  }) {
+    // Normalize separators to the current platform
+    final String normalized = path.normalize(pictureJsonPathFileName);
+
+    // 1. Directory of the JSON file: ...\playlists\local\pictures
+    final String picturesDir = path.dirname(normalized);
+
+    // 2. Directory above "pictures": ...\playlists\local
+    final String playlistDir = path.dirname(picturesDir);
+
+    // 3. Last segment: "local" (the playlist title)
+    final String playlistTitle = path.basename(playlistDir);
+
+    return playlistTitle;
   }
 
   /// Restores MP3 audio files from a ZIP file to their respective playlist directories.
