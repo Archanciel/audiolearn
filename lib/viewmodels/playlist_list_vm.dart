@@ -4183,7 +4183,8 @@ class PlaylistListVM extends ChangeNotifier {
       wasIndividualPlaylistRestored: wasIndividualPlaylistRestored,
       newPlaylistsAddedAtEndOfPlaylistLst: restoredInfoLst[9],
       deletedExistingPlaylistTitlesLst: restoredInfoLst[10],
-      deletedCommentNumber: restoredInfoLst[11],);
+      deletedCommentNumber: restoredInfoLst[11],
+    );
 
     if (doReplaceExistingPlaylists &&
             selectedPlaylistBeforeRestoreTitle != '' ||
@@ -4591,7 +4592,8 @@ class PlaylistListVM extends ChangeNotifier {
           !destinationPathFileName.contains(kPictureAudioMapFileName)) {
         // Second condition guarantees that the picture json files
         // number is correctly calculated.
-        if (destinationPathFileName.contains(kCommentDirName) && !File(destinationPathFileName).existsSync()) {
+        if (destinationPathFileName.contains(kCommentDirName) &&
+            !File(destinationPathFileName).existsSync()) {
           restoredCommentsJsonNumber++;
         } else if (destinationPathFileName.contains(kPictureDirName)) {
           if (destinationPathFileName.endsWith('.jpg')) {
