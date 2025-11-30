@@ -19706,7 +19706,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 5 playlist, 6 comment and 6 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
+                  'Restored 5 playlist, 6 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -20162,7 +20162,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 4 playlist, 5 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 6 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
+                  'Restored 4 playlist, 5 comment and 2 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -20203,14 +20203,14 @@ void main() {
               "Quand Aurélien Barrau va dans une école de management",
               "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
               "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-              "La surpopulation mondiale par Jancovici et Barrau",
+              // "La surpopulation mondiale par Jancovici et Barrau",
             ];
 
             audioSubTitles = [
               "0:17:59.0 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11",
               "1:17:53.6 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06",
               "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
-              "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36",
+              // "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36",
             ];
 
             const String youtubePlaylistTitle = 'S8 audio';
@@ -20256,9 +20256,9 @@ void main() {
               playlistTitle: youtubePlaylistTitle,
               expectedAudioFiles: [],
               expectedCommentFiles: [
-                "New file name.json",
-                "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
                 "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.json",
+                "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
+                "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
               ],
               expectedPictureFiles: [],
               playlistRootDir: playlistRootDirName,
@@ -20268,6 +20268,15 @@ void main() {
               pictureFileNameOne: "Jésus je T'adore.jpg",
               audioForPictureTitleOneLst: [
                 "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
+              ],
+              pictureFileNameTwo: "Jésus le Dieu vivant.jpg",
+              audioForPictureTitleTwoLst: [
+                "local|240110-181810-morning _ cinematic video 23-07-01"
+              ],
+              pictureFileNameThree: "Jancovici.jpg",
+              audioForPictureTitleThreeLst: [
+                "S8 audio|240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03",
+                "local|240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12",
               ],
             );
 
@@ -20413,7 +20422,6 @@ void main() {
                 "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.json",
                 "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
                 "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
-                "New file name.json",
               ],
               expectedPictureFiles: [],
               playlistRootDir: playlistRootDirName,
@@ -20972,19 +20980,19 @@ void main() {
               doDeleteExistingPlaylistsNotContainedInZip: true,
             );
 
-            // Verify that the audio menu button is enabled
-            IntegrationTestUtil.verifyWidgetIsEnabled(
-              tester: tester,
-              widgetKeyStr: 'audio_popup_menu_button',
-            );
-
             // Verify the displayed warning confirmation dialog
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 5 playlist, 6 comment and 6 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
+                  'Restored 5 playlist, 6 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
+            );
+
+            // Verify that the audio menu button is enabled
+            IntegrationTestUtil.verifyWidgetIsEnabled(
+              tester: tester,
+              widgetKeyStr: 'audio_popup_menu_button',
             );
 
             // Verifying the existing and the restored playlists
@@ -21448,7 +21456,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 4 playlist, 5 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 6 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
+                  'Restored 4 playlist, 5 comment and 2 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -21506,14 +21514,14 @@ void main() {
               "Quand Aurélien Barrau va dans une école de management",
               "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
               "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-              "La surpopulation mondiale par Jancovici et Barrau",
+              // "La surpopulation mondiale par Jancovici et Barrau",
             ];
 
             audioSubTitles = [
               "0:17:59.0 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11",
               "1:17:53.6 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06",
               "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
-              "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36",
+              // "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36",
             ];
 
             const String youtubePlaylistTitle = 'S8 audio';
@@ -21551,6 +21559,15 @@ void main() {
               audioForPictureTitleOneLst: [
                 "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
               ],
+              pictureFileNameTwo: "Jésus le Dieu vivant.jpg",
+              audioForPictureTitleTwoLst: [
+                "local|240110-181810-morning _ cinematic video 23-07-01"
+              ],
+              pictureFileNameThree: "Jancovici.jpg",
+              audioForPictureTitleThreeLst: [
+                "S8 audio|240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03",
+                "local|240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12",
+              ],
             );
 
             // Verify the content of the 'S8 audio' playlist dir
@@ -21559,9 +21576,9 @@ void main() {
               playlistTitle: youtubePlaylistTitle,
               expectedAudioFiles: [],
               expectedCommentFiles: [
-                "New file name.json",
-                "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
                 "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.json",
+                "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
+                "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
               ],
               expectedPictureFiles: [],
               playlistRootDir: playlistRootDirName,
@@ -21571,6 +21588,15 @@ void main() {
               pictureFileNameOne: "Jésus je T'adore.jpg",
               audioForPictureTitleOneLst: [
                 "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
+              ],
+              pictureFileNameTwo: "Jésus le Dieu vivant.jpg",
+              audioForPictureTitleTwoLst: [
+                "local|240110-181810-morning _ cinematic video 23-07-01"
+              ],
+              pictureFileNameThree: "Jancovici.jpg",
+              audioForPictureTitleThreeLst: [
+                "S8 audio|240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03",
+                "local|240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12",
               ],
             );
 
@@ -21716,7 +21742,6 @@ void main() {
                 "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.json",
                 "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
                 "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
-                "New file name.json",
               ],
               expectedPictureFiles: [],
               playlistRootDir: playlistRootDirName,
