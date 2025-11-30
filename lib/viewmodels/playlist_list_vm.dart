@@ -4527,25 +4527,6 @@ class PlaylistListVM extends ChangeNotifier {
 
               restoredPicturesJpgNumber++;
             } else if (!File(destinationPathFileName).existsSync()) {
-              String playlistTitle = _extractPlaylistTitleFromPictureJsonPath(
-                pictureJsonPathFileName: destinationPathFileName,
-              );
-              Playlist playlist = _listOfSelectablePlaylists.firstWhere(
-                (pl) => pl.title == playlistTitle,
-              );
-              String audioFileName =
-                  "${path.basenameWithoutExtension(destinationPathFileName)}.mp3";
-              Audio? audio = playlist.playableAudioLst.firstWhereOrNull(
-                (a) => a.audioFileName == audioFileName,
-              );
-              
-              if (audio == null) {
-                // The audio corresponding to the picture json file
-                // does not exist in the playlist. So skip restoring
-                // this picture json file.
-                continue;
-              }
-              
               // The json file is an audio picture reference file.
               restoredPicturesJsonNumber++;
             }
