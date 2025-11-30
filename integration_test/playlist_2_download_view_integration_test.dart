@@ -19687,7 +19687,7 @@ void main() {
                   name: restorableZipFileName,
                   path:
                       '$kApplicationPathWindowsTest${path.separator}$restorableZipFileName',
-                  size: 12828),
+                  size: 16825),
             ]);
 
             // Execute the 'Restore Playlists, Comments and Settings from Zip
@@ -21864,7 +21864,7 @@ void main() {
                   name: restorableZipFileName,
                   path:
                       '$kApplicationPathWindowsTest${path.separator}$restorableZipFileName',
-                  size: 12828),
+                  size: 16825),
             ]);
 
             // Deselect the 'local' playlist
