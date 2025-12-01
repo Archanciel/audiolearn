@@ -314,6 +314,9 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
           case PlaylistPopupMenuAction.displayPlaylistInfo:
             showDialog<void>(
               context: context,
+              barrierDismissible:
+                  false, // This line prevents the dialog from closing when
+              //            tapping outside the dialog
               builder: (BuildContext context) {
                 return PlaylistInfoDialog(
                   settingsDataService: settingsDataService,
