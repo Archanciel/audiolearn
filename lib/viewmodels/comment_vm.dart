@@ -492,18 +492,12 @@ class CommentVM extends ChangeNotifier {
   int getPlaylistAudioCommentNumber({
     required Playlist playlist,
   }) {
-    int commentNumber = 0;
+    String playlistCommentPath = "${playlist.downloadPath}${path.separator}$kCommentDirName";
 
-    Map<String, List<Comment>> playlistAudiosCommentsMap =
-        getPlaylistAudioComments(
-      playlist: playlist,
+    return DirUtil.countFilesInDir(
+      directoryPath: playlistCommentPath,
+      fileExtension: 'json',
     );
-
-    for (List<Comment> audioComments in playlistAudiosCommentsMap.values) {
-      commentNumber += audioComments.length;
-    }
-
-    return commentNumber;
   }
 
   /// Method called when te user clicks on play icon of a comment listed in

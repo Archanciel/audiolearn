@@ -454,6 +454,17 @@ class PictureVM extends ChangeNotifier {
     return audioPictureFileNamesLst;
   }
 
+  int getPlaylistAudioPictureNumber({
+    required Playlist playlist,
+  }) {
+    String playlistPPicturePath = "${playlist.downloadPath}${path.separator}$kPictureDirName";
+
+    return DirUtil.countFilesInDir(
+      directoryPath: playlistPPicturePath,
+      fileExtension: 'json',
+    );
+  }
+
   /// Method called by PlaylistListVM when the audio is deleted.
   void deleteAudioPictureJsonFileIfExist({
     required Audio audio,

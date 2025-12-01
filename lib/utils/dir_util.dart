@@ -606,6 +606,39 @@ class DirUtil {
     return fileNameList;
   }
 
+  /// Returns the number of files in [directoryPath] whose file names end with
+  /// [fileExtension]. The [fileExtension] must be provided without a leading dot,
+  /// e.g. "mp3", "jpg", "json".
+  ///
+  /// If the directory does not exist, the method returns 0.
+  ///
+  /// The method checks only regular files (not directories).
+  static int countFilesInDir({
+    required String directoryPath,
+    required String fileExtension,
+  }) {
+    final dir = Directory(directoryPath);
+
+    if (!dir.existsSync()) {
+      return 0;
+    }
+
+    // Normalize extension to lowercase for case-insensitive matching.
+    final normalizedExt = fileExtension.toLowerCase();
+
+    int count = 0;
+    for (final entity in dir.listSync(followLinks: false)) {
+      if (entity is File) {
+        final name = entity.path.toLowerCase();
+        if (name.endsWith('.$normalizedExt')) {
+          count++;
+        }
+      }
+    }
+
+    return count;
+  }
+
   /// Lists all the file path names in a directory with a given extension.
   ///
   /// If the directory does not exist, an empty list is returned.
@@ -780,7 +813,7 @@ class DirUtil {
       existingDir.renameSync(newPath);
       return newPath;
     } catch (e) {
-      logger.e( 'Error renaming directory: $e');
+      logger.e('Error renaming directory: $e');
       return '';
     }
   }

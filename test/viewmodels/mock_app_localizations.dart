@@ -2622,4 +2622,7 @@ class MockAppLocalizations extends AppLocalizations {
     Object playlistTitle,
   ) =>
       "The modified playlist title \"$playlistTitle\" can not contain any comma. Please correct the title and retry ...";
+
+  @override
+  String get playlistAudioPicturesLabel => "Audio pictures";
 }
