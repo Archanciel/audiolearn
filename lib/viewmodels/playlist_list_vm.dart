@@ -5442,27 +5442,6 @@ class PlaylistListVM extends ChangeNotifier {
     return restoredPicturesCount;
   }
 
-  /// Example:
-  ///   "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\local\\pictures\\240701-....json"
-  ///   -> "local"
-  String _extractPlaylistTitleFromPictureJsonPath({
-    required String pictureJsonPathFileName,
-  }) {
-    // Normalize separators to the current platform
-    final String normalized = path.normalize(pictureJsonPathFileName);
-
-    // 1. Directory of the JSON file: ...\playlists\local\pictures
-    final String picturesDir = path.dirname(normalized);
-
-    // 2. Directory above "pictures": ...\playlists\local
-    final String playlistDir = path.dirname(picturesDir);
-
-    // 3. Last segment: "local" (the playlist title)
-    final String playlistTitle = path.basename(playlistDir);
-
-    return playlistTitle;
-  }
-
   /// Restores MP3 audio files from a ZIP file to their respective playlist directories.
   /// Only copies MP3 files that correspond to Audio objects present in the
   /// playlist.playableAudioLst and that don't already exist in the playlist directory.
