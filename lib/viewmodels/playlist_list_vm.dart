@@ -900,7 +900,7 @@ class PlaylistListVM extends ChangeNotifier {
   }) {
     // if the playlist to delete is local, then its id is its title ...
     int playlistToDeleteIndex = _listOfSelectablePlaylists
-        .indexWhere((playlist) => playlist.id == playlistToDelete.id);
+        .indexWhere((playlist) => playlist == playlistToDelete);
 
     if (playlistToDeleteIndex != -1) {
       if (playlistToDelete.isSelected) {
