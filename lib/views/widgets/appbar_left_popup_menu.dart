@@ -238,6 +238,9 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
               case AudioPopupMenuAction.displayAudioInfo:
                 showDialog<void>(
                   context: context,
+                  barrierDismissible:
+                      false, // This line prevents the dialog from closing when
+                  //            tapping outside the dialog
                   builder: (BuildContext context) => AudioInfoDialog(
                     audio: audio,
                   ),
