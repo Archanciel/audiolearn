@@ -5,6 +5,7 @@ import '../../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../viewmodels/comment_vm.dart';
+import '../../viewmodels/picture_vm.dart';
 import '/../utils/duration_expansion.dart';
 import '../../constants.dart';
 import '../../models/playlist.dart';
@@ -51,6 +52,8 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
 
     final CommentVM commentVMlistenFalse =
         Provider.of<CommentVM>(context, listen: false);
+    final PictureVM pictureVMlistenFalse =
+        Provider.of<PictureVM>(context, listen: false);
 
     return KeyboardListener(
       // Using FocusNode to enable clicking on Enter to close
@@ -170,6 +173,17 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                       AppLocalizations.of(context)!.playlistAudioCommentsLabel,
                   value: commentVMlistenFalse
                       .getPlaylistAudioCommentNumber(
+                        playlist: playlist,
+                      )
+                      .toString()),
+              createInfoRowFunction(
+                  valueTextWidgetKey:
+                      Key('playlist_info_audio_picture_number_key'),
+                  context: context,
+                  label:
+                      AppLocalizations.of(context)!.playlistAudioPicturesLabel,
+                  value: pictureVMlistenFalse
+                      .getPlaylistAudioPictureNumber(
                         playlist: playlist,
                       )
                       .toString()),
