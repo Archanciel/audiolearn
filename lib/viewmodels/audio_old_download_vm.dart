@@ -430,7 +430,7 @@ class AudioDownloadVM extends ChangeNotifier {
     required Playlist playlistToDelete,
   }) {
     _listOfPlaylist
-        .removeWhere((playlist) => playlist.id == playlistToDelete.id);
+        .removeWhere((playlist) => playlist == playlistToDelete);
 
     DirUtil.deleteDirAndSubDirsIfExist(
       rootPath: playlistToDelete.downloadPath,
