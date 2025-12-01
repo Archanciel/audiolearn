@@ -707,7 +707,9 @@ class Playlist {
       return true;
     }
 
-    return other is Playlist && other.id == id;
+    // other.title == title is necessary in case a Youtube playlist
+    // was renamed and the initial playlist with same id is restored
+    return other is Playlist && other.id == id && other.title == title;
   }
 
   @override
