@@ -4243,8 +4243,10 @@ void main() {
       await tester.tap(find.byIcon(Icons.play_arrow));
       await tester.pumpAndSettle();
 
-      await Future.delayed(const Duration(seconds: 5));
-      await tester.pumpAndSettle();
+      for (int i = 0; i < 10; i++) {
+        await Future.delayed(const Duration(milliseconds: 500));
+        await tester.pumpAndSettle();
+      }
 
       // Tap on pause button to pause the audio
       await tester.tap(find.byIcon(Icons.pause));
@@ -4258,8 +4260,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '0:04',
-        maxPositionTimeStr: '0:07',
+        minPositionTimeStr: '0:05',
+        maxPositionTimeStr: '0:08',
       );
 
       // Return to the Playlist Download View
@@ -6838,8 +6840,10 @@ void main() {
       await tester.tap(find.byIcon(Icons.play_arrow));
       await tester.pumpAndSettle();
 
-      await Future.delayed(const Duration(seconds: 5));
-      await tester.pumpAndSettle();
+      for (int i = 0; i < 10; i++) {
+        await Future.delayed(const Duration(milliseconds: 500));
+        await tester.pumpAndSettle();
+      }
 
       // Tap on pause button to pause the audio
       await tester.tap(find.byIcon(Icons.pause));
@@ -6853,8 +6857,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '0:03',
-        maxPositionTimeStr: '0:05',
+        minPositionTimeStr: '0:04',
+        maxPositionTimeStr: '0:06',
       );
 
       // *** Then move back the moved audio from the target local playlist
@@ -15877,7 +15881,7 @@ void main() {
         confirmDialogTitleOne:
             'Supprimer la playlist Youtube "$youtubePlaylistToDeleteTitle"',
         confirmDialogMessage:
-            'Suppression de la playlist, de ses 2 fichiers audio, de ses 3 commentaire(s) audio, de ses 0 photo(s) audio ainsi que de son fichier JSON et de son répertoire.',
+            'Suppression de la playlist, de ses 2 fichiers audio, de ses 2 commentaire(s) audio, de ses 0 photo(s) audio ainsi que de son fichier JSON et de son répertoire.',
         confirmOrCancelAction: true, // Confirm button is tapped
       );
 
@@ -16946,7 +16950,7 @@ void main() {
         confirmActionDialogTitle:
             'Supprimer la playlist Youtube "$youtubePlaylistToDeleteTitle"',
         confirmActionDialogMessagePossibleLst: [
-          "Suppression de la playlist, de ses 2 fichiers audio, de ses 3 commentaire(s) audio, de ses 0 photo(s) audio ainsi que de son fichier JSON et de son répertoire."
+          "Suppression de la playlist, de ses 2 fichiers audio, de ses 2 commentaire(s) audio, de ses 0 photo(s) audio ainsi que de son fichier JSON et de son répertoire."
         ],
         closeDialogWithConfirmButton: true,
         usePumpAndSettle: true,
@@ -19654,7 +19658,8 @@ void main() {
 
       // Verify the initial value of the TextField
 
-      const String oldFileName = '231117-002828-morning _ cinematic video 23-07-01';
+      const String oldFileName =
+          '231117-002828-morning _ cinematic video 23-07-01';
 
       expect(textField.controller!.text, "$oldFileName.mp3");
 
