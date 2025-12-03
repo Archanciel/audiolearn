@@ -4488,13 +4488,12 @@ class PlaylistListVM extends ChangeNotifier {
         }
       }
 
-      // Write the file's bytes to the computed destination.
+      // File's bytes to be written later the computed destination.
       final File outputFile = File(destinationPathFileName);
 
       if (!doReplaceExistingPlaylists &&
           !destinationPathFileName.contains(kSettingsFileName) &&
           !destinationPathFileName.contains(kPictureAudioMapFileName)) {
-        // 'pictureAudioMap.json'
         // Check if this is a playlist JSON file to merge.
         if (path.extension(destinationPathFileName) == '.json' &&
             !destinationPathFileName.contains(kCommentDirName) &&
@@ -4611,7 +4610,7 @@ class PlaylistListVM extends ChangeNotifier {
         } else {
           // Get the playableAudioLst length from the just-written playlist file
           try {
-            // Read the JSON content that was just written
+            // Read the JSON content that will be written below
             final String jsonContent =
                 utf8.decode(archiveFile.content as List<int>);
             final Map<String, dynamic> playlistJson = jsonDecode(jsonContent);
@@ -4634,6 +4633,7 @@ class PlaylistListVM extends ChangeNotifier {
         }
       }
 
+      // Writting the json content
       await outputFile.writeAsBytes(
         archiveFile.content as List<int>,
         flush: true,
@@ -4821,7 +4821,7 @@ class PlaylistListVM extends ChangeNotifier {
     required Archive archive,
     required bool doReplaceExistingPlaylists,
   }) async {
-    int addedAudiosCount = 0;
+    int addedAudioReferencesCount = 0;
     int addedCommentJsonFilesCount = 0;
     int addedPicturesCount = 0;
     int updatedCommentsCount = 0;
@@ -4855,7 +4855,7 @@ class PlaylistListVM extends ChangeNotifier {
         doReplaceExistingPlaylists: doReplaceExistingPlaylists,
       );
 
-      addedAudiosCount += resultLst[0];
+      addedAudioReferencesCount += resultLst[0];
       addedCommentJsonFilesCount += resultLst[1];
       addedPicturesCount += resultLst[2];
       updatedCommentsCount += resultLst[3];
@@ -4879,7 +4879,7 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     restoredResultsLst.clear();
-    restoredResultsLst.add(addedAudiosCount);
+    restoredResultsLst.add(addedAudioReferencesCount);
     restoredResultsLst.add(addedCommentJsonFilesCount);
     restoredResultsLst.add(addedPicturesCount);
     restoredResultsLst.add(updatedCommentsCount);
@@ -4939,7 +4939,7 @@ class PlaylistListVM extends ChangeNotifier {
     required Archive archive,
     required bool doReplaceExistingPlaylists,
   }) async {
-    int addedAudiosCount = 0;
+    int addedAudioReferencesCount = 0;
     int addedCommentJsonFilesCount = 0;
     int addedPicturesCount = 0;
     List<int> restoredNumberLst = []; // restored number returned list
@@ -4957,17 +4957,19 @@ class PlaylistListVM extends ChangeNotifier {
     // Iterate through downloaded audios from the zip playlist.
     for (Audio zipAudio in zipPlaylist.downloadedAudioLst) {
       // Check if this audio already exists in the existing playlist
-      bool audioExists = existingPlaylist.downloadedAudioLst.any(
+      bool audioExistsInDownloadedAudioLst =
+          existingPlaylist.downloadedAudioLst.any(
         (existingAudio) =>
             existingAudio.audioFileName == zipAudio.audioFileName,
       );
 
-      if (!audioExists) {
+      if (!audioExistsInDownloadedAudioLst) {
         // This audio doesn't exist in the existing playlist.
         // Add it even if the physical file doesn't exist (can be
         // downloaded later).
 
-        // Create a copy of the audio and add it to the lists.
+        // Create a copy of the audio and add it to the downloaded
+        // and playable audio lists.
         Audio audioToAdd = zipAudio.copy();
         audioToAdd.enclosingPlaylist = existingPlaylist;
         audioToAdd.audioPlaySpeed = existingPlaylist.audioPlaySpeed;
@@ -4975,20 +4977,18 @@ class PlaylistListVM extends ChangeNotifier {
         // Add to the downloaded audio list.
         existingPlaylist.downloadedAudioLst.add(audioToAdd);
 
-        // Check if the audio should also be added to the playable list.
-        bool isInPlayableList = existingPlaylist.playableAudioLst.any(
-          (playableAudio) =>
-              playableAudio.audioFileName == zipAudio.audioFileName,
-        );
+        // Add to the playable audio list using the method that
+        // correctly handles the currentOrPastPlayableAudioIndex.
+        existingPlaylist.playableAudioLst.insert(0, audioToAdd);
+        existingPlaylist.currentOrPastPlayableAudioIndex++;
 
-        if (!isInPlayableList) {
-          // Add to the playable audio list using the method that
-          // correctly handles the currentOrPastPlayableAudioIndex.
-          existingPlaylist.playableAudioLst.insert(0, audioToAdd);
-          existingPlaylist.currentOrPastPlayableAudioIndex++;
+        if (!doReplaceExistingPlaylists) {
+          // If doReplaceExistingPlaylists is true, the audio references
+          // number were added to restoredAudioReferencesNumber before
+          // the playlist json file was written. THIS CORRECTS A ENORMOUS
+          // BUG.
+          addedAudioReferencesCount++;
         }
-
-        addedAudiosCount++;
 
         // Restore comment file for this audio if it exists in the zip
         if (await _restoreAudioCommentFileFromZip(
@@ -5008,7 +5008,7 @@ class PlaylistListVM extends ChangeNotifier {
 
         addedPicturesCount += restoredPicturesForAudio;
 
-        if (addedAudiosCount > 0) {
+        if (addedAudioReferencesCount > 0) {
           await _writePlaylistToFile(
             playlist: existingPlaylist,
           );
@@ -5162,7 +5162,7 @@ class PlaylistListVM extends ChangeNotifier {
       }
     }
 
-    restoredNumberLst.add(addedAudiosCount);
+    restoredNumberLst.add(addedAudioReferencesCount);
     restoredNumberLst.add(addedCommentJsonFilesCount);
     restoredNumberLst.add(addedPicturesCount);
     restoredNumberLst
