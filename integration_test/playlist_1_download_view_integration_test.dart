@@ -17333,6 +17333,134 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
+    testWidgets('''Delete renamed Youtube playlist.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}delete_youube_playlist_test",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      const String youtubePlaylistToDeleteTitle =
+          'Bible Bénie A Supprimer';
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the download app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      // First, find the Playlist ListTile Text widget
+      final Finder youtubePlaylistToDeleteListTileTextWidgetFinder =
+          find.text(youtubePlaylistToDeleteTitle);
+
+      // Then obtain the Playlist ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      final Finder youtubePlaylistToDeleteListTileWidgetFinder = find.ancestor(
+        of: youtubePlaylistToDeleteListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the Checkbox widget located in the Playlist ListTile
+      // and tap on it to select the playlist
+      final Finder youtubePlaylistToDeleteListTileCheckboxWidgetFinder =
+          find.descendant(
+        of: youtubePlaylistToDeleteListTileWidgetFinder,
+        matching: find.byType(Checkbox),
+      );
+
+      // Tap the ListTile Playlist checkbox to select it
+      await tester.tap(youtubePlaylistToDeleteListTileCheckboxWidgetFinder);
+      await tester.pumpAndSettle();
+
+      // Now test deleting the playlist
+
+      // Open the delete playlist dialog by clicking on the 'Delete
+      // playlist ...' playlist menu item
+
+      // Now find the leading menu icon button of the Playlist to
+      // delete ListTile and tap on it
+      final Finder firstPlaylistListTileLeadingMenuIconButton = find.descendant(
+        of: youtubePlaylistToDeleteListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(firstPlaylistListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      await tester.drag(
+        find.byType(Material).last, // The popup menu is wrapped in Material
+        const Offset(0, -300),
+      );
+
+      await tester.pumpAndSettle();
+
+      // Now find the delete playlist popup menu item and tap on it
+      final Finder popupDeletePlaylistMenuItem =
+          find.byKey(const Key("popup_menu_delete_playlist"));
+
+      await tester.tap(popupDeletePlaylistMenuItem);
+      await tester.pumpAndSettle();
+
+      // Now verifying and closing the confirm dialog
+
+      await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+        tester: tester,
+        confirmDialogTitleOne:
+            'Supprimer la playlist Youtube "$youtubePlaylistToDeleteTitle"',
+        confirmDialogMessage:
+            'Suppression de la playlist, de ses 9 fichiers audio, de ses 2 commentaire(s) audio, de ses 1 photo(s) audio ainsi que de son fichier JSON et de son répertoire.',
+        confirmOrCancelAction: true, // Confirm button is tapped
+      );
+
+      // Reload the settings from the json file.
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      // Check that the deleted playlist title is no longer in the
+      // playlist titles list of the settings data service
+      expect(
+          settingsDataService.get(
+            settingType: SettingType.playlists,
+            settingSubType: Playlists.orderedTitleLst,
+          ),
+          [
+            'Bible Bénie',
+            'Nouvelle Bible Bénie'
+          ]);
+
+      final String youtubePlaylistToDeletePath = path.join(
+        kApplicationPathWindowsTest,
+        youtubePlaylistToDeleteTitle,
+      );
+
+      // Check that the deleted playlist directory no longer exist
+      expect(Directory(youtubePlaylistToDeletePath).existsSync(), false);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
   });
   group('PlaylistDownloadView buttons state test', () {
     testWidgets('PlaylistDownloadView displayed with no selected playlist',
