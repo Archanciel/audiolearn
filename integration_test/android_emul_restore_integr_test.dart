@@ -1463,7 +1463,7 @@ void main() {
       });
     });
     group('''Convert text to audio. IF THE GROUP CAN NOT RUN DUE TO MISSING PERMISSIONS, RUN THE
-             APP ON THE EMULATOR AND THEN RUN THIS GROUP.''', () {
+             APP ON THE EMULATOR AND THEN, WITHOUT UNRUNNING THE APP, RUN THIS GROUP.''', () {
       testWidgets(
           '''On selected playlist, add a text to speech audio. Verify the text to speech dialog appearance.
           Then enter a text with case ( { ) characters. Verify the Listen Create MP3 button state. Listen
