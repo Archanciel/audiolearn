@@ -25697,7 +25697,7 @@ void main() {
             // String restorableZipFilePathName =
             //     '$kApplicationPathWindowsTest${path.separator}Windows Prières du Maître initialization.zip';
             String restorableZipFilePathName =
-                '$kApplicationPathWindowsTest${path.separator}Windows Prières du Maître initialization.zip';
+                '$kApplicationPathWindowsTest${path.separator}Windows Prières initialization.zip';
 
             mockFilePicker.setSelectedFiles([
               PlatformFile(
@@ -25721,7 +25721,7 @@ void main() {
               warningDialogMessage:
                   // If executed on main
                   // 'Restored 1 playlist saved individually, 3 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières du Maître initialization.zip".',
-                  'Restored 1 playlist saved individually, 3 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières du Maître initialization.zip".',
+                  'Restored 1 playlist saved individually, 3 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières initialization.zip".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -25776,8 +25776,8 @@ void main() {
 
             restorableZipFilePathName =
                 // If executed on main
-                // '$kApplicationPathWindowsTest${path.separator}Windows Prières du Maître comment restoration.zip';
-                '$kApplicationPathWindowsTest${path.separator}Windows Prières du Maître comment restoration.zip';
+                // '$kApplicationPathWindowsTest${path.separator}Windows Prières comment restoration.zip';
+                '$kApplicationPathWindowsTest${path.separator}Windows Prières comment restoration.zip';
 
             mockFilePicker.setSelectedFiles([
               PlatformFile(
@@ -25801,7 +25801,7 @@ void main() {
               warningDialogMessage:
                   // If executed on main
                   // 'Restored 0 playlist saved individually, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 1 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières du Maître comment restoration.zip".',
-                  'Restored 0 playlist saved individually, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 1 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières du Maître comment restoration.zip".',
+                  'Restored 0 playlist saved individually, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 1 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières comment restoration.zip".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -26032,7 +26032,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 0 playlist, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 1 added plus 0 deleted plus 4 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières and local comment restoration.zip".',
+                  'Restored 0 playlist, 2 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 1 added plus 0 deleted plus 4 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières and local comment restoration.zip".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -26100,7 +26100,7 @@ void main() {
                   .widget<ListBody>(playlistCommentListFinder)
                   .children
                   .length,
-              6,
+              8,
             );
 
             IntegrationTestUtil.checkPlaylistCommentListDialogContent(
@@ -26119,6 +26119,9 @@ void main() {
                 "0:28",
                 "0:33",
                 "After restore",
+                "morning _ cinematic video",
+                "New",
+                "After restoration. Creating new comment for uncommented audio",
               ],
               multipleString: "After restore",
               multipleCount: 3,
@@ -36932,7 +36935,7 @@ void main() {
       );
 
       // Add a delay to allow the download to finish.
-      for (int i = 0; i < 6; i++) {
+      for (int i = 0; i < 7; i++) {
         await Future.delayed(const Duration(milliseconds: 1000));
         await tester.pumpAndSettle();
       }
