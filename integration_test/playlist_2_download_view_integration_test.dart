@@ -19750,14 +19750,14 @@ void main() {
               "Quand Aurélien Barrau va dans une école de management",
               "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
               "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-              "La surpopulation mondiale par Jancovici et Barrau",
+              // "La surpopulation mondiale par Jancovici et Barrau",
             ];
 
             audioSubTitles = [
               "0:17:59.0 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11",
               "1:17:53.6 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06",
               "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
-              "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36",
+              // "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36",
             ];
 
             const String youtubePlaylistTitle = 'S8 audio';
@@ -19782,9 +19782,11 @@ void main() {
                 "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.mp3"
               ],
               expectedCommentFiles: [
+                "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
                 "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json"
               ],
               expectedPictureFiles: [
+                "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
                 "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json"
               ],
               playlistRootDir: playlistRootDirName,
@@ -19794,6 +19796,15 @@ void main() {
               pictureFileNameOne: "Jésus je T'adore.jpg",
               audioForPictureTitleOneLst: [
                 "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
+              ],
+              pictureFileNameTwo: "Jésus le Dieu vivant.jpg",
+              audioForPictureTitleTwoLst: [
+                "local|240110-181810-morning _ cinematic video 23-07-01"
+              ],
+              pictureFileNameThree: "Jancovici.jpg",
+              audioForPictureTitleThreeLst: [
+                "S8 audio|240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03",
+                "local|240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12",
               ],
             );
 
@@ -19803,11 +19814,13 @@ void main() {
               playlistTitle: youtubePlaylistTitle,
               expectedAudioFiles: [],
               expectedCommentFiles: [
-                "New file name.json",
-                "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
                 "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.json",
+                "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
+                "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
               ],
-              expectedPictureFiles: [],
+              expectedPictureFiles: [
+                "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
+              ],
               playlistRootDir: playlistRootDirName,
               doesPictureAudioMapFileNameExist: true,
               applicationPictureDir:
@@ -19815,6 +19828,15 @@ void main() {
               pictureFileNameOne: "Jésus je T'adore.jpg",
               audioForPictureTitleOneLst: [
                 "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
+              ],
+              pictureFileNameTwo: "Jésus le Dieu vivant.jpg",
+              audioForPictureTitleTwoLst: [
+                "local|240110-181810-morning _ cinematic video 23-07-01"
+              ],
+              pictureFileNameThree: "Jancovici.jpg",
+              audioForPictureTitleThreeLst: [
+                "S8 audio|240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03",
+                "local|240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12",
               ],
             );
 
@@ -19960,7 +19982,6 @@ void main() {
                 "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.json",
                 "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
                 "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
-                "New file name.json",
               ],
               expectedPictureFiles: [],
               playlistRootDir: playlistRootDirName,
@@ -21034,14 +21055,14 @@ void main() {
               "Quand Aurélien Barrau va dans une école de management",
               "Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité...",
               "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
-              "La surpopulation mondiale par Jancovici et Barrau",
+              // "La surpopulation mondiale par Jancovici et Barrau",
             ];
 
             audioSubTitles = [
               "0:17:59.0 6.58 MB at 1.80 MB/sec on 22/07/2024 at 08:11",
               "1:17:53.6 28.50 MB at 1.63 MB/sec on 28/05/2024 at 13:06",
               "0:06:29.0 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
-              "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36",
+              // "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36",
             ];
 
             const String youtubePlaylistTitle = 'S8 audio';
@@ -21066,9 +21087,11 @@ void main() {
                 "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.mp3"
               ],
               expectedCommentFiles: [
+                "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
                 "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json"
               ],
               expectedPictureFiles: [
+                "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
                 "250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09.json"
               ],
               playlistRootDir: playlistRootDirName,
@@ -21078,6 +21101,15 @@ void main() {
               pictureFileNameOne: "Jésus je T'adore.jpg",
               audioForPictureTitleOneLst: [
                 "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
+              ],
+              pictureFileNameTwo: "Jésus le Dieu vivant.jpg",
+              audioForPictureTitleTwoLst: [
+                "local|240110-181810-morning _ cinematic video 23-07-01"
+              ],
+              pictureFileNameThree: "Jancovici.jpg",
+              audioForPictureTitleThreeLst: [
+                "S8 audio|240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03",
+                "local|240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12",
               ],
             );
 
@@ -21087,11 +21119,13 @@ void main() {
               playlistTitle: youtubePlaylistTitle,
               expectedAudioFiles: [],
               expectedCommentFiles: [
-                "New file name.json",
-                "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
                 "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.json",
+                "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
+                "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
               ],
-              expectedPictureFiles: [],
+              expectedPictureFiles: [
+                "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
+              ],
               playlistRootDir: playlistRootDirName,
               doesPictureAudioMapFileNameExist: true,
               applicationPictureDir:
@@ -21099,6 +21133,15 @@ void main() {
               pictureFileNameOne: "Jésus je T'adore.jpg",
               audioForPictureTitleOneLst: [
                 "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
+              ],
+              pictureFileNameTwo: "Jésus le Dieu vivant.jpg",
+              audioForPictureTitleTwoLst: [
+                "local|240110-181810-morning _ cinematic video 23-07-01"
+              ],
+              pictureFileNameThree: "Jancovici.jpg",
+              audioForPictureTitleThreeLst: [
+                "S8 audio|240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03",
+                "local|240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12",
               ],
             );
 
@@ -21234,21 +21277,33 @@ void main() {
             // - IA, intelligence, philosophie, géopolitique,
             // post-vérité...'.
             IntegrationTestUtil.verifyPlaylistDirectoryContents(
-              playlistTitle: 'S8 audio',
-              expectedAudioFiles: [
-                "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.mp3",
-                "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
-                "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.mp3",
-              ],
+              playlistTitle: youtubePlaylistTitle,
+              expectedAudioFiles: [],
               expectedCommentFiles: [
                 "240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.json",
                 "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
                 "240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
-                "New file name.json",
               ],
-              expectedPictureFiles: [],
+              expectedPictureFiles: [
+                "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
+              ],
               playlistRootDir: playlistRootDirName,
               doesPictureAudioMapFileNameExist: true,
+              applicationPictureDir:
+                  "$kApplicationPathWindowsTest${path.separator}$kPictureDirName",
+              pictureFileNameOne: "Jésus je T'adore.jpg",
+              audioForPictureTitleOneLst: [
+                "local|250213-083015-Un fille revient de la mort avec un message HORRIFIANT de Jésus - Témoignage! 25-02-09"
+              ],
+              pictureFileNameTwo: "Jésus le Dieu vivant.jpg",
+              audioForPictureTitleTwoLst: [
+                "local|240110-181810-morning _ cinematic video 23-07-01"
+              ],
+              pictureFileNameThree: "Jancovici.jpg",
+              audioForPictureTitleThreeLst: [
+                "S8 audio|240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03",
+                "local|240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12",
+              ],
             );
 
             // Purge the test playlist directory so that the created test
@@ -25642,7 +25697,7 @@ void main() {
             // String restorableZipFilePathName =
             //     '$kApplicationPathWindowsTest${path.separator}Windows Prières du Maître initialization.zip';
             String restorableZipFilePathName =
-                '$kApplicationPathWindowsTest${path.separator}Windows Prières initialization.zip';
+                '$kApplicationPathWindowsTest${path.separator}Windows Prières du Maître initialization.zip';
 
             mockFilePicker.setSelectedFiles([
               PlatformFile(
@@ -25666,7 +25721,7 @@ void main() {
               warningDialogMessage:
                   // If executed on main
                   // 'Restored 1 playlist saved individually, 3 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières du Maître initialization.zip".',
-                  'Restored 1 playlist saved individually, 3 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières initialization.zip".',
+                  'Restored 1 playlist saved individually, 3 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières du Maître initialization.zip".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -25722,7 +25777,7 @@ void main() {
             restorableZipFilePathName =
                 // If executed on main
                 // '$kApplicationPathWindowsTest${path.separator}Windows Prières du Maître comment restoration.zip';
-                '$kApplicationPathWindowsTest${path.separator}Windows Prières comment restoration.zip';
+                '$kApplicationPathWindowsTest${path.separator}Windows Prières du Maître comment restoration.zip';
 
             mockFilePicker.setSelectedFiles([
               PlatformFile(
@@ -25746,7 +25801,7 @@ void main() {
               warningDialogMessage:
                   // If executed on main
                   // 'Restored 0 playlist saved individually, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 1 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières du Maître comment restoration.zip".',
-                  'Restored 0 playlist saved individually, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 1 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières comment restoration.zip".',
+                  'Restored 0 playlist saved individually, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 1 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières du Maître comment restoration.zip".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -25977,7 +26032,7 @@ void main() {
             await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
               tester: tester,
               warningDialogMessage:
-                  'Restored 0 playlist, 2 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 1 added plus 0 deleted plus 4 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières and local comment restoration.zip".',
+                  'Restored 0 playlist, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 1 added plus 0 deleted plus 4 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières and local comment restoration.zip".',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -26045,24 +26100,29 @@ void main() {
                   .widget<ListBody>(playlistCommentListFinder)
                   .children
                   .length,
-              8,
+              6,
             );
 
             IntegrationTestUtil.checkPlaylistCommentListDialogContent(
-                playlistCommentListDialogFinder:
-                    playlistCommentListDialogFinder,
-                expectedCommentTextsLst: [
-                  "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-                  "Prière",
-                  "23/06/25",
-                  "Marie-France",
-                  "One",
-                  "Two",
-                  "Before restore",
-                  "Three",
-                  "0:28",
-                  "0:33",
-                ]);
+              playlistCommentListDialogFinder: playlistCommentListDialogFinder,
+              expectedCommentTextsLst: [
+                "Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+                "Prière",
+                "23/06/25",
+                "After restore",
+                "Marie-France",
+                "One",
+                "After restore",
+                "Two",
+                "Before restore",
+                "Three",
+                "0:28",
+                "0:33",
+                "After restore",
+              ],
+              multipleString: "After restore",
+              multipleCount: 3,
+            );
 
             // Now close the comment list dialog
             await tester.tap(find
