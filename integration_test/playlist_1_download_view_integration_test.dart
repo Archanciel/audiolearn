@@ -17333,7 +17333,8 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('''Delete renamed Youtube playlist.''',
+    testWidgets('''Delete renamed Youtube playlist. Before improving the Playlist == method,
+                   this test would fail.''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
