@@ -32313,6 +32313,217 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
+      testWidgets(
+          '''After renaming it, restore the source playlist in the application. Before improving
+             the Playlist == method, this test would fail.''',
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}restore_youtube_playlist_after_renaming_it",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        await app.main();
+        await tester.pumpAndSettle();
+
+        const String playlistToRenametitle = 'Bible Bénie';
+        const String modifiedPlaylistTitle = 'Renamed Bible Bénie';
+
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: playlistToRenametitle,
+          playlistMenuKeyStr: 'popup_menu_rename_playlist',
+        );
+
+        // Enter the new playlist name
+
+        // Find the TextField using the Key
+        final Finder textFieldFinder =
+            find.byKey(const Key('playlistTitleModificationTextField'));
+
+        // Retrieve the TextField widget
+        final TextField textField = tester.widget<TextField>(textFieldFinder);
+
+        // Verify the initial value of the TextField
+
+        expect(textField.controller!.text, playlistToRenametitle);
+
+        // Enter the new playlist title
+
+        await tester.enterText(
+          textFieldFinder,
+          modifiedPlaylistTitle,
+        );
+        await tester.pumpAndSettle();
+
+        // Now tap the rename button
+        await tester.tap(find.byKey(const Key('playlistRenameButton')));
+        await tester.pumpAndSettle();
+
+        // Verify the presence of the renamed playlist in the playlist list
+
+        List<String> playlistsTitles = [
+          modifiedPlaylistTitle,
+        ];
+
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
+        );
+
+        // Verify the id and title in the renamed playlist info
+
+        // First, find the Playlist ListTile Text widget of 'Renamed Bible Bénie'
+        final Finder playlistToExamineInfoTextWidgetFinder =
+            find.text(modifiedPlaylistTitle);
+
+        // Then obtain the Playlist ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        final Finder playlistWithCommentedAudioListTileWidgetFinder =
+            find.ancestor(
+          of: playlistToExamineInfoTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now find the leading menu icon button of the playlist and tap on it
+        final Finder playlistListTileLeadingMenuIconButton = find.descendant(
+          of: playlistWithCommentedAudioListTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(playlistListTileLeadingMenuIconButton);
+        await tester.pumpAndSettle(); // Wait for popup menu to appear
+
+        // Now find the playlist info popup menu item and tap on it
+        // to open the PlaylistInfoDialog
+        final Finder popupPlaylistInfoMenuItem =
+            find.byKey(const Key("popup_menu_display_playlist_info"));
+
+        await tester.tap(popupPlaylistInfoMenuItem);
+        await tester.pumpAndSettle();
+
+        // Verify the playlist id
+
+        final Text playlistIdTextWidget =
+            tester.widget<Text>(find.byKey(const Key('playlist_id_key')));
+
+        expect(
+          playlistIdTextWidget.data,
+          "PL0wcSzZvbKk5CYv5qoaCrpqcm1gzSLULN",
+        );
+
+        // Verify the playlist title
+
+        final Text playlistTitleTextWidget =
+            tester.widget<Text>(find.byKey(const Key('playlist_title_key')));
+
+        expect(
+          playlistTitleTextWidget.data,
+          modifiedPlaylistTitle,
+        );
+
+        // Verify the playlist download directory
+
+        final String modifiedPlaylistDirPath =
+            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$modifiedPlaylistTitle';
+        final Text playlistDownloadDirectoryTextWidget = tester
+            .widget<Text>(find.byKey(const Key('playlist_download_path_key')));
+
+        expect(
+          playlistDownloadDirectoryTextWidget.data,
+          modifiedPlaylistDirPath,
+        );
+
+        // Verify the playlist url
+
+        final String modifiedPlaylistUrl =
+            "https://youtube.com/playlist?list=PL0wcSzZvbKk5CYv5qoaCrpqcm1gzSLULN&si=xHcSxcoeXJrK-8WL";
+        final Text playlistUrlTextWidget =
+            tester.widget<Text>(find.byKey(const Key('playlist_url_key')));
+
+        expect(
+          playlistUrlTextWidget.data,
+          modifiedPlaylistUrl,
+        );
+
+        // Now find the ok button of the playlist info dialog
+        // and tap on it
+        await tester.tap(find.byKey(const Key('playlist_info_ok_button_key')));
+        await tester.pumpAndSettle();
+
+        // Install the initial version of the 'Bible Bénie' playlist
+
+        String restorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}Bible Bénie.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 2876215),
+        ]);
+
+        // Execute the 'Restore Playlists, Comments and Settings
+        // from Zip File ...' menu to install the initial
+        // audiolearn version
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylistsNotContainedInZip: false,
+        );
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Restored 1 playlist saved individually, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from \"$restorableZipFilePathName\".\n\nSince the playlist\n  \"Bible Bénie\"\nwas created, it is positioned at the end of the playlist list.",
+          isWarningConfirming: true,
+          warningTitle: 'CONFIRMATION',
+        );
+
+        // Verify the presence of the renamed and the restored playlist
+        // in the playlist list
+
+        playlistsTitles = [
+          modifiedPlaylistTitle,
+          playlistToRenametitle,
+        ];
+
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
     });
   });
 
