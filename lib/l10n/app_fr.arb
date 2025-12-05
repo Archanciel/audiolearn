@@ -599,7 +599,7 @@
   "playlistToggleButtonInAudioPlayerViewTooltip": "Afficher/masquer les playlists. Ensuite, cochez une playlist pour sélectionner son audio en cours d'écoute.",
   "playlistSelectedSnackBarMessage": "Playlist \"{title}\" sélectionnée",
   "playlistImportAudioMenu": "Importer des audio's ...",
-  "playlistImportAudioMenuTooltip": "Importer des audio's dans la playlist afin de pouvoir les écouter ainsi qu'y ajouter des commentaires positionnés.",
+  "playlistImportAudioMenuTooltip": "Importer des audio's MP3 ou des vidéos MP4 converties en audio's MP3 dans la playlist afin de pouvoir les écouter ainsi qu'y ajouter des commentaires positionnés et des photos.",
   "setPlaylistAudioPlaySpeedTooltip": "Définir la vitesse de lecture audio pour les prochains audio téléchargés dans la playlist ainsi que pour les audio's existants.",
   "audioNotImportedToLocalPlaylist": "Le(s) audio(s)\n\n{rejectedImportedAudioFileNames}\n\nn'ont pas été importés vers la playlist locale \"{toPlaylistTitle}\" car ils sont déjà présents dans son répertoire.",
   "audioNotImportedToYoutubePlaylist": "Le(s) audio(s)\n\n{rejectedImportedAudioFileNames}\n\nn'ont pas été importés vers la playlist Youtube \"{toPlaylistTitle}\" car ils sont déjà présents dans son répertoire.",
