@@ -320,7 +320,7 @@ class WarningMessageVM extends ChangeNotifier {
   /// Adds a warning message elements string to the queue of warning message
   /// elements to be displayed.
   ///
-  /// Example of {warningMessageElements}:
+  /// Example of [warningMessageElements]:
   ///
   /// For a warning message indicating that 2 audio files were not imported
   /// due to the fact that they already exist in the target playlist,
@@ -330,7 +330,7 @@ class WarningMessageVM extends ChangeNotifier {
   /// Youtube playlist "S8 audio" since the playlist directory already
   /// contains the audio(s).
   ///
-  /// In this example, the {warningMessageElements} value is "audio1, audio2".
+  /// In this example, the [warningMessageElements] value is "audio1, audio2".
   void _addWarningMessageElements({
     required String warningMessageElements,
   }) {

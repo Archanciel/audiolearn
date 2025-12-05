@@ -1140,7 +1140,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get playlistImportAudioMenuTooltip =>
-      'Importer des audio\'s dans la playlist afin de pouvoir les écouter ainsi qu\'y ajouter des commentaires positionnés.';
+      'Importer des audio\'s MP3 ou des vidéos MP4 converties en audio\'s MP3 dans la playlist afin de pouvoir les écouter ainsi qu\'y ajouter des commentaires positionnés et des photos.';
 
   @override
   String get setPlaylistAudioPlaySpeedTooltip =>

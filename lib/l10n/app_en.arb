@@ -501,7 +501,7 @@
   "playlistToggleButtonInAudioPlayerViewTooltip": "Show/hide playlists. Then check a playlist to select its current listened audio.",
   "playlistSelectedSnackBarMessage": "Playlist \"{title}\" selected",
   "playlistImportAudioMenu": "Import Audio File(s) ...",
-  "playlistImportAudioMenuTooltip": "Import audio file(s) into the playlist in order to be able to listen them and add positionned comments to them.",
+  "playlistImportAudioMenuTooltip": "Import MP3 audio file(s) or MP4 video file(s) converted to MP3 audio file(s) into the playlist in order to be able to listen them and add positionned comments and pictures to them.",
   "setPlaylistAudioPlaySpeedTooltip": "Set audio play speed for the playlist existing and next downloaded audio.",
   "audioNotImportedToLocalPlaylist": "Audio(s)\n\n{rejectedImportedAudioFileNames}\n\nNOT imported to local playlist \"{toPlaylistTitle}\" since the playlist directory already contains the audio(s).",
   "audioNotImportedToYoutubePlaylist": "Audio(s)\n\n{rejectedImportedAudioFileNames}\n\nNOT imported to Youtube playlist \"{toPlaylistTitle}\" since the playlist directory already contains the audio(s).",

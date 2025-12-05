@@ -1985,7 +1985,7 @@ abstract class AppLocalizations {
   /// No description provided for @playlistImportAudioMenuTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Import audio file(s) into the playlist in order to be able to listen them and add positionned comments to them.'**
+  /// **'Import MP3 audio file(s) or MP4 video file(s) converted to MP3 audio file(s) into the playlist in order to be able to listen them and add positionned comments and pictures to them.'**
   String get playlistImportAudioMenuTooltip;
 
   /// No description provided for @setPlaylistAudioPlaySpeedTooltip.
