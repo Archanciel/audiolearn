@@ -486,8 +486,7 @@ class AudioDownloadVM extends ChangeNotifier {
   void deletePlaylist({
     required Playlist playlistToDelete,
   }) {
-    _listOfPlaylist
-        .removeWhere((playlist) => playlist == playlistToDelete);
+    _listOfPlaylist.removeWhere((playlist) => playlist == playlistToDelete);
 
     DirUtil.deleteDirAndSubDirsIfExist(
       rootPath: playlistToDelete.downloadPath,
@@ -1856,6 +1855,43 @@ class AudioDownloadVM extends ChangeNotifier {
 
     for (String filePathName in filePathNameToImportLstCopy) {
       String fileName = filePathName.split(path.separator).last;
+
+      if (fileName.toLowerCase().endsWith('.mp4')) {
+        File tmpMp4File = File(filePathName);
+        File targetMp3File = File(
+            '${targetPlaylist.downloadPath}${path.separator}${fileName.replaceAll('mp4', 'mp3')}');
+
+        if (targetMp3File.existsSync()) {
+          // the case if the imported audio file already exist in the target
+          // playlist directory
+          rejectedImportedFileNames += "\"$fileName\",\n";
+          filePathNameToImportLst.remove(filePathName);
+          continue;
+        }
+
+        final bool useMusicQuality = true;
+        final String targetBitrate = useMusicQuality ? '128k' : '48k';
+        final int sampleRate = useMusicQuality ? 44100 : 22050;
+        final int channels = useMusicQuality ? 2 : 1;
+
+        _isAudioDownloading = false;
+        _isDownloadedAudioConvertingToMp3 = true;
+        notifyListeners();
+
+        final ok = await _FfmpegFacade.convertToMp3(
+          inputPath: tmpMp4File.path,
+          outputPath: targetMp3File.path,
+          bitrate: targetBitrate,
+          sampleRate: sampleRate,
+          channels: channels,
+        );
+
+        // Cleanup temp
+        // try {
+        //   if (await tmpMp4File.exists()) await tmpMp4File.delete();
+        // } catch (_) {}
+      }
+
       File targetFile =
           File('${targetPlaylist.downloadPath}${path.separator}$fileName');
 
@@ -1900,20 +1936,30 @@ class AudioDownloadVM extends ChangeNotifier {
     for (String filePathName in filePathNameToImportLst) {
       // Now, the filePathNameToImportLst does not contain the audio
       // files which already exist in the target playlist directory !
-      String fileName = filePathName.split(path.separator).last;
-      String targetFilePathName =
-          "${targetPlaylist.downloadPath}${path.separator}$fileName";
 
       // Physically copying the audio file to the target playlist
       // directory. If the audio file already exist in the
       // target playlist directory due to the fact it was created
       // from the text to speech operation, the copy must not be
       // executed, otherwise _createImportedAudio will fail.
-      File(filePathName).copySync(targetFilePathName);
+      String fileName = filePathName.split(path.separator).last;
+      String targetFilePathName =
+          "${targetPlaylist.downloadPath}${path.separator}$fileName";
 
-      Audio? existingAudio = targetPlaylist.getAudioByFileNameNoExt(
-        audioFileNameNoExt: fileName.replaceFirst('.mp3', ''),
-      );
+      Audio? existingAudio;
+
+      if (!fileName.endsWith('.mp4')) {
+        // the case if the audio file was not converted from mp4 to mp3
+        File(filePathName).copySync(targetFilePathName);
+
+        existingAudio = targetPlaylist.getAudioByFileNameNoExt(
+          audioFileNameNoExt: fileName.replaceFirst('.mp3', ''),
+        );
+      } else {
+        existingAudio = targetPlaylist.getAudioByFileNameNoExt(
+          audioFileNameNoExt: fileName.replaceFirst('.mp4', ''),
+        );
+      }
 
       // Instantiating the imported audio and adding it to the target
       // playlist downloaded audio list and playable audio list.
@@ -1922,8 +1968,8 @@ class AudioDownloadVM extends ChangeNotifier {
         Audio importedAudio = await _createImportedAudio(
           targetPlaylist: targetPlaylist,
           audioPlayer: audioPlayer,
-          targetFilePathName: targetFilePathName,
-          importedFileName: fileName,
+          targetFilePathName: (targetFilePathName.contains('mp4')) ? '${targetPlaylist.downloadPath}${path.separator}${fileName.replaceAll('mp4', 'mp3')}' : targetFilePathName,
+          importedFileName: (targetFilePathName.contains('mp4')) ? fileName.replaceAll('mp4', 'mp3') : fileName,
         );
 
         targetPlaylist.addImportedAudio(
@@ -2585,7 +2631,9 @@ class AudioDownloadVM extends ChangeNotifier {
     }
 
     final yt.AudioOnlyStreamInfo streamInfo = await _pickBestAudioStream(
-        manifest: manifest, highQuality: isHighQuality);
+      manifest: manifest,
+      highQuality: isHighQuality,
+    );
 
     // Temp file for container (m4a/webm)
     final String tmpExt = streamInfo.container.name; // "m4a" or "webm"
