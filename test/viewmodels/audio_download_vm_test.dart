@@ -1667,6 +1667,141 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
+    test('''Import one not existing MP4 file in playlist whose play speed is set
+            to 1.0 and then re-import it so that it will not be imported a
+            second time. Since the playlist play speed is defined, it will
+            be applied to the imported Audio.''', () async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}import_audio_file_test",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+      WarningMessageVM warningMessageVM = WarningMessageVM();
+      SettingsDataService settingsDataService = SettingsDataService();
+
+      // necessary, otherwise audioDownloadVM won't be able to load
+      // the existing playlists and the test will fail
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      // Using MockAudioDownloadVM which inherits from AudioDownloadVM
+      // and overrides the getMp3DurationWithAudioPlayer() method so that
+      // the AudioPlayer plugin not usable in unit test is not instantiated.
+      AudioDownloadVM audioDownloadVM = MockAudioDownloadVM(
+        warningMessageVM: warningMessageVM,
+        settingsDataService: settingsDataService,
+      );
+
+      // Initializing the audioDownloadVM
+      audioDownloadVM.loadExistingPlaylists();
+
+      // Load Playlist from the json file. The play speed of this playlist is
+      // defined.
+      const String targetPlayListName = "Empty";
+      Playlist targetPlaylistEmpty = _loadPlaylist(targetPlayListName);
+
+      expect(targetPlaylistEmpty.downloadedAudioLst.length, 0);
+      expect(targetPlaylistEmpty.playableAudioLst.length, 0);
+
+      String fileToImportDir =
+          '$kApplicationPathWindowsTest${path.separator}Files to import';
+      const String importeMp4FileNameOne =
+          "La vraie prière.mp4";
+      const String importeMp3FileNameOne =
+          "La vraie prière.mp3";
+      List<String> importedFileNamesLst = [
+        importeMp3FileNameOne,
+      ];
+      List<String> filePathNamesToImportLst = [
+        "$fileToImportDir${path.separator}$importeMp4FileNameOne",
+      ];
+
+      // Import one file in the Empty playlist
+      await audioDownloadVM.importAudioFilesInPlaylist(
+        targetPlaylist: targetPlaylistEmpty,
+        filePathNameToImportLst: filePathNamesToImportLst,
+      );
+
+      // Verify that the imported file physically exists in the target
+      // playlist directory and in the downloaded and playable audio lists
+      _verifyImportedFilesPresence(
+        targetPlaylist: targetPlaylistEmpty,
+        importedFileNamesLst: importedFileNamesLst,
+        targetPlaylistDownloadedAudioListInitialLengh: 0,
+        targetPlaylistPlayableAudioListFinalLengh: 1,
+        initialPlayableListLengh: 0,
+      );
+
+      final DateTime dateTimeNow = DateTime.now();
+
+      Audio expectedImportedAudio = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
+        enclosingPlaylist: targetPlaylistEmpty,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        originalVideoTitle:
+            "La vraie prière",
+        compactVideoDescription: '',
+        validVideoTitle:
+            "La vraie prière",
+        videoUrl: '',
+        audioDownloadDateTime: dateTimeNow,
+        audioDownloadDuration: const Duration(microseconds: 0),
+        audioDownloadSpeed: 0,
+        videoUploadDate: dateTimeNow,
+        audioDuration: const Duration(milliseconds: 284000),
+        isAudioMusicQuality: false,
+        audioPlaySpeed: 1.0,
+        audioPlayVolume: 0.5,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName:
+            "La vraie prière.mp3",
+        audioFileSize: 4544188,
+        audioType: AudioType.imported,
+      );
+
+      Audio importedAudio = targetPlaylistEmpty.playableAudioLst[0];
+
+      // Verify that the audio fields are correct
+      _verifyAudioFields(importedAudio, expectedImportedAudio);
+
+      // Now import again the same file which now exists in the Empty
+      // playlist
+      await audioDownloadVM.importAudioFilesInPlaylist(
+        targetPlaylist: targetPlaylistEmpty,
+        filePathNameToImportLst: filePathNamesToImportLst,
+      );
+
+      // Verify that the re-imported file has not been imported a second
+      // time
+      _verifyImportedFilesPresence(
+        targetPlaylist: targetPlaylistEmpty,
+        importedFileNamesLst: [],
+        targetPlaylistDownloadedAudioListInitialLengh:
+            1, // final length in fact
+        targetPlaylistPlayableAudioListFinalLengh: 1,
+        initialPlayableListLengh: 0,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
   });
   group('Delete audio physically and from playlist', () {
     test('''Delete from playable audio list''', () async {
