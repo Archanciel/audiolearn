@@ -1340,7 +1340,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
   Future<List<String>> _filePickerSelectAudioFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['mp3'],
+      allowedExtensions: ['mp3', 'mp4',],
       allowMultiple: true,
       initialDirectory: DirUtil.getApplicationPath(),
     );
