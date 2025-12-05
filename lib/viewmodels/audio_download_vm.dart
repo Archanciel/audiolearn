@@ -20,8 +20,6 @@ import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
 import 'package:ffmpeg_kit_flutter_new/return_code.dart';
 
 import 'package:ffmpeg_kit_flutter_new/ffprobe_kit.dart';
-import 'package:ffmpeg_kit_flutter_new/media_information_session.dart';
-import 'package:ffmpeg_kit_flutter_new/media_information.dart';
 
 import '../models/audio_file.dart';
 import '../models/comment.dart';
@@ -177,7 +175,6 @@ class AudioDownloadVM extends ChangeNotifier {
   bool isHighQuality = false;
 
   bool _stopDownloadPressed = false;
-
   bool get isDownloadStopping => _stopDownloadPressed;
 
   // setter used by MockAudioDownloadVM in integration test only !
@@ -1888,7 +1885,7 @@ class AudioDownloadVM extends ChangeNotifier {
     //                                                 may be modified
     String rejectedImportedFileNames = '';
     String acceptableImportedFileNames = '';
-    bool _isImportedMp4ConvertedToMp3InMusicQuality = false;
+    bool isImportedMp4ConvertedToMp3InMusicQuality = false;
 
     for (String filePathName in filePathNameToImportLstCopy) {
       String fileName = filePathName.split(path.separator).last;
@@ -1911,29 +1908,29 @@ class AudioDownloadVM extends ChangeNotifier {
         notifyListeners();
 
         // 1) get attributes (bitrate, sampleRate, channels)
-        final attrs = await getAudioAttributesWithFfprobe(
+        final attrs = await _getAudioAttributesWithFfprobe(
           filePath: tmpMp4File.path,
         );
 
         // 2) choose target bitrate (kbps string)
         final sourceBps = attrs?.bitrateBps;
-        final chosenKbps = chooseTargetKbpsFromSourceBps(
+        final chosenKbps = _chooseTargetKbpsFromSourceBps(
           sourceBps: sourceBps,
         );
         final targetBitrate = '${chosenKbps}k';
 
         // 3) choose sampleRate and channels if not known
-        final finalSampleRate = chooseSampleRate(
+        final finalSampleRate = _chooseSampleRate(
           sourceSampleRate: attrs?.sampleRate,
           chosenKbps: chosenKbps,
         );
 
-        final finalChannels = chooseChannels(
+        final finalChannels = _chooseChannels(
           sourceChannels: attrs?.channels,
           chosenKbps: chosenKbps,
         );
 
-        _isImportedMp4ConvertedToMp3InMusicQuality = isMusicQuality(
+        isImportedMp4ConvertedToMp3InMusicQuality = _isMusicQuality(
           bitrate: targetBitrate,
           channels: finalChannels,
         );
@@ -2046,7 +2043,7 @@ class AudioDownloadVM extends ChangeNotifier {
         );
         
         importedAudio.isAudioMusicQuality =
-            _isImportedMp4ConvertedToMp3InMusicQuality;
+            isImportedMp4ConvertedToMp3InMusicQuality;
 
         targetPlaylist.addImportedAudio(
           importedAudio,
@@ -2076,7 +2073,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
   /// Returns audio attributes extracted via ffprobe (desktop) or FFprobeKit (mobile).
   /// Returns null on fatal error.
-  Future<AudioAttributes?> getAudioAttributesWithFfprobe({
+  Future<AudioAttributes?> _getAudioAttributesWithFfprobe({
     required String filePath,
     Duration timeout = const Duration(seconds: 8),
   }) async {
@@ -2168,10 +2165,10 @@ class AudioDownloadVM extends ChangeNotifier {
               return;
             }
 
-            final List<dynamic>? streams = mediaInfo.getStreams();
+            final List<dynamic> streams = mediaInfo.getStreams();
             Map<String, dynamic>? audioStream;
 
-            if (streams != null && streams.isNotEmpty) {
+            if (streams.isNotEmpty) {
               for (final s in streams) {
                 try {
                   final map = Map<String, dynamic>.from(s as Map);
@@ -2241,7 +2238,7 @@ class AudioDownloadVM extends ChangeNotifier {
   /// Choose the target kbps given the source bitrate in bits/s.
   /// Conservative policy: do not increase quality above source.
   /// Returns integer kbps (e.g. 128).
-  int chooseTargetKbpsFromSourceBps({
+  int _chooseTargetKbpsFromSourceBps({
     required int? sourceBps,
     int defaultKbps = 128,
   }) {
@@ -2258,7 +2255,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
   /// Converts "128k" into 128.
   /// Returns null if the string is malformed.
-  bool isMusicQuality({
+  bool _isMusicQuality({
     required String bitrate,
     required int channels,
   }) {
@@ -2275,9 +2272,10 @@ class AudioDownloadVM extends ChangeNotifier {
   /// Decide sample rate to use for encoding.
   /// If sourceSampleRate is provided, reuse it. Otherwise choose a reasonable default
   /// according to the chosen kbps.
-  int chooseSampleRate({int? sourceSampleRate, required int chosenKbps}) {
-    if (sourceSampleRate != null && sourceSampleRate > 0)
+  int _chooseSampleRate({int? sourceSampleRate, required int chosenKbps}) {
+    if (sourceSampleRate != null && sourceSampleRate > 0) {
       return sourceSampleRate;
+    }
 
     // Heuristics:
     // - below ~96 kbps -> use 22050 to save size
@@ -2288,7 +2286,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
   /// Decide channels to use for encoding.
   /// If sourceChannels provided, reuse it. Otherwise pick mono for very low kbps, stereo otherwise.
-  int chooseChannels({int? sourceChannels, required int chosenKbps}) {
+  int _chooseChannels({int? sourceChannels, required int chosenKbps}) {
     if (sourceChannels != null && sourceChannels > 0) return sourceChannels;
     if (chosenKbps <= 96) return 1; // mono for low bitrate targets
     return 2; // stereo otherwise
