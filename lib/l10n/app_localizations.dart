@@ -4039,6 +4039,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Importing the audio of the mp4 video \"{videoTitle}\" FAILED: \"{exceptionMessage}\".'**
   String importingMp4Error(Object videoTitle, Object exceptionMessage);
+
+  /// No description provided for @convertingMp4ToMP3.
+  ///
+  /// In en, this message translates to:
+  /// **'Converting imported MP4 to MP3 ...'**
+  String get convertingMp4ToMP3;
 }
 
 class _AppLocalizationsDelegate

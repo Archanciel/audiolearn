@@ -1760,7 +1760,7 @@ void main() {
         audioDownloadSpeed: 0,
         videoUploadDate: dateTimeNow,
         audioDuration: const Duration(milliseconds: 284000),
-        isAudioMusicQuality: false,
+        isAudioMusicQuality: true,
         audioPlaySpeed: 1.0,
         audioPlayVolume: 0.5,
         isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,

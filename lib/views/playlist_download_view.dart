@@ -604,6 +604,31 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               ]),
             ]),
           );
+        } else if (audioDownloadVMlistenTrue.isImportedMp4ConvertingToMp3) {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(children: [
+              Text(
+                audioDownloadVMlistenTrue
+                    .mp4ConvertingToMp3FileName,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center, // Centered multi lines text
+              ),
+              const SizedBox(height: 10.0),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Text(AppLocalizations.of(context)!.convertingMp4ToMP3,
+                ),
+                SizedBox(width: 20.0),
+                SizedBox(
+                  width: 24, // taille souhaitée
+                  height: 24,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 3,
+                  ),
+                ),
+              ]),
+            ]),
+          );
         } else {
           return const SizedBox.shrink();
         }

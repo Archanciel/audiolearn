@@ -1553,5 +1553,6 @@
         "type": "Object"
       }
     }
-  }
+  },
+  "convertingMp4ToMP3":"Conversion du MP4 importé en MP3 ..."
 }                                   
