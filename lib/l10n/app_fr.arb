@@ -1540,5 +1540,18 @@
   "renamePlaylistButton": "Renommer",
   "renamePictureFileNameAlreadyUsed": "Le nom du fichier de photo \"{fileName}.json\" est déjà utilisé dans le même répertoire de photos. Il est donc impossible de renommer le fichier audio avec le nom \"{fileName}.mp3\".",
   "playlistWithTitleAlreadyExist": "Une playlist avec le titre \"{title}\" existe déjà dans la liste des playlists et donc la playlist ne peut pas être renommée avec ce titre.",
-  "invalidModifiedPlaylistTitle": "Le titre modifié \"{playlistTitle}\" de la playlist ne peut contenir aucune virgule. Corrigez le titre et rééssayez ..."
+  "invalidModifiedPlaylistTitle": "Le titre modifié \"{playlistTitle}\" de la playlist ne peut contenir aucune virgule. Corrigez le titre et rééssayez ...",
+  "youtubePlaylistWithTitleAlreadyInListOfPlaylists": "La playlist Youtube \"{title}\" est déjà dans la liste des playlists. Par conséquent, la playlist locale avec ce titre ne sera pas créée.",
+  "importingMp4Error": "ÉCHEC de l'importation de l'audio de la vidéo \"{videoTitle}\": \"{exceptionMessage}\".",
+  "@importingMp4Error": {
+    "description": "Message d'erreur affiché lorsqu'une erreur se produit lors de l'importation d'une vidéo mp4",
+    "placeholders": {
+      "videoTitle":  {
+        "type": "Object"
+      },
+      "exceptionMessage": {
+        "type": "Object"
+      }
+    }
+  }
 }                                   

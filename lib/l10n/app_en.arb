@@ -1138,5 +1138,13 @@
   "renamePlaylistButton": "Rename",
   "renamePictureFileNameAlreadyUsed": "The picture file name \"{fileName}.json\" already exists in the picture directory and so renaming the audio file with the name \"{fileName}.mp3\" is not possible.",
   "playlistWithTitleAlreadyExist": "A playlist with the title \"{title}\" already exists in the playlists list and so the playlist can't be renamed to this title.",
-  "invalidModifiedPlaylistTitle": "The modified playlist title \"{playlistTitle}\" can not contain any comma. Please correct the title and retry ..."
+  "invalidModifiedPlaylistTitle": "The modified playlist title \"{playlistTitle}\" can not contain any comma. Please correct the title and retry ...",
+  "importingMp4Error": "Importing the audio of the mp4 video \"{videoTitle}\" FAILED: \"{exceptionMessage}\".",
+  "@importingMp4Error": {
+    "description": "Warning announcing that importing the audio's from mp4 file failed.",
+    "placeholders": {
+      "videoTitle": {},
+      "exceptionMessage": {}
+    }
+  }
 }

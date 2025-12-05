@@ -93,6 +93,23 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
             }
 
             return const SizedBox.shrink();
+          case ErrorType.importingMp4Error:
+            String exceptionMessage = _warningMessageVM.errorArgOne;
+            String videoTitle = _warningMessageVM.errorArgTwo;
+
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              _displayWarningDialog(
+                context: _context,
+                message: AppLocalizations.of(context)!.importingMp4Error(
+                  videoTitle,
+                  exceptionMessage,
+                ),
+                warningMessageVM: _warningMessageVM,
+                themeProviderVM: themeProviderVM,
+              );
+            });
+
+            return const SizedBox.shrink();
           case ErrorType.downloadAudioYoutubeErrorDueToLiveVideoInPlaylist:
             String playlistTitle = _warningMessageVM.errorArgOne;
             String liveVideoString = _warningMessageVM.errorArgTwo;
@@ -474,27 +491,25 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
       case WarningMessageType.renameAudioAndAssociatedFilesConfirm:
         String oldFileName = _warningMessageVM.oldFileName;
         String newFileName = _warningMessageVM.newFileName;
-        bool isCommentFileRenamed =
-            _warningMessageVM.isCommentFileRenamed;
-        bool isPictureFileRenamed =
-            _warningMessageVM.isPictureFileRenamed;
+        bool isCommentFileRenamed = _warningMessageVM.isCommentFileRenamed;
+        bool isPictureFileRenamed = _warningMessageVM.isPictureFileRenamed;
         String secondMessagePart;
 
         if (isCommentFileRenamed && isPictureFileRenamed) {
-          secondMessagePart = AppLocalizations.of(context)!
-              .secondMessagePartCommentAndPicture(
+          secondMessagePart =
+              AppLocalizations.of(context)!.secondMessagePartCommentAndPicture(
             newFileName,
             oldFileName,
           );
         } else if (isCommentFileRenamed) {
-          secondMessagePart = AppLocalizations.of(context)!
-              .secondMessagePartCommentOnly(
+          secondMessagePart =
+              AppLocalizations.of(context)!.secondMessagePartCommentOnly(
             newFileName,
             oldFileName,
           );
         } else if (isPictureFileRenamed) {
-          secondMessagePart = AppLocalizations.of(context)!
-              .secondMessagePartPictureOnly(
+          secondMessagePart =
+              AppLocalizations.of(context)!.secondMessagePartPictureOnly(
             newFileName,
             oldFileName,
           );
@@ -624,8 +639,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
           _displayWarningDialog(
             context: _context,
             message: AppLocalizations.of(context)!
-                .playlistWithTitleAlreadyExist(
-                    playlistTitle),
+                .playlistWithTitleAlreadyExist(playlistTitle),
             warningMessageVM: _warningMessageVM,
             themeProviderVM: themeProviderVM,
           );
