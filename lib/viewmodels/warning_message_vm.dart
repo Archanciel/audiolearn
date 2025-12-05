@@ -234,6 +234,9 @@ enum ErrorType {
 
   downloadAudioYoutubeError, // In case of a Youtube error.
 
+  importingMp4Error, // In case of an error when converting an
+  // imported mp4 to mp3
+
   downloadAudioYoutubeErrorDueToLiveVideoInPlaylist, // In case of a
   // Youtube error caused by the fact that the playlist contains a
   // live video.

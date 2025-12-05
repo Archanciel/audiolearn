@@ -4033,6 +4033,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The modified playlist title \"{playlistTitle}\" can not contain any comma. Please correct the title and retry ...'**
   String invalidModifiedPlaylistTitle(Object playlistTitle);
+
+  /// Warning announcing that importing the audio's from mp4 file failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Importing the audio of the mp4 video \"{videoTitle}\" FAILED: \"{exceptionMessage}\".'**
+  String importingMp4Error(Object videoTitle, Object exceptionMessage);
 }
 
 class _AppLocalizationsDelegate

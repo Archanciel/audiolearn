@@ -2525,4 +2525,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String invalidModifiedPlaylistTitle(Object playlistTitle) {
     return 'The modified playlist title \"$playlistTitle\" can not contain any comma. Please correct the title and retry ...';
   }
+
+  @override
+  String importingMp4Error(Object videoTitle, Object exceptionMessage) {
+    return 'Importing the audio of the mp4 video \"$videoTitle\" FAILED: \"$exceptionMessage\".';
+  }
 }

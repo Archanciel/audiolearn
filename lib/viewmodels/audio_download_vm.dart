@@ -1,4 +1,6 @@
 // audio_download_vm.dart
+import 'dart:convert';
+
 import 'package:archive/archive.dart';
 import 'package:audiolearn/constants.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -16,6 +18,10 @@ import 'package:youtube_explode_dart/youtube_explode_dart.dart' as yt;
 // NEW: FFmpegKit fork (mobile) — conversion on Android/iOS
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
 import 'package:ffmpeg_kit_flutter_new/return_code.dart';
+
+import 'package:ffmpeg_kit_flutter_new/ffprobe_kit.dart';
+import 'package:ffmpeg_kit_flutter_new/media_information_session.dart';
+import 'package:ffmpeg_kit_flutter_new/media_information.dart';
 
 import '../models/audio_file.dart';
 import '../models/comment.dart';
@@ -81,6 +87,28 @@ class _FfmpegFacade {
   static bool get _isMobile => Platform.isAndroid || Platform.isIOS;
 
   static String _q(String s) => s.contains(' ') ? '"$s"' : s;
+}
+
+/// Container for audio attributes.
+class AudioAttributes {
+  /// Audio bitrate in bits per second (e.g. 128000) or null if unknown.
+  final int? bitrateBps;
+
+  /// Sample rate in Hz (e.g. 44100) or null if unknown.
+  final int? sampleRate;
+
+  /// Number of audio channels (1 = mono, 2 = stereo) or null if unknown.
+  final int? channels;
+
+  /// Duration in seconds or null if unknown.
+  final double? durationSeconds;
+
+  const AudioAttributes({
+    this.bitrateBps,
+    this.sampleRate,
+    this.channels,
+    this.durationSeconds,
+  });
 }
 
 /// This VM (View Model) class is part of the MVVM architecture.
@@ -1859,7 +1887,7 @@ class AudioDownloadVM extends ChangeNotifier {
       if (fileName.toLowerCase().endsWith('.mp4')) {
         File tmpMp4File = File(filePathName);
         File targetMp3File = File(
-            '${targetPlaylist.downloadPath}${path.separator}${fileName.replaceAll('mp4', 'mp3')}');
+            '${targetPlaylist.downloadPath}${path.separator}${fileName.replaceFirst('mp4', 'mp3')}');
 
         if (targetMp3File.existsSync()) {
           // the case if the imported audio file already exist in the target
@@ -1869,40 +1897,60 @@ class AudioDownloadVM extends ChangeNotifier {
           continue;
         }
 
-        final bool useMusicQuality = true;
-        final String targetBitrate = useMusicQuality ? '128k' : '48k';
-        final int sampleRate = useMusicQuality ? 44100 : 22050;
-        final int channels = useMusicQuality ? 2 : 1;
+        // 1) get attributes (bitrate, sampleRate, channels)
+        final attrs = await getAudioAttributesWithFfprobe(
+          filePath: tmpMp4File.path,
+        );
 
-        _isAudioDownloading = false;
-        _isDownloadedAudioConvertingToMp3 = true;
-        notifyListeners();
+        // 2) choose target bitrate (kbps string)
+        final sourceBps = attrs?.bitrateBps;
+        final chosenKbps = chooseTargetKbpsFromSourceBps(
+          sourceBps: sourceBps,
+        );
+        final targetBitrate = '${chosenKbps}k';
 
+        // 3) choose sampleRate and channels if not known
+        final finalSampleRate = chooseSampleRate(
+          sourceSampleRate: attrs?.sampleRate,
+          chosenKbps: chosenKbps,
+        );
+
+        final finalChannels = chooseChannels(
+          sourceChannels: attrs?.channels,
+          chosenKbps: chosenKbps,
+        );
+
+        // 4) convert
         final ok = await _FfmpegFacade.convertToMp3(
           inputPath: tmpMp4File.path,
           outputPath: targetMp3File.path,
           bitrate: targetBitrate,
-          sampleRate: sampleRate,
-          channels: channels,
+          sampleRate: finalSampleRate,
+          channels: finalChannels,
         );
 
-        // Cleanup temp
-        // try {
-        //   if (await tmpMp4File.exists()) await tmpMp4File.delete();
-        // } catch (_) {}
-      }
+        if (!ok) {
+          notifyDownloadError(
+            errorType: ErrorType.importingMp4Error,
+            errorArgOne: 'FFmpeg conversion failed',
+            errorArgTwo: fileName,
+          );
 
-      File targetFile =
-          File('${targetPlaylist.downloadPath}${path.separator}$fileName');
+          return;
+        }
+      } else {
+        File targetFile =
+            File('${targetPlaylist.downloadPath}${path.separator}$fileName');
 
-      if (targetFile.existsSync()) {
-        // the case if the imported audio file already exist in the target
-        // playlist directory
-        rejectedImportedFileNames += "\"$fileName\",\n";
-        filePathNameToImportLst.remove(filePathName);
-        continue;
+        if (targetFile.existsSync()) {
+          // the case if the imported audio file already exist in the target
+          // playlist directory
+          rejectedImportedFileNames += "\"$fileName\",\n";
+          filePathNameToImportLst.remove(filePathName);
+          continue;
+        }
+        acceptableImportedFileNames += "\"$fileName\",\n";
       }
-      acceptableImportedFileNames += "\"$fileName\",\n";
     }
 
     // Displaying a warning which lists the audio files which won't be
@@ -1965,11 +2013,15 @@ class AudioDownloadVM extends ChangeNotifier {
       // playlist downloaded audio list and playable audio list.
 
       if (existingAudio == null) {
+        String mp3FileName = fileName.replaceFirst('mp4', 'mp3');
         Audio importedAudio = await _createImportedAudio(
           targetPlaylist: targetPlaylist,
           audioPlayer: audioPlayer,
-          targetFilePathName: (targetFilePathName.contains('mp4')) ? '${targetPlaylist.downloadPath}${path.separator}${fileName.replaceAll('mp4', 'mp3')}' : targetFilePathName,
-          importedFileName: (targetFilePathName.contains('mp4')) ? fileName.replaceAll('mp4', 'mp3') : fileName,
+          targetFilePathName: (targetFilePathName.contains('mp4'))
+              ? '${targetPlaylist.downloadPath}${path.separator}$mp3FileName'
+              : targetFilePathName,
+          importedFileName:
+              (targetFilePathName.contains('mp4')) ? mp3FileName : fileName,
         );
 
         targetPlaylist.addImportedAudio(
@@ -1996,6 +2048,210 @@ class AudioDownloadVM extends ChangeNotifier {
       model: targetPlaylist,
       path: targetPlaylist.getPlaylistDownloadFilePathName(),
     );
+  }
+
+  /// Returns audio attributes extracted via ffprobe (desktop) or FFprobeKit (mobile).
+  /// Returns null on fatal error.
+  Future<AudioAttributes?> getAudioAttributesWithFfprobe({
+    required String filePath,
+    Duration timeout = const Duration(seconds: 8),
+  }) async {
+    try {
+      // Desktop (Windows/Linux/macOS) -> call external ffprobe binary
+      if (!Platform.isAndroid && !Platform.isIOS) {
+        final result = await Process.run('ffprobe', [
+          '-v',
+          'error',
+          '-select_streams',
+          'a:0',
+          '-show_entries',
+          'stream=bit_rate,sample_rate,channels,duration',
+          '-of',
+          'json',
+          filePath,
+        ]).timeout(timeout);
+
+        if (result.exitCode != 0) {
+          return null;
+        }
+
+        final Map jsonMap = jsonDecode(result.stdout as String) as Map;
+        final List<dynamic> streams =
+            (jsonMap['streams'] as List<dynamic>?) ?? [];
+
+        if (streams.isEmpty) {
+          return null;
+        }
+
+        final stream = streams.first as Map<String, dynamic>;
+
+        final int? bitRate = stream['bit_rate'] != null
+            ? int.tryParse(stream['bit_rate'].toString())
+            : null;
+
+        final int? sampleRate = stream['sample_rate'] != null
+            ? int.tryParse(stream['sample_rate'].toString())
+            : null;
+
+        final int? channels = stream['channels'] != null
+            ? int.tryParse(stream['channels'].toString())
+            : null;
+
+        // duration may be within stream or top-level format
+        final String? durationStr = stream['duration']?.toString() ??
+            jsonMap['format']?['duration']?.toString();
+        final double? duration =
+            durationStr != null ? double.tryParse(durationStr) : null;
+
+        // fallback: if bitrate unknown but duration available, estimate from file size
+        int? finalBitrate = bitRate;
+
+        if ((finalBitrate == null || finalBitrate == 0) &&
+            duration != null &&
+            duration > 0) {
+          final file = File(filePath);
+          final size = await file.length();
+          finalBitrate = ((size * 8) / duration).round();
+        }
+
+        return AudioAttributes(
+          bitrateBps: finalBitrate,
+          sampleRate: sampleRate,
+          channels: channels,
+          durationSeconds: duration,
+        );
+      }
+
+      // Mobile (Android/iOS): use FFprobeKit async API
+      final Completer completer = Completer<AudioAttributes?>();
+      final Timer timer = Timer(timeout, () {
+        if (!completer.isCompleted) {
+          completer.complete(null);
+        }
+      });
+
+      FFprobeKit.getMediaInformationAsync(
+        filePath,
+        (session) async {
+          try {
+            final mediaInfo = (session).getMediaInformation();
+
+            if (mediaInfo == null) {
+              if (!completer.isCompleted) {
+                completer.complete(null);
+              }
+
+              return;
+            }
+
+            final List<dynamic>? streams = mediaInfo.getStreams();
+            Map<String, dynamic>? audioStream;
+
+            if (streams != null && streams.isNotEmpty) {
+              for (final s in streams) {
+                try {
+                  final map = Map<String, dynamic>.from(s as Map);
+
+                  if ((map['codec_type']?.toString() ?? '') == 'audio') {
+                    audioStream = map;
+                    break;
+                  }
+                } catch (_) {
+                  // ignore malformed stream
+                }
+              }
+            }
+
+            int? bitRate =
+                audioStream != null && audioStream.containsKey('bit_rate')
+                    ? int.tryParse(audioStream['bit_rate'].toString())
+                    : null;
+
+            final int? sampleRate =
+                audioStream != null && audioStream.containsKey('sample_rate')
+                    ? int.tryParse(audioStream['sample_rate'].toString())
+                    : null;
+
+            final int? channels =
+                audioStream != null && audioStream.containsKey('channels')
+                    ? int.tryParse(audioStream['channels'].toString())
+                    : null;
+
+            // fallback for duration
+            final String? durationStr = mediaInfo.getDuration();
+            final double? duration =
+                durationStr != null ? double.tryParse(durationStr) : null;
+
+            // fallback: estimate bitrate from file size and duration if needed
+            if ((bitRate == null || bitRate == 0) &&
+                duration != null &&
+                duration > 0) {
+              final file = File(filePath);
+              final size = await file.length();
+              bitRate = ((size * 8) / duration).round();
+            }
+
+            if (!completer.isCompleted) {
+              completer.complete(AudioAttributes(
+                bitrateBps: bitRate,
+                sampleRate: sampleRate,
+                channels: channels,
+                durationSeconds: duration,
+              ));
+            }
+          } catch (_) {
+            if (!completer.isCompleted) completer.complete(null);
+          } finally {
+            timer.cancel();
+          }
+        },
+      );
+
+      final attrs = await completer.future;
+      return attrs;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /// Choose the target kbps given the source bitrate in bits/s.
+  /// Conservative policy: do not increase quality above source.
+  /// Returns integer kbps (e.g. 128).
+  int chooseTargetKbpsFromSourceBps({
+    required int? sourceBps,
+    int defaultKbps = 128,
+  }) {
+    if (sourceBps == null || sourceBps <= 0) return defaultKbps;
+    final srcKbps = (sourceBps / 1000).round();
+
+    if (srcKbps <= 64) return 48; // very low quality sources -> keep low
+    if (srcKbps <= 96) return 64;
+    if (srcKbps <= 128) return 128;
+    if (srcKbps <= 192) return 192;
+    if (srcKbps <= 256) return 256;
+    return 320; // allow higher for high-bitrate sources
+  }
+
+  /// Decide sample rate to use for encoding.
+  /// If sourceSampleRate is provided, reuse it. Otherwise choose a reasonable default
+  /// according to the chosen kbps.
+  int chooseSampleRate({int? sourceSampleRate, required int chosenKbps}) {
+    if (sourceSampleRate != null && sourceSampleRate > 0)
+      return sourceSampleRate;
+
+    // Heuristics:
+    // - below ~96 kbps -> use 22050 to save size
+    // - otherwise use 44100 (standard for audio)
+    if (chosenKbps <= 96) return 22050;
+    return 44100;
+  }
+
+  /// Decide channels to use for encoding.
+  /// If sourceChannels provided, reuse it. Otherwise pick mono for very low kbps, stereo otherwise.
+  int chooseChannels({int? sourceChannels, required int chosenKbps}) {
+    if (sourceChannels != null && sourceChannels > 0) return sourceChannels;
+    if (chosenKbps <= 96) return 1; // mono for low bitrate targets
+    return 2; // stereo otherwise
   }
 
   /// The method is called  when the user selects the "Convert Text to

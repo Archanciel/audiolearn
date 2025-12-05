@@ -2625,4 +2625,11 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get playlistAudioPicturesLabel => "Audio pictures";
+
+  @override
+  String importingMp4Error(
+    Object videoTitle,
+    Object exceptionMessage,
+  ) =>
+      "Importing the audio of the mp4 video \"$videoTitle\" FAILED: \"$exceptionMessage\".";
 }

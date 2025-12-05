@@ -2550,4 +2550,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String invalidModifiedPlaylistTitle(Object playlistTitle) {
     return 'Le titre modifié \"$playlistTitle\" de la playlist ne peut contenir aucune virgule. Corrigez le titre et rééssayez ...';
   }
+
+  @override
+  String importingMp4Error(Object videoTitle, Object exceptionMessage) {
+    return 'ÉCHEC de l\'importation de l\'audio de la vidéo \"$videoTitle\": \"$exceptionMessage\".';
+  }
 }
