@@ -2632,4 +2632,7 @@ class MockAppLocalizations extends AppLocalizations {
     Object exceptionMessage,
   ) =>
       "Importing the audio of the mp4 video \"$videoTitle\" FAILED: \"$exceptionMessage\".";
+
+  @override
+  String get convertingMp4ToMP3 => "Converting imported mp4 to MP3 ...";
 }

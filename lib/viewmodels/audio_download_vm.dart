@@ -165,11 +165,19 @@ class AudioDownloadVM extends ChangeNotifier {
   bool get isDownloadedAudioConvertingToMp3 =>
       _isDownloadedAudioConvertingToMp3;
 
+  // If a mp4 is imported, it must be converted to MP3. This
+  // takes time and so the conversion progression is displayed
+  // on the playlist download view.
+  bool _isImportedMp4ConvertingToMp3 = false;
+  bool get isImportedMp4ConvertingToMp3 => _isImportedMp4ConvertingToMp3;
+
+  String _mp4ConvertingToMp3FileName = '';
+  String get mp4ConvertingToMp3FileName => _mp4ConvertingToMp3FileName;
+
   bool isHighQuality = false;
 
   bool _stopDownloadPressed = false;
 
-  // ignore: unnecessary_getters_setters
   bool get isDownloadStopping => _stopDownloadPressed;
 
   // setter used by MockAudioDownloadVM in integration test only !
@@ -1880,6 +1888,7 @@ class AudioDownloadVM extends ChangeNotifier {
     //                                                 may be modified
     String rejectedImportedFileNames = '';
     String acceptableImportedFileNames = '';
+    bool _isImportedMp4ConvertedToMp3InMusicQuality = false;
 
     for (String filePathName in filePathNameToImportLstCopy) {
       String fileName = filePathName.split(path.separator).last;
@@ -1896,6 +1905,10 @@ class AudioDownloadVM extends ChangeNotifier {
           filePathNameToImportLst.remove(filePathName);
           continue;
         }
+
+        _mp4ConvertingToMp3FileName = fileName;
+        _isImportedMp4ConvertingToMp3 = true;
+        notifyListeners();
 
         // 1) get attributes (bitrate, sampleRate, channels)
         final attrs = await getAudioAttributesWithFfprobe(
@@ -1920,6 +1933,11 @@ class AudioDownloadVM extends ChangeNotifier {
           chosenKbps: chosenKbps,
         );
 
+        _isImportedMp4ConvertedToMp3InMusicQuality = isMusicQuality(
+          bitrate: targetBitrate,
+          channels: finalChannels,
+        );
+
         // 4) convert
         final ok = await _FfmpegFacade.convertToMp3(
           inputPath: tmpMp4File.path,
@@ -1928,6 +1946,9 @@ class AudioDownloadVM extends ChangeNotifier {
           sampleRate: finalSampleRate,
           channels: finalChannels,
         );
+
+        _isImportedMp4ConvertingToMp3 = false;
+        notifyListeners();
 
         if (!ok) {
           notifyDownloadError(
@@ -2023,6 +2044,9 @@ class AudioDownloadVM extends ChangeNotifier {
           importedFileName:
               (targetFilePathName.contains('mp4')) ? mp3FileName : fileName,
         );
+        
+        importedAudio.isAudioMusicQuality =
+            _isImportedMp4ConvertedToMp3InMusicQuality;
 
         targetPlaylist.addImportedAudio(
           importedAudio,
@@ -2230,6 +2254,22 @@ class AudioDownloadVM extends ChangeNotifier {
     if (srcKbps <= 192) return 192;
     if (srcKbps <= 256) return 256;
     return 320; // allow higher for high-bitrate sources
+  }
+
+  /// Converts "128k" into 128.
+  /// Returns null if the string is malformed.
+  bool isMusicQuality({
+    required String bitrate,
+    required int channels,
+  }) {
+    final cleaned = bitrate.trim().toLowerCase().replaceAll('k', '');
+    int? kNumber = int.tryParse(cleaned);
+
+    if (kNumber == null) {
+      return false;
+    } else {
+      return kNumber >= 128 && channels >= 2;
+    }
   }
 
   /// Decide sample rate to use for encoding.

@@ -2530,4 +2530,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String importingMp4Error(Object videoTitle, Object exceptionMessage) {
     return 'Importing the audio of the mp4 video \"$videoTitle\" FAILED: \"$exceptionMessage\".';
   }
+
+  @override
+  String get convertingMp4ToMP3 => 'Converting imported MP4 to MP3 ...';
 }
