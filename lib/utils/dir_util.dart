@@ -449,7 +449,7 @@ class DirUtil {
 
     if (!sourceDirectory.existsSync()) {
       logger.i(
-          'Source directory does not exist. Please check the source directory path.');
+          'Source directory $sourceRootPath does not exist. Please check the source directory path.');
       return;
     }
 
