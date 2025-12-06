@@ -35642,6 +35642,104 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
+    testWidgets(
+        '''Import 1 mp4 video file and 1 audio, both not present in the target playlist.
+           Verify the import confirmation. Then import again all the mp4/mp3 files present
+           in the source directory and verify the warning and the confirmation displayed.
+           Then, delete an audio in the target playlist as well as a mp3 converted from
+           mp4 and re-import the same files to verify that the import work. Finally, delete those
+           mp3' from playlist as well and reverify that the import work.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      const String targetPlaylistTitle = 'empty';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'import_audio_file_test',
+        selectedPlaylistTitle: targetPlaylistTitle,
+        tapOnPlaylistToggleButton: false,
+      );
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      // Files to import from 'Files to import' directory
+      const String fileName_1 =
+          "audio learn test short video one.mp3";
+      const String fileName_2 =
+          "La vraie prière.mp4";
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: fileName_1,
+            path:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle${path.separator}$fileName_1",
+            size: 143679),
+        PlatformFile(
+            name: fileName_2,
+            path:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle${path.separator}$fileName_2",
+            size: 17689541),
+      ]);
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: targetPlaylistTitle,
+        playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
+      );
+
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Audio(s)\n\n\"$fileName_1\",\n\"$fileName_2\"\n\nimported to local playlist \"$targetPlaylistTitle\".",
+        isWarningConfirming: true,
+      );
+
+      // await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      //   tester: tester,
+      //   warningDialogMessage:
+      //       "Audio(s)\n\n\"$fileName_3\",\n\"$fileName_4\"\n\nNOT imported to local playlist \"$targetPlaylistTitle\" since the playlist directory already contains the audio(s).",
+      // );
+
+      // Re-import the same audio's to verify the not imported warning\
+
+      mockFilePicker.setSelectedFiles([
+        PlatformFile(
+            name: fileName_1,
+            path:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle${path.separator}$fileName_1",
+            size: 143679),
+        PlatformFile(
+            name: fileName_2,
+            path:
+                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle${path.separator}$fileName_2",
+            size: 17689541),
+      ]);
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: targetPlaylistTitle,
+        playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
+      );
+
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Audio(s)\n\n\"$fileName_1\",\n\"$fileName_2\"\n\nNOT imported to local playlist \"$targetPlaylistTitle\" since the playlist directory already contains the audio(s).",
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
   });
   group('''Convert text to audio.''', () {
     testWidgets(
