@@ -35643,9 +35643,10 @@ void main() {
       );
     });
     testWidgets(
-        '''Import 1 mp4 video file and 1 audio, both not present in the target playlist.
+        '''Import 1 mp4 video file and 1 audio mp3, both not present in the target playlist.
            Verify the import confirmation. Then import again all the mp4/mp3 files present
            in the source directory and verify the warning and the confirmation displayed.
+           
            Then, delete an audio in the target playlist as well as a mp3 converted from
            mp4 and re-import the same files to verify that the import work. Finally, delete those
            mp3' from playlist as well and reverify that the import work.''',
@@ -35656,13 +35657,19 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
 
-      const String targetPlaylistTitle = 'empty';
+      const String targetPlaylistTitle = 'urgent_actus_17-12-2023';
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
-        savedTestDataDirName: 'import_audio_file_test',
+        savedTestDataDirName: 'import_audios_integr_test',
         selectedPlaylistTitle: targetPlaylistTitle,
         tapOnPlaylistToggleButton: false,
+      );
+
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}import_audio_file_test",
+        destinationRootPath: kApplicationPathWindowsTest,
       );
 
       // Replace the platform instance with your mock
@@ -35670,23 +35677,28 @@ void main() {
       FilePicker.platform = mockFilePicker;
 
       // Files to import from 'Files to import' directory
-      const String fileName_1 =
-          "audio learn test short video one.mp3";
-      const String fileName_2 =
-          "La vraie prière.mp4";
+      const String fileName_1 = "audio learn test short video one.mp3";
+      const String fileName_2 = "La vraie prière.mp4";
+      const String fileName_2_mp3 = "La vraie prière.mp3";
+      const String fileName_3 = "Robot Chef Surprises Everyone With Amazing Cooking Skills!.mp4";
+      const String fileName_3_mp3 = "Robot Chef Surprises Everyone With Amazing Cooking Skills!.mp3";
+      const String fileName_4 = "Really short video.mp3";
+      const String fileName_5 = "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet.mp3";
 
       mockFilePicker.setSelectedFiles([
         PlatformFile(
             name: fileName_1,
             path:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle${path.separator}$fileName_1",
+                "$kApplicationPathWindowsTest${path.separator}Files to import${path.separator}$fileName_1",
             size: 143679),
         PlatformFile(
             name: fileName_2,
             path:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle${path.separator}$fileName_2",
+                "$kApplicationPathWindowsTest${path.separator}Files to import${path.separator}$fileName_2",
             size: 17689541),
       ]);
+
+      // First import operation
 
       await IntegrationTestUtil.typeOnPlaylistMenuItem(
         tester: tester,
@@ -35697,30 +35709,42 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Audio(s)\n\n\"$fileName_1\",\n\"$fileName_2\"\n\nimported to local playlist \"$targetPlaylistTitle\".",
+            "Audio(s)\n\n\"$fileName_1\",\n\"$fileName_2_mp3\"\n\nimported to Youtube playlist \"$targetPlaylistTitle\".",
         isWarningConfirming: true,
       );
 
-      // await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-      //   tester: tester,
-      //   warningDialogMessage:
-      //       "Audio(s)\n\n\"$fileName_3\",\n\"$fileName_4\"\n\nNOT imported to local playlist \"$targetPlaylistTitle\" since the playlist directory already contains the audio(s).",
-      // );
-
-      // Re-import the same audio's to verify the not imported warning\
+      mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
 
       mockFilePicker.setSelectedFiles([
         PlatformFile(
             name: fileName_1,
             path:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle${path.separator}$fileName_1",
+                "$kApplicationPathWindowsTest${path.separator}Files to import${path.separator}$fileName_1",
             size: 143679),
         PlatformFile(
             name: fileName_2,
             path:
-                "$kPlaylistDownloadRootPathWindowsTest${path.separator}$targetPlaylistTitle${path.separator}$fileName_2",
+                "$kApplicationPathWindowsTest${path.separator}Files to import${path.separator}$fileName_2",
             size: 17689541),
+        PlatformFile(
+            name: fileName_3,
+            path:
+                "$kApplicationPathWindowsTest${path.separator}Files to import${path.separator}$fileName_3",
+            size: 916058),
+        PlatformFile(
+            name: fileName_4,
+            path:
+                "$kApplicationPathWindowsTest${path.separator}Files to import${path.separator}$fileName_4",
+            size: 81425),
+        PlatformFile(
+            name: fileName_5,
+            path:
+                "$kApplicationPathWindowsTest${path.separator}Files to import${path.separator}$fileName_5",
+            size: 3600082),
       ]);
+      
+      // Second import operation
 
       await IntegrationTestUtil.typeOnPlaylistMenuItem(
         tester: tester,
@@ -35731,7 +35755,14 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Audio(s)\n\n\"$fileName_1\",\n\"$fileName_2\"\n\nNOT imported to local playlist \"$targetPlaylistTitle\" since the playlist directory already contains the audio(s).",
+            "Audio(s)\n\n\"$fileName_3_mp3\",\n\"$fileName_4\",\n\"$fileName_5\"\n\nimported to Youtube playlist \"$targetPlaylistTitle\".",
+        isWarningConfirming: true,
+      );
+
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Audio(s)\n\n\"$fileName_1\",\n\"$fileName_2_mp3\"\n\nNOT imported to Youtube playlist \"$targetPlaylistTitle\" since the playlist directory already contains the audio(s).",
       );
 
       // Purge the test playlist directory so that the created test
