@@ -1883,22 +1883,24 @@ class AudioDownloadVM extends ChangeNotifier {
         List<String>.from(filePathNameToImportLst); // necessary since the
     //                                                 filePathNameToImportLst
     //                                                 may be modified
-    String rejectedImportedFileNames = '';
+    String rejectedImportedFileNamesLst = '';
     String acceptableImportedFileNames = '';
     bool isImportedMp4ConvertedToMp3InMusicQuality = false;
 
     for (String filePathName in filePathNameToImportLstCopy) {
       String fileName = filePathName.split(path.separator).last;
+      String targetMp4ToMp3FileName = '';
 
       if (fileName.toLowerCase().endsWith('.mp4')) {
         File tmpMp4File = File(filePathName);
-        File targetMp3File = File(
-            '${targetPlaylist.downloadPath}${path.separator}${fileName.replaceFirst('mp4', 'mp3')}');
+        targetMp4ToMp3FileName = fileName.replaceFirst('mp4', 'mp3');
+        File targetMp4ToMp3File = File(
+            '${targetPlaylist.downloadPath}${path.separator}$targetMp4ToMp3FileName');
 
-        if (targetMp3File.existsSync()) {
+        if (targetMp4ToMp3File.existsSync()) {
           // the case if the imported audio file already exist in the target
           // playlist directory
-          rejectedImportedFileNames += "\"$fileName\",\n";
+          rejectedImportedFileNamesLst += "\"$targetMp4ToMp3FileName\",\n";
           filePathNameToImportLst.remove(filePathName);
           continue;
         }
@@ -1938,7 +1940,7 @@ class AudioDownloadVM extends ChangeNotifier {
         // 4) convert
         final ok = await _FfmpegFacade.convertToMp3(
           inputPath: tmpMp4File.path,
-          outputPath: targetMp3File.path,
+          outputPath: targetMp4ToMp3File.path,
           bitrate: targetBitrate,
           sampleRate: finalSampleRate,
           channels: finalChannels,
@@ -1956,6 +1958,8 @@ class AudioDownloadVM extends ChangeNotifier {
 
           return;
         }
+
+        acceptableImportedFileNames += "\"$targetMp4ToMp3FileName\",\n";
       } else {
         File targetFile =
             File('${targetPlaylist.downloadPath}${path.separator}$fileName');
@@ -1963,10 +1967,11 @@ class AudioDownloadVM extends ChangeNotifier {
         if (targetFile.existsSync()) {
           // the case if the imported audio file already exist in the target
           // playlist directory
-          rejectedImportedFileNames += "\"$fileName\",\n";
+          rejectedImportedFileNamesLst += "\"$fileName\",\n";
           filePathNameToImportLst.remove(filePathName);
           continue;
         }
+
         acceptableImportedFileNames += "\"$fileName\",\n";
       }
     }
@@ -1974,10 +1979,10 @@ class AudioDownloadVM extends ChangeNotifier {
     // Displaying a warning which lists the audio files which won't be
     // imported to the playlist since they already exist in the playlist
     // directory.
-    if (rejectedImportedFileNames.isNotEmpty) {
+    if (rejectedImportedFileNamesLst.isNotEmpty) {
       warningMessageVM.setAudioNotImportedToPlaylistTitles(
-          rejectedImportedAudioFileNames: rejectedImportedFileNames.substring(0,
-              rejectedImportedFileNames.length - 2), // removing the last comma
+          rejectedImportedAudioFileNames: rejectedImportedFileNamesLst.substring(0,
+              rejectedImportedFileNamesLst.length - 2), // removing the last comma
           //                                               and the last line break
           importedToPlaylistTitle: targetPlaylist.title,
           importedToPlaylistType: targetPlaylist.playlistType);
