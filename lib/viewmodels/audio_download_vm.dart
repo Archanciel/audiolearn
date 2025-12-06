@@ -74,7 +74,7 @@ class _FfmpegFacade {
       return ReturnCode.isSuccess(rc);
     } else {
       try {
-        final result = await Process.run('ffmpeg', args);
+        final ProcessResult result = await Process.run('ffmpeg', args);
         return result.exitCode == 0;
       } catch (_) {
         return false;
@@ -1938,7 +1938,7 @@ class AudioDownloadVM extends ChangeNotifier {
         );
 
         // 4) convert
-        final ok = await _FfmpegFacade.convertToMp3(
+        final bool ok = await _FfmpegFacade.convertToMp3(
           inputPath: tmpMp4File.path,
           outputPath: targetMp4ToMp3File.path,
           bitrate: targetBitrate,
