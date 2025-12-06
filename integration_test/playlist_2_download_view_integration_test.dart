@@ -35679,9 +35679,9 @@ void main() {
       // Files to import from 'Files to import' directory
       const String fileName_1 = "audio learn test short video one.mp3";
       const String fileName_2 = "La vraie prière.mp4";
-      const String fileName_2_mp3 = "La vraie prière.mp3";
+      const String filename2Mp3 = "La vraie prière.mp3";
       const String fileName_3 = "Robot Chef Surprises Everyone With Amazing Cooking Skills!.mp4";
-      const String fileName_3_mp3 = "Robot Chef Surprises Everyone With Amazing Cooking Skills!.mp3";
+      const String filename3Mp3 = "Robot Chef Surprises Everyone With Amazing Cooking Skills!.mp3";
       const String fileName_4 = "Really short video.mp3";
       const String fileName_5 = "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet.mp3";
 
@@ -35709,7 +35709,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Audio(s)\n\n\"$fileName_1\",\n\"$fileName_2_mp3\"\n\nimported to Youtube playlist \"$targetPlaylistTitle\".",
+            "Audio(s)\n\n\"$fileName_1\",\n\"$filename2Mp3\"\n\nimported to Youtube playlist \"$targetPlaylistTitle\".",
         isWarningConfirming: true,
       );
 
@@ -35755,14 +35755,14 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Audio(s)\n\n\"$fileName_3_mp3\",\n\"$fileName_4\",\n\"$fileName_5\"\n\nimported to Youtube playlist \"$targetPlaylistTitle\".",
+            "Audio(s)\n\n\"$filename3Mp3\",\n\"$fileName_4\",\n\"$fileName_5\"\n\nimported to Youtube playlist \"$targetPlaylistTitle\".",
         isWarningConfirming: true,
       );
 
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Audio(s)\n\n\"$fileName_1\",\n\"$fileName_2_mp3\"\n\nNOT imported to Youtube playlist \"$targetPlaylistTitle\" since the playlist directory already contains the audio(s).",
+            "Audio(s)\n\n\"$fileName_1\",\n\"$filename2Mp3\"\n\nNOT imported to Youtube playlist \"$targetPlaylistTitle\" since the playlist directory already contains the audio(s).",
       );
 
       // Purge the test playlist directory so that the created test
