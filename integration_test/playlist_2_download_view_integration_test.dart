@@ -35680,10 +35680,13 @@ void main() {
       const String fileName_1 = "audio learn test short video one.mp3";
       const String fileName_2 = "La vraie prière.mp4";
       const String filename2Mp3 = "La vraie prière.mp3";
-      const String fileName_3 = "Robot Chef Surprises Everyone With Amazing Cooking Skills!.mp4";
-      const String filename3Mp3 = "Robot Chef Surprises Everyone With Amazing Cooking Skills!.mp3";
+      const String fileName_3 =
+          "Robot Chef Surprises Everyone With Amazing Cooking Skills!.mp4";
+      const String filename3Mp3 =
+          "Robot Chef Surprises Everyone With Amazing Cooking Skills!.mp3";
       const String fileName_4 = "Really short video.mp3";
-      const String fileName_5 = "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet.mp3";
+      const String fileName_5 =
+          "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet.mp3";
 
       mockFilePicker.setSelectedFiles([
         PlatformFile(
@@ -35743,7 +35746,7 @@ void main() {
                 "$kApplicationPathWindowsTest${path.separator}Files to import${path.separator}$fileName_5",
             size: 3600082),
       ]);
-      
+
       // Second import operation
 
       await IntegrationTestUtil.typeOnPlaylistMenuItem(
@@ -35763,6 +35766,114 @@ void main() {
         tester: tester,
         warningDialogMessage:
             "Audio(s)\n\n\"$fileName_1\",\n\"$filename2Mp3\"\n\nNOT imported to Youtube playlist \"$targetPlaylistTitle\" since the playlist directory already contains the audio(s).",
+      );
+
+      // Now, delete an audio and re-import the same files to verify that
+      // the deleted audio import work
+      // Find the audio list widget using its key
+      Finder listFinder = find.byKey(const Key('audio_list'));
+
+      // Perform the scroll action
+      await tester.drag(listFinder, const Offset(0, -100));
+      await tester.pumpAndSettle();
+
+      // First, find the Audio sublist ListTile Text widget
+      Finder targetAudioListTileTextWidgetFinder =
+          find.text(filename2Mp3.replaceFirst('.mp3', ''));
+
+      // Then obtain the Audio ListTile widget enclosing the Text widget by
+      // finding its ancestor
+      Finder targetAudioListTileWidgetFinder = find.ancestor(
+        of: targetAudioListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the leading menu icon button of the Audio ListTile and tap
+      // on it
+      Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
+        of: targetAudioListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(targetAudioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the popup menu delete audio item and tap on it
+      Finder popupDisplayAudioInfoMenuItemFinder =
+          find.byKey(const Key("popup_menu_delete_audio"));
+
+      await tester.tap(popupDisplayAudioInfoMenuItemFinder);
+      await tester.pumpAndSettle();
+
+      // Now, the La vraie prière mp3 audio is deleted from the playlist
+      // directopy. It can be re-imported.
+
+      await _thirdReImport(
+        tester: tester,
+        mockFilePicker: mockFilePicker,
+        fileName_1: fileName_1,
+        fileName_2: fileName_2,
+        filename2Mp3: filename2Mp3,
+        filename3Mp3: filename3Mp3,
+        fileName_3: fileName_3,
+        fileName_4: fileName_4,
+        fileName_5: fileName_5,
+        targetPlaylistTitle: targetPlaylistTitle,
+      );
+
+      // Now, delete an audio from Youtube playlist aswell and re-import the same files to verify that
+      // mp4 file. Verify that the deleted audio import work.
+      // Find the audio list widget using its key
+      listFinder = find.byKey(const Key('audio_list'));
+
+      // The scroll action is not necessary now.
+      // await tester.drag(listFinder, const Offset(0, -300));
+      // await tester.pumpAndSettle();
+
+      // First, find the Audio sublist ListTile Text widget
+      targetAudioListTileTextWidgetFinder =
+          find.text(filename2Mp3.replaceFirst('.mp3', ''));
+
+      // Then obtain the Audio ListTile widget enclosing the Text widget by
+      // finding its ancestor
+      targetAudioListTileWidgetFinder = find.ancestor(
+        of: targetAudioListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the leading menu icon button of the Audio ListTile and tap
+      // on it
+      targetAudioListTileLeadingMenuIconButton = find.descendant(
+        of: targetAudioListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(targetAudioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the popup menu delete audio fromplaylist aswell item and tap on it
+      popupDisplayAudioInfoMenuItemFinder =
+          find.byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
+
+      await tester.tap(popupDisplayAudioInfoMenuItemFinder);
+      await tester.pumpAndSettle();
+
+      // Now, the La vraie prière mp3 audio is deleted from the playlist
+      // directopy. It can be re-imported.
+
+      await _thirdReImport(
+        tester: tester,
+        mockFilePicker: mockFilePicker,
+        fileName_1: fileName_1,
+        fileName_2: fileName_2,
+        filename2Mp3: filename2Mp3,
+        filename3Mp3: filename3Mp3,
+        fileName_3: fileName_3,
+        fileName_4: fileName_4,
+        fileName_5: fileName_5,
+        targetPlaylistTitle: targetPlaylistTitle,
       );
 
       // Purge the test playlist directory so that the created test
@@ -38428,6 +38539,71 @@ void main() {
       });
     });
   });
+}
+
+Future<void> _thirdReImport({
+  required WidgetTester tester,
+  required MockFilePicker mockFilePicker,
+  required String fileName_1,
+  required String fileName_2,
+  required String filename2Mp3,
+  required String fileName_3,
+  required String filename3Mp3,
+  required String fileName_4,
+  required String fileName_5,
+  required String targetPlaylistTitle,
+}) async {
+  mockFilePicker = MockFilePicker();
+  FilePicker.platform = mockFilePicker;
+
+  mockFilePicker.setSelectedFiles([
+    PlatformFile(
+        name: fileName_1,
+        path:
+            "$kApplicationPathWindowsTest${path.separator}Files to import${path.separator}$fileName_1",
+        size: 143679),
+    PlatformFile(
+        name: fileName_2,
+        path:
+            "$kApplicationPathWindowsTest${path.separator}Files to import${path.separator}$fileName_2",
+        size: 17689541),
+    PlatformFile(
+        name: fileName_3,
+        path:
+            "$kApplicationPathWindowsTest${path.separator}Files to import${path.separator}$fileName_3",
+        size: 916058),
+    PlatformFile(
+        name: fileName_4,
+        path:
+            "$kApplicationPathWindowsTest${path.separator}Files to import${path.separator}$fileName_4",
+        size: 81425),
+    PlatformFile(
+        name: fileName_5,
+        path:
+            "$kApplicationPathWindowsTest${path.separator}Files to import${path.separator}$fileName_5",
+        size: 3600082),
+  ]);
+
+  // Third import operation
+
+  await IntegrationTestUtil.typeOnPlaylistMenuItem(
+    tester: tester,
+    playlistTitle: targetPlaylistTitle,
+    playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
+  );
+
+  await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+    tester: tester,
+    warningDialogMessage:
+        "Audio(s)\n\n\"$filename2Mp3\"\n\nimported to Youtube playlist \"$targetPlaylistTitle\".",
+    isWarningConfirming: true,
+  );
+
+  await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+    tester: tester,
+    warningDialogMessage:
+        "Audio(s)\n\n\"$fileName_1\",\n\"$filename3Mp3\",\n\"$fileName_4\",\n\"$fileName_5\"\n\nNOT imported to Youtube playlist \"$targetPlaylistTitle\" since the playlist directory already contains the audio(s).",
+  );
 }
 
 void _verifyAppPictureAudioMapContent({
