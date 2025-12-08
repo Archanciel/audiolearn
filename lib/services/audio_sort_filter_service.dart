@@ -583,7 +583,8 @@ class AudioSortFilterService {
         newOrModifiedaudioSortFilterParms.filterConverted) {
       wasFilterOptionsTitleAddedToDifferencesLst =
           _addToDifferencesLstOtherOptionCheckboxValueStr(
-              initialCheckBoxState: existingAudioSortFilterParms.filterConverted,
+              initialCheckBoxState:
+                  existingAudioSortFilterParms.filterConverted,
               modifiedCheckBoxState:
                   newOrModifiedaudioSortFilterParms.filterConverted,
               sortFilterParmsNameTranslationMap:
