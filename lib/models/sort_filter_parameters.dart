@@ -31,6 +31,39 @@ enum SentencesCombination {
   or, // at least one sentence must be found
 }
 
+class ChapterSortKey implements Comparable<ChapterSortKey> {
+  final bool hasPosition;
+  final int? chapterNumber;
+  final String title;
+
+  ChapterSortKey({
+    required this.hasPosition,
+    this.chapterNumber,
+    required this.title,
+  });
+
+  @override
+  int compareTo(ChapterSortKey other) {
+    // Si les deux ont une position, comparer les numéros de chapitre
+    if (hasPosition && other.hasPosition) {
+      return chapterNumber!.compareTo(other.chapterNumber!);
+    }
+
+    // Si les deux n'ont pas de position, comparer les titres alphabétiquement
+    if (!hasPosition && !other.hasPosition) {
+      return title.compareTo(other.title);
+    }
+
+    // Si seulement this a une position, this vient AVANT (retourne -1)
+    if (hasPosition && !other.hasPosition) {
+      return -1;
+    }
+
+    // Si seulement other a une position, other vient AVANT (retourne 1)
+    return 1;
+  }
+}
+
 // Constants used to specify the sort order. The plus or minus constant is
 // used multiply the value returned by compareTo applyed in
 // AudioSortFilterService.sortAudioLstBySortingOptions() as shown
@@ -158,24 +191,39 @@ class AudioSortFilterParameters {
     ),
     SortingOption.chapterAudioTitle: SortCriteria<Audio>(
       selectorFunction: (Audio audio) {
-        final regex =
-            RegExp(r'(\d+)[_\-/:]\d+|\b(\d+)\s*à\s*\d+', caseSensitive: false);
+        // Modifié pour capturer aussi les patterns _<nombre>
+        final regex = RegExp(
+          r'(\d+)[_\-/:]\d+|_(\d+)|\b(\d+)\s*\d+',
+          caseSensitive: false,
+        );
 
         String validVideoTitleLow = audio.validVideoTitle.toLowerCase();
-
         RegExpMatch? match = regex.firstMatch(validVideoTitleLow);
 
         if (match != null) {
-          // Extract the first captured number, either from the first group or second
-          int chapterNumber = match.group(1) != null
-              ? int.parse(match.group(1)!) // First regex match (1_2, 3-5)
-              : int.parse(
-                  match.group(2)!); // Second regex match (6 à 10, 11 à 15)
+          // Extraire le numéro du premier groupe capturé disponible
+          int chapterNumber;
+          if (match.group(1) != null) {
+            chapterNumber = int.parse(match.group(1)!);
+          } else if (match.group(2) != null) {
+            chapterNumber = int.parse(match.group(2)!);
+          } else {
+            chapterNumber = int.parse(match.group(3)!);
+          }
 
-          return chapterNumber;
+          // Retourner une clé avec position définie
+          return ChapterSortKey(
+            hasPosition: true,
+            chapterNumber: chapterNumber,
+            title: validVideoTitleLow,
+          );
         }
 
-        return validVideoTitleLow; // Default to title string if no match is found
+        // Retourner une clé sans position (tri alphabétique)
+        return ChapterSortKey(
+          hasPosition: false,
+          title: validVideoTitleLow,
+        );
       },
       sortOrder: sortAscending,
     ),

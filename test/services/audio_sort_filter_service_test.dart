@@ -3096,7 +3096,7 @@ void main() {
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
           originalVideoTitle:
-              "Audio Et l'Univers disparaitra 1_37  - Avant - propos de l'éditeur américain",
+              "Audio Et l'Univers disparaitra - Avant - propos de l'éditeur américain",
           compactVideoDescription: '',
           validVideoTitle:
               "Audio Et l'Univers disparaitra 1_37  - Avant - propos de l'éditeur américain",
@@ -3114,7 +3114,7 @@ void main() {
           audioPausedDateTime: null,
           audioPositionSeconds: 0,
           audioFileName:
-              "Audio Et l'Univers disparaitra 1_37  - Avant - propos de l'éditeur américain.mp3",
+              "Audio Et l'Univers disparaitra - Avant - propos de l'éditeur américain.mp3",
           audioFileSize: 330000000,
           audioType: AudioType.downloaded,
         );
@@ -3127,10 +3127,10 @@ void main() {
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
           originalVideoTitle:
-              "Audio Et l'Univers disparaitra 2_37  - Note et remerciements de l'auteur",
+              "Audio Et l'Univers disparaitra - Note et remerciements de l'auteur",
           compactVideoDescription: '',
           validVideoTitle:
-              "Audio Et l'Univers disparaitra 2_37  - Note et remerciements de l'auteur",
+              "Audio Et l'Univers disparaitra 2_37 - Note et remerciements de l'auteur",
           videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
           audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 32),
           audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
@@ -3145,7 +3145,7 @@ void main() {
           audioPausedDateTime: null,
           audioPositionSeconds: 0,
           audioFileName:
-              "Audio Et l'Univers disparaitra 2_37  - Note et remerciements de l'auteur.mp3",
+              "Audio Et l'Univers disparaitra - Note et remerciements de l'auteur.mp3",
           audioFileSize: 330000000,
           audioType: AudioType.downloaded,
         );
@@ -3158,7 +3158,7 @@ void main() {
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
           originalVideoTitle:
-              "Audio Et l'Univers disparaitra de Gary Renard 3_37  - Partie 1 chapitre 1",
+              "Audio Et l'Univers disparaitra de Gary Renard 3_37  - Partie 1",
           compactVideoDescription: '',
           validVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 3_37  - Partie 1 chapitre 1",
@@ -3176,7 +3176,7 @@ void main() {
           audioPausedDateTime: null,
           audioPositionSeconds: 0,
           audioFileName:
-              "Audio Et l'Univers disparaitra de Gary Renard 3_37  - Partie 1 chapitre 1.mp3",
+              "Audio Et l'Univers disparaitra de Gary Renard 3_37  - Partie 1.mp3",
           audioFileSize: 330000000,
           audioType: AudioType.downloaded,
         );
@@ -3189,7 +3189,7 @@ void main() {
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
           originalVideoTitle:
-              "Audio Et l'Univers disparaitra de Gary Renard 4_37  - chapitre 2-1",
+              "Audio Et l'Univers disparaitra de Gary Renard 4_37",
           compactVideoDescription: '',
           validVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 4_37  - chapitre 2-1",
@@ -3207,7 +3207,7 @@ void main() {
           audioPausedDateTime: null,
           audioPositionSeconds: 0,
           audioFileName:
-              "Audio Et l'Univers disparaitra de Gary Renard 4_37  - chapitre 2-1.mp3",
+              "Audio Et l'Univers disparaitra de Gary Renard 4_37.mp3",
           audioFileSize: 330000000,
           audioType: AudioType.downloaded,
         );
@@ -3220,7 +3220,7 @@ void main() {
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
           originalVideoTitle:
-              "Audio Et l'Univers disparaitra de Gary Renard 5_37  - chapitre 2 - 2",
+              "Audio Et l'Univers disparaitra de Gary Renard 5_37",
           compactVideoDescription: '',
           validVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 5_37  - chapitre 2 - 2",
@@ -3238,7 +3238,7 @@ void main() {
           audioPausedDateTime: null,
           audioPositionSeconds: 0,
           audioFileName:
-              "Audio Et l'Univers disparaitra de Gary Renard 5_37  - chapitre 2 - 2.mp3",
+              "Audio Et l'Univers disparaitra de Gary Renard 5_37.mp3",
           audioFileSize: 330000000,
           audioType: AudioType.downloaded,
         );
@@ -3251,7 +3251,7 @@ void main() {
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
           originalVideoTitle:
-              "Audio Et l'Univers disparaitra de Gary Renard 6_37  - chapitre 2 - 3",
+              "Audio Et l'Univers disparaitra de Gary Renard 6_37",
           compactVideoDescription: '',
           validVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 6_37  - chapitre 2 - 3",
@@ -3269,7 +3269,7 @@ void main() {
           audioPausedDateTime: null,
           audioPositionSeconds: 0,
           audioFileName:
-              "Audio Et l'Univers disparaitra de Gary Renard 6_37  - chapitre 2 - 3.mp3",
+              "Audio Et l'Univers disparaitra de Gary Renard 6_37.mp3",
           audioFileSize: 330000000,
           audioType: AudioType.downloaded,
         );
@@ -3654,7 +3654,7 @@ void main() {
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
           originalVideoTitle:
-              "Audio Et l'Univers disparaitra de Gary Renard 33_37  - chapitre 13",
+              "Audio Et l'Univers disparaitra de Gary Renard 33_37",
           compactVideoDescription: '',
           validVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 33_37  - chapitre 13",
@@ -3671,8 +3671,7 @@ void main() {
           isPaused: true,
           audioPausedDateTime: null,
           audioPositionSeconds: 0,
-          audioFileName:
-              "Audio Et l'Univers disparaitra de Gary Renard 33_37  - chapitre 13.mp3",
+          audioFileName: "Audio Et l'Univers disparaitra de Gary Renard 33_37",
           audioFileSize: 330000000,
           audioType: AudioType.downloaded,
         );
@@ -8698,8 +8697,7 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
-      test('''sort by ' à ' chapter title number. Example: chapitre 1 à 5,
-            Chapitre 6 à 10, chapitre 11 à 15''', () {
+      test('''sort asc by position in audio title number.''', () {
         final Audio one = Audio.fullConstructor(
             enclosingPlaylist: audioPlaylist,
             audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
@@ -8725,8 +8723,7 @@ void main() {
             movedToPlaylistTitle: null,
             originalVideoTitle:
                 "Livre Audio Imitation du Christ Livre 1 Chapitre 1 \u00e0 5",
-            validVideoTitle:
-                "Livre Audio l'Imitation de Christ Livre 1 chapitre 1 \u00e0 5",
+            validVideoTitle: "Un amour si profond qu'il ne crie pas",
             videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
             videoUrl: "https://www.youtube.com/watch?v=ZkMs8aGzUaU",
             youtubeVideoChannel: "La voie de Dieu par la voix des saints");
@@ -8737,7 +8734,7 @@ void main() {
             audioDownloadSpeed: 474501,
             audioDuration: const Duration(milliseconds: 863411),
             audioFileName:
-                "250301-201610-LIvre audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 11 \u00e0 15 23-08-27.mp3",
+                "250301-201610-LIvre audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 11 23-08-27.mp3",
             audioFileSize: 5265772,
             audioPausedDateTime: null,
             audioPlaySpeed: 1.0,
@@ -8755,8 +8752,7 @@ void main() {
             movedToPlaylistTitle: null,
             originalVideoTitle:
                 "LIvre audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 11 \u00e0 15",
-            validVideoTitle:
-                "LIvre audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 11 \u00e0 15",
+            validVideoTitle: "Les commandements de Jésus (version pratique)_10",
             videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
             videoUrl: "https://www.youtube.com/watch?v=ezC10g8xnPo",
             youtubeVideoChannel: "La voie de Dieu par la voix des saints");
@@ -8767,7 +8763,7 @@ void main() {
             audioDownloadSpeed: 474501,
             audioDuration: const Duration(milliseconds: 1444281),
             audioFileName:
-                "250301-201621-Livre audio L imitation de J\u00e9sus Christ Livre 1 chapitre 16 \u00e0 21 23-08-27.mp3",
+                "250301-201621-Livre audio L imitation de J\u00e9sus Christ Livre 1 chapitre 12 23-08-27.mp3",
             audioFileSize: 8807603,
             audioPausedDateTime: null,
             audioPlaySpeed: 1.0,
@@ -8785,8 +8781,7 @@ void main() {
             movedToPlaylistTitle: null,
             originalVideoTitle:
                 "Livre audio L imitation de J\u00e9sus Christ Livre 1 chapitre 16 \u00e0 21",
-            validVideoTitle:
-                "Livre audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 16 \u00e0 21",
+            validVideoTitle: "_4 Dieu dit",
             videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
             videoUrl: "https://www.youtube.com/watch?v=BTHUIqDUBTI",
             youtubeVideoChannel: "La voie de Dieu par la voix des saints");
@@ -8797,7 +8792,7 @@ void main() {
             audioDownloadSpeed: 474501,
             audioDuration: const Duration(milliseconds: 1642487),
             audioFileName:
-                "250301-201628-Livre audio l imitation de J\u00e9sus Christ Livre 1 chapitre 22 \u00e0 25 23-08-27.mp3",
+                "250301-201628-Livre audio l imitation de J\u00e9sus Christ Livre 1 chapitre 13 23-08-27.mp3",
             audioFileSize: 10016268,
             audioPausedDateTime: null,
             audioPlaySpeed: 1.0,
@@ -8816,7 +8811,7 @@ void main() {
             originalVideoTitle:
                 "Livre audio l imitation de J\u00e9sus Christ Livre 1 chapitre 22 \u00e0 25",
             validVideoTitle:
-                "Livre audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 22 \u00e0 25",
+                "Dieu cherche ceux qui rêvent de Son apparitaion_2",
             videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
             videoUrl: "https://www.youtube.com/watch?v=7dkWTWTi8A8",
             youtubeVideoChannel: "La voie de Dieu par la voix des saints");
@@ -8827,7 +8822,7 @@ void main() {
             audioDownloadSpeed: 474501,
             audioDuration: const Duration(milliseconds: 475870),
             audioFileName:
-                "250301-201546-Livre Audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 6 \u00e0 10 23-08-27.mp3",
+                "250301-201546-Livre Audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 14 23-08-27.mp3",
             audioFileSize: 2902447,
             audioPausedDateTime: null,
             audioPlaySpeed: 1.0,
@@ -8846,7 +8841,37 @@ void main() {
             originalVideoTitle:
                 "Livre Audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 6 \u00e0 10",
             validVideoTitle:
+                "_3Dieu dit - Je marche maintenant au milieu de Mon peuple",
+            videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+            videoUrl: "https://www.youtube.com/watch?v=FUFz3R4PX6Q",
+            youtubeVideoChannel: "La voie de Dieu par la voix des saints");
+        final Audio six = Audio.fullConstructor(
+            enclosingPlaylist: audioPlaylist,
+            audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+            audioDownloadDuration: const Duration(milliseconds: 10503),
+            audioDownloadSpeed: 474501,
+            audioDuration: const Duration(milliseconds: 475870),
+            audioFileName:
+                "250301-201546-Livre Audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 14 23-08-27.mp3",
+            audioFileSize: 2902447,
+            audioPausedDateTime: null,
+            audioPlaySpeed: 1.0,
+            audioPlayVolume: 0.5,
+            audioPositionSeconds: 0,
+            compactVideoDescription:
+                "La voie de Dieu par la voix des saints\n\nChapitre 6: Des affections d\u00e9r\u00e9gl\u00e9s.\nChapitre 7: Qu'il faut fuir l'orgueil et les vaines esp\u00e9rances.\nChapitre 8: Eviter la pop grande familiarit\u00e9. ...",
+            copiedFromPlaylistTitle: null,
+            copiedToPlaylistTitle: null,
+            audioType: AudioType.downloaded,
+            isAudioMusicQuality: false,
+            isPaused: true,
+            isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+            movedFromPlaylistTitle: null,
+            movedToPlaylistTitle: null,
+            originalVideoTitle:
                 "Livre Audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 6 \u00e0 10",
+            validVideoTitle:
+                "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'_1",
             videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
             videoUrl: "https://www.youtube.com/watch?v=FUFz3R4PX6Q",
             youtubeVideoChannel: "La voie de Dieu par la voix des saints");
@@ -8857,20 +8882,244 @@ void main() {
           three,
           four,
           five,
+          six,
         ];
 
         List<Audio> expectedResultForTitleAsc = [
-          one,
-          five,
-          two,
-          three,
+          six,
           four,
+          five,
+          three,
+          two,
+          one,
         ];
 
         final List<SortingItem> selectedSortItemLstAsc = [
           SortingItem(
             sortingOption: SortingOption.chapterAudioTitle,
             isAscending: true,
+          ),
+        ];
+
+        List<Audio> sortedByTitleAsc =
+            audioSortFilterService.sortAudioLstBySortingOptions(
+          audioLst: audioList,
+          selectedSortItemLst: selectedSortItemLstAsc,
+        );
+
+        expect(
+            sortedByTitleAsc.map((audio) => audio.validVideoTitle).toList(),
+            equals(expectedResultForTitleAsc
+                .map((audio) => audio.validVideoTitle)
+                .toList()));
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      test('''sort desc by position in audio title number.''', () {
+        final Audio one = Audio.fullConstructor(
+            enclosingPlaylist: audioPlaylist,
+            audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+            audioDownloadDuration: const Duration(milliseconds: 10503),
+            audioDownloadSpeed: 474501,
+            audioDuration: const Duration(milliseconds: 817203),
+            audioFileName:
+                "250301-201558-Livre Audio Imitation du Christ Livre 1 Chapitre 1 \u00e0 5 23-08-27.mp3",
+            audioFileSize: 4983815,
+            audioPausedDateTime: null,
+            audioPlaySpeed: 1.0,
+            audioPlayVolume: 0.5,
+            audioPositionSeconds: 0,
+            compactVideoDescription:
+                "La voie de Dieu par la voix des saints\n\nChapitre 1: Qu'il faut imiter J\u00e9sus-Christ, et m\u00e9priser toutes les vanit\u00e9s du monde.\nChapitre 2: Avoir d'humble sentiments de soi-m\u00eame.\nChapitre 3: De la doctrine de la v\u00e9rit\u00e9. ...",
+            copiedFromPlaylistTitle: null,
+            copiedToPlaylistTitle: null,
+            audioType: AudioType.downloaded,
+            isAudioMusicQuality: false,
+            isPaused: true,
+            isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+            movedFromPlaylistTitle: null,
+            movedToPlaylistTitle: null,
+            originalVideoTitle:
+                "Livre Audio Imitation du Christ Livre 1 Chapitre 1 \u00e0 5",
+            validVideoTitle: "Un amour si profond qu'il ne crie pas",
+            videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+            videoUrl: "https://www.youtube.com/watch?v=ZkMs8aGzUaU",
+            youtubeVideoChannel: "La voie de Dieu par la voix des saints");
+        final Audio two = Audio.fullConstructor(
+            enclosingPlaylist: audioPlaylist,
+            audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+            audioDownloadDuration: const Duration(milliseconds: 10503),
+            audioDownloadSpeed: 474501,
+            audioDuration: const Duration(milliseconds: 863411),
+            audioFileName:
+                "250301-201610-LIvre audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 11 23-08-27.mp3",
+            audioFileSize: 5265772,
+            audioPausedDateTime: null,
+            audioPlaySpeed: 1.0,
+            audioPlayVolume: 0.5,
+            audioPositionSeconds: 0,
+            compactVideoDescription:
+                "La voie de Dieu par la voix des saints\n\nChapitre 11:  Des moyens d'acqu\u00e9rir la paix int\u00e9rieure et du soin d'avancer dans la vertu.\nChapitre 12: De l'avantage de l'adversit\u00e9.\nChapitre 13 :  De la r\u00e9sistance aux tentations. ...\n\nChapitre14: Eviter, Chapitre15: Des",
+            copiedFromPlaylistTitle: null,
+            copiedToPlaylistTitle: null,
+            audioType: AudioType.downloaded,
+            isAudioMusicQuality: false,
+            isPaused: true,
+            isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+            movedFromPlaylistTitle: null,
+            movedToPlaylistTitle: null,
+            originalVideoTitle:
+                "LIvre audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 11 \u00e0 15",
+            validVideoTitle: "Les commandements de Jésus (version pratique)_10",
+            videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+            videoUrl: "https://www.youtube.com/watch?v=ezC10g8xnPo",
+            youtubeVideoChannel: "La voie de Dieu par la voix des saints");
+        final Audio three = Audio.fullConstructor(
+            enclosingPlaylist: audioPlaylist,
+            audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+            audioDownloadDuration: const Duration(milliseconds: 10503),
+            audioDownloadSpeed: 474501,
+            audioDuration: const Duration(milliseconds: 1444281),
+            audioFileName:
+                "250301-201621-Livre audio L imitation de J\u00e9sus Christ Livre 1 chapitre 12 23-08-27.mp3",
+            audioFileSize: 8807603,
+            audioPausedDateTime: null,
+            audioPlaySpeed: 1.0,
+            audioPlayVolume: 0.5,
+            audioPositionSeconds: 0,
+            compactVideoDescription:
+                "La voie de Dieu par la voix des saints\n\nChapitre 16: Qu'il faut supporter les d\u00e9fauts d'autrui.\nChapitre17: De la vie religieuse.\nChapitre 18: De l'exemple des saints. ...",
+            copiedFromPlaylistTitle: null,
+            copiedToPlaylistTitle: null,
+            audioType: AudioType.downloaded,
+            isAudioMusicQuality: false,
+            isPaused: true,
+            isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+            movedFromPlaylistTitle: null,
+            movedToPlaylistTitle: null,
+            originalVideoTitle:
+                "Livre audio L imitation de J\u00e9sus Christ Livre 1 chapitre 16 \u00e0 21",
+            validVideoTitle: "_4 Dieu dit",
+            videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+            videoUrl: "https://www.youtube.com/watch?v=BTHUIqDUBTI",
+            youtubeVideoChannel: "La voie de Dieu par la voix des saints");
+        final Audio four = Audio.fullConstructor(
+            enclosingPlaylist: audioPlaylist,
+            audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+            audioDownloadDuration: const Duration(milliseconds: 10503),
+            audioDownloadSpeed: 474501,
+            audioDuration: const Duration(milliseconds: 1642487),
+            audioFileName:
+                "250301-201628-Livre audio l imitation de J\u00e9sus Christ Livre 1 chapitre 13 23-08-27.mp3",
+            audioFileSize: 10016268,
+            audioPausedDateTime: null,
+            audioPlaySpeed: 1.0,
+            audioPlayVolume: 0.5,
+            audioPositionSeconds: 0,
+            compactVideoDescription:
+                "La voie de Dieu par la voix des saints\n\nChapitre 22: De la consid\u00e9ration de la mis\u00e8re humaine.\nChapitre 23: De la m\u00e9ditation de la mort.\nChapitre 24: Du jugement et des peines des p\u00e9cheurs. ...",
+            copiedFromPlaylistTitle: null,
+            copiedToPlaylistTitle: null,
+            audioType: AudioType.downloaded,
+            isAudioMusicQuality: false,
+            isPaused: true,
+            isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+            movedFromPlaylistTitle: null,
+            movedToPlaylistTitle: null,
+            originalVideoTitle:
+                "Livre audio l imitation de J\u00e9sus Christ Livre 1 chapitre 22 \u00e0 25",
+            validVideoTitle:
+                "Dieu cherche ceux qui rêvent de Son apparitaion_2",
+            videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+            videoUrl: "https://www.youtube.com/watch?v=7dkWTWTi8A8",
+            youtubeVideoChannel: "La voie de Dieu par la voix des saints");
+        final Audio five = Audio.fullConstructor(
+            enclosingPlaylist: audioPlaylist,
+            audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+            audioDownloadDuration: const Duration(milliseconds: 10503),
+            audioDownloadSpeed: 474501,
+            audioDuration: const Duration(milliseconds: 475870),
+            audioFileName:
+                "250301-201546-Livre Audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 14 23-08-27.mp3",
+            audioFileSize: 2902447,
+            audioPausedDateTime: null,
+            audioPlaySpeed: 1.0,
+            audioPlayVolume: 0.5,
+            audioPositionSeconds: 0,
+            compactVideoDescription:
+                "La voie de Dieu par la voix des saints\n\nChapitre 6: Des affections d\u00e9r\u00e9gl\u00e9s.\nChapitre 7: Qu'il faut fuir l'orgueil et les vaines esp\u00e9rances.\nChapitre 8: Eviter la pop grande familiarit\u00e9. ...",
+            copiedFromPlaylistTitle: null,
+            copiedToPlaylistTitle: null,
+            audioType: AudioType.downloaded,
+            isAudioMusicQuality: false,
+            isPaused: true,
+            isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+            movedFromPlaylistTitle: null,
+            movedToPlaylistTitle: null,
+            originalVideoTitle:
+                "Livre Audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 6 \u00e0 10",
+            validVideoTitle:
+                "_3Dieu dit - Je marche maintenant au milieu de Mon peuple",
+            videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+            videoUrl: "https://www.youtube.com/watch?v=FUFz3R4PX6Q",
+            youtubeVideoChannel: "La voie de Dieu par la voix des saints");
+        final Audio six = Audio.fullConstructor(
+            enclosingPlaylist: audioPlaylist,
+            audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+            audioDownloadDuration: const Duration(milliseconds: 10503),
+            audioDownloadSpeed: 474501,
+            audioDuration: const Duration(milliseconds: 475870),
+            audioFileName:
+                "250301-201546-Livre Audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 14 23-08-27.mp3",
+            audioFileSize: 2902447,
+            audioPausedDateTime: null,
+            audioPlaySpeed: 1.0,
+            audioPlayVolume: 0.5,
+            audioPositionSeconds: 0,
+            compactVideoDescription:
+                "La voie de Dieu par la voix des saints\n\nChapitre 6: Des affections d\u00e9r\u00e9gl\u00e9s.\nChapitre 7: Qu'il faut fuir l'orgueil et les vaines esp\u00e9rances.\nChapitre 8: Eviter la pop grande familiarit\u00e9. ...",
+            copiedFromPlaylistTitle: null,
+            copiedToPlaylistTitle: null,
+            audioType: AudioType.downloaded,
+            isAudioMusicQuality: false,
+            isPaused: true,
+            isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+            movedFromPlaylistTitle: null,
+            movedToPlaylistTitle: null,
+            originalVideoTitle:
+                "Livre Audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 6 \u00e0 10",
+            validVideoTitle:
+                "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'_1",
+            videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+            videoUrl: "https://www.youtube.com/watch?v=FUFz3R4PX6Q",
+            youtubeVideoChannel: "La voie de Dieu par la voix des saints");
+
+        List<Audio> audioList = [
+          one,
+          two,
+          three,
+          four,
+          five,
+          six,
+        ];
+
+        List<Audio> expectedResultForTitleAsc = [
+          one,
+          two,
+          three,
+          five,
+          four,
+          six,
+        ];
+
+        final List<SortingItem> selectedSortItemLstAsc = [
+          SortingItem(
+            sortingOption: SortingOption.chapterAudioTitle,
+            isAscending: false,
           ),
         ];
 
