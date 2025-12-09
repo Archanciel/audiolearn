@@ -3678,24 +3678,24 @@ void main() {
 
         List<Audio> audioList = [
           avantPropos,
-          note,
+          chap_10,
           chap_1,
+          note,
           chap_2_1,
-          chap_2_2,
-          chap_2_3,
+          chap_5_1,
           chap_3_1,
           chap_3_2,
           chap_4_1,
-          chap_5_1,
-          chap_6_1,
           chap_6_2,
+          chap_2_2,
           chap_8,
           chap_9_1,
-          chap_10,
           chap_11_1,
+          chap_6_1,
           chap_11_2,
           chap_12,
           chap_13,
+          chap_2_3,
         ];
 
         List<Audio> expectedResultForTitleAsc = [
@@ -8705,7 +8705,7 @@ void main() {
             audioDownloadSpeed: 474501,
             audioDuration: const Duration(milliseconds: 817203),
             audioFileName:
-                "250301-201558-Livre Audio Imitation du Christ Livre 1 Chapitre 1 \u00e0 5 23-08-27.mp3",
+                "250301-201558-Un amour si profond qu'il ne crie pas 23-08-27.mp3",
             audioFileSize: 4983815,
             audioPausedDateTime: null,
             audioPlaySpeed: 1.0,
@@ -8722,7 +8722,7 @@ void main() {
             movedFromPlaylistTitle: null,
             movedToPlaylistTitle: null,
             originalVideoTitle:
-                "Livre Audio Imitation du Christ Livre 1 Chapitre 1 \u00e0 5",
+                "Un amour si profond qu'il ne crie pas",
             validVideoTitle: "Un amour si profond qu'il ne crie pas",
             videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
             videoUrl: "https://www.youtube.com/watch?v=ZkMs8aGzUaU",
@@ -8734,7 +8734,7 @@ void main() {
             audioDownloadSpeed: 474501,
             audioDuration: const Duration(milliseconds: 863411),
             audioFileName:
-                "250301-201610-LIvre audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 11 23-08-27.mp3",
+                "250301-201610-Les commandements de Jésus (version pratique) 23-08-27.mp3",
             audioFileSize: 5265772,
             audioPausedDateTime: null,
             audioPlaySpeed: 1.0,
@@ -8751,7 +8751,7 @@ void main() {
             movedFromPlaylistTitle: null,
             movedToPlaylistTitle: null,
             originalVideoTitle:
-                "LIvre audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 11 \u00e0 15",
+                "Les commandements de Jésus (version pratique)",
             validVideoTitle: "Les commandements de Jésus (version pratique)_10",
             videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
             videoUrl: "https://www.youtube.com/watch?v=ezC10g8xnPo",
@@ -8763,7 +8763,7 @@ void main() {
             audioDownloadSpeed: 474501,
             audioDuration: const Duration(milliseconds: 1444281),
             audioFileName:
-                "250301-201621-Livre audio L imitation de J\u00e9sus Christ Livre 1 chapitre 12 23-08-27.mp3",
+                "250301-201621-Dieu dit 23-08-27.mp3",
             audioFileSize: 8807603,
             audioPausedDateTime: null,
             audioPlaySpeed: 1.0,
@@ -8780,7 +8780,7 @@ void main() {
             movedFromPlaylistTitle: null,
             movedToPlaylistTitle: null,
             originalVideoTitle:
-                "Livre audio L imitation de J\u00e9sus Christ Livre 1 chapitre 16 \u00e0 21",
+                "Dieu dit",
             validVideoTitle: "_4 Dieu dit",
             videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
             videoUrl: "https://www.youtube.com/watch?v=BTHUIqDUBTI",
@@ -8792,7 +8792,7 @@ void main() {
             audioDownloadSpeed: 474501,
             audioDuration: const Duration(milliseconds: 1642487),
             audioFileName:
-                "250301-201628-Livre audio l imitation de J\u00e9sus Christ Livre 1 chapitre 13 23-08-27.mp3",
+                "250301-201628-Dieu cherche ceux qui rêvent de Son apparitaion 23-08-27.mp3",
             audioFileSize: 10016268,
             audioPausedDateTime: null,
             audioPlaySpeed: 1.0,
@@ -8809,7 +8809,7 @@ void main() {
             movedFromPlaylistTitle: null,
             movedToPlaylistTitle: null,
             originalVideoTitle:
-                "Livre audio l imitation de J\u00e9sus Christ Livre 1 chapitre 22 \u00e0 25",
+                "Dieu cherche ceux qui rêvent de Son apparitaion",
             validVideoTitle:
                 "Dieu cherche ceux qui rêvent de Son apparitaion_2",
             videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
@@ -8822,7 +8822,7 @@ void main() {
             audioDownloadSpeed: 474501,
             audioDuration: const Duration(milliseconds: 475870),
             audioFileName:
-                "250301-201546-Livre Audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 14 23-08-27.mp3",
+                "250301-201546-Dieu dit - Je marche maintenant au milieu de Mon peuple23-08-27.mp3",
             audioFileSize: 2902447,
             audioPausedDateTime: null,
             audioPlaySpeed: 1.0,
@@ -8839,7 +8839,7 @@ void main() {
             movedFromPlaylistTitle: null,
             movedToPlaylistTitle: null,
             originalVideoTitle:
-                "Livre Audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 6 \u00e0 10",
+                "Dieu dit - Je marche maintenant au milieu de Mon peuple",
             validVideoTitle:
                 "_3Dieu dit - Je marche maintenant au milieu de Mon peuple",
             videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
@@ -8852,7 +8852,7 @@ void main() {
             audioDownloadSpeed: 474501,
             audioDuration: const Duration(milliseconds: 475870),
             audioFileName:
-                "250301-201546-Livre Audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 14 23-08-27.mp3",
+                "250301-201546-Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!' 23-08-27.mp3",
             audioFileSize: 2902447,
             audioPausedDateTime: null,
             audioPlaySpeed: 1.0,
@@ -8869,7 +8869,7 @@ void main() {
             movedFromPlaylistTitle: null,
             movedToPlaylistTitle: null,
             originalVideoTitle:
-                "Livre Audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 6 \u00e0 10",
+                "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
             validVideoTitle:
                 "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'_1",
             videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
@@ -8927,7 +8927,7 @@ void main() {
             audioDownloadSpeed: 474501,
             audioDuration: const Duration(milliseconds: 817203),
             audioFileName:
-                "250301-201558-Livre Audio Imitation du Christ Livre 1 Chapitre 1 \u00e0 5 23-08-27.mp3",
+                "250301-201558-Un amour si profond qu'il ne crie pas 23-08-27.mp3",
             audioFileSize: 4983815,
             audioPausedDateTime: null,
             audioPlaySpeed: 1.0,
@@ -8944,7 +8944,7 @@ void main() {
             movedFromPlaylistTitle: null,
             movedToPlaylistTitle: null,
             originalVideoTitle:
-                "Livre Audio Imitation du Christ Livre 1 Chapitre 1 \u00e0 5",
+                "Un amour si profond qu'il ne crie pas",
             validVideoTitle: "Un amour si profond qu'il ne crie pas",
             videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
             videoUrl: "https://www.youtube.com/watch?v=ZkMs8aGzUaU",
@@ -8956,7 +8956,7 @@ void main() {
             audioDownloadSpeed: 474501,
             audioDuration: const Duration(milliseconds: 863411),
             audioFileName:
-                "250301-201610-LIvre audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 11 23-08-27.mp3",
+                "250301-201610-Les commandements de Jésus (version pratique) 23-08-27.mp3",
             audioFileSize: 5265772,
             audioPausedDateTime: null,
             audioPlaySpeed: 1.0,
@@ -8973,7 +8973,7 @@ void main() {
             movedFromPlaylistTitle: null,
             movedToPlaylistTitle: null,
             originalVideoTitle:
-                "LIvre audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 11 \u00e0 15",
+                "Les commandements de Jésus (version pratique)",
             validVideoTitle: "Les commandements de Jésus (version pratique)_10",
             videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
             videoUrl: "https://www.youtube.com/watch?v=ezC10g8xnPo",
@@ -8985,7 +8985,7 @@ void main() {
             audioDownloadSpeed: 474501,
             audioDuration: const Duration(milliseconds: 1444281),
             audioFileName:
-                "250301-201621-Livre audio L imitation de J\u00e9sus Christ Livre 1 chapitre 12 23-08-27.mp3",
+                "250301-201621-Dieu dit 23-08-27.mp3",
             audioFileSize: 8807603,
             audioPausedDateTime: null,
             audioPlaySpeed: 1.0,
@@ -9002,7 +9002,7 @@ void main() {
             movedFromPlaylistTitle: null,
             movedToPlaylistTitle: null,
             originalVideoTitle:
-                "Livre audio L imitation de J\u00e9sus Christ Livre 1 chapitre 16 \u00e0 21",
+                "Dieu dit",
             validVideoTitle: "_4 Dieu dit",
             videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
             videoUrl: "https://www.youtube.com/watch?v=BTHUIqDUBTI",
@@ -9014,7 +9014,7 @@ void main() {
             audioDownloadSpeed: 474501,
             audioDuration: const Duration(milliseconds: 1642487),
             audioFileName:
-                "250301-201628-Livre audio l imitation de J\u00e9sus Christ Livre 1 chapitre 13 23-08-27.mp3",
+                "250301-201628-Dieu cherche ceux qui rêvent de Son apparitaion 23-08-27.mp3",
             audioFileSize: 10016268,
             audioPausedDateTime: null,
             audioPlaySpeed: 1.0,
@@ -9031,7 +9031,7 @@ void main() {
             movedFromPlaylistTitle: null,
             movedToPlaylistTitle: null,
             originalVideoTitle:
-                "Livre audio l imitation de J\u00e9sus Christ Livre 1 chapitre 22 \u00e0 25",
+                "Dieu cherche ceux qui rêvent de Son apparitaion",
             validVideoTitle:
                 "Dieu cherche ceux qui rêvent de Son apparitaion_2",
             videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
@@ -9044,7 +9044,7 @@ void main() {
             audioDownloadSpeed: 474501,
             audioDuration: const Duration(milliseconds: 475870),
             audioFileName:
-                "250301-201546-Livre Audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 14 23-08-27.mp3",
+                "250301-201546-Dieu dit - Je marche maintenant au milieu de Mon peuple23-08-27.mp3",
             audioFileSize: 2902447,
             audioPausedDateTime: null,
             audioPlaySpeed: 1.0,
@@ -9061,7 +9061,7 @@ void main() {
             movedFromPlaylistTitle: null,
             movedToPlaylistTitle: null,
             originalVideoTitle:
-                "Livre Audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 6 \u00e0 10",
+                "Dieu dit - Je marche maintenant au milieu de Mon peuple",
             validVideoTitle:
                 "_3Dieu dit - Je marche maintenant au milieu de Mon peuple",
             videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
@@ -9074,7 +9074,7 @@ void main() {
             audioDownloadSpeed: 474501,
             audioDuration: const Duration(milliseconds: 475870),
             audioFileName:
-                "250301-201546-Livre Audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 14 23-08-27.mp3",
+                "250301-201546-Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!' 23-08-27.mp3",
             audioFileSize: 2902447,
             audioPausedDateTime: null,
             audioPlaySpeed: 1.0,
@@ -9091,7 +9091,7 @@ void main() {
             movedFromPlaylistTitle: null,
             movedToPlaylistTitle: null,
             originalVideoTitle:
-                "Livre Audio l'Imitation de J\u00e9sus Christ Livre 1 chapitre 6 \u00e0 10",
+                "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
             validVideoTitle:
                 "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'_1",
             videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
