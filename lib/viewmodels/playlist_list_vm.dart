@@ -6370,7 +6370,7 @@ class PlaylistListVM extends ChangeNotifier {
     // Add numeric prefixes to playableAudioLst
     // Reset counter or continue from downloadedAudioLst count
     int counter = 1;
-    for (var audio in playlist.playableAudioLst) {
+    for (var audio in playlist.playableAudioLst.reversed) {
       // Only add prefix if it doesn't already start with a number followed by underscore
       if (!RegExp(r'^\d+_').hasMatch(audio.validVideoTitle)) {
         audio.validVideoTitle = '${counter}_${audio.validVideoTitle}';
