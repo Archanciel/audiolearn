@@ -193,7 +193,7 @@ class AudioSortFilterParameters {
       selectorFunction: (Audio audio) {
         // Modifié pour capturer aussi les patterns _<nombre>
         final regex = RegExp(
-          r'(\d+)[_\-/:]\d+|_(\d+)|\b(\d+)\s*\d+',
+          r'^(\d+)_|(\d+)[_\-/:]\d+|_(\d+)|\b(\d+)\s+\d+',
           caseSensitive: false,
         );
 

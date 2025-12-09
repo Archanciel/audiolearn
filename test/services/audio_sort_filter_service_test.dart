@@ -9676,12 +9676,442 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
+      test(
+          '''sort asc by 1_title, 2_new, 10_aa, 28_... position in audio title number.''',
+          () {
+        final Audio one = Audio.fullConstructor(
+            enclosingPlaylist: audioPlaylist,
+            audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+            audioDownloadDuration: const Duration(milliseconds: 10503),
+            audioDownloadSpeed: 474501,
+            audioDuration: const Duration(milliseconds: 817203),
+            audioFileName:
+                "250301-201558-Un amour si profond qu'il ne crie pas 23-08-27.mp3",
+            audioFileSize: 4983815,
+            audioPausedDateTime: null,
+            audioPlaySpeed: 1.0,
+            audioPlayVolume: 0.5,
+            audioPositionSeconds: 0,
+            compactVideoDescription:
+                "La voie de Dieu par la voix des saints\n\nChapitre 1: Qu'il faut imiter J\u00e9sus-Christ, et m\u00e9priser toutes les vanit\u00e9s du monde.\nChapitre 2: Avoir d'humble sentiments de soi-m\u00eame.\nChapitre 3: De la doctrine de la v\u00e9rit\u00e9. ...",
+            copiedFromPlaylistTitle: null,
+            copiedToPlaylistTitle: null,
+            audioType: AudioType.downloaded,
+            isAudioMusicQuality: false,
+            isPaused: true,
+            isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+            movedFromPlaylistTitle: null,
+            movedToPlaylistTitle: null,
+            originalVideoTitle: "Un amour si profond qu'il ne crie pas",
+            validVideoTitle: "1_Les jours se termineront",
+            videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+            videoUrl: "https://www.youtube.com/watch?v=ZkMs8aGzUaU",
+            youtubeVideoChannel: "La voie de Dieu par la voix des saints");
+        final Audio two = Audio.fullConstructor(
+            enclosingPlaylist: audioPlaylist,
+            audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+            audioDownloadDuration: const Duration(milliseconds: 10503),
+            audioDownloadSpeed: 474501,
+            audioDuration: const Duration(milliseconds: 863411),
+            audioFileName:
+                "250301-201610-Les commandements de Jésus (version pratique) 23-08-27.mp3",
+            audioFileSize: 5265772,
+            audioPausedDateTime: null,
+            audioPlaySpeed: 1.0,
+            audioPlayVolume: 0.5,
+            audioPositionSeconds: 0,
+            compactVideoDescription:
+                "La voie de Dieu par la voix des saints\n\nChapitre 11:  Des moyens d'acqu\u00e9rir la paix int\u00e9rieure et du soin d'avancer dans la vertu.\nChapitre 12: De l'avantage de l'adversit\u00e9.\nChapitre 13 :  De la r\u00e9sistance aux tentations. ...\n\nChapitre14: Eviter, Chapitre15: Des",
+            copiedFromPlaylistTitle: null,
+            copiedToPlaylistTitle: null,
+            audioType: AudioType.downloaded,
+            isAudioMusicQuality: false,
+            isPaused: true,
+            isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+            movedFromPlaylistTitle: null,
+            movedToPlaylistTitle: null,
+            originalVideoTitle: "Les commandements de Jésus (version pratique)",
+            validVideoTitle: "2_Seigneur, merci pour Tes promesses",
+            videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+            videoUrl: "https://www.youtube.com/watch?v=ezC10g8xnPo",
+            youtubeVideoChannel: "La voie de Dieu par la voix des saints");
+        final Audio three = Audio.fullConstructor(
+            enclosingPlaylist: audioPlaylist,
+            audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+            audioDownloadDuration: const Duration(milliseconds: 10503),
+            audioDownloadSpeed: 474501,
+            audioDuration: const Duration(milliseconds: 1444281),
+            audioFileName: "250301-201621-Dieu dit 23-08-27.mp3",
+            audioFileSize: 8807603,
+            audioPausedDateTime: null,
+            audioPlaySpeed: 1.0,
+            audioPlayVolume: 0.5,
+            audioPositionSeconds: 0,
+            compactVideoDescription:
+                "La voie de Dieu par la voix des saints\n\nChapitre 16: Qu'il faut supporter les d\u00e9fauts d'autrui.\nChapitre17: De la vie religieuse.\nChapitre 18: De l'exemple des saints. ...",
+            copiedFromPlaylistTitle: null,
+            copiedToPlaylistTitle: null,
+            audioType: AudioType.downloaded,
+            isAudioMusicQuality: false,
+            isPaused: true,
+            isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+            movedFromPlaylistTitle: null,
+            movedToPlaylistTitle: null,
+            originalVideoTitle: "Dieu dit",
+            validVideoTitle: "10_Seigneur tout puissant",
+            videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+            videoUrl: "https://www.youtube.com/watch?v=BTHUIqDUBTI",
+            youtubeVideoChannel: "La voie de Dieu par la voix des saints");
+        final Audio four = Audio.fullConstructor(
+            enclosingPlaylist: audioPlaylist,
+            audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+            audioDownloadDuration: const Duration(milliseconds: 10503),
+            audioDownloadSpeed: 474501,
+            audioDuration: const Duration(milliseconds: 1642487),
+            audioFileName:
+                "250301-201628-Dieu cherche ceux qui rêvent de Son apparitaion 23-08-27.mp3",
+            audioFileSize: 10016268,
+            audioPausedDateTime: null,
+            audioPlaySpeed: 1.0,
+            audioPlayVolume: 0.5,
+            audioPositionSeconds: 0,
+            compactVideoDescription:
+                "La voie de Dieu par la voix des saints\n\nChapitre 22: De la consid\u00e9ration de la mis\u00e8re humaine.\nChapitre 23: De la m\u00e9ditation de la mort.\nChapitre 24: Du jugement et des peines des p\u00e9cheurs. ...",
+            copiedFromPlaylistTitle: null,
+            copiedToPlaylistTitle: null,
+            audioType: AudioType.downloaded,
+            isAudioMusicQuality: false,
+            isPaused: true,
+            isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+            movedFromPlaylistTitle: null,
+            movedToPlaylistTitle: null,
+            originalVideoTitle:
+                "Dieu cherche ceux qui rêvent de Son apparitaion",
+            validVideoTitle: "19_Gloire au Père, au Fils,et au Saint-Esprit",
+            videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+            videoUrl: "https://www.youtube.com/watch?v=7dkWTWTi8A8",
+            youtubeVideoChannel: "La voie de Dieu par la voix des saints");
+        final Audio five = Audio.fullConstructor(
+            enclosingPlaylist: audioPlaylist,
+            audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+            audioDownloadDuration: const Duration(milliseconds: 10503),
+            audioDownloadSpeed: 474501,
+            audioDuration: const Duration(milliseconds: 475870),
+            audioFileName:
+                "250301-201546-Dieu dit - Je marche maintenant au milieu de Mon peuple23-08-27.mp3",
+            audioFileSize: 2902447,
+            audioPausedDateTime: null,
+            audioPlaySpeed: 1.0,
+            audioPlayVolume: 0.5,
+            audioPositionSeconds: 0,
+            compactVideoDescription:
+                "La voie de Dieu par la voix des saints\n\nChapitre 6: Des affections d\u00e9r\u00e9gl\u00e9s.\nChapitre 7: Qu'il faut fuir l'orgueil et les vaines esp\u00e9rances.\nChapitre 8: Eviter la pop grande familiarit\u00e9. ...",
+            copiedFromPlaylistTitle: null,
+            copiedToPlaylistTitle: null,
+            audioType: AudioType.downloaded,
+            isAudioMusicQuality: false,
+            isPaused: true,
+            isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+            movedFromPlaylistTitle: null,
+            movedToPlaylistTitle: null,
+            originalVideoTitle:
+                "Dieu dit - Je marche maintenant au milieu de Mon peuple",
+            validVideoTitle: "21_Prière au Seigneur",
+            videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+            videoUrl: "https://www.youtube.com/watch?v=FUFz3R4PX6Q",
+            youtubeVideoChannel: "La voie de Dieu par la voix des saints");
+        final Audio six = Audio.fullConstructor(
+            enclosingPlaylist: audioPlaylist,
+            audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+            audioDownloadDuration: const Duration(milliseconds: 10503),
+            audioDownloadSpeed: 474501,
+            audioDuration: const Duration(milliseconds: 475870),
+            audioFileName:
+                "250301-201546-Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!' 23-08-27.mp3",
+            audioFileSize: 2902447,
+            audioPausedDateTime: null,
+            audioPlaySpeed: 1.0,
+            audioPlayVolume: 0.5,
+            audioPositionSeconds: 0,
+            compactVideoDescription:
+                "La voie de Dieu par la voix des saints\n\nChapitre 6: Des affections d\u00e9r\u00e9gl\u00e9s.\nChapitre 7: Qu'il faut fuir l'orgueil et les vaines esp\u00e9rances.\nChapitre 8: Eviter la pop grande familiarit\u00e9. ...",
+            copiedFromPlaylistTitle: null,
+            copiedToPlaylistTitle: null,
+            audioType: AudioType.downloaded,
+            isAudioMusicQuality: false,
+            isPaused: true,
+            isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+            movedFromPlaylistTitle: null,
+            movedToPlaylistTitle: null,
+            originalVideoTitle:
+                "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+            validVideoTitle:
+                "26_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+            videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+            videoUrl: "https://www.youtube.com/watch?v=FUFz3R4PX6Q",
+            youtubeVideoChannel: "La voie de Dieu par la voix des saints");
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        List<Audio> audioList = [
+          one,
+          two,
+          three,
+          four,
+          five,
+          six,
+        ];
+
+        List<Audio> expectedResultForTitleAsc = [
+          one,
+          two,
+          three,
+          four,
+          five,
+          six,
+        ];
+
+        final List<SortingItem> selectedSortItemLstAsc = [
+          SortingItem(
+            sortingOption: SortingOption.chapterAudioTitle,
+            isAscending: true,
+          ),
+        ];
+
+        List<Audio> sortedByTitleAsc =
+            audioSortFilterService.sortAudioLstBySortingOptions(
+          audioLst: audioList,
+          selectedSortItemLst: selectedSortItemLstAsc,
+        );
+
+        expect(
+            sortedByTitleAsc.map((audio) => audio.validVideoTitle).toList(),
+            equals(expectedResultForTitleAsc
+                .map((audio) => audio.validVideoTitle)
+                .toList()));
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      test(
+          '''sort desc by 1_title, 2_new, 10_aa, 28_... position in audio title number.''',
+          () {
+        final Audio one = Audio.fullConstructor(
+            enclosingPlaylist: audioPlaylist,
+            audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+            audioDownloadDuration: const Duration(milliseconds: 10503),
+            audioDownloadSpeed: 474501,
+            audioDuration: const Duration(milliseconds: 817203),
+            audioFileName:
+                "250301-201558-Un amour si profond qu'il ne crie pas 23-08-27.mp3",
+            audioFileSize: 4983815,
+            audioPausedDateTime: null,
+            audioPlaySpeed: 1.0,
+            audioPlayVolume: 0.5,
+            audioPositionSeconds: 0,
+            compactVideoDescription:
+                "La voie de Dieu par la voix des saints\n\nChapitre 1: Qu'il faut imiter J\u00e9sus-Christ, et m\u00e9priser toutes les vanit\u00e9s du monde.\nChapitre 2: Avoir d'humble sentiments de soi-m\u00eame.\nChapitre 3: De la doctrine de la v\u00e9rit\u00e9. ...",
+            copiedFromPlaylistTitle: null,
+            copiedToPlaylistTitle: null,
+            audioType: AudioType.downloaded,
+            isAudioMusicQuality: false,
+            isPaused: true,
+            isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+            movedFromPlaylistTitle: null,
+            movedToPlaylistTitle: null,
+            originalVideoTitle: "Un amour si profond qu'il ne crie pas",
+            validVideoTitle: "1_Les jours se termineront",
+            videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+            videoUrl: "https://www.youtube.com/watch?v=ZkMs8aGzUaU",
+            youtubeVideoChannel: "La voie de Dieu par la voix des saints");
+        final Audio two = Audio.fullConstructor(
+            enclosingPlaylist: audioPlaylist,
+            audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+            audioDownloadDuration: const Duration(milliseconds: 10503),
+            audioDownloadSpeed: 474501,
+            audioDuration: const Duration(milliseconds: 863411),
+            audioFileName:
+                "250301-201610-Les commandements de Jésus (version pratique) 23-08-27.mp3",
+            audioFileSize: 5265772,
+            audioPausedDateTime: null,
+            audioPlaySpeed: 1.0,
+            audioPlayVolume: 0.5,
+            audioPositionSeconds: 0,
+            compactVideoDescription:
+                "La voie de Dieu par la voix des saints\n\nChapitre 11:  Des moyens d'acqu\u00e9rir la paix int\u00e9rieure et du soin d'avancer dans la vertu.\nChapitre 12: De l'avantage de l'adversit\u00e9.\nChapitre 13 :  De la r\u00e9sistance aux tentations. ...\n\nChapitre14: Eviter, Chapitre15: Des",
+            copiedFromPlaylistTitle: null,
+            copiedToPlaylistTitle: null,
+            audioType: AudioType.downloaded,
+            isAudioMusicQuality: false,
+            isPaused: true,
+            isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+            movedFromPlaylistTitle: null,
+            movedToPlaylistTitle: null,
+            originalVideoTitle: "Les commandements de Jésus (version pratique)",
+            validVideoTitle: "2_Seigneur, merci pour Tes promesses",
+            videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+            videoUrl: "https://www.youtube.com/watch?v=ezC10g8xnPo",
+            youtubeVideoChannel: "La voie de Dieu par la voix des saints");
+        final Audio three = Audio.fullConstructor(
+            enclosingPlaylist: audioPlaylist,
+            audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+            audioDownloadDuration: const Duration(milliseconds: 10503),
+            audioDownloadSpeed: 474501,
+            audioDuration: const Duration(milliseconds: 1444281),
+            audioFileName: "250301-201621-Dieu dit 23-08-27.mp3",
+            audioFileSize: 8807603,
+            audioPausedDateTime: null,
+            audioPlaySpeed: 1.0,
+            audioPlayVolume: 0.5,
+            audioPositionSeconds: 0,
+            compactVideoDescription:
+                "La voie de Dieu par la voix des saints\n\nChapitre 16: Qu'il faut supporter les d\u00e9fauts d'autrui.\nChapitre17: De la vie religieuse.\nChapitre 18: De l'exemple des saints. ...",
+            copiedFromPlaylistTitle: null,
+            copiedToPlaylistTitle: null,
+            audioType: AudioType.downloaded,
+            isAudioMusicQuality: false,
+            isPaused: true,
+            isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+            movedFromPlaylistTitle: null,
+            movedToPlaylistTitle: null,
+            originalVideoTitle: "Dieu dit",
+            validVideoTitle: "10_Seigneur tout puissant",
+            videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+            videoUrl: "https://www.youtube.com/watch?v=BTHUIqDUBTI",
+            youtubeVideoChannel: "La voie de Dieu par la voix des saints");
+        final Audio four = Audio.fullConstructor(
+            enclosingPlaylist: audioPlaylist,
+            audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+            audioDownloadDuration: const Duration(milliseconds: 10503),
+            audioDownloadSpeed: 474501,
+            audioDuration: const Duration(milliseconds: 1642487),
+            audioFileName:
+                "250301-201628-Dieu cherche ceux qui rêvent de Son apparitaion 23-08-27.mp3",
+            audioFileSize: 10016268,
+            audioPausedDateTime: null,
+            audioPlaySpeed: 1.0,
+            audioPlayVolume: 0.5,
+            audioPositionSeconds: 0,
+            compactVideoDescription:
+                "La voie de Dieu par la voix des saints\n\nChapitre 22: De la consid\u00e9ration de la mis\u00e8re humaine.\nChapitre 23: De la m\u00e9ditation de la mort.\nChapitre 24: Du jugement et des peines des p\u00e9cheurs. ...",
+            copiedFromPlaylistTitle: null,
+            copiedToPlaylistTitle: null,
+            audioType: AudioType.downloaded,
+            isAudioMusicQuality: false,
+            isPaused: true,
+            isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+            movedFromPlaylistTitle: null,
+            movedToPlaylistTitle: null,
+            originalVideoTitle:
+                "Dieu cherche ceux qui rêvent de Son apparitaion",
+            validVideoTitle: "19_Gloire au Père, au Fils,et au Saint-Esprit",
+            videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+            videoUrl: "https://www.youtube.com/watch?v=7dkWTWTi8A8",
+            youtubeVideoChannel: "La voie de Dieu par la voix des saints");
+        final Audio five = Audio.fullConstructor(
+            enclosingPlaylist: audioPlaylist,
+            audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+            audioDownloadDuration: const Duration(milliseconds: 10503),
+            audioDownloadSpeed: 474501,
+            audioDuration: const Duration(milliseconds: 475870),
+            audioFileName:
+                "250301-201546-Dieu dit - Je marche maintenant au milieu de Mon peuple23-08-27.mp3",
+            audioFileSize: 2902447,
+            audioPausedDateTime: null,
+            audioPlaySpeed: 1.0,
+            audioPlayVolume: 0.5,
+            audioPositionSeconds: 0,
+            compactVideoDescription:
+                "La voie de Dieu par la voix des saints\n\nChapitre 6: Des affections d\u00e9r\u00e9gl\u00e9s.\nChapitre 7: Qu'il faut fuir l'orgueil et les vaines esp\u00e9rances.\nChapitre 8: Eviter la pop grande familiarit\u00e9. ...",
+            copiedFromPlaylistTitle: null,
+            copiedToPlaylistTitle: null,
+            audioType: AudioType.downloaded,
+            isAudioMusicQuality: false,
+            isPaused: true,
+            isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+            movedFromPlaylistTitle: null,
+            movedToPlaylistTitle: null,
+            originalVideoTitle:
+                "Dieu dit - Je marche maintenant au milieu de Mon peuple",
+            validVideoTitle: "21_Prière au Seigneur",
+            videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+            videoUrl: "https://www.youtube.com/watch?v=FUFz3R4PX6Q",
+            youtubeVideoChannel: "La voie de Dieu par la voix des saints");
+        final Audio six = Audio.fullConstructor(
+            enclosingPlaylist: audioPlaylist,
+            audioDownloadDateTime: DateTime(2025, 03, 01, 20, 15, 58),
+            audioDownloadDuration: const Duration(milliseconds: 10503),
+            audioDownloadSpeed: 474501,
+            audioDuration: const Duration(milliseconds: 475870),
+            audioFileName:
+                "250301-201546-Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!' 23-08-27.mp3",
+            audioFileSize: 2902447,
+            audioPausedDateTime: null,
+            audioPlaySpeed: 1.0,
+            audioPlayVolume: 0.5,
+            audioPositionSeconds: 0,
+            compactVideoDescription:
+                "La voie de Dieu par la voix des saints\n\nChapitre 6: Des affections d\u00e9r\u00e9gl\u00e9s.\nChapitre 7: Qu'il faut fuir l'orgueil et les vaines esp\u00e9rances.\nChapitre 8: Eviter la pop grande familiarit\u00e9. ...",
+            copiedFromPlaylistTitle: null,
+            copiedToPlaylistTitle: null,
+            audioType: AudioType.downloaded,
+            isAudioMusicQuality: false,
+            isPaused: true,
+            isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+            movedFromPlaylistTitle: null,
+            movedToPlaylistTitle: null,
+            originalVideoTitle:
+                "Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+            validVideoTitle:
+                "26_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+            videoUploadDate: DateTime(2023, 08, 27, 12, 10, 41),
+            videoUrl: "https://www.youtube.com/watch?v=FUFz3R4PX6Q",
+            youtubeVideoChannel: "La voie de Dieu par la voix des saints");
+
+        List<Audio> audioList = [
+          one,
+          two,
+          three,
+          four,
+          five,
+          six,
+        ];
+
+        List<Audio> expectedResultForTitleDesc = [
+          six,
+          five,
+          four,
+          three,
+          two,
+          one,
+        ];
+
+        final List<SortingItem> selectedSortItemLstAsc = [
+          SortingItem(
+            sortingOption: SortingOption.chapterAudioTitle,
+            isAscending: false,
+          ),
+        ];
+
+        List<Audio> sortedByTitleAsc =
+            audioSortFilterService.sortAudioLstBySortingOptions(
+          audioLst: audioList,
+          selectedSortItemLst: selectedSortItemLstAsc,
+        );
+
+        expect(
+            sortedByTitleAsc.map((audio) => audio.validVideoTitle).toList(),
+            equals(expectedResultForTitleDesc
+                .map((audio) => audio.validVideoTitle)
+                .toList()));
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
     });
   });
   group("sort audio lst by multiple SortingOption's", () {
