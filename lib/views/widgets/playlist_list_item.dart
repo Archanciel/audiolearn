@@ -7,6 +7,7 @@ import 'package:audiolearn/viewmodels/audio_player_vm.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:path/path.dart' as path;
 import '../../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -34,6 +35,7 @@ enum PlaylistPopupMenuAction {
   copyYoutubePlaylistUrl,
   displayPlaylistInfo,
   renamePlaylist,
+  addAudioPositionToItsTitle,
   displayPlaylistAudioComments,
   importAudioFilesInPlaylist,
   convertTextToAudioInPlaylist, // New action to convert text to audio
@@ -184,6 +186,11 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
           key: const Key('popup_menu_rename_playlist'),
           value: PlaylistPopupMenuAction.renamePlaylist,
           child: Text(AppLocalizations.of(context)!.renamePlaylistMenu),
+        ),
+        PopupMenuItem<PlaylistPopupMenuAction>(
+          key: const Key('popup_menu_add_audio_position_to_its_title'),
+          value: PlaylistPopupMenuAction.addAudioPositionToItsTitle,
+          child: Text('Add Audio Position To Its Title'),
         ),
         PopupMenuItem<PlaylistPopupMenuAction>(
           key: const Key('popup_menu_display_playlist_audio_comments'),
@@ -339,6 +346,12 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   playlist: playlist,
                 );
               },
+            );
+            break;
+          case PlaylistPopupMenuAction.addAudioPositionToItsTitle:
+            playlistListVMlistenFalse.addNumericPrefixesToPlaylistAudioTitles(
+              playlistJsonPathFileName:
+                  "${playlist.downloadPath}${path.separator}${playlist.title}.json",
             );
             break;
           case PlaylistPopupMenuAction.displayPlaylistAudioComments:
@@ -1340,7 +1353,10 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
   Future<List<String>> _filePickerSelectAudioFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['mp3', 'mp4',],
+      allowedExtensions: [
+        'mp3',
+        'mp4',
+      ],
       allowMultiple: true,
       initialDirectory: DirUtil.getApplicationPath(),
     );
