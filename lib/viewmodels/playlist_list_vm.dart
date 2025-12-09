@@ -6335,4 +6335,62 @@ class PlaylistListVM extends ChangeNotifier {
 
     return true;
   }
+
+  /// Adds numeric prefixes (1_, 2_, 3_, ...) to all Audio.validVideoTitle
+  /// in contained in the playlist playable audio list and saves the modified
+  /// playlist back to its JSON file.
+  ///
+  /// The numbering starts from 1 at the end of the playable audio list and
+  /// augment till the start of the list.
+  ///
+  /// Example: "Mon Titre" becomes "1_Mon Titre"
+  void addNumericPrefixesToPlaylistAudioTitles({
+    required String playlistJsonPathFileName,
+  }) {
+    // Check if the file exists
+    if (!File(playlistJsonPathFileName).existsSync()) {
+      _logger.i('Error: File not found: $playlistJsonPathFileName');
+      return;
+    }
+
+    // Load the playlist from the JSON file
+    Playlist? playlist = JsonDataService.loadFromFile(
+      jsonPathFileName: playlistJsonPathFileName,
+      type: Playlist,
+    ) as Playlist?;
+
+    if (playlist == null) {
+      _logger.i('Error: Unable to load playlist from $playlistJsonPathFileName');
+      return;
+    }
+
+    _logger.i('Processing playlist: ${playlist.title}');
+    _logger.i('Playable audios: ${playlist.playableAudioLst.length}');
+
+    // Add numeric prefixes to playableAudioLst
+    // Reset counter or continue from downloadedAudioLst count
+    int counter = 1;
+    for (var audio in playlist.playableAudioLst) {
+      // Only add prefix if it doesn't already start with a number followed by underscore
+      if (!RegExp(r'^\d+_').hasMatch(audio.validVideoTitle)) {
+        audio.validVideoTitle = '${counter}_${audio.validVideoTitle}';
+        _logger.i('  [$counter] ${audio.validVideoTitle}');
+      } else {
+        _logger.i('  [$counter] ${audio.validVideoTitle} (already has prefix)');
+      }
+      counter++;
+    }
+
+    // Save the modified playlist back to the JSON file
+    JsonDataService.saveToFile(
+      model: playlist,
+      path: playlistJsonPathFileName,
+    );
+
+    _logger.i('Successfully saved modified playlist to $playlistJsonPathFileName');
+
+    updateSettingsAndPlaylistJsonFiles(
+      updatePlaylistPlayableAudioList: true,
+    );
+  }
 }
