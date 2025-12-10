@@ -35,7 +35,7 @@ enum PlaylistPopupMenuAction {
   copyYoutubePlaylistUrl,
   displayPlaylistInfo,
   renamePlaylist,
-  addAudioPositionToItsTitle,
+  addPositionToAudioTitle,
   displayPlaylistAudioComments,
   importAudioFilesInPlaylist,
   convertTextToAudioInPlaylist, // New action to convert text to audio
@@ -189,8 +189,8 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
         ),
         PopupMenuItem<PlaylistPopupMenuAction>(
           key: const Key('popup_menu_add_audio_position_to_its_title'),
-          value: PlaylistPopupMenuAction.addAudioPositionToItsTitle,
-          child: Text('Add Audio Position To Its Title'),
+          value: PlaylistPopupMenuAction.addPositionToAudioTitle,
+          child: Text(AppLocalizations.of(context)!.addPositionToAudioTitleMenu),
         ),
         PopupMenuItem<PlaylistPopupMenuAction>(
           key: const Key('popup_menu_display_playlist_audio_comments'),
@@ -348,10 +348,10 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               },
             );
             break;
-          case PlaylistPopupMenuAction.addAudioPositionToItsTitle:
+          case PlaylistPopupMenuAction.addPositionToAudioTitle:
             playlistListVMlistenFalse.addNumericPrefixesToPlaylistAudioTitles(
-              playlistJsonPathFileName:
-                  "${playlist.downloadPath}${path.separator}${playlist.title}.json",
+              playlist:
+                  playlist,
             );
             break;
           case PlaylistPopupMenuAction.displayPlaylistAudioComments:
