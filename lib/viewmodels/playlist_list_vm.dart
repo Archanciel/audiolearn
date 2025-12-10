@@ -6345,25 +6345,9 @@ class PlaylistListVM extends ChangeNotifier {
   ///
   /// Example: "Mon Titre" becomes "1_Mon Titre"
   void addNumericPrefixesToPlaylistAudioTitles({
-    required String playlistJsonPathFileName,
+    required Playlist playlist,
   }) {
     // Check if the file exists
-    if (!File(playlistJsonPathFileName).existsSync()) {
-      _logger.i('Error: File not found: $playlistJsonPathFileName');
-      return;
-    }
-
-    // Load the playlist from the JSON file
-    Playlist? playlist = JsonDataService.loadFromFile(
-      jsonPathFileName: playlistJsonPathFileName,
-      type: Playlist,
-    ) as Playlist?;
-
-    if (playlist == null) {
-      _logger.i('Error: Unable to load playlist from $playlistJsonPathFileName');
-      return;
-    }
-
     _logger.i('Processing playlist: ${playlist.title}');
     _logger.i('Playable audios: ${playlist.playableAudioLst.length}');
 
@@ -6381,16 +6365,8 @@ class PlaylistListVM extends ChangeNotifier {
       counter++;
     }
 
-    // Save the modified playlist back to the JSON file
-    JsonDataService.saveToFile(
-      model: playlist,
-      path: playlistJsonPathFileName,
-    );
+    _logger.i('Successfully saved modified playlist to $playlist');
 
-    _logger.i('Successfully saved modified playlist to $playlistJsonPathFileName');
-
-    updateSettingsAndPlaylistJsonFiles(
-      updatePlaylistPlayableAudioList: true,
-    );
+    notifyListeners();
   }
 }
