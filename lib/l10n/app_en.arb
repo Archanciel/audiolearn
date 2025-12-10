@@ -1148,5 +1148,10 @@
     }
   },
   "convertingMp4ToMP3":"Converting imported MP4 to MP3 ...",
-  "addPositionToAudioTitleMenu": "Add Position To Audio Title"
+  "addPositionToAudioTitleMenu": "Add Position to Audio Title",
+  "moveAudioToPositionMenu": "Move Audio to Position ...",
+  "moveAudioToPosition": "Move Audio to Int Position",
+  "audioIntPositionLabel": "Audio int position",
+  "moveAudioToPositionButton": "Move",
+  "audioPositionTooltip": "Define the int position which will be addid to the audio title."
 }

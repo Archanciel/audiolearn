@@ -167,6 +167,11 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 child: Text(AppLocalizations.of(context)!.modifyAudioTitle),
               ),
               PopupMenuItem<AudioPopupMenuAction>(
+                key: const Key('popup_menu_move_audio_to_position'),
+                value: AudioPopupMenuAction.moveAudioToPosition,
+                child: Text(AppLocalizations.of(context)!.moveAudioToPosition),
+              ),
+              PopupMenuItem<AudioPopupMenuAction>(
                 key: const Key('popup_menu_rename_audio_file'),
                 value: AudioPopupMenuAction.renameAudioFile,
                 child: Text(AppLocalizations.of(context)!.renameAudioFile),
@@ -259,6 +264,28 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 commentVMlistenFalse.wasCommentDialogOpened = true;
                 break;
               case AudioPopupMenuAction.modifyAudioTitle:
+                await showDialog<String?>(
+                  context: context,
+                  barrierDismissible:
+                      false, // This line prevents the dialog from closing when
+                  //            tapping outside the dialog
+                  builder: (BuildContext context) {
+                    return AudioModificationDialog(
+                      audio: audio,
+                      audioModificationType:
+                          AudioModificationType.modifyAudioTitle,
+                    );
+                  },
+                ).then((String? modifiedAudioTitle) async {
+                  // Required so that the audio title displayed in the
+                  // audio player view is updated with the modified title
+                  if (modifiedAudioTitle != null) {
+                    audioPlayerVMlistenFalse.currentAudioTitleNotifier.value =
+                        modifiedAudioTitle;
+                  }
+                });
+                break;
+              case AudioPopupMenuAction.moveAudioToPosition:
                 await showDialog<String?>(
                   context: context,
                   barrierDismissible:

@@ -6337,8 +6337,7 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   /// Adds numeric prefixes (1_, 2_, 3_, ...) to all Audio.validVideoTitle
-  /// in contained in the playlist playable audio list and saves the modified
-  /// playlist back to its JSON file.
+  /// in contained in the passed playlist playable audio list.
   ///
   /// The numbering starts from 1 at the end of the playable audio list and
   /// augment till the start of the list.
@@ -6368,6 +6367,71 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     _logger.i('Successfully saved modified playlist to $playlist');
+
+    notifyListeners();
+  }
+
+  /// Move an audio to a specific position in its enclosing playlist's playable
+  /// audio list.
+  ///
+  /// The audio's whose validVideoTitle position number is equal to or greater than
+  /// the specified position will have their position number incremented by 1.
+  ///
+  /// Position numbering: 1 = last audio in list, 2 = second to last, etc.
+  ///
+  /// Example: If playlist contains [5_A, 4_B, 3_C, 2_D, 1_E] and we copy NewAudio
+  /// to the playlist and then move it to position 2, the result will be
+  /// the result will be [6_A, 5_B, 4_C, 3_D, 2_NewAudio, 1_E].
+  void moveAudioToPosition({
+    required Audio audio,
+    required int position,
+  }) {
+    Playlist? playlist = audio.enclosingPlaylist;
+    _logger
+        .i('Adding audio to playlist: ${playlist!.title} at position $position');
+    _logger.i('Audio to add: ${audio.validVideoTitle}');
+
+    // Step 1: Update position numbers for existing audios
+    final RegExp regex = RegExp(r'^(\d+)_');
+
+    for (Audio existingAudio in playlist.playableAudioLst) {
+      RegExpMatch? match = regex.firstMatch(existingAudio.validVideoTitle);
+
+      if (match != null) {
+        int currentPosition = int.parse(match.group(1)!);
+
+        // If the current position is >= to the insertion position, increment it
+        if (currentPosition >= position) {
+          int newPosition = currentPosition + 1;
+          existingAudio.validVideoTitle = existingAudio.validVideoTitle
+              .replaceFirst(regex, '${newPosition}_');
+          _logger.i('  Updated: ${existingAudio.validVideoTitle}');
+        }
+      }
+    }
+
+    // Step 2: Add position prefix to the new audio
+    // Remove existing prefix if present
+    String titleWithoutPrefix = audio.validVideoTitle.replaceFirst(regex, '');
+    audio.validVideoTitle = '${position}_$titleWithoutPrefix';
+
+    // Step 3: Insert the audio at the correct index in the list
+    // Position 1 = last element (index = length)
+    // Position 2 = second to last (index = length - 1)
+    // Position n = index = length - n + 1
+    int insertIndex = playlist.playableAudioLst.length - position + 1;
+
+    // Ensure index is within bounds
+    if (insertIndex < 0) {
+      insertIndex = 0;
+    } else if (insertIndex > playlist.playableAudioLst.length) {
+      insertIndex = playlist.playableAudioLst.length;
+    }
+
+    playlist.playableAudioLst.insert(insertIndex, audio);
+
+    _logger.i('Inserted audio at index $insertIndex: ${audio.validVideoTitle}');
+    _logger.i('Playable audios count: ${playlist.playableAudioLst.length}');
 
     notifyListeners();
   }

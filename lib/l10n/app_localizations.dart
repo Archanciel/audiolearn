@@ -4049,8 +4049,38 @@ abstract class AppLocalizations {
   /// No description provided for @addPositionToAudioTitleMenu.
   ///
   /// In en, this message translates to:
-  /// **'Add Position To Audio Title'**
+  /// **'Add Position to Audio Title'**
   String get addPositionToAudioTitleMenu;
+
+  /// No description provided for @moveAudioToPositionMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Move Audio to Position ...'**
+  String get moveAudioToPositionMenu;
+
+  /// No description provided for @moveAudioToPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Move Audio to Int Position'**
+  String get moveAudioToPosition;
+
+  /// No description provided for @audioIntPositionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio int position'**
+  String get audioIntPositionLabel;
+
+  /// No description provided for @moveAudioToPositionButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Move'**
+  String get moveAudioToPositionButton;
+
+  /// No description provided for @audioPositionTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Define the int position which will be addid to the audio title.'**
+  String get audioPositionTooltip;
 }
 
 class _AppLocalizationsDelegate
