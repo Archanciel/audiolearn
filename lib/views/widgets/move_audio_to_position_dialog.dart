@@ -4,32 +4,33 @@ import 'package:provider/provider.dart';
 import '../../l10n/app_localizations.dart';
 
 import '../../constants.dart';
+import '../../models/audio.dart';
 import '../../models/help_item.dart';
-import '../../models/playlist.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../../viewmodels/playlist_list_vm.dart';
 import '../../views/screen_mixin.dart';
 import '../../services/settings_data_service.dart';
 import 'help_dialog.dart';
 
-/// This dialog allows the user to modify the playlist title.
-class PlaylistRenameDialog extends StatefulWidget {
-  final Playlist playlist;
+/// This dialog allows the user to rename the audio file or modify its title
+class MoveAudioToPositionDialog extends StatefulWidget {
+  final Audio audio;
   final List<HelpItem> helpItemsLst;
 
-  const PlaylistRenameDialog({
-    required this.playlist,
+  const MoveAudioToPositionDialog({
+    required this.audio,
     this.helpItemsLst = const [],
     super.key,
   });
 
   @override
-  State<PlaylistRenameDialog> createState() => _PlaylistRenameDialogState();
+  State<MoveAudioToPositionDialog> createState() =>
+      _MoveAudioToPositionDialogState();
 }
 
-class _PlaylistRenameDialogState extends State<PlaylistRenameDialog>
+class _MoveAudioToPositionDialogState extends State<MoveAudioToPositionDialog>
     with ScreenMixin {
-  final TextEditingController _playlistNameTextEditingController =
+  final TextEditingController _audioPositionTextEditingController =
       TextEditingController();
   final FocusNode _focusNodeDialog = FocusNode();
   final FocusNode _focusNodeAudioModificationTextField = FocusNode();
@@ -40,19 +41,15 @@ class _PlaylistRenameDialogState extends State<PlaylistRenameDialog>
 
     // This enable the Modify or Rename button to be disabled when
     // the text field is empty
-    _playlistNameTextEditingController.addListener(() {
+    _audioPositionTextEditingController.addListener(() {
       setState(() {}); // Rebuild when text changes
-    });
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _playlistNameTextEditingController.text = widget.playlist.title;
     });
   }
 
   @override
   void dispose() {
-    _playlistNameTextEditingController.removeListener(() {});
-    _playlistNameTextEditingController.dispose();
+    _audioPositionTextEditingController.removeListener(() {});
+    _audioPositionTextEditingController.dispose();
     _focusNodeDialog.dispose();
     _focusNodeAudioModificationTextField.dispose();
 
@@ -73,11 +70,11 @@ class _PlaylistRenameDialogState extends State<PlaylistRenameDialog>
     String labelAndTextFieldTooltipStr;
     int flexibleValue;
 
-    titleStr = AppLocalizations.of(context)!.renamePlaylist;
-    labelStr = AppLocalizations.of(context)!.renamePlaylistLabel;
+    titleStr = AppLocalizations.of(context)!.moveAudioToPosition;
+    labelStr = AppLocalizations.of(context)!.audioIntPositionLabel;
     labelAndTextFieldTooltipStr =
-        AppLocalizations.of(context)!.renamePlaylistTooltip;
-    flexibleValue = 4;
+        AppLocalizations.of(context)!.audioPositionTooltip;
+    flexibleValue = 1;
 
     return KeyboardListener(
       // Using FocusNode to enable clicking on Enter to close
@@ -89,9 +86,9 @@ class _PlaylistRenameDialogState extends State<PlaylistRenameDialog>
               event.logicalKey == LogicalKeyboardKey.numpadEnter) {
             // executing the same code as in the audioModification
             // TextButton onPressed callback
-            _renamePlaylist(context);
+            _moveAudioToPosition(context);
 
-            Navigator.of(context).pop(_playlistNameTextEditingController.text);
+            Navigator.of(context).pop(_audioPositionTextEditingController.text);
           }
         }
       },
@@ -132,15 +129,17 @@ class _PlaylistRenameDialogState extends State<PlaylistRenameDialog>
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
+              const SizedBox.shrink(),
               createFlexibleEditableRowFunction(
                 valueTextFieldWidgetKey:
                     const Key('playlistTitleModificationTextField'),
                 context: context,
                 label: labelStr,
                 labelAndTextFieldTooltip: labelAndTextFieldTooltipStr,
-                controller: _playlistNameTextEditingController,
+                controller: _audioPositionTextEditingController,
                 textFieldFocusNode: _focusNodeAudioModificationTextField,
                 editableFieldFlexValue: flexibleValue,
+                labelFlexValue: 5,
                 isCursorAtStart:
                     false, // if true, cursor set at start at every text modification
               ),
@@ -149,20 +148,17 @@ class _PlaylistRenameDialogState extends State<PlaylistRenameDialog>
         ),
         actions: [
           TextButton(
-            key: const Key('playlistRenameButton'),
-            onPressed: _playlistNameTextEditingController.text.trim().isEmpty
+            key: const Key('moveAudioToPositionButton'),
+            onPressed: _audioPositionTextEditingController.text.trim().isEmpty
                 ? null // This disables the button
                 : () {
-                    if (_renamePlaylist(context)) {
-                      Navigator.of(context)
-                          .pop(_playlistNameTextEditingController.text);
-                    } // else, if playlist title was not changed or if the title
-                    //   is already used or if the title is invalid, does not
-                    //   close the dialog
+                    _moveAudioToPosition(context);
+                    Navigator.of(context)
+                        .pop(_audioPositionTextEditingController.text);
                   },
             child: Text(
-              AppLocalizations.of(context)!.renamePlaylistButton,
-              style: _playlistNameTextEditingController.text.trim().isEmpty
+              AppLocalizations.of(context)!.moveAudioToPositionButton,
+              style: _audioPositionTextEditingController.text.trim().isEmpty
                   ? const TextStyle(
                       fontSize: kTextButtonFontSize) // Disabled style
                   : (themeProviderVM.currentTheme == AppTheme.dark)
@@ -187,15 +183,15 @@ class _PlaylistRenameDialogState extends State<PlaylistRenameDialog>
     );
   }
 
-  bool _renamePlaylist(BuildContext context) {
+  void _moveAudioToPosition(BuildContext context) {
     PlaylistListVM playlistListVMlistendFalse = Provider.of<PlaylistListVM>(
       context,
       listen: false,
     );
 
-    return playlistListVMlistendFalse.renamePlaylist(
-      playlist: widget.playlist,
-      modifiedPlaylistTitle: _playlistNameTextEditingController.text.trim(),
+    return playlistListVMlistendFalse.moveAudioToPosition(
+      audio: widget.audio,
+      position: int.parse(_audioPositionTextEditingController.text.trim()),
     );
   }
 }

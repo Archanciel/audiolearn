@@ -17,7 +17,7 @@ enum AudioModificationType {
   modifyAudioTitle,
 }
 
-/// This dialog allows the user to rename the audio file or modify its title
+/// This dialog allows the user to rename the audio file or modify its title.
 class AudioModificationDialog extends StatefulWidget {
   final Audio audio;
   final AudioModificationType audioModificationType;

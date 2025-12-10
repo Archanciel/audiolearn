@@ -2638,4 +2638,20 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get addPositionToAudioTitleMenu => "Add Position To Audio Title";
+
+  @override
+  String get moveAudioToPosition => "Move Audio to Position";
+
+  @override
+  String get audioPositionTooltip =>
+      "Define the int position which will be addid to the audio title.";
+
+  @override
+  String get moveAudioToPositionMenu => "Move Audio to Position ...";
+
+  @override
+  String get audioIntPositionLabel => "Audio int position";
+
+  @override
+  String get moveAudioToPositionButton => "Move";
 }

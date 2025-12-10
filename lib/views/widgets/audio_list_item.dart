@@ -25,6 +25,7 @@ import '../screen_mixin.dart';
 import 'confirm_action_dialog.dart';
 import 'audio_info_dialog.dart';
 import 'comment_list_add_dialog.dart';
+import 'move_audio_to_position_dialog.dart';
 import 'playlist_one_selectable_dialog.dart';
 import 'audio_modification_dialog.dart';
 
@@ -203,6 +204,11 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
           child: Text(AppLocalizations.of(context)!.modifyAudioTitle),
         ),
         PopupMenuItem<AudioPopupMenuAction>(
+          key: const Key('popup_menu_move_audio_to_position'),
+          value: AudioPopupMenuAction.moveAudioToPosition,
+          child: Text(AppLocalizations.of(context)!.moveAudioToPositionMenu),
+        ),
+        PopupMenuItem<AudioPopupMenuAction>(
           key: const Key('popup_menu_rename_audio_file'),
           value: AudioPopupMenuAction.renameAudioFile,
           child: Text(AppLocalizations.of(context)!.renameAudioFile),
@@ -316,6 +322,44 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
               if (modifiedAudioTitle != null) {
                 audioPlayerVMlistenFalse.currentAudioTitleNotifier.value =
                     modifiedAudioTitle;
+              }
+            });
+            break;
+          case AudioPopupMenuAction.moveAudioToPosition:
+            List<HelpItem> audioTitleModificationHelpItemsLst = [
+              HelpItem(
+                helpTitle: AppLocalizations.of(context)!
+                    .audioTitleModificationHelpTitle,
+                helpContent: AppLocalizations.of(context)!
+                    .audioTitleModificationHelpContent,
+                displayHelpItemNumber: false,
+              ),
+            ];
+            await showDialog<int?>(
+              context: context,
+              barrierDismissible:
+                  false, // This line prevents the dialog from closing when
+              //            tapping outside the dialog
+              builder: (BuildContext context) {
+                return MoveAudioToPositionDialog(
+                  audio: audio,
+                  helpItemsLst: audioTitleModificationHelpItemsLst,
+                );
+              },
+            ).then((int? audioPosition) async {
+              final PlaylistListVM playlistVMlistnedFalse =
+                  Provider.of<PlaylistListVM>(
+                context,
+                listen: false,
+              );
+
+              // Required so that the audio title displayed in the
+              // audio player view is updated with the modified title
+              if (audioPosition != null) {
+                playlistVMlistnedFalse.moveAudioToPosition(
+                  audio: audio,
+                  position: audioPosition,
+                );
               }
             });
             break;
