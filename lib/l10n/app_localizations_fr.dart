@@ -2558,4 +2558,8 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get convertingMp4ToMP3 => 'Conversion du MP4 importé en MP3 ...';
+
+  @override
+  String get addPositionToAudioTitleMenu =>
+      'Ajouter la position au titre des audio\'s';
 }

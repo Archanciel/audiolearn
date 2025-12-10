@@ -2635,4 +2635,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get convertingMp4ToMP3 => "Converting imported mp4 to MP3 ...";
+
+  @override
+  String get addPositionToAudioTitleMenu => "Add Position To Audio Title";
 }

@@ -4045,6 +4045,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Converting imported MP4 to MP3 ...'**
   String get convertingMp4ToMP3;
+
+  /// No description provided for @addPositionToAudioTitleMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Position To Audio Title'**
+  String get addPositionToAudioTitleMenu;
 }
 
 class _AppLocalizationsDelegate
