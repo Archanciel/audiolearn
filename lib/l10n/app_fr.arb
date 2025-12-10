@@ -1554,5 +1554,6 @@
       }
     }
   },
-  "convertingMp4ToMP3":"Conversion du MP4 importé en MP3 ..."
+  "convertingMp4ToMP3":"Conversion du MP4 importé en MP3 ...",
+  "addPositionToAudioTitleMenu": "Ajouter la position au titre des audio's"
 }                                   
