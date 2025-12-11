@@ -335,7 +335,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                 displayHelpItemNumber: false,
               ),
             ];
-            await showDialog<int?>(
+             showDialog<void>(
               context: context,
               barrierDismissible:
                   false, // This line prevents the dialog from closing when
@@ -346,22 +346,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                   helpItemsLst: audioTitleModificationHelpItemsLst,
                 );
               },
-            ).then((int? audioPosition) async {
-              final PlaylistListVM playlistVMlistnedFalse =
-                  Provider.of<PlaylistListVM>(
-                context,
-                listen: false,
-              );
-
-              // Required so that the audio title displayed in the
-              // audio player view is updated with the modified title
-              if (audioPosition != null) {
-                playlistVMlistnedFalse.moveAudioToPosition(
-                  audio: audio,
-                  position: audioPosition,
-                );
-              }
-            });
+            );
             break;
           case AudioPopupMenuAction.renameAudioFile:
             showDialog<void>(
