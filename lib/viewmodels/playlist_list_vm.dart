@@ -6370,7 +6370,9 @@ class PlaylistListVM extends ChangeNotifier {
       counter++;
     }
 
-    _logger.i('Successfully saved modified playlist to $playlist');
+    _writePlaylistToFile(
+      playlist: playlist,
+    );
 
     notifyListeners();
   }
@@ -6438,6 +6440,10 @@ class PlaylistListVM extends ChangeNotifier {
 
     _logger.i('Modified the audio ${audio.validVideoTitle}');
     _logger.i('Playable audios count: ${playlist.playableAudioLst.length}');
+
+    _writePlaylistToFile(
+      playlist: playlist,
+    );
 
     notifyListeners();
   }
