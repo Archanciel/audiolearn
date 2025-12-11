@@ -4049,7 +4049,7 @@ abstract class AppLocalizations {
   /// No description provided for @addPositionToAudioTitleMenu.
   ///
   /// In en, this message translates to:
-  /// **'Add Position to Audio Title'**
+  /// **'Add Position to Audio\'s Title'**
   String get addPositionToAudioTitleMenu;
 
   /// No description provided for @moveAudioToPositionMenu.
