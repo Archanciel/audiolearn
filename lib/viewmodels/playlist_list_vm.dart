@@ -6357,7 +6357,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     for (Audio audio in playlist.playableAudioLst.reversed) {
       // Only add prefix if it doesn't already start with a number followed by underscore
-      if (!RegExp(r'^\d+_').hasMatch(audio.validVideoTitle)) {
+      if (!regex.hasMatch(audio.validVideoTitle)) {
         audio.validVideoTitle = '${counter}_${audio.validVideoTitle}';
         _logger.i('  [$counter] ${audio.validVideoTitle}');
       } else {
