@@ -38573,29 +38573,101 @@ void main() {
         await app.main();
         await tester.pumpAndSettle();
 
-        // Load the application picture audio map from the
-        // application picture audio map json file and
-        // verify its content.
+        const String playlistToPositionAudioTitles = 'Prières 2';
 
-        PictureVM pictureVM = PictureVM(
-          settingsDataService: settingsDataService,
-        );
-
-        const String playlistToRenametitle = 'local';
-
-        Map<String, List<String>> applicationPictureAudioMap =
-            pictureVM.readAppPictureAudioMap();
-
-        _verifyAppPictureAudioMapContent(
-          applicationPictureAudioMap: applicationPictureAudioMap,
-          wallpaperPlaylistTitle: playlistToRenametitle,
-          liguriaPlaylistTitle: 'temp',
+        // Select the playlistToPositionAudioTitles playlist
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: playlistToPositionAudioTitles,
         );
 
         await IntegrationTestUtil.typeOnPlaylistMenuItem(
           tester: tester,
-          playlistTitle: playlistToRenametitle,
-          playlistMenuKeyStr: 'popup_menu_rename_playlist',
+          playlistTitle: playlistToPositionAudioTitles,
+          playlistMenuKeyStr: 'popup_menu_add_audio_position_to_its_title',
+        );
+
+        // Verify the presence of the renamed playlist in the playlist list
+
+        final List<String> audioPositionedTitles = [
+          "27_on va prier maintenant ensemble",
+          "26_Ne laissez pas l’inquiétude remplir votre vie",
+          "25_Nouveau jour pour le Seigneur",
+          "24_Seigneur, ce matin",
+        ];
+
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+          firstAudioListTileIndex: 2,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });    
+    testWidgets(
+          '''Audio item menu "Move Audio to Position" for not yet positioned audio test.''',
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}position_to_audo_title_test",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
+
+        _loadSettingsMap();
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+        await app.main();
+        await tester.pumpAndSettle();
+
+        const String playlistToPositionAudioTitles = 'Prières 2';
+
+        // Select the playlistToPositionAudioTitles playlist
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: playlistToPositionAudioTitles,
+        );
+
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: playlistToPositionAudioTitles,
+          playlistMenuKeyStr: 'popup_menu_add_audio_position_to_its_title',
+        );
+
+        // Verify the presence of the renamed playlist in the playlist list
+
+        final List<String> audioPositionedTitles = [
+          "27_on va prier maintenant ensemble",
+          "26_Ne laissez pas l’inquiétude remplir votre vie",
+          "25_Nouveau jour pour le Seigneur",
+          "24_Seigneur, ce matin",
+        ];
+
+        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          tester: tester,
+          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+          firstAudioListTileIndex: 3,
         );
 
         // Enter the new playlist name
@@ -38609,7 +38681,7 @@ void main() {
 
         // Verify the initial value of the TextField
 
-        expect(textField.controller!.text, playlistToRenametitle);
+        expect(textField.controller!.text, playlistToPositionAudioTitles);
 
         // Enter the new playlist title
 
@@ -38625,138 +38697,6 @@ void main() {
         await tester.tap(find.byKey(const Key('playlistRenameButton')));
         await tester.pumpAndSettle();
 
-        // Verify the presence of the renamed playlist in the playlist list
-
-        final List<String> playlistsTitles = [
-          "local renamed",
-          "temp",
-          "local two",
-        ];
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: playlistsTitles,
-        );
-
-        // Verify the id and title in the renamed playlist info
-
-        // First, find the Playlist ListTile Text widget of 'local renamed'
-        final Finder playlistToExamineInfoTextWidgetFinder =
-            find.text(modifiedPlaylistTitle);
-
-        // Then obtain the Playlist ListTile widget enclosing the Text widget
-        // by finding its ancestor
-        final Finder playlistWithCommentedAudioListTileWidgetFinder =
-            find.ancestor(
-          of: playlistToExamineInfoTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the playlist and tap on it
-        final Finder playlistListTileLeadingMenuIconButton = find.descendant(
-          of: playlistWithCommentedAudioListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(playlistListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle(); // Wait for popup menu to appear
-
-        // Now find the playlist info popup menu item and tap on it
-        // to open the PlaylistInfoDialog
-        final Finder popupPlaylistInfoMenuItem =
-            find.byKey(const Key("popup_menu_display_playlist_info"));
-
-        await tester.tap(popupPlaylistInfoMenuItem);
-        await tester.pumpAndSettle();
-
-        // Verify the playlist id
-
-        final Text playlistIdTextWidget =
-            tester.widget<Text>(find.byKey(const Key('playlist_id_key')));
-
-        expect(
-          playlistIdTextWidget.data,
-          modifiedPlaylistTitle,
-        );
-
-        // Verify the playlist title
-
-        final Text playlistTitleTextWidget =
-            tester.widget<Text>(find.byKey(const Key('playlist_title_key')));
-
-        expect(
-          playlistTitleTextWidget.data,
-          modifiedPlaylistTitle,
-        );
-
-        // Verify the playlist download directory
-
-        final String modifiedPlaylistDirPath =
-            '$kPlaylistDownloadRootPathWindowsTest${path.separator}$modifiedPlaylistTitle';
-        final Text playlistDownloadDirectoryTextWidget = tester
-            .widget<Text>(find.byKey(const Key('playlist_download_path_key')));
-
-        expect(
-          playlistDownloadDirectoryTextWidget.data,
-          modifiedPlaylistDirPath,
-        );
-
-        // Verify the playlist url
-
-        final String modifiedPlaylistUrl = '';
-        final Text playlistUrlTextWidget =
-            tester.widget<Text>(find.byKey(const Key('playlist_url_key')));
-
-        expect(
-          playlistUrlTextWidget.data,
-          modifiedPlaylistUrl,
-        );
-
-        // Now find the ok button of the playlist info dialog
-        // and tap on it
-        await tester.tap(find.byKey(const Key('playlist_info_ok_button_key')));
-        await tester.pumpAndSettle();
-
-        // Verify that the modified playlist download directory exists
-        expect(Directory(modifiedPlaylistDirPath).existsSync(), isTrue);
-
-        // Verify that the modified playlist json file exists
-        final String modifiedPlaylistJsonFilePath =
-            '$modifiedPlaylistDirPath${path.separator}$modifiedPlaylistTitle.json';
-        expect(File(modifiedPlaylistJsonFilePath).existsSync(), isTrue);
-
-        // Load the modified playlist from the json file
-        // and verify its modified properties
-
-        Playlist loadedPlaylist = JsonDataService.loadFromFile(
-          jsonPathFileName: modifiedPlaylistJsonFilePath,
-          type: Playlist,
-        );
-
-        // Verify the loaded playlist title
-        expect(loadedPlaylist.title, modifiedPlaylistTitle);
-
-        // Verify the loaded playlist id
-        expect(loadedPlaylist.id, modifiedPlaylistTitle);
-
-        // Verify the loaded playlist download directory
-        expect(loadedPlaylist.downloadPath, modifiedPlaylistDirPath);
-
-        // Verify the loaded playlist url
-        expect(loadedPlaylist.url, "");
-
-        // Load the application picture audio map from the
-        // application picture audio map json file and
-        // verify its content.
-
-        applicationPictureAudioMap = pictureVM.readAppPictureAudioMap();
-
-        _verifyAppPictureAudioMapContent(
-          applicationPictureAudioMap: applicationPictureAudioMap,
-          wallpaperPlaylistTitle: modifiedPlaylistTitle,
-          liguriaPlaylistTitle: 'temp',
-        );
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
