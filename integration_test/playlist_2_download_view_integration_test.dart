@@ -38540,170 +38540,205 @@ void main() {
     });
   });
   group('Position setting to Audio validVideoTitle tests', () {
-     testWidgets(
-          '''Playlist item menu "Add Position to Audio's Title" test.''',
-          (WidgetTester tester) async {
-        // Purge the test playlist directory if it exists so that the
-        // playlist list is empty
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kApplicationPathWindowsTest,
-        );
+    testWidgets('''Playlist item menu "Add Position to Audio's Title" test.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
 
-        // Copy the test initial audio data to the app dir
-        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-          sourceRootPath:
-              "$kDownloadAppTestSavedDataDir${path.separator}position_to_audo_title_test",
-          destinationRootPath: kApplicationPathWindowsTest,
-        );
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}position_to_audo_title_test",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
 
-        _loadSettingsMap();
+      _loadSettingsMap();
 
-        final SettingsDataService settingsDataService = SettingsDataService(
-          isTest: true,
-        );
+      final SettingsDataService settingsDataService = SettingsDataService(
+        isTest: true,
+      );
 
-        // Load the settings from the json file. This is necessary
-        // otherwise the ordered playlist titles will remain empty
-        // and the playlist list will not be filled with the
-        // playlists available in the app test dir
-        await settingsDataService.loadSettingsFromFile(
-            settingsJsonPathFileName:
-                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-        await app.main();
-        await tester.pumpAndSettle();
+      await app.main();
+      await tester.pumpAndSettle();
 
-        const String playlistToPositionAudioTitles = 'Prières 2';
+      const String playlistToPositionAudioTitles = 'Prières 2';
 
-        // Select the playlistToPositionAudioTitles playlist
-        await IntegrationTestUtil.selectPlaylist(
-          tester: tester,
-          playlistToSelectTitle: playlistToPositionAudioTitles,
-        );
+      // Select the playlistToPositionAudioTitles playlist
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: playlistToPositionAudioTitles,
+      );
 
-        await IntegrationTestUtil.typeOnPlaylistMenuItem(
-          tester: tester,
-          playlistTitle: playlistToPositionAudioTitles,
-          playlistMenuKeyStr: 'popup_menu_add_audio_position_to_its_title',
-        );
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: playlistToPositionAudioTitles,
+        playlistMenuKeyStr: 'popup_menu_add_audio_position_to_its_title',
+      );
 
-        // Verify the presence of the renamed playlist in the playlist list
+      // Verify the presence of the renamed playlist in the playlist list
 
-        final List<String> audioPositionedTitles = [
-          "27_on va prier maintenant ensemble",
-          "26_Ne laissez pas l’inquiétude remplir votre vie",
-          "25_Nouveau jour pour le Seigneur",
-          "24_Seigneur, ce matin",
-        ];
+      final List<String> audioPositionedTitles = [
+        "27_on va prier maintenant ensemble",
+        "26_Ne laissez pas l’inquiétude remplir votre vie",
+        "25_Nouveau jour pour le Seigneur",
+        "24_Seigneur, ce matin",
+      ];
 
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 2,
-        );
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+        firstAudioListTileIndex: 2,
+      );
 
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kApplicationPathWindowsTest,
-        );
-      });    
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
     testWidgets(
-          '''Audio item menu "Move Audio to Position" for not yet positioned audio test.''',
-          (WidgetTester tester) async {
-        // Purge the test playlist directory if it exists so that the
-        // playlist list is empty
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kApplicationPathWindowsTest,
-        );
+        '''Audio item menu "Move Audio to Position" for not yet positioned audio test.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
 
-        // Copy the test initial audio data to the app dir
-        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-          sourceRootPath:
-              "$kDownloadAppTestSavedDataDir${path.separator}position_to_audo_title_test",
-          destinationRootPath: kApplicationPathWindowsTest,
-        );
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}position_to_audo_title_test",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
 
-        _loadSettingsMap();
+      _loadSettingsMap();
 
-        final SettingsDataService settingsDataService = SettingsDataService(
-          isTest: true,
-        );
+      final SettingsDataService settingsDataService = SettingsDataService(
+        isTest: true,
+      );
 
-        // Load the settings from the json file. This is necessary
-        // otherwise the ordered playlist titles will remain empty
-        // and the playlist list will not be filled with the
-        // playlists available in the app test dir
-        await settingsDataService.loadSettingsFromFile(
-            settingsJsonPathFileName:
-                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-        await app.main();
-        await tester.pumpAndSettle();
+      await app.main();
+      await tester.pumpAndSettle();
 
-        const String playlistToPositionAudioTitles = 'Prières 2';
+      // Tap the 'Toggle List' button to hide the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester
+          .pumpAndSettle(); // Enter the not yet positioned audio position
 
-        // Select the playlistToPositionAudioTitles playlist
-        await IntegrationTestUtil.selectPlaylist(
-          tester: tester,
-          playlistToSelectTitle: playlistToPositionAudioTitles,
-        );
+      // Upload the audio list
 
-        await IntegrationTestUtil.typeOnPlaylistMenuItem(
-          tester: tester,
-          playlistTitle: playlistToPositionAudioTitles,
-          playlistMenuKeyStr: 'popup_menu_add_audio_position_to_its_title',
-        );
+      // Find the audio list widget using its key
+      final listFinder = find.byKey(const Key('audio_list'));
 
-        // Verify the presence of the renamed playlist in the playlist list
+      // Perform the scroll up action
+      await tester.drag(listFinder, const Offset(0, 3000));
+      await tester.pumpAndSettle();
 
-        final List<String> audioPositionedTitles = [
-          "27_on va prier maintenant ensemble",
-          "26_Ne laissez pas l’inquiétude remplir votre vie",
-          "25_Nouveau jour pour le Seigneur",
-          "24_Seigneur, ce matin",
-        ];
+      // Now we want to tap the popup menu of the unique Audio ListTile
+      // "audio learn test short video one"
 
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 3,
-        );
+      const String audioToPositionTitle =
+          "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus";
 
-        // Enter the new playlist name
+      // First, find the Audio sublist ListTile Text widget
+      final Finder audioToPositionTitleTextWidgetFinder =
+          find.text(audioToPositionTitle);
 
-        // Find the TextField using the Key
-        final Finder textFieldFinder =
-            find.byKey(const Key('playlistTitleModificationTextField'));
+      // Then obtain the Audio ListTile widget enclosing the Text widget by
+      // finding its ancestor
+      final Finder audioToPositionListTileWidgetFinder = find.ancestor(
+        of: audioToPositionTitleTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
 
-        // Retrieve the TextField widget
-        final TextField textField = tester.widget<TextField>(textFieldFinder);
+      // Now find the leading menu icon button of the Audio ListTile
+      // and tap on it
+      final Finder audioToPositionListTileLeadingMenuIconButton =
+          find.descendant(
+        of: audioToPositionListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
 
-        // Verify the initial value of the TextField
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
 
-        expect(textField.controller!.text, playlistToPositionAudioTitles);
+      // Now find the move audio popup menu item and tap on it
+      final Finder popupMoveAudioMenuItem =
+          find.byKey(const Key("popup_menu_move_audio_to_position"));
 
-        // Enter the new playlist title
+      await tester.tap(popupMoveAudioMenuItem);
+      await tester.pumpAndSettle();
 
-        const String modifiedPlaylistTitle = 'local renamed';
+      // Find the TextField using the Key
+      final Finder textFieldFinder =
+          find.byKey(const Key('audioPositionModificationTextField'));
 
-        await tester.enterText(
-          textFieldFinder,
-          modifiedPlaylistTitle,
-        );
-        await tester.pumpAndSettle();
+      // Retrieve the TextField widget
+      final TextField textField = tester.widget<TextField>(textFieldFinder);
 
-        // Now tap the rename button
-        await tester.tap(find.byKey(const Key('playlistRenameButton')));
-        await tester.pumpAndSettle();
+      // Verify the initial value of the TextField
 
+      expect(textField.controller!.text, "");
 
-        // Purge the test playlist directory so that the created test
-        // files are not uploaded to GitHub
-        DirUtil.deleteFilesInDirAndSubDirs(
-          rootPath: kApplicationPathWindowsTest,
-        );
-      });    
+      // Enter the Audio position
+
+      const String audioPosition = '4';
+
+      await tester.enterText(
+        textFieldFinder,
+        audioPosition,
+      );
+      await tester.pumpAndSettle();
+
+      // Now tap the 'Move'' button
+      await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+      await tester.pumpAndSettle();
+
+      // Verify the presence of the renamed playlist in the playlist list
+
+      final List<String> audioPositionedTitles = [
+        "7_Prière au Seigneur",
+        "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+        "5_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+        "4_Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
+        "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+        "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+        "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+      ];
+
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+        firstAudioListTileIndex: 1,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
   });
 }
 
