@@ -119,7 +119,7 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
       },
       child: AlertDialog(
         title: Text(
-          key: const Key('audioModificationDialogTitleKey'),
+          key: const Key('confirmWithOptionDialogTitleKey'),
           titleStr,
         ),
         actionsPadding: kDialogActionsPadding,
