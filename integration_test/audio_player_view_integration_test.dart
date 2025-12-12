@@ -2827,7 +2827,9 @@ void main() {
           find.text(nextDownloadedAudioTitle);
 
       await tester.tap(toSelectAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // check the current audio's position
       expect(find.text('19:05'), findsOneWidget);
@@ -3640,7 +3642,9 @@ void main() {
           find.text(toSelectAudioTitle);
 
       await tester.tap(toSelectAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // check the current audio's position
       expect(find.text('10:00'), findsOneWidget);
@@ -4491,7 +4495,9 @@ void main() {
           find.text(toSelectAudioTitle);
 
       await tester.tap(toSelectAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // check the current audio's changed position
       expect(find.text('10:00'), findsOneWidget);
