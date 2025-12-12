@@ -101,7 +101,7 @@ class _PlaylistRenameDialogState extends State<PlaylistRenameDialog>
           children: [
             Flexible(
               child: Text(
-                key: const Key('audioModificationDialogTitleKey'),
+                key: const Key('playlistRenameDialogTitleKey'),
                 titleStr,
               ),
             ),

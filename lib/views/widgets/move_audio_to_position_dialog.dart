@@ -98,7 +98,7 @@ class _MoveAudioToPositionDialogState extends State<MoveAudioToPositionDialog>
           children: [
             Flexible(
               child: Text(
-                key: const Key('audioModificationDialogTitleKey'),
+                key: const Key('audioPositionMoveDialogTitleKey'),
                 titleStr,
               ),
             ),
