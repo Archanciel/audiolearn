@@ -132,7 +132,7 @@ class _MoveAudioToPositionDialogState extends State<MoveAudioToPositionDialog>
               const SizedBox.shrink(),
               createFlexibleEditableRowFunction(
                 valueTextFieldWidgetKey:
-                    const Key('playlistTitleModificationTextField'),
+                    const Key('audioPositionModificationTextField'),
                 context: context,
                 label: labelStr,
                 labelAndTextFieldTooltip: labelAndTextFieldTooltipStr,
