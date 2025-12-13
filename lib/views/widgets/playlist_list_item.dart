@@ -787,7 +787,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   dialogContent:
                       AppLocalizations.of(context)!.deletePlaylistDialogComment(
                     playlist.downloadedAudioLst.length,
-                    commentVMlistenFalse.getPlaylistAudioCommentNumber(
+                    commentVMlistenFalse.getPlaylistAudioCommentJsonFilesNumber(
                       playlist: playlist,
                     ),
                     playlistListVMlistenFalse.getPlaylistAudioPictureNumber(
