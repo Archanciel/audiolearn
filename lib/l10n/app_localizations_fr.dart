@@ -2578,4 +2578,7 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get audioPositionTooltip =>
       'Definir la position qui sera ajoutée au titre de l\'audio.';
+
+  @override
+  String get extractCommentsToMp3TextButton => 'Commentaires dans un MP3';
 }

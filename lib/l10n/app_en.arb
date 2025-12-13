@@ -1153,5 +1153,6 @@
   "moveAudioToPosition": "Move Audio to Int Position",
   "audioIntPositionLabel": "Audio int position",
   "moveAudioToPositionButton": "Move",
-  "audioPositionTooltip": "Define the int position which will be addid to the audio title."
+  "audioPositionTooltip": "Define the int position which will be addid to the audio title.",
+  "extractCommentsToMp3TextButton": "Extract comments to MP3"
 }
