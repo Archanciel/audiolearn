@@ -502,7 +502,7 @@ class CommentVM extends ChangeNotifier {
     return playlistAudiosCommentsMap;
   }
 
-  int getPlaylistAudioCommentNumber({
+  int getPlaylistAudioCommentJsonFilesNumber({
     required Playlist playlist,
   }) {
     String playlistCommentPath = "${playlist.downloadPath}${path.separator}$kCommentDirName";
@@ -511,6 +511,23 @@ class CommentVM extends ChangeNotifier {
       directoryPath: playlistCommentPath,
       fileExtension: 'json',
     );
+  }
+
+  int getPlaylistAudioCommentNumber({
+    required Playlist playlist,
+  }) {
+    int commentNumber = 0;
+
+    Map<String, List<Comment>> playlistAudiosCommentsMap =
+        getPlaylistAudioComments(
+      playlist: playlist,
+    );
+
+    for (List<Comment> audioComments in playlistAudiosCommentsMap.values) {
+      commentNumber += audioComments.length;
+    }
+
+    return commentNumber;
   }
 
   /// Method called when te user clicks on play icon of a comment listed in
