@@ -12,7 +12,7 @@ import 'package:path/path.dart' as path;
 // youtube_explode_dart Playlist class name.
 import 'package:youtube_explode_dart/youtube_explode_dart.dart' as yt;
 
-import '../models/audio_file.dart';
+import '../models/text_to_mp3_audio_file.dart';
 import '../models/comment.dart';
 import '../services/settings_data_service.dart';
 import '../services/json_data_service.dart';
@@ -1896,7 +1896,7 @@ class AudioDownloadVM extends ChangeNotifier {
   Future<void> importConvertedAudioFileInPlaylist({
     required CommentVM commentVMlistenFalse,
     required Playlist targetPlaylist,
-    required AudioFile currentAudioFile,
+    required TextToMp3AudioFile currentAudioFile,
     required String commentTitle,
     required bool wasConvertedAudioAdded,
   }) async {
