@@ -24175,7 +24175,7 @@ void main() {
             // Add a delay to allow the download to finish. Since a mock
             // AudioDownloadVM is used, the download will be simulated and
             // will not take time.
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 6; i++) {
               await Future.delayed(const Duration(seconds: 2));
               await tester.pumpAndSettle();
             }
@@ -24525,7 +24525,7 @@ void main() {
             // Add a delay to allow the download to finish. Since a mock
             // AudioDownloadVM is used, the download will be simulated and
             // will not take time.
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 6; i++) {
               await Future.delayed(const Duration(seconds: 2));
               await tester.pumpAndSettle();
             }
@@ -24876,7 +24876,7 @@ void main() {
             // Add a delay to allow the download to finish. Since a mock
             // AudioDownloadVM is used, the download will be simulated and
             // will not take time.
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 6; i++) {
               await Future.delayed(const Duration(seconds: 2));
               await tester.pumpAndSettle();
             }
@@ -25225,7 +25225,7 @@ void main() {
             // Add a delay to allow the download to finish. Since a mock
             // AudioDownloadVM is used, the download will be simulated and
             // will not take time.
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 6; i++) {
               await Future.delayed(const Duration(seconds: 2));
               await tester.pumpAndSettle();
             }
@@ -28178,7 +28178,7 @@ void main() {
             // Add a delay to allow the download to finish. Since a mock
             // AudioDownloadVM is used, the download will be simulated and
             // will not take time.
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 6; i++) {
               await Future.delayed(const Duration(seconds: 2));
               await tester.pumpAndSettle();
             }
@@ -28528,7 +28528,7 @@ void main() {
             // Add a delay to allow the download to finish. Since a mock
             // AudioDownloadVM is used, the download will be simulated and
             // will not take time.
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 6; i++) {
               await Future.delayed(const Duration(seconds: 2));
               await tester.pumpAndSettle();
             }
