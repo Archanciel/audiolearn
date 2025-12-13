@@ -1,11 +1,11 @@
-class AudioFile {
+class TextToMp3AudioFile {
   final String id;
   final String text;
   final String filePath;
   final DateTime createdAt;
   final int sizeBytes;
 
-  AudioFile({
+  TextToMp3AudioFile({
     required this.id,
     required this.text,
     required this.filePath,
@@ -23,8 +23,8 @@ class AudioFile {
     };
   }
 
-  factory AudioFile.fromJson(Map<String, dynamic> json) {
-    return AudioFile(
+  factory TextToMp3AudioFile.fromJson(Map<String, dynamic> json) {
+    return TextToMp3AudioFile(
       id: json['id'],
       text: json['text'],
       filePath: json['filePath'],

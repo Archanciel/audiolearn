@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
-import '../models/audio_file.dart';
+import '../models/text_to_mp3_audio_file.dart';
 import '../viewmodels/warning_message_vm.dart';
 import 'logging_service.dart';
 
@@ -64,7 +64,7 @@ class DirectGoogleTtsService {
     return sanitized;
   }
 
-  Future<AudioFile?> convertTextToMP3({
+  Future<TextToMp3AudioFile?> convertTextToMP3({
     required WarningMessageVM warningMessageVMlistenFalse,
     required String text,
     required String customFileName,
@@ -100,7 +100,7 @@ class DirectGoogleTtsService {
         ];
       }
 
-      AudioFile? result;
+      TextToMp3AudioFile? result;
 
       // Essayer chaque voix jusqu'à en trouver une qui marche
       for (final voice in voicesToTry) {
@@ -180,7 +180,7 @@ class DirectGoogleTtsService {
                 await fallbackFile.writeAsBytes(audioBytes);
                 logInfo('✅ Fichier sauvegardé dans Download: $fallbackPath');
 
-                result = AudioFile(
+                result = TextToMp3AudioFile(
                   id: DateTime.now().millisecondsSinceEpoch.toString(),
                   text: text,
                   filePath: fallbackPath,
@@ -192,7 +192,7 @@ class DirectGoogleTtsService {
               }
             }
 
-            result ??= AudioFile(
+            result ??= TextToMp3AudioFile(
               id: DateTime.now().millisecondsSinceEpoch.toString(),
               text: text,
               filePath: filePath,

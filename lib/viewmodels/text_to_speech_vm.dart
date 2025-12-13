@@ -2,7 +2,7 @@ import 'package:audiolearn/viewmodels/audio_player_vm.dart';
 import 'package:flutter/material.dart';
 import '../services/direct_google_tts_service.dart';
 import '../services/logging_service.dart';
-import '../models/audio_file.dart';
+import '../models/text_to_mp3_audio_file.dart';
 import '../services/text_to_speech_service.dart';
 import 'warning_message_vm.dart';
 
@@ -12,7 +12,7 @@ class TextToSpeechVM extends ChangeNotifier {
       DirectGoogleTtsService();
   String _inputText = '';
   bool _isConverting = false;
-  AudioFile? _currentAudioFile;
+  TextToMp3AudioFile? _currentAudioFile;
 
   // Silence duration setting
   double _silenceDurationSeconds = 1.0;
@@ -23,7 +23,7 @@ class TextToSpeechVM extends ChangeNotifier {
   // Used to indicate if a conversion is in progress
   bool get isConverting => _isConverting;
 
-  AudioFile? get currentAudioFile => _currentAudioFile;
+  TextToMp3AudioFile? get currentAudioFile => _currentAudioFile;
   double get silenceDurationSeconds => _silenceDurationSeconds;
 
   bool _isSpeaking = false;
@@ -190,7 +190,7 @@ class TextToSpeechVM extends ChangeNotifier {
     );
 
     try {
-      AudioFile? audioFile;
+      TextToMp3AudioFile? audioFile;
 
       // CRITICAL FIX: Don't modify _inputText directly
       // Create a processed copy instead

@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../constants.dart';
 import '../../models/audio.dart';
-import '../../models/audio_file.dart';
+import '../../models/text_to_mp3_audio_file.dart';
 import '../../models/help_item.dart';
 import '../../models/playlist.dart';
 import '../../models/sort_filter_parameters.dart';
@@ -665,7 +665,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
         clearEndLineChars: _clearEndLineChars,
       );
 
-      AudioFile? currentAudioFile = textToSpeechVMlistenTrue.currentAudioFile;
+      TextToMp3AudioFile? currentAudioFile = textToSpeechVMlistenTrue.currentAudioFile;
 
       if (currentAudioFile != null) {
         if (!context.mounted) return;

@@ -21,7 +21,7 @@ import 'package:ffmpeg_kit_flutter_new/return_code.dart';
 
 import 'package:ffmpeg_kit_flutter_new/ffprobe_kit.dart';
 
-import '../models/audio_file.dart';
+import '../models/text_to_mp3_audio_file.dart';
 import '../models/comment.dart';
 import '../services/settings_data_service.dart';
 import '../services/json_data_service.dart';
@@ -2304,7 +2304,7 @@ class AudioDownloadVM extends ChangeNotifier {
   Future<void> importConvertedAudioFileInPlaylist({
     required CommentVM commentVMlistenFalse,
     required Playlist targetPlaylist,
-    required AudioFile currentAudioFile,
+    required TextToMp3AudioFile currentAudioFile,
     required String commentTitle,
     required bool wasConvertedAudioAdded,
   }) async {
