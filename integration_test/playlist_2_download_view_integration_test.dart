@@ -3787,10 +3787,10 @@ void main() {
         // Enter the two letters of the 'no' search word.
 
         // Select the text field
+        Finder youtubeUrlOrSearchTextFieldyoutubeUrlOrSearchTextField =
+            find.byKey(const Key('youtubeUrlOrSearchTextField'));
         await tester.tap(
-          find.byKey(
-            const Key('youtubeUrlOrSearchTextField'),
-          ),
+          youtubeUrlOrSearchTextFieldyoutubeUrlOrSearchTextField,
         );
         await tester.pumpAndSettle();
 
@@ -32629,6 +32629,7 @@ void main() {
         playlistTitle: playlistTitle,
         playlistMenuKeyStr:
             'popup_menu_restore_playlist_audio_mp3_files_from_zip',
+        dragToBottom: true,
       );
 
       // Verify the displayed confirmation dialog
@@ -32787,6 +32788,7 @@ void main() {
         playlistTitle: playlistTitle,
         playlistMenuKeyStr:
             'popup_menu_restore_playlist_audio_mp3_files_from_zip',
+        dragToBottom: true,
       );
 
       // Verify the displayed confirmation dialog
@@ -38645,7 +38647,7 @@ void main() {
       await tester
           .pumpAndSettle(); // Enter the not yet positioned audio position
 
-      // Verify the the initial ordered audio titles 
+      // Verify the the initial ordered audio titles
 
       List<String> audioPositionedTitles = [
         "7_Prière pour Dieu",
@@ -38736,7 +38738,7 @@ void main() {
       await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
       await tester.pumpAndSettle();
 
-      // Verify the the modified ordered audio titles 
+      // Verify the the modified ordered audio titles
 
       audioPositionedTitles = [
         "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
@@ -38797,7 +38799,7 @@ void main() {
       await tester
           .pumpAndSettle(); // Enter the not yet positioned audio position
 
-      // Verify the the initial ordered audio titles 
+      // Verify the the initial ordered audio titles
 
       List<String> audioPositionedTitles = [
         "7_Prière pour Dieu",
@@ -38818,8 +38820,7 @@ void main() {
       // Now we want to tap the popup menu of the Audio ListTile
       // "6_Prière au Seigneur"
 
-      const String audioToPositionTitle =
-          "6_Prière au Seigneur";
+      const String audioToPositionTitle = "6_Prière au Seigneur";
 
       // First, find the Audio sublist ListTile Text widget
       final Finder audioToPositionTitleTextWidgetFinder =
@@ -38869,7 +38870,7 @@ void main() {
       await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
       await tester.pumpAndSettle();
 
-      // Verify the the modified ordered audio titles 
+      // Verify the the modified ordered audio titles
 
       audioPositionedTitles = [
         "8_Prière pour Dieu",
@@ -39122,11 +39123,14 @@ Future<void> _restorePaylistsAndTheirMp3({
       playlistTitle: restoreMp3FromUniquePlaylistTitle,
       playlistMenuKeyStr:
           'popup_menu_restore_playlist_audio_mp3_files_from_zip',
+      dragToBottom: true,
     );
   }
 
   // Tap on the MP3 Restoration SetValueToTargetDialog Ok button
-  await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+  Finder setValueToTargetOkButton =
+      find.byKey(const Key('setValueToTargetOkButton'));
+  await tester.tap(setValueToTargetOkButton);
   await tester.pumpAndSettle();
 
   // Now tap on the 'A Single ZIP File' button
