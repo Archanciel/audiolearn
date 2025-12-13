@@ -1,13 +1,5 @@
 import 'package:audiolearn/models/audio.dart';
-import 'package:audiolearn/viewmodels/audio_download_vm.dart';
-import 'package:audiolearn/viewmodels/audio_player_vm.dart';
-import 'package:audiolearn/viewmodels/comment_vm.dart';
-import 'package:audiolearn/viewmodels/date_format_vm.dart';
-import 'package:audiolearn/viewmodels/picture_vm.dart';
-import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
-import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 import 'package:audiolearn/views/widgets/convert_text_to_audio_dialog.dart';
-import 'package:audiolearn/views/widgets/set_value_to_target_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -16,10 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:path/path.dart' as path;
 
 import 'package:audiolearn/constants.dart';
-import 'package:audiolearn/services/settings_data_service.dart';
-import 'package:audiolearn/utils/dir_util.dart';
 
-import '../test/viewmodels/mock_audio_download_vm.dart';
 import 'integration_test_util.dart';
 import 'mock_file_picker.dart';
 
