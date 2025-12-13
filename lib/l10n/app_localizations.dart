@@ -4081,6 +4081,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Define the int position which will be addid to the audio title.'**
   String get audioPositionTooltip;
+
+  /// No description provided for @extractCommentsToMp3TextButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Extract comments to MP3'**
+  String get extractCommentsToMp3TextButton;
 }
 
 class _AppLocalizationsDelegate

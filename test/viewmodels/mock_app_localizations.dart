@@ -2654,4 +2654,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get moveAudioToPositionButton => "Move";
+
+  @override
+  String get extractCommentsToMp3TextButton => "Extract comments to MP3";
 }

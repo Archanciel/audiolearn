@@ -1560,5 +1560,6 @@
   "moveAudioToPosition": "Déplacer l'audio à la position",
   "audioIntPositionLabel": "Position audio entière",
   "moveAudioToPositionButton": "Déplacer",
-  "audioPositionTooltip": "Definir la position qui sera ajoutée au titre de l'audio."
+  "audioPositionTooltip": "Definir la position qui sera ajoutée au titre de l'audio.",
+  "extractCommentsToMp3TextButton": "Commentaires dans un MP3"
 }                                   

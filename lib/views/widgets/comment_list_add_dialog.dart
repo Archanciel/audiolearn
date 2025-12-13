@@ -648,29 +648,58 @@ class _CommentListAddDialogContentState
           ),
         ),
         actions: <Widget>[
-          TextButton(
-            key: const Key('closeDialogTextButton'),
-            child: Text(
-              AppLocalizations.of(context)!.closeTextButton,
-              style: (isDarkTheme)
-                  ? kTextButtonStyleDarkMode
-                  : kTextButtonStyleLightMode,
-            ),
-            onPressed: () async {
-              await _whenClosingStopAudioIfPlaying(
-                audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-                commentVMlistenFalse: commentVMlistenTrue,
-                currentAudio: currentAudio,
-              );
-
-              if (CommentDialogManager.hasActiveOverlay) {
-                // Close the dialog if an overlay is active
-                CommentDialogManager.closeCurrentOverlay();
-              } else {
-                // Otherwise, close the normal dialog
-                Navigator.of(context).pop();
-              }
-            },
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                key: const Key('extractCommentsToMp3TextButton'),
+                child: Text(
+                  AppLocalizations.of(context)!.extractCommentsToMp3TextButton,
+                  style: (isDarkTheme)
+                      ? kTextButtonStyleDarkMode
+                      : kTextButtonStyleLightMode,
+                ),
+                onPressed: () async {
+                  await _whenClosingStopAudioIfPlaying(
+                    audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+                    commentVMlistenFalse: commentVMlistenTrue,
+                    currentAudio: currentAudio,
+                  );
+              
+                  if (CommentDialogManager.hasActiveOverlay) {
+                    // Close the dialog if an overlay is active
+                    CommentDialogManager.closeCurrentOverlay();
+                  } else {
+                    // Otherwise, close the normal dialog
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+              TextButton(
+                key: const Key('closeDialogTextButton'),
+                child: Text(
+                  AppLocalizations.of(context)!.closeTextButton,
+                  style: (isDarkTheme)
+                      ? kTextButtonStyleDarkMode
+                      : kTextButtonStyleLightMode,
+                ),
+                onPressed: () async {
+                  await _whenClosingStopAudioIfPlaying(
+                    audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+                    commentVMlistenFalse: commentVMlistenTrue,
+                    currentAudio: currentAudio,
+                  );
+              
+                  if (CommentDialogManager.hasActiveOverlay) {
+                    // Close the dialog if an overlay is active
+                    CommentDialogManager.closeCurrentOverlay();
+                  } else {
+                    // Otherwise, close the normal dialog
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+            ],
           ),
         ],
       ),
