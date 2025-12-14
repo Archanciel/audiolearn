@@ -16,6 +16,7 @@ import '../../viewmodels/date_format_vm.dart';
 import '../../viewmodels/picture_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../screen_mixin.dart';
+import 'audio_extractor_dialog.dart';
 import 'comment_add_edit_dialog.dart';
 
 /// A global manager class for handling comment dialog overlays throughout the application.
@@ -657,19 +658,24 @@ class _CommentListAddDialogContentState
                   message: AppLocalizations.of(context)!
                       .extractCommentsToMp3TextButtonTooltip,
                   child: Text(
-                    AppLocalizations.of(context)!.extractCommentsToMp3TextButton,
+                    AppLocalizations.of(context)!
+                        .extractCommentsToMp3TextButton,
                     style: (isDarkTheme)
                         ? kTextButtonStyleDarkMode
                         : kTextButtonStyleLightMode,
                   ),
                 ),
                 onPressed: () async {
-                  await _whenClosingStopAudioIfPlaying(
-                    audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-                    commentVMlistenFalse: commentVMlistenTrue,
-                    currentAudio: currentAudio,
+                  showDialog<void>(
+                    context: context,
+                    barrierDismissible:
+                        false, // This line prevents the dialog from
+                    // closing when tapping outside the dialog
+                    builder: (BuildContext context) {
+                      return AudioExtractorDialog();
+                    },
                   );
-              
+
                   if (CommentDialogManager.hasActiveOverlay) {
                     // Close the dialog if an overlay is active
                     CommentDialogManager.closeCurrentOverlay();
@@ -693,7 +699,7 @@ class _CommentListAddDialogContentState
                     commentVMlistenFalse: commentVMlistenTrue,
                     currentAudio: currentAudio,
                   );
-              
+
                   if (CommentDialogManager.hasActiveOverlay) {
                     // Close the dialog if an overlay is active
                     CommentDialogManager.closeCurrentOverlay();
