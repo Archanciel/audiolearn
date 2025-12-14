@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:audiolearn/models/help_item.dart';
+import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +21,12 @@ import 'confirm_action_dialog.dart';
 class AudioExtractorDialog extends StatefulWidget {
   final SettingsDataService settingsDataService = SettingsDataService();
   final Audio currentAudio;
+  final CommentVM commentVMlistenTrue;
 
   AudioExtractorDialog({
     super.key,
     required this.currentAudio,
+    required this.commentVMlistenTrue,
   });
 
   @override

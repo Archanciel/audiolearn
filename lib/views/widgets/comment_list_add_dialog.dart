@@ -548,7 +548,7 @@ class _CommentListAddDialogContentState
               event.logicalKey == LogicalKeyboardKey.numpadEnter) {
             await _whenClosingStopAudioIfPlaying(
               audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-              commentVMlistenFalse: commentVMlistenTrue,
+              commentVMlistenTrue: commentVMlistenTrue,
               currentAudio: currentAudio,
             );
 
@@ -674,6 +674,7 @@ class _CommentListAddDialogContentState
                     builder: (BuildContext context) {
                       return AudioExtractorDialog(
                         currentAudio: currentAudio,
+                        commentVMlistenTrue: commentVMlistenTrue,
                       );
                     },
                   );
@@ -698,7 +699,7 @@ class _CommentListAddDialogContentState
                 onPressed: () async {
                   await _whenClosingStopAudioIfPlaying(
                     audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
-                    commentVMlistenFalse: commentVMlistenTrue,
+                    commentVMlistenTrue: commentVMlistenTrue,
                     currentAudio: currentAudio,
                   );
 
@@ -721,7 +722,7 @@ class _CommentListAddDialogContentState
   /// Method called when clicking on dialog close button or on enter (on Windows).
   Future<void> _whenClosingStopAudioIfPlaying({
     required AudioPlayerVM audioPlayerVMlistenFalse,
-    required CommentVM commentVMlistenFalse,
+    required CommentVM commentVMlistenTrue,
     required Audio currentAudio,
   }) async {
     // Calling setCurrentAudio() when closing the comment
@@ -748,7 +749,7 @@ class _CommentListAddDialogContentState
     // Useful in order to redisplay the second line play/pause
     // icon in the audio player view containing a picture when
     // the comment list dialog is closed.
-    commentVMlistenFalse.wasCommentDialogOpened = false;
+    commentVMlistenTrue.wasCommentDialogOpened = false;
   }
 
   List<Widget> _buildAudioCommentsLst({
