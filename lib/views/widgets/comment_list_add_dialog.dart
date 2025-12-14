@@ -653,11 +653,15 @@ class _CommentListAddDialogContentState
             children: [
               TextButton(
                 key: const Key('extractCommentsToMp3TextButton'),
-                child: Text(
-                  AppLocalizations.of(context)!.extractCommentsToMp3TextButton,
-                  style: (isDarkTheme)
-                      ? kTextButtonStyleDarkMode
-                      : kTextButtonStyleLightMode,
+                child: Tooltip(
+                  message: AppLocalizations.of(context)!
+                      .extractCommentsToMp3TextButtonTooltip,
+                  child: Text(
+                    AppLocalizations.of(context)!.extractCommentsToMp3TextButton,
+                    style: (isDarkTheme)
+                        ? kTextButtonStyleDarkMode
+                        : kTextButtonStyleLightMode,
+                  ),
                 ),
                 onPressed: () async {
                   await _whenClosingStopAudioIfPlaying(

@@ -2581,4 +2581,8 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get extractCommentsToMp3TextButton => 'Commentaires dans un MP3';
+
+  @override
+  String get extractCommentsToMp3TextButtonTooltip =>
+      'Extraire les segments audio définis par les commentaires dans un fichier MP3.';
 }

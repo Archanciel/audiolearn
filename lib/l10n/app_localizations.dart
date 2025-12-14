@@ -4087,6 +4087,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Extract comments to MP3'**
   String get extractCommentsToMp3TextButton;
+
+  /// No description provided for @extractCommentsToMp3TextButtonTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Extract audio segments defined by comment timestamps to MP3.'**
+  String get extractCommentsToMp3TextButtonTooltip;
 }
 
 class _AppLocalizationsDelegate

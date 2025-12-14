@@ -2657,4 +2657,8 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get extractCommentsToMp3TextButton => "Extract comments to MP3";
+
+  @override
+  String get extractCommentsToMp3TextButtonTooltip =>
+      "Extract audio segments defined by comment timestamps to MP3.";
 }
