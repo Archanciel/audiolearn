@@ -672,7 +672,9 @@ class _CommentListAddDialogContentState
                         false, // This line prevents the dialog from
                     // closing when tapping outside the dialog
                     builder: (BuildContext context) {
-                      return AudioExtractorDialog();
+                      return AudioExtractorDialog(
+                        currentAudio: currentAudio,
+                      );
                     },
                   );
 

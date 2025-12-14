@@ -8,6 +8,7 @@ import 'package:path/path.dart' as path;
 import 'package:provider/provider.dart';
 import '../../l10n/app_localizations.dart';
 
+import '../../models/audio.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../../views/screen_mixin.dart';
 import '../../constants.dart';
@@ -17,15 +18,16 @@ import 'audio_set_speed_dialog.dart';
 import 'confirm_action_dialog.dart';
 
 class AudioExtractorDialog extends StatefulWidget {
-  final SettingsDataService settingsDataService =SettingsDataService();
+  final SettingsDataService settingsDataService = SettingsDataService();
+  final Audio currentAudio;
 
   AudioExtractorDialog({
     super.key,
+    required this.currentAudio,
   });
 
   @override
-  State<AudioExtractorDialog> createState() =>
-      _AudioExtractorDialogState();
+  State<AudioExtractorDialog> createState() => _AudioExtractorDialogState();
 }
 
 class _AudioExtractorDialogState extends State<AudioExtractorDialog>
@@ -330,7 +332,8 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
         barrierDismissible: false,
         builder: (BuildContext context) {
           return ConfirmActionDialog(
-            actionFunction: () => ConfirmActionDialog.choosenConfirmAction, // Return ConfirmAction
+            actionFunction: () => ConfirmActionDialog
+                .choosenConfirmAction, // Return ConfirmAction
             actionFunctionArgs: [],
             dialogTitleOne:
                 AppLocalizations.of(context)!.restorePlaylistTitlesOrderTitle,
@@ -354,7 +357,8 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
             .updatePlaylistRootPathAndSavePlaylistTitleOrder(
           actualPlaylistRootPath: settingsDataServicePlaylistRootPath,
           modifiedPlaylistRootPath: _applicationDialogPlaylistRootPath,
-          playlistTitleOrderPathFileName: '', // empty string means do not restore the
+          playlistTitleOrderPathFileName:
+              '', // empty string means do not restore the
           //                                     previously saved playlist title order
           //                                     since the Cancel button was clicked
         );
@@ -364,7 +368,8 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
       playlistListVMlistenFalse.updatePlaylistRootPathAndSavePlaylistTitleOrder(
         actualPlaylistRootPath: settingsDataServicePlaylistRootPath,
         modifiedPlaylistRootPath: _applicationDialogPlaylistRootPath,
-        playlistTitleOrderPathFileName: '', // empty string means do not restore the
+        playlistTitleOrderPathFileName:
+            '', // empty string means do not restore the
         //                                     previously saved playlist title order
         //                                     which does not exist
       );
