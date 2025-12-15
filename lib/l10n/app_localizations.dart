@@ -4124,6 +4124,18 @@ abstract class AppLocalizations {
   /// **'Are you sure you want to remove this comment ?'**
   String get deleteCommentExplanation;
 
+  /// No description provided for @clearAllCommentDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear all Comments'**
+  String get clearAllCommentDialogTitle;
+
+  /// No description provided for @clearAllCommentExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to clear all comments ?'**
+  String get clearAllCommentExplanation;
+
   /// No description provided for @maxDuration.
   ///
   /// In en, this message translates to:
@@ -4165,6 +4177,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Total duration'**
   String get totalDuration;
+
+  /// No description provided for @clearAllButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear all'**
+  String get clearAllButton;
+
+  /// No description provided for @extractMp3Button.
+  ///
+  /// In en, this message translates to:
+  /// **'Extract MP3'**
+  String get extractMp3Button;
 }
 
 class _AppLocalizationsDelegate

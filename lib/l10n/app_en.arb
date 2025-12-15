@@ -1161,11 +1161,15 @@
   "addCommentDialogTitle": "Add Comment",
   "deleteCommentDialogTitle": "Remove Comment",
   "deleteCommentExplanation": "Are you sure you want to remove this comment ?",
+  "clearAllCommentDialogTitle": "Clear all Comments",
+  "clearAllCommentExplanation": "Are you sure you want to clear all comments ?",
   "maxDuration": "Total audio duration",
   "startPositionLabel": "Start position (h:mm:ss.t)",
   "endPositionLabel": "End position (h:mm:ss.t)",
   "silenceDurationLabel": "Silence duration after (h:mm:ss.t)",
   "duration": "Duration",
   "silence": "silence",
-  "totalDuration": "Total duration"
+  "totalDuration": "Total duration",
+  "clearAllButton": "Clear all",
+  "extractMp3Button": "Extract MP3"
 }
