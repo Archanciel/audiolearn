@@ -1159,6 +1159,8 @@
   "audioExtractorDialogTitle": "Comments in MP3",
   "editCommentDialogTitle": "Edit Comment",
   "addCommentDialogTitle": "Add Comment",
+  "deleteCommentDialogTitle": "Remove Comment",
+  "deleteCommentExplanation": "Are you sure you want to remove this comment ?",
   "maxDuration": "Total audio duration",
   "startPositionLabel": "Start position (h:mm:ss.t)",
   "endPositionLabel": "End position (h:mm:ss.t)",
