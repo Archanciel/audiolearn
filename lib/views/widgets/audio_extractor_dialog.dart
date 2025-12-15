@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:audiolearn/models/audio_segment.dart';
 import 'package:audiolearn/models/help_item.dart';
 import 'package:audiolearn/services/audio_extractor_service.dart';
-import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/utils/path_util.dart';
 import 'package:audiolearn/utils/time_format_util.dart';
 import 'package:audiolearn/viewmodels/audio_extractor_vm.dart';
@@ -283,7 +282,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                               audioExtractorVM,
                             ),
                             icon: const Icon(Icons.clear_all, size: 18),
-                            label: const Text('Clear All'),
+                            label: Text(AppLocalizations.of(context)!.clearAllButton),
                             style: TextButton.styleFrom(
                               foregroundColor: Colors.red,
                             ),
@@ -296,7 +295,9 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                       onPressed: audioExtractorVM.extractionResult.isProcessing
                           ? null
                           : () => _extractMP3(context: context),
-                      child: const Text('Extract MP3'),
+                      child: Text(
+                        AppLocalizations.of(context)!.extractMp3Button,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     if (audioExtractorVM.extractionResult.isProcessing)
@@ -409,7 +410,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
           ),
           const SizedBox(height: 8),
           Text(
-            'Playing: ${PathUtil.fileName(audioExtractorVM.extractionResult.outputPath!)}',
+            "${AppLocalizations.of(context)!.audioStatePlaying}: ${PathUtil.fileName(audioExtractorVM.extractionResult.outputPath!)}",
             style: const TextStyle(
               fontStyle: FontStyle.italic,
               fontSize: 12,
@@ -469,14 +470,14 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('Clear All Segments'),
-        content: const Text(
-          'Are you sure you want to clear all segments?',
+        title: Text(AppLocalizations.of(context)!.clearAllCommentDialogTitle),
+        content: Text(
+          AppLocalizations.of(context)!.clearAllCommentExplanation,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+            child: Text(AppLocalizations.of(context)!.cancelButton),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -486,7 +487,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
               vm.clearSegments();
               Navigator.of(context).pop();
             },
-            child: const Text('Clear All'),
+            child: Text(AppLocalizations.of(context)!.clearAllButton),
           ),
         ],
       ),

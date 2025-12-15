@@ -2603,6 +2603,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Etes-vous sûr que vous voulez enlever ce commentaire ?';
 
   @override
+  String get clearAllCommentDialogTitle => 'Enlever tous les commentaires';
+
+  @override
+  String get clearAllCommentExplanation =>
+      'Etes-vous sûr que vous voulez enlever tous les commentaires ?';
+
+  @override
   String get maxDuration => 'Durée audio totale';
 
   @override
@@ -2622,4 +2629,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get totalDuration => 'Durée totale';
+
+  @override
+  String get clearAllButton => 'Tout enlever';
+
+  @override
+  String get extractMp3Button => 'Extraire le MP3';
 }

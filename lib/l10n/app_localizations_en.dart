@@ -2577,6 +2577,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Are you sure you want to remove this comment ?';
 
   @override
+  String get clearAllCommentDialogTitle => 'Clear all Comments';
+
+  @override
+  String get clearAllCommentExplanation =>
+      'Are you sure you want to clear all comments ?';
+
+  @override
   String get maxDuration => 'Total audio duration';
 
   @override
@@ -2596,4 +2603,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get totalDuration => 'Total duration';
+
+  @override
+  String get clearAllButton => 'Clear all';
+
+  @override
+  String get extractMp3Button => 'Extract MP3';
 }
