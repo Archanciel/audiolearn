@@ -2661,4 +2661,34 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get extractCommentsToMp3TextButtonTooltip =>
       "Extract audio segments defined by comment timestamps to MP3.";
+
+  @override
+  String get audioExtractorDialogTitle => "MP3 Extractor";
+
+  @override
+  String get editCommentDialogTitle => "Edit Comment";
+
+  @override
+  String get maxDuration => "Max duration";
+
+  @override
+  String get startPositionLabel => "Start position (h:mm:ss.t)";
+
+  @override
+  String get endPositionLabel => "End position (h:mm:ss.t)";
+
+  @override
+  String get silenceDurationLabel => "Silence duration after (h:mm:ss.t)";
+
+  @override
+  String get Duration => "Duration";
+
+  @override
+  String get Silence => "Silence";
+
+  @override
+  String get totalDuration => "Total duration";
+
+  @override
+  String get addCommentDialogTitle => "Add Comment";
 }

@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:audiolearn/viewmodels/audio_extractor_vm.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
+import 'package:audiolearn/viewmodels/extract_mp3_audio_player_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'l10n/app_localizations.dart';
@@ -149,6 +151,12 @@ class MainApp extends StatelessWidget with ScreenMixin {
         ChangeNotifierProvider(create: (_) => audioDownloadVM),
         ChangeNotifierProvider(
           create: (_) => audioPlayerVM,
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ExtractMp3AudioPlayerVM(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => AudioExtractorVM(),
         ),
         ChangeNotifierProvider(
           create: (_) => ThemeProviderVM(

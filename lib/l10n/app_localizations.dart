@@ -4093,6 +4093,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Extract audio segments defined by comment timestamps to MP3.'**
   String get extractCommentsToMp3TextButtonTooltip;
+
+  /// No description provided for @audioExtractorDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Comments in MP3'**
+  String get audioExtractorDialogTitle;
+
+  /// No description provided for @editCommentDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Comment'**
+  String get editCommentDialogTitle;
+
+  /// No description provided for @addCommentDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Comment'**
+  String get addCommentDialogTitle;
+
+  /// No description provided for @maxDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Total audio duration'**
+  String get maxDuration;
+
+  /// No description provided for @startPositionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Start position (h:mm:ss.t)'**
+  String get startPositionLabel;
+
+  /// No description provided for @endPositionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'End position (h:mm:ss.t)'**
+  String get endPositionLabel;
+
+  /// No description provided for @silenceDurationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Silence duration after (h:mm:ss.t)'**
+  String get silenceDurationLabel;
+
+  /// No description provided for @duration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get duration;
+
+  /// No description provided for @silence.
+  ///
+  /// In en, this message translates to:
+  /// **'silence'**
+  String get silence;
+
+  /// No description provided for @totalDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Total duration'**
+  String get totalDuration;
 }
 
 class _AppLocalizationsDelegate

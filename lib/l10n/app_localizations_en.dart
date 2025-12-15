@@ -2559,4 +2559,34 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get extractCommentsToMp3TextButtonTooltip =>
       'Extract audio segments defined by comment timestamps to MP3.';
+
+  @override
+  String get audioExtractorDialogTitle => 'Comments in MP3';
+
+  @override
+  String get editCommentDialogTitle => 'Edit Comment';
+
+  @override
+  String get addCommentDialogTitle => 'Add Comment';
+
+  @override
+  String get maxDuration => 'Total audio duration';
+
+  @override
+  String get startPositionLabel => 'Start position (h:mm:ss.t)';
+
+  @override
+  String get endPositionLabel => 'End position (h:mm:ss.t)';
+
+  @override
+  String get silenceDurationLabel => 'Silence duration after (h:mm:ss.t)';
+
+  @override
+  String get duration => 'Duration';
+
+  @override
+  String get silence => 'silence';
+
+  @override
+  String get totalDuration => 'Total duration';
 }

@@ -1,0 +1,175 @@
+// lib/views/widgets/add_segment_dialog.dart
+import 'package:flutter/material.dart';
+import '../../l10n/app_localizations.dart';
+import '../../models/audio_segment.dart';
+import '../../utils/time_format_util.dart';
+import '../../utils/time_text_input_formatter.dart';
+
+class AddSegmentDialog extends StatefulWidget {
+  final double maxDuration;
+  final AudioSegment? existingSegment;
+
+  const AddSegmentDialog({
+    super.key,
+    required this.maxDuration,
+    this.existingSegment,
+  });
+
+  @override
+  State<AddSegmentDialog> createState() => _AddSegmentDialogState();
+}
+
+class _AddSegmentDialogState extends State<AddSegmentDialog> {
+  late final TextEditingController _startController;
+  late final TextEditingController _endController;
+  late final TextEditingController _silenceController;
+  late final TextEditingController _titleController;
+
+  @override
+  void initState() {
+    super.initState();
+    _startController = TextEditingController(
+      text: TimeFormatUtil.formatSeconds(
+        widget.existingSegment?.startPosition ?? 0,
+      ),
+    );
+    _endController = TextEditingController(
+      text: TimeFormatUtil.formatSeconds(
+        widget.existingSegment?.endPosition ?? 0,
+      ),
+    );
+    _silenceController = TextEditingController(
+      text: TimeFormatUtil.formatSeconds(
+        widget.existingSegment?.silenceDuration ?? 0,
+      ),
+    );
+    _titleController = TextEditingController(
+      text: (widget.existingSegment?.title ?? ''),
+    );
+  }
+
+  @override
+  void dispose() {
+    _startController.dispose();
+    _endController.dispose();
+    _silenceController.dispose();
+    _titleController.dispose();
+    super.dispose();
+  }
+
+  void _saveSegment() {
+    final start = TimeFormatUtil.parseFlexible(_startController.text);
+    final end = TimeFormatUtil.parseFlexible(_endController.text);
+    final silence = TimeFormatUtil.parseFlexible(
+      _silenceController.text,
+    );
+    final title = _titleController.text.trim();
+
+    if (start < 0 || start >= widget.maxDuration) {
+      _showError(
+        'Start position must be between 0 and ${TimeFormatUtil.formatSeconds(widget.maxDuration)}',
+      );
+      return;
+    }
+    if (end <= start || end > widget.maxDuration) {
+      _showError(
+        'End position must be after start and not exceed ${TimeFormatUtil.formatSeconds(widget.maxDuration)}',
+      );
+      return;
+    }
+    if (silence < 0) {
+      _showError('Silence duration cannot be negative');
+      return;
+    }
+    if (title.isEmpty) {
+      _showError('Title cannot be empty');
+      return;
+    }
+
+    Navigator.of(context).pop(
+      AudioSegment(
+        startPosition: start,
+        endPosition: end,
+        silenceDuration: silence,
+        title: title,
+      ),
+    );
+  }
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message), backgroundColor: Colors.red),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(
+        widget.existingSegment != null
+            ? AppLocalizations.of(context)!.editCommentDialogTitle
+            : AppLocalizations.of(context)!.addCommentDialogTitle,
+      ),
+      content: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              controller: _titleController,
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.modifyAudioTitleLabel,
+                border: const OutlineInputBorder(),
+              ),
+              minLines: 1,
+              maxLines: 4,
+            ),
+            const SizedBox(height: 12),
+            Text(
+              "${AppLocalizations.of(context)!.maxDuration}: ${TimeFormatUtil.formatSeconds(widget.maxDuration)}",
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: _startController,
+              inputFormatters: [TimeTextInputFormatter()],
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.startPositionLabel,
+                hintText: '0:00.0',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: _endController,
+              inputFormatters: [TimeTextInputFormatter()],
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.endPositionLabel,
+                hintText: '0:00.0',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: _silenceController,
+              inputFormatters: [TimeTextInputFormatter()],
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.silenceDurationLabel,
+                hintText: '0:00.0',
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(AppLocalizations.of(context)!.cancelButton),
+        ),
+        ElevatedButton(
+          onPressed: _saveSegment,
+          child: Text(AppLocalizations.of(context)!.saveButton),
+        ),
+      ],
+    );
+  }
+}

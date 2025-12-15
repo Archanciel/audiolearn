@@ -229,3 +229,8 @@ const double kMp3ZipFileSizeLimitInMb = 525.0; // 525 required by Android
 // minus fullyListenedBufferSeconds seconds, then the audio is considered
 // as being fully listened.
 const int kFullyListenedBufferSeconds = 10;
+
+// Used by audio extractor functionality
+const double kDefaultSilenceDuration = 1.0; // in seconds
+const double kDefaultSilenceDurationBetweenMp3 = 2.0; // in seconds
+
