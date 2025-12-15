@@ -2681,10 +2681,10 @@ class MockAppLocalizations extends AppLocalizations {
   String get silenceDurationLabel => "Silence duration after (h:mm:ss.t)";
 
   @override
-  String get Duration => "Duration";
+  String get duration => "Duration";
 
   @override
-  String get Silence => "Silence";
+  String get silence => "Silence";
 
   @override
   String get totalDuration => "Total duration";
