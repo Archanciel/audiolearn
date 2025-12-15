@@ -1,22 +1,26 @@
 import 'dart:io';
 
+import 'package:audiolearn/models/audio_segment.dart';
 import 'package:audiolearn/models/help_item.dart';
+import 'package:audiolearn/services/audio_extractor_service.dart';
+import 'package:audiolearn/services/json_data_service.dart';
+import 'package:audiolearn/utils/path_util.dart';
+import 'package:audiolearn/utils/time_format_util.dart';
+import 'package:audiolearn/viewmodels/audio_extractor_vm.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
-import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
+import 'package:audiolearn/viewmodels/extract_mp3_audio_player_vm.dart';
+import 'package:audiolearn/views/widgets/add_segment_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart' as path;
 import 'package:provider/provider.dart';
 import '../../l10n/app_localizations.dart';
 
 import '../../models/audio.dart';
-import '../../viewmodels/warning_message_vm.dart';
+import '../../models/comment.dart';
 import '../../views/screen_mixin.dart';
 import '../../constants.dart';
 import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
-import 'audio_set_speed_dialog.dart';
-import 'confirm_action_dialog.dart';
 
 class AudioExtractorDialog extends StatefulWidget {
   final SettingsDataService settingsDataService = SettingsDataService();
@@ -35,38 +39,25 @@ class AudioExtractorDialog extends StatefulWidget {
 
 class _AudioExtractorDialogState extends State<AudioExtractorDialog>
     with ScreenMixin {
-  late double _audioPlaySpeed;
-  bool _applyAudioPlaySpeedToExistingPlaylists = false;
-  bool _applyAudioPlaySpeedToAlreadyDownloadedAudios = false;
   late final List<HelpItem> _helpItemsLst;
-  String _applicationDialogPlaylistRootPath = '';
-  final TextEditingController _mp3ZipFileSizeLimitInMbController =
-      TextEditingController();
+  late final ScrollController _segmentsScrollController;
 
   @override
   void initState() {
     super.initState();
+    _segmentsScrollController = ScrollController();
+    final AudioExtractorVM audioExtractorVM = context.read<AudioExtractorVM>();
 
-    // Obtaining the default audio play speed from the settings data service
-    _audioPlaySpeed = widget.settingsDataService.get(
-            settingType: SettingType.playlists,
-            settingSubType: Playlists.playSpeed) ??
-        1.0;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _pickMP3File(
+        context: context,
+        audioExtractorVM: audioExtractorVM,
+      );
 
-    _applicationDialogPlaylistRootPath = widget.settingsDataService.get(
-            settingType: SettingType.dataLocation,
-            settingSubType: DataLocation.playlistRootPath) ??
-        '';
-
-    _mp3ZipFileSizeLimitInMbController.text = widget.settingsDataService
-            .get(
-              settingType: SettingType.playlists,
-              settingSubType: Playlists.maxSavableAudioMp3FileSizeInMb,
-            )
-            ?.toString() ??
-        kMp3ZipFileSizeLimitInMb.toString();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+      await _loadSegmentsFromCommentFile(
+        context: context,
+        audioExtractorVM: audioExtractorVM,
+      );
       _helpItemsLst = [
         HelpItem(
           helpTitle: AppLocalizations.of(context)!.defaultApplicationHelpTitle,
@@ -97,7 +88,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
 
   @override
   void dispose() {
-    _mp3ZipFileSizeLimitInMbController.dispose();
+    _segmentsScrollController.dispose();
 
     super.dispose();
   }
@@ -117,394 +108,646 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            AppLocalizations.of(context)!.appSettingsDialogTitle,
+            AppLocalizations.of(context)!.audioExtractorDialogTitle,
           ),
-        ),
-        body: Column(
-          children: [
-            // Content at the top
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            AppLocalizations.of(context)!
-                                .setAudioPlaySpeedDialogTitle,
-                          ),
-                        ),
-                        Expanded(
-                          child: SizedBox(
-                            height: 37,
-                            child: _buildSetAudioSpeedTextButton(context),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            AppLocalizations.of(context)!.playlistRootpathLabel,
-                          ),
-                        ),
-                        Expanded(
-                          child: SizedBox(
-                            height: 37,
-                            child: _buildOpenDirectoryIconButton(context),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: Text(
-                        _applicationDialogPlaylistRootPath,
-                        key: const Key('playlistsRootPathText'),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: createFlexibleEditableRowFunction(
-                            context: context,
-                            valueTextFieldWidgetKey:
-                                const Key('mp3ZipFileSizeLimitInMb'),
-                            label: AppLocalizations.of(context)!
-                                .mp3ZipFileSizeLimitInMbLabel,
-                            labelAndTextFieldTooltip:
-                                AppLocalizations.of(context)!
-                                    .mp3ZipFileSizeLimitInMbTooltip,
-                            controller: _mp3ZipFileSizeLimitInMbController,
-                            labelFlexValue: 4,
-                            editableFieldFlexValue: 1,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            // Spacer to push buttons to the bottom
-            const Spacer(),
-            // Save and Cancel buttons at the bottom
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
-                    key: const Key('saveButton'),
-                    onPressed: () async {
-                      await _handleSaveButton(context);
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!.saveButton,
-                      style: (themeProviderVMlistenFalse.currentTheme ==
-                              AppTheme.dark)
-                          ? kTextButtonStyleDarkMode
-                          : kTextButtonStyleLightMode,
-                    ),
-                  ),
-                  const SizedBox(width: 16), // Space between the buttons
-                  TextButton(
-                    key: const Key('cancelButton'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!.cancelButton,
-                      style: (themeProviderVMlistenFalse.currentTheme ==
-                              AppTheme.dark)
-                          ? kTextButtonStyleDarkMode
-                          : kTextButtonStyleLightMode,
-                    ),
-                  ),
-                ],
-              ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () => _showSettingsDialog(context: context),
             ),
           ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Consumer2<AudioExtractorVM, ExtractMp3AudioPlayerVM>(
+            builder: (context, audioExtractorVM, audioPlayerVM, _) {
+              return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "${AppLocalizations.of(context)!.commentsDialogTitle} (${audioExtractorVM.segmentCount})",
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    (audioExtractorVM.segments.isEmpty)
+                        ? Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'No segments added yet.\nLoad from a comment file or add segments manually.',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            ),
+                          )
+                        : Container(
+                            constraints: const BoxConstraints(
+                              maxHeight: 400,
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.grey.shade300,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Scrollbar(
+                              controller: _segmentsScrollController,
+                              thumbVisibility: true,
+                              child: ListView.builder(
+                                controller: _segmentsScrollController,
+                                primary: false,
+                                shrinkWrap: true,
+                                itemCount: audioExtractorVM.segments.length,
+                                itemBuilder: (context, index) {
+                                  final s = audioExtractorVM.segments[index];
+                                  return Card(
+                                    margin: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 4,
+                                    ),
+                                    child: ListTile(
+                                      leading: CircleAvatar(
+                                        child: Text('${index + 1}'),
+                                      ),
+                                      title: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            s.title,
+                                            maxLines: 4,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 2),
+                                          Text(
+                                            '${TimeFormatUtil.formatSeconds(s.startPosition)} → '
+                                            '${TimeFormatUtil.formatSeconds(s.endPosition)}',
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.black87,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      subtitle: Text(
+                                        "${AppLocalizations.of(context)!.duration}: ${TimeFormatUtil.formatSeconds(s.duration)}"
+                                        "${s.silenceDuration > 0 ? ' + ${AppLocalizations.of(context)!.silence} ${TimeFormatUtil.formatSeconds(s.silenceDuration)}' : ''}",
+                                        maxLines: 1,
+                                        overflow: TextOverflow
+                                            .ellipsis, // ← Shows ... if too long
+                                        style: const TextStyle(
+                                            fontSize: 12), // ← Smaller font
+                                      ),
+                                      trailing: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          IconButton(
+                                            icon: const Icon(
+                                              Icons.edit,
+                                              size: 20,
+                                            ),
+                                            onPressed: () async {
+                                              // After pressing 'Edit' icon button
+                                              final updated = await showDialog<
+                                                  AudioSegment>(
+                                                context: context,
+                                                builder: (
+                                                  _,
+                                                ) =>
+                                                    AddSegmentDialog(
+                                                  maxDuration: audioExtractorVM
+                                                      .audioFile.duration,
+                                                  existingSegment: s,
+                                                ),
+                                              );
+                                              if (updated != null) {
+                                                audioExtractorVM.updateSegment(
+                                                  index,
+                                                  updated,
+                                                );
+                                              }
+                                            },
+                                          ),
+                                          IconButton(
+                                            icon: const Icon(
+                                              Icons.delete,
+                                              size: 20,
+                                              color: Colors.red,
+                                            ),
+                                            onPressed: () =>
+                                                _confirmDeleteSegment(
+                                              context,
+                                              audioExtractorVM,
+                                              index,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                    if (audioExtractorVM.segments.isNotEmpty) ...[
+                      const SizedBox(height: 8),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "${AppLocalizations.of(context)!.totalDuration}: ${TimeFormatUtil.formatSeconds(audioExtractorVM.totalDuration)}",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          TextButton.icon(
+                            onPressed: () => _confirmClearSegments(
+                              context,
+                              audioExtractorVM,
+                            ),
+                            icon: const Icon(Icons.clear_all, size: 18),
+                            label: const Text('Clear All'),
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.red,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                    const SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: audioExtractorVM.extractionResult.isProcessing
+                          ? null
+                          : () => _extractMP3(context: context),
+                      child: const Text('Extract MP3'),
+                    ),
+                    const SizedBox(height: 16),
+                    if (audioExtractorVM.extractionResult.isProcessing)
+                      const Center(child: CircularProgressIndicator()),
+                    if (audioExtractorVM.extractionResult.hasMessage)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16.0),
+                        child: Text(
+                          audioExtractorVM.extractionResult.message,
+                          style: TextStyle(
+                            color: audioExtractorVM.extractionResult.isError
+                                ? Colors.red
+                                : audioExtractorVM.extractionResult.isSuccess
+                                    ? Colors.green[700]
+                                    : Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    if (audioExtractorVM.extractionResult.isSuccess &&
+                        audioExtractorVM.extractionResult.outputPath !=
+                            null) ...[
+                      const SizedBox(height: 8),
+                      _buildAudioPlayerControls(
+                        context: context,
+                        audioExtractorVM: audioExtractorVM,
+                        audioPlayerVM: audioPlayerVM,
+                      ),
+                    ],
+                  ],
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
   }
 
-  Future<void> _handleSaveButton(BuildContext context) async {
-    PlaylistListVM playlistListVMlistenFalse = Provider.of<PlaylistListVM>(
-      context,
-      listen: false,
+  Widget _buildAudioPlayerControls({
+    required BuildContext context,
+    required AudioExtractorVM audioExtractorVM,
+    required ExtractMp3AudioPlayerVM audioPlayerVM,
+  }) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton.icon(
+              onPressed: audioPlayerVM.hasError
+                  ? () => audioPlayerVM.tryRepairPlayer()
+                  : audioPlayerVM.isLoaded
+                      ? () => audioPlayerVM.togglePlay()
+                      : () => _playExtractedFile(
+                            context,
+                            audioExtractorVM.extractionResult.outputPath!,
+                          ),
+              icon: Icon(
+                audioPlayerVM.hasError
+                    ? Icons.refresh
+                    : audioPlayerVM.isPlaying
+                        ? Icons.pause
+                        : Icons.play_arrow,
+              ),
+              label: Text(
+                audioPlayerVM.hasError
+                    ? 'Retry'
+                    : audioPlayerVM.isPlaying
+                        ? 'Pause'
+                        : 'Play',
+              ),
+            ),
+          ],
+        ),
+        if (audioPlayerVM.isLoaded && !audioPlayerVM.hasError) ...[
+          const SizedBox(height: 8),
+          SliderTheme(
+            data: const SliderThemeData(
+              trackHeight: 4,
+              thumbShape: RoundSliderThumbShape(
+                enabledThumbRadius: 8,
+              ),
+            ),
+            child: Slider(
+              value: audioPlayerVM.progressPercent.clamp(0.0, 1.0),
+              onChanged: (value) => audioPlayerVM.seekByPercentage(
+                percentage: value,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  TimeFormatUtil.formatDuration(
+                    audioPlayerVM.position,
+                  ),
+                ),
+                Text(
+                  TimeFormatUtil.formatDuration(
+                    audioPlayerVM.duration,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Playing: ${PathUtil.fileName(audioExtractorVM.extractionResult.outputPath!)}',
+            style: const TextStyle(
+              fontStyle: FontStyle.italic,
+              fontSize: 12,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+        if (audioPlayerVM.hasError)
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              audioPlayerVM.errorMessage,
+              style: const TextStyle(color: Colors.red, fontSize: 12),
+              textAlign: TextAlign.center,
+            ),
+          ),
+      ],
     );
+  }
 
-    // This method modifies also the playlist default play speed in
-    // the application settings file and saves the file.
-    playlistListVMlistenFalse
-        .updateExistingPlaylistsAndOrAlreadyDownloadedAudioPlaySpeed(
-      audioPlaySpeed: _audioPlaySpeed,
-      applyAudioPlaySpeedToExistingPlaylists:
-          _applyAudioPlaySpeedToExistingPlaylists,
-      applyAudioPlaySpeedToAlreadyDownloadedAudio:
-          _applyAudioPlaySpeedToAlreadyDownloadedAudios,
+  void _confirmDeleteSegment(
+    BuildContext context,
+    AudioExtractorVM vm,
+    int index,
+  ) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Delete Segment'),
+        content: const Text(
+          'Are you sure you want to delete this segment?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+            ),
+            onPressed: () {
+              vm.removeSegment(index);
+              Navigator.of(context).pop();
+            },
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
     );
+  }
 
-    double? value = double.tryParse(_mp3ZipFileSizeLimitInMbController.text);
-
-    if (value != null) {
-      widget.settingsDataService.set(
-          settingType: SettingType.playlists,
-          settingSubType: Playlists.maxSavableAudioMp3FileSizeInMb,
-          value: value);
-
-      widget.settingsDataService.saveSettings();
-    }
-
-    // Updating the playlist root path in the application settings if
-    // the path was changed and saving the playlists title order list in
-    // the previous root path.
-
-    String settingsDataServicePlaylistRootPath = widget.settingsDataService.get(
-      settingType: SettingType.dataLocation,
-      settingSubType: DataLocation.playlistRootPath,
+  void _confirmClearSegments(
+    BuildContext context,
+    AudioExtractorVM vm,
+  ) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Clear All Segments'),
+        content: const Text(
+          'Are you sure you want to clear all segments?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+            ),
+            onPressed: () {
+              vm.clearSegments();
+              Navigator.of(context).pop();
+            },
+            child: const Text('Clear All'),
+          ),
+        ],
+      ),
     );
+  }
 
-    String lastComponent = path.basename(_applicationDialogPlaylistRootPath);
+  void _showSettingsDialog({required BuildContext context}) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('MP3 Extractor $kApplicationVersion'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Fermer'),
+          ),
+        ],
+      ),
+    );
+  }
+  // ────────────────────────────────────────────────────────────────────────────
+  // File picking helpers
+  // ────────────────────────────────────────────────────────────────────────────
 
-    if (lastComponent != kImposedPlaylistsSubDirName) {
-      // If the modified playlist directory name is invalid (must be 'playlists'), a warning
-      // is displayed and return is performed, so that the modified playlist dir is ignored.
-      Provider.of<WarningMessageVM>(
-        context,
-        listen: false,
-      ).signalInvalidPlaylistRootDirName(
-        playlistInvalidRootPath: _applicationDialogPlaylistRootPath,
-        playlistInvalidRootName: lastComponent,
-      );
+  Future<void> _pickMP3File({
+    required BuildContext context,
+    required AudioExtractorVM audioExtractorVM,
+  }) async {
+    try {
+      late final String path;
 
-      return;
-    }
-
-    if (settingsDataServicePlaylistRootPath ==
-            _applicationDialogPlaylistRootPath ||
-        _applicationDialogPlaylistRootPath.isEmpty) {
-      // The modified playlist root path is identical to the
-      // previous one or is empty.
-      return;
-    }
-
-    final Directory directory = Directory(_applicationDialogPlaylistRootPath);
-
-    if (!directory.existsSync()) {
-      // If the modified playlist root path does not exist, a warning
-      // is displayed and return is performed.
-      Provider.of<WarningMessageVM>(
-        context,
-        listen: false,
-      ).setPlaylistInexistingRootPath(
-        playlistInexistingRootPath: _applicationDialogPlaylistRootPath,
-      );
-
-      return;
-    }
-
-    String playlistTitleOrderPathFileName =
-        "$_applicationDialogPlaylistRootPath${path.separator}$kOrderedPlaylistTitlesFileName";
-    final File file = File(playlistTitleOrderPathFileName);
-
-    if (file.existsSync()) {
-      final result = await showDialog<ConfirmAction>(
-        // Add await and type
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return ConfirmActionDialog(
-            actionFunction: () => ConfirmActionDialog
-                .choosenConfirmAction, // Return ConfirmAction
-            actionFunctionArgs: [],
-            dialogTitleOne:
-                AppLocalizations.of(context)!.restorePlaylistTitlesOrderTitle,
-            dialogContent:
-                AppLocalizations.of(context)!.restorePlaylistTitlesOrderMessage,
-          );
-        },
-      );
-
-      // Handle the result after dialog closes
-      if (result == ConfirmAction.confirm) {
-        playlistListVMlistenFalse
-            .updatePlaylistRootPathAndSavePlaylistTitleOrder(
-          actualPlaylistRootPath: settingsDataServicePlaylistRootPath,
-          modifiedPlaylistRootPath: _applicationDialogPlaylistRootPath,
-          playlistTitleOrderPathFileName: playlistTitleOrderPathFileName,
-        );
+      if (Platform.isAndroid) {
+        path =
+            "/data/user/0/com.example.extractmp3/cache/file_picker/1765727850000/250116-232156-EMI  - Que font les morts dans l’au-delà  La révélation qui a tout changé ! 24-11-23.mp3";
       } else {
-        // Cancel or null result
-        playlistListVMlistenFalse
-            .updatePlaylistRootPathAndSavePlaylistTitleOrder(
-          actualPlaylistRootPath: settingsDataServicePlaylistRootPath,
-          modifiedPlaylistRootPath: _applicationDialogPlaylistRootPath,
-          playlistTitleOrderPathFileName:
-              '', // empty string means do not restore the
-          //                                     previously saved playlist title order
-          //                                     since the Cancel button was clicked
-        );
+        path =
+            "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\audio_learn_emi\\250116-232156-EMI  - Que font les morts dans l’au-delà  La révélation qui a tout changé ! 24-11-23.mp3";
       }
-      // If result == ConfirmAction.cancel or null, do nothing
-    } else {
-      playlistListVMlistenFalse.updatePlaylistRootPathAndSavePlaylistTitleOrder(
-        actualPlaylistRootPath: settingsDataServicePlaylistRootPath,
-        modifiedPlaylistRootPath: _applicationDialogPlaylistRootPath,
-        playlistTitleOrderPathFileName:
-            '', // empty string means do not restore the
-        //                                     previously saved playlist title order
-        //                                     which does not exist
+
+      const String name =
+          "250116-232156-EMI  - Que font les morts dans l’au-delà  La révélation qui a tout changé ! 24-11-23.mp3";
+      final double duration = await AudioExtractorService.getAudioDuration(
+        filePath: path,
+      );
+
+      audioExtractorVM.setAudioFile(
+        path: path,
+        name: name,
+        duration: duration,
+      );
+    } catch (e) {
+      audioExtractorVM.setError('Error selecting file: $e');
+    }
+  }
+
+  Future<void> _loadSegmentsFromCommentFile({
+    required BuildContext context,
+    required AudioExtractorVM audioExtractorVM,
+  }) async {
+    try {
+      late final String jsonPath;
+
+      if (Platform.isAndroid) {
+        jsonPath =
+            "/data/user/0/com.example.extractmp3/cache/file_picker/1765728100802/250116-232156-EMI  - Que font les morts dans l’au-delà  La révélation qui a tout changé ! 24-11-23.json";
+      } else {
+        jsonPath =
+            "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\audio_learn_emi\\comments\\250116-232156-EMI  - Que font les morts dans l’au-delà  La révélation qui a tout changé ! 24-11-23.json";
+      }
+
+      final List<Comment> comments = JsonDataService.loadListFromFile<Comment>(
+        jsonPathFileName: jsonPath,
+        type: Comment,
+      );
+
+      if (comments.isEmpty) {
+        if (!context.mounted) {
+          return;
+        }
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('No comments found in the selected file'),
+            backgroundColor: Colors.orange,
+          ),
+        );
+
+        return;
+      }
+
+      int added = 0;
+      int skipped = 0;
+
+      for (int i = 0; i < comments.length; i++) {
+        final Comment comment = comments[i];
+        final double start =
+            comment.commentStartPositionInTenthOfSeconds / 10.0;
+        final double end = comment.commentEndPositionInTenthOfSeconds / 10.0;
+
+        if (start >= 0 &&
+            end > start &&
+            audioExtractorVM.audioFile.duration > 0 &&
+            end <= audioExtractorVM.audioFile.duration) {
+          final silence =
+              (i < comments.length - 1) ? kDefaultSilenceDuration : 0.0;
+          audioExtractorVM.addSegment(
+            AudioSegment(
+              startPosition: start,
+              endPosition: end,
+              silenceDuration: silence,
+              title: comment.title,
+            ),
+          );
+          added++;
+        } else {
+          skipped++;
+        }
+      }
+
+      if (!context.mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Loaded $added segment(s)${skipped > 0 ? ' ($skipped skipped)' : ''}',
+          ),
+          backgroundColor: Colors.green,
+          duration: const Duration(seconds: 3),
+        ),
+      );
+    } catch (e) {
+      audioExtractorVM.setError('Error loading comment file: $e');
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error loading comment file: $e'),
+          backgroundColor: Colors.red,
+          duration: const Duration(seconds: 4),
+        ),
       );
     }
   }
 
-  Widget _buildSetAudioSpeedTextButton(
-    BuildContext context,
-  ) {
-    return Consumer<ThemeProviderVM>(
-      builder: (context, themeProviderVM, child) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              // sets the rounded TextButton size improving the distance
-              // between the button text and its boarder
-              width: kNormalButtonWidth - 18.0,
-              height: kNormalButtonHeight,
-              child: TextButton(
-                key: const Key('setAudioSpeedTextButton'),
-                style: ButtonStyle(
-                  shape: getButtonRoundedShape(
-                      currentTheme: themeProviderVM.currentTheme),
-                  padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                    const EdgeInsets.symmetric(
-                        horizontal: kSmallButtonInsidePadding, vertical: 0),
-                  ),
-                  overlayColor: textButtonTapModification, // Tap feedback color
-                ),
-                onPressed: () {
-                  showDialog<List<dynamic>>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AudioSetSpeedDialog(
-                        audioPlaySpeed: _audioPlaySpeed,
-                        updateCurrentPlayAudioSpeed: false,
-                        displayApplyToExistingPlaylistCheckbox: true,
-                        displayApplyToAudioAlreadyDownloadedCheckbox: true,
-                        helpItemsLst: _helpItemsLst,
-                      );
-                    },
-                  ).then((value) {
-                    // not null value is boolean
-                    if (value != null) {
-                      // value is null if clicking on Cancel
+  Future<void> _extractMP3({required BuildContext context}) async {
+    final AudioExtractorVM audioExtractorVM = context.read<AudioExtractorVM>();
+    final ExtractMp3AudioPlayerVM audioPlayerVM =
+        context.read<ExtractMp3AudioPlayerVM>();
 
-                      _audioPlaySpeed = value[0] as double;
-                      _applyAudioPlaySpeedToExistingPlaylists = value[1];
-                      _applyAudioPlaySpeedToAlreadyDownloadedAudios = value[2];
+    if (audioExtractorVM.multiInputs.isEmpty) {
+      if (audioExtractorVM.audioFile.path == null) {
+        audioExtractorVM.setError('Please select an MP3 file first');
 
-                      setState(() {}); // required, otherwise the TextButton
-                      // text in the application settings dialog is not
-                      // updated
-                    }
-                  });
-                },
-                child: Tooltip(
-                  message:
-                      AppLocalizations.of(context)!.setAudioPlaySpeedTooltip,
-                  child: Text(
-                    '${_audioPlaySpeed.toStringAsFixed(2)}x',
-                    textAlign: TextAlign.center,
-                    style: (themeProviderVM.currentTheme == AppTheme.dark)
-                        ? kTextButtonStyleDarkMode
-                        : kTextButtonStyleLightMode,
-                  ),
-                ),
-              ),
-            ),
-          ],
+        return;
+      }
+
+      if (audioExtractorVM.segments.isEmpty) {
+        audioExtractorVM.setError('Please add at least one segment');
+
+        return;
+      }
+    }
+
+    try {
+      if (Platform.isWindows && audioPlayerVM.isLoaded) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Preparing extraction...'),
+            duration: Duration(seconds: 1),
+          ),
         );
-      },
-    );
+
+        await audioPlayerVM.releaseCurrentFile();
+        await Future.delayed(const Duration(milliseconds: 500));
+      }
+
+      final String base = PathUtil.removeExtension(
+        audioExtractorVM.audioFile.name ?? 'extract',
+      );
+
+      String extractedMp3FileName;
+
+      if (audioExtractorVM.multiInputs.isNotEmpty) {
+        final totalSegs = audioExtractorVM.multiInputs.fold<int>(
+          0,
+          (n, i) => n + i.segments.length,
+        );
+        extractedMp3FileName = '${base}_multi_${totalSegs}_segments.mp3';
+      } else if (audioExtractorVM.segments.length == 1) {
+        extractedMp3FileName =
+            '$base from ${TimeFormatUtil.formatSeconds(audioExtractorVM.segments[0].startPosition)} '
+            'to ${TimeFormatUtil.formatSeconds(audioExtractorVM.segments[0].endPosition)}.mp3';
+      } else {
+        extractedMp3FileName =
+            '${base}_${audioExtractorVM.segments.length}_segments.mp3';
+      }
+
+      extractedMp3FileName = PathUtil.sanitizeFileName(
+        extractedMp3FileName,
+      );
+
+      final String? extractedMp3DestinationDir =
+          await FilePicker.platform.getDirectoryPath();
+      if (extractedMp3DestinationDir == null) {
+        audioExtractorVM.setError('Save location selection canceled');
+
+        return;
+      }
+
+      final String outputPath =
+          '$extractedMp3DestinationDir${Platform.pathSeparator}$extractedMp3FileName';
+
+      if (audioExtractorVM.multiInputs.isNotEmpty) {
+        await audioExtractorVM.extractMP3Multi(outputPath);
+      } else {
+        await audioExtractorVM.extractMP3(outputPath);
+      }
+    } catch (e) {
+      audioExtractorVM.setError('Error selecting save location: $e');
+    }
   }
 
-  Widget _buildOpenDirectoryIconButton(
+  Future<void> _playExtractedFile(
     BuildContext context,
-  ) {
-    return Consumer<ThemeProviderVM>(
-      builder: (context, themeProviderVM, child) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              // sets the rounded TextButton size improving the distance
-              // between the button text and its boarder
-              width: kNormalButtonWidth,
-              height: kNormalButtonHeight,
-              child: IconButton(
-                iconSize: 30,
-                key: const Key('openDirectoryIconButton'),
-                style: ButtonStyle(
-                  // Highlight button when pressed
-                  padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                    const EdgeInsets.symmetric(
-                        horizontal: kSmallButtonInsidePadding, vertical: 0),
-                  ),
-                  overlayColor: iconButtonTapModification, // Tap feedback color
-                ),
-                onPressed: () async {
-                  String? selectedDir = await _filePickerSelectDirectory();
-
-                  if (selectedDir != null) {
-                    _applicationDialogPlaylistRootPath = selectedDir;
-                  }
-
-                  setState(() {}); // required, otherwise the TextButton
-                },
-                icon: Icon(
-                  Icons.folder_open,
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-    );
+    String filePath,
+  ) async {
+    final audioPlayerVM = context.read<ExtractMp3AudioPlayerVM>();
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    try {
+      await audioPlayerVM.loadFile(filePath: filePath);
+      if (!audioPlayerVM.hasError) {
+        await audioPlayerVM.togglePlay();
+      } else {
+        if (!context.mounted) return;
+        _showErrorSnackBar(context, audioPlayerVM.errorMessage);
+      }
+    } catch (e) {
+      if (!context.mounted) return;
+      _showErrorSnackBar(context, 'Error playing file: $e');
+    }
   }
 
-  Future<String?> _filePickerSelectDirectory() async {
-    // Pick a single directory
-    String? directoryPath = await FilePicker.platform.getDirectoryPath(
-      initialDirectory: widget.settingsDataService.get(
-              settingType: SettingType.dataLocation,
-              settingSubType: DataLocation.playlistRootPath) ??
-          '',
+  void _showErrorSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+        duration: const Duration(seconds: 5),
+        action: SnackBarAction(
+          label: 'Repair',
+          textColor: Colors.white,
+          onPressed: () async {
+            final audioPlayerVM = Provider.of<ExtractMp3AudioPlayerVM>(
+              context,
+              listen: false,
+            );
+            await audioPlayerVM.tryRepairPlayer();
+          },
+        ),
+      ),
     );
-
-    // Return the selected directory path or null if no selection
-    return directoryPath;
   }
 }

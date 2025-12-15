@@ -1562,5 +1562,15 @@
   "moveAudioToPositionButton": "Déplacer",
   "audioPositionTooltip": "Definir la position qui sera ajoutée au titre de l'audio.",
   "extractCommentsToMp3TextButton": "Commentaires dans un MP3",
-  "extractCommentsToMp3TextButtonTooltip": "Extraire les segments audio définis par les commentaires dans un fichier MP3."  
+  "extractCommentsToMp3TextButtonTooltip": "Extraire les segments audio définis par les commentaires dans un fichier MP3.",
+  "audioExtractorDialogTitle": "Commentaires dans un MP3",
+  "editCommentDialogTitle": "Éditer le commentaire",
+  "addCommentDialogTitle": "Ajouter un commentaire",
+  "maxDuration": "Durée audio totale",
+  "startPositionLabel": "Position de début (h:mm:ss.d)",
+  "endPositionLabel": "Position de fin (h:mm:ss.d)",
+  "silenceDurationLabel": "Silence après (h:mm:ss.t)",
+  "duration": "Durée",
+  "silence": "silence",
+  "totalDuration": "Durée totale"
 }                                   
