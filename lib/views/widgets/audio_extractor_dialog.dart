@@ -194,13 +194,30 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                               fontSize: 15,
                                             ),
                                           ),
-                                          const SizedBox(height: 2),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                TimeFormatUtil.formatSeconds(
+                                                    s.startPosition),
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.white70,
+                                                ),
+                                              ),
+                                              const Icon(
+                                                Icons
+                                                    .arrow_forward, // or Icons.arrow_right_alt
+                                                size: 15, // ← Control size
+                                                color: Colors.white70,
+                                              ),
+                                            ],
+                                          ),
                                           Text(
-                                            '${TimeFormatUtil.formatSeconds(s.startPosition)} → '
-                                            '${TimeFormatUtil.formatSeconds(s.endPosition)}',
+                                            TimeFormatUtil.formatSeconds(
+                                                s.endPosition),
                                             style: const TextStyle(
                                               fontWeight: FontWeight.w500,
-                                              color: Colors.black87,
+                                              color: Colors.white70,
                                             ),
                                           ),
                                         ],
@@ -208,9 +225,6 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                       subtitle: Text(
                                         "${AppLocalizations.of(context)!.duration}: ${TimeFormatUtil.formatSeconds(s.duration)}"
                                         "${s.silenceDuration > 0 ? ' + ${AppLocalizations.of(context)!.silence} ${TimeFormatUtil.formatSeconds(s.silenceDuration)}' : ''}",
-                                        maxLines: 1,
-                                        overflow: TextOverflow
-                                            .ellipsis, // ← Shows ... if too long
                                         style: const TextStyle(
                                             fontSize: 12), // ← Smaller font
                                       ),
@@ -282,7 +296,8 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                               audioExtractorVM,
                             ),
                             icon: const Icon(Icons.clear_all, size: 18),
-                            label: Text(AppLocalizations.of(context)!.clearAllButton),
+                            label: Text(
+                                AppLocalizations.of(context)!.clearAllButton),
                             style: TextButton.styleFrom(
                               foregroundColor: Colors.red,
                             ),
