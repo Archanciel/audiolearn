@@ -4112,6 +4112,18 @@ abstract class AppLocalizations {
   /// **'Add Comment'**
   String get addCommentDialogTitle;
 
+  /// No description provided for @deleteCommentDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Comment'**
+  String get deleteCommentDialogTitle;
+
+  /// No description provided for @deleteCommentExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to remove this comment ?'**
+  String get deleteCommentExplanation;
+
   /// No description provided for @maxDuration.
   ///
   /// In en, this message translates to:

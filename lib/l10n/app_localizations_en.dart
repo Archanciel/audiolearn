@@ -2570,6 +2570,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addCommentDialogTitle => 'Add Comment';
 
   @override
+  String get deleteCommentDialogTitle => 'Remove Comment';
+
+  @override
+  String get deleteCommentExplanation =>
+      'Are you sure you want to remove this comment ?';
+
+  @override
   String get maxDuration => 'Total audio duration';
 
   @override

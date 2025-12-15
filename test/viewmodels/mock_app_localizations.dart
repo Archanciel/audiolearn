@@ -2691,4 +2691,11 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get addCommentDialogTitle => "Add Comment";
+
+  @override
+  String get deleteCommentDialogTitle => "Remove Comment";
+
+  @override
+  String get deleteCommentExplanation =>
+      "Are you sure you want to remove this comment ?";
 }
