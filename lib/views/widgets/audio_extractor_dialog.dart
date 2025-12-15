@@ -438,14 +438,14 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('Delete Segment'),
-        content: const Text(
-          'Are you sure you want to delete this segment?',
+        title: Text(AppLocalizations.of(context)!.deleteCommentDialogTitle),
+        content: Text(
+          AppLocalizations.of(context)!.deleteCommentExplanation,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+            child: Text(AppLocalizations.of(context)!.cancelButton),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -455,7 +455,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
               vm.removeSegment(index);
               Navigator.of(context).pop();
             },
-            child: const Text('Delete'),
+            child: Text(AppLocalizations.of(context)!.delete),
           ),
         ],
       ),
@@ -516,25 +516,15 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
     required AudioExtractorVM audioExtractorVM,
   }) async {
     try {
-      late final String path;
+      final String path = widget.currentAudio.filePathName;
 
-      if (Platform.isAndroid) {
-        path =
-            "/data/user/0/documents/test/audiolearn/250116-232156-EMI  - Que font les morts dans l’au-delà  La révélation qui a tout changé ! 24-11-23.mp3";
-      } else {
-        path =
-            "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\audio_learn_emi\\250116-232156-EMI  - Que font les morts dans l’au-delà  La révélation qui a tout changé ! 24-11-23.mp3";
-      }
-
-      const String name =
-          "250116-232156-EMI  - Que font les morts dans l’au-delà  La révélation qui a tout changé ! 24-11-23.mp3";
       final double duration = await AudioExtractorService.getAudioDuration(
         filePath: path,
       );
 
       audioExtractorVM.setAudioFile(
         path: path,
-        name: name,
+        name: widget.currentAudio.audioFileName,
         duration: duration,
       );
     } catch (e) {
@@ -547,22 +537,12 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
     required AudioExtractorVM audioExtractorVM,
   }) async {
     try {
-      late final String jsonPath;
-
-      if (Platform.isAndroid) {
-        jsonPath =
-            "/data/user/0/documents/test/audiolearn/250116-232156-EMI  - Que font les morts dans l’au-delà  La révélation qui a tout changé ! 24-11-23.json";
-      } else {
-        jsonPath =
-            "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\audio_learn_emi\\comments\\250116-232156-EMI  - Que font les morts dans l’au-delà  La révélation qui a tout changé ! 24-11-23.json";
-      }
-
-      final List<Comment> comments = JsonDataService.loadListFromFile<Comment>(
-        jsonPathFileName: jsonPath,
-        type: Comment,
+      final List<Comment> commentsLst =
+          widget.commentVMlistenTrue.loadAudioComments(
+        audio: widget.currentAudio,
       );
 
-      if (comments.isEmpty) {
+      if (commentsLst.isEmpty) {
         if (!context.mounted) {
           return;
         }
@@ -580,8 +560,8 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
       int added = 0;
       int skipped = 0;
 
-      for (int i = 0; i < comments.length; i++) {
-        final Comment comment = comments[i];
+      for (int i = 0; i < commentsLst.length; i++) {
+        final Comment comment = commentsLst[i];
         final double start =
             comment.commentStartPositionInTenthOfSeconds / 10.0;
         final double end = comment.commentEndPositionInTenthOfSeconds / 10.0;
@@ -591,7 +571,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
             audioExtractorVM.audioFile.duration > 0 &&
             end <= audioExtractorVM.audioFile.duration) {
           final silence =
-              (i < comments.length - 1) ? kDefaultSilenceDuration : 0.0;
+              (i < commentsLst.length - 1) ? kDefaultSilenceDuration : 0.0;
           audioExtractorVM.addSegment(
             AudioSegment(
               startPosition: start,
@@ -652,16 +632,22 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
     }
 
     try {
-      if (Platform.isWindows && audioPlayerVM.isLoaded) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Preparing extraction...'),
-            duration: Duration(seconds: 1),
-          ),
-        );
+      // ✅ NEW - Release on ALL platforms
+      if (audioPlayerVM.isLoaded) {
+        if (Platform.isWindows) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Preparing extraction...'),
+              duration: Duration(seconds: 1),
+            ),
+          );
+        }
 
         await audioPlayerVM.releaseCurrentFile();
-        await Future.delayed(const Duration(milliseconds: 500));
+
+        if (Platform.isWindows) {
+          await Future.delayed(const Duration(milliseconds: 500));
+        }
       }
 
       final String base = PathUtil.removeExtension(
