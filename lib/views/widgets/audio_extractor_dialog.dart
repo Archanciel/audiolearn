@@ -520,7 +520,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
 
       if (Platform.isAndroid) {
         path =
-            "/data/user/0/com.example.extractmp3/cache/file_picker/1765727850000/250116-232156-EMI  - Que font les morts dans l’au-delà  La révélation qui a tout changé ! 24-11-23.mp3";
+            "/data/user/0/documents/test/audiolearn/250116-232156-EMI  - Que font les morts dans l’au-delà  La révélation qui a tout changé ! 24-11-23.mp3";
       } else {
         path =
             "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\audio_learn_emi\\250116-232156-EMI  - Que font les morts dans l’au-delà  La révélation qui a tout changé ! 24-11-23.mp3";
@@ -551,7 +551,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
 
       if (Platform.isAndroid) {
         jsonPath =
-            "/data/user/0/com.example.extractmp3/cache/file_picker/1765728100802/250116-232156-EMI  - Que font les morts dans l’au-delà  La révélation qui a tout changé ! 24-11-23.json";
+            "/data/user/0/documents/test/audiolearn/250116-232156-EMI  - Que font les morts dans l’au-delà  La révélation qui a tout changé ! 24-11-23.json";
       } else {
         jsonPath =
             "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\audio_learn_emi\\comments\\250116-232156-EMI  - Que font les morts dans l’au-delà  La révélation qui a tout changé ! 24-11-23.json";
