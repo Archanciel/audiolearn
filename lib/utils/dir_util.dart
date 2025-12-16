@@ -353,7 +353,7 @@ class DirUtil {
       } catch (e) {
         if (attempt == maxRetries - 1) {
           // Last attempt failed, log and rethrow
-          print(
+          logger.i(
               'Failed to delete file ${file.path} after $maxRetries attempts: $e');
           rethrow;
         }
@@ -375,7 +375,7 @@ class DirUtil {
       } catch (e) {
         if (attempt == maxRetries - 1) {
           // Last attempt failed, log and rethrow
-          print(
+          logger.i(
               'Failed to delete directory ${directory.path} after $maxRetries attempts: $e');
           rethrow;
         }
@@ -906,7 +906,7 @@ class DirUtil {
     required DateTime creationTime,
   }) async {
     if (!File(filePathName).existsSync()) {
-      print('Error: File does not exist: $filePathName');
+      logger.i('Error: File does not exist: $filePathName');
       return false;
     }
 
@@ -939,12 +939,12 @@ class DirUtil {
       }
 
       if (result.exitCode != 0) {
-        print('PowerShell error: ${result.stderr}');
+        logger.i('PowerShell error: ${result.stderr}');
       }
 
       return false;
     } catch (e) {
-      print('Error setting file creation time: $e');
+      logger.i('Error setting file creation time: $e');
       return false;
     }
   }
@@ -956,7 +956,7 @@ class DirUtil {
     required DateTime modificationTime,
   }) async {
     if (!File(filePathName).existsSync()) {
-      print('Error: File does not exist: $filePathName');
+      logger.i('Error: File does not exist: $filePathName');
       return false;
     }
 
@@ -987,12 +987,12 @@ class DirUtil {
       }
 
       if (result.exitCode != 0) {
-        print('PowerShell error: ${result.stderr}');
+        logger.i('PowerShell error: ${result.stderr}');
       }
 
       return false;
     } catch (e) {
-      print('Error setting file modification time: $e');
+      logger.i('Error setting file modification time: $e');
       return false;
     }
   }
@@ -1004,7 +1004,7 @@ class DirUtil {
     required DateTime accessTime,
   }) async {
     if (!File(filePathName).existsSync()) {
-      print('Error: File does not exist: $filePathName');
+      logger.i('Error: File does not exist: $filePathName');
       return false;
     }
 
@@ -1028,7 +1028,7 @@ class DirUtil {
       return result.exitCode == 0 &&
           result.stdout.toString().contains('Success');
     } catch (e) {
-      print('Error setting file access time: $e');
+      logger.i('Error setting file access time: $e');
       return false;
     }
   }
@@ -1043,7 +1043,7 @@ class DirUtil {
     DateTime? accessTime,
   }) async {
     if (!File(filePathName).existsSync()) {
-      print('Error: File does not exist: $filePathName');
+      logger.i('Error: File does not exist: $filePathName');
       return false;
     }
 
@@ -1088,11 +1088,11 @@ class DirUtil {
                   1;
 
           if (!creationOk) {
-            print(
+            logger.i(
                 'Warning: Creation time verification failed. Expected: $creationTime, Got: $actualCreation');
           }
           if (!modificationOk) {
-            print(
+            logger.i(
                 'Warning: Modification time verification failed. Expected: $modificationTime, Got: $actualModification');
           }
 
@@ -1101,12 +1101,12 @@ class DirUtil {
       }
 
       if (result.exitCode != 0) {
-        print('PowerShell error: ${result.stderr}');
+        logger.i('PowerShell error: ${result.stderr}');
       }
 
       return false;
     } catch (e) {
-      print('Error setting file times: $e');
+      logger.i('Error setting file times: $e');
       return false;
     }
   }
@@ -1123,7 +1123,7 @@ class DirUtil {
 
       return file.statSync().changed;
     } catch (e) {
-      print('Error getting file creation date: $e');
+      logger.i('Error getting file creation date: $e');
       return null;
     }
   }
@@ -1140,7 +1140,7 @@ class DirUtil {
 
       return file.statSync().modified;
     } catch (e) {
-      print('Error getting file modification date: $e');
+      logger.i('Error getting file modification date: $e');
       return null;
     }
   }
@@ -1157,7 +1157,7 @@ class DirUtil {
 
       return file.statSync().accessed;
     } catch (e) {
-      print('Error getting file access date: $e');
+      logger.i('Error getting file access date: $e');
       return null;
     }
   }
@@ -1180,15 +1180,15 @@ class DirUtil {
   /// Prints all date information for a file (useful for debugging).
   static void printFileDates(String filePathName) {
     if (!File(filePathName).existsSync()) {
-      print('File does not exist: $filePathName');
+      logger.i('File does not exist: $filePathName');
       return;
     }
 
-    print('\n=== File Date Information ===');
-    print('File: $filePathName');
-    print('Creation Time:     ${getFileCreationDate(filePathName)}');
-    print('Modification Time: ${getFileModificationDate(filePathName)}');
-    print('Access Time:       ${getFileAccessDate(filePathName)}');
-    print('=============================\n');
+    logger.i('\n=== File Date Information ===');
+    logger.i('File: $filePathName');
+    logger.i('Creation Time:     ${getFileCreationDate(filePathName)}');
+    logger.i('Modification Time: ${getFileModificationDate(filePathName)}');
+    logger.i('Access Time:       ${getFileAccessDate(filePathName)}');
+    logger.i('=============================\n');
   }
 }
