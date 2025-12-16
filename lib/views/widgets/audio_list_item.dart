@@ -287,11 +287,9 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
             );
             break;
           case AudioPopupMenuAction.audioComment:
-            showDialog<void>(
+            CommentListAddDialog.showCommentDialog(
               context: context,
-              builder: (context) => CommentListAddDialog(
-                currentAudio: audio,
-              ),
+              currentAudio: audio,
             );
             break;
           case AudioPopupMenuAction.modifyAudioTitle:
@@ -335,7 +333,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                 displayHelpItemNumber: false,
               ),
             ];
-             showDialog<void>(
+            showDialog<void>(
               context: context,
               barrierDismissible:
                   false, // This line prevents the dialog from closing when
