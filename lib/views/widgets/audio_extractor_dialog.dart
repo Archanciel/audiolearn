@@ -677,14 +677,14 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
           0,
           (n, i) => n + i.segments.length,
         );
-        extractedMp3FileName = '${base}_multi_${totalSegs}_segments.mp3';
+        extractedMp3FileName = '${base}_multi_${totalSegs}_comments.mp3';
       } else if (audioExtractorVM.segments.length == 1) {
         extractedMp3FileName =
             '$base from ${TimeFormatUtil.formatSeconds(audioExtractorVM.segments[0].startPosition)} '
             'to ${TimeFormatUtil.formatSeconds(audioExtractorVM.segments[0].endPosition)}.mp3';
       } else {
         extractedMp3FileName =
-            '${base}_${audioExtractorVM.segments.length}_segments.mp3';
+            '${base}_${audioExtractorVM.segments.length}_comments.mp3';
       }
 
       extractedMp3FileName = PathUtil.sanitizeFileName(
@@ -694,7 +694,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
       final String? extractedMp3DestinationDir =
           await FilePicker.platform.getDirectoryPath();
       if (extractedMp3DestinationDir == null) {
-        audioExtractorVM.setError('Save location selection canceled');
+        audioExtractorVM.setError(AppLocalizations.of(context)!.saveLocationSelectionCanceledMessage);
 
         return;
       }

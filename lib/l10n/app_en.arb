@@ -1171,5 +1171,6 @@
   "silence": "silence",
   "totalDuration": "Total duration",
   "clearAllButton": "Clear all",
-  "extractMp3Button": "Extract MP3"
+  "extractMp3Button": "Extract MP3",
+  "saveLocationSelectionCanceledMessage": "Error: save location selection canceled"
 }

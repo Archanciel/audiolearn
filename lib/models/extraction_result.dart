@@ -38,7 +38,7 @@ class ExtractionResult {
   factory ExtractionResult.error(String errorMessage) {
     return ExtractionResult(
       status: ExtractionStatus.error,
-      message: 'Error: $errorMessage',
+      message: errorMessage,
     );
   }
 

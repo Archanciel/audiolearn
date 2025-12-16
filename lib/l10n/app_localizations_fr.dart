@@ -2580,14 +2580,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Definir la position qui sera ajoutée au titre de l\'audio.';
 
   @override
-  String get extractCommentsToMp3TextButton => 'Commentaires dans un MP3';
+  String get extractCommentsToMp3TextButton => 'Commentaires dans MP3';
 
   @override
   String get extractCommentsToMp3TextButtonTooltip =>
       'Extraire les segments audio définis par les commentaires dans un fichier MP3.';
 
   @override
-  String get audioExtractorDialogTitle => 'Commentaires dans un MP3';
+  String get audioExtractorDialogTitle => 'Commentaires -> MP3';
 
   @override
   String get editCommentDialogTitle => 'Éditer le commentaire';
@@ -2635,4 +2635,8 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get extractMp3Button => 'Extraire le MP3';
+
+  @override
+  String get saveLocationSelectionCanceledMessage =>
+      'Erreur: sélection du dossier annulée';
 }
