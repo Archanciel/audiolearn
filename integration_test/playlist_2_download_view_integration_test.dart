@@ -38895,6 +38895,109 @@ void main() {
       );
     });
   });
+  group('Extract audio comments to MP3 tests', () {
+    testWidgets('''Audio with 3 comments.''', (WidgetTester tester) async {
+      const String youtubePlaylistTitle = 'audio_learn_emi';
+      const String audioTitle =
+          "EMI  - Que font les morts dans l’au-delà  La révélation qui a tout changé !";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'extract_comments_to_mp3_test',
+        selectedPlaylistTitle: youtubePlaylistTitle,
+      );
+
+      // First, find the Youtube playlist audio ListTile Text widget
+      Finder audioTitleTileTextWidgetFinder = find.text(audioTitle);
+
+      // Then obtain the audio ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      Finder audioTitleTileWidgetFinder = find.ancestor(
+        of: audioTitleTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now we want to tap the popup menu of the audioTitle ListTile
+
+      // Find the leading menu icon button of the audioTitle ListTile
+      // and tap on it
+      Finder audioTitleTileLeadingMenuIconButton = find.descendant(
+        of: audioTitleTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(audioTitleTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the 'Audio Comments ...' popup menu item and
+      // tap on it
+      final Finder audioCommentsPopupMenuItem =
+          find.byKey(const Key("popup_menu_audio_comment"));
+
+      await tester.tap(audioCommentsPopupMenuItem);
+      await tester.pumpAndSettle();
+
+      // Verify that the audio comment dialog is displayed
+      expect(find.byType(CommentListAddDialog), findsOneWidget);
+
+      // Verify the dialog title
+      expect(find.text('Comments'), findsOneWidget);
+
+      // Verify that the audio comments list of the dialog has 1 comment
+      // item
+
+      Finder audioCommentsLstFinder = find.byKey(const Key(
+        'audioCommentsListKey',
+      ));
+
+      // Ensure the list has one child widgets
+      expect(
+        tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+        1,
+      );
+
+      // Now delete the comment item
+
+      // Find the delete icon button of the comment item and tap on it
+      final Finder deleteCommentIconButtonFinder = find.descendant(
+        of: audioCommentsLstFinder,
+        matching: find.byKey(const Key('deleteCommentIconButton')),
+      );
+      await tester.tap(deleteCommentIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the delete comment dialog title
+      expect(find.text('Delete Comment'), findsOneWidget);
+
+      final String commentTitle = 'Comment Jancovici';
+
+      // Verify the delete comment dialog message
+      expect(find.text("Deleting comment \"$commentTitle\"."), findsOneWidget);
+
+      // Confirm the deletion of the comment
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      final Finder commentListDialogFinder = find.byType(CommentListAddDialog);
+
+      // Verify that the comment list dialog now displays no comment
+      expect(
+          find.descendant(
+              of: commentListDialogFinder, matching: find.text(commentTitle)),
+          findsNothing);
+
+      // Now close the comment list dialog
+      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+      await tester.pumpAndSettle();
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+  });
 }
 
 Future<void> _thirdReImport({
