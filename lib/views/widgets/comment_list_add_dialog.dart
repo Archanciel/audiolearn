@@ -314,6 +314,7 @@ class _AutoRefreshCommentDialogState extends State<AutoRefreshCommentDialog> {
           context,
           listen: false,
         );
+        audioPlayerVM.setCurrentAudio(audio: _currentAudio);
         final CommentVM commentVM = Provider.of<CommentVM>(
           context,
           listen: false,
