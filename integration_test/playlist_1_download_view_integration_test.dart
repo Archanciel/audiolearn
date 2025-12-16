@@ -22536,9 +22536,9 @@ void main() {
   });
   group('Audio CommentListAddDialog dialog test', () {
     testWidgets('''Delete comment.''', (WidgetTester tester) async {
-      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+      const String youtubePlaylistTitle = 'S8 audio';
       const String audioTitle =
-          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique"; // Youtube playlist
+          "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -22641,7 +22641,7 @@ void main() {
           comment button. The index of the first comment is 0, the index of the second comment is 3,
           and index of the last (5th) comment is 12.''',
         (WidgetTester tester) async {
-      const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
+      const String youtubePlaylistTitle = 'S8 audio';
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
