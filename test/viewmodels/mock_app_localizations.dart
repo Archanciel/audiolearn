@@ -2711,4 +2711,8 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get extractMp3Button => "Extract MP3";
+
+  @override
+  String get saveLocationSelectionCanceledMessage =>
+      "Save location selection canceled";
 }

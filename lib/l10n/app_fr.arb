@@ -1561,9 +1561,9 @@
   "audioIntPositionLabel": "Position audio entière",
   "moveAudioToPositionButton": "Déplacer",
   "audioPositionTooltip": "Definir la position qui sera ajoutée au titre de l'audio.",
-  "extractCommentsToMp3TextButton": "Commentaires dans un MP3",
+  "extractCommentsToMp3TextButton": "Commentaires dans MP3",
   "extractCommentsToMp3TextButtonTooltip": "Extraire les segments audio définis par les commentaires dans un fichier MP3.",
-  "audioExtractorDialogTitle": "Commentaires dans un MP3",
+  "audioExtractorDialogTitle": "Commentaires -> MP3",
   "editCommentDialogTitle": "Éditer le commentaire",
   "addCommentDialogTitle": "Ajouter un commentaire",
   "deleteCommentDialogTitle": "Enlever le commentaire",
@@ -1578,5 +1578,6 @@
   "silence": "silence",
   "totalDuration": "Durée totale",
   "clearAllButton": "Tout enlever",
-  "extractMp3Button": "Extraire le MP3"
+  "extractMp3Button": "Extraire le MP3",
+  "saveLocationSelectionCanceledMessage": "Erreur: sélection du dossier annulée"
 }                                   

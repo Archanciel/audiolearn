@@ -4189,6 +4189,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Extract MP3'**
   String get extractMp3Button;
+
+  /// No description provided for @saveLocationSelectionCanceledMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: save location selection canceled'**
+  String get saveLocationSelectionCanceledMessage;
 }
 
 class _AppLocalizationsDelegate
