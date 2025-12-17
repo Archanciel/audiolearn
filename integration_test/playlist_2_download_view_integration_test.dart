@@ -38542,7 +38542,7 @@ void main() {
     });
   });
   group('Position setting to Audio validVideoTitle tests', () {
-    testWidgets('''Playlist item menu "Add Position to Audio's Title" test.''',
+    testWidgets('''Playlist item menu "Add/update Position to Audio's Title" test.''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
