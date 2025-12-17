@@ -189,7 +189,8 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
         PopupMenuItem<PlaylistPopupMenuAction>(
           key: const Key('popup_menu_add_audio_position_to_its_title'),
           value: PlaylistPopupMenuAction.addPositionToAudioTitle,
-          child: Text(AppLocalizations.of(context)!.addPositionToAudioTitleMenu),
+          child:
+              Text(AppLocalizations.of(context)!.addPositionToAudioTitleMenu),
         ),
         PopupMenuItem<PlaylistPopupMenuAction>(
           key: const Key('popup_menu_display_playlist_audio_comments'),
@@ -348,8 +349,11 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             break;
           case PlaylistPopupMenuAction.addPositionToAudioTitle:
             playlistListVMlistenFalse.addNumericPrefixesToPlaylistAudioTitles(
-              playlist:
-                  playlist,
+              playlist: playlist,
+              sortFilterParametersAppliedName:
+                  AppLocalizations.of(context)!.sortFilterParametersAppliedName,
+              sortFilterParametersDefaultName:
+                  AppLocalizations.of(context)!.sortFilterParametersDefaultName,
             );
             break;
           case PlaylistPopupMenuAction.displayPlaylistAudioComments:

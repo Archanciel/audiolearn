@@ -6345,18 +6345,40 @@ class PlaylistListVM extends ChangeNotifier {
   /// Example: "Mon Titre" becomes "1_Mon Titre"
   void addNumericPrefixesToPlaylistAudioTitles({
     required Playlist playlist,
+    required String sortFilterParametersAppliedName,
+    required String sortFilterParametersDefaultName,
   }) {
-    // Check if the file exists
-    _logger.i('Processing playlist: ${playlist.title}');
-    _logger.i('Playable audios: ${playlist.playableAudioLst.length}');
+    String selectedPlaylistAudioSortFilterParmsName =
+        getSelectedPlaylistAudioSortFilterParmsNameForView(
+            audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+            translatedAppliedSortFilterParmsName:
+                sortFilterParametersAppliedName);
+
+    if (selectedPlaylistAudioSortFilterParmsName.isEmpty) {
+      selectedPlaylistAudioSortFilterParmsName =
+          sortFilterParametersDefaultName;
+    }
+
+    AudioSortFilterParameters audioSortFilterParameters =
+        getAudioSortFilterParameters(
+      audioSortFilterParametersName: selectedPlaylistAudioSortFilterParmsName,
+    );
+
+    List<Audio> sortFilteredPlaylistPlayableAudiosLst =
+        getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+      audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+      passedAudioSortFilterParameters: audioSortFilterParameters,
+    );
 
     // Add numeric prefixes to playableAudioLst
     // Reset counter or continue from downloadedAudioLst count
     int counter = 1;
     final RegExp regex = RegExp(r'^(\d+)_');
 
-    for (Audio audio in playlist.playableAudioLst.reversed) {
-      // Only add prefix if it doesn't already start with a number followed by underscore
+    for (Audio audio in sortFilteredPlaylistPlayableAudiosLst.reversed) {
+      // Add position prefix if the audio valid video title doesn't already
+      // start with a number followed by underscore. Othrwise, update the existing
+      // prefix to the new position number.
       if (!regex.hasMatch(audio.validVideoTitle)) {
         audio.validVideoTitle = '${counter}_${audio.validVideoTitle}';
         _logger.i('  [$counter] ${audio.validVideoTitle}');
