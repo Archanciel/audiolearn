@@ -139,7 +139,7 @@ class _MoveAudioToPositionDialogState extends State<MoveAudioToPositionDialog>
                 controller: _audioPositionTextEditingController,
                 textFieldFocusNode: _focusNodeAudioModificationTextField,
                 editableFieldFlexValue: flexibleValue,
-                labelFlexValue: 5,
+                labelFlexValue: 4,
                 isCursorAtStart:
                     false, // if true, cursor set at start at every text modification
               ),
