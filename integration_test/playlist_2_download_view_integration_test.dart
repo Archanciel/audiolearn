@@ -38659,16 +38659,23 @@ void main() {
         "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
       ];
 
+      // Find the audio list widget using its key
+      Finder listFinder = find.byKey(const Key('audio_list'));
+
+      // Perform the scroll down action
+      await tester.drag(listFinder, const Offset(0, -300));
+      await tester.pumpAndSettle();
+
       IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
         tester: tester,
         audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-        firstAudioListTileIndex: 1,
+        firstAudioListTileIndex: 0,
       );
 
       // Upload the audio list
 
       // Find the audio list widget using its key
-      final listFinder = find.byKey(const Key('audio_list'));
+      listFinder = find.byKey(const Key('audio_list'));
 
       // Perform the scroll up action
       await tester.drag(listFinder, const Offset(0, 3000));
@@ -38749,6 +38756,13 @@ void main() {
         "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
       ];
 
+      // Find the audio list widget using its key
+      listFinder = find.byKey(const Key('audio_list'));
+
+      // Perform the scroll down action
+      await tester.drag(listFinder, const Offset(0, -300));
+      await tester.pumpAndSettle();
+
       IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
         tester: tester,
         audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
@@ -38762,7 +38776,12 @@ void main() {
       );
     });
     testWidgets(
-        '''For already positioned audio Audio item menu "Move Audio to Position" test.''',
+        '''For already positioned audio's, execute a first time the Audio item menu "Move
+           Audio to Position". Then on another positioned audio, execute the same item menu.
+           The result now two audio's are positioned with a position difference of 2 instead
+           of 1. In order to re-apply a correct positioning differenced by 1, re-execute the
+           playlist item menu Add/update Position to Audio's Title. Then, all position are
+           separated by 1 again.''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -38811,32 +38830,38 @@ void main() {
         "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
       ];
 
+      // Find the audio list widget using its key
+      Finder listFinder = find.byKey(const Key('audio_list'));
+
+      // Perform the scroll down action
+      await tester.drag(listFinder, const Offset(0, -300));
+      await tester.pumpAndSettle();
+
       IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
         tester: tester,
         audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-        firstAudioListTileIndex: 1,
+        firstAudioListTileIndex: 0,
       );
 
       // Now we want to tap the popup menu of the Audio ListTile
       // "6_Prière au Seigneur"
 
-      const String audioToPositionTitle = "6_Prière au Seigneur";
+      String audioToPositionTitle = "6_Prière au Seigneur";
 
       // First, find the Audio sublist ListTile Text widget
-      final Finder audioToPositionTitleTextWidgetFinder =
+      Finder audioToPositionTitleTextWidgetFinder =
           find.text(audioToPositionTitle);
 
       // Then obtain the Audio ListTile widget enclosing the Text widget by
       // finding its ancestor
-      final Finder audioToPositionListTileWidgetFinder = find.ancestor(
+      Finder audioToPositionListTileWidgetFinder = find.ancestor(
         of: audioToPositionTitleTextWidgetFinder,
         matching: find.byType(ListTile),
       );
 
       // Now find the leading menu icon button of the Audio ListTile
       // and tap on it
-      final Finder audioToPositionListTileLeadingMenuIconButton =
-          find.descendant(
+      Finder audioToPositionListTileLeadingMenuIconButton = find.descendant(
         of: audioToPositionListTileWidgetFinder,
         matching: find.byIcon(Icons.menu),
       );
@@ -38846,19 +38871,19 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now find the move audio popup menu item and tap on it
-      final Finder popupMoveAudioMenuItem =
+      Finder popupMoveAudioMenuItem =
           find.byKey(const Key("popup_menu_move_audio_to_position"));
 
       await tester.tap(popupMoveAudioMenuItem);
       await tester.pumpAndSettle();
 
       // Find the TextField using the Key
-      final Finder textFieldFinder =
+      Finder textFieldFinder =
           find.byKey(const Key('audioPositionModificationTextField'));
 
       // Enter the Audio position
 
-      const String audioPosition = '3';
+      String audioPosition = '3';
 
       await tester.enterText(
         textFieldFinder,
@@ -38882,10 +38907,141 @@ void main() {
         "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
       ];
 
+      // Find the audio list widget using its key
+      listFinder = find.byKey(const Key('audio_list'));
+
+      // Perform the scroll down action
+      await tester.drag(listFinder, const Offset(0, -300));
+      await tester.pumpAndSettle();
+
       IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
         tester: tester,
         audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-        firstAudioListTileIndex: 1,
+        firstAudioListTileIndex: 0,
+      );
+
+      // Now we want to move another already positioned audio
+
+      audioToPositionTitle =
+          "4_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!";
+
+      // First, find the Audio sublist ListTile Text widget
+      audioToPositionTitleTextWidgetFinder = find.text(audioToPositionTitle);
+
+      // Then obtain the Audio ListTile widget enclosing the Text widget by
+      // finding its ancestor
+      audioToPositionListTileWidgetFinder = find.ancestor(
+        of: audioToPositionTitleTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the leading menu icon button of the Audio ListTile
+      // and tap on it
+      audioToPositionListTileLeadingMenuIconButton = find.descendant(
+        of: audioToPositionListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the move audio popup menu item and tap on it
+      popupMoveAudioMenuItem =
+          find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+      await tester.tap(popupMoveAudioMenuItem);
+      await tester.pumpAndSettle();
+
+      // Find the TextField using the Key
+      textFieldFinder =
+          find.byKey(const Key('audioPositionModificationTextField'));
+
+      // Enter the Audio position
+
+      audioPosition = '1';
+
+      await tester.enterText(
+        textFieldFinder,
+        audioPosition,
+      );
+      await tester.pumpAndSettle();
+
+      // Now tap the 'Move'' button
+      await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+      await tester.pumpAndSettle();
+
+      // Verify the the modified ordered audio titles
+
+      audioPositionedTitles = [
+        "9_Prière pour Dieu",
+        "7_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+        "6_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+        "4_Prière au Seigneur",
+        "3_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+        "2_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+        "1_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+      ];
+
+      // Find the audio list widget using its key
+      listFinder = find.byKey(const Key('audio_list'));
+
+      // Perform the scroll down action
+      await tester.drag(listFinder, const Offset(0, -300));
+      await tester.pumpAndSettle();
+
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+        firstAudioListTileIndex: 0,
+      );
+
+      // Now, execute Add/update Position to Audio's Title in order
+      // to update the audio titles with their new positions differenced
+      // by 1 and not more
+
+      // Tap the 'Toggle List' button to display the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester
+          .pumpAndSettle(); // Enter the not yet positioned audio position
+
+      const String playlistToPositionAudioTitles = 'Prières 1';
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: playlistToPositionAudioTitles,
+        playlistMenuKeyStr: 'popup_menu_add_audio_position_to_its_title',
+      );
+
+      // Tap the 'Toggle List' button to hide the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester
+          .pumpAndSettle(); // Enter the not yet positioned audio position
+
+      // Verify the the modified ordered audio titles which are separated
+      // by 1 only and not by twice 2 !
+
+      audioPositionedTitles = [
+        "7_Prière pour Dieu",
+        "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+        "5_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+        "4_Prière au Seigneur",
+        "3_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+        "2_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+        "1_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+      ];
+
+      // Find the audio list widget using its key
+      listFinder = find.byKey(const Key('audio_list'));
+
+      // Perform the scroll down action
+      await tester.drag(listFinder, const Offset(0, -300));
+      await tester.pumpAndSettle();
+
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+        firstAudioListTileIndex: 0,
       );
 
       // Purge the test playlist directory so that the created test
