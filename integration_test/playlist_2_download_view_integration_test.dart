@@ -38938,42 +38938,58 @@ void main() {
       await tester.tap(audioCommentsPopupMenuItem);
       await tester.pumpAndSettle();
 
-      // Verify that the audio comment dialog is displayed
-      expect(find.byType(CommentListAddDialog), findsOneWidget);
-
-      // Verify the dialog title
-      expect(find.text('Comments'), findsOneWidget);
-
-      // Verify that the audio comments list of the dialog has 1 comment
-      // item
-
       Finder audioCommentsLstFinder = find.byKey(const Key(
         'audioCommentsListKey',
       ));
 
-      // Ensure the list has one child widgets
+      // Ensure the list has 3 child widgets
       expect(
         tester.widget<ListBody>(audioCommentsLstFinder).children.length,
-        1,
+        3,
       );
 
-      // Now delete the comment item
+      // Now open the extract comments to MP3 dialog
 
-      // Find the delete icon button of the comment item and tap on it
-      final Finder deleteCommentIconButtonFinder = find.descendant(
-        of: audioCommentsLstFinder,
-        matching: find.byKey(const Key('deleteCommentIconButton')),
-      );
-      await tester.tap(deleteCommentIconButtonFinder);
+      // Find the extract comments to MP3 button of the comment item and tap on it
+      final Finder extractCommentsToMp3ButtonFinder =
+          find.byKey(const Key('extractCommentsToMp3TextButton'));
+      await tester.tap(extractCommentsToMp3ButtonFinder);
       await tester.pumpAndSettle();
 
-      // Verify the delete comment dialog title
-      expect(find.text('Delete Comment'), findsOneWidget);
+      // Verify the extract comments to MP3 dialog title
+      expect(find.text('Comments in MP3'), findsOneWidget);
 
       final String commentTitle = 'Comment Jancovici';
 
-      // Verify the delete comment dialog message
-      expect(find.text("Deleting comment \"$commentTitle\"."), findsOneWidget);
+      // Verify the comments number
+      expect(find.text("Comments (3)"), findsOneWidget);
+
+      IntegrationTestUtil.checkSegmentDetailsInListTile(
+        tester: tester,
+        segmentDetailsList: [
+          {
+            'number': 1,
+            'title': "L'importance de choisir l'amour plutôt que la peur",
+            'startPosition': '24:27.7',
+            'endPosition': '24:37.0',
+            'subtitle': '0:09.3',
+          },
+          {
+            'number': 2,
+            'title': "Choix de l'amour plutôt que la peur",
+            'startPosition': '27:44.5',
+            'endPosition': '28:56.2',
+            'subtitle': '1:11.7',
+          },
+          {
+            'number': 3,
+            'title': "Infirmière en colère traitée par amour",
+            'startPosition': '35:10.8',
+            'endPosition': '35:47.3',
+            'subtitle': '0:36.5',
+          },
+        ],
+      );
 
       // Confirm the deletion of the comment
       await tester.tap(find.byKey(const Key('confirmButton')));
