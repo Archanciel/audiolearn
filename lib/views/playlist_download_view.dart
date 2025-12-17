@@ -1244,7 +1244,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
   /// Method called when the user select a sort/filter parameters in the
   /// sort/filter dropdown button list. The selected sort/filter parameters
-  /// are applied to the selected playlist audio list.
+  /// are applied to the selected playlist playable audio list.
   String _applySortFilterParmsNameChange({
     required PlaylistListVM playlistListVMlistenFalseOrTrue,
     notifyListeners = false,
@@ -1301,9 +1301,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     return _selectedSortFilterParametersName!; // is not null
   }
 
-  /// Updates the sorted and filtered audio list of the selected playlist
-  /// according to the sort and filter parameters selected in the dropdown
-  /// button list as well as the entered search sentence.
+  /// Updates the sorted and filtered playable audio list of the selected
+  /// playlist according to the sort and filter parameters selected in the
+  /// dropdown button list as well as the entered search sentence.
   void _updatePlaylistSortedFilteredAudioList({
     required PlaylistListVM playlistListVMlistenFalse,
     String searchSentence = '',

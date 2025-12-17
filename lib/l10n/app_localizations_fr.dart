@@ -2639,4 +2639,12 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get saveLocationSelectionCanceledMessage =>
       'Erreur: sélection du dossier annulée';
+
+  @override
+  String get addAtLeastOneCommentMessage =>
+      'Veuillez ajouter au moins un commentaire à l\'audio';
+
+  @override
+  String get noCommentFoundInAudioMessage =>
+      'Aucun commentaire trouvé dans l\'audio';
 }

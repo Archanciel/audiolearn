@@ -1579,5 +1579,7 @@
   "totalDuration": "Durée totale",
   "clearAllButton": "Tout enlever",
   "extractMp3Button": "Extraire le MP3",
-  "saveLocationSelectionCanceledMessage": "Erreur: sélection du dossier annulée"
+  "saveLocationSelectionCanceledMessage": "Erreur: sélection du dossier annulée",
+  "addAtLeastOneCommentMessage": "Veuillez ajouter au moins un commentaire à l'audio",
+  "noCommentFoundInAudioMessage": "Aucun commentaire trouvé dans l'audio"
 }                                   
