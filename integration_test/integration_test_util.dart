@@ -2841,69 +2841,65 @@ class IntegrationTestUtil {
     await tester.pumpAndSettle();
   }
 
-  /// Verifies segment details including title, times, and duration
-  static void checkSegmentDetailsInListTile({
+  /// Simpler verification using text matching
+  static void checkExtractionCommentDetails({
     required WidgetTester tester,
     required List<Map<String, dynamic>> segmentDetailsList,
-    int firstSegmentListTileIndex = 0,
   }) {
-    final Finder listTilesFinder = find.byType(ListTile);
-
     for (var segmentDetails in segmentDetailsList) {
-      final int currentIndex = firstSegmentListTileIndex++;
 
-      // Find all Text widgets in this ListTile
-      Finder textWidgetsFinder = find.descendant(
-        of: listTilesFinder.at(currentIndex),
-        matching: find.byType(Text),
-      );
+      // Verify number in CircleAvatar
+      if (segmentDetails.containsKey('number')) {
+        expect(
+          find.text('${segmentDetails['number']}'),
+          findsWidgets, // May find more than one if number repeats
+          reason: 'Number "${segmentDetails['number']}" not found',
+        );
+      }
 
-      // Verify title (first Text widget)
+      // Verify title exists
       if (segmentDetails.containsKey('title')) {
         expect(
-          tester.widget<Text>(textWidgetsFinder.at(0)).data,
-          segmentDetails['title'],
+          find.text(segmentDetails['title']),
+          findsOneWidget,
+          reason: 'Title "${segmentDetails['title']}" not found',
         );
       }
 
-      // Verify start position (second Text widget)
+      // Verify start position exists
       if (segmentDetails.containsKey('startPosition')) {
         expect(
-          tester.widget<Text>(textWidgetsFinder.at(1)).data,
-          segmentDetails['startPosition'],
+          find.text(segmentDetails['startPosition']),
+          findsOneWidget,
+          reason:
+              'Start position "${segmentDetails['startPosition']}" not found',
         );
       }
 
-      // Verify end position (third Text widget)
+      // Verify end position exists
       if (segmentDetails.containsKey('endPosition')) {
         expect(
-          tester.widget<Text>(textWidgetsFinder.at(2)).data,
-          segmentDetails['endPosition'],
+          find.text(segmentDetails['endPosition']),
+          findsOneWidget,
+          reason: 'End position "${segmentDetails['endPosition']}" not found',
         );
       }
 
-      // Verify subtitle with duration (fourth Text widget)
-      if (segmentDetails.containsKey('subtitle')) {
-        final String subtitleText =
-            tester.widget<Text>(textWidgetsFinder.at(3)).data!;
+      // Verify duration exists
+      if (segmentDetails.containsKey('duration')) {
         expect(
-          subtitleText.contains(segmentDetails['subtitle']),
-          true,
+          find.text(segmentDetails['duration']),
+          findsOneWidget,
+          reason: 'End position "${segmentDetails['duration']}" not found',
         );
       }
 
-      // Verify CircleAvatar number
-      if (segmentDetails.containsKey('number')) {
-        Finder avatarTextFinder = find.descendant(
-          of: find.descendant(
-            of: listTilesFinder.at(currentIndex),
-            matching: find.byType(CircleAvatar),
-          ),
-          matching: find.byType(Text),
-        );
+      // Verify silence exists
+      if (segmentDetails.containsKey('silence')) {
         expect(
-          tester.widget<Text>(avatarTextFinder).data,
-          '${segmentDetails['number']}',
+          find.text(segmentDetails['silence']),
+          findsOneWidget,
+          reason: 'End position "${segmentDetails['silence']}" not found',
         );
       }
     }

@@ -39120,7 +39120,7 @@ void main() {
       // Verify the comments number
       expect(find.text("Comments (3)"), findsOneWidget);
 
-      IntegrationTestUtil.checkSegmentDetailsInListTile(
+      IntegrationTestUtil.checkExtractionCommentDetails(
         tester: tester,
         segmentDetailsList: [
           {
@@ -39128,21 +39128,21 @@ void main() {
             'title': "L'importance de choisir l'amour plutôt que la peur",
             'startPosition': '24:27.7',
             'endPosition': '24:37.0',
-            'subtitle': '0:09.3',
+            'duration': 'Duration: 0:09.3 + silence 0:01.0',
           },
           {
             'number': 2,
             'title': "Choix de l'amour plutôt que la peur",
             'startPosition': '27:44.5',
             'endPosition': '28:56.2',
-            'subtitle': '1:11.7',
+            'duration': 'Duration: 1:11.7 + silence 0:01.0',
           },
           {
             'number': 3,
             'title': "Infirmière en colère traitée par amour",
             'startPosition': '35:10.8',
             'endPosition': '35:47.3',
-            'subtitle': '0:36.5',
+            'duration': 'Duration: 0:36.5',
           },
         ],
       );
