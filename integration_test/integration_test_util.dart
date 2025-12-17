@@ -2046,7 +2046,7 @@ class IntegrationTestUtil {
         verifyPictureAudioMapLength,
       );
     }
-    
+
     List<String> pictureAudioLst =
         applicationPictureJsonMap[pictureFileNameOne] ?? [];
 
@@ -2839,6 +2839,74 @@ class IntegrationTestUtil {
     // and tap on it
     await tester.tap(find.byKey(const Key('playlist_info_ok_button_key')));
     await tester.pumpAndSettle();
+  }
+
+  /// Verifies segment details including title, times, and duration
+  static void checkSegmentDetailsInListTile({
+    required WidgetTester tester,
+    required List<Map<String, dynamic>> segmentDetailsList,
+    int firstSegmentListTileIndex = 0,
+  }) {
+    final Finder listTilesFinder = find.byType(ListTile);
+
+    for (var segmentDetails in segmentDetailsList) {
+      final int currentIndex = firstSegmentListTileIndex++;
+
+      // Find all Text widgets in this ListTile
+      Finder textWidgetsFinder = find.descendant(
+        of: listTilesFinder.at(currentIndex),
+        matching: find.byType(Text),
+      );
+
+      // Verify title (first Text widget)
+      if (segmentDetails.containsKey('title')) {
+        expect(
+          tester.widget<Text>(textWidgetsFinder.at(0)).data,
+          segmentDetails['title'],
+        );
+      }
+
+      // Verify start position (second Text widget)
+      if (segmentDetails.containsKey('startPosition')) {
+        expect(
+          tester.widget<Text>(textWidgetsFinder.at(1)).data,
+          segmentDetails['startPosition'],
+        );
+      }
+
+      // Verify end position (third Text widget)
+      if (segmentDetails.containsKey('endPosition')) {
+        expect(
+          tester.widget<Text>(textWidgetsFinder.at(2)).data,
+          segmentDetails['endPosition'],
+        );
+      }
+
+      // Verify subtitle with duration (fourth Text widget)
+      if (segmentDetails.containsKey('subtitle')) {
+        final String subtitleText =
+            tester.widget<Text>(textWidgetsFinder.at(3)).data!;
+        expect(
+          subtitleText.contains(segmentDetails['subtitle']),
+          true,
+        );
+      }
+
+      // Verify CircleAvatar number
+      if (segmentDetails.containsKey('number')) {
+        Finder avatarTextFinder = find.descendant(
+          of: find.descendant(
+            of: listTilesFinder.at(currentIndex),
+            matching: find.byType(CircleAvatar),
+          ),
+          matching: find.byType(Text),
+        );
+        expect(
+          tester.widget<Text>(avatarTextFinder).data,
+          '${segmentDetails['number']}',
+        );
+      }
+    }
   }
 
   static Future<void> selectAndSaveSortFilterParmsToPlaylist({

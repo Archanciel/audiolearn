@@ -2613,4 +2613,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get saveLocationSelectionCanceledMessage =>
       'Error: save location selection canceled';
+
+  @override
+  String get addAtLeastOneCommentMessage =>
+      'Please add at least one comment to the audio';
+
+  @override
+  String get noCommentFoundInAudioMessage => 'No comment found in the audio';
 }

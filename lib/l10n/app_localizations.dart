@@ -4195,6 +4195,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error: save location selection canceled'**
   String get saveLocationSelectionCanceledMessage;
+
+  /// No description provided for @addAtLeastOneCommentMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Please add at least one comment to the audio'**
+  String get addAtLeastOneCommentMessage;
+
+  /// No description provided for @noCommentFoundInAudioMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'No comment found in the audio'**
+  String get noCommentFoundInAudioMessage;
 }
 
 class _AppLocalizationsDelegate

@@ -138,20 +138,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                     ),
                     const SizedBox(height: 8),
                     (audioExtractorVM.segments.isEmpty)
-                        ? Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'No segments added yet.\nLoad from a comment file or add segments manually.',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                            ),
-                          )
+                        ? const SizedBox.shrink()  // ← Renders nothing
                         : Container(
                             constraints: const BoxConstraints(
                               maxHeight: 400,
@@ -564,8 +551,8 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
         }
 
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('No comments found in the selected file'),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.noCommentFoundInAudioMessage),
             backgroundColor: Colors.orange,
           ),
         );
@@ -641,7 +628,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
       }
 
       if (audioExtractorVM.segments.isEmpty) {
-        audioExtractorVM.setError('Please add at least one segment');
+        audioExtractorVM.setError(AppLocalizations.of(context)!.addAtLeastOneCommentMessage);
 
         return;
       }

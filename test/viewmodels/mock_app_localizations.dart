@@ -2715,4 +2715,10 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get saveLocationSelectionCanceledMessage =>
       "Save location selection canceled";
+
+  @override
+  String get addAtLeastOneCommentMessage => "Please add at least one comment";
+
+  @override
+  String get noCommentFoundInAudioMessage => "No comment found in the audio";
 }
