@@ -6413,60 +6413,35 @@ class PlaylistListVM extends ChangeNotifier {
   void moveAudioToPosition({
     required Audio audio,
     required int position,
+    required String sortFilterParametersAppliedName,
+    required String sortFilterParametersDefaultName,
   }) {
     Playlist? playlist = audio.enclosingPlaylist;
 
-    // Step 1: Update position numbers for existing audios
     final RegExp regex = RegExp(r'^(\d+)_');
 
-    final List<SortingItem> selectedSortItemLstDesc = [
-      SortingItem(
-        sortingOption: SortingOption.chapterAudioTitle,
-        isAscending: false,
-      ),
-    ];
+    // Step 1: Add position prefix to the moved audio
 
-    List<Audio> audioSortedByTitleDescLst =
-        _audioSortFilterService.sortAudioLstBySortingOptions(
-      audioLst: playlist!.playableAudioLst,
-      selectedSortItemLst: selectedSortItemLstDesc,
-    );
+    int initialPosition = regex.firstMatch(audio.validVideoTitle) != null
+        ? int.parse(regex.firstMatch(audio.validVideoTitle)!.group(1)!)
+        : playlist!
+            .playableAudioLst.length; // If no prefix, assume it's at the end
 
-    for (Audio existingAudio in audioSortedByTitleDescLst) {
-      if (existingAudio == audio) {
-        // Skip the audio being moved
-        continue;
-      }
-
-      RegExpMatch? match = regex.firstMatch(existingAudio.validVideoTitle);
-
-      if (match != null) {
-        int currentPosition = int.parse(match.group(1)!);
-
-        // If the current position is >= to the move to position, increment it
-        if (currentPosition >= position) {
-          int newPosition = currentPosition + 1;
-          existingAudio.validVideoTitle = existingAudio.validVideoTitle
-              .replaceFirst(regex, '${newPosition}_');
-          _logger.i('Updated: ${existingAudio.validVideoTitle}');
-        }
-      }
+    if (position > initialPosition) {
+      position++;
+    } else if (position < initialPosition) {
+      position = ((position - 2) <= -1) ? 0 : position - 1;
     }
-
-    // Step 2: Add position prefix to the moved audio
 
     // Remove existing prefix if present
     String titleWithoutPrefix = audio.validVideoTitle.replaceFirst(regex, '');
 
     audio.validVideoTitle = '${position}_$titleWithoutPrefix';
 
-    _logger.i('Modified the audio ${audio.validVideoTitle}');
-    _logger.i('Playable audios count: ${playlist.playableAudioLst.length}');
-
-    _writePlaylistToFile(
-      playlist: playlist,
+    addNumericPrefixesToPlaylistAudioTitles(
+      playlist: playlist!,
+      sortFilterParametersAppliedName: sortFilterParametersAppliedName,
+      sortFilterParametersDefaultName: sortFilterParametersDefaultName,
     );
-
-    notifyListeners();
   }
 }
