@@ -38588,7 +38588,8 @@ void main() {
         playlistMenuKeyStr: 'popup_menu_add_audio_position_to_its_title',
       );
 
-      // Verify the presence of the renamed playlist in the playlist list
+      // Verify the presence of the positioned audio in the in the
+      // playlist audio list
 
       final List<String> audioPositionedTitles = [
         "27_on va prier maintenant ensemble",
@@ -38779,8 +38780,7 @@ void main() {
         '''For already positioned audio's, execute a first time the Audio item menu "Move
            Audio to Position". Then on another positioned audio, execute the same item menu.
            The result is that the two moved audio's are positioned with a position difference
-           of 1 which is correct.''',
-        (WidgetTester tester) async {
+           of 1 which is correct.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -39000,6 +39000,105 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
+    testWidgets('''Moving Audio to position < actual audio position tests.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exi sts so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}position_to_audo_title_test",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      _loadSettingsMap();
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      const String playlistToPositionAudioTitles = 'Prières 1';
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: playlistToPositionAudioTitles,
+        playlistMenuKeyStr: 'popup_menu_add_audio_position_to_its_title',
+      );
+
+      // Verify the presence of the positioned audio in the in the
+      // playlist audio list
+
+      // Tap the 'Toggle List' button to hide the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester
+          .pumpAndSettle(); // Enter the not yet positioned audio position
+
+      // Verify the the initial ordered audio titles
+
+      List<String> audioPositionedTitles = [
+        "7_Prière pour Dieu",
+        "6_Prière au Seigneur",
+        "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+        "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+        "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+        "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+        "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+      ];
+
+      // Find the audio list widget using its key
+      Finder listFinder = find.byKey(const Key('audio_list'));
+
+      // Perform the scroll down action
+      await tester.drag(listFinder, const Offset(0, -300));
+      await tester.pumpAndSettle();
+
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+        firstAudioListTileIndex: 0,
+      );
+
+      // Now we want to tap the popup menu of the Audio ListTile
+      // "6_Prière au Seigneur"
+
+      audioPositionedTitles = [
+        "7_Prière pour Dieu",
+        "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+        "5_Prière au Seigneur",
+        "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+        "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+        "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+        "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+      ];
+
+      await _movePositionedAudioAndVerifyResult(
+        tester: tester,
+        audioToPositionTitle: "6_Prière au Seigneur",
+        audioNewPosition: '5',
+        expectedAudioPositionedTitles: audioPositionedTitles,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
   });
   group('Extract audio comments to MP3 tests', () {
     testWidgets('''Audio with 3 comments.''', (WidgetTester tester) async {
@@ -39120,6 +39219,72 @@ void main() {
       );
     });
   });
+}
+
+Future<void> _movePositionedAudioAndVerifyResult({
+  required WidgetTester tester,
+  required String audioToPositionTitle,
+  required String audioNewPosition,
+  required List<String> expectedAudioPositionedTitles,
+}) async {
+  // First, find the Audio sublist ListTile Text widget
+  Finder audioToPositionTitleTextWidgetFinder = find.text(audioToPositionTitle);
+
+  // Then obtain the Audio ListTile widget enclosing the Text widget by
+  // finding its ancestor
+  Finder audioToPositionListTileWidgetFinder = find.ancestor(
+    of: audioToPositionTitleTextWidgetFinder,
+    matching: find.byType(ListTile),
+  );
+
+  // Now find the leading menu icon button of the Audio ListTile
+  // and tap on it
+  Finder audioToPositionListTileLeadingMenuIconButton = find.descendant(
+    of: audioToPositionListTileWidgetFinder,
+    matching: find.byIcon(Icons.menu),
+  );
+
+  // Tap the leading menu icon button to open the popup menu
+  await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+  await tester.pumpAndSettle();
+
+  // Now find the move audio popup menu item and tap on it
+  Finder popupMoveAudioMenuItem =
+      find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+  await tester.tap(popupMoveAudioMenuItem);
+  await tester.pumpAndSettle();
+
+  // Find the TextField using the Key
+  Finder textFieldFinder =
+      find.byKey(const Key('audioPositionModificationTextField'));
+
+  // Enter the Audio position
+
+  await tester.enterText(
+    textFieldFinder,
+    audioNewPosition,
+  );
+  await tester.pumpAndSettle();
+
+  // Now tap the 'Move'' button
+  await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+  await tester.pumpAndSettle();
+
+  // Verify the the modified ordered audio titles
+
+  // Find the audio list widget using its key
+  final Finder listFinder = find.byKey(const Key('audio_list'));
+
+  // Perform the scroll down action
+  await tester.drag(listFinder, const Offset(0, -300));
+  await tester.pumpAndSettle();
+
+  IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    tester: tester,
+    audioOrPlaylistTitlesOrderedLst: expectedAudioPositionedTitles,
+    firstAudioListTileIndex: 0,
+  );
 }
 
 Future<void> _thirdReImport({
