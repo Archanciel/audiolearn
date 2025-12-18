@@ -1224,7 +1224,7 @@
       }
     }
   },
-  "sinceAbsentFromSourcePlaylist": " car il n'est pas présent dans la playlist source.",
+  "sinceAbsentFromSourcePlaylist": " car son fichier MP3 n'est pas présent dans la playlist source.",
   "sinceAlreadyPresentInTargetPlaylist": " car il est déjà présent dans cette playlist.",
   "audioNotKeptInSourcePlaylist": ".\n\nSUPPRIMEZ L'AUDIO \"{audioTitle}\" DE LA PLAYLIST YOUTUBE \"{fromPlaylistTitle}\", SINON L'AUDIO SERA TÉLÉCHARGÉ À NOUVEAU LORS DU PROCHAIN TÉLÉCHARGEMENT DE LA PLAYLIST.",
   "@audioNotKeptInSourcePlaylist": {

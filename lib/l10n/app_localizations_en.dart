@@ -1835,7 +1835,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sinceAbsentFromSourcePlaylist =>
-      ' since it is not present in the source playlist.';
+      ' since its MP3 is not present in the source playlist.';
 
   @override
   String get sinceAlreadyPresentInTargetPlaylist =>

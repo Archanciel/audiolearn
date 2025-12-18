@@ -2989,7 +2989,7 @@ abstract class AppLocalizations {
   /// No description provided for @sinceAbsentFromSourcePlaylist.
   ///
   /// In en, this message translates to:
-  /// **' since it is not present in the source playlist.'**
+  /// **' since its MP3 is not present in the source playlist.'**
   String get sinceAbsentFromSourcePlaylist;
 
   /// No description provided for @sinceAlreadyPresentInTargetPlaylist.
