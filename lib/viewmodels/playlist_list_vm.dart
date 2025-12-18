@@ -6422,15 +6422,18 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Step 1: Add position prefix to the moved audio
 
+    final int playableAudioLstLength = playlist!.playableAudioLst.length;
     int initialPosition = regex.firstMatch(audio.validVideoTitle) != null
         ? int.parse(regex.firstMatch(audio.validVideoTitle)!.group(1)!)
-        : playlist!
-            .playableAudioLst.length; // If no prefix, assume it's at the end
+        : playableAudioLstLength; // If no prefix, assume it's at the end
 
     if (position > initialPosition) {
-      position++;
+      position = ((position - initialPosition) == 1 &&
+              position < playableAudioLstLength)
+          ? position
+          : ++position;
     } else if (position < initialPosition) {
-      position = ((position - 2) <= -1) ? 0 : position - 1;
+      position = ((position - 2) <= -1) ? 0 : --position;
     }
 
     // Remove existing prefix if present
