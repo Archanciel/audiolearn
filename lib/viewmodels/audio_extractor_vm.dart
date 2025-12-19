@@ -76,6 +76,8 @@ class AudioExtractorVM extends ChangeNotifier {
         silenceDuration: TimeFormatUtil.normalizeToTenths(
           segment.silenceDuration,
         ),
+        soundReductionPosition: segment.soundReductionPosition,
+        soundReductionDuration: segment.soundReductionDuration,
         title: segment.title,
       );
       _segments[index] = normalized;

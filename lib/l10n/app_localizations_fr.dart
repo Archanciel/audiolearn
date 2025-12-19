@@ -2619,7 +2619,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get endPositionLabel => 'Position de fin (h:mm:ss.d)';
 
   @override
-  String get silenceDurationLabel => 'Silence après (h:mm:ss.t)';
+  String get silenceDurationLabel => 'Silence après la fin (h:mm:ss.t)';
 
   @override
   String get duration => 'Durée';
@@ -2653,4 +2653,32 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get inMusicQuality => 'qualitéMusicale';
+
+  @override
+  String get soundReductionPosition => 'Position de réduction du volume';
+
+  @override
+  String get soundReductionDuration => 'Durée de réduction du volume';
+
+  @override
+  String get volumeFadeOutOptional =>
+      'Diminution progressive du volume (optionnel)';
+
+  @override
+  String get fadeStartPositionLabel => 'Début de la diminution (h:mm:ss.t)';
+
+  @override
+  String get fadeStartPositionHintText =>
+      '0:00.0 (temps absolu dans le fichier source)';
+
+  @override
+  String get fadeStartPositionHelperText =>
+      'Position où le volume commence à diminuer';
+
+  @override
+  String get fadeDurationLabel => 'Durée de la diminution (h:mm:ss.t)';
+
+  @override
+  String get fadeDurationHelperText =>
+      'Durée pour faire baisser le volume de 100% à 0%';
 }

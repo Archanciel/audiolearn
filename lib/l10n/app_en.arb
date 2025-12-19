@@ -1166,7 +1166,7 @@
   "maxDuration": "Total audio duration",
   "startPositionLabel": "Start position (h:mm:ss.t)",
   "endPositionLabel": "End position (h:mm:ss.t)",
-  "silenceDurationLabel": "Silence duration after (h:mm:ss.t)",
+  "silenceDurationLabel": "Silence duration after end (h:mm:ss.t)",
   "duration": "Duration",
   "silence": "silence",
   "totalDuration": "Total duration",
@@ -1176,5 +1176,13 @@
   "addAtLeastOneCommentMessage": "Please add at least one comment to the audio",
   "noCommentFoundInAudioMessage": "No comment found in the audio",
   "inMusicQualityLabel": "In music quality",
-  "inMusicQuality": "musicQuality"
+  "inMusicQuality": "musicQuality",
+  "soundReductionPosition": "Sound reduction position",
+  "soundReductionDuration": "Sound reduction duration",
+  "volumeFadeOutOptional": "Volume fade-out (optional)",
+  "fadeStartPositionLabel": "Fade start position (h:mm:ss.t)",
+  "fadeStartPositionHintText": "0:00.0 (absolute time in source file)",
+  "fadeStartPositionHelperText": "Position where volume starts fading to 0",
+  "fadeDurationLabel": "Fade duration (h:mm:ss.t)",
+  "fadeDurationHelperText": "Duration to fade volume from 100% to 0%"
 }

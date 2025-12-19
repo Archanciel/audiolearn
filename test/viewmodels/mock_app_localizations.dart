@@ -2727,4 +2727,31 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get inMusicQuality => "musicQuality";
+
+  @override
+  String get soundReductionPosition => "Sound reduction position";
+
+  @override
+  String get soundReductionDuration => "Sound reduction duration";
+
+  @override
+  String get volumeFadeOutOptional => "Volume fade-out (optional)";
+
+  @override
+  String get fadeStartPositionLabel => "Fade start position (h:mm:ss.t)";
+
+  @override
+  String get fadeStartPositionHintText =>
+      "0:00.0 (absolute time in source file)";
+
+  @override
+  String get fadeStartPositionHelperText =>
+      "Position where volume starts fading to 0";
+
+  @override
+  String get fadeDurationLabel => "Fade duration (h:mm:ss.t)";
+
+  @override
+  String get fadeDurationHelperText =>
+      "Duration to fade volume from 100% to 0%";
 }

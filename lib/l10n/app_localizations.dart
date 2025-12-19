@@ -4157,7 +4157,7 @@ abstract class AppLocalizations {
   /// No description provided for @silenceDurationLabel.
   ///
   /// In en, this message translates to:
-  /// **'Silence duration after (h:mm:ss.t)'**
+  /// **'Silence duration after end (h:mm:ss.t)'**
   String get silenceDurationLabel;
 
   /// No description provided for @duration.
@@ -4219,6 +4219,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'musicQuality'**
   String get inMusicQuality;
+
+  /// No description provided for @soundReductionPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Sound reduction position'**
+  String get soundReductionPosition;
+
+  /// No description provided for @soundReductionDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Sound reduction duration'**
+  String get soundReductionDuration;
+
+  /// No description provided for @volumeFadeOutOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Volume fade-out (optional)'**
+  String get volumeFadeOutOptional;
+
+  /// No description provided for @fadeStartPositionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Fade start position (h:mm:ss.t)'**
+  String get fadeStartPositionLabel;
+
+  /// No description provided for @fadeStartPositionHintText.
+  ///
+  /// In en, this message translates to:
+  /// **'0:00.0 (absolute time in source file)'**
+  String get fadeStartPositionHintText;
+
+  /// No description provided for @fadeStartPositionHelperText.
+  ///
+  /// In en, this message translates to:
+  /// **'Position where volume starts fading to 0'**
+  String get fadeStartPositionHelperText;
+
+  /// No description provided for @fadeDurationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Fade duration (h:mm:ss.t)'**
+  String get fadeDurationLabel;
+
+  /// No description provided for @fadeDurationHelperText.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration to fade volume from 100% to 0%'**
+  String get fadeDurationHelperText;
 }
 
 class _AppLocalizationsDelegate
