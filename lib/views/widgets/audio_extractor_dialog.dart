@@ -40,6 +40,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
     with ScreenMixin {
   late final List<HelpItem> _helpItemsLst;
   late final ScrollController _segmentsScrollController;
+  bool _extractInMusicQuality = false;
 
   @override
   void initState() {
@@ -138,7 +139,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                     ),
                     const SizedBox(height: 8),
                     (audioExtractorVM.segments.isEmpty)
-                        ? const SizedBox.shrink()  // ← Renders nothing
+                        ? const SizedBox.shrink() // ← Renders nothing
                         : Container(
                             constraints: const BoxConstraints(
                               maxHeight: 400,
@@ -293,13 +294,33 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                       ),
                     ],
                     const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: audioExtractorVM.extractionResult.isProcessing
-                          ? null
-                          : () => _extractMP3(context: context),
-                      child: Text(
-                        AppLocalizations.of(context)!.extractMp3Button,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          onPressed:
+                              audioExtractorVM.extractionResult.isProcessing
+                                  ? null
+                                  : () => _extractMP3(context: context),
+                          child: Text(
+                            AppLocalizations.of(context)!.extractMp3Button,
+                          ),
+                        ),
+                        createCheckboxRowFunction(
+                          // displaying music quality checkbox
+                          checkBoxWidgetKey:
+                              const Key('playlistQualityConfirmDialogCheckBox'),
+                          context: context,
+                          label:
+                              AppLocalizations.of(context)!.inMusicQualityLabel,
+                          value: _extractInMusicQuality,
+                          onChangedFunction: (bool? value) {
+                            setState(() {
+                              _extractInMusicQuality = value ?? false;
+                            });
+                          },
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 16),
                     if (audioExtractorVM.extractionResult.isProcessing)
@@ -552,7 +573,8 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context)!.noCommentFoundInAudioMessage),
+            content: Text(
+                AppLocalizations.of(context)!.noCommentFoundInAudioMessage),
             backgroundColor: Colors.orange,
           ),
         );
@@ -628,7 +650,8 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
       }
 
       if (audioExtractorVM.segments.isEmpty) {
-        audioExtractorVM.setError(AppLocalizations.of(context)!.addAtLeastOneCommentMessage);
+        audioExtractorVM.setError(
+            AppLocalizations.of(context)!.addAtLeastOneCommentMessage);
 
         return;
       }
@@ -674,6 +697,10 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
             '${base}_${audioExtractorVM.segments.length}_comments.mp3';
       }
 
+      if (_extractInMusicQuality) {
+        extractedMp3FileName = "${AppLocalizations.of(context)!.inMusicQuality}_$extractedMp3FileName";
+      }
+
       extractedMp3FileName = PathUtil.sanitizeFileName(
         extractedMp3FileName,
       );
@@ -681,7 +708,8 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
       final String? extractedMp3DestinationDir =
           await FilePicker.platform.getDirectoryPath();
       if (extractedMp3DestinationDir == null) {
-        audioExtractorVM.setError(AppLocalizations.of(context)!.saveLocationSelectionCanceledMessage);
+        audioExtractorVM.setError(
+            AppLocalizations.of(context)!.saveLocationSelectionCanceledMessage);
 
         return;
       }
@@ -692,7 +720,10 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
       if (audioExtractorVM.multiInputs.isNotEmpty) {
         await audioExtractorVM.extractMP3Multi(outputPath);
       } else {
-        await audioExtractorVM.extractMP3(outputPath);
+        await audioExtractorVM.extractMP3(
+          inMusicQuality: _extractInMusicQuality,
+          outputPath: outputPath,
+        );
       }
     } catch (e) {
       audioExtractorVM.setError('Error selecting save location: $e');
