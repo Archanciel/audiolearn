@@ -1573,7 +1573,7 @@
   "maxDuration": "Durée audio totale",
   "startPositionLabel": "Position de début (h:mm:ss.d)",
   "endPositionLabel": "Position de fin (h:mm:ss.d)",
-  "silenceDurationLabel": "Silence après (h:mm:ss.t)",
+  "silenceDurationLabel": "Silence après la fin (h:mm:ss.t)",
   "duration": "Durée",
   "silence": "silence",
   "totalDuration": "Durée totale",
@@ -1583,5 +1583,13 @@
   "addAtLeastOneCommentMessage": "Veuillez ajouter au moins un commentaire à l'audio",
   "noCommentFoundInAudioMessage": "Aucun commentaire trouvé dans l'audio",
   "inMusicQualityLabel": "En qualité musicale",
-  "inMusicQuality": "qualitéMusicale"
+  "inMusicQuality": "qualitéMusicale",
+  "soundReductionPosition": "Position de réduction du volume",
+  "soundReductionDuration": "Durée de réduction du volume",
+  "volumeFadeOutOptional": "Diminution progressive du volume (optionnel)",
+  "fadeStartPositionLabel": "Début de la diminution (h:mm:ss.t)",
+  "fadeStartPositionHintText": "0:00.0 (temps absolu dans le fichier source)",
+  "fadeStartPositionHelperText": "Position où le volume commence à diminuer",
+  "fadeDurationLabel": "Durée de la diminution (h:mm:ss.t)",
+  "fadeDurationHelperText": "Durée pour faire baisser le volume de 100% à 0%"
 }                                   

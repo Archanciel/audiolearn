@@ -208,6 +208,22 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                               color: Colors.white70,
                                             ),
                                           ),
+                                          const SizedBox(height: 2),
+                                          Text(
+                                            "${AppLocalizations.of(context)!.soundReductionPosition}: ${TimeFormatUtil.formatSeconds(s.soundReductionPosition)}",
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white70,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 2),
+                                          Text(
+                                            "${AppLocalizations.of(context)!.soundReductionDuration}: ${TimeFormatUtil.formatSeconds(s.soundReductionDuration)}",
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white70,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                       subtitle: Text(
@@ -698,7 +714,8 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
       }
 
       if (_extractInMusicQuality) {
-        extractedMp3FileName = "${AppLocalizations.of(context)!.inMusicQuality}_$extractedMp3FileName";
+        extractedMp3FileName =
+            "${AppLocalizations.of(context)!.inMusicQuality}_$extractedMp3FileName";
       }
 
       extractedMp3FileName = PathUtil.sanitizeFileName(
