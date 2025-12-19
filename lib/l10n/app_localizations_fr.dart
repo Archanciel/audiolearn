@@ -2647,4 +2647,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get noCommentFoundInAudioMessage =>
       'Aucun commentaire trouvé dans l\'audio';
+
+  @override
+  String get inMusicQualityLabel => 'En qualité musicale';
+
+  @override
+  String get inMusicQuality => 'qualitéMusicale';
 }

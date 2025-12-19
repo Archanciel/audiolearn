@@ -4207,6 +4207,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No comment found in the audio'**
   String get noCommentFoundInAudioMessage;
+
+  /// No description provided for @inMusicQualityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'In music quality'**
+  String get inMusicQualityLabel;
+
+  /// No description provided for @inMusicQuality.
+  ///
+  /// In en, this message translates to:
+  /// **'musicQuality'**
+  String get inMusicQuality;
 }
 
 class _AppLocalizationsDelegate
