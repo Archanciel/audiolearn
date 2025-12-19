@@ -2620,4 +2620,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noCommentFoundInAudioMessage => 'No comment found in the audio';
+
+  @override
+  String get inMusicQualityLabel => 'In music quality';
+
+  @override
+  String get inMusicQuality => 'musicQuality';
 }

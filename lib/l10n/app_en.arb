@@ -1174,5 +1174,7 @@
   "extractMp3Button": "Extract MP3",
   "saveLocationSelectionCanceledMessage": "Error: save location selection canceled",
   "addAtLeastOneCommentMessage": "Please add at least one comment to the audio",
-  "noCommentFoundInAudioMessage": "No comment found in the audio"
+  "noCommentFoundInAudioMessage": "No comment found in the audio",
+  "inMusicQualityLabel": "In music quality",
+  "inMusicQuality": "musicQuality"
 }
