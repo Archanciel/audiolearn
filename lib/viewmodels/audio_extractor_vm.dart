@@ -105,7 +105,10 @@ class AudioExtractorVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> extractMP3(String outputPath) async {
+  Future<void> extractMP3({
+    required bool inMusicQuality,
+    required String outputPath,
+  }) async {
     if (_audioFile.path == null) {
       _extractionResult = ExtractionResult.error(
         'Please select an MP3 file first',
@@ -113,6 +116,7 @@ class AudioExtractorVM extends ChangeNotifier {
       notifyListeners();
       return;
     }
+
     if (_segments.isEmpty) {
       _extractionResult = ExtractionResult.error(
         'Please add at least one segment to extract',
@@ -128,6 +132,7 @@ class AudioExtractorVM extends ChangeNotifier {
         inputPath: _audioFile.path!,
         outputPath: outputPath,
         segments: _segments,
+        inMusicQuality: inMusicQuality,
       );
 
       if (result['success'] == true) {
@@ -153,8 +158,7 @@ class AudioExtractorVM extends ChangeNotifier {
 
   // ── Multi-input mode (with per-input gain) ─────────────────────────────────
   final List<InputSegments> _multiInputs = [];
-  List<InputSegments> get multiInputs =>
-      List.unmodifiable(_multiInputs);
+  List<InputSegments> get multiInputs => List.unmodifiable(_multiInputs);
   bool get hasMultipleSources => _multiInputs.length > 1;
 
   void clearMultiInputs() {
@@ -167,23 +171,22 @@ class AudioExtractorVM extends ChangeNotifier {
     required List<AudioSegment> segments,
     double gainDb = 0.0,
   }) {
-    final normalized =
-        segments
-            .map(
-              (s) => AudioSegment(
-                startPosition: TimeFormatUtil.normalizeToTenths(
-                  s.startPosition,
-                ),
-                endPosition: TimeFormatUtil.normalizeToTenths(
-                  s.endPosition,
-                ),
-                silenceDuration: TimeFormatUtil.normalizeToTenths(
-                  s.silenceDuration,
-                ),
-                title: s.title,
-              ),
-            )
-            .toList();
+    final normalized = segments
+        .map(
+          (s) => AudioSegment(
+            startPosition: TimeFormatUtil.normalizeToTenths(
+              s.startPosition,
+            ),
+            endPosition: TimeFormatUtil.normalizeToTenths(
+              s.endPosition,
+            ),
+            silenceDuration: TimeFormatUtil.normalizeToTenths(
+              s.silenceDuration,
+            ),
+            title: s.title,
+          ),
+        )
+        .toList();
 
     _multiInputs.add(
       InputSegments(
@@ -223,23 +226,22 @@ class AudioExtractorVM extends ChangeNotifier {
     List<AudioSegment> segments,
   ) {
     if (index < 0 || index >= _multiInputs.length) return;
-    final normalized =
-        segments
-            .map(
-              (s) => AudioSegment(
-                startPosition: TimeFormatUtil.normalizeToTenths(
-                  s.startPosition,
-                ),
-                endPosition: TimeFormatUtil.normalizeToTenths(
-                  s.endPosition,
-                ),
-                silenceDuration: TimeFormatUtil.normalizeToTenths(
-                  s.silenceDuration,
-                ),
-                title: s.title,
-              ),
-            )
-            .toList();
+    final normalized = segments
+        .map(
+          (s) => AudioSegment(
+            startPosition: TimeFormatUtil.normalizeToTenths(
+              s.startPosition,
+            ),
+            endPosition: TimeFormatUtil.normalizeToTenths(
+              s.endPosition,
+            ),
+            silenceDuration: TimeFormatUtil.normalizeToTenths(
+              s.silenceDuration,
+            ),
+            title: s.title,
+          ),
+        )
+        .toList();
     final cur = _multiInputs[index];
     _multiInputs[index] = cur.copyWith(segments: normalized);
     notifyListeners();
@@ -255,8 +257,7 @@ class AudioExtractorVM extends ChangeNotifier {
     double sum = 0.0;
     for (final inp in _multiInputs) {
       for (final s in inp.segments) {
-        sum +=
-            TimeFormatUtil.normalizeToTenths(s.duration) +
+        sum += TimeFormatUtil.normalizeToTenths(s.duration) +
             TimeFormatUtil.normalizeToTenths(s.silenceDuration);
       }
     }
@@ -273,11 +274,10 @@ class AudioExtractorVM extends ChangeNotifier {
     }
     try {
       startProcessing();
-      final result =
-          await AudioExtractorService.extractFromMultipleInputs(
-            inputs: _multiInputs,
-            outputPath: outputPath,
-          );
+      final result = await AudioExtractorService.extractFromMultipleInputs(
+        inputs: _multiInputs,
+        outputPath: outputPath,
+      );
       if (result['success'] == true) {
         _extractionResult = ExtractionResult.success(
           result['outputPath']!,

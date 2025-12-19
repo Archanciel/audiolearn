@@ -213,7 +213,7 @@ class AudioExtractorService {
     required String inputPath,
     required String outputPath,
     required List<AudioSegment> segments,
-    String? encoderBitrate,
+    required bool inMusicQuality,
   }) async {
     if (segments.isEmpty) {
       return {
@@ -222,7 +222,8 @@ class AudioExtractorService {
         'outputPath': null,
       };
     }
-    final bitrate = encoderBitrate ?? '128k';
+
+    final bitrate = (inMusicQuality) ? '192k' : '64k';
 
     if (Platform.isAndroid || Platform.isIOS) {
       return _extractSegmentsMobile(
