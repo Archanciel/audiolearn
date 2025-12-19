@@ -39110,6 +39110,23 @@ void main() {
         expectedAudioPositionedTitles: audioPositionedTitles,
       );
 
+      audioPositionedTitles = [
+        "7_Prière pour Dieu",
+        "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+        "5_Prière au Seigneur",
+        "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+        "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+        "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+        "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+      ];
+
+      await _movePositionedAudioAndVerifyResult(
+        tester: tester,
+        audioToPositionTitle: "2_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+        audioNewPosition: '0',
+        expectedAudioPositionedTitles: audioPositionedTitles,
+      );
+
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
