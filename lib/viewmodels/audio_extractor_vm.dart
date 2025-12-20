@@ -10,11 +10,12 @@ import '../utils/time_format_util.dart';
 class AudioExtractorVM extends ChangeNotifier {
   // ── Single-file mode (unchanged) ────────────────────────────────────────────
   ExtractMp3AudioFile _audioFile = ExtractMp3AudioFile();
-  final List<AudioSegment> _segments = [];
-  ExtractionResult _extractionResult = ExtractionResult.initial();
-
   ExtractMp3AudioFile get audioFile => _audioFile;
+
+  final List<AudioSegment> _segments = [];
   List<AudioSegment> get segments => List.unmodifiable(_segments);
+
+  ExtractionResult _extractionResult = ExtractionResult.initial();
   ExtractionResult get extractionResult => _extractionResult;
 
   double get totalDuration {
@@ -64,9 +65,12 @@ class AudioExtractorVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateSegment(int index, AudioSegment segment) {
+  void updateSegment({
+    required int index,
+    required AudioSegment segment,
+  }) {
     if (index >= 0 && index < _segments.length) {
-      final normalized = AudioSegment(
+      final AudioSegment normalizedSegment = AudioSegment(
         startPosition: TimeFormatUtil.normalizeToTenths(
           segment.startPosition,
         ),
@@ -80,7 +84,9 @@ class AudioExtractorVM extends ChangeNotifier {
         soundReductionDuration: segment.soundReductionDuration,
         title: segment.title,
       );
-      _segments[index] = normalized;
+
+      _segments[index] = normalizedSegment;
+
       notifyListeners();
     }
   }
