@@ -1,11 +1,14 @@
 // lib/viewmodels/audio_extractor_vm.dart
 import 'package:flutter/foundation.dart';
 
+import '../models/audio.dart';
+import '../models/comment.dart';
 import '../models/extract_mp3_audio_file.dart';
 import '../models/audio_segment.dart';
 import '../models/extraction_result.dart';
 import '../services/audio_extractor_service.dart';
 import '../utils/time_format_util.dart';
+import 'comment_vm.dart';
 
 class AudioExtractorVM extends ChangeNotifier {
   // ── Single-file mode (unchanged) ────────────────────────────────────────────
@@ -17,6 +20,21 @@ class AudioExtractorVM extends ChangeNotifier {
 
   ExtractionResult _extractionResult = ExtractionResult.initial();
   ExtractionResult get extractionResult => _extractionResult;
+
+  late Audio _currentAudio;
+  set currentAudio(Audio audio) {
+    _currentAudio = audio;
+  }
+
+  late CommentVM _commentVMlistenTrue;
+  set commentVMlistenTrue(CommentVM commentVMlistenTrue) {
+    _commentVMlistenTrue = commentVMlistenTrue;
+  }
+
+  late List<Comment> _commentsLst;
+  set commentsLst(List<Comment> commentsLst) {
+    _commentsLst = commentsLst;
+  }
 
   double get totalDuration {
     return _segments.fold(
@@ -59,6 +77,12 @@ class AudioExtractorVM extends ChangeNotifier {
       silenceDuration: TimeFormatUtil.normalizeToTenths(
         segment.silenceDuration,
       ),
+      soundReductionPosition: TimeFormatUtil.normalizeToTenths(
+        segment.soundReductionPosition,
+      ),
+      soundReductionDuration: TimeFormatUtil.normalizeToTenths(
+        segment.soundReductionDuration,
+      ),
       title: segment.title,
     );
     _segments.add(normalized);
@@ -86,6 +110,24 @@ class AudioExtractorVM extends ChangeNotifier {
       );
 
       _segments[index] = normalizedSegment;
+
+      // Updating the corresponding comment
+
+      Comment comment = _commentsLst[index];
+      comment.lastUpdateDateTime = DateTime.now();
+      comment.title = normalizedSegment.title;
+      comment.commentStartPositionInTenthOfSeconds =
+          (normalizedSegment.startPosition * 10).toInt();
+      comment.commentEndPositionInTenthOfSeconds =
+          (normalizedSegment.endPosition * 10).toInt();
+      comment.silenceDuration = normalizedSegment.silenceDuration;
+      comment.soundReductionPosition = normalizedSegment.soundReductionPosition;
+      comment.soundReductionDuration = normalizedSegment.soundReductionDuration;
+
+      _commentVMlistenTrue.updateAudioComments(
+        commentedAudio: _currentAudio,
+        updateCommentsLst: _commentsLst,
+      );
 
       notifyListeners();
     }

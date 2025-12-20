@@ -6442,7 +6442,7 @@ class PlaylistListVM extends ChangeNotifier {
     audio.validVideoTitle = '${position}_$titleWithoutPrefix';
 
     addNumericPrefixesToPlaylistAudioTitles(
-      playlist: playlist!,
+      playlist: playlist,
       sortFilterParametersAppliedName: sortFilterParametersAppliedName,
       sortFilterParametersDefaultName: sortFilterParametersDefaultName,
     );

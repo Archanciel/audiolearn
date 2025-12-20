@@ -6,6 +6,9 @@ class Comment {
   String content;
   int commentStartPositionInTenthOfSeconds;
   int commentEndPositionInTenthOfSeconds;
+  double silenceDuration;
+  double soundReductionPosition;
+  double soundReductionDuration;
   late DateTime creationDateTime;
   late DateTime lastUpdateDateTime;
 
@@ -14,6 +17,9 @@ class Comment {
     required this.content,
     required this.commentStartPositionInTenthOfSeconds,
     this.commentEndPositionInTenthOfSeconds = 0,
+    this.silenceDuration = 0.0,
+    this.soundReductionPosition = 0.0,
+    this.soundReductionDuration = 0.0,
   })  : id = "${title}_${DateTime.now().microsecondsSinceEpoch.toString()}",
         creationDateTime =
             DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now()) {
@@ -28,6 +34,9 @@ class Comment {
     required this.content,
     required this.commentStartPositionInTenthOfSeconds,
     required this.commentEndPositionInTenthOfSeconds,
+    required this.silenceDuration,
+    required this.soundReductionPosition,
+    required this.soundReductionDuration,
     required this.creationDateTime,
     required this.lastUpdateDateTime,
   });
@@ -41,6 +50,9 @@ class Comment {
           json['commentStartPositionInTenthOfSeconds'] ?? 0,
       commentEndPositionInTenthOfSeconds:
           json['commentEndPositionInTenthOfSeconds'] ?? 0,
+      silenceDuration: json['silenceDuration'] ?? 0.0,
+      soundReductionPosition: json['soundReductionPosition'] ?? 0.0,
+      soundReductionDuration: json['soundReductionDuration'] ?? 0.0,
       creationDateTime: DateTime.parse(json['creationDateTime']),
       lastUpdateDateTime: DateTime.parse(json['lastUpdateDateTime']),
     );
@@ -52,9 +64,12 @@ class Comment {
       'id': id,
       'title': title,
       'content': content,
-      'commentStartPositionInTenthOfSeconds': commentStartPositionInTenthOfSeconds,
-      'commentEndPositionInTenthOfSeconds':
-          commentEndPositionInTenthOfSeconds,
+      'commentStartPositionInTenthOfSeconds':
+          commentStartPositionInTenthOfSeconds,
+      'commentEndPositionInTenthOfSeconds': commentEndPositionInTenthOfSeconds,
+      'silenceDuration': silenceDuration,
+      'soundReductionPosition': soundReductionPosition,
+      'soundReductionDuration': soundReductionDuration,
       'creationDateTime': creationDateTime.toIso8601String(),
       'lastUpdateDateTime': lastUpdateDateTime.toIso8601String(),
     };
