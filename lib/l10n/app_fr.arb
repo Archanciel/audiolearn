@@ -1591,5 +1591,13 @@
   "fadeStartPositionHintText": "0:00.0 (temps absolu dans le fichier source)",
   "fadeStartPositionHelperText": "Position où le volume commence à diminuer",
   "fadeDurationLabel": "Durée de la diminution (h:mm:ss.t)",
-  "fadeDurationHelperText": "Durée pour faire baisser le volume de 100% à 0%"
+  "fadeDurationHelperText": "Durée pour faire baisser le volume de 100% à 0%",
+"startPositionError": "La position de début doit être comprise entre 0 et",
+"endPositionError": "La position de fin doit être après le début sans dépasser",
+"negativeSilenceDurationError": "La durée du silence doit être positive",
+"negativeSoundDurationError": "La durée de la baisse du son ne peut pas être négative",
+"negativeSoundPositionError": "La position de la baisse du son doit être dans le commentaire (>= position de début)",
+"soundPositionBeyondEndError": "La position de la baisse du son doit être avant la position de fin du commentaire",
+"soundPositionPlusDurationBeyondEndError": "La baisse doit se terminer avant ou à la fin du commentaire",
+"emptyTitleError": "Le titre ne peut pas être vide"
 }                                   

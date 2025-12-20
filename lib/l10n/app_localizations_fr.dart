@@ -2681,4 +2681,35 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get fadeDurationHelperText =>
       'Durée pour faire baisser le volume de 100% à 0%';
+
+  @override
+  String get startPositionError =>
+      'La position de début doit être comprise entre 0 et';
+
+  @override
+  String get endPositionError =>
+      'La position de fin doit être après le début sans dépasser';
+
+  @override
+  String get negativeSilenceDurationError =>
+      'La durée du silence doit être positive';
+
+  @override
+  String get negativeSoundDurationError =>
+      'La durée de la baisse du son ne peut pas être négative';
+
+  @override
+  String get negativeSoundPositionError =>
+      'La position de la baisse du son doit être dans le commentaire (>= position de début)';
+
+  @override
+  String get soundPositionBeyondEndError =>
+      'La position de la baisse du son doit être avant la position de fin du commentaire';
+
+  @override
+  String get soundPositionPlusDurationBeyondEndError =>
+      'La baisse doit se terminer avant ou à la fin du commentaire';
+
+  @override
+  String get emptyTitleError => 'Le titre ne peut pas être vide';
 }

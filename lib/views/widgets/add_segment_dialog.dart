@@ -87,42 +87,42 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
 
     if (start < 0 || start >= widget.maxDuration) {
       _showError(
-        'Start position must be between 0 and ${TimeFormatUtil.formatSeconds(widget.maxDuration)}',
+        "${AppLocalizations.of(context)!.startPositionError} ${TimeFormatUtil.formatSeconds(widget.maxDuration)}",
       );
       return;
     }
     if (end <= start || end > widget.maxDuration) {
       _showError(
-        'End position must be after start and not exceed ${TimeFormatUtil.formatSeconds(widget.maxDuration)}',
+        "${AppLocalizations.of(context)!.endPositionError} ${TimeFormatUtil.formatSeconds(widget.maxDuration)}",
       );
       return;
     }
     if (silence < 0) {
-      _showError('Silence duration cannot be negative');
+      _showError(AppLocalizations.of(context)!.negativeSilenceDurationError);
       return;
     }
     if (soundReductionDuration < 0) {
-      _showError('Sound reduction duration cannot be negative');
+      _showError(AppLocalizations.of(context)!.negativeSoundDurationError);
       return;
     }
     // Validate sound reduction position
     if (soundReductionPosition > 0 && soundReductionDuration > 0) {
       if (soundReductionPosition < start) {
         _showError(
-            'Sound reduction position must be within the segment (>= start position)');
+        AppLocalizations.of(context)!.negativeSoundPositionError);
         return;
       }
       if (soundReductionPosition >= end) {
-        _showError('Sound reduction position must be before the end position');
+        _showError(AppLocalizations.of(context)!.soundPositionBeyondEndError);
         return;
       }
       if (soundReductionPosition + soundReductionDuration > end) {
-        _showError('Sound reduction must complete before the segment ends');
+        _showError(AppLocalizations.of(context)!.soundPositionPlusDurationBeyondEndError);
         return;
       }
     }
     if (title.isEmpty) {
-      _showError('Title cannot be empty');
+      _showError(AppLocalizations.of(context)!.emptyTitleError);
       return;
     }
 
@@ -140,7 +140,10 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
 
   void _showError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), backgroundColor: Colors.red),
+      SnackBar(
+        content: Text(message, style: const TextStyle(color: Colors.white)),
+        backgroundColor: Colors.red,
+      ),
     );
   }
 
