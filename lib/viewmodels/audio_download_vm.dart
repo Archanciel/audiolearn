@@ -1915,17 +1915,14 @@ class AudioDownloadVM extends ChangeNotifier {
         );
 
         // 2) choose target bitrate (kbps string)
-        final sourceBps = attrs?.bitrateBps;
-        final chosenKbps = _chooseTargetKbpsFromSourceBps(
+        final int? sourceBps = attrs?.bitrateBps;
+        final int chosenKbps = _chooseTargetKbpsFromSourceBps(
           sourceBps: sourceBps,
         );
-        final targetBitrate = '${chosenKbps}k';
+        final String targetBitrate = '${chosenKbps}k';
 
         // 3) choose sampleRate and channels if not known
-        final finalSampleRate = _chooseSampleRate(
-          sourceSampleRate: attrs?.sampleRate,
-          chosenKbps: chosenKbps,
-        );
+        final int finalSampleRate = 44100;
 
         final finalChannels = _chooseChannels(
           sourceChannels: attrs?.channels,
@@ -1981,8 +1978,11 @@ class AudioDownloadVM extends ChangeNotifier {
     // directory.
     if (rejectedImportedFileNamesLst.isNotEmpty) {
       warningMessageVM.setAudioNotImportedToPlaylistTitles(
-          rejectedImportedAudioFileNames: rejectedImportedFileNamesLst.substring(0,
-              rejectedImportedFileNamesLst.length - 2), // removing the last comma
+          rejectedImportedAudioFileNames:
+              rejectedImportedFileNamesLst.substring(
+                  0,
+                  rejectedImportedFileNamesLst.length -
+                      2), // removing the last comma
           //                                               and the last line break
           importedToPlaylistTitle: targetPlaylist.title,
           importedToPlaylistType: targetPlaylist.playlistType);
@@ -2046,7 +2046,7 @@ class AudioDownloadVM extends ChangeNotifier {
           importedFileName:
               (targetFilePathName.contains('mp4')) ? mp3FileName : fileName,
         );
-        
+
         importedAudio.isAudioMusicQuality =
             isImportedMp4ConvertedToMp3InMusicQuality;
 
@@ -2247,14 +2247,17 @@ class AudioDownloadVM extends ChangeNotifier {
     required int? sourceBps,
     int defaultKbps = 128,
   }) {
-    if (sourceBps == null || sourceBps <= 0) return defaultKbps;
-    final srcKbps = (sourceBps / 1000).round();
+    if (sourceBps == null || sourceBps <= 0) {
+      return defaultKbps;
+    }
+    
+    final int srcKbps = (sourceBps / 1000).round();
 
-    if (srcKbps <= 64) return 48; // very low quality sources -> keep low
     if (srcKbps <= 96) return 64;
     if (srcKbps <= 128) return 128;
     if (srcKbps <= 192) return 192;
     if (srcKbps <= 256) return 256;
+
     return 320; // allow higher for high-bitrate sources
   }
 
@@ -2274,26 +2277,20 @@ class AudioDownloadVM extends ChangeNotifier {
     }
   }
 
-  /// Decide sample rate to use for encoding.
-  /// If sourceSampleRate is provided, reuse it. Otherwise choose a reasonable default
-  /// according to the chosen kbps.
-  int _chooseSampleRate({int? sourceSampleRate, required int chosenKbps}) {
-    if (sourceSampleRate != null && sourceSampleRate > 0) {
-      return sourceSampleRate;
-    }
-
-    // Heuristics:
-    // - below ~96 kbps -> use 22050 to save size
-    // - otherwise use 44100 (standard for audio)
-    if (chosenKbps <= 96) return 22050;
-    return 44100;
-  }
-
   /// Decide channels to use for encoding.
   /// If sourceChannels provided, reuse it. Otherwise pick mono for very low kbps, stereo otherwise.
-  int _chooseChannels({int? sourceChannels, required int chosenKbps}) {
-    if (sourceChannels != null && sourceChannels > 0) return sourceChannels;
-    if (chosenKbps <= 96) return 1; // mono for low bitrate targets
+  int _chooseChannels({
+    int? sourceChannels,
+    required int chosenKbps,
+  }) {
+    if (sourceChannels != null && sourceChannels > 0) {
+      return sourceChannels;
+    }
+
+    if (chosenKbps <= 64) {
+      return 1; // mono for low bitrate targets
+    }
+
     return 2; // stereo otherwise
   }
 
@@ -2971,8 +2968,8 @@ class AudioDownloadVM extends ChangeNotifier {
     // Transcode to MP3
     final bool useMusicQuality = isHighQuality;
 
-    final String targetBitrate = useMusicQuality ? '192k' : '48k';
-    final int sampleRate = useMusicQuality ? 44100 : 22050;
+    final String targetBitrate = useMusicQuality ? '192k' : '64k';
+    final int sampleRate = 44100;
     final int channels = useMusicQuality ? 2 : 1;
 
     _isAudioDownloading = false;
