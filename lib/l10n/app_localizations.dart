@@ -4267,6 +4267,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Duration to fade volume from 100% to 0%'**
   String get fadeDurationHelperText;
+
+  /// No description provided for @startPositionError.
+  ///
+  /// In en, this message translates to:
+  /// **'Start position must be between 0 and'**
+  String get startPositionError;
+
+  /// No description provided for @endPositionError.
+  ///
+  /// In en, this message translates to:
+  /// **'End position must be after start and not exceed'**
+  String get endPositionError;
+
+  /// No description provided for @negativeSilenceDurationError.
+  ///
+  /// In en, this message translates to:
+  /// **'Silence duration cannot be negative'**
+  String get negativeSilenceDurationError;
+
+  /// No description provided for @negativeSoundDurationError.
+  ///
+  /// In en, this message translates to:
+  /// **'Sound reduction duration cannot be negative'**
+  String get negativeSoundDurationError;
+
+  /// No description provided for @negativeSoundPositionError.
+  ///
+  /// In en, this message translates to:
+  /// **'Sound reduction position must be within the comment (>= start position)'**
+  String get negativeSoundPositionError;
+
+  /// No description provided for @soundPositionBeyondEndError.
+  ///
+  /// In en, this message translates to:
+  /// **'Sound reduction position must be before the comment end position'**
+  String get soundPositionBeyondEndError;
+
+  /// No description provided for @soundPositionPlusDurationBeyondEndError.
+  ///
+  /// In en, this message translates to:
+  /// **'Sound reduction must complete before or at the comment end'**
+  String get soundPositionPlusDurationBeyondEndError;
+
+  /// No description provided for @emptyTitleError.
+  ///
+  /// In en, this message translates to:
+  /// **'Title cannot be empty'**
+  String get emptyTitleError;
 }
 
 class _AppLocalizationsDelegate

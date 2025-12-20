@@ -2754,4 +2754,34 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get fadeDurationHelperText =>
       "Duration to fade volume from 100% to 0%";
+
+  @override
+  String get startPositionError => "Start position must be between 0 and";
+
+  @override
+  String get endPositionError =>
+      "End position must be after start and not exceed";
+
+  @override
+  String get negativeSilenceDurationError =>
+      "Silence duration cannot be negative";
+
+  @override
+  String get negativeSoundDurationError =>
+      "Sound reduction duration cannot be negative";
+
+  @override
+  String get negativeSoundPositionError =>
+      "Sound reduction position must be within the segment (>= start position)";
+
+  @override
+  String get soundPositionBeyondEndError =>
+      "Sound reduction position must be before the end position";
+
+  @override
+  String get soundPositionPlusDurationBeyondEndError =>
+      "Sound reduction must complete before the segment ends";
+
+  @override
+  String get emptyTitleError => "Title cannot be empty";
 }
