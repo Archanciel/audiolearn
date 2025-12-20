@@ -5,7 +5,7 @@ class AudioSegment {
   final double silenceDuration;
   final double soundReductionPosition;
   final double soundReductionDuration;
-  final String title; // ← required
+  final String title;
 
   AudioSegment({
     required this.startPosition,
@@ -13,7 +13,7 @@ class AudioSegment {
     this.silenceDuration = 0.0,
     this.soundReductionPosition = 0.0,
     this.soundReductionDuration = 0.0,
-    required this.title, // ← required
+    required this.title,
   });
 
   double get duration => endPosition - startPosition;
