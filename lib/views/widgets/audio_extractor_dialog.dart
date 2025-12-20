@@ -47,6 +47,8 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
     super.initState();
     _segmentsScrollController = ScrollController();
     final AudioExtractorVM audioExtractorVM = context.read<AudioExtractorVM>();
+    audioExtractorVM.currentAudio = widget.currentAudio;
+    audioExtractorVM.commentVMlistenTrue = widget.commentVMlistenTrue;
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await _pickMP3File(
@@ -242,8 +244,10 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                             ),
                                             onPressed: () async {
                                               // After pressing 'Edit' icon button
-                                              final updated = await showDialog<
-                                                  AudioSegment>(
+                                              final AudioSegment?
+                                                  updatedSegment =
+                                                  await showDialog<
+                                                      AudioSegment>(
                                                 context: context,
                                                 builder: (
                                                   _,
@@ -254,10 +258,11 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                                   existingSegment: s,
                                                 ),
                                               );
-                                              if (updated != null) {
+
+                                              if (updatedSegment != null) {
                                                 audioExtractorVM.updateSegment(
-                                                  index,
-                                                  updated,
+                                                  index: index,
+                                                  segment: updatedSegment,
                                                 );
                                               }
                                             },
@@ -577,10 +582,14 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
     required AudioExtractorVM audioExtractorVM,
   }) async {
     try {
+      Audio currentAudio = widget.currentAudio;
       final List<Comment> commentsLst =
           widget.commentVMlistenTrue.loadAudioComments(
-        audio: widget.currentAudio,
+        audio: currentAudio,
       );
+
+      _extractInMusicQuality = currentAudio.isAudioMusicQuality;
+      audioExtractorVM.commentsLst = commentsLst;
 
       if (commentsLst.isEmpty) {
         if (!context.mounted) {
@@ -611,13 +620,20 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
             end > start &&
             audioExtractorVM.audioFile.duration > 0 &&
             end <= audioExtractorVM.audioFile.duration) {
-          final silence =
-              (i < commentsLst.length - 1) ? kDefaultSilenceDuration : 0.0;
+
+          double silence = comment.silenceDuration;
+
+          if (silence == 0.0) {
+            (i < commentsLst.length - 1) ? kDefaultSilenceDuration : 0.0;
+          }
+
           audioExtractorVM.addSegment(
             AudioSegment(
               startPosition: start,
               endPosition: end,
               silenceDuration: silence,
+              soundReductionPosition: comment.soundReductionPosition,
+              soundReductionDuration: comment.soundReductionDuration,
               title: comment.title,
             ),
           );

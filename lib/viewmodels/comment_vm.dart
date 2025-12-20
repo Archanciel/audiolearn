@@ -303,43 +303,32 @@ class CommentVM extends ChangeNotifier {
       audio: commentedAudio,
     );
 
-    final String commentFilePathName = buildCommentFilePathName(
-      playlistDownloadPath: commentedAudio.enclosingPlaylist!.downloadPath,
-      audioFileName: commentedAudio.audioFileName,
-    );
-
-    if (existingCommentsLst.isEmpty) {
-      // Create the comment dir so that the comment file can be
-      // created. This necessary if the audio does not yet have
-      // any comment.
-      DirUtil.createDirIfNotExistSync(
-        pathStr: DirUtil.getPathFromPathFileName(
-          pathFileName: commentFilePathName,
-        ),
-      );
-    }
-
-    for (Comment updateComment in updateCommentsLst) {
+    for (Comment updatedComment in updateCommentsLst) {
       // Check if the comment already exists
       Comment? existingComment = existingCommentsLst.firstWhereOrNull(
-        (element) => element.id == updateComment.id,
+        (element) => element.id == updatedComment.id,
       );
 
       if (existingComment != null) {
         // If the comment already exists, modify it if the update comment
         // last update date time is after the existing comment
         // last update date time.
-        if (updateComment.lastUpdateDateTime
+        if (updatedComment.lastUpdateDateTime
             .isAfter(existingComment.lastUpdateDateTime)) {
           // If the update comment last update date time is after the existing
           // comment last update date time, modify the existing comment.
-          existingComment.title = updateComment.title;
-          existingComment.content = updateComment.content;
+          existingComment.title = updatedComment.title;
+          existingComment.content = updatedComment.content;
           existingComment.commentStartPositionInTenthOfSeconds =
-              updateComment.commentStartPositionInTenthOfSeconds;
+              updatedComment.commentStartPositionInTenthOfSeconds;
           existingComment.commentEndPositionInTenthOfSeconds =
-              updateComment.commentEndPositionInTenthOfSeconds;
-          existingComment.lastUpdateDateTime = updateComment.lastUpdateDateTime;
+              updatedComment.commentEndPositionInTenthOfSeconds;
+          existingComment.silenceDuration = updatedComment.silenceDuration;
+          existingComment.soundReductionPosition =
+              updatedComment.soundReductionPosition;
+          existingComment.soundReductionDuration =
+              updatedComment.soundReductionDuration;
+          existingComment.lastUpdateDateTime = updatedComment.lastUpdateDateTime;
           modifiedCommentNumber++;
         } else {
           // If the update comment last update date time is before or equal to
@@ -348,18 +337,21 @@ class CommentVM extends ChangeNotifier {
         }
       } else if (existingCommentsLst.isEmpty){
         // Comment added to an audio which did not yet have a comment file
-        existingCommentsLst.add(updateComment);
+        existingCommentsLst.add(updatedComment);
         addedCommentJsonFileNumber++;
       } else {
         // Comment added to an audio which already had a comment file
-        existingCommentsLst.add(updateComment);
+        existingCommentsLst.add(updatedComment);
         addedCommentNumber++;
       }
     }
 
     _sortAndSaveCommentLst(
       commentLst: existingCommentsLst,
-      commentFilePathName: commentFilePathName,
+      commentFilePathName: buildCommentFilePathName(
+        playlistDownloadPath: commentedAudio.enclosingPlaylist!.downloadPath,
+        audioFileName: commentedAudio.audioFileName,
+      ),
     );
 
     notifyListeners();
