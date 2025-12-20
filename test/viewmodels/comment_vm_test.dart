@@ -11,6 +11,7 @@ import 'package:audiolearn/models/comment.dart';
 import 'package:audiolearn/utils/dir_util.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
 
+/// This unit test does not pass when executed on the main branch.
 void main() {
   group('CommentVM test on Windows', () {
     test('load comments, comment file not exist', () async {
@@ -883,7 +884,7 @@ void main() {
 
       // adding a new comment to the updated comment list
       List<Comment> updatedCommentLst = [];
-      
+
       updatedCommentLst.add(addedComment);
 
       List<int> updateNumberLst = commentVM.updateAudioComments(
