@@ -3,6 +3,8 @@ class AudioSegment {
   final double startPosition;
   final double endPosition;
   final double silenceDuration;
+  final double
+  fadeInDuration; // NEW: Fade-in at segment start (volume 0→100%)
   final double soundReductionPosition;
   final double soundReductionDuration;
   final String title;
@@ -11,6 +13,7 @@ class AudioSegment {
     required this.startPosition,
     required this.endPosition,
     this.silenceDuration = 0.0,
+    this.fadeInDuration = 0.0, // NEW: Default no fade-in
     this.soundReductionPosition = 0.0,
     this.soundReductionDuration = 0.0,
     required this.title,
@@ -22,6 +25,7 @@ class AudioSegment {
     double? startPosition,
     double? endPosition,
     double? silenceDuration,
+    double? fadeInDuration, // NEW
     double? soundReductionPosition,
     double? soundReductionDuration,
     String? title,
@@ -30,31 +34,41 @@ class AudioSegment {
       startPosition: startPosition ?? this.startPosition,
       endPosition: endPosition ?? this.endPosition,
       silenceDuration: silenceDuration ?? this.silenceDuration,
-      soundReductionPosition: soundReductionPosition ?? this.soundReductionPosition,
-      soundReductionDuration: soundReductionDuration ?? this.soundReductionDuration,
+      fadeInDuration: fadeInDuration ?? this.fadeInDuration, // NEW
+      soundReductionPosition:
+          soundReductionPosition ?? this.soundReductionPosition,
+      soundReductionDuration:
+          soundReductionDuration ?? this.soundReductionDuration,
       title: title ?? this.title,
     );
   }
 
   Map<String, dynamic> toMap() => {
-        'startPosition': startPosition,
-        'endPosition': endPosition,
-        'silenceDuration': silenceDuration,
-        'soundReductionPosition': soundReductionPosition,
-        'soundReductionDuration': soundReductionDuration,
-        'title': title,
-      };
+    'startPosition': startPosition,
+    'endPosition': endPosition,
+    'silenceDuration': silenceDuration,
+    'fadeInDuration': fadeInDuration, // NEW
+    'soundReductionPosition': soundReductionPosition,
+    'soundReductionDuration': soundReductionDuration,
+    'title': title,
+  };
 
   factory AudioSegment.fromMap(Map<String, dynamic> map) {
     return AudioSegment(
       startPosition: (map['startPosition'] as num).toDouble(),
       endPosition: (map['endPosition'] as num).toDouble(),
-      silenceDuration: (map['silenceDuration'] as num?)?.toDouble() ?? 0.0,
-      soundReductionPosition: (map['soundReductionPosition'] as num?)?.toDouble() ?? 0.0,
-      soundReductionDuration: (map['soundReductionDuration'] as num?)?.toDouble() ?? 0.0,
-      title: (map['title'] as String?)?.trim().isNotEmpty == true
-          ? (map['title'] as String).trim()
-          : 'Untitled segment', // hard fallback to keep non-null
+      silenceDuration:
+          (map['silenceDuration'] as num?)?.toDouble() ?? 0.0,
+      fadeInDuration:
+          (map['fadeInDuration'] as num?)?.toDouble() ?? 0.0, // NEW
+      soundReductionPosition:
+          (map['soundReductionPosition'] as num?)?.toDouble() ?? 0.0,
+      soundReductionDuration:
+          (map['soundReductionDuration'] as num?)?.toDouble() ?? 0.0,
+      title:
+          (map['title'] as String?)?.trim().isNotEmpty == true
+              ? (map['title'] as String).trim()
+              : 'Untitled segment',
     );
   }
 }
