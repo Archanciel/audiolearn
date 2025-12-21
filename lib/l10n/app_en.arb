@@ -1194,5 +1194,10 @@
   "soundPositionPlusDurationBeyondEndError": "Sound reduction must complete before or at the comment end",
   "emptyTitleError": "Title cannot be empty",
   "loadedComments": "Loaded {commentNumber} comment(s)",
-  "skippedComments": "({commentNumber} skipped)"
+  "skippedComments": "({commentNumber} skipped)",
+  "fadeInDurationError": "Fade-in duration cannot be negative",
+  "fadeInExceedsCommentDurationError": "Fade-in duration cannot exceed comment duration",
+  "volumeFadeInOptional": "Volume Fade-In (optional)",
+  "fadeInDurationLabel": "Fade-In Duration (h:mm:ss.t)",
+  "fadeInDurationHelperText": "Duration to fade volume from 0% to 100% at comment start"
 }

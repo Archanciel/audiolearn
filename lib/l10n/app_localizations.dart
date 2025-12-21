@@ -4327,6 +4327,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'({commentNumber} skipped)'**
   String skippedComments(Object commentNumber);
+
+  /// No description provided for @fadeInDurationError.
+  ///
+  /// In en, this message translates to:
+  /// **'Fade-in duration cannot be negative'**
+  String get fadeInDurationError;
+
+  /// No description provided for @fadeInExceedsCommentDurationError.
+  ///
+  /// In en, this message translates to:
+  /// **'Fade-in duration cannot exceed comment duration'**
+  String get fadeInExceedsCommentDurationError;
+
+  /// No description provided for @volumeFadeInOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Volume Fade-In (optional)'**
+  String get volumeFadeInOptional;
+
+  /// No description provided for @fadeInDurationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Fade-In Duration (h:mm:ss.t)'**
+  String get fadeInDurationLabel;
+
+  /// No description provided for @fadeInDurationHelperText.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration to fade volume from 0% to 100% at comment start'**
+  String get fadeInDurationHelperText;
 }
 
 class _AppLocalizationsDelegate

@@ -2693,4 +2693,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String skippedComments(Object commentNumber) {
     return '($commentNumber skipped)';
   }
+
+  @override
+  String get fadeInDurationError => 'Fade-in duration cannot be negative';
+
+  @override
+  String get fadeInExceedsCommentDurationError =>
+      'Fade-in duration cannot exceed comment duration';
+
+  @override
+  String get volumeFadeInOptional => 'Volume Fade-In (optional)';
+
+  @override
+  String get fadeInDurationLabel => 'Fade-In Duration (h:mm:ss.t)';
+
+  @override
+  String get fadeInDurationHelperText =>
+      'Duration to fade volume from 0% to 100% at comment start';
 }

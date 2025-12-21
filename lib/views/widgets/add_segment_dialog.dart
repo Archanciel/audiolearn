@@ -1,5 +1,6 @@
 // lib/views/widgets/add_segment_dialog.dart
 import 'package:flutter/material.dart';
+import 'package:googleapis/appengine/v1.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/audio_segment.dart';
 import '../../utils/time_format_util.dart';
@@ -23,6 +24,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
   late final TextEditingController _startController;
   late final TextEditingController _endController;
   late final TextEditingController _silenceController;
+  late final TextEditingController _fadeInDurationController; // NEW
   late final TextEditingController _soundReductionPositionController;
   late final TextEditingController _soundReductionDurationController;
   late final TextEditingController _titleController;
@@ -45,6 +47,11 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
         widget.existingSegment?.silenceDuration ?? 0,
       ),
     );
+    _fadeInDurationController = TextEditingController(
+      text: TimeFormatUtil.formatSeconds(
+        widget.existingSegment?.fadeInDuration ?? 0,
+      ),
+    );
     _soundReductionPositionController = TextEditingController(
       text: TimeFormatUtil.formatSeconds(
         widget.existingSegment?.soundReductionPosition ?? 0,
@@ -65,6 +72,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
     _startController.dispose();
     _endController.dispose();
     _silenceController.dispose();
+    _fadeInDurationController.dispose();
     _soundReductionPositionController.dispose();
     _soundReductionDurationController.dispose();
     _titleController.dispose();
@@ -76,6 +84,10 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
     final end = TimeFormatUtil.parseFlexible(_endController.text);
     final silence = TimeFormatUtil.parseFlexible(
       _silenceController.text,
+    );
+    final fadeInDuration = TimeFormatUtil.parseFlexible(
+      // NEW
+      _fadeInDurationController.text,
     );
     final soundReductionPosition = TimeFormatUtil.parseFlexible(
       _soundReductionPositionController.text,
@@ -99,6 +111,17 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
     }
     if (silence < 0) {
       _showError(AppLocalizations.of(context)!.negativeSilenceDurationError);
+      return;
+    }
+    if (fadeInDuration < 0) {
+      // NEW validation
+      _showError(AppLocalizations.of(context)!.fadeInDurationError);
+      return;
+    }
+    final segmentDuration = end - start;
+    if (fadeInDuration > segmentDuration) {
+      // NEW validation
+      _showError(AppLocalizations.of(context)!.fadeInExceedsCommentDurationError);
       return;
     }
     if (soundReductionDuration < 0) {
@@ -131,6 +154,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
         startPosition: start,
         endPosition: end,
         silenceDuration: silence,
+        fadeInDuration: fadeInDuration,
         soundReductionPosition: soundReductionPosition,
         soundReductionDuration: soundReductionDuration,
         title: title,
@@ -178,7 +202,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
             Text(
               "${AppLocalizations.of(context)!.maxDuration}: ${TimeFormatUtil.formatSeconds(widget.maxDuration)}",
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 8),
             TextField(
               controller: _startController,
               inputFormatters: [TimeTextInputFormatter()],
@@ -209,11 +233,25 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
               ),
             ),
             const SizedBox(height: 12),
-            const Divider(),
+            Text(
+              AppLocalizations.of(context)!.volumeFadeInOptional,
+            ),
             const SizedBox(height: 8),
+            TextField(
+              controller: _fadeInDurationController,
+              inputFormatters: [TimeTextInputFormatter()],
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.fadeInDurationLabel,
+                hintText: '0:00.0',
+                border: OutlineInputBorder(),
+                helperText:
+                    AppLocalizations.of(context)!.fadeInDurationHelperText,
+                helperMaxLines: 2,
+              ),
+            ),
+            const SizedBox(height: 12),
             Text(
               AppLocalizations.of(context)!.volumeFadeOutOptional,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
             ),
             const SizedBox(height: 8),
             TextField(

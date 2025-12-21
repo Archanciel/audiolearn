@@ -2619,7 +2619,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get endPositionLabel => 'Position de fin (h:mm:ss.d)';
 
   @override
-  String get silenceDurationLabel => 'Silence après la fin (h:mm:ss.t)';
+  String get silenceDurationLabel => 'Silence après la fin (h:mm:ss.d)';
 
   @override
   String get duration => 'Durée';
@@ -2665,7 +2665,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Diminution progressive du volume (optionnel)';
 
   @override
-  String get fadeStartPositionLabel => 'Début de la diminution (h:mm:ss.t)';
+  String get fadeStartPositionLabel => 'Début de la diminution (h:mm:ss.d)';
 
   @override
   String get fadeStartPositionHintText =>
@@ -2676,7 +2676,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Position où le volume commence à diminuer';
 
   @override
-  String get fadeDurationLabel => 'Durée de la diminution (h:mm:ss.t)';
+  String get fadeDurationLabel => 'Durée de la diminution (h:mm:ss.d)';
 
   @override
   String get fadeDurationHelperText =>
@@ -2722,4 +2722,24 @@ class AppLocalizationsFr extends AppLocalizations {
   String skippedComments(Object commentNumber) {
     return '($commentNumber ignoré(s))';
   }
+
+  @override
+  String get fadeInDurationError =>
+      'La durée d\'augmentation de volume ne peut être négative';
+
+  @override
+  String get fadeInExceedsCommentDurationError =>
+      'La durée d\'augmentation de volume ne peut excéder la durée du commentaire';
+
+  @override
+  String get volumeFadeInOptional =>
+      'Durée d\'augmentation du volume (optionnel)';
+
+  @override
+  String get fadeInDurationLabel =>
+      'Durée d\'augmentation du volume (h:mm:ss.d)';
+
+  @override
+  String get fadeInDurationHelperText =>
+      'Durée pour augmenter le volume de 0% à 100% au début du commentaire';
 }
