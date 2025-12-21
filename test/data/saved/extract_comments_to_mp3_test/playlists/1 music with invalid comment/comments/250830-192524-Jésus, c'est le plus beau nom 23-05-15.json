@@ -1,0 +1,26 @@
+[
+    {
+        "id": "To extract_1766139242689370",
+        "title": "To extract",
+        "content": "",
+        "commentStartPositionInTenthOfSeconds": 0,
+        "commentEndPositionInTenthOfSeconds": 728,
+        "silenceDuration": 0.0,
+        "soundReductionPosition": 0.0,
+        "soundReductionDuration": 0.0,
+        "creationDateTime": "2025-12-19T11:14:02.000",
+        "lastUpdateDateTime": "2025-12-19T11:14:02.000"
+    },
+    {
+        "id": "_1766260460494754",
+        "title": "Second",
+        "content": "",
+        "commentStartPositionInTenthOfSeconds": 850,
+        "commentEndPositionInTenthOfSeconds": 3768,
+        "silenceDuration": 0.0,
+        "soundReductionPosition": 0.0,
+        "soundReductionDuration": 0.0,
+        "creationDateTime": "2025-12-20T20:54:20.000",
+        "lastUpdateDateTime": "2025-12-21T12:38:44.562403"
+    }
+]
