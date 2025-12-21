@@ -1,6 +1,5 @@
 // lib/views/widgets/add_segment_dialog.dart
 import 'package:flutter/material.dart';
-import 'package:googleapis/appengine/v1.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/audio_segment.dart';
 import '../../utils/time_format_util.dart';
