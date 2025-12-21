@@ -108,8 +108,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
     // Validate sound reduction position
     if (soundReductionPosition > 0 && soundReductionDuration > 0) {
       if (soundReductionPosition < start) {
-        _showError(
-        AppLocalizations.of(context)!.negativeSoundPositionError);
+        _showError(AppLocalizations.of(context)!.negativeSoundPositionError);
         return;
       }
       if (soundReductionPosition >= end) {
@@ -117,7 +116,8 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
         return;
       }
       if (soundReductionPosition + soundReductionDuration > end) {
-        _showError(AppLocalizations.of(context)!.soundPositionPlusDurationBeyondEndError);
+        _showError(AppLocalizations.of(context)!
+            .soundPositionPlusDurationBeyondEndError);
         return;
       }
     }
@@ -141,7 +141,13 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
   void _showError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message, style: const TextStyle(color: Colors.white)),
+        content: Text(
+          message,
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
         backgroundColor: Colors.red,
       ),
     );

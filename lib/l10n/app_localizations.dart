@@ -4223,13 +4223,13 @@ abstract class AppLocalizations {
   /// No description provided for @soundReductionPosition.
   ///
   /// In en, this message translates to:
-  /// **'Sound reduction position'**
+  /// **'Reduction position'**
   String get soundReductionPosition;
 
   /// No description provided for @soundReductionDuration.
   ///
   /// In en, this message translates to:
-  /// **'Sound reduction duration'**
+  /// **'Reduction duration'**
   String get soundReductionDuration;
 
   /// No description provided for @volumeFadeOutOptional.
@@ -4315,6 +4315,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Title cannot be empty'**
   String get emptyTitleError;
+
+  /// No description provided for @loadedComments.
+  ///
+  /// In en, this message translates to:
+  /// **'Loaded {commentNumber} comment(s)'**
+  String loadedComments(Object commentNumber);
+
+  /// No description provided for @skippedComments.
+  ///
+  /// In en, this message translates to:
+  /// **'({commentNumber} skipped)'**
+  String skippedComments(Object commentNumber);
 }
 
 class _AppLocalizationsDelegate
