@@ -2402,7 +2402,7 @@ class AppLocalizationsFr extends AppLocalizations {
       Object deletedAudioAndMp3FilesMsg,
       Object filePathName,
       Object addedAtEndOfPlaylistLstMsg) {
-    return 'Restauration depuis \"$filePathName\" terminée. Les fichiers JSON de $playlistsNumber playlist sauvegardée individuellement, de $commentsNumber commentaire(s) et de $picturesNumber photo(s) ainsi que $addedPictureJpgNumber fichier(s) photo JPG dans le répertoire \"pictures\" de l\'application et $audiosNumber référence(s) audio et $addedCommentNumber commentaire(s) ajouté(s) plus $deletedCommentNumber supprimé(s) plus plus $updatedCommentNumber modifié(s) dans des fichiers de commentaire existants ont été restaurés.$deletedAudioAndMp3FilesMsg$addedAtEndOfPlaylistLstMsg';
+    return 'Restauration depuis \"$filePathName\" terminée. Les fichiers JSON de $playlistsNumber playlist sauvegardée individuellement, de $commentsNumber commentaire(s) et de $picturesNumber photo(s) ainsi que $addedPictureJpgNumber fichier(s) photo JPG dans le répertoire \"pictures\" de l\'application et $audiosNumber référence(s) audio et $addedCommentNumber commentaire(s) ajouté(s) plus $deletedCommentNumber supprimé(s) plus $updatedCommentNumber modifié(s) dans des fichiers de commentaire existants ont été restaurés.$deletedAudioAndMp3FilesMsg$addedAtEndOfPlaylistLstMsg';
   }
 
   @override
@@ -2655,10 +2655,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get inMusicQuality => 'qualitéMusicale';
 
   @override
-  String get soundReductionPosition => 'Position de réduction du volume';
+  String get soundReductionPosition => 'Position de réduction';
 
   @override
-  String get soundReductionDuration => 'Durée de réduction du volume';
+  String get soundReductionDuration => 'Durée de réduction';
 
   @override
   String get volumeFadeOutOptional =>
@@ -2712,4 +2712,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get emptyTitleError => 'Le titre ne peut pas être vide';
+
+  @override
+  String loadedComments(Object commentNumber) {
+    return 'Chargé $commentNumber commentaire(s)';
+  }
+
+  @override
+  String skippedComments(Object commentNumber) {
+    return '($commentNumber ignoré(s))';
+  }
 }

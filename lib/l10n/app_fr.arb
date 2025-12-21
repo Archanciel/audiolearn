@@ -1429,7 +1429,7 @@
   "confirmMp3RestorationFromMp3Zip": "Restauré {audioNNumber} audio(s) MP3 dans {playlistsNumber} {secondMsgPart}.",
   "restorePlaylistTitlesOrderTitle": "Restauration de l'ordre des titres de playlist",
   "restorePlaylistTitlesOrderMessage": "Un fichier d'ordre des titres de playlist précédent est disponible dans le chemin racine de playlist sélectionné. Voulez-vous restaurer cet ordre sauvegardé précédemment ou conserver l'ordre actuel des titres de playlist ? Cliquez sur \"Confirmer\" pour restaurer l'ordre sauvegardé ou sur \"Annuler\" pour conserver l'ordre actuel.",
-  "doRestoreUniquePlaylistFromZip": "Restauration depuis \"{filePathName}\" terminée. Les fichiers JSON de {playlistsNumber} playlist sauvegardée individuellement, de {commentsNumber} commentaire(s) et de {picturesNumber} photo(s) ainsi que {addedPictureJpgNumber} fichier(s) photo JPG dans le répertoire \"pictures\" de l'application et {audiosNumber} référence(s) audio et {addedCommentNumber} commentaire(s) ajouté(s) plus {deletedCommentNumber} supprimé(s) plus plus {updatedCommentNumber} modifié(s) dans des fichiers de commentaire existants ont été restaurés.{deletedAudioAndMp3FilesMsg}{addedAtEndOfPlaylistLstMsg}",
+  "doRestoreUniquePlaylistFromZip": "Restauration depuis \"{filePathName}\" terminée. Les fichiers JSON de {playlistsNumber} playlist sauvegardée individuellement, de {commentsNumber} commentaire(s) et de {picturesNumber} photo(s) ainsi que {addedPictureJpgNumber} fichier(s) photo JPG dans le répertoire \"pictures\" de l'application et {audiosNumber} référence(s) audio et {addedCommentNumber} commentaire(s) ajouté(s) plus {deletedCommentNumber} supprimé(s) plus {updatedCommentNumber} modifié(s) dans des fichiers de commentaire existants ont été restaurés.{deletedAudioAndMp3FilesMsg}{addedAtEndOfPlaylistLstMsg}",
   "@doRestoreUniquePlaylistFromZip": {
     "description": "Warning message indicating that the a unique playlist was restored from ZIP created from playlist item menu",
     "placeholders": {
@@ -1584,8 +1584,8 @@
   "noCommentFoundInAudioMessage": "Aucun commentaire trouvé dans l'audio",
   "inMusicQualityLabel": "En qualité musicale",
   "inMusicQuality": "qualitéMusicale",
-  "soundReductionPosition": "Position de réduction du volume",
-  "soundReductionDuration": "Durée de réduction du volume",
+  "soundReductionPosition": "Position de réduction",
+  "soundReductionDuration": "Durée de réduction",
   "volumeFadeOutOptional": "Diminution progressive du volume (optionnel)",
   "fadeStartPositionLabel": "Début de la diminution (h:mm:ss.t)",
   "fadeStartPositionHintText": "0:00.0 (temps absolu dans le fichier source)",
@@ -1599,5 +1599,7 @@
 "negativeSoundPositionError": "La position de la baisse du son doit être dans le commentaire (>= position de début)",
 "soundPositionBeyondEndError": "La position de la baisse du son doit être avant la position de fin du commentaire",
 "soundPositionPlusDurationBeyondEndError": "La baisse doit se terminer avant ou à la fin du commentaire",
-"emptyTitleError": "Le titre ne peut pas être vide"
+"emptyTitleError": "Le titre ne peut pas être vide",
+"loadedComments": "Chargé {commentNumber} commentaire(s)",
+"skippedComments": "({commentNumber} ignoré(s))"
 }                                   

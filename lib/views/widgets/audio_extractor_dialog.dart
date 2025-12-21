@@ -180,7 +180,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                             maxLines: 4,
                                             overflow: TextOverflow.ellipsis,
                                             style: const TextStyle(
-                                              fontWeight: FontWeight.w700,
+                                              fontWeight: FontWeight.w700, // bold
                                               fontSize: 15,
                                             ),
                                           ),
@@ -191,6 +191,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                                     s.startPosition),
                                                 style: const TextStyle(
                                                   fontWeight: FontWeight.w500,
+                                                  fontSize: 14,
                                                   color: Colors.white70,
                                                 ),
                                               ),
@@ -207,6 +208,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                                 s.endPosition),
                                             style: const TextStyle(
                                               fontWeight: FontWeight.w500,
+                                              fontSize: 14,
                                               color: Colors.white70,
                                             ),
                                           ),
@@ -215,6 +217,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                             "${AppLocalizations.of(context)!.soundReductionPosition}: ${TimeFormatUtil.formatSeconds(s.soundReductionPosition)}",
                                             style: const TextStyle(
                                               fontWeight: FontWeight.w500,
+                                              fontSize: 14,
                                               color: Colors.white70,
                                             ),
                                           ),
@@ -223,6 +226,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                             "${AppLocalizations.of(context)!.soundReductionDuration}: ${TimeFormatUtil.formatSeconds(s.soundReductionDuration)}",
                                             style: const TextStyle(
                                               fontWeight: FontWeight.w500,
+                                              fontSize: 14,
                                               color: Colors.white70,
                                             ),
                                           ),
@@ -358,7 +362,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                     ? Colors.green[700]
                                     : Colors.black,
                             fontSize: 14,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w700, // bold
                           ),
                         ),
                       ),
@@ -599,7 +603,12 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-                AppLocalizations.of(context)!.noCommentFoundInAudioMessage),
+              AppLocalizations.of(context)!.noCommentFoundInAudioMessage,
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w700, // bold
+              ),
+            ),
             backgroundColor: Colors.orange,
           ),
         );
@@ -620,7 +629,6 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
             end > start &&
             audioExtractorVM.audioFile.duration > 0 &&
             end <= audioExtractorVM.audioFile.duration) {
-
           double silence = comment.silenceDuration;
 
           if (silence == 0.0) {
@@ -650,7 +658,11 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'Loaded $added segment(s)${skipped > 0 ? ' ($skipped skipped)' : ''}',
+            "${AppLocalizations.of(context)!.loadedComments(added)}${skipped > 0 ? ' ${AppLocalizations.of(context)!.skippedComments(skipped)}' : ''}",
+            style: const TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w700, // bold
+            ),
           ),
           backgroundColor: Colors.green,
           duration: const Duration(seconds: 3),

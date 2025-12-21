@@ -2628,10 +2628,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inMusicQuality => 'musicQuality';
 
   @override
-  String get soundReductionPosition => 'Sound reduction position';
+  String get soundReductionPosition => 'Reduction position';
 
   @override
-  String get soundReductionDuration => 'Sound reduction duration';
+  String get soundReductionDuration => 'Reduction duration';
 
   @override
   String get volumeFadeOutOptional => 'Volume fade-out (optional)';
@@ -2683,4 +2683,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get emptyTitleError => 'Title cannot be empty';
+
+  @override
+  String loadedComments(Object commentNumber) {
+    return 'Loaded $commentNumber comment(s)';
+  }
+
+  @override
+  String skippedComments(Object commentNumber) {
+    return '($commentNumber skipped)';
+  }
 }

@@ -1177,8 +1177,8 @@
   "noCommentFoundInAudioMessage": "No comment found in the audio",
   "inMusicQualityLabel": "In music quality",
   "inMusicQuality": "musicQuality",
-  "soundReductionPosition": "Sound reduction position",
-  "soundReductionDuration": "Sound reduction duration",
+  "soundReductionPosition": "Reduction position",
+  "soundReductionDuration": "Reduction duration",
   "volumeFadeOutOptional": "Volume fade-out (optional)",
   "fadeStartPositionLabel": "Fade start position (h:mm:ss.t)",
   "fadeStartPositionHintText": "0:00.0 (absolute time in source file)",
@@ -1192,5 +1192,7 @@
   "negativeSoundPositionError": "Sound reduction position must be within the comment (>= start position)",
   "soundPositionBeyondEndError": "Sound reduction position must be before the comment end position",
   "soundPositionPlusDurationBeyondEndError": "Sound reduction must complete before or at the comment end",
-  "emptyTitleError": "Title cannot be empty"
+  "emptyTitleError": "Title cannot be empty",
+  "loadedComments": "Loaded {commentNumber} comment(s)",
+  "skippedComments": "({commentNumber} skipped)"
 }
