@@ -2655,7 +2655,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get inMusicQuality => 'qualitéMusicale';
 
   @override
-  String get fadeStartPosition => 'Durée d\'augmentation';
+  String get fadeStartPosition => 'Durée d\'aug-\nmentation';
 
   @override
   String get soundReductionPosition => 'Position de réduction';
