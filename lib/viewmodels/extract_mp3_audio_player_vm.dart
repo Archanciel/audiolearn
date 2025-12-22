@@ -247,8 +247,9 @@ class ExtractMp3AudioPlayerVM extends ChangeNotifier {
 
   // Seek by percentage (0.0 to 1.0)
   Future<void> seekByPercentage({required double percentage}) async {
-    if (!_isLoaded || _duration == Duration.zero || _player == null)
+    if (!_isLoaded || _duration == Duration.zero || _player == null) {
       return;
+    }
 
     final newPosition = Duration(
       milliseconds: (percentage * _duration.inMilliseconds).round(),

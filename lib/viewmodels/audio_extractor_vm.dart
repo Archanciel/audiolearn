@@ -77,6 +77,10 @@ class AudioExtractorVM extends ChangeNotifier {
       silenceDuration: TimeFormatUtil.normalizeToTenths(
         segment.silenceDuration,
       ),
+      fadeInDuration: TimeFormatUtil.normalizeToTenths(
+        // NEW
+        segment.fadeInDuration,
+      ),
       soundReductionPosition: TimeFormatUtil.normalizeToTenths(
         segment.soundReductionPosition,
       ),
@@ -104,8 +108,16 @@ class AudioExtractorVM extends ChangeNotifier {
         silenceDuration: TimeFormatUtil.normalizeToTenths(
           segment.silenceDuration,
         ),
-        soundReductionPosition: segment.soundReductionPosition,
-        soundReductionDuration: segment.soundReductionDuration,
+        fadeInDuration: TimeFormatUtil.normalizeToTenths(
+          // NEW
+          segment.fadeInDuration,
+        ),
+        soundReductionPosition: TimeFormatUtil.normalizeToTenths(
+          segment.soundReductionPosition,
+        ),
+        soundReductionDuration: TimeFormatUtil.normalizeToTenths(
+          segment.soundReductionDuration,
+        ),
         title: segment.title,
       );
 
@@ -121,6 +133,7 @@ class AudioExtractorVM extends ChangeNotifier {
       comment.commentEndPositionInTenthOfSeconds =
           (normalizedSegment.endPosition * 10).toInt();
       comment.silenceDuration = normalizedSegment.silenceDuration;
+      comment.fadeInDuration = normalizedSegment.fadeInDuration;
       comment.soundReductionPosition = normalizedSegment.soundReductionPosition;
       comment.soundReductionDuration = normalizedSegment.soundReductionDuration;
 
@@ -233,6 +246,16 @@ class AudioExtractorVM extends ChangeNotifier {
             silenceDuration: TimeFormatUtil.normalizeToTenths(
               s.silenceDuration,
             ),
+            fadeInDuration: TimeFormatUtil.normalizeToTenths(
+              // NEW
+              s.fadeInDuration,
+            ),
+            soundReductionPosition: TimeFormatUtil.normalizeToTenths(
+              s.soundReductionPosition,
+            ),
+            soundReductionDuration: TimeFormatUtil.normalizeToTenths(
+              s.soundReductionDuration,
+            ),
             title: s.title,
           ),
         )
@@ -287,6 +310,16 @@ class AudioExtractorVM extends ChangeNotifier {
             ),
             silenceDuration: TimeFormatUtil.normalizeToTenths(
               s.silenceDuration,
+            ),
+            fadeInDuration: TimeFormatUtil.normalizeToTenths(
+              // NEW
+              s.fadeInDuration,
+            ),
+            soundReductionPosition: TimeFormatUtil.normalizeToTenths(
+              s.soundReductionPosition,
+            ),
+            soundReductionDuration: TimeFormatUtil.normalizeToTenths(
+              s.soundReductionDuration,
             ),
             title: s.title,
           ),

@@ -45,7 +45,7 @@ class AudioExtractorService {
   // Helper: Build audio filter for fade-out
   // ────────────────────────────────────────────────────────────────────────────
 
-  /// Builds an audio filter string for FFmpeg.
+  /// Builds an audio filter string for FFmpeg (fade and volume only).
   ///
   /// Parameters:
   /// - segment: The audio segment with fade parameters
@@ -53,6 +53,9 @@ class AudioExtractorService {
   ///
   /// Returns a filter string like "volume=3dB,afade=t=out:st=50:d=10"
   /// or empty string if no filters needed.
+  ///
+  /// NOTE: Timestamp reset (asetpts) is handled separately in the main filter chain
+  /// when using atrim, so we don't include it here.
   static String _buildAudioFilter({
     required AudioSegment segment,
     double gainDb = 0.0,
@@ -64,15 +67,19 @@ class AudioExtractorService {
       filters.add('volume=${gainDb}dB');
     }
 
-    // Add fade-out filter if specified
-    if (segment.soundReductionDuration > 0) {
+    // Add fade-out filter if BOTH position AND duration are meaningfully set
+    const double threshold = 0.05;
+
+    if (segment.soundReductionDuration > threshold &&
+        segment.soundReductionPosition > threshold) {
       // Calculate relative position of fade start within the segment
       final segmentDuration = segment.endPosition - segment.startPosition;
       final fadeStartRelative =
           segment.soundReductionPosition - segment.startPosition;
 
       // Validate fade parameters
-      if (fadeStartRelative >= 0 && fadeStartRelative < segmentDuration) {
+      if (fadeStartRelative >= -threshold &&
+          fadeStartRelative < segmentDuration) {
         final fadeDuration = segment.soundReductionDuration;
 
         // Ensure fade doesn't extend beyond segment end
@@ -80,12 +87,24 @@ class AudioExtractorService {
         final actualFadeDuration =
             fadeDuration > maxFadeDuration ? maxFadeDuration : fadeDuration;
 
-        if (actualFadeDuration > 0) {
+        if (actualFadeDuration > threshold) {
+          // Ensure fadeStartRelative is not negative (clamp to 0)
+          final safeStartRelative =
+              fadeStartRelative < 0 ? 0.0 : fadeStartRelative;
+
           // Format with precision to avoid rounding issues
-          final stStr = fadeStartRelative.toStringAsFixed(3);
+          final stStr = safeStartRelative.toStringAsFixed(3);
           final dStr = actualFadeDuration.toStringAsFixed(3);
           filters.add('afade=t=out:st=$stStr:d=$dStr');
+
+          logger.i(
+            'Fade-out: st=$stStr d=$dStr (segment ${segment.startPosition}-${segment.endPosition})',
+          );
         }
+      } else {
+        logger.w(
+          'Invalid fade: fadeStart=$fadeStartRelative segDur=$segmentDuration',
+        );
       }
     }
 
@@ -97,17 +116,23 @@ class AudioExtractorService {
   // ────────────────────────────────────────────────────────────────────────────
 
   /// Returns media duration in seconds.
-  static Future<double> getAudioDuration({required String filePath}) async {
+  static Future<double> getAudioDuration({
+    required String filePath,
+  }) async {
     try {
       if (Platform.isAndroid || Platform.isIOS) {
-        final session = await FFprobeKit.getMediaInformation(filePath);
+        final session = await FFprobeKit.getMediaInformation(
+          filePath,
+        );
         final info = session.getMediaInformation();
         final durationStr = info?.getDuration();
         if (durationStr != null) {
           final d = double.tryParse(durationStr);
           if (d != null && d > 0) return d;
         }
-        logger.w('FFprobeKit no duration for "$filePath", fallback to 60s');
+        logger.w(
+          'FFprobeKit no duration for "$filePath", fallback to 60s',
+        );
         return 60.0;
       } else {
         return await _probeDurationDesktop(filePath: filePath);
@@ -212,7 +237,11 @@ class AudioExtractorService {
     final sess = await FFmpegKit.execute(cmd);
     final rc = await sess.getReturnCode();
     if (ReturnCode.isSuccess(rc)) {
-      return {'success': true, 'message': 'OK', 'outputPath': outputPath};
+      return {
+        'success': true,
+        'message': 'OK',
+        'outputPath': outputPath,
+      };
     } else {
       final logs = await sess.getAllLogsAsString();
       return {
@@ -246,7 +275,11 @@ class AudioExtractorService {
     ];
     final r = await Process.run('ffmpeg', args);
     if (r.exitCode == 0) {
-      return {'success': true, 'message': 'OK', 'outputPath': outputPath};
+      return {
+        'success': true,
+        'message': 'OK',
+        'outputPath': outputPath,
+      };
     } else {
       return {
         'success': false,
@@ -265,6 +298,7 @@ class AudioExtractorService {
     required String outputPath,
     required List<AudioSegment> segments,
     required bool inMusicQuality,
+    String? encoderBitrate,
   }) async {
     if (segments.isEmpty) {
       return {
@@ -311,37 +345,104 @@ class AudioExtractorService {
 
       for (int i = 0; i < segments.length; i++) {
         final s = segments[i];
-        final segPath = '${tmp.path}/segment_$i.mp3';
 
-        // Build audio filter for this segment
-        final audioFilter = _buildAudioFilter(segment: s, gainDb: 0.0);
+        // Step 1: Extract segment without any filters
+        // This ensures we get a clean file with timestamps starting at 0
+        final tempSegPath = '${tmp.path}/temp_seg_$i.mp3';
 
-        final cut = [
+        final extractCmd = [
           '-ss',
           s.startPosition.toString(),
-          '-to',
-          s.endPosition.toString(),
+          '-t',
+          (s.endPosition - s.startPosition).toString(),
           '-i',
           _q(inputPath),
-          if (audioFilter.isNotEmpty) '-af',
-          if (audioFilter.isNotEmpty) '"$audioFilter"',
           '-c:a',
-          'libmp3lame',
+          'libmp3lame', // Re-encode instead of copy to ensure valid MP3
           '-b:a',
           encoderBitrate,
-          _q(segPath),
+          _q(tempSegPath),
           '-y',
         ].join(' ');
 
-        final cutSess = await FFmpegKit.execute(cut);
-        if (!ReturnCode.isSuccess(await cutSess.getReturnCode())) {
+        logger.i('Step 1: Extracting segment $i');
+
+        final extractSess = await FFmpegKit.execute(extractCmd);
+        if (!ReturnCode.isSuccess(
+          await extractSess.getReturnCode(),
+        )) {
           return {
             'success': false,
             'message':
-                'FFmpeg cut failed @segment ${i + 1}:\n${await cutSess.getAllLogsAsString()}',
+                'FFmpeg extract failed @segment ${i + 1}:\n${await extractSess.getAllLogsAsString()}',
             'outputPath': null,
           };
         }
+
+        // Step 2: Apply filters to the extracted segment (which now starts at 0)
+        final segPath = '${tmp.path}/segment_$i.mp3';
+
+        // Build audio filter for this segment (fade-out uses segment-relative time)
+        final fadeFilter = _buildFadeFilterForExtractedSegment(
+          segment: s,
+        );
+
+        if (fadeFilter.isEmpty) {
+          // No filters needed, just re-encode
+          final reencodeCmd = [
+            '-i',
+            _q(tempSegPath),
+            '-c:a',
+            'libmp3lame',
+            '-b:a',
+            encoderBitrate,
+            _q(segPath),
+            '-y',
+          ].join(' ');
+
+          final reencodeSess = await FFmpegKit.execute(reencodeCmd);
+          if (!ReturnCode.isSuccess(
+            await reencodeSess.getReturnCode(),
+          )) {
+            return {
+              'success': false,
+              'message':
+                  'FFmpeg re-encode failed @segment ${i + 1}:\n${await reencodeSess.getAllLogsAsString()}',
+              'outputPath': null,
+            };
+          }
+        } else {
+          // Apply filters and re-encode
+          logger.i(
+            'Step 2: Applying filter to segment $i: $fadeFilter',
+          );
+
+          final filterCmd = [
+            '-i',
+            _q(tempSegPath),
+            '-af',
+            fadeFilter,
+            '-c:a',
+            'libmp3lame',
+            '-b:a',
+            encoderBitrate,
+            _q(segPath),
+            '-y',
+          ].join(' ');
+
+          final filterSess = await FFmpegKit.execute(filterCmd);
+          if (!ReturnCode.isSuccess(
+            await filterSess.getReturnCode(),
+          )) {
+            return {
+              'success': false,
+              'message':
+                  'FFmpeg filter failed @segment ${i + 1}:\n${await filterSess.getAllLogsAsString()}',
+              'outputPath': null,
+            };
+          }
+        }
+
         parts.add(segPath);
 
         final silUser = s.silenceDuration;
@@ -423,6 +524,73 @@ class AudioExtractorService {
     }
   }
 
+  /// Builds fade filter for an already-extracted segment (timestamps start at 0)
+  static String _buildFadeFilterForExtractedSegment({
+    required AudioSegment segment,
+    double gainDb = 0.0,
+  }) {
+    final List<String> filters = [];
+
+    // Add volume filter if gain is specified
+    if (gainDb.abs() > 1e-6) {
+      filters.add('volume=${gainDb}dB');
+    }
+
+    const double threshold = 0.05;
+    final segmentDuration = segment.endPosition - segment.startPosition;
+
+    // Add fade-IN filter if configured (volume 0% → 100% at start)
+    if (segment.fadeInDuration > threshold) {
+      final fadeInDur = segment.fadeInDuration;
+
+      // Ensure fade-in doesn't exceed segment duration
+      final actualFadeInDur =
+          fadeInDur > segmentDuration ? segmentDuration : fadeInDur;
+
+      if (actualFadeInDur > threshold) {
+        final dStr = actualFadeInDur.toStringAsFixed(3);
+        filters.add('afade=t=in:st=0:d=$dStr');
+
+        logger.i('Fade-in filter: afade=t=in:st=0:d=$dStr');
+      }
+    }
+
+    // Add fade-OUT filter if configured (volume 100% → 0% at end)
+    if (segment.soundReductionDuration > threshold &&
+        segment.soundReductionPosition > threshold) {
+      // For an extracted segment, calculate fade start relative to segment start
+      final fadeStartRelative =
+          segment.soundReductionPosition - segment.startPosition;
+
+      if (fadeStartRelative >= -threshold &&
+          fadeStartRelative < segmentDuration) {
+        final fadeDuration = segment.soundReductionDuration;
+
+        // Ensure fade doesn't extend beyond segment end
+        final maxFadeDuration = segmentDuration - fadeStartRelative;
+        final actualFadeDuration =
+            fadeDuration > maxFadeDuration ? maxFadeDuration : fadeDuration;
+
+        if (actualFadeDuration > threshold) {
+          final safeStartRelative =
+              fadeStartRelative < 0 ? 0.0 : fadeStartRelative;
+
+          final stStr = safeStartRelative.toStringAsFixed(3);
+          final dStr = actualFadeDuration.toStringAsFixed(3);
+          filters.add('afade=t=out:st=$stStr:d=$dStr');
+
+          logger.i('Fade-out filter: afade=t=out:st=$stStr:d=$dStr');
+        }
+      } else {
+        logger.w(
+          'Invalid fade: fadeStart=$fadeStartRelative > segmentDuration=$segmentDuration',
+        );
+      }
+    }
+
+    return filters.join(',');
+  }
+
   static Future<Map<String, dynamic>> _extractSegmentsDesktop({
     required String inputPath,
     required String outputPath,
@@ -430,45 +598,120 @@ class AudioExtractorService {
     required String encoderBitrate,
   }) async {
     try {
-      final tempDir = Directory.systemTemp.createTempSync('mp3_extract_');
+      final tempDir = Directory.systemTemp.createTempSync(
+        'mp3_extract_',
+      );
       final partFiles = <String>[];
 
       try {
         for (int i = 0; i < segments.length; i++) {
           final s = segments[i];
-          final segPath =
-              '${tempDir.path}${Platform.pathSeparator}segment_$i.mp3';
 
-          // Build audio filter for this segment
-          final audioFilter = _buildAudioFilter(segment: s, gainDb: 0.0);
+          // Step 1: Extract segment without filters (ensures timestamps start at 0)
+          final tempSegPath =
+              '${tempDir.path}${Platform.pathSeparator}temp_seg_$i.mp3';
 
-          final args = [
-            '-i',
-            inputPath,
+          final extractArgs = [
             '-ss',
             s.startPosition.toString(),
-            '-to',
-            s.endPosition.toString(),
-            if (audioFilter.isNotEmpty) '-af',
-            if (audioFilter.isNotEmpty) audioFilter,
+            '-t',
+            (s.endPosition - s.startPosition).toString(),
+            '-i',
+            inputPath,
             '-c:a',
-            'libmp3lame',
+            'libmp3lame', // Re-encode instead of copy to ensure valid MP3
             '-b:a',
             encoderBitrate,
-            segPath,
+            tempSegPath,
             '-y',
             '-v',
             'error',
           ];
 
-          final r = await Process.run('ffmpeg', args);
-          if (r.exitCode != 0) {
+          final extractResult = await Process.run(
+            'ffmpeg',
+            extractArgs,
+          );
+          if (extractResult.exitCode != 0) {
             return {
               'success': false,
-              'message': 'Failed to extract segment ${i + 1}: ${r.stderr}',
+              'message':
+                  'Failed to extract segment ${i + 1}: ${extractResult.stderr}',
               'outputPath': null,
             };
           }
+
+          // Step 2: Apply filters to extracted segment
+          final segPath =
+              '${tempDir.path}${Platform.pathSeparator}segment_$i.mp3';
+
+          final fadeFilter = _buildFadeFilterForExtractedSegment(
+            segment: s,
+            gainDb: 0.0,
+          );
+
+          if (fadeFilter.isEmpty) {
+            // No filters, just re-encode
+            final reencodeArgs = [
+              '-i',
+              tempSegPath,
+              '-c:a',
+              'libmp3lame',
+              '-b:a',
+              encoderBitrate,
+              segPath,
+              '-y',
+              '-v',
+              'error',
+            ];
+
+            final reencodeResult = await Process.run(
+              'ffmpeg',
+              reencodeArgs,
+            );
+            if (reencodeResult.exitCode != 0) {
+              return {
+                'success': false,
+                'message':
+                    'Failed to re-encode segment ${i + 1}: ${reencodeResult.stderr}',
+                'outputPath': null,
+              };
+            }
+          } else {
+            // Apply filters
+            logger.i(
+              'Desktop: Applying filter to segment $i: $fadeFilter',
+            );
+
+            final filterArgs = [
+              '-i',
+              tempSegPath,
+              '-af',
+              fadeFilter,
+              '-c:a',
+              'libmp3lame',
+              '-b:a',
+              encoderBitrate,
+              segPath,
+              '-y',
+              '-v',
+              'error',
+            ];
+
+            final filterResult = await Process.run(
+              'ffmpeg',
+              filterArgs,
+            );
+            if (filterResult.exitCode != 0) {
+              return {
+                'success': false,
+                'message':
+                    'Failed to apply filter to segment ${i + 1}: ${filterResult.stderr}',
+                'outputPath': null,
+              };
+            }
+          }
+
           partFiles.add(segPath);
 
           final silUser = s.silenceDuration;
@@ -619,37 +862,77 @@ class AudioExtractorService {
         for (int j = 0; j < inp.segments.length; j++) {
           final s = inp.segments[j];
 
+          // Two-step extraction for multi-input too
+          final tempCutPath = '${tmp.path}/m_temp_$partIndex.mp3';
           final cutPath = '${tmp.path}/m_cut_${partIndex++}.mp3';
 
-          // Build audio filter with both gain and fade-out
-          final audioFilter = _buildAudioFilter(segment: s, gainDb: inp.gainDb);
-
-          final cutCmd = [
+          // Step 1: Extract segment without filters
+          final extractCmd = [
             '-ss',
             s.startPosition.toString(),
-            '-to',
-            s.endPosition.toString(),
+            '-t',
+            (s.endPosition - s.startPosition).toString(),
             '-i',
             _q(inp.inputPath),
-            if (audioFilter.isNotEmpty) '-filter:a',
-            if (audioFilter.isNotEmpty) '"$audioFilter"',
             '-c:a',
             'libmp3lame',
             '-b:a',
             encoderBitrate,
-            _q(cutPath),
+            _q(tempCutPath),
             '-y',
           ].join(' ');
 
-          final cutSess = await FFmpegKit.execute(cutCmd);
-          if (!ReturnCode.isSuccess(await cutSess.getReturnCode())) {
+          final extractSess = await FFmpegKit.execute(extractCmd);
+          if (!ReturnCode.isSuccess(
+            await extractSess.getReturnCode(),
+          )) {
             return {
               'success': false,
               'message':
-                  'FFmpeg cut failed @input ${i + 1}, segment ${j + 1}:\n${await cutSess.getAllLogsAsString()}',
+                  'FFmpeg extract failed @input ${i + 1}, segment ${j + 1}:\n${await extractSess.getAllLogsAsString()}',
               'outputPath': null,
             };
           }
+
+          // Step 2: Apply filters (gain + fade)
+          final audioFilter = _buildFadeFilterForExtractedSegment(
+            segment: s,
+            gainDb: inp.gainDb,
+          );
+
+          if (audioFilter.isEmpty) {
+            // No filters, just rename temp file
+            final tempFile = File(tempCutPath);
+            await tempFile.copy(cutPath);
+            await tempFile.delete();
+          } else {
+            // Apply filters
+            final filterCmd = [
+              '-i',
+              _q(tempCutPath),
+              '-af',
+              audioFilter,
+              '-c:a',
+              'libmp3lame',
+              '-b:a',
+              encoderBitrate,
+              _q(cutPath),
+              '-y',
+            ].join(' ');
+
+            final filterSess = await FFmpegKit.execute(filterCmd);
+            if (!ReturnCode.isSuccess(
+              await filterSess.getReturnCode(),
+            )) {
+              return {
+                'success': false,
+                'message':
+                    'FFmpeg filter failed @input ${i + 1}, segment ${j + 1}:\n${await filterSess.getAllLogsAsString()}',
+                'outputPath': null,
+              };
+            }
+          }
+
           parts.add(cutPath);
 
           // Silence between segments of the same input
@@ -678,7 +961,9 @@ class AudioExtractorService {
               '-y',
             ].join(' ');
             final silSess = await FFmpegKit.execute(silCmd);
-            if (!ReturnCode.isSuccess(await silSess.getReturnCode())) {
+            if (!ReturnCode.isSuccess(
+              await silSess.getReturnCode(),
+            )) {
               return {
                 'success': false,
                 'message':
@@ -708,7 +993,9 @@ class AudioExtractorService {
             '-y',
           ].join(' ');
           final interSess = await FFmpegKit.execute(interCmd);
-          if (!ReturnCode.isSuccess(await interSess.getReturnCode())) {
+          if (!ReturnCode.isSuccess(
+            await interSess.getReturnCode(),
+          )) {
             return {
               'success': false,
               'message':
@@ -781,39 +1068,81 @@ class AudioExtractorService {
         for (int j = 0; j < inp.segments.length; j++) {
           final s = inp.segments[j];
 
+          // Two-step extraction for multi-input
+          final tempCutPath =
+              '${tempDir.path}${Platform.pathSeparator}m_temp_$idx.mp3';
           final cutPath =
               '${tempDir.path}${Platform.pathSeparator}m_cut_${idx++}.mp3';
 
-          // Build audio filter with both gain and fade-out
-          final audioFilter = _buildAudioFilter(segment: s, gainDb: inp.gainDb);
-
-          final cutArgs = <String>[
-            '-i',
-            inp.inputPath,
+          // Step 1: Extract segment without filters
+          final extractArgs = [
             '-ss',
             s.startPosition.toString(),
-            '-to',
-            s.endPosition.toString(),
-            if (audioFilter.isNotEmpty) '-filter:a',
-            if (audioFilter.isNotEmpty) audioFilter,
+            '-t',
+            (s.endPosition - s.startPosition).toString(),
+            '-i',
+            inp.inputPath,
             '-c:a',
             'libmp3lame',
             '-b:a',
             encoderBitrate,
-            cutPath,
+            tempCutPath,
             '-y',
             '-v',
             'error',
           ];
 
-          final r = await Process.run('ffmpeg', cutArgs);
-          if (r.exitCode != 0) {
+          final extractResult = await Process.run(
+            'ffmpeg',
+            extractArgs,
+          );
+          if (extractResult.exitCode != 0) {
             return {
               'success': false,
-              'message': 'Cut failed: ${r.stderr}',
+              'message': 'Extract failed: ${extractResult.stderr}',
               'outputPath': null,
             };
           }
+
+          // Step 2: Apply filters (gain + fade)
+          final audioFilter = _buildFadeFilterForExtractedSegment(
+            segment: s,
+            gainDb: inp.gainDb,
+          );
+
+          if (audioFilter.isEmpty) {
+            // No filters, just rename
+            File(tempCutPath).renameSync(cutPath);
+          } else {
+            // Apply filters
+            final filterArgs = [
+              '-i',
+              tempCutPath,
+              '-af',
+              audioFilter,
+              '-c:a',
+              'libmp3lame',
+              '-b:a',
+              encoderBitrate,
+              cutPath,
+              '-y',
+              '-v',
+              'error',
+            ];
+
+            final filterResult = await Process.run(
+              'ffmpeg',
+              filterArgs,
+            );
+            if (filterResult.exitCode != 0) {
+              return {
+                'success': false,
+                'message': 'Filter failed: ${filterResult.stderr}',
+                'outputPath': null,
+              };
+            }
+          }
+
           partFiles.add(cutPath);
 
           final silUser = s.silenceDuration;

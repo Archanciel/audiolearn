@@ -640,6 +640,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
               startPosition: start,
               endPosition: end,
               silenceDuration: silence,
+              fadeInDuration: comment.fadeInDuration,
               soundReductionPosition: comment.soundReductionPosition,
               soundReductionDuration: comment.soundReductionDuration,
               title: comment.title,
