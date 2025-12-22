@@ -3,8 +3,7 @@ class AudioSegment {
   final double startPosition;
   final double endPosition;
   final double silenceDuration;
-  final double
-  fadeInDuration; // NEW: Fade-in at segment start (volume 0→100%)
+  final double fadeInDuration; // NEW: Fade-in at segment start (volume 0→100%)
   final double soundReductionPosition;
   final double soundReductionDuration;
   final String title;
@@ -44,31 +43,28 @@ class AudioSegment {
   }
 
   Map<String, dynamic> toMap() => {
-    'startPosition': startPosition,
-    'endPosition': endPosition,
-    'silenceDuration': silenceDuration,
-    'fadeInDuration': fadeInDuration, // NEW
-    'soundReductionPosition': soundReductionPosition,
-    'soundReductionDuration': soundReductionDuration,
-    'title': title,
-  };
+        'startPosition': startPosition,
+        'endPosition': endPosition,
+        'silenceDuration': silenceDuration,
+        'fadeInDuration': fadeInDuration, // NEW
+        'soundReductionPosition': soundReductionPosition,
+        'soundReductionDuration': soundReductionDuration,
+        'title': title,
+      };
 
   factory AudioSegment.fromMap(Map<String, dynamic> map) {
     return AudioSegment(
       startPosition: (map['startPosition'] as num).toDouble(),
       endPosition: (map['endPosition'] as num).toDouble(),
-      silenceDuration:
-          (map['silenceDuration'] as num?)?.toDouble() ?? 0.0,
-      fadeInDuration:
-          (map['fadeInDuration'] as num?)?.toDouble() ?? 0.0, // NEW
+      silenceDuration: (map['silenceDuration'] as num?)?.toDouble() ?? 0.0,
+      fadeInDuration: (map['fadeInDuration'] as num?)?.toDouble() ?? 0.0, // NEW
       soundReductionPosition:
           (map['soundReductionPosition'] as num?)?.toDouble() ?? 0.0,
       soundReductionDuration:
           (map['soundReductionDuration'] as num?)?.toDouble() ?? 0.0,
-      title:
-          (map['title'] as String?)?.trim().isNotEmpty == true
-              ? (map['title'] as String).trim()
-              : 'Untitled segment',
+      title: (map['title'] as String?)?.trim().isNotEmpty == true
+          ? (map['title'] as String).trim()
+          : 'Untitled segment',
     );
   }
 }
