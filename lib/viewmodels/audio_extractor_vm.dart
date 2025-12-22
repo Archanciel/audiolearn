@@ -146,9 +146,11 @@ class AudioExtractorVM extends ChangeNotifier {
     }
   }
 
-  void removeSegment(int index) {
-    if (index >= 0 && index < _segments.length) {
-      _segments.removeAt(index);
+  void removeSegment({
+    required int segmentToRemoveIndex,
+  }) {
+    if (segmentToRemoveIndex >= 0 && segmentToRemoveIndex < _segments.length) {
+      _segments.removeAt(segmentToRemoveIndex);
       notifyListeners();
     }
   }

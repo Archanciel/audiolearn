@@ -2813,4 +2813,19 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get fadeInDurationHelperText =>
       "Duration to fade volume from 0% to 100% at comment start";
+
+  @override
+  String get fadeStartPosition => "Increase duration";
+
+  @override
+  String get fadeStartPositionTooltip =>
+      "Defines how long the audio fades in from 0% to 100% at the start of the comment.";
+
+  @override
+  String get soundReductionPositionTooltip =>
+      "Defines the position where the audio starts fading out from 100% to 0%.";
+
+  @override
+  String get soundReductionDurationTooltip =>
+      "Defines how long the audio fades out from 100% to 0%. Ideally, the fade-out start position plus its duration should match the comment end position.";
 }

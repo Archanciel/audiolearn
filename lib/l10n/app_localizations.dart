@@ -4220,6 +4220,12 @@ abstract class AppLocalizations {
   /// **'musicQuality'**
   String get inMusicQuality;
 
+  /// No description provided for @fadeStartPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Increase duration'**
+  String get fadeStartPosition;
+
   /// No description provided for @soundReductionPosition.
   ///
   /// In en, this message translates to:
@@ -4231,6 +4237,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reduction duration'**
   String get soundReductionDuration;
+
+  /// No description provided for @fadeStartPositionTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Defines how long the audio fades in from 0% to 100% at the start of the comment.'**
+  String get fadeStartPositionTooltip;
+
+  /// No description provided for @soundReductionPositionTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Defines the position where the audio starts fading out from 100% to 0%.'**
+  String get soundReductionPositionTooltip;
+
+  /// No description provided for @soundReductionDurationTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Defines how long the audio fades out from 100% to 0%. Ideally, the fade-out start position plus its duration should match the comment end position.'**
+  String get soundReductionDurationTooltip;
 
   /// No description provided for @volumeFadeOutOptional.
   ///

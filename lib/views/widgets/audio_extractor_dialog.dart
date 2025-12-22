@@ -180,7 +180,8 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                             maxLines: 4,
                                             overflow: TextOverflow.ellipsis,
                                             style: const TextStyle(
-                                              fontWeight: FontWeight.w700, // bold
+                                              fontWeight:
+                                                  FontWeight.w700, // bold
                                               fontSize: 15,
                                             ),
                                           ),
@@ -213,21 +214,45 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                             ),
                                           ),
                                           const SizedBox(height: 2),
-                                          Text(
-                                            "${AppLocalizations.of(context)!.soundReductionPosition}: ${TimeFormatUtil.formatSeconds(s.soundReductionPosition)}",
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 14,
-                                              color: Colors.white70,
+                                          Tooltip(
+                                            message:
+                                                AppLocalizations.of(context)!
+                                                    .fadeStartPositionTooltip,
+                                            child: Text(
+                                              "${AppLocalizations.of(context)!.fadeStartPosition}: ${TimeFormatUtil.formatSeconds(s.fadeInDuration)}",
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14,
+                                                color: Colors.white70,
+                                              ),
                                             ),
                                           ),
                                           const SizedBox(height: 2),
-                                          Text(
-                                            "${AppLocalizations.of(context)!.soundReductionDuration}: ${TimeFormatUtil.formatSeconds(s.soundReductionDuration)}",
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 14,
-                                              color: Colors.white70,
+                                          Tooltip(
+                                            message: AppLocalizations.of(
+                                                    context)!
+                                                .soundReductionPositionTooltip,
+                                            child: Text(
+                                              "${AppLocalizations.of(context)!.soundReductionPosition}: ${TimeFormatUtil.formatSeconds(s.soundReductionPosition)}",
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14,
+                                                color: Colors.white70,
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 2),
+                                          Tooltip(
+                                            message: AppLocalizations.of(
+                                                    context)!
+                                                .soundReductionDurationTooltip,
+                                            child: Text(
+                                              "${AppLocalizations.of(context)!.soundReductionDuration}: ${TimeFormatUtil.formatSeconds(s.soundReductionDuration)}",
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14,
+                                                color: Colors.white70,
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -279,9 +304,10 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                             ),
                                             onPressed: () =>
                                                 _confirmDeleteSegment(
-                                              context,
-                                              audioExtractorVM,
-                                              index,
+                                              context: context,
+                                              audioExtractorVM:
+                                                  audioExtractorVM,
+                                              segmentToDeleteIndex: index,
                                             ),
                                           ),
                                         ],
@@ -479,11 +505,11 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
     );
   }
 
-  void _confirmDeleteSegment(
-    BuildContext context,
-    AudioExtractorVM vm,
-    int index,
-  ) {
+  void _confirmDeleteSegment({
+    required BuildContext context,
+    required AudioExtractorVM audioExtractorVM,
+    required int segmentToDeleteIndex,
+  }) {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
@@ -501,7 +527,9 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
               backgroundColor: Colors.red,
             ),
             onPressed: () {
-              vm.removeSegment(index);
+              audioExtractorVM.removeSegment(
+                segmentToRemoveIndex: segmentToDeleteIndex,
+              );
               Navigator.of(context).pop();
             },
             child: Text(AppLocalizations.of(context)!.delete),

@@ -2655,10 +2655,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get inMusicQuality => 'qualitéMusicale';
 
   @override
+  String get fadeStartPosition => 'Durée d\'augmentation';
+
+  @override
   String get soundReductionPosition => 'Position de réduction';
 
   @override
   String get soundReductionDuration => 'Durée de réduction';
+
+  @override
+  String get fadeStartPositionTooltip =>
+      'Définit la durée de l\'augmentation du volume de 0 % à 100 % au début du commentaire.';
+
+  @override
+  String get soundReductionPositionTooltip =>
+      'Définit la position à laquelle le son commence à diminuer de 100 % à 0 %.';
+
+  @override
+  String get soundReductionDurationTooltip =>
+      'Définit la durée de la diminution de volume de 100 % à 0 %. Idéalement, la position de début de la diminution de volume additionnée à sa durée doit correspondre à la position de fin du commentaire.';
 
   @override
   String get volumeFadeOutOptional =>
