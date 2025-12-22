@@ -7,6 +7,7 @@ class Comment {
   int commentStartPositionInTenthOfSeconds;
   int commentEndPositionInTenthOfSeconds;
   double silenceDuration;
+  double fadeInDuration;
   double soundReductionPosition;
   double soundReductionDuration;
   late DateTime creationDateTime;
@@ -18,6 +19,7 @@ class Comment {
     required this.commentStartPositionInTenthOfSeconds,
     this.commentEndPositionInTenthOfSeconds = 0,
     this.silenceDuration = 0.0,
+    this.fadeInDuration = 0.0,
     this.soundReductionPosition = 0.0,
     this.soundReductionDuration = 0.0,
   })  : id = "${title}_${DateTime.now().microsecondsSinceEpoch.toString()}",
@@ -35,6 +37,7 @@ class Comment {
     required this.commentStartPositionInTenthOfSeconds,
     required this.commentEndPositionInTenthOfSeconds,
     required this.silenceDuration,
+    required this.fadeInDuration,
     required this.soundReductionPosition,
     required this.soundReductionDuration,
     required this.creationDateTime,
@@ -51,6 +54,7 @@ class Comment {
       commentEndPositionInTenthOfSeconds:
           json['commentEndPositionInTenthOfSeconds'] ?? 0,
       silenceDuration: json['silenceDuration'] ?? 0.0,
+      fadeInDuration: json['fadeInDuration'] ?? 0.0,
       soundReductionPosition: json['soundReductionPosition'] ?? 0.0,
       soundReductionDuration: json['soundReductionDuration'] ?? 0.0,
       creationDateTime: DateTime.parse(json['creationDateTime']),
@@ -68,6 +72,7 @@ class Comment {
           commentStartPositionInTenthOfSeconds,
       'commentEndPositionInTenthOfSeconds': commentEndPositionInTenthOfSeconds,
       'silenceDuration': silenceDuration,
+      'fadeInDuration': fadeInDuration,
       'soundReductionPosition': soundReductionPosition,
       'soundReductionDuration': soundReductionDuration,
       'creationDateTime': creationDateTime.toIso8601String(),

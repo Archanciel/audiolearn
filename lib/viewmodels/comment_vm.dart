@@ -324,6 +324,7 @@ class CommentVM extends ChangeNotifier {
           existingComment.commentEndPositionInTenthOfSeconds =
               updatedComment.commentEndPositionInTenthOfSeconds;
           existingComment.silenceDuration = updatedComment.silenceDuration;
+          existingComment.fadeInDuration = updatedComment.fadeInDuration;
           existingComment.soundReductionPosition =
               updatedComment.soundReductionPosition;
           existingComment.soundReductionDuration =
