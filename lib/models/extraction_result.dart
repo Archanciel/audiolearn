@@ -20,6 +20,14 @@ class ExtractionResult {
     return ExtractionResult(status: ExtractionStatus.none);
   }
 
+  /// Necessary so that the CircularProgressIndicator is displayed in the audio extractor dialog.
+  factory ExtractionResult.processing() {
+    return ExtractionResult(
+      status: ExtractionStatus.processing,
+      message: 'Processing...',
+    );
+  }
+
   factory ExtractionResult.success(String outputPath) {
     return ExtractionResult(
       status: ExtractionStatus.success,

@@ -186,6 +186,10 @@ class AudioExtractorVM extends ChangeNotifier {
     }
 
     try {
+      // Necessary so that the CircularProgressIndicator is displayed
+      // in the audio extractor dialog
+      startProcessing();
+
       final result = await AudioExtractorService.extractAudioSegments(
         inputPath: _audioFile.path!,
         outputPath: outputPath,
@@ -207,6 +211,12 @@ class AudioExtractorVM extends ChangeNotifier {
       );
       notifyListeners();
     }
+  }
+
+  /// Enables to display the CircularProgressIndicator in the audio extractor dialog.
+  void startProcessing() {
+    _extractionResult = ExtractionResult.processing();
+    notifyListeners();
   }
 
   void resetExtractionResult() {
@@ -351,6 +361,10 @@ class AudioExtractorVM extends ChangeNotifier {
       return;
     }
     try {
+      // Necessary so that the CircularProgressIndicator is displayed
+      // in the audio extractor dialog
+      startProcessing();
+
       final result = await AudioExtractorService.extractFromMultipleInputs(
         inputs: _multiInputs,
         outputPath: outputPath,
