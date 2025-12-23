@@ -4409,7 +4409,7 @@ abstract class AppLocalizations {
   /// No description provided for @inPlaylistLabelTooltip.
   ///
   /// In en, this message translates to:
-  /// **'An audio file containing the created MP3 and its associated comment(s) is stored in the selected playlist.'**
+  /// **'An audio containing the created MP3 and its associated comment(s) is added to the selected playlist.'**
   String get inPlaylistLabelTooltip;
 
   /// No description provided for @noPlaylistSelectedForExtractedMp3LocationWarning.

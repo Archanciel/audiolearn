@@ -2741,7 +2741,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get inPlaylistLabelTooltip =>
-      'An audio file containing the created MP3 and its associated comment(s) is stored in the selected playlist.';
+      'An audio containing the created MP3 and its associated comment(s) is added to the selected playlist.';
 
   @override
   String get noPlaylistSelectedForExtractedMp3LocationWarning =>

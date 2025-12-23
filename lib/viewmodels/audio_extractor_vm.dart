@@ -165,26 +165,10 @@ class AudioExtractorVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> extractMP3({
+  Future<void> extractMP3ToDirectory({
     required bool inMusicQuality,
     required String outputPath,
   }) async {
-    if (_audioFile.path == null) {
-      _extractionResult = ExtractionResult.error(
-        'Please select an MP3 file first',
-      );
-      notifyListeners();
-      return;
-    }
-
-    if (_segments.isEmpty) {
-      _extractionResult = ExtractionResult.error(
-        'Please add at least one segment to extract',
-      );
-      notifyListeners();
-      return;
-    }
-
     try {
       // Necessary so that the CircularProgressIndicator is displayed
       // in the audio extractor dialog
