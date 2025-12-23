@@ -2725,4 +2725,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get fadeInDurationHelperText =>
       'Duration to fade volume from 0% to 100% at comment start';
+
+  @override
+  String get extractedMp3Saved => 'Extracted MP3 saved to';
 }

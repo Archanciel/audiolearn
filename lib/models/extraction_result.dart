@@ -20,13 +20,6 @@ class ExtractionResult {
     return ExtractionResult(status: ExtractionStatus.none);
   }
 
-  factory ExtractionResult.processing() {
-    return ExtractionResult(
-      status: ExtractionStatus.processing,
-      message: 'Processing...',
-    );
-  }
-
   factory ExtractionResult.success(String outputPath) {
     return ExtractionResult(
       status: ExtractionStatus.success,

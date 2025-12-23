@@ -2828,4 +2828,7 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get soundReductionDurationTooltip =>
       "Defines how long the audio fades out from 100% to 0%. Ideally, the fade-out start position plus its duration should match the comment end position.";
+
+  @override
+  String get extractedMp3Saved => "Extracted MP3 saved to";
 }

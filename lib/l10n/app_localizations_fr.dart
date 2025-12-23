@@ -2757,4 +2757,7 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get fadeInDurationHelperText =>
       'Durée pour augmenter le volume de 0% à 100% au début du commentaire';
+
+  @override
+  String get extractedMp3Saved => 'MP3 extrait enregistré en tant que';
 }

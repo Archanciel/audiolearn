@@ -1610,5 +1610,6 @@
   "fadeInExceedsCommentDurationError": "La durée d'augmentation de volume ne peut excéder la durée du commentaire",
   "volumeFadeInOptional": "Durée d'augmentation du volume (optionnel)",
   "fadeInDurationLabel": "Durée d'augmentation du volume (h:mm:ss.d)",
-  "fadeInDurationHelperText": "Durée pour augmenter le volume de 0% à 100% au début du commentaire"
+  "fadeInDurationHelperText": "Durée pour augmenter le volume de 0% à 100% au début du commentaire",
+  "extractedMp3Saved": "MP3 extrait enregistré en tant que"
 }                                   
