@@ -17,6 +17,7 @@ import '../../l10n/app_localizations.dart';
 import '../../models/audio.dart';
 import '../../models/comment.dart';
 import '../../models/playlist.dart';
+import '../../viewmodels/audio_download_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../../views/screen_mixin.dart';
 import '../../constants.dart';
@@ -654,17 +655,17 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
     required BuildContext context,
     required AudioExtractorVM audioExtractorVM,
   }) async {
-      final String path = widget.currentAudio.filePathName;
+    final String path = widget.currentAudio.filePathName;
 
-      final double duration = await AudioExtractorService.getAudioDuration(
-        filePath: path,
-      );
+    final double duration = await AudioExtractorService.getAudioDuration(
+      filePath: path,
+    );
 
-      audioExtractorVM.setAudioFile(
-        path: path,
-        name: widget.currentAudio.audioFileName,
-        duration: duration,
-      );
+    audioExtractorVM.setAudioFile(
+      path: path,
+      name: widget.currentAudio.audioFileName,
+      duration: duration,
+    );
   }
 
   Future<void> _loadSegmentsFromCommentFile({
@@ -816,24 +817,30 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
 
     String extractedMp3FileName;
 
-    if (audioExtractorVM.multiInputs.isNotEmpty) {
-      final totalSegs = audioExtractorVM.multiInputs.fold<int>(
-        0,
-        (n, i) => n + i.segments.length,
-      );
-      extractedMp3FileName = '${base}_multi_${totalSegs}_comments.mp3';
-    } else if (audioExtractorVM.segments.length == 1) {
-      extractedMp3FileName =
-          '$base from ${TimeFormatUtil.formatSeconds(audioExtractorVM.segments[0].startPosition)} '
-          'to ${TimeFormatUtil.formatSeconds(audioExtractorVM.segments[0].endPosition)}.mp3';
-    } else {
-      extractedMp3FileName =
-          '${base}_${audioExtractorVM.segments.length}_comments.mp3';
-    }
+    if (_extractInDirectory) {
+      if (audioExtractorVM.multiInputs.isNotEmpty) {
+        final totalSegs = audioExtractorVM.multiInputs.fold<int>(
+          0,
+          (n, i) => n + i.segments.length,
+        );
+        extractedMp3FileName = '${base}_multi_${totalSegs}_comments.mp3';
+      } else if (audioExtractorVM.segments.length == 1) {
+        extractedMp3FileName =
+            '$base from ${TimeFormatUtil.formatSeconds(audioExtractorVM.segments[0].startPosition)} '
+            'to ${TimeFormatUtil.formatSeconds(audioExtractorVM.segments[0].endPosition)}.mp3';
+      } else {
+        extractedMp3FileName =
+            '${base}_${audioExtractorVM.segments.length}_comments.mp3';
+      }
 
-    if (_extractInMusicQuality) {
+      if (_extractInMusicQuality) {
+        extractedMp3FileName =
+            "${AppLocalizations.of(context)!.inMusicQuality}_$extractedMp3FileName";
+      }
+    } else {
+      // Extracting to playlist
       extractedMp3FileName =
-          "${AppLocalizations.of(context)!.inMusicQuality}_$extractedMp3FileName";
+          '${base}.mp3';
     }
 
     extractedMp3FileName = PathUtil.sanitizeFileName(
@@ -841,6 +848,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
     );
 
     String? extractedMp3DestinationDir;
+    Playlist? targetPlaylist;
 
     if (_extractInDirectory) {
       extractedMp3DestinationDir = await FilePicker.platform.getDirectoryPath();
@@ -859,40 +867,52 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
           ),
           excludedPlaylist: widget.currentAudio.enclosingPlaylist!,
         ),
-      ).then((resultMap) {
+      ).then((resultMap) async {
         if (resultMap is String && resultMap == 'cancel') {
           return;
         }
 
-        final Playlist? targetPlaylist = resultMap['selectedPlaylist'];
+        targetPlaylist = resultMap['selectedPlaylist'];
 
         if (targetPlaylist == null) {
           return;
         }
+
+        AudioDownloadVM audioDownloadVMlistenFalse =
+            Provider.of<AudioDownloadVM>(
+          context,
+          listen: false,
+        );
+
+        await audioExtractorVM.extractMP3ToPlaylist(
+          audioDownloadVMlistenFalse: audioDownloadVMlistenFalse,
+          playlist: targetPlaylist!,
+          extractedMp3FileName: extractedMp3FileName,
+          inMusicQuality: _extractInMusicQuality,
+          totalDuration: audioExtractorVM.totalDuration,
+        );
       });
     }
 
-    if (_extractInDirectory) {
-      if (extractedMp3DestinationDir == null) {
-        audioExtractorVM.setError(
-            // This error is cleared when user set 'In playlist' checkbox
-            AppLocalizations.of(context)!.saveLocationSelectionCanceledMessage);
+    if (extractedMp3DestinationDir == null) {
+      audioExtractorVM.setError(
+          // This error is cleared when user set 'In playlist' checkbox
+          AppLocalizations.of(context)!.saveLocationSelectionCanceledMessage);
 
-        return;
+      return;
+    } else {
+      final String outputPath =
+          '$extractedMp3DestinationDir${Platform.pathSeparator}$extractedMp3FileName';
+
+      if (audioExtractorVM.multiInputs.isNotEmpty) {
+        await audioExtractorVM.extractMP3Multi(outputPath);
       } else {
-        final String outputPath =
-            '$extractedMp3DestinationDir${Platform.pathSeparator}$extractedMp3FileName';
-
-        if (audioExtractorVM.multiInputs.isNotEmpty) {
-          await audioExtractorVM.extractMP3Multi(outputPath);
-        } else {
-          await audioExtractorVM.extractMP3ToDirectory(
-            inMusicQuality: _extractInMusicQuality,
-            outputPath: outputPath,
-          );
-        }
+        await audioExtractorVM.extractMP3ToDirectory(
+          inMusicQuality: _extractInMusicQuality,
+          outputPath: outputPath,
+        );
       }
-    } else {}
+    }
   }
 
   Future<void> _playExtractedFile(

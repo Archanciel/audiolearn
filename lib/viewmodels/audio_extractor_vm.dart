@@ -1,4 +1,6 @@
 // lib/viewmodels/audio_extractor_vm.dart
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 
 import '../models/audio.dart';
@@ -6,8 +8,10 @@ import '../models/comment.dart';
 import '../models/extract_mp3_audio_file.dart';
 import '../models/audio_segment.dart';
 import '../models/extraction_result.dart';
+import '../models/playlist.dart';
 import '../services/audio_extractor_service.dart';
 import '../utils/time_format_util.dart';
+import 'audio_download_vm.dart';
 import 'comment_vm.dart';
 
 class AudioExtractorVM extends ChangeNotifier {
@@ -174,7 +178,8 @@ class AudioExtractorVM extends ChangeNotifier {
       // in the audio extractor dialog
       startProcessing();
 
-      final result = await AudioExtractorService.extractAudioSegments(
+      final Map<String, dynamic> result =
+          await AudioExtractorService.extractAudioSegments(
         inputPath: _audioFile.path!,
         outputPath: outputPath,
         segments: _segments,
@@ -195,6 +200,53 @@ class AudioExtractorVM extends ChangeNotifier {
       );
       notifyListeners();
     }
+  }
+
+  Future<void> extractMP3ToPlaylist({
+    required AudioDownloadVM audioDownloadVMlistenFalse,
+    required Playlist playlist,
+    required String extractedMp3FileName,
+    required bool inMusicQuality,
+    required double totalDuration,
+  }) async {
+    try {
+      // Necessary so that the CircularProgressIndicator is displayed
+      // in the audio extractor dialog
+      startProcessing();
+
+      final String outputPath =
+          '${playlist.downloadPath}${Platform.pathSeparator}$extractedMp3FileName';
+
+      final Map<String, dynamic> result =
+          await AudioExtractorService.extractAudioSegments(
+        inputPath: _audioFile.path!,
+        outputPath: outputPath,
+        segments: _segments,
+        inMusicQuality: inMusicQuality,
+      );
+
+      if (result['success'] == true) {
+        _extractionResult = ExtractionResult.success(
+          result['outputPath']!,
+        );
+      } else {
+        _extractionResult = ExtractionResult.error(result['message']);
+      }
+      notifyListeners();
+    } catch (e) {
+      _extractionResult = ExtractionResult.error(
+        'Error during extraction: $e',
+      );
+      notifyListeners();
+    }
+
+    await audioDownloadVMlistenFalse.addExtractedAudioFileToPlaylist(
+      targetPlaylist: playlist,
+      filePathNameToAdd:
+          '${playlist.downloadPath}${Platform.pathSeparator}$extractedMp3FileName',
+      inMusicQuality: inMusicQuality,
+      totalDuration: totalDuration,
+    );
   }
 
   /// Enables to display the CircularProgressIndicator in the audio extractor dialog.

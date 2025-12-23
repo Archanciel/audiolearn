@@ -1422,6 +1422,7 @@
   "convertTextToAudioHelpContent": "{brace_1}Un texte avec un caractère qui introduit un silence de 1 seconde. Au dàbut du texte, 2 secondes de silence sont ajoutées. {brace_2} Avant cette phrase, 4 secondes de silence sont introduites. {brace_3} Ici, une seconde de silence. Ce caractère a été choisi du fait qu'il n'est pas normalement utilisé dans les écritures.",
   "textToSpeech": "converti",
   "audioTextToSpeechInfoDialogTitle": "Informations sur l'audio converti",
+  "audioExtractedInfoDialogTitle": "Informations sur l'audio extrait via des commentaires",
   "convertedAudioDateTimeLabel": "Date//heure prem conversion",
   "fromMp3ZipFileUsedToRestoreUniquePlaylist": "playlist(s) à partir du fichier zip MP3 \"{zipFilePathNName}\"",
   "fromMp3ZipFileUsedToRestoreMultiplePlaylists": "playlist(s) à partir du fichier zip MP3 de playlists multiples \"{zipFilePathNName}\"", 
