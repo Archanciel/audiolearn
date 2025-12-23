@@ -2076,6 +2076,64 @@ class AudioDownloadVM extends ChangeNotifier {
     );
   }
 
+  /// This method is called when the user selects the "Import Audio Files ..."
+  /// playlist menu item. In this case, a filepicker dialog is displayed
+  /// which allows the user to select one or everal audio files to import.
+  Future<void> addExtractedAudioFileToPlaylist({
+    required Playlist targetPlaylist,
+    required String filePathNameToAdd,
+    required bool inMusicQuality,
+    required double totalDuration,
+  }) async {
+    String fileName = filePathNameToAdd.split(path.separator).last;
+
+    File targetFile =
+        File('${targetPlaylist.downloadPath}${path.separator}$fileName');
+
+    // Now, the filePathNameToImportLst does not contain the audio
+    // files which already exist in the target playlist directory !
+
+    // Physically copying the audio file to the target playlist
+    // directory. If the audio file already exist in the
+    // target playlist directory due to the fact it was created
+    // from the text to speech operation, the copy must not be
+    // executed, otherwise _createImportedAudio will fail.
+    String targetFilePathName =
+        "${targetPlaylist.downloadPath}${path.separator}$fileName";
+
+    Audio? existingAudio;
+
+    // the case if the audio file was not converted from mp4 to mp3
+    File(filePathNameToAdd).copySync(targetFilePathName);
+
+    // Instantiating the imported audio and adding it to the target
+    // playlist downloaded audio list and playable audio list.
+
+    String mp3FileName = fileName.replaceFirst('mp4', 'mp3');
+    Audio extractedAudio = await _createExtractedAudio(
+      targetPlaylist: targetPlaylist,
+      totalDuration: totalDuration,
+      targetFilePathName: (targetFilePathName.contains('mp4'))
+          ? '${targetPlaylist.downloadPath}${path.separator}$mp3FileName'
+          : targetFilePathName,
+      importedFileName:
+          (targetFilePathName.contains('mp4')) ? mp3FileName : fileName,
+    );
+
+    extractedAudio.isAudioMusicQuality = inMusicQuality;
+
+    targetPlaylist.addImportedAudio(
+      extractedAudio,
+    );
+
+    notifyListeners();
+
+    JsonDataService.saveToFile(
+      model: targetPlaylist,
+      path: targetPlaylist.getPlaylistDownloadFilePathName(),
+    );
+  }
+
   /// Returns audio attributes extracted via ffprobe (desktop) or FFprobeKit (mobile).
   /// Returns null on fatal error.
   Future<AudioAttributes?> _getAudioAttributesWithFfprobe({
@@ -2250,7 +2308,7 @@ class AudioDownloadVM extends ChangeNotifier {
     if (sourceBps == null || sourceBps <= 0) {
       return defaultKbps;
     }
-    
+
     final int srcKbps = (sourceBps / 1000).round();
 
     if (srcKbps <= 96) return 64;
@@ -2427,6 +2485,55 @@ class AudioDownloadVM extends ChangeNotifier {
 
     return importedAudio;
   }
+
+  Future<Audio> _createExtractedAudio({
+    required Playlist targetPlaylist,
+    required double totalDuration,
+    required String targetFilePathName,
+    required String importedFileName,
+  }) async {
+    Duration importedAudioDuration = Duration(milliseconds: (totalDuration * 1000).round());
+
+    DateTime dateTimeNow = DateTime.now();
+    final String audioTitle = importedFileName.replaceFirst('.mp3', '');
+
+    Audio extractedAudio = Audio(
+      enclosingPlaylist: targetPlaylist,
+      originalVideoTitle: audioTitle,
+      compactVideoDescription: '',
+      videoUrl: '',
+      audioDownloadDateTime: dateTimeNow,
+      audioDownloadDuration: const Duration(microseconds: 0),
+      videoUploadDate: dateTimeNow,
+      audioDuration: importedAudioDuration,
+      audioPlaySpeed: _determineNewAudioPlaySpeed(targetPlaylist),
+    );
+
+    extractedAudio.downloadDuration = const Duration(microseconds: 0);
+    extractedAudio.fileSize = File(targetFilePathName).lengthSync();
+    extractedAudio.validVideoTitle = _cleanAudioFileName(
+      fileName: audioTitle,
+    );
+
+    // Since the Audio file name is set in the Audio constructor with
+    // adding to it the audio download date time and the video upload
+    // date, the constructor audio file name will not correspond to the
+    // physical imported audio file name.
+    extractedAudio.audioFileName = importedFileName;
+    extractedAudio.audioType = AudioType.imported;
+
+    return extractedAudio;
+  }
+
+  String _cleanAudioFileName({
+    required String fileName,
+  }) {
+  return fileName
+      // Remove leading timestamp: yymmdd-hhmmss-
+      .replaceFirst(RegExp(r'^\d{6}-\d{6}-'), '')
+      // Remove trailing date: yy-mm-dd
+      .replaceFirst(RegExp(r'\s\d{2}-\d{2}-\d{2}$'), '')
+      .trim();  }
 
   /// This method is not private since it is redifined in the
   /// MockAudioDownloadVM so that the importAudioFilesInPlaylist()

@@ -3747,6 +3747,12 @@ abstract class AppLocalizations {
   /// **'Converted Audio Info'**
   String get audioTextToSpeechInfoDialogTitle;
 
+  /// No description provided for @audioExtractedInfoDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Extracted Audio Info'**
+  String get audioExtractedInfoDialogTitle;
+
   /// No description provided for @convertedAudioDateTimeLabel.
   ///
   /// In en, this message translates to:

@@ -2357,6 +2357,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Informations sur l\'audio converti';
 
   @override
+  String get audioExtractedInfoDialogTitle =>
+      'Informations sur l\'audio extrait via des commentaires';
+
+  @override
   String get convertedAudioDateTimeLabel => 'Date//heure prem conversion';
 
   @override

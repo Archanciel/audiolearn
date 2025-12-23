@@ -2849,4 +2849,7 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get noPlaylistSelectedForExtractedMp3LocationWarning =>
       "No playlist selected for adding the audio containing the extracted MP3. Select one playlist and retry ...";
+
+  @override
+  String get audioExtractedInfoDialogTitle => "Extracted Audio Info";
 }

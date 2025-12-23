@@ -11,6 +11,7 @@ enum AudioType {
   downloaded,
   imported,
   textToSpeech,
+  extracted,
 }
 
 /// Contains informations of the audio extracted from the video

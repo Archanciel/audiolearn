@@ -2333,6 +2333,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get audioTextToSpeechInfoDialogTitle => 'Converted Audio Info';
 
   @override
+  String get audioExtractedInfoDialogTitle => 'Extracted Audio Info';
+
+  @override
   String get convertedAudioDateTimeLabel => 'Converted text first date time';
 
   @override
