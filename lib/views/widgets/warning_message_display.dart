@@ -1133,6 +1133,18 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
+      case WarningMessageType.noPlaylistSelectedForExtractedMp3Location:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _displayWarningDialog(
+            context: _context,
+            message: AppLocalizations.of(context)!
+                .noPlaylistSelectedForExtractedMp3LocationWarning,
+            warningMessageVM: _warningMessageVM,
+            themeProviderVM: themeProviderVM,
+          );
+        });
+
+        return const SizedBox.shrink();
       case WarningMessageType.isNoPlaylistSelectedForAudioMove:
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _displayWarningDialog(

@@ -1611,5 +1611,10 @@
   "volumeFadeInOptional": "Durée d'augmentation du volume (optionnel)",
   "fadeInDurationLabel": "Durée d'augmentation du volume (h:mm:ss.d)",
   "fadeInDurationHelperText": "Durée pour augmenter le volume de 0% à 100% au début du commentaire",
-  "extractedMp3Saved": "MP3 extrait enregistré en tant que"
-}                                   
+  "extractedMp3Saved": "MP3 extrait enregistré en tant que",
+  "inDirectoryLabel": "Dans un dossier",
+  "inDirectoryLabelTooltip": "Le MP3 créé est enregistré dans le dossier sélectionné.",
+  "inPlaylistLabel": "Dans une playlist",
+  "inPlaylistLabelTooltip": "Un fichier audio contenant le MP3 créé et les commentaires associés est enregistré dans la playlist sélectionnée.",
+  "noPlaylistSelectedForExtractedMp3LocationWarning": "Aucune playlist sélectionnée pour l'ajout de l'audio contenant le MP3 extrait. Sélectionnez une playlist et rééssayez ..."
+}

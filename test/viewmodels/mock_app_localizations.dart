@@ -2831,4 +2831,22 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get extractedMp3Saved => "Extracted MP3 saved to";
+
+  @override
+  String get inDirectoryLabel => "In directory";
+
+  @override
+  String get inDirectoryLabelTooltip =>
+      "The created MP3 will be stored in the selected directory.";
+
+  @override
+  String get inPlaylistLabel => "In playlist";
+
+  @override
+  String get inPlaylistLabelTooltip =>
+      "An audio containing the created MP3 as well as the corresponding comment(s) will be stored in the choosen playlist.";
+
+  @override
+  String get noPlaylistSelectedForExtractedMp3LocationWarning =>
+      "No playlist selected for adding the audio containing the extracted MP3. Select one playlist and retry ...";
 }

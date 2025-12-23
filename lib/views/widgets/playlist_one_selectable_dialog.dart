@@ -17,6 +17,7 @@ enum PlaylistOneSelectableDialogUsedFor {
   moveMultipleAudioToPlaylist,
   copySingleAudioToPlaylist,
   copyMultipleAudioToPlaylist,
+  fromCommentsExtractedMp3AddedToPlaylist,
 }
 
 /// This dialog is used to select a single playlist among the
@@ -231,6 +232,12 @@ class _PlaylistOneSelectableDialogState
       case PlaylistOneSelectableDialogUsedFor.moveSingleAudioToPlaylist:
         if (_selectedPlaylist == null) {
           widget.warningMessageVM.isNoPlaylistSelectedForAudioMove();
+          return;
+        }
+        break;
+      case PlaylistOneSelectableDialogUsedFor.fromCommentsExtractedMp3AddedToPlaylist:
+        if (_selectedPlaylist == null) {
+          widget.warningMessageVM.isNoPlaylistSelectedForExtractedMp3Location();
           return;
         }
         break;

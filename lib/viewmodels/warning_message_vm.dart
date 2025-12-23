@@ -164,6 +164,10 @@ enum WarningMessageType {
   // clicks on the single video download button but no playlist
   // to which the downloaded audio will be copied is selected.
 
+  noPlaylistSelectedForExtractedMp3Location, // The case if the
+  // user extract a comment MP3 for a playlist but no playlist
+  // to which the extracted audio will be added is selected.
+
   isNoPlaylistSelectedForAudioMove, // The case if the user
   // clicks on the single video download button but no playlist
   // to which the downloaded audio will be moved is selected.
@@ -780,6 +784,13 @@ class WarningMessageVM extends ChangeNotifier {
 
   void isNoPlaylistSelectedForAudioCopy() {
     warningMessageType = WarningMessageType.isNoPlaylistSelectedForAudioCopy;
+
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  void isNoPlaylistSelectedForExtractedMp3Location() {
+    warningMessageType = WarningMessageType.noPlaylistSelectedForExtractedMp3Location;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();
