@@ -16,10 +16,14 @@ import '../../l10n/app_localizations.dart';
 
 import '../../models/audio.dart';
 import '../../models/comment.dart';
+import '../../models/playlist.dart';
+import '../../viewmodels/playlist_list_vm.dart';
+import '../../viewmodels/warning_message_vm.dart';
 import '../../views/screen_mixin.dart';
 import '../../constants.dart';
 import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
+import 'playlist_one_selectable_dialog.dart';
 
 class AudioExtractorDialog extends StatefulWidget {
   final SettingsDataService settingsDataService = SettingsDataService();
@@ -41,6 +45,8 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
   late final List<HelpItem> _helpItemsLst;
   late final ScrollController _segmentsScrollController;
   bool _extractInMusicQuality = false;
+  bool _extractInDirectory = true;
+  bool _extractInPlaylist = false;
 
   @override
   void initState() {
@@ -368,7 +374,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                         createCheckboxRowFunction(
                           // displaying music quality checkbox
                           checkBoxWidgetKey:
-                              const Key('playlistQualityConfirmDialogCheckBox'),
+                              const Key('musicalQualityCheckBox'),
                           context: context,
                           label:
                               AppLocalizations.of(context)!.inMusicQualityLabel,
@@ -377,6 +383,49 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                             setState(() {
                               _extractInMusicQuality = value ?? false;
                             });
+                          },
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        createCheckboxRowFunction(
+                          // displaying music quality checkbox
+                          checkBoxWidgetKey: const Key('onDirectoryCheckBox'),
+                          context: context,
+                          label: AppLocalizations.of(context)!.inDirectoryLabel,
+                          labelTooltip: AppLocalizations.of(context)!
+                              .inDirectoryLabelTooltip,
+                          value: _extractInDirectory,
+                          onChangedFunction: (bool? value) {
+                            setState(() {
+                              _extractInDirectory = value ?? false;
+                              _extractInPlaylist = !_extractInDirectory;
+                            });
+
+                            if (!_extractInDirectory) {
+                              // Clear the directory not selected error
+                              audioExtractorVM.setError('');
+                            }
+                          },
+                        ),
+                        createCheckboxRowFunction(
+                          // displaying music quality checkbox
+                          checkBoxWidgetKey: const Key('inPlaylistCheckBox'),
+                          context: context,
+                          label: AppLocalizations.of(context)!.inPlaylistLabel,
+                          labelTooltip: AppLocalizations.of(context)!
+                              .inPlaylistLabelTooltip,
+                          value: _extractInPlaylist,
+                          onChangedFunction: (bool? value) {
+                            setState(() {
+                              _extractInPlaylist = value ?? false;
+                              _extractInDirectory = !_extractInPlaylist;
+                            });
+
+                            // Clear the directory not selected error
+                            audioExtractorVM.setError('');
                           },
                         ),
                       ],
@@ -793,12 +842,50 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
         extractedMp3FileName,
       );
 
-      final String? extractedMp3DestinationDir =
-          await FilePicker.platform.getDirectoryPath();
-      if (extractedMp3DestinationDir == null) {
+      String? extractedMp3DestinationDir;
+
+      if (_extractInDirectory) {
+        extractedMp3DestinationDir =
+            await FilePicker.platform.getDirectoryPath();
+      } else {
+        showDialog<dynamic>(
+          context: context,
+          builder: (context) => PlaylistOneSelectableDialog(
+            usedFor:
+                PlaylistOneSelectableDialogUsedFor.fromCommentsExtractedMp3AddedToPlaylist,
+            warningMessageVM: Provider.of<WarningMessageVM>(
+              context,
+              listen: false,
+            ),
+            excludedPlaylist: widget.currentAudio.enclosingPlaylist!,
+          ),
+        ).then((resultMap) {
+          if (resultMap is String && resultMap == 'cancel') {
+            return;
+          }
+
+          final Playlist? targetPlaylist = resultMap['selectedPlaylist'];
+
+          if (targetPlaylist == null) {
+            return;
+          }
+
+          Provider.of<PlaylistListVM>(
+            context,
+            listen: false,
+          ).copyAudioAndCommentAndPictureToPlaylist(
+            audio: widget.currentAudio,
+            targetPlaylist: targetPlaylist,
+          );
+        });
+      }
+
+      if (_extractInDirectory && extractedMp3DestinationDir == null) {
         audioExtractorVM.setError(
             AppLocalizations.of(context)!.saveLocationSelectionCanceledMessage);
 
+        return;
+      } else {
         return;
       }
 

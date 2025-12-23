@@ -2760,4 +2760,22 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get extractedMp3Saved => 'MP3 extrait enregistré en tant que';
+
+  @override
+  String get inDirectoryLabel => 'Dans un dossier';
+
+  @override
+  String get inDirectoryLabelTooltip =>
+      'Le MP3 créé est enregistré dans le dossier sélectionné.';
+
+  @override
+  String get inPlaylistLabel => 'Dans une playlist';
+
+  @override
+  String get inPlaylistLabelTooltip =>
+      'Un fichier audio contenant le MP3 créé et les commentaires associés est enregistré dans la playlist sélectionnée.';
+
+  @override
+  String get noPlaylistSelectedForExtractedMp3LocationWarning =>
+      'Aucune playlist sélectionnée pour l\'ajout de l\'audio contenant le MP3 extrait. Sélectionnez une playlist et rééssayez ...';
 }

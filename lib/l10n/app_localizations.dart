@@ -4387,6 +4387,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Extracted MP3 saved to'**
   String get extractedMp3Saved;
+
+  /// No description provided for @inDirectoryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'In directory'**
+  String get inDirectoryLabel;
+
+  /// No description provided for @inDirectoryLabelTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'The created MP3 is stored in the selected directory.'**
+  String get inDirectoryLabelTooltip;
+
+  /// No description provided for @inPlaylistLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'In playlist'**
+  String get inPlaylistLabel;
+
+  /// No description provided for @inPlaylistLabelTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'An audio file containing the created MP3 and its associated comment(s) is stored in the selected playlist.'**
+  String get inPlaylistLabelTooltip;
+
+  /// No description provided for @noPlaylistSelectedForExtractedMp3LocationWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'No playlist selected for the addition of the audio containing the extracted MP3. Select one playlist and retry ...'**
+  String get noPlaylistSelectedForExtractedMp3LocationWarning;
 }
 
 class _AppLocalizationsDelegate

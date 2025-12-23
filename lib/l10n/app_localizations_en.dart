@@ -2728,4 +2728,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get extractedMp3Saved => 'Extracted MP3 saved to';
+
+  @override
+  String get inDirectoryLabel => 'In directory';
+
+  @override
+  String get inDirectoryLabelTooltip =>
+      'The created MP3 is stored in the selected directory.';
+
+  @override
+  String get inPlaylistLabel => 'In playlist';
+
+  @override
+  String get inPlaylistLabelTooltip =>
+      'An audio file containing the created MP3 and its associated comment(s) is stored in the selected playlist.';
+
+  @override
+  String get noPlaylistSelectedForExtractedMp3LocationWarning =>
+      'No playlist selected for the addition of the audio containing the extracted MP3. Select one playlist and retry ...';
 }
