@@ -165,11 +165,6 @@ class AudioExtractorVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  void startProcessing() {
-    _extractionResult = ExtractionResult.processing();
-    notifyListeners();
-  }
-
   Future<void> extractMP3({
     required bool inMusicQuality,
     required String outputPath,
@@ -191,8 +186,6 @@ class AudioExtractorVM extends ChangeNotifier {
     }
 
     try {
-      startProcessing();
-
       final result = await AudioExtractorService.extractAudioSegments(
         inputPath: _audioFile.path!,
         outputPath: outputPath,
@@ -358,7 +351,6 @@ class AudioExtractorVM extends ChangeNotifier {
       return;
     }
     try {
-      startProcessing();
       final result = await AudioExtractorService.extractFromMultipleInputs(
         inputs: _multiInputs,
         outputPath: outputPath,

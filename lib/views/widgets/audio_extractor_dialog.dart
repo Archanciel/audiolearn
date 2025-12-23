@@ -123,6 +123,14 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
           padding: const EdgeInsets.all(16),
           child: Consumer2<AudioExtractorVM, ExtractMp3AudioPlayerVM>(
             builder: (context, audioExtractorVM, audioPlayerVM, _) {
+              String extractionResultMessage =
+                  audioExtractorVM.extractionResult.message;
+              if (extractionResultMessage.contains('Extracted MP3 saved to')) {
+                extractionResultMessage = extractionResultMessage.replaceFirst(
+                  'Extracted MP3 saved to',
+                  AppLocalizations.of(context)!.extractedMp3Saved,
+                );
+              }
               return SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -380,7 +388,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                       Padding(
                         padding: const EdgeInsets.only(top: 16.0),
                         child: Text(
-                          audioExtractorVM.extractionResult.message,
+                          extractionResultMessage,
                           style: TextStyle(
                             color: audioExtractorVM.extractionResult.isError
                                 ? Colors.red
@@ -422,28 +430,34 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton.icon(
-              onPressed: audioPlayerVM.hasError
-                  ? () => audioPlayerVM.tryRepairPlayer()
-                  : audioPlayerVM.isLoaded
-                      ? () => audioPlayerVM.togglePlay()
-                      : () => _playExtractedFile(
-                            context,
-                            audioExtractorVM.extractionResult.outputPath!,
-                          ),
-              icon: Icon(
-                audioPlayerVM.hasError
-                    ? Icons.refresh
-                    : audioPlayerVM.isPlaying
-                        ? Icons.pause
-                        : Icons.play_arrow,
-              ),
-              label: Text(
-                audioPlayerVM.hasError
-                    ? 'Retry'
-                    : audioPlayerVM.isPlaying
-                        ? 'Pause'
-                        : 'Play',
+            Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: IconButton(
+                key: const Key('playPauseButton'),
+                iconSize: 80,
+                onPressed: audioPlayerVM.hasError
+                    ? () => audioPlayerVM.tryRepairPlayer()
+                    : audioPlayerVM.isLoaded
+                        ? () => audioPlayerVM.togglePlay()
+                        : () => _playExtractedFile(
+                              context,
+                              audioExtractorVM.extractionResult.outputPath!,
+                            ),
+                icon: Icon(
+                  audioPlayerVM.hasError
+                      ? Icons.refresh
+                      : audioPlayerVM.isPlaying
+                          ? Icons.pause
+                          : Icons.play_arrow,
+                ),
+                style: ButtonStyle(
+                  // Highlight button when pressed
+                  padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                    const EdgeInsets.symmetric(
+                        horizontal: kSmallButtonInsidePadding, vertical: 0),
+                  ),
+                  overlayColor: iconButtonTapModification, // Tap feedback color
+                ),
               ),
             ),
           ],

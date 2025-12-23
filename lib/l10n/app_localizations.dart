@@ -4381,6 +4381,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Duration to fade volume from 0% to 100% at comment start'**
   String get fadeInDurationHelperText;
+
+  /// No description provided for @extractedMp3Saved.
+  ///
+  /// In en, this message translates to:
+  /// **'Extracted MP3 saved to'**
+  String get extractedMp3Saved;
 }
 
 class _AppLocalizationsDelegate

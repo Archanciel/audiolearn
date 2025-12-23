@@ -1203,5 +1203,6 @@
   "fadeInExceedsCommentDurationError": "Fade-in duration cannot exceed comment duration",
   "volumeFadeInOptional": "Volume Fade-In (optional)",
   "fadeInDurationLabel": "Fade-In Duration (h:mm:ss.t)",
-  "fadeInDurationHelperText": "Duration to fade volume from 0% to 100% at comment start"
+  "fadeInDurationHelperText": "Duration to fade volume from 0% to 100% at comment start",
+  "extractedMp3Saved": "Extracted MP3 saved to"
 }
