@@ -539,6 +539,11 @@ class _CommentListAddDialogContentState
       );
     }
 
+    final List<Comment> loadedAudioComments =
+        commentVMlistenTrue.loadAudioComments(
+      audio: currentAudio,
+    );
+
     return KeyboardListener(
       // Using FocusNode to enable clicking on Enter to close
       // the dialog
@@ -644,6 +649,7 @@ class _CommentListAddDialogContentState
               themeProviderVM: themeProviderVM,
               audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
               commentVMlistenTrue: commentVMlistenTrue,
+              commentsLst: loadedAudioComments,
               currentAudio: currentAudio,
               isDarkTheme: isDarkTheme,
             ),
@@ -653,42 +659,44 @@ class _CommentListAddDialogContentState
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              TextButton(
-                key: const Key('extractCommentsToMp3TextButton'),
-                child: Tooltip(
-                  message: AppLocalizations.of(context)!
-                      .extractCommentsToMp3TextButtonTooltip,
-                  child: Text(
-                    AppLocalizations.of(context)!
-                        .extractCommentsToMp3TextButton,
-                    style: (isDarkTheme)
-                        ? kTextButtonStyleDarkMode
-                        : kTextButtonStyleLightMode,
-                  ),
-                ),
-                onPressed: () async {
-                  showDialog<void>(
-                    context: context,
-                    barrierDismissible:
-                        false, // This line prevents the dialog from
-                    // closing when tapping outside the dialog
-                    builder: (BuildContext context) {
-                      return AudioExtractorDialog(
-                        currentAudio: currentAudio,
-                        commentVMlistenTrue: commentVMlistenTrue,
-                      );
-                    },
-                  );
+              (loadedAudioComments.isNotEmpty)
+                  ? TextButton(
+                      key: const Key('extractCommentsToMp3TextButton'),
+                      child: Tooltip(
+                        message: AppLocalizations.of(context)!
+                            .extractCommentsToMp3TextButtonTooltip,
+                        child: Text(
+                          AppLocalizations.of(context)!
+                              .extractCommentsToMp3TextButton,
+                          style: (isDarkTheme)
+                              ? kTextButtonStyleDarkMode
+                              : kTextButtonStyleLightMode,
+                        ),
+                      ),
+                      onPressed: () async {
+                        showDialog<void>(
+                          context: context,
+                          barrierDismissible:
+                              false, // This line prevents the dialog from
+                          // closing when tapping outside the dialog
+                          builder: (BuildContext context) {
+                            return AudioExtractorDialog(
+                              currentAudio: currentAudio,
+                              commentVMlistenTrue: commentVMlistenTrue,
+                            );
+                          },
+                        );
 
-                  if (CommentDialogManager.hasActiveOverlay) {
-                    // Close the dialog if an overlay is active
-                    CommentDialogManager.closeCurrentOverlay();
-                  } else {
-                    // Otherwise, close the normal dialog
-                    Navigator.of(context).pop();
-                  }
-                },
-              ),
+                        if (CommentDialogManager.hasActiveOverlay) {
+                          // Close the dialog if an overlay is active
+                          CommentDialogManager.closeCurrentOverlay();
+                        } else {
+                          // Otherwise, close the normal dialog
+                          Navigator.of(context).pop();
+                        }
+                      },
+                    )
+                  : const SizedBox(width: 0),
               TextButton(
                 key: const Key('closeDialogTextButton'),
                 child: Text(
@@ -757,13 +765,10 @@ class _CommentListAddDialogContentState
     required ThemeProviderVM themeProviderVM,
     required AudioPlayerVM audioPlayerVMlistenFalse,
     required CommentVM commentVMlistenTrue,
+    required List<Comment> commentsLst,
     required Audio currentAudio,
     required bool isDarkTheme,
   }) {
-    List<Comment> commentsLst = commentVMlistenTrue.loadAudioComments(
-      audio: currentAudio,
-    );
-
     const TextStyle commentTitleTextStyle = TextStyle(
       fontSize: kAudioTitleFontSize,
       fontWeight: FontWeight.bold,

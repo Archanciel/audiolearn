@@ -17,7 +17,6 @@ import '../../l10n/app_localizations.dart';
 import '../../models/audio.dart';
 import '../../models/comment.dart';
 import '../../models/playlist.dart';
-import '../../viewmodels/playlist_list_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../../views/screen_mixin.dart';
 import '../../constants.dart';
@@ -655,7 +654,6 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
     required BuildContext context,
     required AudioExtractorVM audioExtractorVM,
   }) async {
-    try {
       final String path = widget.currentAudio.filePathName;
 
       final double duration = await AudioExtractorService.getAudioDuration(
@@ -667,9 +665,6 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
         name: widget.currentAudio.audioFileName,
         duration: duration,
       );
-    } catch (e) {
-      audioExtractorVM.setError('Error selecting file: $e');
-    }
   }
 
   Future<void> _loadSegmentsFromCommentFile({
@@ -687,6 +682,8 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
       audioExtractorVM.commentsLst = commentsLst;
 
       if (commentsLst.isEmpty) {
+        // Useful if in the audio extractor dialog the red 'Clear all'
+        // button was pressed
         if (!context.mounted) {
           return;
         }
@@ -786,6 +783,8 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
       }
 
       if (audioExtractorVM.segments.isEmpty) {
+        // Useful if in the audio extractor dialog the red 'Clear all'
+        // button was pressed
         audioExtractorVM.setError(
             AppLocalizations.of(context)!.addAtLeastOneCommentMessage);
 
@@ -793,116 +792,107 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
       }
     }
 
-    try {
-      // ✅ NEW - Release on ALL platforms
-      if (audioPlayerVM.isLoaded) {
-        if (Platform.isWindows) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Preparing extraction...'),
-              duration: Duration(seconds: 1),
-            ),
-          );
-        }
-
-        await audioPlayerVM.releaseCurrentFile();
-
-        if (Platform.isWindows) {
-          await Future.delayed(const Duration(milliseconds: 500));
-        }
-      }
-
-      final String base = PathUtil.removeExtension(
-        audioExtractorVM.audioFile.name ?? 'extract',
-      );
-
-      String extractedMp3FileName;
-
-      if (audioExtractorVM.multiInputs.isNotEmpty) {
-        final totalSegs = audioExtractorVM.multiInputs.fold<int>(
-          0,
-          (n, i) => n + i.segments.length,
-        );
-        extractedMp3FileName = '${base}_multi_${totalSegs}_comments.mp3';
-      } else if (audioExtractorVM.segments.length == 1) {
-        extractedMp3FileName =
-            '$base from ${TimeFormatUtil.formatSeconds(audioExtractorVM.segments[0].startPosition)} '
-            'to ${TimeFormatUtil.formatSeconds(audioExtractorVM.segments[0].endPosition)}.mp3';
-      } else {
-        extractedMp3FileName =
-            '${base}_${audioExtractorVM.segments.length}_comments.mp3';
-      }
-
-      if (_extractInMusicQuality) {
-        extractedMp3FileName =
-            "${AppLocalizations.of(context)!.inMusicQuality}_$extractedMp3FileName";
-      }
-
-      extractedMp3FileName = PathUtil.sanitizeFileName(
-        extractedMp3FileName,
-      );
-
-      String? extractedMp3DestinationDir;
-
-      if (_extractInDirectory) {
-        extractedMp3DestinationDir =
-            await FilePicker.platform.getDirectoryPath();
-      } else {
-        showDialog<dynamic>(
-          context: context,
-          builder: (context) => PlaylistOneSelectableDialog(
-            usedFor:
-                PlaylistOneSelectableDialogUsedFor.fromCommentsExtractedMp3AddedToPlaylist,
-            warningMessageVM: Provider.of<WarningMessageVM>(
-              context,
-              listen: false,
-            ),
-            excludedPlaylist: widget.currentAudio.enclosingPlaylist!,
+    // ✅ NEW - Release on ALL platforms
+    if (audioPlayerVM.isLoaded) {
+      if (Platform.isWindows) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Preparing extraction...'),
+            duration: Duration(seconds: 1),
           ),
-        ).then((resultMap) {
-          if (resultMap is String && resultMap == 'cancel') {
-            return;
-          }
+        );
+      }
 
-          final Playlist? targetPlaylist = resultMap['selectedPlaylist'];
+      await audioPlayerVM.releaseCurrentFile();
 
-          if (targetPlaylist == null) {
-            return;
-          }
+      if (Platform.isWindows) {
+        await Future.delayed(const Duration(milliseconds: 500));
+      }
+    }
 
-          Provider.of<PlaylistListVM>(
+    final String base = PathUtil.removeExtension(
+      audioExtractorVM.audioFile.name ?? 'extract',
+    );
+
+    String extractedMp3FileName;
+
+    if (audioExtractorVM.multiInputs.isNotEmpty) {
+      final totalSegs = audioExtractorVM.multiInputs.fold<int>(
+        0,
+        (n, i) => n + i.segments.length,
+      );
+      extractedMp3FileName = '${base}_multi_${totalSegs}_comments.mp3';
+    } else if (audioExtractorVM.segments.length == 1) {
+      extractedMp3FileName =
+          '$base from ${TimeFormatUtil.formatSeconds(audioExtractorVM.segments[0].startPosition)} '
+          'to ${TimeFormatUtil.formatSeconds(audioExtractorVM.segments[0].endPosition)}.mp3';
+    } else {
+      extractedMp3FileName =
+          '${base}_${audioExtractorVM.segments.length}_comments.mp3';
+    }
+
+    if (_extractInMusicQuality) {
+      extractedMp3FileName =
+          "${AppLocalizations.of(context)!.inMusicQuality}_$extractedMp3FileName";
+    }
+
+    extractedMp3FileName = PathUtil.sanitizeFileName(
+      extractedMp3FileName,
+    );
+
+    String? extractedMp3DestinationDir;
+
+    if (_extractInDirectory) {
+      extractedMp3DestinationDir = await FilePicker.platform.getDirectoryPath();
+    } else {
+      // Showing the dialog enabling to select the playlist where to add
+      // the audio containing the extracted MP3 as well as the corresponding
+      // comments
+      showDialog<dynamic>(
+        context: context,
+        builder: (context) => PlaylistOneSelectableDialog(
+          usedFor: PlaylistOneSelectableDialogUsedFor
+              .fromCommentsExtractedMp3AddedToPlaylist,
+          warningMessageVM: Provider.of<WarningMessageVM>(
             context,
             listen: false,
-          ).copyAudioAndCommentAndPictureToPlaylist(
-            audio: widget.currentAudio,
-            targetPlaylist: targetPlaylist,
-          );
-        });
-      }
+          ),
+          excludedPlaylist: widget.currentAudio.enclosingPlaylist!,
+        ),
+      ).then((resultMap) {
+        if (resultMap is String && resultMap == 'cancel') {
+          return;
+        }
 
-      if (_extractInDirectory && extractedMp3DestinationDir == null) {
+        final Playlist? targetPlaylist = resultMap['selectedPlaylist'];
+
+        if (targetPlaylist == null) {
+          return;
+        }
+      });
+    }
+
+    if (_extractInDirectory) {
+      if (extractedMp3DestinationDir == null) {
         audioExtractorVM.setError(
+            // This error is cleared when user set 'In playlist' checkbox
             AppLocalizations.of(context)!.saveLocationSelectionCanceledMessage);
 
         return;
       } else {
-        return;
-      }
+        final String outputPath =
+            '$extractedMp3DestinationDir${Platform.pathSeparator}$extractedMp3FileName';
 
-      final String outputPath =
-          '$extractedMp3DestinationDir${Platform.pathSeparator}$extractedMp3FileName';
-
-      if (audioExtractorVM.multiInputs.isNotEmpty) {
-        await audioExtractorVM.extractMP3Multi(outputPath);
-      } else {
-        await audioExtractorVM.extractMP3(
-          inMusicQuality: _extractInMusicQuality,
-          outputPath: outputPath,
-        );
+        if (audioExtractorVM.multiInputs.isNotEmpty) {
+          await audioExtractorVM.extractMP3Multi(outputPath);
+        } else {
+          await audioExtractorVM.extractMP3ToDirectory(
+            inMusicQuality: _extractInMusicQuality,
+            outputPath: outputPath,
+          );
+        }
       }
-    } catch (e) {
-      audioExtractorVM.setError('Error selecting save location: $e');
-    }
+    } else {}
   }
 
   Future<void> _playExtractedFile(
