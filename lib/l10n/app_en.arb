@@ -1210,5 +1210,7 @@
   "inDirectoryLabelTooltip": "The created MP3 is stored in the selected directory.",
   "inPlaylistLabel": "In playlist",
   "inPlaylistLabelTooltip": "An audio containing the created MP3 and its associated comment(s) is added to the selected playlist.",
-  "noPlaylistSelectedForExtractedMp3LocationWarning": "No playlist selected for the addition of the audio containing the extracted MP3. Select one playlist and retry ..."
+  "noPlaylistSelectedForExtractedMp3LocationWarning": "No playlist selected for the addition of the audio containing the extracted MP3. Select one playlist and retry ...",
+  "extractedAudioDateTimeLabel": "Extracted audio date time",
+  "extractedFromPlaylistLabel": "Extracted from playlist"
 }

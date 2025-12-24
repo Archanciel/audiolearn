@@ -1184,7 +1184,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get chapterAudioTitleLabel => 'Chapitre audio';
 
   @override
-  String get importedAudioDateTimeLabel => 'Date/heure import';
+  String get importedAudioDateTimeLabel => 'Date/heure extr';
 
   @override
   String get sortFilterParametersAppliedName => 'appliqué';
@@ -2782,4 +2782,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get noPlaylistSelectedForExtractedMp3LocationWarning =>
       'Aucune playlist sélectionnée pour l\'ajout de l\'audio contenant le MP3 extrait. Sélectionnez une playlist et rééssayez ...';
+
+  @override
+  String get extractedAudioDateTimeLabel => 'Extracted audio date time';
+
+  @override
+  String get extractedFromPlaylistLabel => 'Extrait de la playlist';
 }

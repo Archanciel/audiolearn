@@ -4423,6 +4423,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No playlist selected for the addition of the audio containing the extracted MP3. Select one playlist and retry ...'**
   String get noPlaylistSelectedForExtractedMp3LocationWarning;
+
+  /// No description provided for @extractedAudioDateTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Extracted audio date time'**
+  String get extractedAudioDateTimeLabel;
+
+  /// No description provided for @extractedFromPlaylistLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Extracted from playlist'**
+  String get extractedFromPlaylistLabel;
 }
 
 class _AppLocalizationsDelegate

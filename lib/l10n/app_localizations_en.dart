@@ -2749,4 +2749,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get noPlaylistSelectedForExtractedMp3LocationWarning =>
       'No playlist selected for the addition of the audio containing the extracted MP3. Select one playlist and retry ...';
+
+  @override
+  String get extractedAudioDateTimeLabel => 'Extracted audio date time';
+
+  @override
+  String get extractedFromPlaylistLabel => 'Extracted from playlist';
 }

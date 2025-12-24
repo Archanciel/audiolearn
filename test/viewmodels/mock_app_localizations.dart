@@ -2852,4 +2852,13 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get audioExtractedInfoDialogTitle => "Extracted Audio Info";
+
+  @override
+  String get extractedAudioDateTimeLabel => "Extracted audio date time";
+
+  @override
+  String get extractedFromPlaylistLabel => "Extracted from playlist";
+
+  @override
+  String get extractedFromPlaylistLabel => "Extracted from playlist";
 }
