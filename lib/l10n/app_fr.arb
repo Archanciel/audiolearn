@@ -215,7 +215,7 @@
   "originalVideoTitleLabel": "Titre vidéo original",
   "validVideoTitleLabel": "Titre vidéo valide",
   "videoUrlLabel": "URL vidéo",
-  "audioDownloadDateTimeLabel": "Date/heure téléch",
+  "audioDownloadDateTimeLabel": "Date/heure téléchargement",
   "audioDownloadDurationLabel": "Durée téléch",
   "audioDownloadSpeedLabel": "Vitesse téléch",
   "videoUploadDateLabel": "Date mise en ligne",
@@ -609,7 +609,7 @@
   "audioImportedInfoDialogTitle": "Informations sur l'audio importé",
   "audioTitleLabel": "Titre audio",
   "chapterAudioTitleLabel": "Chapitre audio",
-  "importedAudioDateTimeLabel": "Date/heure import",
+  "importedAudioDateTimeLabel": "Date/heure importation",
   "sortFilterParametersAppliedName": "appliqué",
   "lastListenedDateTime": "Date/heure dernière écoute",
   "downloadSingleVideoAudioAtMusicQuality": "Télécharger l'audio de la vidéo à qualité musicale",
@@ -1618,7 +1618,7 @@
   "inPlaylistLabel": "Dans une playlist",
   "inPlaylistLabelTooltip": "Un audio contenant le MP3 créé et les commentaires associés est ajouté dans la playlist sélectionnée.",
   "noPlaylistSelectedForExtractedMp3LocationWarning": "Aucune playlist sélectionnée pour l'ajout de l'audio contenant le MP3 extrait. Sélectionnez une playlist et rééssayez ...",
-  "importedAudioDateTimeLabel": "Date/heure extr",
+  "extractedAudioDateTimeLabel": "Date/heure extraction",
   "extractedFromPlaylistLabel": "Extrait de la playlist",
   "extracted": "extrait"
 }

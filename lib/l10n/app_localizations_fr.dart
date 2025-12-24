@@ -314,7 +314,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get videoUrlLabel => 'URL vidéo';
 
   @override
-  String get audioDownloadDateTimeLabel => 'Date/heure téléch';
+  String get audioDownloadDateTimeLabel => 'Date/heure téléchargement';
 
   @override
   String get audioDownloadDurationLabel => 'Durée téléch';
@@ -1184,7 +1184,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get chapterAudioTitleLabel => 'Chapitre audio';
 
   @override
-  String get importedAudioDateTimeLabel => 'Date/heure extr';
+  String get importedAudioDateTimeLabel => 'Date/heure importation';
 
   @override
   String get sortFilterParametersAppliedName => 'appliqué';
@@ -2784,7 +2784,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucune playlist sélectionnée pour l\'ajout de l\'audio contenant le MP3 extrait. Sélectionnez une playlist et rééssayez ...';
 
   @override
-  String get extractedAudioDateTimeLabel => 'Extracted audio date time';
+  String get extractedAudioDateTimeLabel => 'Date/heure extraction';
 
   @override
   String get extractedFromPlaylistLabel => 'Extrait de la playlist';

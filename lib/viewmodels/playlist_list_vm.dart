@@ -3356,7 +3356,8 @@ class PlaylistListVM extends ChangeNotifier {
       List<Audio> filteredAudioLst = playlist.playableAudioLst.where((audio) {
         // Include downloaded and imported audios based on download date
         if (audio.audioType == AudioType.downloaded ||
-            audio.audioType == AudioType.imported) {
+            audio.audioType == AudioType.imported ||
+            audio.audioType == AudioType.extracted) {
           return audio.audioDownloadDateTime
               .isAtOrAfter(fromAudioDownloadDateTime);
         }
