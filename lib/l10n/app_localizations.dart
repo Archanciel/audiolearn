@@ -4441,6 +4441,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'extracted'**
   String get extracted;
+
+  /// No description provided for @extractedAudioNotAddedToPlaylistMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'The extracted audio was not added to the \"{targetPlaylist}\" playlist because it already exists in it. To resolve this, please delete the existing extracted audio before running the extraction again.'**
+  String extractedAudioNotAddedToPlaylistMessage(Object targetPlaylist);
 }
 
 class _AppLocalizationsDelegate

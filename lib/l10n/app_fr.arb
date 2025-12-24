@@ -1620,5 +1620,6 @@
   "noPlaylistSelectedForExtractedMp3LocationWarning": "Aucune playlist sélectionnée pour l'ajout de l'audio contenant le MP3 extrait. Sélectionnez une playlist et rééssayez ...",
   "extractedAudioDateTimeLabel": "Date/heure extraction",
   "extractedFromPlaylistLabel": "Extrait de la playlist",
-  "extracted": "extrait"
+  "extracted": "extrait",
+  "extractedAudioNotAddedToPlaylistMessage": "L’audio extrait n’a pas été ajouté à la playlist \"{targetPlaylist}\" car il existe déjà en elle. Pour résoudre ce problème, veuillez supprimer l’audio extrait existant avant de relancer l’extraction."
 }
