@@ -202,9 +202,12 @@ class AudioExtractorVM extends ChangeNotifier {
     }
   }
 
-  Future<void> extractMP3ToPlaylist({
+  /// True is returned when the extracted audio file is added to the
+  /// target playlist, false otherwise. False is returned if the audio
+  /// file to add already exists in the target playlist directory.
+  Future<bool> extractMP3ToPlaylist({
     required AudioDownloadVM audioDownloadVMlistenFalse,
-    required Playlist sourcePlaylist,
+    required Audio currentAudio,
     required Playlist targetPlaylist,
     required String extractedMp3FileName,
     required bool inMusicQuality,
@@ -217,6 +220,13 @@ class AudioExtractorVM extends ChangeNotifier {
 
       final String outputPath =
           '${targetPlaylist.downloadPath}${Platform.pathSeparator}$extractedMp3FileName';
+      final File outputFile = File(outputPath);
+
+      if (outputFile.existsSync()) {
+        // the case if the audio file to add already exist in the target
+        // playlist directory
+        return false;
+      }
 
       final Map<String, dynamic> result =
           await AudioExtractorService.extractAudioSegments(
@@ -242,13 +252,15 @@ class AudioExtractorVM extends ChangeNotifier {
     }
 
     await audioDownloadVMlistenFalse.addExtractedAudioFileToPlaylist(
-      sourcePlaylist: sourcePlaylist,
+      currentAudio: currentAudio,
       targetPlaylist: targetPlaylist,
       filePathNameToAdd:
           '${targetPlaylist.downloadPath}${Platform.pathSeparator}$extractedMp3FileName',
       inMusicQuality: inMusicQuality,
       totalDuration: totalDuration,
     );
+
+    return true;
   }
 
   /// Enables to display the CircularProgressIndicator in the audio extractor dialog.

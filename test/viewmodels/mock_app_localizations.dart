@@ -2860,8 +2860,11 @@ class MockAppLocalizations extends AppLocalizations {
   String get extractedFromPlaylistLabel => "Extracted from playlist";
 
   @override
-  String get extractedFromPlaylistLabel => "Extracted from playlist";
+  String get extracted => "extracted";
 
   @override
-  String get extracted => "extracted";
+  String extractedAudioNotAddedToPlaylistMessage(
+    Object targetPlaylist,
+  ) =>
+      "The extracted audio was not added to the \"$targetPlaylist\" playlist because it already exists in it. To resolve this, please delete the existing extracted audio before running the extraction again.";
 }

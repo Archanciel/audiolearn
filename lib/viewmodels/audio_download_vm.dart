@@ -1018,7 +1018,9 @@ class AudioDownloadVM extends ChangeNotifier {
       return;
     }
 
-    PictureVM pictureVM = PictureVM(settingsDataService: _settingsDataService);
+    PictureVM pictureVM = PictureVM(
+      settingsDataService: _settingsDataService,
+    );
 
     // building the new picture file path name
 
@@ -2076,11 +2078,10 @@ class AudioDownloadVM extends ChangeNotifier {
     );
   }
 
-  /// This method is called when the user selects the "Import Audio Files ..."
-  /// playlist menu item. In this case, a filepicker dialog is displayed
-  /// which allows the user to select one or everal audio files to import.
+  /// This method is called when the user wish to add the extracted audio
+  /// to an existing playlist.
   Future<void> addExtractedAudioFileToPlaylist({
-    required Playlist sourcePlaylist,
+    required Audio currentAudio,
     required Playlist targetPlaylist,
     required String filePathNameToAdd,
     required bool inMusicQuality,
@@ -2088,44 +2089,44 @@ class AudioDownloadVM extends ChangeNotifier {
   }) async {
     String fileName = filePathNameToAdd.split(path.separator).last;
 
-    File targetFile =
-        File('${targetPlaylist.downloadPath}${path.separator}$fileName');
-
-    // Now, the filePathNameToImportLst does not contain the audio
-    // files which already exist in the target playlist directory !
-
-    // Physically copying the audio file to the target playlist
-    // directory. If the audio file already exist in the
-    // target playlist directory due to the fact it was created
-    // from the text to speech operation, the copy must not be
-    // executed, otherwise _createImportedAudio will fail.
+    // Physically copying the extracted audio file to the target
+    // playlist directory.
     String targetFilePathName =
         "${targetPlaylist.downloadPath}${path.separator}$fileName";
-
-    Audio? existingAudio;
-
-    // the case if the audio file was not converted from mp4 to mp3
     File(filePathNameToAdd).copySync(targetFilePathName);
 
     // Instantiating the imported audio and adding it to the target
     // playlist downloaded audio list and playable audio list.
 
-    String mp3FileName = fileName.replaceFirst('mp4', 'mp3');
     Audio extractedAudio = await _createExtractedAudio(
-      sourcePlaylist: sourcePlaylist,
+      sourcePlaylist: currentAudio.enclosingPlaylist!,
       targetPlaylist: targetPlaylist,
       totalDuration: totalDuration,
-      targetFilePathName: (targetFilePathName.contains('mp4'))
-          ? '${targetPlaylist.downloadPath}${path.separator}$mp3FileName'
-          : targetFilePathName,
-      extractedFileName:
-          (targetFilePathName.contains('mp4')) ? mp3FileName : fileName,
+      targetFilePathName: targetFilePathName,
+      extractedFileName: fileName,
     );
 
     extractedAudio.isAudioMusicQuality = inMusicQuality;
 
     targetPlaylist.addImportedAudio(
       extractedAudio,
+    );
+
+    CommentVM commentVM = CommentVM();
+    PictureVM pictureVM = PictureVM(
+      settingsDataService: _settingsDataService,
+    );
+
+    // Copying the audio comment file if it exists
+    commentVM.copyAudioCommentFileToTargetPlaylist(
+      audio: currentAudio,
+      targetPlaylistPath: targetPlaylist.downloadPath,
+    );
+
+    // Copying the audio picture file if it exists
+    pictureVM.copyAudioPictureJsonFileToTargetPlaylist(
+      audio: currentAudio,
+      targetPlaylist: targetPlaylist,
     );
 
     notifyListeners();

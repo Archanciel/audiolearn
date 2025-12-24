@@ -883,14 +883,22 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
           listen: false,
         );
 
-        await audioExtractorVM.extractMP3ToPlaylist(
+        bool wasExtractedAudioAddedToTargetPlaylist =
+            await audioExtractorVM.extractMP3ToPlaylist(
           audioDownloadVMlistenFalse: audioDownloadVMlistenFalse,
-          sourcePlaylist: widget.currentAudio.enclosingPlaylist!,
+          currentAudio: widget.currentAudio,
           targetPlaylist: targetPlaylist!,
           extractedMp3FileName: extractedMp3FileName,
           inMusicQuality: _extractInMusicQuality,
           totalDuration: audioExtractorVM.totalDuration,
         );
+
+        if (!wasExtractedAudioAddedToTargetPlaylist) {
+          audioExtractorVM.setError(
+              // This error is cleared when user set 'In playlist' checkbox
+              AppLocalizations.of(context)!
+                  .extractedAudioNotAddedToPlaylistMessage(targetPlaylist!.title));
+        }
       });
     }
 

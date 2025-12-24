@@ -2075,6 +2075,7 @@ class PlaylistListVM extends ChangeNotifier {
       return false;
     }
 
+    // Copying the audio comment file if it exists
     _commentVM.copyAudioCommentFileToTargetPlaylist(
       audio: audio,
       targetPlaylistPath: targetPlaylist.downloadPath,

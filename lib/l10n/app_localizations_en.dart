@@ -2758,4 +2758,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get extracted => 'extracted';
+
+  @override
+  String extractedAudioNotAddedToPlaylistMessage(Object targetPlaylist) {
+    return 'The extracted audio was not added to the \"$targetPlaylist\" playlist because it already exists in it. To resolve this, please delete the existing extracted audio before running the extraction again.';
+  }
 }
