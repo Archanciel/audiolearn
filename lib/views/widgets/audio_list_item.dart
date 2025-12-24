@@ -775,15 +775,23 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
     final DateTime audioDownloadDateTime = audio.audioDownloadDateTime;
     String lastSubtitlePart = '';
 
-    if (audio.audioType == AudioType.imported) {
-      lastSubtitlePart =
-          '$audioFileSizeStr ${AppLocalizations.of(context)!.imported} ${AppLocalizations.of(context)!.on} ${dateFormatVMlistenTrue.formatDate(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
-    } else if (audio.audioType == AudioType.downloaded) {
-      lastSubtitlePart =
-          '$audioFileSizeStr ${AppLocalizations.of(context)!.atPreposition} $audioDownloadSpeedStr ${AppLocalizations.of(context)!.on} ${dateFormatVMlistenTrue.formatDate(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
-    } else if (audio.audioType == AudioType.textToSpeech) {
-      lastSubtitlePart =
-          '$audioFileSizeStr ${AppLocalizations.of(context)!.textToSpeech} ${AppLocalizations.of(context)!.on} ${dateFormatVMlistenTrue.formatDate(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
+    switch (audio.audioType) {
+      case AudioType.downloaded:
+        lastSubtitlePart =
+            '$audioFileSizeStr ${AppLocalizations.of(context)!.atPreposition} $audioDownloadSpeedStr ${AppLocalizations.of(context)!.on} ${dateFormatVMlistenTrue.formatDate(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
+        break;
+      case AudioType.imported:
+        lastSubtitlePart =
+            '$audioFileSizeStr ${AppLocalizations.of(context)!.imported} ${AppLocalizations.of(context)!.on} ${dateFormatVMlistenTrue.formatDate(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
+        break;
+      case AudioType.textToSpeech:
+        lastSubtitlePart =
+            '$audioFileSizeStr ${AppLocalizations.of(context)!.textToSpeech} ${AppLocalizations.of(context)!.on} ${dateFormatVMlistenTrue.formatDate(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
+        break;
+      case AudioType.extracted:
+        lastSubtitlePart =
+            '$audioFileSizeStr ${AppLocalizations.of(context)!.extracted} ${AppLocalizations.of(context)!.on} ${dateFormatVMlistenTrue.formatDate(audioDownloadDateTime)} ${AppLocalizations.of(context)!.atPreposition} ${timeFormat.format(audioDownloadDateTime)}';
+        break;
     }
 
     return lastSubtitlePart;

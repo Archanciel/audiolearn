@@ -1619,5 +1619,6 @@
   "inPlaylistLabelTooltip": "Un audio contenant le MP3 créé et les commentaires associés est ajouté dans la playlist sélectionnée.",
   "noPlaylistSelectedForExtractedMp3LocationWarning": "Aucune playlist sélectionnée pour l'ajout de l'audio contenant le MP3 extrait. Sélectionnez une playlist et rééssayez ...",
   "importedAudioDateTimeLabel": "Date/heure extr",
-  "extractedFromPlaylistLabel": "Extrait de la playlist"
+  "extractedFromPlaylistLabel": "Extrait de la playlist",
+  "extracted": "extrait"
 }

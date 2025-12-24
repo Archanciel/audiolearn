@@ -2788,4 +2788,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get extractedFromPlaylistLabel => 'Extrait de la playlist';
+
+  @override
+  String get extracted => 'extrait';
 }
