@@ -204,7 +204,8 @@ class AudioExtractorVM extends ChangeNotifier {
 
   Future<void> extractMP3ToPlaylist({
     required AudioDownloadVM audioDownloadVMlistenFalse,
-    required Playlist playlist,
+    required Playlist sourcePlaylist,
+    required Playlist targetPlaylist,
     required String extractedMp3FileName,
     required bool inMusicQuality,
     required double totalDuration,
@@ -215,7 +216,7 @@ class AudioExtractorVM extends ChangeNotifier {
       startProcessing();
 
       final String outputPath =
-          '${playlist.downloadPath}${Platform.pathSeparator}$extractedMp3FileName';
+          '${targetPlaylist.downloadPath}${Platform.pathSeparator}$extractedMp3FileName';
 
       final Map<String, dynamic> result =
           await AudioExtractorService.extractAudioSegments(
@@ -241,9 +242,10 @@ class AudioExtractorVM extends ChangeNotifier {
     }
 
     await audioDownloadVMlistenFalse.addExtractedAudioFileToPlaylist(
-      targetPlaylist: playlist,
+      sourcePlaylist: sourcePlaylist,
+      targetPlaylist: targetPlaylist,
       filePathNameToAdd:
-          '${playlist.downloadPath}${Platform.pathSeparator}$extractedMp3FileName',
+          '${targetPlaylist.downloadPath}${Platform.pathSeparator}$extractedMp3FileName',
       inMusicQuality: inMusicQuality,
       totalDuration: totalDuration,
     );

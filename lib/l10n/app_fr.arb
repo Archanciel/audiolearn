@@ -1617,5 +1617,7 @@
   "inDirectoryLabelTooltip": "Le MP3 créé est enregistré dans le dossier sélectionné.",
   "inPlaylistLabel": "Dans une playlist",
   "inPlaylistLabelTooltip": "Un audio contenant le MP3 créé et les commentaires associés est ajouté dans la playlist sélectionnée.",
-  "noPlaylistSelectedForExtractedMp3LocationWarning": "Aucune playlist sélectionnée pour l'ajout de l'audio contenant le MP3 extrait. Sélectionnez une playlist et rééssayez ..."
+  "noPlaylistSelectedForExtractedMp3LocationWarning": "Aucune playlist sélectionnée pour l'ajout de l'audio contenant le MP3 extrait. Sélectionnez une playlist et rééssayez ...",
+  "importedAudioDateTimeLabel": "Date/heure extr",
+  "extractedFromPlaylistLabel": "Extrait de la playlist"
 }

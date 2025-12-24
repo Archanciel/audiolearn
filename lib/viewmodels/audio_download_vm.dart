@@ -2080,6 +2080,7 @@ class AudioDownloadVM extends ChangeNotifier {
   /// playlist menu item. In this case, a filepicker dialog is displayed
   /// which allows the user to select one or everal audio files to import.
   Future<void> addExtractedAudioFileToPlaylist({
+    required Playlist sourcePlaylist,
     required Playlist targetPlaylist,
     required String filePathNameToAdd,
     required bool inMusicQuality,
@@ -2111,12 +2112,13 @@ class AudioDownloadVM extends ChangeNotifier {
 
     String mp3FileName = fileName.replaceFirst('mp4', 'mp3');
     Audio extractedAudio = await _createExtractedAudio(
+      sourcePlaylist: sourcePlaylist,
       targetPlaylist: targetPlaylist,
       totalDuration: totalDuration,
       targetFilePathName: (targetFilePathName.contains('mp4'))
           ? '${targetPlaylist.downloadPath}${path.separator}$mp3FileName'
           : targetFilePathName,
-      importedFileName:
+      extractedFileName:
           (targetFilePathName.contains('mp4')) ? mp3FileName : fileName,
     );
 
@@ -2487,15 +2489,16 @@ class AudioDownloadVM extends ChangeNotifier {
   }
 
   Future<Audio> _createExtractedAudio({
+    required Playlist sourcePlaylist,
     required Playlist targetPlaylist,
     required double totalDuration,
     required String targetFilePathName,
-    required String importedFileName,
+    required String extractedFileName,
   }) async {
-    Duration importedAudioDuration = Duration(milliseconds: (totalDuration * 1000).round());
-
+    Duration importedAudioDuration =
+        Duration(milliseconds: (totalDuration * 1000).round());
     DateTime dateTimeNow = DateTime.now();
-    final String audioTitle = importedFileName.replaceFirst('.mp3', '');
+    final String audioTitle = extractedFileName.replaceFirst('.mp3', '');
 
     Audio extractedAudio = Audio(
       enclosingPlaylist: targetPlaylist,
@@ -2518,9 +2521,10 @@ class AudioDownloadVM extends ChangeNotifier {
     // Since the Audio file name is set in the Audio constructor with
     // adding to it the audio download date time and the video upload
     // date, the constructor audio file name will not correspond to the
-    // physical imported audio file name.
-    extractedAudio.audioFileName = importedFileName;
-    extractedAudio.audioType = AudioType.imported;
+    // physical extracted audio file name.
+    extractedAudio.audioFileName = extractedFileName;
+    extractedAudio.audioType = AudioType.extracted;
+    extractedAudio.extractedFromPlaylistTitle = sourcePlaylist.title;
 
     return extractedAudio;
   }
@@ -2528,12 +2532,13 @@ class AudioDownloadVM extends ChangeNotifier {
   String _cleanAudioFileName({
     required String fileName,
   }) {
-  return fileName
-      // Remove leading timestamp: yymmdd-hhmmss-
-      .replaceFirst(RegExp(r'^\d{6}-\d{6}-'), '')
-      // Remove trailing date: yy-mm-dd
-      .replaceFirst(RegExp(r'\s\d{2}-\d{2}-\d{2}$'), '')
-      .trim();  }
+    return fileName
+        // Remove leading timestamp: yymmdd-hhmmss-
+        .replaceFirst(RegExp(r'^\d{6}-\d{6}-'), '')
+        // Remove trailing date: yy-mm-dd
+        .replaceFirst(RegExp(r'\s\d{2}-\d{2}-\d{2}$'), '')
+        .trim();
+  }
 
   /// This method is not private since it is redifined in the
   /// MockAudioDownloadVM so that the importAudioFilesInPlaylist()

@@ -190,6 +190,13 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
               ? ''
               : audio.copiedToPlaylistTitle!),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('extractedFromPlaylistTitleKey'),
+          context: context,
+          label: AppLocalizations.of(context)!.extractedFromPlaylistLabel,
+          value: (audio.extractedFromPlaylistTitle == null)
+              ? ''
+              : audio.extractedFromPlaylistTitle!),
+      createInfoRowFunction(
           valueTextWidgetKey: const Key('audioDownloadDurationKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioDownloadDurationLabel,
@@ -327,6 +334,13 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
               ? ''
               : audio.copiedToPlaylistTitle!),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('extractedFromPlaylistTitleKey'),
+          context: context,
+          label: AppLocalizations.of(context)!.extractedFromPlaylistLabel,
+          value: (audio.extractedFromPlaylistTitle == null)
+              ? ''
+              : audio.extractedFromPlaylistTitle!),
+      createInfoRowFunction(
           valueTextWidgetKey: const Key('audioDurationKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioDurationLabel,
@@ -451,6 +465,13 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
               ? ''
               : audio.copiedToPlaylistTitle!),
       createInfoRowFunction(
+          valueTextWidgetKey: const Key('extractedFromPlaylistTitleKey'),
+          context: context,
+          label: AppLocalizations.of(context)!.extractedFromPlaylistLabel,
+          value: (audio.extractedFromPlaylistTitle == null)
+              ? ''
+              : audio.extractedFromPlaylistTitle!),
+      createInfoRowFunction(
           valueTextWidgetKey: const Key('audioDurationKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioDurationLabel,
@@ -515,6 +536,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
               commentVMlistenFalse.getCommentNumber(audio: audio).toString()),
     ];
   }
+
   /// Creates the list of audio information lines for extracted audio.
   List<Widget> _createExtractedAudioInfoLines(BuildContext context) {
     CommentVM commentVMlistenFalse =
@@ -522,14 +544,14 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
 
     return <Widget>[
       createInfoRowFunction(
-          valueTextWidgetKey: const Key('importedAudioTitleKey'),
+          valueTextWidgetKey: const Key('AudioTitleKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioTitleLabel,
           value: audio.validVideoTitle),
       createInfoRowFunction(
-          valueTextWidgetKey: const Key('importedAudioDateTimeKey'),
+          valueTextWidgetKey: const Key('extractedAudioDateTimeKey'),
           context: context,
-          label: AppLocalizations.of(context)!.importedAudioDateTimeLabel,
+          label: AppLocalizations.of(context)!.extractedAudioDateTimeLabel,
           value: frenchDateTimeFormat.format(audio.audioDownloadDateTime)),
       createInfoRowFunction(
           valueTextWidgetKey: const Key('isAudioPlayableKey'),
@@ -573,6 +595,13 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           value: (audio.copiedToPlaylistTitle == null)
               ? ''
               : audio.copiedToPlaylistTitle!),
+      createInfoRowFunction(
+          valueTextWidgetKey: const Key('extractedFromPlaylistTitleKey'),
+          context: context,
+          label: AppLocalizations.of(context)!.extractedFromPlaylistLabel,
+          value: (audio.extractedFromPlaylistTitle == null)
+              ? ''
+              : audio.extractedFromPlaylistTitle!),
       createInfoRowFunction(
           valueTextWidgetKey: const Key('audioDurationKey'),
           context: context,

@@ -885,7 +885,8 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
 
         await audioExtractorVM.extractMP3ToPlaylist(
           audioDownloadVMlistenFalse: audioDownloadVMlistenFalse,
-          playlist: targetPlaylist!,
+          sourcePlaylist: widget.currentAudio.enclosingPlaylist!,
+          targetPlaylist: targetPlaylist!,
           extractedMp3FileName: extractedMp3FileName,
           inMusicQuality: _extractInMusicQuality,
           totalDuration: audioExtractorVM.totalDuration,
