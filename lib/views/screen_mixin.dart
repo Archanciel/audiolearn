@@ -371,6 +371,7 @@ mixin ScreenMixin {
     required String value,
     bool isTextBold = false,
     bool addSizeBoxBeforeAndAfter = false,
+    bool isValueSelectable = false,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
@@ -383,13 +384,21 @@ mixin ScreenMixin {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: Text(
-                  label,
-                  style: TextStyle(
-                    fontWeight:
-                        isTextBold ? FontWeight.bold : FontWeight.normal,
-                  ),
-                ),
+                child: (isValueSelectable)
+                    ? SelectableText(
+                        label,
+                        style: TextStyle(
+                          fontWeight:
+                              isTextBold ? FontWeight.bold : FontWeight.normal,
+                        ),
+                      )
+                    : Text(
+                        label,
+                        style: TextStyle(
+                          fontWeight:
+                              isTextBold ? FontWeight.bold : FontWeight.normal,
+                        ),
+                      ),
               ),
               Expanded(
                 child: InkWell(

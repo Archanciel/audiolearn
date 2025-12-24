@@ -2099,7 +2099,7 @@ class AudioDownloadVM extends ChangeNotifier {
     // playlist downloaded audio list and playable audio list.
 
     Audio extractedAudio = await _createExtractedAudio(
-      sourcePlaylist: currentAudio.enclosingPlaylist!,
+      currentAudio: currentAudio,
       targetPlaylist: targetPlaylist,
       totalDuration: totalDuration,
       targetFilePathName: targetFilePathName,
@@ -2490,7 +2490,7 @@ class AudioDownloadVM extends ChangeNotifier {
   }
 
   Future<Audio> _createExtractedAudio({
-    required Playlist sourcePlaylist,
+    required Audio currentAudio,
     required Playlist targetPlaylist,
     required double totalDuration,
     required String targetFilePathName,
@@ -2505,7 +2505,7 @@ class AudioDownloadVM extends ChangeNotifier {
       enclosingPlaylist: targetPlaylist,
       originalVideoTitle: audioTitle,
       compactVideoDescription: '',
-      videoUrl: '',
+      videoUrl: currentAudio.videoUrl,
       audioDownloadDateTime: dateTimeNow,
       audioDownloadDuration: const Duration(microseconds: 0),
       videoUploadDate: dateTimeNow,
@@ -2525,7 +2525,7 @@ class AudioDownloadVM extends ChangeNotifier {
     // physical extracted audio file name.
     extractedAudio.audioFileName = extractedFileName;
     extractedAudio.audioType = AudioType.extracted;
-    extractedAudio.extractedFromPlaylistTitle = sourcePlaylist.title;
+    extractedAudio.extractedFromPlaylistTitle = currentAudio.enclosingPlaylist!.title;
 
     return extractedAudio;
   }
