@@ -2861,4 +2861,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get extractedFromPlaylistLabel => "Extracted from playlist";
+
+  @override
+  String get extracted => "extracted";
 }

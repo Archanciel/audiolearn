@@ -4435,6 +4435,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Extracted from playlist'**
   String get extractedFromPlaylistLabel;
+
+  /// No description provided for @extracted.
+  ///
+  /// In en, this message translates to:
+  /// **'extracted'**
+  String get extracted;
 }
 
 class _AppLocalizationsDelegate
