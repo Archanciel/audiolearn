@@ -839,8 +839,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
       }
     } else {
       // Extracting to playlist
-      extractedMp3FileName =
-          '${base}.mp3';
+      extractedMp3FileName = '$base.mp3';
     }
 
     extractedMp3FileName = PathUtil.sanitizeFileName(
@@ -894,23 +893,25 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
       });
     }
 
-    if (extractedMp3DestinationDir == null) {
-      audioExtractorVM.setError(
-          // This error is cleared when user set 'In playlist' checkbox
-          AppLocalizations.of(context)!.saveLocationSelectionCanceledMessage);
+    if (_extractInDirectory) {
+      if (extractedMp3DestinationDir == null) {
+        audioExtractorVM.setError(
+            // This error is cleared when user set 'In playlist' checkbox
+            AppLocalizations.of(context)!.saveLocationSelectionCanceledMessage);
 
-      return;
-    } else {
-      final String outputPath =
-          '$extractedMp3DestinationDir${Platform.pathSeparator}$extractedMp3FileName';
-
-      if (audioExtractorVM.multiInputs.isNotEmpty) {
-        await audioExtractorVM.extractMP3Multi(outputPath);
+        return;
       } else {
-        await audioExtractorVM.extractMP3ToDirectory(
-          inMusicQuality: _extractInMusicQuality,
-          outputPath: outputPath,
-        );
+        final String outputPath =
+            '$extractedMp3DestinationDir${Platform.pathSeparator}$extractedMp3FileName';
+
+        if (audioExtractorVM.multiInputs.isNotEmpty) {
+          await audioExtractorVM.extractMP3Multi(outputPath);
+        } else {
+          await audioExtractorVM.extractMP3ToDirectory(
+            inMusicQuality: _extractInMusicQuality,
+            outputPath: outputPath,
+          );
+        }
       }
     }
   }
