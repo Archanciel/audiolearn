@@ -140,10 +140,12 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
               ? AppLocalizations.of(context)!.yes
               : AppLocalizations.of(context)!.no),
       createInfoRowFunction(
-          valueTextWidgetKey: const Key('videoUrlKey'),
-          context: context,
-          label: AppLocalizations.of(context)!.videoUrlLabel,
-          value: audio.videoUrl),
+        valueTextWidgetKey: const Key('videoUrlKey'),
+        context: context,
+        label: AppLocalizations.of(context)!.videoUrlLabel,
+        value: audio.videoUrl,
+        isValueSelectable: true,
+      ),
       createInfoRowFunction(
           valueTextWidgetKey: const Key('compactVideoDescriptionKey'),
           context: context,
@@ -560,6 +562,13 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           value: (UiUtil.isAudioPlayable(audio: audio))
               ? AppLocalizations.of(context)!.yes
               : AppLocalizations.of(context)!.no),
+      createInfoRowFunction(
+        valueTextWidgetKey: const Key('videoUrlKey'),
+        context: context,
+        label: AppLocalizations.of(context)!.videoUrlLabel,
+        value: audio.videoUrl,
+        isValueSelectable: true,
+      ),
       createInfoRowFunction(
           valueTextWidgetKey: const Key('enclosingPlaylistTitleKey'),
           context: context,
