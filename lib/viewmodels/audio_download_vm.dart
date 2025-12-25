@@ -2093,11 +2093,9 @@ class AudioDownloadVM extends ChangeNotifier {
     // playlist directory.
     String targetFilePathName =
         "${targetPlaylist.downloadPath}${path.separator}$fileName";
-    File(filePathNameToAdd).copySync(targetFilePathName);
 
-    // Instantiating the imported audio and adding it to the target
+    // Instantiating the extracted audio and adding it to the target
     // playlist downloaded audio list and playable audio list.
-
     Audio extractedAudio = await _createExtractedAudio(
       currentAudio: currentAudio,
       targetPlaylist: targetPlaylist,
