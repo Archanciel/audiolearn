@@ -3750,7 +3750,7 @@ abstract class AppLocalizations {
   /// No description provided for @audioExtractedInfoDialogTitle.
   ///
   /// In en, this message translates to:
-  /// **'Extracted Audio Info'**
+  /// **'Audio Extracted through Comments Info'**
   String get audioExtractedInfoDialogTitle;
 
   /// No description provided for @convertedAudioDateTimeLabel.
