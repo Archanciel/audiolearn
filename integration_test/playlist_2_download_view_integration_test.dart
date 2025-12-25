@@ -36170,7 +36170,7 @@ void main() {
       );
 
       // Verifying all audio info dialog fields related of the
-      // converted audio type
+      // textToSpeech audio type
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioType: AudioType.textToSpeech,
