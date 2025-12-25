@@ -19,8 +19,7 @@ void main() {
       WarningMessageVM warningMessageVM = WarningMessageVM();
       AudioDownloadVM audioDownloadVM = AudioDownloadVM(
         warningMessageVM: warningMessageVM,
-        settingsDataService:
-            SettingsDataService(),
+        settingsDataService: SettingsDataService(),
       );
 
       String videoDescription = '''Ma chaîne YouTube principale
@@ -1262,6 +1261,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle:
             "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         compactVideoDescription: '',
@@ -1396,6 +1396,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle:
             "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         compactVideoDescription: '',
@@ -1713,10 +1714,8 @@ void main() {
 
       String fileToImportDir =
           '$kApplicationPathWindowsTest${path.separator}Files to import';
-      const String importeMp4FileNameOne =
-          "La vraie prière.mp4";
-      const String importeMp3FileNameOne =
-          "La vraie prière.mp3";
+      const String importeMp4FileNameOne = "La vraie prière.mp4";
+      const String importeMp3FileNameOne = "La vraie prière.mp3";
       List<String> importedFileNamesLst = [
         importeMp3FileNameOne,
       ];
@@ -1749,11 +1748,10 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle:
-            "La vraie prière",
+        extractedFromPlaylistTitle: null,
+        originalVideoTitle: "La vraie prière",
         compactVideoDescription: '',
-        validVideoTitle:
-            "La vraie prière",
+        validVideoTitle: "La vraie prière",
         videoUrl: '',
         audioDownloadDateTime: dateTimeNow,
         audioDownloadDuration: const Duration(microseconds: 0),
@@ -1767,8 +1765,7 @@ void main() {
         isPaused: true,
         audioPausedDateTime: null,
         audioPositionSeconds: 0,
-        audioFileName:
-            "La vraie prière.mp3",
+        audioFileName: "La vraie prière.mp3",
         audioFileSize: 4544188,
         audioType: AudioType.imported,
       );
@@ -1848,10 +1845,8 @@ void main() {
 
       String fileToImportDir =
           '$kApplicationPathWindowsTest${path.separator}Files to import';
-      const String importeMp4FileNameOne =
-          "La vraie prière.mp4";
-      const String importeMp3FileNameOne =
-          "La vraie prière.mp3";
+      const String importeMp4FileNameOne = "La vraie prière.mp4";
+      const String importeMp3FileNameOne = "La vraie prière.mp3";
       List<String> importedFileNamesLst = [
         importeMp3FileNameOne,
       ];
@@ -1884,11 +1879,10 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
-        originalVideoTitle:
-            "La vraie prière",
+        extractedFromPlaylistTitle: null,
+        originalVideoTitle: "La vraie prière",
         compactVideoDescription: '',
-        validVideoTitle:
-            "La vraie prière",
+        validVideoTitle: "La vraie prière",
         videoUrl: '',
         audioDownloadDateTime: dateTimeNow,
         audioDownloadDuration: const Duration(microseconds: 0),
@@ -1902,8 +1896,7 @@ void main() {
         isPaused: true,
         audioPausedDateTime: null,
         audioPositionSeconds: 0,
-        audioFileName:
-            "La vraie prière.mp3",
+        audioFileName: "La vraie prière.mp3",
         audioFileSize: 4544188,
         audioType: AudioType.imported,
       );
