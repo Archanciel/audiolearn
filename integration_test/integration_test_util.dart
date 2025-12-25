@@ -3101,6 +3101,18 @@ class IntegrationTestUtil {
           expect(find.text('Valid video title'), findsNothing);
 
           break;
+        case AudioType.extracted:
+          expect(find.text('Audio Extracted through Comments Info'), findsOneWidget);
+          expect(find.text('Youtube channel'), findsNothing);
+          expect(find.text('Audio title'), findsOneWidget);
+          expect(find.text('Video upload date'), findsNothing);
+          expect(find.text('Extracted audio date time'), findsOneWidget);
+          expect(find.text('Playable'), findsOneWidget);
+          expect(find.text('Video URL'), findsOneWidget);
+          expect(find.text('Compact video description'), findsNothing);
+          expect(find.text('Valid video title'), findsNothing);
+
+          break;
       }
     } else {
       // language == Language.french
@@ -3111,7 +3123,7 @@ class IntegrationTestUtil {
           expect(find.text('Chaîne Youtube'), findsOneWidget);
           expect(find.text('Titre vidéo original'), findsOneWidget);
           expect(find.text('Date mise en ligne'), findsOneWidget);
-          expect(find.text('Date/heure téléch'), findsOneWidget);
+          expect(find.text('Date/heure téléchargement'), findsOneWidget);
           expect(find.text('Jouable'), findsOneWidget);
           expect(find.text('URL vidéo'), findsOneWidget);
           expect(find.text('Description vidéo compacte'), findsOneWidget);
@@ -3139,6 +3151,18 @@ class IntegrationTestUtil {
           expect(find.text('Date/heure prem conversion'), findsOneWidget);
           expect(find.text('Jouable'), findsOneWidget);
           expect(find.text('URL vidéo'), findsNothing);
+          expect(find.text('Description vidéo compacte'), findsNothing);
+          expect(find.text('Titre vidéo valide'), findsNothing);
+
+          break;
+        case AudioType.extracted:
+          expect(find.text("Informations sur l'audio extrait via des commentaires"), findsOneWidget);
+          expect(find.text('Chaîne Youtube'), findsNothing);
+          expect(find.text('Titre audio'), findsOneWidget);
+          expect(find.text('Date mise en ligne'), findsNothing);
+          expect(find.text('Date/heure import'), findsOneWidget);
+          expect(find.text('Jouable'), findsOneWidget);
+          expect(find.text('URL vidéo'), findsOneWidget);
           expect(find.text('Description vidéo compacte'), findsNothing);
           expect(find.text('Titre vidéo valide'), findsNothing);
 
@@ -3265,6 +3289,43 @@ class IntegrationTestUtil {
         if (audioDownloadDateTime.isNotEmpty) {
           final Text audioDownloadDateTimeTextWidget = tester
               .widget<Text>(find.byKey(const Key('convertedAudioDateTimeKey')));
+          expect(audioDownloadDateTimeTextWidget.data, audioDownloadDateTime);
+        }
+
+        // Verify if the audio is playable or not
+        if (language == Language.english) {
+          // In English, the 'isAudioPlayableKey' Text widget contains
+          // 'Yes' or 'No'
+          final Text isAudioPlayableTextWidget =
+              tester.widget<Text>(find.byKey(const Key('isAudioPlayableKey')));
+          if (isAudioPlayable) {
+            expect(isAudioPlayableTextWidget.data, 'Yes');
+          } else {
+            expect(isAudioPlayableTextWidget.data, 'No');
+          }
+        } else {
+          // In French, the 'isAudioPlayableKey' Text widget contains
+          // 'Oui' or 'Non'
+          final Text isAudioPlayableTextWidget =
+              tester.widget<Text>(find.byKey(const Key('isAudioPlayableKey')));
+          if (isAudioPlayable) {
+            expect(isAudioPlayableTextWidget.data, 'Oui');
+          } else {
+            expect(isAudioPlayableTextWidget.data, 'Non');
+          }
+        }
+
+        break;
+      case AudioType.extracted:
+        // Verify the valid video title of the audio
+        final Text validVideoTitleTextWidget =
+            tester.widget<Text>(find.byKey(const Key('extractedAudioTitleKey')));
+        expect(validVideoTitleTextWidget.data, validVideoTitleOrAudioTitle);
+
+        // Verify the audio download date time of the audio
+        if (audioDownloadDateTime.isNotEmpty) {
+          final Text audioDownloadDateTimeTextWidget = tester
+              .widget<Text>(find.byKey(const Key('extractedAudioDateTimeKey')));
           expect(audioDownloadDateTimeTextWidget.data, audioDownloadDateTime);
         }
 

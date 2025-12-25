@@ -32,6 +32,7 @@ void main() {
     movedToPlaylistTitle: null,
     copiedFromPlaylistTitle: null,
     copiedToPlaylistTitle: null,
+    extractedFromPlaylistTitle: null,
     originalVideoTitle: 'Zebra ?',
     compactVideoDescription:
         'On vous propose de découvrir les tendances crypto en progression en 2024. Découvrez lesquelles sont les plus prometteuses et lesquelles sont à éviter.',
@@ -61,6 +62,7 @@ void main() {
     movedToPlaylistTitle: null,
     copiedFromPlaylistTitle: null,
     copiedToPlaylistTitle: null,
+    extractedFromPlaylistTitle: null,
     originalVideoTitle: 'Zebra ?',
     compactVideoDescription:
         'Éthique et tac vous propose de découvrir les tendances crypto en progression en 2024. Découvrez lesquelles sont les plus prometteuses et lesquelles sont à éviter.',
@@ -89,6 +91,7 @@ void main() {
     movedToPlaylistTitle: null,
     copiedFromPlaylistTitle: null,
     copiedToPlaylistTitle: null,
+    extractedFromPlaylistTitle: null,
     originalVideoTitle: 'Zebra ?',
     compactVideoDescription:
         "Se dirige-t-on vers une intelligence artificielle qui pourrait menacer l’humanité ou au contraire, vers une opportunité pour l’humanité ? Découvrez les réponses à ces questions dans ce podcast.",
@@ -118,6 +121,7 @@ void main() {
     movedToPlaylistTitle: null,
     copiedFromPlaylistTitle: null,
     copiedToPlaylistTitle: null,
+    extractedFromPlaylistTitle: null,
     originalVideoTitle: 'Zebra ?',
     compactVideoDescription:
         "Sur le plan philosophique, quelles différences entre l’intelligence humaine et l’intelligence artificielle ? Découvrez les réponses à ces questions dans ce podcast.",
@@ -1016,6 +1020,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle: 'Zebra ?',
           compactVideoDescription: '',
           validVideoTitle: 'Zebra',
@@ -1043,6 +1048,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle: 'Apple ?',
           compactVideoDescription: '',
           validVideoTitle: 'Apple',
@@ -1070,6 +1076,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle: 'Bananna ?',
           compactVideoDescription: '',
           validVideoTitle: 'Bananna',
@@ -1161,6 +1168,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "La foi contre la peur (1_2 - Joyce Meyer -  Avoir des relations saines",
           compactVideoDescription: '',
@@ -1192,6 +1200,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "La foi contre la peur (2_2 - Joyce Meyer -  Avoir des relations saines",
           compactVideoDescription: '',
@@ -1223,6 +1232,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Il est temps d'être sérieux avec Dieu ! (2_2 - Joyce Meyer - Grandir avec Dieu",
           compactVideoDescription: '',
@@ -1254,6 +1264,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Il est temps d'être sérieux avec Dieu ! (1_2 - Joyce Meyer - Grandir avec Dieu",
           compactVideoDescription: '',
@@ -1285,6 +1296,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Laisser Dieu au contrôle - Joyce Meyer - Grandir avec Dieu",
           compactVideoDescription: '',
@@ -1316,6 +1328,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "VOICI COMMENT ÊTRE GUIDÉ PAR LE SAINT ESPRIT _ JOYCE MEYER",
           compactVideoDescription: '',
@@ -1347,6 +1360,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Communiquer avec Dieu (1_2 - Joyce Meyer - Grandir avec Dieu",
           compactVideoDescription: '',
@@ -1378,6 +1392,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Communiquer avec Dieu (2_2 - Joyce Meyer - Grandir avec Dieu",
           compactVideoDescription: '',
@@ -1487,6 +1502,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "La foi contre la peur (1-2 - Joyce Meyer -  Avoir des relations saines",
           compactVideoDescription: '',
@@ -1518,6 +1534,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "La foi contre la peur (2-2 - Joyce Meyer -  Avoir des relations saines",
           compactVideoDescription: '',
@@ -1549,6 +1566,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Il est temps d'être sérieux avec Dieu ! (2-2 - Joyce Meyer - Grandir avec Dieu",
           compactVideoDescription: '',
@@ -1580,6 +1598,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Il est temps d'être sérieux avec Dieu ! (1-2 - Joyce Meyer - Grandir avec Dieu",
           compactVideoDescription: '',
@@ -1611,6 +1630,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Laisser Dieu au contrôle - Joyce Meyer - Grandir avec Dieu",
           compactVideoDescription: '',
@@ -1642,6 +1662,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "VOICI COMMENT ÊTRE GUIDÉ PAR LE SAINT ESPRIT _ JOYCE MEYER",
           compactVideoDescription: '',
@@ -1673,6 +1694,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Communiquer avec Dieu (1-2 - Joyce Meyer - Grandir avec Dieu",
           compactVideoDescription: '',
@@ -1704,6 +1726,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Communiquer avec Dieu (2-2 - Joyce Meyer - Grandir avec Dieu",
           compactVideoDescription: '',
@@ -1813,6 +1836,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "La foi contre la peur (1/2 - Joyce Meyer -  Avoir des relations saines",
           compactVideoDescription: '',
@@ -1844,6 +1868,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "La foi contre la peur (2/2 - Joyce Meyer -  Avoir des relations saines",
           compactVideoDescription: '',
@@ -1875,6 +1900,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Il est temps d'être sérieux avec Dieu ! (2/2 - Joyce Meyer - Grandir avec Dieu",
           compactVideoDescription: '',
@@ -1906,6 +1932,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Il est temps d'être sérieux avec Dieu ! (1/2 - Joyce Meyer - Grandir avec Dieu",
           compactVideoDescription: '',
@@ -1937,6 +1964,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Laisser Dieu au contrôle - Joyce Meyer - Grandir avec Dieu",
           compactVideoDescription: '',
@@ -1968,6 +1996,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "VOICI COMMENT ÊTRE GUIDÉ PAR LE SAINT ESPRIT _ JOYCE MEYER",
           compactVideoDescription: '',
@@ -1999,6 +2028,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Communiquer avec Dieu (1/2 - Joyce Meyer - Grandir avec Dieu",
           compactVideoDescription: '',
@@ -2030,6 +2060,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Communiquer avec Dieu (2/2 - Joyce Meyer - Grandir avec Dieu",
           compactVideoDescription: '',
@@ -2139,6 +2170,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "La foi contre la peur (1:2 - Joyce Meyer -  Avoir des relations saines",
           compactVideoDescription: '',
@@ -2170,6 +2202,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "La foi contre la peur (2:2 - Joyce Meyer -  Avoir des relations saines",
           compactVideoDescription: '',
@@ -2201,6 +2234,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Il est temps d'être sérieux avec Dieu ! (2:2 - Joyce Meyer - Grandir avec Dieu",
           compactVideoDescription: '',
@@ -2232,6 +2266,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Il est temps d'être sérieux avec Dieu ! (1:2 - Joyce Meyer - Grandir avec Dieu",
           compactVideoDescription: '',
@@ -2263,6 +2298,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Laisser Dieu au contrôle - Joyce Meyer - Grandir avec Dieu",
           compactVideoDescription: '',
@@ -2294,6 +2330,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "VOICI COMMENT ÊTRE GUIDÉ PAR LE SAINT ESPRIT _ JOYCE MEYER",
           compactVideoDescription: '',
@@ -2325,6 +2362,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Communiquer avec Dieu (1:2 - Joyce Meyer - Grandir avec Dieu",
           compactVideoDescription: '',
@@ -2356,6 +2394,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Communiquer avec Dieu (2:2 - Joyce Meyer - Grandir avec Dieu",
           compactVideoDescription: '',
@@ -2572,6 +2611,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle: "'title",
           compactVideoDescription: 'compactVideoDescription',
           validVideoTitle: "'title",
@@ -2600,6 +2640,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle: "%avec percent title",
           compactVideoDescription: 'compactVideoDescription',
           validVideoTitle: "%avec percent title",
@@ -2628,6 +2669,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle: "%percent title",
           compactVideoDescription: 'compactVideoDescription',
           validVideoTitle: "%percent title",
@@ -2656,6 +2698,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle: "power title",
           compactVideoDescription: 'compactVideoDescription',
           validVideoTitle: "power title",
@@ -2684,6 +2727,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle: "#'amen title",
           compactVideoDescription: 'compactVideoDescription',
           validVideoTitle: "#'amen title",
@@ -2712,6 +2756,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle: "ÉPICURE - La mort n'est rien 📏",
           compactVideoDescription: 'compactVideoDescription',
           validVideoTitle: "ÉPICURE - La mort n'est rien",
@@ -2740,6 +2785,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle: "%95 title",
           compactVideoDescription: 'compactVideoDescription',
           validVideoTitle: "%95 title",
@@ -2768,6 +2814,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle: "93 title",
           compactVideoDescription: 'compactVideoDescription',
           validVideoTitle: "93 title",
@@ -2796,6 +2843,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle: "#94 title",
           compactVideoDescription: 'compactVideoDescription',
           validVideoTitle: "#94 title",
@@ -2824,6 +2872,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle: "Échapper à l'illusion de l'esprit",
           compactVideoDescription: 'compactVideoDescription',
           validVideoTitle: "Échapper à l'illusion de l'esprit",
@@ -2852,6 +2901,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle: "évident title",
           compactVideoDescription: 'compactVideoDescription',
           validVideoTitle: "évident title",
@@ -2880,6 +2930,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle: "à lire title",
           compactVideoDescription: 'compactVideoDescription',
           validVideoTitle: "à lire title",
@@ -2908,6 +2959,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle: "9 title",
           compactVideoDescription: 'compactVideoDescription',
           validVideoTitle: "9 title",
@@ -2936,6 +2988,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle: "8 title",
           compactVideoDescription: 'compactVideoDescription',
           validVideoTitle: "8 title",
@@ -2964,6 +3017,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle: "éventuel title",
           compactVideoDescription: 'compactVideoDescription',
           validVideoTitle: "éventuel title",
@@ -3095,6 +3149,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra - Avant - propos de l'éditeur américain",
           compactVideoDescription: '',
@@ -3126,6 +3181,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra - Note et remerciements de l'auteur",
           compactVideoDescription: '',
@@ -3157,6 +3213,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 3_37  - Partie 1",
           compactVideoDescription: '',
@@ -3188,6 +3245,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 4_37",
           compactVideoDescription: '',
@@ -3219,6 +3277,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 5_37",
           compactVideoDescription: '',
@@ -3250,6 +3309,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 6_37",
           compactVideoDescription: '',
@@ -3281,6 +3341,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 10_37  - chapitre 3 - 1",
           compactVideoDescription: '',
@@ -3312,6 +3373,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 11_37  - chapitre 3 - 2",
           compactVideoDescription: '',
@@ -3343,6 +3405,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 13_37  - chapitre 4 - 1",
           compactVideoDescription: '',
@@ -3374,6 +3437,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 16_37  - Chapitre 5 - 1",
           compactVideoDescription: '',
@@ -3405,6 +3469,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 21_37  - Partie 2 chapitre 6 - 1",
           compactVideoDescription: '',
@@ -3436,6 +3501,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 22_37  - chapitre 6 - 2",
           compactVideoDescription: '',
@@ -3467,6 +3533,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 26_37  - chapitre 8",
           compactVideoDescription: '',
@@ -3498,6 +3565,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 27_37  - chapitre 9 - 1",
           compactVideoDescription: '',
@@ -3529,6 +3597,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 29_37  - chapitre 10",
           compactVideoDescription: '',
@@ -3560,6 +3629,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 30_37  - chapitre 11 - 1",
           compactVideoDescription: '',
@@ -3591,6 +3661,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 31_37  - chapitre 11 - 2",
           compactVideoDescription: '',
@@ -3622,6 +3693,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 32_37  - chapitre 12",
           compactVideoDescription: '',
@@ -3653,6 +3725,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 33_37",
           compactVideoDescription: '',
@@ -3795,6 +3868,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra 1-37  - Avant - propos de l'éditeur américain",
           compactVideoDescription: '',
@@ -3826,6 +3900,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra 2-37  - Note et remerciements de l'auteur",
           compactVideoDescription: '',
@@ -3857,6 +3932,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 3-37  - Partie 1 chapitre 1",
           compactVideoDescription: '',
@@ -3888,6 +3964,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 4-37  - chapitre 2-1",
           compactVideoDescription: '',
@@ -3919,6 +3996,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 5-37  - chapitre 2 - 2",
           compactVideoDescription: '',
@@ -3950,6 +4028,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 6-37  - chapitre 2 - 3",
           compactVideoDescription: '',
@@ -3981,6 +4060,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 10-37  - chapitre 3 - 1",
           compactVideoDescription: '',
@@ -4012,6 +4092,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 11-37  - chapitre 3 - 2",
           compactVideoDescription: '',
@@ -4043,6 +4124,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 13-37  - chapitre 4 - 1",
           compactVideoDescription: '',
@@ -4074,6 +4156,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 16-37  - Chapitre 5 - 1",
           compactVideoDescription: '',
@@ -4105,6 +4188,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 21-37  - Partie 2 chapitre 6 - 1",
           compactVideoDescription: '',
@@ -4136,6 +4220,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 22-37  - chapitre 6 - 2",
           compactVideoDescription: '',
@@ -4167,6 +4252,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 26-37  - chapitre 8",
           compactVideoDescription: '',
@@ -4198,6 +4284,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 27-37  - chapitre 9 - 1",
           compactVideoDescription: '',
@@ -4229,6 +4316,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 29-37  - chapitre 10",
           compactVideoDescription: '',
@@ -4260,6 +4348,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 30-37  - chapitre 11 - 1",
           compactVideoDescription: '',
@@ -4291,6 +4380,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 31-37  - chapitre 11 - 2",
           compactVideoDescription: '',
@@ -4322,6 +4412,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 32-37  - chapitre 12",
           compactVideoDescription: '',
@@ -4353,6 +4444,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 33-37  - chapitre 13",
           compactVideoDescription: '',
@@ -4496,6 +4588,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra 1/37  - Avant - propos de l'éditeur américain",
           compactVideoDescription: '',
@@ -4527,6 +4620,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra 2/37  - Note et remerciements de l'auteur",
           compactVideoDescription: '',
@@ -4558,6 +4652,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 3/37  - Partie 1 chapitre 1",
           compactVideoDescription: '',
@@ -4589,6 +4684,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 4/37  - chapitre 2-1",
           compactVideoDescription: '',
@@ -4620,6 +4716,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 5/37  - chapitre 2 - 2",
           compactVideoDescription: '',
@@ -4651,6 +4748,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 6/37  - chapitre 2 - 3",
           compactVideoDescription: '',
@@ -4682,6 +4780,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 10/37  - chapitre 3 - 1",
           compactVideoDescription: '',
@@ -4713,6 +4812,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 11/37  - chapitre 3 - 2",
           compactVideoDescription: '',
@@ -4744,6 +4844,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 13/37  - chapitre 4 - 1",
           compactVideoDescription: '',
@@ -4775,6 +4876,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 16/37  - Chapitre 5 - 1",
           compactVideoDescription: '',
@@ -4806,6 +4908,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 21/37  - Partie 2 chapitre 6 - 1",
           compactVideoDescription: '',
@@ -4837,6 +4940,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 22/37  - chapitre 6 - 2",
           compactVideoDescription: '',
@@ -4868,6 +4972,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 26/37  - chapitre 8",
           compactVideoDescription: '',
@@ -4899,6 +5004,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 27/37  - chapitre 9 - 1",
           compactVideoDescription: '',
@@ -4930,6 +5036,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 29/37  - chapitre 10",
           compactVideoDescription: '',
@@ -4961,6 +5068,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 30/37  - chapitre 11 - 1",
           compactVideoDescription: '',
@@ -4992,6 +5100,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 31/37  - chapitre 11 - 2",
           compactVideoDescription: '',
@@ -5023,6 +5132,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 32/37  - chapitre 12",
           compactVideoDescription: '',
@@ -5054,6 +5164,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 33/37  - chapitre 13",
           compactVideoDescription: '',
@@ -5197,6 +5308,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra 1:37  - Avant - propos de l'éditeur américain",
           compactVideoDescription: '',
@@ -5228,6 +5340,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra 2:37  - Note et remerciements de l'auteur",
           compactVideoDescription: '',
@@ -5259,6 +5372,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 3:37  - Partie 1 chapitre 1",
           compactVideoDescription: '',
@@ -5290,6 +5404,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 4:37  - chapitre 2-1",
           compactVideoDescription: '',
@@ -5321,6 +5436,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 5:37  - chapitre 2 - 2",
           compactVideoDescription: '',
@@ -5352,6 +5468,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 6:37  - chapitre 2 - 3",
           compactVideoDescription: '',
@@ -5383,6 +5500,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 10:37  - chapitre 3 - 1",
           compactVideoDescription: '',
@@ -5414,6 +5532,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 11:37  - chapitre 3 - 2",
           compactVideoDescription: '',
@@ -5445,6 +5564,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 13:37  - chapitre 4 - 1",
           compactVideoDescription: '',
@@ -5476,6 +5596,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 16:37  - Chapitre 5 - 1",
           compactVideoDescription: '',
@@ -5507,6 +5628,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 21:37  - Partie 2 chapitre 6 - 1",
           compactVideoDescription: '',
@@ -5538,6 +5660,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 22:37  - chapitre 6 - 2",
           compactVideoDescription: '',
@@ -5569,6 +5692,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 26:37  - chapitre 8",
           compactVideoDescription: '',
@@ -5600,6 +5724,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 27:37  - chapitre 9 - 1",
           compactVideoDescription: '',
@@ -5631,6 +5756,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 29:37  - chapitre 10",
           compactVideoDescription: '',
@@ -5662,6 +5788,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 30:37  - chapitre 11 - 1",
           compactVideoDescription: '',
@@ -5693,6 +5820,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 31:37  - chapitre 11 - 2",
           compactVideoDescription: '',
@@ -5724,6 +5852,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 32:37  - chapitre 12",
           compactVideoDescription: '',
@@ -5755,6 +5884,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 33:37  - chapitre 13",
           compactVideoDescription: '',
@@ -5899,6 +6029,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra 1_37  - Avant - propos de l'éditeur américain",
           compactVideoDescription: '',
@@ -5930,6 +6061,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra 2_37  - Note et remerciements de l'auteur",
           compactVideoDescription: '',
@@ -5961,6 +6093,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 3_37  - Partie 1 chapitre 1",
           compactVideoDescription: '',
@@ -5992,6 +6125,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 4_37  - chapitre 2-1",
           compactVideoDescription: '',
@@ -6023,6 +6157,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 5_37  - chapitre 2 - 2",
           compactVideoDescription: '',
@@ -6054,6 +6189,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 6_37  - chapitre 2 - 3",
           compactVideoDescription: '',
@@ -6085,6 +6221,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 10_37  - chapitre 3 - 1",
           compactVideoDescription: '',
@@ -6116,6 +6253,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 11_37  - chapitre 3 - 2",
           compactVideoDescription: '',
@@ -6147,6 +6285,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 13_37  - chapitre 4 - 1",
           compactVideoDescription: '',
@@ -6178,6 +6317,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 16_37  - Chapitre 5 - 1",
           compactVideoDescription: '',
@@ -6209,6 +6349,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 21_37  - Partie 2 chapitre 6 - 1",
           compactVideoDescription: '',
@@ -6240,6 +6381,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 22_37  - chapitre 6 - 2",
           compactVideoDescription: '',
@@ -6271,6 +6413,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 26_37  - chapitre 8",
           compactVideoDescription: '',
@@ -6302,6 +6445,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 27_37  - chapitre 9 - 1",
           compactVideoDescription: '',
@@ -6333,6 +6477,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 29_37  - chapitre 10",
           compactVideoDescription: '',
@@ -6364,6 +6509,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 30_37  - chapitre 11 - 1",
           compactVideoDescription: '',
@@ -6395,6 +6541,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 31_37  - chapitre 11 - 2",
           compactVideoDescription: '',
@@ -6426,6 +6573,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 32_37  - chapitre 12",
           compactVideoDescription: '',
@@ -6457,6 +6605,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 33_37  - chapitre 13",
           compactVideoDescription: '',
@@ -6601,6 +6750,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra 1-37  - Avant - propos de l'éditeur américain",
           compactVideoDescription: '',
@@ -6632,6 +6782,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra 2-37  - Note et remerciements de l'auteur",
           compactVideoDescription: '',
@@ -6663,6 +6814,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 3-37  - Partie 1 chapitre 1",
           compactVideoDescription: '',
@@ -6694,6 +6846,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 4-37  - chapitre 2-1",
           compactVideoDescription: '',
@@ -6725,6 +6878,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 5-37  - chapitre 2 - 2",
           compactVideoDescription: '',
@@ -6756,6 +6910,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 6-37  - chapitre 2 - 3",
           compactVideoDescription: '',
@@ -6787,6 +6942,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 10-37  - chapitre 3 - 1",
           compactVideoDescription: '',
@@ -6818,6 +6974,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 11-37  - chapitre 3 - 2",
           compactVideoDescription: '',
@@ -6849,6 +7006,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 13-37  - chapitre 4 - 1",
           compactVideoDescription: '',
@@ -6880,6 +7038,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 16-37  - Chapitre 5 - 1",
           compactVideoDescription: '',
@@ -6911,6 +7070,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 21-37  - Partie 2 chapitre 6 - 1",
           compactVideoDescription: '',
@@ -6942,6 +7102,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 22-37  - chapitre 6 - 2",
           compactVideoDescription: '',
@@ -6973,6 +7134,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 26-37  - chapitre 8",
           compactVideoDescription: '',
@@ -7004,6 +7166,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 27-37  - chapitre 9 - 1",
           compactVideoDescription: '',
@@ -7035,6 +7198,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 29-37  - chapitre 10",
           compactVideoDescription: '',
@@ -7066,6 +7230,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 30-37  - chapitre 11 - 1",
           compactVideoDescription: '',
@@ -7097,6 +7262,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 31-37  - chapitre 11 - 2",
           compactVideoDescription: '',
@@ -7128,6 +7294,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 32-37  - chapitre 12",
           compactVideoDescription: '',
@@ -7159,6 +7326,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 33-37  - chapitre 13",
           compactVideoDescription: '',
@@ -7303,6 +7471,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra 1/37  - Avant - propos de l'éditeur américain",
           compactVideoDescription: '',
@@ -7334,6 +7503,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra 2/37  - Note et remerciements de l'auteur",
           compactVideoDescription: '',
@@ -7365,6 +7535,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 3/37  - Partie 1 chapitre 1",
           compactVideoDescription: '',
@@ -7396,6 +7567,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 4/37  - chapitre 2-1",
           compactVideoDescription: '',
@@ -7427,6 +7599,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 5/37  - chapitre 2 - 2",
           compactVideoDescription: '',
@@ -7458,6 +7631,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 6/37  - chapitre 2 - 3",
           compactVideoDescription: '',
@@ -7489,6 +7663,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 10/37  - chapitre 3 - 1",
           compactVideoDescription: '',
@@ -7520,6 +7695,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 11/37  - chapitre 3 - 2",
           compactVideoDescription: '',
@@ -7551,6 +7727,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 13/37  - chapitre 4 - 1",
           compactVideoDescription: '',
@@ -7582,6 +7759,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 16/37  - Chapitre 5 - 1",
           compactVideoDescription: '',
@@ -7613,6 +7791,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 21/37  - Partie 2 chapitre 6 - 1",
           compactVideoDescription: '',
@@ -7644,6 +7823,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 22/37  - chapitre 6 - 2",
           compactVideoDescription: '',
@@ -7675,6 +7855,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 26/37  - chapitre 8",
           compactVideoDescription: '',
@@ -7706,6 +7887,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 27/37  - chapitre 9 - 1",
           compactVideoDescription: '',
@@ -7737,6 +7919,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 29/37  - chapitre 10",
           compactVideoDescription: '',
@@ -7768,6 +7951,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 30/37  - chapitre 11 - 1",
           compactVideoDescription: '',
@@ -7799,6 +7983,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 31/37  - chapitre 11 - 2",
           compactVideoDescription: '',
@@ -7830,6 +8015,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 32/37  - chapitre 12",
           compactVideoDescription: '',
@@ -7861,6 +8047,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 33/37  - chapitre 13",
           compactVideoDescription: '',
@@ -8005,6 +8192,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra 1:37  - Avant - propos de l'éditeur américain",
           compactVideoDescription: '',
@@ -8036,6 +8224,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra 2:37  - Note et remerciements de l'auteur",
           compactVideoDescription: '',
@@ -8067,6 +8256,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 3:37  - Partie 1 chapitre 1",
           compactVideoDescription: '',
@@ -8098,6 +8288,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 4:37  - chapitre 2-1",
           compactVideoDescription: '',
@@ -8129,6 +8320,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 5:37  - chapitre 2 - 2",
           compactVideoDescription: '',
@@ -8160,6 +8352,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 6:37  - chapitre 2 - 3",
           compactVideoDescription: '',
@@ -8191,6 +8384,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 10:37  - chapitre 3 - 1",
           compactVideoDescription: '',
@@ -8222,6 +8416,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 11:37  - chapitre 3 - 2",
           compactVideoDescription: '',
@@ -8253,6 +8448,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 13:37  - chapitre 4 - 1",
           compactVideoDescription: '',
@@ -8284,6 +8480,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 16:37  - Chapitre 5 - 1",
           compactVideoDescription: '',
@@ -8315,6 +8512,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 21:37  - Partie 2 chapitre 6 - 1",
           compactVideoDescription: '',
@@ -8346,6 +8544,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 22:37  - chapitre 6 - 2",
           compactVideoDescription: '',
@@ -8377,6 +8576,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 26:37  - chapitre 8",
           compactVideoDescription: '',
@@ -8408,6 +8608,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 27:37  - chapitre 9 - 1",
           compactVideoDescription: '',
@@ -8439,6 +8640,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 29:37  - chapitre 10",
           compactVideoDescription: '',
@@ -8470,6 +8672,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 30:37  - chapitre 11 - 1",
           compactVideoDescription: '',
@@ -8501,6 +8704,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 31:37  - chapitre 11 - 2",
           compactVideoDescription: '',
@@ -8532,6 +8736,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 32:37  - chapitre 12",
           compactVideoDescription: '',
@@ -8563,6 +8768,7 @@ void main() {
           movedToPlaylistTitle: null,
           copiedFromPlaylistTitle: null,
           copiedToPlaylistTitle: null,
+          extractedFromPlaylistTitle: null,
           originalVideoTitle:
               "Audio Et l'Univers disparaitra de Gary Renard 33:37  - chapitre 13",
           compactVideoDescription: '',
@@ -8715,6 +8921,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 1: Qu'il faut imiter J\u00e9sus-Christ, et m\u00e9priser toutes les vanit\u00e9s du monde.\nChapitre 2: Avoir d'humble sentiments de soi-m\u00eame.\nChapitre 3: De la doctrine de la v\u00e9rit\u00e9. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -8743,6 +8950,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 11:  Des moyens d'acqu\u00e9rir la paix int\u00e9rieure et du soin d'avancer dans la vertu.\nChapitre 12: De l'avantage de l'adversit\u00e9.\nChapitre 13 :  De la r\u00e9sistance aux tentations. ...\n\nChapitre14: Eviter, Chapitre15: Des",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -8770,6 +8978,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 16: Qu'il faut supporter les d\u00e9fauts d'autrui.\nChapitre17: De la vie religieuse.\nChapitre 18: De l'exemple des saints. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -8798,6 +9007,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 22: De la consid\u00e9ration de la mis\u00e8re humaine.\nChapitre 23: De la m\u00e9ditation de la mort.\nChapitre 24: Du jugement et des peines des p\u00e9cheurs. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -8828,6 +9038,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 6: Des affections d\u00e9r\u00e9gl\u00e9s.\nChapitre 7: Qu'il faut fuir l'orgueil et les vaines esp\u00e9rances.\nChapitre 8: Eviter la pop grande familiarit\u00e9. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -8858,6 +9069,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 6: Des affections d\u00e9r\u00e9gl\u00e9s.\nChapitre 7: Qu'il faut fuir l'orgueil et les vaines esp\u00e9rances.\nChapitre 8: Eviter la pop grande familiarit\u00e9. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -8933,6 +9145,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 1: Qu'il faut imiter J\u00e9sus-Christ, et m\u00e9priser toutes les vanit\u00e9s du monde.\nChapitre 2: Avoir d'humble sentiments de soi-m\u00eame.\nChapitre 3: De la doctrine de la v\u00e9rit\u00e9. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -8961,6 +9174,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 11:  Des moyens d'acqu\u00e9rir la paix int\u00e9rieure et du soin d'avancer dans la vertu.\nChapitre 12: De l'avantage de l'adversit\u00e9.\nChapitre 13 :  De la r\u00e9sistance aux tentations. ...\n\nChapitre14: Eviter, Chapitre15: Des",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -8988,6 +9202,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 16: Qu'il faut supporter les d\u00e9fauts d'autrui.\nChapitre17: De la vie religieuse.\nChapitre 18: De l'exemple des saints. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9016,6 +9231,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 22: De la consid\u00e9ration de la mis\u00e8re humaine.\nChapitre 23: De la m\u00e9ditation de la mort.\nChapitre 24: Du jugement et des peines des p\u00e9cheurs. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9046,6 +9262,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 6: Des affections d\u00e9r\u00e9gl\u00e9s.\nChapitre 7: Qu'il faut fuir l'orgueil et les vaines esp\u00e9rances.\nChapitre 8: Eviter la pop grande familiarit\u00e9. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9076,6 +9293,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 6: Des affections d\u00e9r\u00e9gl\u00e9s.\nChapitre 7: Qu'il faut fuir l'orgueil et les vaines esp\u00e9rances.\nChapitre 8: Eviter la pop grande familiarit\u00e9. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9152,6 +9370,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 1: Qu'il faut imiter J\u00e9sus-Christ, et m\u00e9priser toutes les vanit\u00e9s du monde.\nChapitre 2: Avoir d'humble sentiments de soi-m\u00eame.\nChapitre 3: De la doctrine de la v\u00e9rit\u00e9. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9180,6 +9399,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 11:  Des moyens d'acqu\u00e9rir la paix int\u00e9rieure et du soin d'avancer dans la vertu.\nChapitre 12: De l'avantage de l'adversit\u00e9.\nChapitre 13 :  De la r\u00e9sistance aux tentations. ...\n\nChapitre14: Eviter, Chapitre15: Des",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9208,6 +9428,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 16: Qu'il faut supporter les d\u00e9fauts d'autrui.\nChapitre17: De la vie religieuse.\nChapitre 18: De l'exemple des saints. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9236,6 +9457,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 22: De la consid\u00e9ration de la mis\u00e8re humaine.\nChapitre 23: De la m\u00e9ditation de la mort.\nChapitre 24: Du jugement et des peines des p\u00e9cheurs. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9266,6 +9488,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 6: Des affections d\u00e9r\u00e9gl\u00e9s.\nChapitre 7: Qu'il faut fuir l'orgueil et les vaines esp\u00e9rances.\nChapitre 8: Eviter la pop grande familiarit\u00e9. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9296,6 +9519,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 6: Des affections d\u00e9r\u00e9gl\u00e9s.\nChapitre 7: Qu'il faut fuir l'orgueil et les vaines esp\u00e9rances.\nChapitre 8: Eviter la pop grande familiarit\u00e9. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9372,6 +9596,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 1: Qu'il faut imiter J\u00e9sus-Christ, et m\u00e9priser toutes les vanit\u00e9s du monde.\nChapitre 2: Avoir d'humble sentiments de soi-m\u00eame.\nChapitre 3: De la doctrine de la v\u00e9rit\u00e9. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9400,6 +9625,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 11:  Des moyens d'acqu\u00e9rir la paix int\u00e9rieure et du soin d'avancer dans la vertu.\nChapitre 12: De l'avantage de l'adversit\u00e9.\nChapitre 13 :  De la r\u00e9sistance aux tentations. ...\n\nChapitre14: Eviter, Chapitre15: Des",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9428,6 +9654,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 16: Qu'il faut supporter les d\u00e9fauts d'autrui.\nChapitre17: De la vie religieuse.\nChapitre 18: De l'exemple des saints. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9456,6 +9683,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 22: De la consid\u00e9ration de la mis\u00e8re humaine.\nChapitre 23: De la m\u00e9ditation de la mort.\nChapitre 24: Du jugement et des peines des p\u00e9cheurs. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9486,6 +9714,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 6: Des affections d\u00e9r\u00e9gl\u00e9s.\nChapitre 7: Qu'il faut fuir l'orgueil et les vaines esp\u00e9rances.\nChapitre 8: Eviter la pop grande familiarit\u00e9. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9516,6 +9745,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 6: Des affections d\u00e9r\u00e9gl\u00e9s.\nChapitre 7: Qu'il faut fuir l'orgueil et les vaines esp\u00e9rances.\nChapitre 8: Eviter la pop grande familiarit\u00e9. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9696,6 +9926,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 1: Qu'il faut imiter J\u00e9sus-Christ, et m\u00e9priser toutes les vanit\u00e9s du monde.\nChapitre 2: Avoir d'humble sentiments de soi-m\u00eame.\nChapitre 3: De la doctrine de la v\u00e9rit\u00e9. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9724,6 +9955,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 11:  Des moyens d'acqu\u00e9rir la paix int\u00e9rieure et du soin d'avancer dans la vertu.\nChapitre 12: De l'avantage de l'adversit\u00e9.\nChapitre 13 :  De la r\u00e9sistance aux tentations. ...\n\nChapitre14: Eviter, Chapitre15: Des",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9751,6 +9983,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 16: Qu'il faut supporter les d\u00e9fauts d'autrui.\nChapitre17: De la vie religieuse.\nChapitre 18: De l'exemple des saints. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9779,6 +10012,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 22: De la consid\u00e9ration de la mis\u00e8re humaine.\nChapitre 23: De la m\u00e9ditation de la mort.\nChapitre 24: Du jugement et des peines des p\u00e9cheurs. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9808,6 +10042,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 6: Des affections d\u00e9r\u00e9gl\u00e9s.\nChapitre 7: Qu'il faut fuir l'orgueil et les vaines esp\u00e9rances.\nChapitre 8: Eviter la pop grande familiarit\u00e9. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9837,6 +10072,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 6: Des affections d\u00e9r\u00e9gl\u00e9s.\nChapitre 7: Qu'il faut fuir l'orgueil et les vaines esp\u00e9rances.\nChapitre 8: Eviter la pop grande familiarit\u00e9. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9914,6 +10150,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 1: Qu'il faut imiter J\u00e9sus-Christ, et m\u00e9priser toutes les vanit\u00e9s du monde.\nChapitre 2: Avoir d'humble sentiments de soi-m\u00eame.\nChapitre 3: De la doctrine de la v\u00e9rit\u00e9. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9942,6 +10179,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 11:  Des moyens d'acqu\u00e9rir la paix int\u00e9rieure et du soin d'avancer dans la vertu.\nChapitre 12: De l'avantage de l'adversit\u00e9.\nChapitre 13 :  De la r\u00e9sistance aux tentations. ...\n\nChapitre14: Eviter, Chapitre15: Des",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9969,6 +10207,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 16: Qu'il faut supporter les d\u00e9fauts d'autrui.\nChapitre17: De la vie religieuse.\nChapitre 18: De l'exemple des saints. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -9997,6 +10236,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 22: De la consid\u00e9ration de la mis\u00e8re humaine.\nChapitre 23: De la m\u00e9ditation de la mort.\nChapitre 24: Du jugement et des peines des p\u00e9cheurs. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -10026,6 +10266,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 6: Des affections d\u00e9r\u00e9gl\u00e9s.\nChapitre 7: Qu'il faut fuir l'orgueil et les vaines esp\u00e9rances.\nChapitre 8: Eviter la pop grande familiarit\u00e9. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -10055,6 +10296,7 @@ void main() {
                 "La voie de Dieu par la voix des saints\n\nChapitre 6: Des affections d\u00e9r\u00e9gl\u00e9s.\nChapitre 7: Qu'il faut fuir l'orgueil et les vaines esp\u00e9rances.\nChapitre 8: Eviter la pop grande familiarit\u00e9. ...",
             copiedFromPlaylistTitle: null,
             copiedToPlaylistTitle: null,
+            extractedFromPlaylistTitle: null,
             audioType: AudioType.downloaded,
             isAudioMusicQuality: false,
             isPaused: true,
@@ -10140,6 +10382,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Zebra ?',
         compactVideoDescription: '',
         validVideoTitle: 'Zebra',
@@ -10167,6 +10410,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Apple ?',
         compactVideoDescription: '',
         validVideoTitle: 'Apple',
@@ -10194,6 +10438,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Bananna ?',
         compactVideoDescription: '',
         validVideoTitle: 'Bananna',
@@ -10221,6 +10466,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Bananna ?',
         compactVideoDescription: '',
         validVideoTitle: 'Bananna Longer',
@@ -10343,6 +10589,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Zebra ?',
         compactVideoDescription: '',
         validVideoTitle: 'Zebra 1',
@@ -10370,6 +10617,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Apple ?',
         compactVideoDescription: '',
         validVideoTitle: 'Apple',
@@ -10397,6 +10645,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Zebra ?',
         compactVideoDescription: '',
         validVideoTitle: 'Zebra 3',
@@ -10424,6 +10673,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Bananna ?',
         compactVideoDescription: '',
         validVideoTitle: 'Bananna',
@@ -10451,6 +10701,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Zebra ?',
         compactVideoDescription: '',
         validVideoTitle: 'Zebra 2',
@@ -10609,6 +10860,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Zebra ?',
         compactVideoDescription: 'Julien Bam',
         validVideoTitle: 'Zebra 1',
@@ -10636,6 +10888,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Apple ?',
         compactVideoDescription: 'description',
         validVideoTitle: 'Apple',
@@ -10663,6 +10916,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Zebra ?',
         compactVideoDescription: 'Julien Bam',
         validVideoTitle: 'Zebra 3',
@@ -10690,6 +10944,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Bananna ?',
         compactVideoDescription: '',
         validVideoTitle: 'Bananna',
@@ -10717,6 +10972,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Zebra ?',
         compactVideoDescription: 'Julien Goal',
         validVideoTitle: 'Zebra 2',
@@ -10835,6 +11091,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Zebra ?',
         compactVideoDescription: 'Julien Bam',
         validVideoTitle: 'Zebra 1',
@@ -10862,6 +11119,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Apple ?',
         compactVideoDescription: 'description',
         validVideoTitle: 'Apple Julien',
@@ -10889,6 +11147,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Zebra ?',
         compactVideoDescription: 'Julien Bam',
         validVideoTitle: 'Zebra 3',
@@ -10916,6 +11175,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Bananna ?',
         compactVideoDescription: '',
         validVideoTitle: 'Bananna',
@@ -10943,6 +11203,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Zebra ?',
         compactVideoDescription: 'Julien Goal',
         validVideoTitle: 'Zebra 2',
@@ -11084,6 +11345,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Zebra ?',
         compactVideoDescription: 'Julien Bam',
         validVideoTitle: 'Zebra 1 Julien',
@@ -11111,6 +11373,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Apple ?',
         compactVideoDescription: 'description',
         validVideoTitle: 'Apple Julien',
@@ -11138,6 +11401,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Zebra ?',
         compactVideoDescription: 'Julien Bam',
         validVideoTitle: 'Zebra 3',
@@ -11165,6 +11429,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Bananna ?',
         compactVideoDescription: '',
         validVideoTitle: 'Bananna',
@@ -11192,6 +11457,7 @@ void main() {
         movedToPlaylistTitle: null,
         copiedFromPlaylistTitle: null,
         copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
         originalVideoTitle: 'Zebra ?',
         compactVideoDescription: 'Julien Goal',
         validVideoTitle: 'Zebra 2',

@@ -5211,7 +5211,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "L'audio \"audio learn test short video one\" N'A PAS été copié de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\" car il n'est pas présent dans la playlist source.",
+            "L'audio \"audio learn test short video one\" N'A PAS été copié de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\" car son fichier MP3 n'est pas présent dans la playlist source.",
         warningTitle: 'AVERTISSEMENT',
       );
 
@@ -7527,7 +7527,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "L'audio \"audio learn test short video one\" N'A PAS été déplacé de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\" car il n'est pas présent dans la playlist source.",
+            "L'audio \"audio learn test short video one\" N'A PAS été déplacé de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\" car son fichier MP3 n'est pas présent dans la playlist source.",
         isWarningConfirming: false,
         warningTitle: 'AVERTISSEMENT',
       );
@@ -7645,7 +7645,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "L'audio \"audio learn test short video one\" N'A PAS été déplacé de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\" car il n'est pas présent dans la playlist source.",
+            "L'audio \"audio learn test short video one\" N'A PAS été déplacé de la playlist Youtube \"audio_learn_test_download_2_small_videos\" vers la playlist locale \"local_audio_playlist_2\" car son fichier MP3 n'est pas présent dans la playlist source.",
         isWarningConfirming: false,
         warningTitle: 'AVERTISSEMENT',
       );
