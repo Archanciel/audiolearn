@@ -17333,9 +17333,9 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets('''Delete renamed Youtube playlist. Before improving the Playlist == method,
-                   this test would fail.''',
-        (WidgetTester tester) async {
+    testWidgets(
+        '''Delete renamed Youtube playlist. Before improving the Playlist == method,
+                   this test would fail.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -17349,8 +17349,7 @@ void main() {
         destinationRootPath: kApplicationPathWindowsTest,
       );
 
-      const String youtubePlaylistToDeleteTitle =
-          'Bible Bénie A Supprimer';
+      const String youtubePlaylistToDeleteTitle = 'Bible Bénie A Supprimer';
 
       final SettingsDataService settingsDataService = SettingsDataService(
         isTest: true,
@@ -17443,10 +17442,7 @@ void main() {
             settingType: SettingType.playlists,
             settingSubType: Playlists.orderedTitleLst,
           ),
-          [
-            'Bible Bénie',
-            'Nouvelle Bible Bénie'
-          ]);
+          ['Bible Bénie', 'Nouvelle Bible Bénie']);
 
       final String youtubePlaylistToDeletePath = path.join(
         kApplicationPathWindowsTest,
@@ -18974,6 +18970,7 @@ void main() {
         tester: tester,
         audioListTileWidgetFinder: audioListTileWidgetFinder,
         expectedCommentTitle: expectedCommentTitle,
+        isAutoRefreshCommentDialogExpected: true,
       );
 
       // Now we want to tap the popup menu of the audio ListTile
@@ -19400,6 +19397,7 @@ void main() {
         tester: tester,
         audioListTileWidgetFinder: audioListTileWidgetFinder,
         expectedCommentTitle: anAudioCommentTitle,
+        isAutoRefreshCommentDialogExpected: true,
       );
 
       // Now we want to tap the popup menu of the audio ListTile
@@ -20023,6 +20021,7 @@ void main() {
         audioListTileWidgetFinder: audioListTileWidgetFinder,
         expectedCommentTitle: 'morning _ cinematic accessible after renaming',
         audioTitleToVerifyInCommentAddEditDialog: newTitle,
+        isAutoRefreshCommentDialogExpected: true,
       );
 
       // Purge the test playlist directory so that the created test
@@ -20173,6 +20172,7 @@ void main() {
         audioListTileWidgetFinder: audioListTileWidgetFinder,
         expectedCommentTitle: 'Really short video accessible after renaming',
         audioTitleToVerifyInCommentAddEditDialog: newTitle,
+        isAutoRefreshCommentDialogExpected: true,
       );
 
       // Purge the test playlist directory so that the created test
@@ -20323,6 +20323,7 @@ void main() {
         audioListTileWidgetFinder: audioListTileWidgetFinder,
         expectedCommentTitle: 'morning _ cinematic accessible after renaming',
         audioTitleToVerifyInCommentAddEditDialog: newTitle,
+        isAutoRefreshCommentDialogExpected: true,
       );
 
       // Purge the test playlist directory so that the created test
@@ -20427,6 +20428,7 @@ void main() {
         audioListTileWidgetFinder: audioListTileWidgetFinder,
         expectedCommentTitle: 'morning _ cinematic accessible after renaming',
         audioTitleToVerifyInCommentAddEditDialog: newTitle,
+        isAutoRefreshCommentDialogExpected: true,
       );
 
       // Then obtain the audio ListTile widget enclosing the Text widget
@@ -20478,6 +20480,7 @@ void main() {
         audioListTileWidgetFinder: audioListTileWidgetFinder,
         expectedCommentTitle: 'morning _ cinematic accessible after renaming',
         audioTitleToVerifyInCommentAddEditDialog: newTitle,
+        isAutoRefreshCommentDialogExpected: true,
       );
 
       // Purge the test playlist directory so that the created test
@@ -22578,7 +22581,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the audio comment dialog is displayed
-      expect(find.byType(CommentListAddDialog), findsOneWidget);
+      expect(find.byType(AutoRefreshCommentDialog), findsOneWidget);
 
       // Verify the dialog title
       expect(find.text('Comments'), findsOneWidget);
@@ -22684,7 +22687,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify that the audio comment dialog is displayed
-      expect(find.byType(CommentListAddDialog), findsOneWidget);
+      expect(find.byType(AutoRefreshCommentDialog), findsOneWidget);
 
       // Verify that the audio comments list of the dialog has 4 comment
       // item
@@ -22791,7 +22794,7 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.drag(
-        find.byType(CommentListAddDialog),
+        find.byType(AutoRefreshCommentDialog),
         const Offset(0, 800), // Negative value for vertical drag to scroll down
       );
 
@@ -22810,7 +22813,7 @@ void main() {
       // Checking the previously played comment icon button
 
       await tester.drag(
-        find.byType(CommentListAddDialog),
+        find.byType(AutoRefreshCommentDialog),
         const Offset(
             0, -800), // Negative value for vertical drag to scroll down
       );
@@ -22835,7 +22838,7 @@ void main() {
       // Checking the currently played comment icon button
 
       await tester.drag(
-        find.byType(CommentListAddDialog),
+        find.byType(AutoRefreshCommentDialog),
         const Offset(0, 800), // Negative value for vertical drag to scroll down
       );
 
@@ -22912,7 +22915,7 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.drag(
-        find.byType(CommentListAddDialog),
+        find.byType(AutoRefreshCommentDialog),
         const Offset(
             0, -800), // Negative value for vertical drag to scroll down
       );
@@ -22934,7 +22937,7 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.drag(
-        find.byType(CommentListAddDialog),
+        find.byType(AutoRefreshCommentDialog),
         const Offset(0, 800), // Negative value for vertical drag to scroll down
       );
 
@@ -22963,7 +22966,7 @@ void main() {
       // Checking the currently played comment icon button
 
       await tester.drag(
-        find.byType(CommentListAddDialog),
+        find.byType(AutoRefreshCommentDialog),
         const Offset(
             0, -800), // Negative value for vertical drag to scroll down
       );
@@ -23794,8 +23797,10 @@ Future<void> _checkAudioCommentUsingAudioItemMenu({
   required WidgetTester tester,
   required Finder audioListTileWidgetFinder,
   required String expectedCommentTitle,
+  int expectedCommentTitleNumber = 1,
   String? notAccessibleCommentTitle,
   String? audioTitleToVerifyInCommentAddEditDialog,
+  bool isAutoRefreshCommentDialogExpected = false,
 }) async {
   // Find the leading menu icon button of the audio ListTile
   // and tap on it
@@ -23816,17 +23821,28 @@ Future<void> _checkAudioCommentUsingAudioItemMenu({
   await tester.pumpAndSettle();
 
   // Verify that the comment list is displayed
-  expect(find.byType(CommentListAddDialog), findsOneWidget);
+
+  if (isAutoRefreshCommentDialogExpected) {
+    expect(find.byType(AutoRefreshCommentDialog), findsOneWidget);
+  } else {
+    expect(find.byType(CommentListAddDialog), findsOneWidget);
+  }
 
   // Verify that the expectedCommentTitle is listed
 
-  Finder commentListDialogFinder = find.byType(CommentListAddDialog);
+  Finder commentListDialogFinder;
+
+  if (isAutoRefreshCommentDialogExpected) {
+    commentListDialogFinder = find.byType(AutoRefreshCommentDialog);
+  } else {
+    commentListDialogFinder = find.byType(CommentListAddDialog);
+  }
 
   expect(
       find.descendant(
           of: commentListDialogFinder,
           matching: find.text(expectedCommentTitle)),
-      findsOneWidget);
+      findsNWidgets(expectedCommentTitleNumber));
 
   // If the notAccessibleCommentTitle is not null, verify that it is
   // not listed
