@@ -303,6 +303,8 @@ class CommentVM extends ChangeNotifier {
       audio: commentedAudio,
     );
 
+    bool isInitialExistingCommentsLstEmpty = existingCommentsLst.isEmpty;
+
     for (Comment updatedComment in updateCommentsLst) {
       // Check if the comment already exists
       Comment? existingComment = existingCommentsLst.firstWhereOrNull(
@@ -347,12 +349,23 @@ class CommentVM extends ChangeNotifier {
       }
     }
 
-    _sortAndSaveCommentLst(
-      commentLst: existingCommentsLst,
-      commentFilePathName: buildCommentFilePathName(
+    final String commentFilePathName = buildCommentFilePathName(
         playlistDownloadPath: commentedAudio.enclosingPlaylist!.downloadPath,
         audioFileName: commentedAudio.audioFileName,
-      ),
+      );
+
+    if (isInitialExistingCommentsLstEmpty) {
+      // Create the comment dir so that the comment file can be created
+      DirUtil.createDirIfNotExistSync(
+        pathStr: DirUtil.getPathFromPathFileName(
+          pathFileName: commentFilePathName,
+        ),
+      );
+    }
+
+    _sortAndSaveCommentLst(
+      commentLst: existingCommentsLst,
+      commentFilePathName: commentFilePathName,
     );
 
     notifyListeners();
