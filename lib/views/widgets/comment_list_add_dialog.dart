@@ -213,6 +213,7 @@ class CommentListAddDialog extends StatefulWidget {
   static void showCommentDialog({
     required BuildContext context,
     required Audio currentAudio,
+    bool isCalledByAudioListItem = false,
     VoidCallback? onClosed, // **NEW**: Optional callback when dialog is closed
   }) {
     OverlayState? overlayState = Overlay.of(context);
@@ -241,6 +242,7 @@ class CommentListAddDialog extends StatefulWidget {
               child: Builder(builder: (context) {
                 return AutoRefreshCommentDialog(
                   initialAudio: currentAudio,
+                  isCalledByAudioListItem: isCalledByAudioListItem,
                 );
               }),
             ),
@@ -271,10 +273,12 @@ class _CommentListAddDialogState extends State<CommentListAddDialog> {
 /// This widget listens for audio changes and automatically updates the dialog content
 class AutoRefreshCommentDialog extends StatefulWidget {
   final Audio initialAudio;
+  final bool isCalledByAudioListItem;
 
   const AutoRefreshCommentDialog({
     super.key,
     required this.initialAudio,
+    this.isCalledByAudioListItem = false,
   });
 
   @override
@@ -378,7 +382,10 @@ class _AutoRefreshCommentDialogState extends State<AutoRefreshCommentDialog> {
   @override
   Widget build(BuildContext context) {
     // Build the actual dialog content with the current audio
-    return _CommentListAddDialogContent(currentAudio: _currentAudio);
+    return _CommentListAddDialogContent(
+      currentAudio: _currentAudio,
+      isCalledByAudioListItem: widget.isCalledByAudioListItem,
+    );
   }
 }
 
@@ -386,8 +393,14 @@ class _AutoRefreshCommentDialogState extends State<AutoRefreshCommentDialog> {
 class _CommentListAddDialogContent extends StatefulWidget {
   final Audio currentAudio;
 
+  // If true, avoids the presence of the minimize comment list add
+  // dialog icon if the comment list add dialog is opened from the
+  // audio list item 'Audio Comments' menu
+  final bool isCalledByAudioListItem;
+
   const _CommentListAddDialogContent({
     required this.currentAudio,
+    this.isCalledByAudioListItem = false,
   });
 
   @override
@@ -589,7 +602,8 @@ class _CommentListAddDialogContentState
                           audio: currentAudio,
                         ) !=
                         null &&
-                    CommentDialogManager.hasActiveOverlay)
+                    CommentDialogManager.hasActiveOverlay &&
+                    !widget.isCalledByAudioListItem)
                 // Showing the minimize icon happens only if the comment list
                 // add dialog was opened in the audio player view by the
                 // CommentDialogManager.

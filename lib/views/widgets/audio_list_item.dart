@@ -290,6 +290,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
             CommentListAddDialog.showCommentDialog(
               context: context,
               currentAudio: audio,
+              isCalledByAudioListItem: true,
             );
             break;
           case AudioPopupMenuAction.modifyAudioTitle:
