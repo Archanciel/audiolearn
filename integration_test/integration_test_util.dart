@@ -2846,62 +2846,64 @@ class IntegrationTestUtil {
     required WidgetTester tester,
     required List<Map<String, dynamic>> segmentDetailsList,
   }) {
-    for (var segmentDetails in segmentDetailsList) {
-
+    for (Map<String, dynamic> segmentDetails in segmentDetailsList) {
       // Verify number in CircleAvatar
       if (segmentDetails.containsKey('number')) {
         expect(
           find.text('${segmentDetails['number']}'),
-          findsWidgets, // May find more than one if number repeats
+          findsOneWidget,
           reason: 'Number "${segmentDetails['number']}" not found',
         );
       }
 
-      // Verify title exists
-      if (segmentDetails.containsKey('title')) {
-        expect(
-          find.text(segmentDetails['title']),
-          findsOneWidget,
-          reason: 'Title "${segmentDetails['title']}" not found',
-        );
-      }
+      // D'abord trouvez la carte du segment par son titre
+      final Finder firstSegmentCard = find.ancestor(
+        of: find.text(segmentDetails['title']),
+        matching: find.byType(Card),
+      );
 
-      // Verify start position exists
-      if (segmentDetails.containsKey('startPosition')) {
-        expect(
-          find.text(segmentDetails['startPosition']),
-          findsOneWidget,
-          reason:
-              'Start position "${segmentDetails['startPosition']}" not found',
-        );
-      }
+      // Puis cherchez les temps dans ce segment spécifique
+      final Finder startTime = find.descendant(
+        of: firstSegmentCard,
+        matching: find.text(segmentDetails['startPosition']),
+      );
+      expect(startTime, findsOneWidget);
 
-      // Verify end position exists
-      if (segmentDetails.containsKey('endPosition')) {
-        expect(
-          find.text(segmentDetails['endPosition']),
-          findsOneWidget,
-          reason: 'End position "${segmentDetails['endPosition']}" not found',
-        );
-      }
+      final Finder arrow = find.descendant(
+        of: firstSegmentCard,
+        matching: find.byIcon(Icons.arrow_forward),
+      );
+      expect(arrow, findsOneWidget);
 
-      // Verify duration exists
-      if (segmentDetails.containsKey('duration')) {
-        expect(
-          find.text(segmentDetails['duration']),
-          findsOneWidget,
-          reason: 'End position "${segmentDetails['duration']}" not found',
-        );
-      }
+      final Finder endTime = find.descendant(
+        of: firstSegmentCard,
+        matching: find.text(segmentDetails['endPosition']),
+      );
+      expect(endTime, findsOneWidget);
 
-      // Verify silence exists
-      if (segmentDetails.containsKey('silence')) {
-        expect(
-          find.text(segmentDetails['silence']),
-          findsOneWidget,
-          reason: 'End position "${segmentDetails['silence']}" not found',
-        );
-      }
+      final Finder increaseDuration = find.descendant(
+        of: firstSegmentCard,
+        matching: find.text(segmentDetails['increaseDuration']),
+      );
+      expect(increaseDuration, findsOneWidget);
+
+      final Finder reductionPosition = find.descendant(
+        of: firstSegmentCard,
+        matching: find.text(segmentDetails['reductionPosition']),
+      );
+      expect(reductionPosition, findsOneWidget);
+
+      final Finder reductionDuration = find.descendant(
+        of: firstSegmentCard,
+        matching: find.text(segmentDetails['reductionDuration']),
+      );
+      expect(reductionDuration, findsOneWidget);
+
+      final Finder duration = find.descendant(
+        of: firstSegmentCard,
+        matching: find.text(segmentDetails['duration']),
+      );
+      expect(duration, findsOneWidget);
     }
   }
 
@@ -3102,7 +3104,8 @@ class IntegrationTestUtil {
 
           break;
         case AudioType.extracted:
-          expect(find.text('Audio Extracted through Comments Info'), findsOneWidget);
+          expect(find.text('Audio Extracted through Comments Info'),
+              findsOneWidget);
           expect(find.text('Youtube channel'), findsNothing);
           expect(find.text('Audio title'), findsOneWidget);
           expect(find.text('Video upload date'), findsNothing);
@@ -3156,7 +3159,10 @@ class IntegrationTestUtil {
 
           break;
         case AudioType.extracted:
-          expect(find.text("Informations sur l'audio extrait via des commentaires"), findsOneWidget);
+          expect(
+              find.text(
+                  "Informations sur l'audio extrait via des commentaires"),
+              findsOneWidget);
           expect(find.text('Chaîne Youtube'), findsNothing);
           expect(find.text('Titre audio'), findsOneWidget);
           expect(find.text('Date mise en ligne'), findsNothing);
@@ -3318,8 +3324,8 @@ class IntegrationTestUtil {
         break;
       case AudioType.extracted:
         // Verify the valid video title of the audio
-        final Text validVideoTitleTextWidget =
-            tester.widget<Text>(find.byKey(const Key('extractedAudioTitleKey')));
+        final Text validVideoTitleTextWidget = tester
+            .widget<Text>(find.byKey(const Key('extractedAudioTitleKey')));
         expect(validVideoTitleTextWidget.data, validVideoTitleOrAudioTitle);
 
         // Verify the audio download date time of the audio
