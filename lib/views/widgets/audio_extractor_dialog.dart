@@ -371,6 +371,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         ElevatedButton(
+                          key: const Key('extractMp3Button'),
                           onPressed:
                               audioExtractorVM.extractionResult.isProcessing
                                   ? null
