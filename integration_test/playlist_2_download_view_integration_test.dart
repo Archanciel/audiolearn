@@ -39136,17 +39136,15 @@ void main() {
   });
   group('Extract audio comments to MP3 tests', () {
     testWidgets('''Audio with 3 comments.''', (WidgetTester tester) async {
-      const String youtubePlaylistTitle = 'audio_learn_emi';
       const String audioTitle =
-          "EMI  - Que font les morts dans l’au-delà  La révélation qui a tout changé !";
+          "Glorious - Laisse-moi te parler de Jésus #louange";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'extract_comments_to_mp3_test',
-        selectedPlaylistTitle: youtubePlaylistTitle,
       );
 
-      // First, find the Youtube playlist audio ListTile Text widget
+      // First, find the '1 long music' playlist audio ListTile Text widget
       Finder audioTitleTileTextWidgetFinder = find.text(audioTitle);
 
       // Then obtain the audio ListTile widget enclosing the Text widget
@@ -39189,7 +39187,8 @@ void main() {
 
       // Now open the extract comments to MP3 dialog
 
-      // Find the extract comments to MP3 button of the comment item and tap on it
+      // Find the extract comments to MP3 button of the comment add
+      // dialog and tap on it
       final Finder extractCommentsToMp3ButtonFinder =
           find.byKey(const Key('extractCommentsToMp3TextButton'));
       await tester.tap(extractCommentsToMp3ButtonFinder);
@@ -39198,53 +39197,57 @@ void main() {
       // Verify the extract comments to MP3 dialog title
       expect(find.text('Comments in MP3'), findsOneWidget);
 
-      final String commentTitle = 'Comment Jancovici';
+      // Verify the Comments number title
+      expect(find.text('Comments (3)'), findsOneWidget);
 
-      // Verify the comments number
-      expect(find.text("Comments (3)"), findsOneWidget);
+      // Now, delete the second comment
+      
+      // This opens the delete comment confirmation dialog
+      final Finder deleteCommentIconButtonFinder =
+          find.byKey(const Key('deleteSegmentButtonKey_2'));
+      await tester.tap(deleteCommentIconButtonFinder);
+      await tester.pumpAndSettle();
+      
+      // Verify the delete comment confirmation dialog title
+      expect(find.text('Remove Comment'), findsOneWidget);
+
+      // Verify the delete comment confirmation dialog content
+      expect(
+          find.text(
+              'Are you sure you want to remove this comment ?'),
+          findsOneWidget);
+
+      // Confirm the deletion by tapping the delete button
+      final Finder deleteCommentButtonFinder =
+          find.byKey(const Key('confirmDeleteSegmentButton'));
+      await tester.tap(deleteCommentButtonFinder);
+      await tester.pumpAndSettle();
 
       IntegrationTestUtil.checkExtractionCommentDetails(
         tester: tester,
         segmentDetailsList: [
           {
             'number': 1,
-            'title': "L'importance de choisir l'amour plutôt que la peur",
-            'startPosition': '24:27.7',
-            'endPosition': '24:37.0',
-            'duration': 'Duration: 0:09.3 + silence 0:01.0',
+            'title': "First part",
+            'startPosition': '0:00.0',
+            'endPosition': '3:01.0',
+            'increaseDuration': 'Increase duration: 0:00.0',
+            'reductionPosition': 'Reduction position: 2:50.0',
+            'reductionDuration': 'Reduction duration: 0:11.0',
+            'duration': 'Duration: 3:01.0 + silence 0:01.0',
           },
           {
             'number': 2,
-            'title': "Choix de l'amour plutôt que la peur",
-            'startPosition': '27:44.5',
-            'endPosition': '28:56.2',
-            'duration': 'Duration: 1:11.7 + silence 0:01.0',
-          },
-          {
-            'number': 3,
-            'title': "Infirmière en colère traitée par amour",
-            'startPosition': '35:10.8',
-            'endPosition': '35:47.3',
-            'duration': 'Duration: 0:36.5',
+            'title': "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
+            'startPosition': '3:56.1',
+            'endPosition': '5:20.8',
+            'increaseDuration': 'Increase duration: 0:09.0',
+            'reductionPosition': 'Reduction position: 5:11.0',
+            'reductionDuration': 'Reduction duration: 0:09.8',
+            'duration': 'Duration: 1:24.7',
           },
         ],
       );
-
-      // Confirm the deletion of the comment
-      await tester.tap(find.byKey(const Key('confirmButton')));
-      await tester.pumpAndSettle();
-
-      final Finder commentListDialogFinder = find.byType(CommentListAddDialog);
-
-      // Verify that the comment list dialog now displays no comment
-      expect(
-          find.descendant(
-              of: commentListDialogFinder, matching: find.text(commentTitle)),
-          findsNothing);
-
-      // Now close the comment list dialog
-      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-      await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
