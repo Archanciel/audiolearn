@@ -35312,7 +35312,7 @@ void main() {
         movedToPlaylistTitle: '',
         copiedFromPlaylistTitle: '',
         copiedToPlaylistTitle: '',
-        audioDuration: '0:00:58.5',
+        audioDuration: '0:00:59.0', // was 0:00:58.5 before fix
         isMusicQuality: false, // Is musical quality
       );
 
