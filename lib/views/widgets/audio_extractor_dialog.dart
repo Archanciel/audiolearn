@@ -175,7 +175,10 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                 shrinkWrap: true,
                                 itemCount: audioExtractorVM.segments.length,
                                 itemBuilder: (context, index) {
-                                  final s = audioExtractorVM.segments[index];
+                                  final AudioSegment segment =
+                                      audioExtractorVM.segments[index];
+                                  final String displayedIndex =
+                                      (index + 1).toString();
                                   return Card(
                                     margin: const EdgeInsets.symmetric(
                                       horizontal: 8,
@@ -183,14 +186,14 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                     ),
                                     child: ListTile(
                                       leading: CircleAvatar(
-                                        child: Text('${index + 1}'),
+                                        child: Text(displayedIndex),
                                       ),
                                       title: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            s.title,
+                                            segment.title,
                                             maxLines: 4,
                                             overflow: TextOverflow.ellipsis,
                                             style: const TextStyle(
@@ -203,7 +206,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                             children: [
                                               Text(
                                                 TimeFormatUtil.formatSeconds(
-                                                    s.startPosition),
+                                                    segment.startPosition),
                                                 style: const TextStyle(
                                                   fontWeight: FontWeight.w500,
                                                   fontSize: 14,
@@ -220,7 +223,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                           ),
                                           Text(
                                             TimeFormatUtil.formatSeconds(
-                                                s.endPosition),
+                                                segment.endPosition),
                                             style: const TextStyle(
                                               fontWeight: FontWeight.w500,
                                               fontSize: 14,
@@ -233,7 +236,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                                 AppLocalizations.of(context)!
                                                     .fadeStartPositionTooltip,
                                             child: Text(
-                                              "${AppLocalizations.of(context)!.fadeStartPosition}: ${TimeFormatUtil.formatSeconds(s.fadeInDuration)}",
+                                              "${AppLocalizations.of(context)!.fadeStartPosition}: ${TimeFormatUtil.formatSeconds(segment.fadeInDuration)}",
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 14,
@@ -247,7 +250,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                                     context)!
                                                 .soundReductionPositionTooltip,
                                             child: Text(
-                                              "${AppLocalizations.of(context)!.soundReductionPosition}: ${TimeFormatUtil.formatSeconds(s.soundReductionPosition)}",
+                                              "${AppLocalizations.of(context)!.soundReductionPosition}: ${TimeFormatUtil.formatSeconds(segment.soundReductionPosition)}",
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 14,
@@ -261,7 +264,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                                     context)!
                                                 .soundReductionDurationTooltip,
                                             child: Text(
-                                              "${AppLocalizations.of(context)!.soundReductionDuration}: ${TimeFormatUtil.formatSeconds(s.soundReductionDuration)}",
+                                              "${AppLocalizations.of(context)!.soundReductionDuration}: ${TimeFormatUtil.formatSeconds(segment.soundReductionDuration)}",
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 14,
@@ -272,8 +275,8 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                         ],
                                       ),
                                       subtitle: Text(
-                                        "${AppLocalizations.of(context)!.duration}: ${TimeFormatUtil.formatSeconds(s.duration)}"
-                                        "${s.silenceDuration > 0 ? ' + ${AppLocalizations.of(context)!.silence} ${TimeFormatUtil.formatSeconds(s.silenceDuration)}' : ''}",
+                                        "${AppLocalizations.of(context)!.duration}: ${TimeFormatUtil.formatSeconds(segment.duration)}"
+                                        "${segment.silenceDuration > 0 ? ' + ${AppLocalizations.of(context)!.silence} ${TimeFormatUtil.formatSeconds(segment.silenceDuration)}' : ''}",
                                         style: const TextStyle(
                                             fontSize: 12), // ← Smaller font
                                       ),
@@ -281,12 +284,15 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           IconButton(
+                                            key: Key(
+                                                'editSegmentButtonKey_$displayedIndex'),
                                             icon: const Icon(
                                               Icons.edit,
                                               size: 20,
                                             ),
                                             onPressed: () async {
-                                              // After pressing 'Edit' icon button
+                                              // After pressing 'Edit' icon button, show
+                                              // the AddSegmentDialog to edit the segment
                                               final AudioSegment?
                                                   updatedSegment =
                                                   await showDialog<
@@ -298,7 +304,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                                     AddSegmentDialog(
                                                   maxDuration: audioExtractorVM
                                                       .audioFile.duration,
-                                                  existingSegment: s,
+                                                  existingSegment: segment,
                                                 ),
                                               );
 
@@ -311,6 +317,8 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                             },
                                           ),
                                           IconButton(
+                                            key: Key(
+                                                'deleteSegmentButtonKey_$displayedIndex'),
                                             icon: const Icon(
                                               Icons.delete,
                                               size: 20,
@@ -586,6 +594,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
             child: Text(AppLocalizations.of(context)!.cancelButton),
           ),
           ElevatedButton(
+            key: const Key('confirmDeleteSegmentButton'),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red,
             ),
@@ -897,7 +906,8 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
           audioExtractorVM.setError(
               // This error is cleared when user set 'In playlist' checkbox
               AppLocalizations.of(context)!
-                  .extractedAudioNotAddedToPlaylistMessage(targetPlaylist!.title));
+                  .extractedAudioNotAddedToPlaylistMessage(
+                      targetPlaylist!.title));
         }
       });
     }
