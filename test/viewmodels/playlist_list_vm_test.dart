@@ -1009,7 +1009,6 @@ void main() {
 
       String savedZipFilePathName = await playlistListVM
           .savePlaylistsCommentPictureAndSettingsJsonFilesToZip(
-        targetDirectoryPath: kApplicationPathWindowsTest,
         addPictureJpgFilesToZip: false,
       );
 
@@ -1097,7 +1096,6 @@ void main() {
       );
 
       await playlistListVM.savePlaylistsCommentPictureAndSettingsJsonFilesToZip(
-        targetDirectoryPath: kApplicationPathWindowsTest,
         addPictureJpgFilesToZip: false,
       );
 
@@ -1191,7 +1189,6 @@ void main() {
         List<dynamic> savedMp3InfoLst =
             await playlistListVM.savePlaylistsAudioMp3FilesToZip(
           listOfPlaylists: playlistListVM.listOfSelectablePlaylists,
-          targetDirStrOnWindows: kApplicationPathWindowsTest,
           fromAudioDownloadDateTime: fromDateTime,
           zipFileSizeLimitInMb: kMp3ZipFileSizeLimitInMb,
         );
@@ -1291,7 +1288,6 @@ void main() {
         List<dynamic> savedMp3InfoLst =
             await playlistListVM.savePlaylistsAudioMp3FilesToZip(
           listOfPlaylists: playlistListVM.listOfSelectablePlaylists,
-          targetDirStrOnWindows: kApplicationPathWindowsTest,
           fromAudioDownloadDateTime: fromDateTime,
           zipFileSizeLimitInMb: kMp3ZipFileSizeLimitInMb,
         );
@@ -1404,7 +1400,6 @@ void main() {
         List<dynamic> savedMp3InfoLst =
             await playlistListVM.savePlaylistsAudioMp3FilesToZip(
           listOfPlaylists: [playlistLst[4]], // S8 audio
-          targetDirStrOnWindows: kApplicationPathWindowsTest,
           fromAudioDownloadDateTime: fromDateTime,
           zipFileSizeLimitInMb: kMp3ZipFileSizeLimitInMb,
           uniquePlaylistIsSaved: true,
@@ -1517,7 +1512,6 @@ void main() {
         List<dynamic> savedMp3InfoLst =
             await playlistListVM.savePlaylistsAudioMp3FilesToZip(
           listOfPlaylists: [playlistLst[1]], // S8 audio
-          targetDirStrOnWindows: kApplicationPathWindowsTest,
           fromAudioDownloadDateTime: fromDateTime,
           zipFileSizeLimitInMb: kMp3ZipFileSizeLimitInMb,
           uniquePlaylistIsSaved: true,

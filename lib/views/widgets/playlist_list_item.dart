@@ -600,14 +600,6 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             );
             break;
           case PlaylistPopupMenuAction.savePlaylistAudioMp3FilesToZip:
-            String? targetSaveDirectoryPath;
-
-            targetSaveDirectoryPath = await UiUtil.filePickerSelectTargetDir();
-
-            if (targetSaveDirectoryPath == null) {
-              return;
-            }
-
             final PlaylistListVM playlistListVMlistenFalse =
                 Provider.of<PlaylistListVM>(
               context,
@@ -704,9 +696,8 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   return ConfirmActionDialog(
                     actionFunction: () async {
                       await playlistListVMlistenFalse
-                          .savePlaylistsAudioMp3FilesToZipWithPublicCopy(
+                          .savePlaylistsAudioMp3FilesToZip(
                         listOfPlaylists: [playlist],
-                        targetSaveDirStr: targetSaveDirectoryPath!,
                         fromAudioDownloadDateTime:
                             parseDateTimeOrDateStrUsinAppDateFormat,
                         zipFileSizeLimitInMb: settingsDataService.get(
