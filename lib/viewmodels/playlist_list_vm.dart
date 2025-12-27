@@ -5226,6 +5226,10 @@ class PlaylistListVM extends ChangeNotifier {
     required List<Playlist> listOfPlaylists,
     bool uniquePlaylistIsRestored = false,
   }) async {
+    if (Platform.isAndroid) {
+      zipFilePathName = _removeSDCardId(zipFilePathName);
+    }
+
     int restoredAudioCount = 0;
     List<String> playlistTitlesPresentInMp3ZipFileLst = [];
     List<String> restoredPlaylistTitlesLst = [];
@@ -5427,7 +5431,8 @@ class PlaylistListVM extends ChangeNotifier {
   /// [
   ///   total number of MP3 files that were successfully restored (int),
   ///   number of ZIP files processed (int),
-  ///   list of playlist titles that received restored files (List of String's)
+  ///   list of playlist titles that received restored files (List of String's),
+  ///   the maybe modified zipDirectoryPath
   /// ]
   Future<List<dynamic>> _restorePlaylistsAudioMp3FilesFromMultipleZips({
     required String zipDirectoryPath,
@@ -5441,6 +5446,45 @@ class PlaylistListVM extends ChangeNotifier {
     try {
       // Check if the directory exists
       Directory zipDirectory = Directory(zipDirectoryPath);
+
+      if (!await zipDirectory.exists()) {
+        _logger.w('Original path not found: $zipDirectoryPath');
+
+        // Try with emulated/0
+        String altPath1 = zipDirectoryPath.replaceFirst(
+          RegExp(r'/storage/[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}/'),
+          '/storage/emulated/0/',
+        );
+
+        if (await Directory(altPath1).exists()) {
+          zipDirectoryPath = altPath1;
+          zipDirectory = Directory(zipDirectoryPath);
+          _logger.i('Using alternative path: $zipDirectoryPath');
+        } else {
+          // Try common Download locations
+          List<String> alternatives = [
+            '/storage/emulated/0/Download/S8',
+            '/sdcard/Download/S8',
+            '/storage/emulated/0/Downloads/S8',
+          ];
+
+          bool found = false;
+          for (String alt in alternatives) {
+            if (await Directory(alt).exists()) {
+              zipDirectoryPath = alt;
+              zipDirectory = Directory(zipDirectoryPath);
+              _logger.i('Found valid path: $zipDirectoryPath');
+              found = true;
+              break;
+            }
+          }
+
+          if (!found) {
+            _logger.e('No valid ZIP directory found');
+            return emptyDynamicLst;
+          }
+        }
+      }
 
       if (!await zipDirectory.exists()) {
         _logger.e('ZIP directory does not exist: "$zipDirectoryPath"');
@@ -5667,6 +5711,7 @@ class PlaylistListVM extends ChangeNotifier {
         totalRestoredAudioCount,
         processedZipCount,
         restoredPlaylistTitlesSet.toList(),
+        zipDirectoryPath,
       ];
     } catch (e) {
       _logger.e('Error in restorePlaylistsAudioMp3FilesFromMultipleZips: $e');
@@ -5678,6 +5723,19 @@ class PlaylistListVM extends ChangeNotifier {
     }
   }
 
+  String _removeSDCardId(String pathStr) {
+    List<String> parts = pathStr.split('/');
+
+    // Filtrer les segments qui ressemblent à un UUID de carte SD
+    // Format attendu : XXXX-XXXX (4 caractères, tiret, 4 caractères)
+    List<String> filteredParts = parts.where((part) {
+      // Garde tous les segments SAUF ceux qui matchent le pattern UUID
+      return !RegExp(r'^[0-9A-F]{4}-[0-9A-F]{4}$').hasMatch(part);
+    }).toList();
+
+    return filteredParts.join('/');
+  }
+
   /// Convenience method that calls restorePlaylistsAudioMp3FilesFromMultipleZips
   /// and displays a confirmation message to the user.
   ///
@@ -5686,6 +5744,17 @@ class PlaylistListVM extends ChangeNotifier {
     required String zipDirectoryPath,
     required List<Playlist> listOfPlaylists,
   }) async {
+    if (Platform.isAndroid) {
+      zipDirectoryPath = _removeSDCardId(zipDirectoryPath);
+    }
+
+    // result list contains:
+    // [
+    //   total number of MP3 files that were successfully restored (int),
+    //   number of ZIP files processed (int),
+    //   list of playlist titles that received restored files (List of String's),
+    //   the maybe modified zipDirectoryPath
+    // ]
     List<dynamic> resultLst =
         await _restorePlaylistsAudioMp3FilesFromMultipleZips(
       zipDirectoryPath: zipDirectoryPath,
@@ -5699,7 +5768,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Display confirmation message via WarningMessageVM
     _warningMessageVM.confirmRestoringAudioMp3FromMultipleZips(
-      multipleZipsDirectoryPath: zipDirectoryPath,
+      multipleZipsDirectoryPath: resultLst[3] as String,
       totalRestoredAudioCount: totalRestoredAudioCount,
       processedZipCount: processedZipCount,
       restoredPlaylistTitles: restoredPlaylistTitles,
