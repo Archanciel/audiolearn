@@ -14738,16 +14738,7 @@ void main() {
         // Create a new directory to which the zip file will be saved
 
         String saveZipFilePath =
-            '$kApplicationPathWindowsTest${path.separator}appSave';
-
-        DirUtil.createDirIfNotExistSync(
-          pathStr: saveZipFilePath,
-        );
-
-        // Setting the path value returned by the FilePicker mock.
-        mockFilePicker.setPathToSelect(
-          pathToSelectStr: saveZipFilePath,
-        );
+            '$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName';
 
         // Tap the appbar leading popup menu button Then, the 'Save
         // Playlists and Comments to zip File' menu is selected.
@@ -14809,9 +14800,9 @@ void main() {
         );
       });
       testWidgets(
-          '''Unsuccessful save which happens on the S8 Galaxy smartphone. In the save to ZIP dialod,
+          '''Unsuccessful save which happens on the S8 Galaxy smartphone. In the save to ZIP dialog,
            the "Add all JPG pictures to ZIP" checkbox is not checked. The integration test verifies
-           the displayed warning.''', (WidgetTester tester) async {
+           the displayed warning. Problem was solved.''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -14847,17 +14838,7 @@ void main() {
         // Create a new directory to which the zip file will be saved
 
         String saveZipFilePath =
-            '$kApplicationPathWindowsTest${path.separator}appSave';
-
-        DirUtil.createDirIfNotExistSync(
-          pathStr: saveZipFilePath,
-        );
-
-        // Setting the path value returned by the FilePicker mock. This
-        // path value is the one returned on the S8 Galaxy smartphone !
-        mockFilePicker.setPathToSelect(
-          pathToSelectStr: '/',
-        );
+            '$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName';
 
         // Tap the appbar leading popup menu button Then, the 'Save
         // Playlists and Comments to zip File' menu is selected.
@@ -14876,12 +14857,15 @@ void main() {
           closeDialog: true,
         );
 
-        // Verify the displayed warning dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-          tester: tester,
-          warningDialogMessage:
-              "Playlist, comment and picture JSON files as well as application settings could not be saved to ZIP.",
-          isWarningConfirming: false,
+        String actualMessage = tester
+            .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+            .data!;
+
+        expect(
+          actualMessage,
+          contains(
+            "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_",
+          ),
         );
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
@@ -14889,7 +14873,7 @@ void main() {
           fileExtension: 'zip',
         );
 
-        expect(zipLst.isEmpty, true);
+        expect(zipLst.isEmpty, false);
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
@@ -15273,7 +15257,7 @@ void main() {
         await tester.pumpAndSettle();
 
         String saveZipFilePath =
-            '$kApplicationPathWindowsTest${path.separator}backupFolder';
+            '$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName';
 
         // Setting the path value returned by the FilePicker mock.
         mockFilePicker.setPathToSelect(
@@ -15309,7 +15293,7 @@ void main() {
 
         List<String> pictureNamesLst = DirUtil.listFileNamesInDir(
           directoryPath:
-              "$kApplicationPathWindowsTest${path.separator}backupFolder${path.separator}$kPictureDirName",
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}$kPictureDirName",
           fileExtension: 'jpg',
         );
 
@@ -15362,10 +15346,6 @@ void main() {
             settingsJsonPathFileName:
                 "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
         await app.main();
         await tester.pumpAndSettle();
 
@@ -15378,16 +15358,7 @@ void main() {
         // Create a new directory to which the zip file will be saved
 
         String saveZipFilePath =
-            '$kApplicationPathWindowsTest${path.separator}appSave';
-
-        DirUtil.createDirIfNotExistSync(
-          pathStr: saveZipFilePath,
-        );
-
-        // Setting the path value returned by the FilePicker mock.
-        mockFilePicker.setPathToSelect(
-          pathToSelectStr: saveZipFilePath,
-        );
+            '$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName';
 
         // Tap the appbar leading popup menu button Then, the 'Save
         // Playlists and Comments to zip File' menu is selected.
@@ -15465,7 +15436,7 @@ void main() {
       testWidgets(
           '''Unsuccessful save which happens on the S8 Galaxy smartphone. In the save to ZIP dialod,
            the "Add all JPG pictures to ZIP" checkbox is checked. The integration test verifies the
-           displayed warning.''', (WidgetTester tester) async {
+           displayed warning. Problem was solved.''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -15491,27 +15462,13 @@ void main() {
             settingsJsonPathFileName:
                 "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
         await app.main();
         await tester.pumpAndSettle();
 
         // Create a new directory to which the zip file will be saved
 
         String saveZipFilePath =
-            '$kApplicationPathWindowsTest${path.separator}appSave';
-
-        DirUtil.createDirIfNotExistSync(
-          pathStr: saveZipFilePath,
-        );
-
-        // Setting the path value returned by the FilePicker mock. This
-        // path value is the one returned on the S8 Galaxy smartphone !
-        mockFilePicker.setPathToSelect(
-          pathToSelectStr: '/',
-        );
+            '$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName';
 
         // Tap the appbar leading popup menu button Then, the 'Save
         // Playlists and Comments to zip File' menu is selected.
@@ -15536,12 +15493,15 @@ void main() {
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
         await tester.pumpAndSettle();
 
-        // Verify the displayed warning dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
-          tester: tester,
-          warningDialogMessage:
-              "Playlist, comment and picture JSON files as well as application settings could not be saved to ZIP.",
-          isWarningConfirming: false,
+        String actualMessage = tester
+            .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+            .data!;
+
+        expect(
+          actualMessage,
+          contains(
+            "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_",
+          ),
         );
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
@@ -15549,7 +15509,7 @@ void main() {
           fileExtension: 'zip',
         );
 
-        expect(zipLst.isEmpty, true);
+        expect(zipLst.isEmpty, false);
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
@@ -15933,12 +15893,7 @@ void main() {
         await tester.pumpAndSettle();
 
         String saveZipFilePath =
-            '$kApplicationPathWindowsTest${path.separator}backupFolder';
-
-        // Setting the path value returned by the FilePicker mock.
-        mockFilePicker.setPathToSelect(
-          pathToSelectStr: saveZipFilePath,
-        );
+            '$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName';
 
         // Tap the appbar leading popup menu button Then, the 'Save
         // Playlists and Comments to zip File' menu is selected.
@@ -15975,12 +15930,12 @@ void main() {
 
         List<String> pictureNamesLst = DirUtil.listFileNamesInDir(
           directoryPath:
-              "$kApplicationPathWindowsTest${path.separator}backupFolder${path.separator}$kPictureDirName",
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}$kPictureDirName",
           fileExtension: 'jpg',
         );
 
         // Since the picture files were added to the creted save ZIP file,
-        // the picture dir in the backupFolder should be empty
+        // the picture dir in the saved should be empty
         List<String> expectedPictureNamesLst = [];
         expect(
           pictureNamesLst,
@@ -16006,16 +15961,16 @@ void main() {
         );
 
         // Verify that the picture files were now saved to the pictures
-        // dir in the backupFolder
+        // dir in the saved
 
         pictureNamesLst = DirUtil.listFileNamesInDir(
           directoryPath:
-              "$kApplicationPathWindowsTest${path.separator}backupFolder${path.separator}$kPictureDirName",
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}$kPictureDirName",
           fileExtension: 'jpg',
         );
 
         // Since the picture files were added to the creted save ZIP file,
-        // the picture dir in the backupFolder should be empty
+        // the picture dir in the saved should be empty
         expectedPictureNamesLst = [
           "Jésus je T'adore.jpg",
           "Jésus je T'aime.jpg",
@@ -16038,9 +15993,6 @@ void main() {
         '''Save unique Youtube playlist containing pictures to zip file.''',
         (WidgetTester tester) async {
       // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
-
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'save_or_delete_playlist_with_pictures',
@@ -16069,11 +16021,6 @@ void main() {
 
       // Save the playlist and its comments and pictures to a zip file
 
-      // Setting the path value returned by the FilePicker mock.
-      mockFilePicker.setPathToSelect(
-        pathToSelectStr: kApplicationPathWindowsTest,
-      );
-
       await IntegrationTestUtil.typeOnPlaylistMenuItem(
         tester: tester,
         playlistTitle: playlistToSaveTitle,
@@ -16084,14 +16031,14 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Saved playlist, comment and picture JSON files to \"$kApplicationPathWindowsTest${path.separator}$playlistToSaveTitle.zip\".\n\nSaved also 3 picture JPG file(s) in the ZIP file.",
+            "Saved playlist, comment and picture JSON files to \"$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}$playlistToSaveTitle.zip\".\n\nSaved also 3 picture JPG file(s) in the ZIP file.",
         isWarningConfirming: true,
       );
 
       // Verify that the zip file has been created
 
       zipLst = DirUtil.listFileNamesInDir(
-        directoryPath: kApplicationPathWindowsTest,
+        directoryPath: "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName",
         fileExtension: 'zip',
       );
 
@@ -16099,16 +16046,13 @@ void main() {
         zipLst,
         [
           '$playlistToSaveTitle.zip',
-          'Windows audioLearn_2025-05-11_13_16.zip',
-          'Windows Local restore- short - test - playlist.zip',
-          'Windows Restore- short - test - playlist.zip'
         ],
       );
 
       // Verify the content of the created ZIP file
 
       final zipFilePath =
-          path.join(kApplicationPathWindowsTest, '$playlistToSaveTitle.zip');
+          path.join("$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName", '$playlistToSaveTitle.zip');
       final zipFile = File(zipFilePath);
 
       // Read the ZIP file as bytes
@@ -16171,9 +16115,6 @@ void main() {
     testWidgets(
         '''Save unique local playlist containing pictures to zip file.''',
         (WidgetTester tester) async {
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -16204,11 +16145,6 @@ void main() {
 
       // Save the playlist and its comments and pictures to a zip file
 
-      // Setting the path value returned by the FilePicker mock.
-      mockFilePicker.setPathToSelect(
-        pathToSelectStr: kApplicationPathWindowsTest,
-      );
-
       await IntegrationTestUtil.typeOnPlaylistMenuItem(
         tester: tester,
         playlistTitle: playlistToSaveTitle,
@@ -16219,14 +16155,14 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Saved playlist, comment and picture JSON files to \"$kApplicationPathWindowsTest${path.separator}$playlistToSaveTitle.zip\".\n\nSaved also 3 picture JPG file(s) in the ZIP file.",
+            "Saved playlist, comment and picture JSON files to \"$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}$playlistToSaveTitle.zip\".\n\nSaved also 3 picture JPG file(s) in the ZIP file.",
         isWarningConfirming: true,
       );
 
       // Verify that the zip file has been created
 
       zipLst = DirUtil.listFileNamesInDir(
-        directoryPath: kApplicationPathWindowsTest,
+        directoryPath: "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName",
         fileExtension: 'zip',
       );
 
@@ -16234,16 +16170,13 @@ void main() {
         zipLst,
         [
           '$playlistToSaveTitle.zip',
-          'Windows audioLearn_2025-05-11_13_16.zip',
-          'Windows Local restore- short - test - playlist.zip',
-          'Windows Restore- short - test - playlist.zip'
         ],
       );
 
       // Verify the content of the created ZIP file
 
       final zipFilePath =
-          path.join(kApplicationPathWindowsTest, '$playlistToSaveTitle.zip');
+          path.join("$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName", '$playlistToSaveTitle.zip');
       final zipFile = File(zipFilePath);
 
       // Read the ZIP file as bytes
@@ -16336,11 +16269,6 @@ void main() {
         await settingsDataService.loadSettingsFromFile(
             settingsJsonPathFileName:
                 "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
         await app.main();
         await tester.pumpAndSettle();
 
@@ -16348,11 +16276,6 @@ void main() {
         await IntegrationTestUtil.setApplicationLanguage(
           tester: tester,
           language: Language.english,
-        );
-
-        // Setting the path value returned by the FilePicker mock.
-        mockFilePicker.setPathToSelect(
-          pathToSelectStr: kApplicationPathWindowsTest,
         );
 
         // Tap the appbar leading popup menu button Then, the 'Save
@@ -16492,10 +16415,6 @@ void main() {
             settingsJsonPathFileName:
                 "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
         await app.main();
         await tester.pumpAndSettle();
 
@@ -16503,11 +16422,6 @@ void main() {
         await IntegrationTestUtil.setApplicationLanguage(
           tester: tester,
           language: Language.english,
-        );
-
-        // Setting the path value returned by the FilePicker mock.
-        mockFilePicker.setPathToSelect(
-          pathToSelectStr: kApplicationPathWindowsTest,
         );
 
         // Tap the appbar leading popup menu button Then, the 'Save
@@ -16697,10 +16611,6 @@ void main() {
             settingsJsonPathFileName:
                 "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
         await app.main();
         await tester.pumpAndSettle();
 
@@ -16708,11 +16618,6 @@ void main() {
         await IntegrationTestUtil.setApplicationLanguage(
           tester: tester,
           language: Language.english,
-        );
-
-        // Setting the path value returned by the FilePicker mock.
-        mockFilePicker.setPathToSelect(
-          pathToSelectStr: kApplicationPathWindowsTest,
         );
 
         // Tap the appbar leading popup menu button Then, the 'Save
@@ -16825,10 +16730,6 @@ void main() {
             settingsJsonPathFileName:
                 "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
         await app.main();
         await tester.pumpAndSettle();
 
@@ -16836,11 +16737,6 @@ void main() {
         await IntegrationTestUtil.setApplicationLanguage(
           tester: tester,
           language: Language.english,
-        );
-
-        // Setting the path value returned by the FilePicker mock.
-        mockFilePicker.setPathToSelect(
-          pathToSelectStr: kApplicationPathWindowsTest,
         );
 
         // Tap the appbar leading popup menu button Then, the 'Save
@@ -16931,10 +16827,6 @@ void main() {
             settingsJsonPathFileName:
                 "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
         await app.main();
         await tester.pumpAndSettle();
 
@@ -16942,11 +16834,6 @@ void main() {
         await IntegrationTestUtil.setApplicationLanguage(
           tester: tester,
           language: Language.english,
-        );
-
-        // Setting the path value returned by the FilePicker mock.
-        mockFilePicker.setPathToSelect(
-          pathToSelectStr: kApplicationPathWindowsTest,
         );
 
         // Tap the appbar leading popup menu button Then, the 'Save
@@ -17038,10 +16925,6 @@ void main() {
             settingsJsonPathFileName:
                 "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
         await app.main();
         await tester.pumpAndSettle();
 
@@ -17049,11 +16932,6 @@ void main() {
         await IntegrationTestUtil.setApplicationLanguage(
           tester: tester,
           language: Language.english,
-        );
-
-        // Setting the path value returned by the FilePicker mock.
-        mockFilePicker.setPathToSelect(
-          pathToSelectStr: kApplicationPathWindowsTest,
         );
 
         // Tap the appbar leading popup menu button Then, the 'Save
@@ -17147,10 +17025,6 @@ void main() {
             settingsJsonPathFileName:
                 "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
         await app.main();
         await tester.pumpAndSettle();
 
@@ -17158,11 +17032,6 @@ void main() {
         await IntegrationTestUtil.setApplicationLanguage(
           tester: tester,
           language: Language.english,
-        );
-
-        // Setting the path value returned by the FilePicker mock.
-        mockFilePicker.setPathToSelect(
-          pathToSelectStr: kApplicationPathWindowsTest,
         );
 
         const String playlistToSaveTitle = "Saint François d'Assise";
@@ -17301,10 +17170,6 @@ void main() {
             settingsJsonPathFileName:
                 "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
         await app.main();
         await tester.pumpAndSettle();
 
@@ -17312,11 +17177,6 @@ void main() {
         await IntegrationTestUtil.setApplicationLanguage(
           tester: tester,
           language: Language.english,
-        );
-
-        // Setting the path value returned by the FilePicker mock.
-        mockFilePicker.setPathToSelect(
-          pathToSelectStr: kApplicationPathWindowsTest,
         );
 
         const String playlistToSaveTitle = "Saint François d'Assise";
@@ -17458,10 +17318,6 @@ void main() {
             settingsJsonPathFileName:
                 "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
         await app.main();
         await tester.pumpAndSettle();
 
@@ -17469,11 +17325,6 @@ void main() {
         await IntegrationTestUtil.setApplicationLanguage(
           tester: tester,
           language: Language.english,
-        );
-
-        // Setting the path value returned by the FilePicker mock.
-        mockFilePicker.setPathToSelect(
-          pathToSelectStr: kApplicationPathWindowsTest,
         );
 
         const String playlistToSaveTitle = "Saint François d'Assise";
@@ -17586,10 +17437,6 @@ void main() {
             settingsJsonPathFileName:
                 "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
         await app.main();
         await tester.pumpAndSettle();
 
@@ -17597,11 +17444,6 @@ void main() {
         await IntegrationTestUtil.setApplicationLanguage(
           tester: tester,
           language: Language.english,
-        );
-
-        // Setting the path value returned by the FilePicker mock.
-        mockFilePicker.setPathToSelect(
-          pathToSelectStr: kApplicationPathWindowsTest,
         );
 
         const String playlistToSaveTitle = "Saint François d'Assise";
@@ -17695,10 +17537,6 @@ void main() {
             settingsJsonPathFileName:
                 "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
         await app.main();
         await tester.pumpAndSettle();
 
@@ -17706,11 +17544,6 @@ void main() {
         await IntegrationTestUtil.setApplicationLanguage(
           tester: tester,
           language: Language.english,
-        );
-
-        // Setting the path value returned by the FilePicker mock.
-        mockFilePicker.setPathToSelect(
-          pathToSelectStr: kApplicationPathWindowsTest,
         );
 
         const String playlistToSaveTitle = "Saint François d'Assise";
@@ -17805,10 +17638,6 @@ void main() {
             settingsJsonPathFileName:
                 "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
         await app.main();
         await tester.pumpAndSettle();
 
@@ -17816,11 +17645,6 @@ void main() {
         await IntegrationTestUtil.setApplicationLanguage(
           tester: tester,
           language: Language.english,
-        );
-
-        // Setting the path value returned by the FilePicker mock.
-        mockFilePicker.setPathToSelect(
-          pathToSelectStr: kApplicationPathWindowsTest,
         );
 
         const String playlistToSaveTitle = "Saint François d'Assise";
