@@ -8,7 +8,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 import 'package:path/path.dart' as path;
-import 'package:path_provider/path_provider.dart';
 
 import '../constants.dart';
 import '../models/audio.dart';
@@ -2883,9 +2882,15 @@ class PlaylistListVM extends ChangeNotifier {
   /// zip save to target dir do not exist. The returned value is only used in
   /// the playlistListVM unit test.
   Future<String> savePlaylistsCommentPictureAndSettingsJsonFilesToZip({
-    required String targetDirectoryPath,
     required bool addPictureJpgFilesToZip,
   }) async {
+    String targetDirectoryPath =
+        "${_settingsDataService.get(settingType: SettingType.dataLocation, settingSubType: DataLocation.appSettingsPath)}${path.separator}$kSavedPlaylistsDirName";
+
+    DirUtil.createDirIfNotExistSync(
+      pathStr: targetDirectoryPath,
+    );
+
     List<dynamic> returnedResults = await _saveAllJsonFilesToZip(
       targetDir: targetDirectoryPath,
       addPictureJpgFilesToZip: addPictureJpgFilesToZip,
@@ -2943,7 +2948,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     Directory sourceDir = Directory(playlistsRootPath);
 
-    if (!sourceDir.existsSync() || targetDir == '/') {
+    if (!sourceDir.existsSync()) {
       return returnedResults; // returning an empty list
     }
 
@@ -3054,11 +3059,14 @@ class PlaylistListVM extends ChangeNotifier {
     // Save the archive to a zip file in the target directory
     String zipFileName =
         "audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip";
-
     String zipFilePathName = path.join(targetDir, zipFileName);
-
     File zipFile = File(zipFilePathName);
-    zipFile.writeAsBytesSync(ZipEncoder().encode(archive), flush: true);
+
+    try {
+      zipFile.writeAsBytesSync(ZipEncoder().encode(archive), flush: true);
+    } catch (e) {
+      _logger.i(e.toString());
+    }
 
     returnedResults.add(zipFilePathName);
 
@@ -3075,7 +3083,6 @@ class PlaylistListVM extends ChangeNotifier {
   /// the zip does not exist.
   Future<String> saveUniquePlaylistCommentAndPictureJsonFilesToZip({
     required Playlist playlist,
-    required String targetDir,
   }) async {
     String applicationPath = _settingsDataService.get(
       settingType: SettingType.dataLocation,
@@ -3083,10 +3090,6 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     Directory sourceDir = Directory(playlist.downloadPath);
-
-    if (!sourceDir.existsSync() || targetDir == '/') {
-      return '';
-    }
 
     // Create a zip encoder
     final archive = Archive();
@@ -3177,17 +3180,30 @@ class PlaylistListVM extends ChangeNotifier {
       }
     }
 
+    String targetDirectoryPath =
+        "${_settingsDataService.get(settingType: SettingType.dataLocation, settingSubType: DataLocation.appSettingsPath)}${path.separator}$kSavedPlaylistsDirName";
+
+    DirUtil.createDirIfNotExistSync(
+      pathStr: targetDirectoryPath,
+    );
+
     // Save the archive to a zip file in the target directory
     String zipFileName = "$playlistTitle.zip";
-    String savedZipFilePathName = path.join(targetDir, zipFileName);
+    String savedZipFilePathName = path.join(targetDirectoryPath, zipFileName);
     File zipFile = File(savedZipFilePathName);
-    zipFile.writeAsBytesSync(ZipEncoder().encode(archive), flush: true);
+
+    try {
+      zipFile.writeAsBytesSync(ZipEncoder().encode(archive), flush: true);
+    } catch (e) {
+      _logger.i(e.toString());
+    }
 
     _warningMessageVM.confirmSavingToZip(
         zipFilePathName: savedZipFilePathName,
         savedPictureNumber: savedPictureNumber, // if the picture number is > 0,
         // then a picture number sentence is added to the confirmation message.
         uniquePlaylistIsSaved: true);
+
     return savedZipFilePathName;
   }
 
@@ -3214,19 +3230,13 @@ class PlaylistListVM extends ChangeNotifier {
   /// ]
   Future<List<dynamic>> savePlaylistsAudioMp3FilesToZip({
     required List<Playlist> listOfPlaylists,
-    String targetDirStrOnWindows = '',
     required DateTime fromAudioDownloadDateTime,
     required double zipFileSizeLimitInMb,
     bool uniquePlaylistIsSaved = false,
   }) async {
-    if (targetDirStrOnWindows == '/') {
-      return [];
-    }
-
     List<dynamic> savedMp3InfoLst =
         await _saveAllAudioMp3FilesToZipWithZipSizeLimit(
       listOfPlaylists: listOfPlaylists,
-      targetDirStrOnWindows: targetDirStrOnWindows,
       fromAudioDownloadDateTime: fromAudioDownloadDateTime,
       zipFileSizeLimitInMb: zipFileSizeLimitInMb,
       uniquePlaylistIsSaved: uniquePlaylistIsSaved,
@@ -3260,21 +3270,19 @@ class PlaylistListVM extends ChangeNotifier {
       return savedMp3InfoLst;
     }
 
-    if (!Platform.isAndroid) {
-      _warningMessageVM.confirmSavingAudioMp3ToZip(
-        zipFilePathName: savedMp3InfoLst[0],
-        fromAudioDownloadDateTime:
-            dateFormatVM.formatDateTime(fromAudioDownloadDateTime),
-        savedAudioMp3Number: savedMp3InfoLst[1],
-        savedTotalAudioFileSize: savedMp3InfoLst[2],
-        savedTotalAudioDuration: savedMp3InfoLst[3],
-        savingAudioToZipOperationDuration: savedMp3InfoLst[4],
-        realNumberOfBytesSavedToZipPerSecond: savedMp3InfoLst[5],
-        uniquePlaylistIsSaved: uniquePlaylistIsSaved,
-        numberOfCreatedZipFiles: savedMp3InfoLst[6], // New parameter
-        excludedTooLargeAudioFilesLst: savedMp3InfoLst[7],
-      );
-    }
+    _warningMessageVM.confirmSavingAudioMp3ToZip(
+      zipFilePathName: savedMp3InfoLst[0],
+      fromAudioDownloadDateTime:
+          dateFormatVM.formatDateTime(fromAudioDownloadDateTime),
+      savedAudioMp3Number: savedMp3InfoLst[1],
+      savedTotalAudioFileSize: savedMp3InfoLst[2],
+      savedTotalAudioDuration: savedMp3InfoLst[3],
+      savingAudioToZipOperationDuration: savedMp3InfoLst[4],
+      realNumberOfBytesSavedToZipPerSecond: savedMp3InfoLst[5],
+      uniquePlaylistIsSaved: uniquePlaylistIsSaved,
+      numberOfCreatedZipFiles: savedMp3InfoLst[6], // New parameter
+      excludedTooLargeAudioFilesLst: savedMp3InfoLst[7],
+    );
 
     return savedMp3InfoLst;
   }
@@ -3295,7 +3303,6 @@ class PlaylistListVM extends ChangeNotifier {
   /// ]
   Future<List<dynamic>> _saveAllAudioMp3FilesToZipWithZipSizeLimit({
     required List<Playlist> listOfPlaylists,
-    required String targetDirStrOnWindows,
     required DateTime fromAudioDownloadDateTime,
     required double zipFileSizeLimitInMb,
     required bool uniquePlaylistIsSaved,
@@ -3328,24 +3335,12 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
 
     // Determine the actual target directory early
-    String actualTargetDir;
+    String actualTargetDir =
+        "${_settingsDataService.get(settingType: SettingType.dataLocation, settingSubType: DataLocation.appSettingsPath)}${path.separator}$kSavedPlaylistsDirName${path.separator}MP3";
 
-    if (Platform.isAndroid) {
-      Directory? externalDir =
-          await getExternalStorageDirectory(); // Method from path_provider package
-      if (externalDir != null) {
-        Directory mp3Dir =
-            Directory('${externalDir.path}/downloads/AudioLearn');
-        if (!await mp3Dir.exists()) {
-          await mp3Dir.create(recursive: true);
-        }
-        actualTargetDir = mp3Dir.path;
-      } else {
-        throw Exception('Could not access external storage');
-      }
-    } else {
-      actualTargetDir = targetDirStrOnWindows;
-    }
+    DirUtil.createDirIfNotExistSync(
+      pathStr: actualTargetDir,
+    );
 
     // Collect all audio files that need to be saved (WITHOUT loading them into memory)
     for (Playlist playlist in listOfPlaylists) {
@@ -3732,233 +3727,6 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     return parts;
-  }
-
-  /// Moves the generated MP3 ZIP file(s) to a directory where they are
-  /// accessible by Android file explorers.
-  ///
-  /// The files are copied to the accessible directory and then deleted
-  /// from the source directory (move operation).
-  ///
-  /// Parameters:
-  /// - [baseZipFileName]: The base name of the ZIP file (without part numbers)
-  /// - [numberOfZipFiles]: The number of ZIP files created
-  /// - [sourceDir]: The directory where the ZIP files were originally created
-  ///
-  /// Returns a list containing:
-  /// [
-  ///   success (bool),
-  ///   public directory path (String),
-  ///   list of moved file names (List of String's),
-  ///   error message if any (String)
-  /// ]
-  Future<List<dynamic>> _moveMp3ZipFilesToAccessibleAndroidDirectory({
-    required String baseZipFileName,
-    required String targetSaveDirStr,
-    required int numberOfZipFiles,
-    required String sourceDir,
-  }) async {
-    List<String> movedFileNames = [];
-    String errorMessage = '';
-    String publicPath = '';
-
-    try {
-      if (!Platform.isAndroid) {
-        // On non-Android platforms, no need to move
-        return [true, sourceDir, [], 'Not needed on this platform'];
-      }
-
-      _isMovingMp3Zip = true;
-      notifyListeners();
-
-      // Move the ZIP file(s) (copy then delete source)
-      for (int i = 1; i <= numberOfZipFiles; i++) {
-        String sourceFileName;
-
-        if (numberOfZipFiles == 1) {
-          sourceFileName = '$baseZipFileName.zip';
-        } else {
-          sourceFileName = '${baseZipFileName}_part$i.zip';
-        }
-
-        String sourceFilePath = path.join(sourceDir, sourceFileName);
-        File sourceFile = File(sourceFilePath);
-
-        _logger.i('Attempting to move: $sourceFilePath');
-
-        if (await sourceFile.exists()) {
-          // Used to show the moved current MP* ZIP name in the audio download view
-          _audioMp3MovedCurrentZipName = sourceFileName;
-          notifyListeners();
-
-          String targetFilePath = path.join(targetSaveDirStr, sourceFileName);
-          File targetFile = File(targetFilePath);
-
-          try {
-            // Delete target if it already exists to avoid conflicts
-            if (await targetFile.exists()) {
-              await targetFile.delete();
-              _logger.i('Deleted existing target file: $targetFilePath');
-            }
-
-            // Copy the file to public Downloads
-            await sourceFile.copy(targetFilePath);
-            _logger.i('Copied to: $targetFilePath');
-
-            // Verify the copy was successful by checking file size
-            int sourceSize = await sourceFile.length();
-            int targetSize = await targetFile.length();
-
-            if (sourceSize == targetSize) {
-              // Delete the source file after successful copy (move operation)
-              await sourceFile.delete();
-              _logger.i('Deleted source file: $sourceFilePath');
-
-              movedFileNames.add(sourceFileName);
-              publicPath = targetSaveDirStr;
-            } else {
-              errorMessage +=
-                  'File size mismatch for $sourceFileName (source: $sourceSize, target: $targetSize)\n';
-              _logger.e('File size mismatch for $sourceFileName');
-              // Don't delete source if sizes don't match
-            }
-          } catch (e) {
-            errorMessage += 'Failed to move $sourceFileName: $e\n';
-            _logger.e('Error moving file $sourceFileName: $e');
-          }
-        } else {
-          errorMessage +=
-              'Source file not found: $sourceFileName at $sourceFilePath\n';
-          _logger.w('Source file not found: $sourceFilePath');
-        }
-      }
-
-      if (movedFileNames.isEmpty) {
-        String finalError =
-            errorMessage.isEmpty ? 'No files were moved' : errorMessage;
-        _logger.e('Move operation failed: $finalError');
-        return [false, publicPath, [], finalError];
-      }
-
-      _logger.i(
-          'Successfully moved ${movedFileNames.length} file(s) to $publicPath');
-
-      // Update the UI to show saving is complete
-      _isMovingMp3Zip = false;
-      notifyListeners();
-
-      return [true, publicPath, movedFileNames, ''];
-    } catch (e) {
-      errorMessage = 'Error moving ZIP files: $e';
-      _logger.e(errorMessage);
-
-      _isMovingMp3Zip = false;
-      notifyListeners();
-
-      return [false, '', [], errorMessage];
-    }
-  }
-
-  /// This method is called when the user clicks on the appbar menu item
-  /// 'Save Playlists Audio MP3 Files to Zip File' menu item or on the playlist
-  /// item 'Save the Playlist Audio MP3 to Zip File' menu item. In this case, the
-  /// [listOfPlaylists] parameter contains only one playlist and the
-  /// [uniquePlaylistIsSaved] parameter is set to true.
-  ///
-  /// Enhanced version of savePlaylistsAudioMp3FilesToZip that automatically
-  /// moves the ZIP files to a selected public accessible directory on Android.
-  ///
-  /// This method wraps the existing savePlaylistsAudioMp3FilesToZip and adds
-  /// the public accessible directory move functionality. The files are moved
-  /// (not copied) from the app's private directory.
-  Future<List<dynamic>> savePlaylistsAudioMp3FilesToZipWithPublicCopy({
-    required List<Playlist> listOfPlaylists,
-    required String targetSaveDirStr,
-    required DateTime fromAudioDownloadDateTime,
-    required double zipFileSizeLimitInMb,
-    bool uniquePlaylistIsSaved = false,
-  }) async {
-    // Call the original method to create the ZIP files
-    List<dynamic> savedMp3InfoLst = await savePlaylistsAudioMp3FilesToZip(
-      listOfPlaylists: listOfPlaylists,
-      targetDirStrOnWindows: targetSaveDirStr,
-      fromAudioDownloadDateTime: fromAudioDownloadDateTime,
-      zipFileSizeLimitInMb: zipFileSizeLimitInMb,
-      uniquePlaylistIsSaved: uniquePlaylistIsSaved,
-    );
-
-    // If no files were saved, return early
-    if (savedMp3InfoLst.isEmpty || savedMp3InfoLst[0] == '') {
-      return savedMp3InfoLst;
-    }
-
-    // Extract information from the result
-    String zipFilePathName = savedMp3InfoLst[0];
-    int numberOfCreatedZipFiles = savedMp3InfoLst[6];
-
-    // Extract base file name from the full path
-    String baseFileName = path.basenameWithoutExtension(zipFilePathName);
-
-    // Remove the "part 1 to X" suffix if present
-    if (baseFileName.contains('_part')) {
-      baseFileName = baseFileName.split('_part')[0];
-    }
-
-    String sourceDir = path.dirname(zipFilePathName);
-
-    _logger.i(
-        'Attempting to move $numberOfCreatedZipFiles ZIP file(s) from $sourceDir');
-
-    // Move to public Downloads directory on Android
-    if (Platform.isAndroid) {
-      List<dynamic> moveResult =
-          await _moveMp3ZipFilesToAccessibleAndroidDirectory(
-        baseZipFileName: baseFileName,
-        targetSaveDirStr: targetSaveDirStr,
-        numberOfZipFiles: numberOfCreatedZipFiles,
-        sourceDir: sourceDir,
-      );
-
-      bool moveSuccess = moveResult[0];
-      String publicDirPath = moveResult[1];
-      List<String> movedFileNames = moveResult[2];
-      String errorMessage = moveResult[3];
-
-      if (moveSuccess && movedFileNames.isNotEmpty) {
-        _logger.i('Successfully moved to public directory: $publicDirPath');
-
-        // Update the return value with the public directory path
-        savedMp3InfoLst[0] = numberOfCreatedZipFiles > 1
-            ? path.join(publicDirPath,
-                '${baseFileName}_part 1 to $numberOfCreatedZipFiles.zip')
-            : path.join(publicDirPath, '$baseFileName.zip');
-
-        // Update the confirmation message to include the public directory path
-        DateFormatVM dateFormatVM = DateFormatVM(
-          settingsDataService: _settingsDataService,
-        );
-
-        // Show confirmation with the public directory location
-        _warningMessageVM.confirmSavingAudioMp3ToZip(
-          zipFilePathName: savedMp3InfoLst[0],
-          fromAudioDownloadDateTime:
-              dateFormatVM.formatDateTime(fromAudioDownloadDateTime),
-          savedAudioMp3Number: savedMp3InfoLst[1],
-          savedTotalAudioFileSize: savedMp3InfoLst[2],
-          savedTotalAudioDuration: savedMp3InfoLst[3],
-          savingAudioToZipOperationDuration: savedMp3InfoLst[4],
-          realNumberOfBytesSavedToZipPerSecond: savedMp3InfoLst[5],
-          uniquePlaylistIsSaved: uniquePlaylistIsSaved,
-          numberOfCreatedZipFiles: numberOfCreatedZipFiles,
-          excludedTooLargeAudioFilesLst: savedMp3InfoLst[7],
-        );
-      } else if (errorMessage.isNotEmpty) {
-        _logger.w('Could not move to public Downloads: $errorMessage');
-        // Still return success since the files are in the app directory
-      }
-    }
-
-    return savedMp3InfoLst;
   }
 
   String getOldestAudioDownloadDateFormattedStr({

@@ -848,14 +848,6 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
             });
             break;
           case AppBarPopupMenu.savePlaylistsAudioMp3FilesToZip:
-            String? targetSaveDirectoryPath;
-
-            targetSaveDirectoryPath = await UiUtil.filePickerSelectTargetDir();
-
-            if (targetSaveDirectoryPath == null) {
-              return;
-            }
-
             final DateFormatVM dateFormatVMlistenFalse =
                 Provider.of<DateFormatVM>(
               context,
@@ -961,9 +953,8 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   return ConfirmActionDialog(
                     actionFunction: () async {
                       await playlistListVMlistenFalse
-                          .savePlaylistsAudioMp3FilesToZipWithPublicCopy(
+                          .savePlaylistsAudioMp3FilesToZip(
                         listOfPlaylists: listOfSelectablePlaylists,
-                        targetSaveDirStr: targetSaveDirectoryPath!,
                         fromAudioDownloadDateTime:
                             parseDateTimeOrDateStrUsinAppDateFormat!,
                         zipFileSizeLimitInMb: settingsDataService.get(

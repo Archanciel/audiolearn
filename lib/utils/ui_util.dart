@@ -97,17 +97,10 @@ class UiUtil {
     required BuildContext context,
     required bool addPictureJpgFilesToZip,
   }) async {
-    String? targetSaveDirectoryPath = await filePickerSelectTargetDir();
-
-    if (targetSaveDirectoryPath == null) {
-      return;
-    }
-
     await Provider.of<PlaylistListVM>(
       context,
       listen: false,
     ).savePlaylistsCommentPictureAndSettingsJsonFilesToZip(
-      targetDirectoryPath: targetSaveDirectoryPath,
       addPictureJpgFilesToZip: addPictureJpgFilesToZip,
     );
   }
@@ -116,18 +109,11 @@ class UiUtil {
     required BuildContext context,
     required Playlist playlist,
   }) async {
-    String? targetSaveDirectoryPath = await filePickerSelectTargetDir();
-
-    if (targetSaveDirectoryPath == null) {
-      return;
-    }
-
     await Provider.of<PlaylistListVM>(
       context,
       listen: false,
     ).saveUniquePlaylistCommentAndPictureJsonFilesToZip(
       playlist: playlist,
-      targetDir: targetSaveDirectoryPath,
     );
   }
 
