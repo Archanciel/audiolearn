@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 const String kApplicationName = "Audio Learn";
-const String kApplicationVersion = "2.5.91";
+const String kApplicationVersion = "2.5.92";
 
 enum PopupMenuButtonType {
   openSortFilterAudioDialog,
