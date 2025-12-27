@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 const String kApplicationName = "Audio Learn";
-const String kApplicationVersion = "2.5.92";
+const String kApplicationVersion = "2.6.0";
 
 enum PopupMenuButtonType {
   openSortFilterAudioDialog,
@@ -71,6 +71,7 @@ const String kDownloadAppTestSavedDataDir =
 const String kSettingsFileName = 'settings.json';
 const String kCommentDirName = 'comments';
 const String kPictureDirName = 'pictures';
+const String kSavedPlaylistsDirName = 'saved';
 const String kPictureAudioMapFileName = 'pictureAudioMap.json';
 const double kWindowsSystemVolume =
     0.55; // 0.86, Default system volume for Windows
