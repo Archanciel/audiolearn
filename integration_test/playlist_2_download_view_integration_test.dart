@@ -13856,7 +13856,8 @@ void main() {
                 "Those files are too large to be included in the MP3 saved ZIP file and so were not saved:\nlocal\\240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3, 2.37 MB;\nS8 audio\\240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3, 2.79 MB;\nS8 audio\\240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3, 2.37 MB."));
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
-          directoryPath: kApplicationPathWindowsTest,
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3",
           fileExtension: 'zip',
         );
 
@@ -13868,7 +13869,7 @@ void main() {
 
         List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
           zipFilePathName:
-              "$kApplicationPathWindowsTest${path.separator}${zipLst[0]}",
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}${zipLst[0]}",
         );
 
         expect(
@@ -14024,7 +14025,8 @@ void main() {
                 "This file is too large to be included in the MP3 saved ZIP file and so was not saved:\nS8 audio\\240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3, 2.79 MB."));
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
-          directoryPath: kApplicationPathWindowsTest,
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3",
           fileExtension: 'zip',
         );
 
@@ -14036,7 +14038,7 @@ void main() {
 
         List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
           zipFilePathName:
-              "$kApplicationPathWindowsTest${path.separator}${zipLst[0]}",
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}${zipLst[0]}",
         );
 
         expect(
@@ -14180,7 +14182,8 @@ void main() {
                 "This file is too large to be included in the MP3 saved ZIP file and so was not saved:\nS8 audio\\240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3, 2.79 MB."));
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
-          directoryPath: kApplicationPathWindowsTest,
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3",
           fileExtension: 'zip',
         );
 
@@ -14341,7 +14344,8 @@ void main() {
                 "Those files are too large to be included in the MP3 saved ZIP file and so were not saved:\nS8 audio\\240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3, 2.79 MB;\nS8 audio\\240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3, 2.37 MB."));
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
-          directoryPath: kApplicationPathWindowsTest,
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3",
           fileExtension: 'zip',
         );
 
@@ -14351,7 +14355,7 @@ void main() {
 
         List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
           zipFilePathName:
-              "$kApplicationPathWindowsTest${path.separator}${zipLst[0]}",
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}${zipLst[0]}",
         );
 
         expect(
@@ -14508,7 +14512,8 @@ void main() {
                 "This file is too large to be included in the MP3 saved ZIP file and so was not saved:\nS8 audio\\240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3, 2.79 MB."));
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
-          directoryPath: kApplicationPathWindowsTest,
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3",
           fileExtension: 'zip',
         );
 
@@ -14518,7 +14523,7 @@ void main() {
 
         List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
           zipFilePathName:
-              "$kApplicationPathWindowsTest${path.separator}${zipLst[0]}",
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}${zipLst[0]}",
         );
 
         expect(
@@ -14663,7 +14668,8 @@ void main() {
                 "This file is too large to be included in the MP3 saved ZIP file and so was not saved:\nS8 audio\\240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.mp3, 2.79 MB."));
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
-          directoryPath: kApplicationPathWindowsTest,
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3",
           fileExtension: 'zip',
         );
 
@@ -14802,7 +14808,8 @@ void main() {
       testWidgets(
           '''Unsuccessful save which happens on the S8 Galaxy smartphone. In the save to ZIP dialog,
            the "Add all JPG pictures to ZIP" checkbox is not checked. The integration test verifies
-           the displayed warning. Problem was solved.''', (WidgetTester tester) async {
+           the displayed warning. Problem was solved.''',
+          (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -15436,7 +15443,8 @@ void main() {
       testWidgets(
           '''Unsuccessful save which happens on the S8 Galaxy smartphone. In the save to ZIP dialod,
            the "Add all JPG pictures to ZIP" checkbox is checked. The integration test verifies the
-           displayed warning. Problem was solved.''', (WidgetTester tester) async {
+           displayed warning. Problem was solved.''',
+          (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -16038,7 +16046,8 @@ void main() {
       // Verify that the zip file has been created
 
       zipLst = DirUtil.listFileNamesInDir(
-        directoryPath: "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName",
+        directoryPath:
+            "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName",
         fileExtension: 'zip',
       );
 
@@ -16051,8 +16060,9 @@ void main() {
 
       // Verify the content of the created ZIP file
 
-      final zipFilePath =
-          path.join("$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName", '$playlistToSaveTitle.zip');
+      final zipFilePath = path.join(
+          "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName",
+          '$playlistToSaveTitle.zip');
       final zipFile = File(zipFilePath);
 
       // Read the ZIP file as bytes
@@ -16115,7 +16125,6 @@ void main() {
     testWidgets(
         '''Save unique local playlist containing pictures to zip file.''',
         (WidgetTester tester) async {
-
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'save_or_delete_local_playlist_with_pictures',
@@ -16162,7 +16171,8 @@ void main() {
       // Verify that the zip file has been created
 
       zipLst = DirUtil.listFileNamesInDir(
-        directoryPath: "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName",
+        directoryPath:
+            "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName",
         fileExtension: 'zip',
       );
 
@@ -16175,8 +16185,9 @@ void main() {
 
       // Verify the content of the created ZIP file
 
-      final zipFilePath =
-          path.join("$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName", '$playlistToSaveTitle.zip');
+      final zipFilePath = path.join(
+          "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName",
+          '$playlistToSaveTitle.zip');
       final zipFile = File(zipFilePath);
 
       // Read the ZIP file as bytes
@@ -16355,10 +16366,11 @@ void main() {
         expect(
             actualMessage,
             contains(
-                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2025-07-13_14_31_25_on_"));
+                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}audioLearn_mp3_from_2025-07-13_14_31_25_on_"));
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
-          directoryPath: kApplicationPathWindowsTest,
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3",
           fileExtension: 'zip',
         );
 
@@ -16372,7 +16384,7 @@ void main() {
 
         List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
           zipFilePathName:
-              "$kApplicationPathWindowsTest${path.separator}${zipLst[0]}",
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}${zipLst[0]}",
         );
 
         expect(
@@ -16556,7 +16568,8 @@ void main() {
             isTrue);
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
-          directoryPath: kApplicationPathWindowsTest,
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3",
           fileExtension: 'zip',
         );
 
@@ -16568,7 +16581,7 @@ void main() {
 
         List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
           zipFilePathName:
-              "$kApplicationPathWindowsTest${path.separator}${zipLst[0]}",
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}${zipLst[0]}",
         );
 
         expect(
@@ -16686,7 +16699,8 @@ void main() {
         );
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
-          directoryPath: kApplicationPathWindowsTest,
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3",
           fileExtension: 'zip',
         );
 
@@ -17112,10 +17126,11 @@ void main() {
         expect(
             actualMessage,
             contains(
-                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}Saint François d'Assise_mp3_from_2025-07-13_14_31_25_on_"));
+                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}Saint François d'Assise_mp3_from_2025-07-13_14_31_25_on_"));
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
-          directoryPath: kApplicationPathWindowsTest,
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3",
           fileExtension: 'zip',
         );
 
@@ -17127,7 +17142,7 @@ void main() {
 
         List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
           zipFilePathName:
-              "$kApplicationPathWindowsTest${path.separator}${zipLst[0]}",
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}${zipLst[0]}",
         );
 
         expect(
@@ -17262,10 +17277,11 @@ void main() {
         expect(
             actualMessage,
             contains(
-                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}Saint François d'Assise_mp3_from_2025-07-14_17_18_54_on_"));
+                "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}Saint François d'Assise_mp3_from_2025-07-14_17_18_54_on_"));
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
-          directoryPath: kApplicationPathWindowsTest,
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3",
           fileExtension: 'zip',
         );
 
@@ -17275,7 +17291,7 @@ void main() {
 
         List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
           zipFilePathName:
-              "$kApplicationPathWindowsTest${path.separator}${zipLst[0]}",
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}${zipLst[0]}",
         );
 
         expect(
@@ -17394,7 +17410,8 @@ void main() {
         );
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
-          directoryPath: kApplicationPathWindowsTest,
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3",
           fileExtension: 'zip',
         );
 
@@ -17965,9 +17982,9 @@ void main() {
             actualMessage,
             anyOf([
               contains(
-                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now)}.zip\"."),
+                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}audioLearn_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now)}.zip\"."),
               contains(
-                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now.subtract(const Duration(seconds: 1)))}.zip\"."),
+                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}audioLearn_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now.subtract(const Duration(seconds: 1)))}.zip\"."),
             ]),
           );
 
@@ -18048,15 +18065,16 @@ void main() {
           // their mp3 files without replacing existing playlists
           await _restorePaylistsAndTheirMp3(
             tester: tester,
-            sourceRootPath: kApplicationPathWindowsTest,
+            sourceRootPath:
+                "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName",
             restorablePlaylistsZipFileName: playlistsNewSavedZipFileName,
             restorableMp3ZipFileName: playlistsMp3NewSavedZipFileName,
             mockFilePicker: mockFilePicker,
             doReplaceExistingPlaylists: false,
             restorePlaylistsConfirmationMessage:
-                'Restored 0 playlist, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 1 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "$kApplicationPathWindowsTest${path.separator}$playlistsNewSavedZipFileName".',
+                'Restored 0 playlist, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 1 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}$playlistsNewSavedZipFileName".',
             restoreMp3ConfirmationMessage:
-                "Restored 1 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistsMp3NewSavedZipFileName\".",
+                "Restored 1 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}$playlistsMp3NewSavedZipFileName\".",
           );
 
           // Now verify that the restored converted audio 'aaa' has a
@@ -18377,9 +18395,9 @@ void main() {
             actualMessage,
             anyOf([
               contains(
-                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now)}.zip\"."),
+                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}audioLearn_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now)}.zip\"."),
               contains(
-                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now.subtract(const Duration(seconds: 1)))}.zip\"."),
+                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}audioLearn_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now.subtract(const Duration(seconds: 1)))}.zip\"."),
             ]),
           );
 
@@ -18460,16 +18478,17 @@ void main() {
           // their mp3 files with replacing existing playlists
           await _restorePaylistsAndTheirMp3(
             tester: tester,
-            sourceRootPath: kApplicationPathWindowsTest,
+            sourceRootPath:
+                "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName",
             restorablePlaylistsZipFileName: playlistsNewSavedZipFileName,
             restorableMp3ZipFileName: playlistsMp3NewSavedZipFileName,
             mockFilePicker: mockFilePicker,
             doReplaceExistingPlaylists: true,
             doDeleteExistingPlaylists: false,
             restorePlaylistsConfirmationMessage:
-                'Restored 2 playlist, 4 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 10 audio reference(s) and 1 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "$kApplicationPathWindowsTest${path.separator}$playlistsNewSavedZipFileName".',
+                'Restored 2 playlist, 4 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 10 audio reference(s) and 1 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}$playlistsNewSavedZipFileName".',
             restoreMp3ConfirmationMessage:
-                "Restored 1 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistsMp3NewSavedZipFileName\".",
+                "Restored 1 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}$playlistsMp3NewSavedZipFileName\".",
           );
 
           // Now verify that the restored converted audio 'aaa' has a
@@ -18789,9 +18808,9 @@ void main() {
             actualMessage,
             anyOf([
               contains(
-                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}${youtubePlaylistTitle}_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now)}.zip\"."),
+                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}${youtubePlaylistTitle}_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now)}.zip\"."),
               contains(
-                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}${youtubePlaylistTitle}_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now.subtract(const Duration(seconds: 1)))}.zip\"."),
+                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}${youtubePlaylistTitle}_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now.subtract(const Duration(seconds: 1)))}.zip\"."),
             ]),
           );
 
@@ -18855,15 +18874,16 @@ void main() {
           // and its mp3 files without replacing the existing playlist
           await _restorePaylistsAndTheirMp3(
               tester: tester,
-              sourceRootPath: kApplicationPathWindowsTest,
+              sourceRootPath:
+                  "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName",
               restorablePlaylistsZipFileName: '$youtubePlaylistTitle.zip',
               restorableMp3ZipFileName: playlistMp3NewSavedZipFileName,
               mockFilePicker: mockFilePicker,
               doReplaceExistingPlaylists: false,
               restorePlaylistsConfirmationMessage:
-                  'Restored 0 playlist saved individually, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 1 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "$kApplicationPathWindowsTest${path.separator}$youtubePlaylistTitle.zip".',
+                  'Restored 0 playlist saved individually, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 1 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}$youtubePlaylistTitle.zip".',
               restoreMp3ConfirmationMessage:
-                  "Restored 1 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistMp3NewSavedZipFileName\".",
+                  "Restored 1 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}$playlistMp3NewSavedZipFileName\".",
               restoreMp3FromUniquePlaylistTitle: youtubePlaylistTitle);
 
           // Now verify that the restored converted audio 'aaa' has a
@@ -19181,9 +19201,9 @@ void main() {
             actualMessage,
             anyOf([
               contains(
-                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}${youtubePlaylistTitle}_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now)}.zip\"."),
+                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}${youtubePlaylistTitle}_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now)}.zip\"."),
               contains(
-                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}${youtubePlaylistTitle}_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now.subtract(const Duration(seconds: 1)))}.zip\"."),
+                  "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}${youtubePlaylistTitle}_mp3_from_${audioOldestDownloadDateTodayForFileNName}_00_00_00_on_${yearMonthDayDateTimeFormatForFileName.format(now.subtract(const Duration(seconds: 1)))}.zip\"."),
             ]),
           );
 
@@ -19247,16 +19267,17 @@ void main() {
           // and its mp3 files with replacing the existing playlist
           await _restorePaylistsAndTheirMp3(
               tester: tester,
-              sourceRootPath: kApplicationPathWindowsTest,
+              sourceRootPath:
+                  "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName",
               restorablePlaylistsZipFileName: '$youtubePlaylistTitle.zip',
               restorableMp3ZipFileName: playlistMp3NewSavedZipFileName,
               mockFilePicker: mockFilePicker,
               doReplaceExistingPlaylists: true,
               doDeleteExistingPlaylists: false,
               restorePlaylistsConfirmationMessage:
-                  'Restored 1 playlist saved individually, 4 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 1 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "$kApplicationPathWindowsTest${path.separator}$youtubePlaylistTitle.zip".',
+                  'Restored 1 playlist saved individually, 4 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 1 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}$youtubePlaylistTitle.zip".',
               restoreMp3ConfirmationMessage:
-                  "Restored 1 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$playlistMp3NewSavedZipFileName\".",
+                  "Restored 1 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}$playlistMp3NewSavedZipFileName\".",
               restoreMp3FromUniquePlaylistTitle: youtubePlaylistTitle);
 
           // Now verify that the restored converted audio 'aaa' has a
@@ -38929,7 +38950,8 @@ void main() {
 
       await _movePositionedAudioAndVerifyResult(
         tester: tester,
-        audioToPositionTitle: "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+        audioToPositionTitle:
+            "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
         audioNewPosition: '1',
         expectedAudioPositionedTitles: audioPositionedTitles,
       );
@@ -38946,7 +38968,8 @@ void main() {
 
       await _movePositionedAudioAndVerifyResult(
         tester: tester,
-        audioToPositionTitle: "2_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+        audioToPositionTitle:
+            "2_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
         audioNewPosition: '0',
         expectedAudioPositionedTitles: audioPositionedTitles,
       );
@@ -39025,20 +39048,18 @@ void main() {
       expect(find.text('Comments (3)'), findsOneWidget);
 
       // Now, delete the second comment
-      
+
       // This opens the delete comment confirmation dialog
       final Finder deleteCommentIconButtonFinder =
           find.byKey(const Key('deleteSegmentButtonKey_2'));
       await tester.tap(deleteCommentIconButtonFinder);
       await tester.pumpAndSettle();
-      
+
       // Verify the delete comment confirmation dialog title
       expect(find.text('Remove Comment'), findsOneWidget);
 
       // Verify the delete comment confirmation dialog content
-      expect(
-          find.text(
-              'Are you sure you want to remove this comment ?'),
+      expect(find.text('Are you sure you want to remove this comment ?'),
           findsOneWidget);
 
       // Confirm the deletion by tapping the delete button
@@ -39062,7 +39083,8 @@ void main() {
           },
           {
             'number': 2,
-            'title': "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
+            'title':
+                "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
             'startPosition': '3:56.1',
             'endPosition': '5:20.8',
             'increaseDuration': 'Increase duration: 0:09.0',
@@ -39349,8 +39371,15 @@ Future<void> _restorePaylistsAndTheirMp3({
     await tester.pumpAndSettle();
   }
 
-  String mp3RestorableZipFilePathName =
-      '$sourceRootPath${path.separator}$restorableMp3ZipFileName';
+  String mp3RestorableZipFilePathName;
+
+  if (sourceRootPath.contains(kSavedPlaylistsDirName)) {
+    mp3RestorableZipFilePathName =
+        '$sourceRootPath${path.separator}MP3${path.separator}$restorableMp3ZipFileName';
+  } else {
+    mp3RestorableZipFilePathName =
+        '$sourceRootPath${path.separator}$restorableMp3ZipFileName';
+  }
 
   mockFilePicker.setSelectedFiles([
     PlatformFile(
