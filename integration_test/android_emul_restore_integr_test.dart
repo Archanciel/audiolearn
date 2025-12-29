@@ -37,10 +37,11 @@ void main() {
       () {
     group('''From Windows zip.''', () {
       testWidgets(
-          '''Unique playlist restore, not replace existing playlist. Restore unique playlist Windows zip
+          '''Unique playlist restore + save, not replace existing playlist. Restore unique playlist Windows zip
             containing 'S8 audio' playlist to Android application which contains 'S8 audio' and 'local'
             playlists. The restored 'S8 audio' playlist contains additional audio's to which comments and
-            pictures are associated.''', (tester) async {
+            pictures are associated. After restoring the playlist, the playlist is saved. First as individual
+            playlist saving and then as multiple playlists saving.''', (tester) async {
         await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
           tester: tester,
           tapOnPlaylistToggleButton: false,
@@ -175,12 +176,65 @@ void main() {
             "S8 audio|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'"
           ],
         );
+
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: 'S8 audio',
+          playlistMenuKeyStr:
+              'popup_menu_save_playlist_comments_pictures_to_zip',
+        );
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Saved playlist, comment and picture JSON files to \"$kApplicationPathAndroidTest${path.separator}$kSavedPlaylistsDirName${path.separator}S8 audio.zip\".\n\nSaved also 2 picture JPG file(s) in the ZIP file.",
+          isWarningConfirming: true,
+        );
+
+        // Tap the appbar leading popup menu button Then, the 'Save
+        // Playlists and Comments to zip File' menu is selected.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
+        );
+
+        // Does not check the "Add all JPG pictures to ZIP" checkbox
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'Playlists Backup to ZIP',
+          dialogMessage:
+              "Checking the \"Add all JPG pictures to ZIP\" checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.",
+          checkboxLabel: "Add all JPG pictures to ZIP",
+          closeDialog: true,
+        );
+
+        String saveZipFilePath =
+            '$kApplicationPathAndroidTest${path.separator}$kSavedPlaylistsDirName';
+
+        String actualMessage = tester
+            .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+            .data!;
+
+        expect(
+          actualMessage,
+          contains(
+            "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_",
+          ),
+        );
+
+        expect(
+          actualMessage,
+          contains(
+            "Saved also 2 picture JPG file(s) in same directory / pictures.",
+          ),
+        );
       });
       testWidgets(
-          '''Multiple playlists restore, not replace existing playlists. Restore multiple playlists Windows
-             zip containing 'S8 audio' and 'local' playlists to Android application which contain 'S8 audio'
-             and 'local' playlists. The restored 'S8 audio' and 'local' playlists contains additional audio's
-             to which comments and pictures are associated.''', (tester) async {
+          '''Multiple playlists restore + save, not replace existing playlists. Restore multiple playlists Windows
+             zip containing 'S8 audio' and 'local' playlists to Android application which contain 'S8 audio' and
+             'local' playlists. The restored 'S8 audio' and 'local' playlists contains additional audio's to which
+             comments and pictures are associated. After restoring the playlists, the playlists are saved.''', (tester) async {
         await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
           tester: tester,
           tapOnPlaylistToggleButton: false,
@@ -316,6 +370,37 @@ void main() {
           audioForPictureTitleThreeLst: [
             "local|Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
           ],
+        );
+
+        // Tap the appbar leading popup menu button Then, the 'Save
+        // Playlists and Comments to zip File' menu is selected.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
+        );
+
+        // Does not check the "Add all JPG pictures to ZIP" checkbox
+        await IntegrationTestUtil.verifySetValueToTargetDialog(
+          tester: tester,
+          dialogTitle: 'Playlists Backup to ZIP',
+          dialogMessage:
+              "Checking the \"Add all JPG pictures to ZIP\" checkbox will add all the application audio pictures to the created ZIP. This is only useful if the ZIP file will be used to restore another application.",
+          checkboxLabel: "Add all JPG pictures to ZIP",
+          closeDialog: true,
+        );
+
+        String saveZipFilePath =
+            '$kApplicationPathAndroidTest${path.separator}$kSavedPlaylistsDirName';
+
+        String actualMessage = tester
+            .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+            .data!;
+
+        expect(
+          actualMessage,
+          contains(
+            "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_",
+          ),
         );
       });
       testWidgets(
@@ -1451,8 +1536,10 @@ void main() {
         );
       });
     });
-    group('''Convert text to audio. IF THE GROUP CAN NOT RUN DUE TO MISSING PERMISSIONS, RUN THE
-             APP ON THE EMULATOR AND THEN, WITHOUT UNRUNNING THE APP, RUN THIS GROUP.''', () {
+    group(
+        '''Convert text to audio. IF THE GROUP CAN NOT RUN DUE TO MISSING PERMISSIONS, RUN THE
+             APP ON THE EMULATOR AND THEN, WITHOUT UNRUNNING THE APP, RUN THIS GROUP.''',
+        () {
       testWidgets(
           '''On selected playlist, add a text to speech audio. Verify the text to speech dialog appearance.
           Then enter a text with case ( { ) characters. Verify the Listen Create MP3 button state. Listen
