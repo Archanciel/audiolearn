@@ -47,6 +47,7 @@
             "filterDownloaded": true,
             "filterImported": true,
             "filterConverted": true,
+            "filterExtracted": true,
             "downloadDateStartRange": null,
             "downloadDateEndRange": null,
             "uploadDateStartRange": null,
