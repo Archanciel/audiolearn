@@ -14741,8 +14741,7 @@ void main() {
           language: Language.english,
         );
 
-        // Create a new directory to which the zip file will be saved
-
+        // New directory to which the zip file will be saved
         String saveZipFilePath =
             '$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName';
 
@@ -14889,8 +14888,8 @@ void main() {
         );
       });
       testWidgets(
-          '''After picture and comment addition, save to zip file without checking the
-                "Add all JPG pictures to ZIP" checkbox.''',
+          '''After picture and comment addition, save to zip file without checking the "Add all
+             JPG pictures to ZIP" checkbox.''',
           (WidgetTester tester) async {
         // Replace the platform instance with your mock
         MockFilePicker mockFilePicker = MockFilePicker();
@@ -15288,6 +15287,17 @@ void main() {
           closeDialog: true,
         );
 
+        String actualMessage = tester
+            .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+            .data!;
+
+        expect(
+          actualMessage,
+          contains(
+            "Saved also 4 picture JPG file(s) in same directory / pictures.",
+          ),
+        );
+
         // Verify the displayed warning dialog
         await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
           tester: tester,
@@ -15300,7 +15310,7 @@ void main() {
 
         List<String> pictureNamesLst = DirUtil.listFileNamesInDir(
           directoryPath:
-              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}$kPictureDirName",
+              "$saveZipFilePath${path.separator}$kPictureDirName",
           fileExtension: 'jpg',
         );
 
