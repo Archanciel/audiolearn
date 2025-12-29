@@ -1954,10 +1954,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get downloadedCheckbox => 'Downloaded';
 
   @override
-  String get importedCheckbox => 'Imported';
+  String get downloadedCheckboxTooltip => 'Selecting downloaded audio\'s.';
+
+  @override
+  String get importedCheckbox => 'Import.';
+
+  @override
+  String get importedCheckboxTooltip => 'Selecting imported audio\'s.';
 
   @override
   String get convertedCheckbox => 'Converted';
+
+  @override
+  String get convertedCheckboxTooltip =>
+      'Selecting text converted to MP3 audio\'s.';
+
+  @override
+  String get extractedCheckbox => 'Extracted';
+
+  @override
+  String get extractedCheckboxTooltip =>
+      'Selecting audio\'s created by comment(s) extraction to MP3. If necessary, ensure both \"Music qual.\" and \"Spoken q.\" checkboxes are checked.';
 
   @override
   String get restoredElementsHelpTitle => 'Restored Elements Description';

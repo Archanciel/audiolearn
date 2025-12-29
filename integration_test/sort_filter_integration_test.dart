@@ -3,6 +3,7 @@ import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/views/widgets/audio_sort_filter_dialog.dart';
+import 'package:audiolearn/views/widgets/confirm_action_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_add_remove_sort_filter_options_dialog.dart';
 import 'package:audiolearn/views/widgets/warning_message_display.dart';
@@ -1716,6 +1717,23 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               audioFilterString: 'Jancovici',
             );
 
+            // Scrolling down the sort filter dialog so that the checkboxes
+            // are visible and so accessible by the integration test.
+            // WARNING: Scrolling down must be done before setting sort
+            // options, otherwise, it does not work.
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -600), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
+            // Tap on the Extracted checkbox to unselect it. This deselect
+            // Extracted without reselect Downloaded since the Converted
+            // checkbox remains selected.
+            await tester.tap(find.byKey(const Key('filterExtractedCheckbox')));
+            await tester.pumpAndSettle();
+
             // Click on the "Save" button.
             await tester
                 .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
@@ -1728,7 +1746,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
-                  "Sort by:\n Present only in initial version:\n   Audio title asc\n Present only in modified version:\n   Audio title desc\nFilter words:\n Present only in modified version:\n   'Jancovici'",
+                  "Sort by:\n Present only in initial version:\n   Audio title asc\n Present only in modified version:\n   Audio title desc\nFilter words:\n Present only in modified version:\n   'Jancovici'\nFilter options:\n In initial version:\n   Extracted: checked\n In modified version:\n   Extracted: unchecked",
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -1792,14 +1810,38 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 .tap(find.byKey(const Key('filterNotPlayableCheckbox')));
             await tester.pumpAndSettle();
 
+            // Scrolling down the sort filter dialog so that the checkboxes
+            // are visible and so accessible by the integration test.
+            // WARNING: Scrolling down must be done before setting sort
+            // options, otherwise, it does not work.
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -200), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
             // Tap on the Downloaded checkbox to unselect it
             await tester.tap(find.byKey(const Key('filterDownloadedCheckbox')));
             await tester.pumpAndSettle();
 
             // Tap on the Imported checkbox to unselect it. This deselect
-            // Imported without reselect Downloaded since the CConverted
+            // Imported without reselect Downloaded since the Converted
             // checkbox remains selected.
             await tester.tap(find.byKey(const Key('filterImportedCheckbox')));
+            await tester.pumpAndSettle();
+
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -200), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
+            // Tap on the Extracted checkbox to select it. This deselect
+            // Extracted without reselect Downloaded since the Converted
+            // checkbox remains selected.
+            await tester.tap(find.byKey(const Key('filterExtractedCheckbox')));
             await tester.pumpAndSettle();
 
             // Tap on the Exclude ignore case checkbox to unselect it
@@ -1940,12 +1982,21 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
             // Verifying and closing the confirm dialog
 
+            // Scrolling down the confirm action dialog so that the
+            // checkbox modifications are visible
+            await tester.drag(
+              find.byType(ConfirmActionDialog),
+              const Offset(
+                  0, -800), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
             await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
               tester: tester,
               confirmDialogTitleOne:
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
-                  "Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Audio chapter asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Audio downl speed desc,\n   Audio downl duration desc\nFilter words:\n Present only in modified version:\n   'Marine Le Pen',\n   'Emmanuel Macron'\nFilter options:\n In initial version:\n   Ignore case: checked\n In modified version:\n   Ignore case: unchecked\n In initial version:\n   Include Youtube channel: checked\n In modified version:\n   Include Youtube\n   channel: unchecked\n In initial version:\n   Spoken q.: checked\n In modified version:\n   Spoken q.: unchecked\n In initial version:\n   Uncom.: checked\n In modified version:\n   Uncom.: unchecked\n In initial version:\n   Unpictured: checked\n In modified version:\n   Unpictured: unchecked\n In initial version:\n   Not playable: checked\n In modified version:\n   Not playable: unchecked\n In initial version:\n   Downloaded: checked\n In modified version:\n   Downloaded: unchecked\n In initial version:\n   Imported: checked\n In modified version:\n   Imported: unchecked\n In modified version:\n   Start downl date: 26/12/2023\n In modified version:\n   End downl date: 06/01/2024\n In modified version:\n   Start upl date: 12/06/2022\n In modified version:\n   End upl date: 19/09/2023\n In modified version:\n   File size range (MB) Start: 2.37\n In modified version:\n   File size range (MB) End: 2.8\n In modified version:\n   Audio duration range (hh:mm)\n   Start: 00:06\n In modified version:\n   Audio duration range (hh:mm)\n   End: 00:08",
+                  "Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Audio chapter asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Audio downl speed desc,\n   Audio downl duration desc\nFilter words:\n Present only in modified version:\n   'Marine Le Pen',\n   'Emmanuel Macron'\nFilter options:\n In initial version:\n   Ignore case: checked\n In modified version:\n   Ignore case: unchecked\n In initial version:\n   Include Youtube channel: checked\n In modified version:\n   Include Youtube\n   channel: unchecked\n In initial version:\n   Spoken q.: checked\n In modified version:\n   Spoken q.: unchecked\n In initial version:\n   Uncom.: checked\n In modified version:\n   Uncom.: unchecked\n In initial version:\n   Unpictured: checked\n In modified version:\n   Unpictured: unchecked\n In initial version:\n   Not playable: checked\n In modified version:\n   Not playable: unchecked\n In initial version:\n   Downloaded: checked\n In modified version:\n   Downloaded: unchecked\n In initial version:\n   Import.: checked\n In modified version:\n   Import.: unchecked\n In initial version:\n   Extracted: unchecked\n In modified version:\n   Extracted: checked\n In modified version:\n   Start downl date: 26/12/2023\n In modified version:\n   End downl date: 06/01/2024\n In modified version:\n   Start upl date: 12/06/2022\n In modified version:\n   End upl date: 19/09/2023\n In modified version:\n   File size range (MB) Start: 2.37\n In modified version:\n   File size range (MB) End: 2.8\n In modified version:\n   Audio duration range (hh:mm)\n   Start: 00:06\n In modified version:\n   Audio duration range (hh:mm)\n   End: 00:08",
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -3091,7 +3142,142 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
-                  'Filter options:\n In initial version:\n   Downloaded: unchecked\n In modified version:\n   Downloaded: checked\n In initial version:\n   Imported: unchecked\n In modified version:\n   Imported: checked\n In initial version:\n   Converted: checked\n In modified version:\n   Converted: unchecked',
+                  'Filter options:\n In initial version:\n   Converted: checked\n In modified version:\n   Converted: unchecked',
+              confirmOrCancelAction: true, // Confirm button is tapped
+            );
+
+            // Purge the test playlist directory so that the created test
+            // files are not uploaded to GitHub
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+          });
+          testWidgets(
+              '''Modify 'Extracted' existing named and saved sort/filter parms unchecking the 'Extracted'
+                 checkbox and verify the ConfirmActionDialog content.''',
+              (WidgetTester tester) async {
+            // Purge the test playlist directory if it exists so that the
+            // playlist list is empty
+            DirUtil.deleteFilesInDirAndSubDirs(
+              rootPath: kApplicationPathWindowsTest,
+            );
+
+            // Copy the test initial audio data to the app dir
+            DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+              sourceRootPath:
+                  "$kDownloadAppTestSavedDataDir${path.separator}sort_filtered_parms_name_deletion_no_mp3_test",
+              destinationRootPath: kApplicationPathWindowsTest,
+            );
+
+            final SettingsDataService settingsDataService =
+                SettingsDataService();
+
+            // Load the settings from the json file. This is necessary
+            // otherwise the ordered playlist titles will remain empty
+            // and the playlist list will not be filled with the
+            // playlists available in the download app test dir
+            await settingsDataService.loadSettingsFromFile(
+                settingsJsonPathFileName:
+                    "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+            await app.main();
+            await tester.pumpAndSettle();
+
+            const String saveAsTitle = 'Extracted';
+
+            // Now open the audio popup menu
+            await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+            await tester.pumpAndSettle();
+
+            // Find the sort/filter audio menu item and tap on it to
+            // open the audio sort filter dialog
+            await tester.tap(find
+                .byKey(const Key('define_sort_and_filter_audio_menu_item')));
+            await tester.pumpAndSettle();
+
+            // Type "Extracted" in the 'Save as' TextField
+
+            await tester.enterText(
+                find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+                saveAsTitle);
+            await tester.pumpAndSettle();
+
+            // Scrolling down the sort filter dialog so that the checkboxes
+            // are visible and so accessible by the integration test.
+            // WARNING: Scrolling down must be done before setting sort
+            // options, otherwise, it does not work.
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -300), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
+            // Tap on the 'Downloaded' checkbox to unselect it
+            await tester.tap(find.byKey(const Key('filterDownloadedCheckbox')));
+            await tester.pumpAndSettle();
+
+            // Tap on the 'Imported' checkbox to unselect it
+            await tester.tap(find.byKey(const Key('filterImportedCheckbox')));
+            await tester.pumpAndSettle();
+
+            // Tap on the 'Converted' checkbox to unselect it
+            await tester.tap(find.byKey(const Key('filterConvertedCheckbox')));
+            await tester.pumpAndSettle();
+
+            // Click on the "Save" button.
+            await tester
+                .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+            await tester.pumpAndSettle();
+
+            // Now tap on the current dropdown button item to open the dropdown
+            // button items list
+
+            // And find the 'Extracted' sort/filter item
+            Finder titleAscDropDownTextFinder =
+                find.text(saveAsTitle).last;
+            await tester.tap(titleAscDropDownTextFinder);
+            await tester.pumpAndSettle();
+            await tester.tap(titleAscDropDownTextFinder);
+            await tester.pumpAndSettle();
+
+            // Now open the audio popup menu in order to modify the
+            // 'Extracted' sort/filter item
+            Finder dropdownItemEditIconButtonFinder = find.byKey(
+                const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+            await tester.tap(dropdownItemEditIconButtonFinder);
+            await tester.pumpAndSettle();
+
+            // Scrolling down the sort filter dialog so that the checkboxes
+            // are visible and so accessible by the integration test.
+            // WARNING: Scrolling down must be done before setting sort
+            // options, otherwise, it does not work.
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -300), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
+            // Tap on the Extracted checkbox to unselect it. This deselect
+            // Extracted without reselect Downloaded since the Converted
+            // checkbox remains selected.
+            await tester.tap(find.byKey(const Key('filterExtractedCheckbox')));
+            await tester.pumpAndSettle();
+
+            // Click on the "Save" button.
+            await tester
+                .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+            await tester.pumpAndSettle();
+
+            // Verifying and closing the confirm dialog
+
+            await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+              tester: tester,
+              confirmDialogTitleOne:
+                  'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
+              confirmDialogMessage:
+                  'Filter options:\n In initial version:\n   Downloaded: unchecked\n In modified version:\n   Downloaded: checked\n In initial version:\n   Import.: unchecked\n In modified version:\n   Import.: checked\n In initial version:\n   Extracted: checked\n In modified version:\n   Extracted: unchecked',
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 

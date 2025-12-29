@@ -90,6 +90,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   late bool _filterDownloaded;
   late bool _filterImported;
   late bool _filterConverted;
+  late bool _filterExtracted;
 
   final TextEditingController _startFileSizeController =
       TextEditingController();
@@ -265,6 +266,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _filterDownloaded = audioSortDefaultFilterParameters.filterDownloaded;
     _filterImported = audioSortDefaultFilterParameters.filterImported;
     _filterConverted = audioSortDefaultFilterParameters.filterConverted;
+    _filterExtracted = audioSortDefaultFilterParameters.filterExtracted;
     _startDownloadDateTime =
         audioSortDefaultFilterParameters.downloadDateStartRange;
     _endDownloadDateTime =
@@ -339,6 +341,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _filterDownloaded = true;
     _filterImported = true;
     _filterConverted = true;
+    _filterExtracted = true;
     _startDownloadDateTimeController.clear();
     _endDownloadDateTimeController.clear();
     _startUploadDateTimeController.clear();
@@ -387,6 +390,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _filterDownloaded = audioSortFilterParameters.filterDownloaded;
     _filterImported = audioSortFilterParameters.filterImported;
     _filterConverted = audioSortFilterParameters.filterConverted;
+    _filterExtracted = audioSortFilterParameters.filterExtracted;
     _startDownloadDateTimeController.clear();
     _endDownloadDateTimeController.clear();
     _startUploadDateTimeController.clear();
@@ -1633,71 +1637,107 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   }) {
     return Wrap(
       children: [
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(AppLocalizations.of(context)!.downloadedCheckbox),
-            Checkbox(
-              key: const Key('filterDownloadedCheckbox'),
-              value: _filterDownloaded,
-              onChanged: (bool? newValue) {
-                setState(() {
-                  _filterDownloaded = newValue!;
-                  if (!_filterDownloaded &&
-                      !_filterConverted &&
-                      !_filterImported) {
-                    _filterImported = true;
-                    _filterConverted = true;
-                  }
-                });
-                _audioTitleSearchSentenceFocusNode.requestFocus();
-              },
-            ),
-          ],
+        Tooltip(
+          message: AppLocalizations.of(context)!.downloadedCheckboxTooltip,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(AppLocalizations.of(context)!.downloadedCheckbox),
+              Checkbox(
+                key: const Key('filterDownloadedCheckbox'),
+                value: _filterDownloaded,
+                onChanged: (bool? newValue) {
+                  setState(() {
+                    _filterDownloaded = newValue!;
+                    if (!_filterExtracted &&
+                        !_filterConverted &&
+                        !_filterImported) {
+                      _filterImported = true;
+                      _filterConverted = true;
+                    }
+                  });
+                  _audioTitleSearchSentenceFocusNode.requestFocus();
+                },
+              ),
+            ],
+          ),
         ),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(AppLocalizations.of(context)!.importedCheckbox),
-            Checkbox(
-              key: const Key('filterImportedCheckbox'),
-              value: _filterImported,
-              onChanged: (bool? newValue) {
-                setState(() {
-                  _filterImported = newValue!;
-                  if (!_filterImported &&
-                      !_filterConverted &&
-                      !_filterDownloaded) {
-                    _filterConverted = true;
-                    _filterDownloaded = true;
-                  }
-                });
-                _audioTitleSearchSentenceFocusNode.requestFocus();
-              },
-            ),
-          ],
+        Tooltip(
+          message: AppLocalizations.of(context)!.importedCheckboxTooltip,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(AppLocalizations.of(context)!.importedCheckbox),
+              Checkbox(
+                key: const Key('filterImportedCheckbox'),
+                value: _filterImported,
+                onChanged: (bool? newValue) {
+                  setState(() {
+                    _filterImported = newValue!;
+                    if (!_filterExtracted &&
+                        !_filterConverted &&
+                        !_filterDownloaded) {
+                      _filterConverted = true;
+                      _filterDownloaded = true;
+                    }
+                  });
+                  _audioTitleSearchSentenceFocusNode.requestFocus();
+                },
+              ),
+            ],
+          ),
         ),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(AppLocalizations.of(context)!.convertedCheckbox),
-            Checkbox(
-              key: const Key('filterConvertedCheckbox'),
-              value: _filterConverted,
-              onChanged: (bool? newValue) {
-                setState(() {
-                  _filterConverted = newValue!;
-                  if (!_filterConverted &&
-                      !_filterImported &&
-                      !_filterDownloaded) {
-                    _filterImported = true;
-                    _filterDownloaded = true;
-                  }
-                });
-                _audioTitleSearchSentenceFocusNode.requestFocus();
-              },
-            ),
-          ],
+        Tooltip(
+          message: AppLocalizations.of(context)!.convertedCheckboxTooltip,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(AppLocalizations.of(context)!.convertedCheckbox),
+              Checkbox(
+                key: const Key('filterConvertedCheckbox'),
+                value: _filterConverted,
+                onChanged: (bool? newValue) {
+                  setState(() {
+                    _filterConverted = newValue!;
+                    if (!_filterExtracted &&
+                        !_filterConverted &&
+                        !_filterImported &&
+                        !_filterDownloaded) {
+                      _filterImported = true;
+                      _filterDownloaded = true;
+                    }
+                  });
+                  _audioTitleSearchSentenceFocusNode.requestFocus();
+                },
+              ),
+            ],
+          ),
+        ),
+        Tooltip(
+          message: AppLocalizations.of(context)!.extractedCheckboxTooltip,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(AppLocalizations.of(context)!.extractedCheckbox),
+              Checkbox(
+                key: const Key('filterExtractedCheckbox'),
+                value: _filterExtracted,
+                onChanged: (bool? newValue) {
+                  setState(() {
+                    _filterExtracted = newValue!;
+                    if (!_filterExtracted &&
+                        !_filterConverted &&
+                        !_filterImported &&
+                        !_filterDownloaded) {
+                      _filterImported = true;
+                      _filterDownloaded = true;
+                    }
+                  });
+                  _audioTitleSearchSentenceFocusNode.requestFocus();
+                },
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -2434,8 +2474,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           AppLocalizations.of(context)!.audioRemainingDuration,
       'lastListenedDateTime':
           AppLocalizations.of(context)!.lastListenedDateTime,
-      'lastCommentDateTime':
-          AppLocalizations.of(context)!.lastCommentDateTime,
+      'lastCommentDateTime': AppLocalizations.of(context)!.lastCommentDateTime,
       'audioFileSize': AppLocalizations.of(context)!.audioFileSize,
       'audioDownloadSpeed': AppLocalizations.of(context)!.audioDownloadSpeed,
       'audioDownloadDuration':
@@ -2476,6 +2515,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       'filterDownloaded': AppLocalizations.of(context)!.downloadedCheckbox,
       'filterImported': AppLocalizations.of(context)!.importedCheckbox,
       "filterConverted": AppLocalizations.of(context)!.convertedCheckbox,
+      "filterExtracted": AppLocalizations.of(context)!.extractedCheckbox,
       'downloadDateStartRange': AppLocalizations.of(context)!.startDownloadDate,
       'downloadDateEndRange': AppLocalizations.of(context)!.endDownloadDate,
       'uploadDateStartRange': AppLocalizations.of(context)!.startUploadDate,
@@ -2656,6 +2696,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       filterDownloaded: _filterDownloaded,
       filterImported: _filterImported,
       filterConverted: _filterConverted,
+      filterExtracted: _filterExtracted,
       filterNotPlayable: _filterNotPlayable,
       downloadDateStartRange: _startDownloadDateTime,
       downloadDateEndRange: _endDownloadDateTime,

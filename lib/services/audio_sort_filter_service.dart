@@ -594,6 +594,20 @@ class AudioSortFilterService {
               wasFilterOptionsTitleAddedToDifferencesLst:
                   wasFilterOptionsTitleAddedToDifferencesLst);
     }
+    if (existingAudioSortFilterParms.filterExtracted !=
+        newOrModifiedaudioSortFilterParms.filterExtracted) {
+      wasFilterOptionsTitleAddedToDifferencesLst =
+          _addToDifferencesLstOtherOptionCheckboxValueStr(
+              initialCheckBoxState: existingAudioSortFilterParms.filterExtracted,
+              modifiedCheckBoxState:
+                  newOrModifiedaudioSortFilterParms.filterExtracted,
+              sortFilterParmsNameTranslationMap:
+                  sortFilterParmsNameTranslationMap,
+              optionNameTranslationKey: 'filterExtracted',
+              differencesLst: differencesLst,
+              wasFilterOptionsTitleAddedToDifferencesLst:
+                  wasFilterOptionsTitleAddedToDifferencesLst);
+    }
 
     if (existingAudioSortFilterParms.downloadDateStartRange !=
         newOrModifiedaudioSortFilterParms.downloadDateStartRange) {
@@ -1325,31 +1339,49 @@ class AudioSortFilterService {
 
     // If the 'Downloaded' checkbox was set to false (by
     // default it is set to true), the returned audio list
-    // only contain audio which were imported or converted.
+    // only contain audio which were imported or converted
+    // (textToSpeech) or extracted.
     if (!audioSortFilterParameters.filterDownloaded) {
       filteredAudios = filteredAudios.where((audio) {
         return audio.audioType == AudioType.imported ||
-            audio.audioType == AudioType.textToSpeech;
+            audio.audioType == AudioType.textToSpeech ||
+            audio.audioType == AudioType.extracted;
       }).toList();
     }
 
     // If the 'Imported' checkbox was set to false (by
     // default it is set to true), the returned audio list
-    // only contain audio which were downloaded or converted.
+    // only contain audio which were downloaded or converted
+    // (textToSpeech) or extracted.
     if (!audioSortFilterParameters.filterImported) {
       filteredAudios = filteredAudios.where((audio) {
         return audio.audioType == AudioType.downloaded ||
-            audio.audioType == AudioType.textToSpeech;
+            audio.audioType == AudioType.textToSpeech ||
+            audio.audioType == AudioType.extracted;
       }).toList();
     }
 
-    // If the 'Converted' checkbox was set to false (by
-    // default it is set to true), the returned audio list
-    // only contain audio which were downloaded or imported.
+    // If the 'Converted' (textToSpeech) checkbox was set
+    // to false (by default it is set to true), the returned^
+    // audio list only contain audio which were downloaded or
+    // imported or extracted.
     if (!audioSortFilterParameters.filterConverted) {
       filteredAudios = filteredAudios.where((audio) {
         return audio.audioType == AudioType.downloaded ||
-            audio.audioType == AudioType.imported;
+            audio.audioType == AudioType.imported ||
+            audio.audioType == AudioType.extracted;
+      }).toList();
+    }
+
+    // If the 'Extracted' checkbox was set to false (by default
+    // it is set to true), the returned audio list only contain
+    // audio which were downloaded or imported or converted
+    // (textToSpeech).
+    if (!audioSortFilterParameters.filterExtracted) {
+      filteredAudios = filteredAudios.where((audio) {
+        return audio.audioType == AudioType.downloaded ||
+            audio.audioType == AudioType.imported ||
+            audio.audioType == AudioType.textToSpeech;
       }).toList();
     }
 

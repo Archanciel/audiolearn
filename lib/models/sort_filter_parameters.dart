@@ -365,6 +365,9 @@ class AudioSortFilterParameters {
   // If true, converted audio are also selected.
   final bool filterConverted;
 
+  // If true, extracted audio are also selected.
+  final bool filterExtracted;
+
   // The start and end range for the download date filter.
   final DateTime? downloadDateStartRange;
   final DateTime? downloadDateEndRange;
@@ -402,6 +405,7 @@ class AudioSortFilterParameters {
     this.filterDownloaded = true,
     this.filterImported = true,
     this.filterConverted = true,
+    this.filterExtracted = true,
     this.downloadDateStartRange,
     this.downloadDateEndRange,
     this.uploadDateStartRange,
@@ -439,6 +443,7 @@ class AudioSortFilterParameters {
       filterDownloaded: json['filterDownloaded'] ?? true,
       filterImported: json['filterImported'] ?? true,
       filterConverted: json['filterConverted'] ?? true,
+      filterExtracted: json['filterExtracted'] ?? true,
       downloadDateStartRange: json['downloadDateStartRange'] == null
           ? null
           : DateTime.parse(json['downloadDateStartRange']),
@@ -481,6 +486,7 @@ class AudioSortFilterParameters {
       'filterDownloaded': filterDownloaded,
       'filterImported': filterImported,
       'filterConverted': filterConverted,
+      'filterExtracted': filterExtracted,
       'downloadDateStartRange': downloadDateStartRange?.toIso8601String(),
       'downloadDateEndRange': downloadDateEndRange?.toIso8601String(),
       'uploadDateStartRange': uploadDateStartRange?.toIso8601String(),
@@ -519,6 +525,7 @@ class AudioSortFilterParameters {
         other.filterDownloaded == filterDownloaded &&
         other.filterImported == filterImported &&
         other.filterConverted == filterConverted &&
+        other.filterExtracted == filterExtracted &&
         other.downloadDateStartRange == downloadDateStartRange &&
         other.downloadDateEndRange == downloadDateEndRange &&
         other.uploadDateStartRange == uploadDateStartRange &&
@@ -579,6 +586,7 @@ class AudioSortFilterParameters {
       filterDownloaded: filterDownloaded,
       filterImported: filterImported,
       filterConverted: filterConverted,
+      filterExtracted: filterExtracted,
       downloadDateStartRange: downloadDateStartRange,
       downloadDateEndRange: downloadDateEndRange,
       uploadDateStartRange: uploadDateStartRange,
