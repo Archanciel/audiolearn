@@ -11,6 +11,7 @@ import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
+import 'package:audiolearn/views/widgets/audio_extractor_dialog.dart';
 import 'package:audiolearn/views/widgets/audio_sort_filter_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_rename_dialog.dart';
 import 'package:audiolearn/views/widgets/set_value_to_target_dialog.dart';
@@ -14889,8 +14890,7 @@ void main() {
       });
       testWidgets(
           '''After picture and comment addition, save to zip file without checking the "Add all
-             JPG pictures to ZIP" checkbox.''',
-          (WidgetTester tester) async {
+             JPG pictures to ZIP" checkbox.''', (WidgetTester tester) async {
         // Replace the platform instance with your mock
         MockFilePicker mockFilePicker = MockFilePicker();
         FilePicker.platform = mockFilePicker;
@@ -15309,8 +15309,7 @@ void main() {
         );
 
         List<String> pictureNamesLst = DirUtil.listFileNamesInDir(
-          directoryPath:
-              "$saveZipFilePath${path.separator}$kPictureDirName",
+          directoryPath: "$saveZipFilePath${path.separator}$kPictureDirName",
           fileExtension: 'jpg',
         );
 
@@ -38992,7 +38991,9 @@ void main() {
     });
   });
   group('Extract audio comments to MP3 tests', () {
-    testWidgets('''Audio with 3 comments.''', (WidgetTester tester) async {
+    testWidgets(
+        '''Extract to dir in music quality an audio with 3 comments. 1 comment is
+           removed before the extraction.''', (WidgetTester tester) async {
       const String audioTitle =
           "Glorious - Laisse-moi te parler de Jésus #louange";
 
@@ -39103,6 +39104,71 @@ void main() {
             'duration': 'Duration: 1:24.7',
           },
         ],
+      );
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      // Setting the path value returned by the FilePicker mock.
+      mockFilePicker.setPathToSelect(
+        pathToSelectStr: kApplicationPathWindowsTest,
+      );
+
+      // Now, type on the Extract MP3 button
+      final Finder extractMp3ButtonFinder =
+          find.byKey(const Key('extractMp3Button'));
+      await tester.tap(extractMp3ButtonFinder);
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(seconds: 4));
+      await tester.pumpAndSettle();
+
+      // Verify the extract comments to MP3 success dialog message
+      expect(
+        find.text(
+            'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3'),
+        findsOneWidget,
+      );
+
+      await tester.drag(
+        find.byType(AudioExtractorDialog),
+        const Offset(
+            0, -200), // Negative value for vertical drag to scroll down
+      );
+      await tester.pumpAndSettle();
+
+      final Finder playPauseButtonFinder =
+          find.byKey(const Key('playPauseButton'));
+
+      expect(
+        playPauseButtonFinder,
+        findsOneWidget,
+      );
+
+      // Tap the play button to start playback
+      await tester.tap(playPauseButtonFinder);
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(milliseconds: 500));
+      await tester.pumpAndSettle();
+
+      // Then tap the pause button to stop playback$
+      await tester.tap(playPauseButtonFinder);
+      await tester.pumpAndSettle();
+
+      await tester.drag(
+        find.byType(AudioExtractorDialog),
+        const Offset(
+            0, -200), // Negative value for vertical drag to scroll down
+      );
+      await tester.pumpAndSettle();
+
+      // Verify the playing comments to MP3 success dialog messa
+      expect(
+        find.text(
+            'Playing: musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3'),
+        findsOneWidget,
       );
 
       // Purge the test playlist directory so that the created test
