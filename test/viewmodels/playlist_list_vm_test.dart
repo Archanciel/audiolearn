@@ -987,8 +987,7 @@ void main() {
       // and the playlist list will not be filled with the
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+          settingsJsonPathFileName: "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -1014,12 +1013,7 @@ void main() {
 
       expect(
         savedZipFilePathName,
-        "$kApplicationPathWindowsTest${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip",
-      );
-
-      List<String> zipLst = DirUtil.listFileNamesInDir(
-        directoryPath: kApplicationPathWindowsTest,
-        fileExtension: 'zip',
+        "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip",
       );
 
       List<String> expectedZipContent = [
@@ -1038,7 +1032,7 @@ void main() {
 
       List<String> zipFilePathNamesLst = await DirUtil.listPathFileNamesInZip(
         zipFilePathName:
-            kApplicationPathWindowsTest + path.separator + zipLst[0],
+            savedZipFilePathName,
       );
 
       expect(
@@ -1075,8 +1069,7 @@ void main() {
       // and the playlist list will not be filled with the
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName:
-              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+          settingsJsonPathFileName: "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -1100,7 +1093,8 @@ void main() {
       );
 
       List<String> zipLst = DirUtil.listFileNamesInDir(
-        directoryPath: kApplicationPathWindowsTest,
+        directoryPath:
+            "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName",
         fileExtension: 'zip',
       );
 
@@ -1120,7 +1114,7 @@ void main() {
 
       List<String> zipFilePathNamesLst = await DirUtil.listPathFileNamesInZip(
         zipFilePathName:
-            kApplicationPathWindowsTest + path.separator + zipLst[0],
+            "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}${zipLst[0]}",
       );
 
       expect(
@@ -1199,16 +1193,17 @@ void main() {
           savedZipFilePathName,
           anyOf([
             equals(
-                "$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2024-01-10_18_18_05_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip"),
+                "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}audioLearn_mp3_from_2024-01-10_18_18_05_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip"),
             equals(
-                "$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2024-01-10_18_18_05_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 2)))}.zip"),
+                "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}audioLearn_mp3_from_2024-01-10_18_18_05_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 2)))}.zip"),
             equals(
-                "$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2024-01-10_18_18_05_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip"),
+                "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}audioLearn_mp3_from_2024-01-10_18_18_05_on_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip"),
           ]),
         );
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
-          directoryPath: kApplicationPathWindowsTest,
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3",
           fileExtension: 'zip',
         );
 
@@ -1221,7 +1216,7 @@ void main() {
 
         List<String> zipFilePathNamesLst = await DirUtil.listPathFileNamesInZip(
           zipFilePathName:
-              kApplicationPathWindowsTest + path.separator + zipLst[0],
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}${zipLst[0]}",
         );
 
         expect(
@@ -1300,7 +1295,7 @@ void main() {
         expect(
           savedZipFilePathName,
           contains(
-            "$kApplicationPathWindowsTest${path.separator}audioLearn_mp3_from_2024-01-08_16_35_21_on_",
+            "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}audioLearn_mp3_from_2024-01-08_16_35_21_on_",
           ),
         );
 
@@ -1320,7 +1315,8 @@ void main() {
         );
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
-          directoryPath: kApplicationPathWindowsTest,
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3",
           fileExtension: 'zip',
         );
 
@@ -1331,7 +1327,7 @@ void main() {
 
         List<String> zipFilePathNamesLst = await DirUtil.listPathFileNamesInZip(
           zipFilePathName:
-              kApplicationPathWindowsTest + path.separator + zipLst[0],
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}${zipLst[0]}",
         );
 
         expect(
@@ -1413,7 +1409,7 @@ void main() {
         expect(
           savedZipFilePathName,
           contains(
-            "$kApplicationPathWindowsTest${path.separator}S8 audio_mp3_from_2024-05-28_13_06_36_on_",
+            "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}S8 audio_mp3_from_2024-05-28_13_06_36_on_",
           ),
         );
 
@@ -1433,7 +1429,8 @@ void main() {
         );
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
-          directoryPath: kApplicationPathWindowsTest,
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3",
           fileExtension: 'zip',
         );
 
@@ -1444,7 +1441,7 @@ void main() {
 
         List<String> zipFilePathNamesLst = await DirUtil.listPathFileNamesInZip(
           zipFilePathName:
-              kApplicationPathWindowsTest + path.separator + zipLst[0],
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}${zipLst[0]}",
         );
 
         expect(
@@ -1525,7 +1522,7 @@ void main() {
         expect(
           savedZipFilePathName,
           contains(
-            "$kApplicationPathWindowsTest${path.separator}http_local_mp3_from_2025-03-18_16_58_14_on_",
+            "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}http_local_mp3_from_2025-03-18_16_58_14_on_",
           ),
         );
 
@@ -1545,7 +1542,8 @@ void main() {
         );
 
         List<String> zipLst = DirUtil.listFileNamesInDir(
-          directoryPath: kApplicationPathWindowsTest,
+          directoryPath:
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3",
           fileExtension: 'zip',
         );
 
@@ -1555,7 +1553,7 @@ void main() {
 
         List<String> zipFilePathNamesLst = await DirUtil.listPathFileNamesInZip(
           zipFilePathName:
-              kApplicationPathWindowsTest + path.separator + zipLst[0],
+              "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}${zipLst[0]}",
         );
 
         expect(
