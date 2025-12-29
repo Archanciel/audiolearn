@@ -2867,4 +2867,21 @@ class MockAppLocalizations extends AppLocalizations {
     Object targetPlaylist,
   ) =>
       "The extracted audio was not added to the \"$targetPlaylist\" playlist because it already exists in it. To resolve this, please delete the existing extracted audio before running the extraction again.";
+
+  @override
+  String get convertedCheckboxTooltip =>
+      "Selecting text converted to MP3 audio's.";
+
+  @override
+  String get extractedCheckbox => "Extracted";
+
+  @override
+  String get extractedCheckboxTooltip =>
+      "Selecting audio's created by comment(s) extraction to MP3.";
+
+  @override
+  String get importedCheckboxTooltip => "Selecting imported audio's.";
+
+  @override
+  String get downloadedCheckboxTooltip => "Selecting downloaded audio's.";
 }

@@ -3179,17 +3179,47 @@ abstract class AppLocalizations {
   /// **'Downloaded'**
   String get downloadedCheckbox;
 
+  /// No description provided for @downloadedCheckboxTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Selecting downloaded audio\'s.'**
+  String get downloadedCheckboxTooltip;
+
   /// No description provided for @importedCheckbox.
   ///
   /// In en, this message translates to:
-  /// **'Imported'**
+  /// **'Import.'**
   String get importedCheckbox;
+
+  /// No description provided for @importedCheckboxTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Selecting imported audio\'s.'**
+  String get importedCheckboxTooltip;
 
   /// No description provided for @convertedCheckbox.
   ///
   /// In en, this message translates to:
   /// **'Converted'**
   String get convertedCheckbox;
+
+  /// No description provided for @convertedCheckboxTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Selecting text converted to MP3 audio\'s.'**
+  String get convertedCheckboxTooltip;
+
+  /// No description provided for @extractedCheckbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Extracted'**
+  String get extractedCheckbox;
+
+  /// No description provided for @extractedCheckboxTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Selecting audio\'s created by comment(s) extraction to MP3. If necessary, ensure both \"Music qual.\" and \"Spoken q.\" checkboxes are checked.'**
+  String get extractedCheckboxTooltip;
 
   /// No description provided for @restoredElementsHelpTitle.
   ///
