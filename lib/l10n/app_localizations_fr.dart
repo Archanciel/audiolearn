@@ -641,7 +641,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get aboutAppDescription =>
-      'Audio Learn vous permet de télécharger l\'audio de vidéos présentes dans des playlists Youtube ajoutées à l\'application, ou l\'audio d\'une vidéo Youtube individuelle à partir de son lien.\n\nVous pouvez également importer des fichiers audio, comme des livres audio, directement dans l\'application.\n\nEn plus de l\'écoute des fichiers audio, Audio Learn offre la possibilité d\'ajouter des commentaires positionnés à chaque fichier, facilitant ainsi la réécoute des passages les plus intéressants.\n\nEnfin, l\'application permet de trier et filtrer les fichiers audio selon de nombreux critères.\n\nDans la prochaine version, vous pourrez extraire les segments audio commentés pour les partager par email ou via WhatsApp, ou encore les combiner pour créer un nouvel audio récapitulatif.';
+      'Audio Learn vous permet de télécharger l\'audio de vidéos présentes dans des playlists Youtube ajoutées à l\'application, ou l\'audio d\'une vidéo Youtube individuelle à partir de son lien.\n\nVous pouvez également importer des fichiers audio, comme des livres audio, directement dans l\'application ou convertir du texte en audio. Cette fonctionalité est particulièrement utile pour écouter des prières écrites trouvées sur Internet.\n\nEn plus de l\'écoute des fichiers audio, Audio Learn offre la possibilité d\'ajouter des commentaires positionnés à chaque fichier, facilitant ainsi la réécoute des passages les plus intéressants.\n\nIl est en outre possible d\'extraire les parties positionnées par les commentaires dans un nouveau fichier MP3 qui peut ensuite être partagé, par email ou via WhatsApp, ou être ajouté à une playlist existante.\n\nEnfin, l\'application permet de trier et filtrer les fichiers audio selon de nombreux critères afin de sélectionner les audio\'s à écouter.';
 
   @override
   String get keepAudioEntryInSourcePlaylist =>
@@ -2609,7 +2609,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Extraire les segments audio définis par les commentaires dans un fichier MP3.';
 
   @override
-  String get audioExtractorDialogTitle => 'Commentaires -> MP3';
+  String get audioExtractorDialogTitle => 'Commentaires->MP3';
 
   @override
   String get editCommentDialogTitle => 'Éditer le commentaire';
