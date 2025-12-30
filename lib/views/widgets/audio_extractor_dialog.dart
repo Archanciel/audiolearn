@@ -23,6 +23,7 @@ import '../../views/screen_mixin.dart';
 import '../../constants.dart';
 import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
+import 'help_dialog.dart';
 import 'playlist_one_selectable_dialog.dart';
 
 class AudioExtractorDialog extends StatefulWidget {
@@ -68,27 +69,23 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
       );
       _helpItemsLst = [
         HelpItem(
-          helpTitle: AppLocalizations.of(context)!.defaultApplicationHelpTitle,
-          helpContent:
-              AppLocalizations.of(context)!.defaultApplicationHelpContent,
-        ),
-        HelpItem(
-          helpTitle:
-              AppLocalizations.of(context)!.modifyingExistingPlaylistsHelpTitle,
+          helpTitle: AppLocalizations.of(context)!.playlistRestorationHelpTitle,
           helpContent: AppLocalizations.of(context)!
-              .modifyingExistingPlaylistsHelpContent,
+              .restorePlaylistAndCommentsFromZipTooltip,
+          displayHelpItemNumber: false,
         ),
         HelpItem(
           helpTitle:
-              AppLocalizations.of(context)!.alreadyDownloadedAudiosHelpTitle,
+              AppLocalizations.of(context)!.playlistRestorationFirstHelpTitle,
           helpContent:
-              AppLocalizations.of(context)!.alreadyDownloadedAudiosHelpContent,
+              AppLocalizations.of(context)!.playlistRestorationFirstHelpContent,
+          displayHelpItemNumber: true,
         ),
         HelpItem(
           helpTitle:
-              AppLocalizations.of(context)!.excludingFutureDownloadsHelpTitle,
-          helpContent:
-              AppLocalizations.of(context)!.excludingFutureDownloadsHelpContent,
+              AppLocalizations.of(context)!.playlistRestorationSecondHelpTitle,
+          helpContent: '',
+          displayHelpItemNumber: false,
         ),
       ];
     });
@@ -120,8 +117,24 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
           ),
           actions: [
             IconButton(
-              icon: const Icon(Icons.settings),
-              onPressed: () => _showSettingsDialog(context: context),
+              icon: IconTheme(
+                data: (themeProviderVMlistenFalse.currentTheme == AppTheme.dark
+                        ? ScreenMixin.themeDataDark
+                        : ScreenMixin.themeDataLight)
+                    .iconTheme,
+                child: const Icon(
+                  Icons.help_outline,
+                  size: 40.0,
+                ),
+              ),
+              onPressed: () {
+                showDialog<void>(
+                  context: context,
+                  builder: (context) => HelpDialog(
+                    helpItemsLst: _helpItemsLst,
+                  ),
+                );
+              },
             ),
           ],
         ),
