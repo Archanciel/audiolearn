@@ -124,7 +124,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                     .iconTheme,
                 child: const Icon(
                   Icons.help_outline,
-                  size: 40.0,
+                  size: 39.0, // 40 is too big for french version
                 ),
               ),
               onPressed: () {
