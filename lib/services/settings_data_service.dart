@@ -403,6 +403,12 @@ class SettingsDataService {
     _saveSettings();
   }
 
+  AudioSortFilterParameters? getNamedAudioSortFilterParameters({
+    required String audioSortFilterParametersName,
+  }) {
+    return _namedAudioSortFilterParametersMap[audioSortFilterParametersName];
+  }
+
   void addAudioSortFilterParametersToSearchHistory({
     required AudioSortFilterParameters audioSortFilterParameters,
   }) {

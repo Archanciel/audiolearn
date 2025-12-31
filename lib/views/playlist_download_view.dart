@@ -1090,6 +1090,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   }) {
     String sortFilterDefaultMenuItemNameCorrespondingToLanguage =
         AppLocalizations.of(context)!.sortFilterParametersDefaultName;
+    String sortFilterAppliedMenuItemNameCorrespondingToLanguage =
+        AppLocalizations.of(context)!.sortFilterParametersAppliedName;
 
     bool wasLanguageChanged = false;
 
@@ -1125,6 +1127,36 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           // filter parameters name (défaut) is no longer available
           // since it was deleted
           _selectedSortFilterParametersName = "default";
+        }
+      }
+    }
+    
+    if (sortFilterAppliedMenuItemNameCorrespondingToLanguage ==
+        "appliqué") {
+      if (playlistListVMlistenFalse.deleteAudioSortFilterParameters(
+              audioSortFilterParametersName: "applied") !=
+          null) {
+        // The sort and filter parameters named "applied" was
+        // deleted from the sort and filter parameters list.
+        wasLanguageChanged = true;
+        if (_selectedSortFilterParametersName == "applied") {
+          // avoids UI problem since the currently selected sort and
+          // filter parameters name (applied) is no longer available
+          // since it was deleted
+          _selectedSortFilterParametersName = "appliqué";
+        }
+      }
+    } else if (sortFilterAppliedMenuItemNameCorrespondingToLanguage ==
+        "applied") {
+      if (playlistListVMlistenFalse.deleteAudioSortFilterParameters(
+              audioSortFilterParametersName: 'appliqué') !=
+          null) {
+        wasLanguageChanged = true;
+        if (_selectedSortFilterParametersName == "appliqué") {
+          // avoids UI problem since the currently selected sort and
+          // filter parameters name (appliqué) is no longer available
+          // since it was deleted
+          _selectedSortFilterParametersName = "applied";
         }
       }
     }
