@@ -39045,8 +39045,8 @@ void main() {
 
       // Now open the extract comments to MP3 dialog
 
-      // Find the extract comments to MP3 button of the comment add
-      // dialog and tap on it
+      // Find the extract comments to MP3 text button of the comment
+      // add dialog and tap on it
       final Finder extractCommentsToMp3ButtonFinder =
           find.byKey(const Key('extractCommentsToMp3TextButton'));
       await tester.tap(extractCommentsToMp3ButtonFinder);
@@ -39054,6 +39054,9 @@ void main() {
 
       // Verify the extract comments to MP3 dialog title
       expect(find.text('Comments in MP3'), findsOneWidget);
+
+      // Verify the presence of the help icon button
+      expect(find.byIcon(Icons.help_outline), findsOneWidget);
 
       // Verify the Comments number title
       expect(find.text('Comments (3)'), findsOneWidget);
@@ -39116,8 +39119,7 @@ void main() {
       );
 
       // Now, type on the Extract MP3 button
-      final Finder extractMp3ButtonFinder =
-          find.byKey(const Key('extractMp3Button'));
+      Finder extractMp3ButtonFinder = find.byKey(const Key('extractMp3Button'));
       await tester.tap(extractMp3ButtonFinder);
       await tester.pumpAndSettle();
 
@@ -39125,50 +39127,57 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the extract comments to MP3 success dialog message
-      expect(
-        find.text(
-            'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3'),
-        findsOneWidget,
+      // and play and pause the extracted MP3 file
+      await verifyAndPlayExtractedMp3Method(
+        tester: tester,
+        extractionSuccessMessage:
+            'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
+        extractionPlayingMessage:
+            'Playing: musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
       );
 
-      await tester.drag(
-        find.byType(AudioExtractorDialog),
-        const Offset(
-            0, -200), // Negative value for vertical drag to scroll down
-      );
+      // Type on 'In playlist' checkbox to set it
+      final Finder inPlaylistCheckboxFinderFinder =
+          find.byKey(const Key('inPlaylistCheckBox'));
+      await tester.tap(inPlaylistCheckboxFinderFinder);
       await tester.pumpAndSettle();
 
-      final Finder playPauseButtonFinder =
-          find.byKey(const Key('playPauseButton'));
+      // Now, type on the Extract MP3 button. This opens the playlist
+      // selection dialog
 
-      expect(
-        playPauseButtonFinder,
-        findsOneWidget,
-      );
+      extractMp3ButtonFinder = find.byKey(const Key('extractMp3Button'));
+      await tester.tap(extractMp3ButtonFinder);
+      await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
-      // Tap the play button to start playback
-      await tester.tap(playPauseButtonFinder);
+      // Find the RadioListTile target playlist to which the
+      // extracted audio will be moved
+
+      final Finder radioListTile = find
+          .ancestor(
+            of: find.text('local with no comment'),
+            matching: find.byType(ListTile),
+          )
+          .last;
+
+      // Tap the target playlist RadioListTile to select it
+      await tester.tap(radioListTile);
       await tester.pumpAndSettle();
 
-      await Future.delayed(const Duration(milliseconds: 500));
+      // Now find the confirm button and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
       await tester.pumpAndSettle();
 
-      // Then tap the pause button to stop playback$
-      await tester.tap(playPauseButtonFinder);
+      await Future.delayed(const Duration(seconds: 4));
       await tester.pumpAndSettle();
 
-      await tester.drag(
-        find.byType(AudioExtractorDialog),
-        const Offset(
-            0, -200), // Negative value for vertical drag to scroll down
-      );
-      await tester.pumpAndSettle();
-
-      // Verify the playing comments to MP3 success dialog messa
-      expect(
-        find.text(
-            'Playing: musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3'),
-        findsOneWidget,
+      // Verify the extract comments to MP3 success dialog message
+      // and play and pause the extracted MP3 file
+      await verifyAndPlayExtractedMp3Method(
+        tester: tester,
+        extractionSuccessMessage:
+            'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\local with no comment\\250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27.mp3',
+        extractionPlayingMessage:
+            'Playing: 250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27.mp3',
       );
 
       // Purge the test playlist directory so that the created test
@@ -39178,6 +39187,56 @@ void main() {
       );
     });
   });
+}
+
+Future<void> verifyAndPlayExtractedMp3Method({
+  required WidgetTester tester,
+  required String extractionSuccessMessage,
+  required String extractionPlayingMessage,
+}) async {
+  // Verify the extract comments to MP3 success dialog message
+  expect(
+    find.text(extractionSuccessMessage),
+    findsOneWidget,
+  );
+
+  await tester.drag(
+    find.byType(AudioExtractorDialog),
+    const Offset(0, -200), // Negative value for vertical drag to scroll down
+  );
+  await tester.pumpAndSettle();
+
+  Finder playPauseButtonFinder = find.byKey(const Key('playPauseButton'));
+
+  expect(
+    playPauseButtonFinder,
+    findsOneWidget,
+  );
+
+  // Tap the play button to start playback
+  await tester.tap(playPauseButtonFinder);
+  await tester.pumpAndSettle();
+
+  await Future.delayed(const Duration(milliseconds: 500));
+  await tester.pumpAndSettle();
+
+  // Then tap the pause button to stop playback$
+  await tester.tap(playPauseButtonFinder);
+  await tester.pumpAndSettle();
+
+  await tester.drag(
+    find.byType(AudioExtractorDialog),
+    const Offset(0, -200), // Negative value for vertical drag to scroll down
+  );
+  await tester.pumpAndSettle();
+
+  // Verify the playing comments to MP3 success dialog messa
+  expect(
+    find.text(
+      extractionPlayingMessage,
+    ),
+    findsOneWidget,
+  );
 }
 
 Future<void> _movePositionedAudioAndVerifyResult({
