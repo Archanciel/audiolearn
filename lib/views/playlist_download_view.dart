@@ -591,7 +591,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               ),
               const SizedBox(height: 10.0),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text(AppLocalizations.of(context)!.convertingDownloadedAudioToMP3,
+                Text(
+                  AppLocalizations.of(context)!.convertingDownloadedAudioToMP3,
                 ),
                 SizedBox(width: 20.0),
                 SizedBox(
@@ -609,14 +610,14 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             padding: const EdgeInsets.all(16.0),
             child: Column(children: [
               Text(
-                audioDownloadVMlistenTrue
-                    .mp4ConvertingToMp3FileName,
+                audioDownloadVMlistenTrue.mp4ConvertingToMp3FileName,
                 style: const TextStyle(fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center, // Centered multi lines text
               ),
               const SizedBox(height: 10.0),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text(AppLocalizations.of(context)!.convertingMp4ToMP3,
+                Text(
+                  AppLocalizations.of(context)!.convertingMp4ToMP3,
                 ),
                 SizedBox(width: 20.0),
                 SizedBox(
@@ -1348,7 +1349,13 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
               (String audioSortFilterParametersName) => DropdownMenuItem(
                 value: audioSortFilterParametersName,
                 child: Tooltip(
-                  message: audioSortFilterParametersName,
+                  message:
+                      "$audioSortFilterParametersName (${playlistListVMlistenFalse.getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+                            audioLearnAppViewType:
+                                AudioLearnAppViewType.playlistDownloadView,
+                            passedAudioSortFilterParametersName:
+                                audioSortFilterParametersName,
+                          ).length.toString()})",
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(
                       maxWidth: kDropdownMenuItemMaxWidth,
