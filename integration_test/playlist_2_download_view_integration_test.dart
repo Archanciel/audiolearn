@@ -33022,7 +33022,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            'Restored 2 playlist, 4 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 10 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\audioLearn_2025-09-07_07_45_02.zip".',
+            'Restored 2 playlist, 4 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 10 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\audioLearn_2025-09-07_07_45_02.zip".',
         isWarningConfirming: true,
         warningTitle: 'CONFIRMATION',
       );
@@ -37314,7 +37314,7 @@ void main() {
       );
 
       // Add a delay to allow the download to finish.
-      for (int i = 0; i < 5; i++) {
+      for (int i = 0; i < 6; i++) {
         await Future.delayed(const Duration(milliseconds: 1500));
         await tester.pumpAndSettle();
       }
