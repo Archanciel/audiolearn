@@ -172,15 +172,41 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
 
   @override
   Widget build(BuildContext context) {
+    SettingsDataService settingsDataService = widget.settingsDataService;
+
     // Creating a default sort filter parameters which will be
     // applied for sorting the playlists audio if no other
     // sort filter parameters are defined and applied.
-    widget.settingsDataService.addOrReplaceNamedAudioSortFilterParameters(
+    settingsDataService.addOrReplaceNamedAudioSortFilterParameters(
       audioSortFilterParametersName:
           AppLocalizations.of(context)!.sortFilterParametersDefaultName,
       audioSortFilterParameters:
           AudioSortFilterParameters.createDefaultAudioSortFilterParameters(),
     );
+
+    // If there is an applied audio sort filter parameters, replaced it
+    // with the updated one in case the language was changed.
+
+    AudioSortFilterParameters? appliedAudioSortFilterParameters;
+
+    appliedAudioSortFilterParameters =
+        settingsDataService.getNamedAudioSortFilterParameters(
+      audioSortFilterParametersName: 'applied',
+    );
+
+    appliedAudioSortFilterParameters ??=
+        settingsDataService.getNamedAudioSortFilterParameters(
+      audioSortFilterParametersName: 'appliqué',
+    );
+
+    if (appliedAudioSortFilterParameters != null) {
+      settingsDataService.addOrReplaceNamedAudioSortFilterParameters(
+        audioSortFilterParametersName:
+            AppLocalizations.of(context)!.sortFilterParametersAppliedName,
+        audioSortFilterParameters: appliedAudioSortFilterParameters,
+      );
+    }
+
     final ThemeProviderVM themeProviderVMlistenTrue =
         Provider.of<ThemeProviderVM>(
       context,
