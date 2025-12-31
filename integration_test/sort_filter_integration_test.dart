@@ -16281,9 +16281,17 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           Finder filterConvertedCheckboxWidgetFinder =
               find.byKey(const Key('filterConvertedCheckbox'));
 
+          // Tap the checkbox to unselect it.
+          await tester.tap(filterConvertedCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Find the 'Extracted' checkbox widget
+          Finder filterExtractedCheckboxWidgetFinder =
+              find.byKey(const Key('filterExtractedCheckbox'));
+
           // Tap the checkbox to unselect it. This will reselect the
           // 'Downloaded' checkbox as well as the "Imported" checkbox
-          await tester.tap(filterConvertedCheckboxWidgetFinder);
+          await tester.tap(filterExtractedCheckboxWidgetFinder);
           await tester.pumpAndSettle();
 
           // Click on the "Save" button. This closes the sort/filter dialog
@@ -16462,9 +16470,17 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           Finder filterConvertedCheckboxWidgetFinder =
               find.byKey(const Key('filterConvertedCheckbox'));
 
+          // Tap the checkbox to unselect it.
+          await tester.tap(filterConvertedCheckboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Find the 'Extracted' checkbox widget
+          Finder filterExtractedCheckboxWidgetFinder =
+              find.byKey(const Key('filterExtractedCheckbox'));
+
           // Tap the checkbox to unselect it. This will reselect the
           // 'Downloaded' checkbox as well as the "Imported" checkbox
-          await tester.tap(filterConvertedCheckboxWidgetFinder);
+          await tester.tap(filterExtractedCheckboxWidgetFinder);
           await tester.pumpAndSettle();
 
           // Unselect the 'Downloaded' checkbox
