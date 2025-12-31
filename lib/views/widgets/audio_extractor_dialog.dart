@@ -857,11 +857,16 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
       }
 
       if (_extractInMusicQuality) {
+        // AppLocalizations.of(context)!.inMusicQuality is only added
+        // when the extracted music quality MP3 is placed in a directory
+        // and not when it is added to a playlist
         extractedMp3FileName =
             "${AppLocalizations.of(context)!.inMusicQuality}_$extractedMp3FileName";
       }
     } else {
-      // Extracting to playlist
+      // Extracting to playlist. The file name is simpler here without
+      // music quality addition to the file name and without comments
+      // number because the file is stored in the playlist directory.
       extractedMp3FileName = '$base.mp3';
     }
 
