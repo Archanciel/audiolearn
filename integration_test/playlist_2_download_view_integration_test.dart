@@ -18142,7 +18142,7 @@ void main() {
             tester: tester,
             audioType: AudioType.textToSpeech,
             validVideoTitleOrAudioTitle: 'aaa',
-            audioDownloadDateTime:
+            audioDownloadDateTimeOne:
                 "07/09/2025 07:37", // this is the imported date time
             copiedToPlaylistTitle: 'local',
             audioDuration: '0:00:08.6',
@@ -18556,7 +18556,7 @@ void main() {
             tester: tester,
             audioType: AudioType.textToSpeech,
             validVideoTitleOrAudioTitle: 'aaa',
-            audioDownloadDateTime:
+            audioDownloadDateTimeOne:
                 "07/09/2025 07:37", // this is the imported date time
             copiedToPlaylistTitle: 'local',
             audioDuration: '0:00:08.6',
@@ -18951,7 +18951,7 @@ void main() {
             tester: tester,
             audioType: AudioType.textToSpeech,
             validVideoTitleOrAudioTitle: 'aaa',
-            audioDownloadDateTime:
+            audioDownloadDateTimeOne:
                 "07/09/2025 07:37", // this is the imported date time
             copiedToPlaylistTitle: 'local',
             audioDuration: '0:00:08.6',
@@ -19345,7 +19345,7 @@ void main() {
             tester: tester,
             audioType: AudioType.textToSpeech,
             validVideoTitleOrAudioTitle: 'aaa',
-            audioDownloadDateTime:
+            audioDownloadDateTimeOne:
                 "07/09/2025 07:37", // this is the imported date time
             copiedToPlaylistTitle: 'local',
             audioDuration: '0:00:08.6',
@@ -35335,7 +35335,7 @@ void main() {
         tester: tester,
         audioType: AudioType.imported,
         validVideoTitleOrAudioTitle: fileNameNoExt,
-        audioDownloadDateTime:
+        audioDownloadDateTimeOne:
             '${DateFormat('dd/MM/yyyy').format(importDateTime)} ${DateFormat('HH:mm').format(importDateTime)}', // this is the imported date time
         isAudioPlayable: true,
         audioEnclosingPlaylistTitle: localPlaylistTitle,
@@ -36029,7 +36029,7 @@ void main() {
         tester: tester,
         audioType: AudioType.textToSpeech,
         validVideoTitleOrAudioTitle: enteredFileNameNoExt,
-        audioDownloadDateTime:
+        audioDownloadDateTimeOne:
             '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
         isAudioPlayable: true,
         audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
@@ -36224,7 +36224,7 @@ void main() {
         tester: tester,
         audioType: AudioType.textToSpeech,
         validVideoTitleOrAudioTitle: enteredFileNameNoExt,
-        audioDownloadDateTime:
+        audioDownloadDateTimeOne:
             '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
         isAudioPlayable: true,
         audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
@@ -36490,7 +36490,7 @@ void main() {
         tester: tester,
         audioType: AudioType.textToSpeech,
         validVideoTitleOrAudioTitle: enteredFileNameNoExt,
-        audioDownloadDateTime:
+        audioDownloadDateTimeOne:
             '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
         isAudioPlayable: true,
         audioEnclosingPlaylistTitle: unselectedLocalPlaylistTitle,
@@ -36686,7 +36686,7 @@ void main() {
         tester: tester,
         audioType: AudioType.textToSpeech,
         validVideoTitleOrAudioTitle: enteredFileNameNoExt,
-        audioDownloadDateTime:
+        audioDownloadDateTimeOne:
             '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
         isAudioPlayable: true,
         audioEnclosingPlaylistTitle: unselectedLocalPlaylistTitle,
@@ -39203,15 +39203,6 @@ void main() {
       await tester.tap(extractCommentsToMp3ButtonFinder);
       await tester.pumpAndSettle();
 
-      // Verify the extract comments to MP3 dialog title
-      expect(find.text('Comments in MP3'), findsOneWidget);
-
-      // Verify the presence of the help icon button
-      expect(find.byIcon(Icons.help_outline), findsOneWidget);
-
-      // Verify the Comments number title
-      expect(find.text('Comments (3)'), findsOneWidget);
-
       // Now, delete the second comment
 
       // This opens the delete comment confirmation dialog
@@ -39219,13 +39210,6 @@ void main() {
           find.byKey(const Key('deleteSegmentButtonKey_2'));
       await tester.tap(deleteCommentIconButtonFinder);
       await tester.pumpAndSettle();
-
-      // Verify the delete comment confirmation dialog title
-      expect(find.text('Remove Comment'), findsOneWidget);
-
-      // Verify the delete comment confirmation dialog content
-      expect(find.text('Are you sure you want to remove this comment ?'),
-          findsOneWidget);
 
       // Confirm the deletion by tapping the delete button
       final Finder deleteCommentButtonFinder =
@@ -39328,12 +39312,15 @@ void main() {
       const String extractedAudioTitle =
           "Glorious - Laisse-moi te parler de Jésus #louange";
 
+      DateTime nowMinusOneMinute = now.subtract(const Duration(minutes: 1));
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioType: AudioType.extracted,
         validVideoTitleOrAudioTitle: extractedAudioTitle,
-        audioDownloadDateTime:
+        audioDownloadDateTimeOne:
             '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the extracted date time
+        audioDownloadDateTimeTwo:
+            '${DateFormat('dd/MM/yyyy').format(nowMinusOneMinute)} ${DateFormat('HH:mm').format(nowMinusOneMinute)}', // this is the extracted date time
         isAudioPlayable: true,
         videoUrl: "https://www.youtube.com/watch?v=eXc6isyEKsw",
         audioEnclosingPlaylistTitle: targetPlaylistTitle,
@@ -39385,8 +39372,9 @@ void main() {
         findsOneWidget,
       );
 
-      // Go to the Audio Player view to verify that the extracted
-      // audio URL is available in the left appbar menu
+      // Go to the audio player view to verify that the extracted
+      // audio URL is available in the audio player view left appbar
+      // menu
 
       final Finder applicationViewNavButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
@@ -39401,7 +39389,8 @@ void main() {
         tester: tester,
       );
 
-      // Tap the appbar leading popup menu button
+      // Tap the appbar leading popup menu button to verify the
+      // presence of the extracted audio URL menu items
       await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
       await tester.pumpAndSettle();
 

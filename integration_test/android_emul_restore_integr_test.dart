@@ -1325,7 +1325,7 @@ void main() {
           tester: tester,
           audioType: AudioType.imported,
           validVideoTitleOrAudioTitle: fileNameNoExt,
-          audioDownloadDateTime:
+          audioDownloadDateTimeOne:
               "${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}", // this is the imported date time
           isAudioPlayable: true,
           audioEnclosingPlaylistTitle: localPlaylistTitle,
@@ -1871,7 +1871,7 @@ void main() {
           tester: tester,
           audioType: AudioType.textToSpeech,
           validVideoTitleOrAudioTitle: enteredFileNameNoExt,
-          audioDownloadDateTime:
+          audioDownloadDateTimeOne:
               '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
           isAudioPlayable: true,
           audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
@@ -2065,7 +2065,7 @@ void main() {
           tester: tester,
           audioType: AudioType.textToSpeech,
           validVideoTitleOrAudioTitle: enteredFileNameNoExt,
-          audioDownloadDateTime:
+          audioDownloadDateTimeOne:
               '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
           isAudioPlayable: true,
           audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
@@ -2374,7 +2374,7 @@ void main() {
           tester: tester,
           audioType: AudioType.textToSpeech,
           validVideoTitleOrAudioTitle: enteredFileNameNoExt,
-          audioDownloadDateTime:
+          audioDownloadDateTimeOne:
               '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
           isAudioPlayable: true,
           audioEnclosingPlaylistTitle: unselectedLocalPlaylistTitle,
@@ -2582,7 +2582,7 @@ void main() {
           tester: tester,
           audioType: AudioType.textToSpeech,
           validVideoTitleOrAudioTitle: enteredFileNameNoExt,
-          audioDownloadDateTime:
+          audioDownloadDateTimeOne:
               '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
           isAudioPlayable: true,
           audioEnclosingPlaylistTitle: unselectedLocalPlaylistTitle,

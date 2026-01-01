@@ -3021,7 +3021,8 @@ class IntegrationTestUtil {
     String youtubeChannel = "Jean-Pierre Schnyder",
     String originalVideoTitle = "",
     String videoUploadDate = '',
-    String audioDownloadDateTime = '',
+    String audioDownloadDateTimeOne = '',
+    String audioDownloadDateTimeTwo = '',
     bool isAudioPlayable = true,
     String videoUrl = '',
     String compactVideoDescription = '',
@@ -3232,10 +3233,11 @@ class IntegrationTestUtil {
         }
 
         // Verify the audio download date time of the audio
-        if (audioDownloadDateTime.isNotEmpty) {
+        if (audioDownloadDateTimeOne.isNotEmpty) {
           final Text audioDownloadDateTimeTextWidget = tester
               .widget<Text>(find.byKey(const Key('audioDownloadDateTimeKey')));
-          expect(audioDownloadDateTimeTextWidget.data, audioDownloadDateTime);
+          expect(
+              audioDownloadDateTimeTextWidget.data, audioDownloadDateTimeOne);
         }
 
         // Verify if the audio is playable or not
@@ -3289,10 +3291,11 @@ class IntegrationTestUtil {
         expect(validVideoTitleTextWidget.data, validVideoTitleOrAudioTitle);
 
         // Verify the audio download date time of the audio
-        if (audioDownloadDateTime.isNotEmpty) {
+        if (audioDownloadDateTimeOne.isNotEmpty) {
           final Text audioDownloadDateTimeTextWidget = tester
               .widget<Text>(find.byKey(const Key('importedAudioDateTimeKey')));
-          expect(audioDownloadDateTimeTextWidget.data, audioDownloadDateTime);
+          expect(
+              audioDownloadDateTimeTextWidget.data, audioDownloadDateTimeOne);
         }
 
         // Verify if the audio is playable or not
@@ -3326,10 +3329,11 @@ class IntegrationTestUtil {
         expect(validVideoTitleTextWidget.data, validVideoTitleOrAudioTitle);
 
         // Verify the audio download date time of the audio
-        if (audioDownloadDateTime.isNotEmpty) {
+        if (audioDownloadDateTimeOne.isNotEmpty) {
           final Text audioDownloadDateTimeTextWidget = tester
               .widget<Text>(find.byKey(const Key('convertedAudioDateTimeKey')));
-          expect(audioDownloadDateTimeTextWidget.data, audioDownloadDateTime);
+          expect(
+              audioDownloadDateTimeTextWidget.data, audioDownloadDateTimeOne);
         }
 
         // Verify if the audio is playable or not
@@ -3362,11 +3366,22 @@ class IntegrationTestUtil {
             .widget<Text>(find.byKey(const Key('extractedAudioTitleKey')));
         expect(validVideoTitleTextWidget.data, validVideoTitleOrAudioTitle);
 
+        final Text audioDownloadDateTimeTextWidget = tester
+            .widget<Text>(find.byKey(const Key('extractedAudioDateTimeKey')));
+
         // Verify the audio download date time of the audio
-        if (audioDownloadDateTime.isNotEmpty) {
-          final Text audioDownloadDateTimeTextWidget = tester
-              .widget<Text>(find.byKey(const Key('extractedAudioDateTimeKey')));
-          expect(audioDownloadDateTimeTextWidget.data, audioDownloadDateTime);
+        if (audioDownloadDateTimeOne.isNotEmpty &&
+            audioDownloadDateTimeTwo.isNotEmpty) {
+          expect(
+            audioDownloadDateTimeTextWidget.data,
+            anyOf(equals(audioDownloadDateTimeOne),
+                equals(audioDownloadDateTimeTwo)),
+          );
+        } else if (audioDownloadDateTimeOne.isNotEmpty) {
+          expect(
+            audioDownloadDateTimeTextWidget.data,
+            audioDownloadDateTimeOne,
+          );
         }
 
         // Verify if the audio is playable or not
@@ -3432,9 +3447,10 @@ class IntegrationTestUtil {
 
     // Verify the 'Extracted from playlist title' of the audio
 
-    final Text extractedFromPlaylistTitleTextWidget =
-        tester.widget<Text>(find.byKey(const Key('extractedFromPlaylistTitleKey')));
-    expect(extractedFromPlaylistTitleTextWidget.data, extractedFromPlaylistTitle);
+    final Text extractedFromPlaylistTitleTextWidget = tester
+        .widget<Text>(find.byKey(const Key('extractedFromPlaylistTitleKey')));
+    expect(
+        extractedFromPlaylistTitleTextWidget.data, extractedFromPlaylistTitle);
 
     if (audioType == AudioType.downloaded) {
       await tester.drag(
