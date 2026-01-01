@@ -38993,7 +38993,8 @@ void main() {
   group('Extract audio comments to MP3 tests', () {
     testWidgets(
         '''Extract to dir in music quality an audio with 3 comments. 1 comment is
-           removed before the extraction.''', (WidgetTester tester) async {
+           removed before the extraction. Verify that tapping on a directory/playlist
+           checkbox to unselect it selects the other checkbox.''', (WidgetTester tester) async {
       const String audioTitle =
           "Glorious - Laisse-moi te parler de Jésus #louange";
 
@@ -39109,6 +39110,40 @@ void main() {
         ],
       );
 
+      // Type on 'In directory' checkbox to set the 'In playlist'
+      // checkbox to true and verify that
+      Finder onDirectoryCheckBoxFinder = find.byKey(const Key('onDirectoryCheckBox'));
+      await tester.tap(onDirectoryCheckBoxFinder);
+      await tester.pumpAndSettle();
+
+      // Get the 'In directory' Checkbox widget's value
+      Checkbox checkboxWidget = tester.widget<Checkbox>(onDirectoryCheckBoxFinder);
+      expect(checkboxWidget.value, isFalse,
+          reason: 'A directiry checkbox is unselected.');
+
+      // Get the 'In playlist' Checkbox finder
+      Finder inPlaylistCheckBoxFinder = find.byKey(const Key('inPlaylistCheckBox'));
+
+      // Get the 'In playlist' Checkbox widget's value
+      checkboxWidget = tester.widget<Checkbox>(inPlaylistCheckBoxFinder);
+      expect(checkboxWidget.value, isTrue,
+          reason: 'A playlist checkbox is selected.');
+
+      // Then type on 'In playlist' checkbox to set the 'In directory'
+      // checkbox to true and verify that
+      await tester.tap(inPlaylistCheckBoxFinder);
+      await tester.pumpAndSettle();
+
+      // Get the 'In directory' Checkbox widget's value
+      checkboxWidget = tester.widget<Checkbox>(onDirectoryCheckBoxFinder);
+      expect(checkboxWidget.value, isTrue,
+          reason: 'A directiry checkbox is unselected.');
+
+      // Get the 'In playlist' Checkbox widget's value
+      checkboxWidget = tester.widget<Checkbox>(inPlaylistCheckBoxFinder);
+      expect(checkboxWidget.value, isFalse,
+          reason: 'A playlist checkbox is selected.');
+
       // Replace the platform instance with your mock
       MockFilePicker mockFilePicker = MockFilePicker();
       FilePicker.platform = mockFilePicker;
@@ -39119,7 +39154,8 @@ void main() {
       );
 
       // Now, type on the Extract MP3 button
-      final Finder extractMp3ButtonFinder = find.byKey(const Key('extractMp3Button'));
+      final Finder extractMp3ButtonFinder =
+          find.byKey(const Key('extractMp3Button'));
       await tester.tap(extractMp3ButtonFinder);
       await tester.pumpAndSettle();
 
@@ -39144,7 +39180,10 @@ void main() {
     });
     testWidgets(
         '''Extract to playlist in music quality an audio with 3 comments. 1 comment is
-           removed before the extraction.''', (WidgetTester tester) async {
+           removed before the extraction. Thev, verify in the playlist extracted audio
+           the content of the audio info dialog. Also verify the URL relation presence
+           in the audio menu as well as in the audio player view left appbar menu.''',
+        (WidgetTester tester) async {
       const String audioTitle =
           "Glorious - Laisse-moi te parler de Jésus #louange";
 
@@ -39245,15 +39284,16 @@ void main() {
       );
 
       // Type on 'In playlist' checkbox to set it
-      final Finder inPlaylistCheckboxFinderFinder =
+      final Finder inPlaylistCheckboxFinder =
           find.byKey(const Key('inPlaylistCheckBox'));
-      await tester.tap(inPlaylistCheckboxFinderFinder);
+      await tester.tap(inPlaylistCheckboxFinder);
       await tester.pumpAndSettle();
 
       // Now, type on the Extract MP3 button. This opens the playlist
       // selection dialog
 
-      final Finder extractMp3ButtonFinder = find.byKey(const Key('extractMp3Button'));
+      final Finder extractMp3ButtonFinder =
+          find.byKey(const Key('extractMp3Button'));
       await tester.tap(extractMp3ButtonFinder);
       await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
