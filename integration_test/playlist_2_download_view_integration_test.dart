@@ -39003,11 +39003,11 @@ void main() {
       );
 
       // First, find the '1 long music' playlist audio ListTile Text widget
-      Finder audioTitleTileTextWidgetFinder = find.text(audioTitle);
+      final Finder audioTitleTileTextWidgetFinder = find.text(audioTitle);
 
       // Then obtain the audio ListTile widget enclosing the Text widget
       // by finding its ancestor
-      Finder audioTitleTileWidgetFinder = find.ancestor(
+      final Finder audioTitleTileWidgetFinder = find.ancestor(
         of: audioTitleTileTextWidgetFinder,
         matching: find.byType(ListTile),
       );
@@ -39016,7 +39016,7 @@ void main() {
 
       // Find the leading menu icon button of the audioTitle ListTile
       // and tap on it
-      Finder audioTitleTileLeadingMenuIconButton = find.descendant(
+      final Finder audioTitleTileLeadingMenuIconButton = find.descendant(
         of: audioTitleTileWidgetFinder,
         matching: find.byIcon(Icons.menu),
       );
@@ -39033,7 +39033,7 @@ void main() {
       await tester.tap(audioCommentsPopupMenuItem);
       await tester.pumpAndSettle();
 
-      Finder audioCommentsLstFinder = find.byKey(const Key(
+      final Finder audioCommentsLstFinder = find.byKey(const Key(
         'audioCommentsListKey',
       ));
 
@@ -39119,7 +39119,7 @@ void main() {
       );
 
       // Now, type on the Extract MP3 button
-      Finder extractMp3ButtonFinder = find.byKey(const Key('extractMp3Button'));
+      final Finder extractMp3ButtonFinder = find.byKey(const Key('extractMp3Button'));
       await tester.tap(extractMp3ButtonFinder);
       await tester.pumpAndSettle();
 
@@ -39136,6 +39136,130 @@ void main() {
             'Playing: musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
       );
 
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Extract to playlist in music quality an audio with 3 comments. 1 comment is
+           removed before the extraction.''', (WidgetTester tester) async {
+      const String audioTitle =
+          "Glorious - Laisse-moi te parler de Jésus #louange";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'extract_comments_to_mp3_test',
+      );
+
+      // First, find the '1 long music' playlist audio ListTile Text widget
+      final Finder audioTitleTileTextWidgetFinder = find.text(audioTitle);
+
+      // Then obtain the audio ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      final Finder audioTitleTileWidgetFinder = find.ancestor(
+        of: audioTitleTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now we want to tap the popup menu of the audioTitle ListTile
+
+      // Find the leading menu icon button of the audioTitle ListTile
+      // and tap on it
+      final Finder audioTitleTileLeadingMenuIconButton = find.descendant(
+        of: audioTitleTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(audioTitleTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the 'Audio Comments ...' popup menu item and
+      // tap on it
+      final Finder audioCommentsPopupMenuItem =
+          find.byKey(const Key("popup_menu_audio_comment"));
+
+      await tester.tap(audioCommentsPopupMenuItem);
+      await tester.pumpAndSettle();
+
+      final Finder audioCommentsLstFinder = find.byKey(const Key(
+        'audioCommentsListKey',
+      ));
+
+      // Ensure the list has 3 child widgets
+      expect(
+        tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+        3,
+      );
+
+      // Now open the extract comments to MP3 dialog
+
+      // Find the extract comments to MP3 text button of the comment
+      // add dialog and tap on it
+      final Finder extractCommentsToMp3ButtonFinder =
+          find.byKey(const Key('extractCommentsToMp3TextButton'));
+      await tester.tap(extractCommentsToMp3ButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the extract comments to MP3 dialog title
+      expect(find.text('Comments in MP3'), findsOneWidget);
+
+      // Verify the presence of the help icon button
+      expect(find.byIcon(Icons.help_outline), findsOneWidget);
+
+      // Verify the Comments number title
+      expect(find.text('Comments (3)'), findsOneWidget);
+
+      // Now, delete the second comment
+
+      // This opens the delete comment confirmation dialog
+      final Finder deleteCommentIconButtonFinder =
+          find.byKey(const Key('deleteSegmentButtonKey_2'));
+      await tester.tap(deleteCommentIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the delete comment confirmation dialog title
+      expect(find.text('Remove Comment'), findsOneWidget);
+
+      // Verify the delete comment confirmation dialog content
+      expect(find.text('Are you sure you want to remove this comment ?'),
+          findsOneWidget);
+
+      // Confirm the deletion by tapping the delete button
+      final Finder deleteCommentButtonFinder =
+          find.byKey(const Key('confirmDeleteSegmentButton'));
+      await tester.tap(deleteCommentButtonFinder);
+      await tester.pumpAndSettle();
+
+      IntegrationTestUtil.checkExtractionCommentDetails(
+        tester: tester,
+        segmentDetailsList: [
+          {
+            'number': 1,
+            'title': "First part",
+            'startPosition': '0:00.0',
+            'endPosition': '3:01.0',
+            'increaseDuration': 'Increase duration: 0:00.0',
+            'reductionPosition': 'Reduction position: 2:50.0',
+            'reductionDuration': 'Reduction duration: 0:11.0',
+            'duration': 'Duration: 3:01.0 + silence 0:01.0',
+          },
+          {
+            'number': 2,
+            'title':
+                "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
+            'startPosition': '3:56.1',
+            'endPosition': '5:20.8',
+            'increaseDuration': 'Increase duration: 0:09.0',
+            'reductionPosition': 'Reduction position: 5:11.0',
+            'reductionDuration': 'Reduction duration: 0:09.8',
+            'duration': 'Duration: 1:24.7',
+          },
+        ],
+      );
+
       // Type on 'In playlist' checkbox to set it
       final Finder inPlaylistCheckboxFinderFinder =
           find.byKey(const Key('inPlaylistCheckBox'));
@@ -39145,7 +39269,7 @@ void main() {
       // Now, type on the Extract MP3 button. This opens the playlist
       // selection dialog
 
-      extractMp3ButtonFinder = find.byKey(const Key('extractMp3Button'));
+      final Finder extractMp3ButtonFinder = find.byKey(const Key('extractMp3Button'));
       await tester.tap(extractMp3ButtonFinder);
       await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
@@ -39232,7 +39356,7 @@ void main() {
 
       // Then obtain the Audio ListTile widget enclosing the Text widget by
       // finding its ancestor
-      Finder audioListTileWidgetFinder = find.ancestor(
+      final Finder audioListTileWidgetFinder = find.ancestor(
         of: audioTitleTextWidgetFinder,
         matching: find.byType(ListTile),
       );
@@ -39242,7 +39366,7 @@ void main() {
 
       // Find the leading menu icon button of the Audio ListTile and tap
       // on it
-      Finder audioListTileLeadingMenuIconButton = find.descendant(
+      final Finder audioListTileLeadingMenuIconButton = find.descendant(
         of: audioListTileWidgetFinder,
         matching: find.byIcon(Icons.menu),
       );
@@ -39264,13 +39388,14 @@ void main() {
       // Go to the Audio Player view to verify that the extracted
       // audio URL is available in the left appbar menu
 
-      Finder applicationViewNavButton =
+      final Finder applicationViewNavButton =
           find.byKey(const ValueKey('audioPlayerViewIconButton'));
 
       // To close the audio menu
       await tester.tap(applicationViewNavButton);
       await tester.pumpAndSettle();
 
+      // Tap the extracted audio ListTile to open the Audio Player view
       await tester.tap(audioTitleTextWidgetFinder);
       await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
         tester: tester,
