@@ -39201,26 +39201,93 @@ void main() {
         playlistToSelectTitle: targetPlaylistTitle,
       );
 
+      const String extractedAudioTitle =
+          "Glorious - Laisse-moi te parler de Jésus #louange";
+
       await IntegrationTestUtil.verifyAudioInfoDialog(
         tester: tester,
         audioType: AudioType.extracted,
-        validVideoTitleOrAudioTitle: "Glorious - Laisse-moi te parler de Jésus #louange",
+        validVideoTitleOrAudioTitle: extractedAudioTitle,
         audioDownloadDateTime:
             '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the extracted date time
         isAudioPlayable: true,
         videoUrl: "https://www.youtube.com/watch?v=eXc6isyEKsw",
         audioEnclosingPlaylistTitle: targetPlaylistTitle,
-        extractedFromPlaylistTitle: '1 long music', 
+        extractedFromPlaylistTitle: '1 long music',
         audioDuration: '0:04:26.7',
         audioPosition: '0:00:00',
         audioState: 'Not listened',
         lastListenDateTime: '',
-        audioFileName: '250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27.mp3',
+        audioFileName:
+            '250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27.mp3',
         audioFileSize: '6.40 MB',
         isMusicQuality: true, // Is music quality
         audioPlaySpeed: '1.0',
         audioVolume: '50.0 %',
         audioCommentNumber: 3,
+      );
+
+      // First, find the Audio sublist ListTile Text widget
+      final Finder audioTitleTextWidgetFinder = find.text(extractedAudioTitle);
+
+      // Then obtain the Audio ListTile widget enclosing the Text widget by
+      // finding its ancestor
+      Finder audioListTileWidgetFinder = find.ancestor(
+        of: audioTitleTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Verify that the extracted audio URL is available in the audio
+      // item menu
+
+      // Find the leading menu icon button of the Audio ListTile and tap
+      // on it
+      Finder audioListTileLeadingMenuIconButton = find.descendant(
+        of: audioListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(audioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      expect(
+        find.byKey(const Key('popup_menu_open_youtube_video')),
+        findsOneWidget,
+      );
+
+      expect(
+        find.byKey(const Key('popup_copy_youtube_video_url')),
+        findsOneWidget,
+      );
+
+      // Go to the Audio Player view to verify that the extracted
+      // audio URL is available in the left appbar menu
+
+      Finder applicationViewNavButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+
+      // To close the audio menu
+      await tester.tap(applicationViewNavButton);
+      await tester.pumpAndSettle();
+
+      await tester.tap(audioTitleTextWidgetFinder);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+
+      // Tap the appbar leading popup menu button
+      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+      await tester.pumpAndSettle();
+
+      expect(
+        find.byKey(const Key('popup_menu_open_youtube_video')),
+        findsOneWidget,
+      );
+
+      expect(
+        find.byKey(const Key('popup_copy_youtube_video_url')),
+        findsOneWidget,
       );
 
       // Purge the test playlist directory so that the created test
@@ -39263,7 +39330,7 @@ Future<void> _verifyAndPlayExtractedMp3Method({
   await Future.delayed(const Duration(milliseconds: 500));
   await tester.pumpAndSettle();
 
-  // Then tap the pause button to stop playback$
+  // Then tap the pause button to stop playback
   await tester.tap(playPauseButtonFinder);
   await tester.pumpAndSettle();
 
