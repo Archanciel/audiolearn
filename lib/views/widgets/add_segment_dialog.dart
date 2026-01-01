@@ -20,9 +20,9 @@ class AddSegmentDialog extends StatefulWidget {
 }
 
 class _AddSegmentDialogState extends State<AddSegmentDialog> {
-  late final TextEditingController _startController;
-  late final TextEditingController _endController;
-  late final TextEditingController _silenceController;
+  late final TextEditingController _startPositionController;
+  late final TextEditingController _endPositionController;
+  late final TextEditingController _silenceDurationController;
   late final TextEditingController _fadeInDurationController; // NEW
   late final TextEditingController _soundReductionPositionController;
   late final TextEditingController _soundReductionDurationController;
@@ -31,17 +31,17 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
   @override
   void initState() {
     super.initState();
-    _startController = TextEditingController(
+    _startPositionController = TextEditingController(
       text: TimeFormatUtil.formatSeconds(
         widget.existingSegment?.startPosition ?? 0,
       ),
     );
-    _endController = TextEditingController(
+    _endPositionController = TextEditingController(
       text: TimeFormatUtil.formatSeconds(
         widget.existingSegment?.endPosition ?? 0,
       ),
     );
-    _silenceController = TextEditingController(
+    _silenceDurationController = TextEditingController(
       text: TimeFormatUtil.formatSeconds(
         widget.existingSegment?.silenceDuration ?? 0,
       ),
@@ -68,9 +68,9 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
 
   @override
   void dispose() {
-    _startController.dispose();
-    _endController.dispose();
-    _silenceController.dispose();
+    _startPositionController.dispose();
+    _endPositionController.dispose();
+    _silenceDurationController.dispose();
     _fadeInDurationController.dispose();
     _soundReductionPositionController.dispose();
     _soundReductionDurationController.dispose();
@@ -79,10 +79,10 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
   }
 
   void _saveSegment() {
-    final start = TimeFormatUtil.parseFlexible(_startController.text);
-    final end = TimeFormatUtil.parseFlexible(_endController.text);
+    final start = TimeFormatUtil.parseFlexible(_startPositionController.text);
+    final end = TimeFormatUtil.parseFlexible(_endPositionController.text);
     final silence = TimeFormatUtil.parseFlexible(
-      _silenceController.text,
+      _silenceDurationController.text,
     );
     final fadeInDuration = TimeFormatUtil.parseFlexible(
       // NEW
@@ -189,6 +189,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
+              key: const Key('commentTitleTextField'),
               controller: _titleController,
               decoration: InputDecoration(
                 labelText: AppLocalizations.of(context)!.modifyAudioTitleLabel,
@@ -199,11 +200,13 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
             ),
             const SizedBox(height: 12),
             Text(
+              // Displays the total audio duration
               "${AppLocalizations.of(context)!.maxDuration}: ${TimeFormatUtil.formatSeconds(widget.maxDuration)}",
             ),
             const SizedBox(height: 8),
             TextField(
-              controller: _startController,
+              key: const Key('startPositionTextField'),
+              controller: _startPositionController,
               inputFormatters: [TimeTextInputFormatter()],
               decoration: InputDecoration(
                 labelText: AppLocalizations.of(context)!.startPositionLabel,
@@ -213,7 +216,8 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
             ),
             const SizedBox(height: 12),
             TextField(
-              controller: _endController,
+              key: const Key('endPositionTextField'),
+              controller: _endPositionController,
               inputFormatters: [TimeTextInputFormatter()],
               decoration: InputDecoration(
                 labelText: AppLocalizations.of(context)!.endPositionLabel,
@@ -223,7 +227,8 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
             ),
             const SizedBox(height: 12),
             TextField(
-              controller: _silenceController,
+              key: const Key('silenceDurationTextField'),
+              controller: _silenceDurationController,
               inputFormatters: [TimeTextInputFormatter()],
               decoration: InputDecoration(
                 labelText: AppLocalizations.of(context)!.silenceDurationLabel,
@@ -237,6 +242,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
             ),
             const SizedBox(height: 8),
             TextField(
+              key: const Key('fadeInDurationTextField'),
               controller: _fadeInDurationController,
               inputFormatters: [TimeTextInputFormatter()],
               decoration: InputDecoration(
@@ -254,6 +260,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
             ),
             const SizedBox(height: 8),
             TextField(
+              key: const Key('soundReductionPositionTextField'),
               controller: _soundReductionPositionController,
               inputFormatters: [TimeTextInputFormatter()],
               decoration: InputDecoration(
@@ -268,6 +275,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
             ),
             const SizedBox(height: 12),
             TextField(
+              key: const Key('soundReductionDurationTextField'),
               controller: _soundReductionDurationController,
               inputFormatters: [TimeTextInputFormatter()],
               decoration: InputDecoration(
