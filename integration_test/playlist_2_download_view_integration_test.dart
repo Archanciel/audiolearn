@@ -39128,7 +39128,7 @@ void main() {
 
       // Verify the extract comments to MP3 success dialog message
       // and play and pause the extracted MP3 file
-      await verifyAndPlayExtractedMp3Method(
+      await _verifyAndPlayExtractedMp3Method(
         tester: tester,
         extractionSuccessMessage:
             'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
@@ -39170,14 +39170,57 @@ void main() {
       await Future.delayed(const Duration(seconds: 4));
       await tester.pumpAndSettle();
 
+      final DateTime now = DateTime.now();
+
       // Verify the extract comments to MP3 success dialog message
       // and play and pause the extracted MP3 file
-      await verifyAndPlayExtractedMp3Method(
+      await _verifyAndPlayExtractedMp3Method(
         tester: tester,
         extractionSuccessMessage:
             'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\local with no comment\\250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27.mp3',
         extractionPlayingMessage:
             'Playing: 250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27.mp3',
+      );
+
+      // Find the back button widget
+      final backButtonFinder = find.byType(BackButton);
+      expect(backButtonFinder, findsOneWidget);
+
+      // Tap on it
+      await tester.tap(backButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      const String targetPlaylistTitle = 'local with no comment';
+
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: targetPlaylistTitle,
+      );
+
+      await IntegrationTestUtil.verifyAudioInfoDialog(
+        tester: tester,
+        audioType: AudioType.extracted,
+        validVideoTitleOrAudioTitle: "Glorious - Laisse-moi te parler de Jésus #louange",
+        audioDownloadDateTime:
+            '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the extracted date time
+        isAudioPlayable: true,
+        videoUrl: "https://www.youtube.com/watch?v=eXc6isyEKsw",
+        audioEnclosingPlaylistTitle: targetPlaylistTitle,
+        extractedFromPlaylistTitle: '1 long music', 
+        audioDuration: '0:04:26.7',
+        audioPosition: '0:00:00',
+        audioState: 'Not listened',
+        lastListenDateTime: '',
+        audioFileName: '250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27.mp3',
+        audioFileSize: '6.40 MB',
+        isMusicQuality: true, // Is music quality
+        audioPlaySpeed: '1.0',
+        audioVolume: '50.0 %',
+        audioCommentNumber: 3,
       );
 
       // Purge the test playlist directory so that the created test
@@ -39189,7 +39232,7 @@ void main() {
   });
 }
 
-Future<void> verifyAndPlayExtractedMp3Method({
+Future<void> _verifyAndPlayExtractedMp3Method({
   required WidgetTester tester,
   required String extractionSuccessMessage,
   required String extractionPlayingMessage,
@@ -39930,32 +39973,11 @@ Future<String> _addPictureToAudioExecutingAudioListItemMenu({
   // Now we want to tap the popup menu of the Audio ListTile
 
   // First, find the Audio sublist ListTile Text widget
-  Finder audioForPictureTitleTextWidgetFinder = find.text(audioForPictureTitle);
-
-  // Then obtain the Audio ListTile widget enclosing the Text widget by
-  // finding its ancestor
-  Finder audioForPictureListTileWidgetFinder = find.ancestor(
-    of: audioForPictureTitleTextWidgetFinder,
-    matching: find.byType(ListTile),
+  await IntegrationTestUtil.typeOnAudioMenuItem(
+    tester: tester,
+    audioTitle: audioForPictureTitle,
+    audioMenuKeyStr: 'popup_menu_add_audio_picture',
   );
-
-  // Now find the leading menu icon button of the Audio ListTile and tap
-  // on it
-  Finder audioForPictureListTileLeadingMenuIconButton = find.descendant(
-    of: audioForPictureListTileWidgetFinder,
-    matching: find.byIcon(Icons.menu),
-  );
-
-  // Tap the leading menu icon button to open the popup menu
-  await tester.tap(audioForPictureListTileLeadingMenuIconButton);
-  await tester.pumpAndSettle();
-
-  // Now find the Add Picture popup menu item and tap on it
-  Finder addPictureMenuItem =
-      find.byKey(const Key("popup_menu_add_audio_picture"));
-
-  await tester.tap(addPictureMenuItem);
-  await tester.pumpAndSettle(const Duration(microseconds: 200));
 
   return pictureFilePathName;
 }
