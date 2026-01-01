@@ -214,6 +214,39 @@ class IntegrationTestUtil {
     await tester.pumpAndSettle();
   }
 
+  static Future<void> typeOnAudioMenuItem({
+    required WidgetTester tester,
+    required String audioTitle,
+    required String audioMenuKeyStr,
+  }) async {
+    // First, find the Audio sublist ListTile Text widget
+    final Finder audioTitleTextWidgetFinder = find.text(audioTitle);
+
+    // Then obtain the Audio ListTile widget enclosing the Text widget by
+    // finding its ancestor
+    Finder audioListTileWidgetFinder = find.ancestor(
+      of: audioTitleTextWidgetFinder,
+      matching: find.byType(ListTile),
+    );
+
+    // Now find the leading menu icon button of the Audio ListTile and tap
+    // on it
+    Finder audioListTileLeadingMenuIconButton = find.descendant(
+      of: audioListTileWidgetFinder,
+      matching: find.byIcon(Icons.menu),
+    );
+
+    // Tap the leading menu icon button to open the popup menu
+    await tester.tap(audioListTileLeadingMenuIconButton);
+    await tester.pumpAndSettle();
+
+    // Now find the Add Picture popup menu item and tap on it
+    Finder audioMenuItem = find.byKey(Key(audioMenuKeyStr));
+
+    await tester.tap(audioMenuItem);
+    await tester.pumpAndSettle(const Duration(microseconds: 200));
+  }
+
   /// Taps on the appbar leading popup menu button and then on the
   /// passed menu item key. This works on the Playlist Download View
   /// as well as on the Audio Player View.
@@ -2998,6 +3031,7 @@ class IntegrationTestUtil {
     String movedToPlaylistTitle = '',
     String copiedFromPlaylistTitle = '',
     String copiedToPlaylistTitle = '',
+    String extractedFromPlaylistTitle = '',
     String audioDownloadDuration = '',
     String audioDownloadSpeed = '',
     String audioDuration = '',
@@ -3395,6 +3429,12 @@ class IntegrationTestUtil {
     final Text copiedToPlaylistTitleTextWidget =
         tester.widget<Text>(find.byKey(const Key('copiedToPlaylistTitleKey')));
     expect(copiedToPlaylistTitleTextWidget.data, copiedToPlaylistTitle);
+
+    // Verify the 'Extracted from playlist title' of the audio
+
+    final Text extractedFromPlaylistTitleTextWidget =
+        tester.widget<Text>(find.byKey(const Key('extractedFromPlaylistTitleKey')));
+    expect(extractedFromPlaylistTitleTextWidget.data, extractedFromPlaylistTitle);
 
     if (audioType == AudioType.downloaded) {
       await tester.drag(
