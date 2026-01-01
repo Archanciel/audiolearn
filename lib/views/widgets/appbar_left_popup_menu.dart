@@ -136,14 +136,14 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
         return PopupMenuButton<AudioPopupMenuAction>(
           itemBuilder: (BuildContext context) {
             return [
-              if (audio.audioType == AudioType.downloaded) ...[
+              if (audio.videoUrl.isNotEmpty) ...[
                 PopupMenuItem<AudioPopupMenuAction>(
                   key: const Key('popup_menu_open_youtube_video'),
                   value: AudioPopupMenuAction.openYoutubeVideo,
                   child: Text(AppLocalizations.of(context)!.openYoutubeVideo),
                 )
               ],
-              if (audio.audioType == AudioType.downloaded) ...[
+              if (audio.videoUrl.isNotEmpty) ...[
                 PopupMenuItem<AudioPopupMenuAction>(
                   key: const Key('popup_copy_youtube_video_url'),
                   value: AudioPopupMenuAction.copyYoutubeVideoUrl,
