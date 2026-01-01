@@ -240,7 +240,7 @@ class IntegrationTestUtil {
     await tester.tap(audioListTileLeadingMenuIconButton);
     await tester.pumpAndSettle();
 
-    // Now find the Add Picture popup menu item and tap on it
+    // Now find the popup menu item and tap on it
     Finder audioMenuItem = find.byKey(Key(audioMenuKeyStr));
 
     await tester.tap(audioMenuItem);
