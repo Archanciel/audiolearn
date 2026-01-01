@@ -39450,6 +39450,192 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
+    testWidgets(
+        '''Modify the extract comments positions and verify that this is memorized and is stored in the
+           comment json file.''', (WidgetTester tester) async {
+      const String audioTitle =
+          "Glorious - Laisse-moi te parler de Jésus #louange";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'extract_comments_to_mp3_test',
+      );
+
+      // First, find the '1 long music' playlist audio ListTile Text widget
+      final Finder audioTitleTileTextWidgetFinder = find.text(audioTitle);
+
+      // Then obtain the audio ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      final Finder audioTitleTileWidgetFinder = find.ancestor(
+        of: audioTitleTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now we want to tap the popup menu of the audioTitle ListTile
+
+      // Find the leading menu icon button of the audioTitle ListTile
+      // and tap on it
+      final Finder audioTitleTileLeadingMenuIconButton = find.descendant(
+        of: audioTitleTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(audioTitleTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the 'Audio Comments ...' popup menu item and
+      // tap on it
+      final Finder audioCommentsPopupMenuItem =
+          find.byKey(const Key("popup_menu_audio_comment"));
+
+      await tester.tap(audioCommentsPopupMenuItem);
+      await tester.pumpAndSettle();
+
+      final Finder audioCommentsLstFinder = find.byKey(const Key(
+        'audioCommentsListKey',
+      ));
+
+      // Ensure the list has 3 child widgets
+      expect(
+        tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+        3,
+      );
+
+      // Now open the extract comments to MP3 dialog
+
+      // Find the extract comments to MP3 text button of the comment
+      // add dialog and tap on it
+      final Finder extractCommentsToMp3ButtonFinder =
+          find.byKey(const Key('extractCommentsToMp3TextButton'));
+      await tester.tap(extractCommentsToMp3ButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the extract comments to MP3 dialog title
+      expect(find.text('Comments in MP3'), findsOneWidget);
+
+      // Verify the presence of the help icon button
+      expect(find.byIcon(Icons.help_outline), findsOneWidget);
+
+      // Verify the Comments number title
+      expect(find.text('Comments (3)'), findsOneWidget);
+
+      // Now, delete the second comment
+
+      // This opens the delete comment confirmation dialog
+      final Finder deleteCommentIconButtonFinder =
+          find.byKey(const Key('deleteSegmentButtonKey_2'));
+      await tester.tap(deleteCommentIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the delete comment confirmation dialog title
+      expect(find.text('Remove Comment'), findsOneWidget);
+
+      // Verify the delete comment confirmation dialog content
+      expect(find.text('Are you sure you want to remove this comment ?'),
+          findsOneWidget);
+
+      // Confirm the deletion by tapping the delete button
+      final Finder deleteCommentButtonFinder =
+          find.byKey(const Key('confirmDeleteSegmentButton'));
+      await tester.tap(deleteCommentButtonFinder);
+      await tester.pumpAndSettle();
+
+      IntegrationTestUtil.checkExtractionCommentDetails(
+        tester: tester,
+        segmentDetailsList: [
+          {
+            'number': 1,
+            'title': "First part",
+            'startPosition': '0:00.0',
+            'endPosition': '3:01.0',
+            'increaseDuration': 'Increase duration: 0:00.0',
+            'reductionPosition': 'Reduction position: 2:50.0',
+            'reductionDuration': 'Reduction duration: 0:11.0',
+            'duration': 'Duration: 3:01.0 + silence 0:01.0',
+          },
+          {
+            'number': 2,
+            'title':
+                "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
+            'startPosition': '3:56.1',
+            'endPosition': '5:20.8',
+            'increaseDuration': 'Increase duration: 0:09.0',
+            'reductionPosition': 'Reduction position: 5:11.0',
+            'reductionDuration': 'Reduction duration: 0:09.8',
+            'duration': 'Duration: 1:24.7',
+          },
+        ],
+      );
+
+      // Type on 'In directory' checkbox to set the 'In playlist'
+      // checkbox to true and verify that
+      Finder onDirectoryCheckBoxFinder = find.byKey(const Key('onDirectoryCheckBox'));
+      await tester.tap(onDirectoryCheckBoxFinder);
+      await tester.pumpAndSettle();
+
+      // Get the 'In directory' Checkbox widget's value
+      Checkbox checkboxWidget = tester.widget<Checkbox>(onDirectoryCheckBoxFinder);
+      expect(checkboxWidget.value, isFalse,
+          reason: 'A directiry checkbox is unselected.');
+
+      // Get the 'In playlist' Checkbox finder
+      Finder inPlaylistCheckBoxFinder = find.byKey(const Key('inPlaylistCheckBox'));
+
+      // Get the 'In playlist' Checkbox widget's value
+      checkboxWidget = tester.widget<Checkbox>(inPlaylistCheckBoxFinder);
+      expect(checkboxWidget.value, isTrue,
+          reason: 'A playlist checkbox is selected.');
+
+      // Then type on 'In playlist' checkbox to set the 'In directory'
+      // checkbox to true and verify that
+      await tester.tap(inPlaylistCheckBoxFinder);
+      await tester.pumpAndSettle();
+
+      // Get the 'In directory' Checkbox widget's value
+      checkboxWidget = tester.widget<Checkbox>(onDirectoryCheckBoxFinder);
+      expect(checkboxWidget.value, isTrue,
+          reason: 'A directiry checkbox is unselected.');
+
+      // Get the 'In playlist' Checkbox widget's value
+      checkboxWidget = tester.widget<Checkbox>(inPlaylistCheckBoxFinder);
+      expect(checkboxWidget.value, isFalse,
+          reason: 'A playlist checkbox is selected.');
+
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      // Setting the path value returned by the FilePicker mock.
+      mockFilePicker.setPathToSelect(
+        pathToSelectStr: kApplicationPathWindowsTest,
+      );
+
+      // Now, type on the Extract MP3 button
+      final Finder extractMp3ButtonFinder =
+          find.byKey(const Key('extractMp3Button'));
+      await tester.tap(extractMp3ButtonFinder);
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(seconds: 4));
+      await tester.pumpAndSettle();
+
+      // Verify the extract comments to MP3 success dialog message
+      // and play and pause the extracted MP3 file
+      await _verifyAndPlayExtractedMp3Method(
+        tester: tester,
+        extractionSuccessMessage:
+            'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
+        extractionPlayingMessage:
+            'Playing: musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
   });
 }
 
