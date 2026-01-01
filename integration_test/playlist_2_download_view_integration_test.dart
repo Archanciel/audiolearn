@@ -39562,16 +39562,19 @@ void main() {
       // Now, delete the second comment
 
       // This opens the delete comment confirmation dialog
-      final Finder deleteCommentIconButtonFinder =
+      Finder deleteCommentIconButtonFinder =
           find.byKey(const Key('deleteSegmentButtonKey_2'));
       await tester.tap(deleteCommentIconButtonFinder);
       await tester.pumpAndSettle();
 
       // Confirm the deletion by tapping the delete button
-      final Finder deleteCommentButtonFinder =
+      Finder deleteCommentButtonFinder =
           find.byKey(const Key('confirmDeleteSegmentButton'));
       await tester.tap(deleteCommentButtonFinder);
       await tester.pumpAndSettle();
+
+      // Verify the Comments number title
+      expect(find.text('Comments (2)'), findsOneWidget);
 
       IntegrationTestUtil.checkExtractionCommentDetails(
         tester: tester,
@@ -39600,11 +39603,8 @@ void main() {
         ],
       );
 
-      // Verify the Comments number title
-      expect(find.text('Comments (2)'), findsOneWidget);
-
       // Find the back button widget
-      final backButtonFinder = find.byType(BackButton);
+      Finder backButtonFinder = find.byType(BackButton);
       expect(backButtonFinder, findsOneWidget);
 
       // Tap on it to quit the audio extractor dialog
@@ -39704,6 +39704,158 @@ void main() {
           },
         ],
       );
+      // Now, delete all comments
+
+      // This opens the delete 1st comment confirmation dialog
+      deleteCommentIconButtonFinder =
+          find.byKey(const Key('deleteSegmentButtonKey_1'));
+      await tester.tap(deleteCommentIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Confirm the 1st deletion by tapping the delete button
+      deleteCommentButtonFinder =
+          find.byKey(const Key('confirmDeleteSegmentButton'));
+      await tester.tap(deleteCommentButtonFinder);
+      await tester.pumpAndSettle();
+
+      // This opens the delete 2nd comment confirmation dialog
+      deleteCommentIconButtonFinder =
+          find.byKey(const Key('deleteSegmentButtonKey_1'));
+      await tester.tap(deleteCommentIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Confirm the 2nd deletion by tapping the delete button
+      deleteCommentButtonFinder =
+          find.byKey(const Key('confirmDeleteSegmentButton'));
+      await tester.tap(deleteCommentButtonFinder);
+      await tester.pumpAndSettle();
+
+      // This opens the delete 3rd comment confirmation dialog
+      deleteCommentIconButtonFinder =
+          find.byKey(const Key('deleteSegmentButtonKey_1'));
+      await tester.tap(deleteCommentIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Confirm the 3rdd deletion by tapping the delete button
+      deleteCommentButtonFinder =
+          find.byKey(const Key('confirmDeleteSegmentButton'));
+      await tester.tap(deleteCommentButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the Comments number title
+      expect(find.text('Comments (0)'), findsOneWidget);
+
+      // Find the back button widget
+      backButtonFinder = find.byType(BackButton);
+      expect(backButtonFinder, findsOneWidget);
+
+      // Tap on it to quit the audio extractor dialog
+      await tester.tap(backButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Now re-open the audio extractor dialog to verify that the
+      // deleted comment is still present
+
+      // First, find the '1 long music' playlist audio ListTile Text widget
+      audioTitleTileTextWidgetFinder = find.text(audioTitle);
+
+      // Then obtain the audio ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      audioTitleTileWidgetFinder = find.ancestor(
+        of: audioTitleTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now we want to tap the popup menu of the audioTitle ListTile
+
+      // Find the leading menu icon button of the audioTitle ListTile
+      // and tap on it
+      audioTitleTileLeadingMenuIconButton = find.descendant(
+        of: audioTitleTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(audioTitleTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the 'Audio Comments ...' popup menu item and
+      // tap on it
+      audioCommentsPopupMenuItem =
+          find.byKey(const Key("popup_menu_audio_comment"));
+
+      await tester.tap(audioCommentsPopupMenuItem);
+      await tester.pumpAndSettle();
+
+      audioCommentsLstFinder = find.byKey(const Key(
+        'audioCommentsListKey',
+      ));
+
+      // Ensure the list has 3 child widgets
+      expect(
+        tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+        3,
+      );
+
+      // Now open the extract comments to MP3 dialog
+
+      // Find the extract comments to MP3 text button of the comment
+      // add dialog and tap on it
+      extractCommentsToMp3ButtonFinder =
+          find.byKey(const Key('extractCommentsToMp3TextButton'));
+      await tester.tap(extractCommentsToMp3ButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the Comments number title
+      expect(find.text('Comments (3)'), findsOneWidget);
+
+      IntegrationTestUtil.checkExtractionCommentDetails(
+        tester: tester,
+        segmentDetailsList: [
+          {
+            'number': 1,
+            'title': "First part",
+            'startPosition': '0:00.0',
+            'endPosition': '3:01.0',
+            'increaseDuration': 'Increase duration: 0:00.0',
+            'reductionPosition': 'Reduction position: 2:50.0',
+            'reductionDuration': 'Reduction duration: 0:11.0',
+            'duration': 'Duration: 3:01.0 + silence 0:01.0',
+          },
+          {
+            'number': 2,
+            'title':
+                "1st ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
+            'startPosition': '3:00.0',
+            'endPosition': '3:54.6',
+            'increaseDuration': 'Increase duration: 0:00.0',
+            'reductionPosition': 'Reduction position: 0:00.0',
+            'reductionDuration': 'Reduction duration: 0:00.0',
+            'duration': 'Duration: 0:54.6',
+          },
+          {
+            'number': 3,
+            'title':
+                "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
+            'startPosition': '3:56.1',
+            'endPosition': '5:20.8',
+            'increaseDuration': 'Increase duration: 0:09.0',
+            'reductionPosition': 'Reduction position: 5:11.0',
+            'reductionDuration': 'Reduction duration: 0:09.8',
+            'duration': 'Duration: 1:24.7',
+          },
+        ],
+      );
+
+      // Now edit the 'First part' comment to modify its title as well
+      // as its start and end positions, its increase duration and
+      // reduction position and duration
+
+      // This opens the edit comment confirmation dialog
+      Finder editCommentIconButtonFinder =
+          find.byKey(const Key('editSegmentButtonKey_1'));
+      await tester.tap(editCommentIconButtonFinder);
+      await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
