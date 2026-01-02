@@ -77,7 +77,7 @@ void main() {
       );
 
       Audio audio = createAudio(
-        playlistTitle: 'local_delete_comment',
+        playlistTitle: '1 long music',
         audioFileName:
             "240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.mp3",
       );
@@ -100,44 +100,47 @@ void main() {
 
       List<Comment> expectedCommentsLst = [
         Comment.fullConstructor(
-          id: 'Test Title 2_2',
-          title: 'Test Title 2',
-          content: 'Test Content 2\nline 2\nline 3\nline four\nline 5',
-          commentStartPositionInTenthOfSeconds: 600,
-          commentEndPositionInTenthOfSeconds: 1800,
-          silenceDuration: 0.0,
+          id: "First part_1766333790797487",
+          title: "First part",
+          content: '',
+          commentStartPositionInTenthOfSeconds: 0,
+          commentEndPositionInTenthOfSeconds: 1810,
+          silenceDuration: 1.0,
           fadeInDuration: 0.0,
-          soundReductionPosition: 0.0,
-          soundReductionDuration: 0.0,
-          creationDateTime: DateTime.parse('2023-03-26T00:05:32.000'),
-          lastUpdateDateTime: DateTime.parse('2024-05-19T15:23:51.000'),
+          soundReductionPosition: 170.0,
+          soundReductionDuration: 11.0,
+          creationDateTime: DateTime.parse('2025-12-21T17:16:30.000'),
+          lastUpdateDateTime: DateTime.parse('2025-12-22T05:47:28.517838'),
+          deleted: false,
         ),
         Comment.fullConstructor(
-          id: 'number 3_8',
-          title: 'number 3',
+          id: "1st ce qu'Il a fait pour Moïse, Il peut le faire pour toi_1766400108231148",
+          title: "1st ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
           content:
-              'A complete example showcasing all audioplayers features can be found in our repository. Also check out our live web app.',
-          commentStartPositionInTenthOfSeconds: 800,
-          commentEndPositionInTenthOfSeconds: 2800,
+              "A remplacer par 2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi which is longer.",
+          commentStartPositionInTenthOfSeconds: 1800,
+          commentEndPositionInTenthOfSeconds: 2346,
           silenceDuration: 0.0,
           fadeInDuration: 0.0,
           soundReductionPosition: 0.0,
           soundReductionDuration: 0.0,
-          creationDateTime: DateTime.parse('2024-05-19T14:49:03.000'),
-          lastUpdateDateTime: DateTime.parse('2024-05-19T14:49:03.000'),
+          creationDateTime: DateTime.parse('2025-12-22T11:41:48.000'),
+          lastUpdateDateTime: DateTime.parse('2025-12-22T16:07:01.000'),
+          deleted: false,
         ),
         Comment.fullConstructor(
-          id: 'Test Title_0',
-          title: 'Test Title 1',
-          content: 'Test Content\nline 2\nline 3',
-          commentStartPositionInTenthOfSeconds: 3100,
-          commentEndPositionInTenthOfSeconds: 5000,
+          id: "1st ce qu'Il a fait pour Moïse, Il peut le faire pour toi_1766334317917836",
+          title: "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
+          content: '',
+          commentStartPositionInTenthOfSeconds: 2361,
+          commentEndPositionInTenthOfSeconds: 3208,
           silenceDuration: 0.0,
-          fadeInDuration: 0.0,
-          soundReductionPosition: 0.0,
-          soundReductionDuration: 0.0,
-          creationDateTime: DateTime.parse('2023-03-24T20:05:32.000'),
-          lastUpdateDateTime: DateTime.parse('2024-05-19T14:46:05.000'),
+          fadeInDuration: 9.0,
+          soundReductionPosition: 311.0,
+          soundReductionDuration: 9.8,
+          creationDateTime: DateTime.parse('2025-12-21T17:25:17.000'),
+          lastUpdateDateTime: DateTime.parse('2026-01-02T14:57:29.867823'),
+          deleted: true,
         ),
       ];
 
@@ -190,6 +193,7 @@ void main() {
           soundReductionDuration: 0.0,
           creationDateTime: DateTime.parse('2023-03-26T00:05:32.000'),
           lastUpdateDateTime: DateTime.parse('2024-05-19T15:23:51.000'),
+          deleted: false,
         ),
         Comment.fullConstructor(
           id: 'number 3_8',
@@ -204,6 +208,7 @@ void main() {
           soundReductionDuration: 0.0,
           creationDateTime: DateTime.parse('2024-05-19T14:49:03.000'),
           lastUpdateDateTime: DateTime.parse('2024-05-19T14:49:03.000'),
+          deleted: false,
         ),
         Comment.fullConstructor(
           id: 'Test Title_0',
@@ -217,6 +222,7 @@ void main() {
           soundReductionDuration: 0.0,
           creationDateTime: DateTime.parse('2023-03-24T20:05:32.000'),
           lastUpdateDateTime: DateTime.parse('2024-05-19T14:46:05.000'),
+          deleted: false,
         ),
       ];
 
@@ -341,7 +347,8 @@ void main() {
         soundReductionPosition: 0.0,
         soundReductionDuration: 0.0,
         creationDateTime: DateTime.parse('2024-05-27T13:14:32.000'),
-        lastUpdateDateTime: DateTime.parse('2024-05-29T13:30:03.000'),
+        lastUpdateDateTime: DateTime.parse('2024-08-01T11:42:36.000'),
+        deleted: false,
       );
       Comment expectedCommentFive = Comment.fullConstructor(
         id: 'To end_46727',
@@ -354,7 +361,8 @@ void main() {
         soundReductionPosition: 0.0,
         soundReductionDuration: 0.0,
         creationDateTime: DateTime.parse('2025-06-06 12:48:25.000'),
-        lastUpdateDateTime: DateTime.parse('2025-06-06 12:48:25.000'),
+        lastUpdateDateTime: DateTime.parse('2025-06-07 17:51:22.000'),
+        deleted: false,
       );
 
       validateComment(commentsLst[0], expectedCommentOne);
@@ -747,6 +755,10 @@ void main() {
         modifiedComment: commentToModify,
         commentedAudio: audio,
       );
+
+      DateTime commentModificationDateTime =
+        DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now());
+      commentToModify.lastUpdateDateTime = commentModificationDateTime;
 
       // now loading the comment list from the comment file
 
@@ -1187,8 +1199,18 @@ void validateComment(Comment actualComment, Comment expectedComment) {
       expectedComment.commentStartPositionInTenthOfSeconds);
   expect(actualComment.commentEndPositionInTenthOfSeconds,
       expectedComment.commentEndPositionInTenthOfSeconds);
+  expect(actualComment.silenceDuration,
+      expectedComment.silenceDuration);
+  expect(actualComment.fadeInDuration,
+      expectedComment.fadeInDuration);
+  expect(actualComment.soundReductionPosition,
+      expectedComment.soundReductionPosition);
+  expect(actualComment.soundReductionDuration,
+      expectedComment.soundReductionDuration);
+  expect(actualComment.deleted,
+      expectedComment.deleted);
   expect(actualComment.creationDateTime, expectedComment.creationDateTime);
-}
+  expect(actualComment.lastUpdateDateTime, expectedComment.lastUpdateDateTime);}
 
 Audio createAudio({
   required String playlistTitle,
