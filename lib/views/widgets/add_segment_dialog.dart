@@ -158,6 +158,9 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
         soundReductionPosition: soundReductionPosition,
         soundReductionDuration: soundReductionDuration,
         title: title,
+
+        // When saving the edited segment, deleted must be set to false
+        deleted: false,
       ),
     );
   }
@@ -202,13 +205,18 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
             (widget.existingSegment!.deleted)
                 ? Container(
                     padding: const EdgeInsets.only(bottom: 12),
-                    child: Text(
-                      AppLocalizations.of(context)!.commentWasDeleted,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700, // bold
-                        fontSize: 14,
-                        fontStyle: FontStyle.italic
+                    child: Tooltip(
+                      message: AppLocalizations.of(context)!
+                          .commentWasDeletedTooltip,
+                      child: Text(
+                        AppLocalizations.of(context)!.commentWasDeleted,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700, // bold
+                          fontSize: 14,
+                          fontStyle: FontStyle.italic,
+                          color: Colors.red,
+                        ),
                       ),
                     ),
                   )

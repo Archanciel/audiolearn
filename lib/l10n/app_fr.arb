@@ -1627,5 +1627,6 @@
   "extractedFromPlaylistLabel": "Extrait de la playlist",
   "extracted": "extrait",
   "extractedAudioNotAddedToPlaylistMessage": "L’audio extrait n’a pas été ajouté à la playlist \"{targetPlaylist}\" car il existe déjà en elle. Pour résoudre ce problème, veuillez supprimer l’audio extrait existant avant de relancer l’extraction.",
-  "commentWasDeleted": "Commentaire non inclu"
+  "commentWasDeleted": "Commentaire non inclu",
+  "commentWasDeletedTooltip": "Ce commentaire a été précédemment supprimé de la liste \"Commentaires->MP3\" et n’est donc pas inclus dans le MP3 extrait. Pour l’inclure à nouveau, éditez le commentaire et sauvez-le."
 }
