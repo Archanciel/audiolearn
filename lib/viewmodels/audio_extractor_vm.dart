@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:googleapis/analytics/v3.dart';
 
 import '../models/audio.dart';
 import '../models/comment.dart';
@@ -67,6 +68,7 @@ class AudioExtractorVM extends ChangeNotifier {
       status: ExtractionStatus.none,
       message: 'File selected: $name',
     );
+
     notifyListeners();
   }
 
@@ -92,8 +94,10 @@ class AudioExtractorVM extends ChangeNotifier {
         segment.soundReductionDuration,
       ),
       title: segment.title,
+      deleted: segment.deleted,
     );
     _segments.add(normalized);
+
     notifyListeners();
   }
 
@@ -123,6 +127,7 @@ class AudioExtractorVM extends ChangeNotifier {
           segment.soundReductionDuration,
         ),
         title: segment.title,
+        deleted: segment.deleted,
       );
 
       _segments[index] = normalizedSegment;
@@ -140,6 +145,7 @@ class AudioExtractorVM extends ChangeNotifier {
       comment.fadeInDuration = normalizedSegment.fadeInDuration;
       comment.soundReductionPosition = normalizedSegment.soundReductionPosition;
       comment.soundReductionDuration = normalizedSegment.soundReductionDuration;
+      comment.deleted = normalizedSegment.deleted;
 
       _commentVMlistenTrue.updateAudioComments(
         commentedAudio: _currentAudio,
@@ -154,13 +160,32 @@ class AudioExtractorVM extends ChangeNotifier {
     required int segmentToRemoveIndex,
   }) {
     if (segmentToRemoveIndex >= 0 && segmentToRemoveIndex < _segments.length) {
+      AudioSegment removedSegment = _segments[segmentToRemoveIndex];
+      removedSegment.deleted = true;
+
+      // Updating the corresponding comment
+      updateSegment(
+        index: segmentToRemoveIndex,
+        segment: removedSegment,
+      );
+
       _segments.removeAt(segmentToRemoveIndex);
+
       notifyListeners();
     }
   }
 
-  void clearSegments() {
+  void clearAllSegments() {
+    int index = 0;
+
+    for (final segment in _segments) {
+      segment.deleted = true;
+      updateSegment(index: index, segment: segment,);
+      index++;
+    }
+    
     _segments.clear();
+
     notifyListeners();
   }
 
@@ -312,6 +337,7 @@ class AudioExtractorVM extends ChangeNotifier {
               s.soundReductionDuration,
             ),
             title: s.title,
+            deleted: s.deleted,
           ),
         )
         .toList();
@@ -377,6 +403,7 @@ class AudioExtractorVM extends ChangeNotifier {
               s.soundReductionDuration,
             ),
             title: s.title,
+            deleted: s.deleted,
           ),
         )
         .toList();

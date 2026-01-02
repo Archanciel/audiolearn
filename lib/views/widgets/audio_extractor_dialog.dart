@@ -217,18 +217,26 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                           ),
                                           (segment.deleted)
                                               ? Container(
-                                                  child: Text(
-                                                    AppLocalizations.of(
-                                                            context)!
-                                                        .commentWasDeleted,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: const TextStyle(
+                                                  child: Tooltip(
+                                                    message:
+                                                        AppLocalizations.of(
+                                                                context)!
+                                                            .commentWasDeletedTooltip,
+                                                    child: Text(
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .commentWasDeleted,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: const TextStyle(
                                                         fontWeight: FontWeight
                                                             .w700, // bold
                                                         fontSize: 14,
                                                         fontStyle:
-                                                            FontStyle.italic),
+                                                            FontStyle.italic,
+                                                        color: Colors.red,
+                                                      ),
+                                                    ),
                                                   ),
                                                 )
                                               : const SizedBox.shrink(),
@@ -644,7 +652,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
 
   void _confirmClearSegments(
     BuildContext context,
-    AudioExtractorVM vm,
+    AudioExtractorVM audioExtractorVM,
   ) {
     showDialog(
       context: context,
@@ -663,7 +671,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
               backgroundColor: Colors.red,
             ),
             onPressed: () {
-              vm.clearSegments();
+              audioExtractorVM.clearAllSegments();
               Navigator.of(context).pop();
             },
             child: Text(AppLocalizations.of(context)!.clearAllButton),
@@ -758,6 +766,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
               soundReductionPosition: comment.soundReductionPosition,
               soundReductionDuration: comment.soundReductionDuration,
               title: comment.title,
+              deleted: comment.deleted,
             ),
           );
           added++;

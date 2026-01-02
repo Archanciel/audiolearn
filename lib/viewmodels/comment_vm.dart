@@ -109,8 +109,7 @@ class CommentVM extends ChangeNotifier {
 
     if (commentLst.isNotEmpty) {
       commentLst.sort(
-        (a, b) => b.lastUpdateDateTime
-            .compareTo(a.lastUpdateDateTime),
+        (a, b) => b.lastUpdateDateTime.compareTo(a.lastUpdateDateTime),
       );
 
       return commentLst.first;
@@ -118,7 +117,7 @@ class CommentVM extends ChangeNotifier {
 
     return null;
   }
-  
+
   int getCommentNumber({
     required Audio audio,
   }) {
@@ -169,7 +168,8 @@ class CommentVM extends ChangeNotifier {
         audioFileName.replaceAll('.mp3', '.json');
     final String playlistCommentPath;
 
-    if (playlistDownloadPath.contains('/')) { // run on Android
+    if (playlistDownloadPath.contains('/')) {
+      // run on Android
       playlistCommentPath = path.posix.join(
         playlistDownloadPath,
         kCommentDirName,
@@ -331,14 +331,16 @@ class CommentVM extends ChangeNotifier {
               updatedComment.soundReductionPosition;
           existingComment.soundReductionDuration =
               updatedComment.soundReductionDuration;
-          existingComment.lastUpdateDateTime = updatedComment.lastUpdateDateTime;
+          existingComment.deleted = updatedComment.deleted;
+          existingComment.lastUpdateDateTime =
+              updatedComment.lastUpdateDateTime;
           modifiedCommentNumber++;
         } else {
           // If the update comment last update date time is before or equal to
           // the existing comment last update date time, skip the modification.
           continue;
         }
-      } else if (existingCommentsLst.isEmpty){
+      } else if (existingCommentsLst.isEmpty) {
         // Comment added to an audio which did not yet have a comment file
         existingCommentsLst.add(updatedComment);
         addedCommentJsonFileNumber++;
@@ -350,9 +352,9 @@ class CommentVM extends ChangeNotifier {
     }
 
     final String commentFilePathName = buildCommentFilePathName(
-        playlistDownloadPath: commentedAudio.enclosingPlaylist!.downloadPath,
-        audioFileName: commentedAudio.audioFileName,
-      );
+      playlistDownloadPath: commentedAudio.enclosingPlaylist!.downloadPath,
+      audioFileName: commentedAudio.audioFileName,
+    );
 
     if (isInitialExistingCommentsLstEmpty) {
       // Create the comment dir so that the comment file can be created
@@ -511,7 +513,8 @@ class CommentVM extends ChangeNotifier {
   int getPlaylistAudioCommentJsonFilesNumber({
     required Playlist playlist,
   }) {
-    String playlistCommentPath = "${playlist.downloadPath}${path.separator}$kCommentDirName";
+    String playlistCommentPath =
+        "${playlist.downloadPath}${path.separator}$kCommentDirName";
 
     return DirUtil.countFilesInDir(
       directoryPath: playlistCommentPath,

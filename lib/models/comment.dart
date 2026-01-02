@@ -10,6 +10,7 @@ class Comment {
   double fadeInDuration;
   double soundReductionPosition;
   double soundReductionDuration;
+  bool deleted;
   late DateTime creationDateTime;
   late DateTime lastUpdateDateTime;
 
@@ -22,6 +23,7 @@ class Comment {
     this.fadeInDuration = 0.0,
     this.soundReductionPosition = 0.0,
     this.soundReductionDuration = 0.0,
+    this.deleted = false,
   })  : id = "${title}_${DateTime.now().microsecondsSinceEpoch.toString()}",
         creationDateTime =
             DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now()) {
@@ -42,6 +44,7 @@ class Comment {
     required this.soundReductionDuration,
     required this.creationDateTime,
     required this.lastUpdateDateTime,
+    required this.deleted,
   });
 
   factory Comment.fromJson(Map<String, dynamic> json) {
@@ -57,6 +60,7 @@ class Comment {
       fadeInDuration: json['fadeInDuration'] ?? 0.0,
       soundReductionPosition: json['soundReductionPosition'] ?? 0.0,
       soundReductionDuration: json['soundReductionDuration'] ?? 0.0,
+      deleted: json['deleted'] ?? false,
       creationDateTime: DateTime.parse(json['creationDateTime']),
       lastUpdateDateTime: DateTime.parse(json['lastUpdateDateTime']),
     );
@@ -75,6 +79,7 @@ class Comment {
       'fadeInDuration': fadeInDuration,
       'soundReductionPosition': soundReductionPosition,
       'soundReductionDuration': soundReductionDuration,
+      'deleted': deleted,
       'creationDateTime': creationDateTime.toIso8601String(),
       'lastUpdateDateTime': lastUpdateDateTime.toIso8601String(),
     };

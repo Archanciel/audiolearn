@@ -7,7 +7,7 @@ class AudioSegment {
   final double soundReductionPosition;
   final double soundReductionDuration;
   final String title;
-  final bool deleted; // NEW: Mark segment as deleted
+  bool deleted; // NEW: Mark segment as deleted
 
   AudioSegment({
     required this.startPosition,
