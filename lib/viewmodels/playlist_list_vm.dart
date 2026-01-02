@@ -258,17 +258,6 @@ class PlaylistListVM extends ChangeNotifier {
   String _audioMp3SaveUniquePlaylistName = '';
   String get audioMp3SaveUniquePlaylistName => _audioMp3SaveUniquePlaylistName;
 
-  // After the playlist(s) MP3 were saved to ZIP's, ZIP's are
-  // moved to the selected save dir. This takes time and so
-  // the move progression is displayed on the playlist download
-  // view fields.
-
-  bool _isMovingMp3Zip = false;
-  bool get isMovingMp3Zip => _isMovingMp3Zip;
-
-  String _audioMp3MovedCurrentZipName = '';
-  String get audioMp3MovedCurrentZipName => _audioMp3MovedCurrentZipName;
-
   // Playlist(s) MP3 restoration progression display on playlist
   // download view fields.
 
