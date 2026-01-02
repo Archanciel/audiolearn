@@ -26,7 +26,6 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
   late final TextEditingController _fadeInDurationController; // NEW
   late final TextEditingController _soundReductionPositionController;
   late final TextEditingController _soundReductionDurationController;
-  late final TextEditingController _titleController;
 
   @override
   void initState() {
@@ -61,9 +60,6 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
         widget.existingSegment?.soundReductionDuration ?? 0,
       ),
     );
-    _titleController = TextEditingController(
-      text: (widget.existingSegment?.title ?? ''),
-    );
   }
 
   @override
@@ -74,7 +70,6 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
     _fadeInDurationController.dispose();
     _soundReductionPositionController.dispose();
     _soundReductionDurationController.dispose();
-    _titleController.dispose();
     super.dispose();
   }
 
@@ -94,7 +89,8 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
     final soundReductionDuration = TimeFormatUtil.parseFlexible(
       _soundReductionDurationController.text,
     );
-    final title = _titleController.text.trim();
+    final commentId = widget.existingSegment?.commentId ?? '';
+    final commentTitle = widget.existingSegment?.commentTitle ?? '';
 
     if (start < 0 || start >= widget.maxDuration) {
       _showError(
@@ -144,7 +140,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
         return;
       }
     }
-    if (title.isEmpty) {
+    if (commentTitle.isEmpty) {
       _showError(AppLocalizations.of(context)!.emptyTitleError);
       return;
     }
@@ -157,7 +153,8 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
         fadeInDuration: fadeInDuration,
         soundReductionPosition: soundReductionPosition,
         soundReductionDuration: soundReductionDuration,
-        title: title,
+        commentId: commentId,
+        commentTitle: commentTitle,
 
         // When saving the edited segment, deleted must be set to false
         deleted: false,
@@ -193,7 +190,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              widget.existingSegment!.title,
+              widget.existingSegment!.commentTitle,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 fontWeight: FontWeight.w700, // bold

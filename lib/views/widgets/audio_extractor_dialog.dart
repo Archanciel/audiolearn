@@ -206,7 +206,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            segment.title,
+                                            segment.commentTitle,
                                             maxLines: 4,
                                             overflow: TextOverflow.ellipsis,
                                             style: const TextStyle(
@@ -216,26 +216,25 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                             ),
                                           ),
                                           (segment.deleted)
-                                              ? Container(
-                                                  child: Tooltip(
-                                                    message:
-                                                        AppLocalizations.of(
-                                                                context)!
-                                                            .commentWasDeletedTooltip,
-                                                    child: Text(
-                                                      AppLocalizations.of(
-                                                              context)!
-                                                          .commentWasDeleted,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: const TextStyle(
-                                                        fontWeight: FontWeight
-                                                            .w700, // bold
-                                                        fontSize: 14,
-                                                        fontStyle:
-                                                            FontStyle.italic,
-                                                        color: Colors.red,
-                                                      ),
+                                              ? Tooltip(
+                                                  message: AppLocalizations.of(
+                                                          context)!
+                                                      .commentWasDeletedTooltip,
+                                                  child: Text(
+                                                    key: Key(
+                                                        'commentDeletedTextKey_$displayedIndex'),
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .commentWasDeleted,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                      fontWeight: FontWeight
+                                                          .w700, // bold
+                                                      fontSize: 14,
+                                                      fontStyle:
+                                                          FontStyle.italic,
+                                                      color: Colors.red,
                                                     ),
                                                   ),
                                                 )
@@ -765,7 +764,8 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
               fadeInDuration: comment.fadeInDuration,
               soundReductionPosition: comment.soundReductionPosition,
               soundReductionDuration: comment.soundReductionDuration,
-              title: comment.title,
+              commentId: comment.id,
+              commentTitle: comment.title,
               deleted: comment.deleted,
             ),
           );

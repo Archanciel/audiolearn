@@ -6,7 +6,8 @@ class AudioSegment {
   final double fadeInDuration; // NEW: Fade-in at segment start (volume 0→100%)
   final double soundReductionPosition;
   final double soundReductionDuration;
-  final String title;
+  final String commentId;
+  final String commentTitle;
   bool deleted; // NEW: Mark segment as deleted
 
   AudioSegment({
@@ -16,7 +17,8 @@ class AudioSegment {
     this.fadeInDuration = 0.0, // NEW: Default no fade-in
     this.soundReductionPosition = 0.0,
     this.soundReductionDuration = 0.0,
-    required this.title,
+    required this.commentId,
+    required this.commentTitle,
     this.deleted = false, // NEW: Default not deleted
   });
 
@@ -29,7 +31,8 @@ class AudioSegment {
     double? fadeInDuration, // NEW
     double? soundReductionPosition,
     double? soundReductionDuration,
-    String? title,
+    String? commentId,
+    String? commentTitle,
     bool? deleted, // NEW
   }) {
     return AudioSegment(
@@ -41,7 +44,8 @@ class AudioSegment {
           soundReductionPosition ?? this.soundReductionPosition,
       soundReductionDuration:
           soundReductionDuration ?? this.soundReductionDuration,
-      title: title ?? this.title,
+          commentId: commentId ?? this.commentId,
+      commentTitle: commentTitle ?? this.commentTitle,
       deleted: deleted ?? this.deleted, // NEW
     );
   }
@@ -53,7 +57,8 @@ class AudioSegment {
         'fadeInDuration': fadeInDuration, // NEW
         'soundReductionPosition': soundReductionPosition,
         'soundReductionDuration': soundReductionDuration,
-        'title': title,
+        'commentId': commentId,
+        'commentTitle': commentTitle,
         'deleted': deleted, // NEW
       };
 
@@ -67,10 +72,12 @@ class AudioSegment {
           (map['soundReductionPosition'] as num?)?.toDouble() ?? 0.0,
       soundReductionDuration:
           (map['soundReductionDuration'] as num?)?.toDouble() ?? 0.0,
-      title: (map['title'] as String?)?.trim().isNotEmpty == true
-          ? (map['title'] as String).trim()
+      commentId: (map['commentId'] as String?)?.trim().isNotEmpty == true
+          ? (map['commentId'] as String).trim()
           : 'Untitled segment',
-      deleted: (map['deleted'] as bool?) ?? false, // NEW
+      commentTitle: (map['commentTitle'] as String?)?.trim().isNotEmpty == true
+          ? (map['commentTitle'] as String).trim()
+          : 'Untitled segment',      deleted: (map['deleted'] as bool?) ?? false, // NEW
     );
   }
 }

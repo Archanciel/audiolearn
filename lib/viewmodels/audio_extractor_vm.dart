@@ -2,7 +2,6 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:googleapis/analytics/v3.dart';
 
 import '../models/audio.dart';
 import '../models/comment.dart';
@@ -93,7 +92,8 @@ class AudioExtractorVM extends ChangeNotifier {
       soundReductionDuration: TimeFormatUtil.normalizeToTenths(
         segment.soundReductionDuration,
       ),
-      title: segment.title,
+      commentId: segment.commentId,
+      commentTitle: segment.commentTitle,
       deleted: segment.deleted,
     );
     _segments.add(normalized);
@@ -126,7 +126,8 @@ class AudioExtractorVM extends ChangeNotifier {
         soundReductionDuration: TimeFormatUtil.normalizeToTenths(
           segment.soundReductionDuration,
         ),
-        title: segment.title,
+        commentId: segment.commentId,
+        commentTitle: segment.commentTitle,
         deleted: segment.deleted,
       );
 
@@ -134,9 +135,11 @@ class AudioExtractorVM extends ChangeNotifier {
 
       // Updating the corresponding comment
 
-      Comment comment = _commentsLst[index];
+      Comment comment = _commentsLst.firstWhere(
+        (c) => c.id == normalizedSegment.commentId,
+      );
       comment.lastUpdateDateTime = DateTime.now();
-      comment.title = normalizedSegment.title;
+      comment.title = normalizedSegment.commentTitle;
       comment.commentStartPositionInTenthOfSeconds =
           (normalizedSegment.startPosition * 10).toInt();
       comment.commentEndPositionInTenthOfSeconds =
@@ -180,10 +183,13 @@ class AudioExtractorVM extends ChangeNotifier {
 
     for (final segment in _segments) {
       segment.deleted = true;
-      updateSegment(index: index, segment: segment,);
+      updateSegment(
+        index: index,
+        segment: segment,
+      );
       index++;
     }
-    
+
     _segments.clear();
 
     notifyListeners();
@@ -336,7 +342,8 @@ class AudioExtractorVM extends ChangeNotifier {
             soundReductionDuration: TimeFormatUtil.normalizeToTenths(
               s.soundReductionDuration,
             ),
-            title: s.title,
+            commentId: s.commentId,
+            commentTitle: s.commentTitle,
             deleted: s.deleted,
           ),
         )
@@ -402,7 +409,8 @@ class AudioExtractorVM extends ChangeNotifier {
             soundReductionDuration: TimeFormatUtil.normalizeToTenths(
               s.soundReductionDuration,
             ),
-            title: s.title,
+            commentId: s.commentId,
+            commentTitle: s.commentTitle,
             deleted: s.deleted,
           ),
         )
