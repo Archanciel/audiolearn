@@ -4477,6 +4477,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The extracted audio was not added to the \"{targetPlaylist}\" playlist because it already exists in it. To resolve this, please delete the existing extracted audio before running the extraction again.'**
   String extractedAudioNotAddedToPlaylistMessage(Object targetPlaylist);
+
+  /// No description provided for @commentWasDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment not included'**
+  String get commentWasDeleted;
 }
 
 class _AppLocalizationsDelegate

@@ -215,6 +215,23 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                               fontSize: 15,
                                             ),
                                           ),
+                                          (segment.deleted)
+                                              ? Container(
+                                                  child: Text(
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .commentWasDeleted,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                        fontWeight: FontWeight
+                                                            .w700, // bold
+                                                        fontSize: 14,
+                                                        fontStyle:
+                                                            FontStyle.italic),
+                                                  ),
+                                                )
+                                              : const SizedBox.shrink(),
                                           Row(
                                             children: [
                                               Text(
@@ -656,24 +673,9 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
     );
   }
 
-  void _showSettingsDialog({required BuildContext context}) {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: const Text('MP3 Extractor $kApplicationVersion'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Fermer'),
-          ),
-        ],
-      ),
-    );
-  }
   // ────────────────────────────────────────────────────────────────────────────
   // File picking helpers
   // ────────────────────────────────────────────────────────────────────────────
-
   Future<void> _pickMP3File({
     required BuildContext context,
     required AudioExtractorVM audioExtractorVM,

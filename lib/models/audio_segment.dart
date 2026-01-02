@@ -7,6 +7,7 @@ class AudioSegment {
   final double soundReductionPosition;
   final double soundReductionDuration;
   final String title;
+  final bool deleted; // NEW: Mark segment as deleted
 
   AudioSegment({
     required this.startPosition,
@@ -16,6 +17,7 @@ class AudioSegment {
     this.soundReductionPosition = 0.0,
     this.soundReductionDuration = 0.0,
     required this.title,
+    this.deleted = false, // NEW: Default not deleted
   });
 
   double get duration => endPosition - startPosition;
@@ -28,6 +30,7 @@ class AudioSegment {
     double? soundReductionPosition,
     double? soundReductionDuration,
     String? title,
+    bool? deleted, // NEW
   }) {
     return AudioSegment(
       startPosition: startPosition ?? this.startPosition,
@@ -39,6 +42,7 @@ class AudioSegment {
       soundReductionDuration:
           soundReductionDuration ?? this.soundReductionDuration,
       title: title ?? this.title,
+      deleted: deleted ?? this.deleted, // NEW
     );
   }
 
@@ -50,6 +54,7 @@ class AudioSegment {
         'soundReductionPosition': soundReductionPosition,
         'soundReductionDuration': soundReductionDuration,
         'title': title,
+        'deleted': deleted, // NEW
       };
 
   factory AudioSegment.fromMap(Map<String, dynamic> map) {
@@ -65,6 +70,7 @@ class AudioSegment {
       title: (map['title'] as String?)?.trim().isNotEmpty == true
           ? (map['title'] as String).trim()
           : 'Untitled segment',
+      deleted: (map['deleted'] as bool?) ?? false, // NEW
     );
   }
 }

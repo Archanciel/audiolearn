@@ -1219,5 +1219,6 @@
   "extractedAudioDateTimeLabel": "Extracted audio date time",
   "extractedFromPlaylistLabel": "Extracted from playlist",
   "extracted": "extracted",
-  "extractedAudioNotAddedToPlaylistMessage": "The extracted audio was not added to the \"{targetPlaylist}\" playlist because it already exists in it. To resolve this, please delete the existing extracted audio before running the extraction again."
+  "extractedAudioNotAddedToPlaylistMessage": "The extracted audio was not added to the \"{targetPlaylist}\" playlist because it already exists in it. To resolve this, please delete the existing extracted audio before running the extraction again.",
+  "commentWasDeleted": "Comment not included"
 }
