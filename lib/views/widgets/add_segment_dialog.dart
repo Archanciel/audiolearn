@@ -120,7 +120,8 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
     final segmentDuration = end - start;
     if (fadeInDuration > segmentDuration) {
       // NEW validation
-      _showError(AppLocalizations.of(context)!.fadeInExceedsCommentDurationError);
+      _showError(
+          AppLocalizations.of(context)!.fadeInExceedsCommentDurationError);
       return;
     }
     if (soundReductionDuration < 0) {
@@ -188,17 +189,30 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              key: const Key('commentTitleTextField'),
-              controller: _titleController,
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.modifyAudioTitleLabel,
-                border: const OutlineInputBorder(),
+            Text(
+              widget.existingSegment!.title,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontWeight: FontWeight.w700, // bold
+                fontSize: 15,
               ),
-              minLines: 1,
               maxLines: 4,
             ),
             const SizedBox(height: 12),
+            (widget.existingSegment!.deleted)
+                ? Container(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: Text(
+                      AppLocalizations.of(context)!.commentWasDeleted,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w700, // bold
+                        fontSize: 14,
+                        fontStyle: FontStyle.italic
+                      ),
+                    ),
+                  )
+                : const SizedBox.shrink(),
             Text(
               // Displays the total audio duration
               "${AppLocalizations.of(context)!.maxDuration}: ${TimeFormatUtil.formatSeconds(widget.maxDuration)}",

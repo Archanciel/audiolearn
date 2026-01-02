@@ -2884,4 +2884,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get downloadedCheckboxTooltip => "Selecting downloaded audio's.";
+
+  @override
+  String get commentWasDeleted => "Comment not included";
 }
