@@ -4,6 +4,7 @@ import 'package:audiolearn/l10n/app_localizations.dart';
 import 'package:audiolearn/models/picture.dart';
 import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:audiolearn/views/my_home_page.dart';
+import 'package:audiolearn/views/widgets/audio_extractor_dialog.dart';
 import 'package:audiolearn/views/widgets/audio_info_dialog.dart';
 import 'package:audiolearn/views/widgets/confirm_action_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
@@ -2875,13 +2876,24 @@ class IntegrationTestUtil {
   }
 
   /// Simpler verification using text matching
-  static void checkExtractionCommentDetails({
+  static Future<void> checkExtractionCommentDetails({
     required WidgetTester tester,
     required List<Map<String, dynamic>> segmentDetailsList,
-  }) {
+    List<int> connentDeletedNumberLst = const [],
+  }) async {
+    int deletedCommentNumber = 1;
+
     for (Map<String, dynamic> segmentDetails in segmentDetailsList) {
       // Verify number in CircleAvatar
       if (segmentDetails.containsKey('number')) {
+        if (deletedCommentNumber > 2) {
+          await tester.drag(
+            find.byType(AudioExtractorDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+        }
         expect(
           find.text('${segmentDetails['number']}'),
           findsOneWidget,
@@ -2889,13 +2901,31 @@ class IntegrationTestUtil {
         );
       }
 
-      // D'abord trouvez la carte du segment par son titre
+      if (connentDeletedNumberLst.contains(deletedCommentNumber)) {
+        // Verify that 'Comment not included' text is found
+        final Finder textFinder =
+            find.byKey(Key('commentDeletedTextKey_$deletedCommentNumber'));
+
+        // Retrieve the Text widget
+        final Text textWidget = tester.widget<Text>(textFinder);
+
+        expect(
+          textWidget.data,
+          'Comment not included',
+          reason: '"Content deleted" text not found',
+        );
+      }
+
+      deletedCommentNumber++;
+
+      // First find the segment card using its commentTitle
       final Finder firstSegmentCard = find.ancestor(
-        of: find.text(segmentDetails['title']),
+        of: find.text(segmentDetails['commentTitle']),
         matching: find.byType(Card),
       );
 
-      // Puis cherchez les temps dans ce segment spécifique
+      // Then verify the other details within that segment card
+
       final Finder startTime = find.descendant(
         of: firstSegmentCard,
         matching: find.text(segmentDetails['startPosition']),

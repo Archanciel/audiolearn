@@ -39054,13 +39054,13 @@ void main() {
       await tester.tap(extractCommentsToMp3ButtonFinder);
       await tester.pumpAndSettle();
 
-      // Verify the extract comments to MP3 dialog title
+      // Verify the extract comments to MP3 dialog commentTitle
       expect(find.text('Comments in MP3'), findsOneWidget);
 
       // Verify the presence of the help icon button
       expect(find.byIcon(Icons.help_outline), findsOneWidget);
 
-      // Verify the Comments number title
+      // Verify the Comments number commentTitle
       expect(find.text('Comments (3)'), findsOneWidget);
 
       // Now, delete the second comment
@@ -39071,7 +39071,7 @@ void main() {
       await tester.tap(deleteCommentIconButtonFinder);
       await tester.pumpAndSettle();
 
-      // Verify the delete comment confirmation dialog title
+      // Verify the delete comment confirmation dialog commentTitle
       expect(find.text('Remove Comment'), findsOneWidget);
 
       // Verify the delete comment confirmation dialog content
@@ -39084,15 +39084,15 @@ void main() {
       await tester.tap(deleteCommentButtonFinder);
       await tester.pumpAndSettle();
 
-      // Verify the Comments number title
+      // Verify the Comments number commentTitle
       expect(find.text('Comments (2)'), findsOneWidget);
 
-      IntegrationTestUtil.checkExtractionCommentDetails(
+      await IntegrationTestUtil.checkExtractionCommentDetails(
         tester: tester,
         segmentDetailsList: [
           {
             'number': 1,
-            'title': "First part",
+            'commentTitle': "First part",
             'startPosition': '0:00.0',
             'endPosition': '3:01.0',
             'increaseDuration': 'Increase duration: 0:00.0',
@@ -39102,7 +39102,7 @@ void main() {
           },
           {
             'number': 2,
-            'title':
+            'commentTitle':
                 "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
             'startPosition': '3:56.1',
             'endPosition': '5:20.8',
@@ -39263,12 +39263,12 @@ void main() {
       await tester.tap(deleteCommentButtonFinder);
       await tester.pumpAndSettle();
 
-      IntegrationTestUtil.checkExtractionCommentDetails(
+      await IntegrationTestUtil.checkExtractionCommentDetails(
         tester: tester,
         segmentDetailsList: [
           {
             'number': 1,
-            'title': "First part",
+            'commentTitle': "First part",
             'startPosition': '0:00.0',
             'endPosition': '3:01.0',
             'increaseDuration': 'Increase duration: 0:00.0',
@@ -39278,7 +39278,7 @@ void main() {
           },
           {
             'number': 2,
-            'title':
+            'commentTitle':
                 "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
             'startPosition': '3:56.1',
             'endPosition': '5:20.8',
@@ -39521,12 +39521,12 @@ void main() {
       // Verify the Comments number title
       expect(find.text('Comments (3)'), findsOneWidget);
 
-      IntegrationTestUtil.checkExtractionCommentDetails(
+      await IntegrationTestUtil.checkExtractionCommentDetails(
         tester: tester,
         segmentDetailsList: [
           {
             'number': 1,
-            'title': "First part",
+            'commentTitle': "First part",
             'startPosition': '0:00.0',
             'endPosition': '3:01.0',
             'increaseDuration': 'Increase duration: 0:00.0',
@@ -39536,7 +39536,7 @@ void main() {
           },
           {
             'number': 2,
-            'title':
+            'commentTitle':
                 "1st ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
             'startPosition': '3:00.0',
             'endPosition': '3:54.6',
@@ -39547,7 +39547,7 @@ void main() {
           },
           {
             'number': 3,
-            'title':
+            'commentTitle':
                 "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
             'startPosition': '3:56.1',
             'endPosition': '5:20.8',
@@ -39576,12 +39576,12 @@ void main() {
       // Verify the Comments number title
       expect(find.text('Comments (2)'), findsOneWidget);
 
-      IntegrationTestUtil.checkExtractionCommentDetails(
+      await IntegrationTestUtil.checkExtractionCommentDetails(
         tester: tester,
         segmentDetailsList: [
           {
             'number': 1,
-            'title': "First part",
+            'commentTitle': "First part",
             'startPosition': '0:00.0',
             'endPosition': '3:01.0',
             'increaseDuration': 'Increase duration: 0:00.0',
@@ -39591,7 +39591,7 @@ void main() {
           },
           {
             'number': 2,
-            'title':
+            'commentTitle':
                 "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
             'startPosition': '3:56.1',
             'endPosition': '5:20.8',
@@ -39664,15 +39664,15 @@ void main() {
       await tester.tap(extractCommentsToMp3ButtonFinder);
       await tester.pumpAndSettle();
 
-      // Verify the Comments number title
+      // Verify the Comments number commentTitle
       expect(find.text('Comments (3)'), findsOneWidget);
 
-      IntegrationTestUtil.checkExtractionCommentDetails(
+      await IntegrationTestUtil.checkExtractionCommentDetails(
         tester: tester,
         segmentDetailsList: [
           {
             'number': 1,
-            'title': "First part",
+            'commentTitle': "First part",
             'startPosition': '0:00.0',
             'endPosition': '3:01.0',
             'increaseDuration': 'Increase duration: 0:00.0',
@@ -39682,7 +39682,7 @@ void main() {
           },
           {
             'number': 2,
-            'title':
+            'commentTitle':
                 "1st ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
             'startPosition': '3:00.0',
             'endPosition': '3:54.6',
@@ -39693,7 +39693,7 @@ void main() {
           },
           {
             'number': 3,
-            'title':
+            'commentTitle':
                 "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
             'startPosition': '3:56.1',
             'endPosition': '5:20.8',
@@ -39703,8 +39703,20 @@ void main() {
             'duration': 'Duration: 1:24.7',
           },
         ],
+        connentDeletedNumberLst: [
+          2,
+        ],
       );
+
       // Now, delete all comments
+
+      // Necessary to drag up vertically to make visible the delete
+      // icon button of the 1st comment
+      await tester.drag(
+        find.byType(AudioExtractorDialog),
+        const Offset(0, 300), // Negative value for vertical drag to scroll down
+      );
+      await tester.pumpAndSettle();
 
       // This opens the delete 1st comment confirmation dialog
       deleteCommentIconButtonFinder =
@@ -39730,13 +39742,21 @@ void main() {
       await tester.tap(deleteCommentButtonFinder);
       await tester.pumpAndSettle();
 
+      // Necessary to drag down vertically to make visible the delete
+      // icon button of the 3rd comment
+      await tester.drag(
+        find.byType(AudioExtractorDialog),
+        const Offset(0, 300), // Negative value for vertical drag to scroll down
+      );
+      await tester.pumpAndSettle();
+
       // This opens the delete 3rd comment confirmation dialog
       deleteCommentIconButtonFinder =
           find.byKey(const Key('deleteSegmentButtonKey_1'));
       await tester.tap(deleteCommentIconButtonFinder);
       await tester.pumpAndSettle();
 
-      // Confirm the 3rdd deletion by tapping the delete button
+      // Confirm the 3rd deletion by tapping the delete button
       deleteCommentButtonFinder =
           find.byKey(const Key('confirmDeleteSegmentButton'));
       await tester.tap(deleteCommentButtonFinder);
@@ -39809,12 +39829,12 @@ void main() {
       // Verify the Comments number title
       expect(find.text('Comments (3)'), findsOneWidget);
 
-      IntegrationTestUtil.checkExtractionCommentDetails(
+      await IntegrationTestUtil.checkExtractionCommentDetails(
         tester: tester,
         segmentDetailsList: [
           {
             'number': 1,
-            'title': "First part",
+            'commentTitle': "First part",
             'startPosition': '0:00.0',
             'endPosition': '3:01.0',
             'increaseDuration': 'Increase duration: 0:00.0',
@@ -39824,7 +39844,7 @@ void main() {
           },
           {
             'number': 2,
-            'title':
+            'commentTitle':
                 "1st ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
             'startPosition': '3:00.0',
             'endPosition': '3:54.6',
@@ -39835,7 +39855,7 @@ void main() {
           },
           {
             'number': 3,
-            'title':
+            'commentTitle':
                 "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
             'startPosition': '3:56.1',
             'endPosition': '5:20.8',
@@ -39845,11 +39865,24 @@ void main() {
             'duration': 'Duration: 1:24.7',
           },
         ],
+        connentDeletedNumberLst: [
+          1,
+          2,
+          3,
+        ],
       );
 
-      // Now edit the 'First part' comment to modify its title as well
-      // as its start and end positions, its increase duration and
-      // reduction position and duration
+      // Now edit the 'First part' comment to modify its start and
+      // end positions, its increase duration and reduction position
+      // and duration
+
+      // Necessary to drag up vertically to make visible the edit
+      // icon button of the 1st comment
+      await tester.drag(
+        find.byType(AudioExtractorDialog),
+        const Offset(0, 300), // Negative value for vertical drag to scroll down
+      );
+      await tester.pumpAndSettle();
 
       // This opens the edit comment confirmation dialog
       Finder editCommentIconButtonFinder =
