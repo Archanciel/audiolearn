@@ -32,7 +32,8 @@ Future<void> main() async {
   //                     version of the app so that the app accesses the
   //                     correct application directory and not the test
   //                     directory. Must also be set to false when
-  //                     debugging the application on the smartphone.
+  //                     debugging the application on the smartphone
+  //                     but not when debugging on the emulator.
 
   String applicationPath = '';
 
