@@ -41,13 +41,15 @@ class AudioExtractorVM extends ChangeNotifier {
   }
 
   double get totalDuration {
-    return _segments.fold(
-      0.0,
-      (sum, s) =>
-          sum +
-          TimeFormatUtil.normalizeToTenths(s.duration) +
-          TimeFormatUtil.normalizeToTenths(s.silenceDuration),
-    );
+    return _segments
+        .where((s) => !s.deleted) // Filtering the not deleted segments
+        .fold(
+          0.0,
+          (sum, s) =>
+              sum +
+              TimeFormatUtil.normalizeToTenths(s.duration) +
+              TimeFormatUtil.normalizeToTenths(s.silenceDuration),
+        );
   }
 
   int get segmentCount => _segments.length;

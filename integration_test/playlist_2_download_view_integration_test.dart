@@ -39249,6 +39249,14 @@ void main() {
       await tester.tap(extractCommentsToMp3ButtonFinder);
       await tester.pumpAndSettle();
 
+      // Verify the total duration text
+      Finder totalDurationTextFinder =
+          find.byKey(const Key('totalSegmentsDurationTextKey'));
+      expect(
+        tester.widget<Text>(totalDurationTextFinder).data,
+        'Total duration: 5:21.3',
+      );
+      
       // Now, delete the second comment
 
       // This opens the delete comment confirmation dialog
@@ -39262,6 +39270,14 @@ void main() {
           find.byKey(const Key('confirmDeleteSegmentButton'));
       await tester.tap(deleteCommentButtonFinder);
       await tester.pumpAndSettle();
+
+      // Verify the total duration text
+      totalDurationTextFinder =
+          find.byKey(const Key('totalSegmentsDurationTextKey'));
+      expect(
+        tester.widget<Text>(totalDurationTextFinder).data,
+        'Total duration: 4:26.7',
+      );
 
       await IntegrationTestUtil.checkExtractionCommentDetails(
         tester: tester,
@@ -39700,6 +39716,14 @@ void main() {
       await tester.tap(extractCommentsToMp3ButtonFinder);
       await tester.pumpAndSettle();
 
+      // Verify the total duration text
+      Finder totalDurationTextFinder =
+          find.byKey(const Key('totalSegmentsDurationTextKey'));
+      expect(
+        tester.widget<Text>(totalDurationTextFinder).data,
+        'Total duration: 4:26.7',
+      );
+
       // Verify the Comments number commentTitle
       expect(find.text('Comments (3)'), findsOneWidget);
 
@@ -39849,6 +39873,14 @@ void main() {
           2,
           3,
         ],
+      );
+
+      // Verify the total duration text
+      totalDurationTextFinder =
+          find.byKey(const Key('totalSegmentsDurationTextKey'));
+      expect(
+        tester.widget<Text>(totalDurationTextFinder).data,
+        'Total duration: 0:00.0',
       );
 
       // Now edit the 'First part' comment to modify its start and
@@ -40002,6 +40034,14 @@ void main() {
             'duration': 'Duration: 1:24.7',
           },
         ],
+      );
+
+      // Verify the total duration text
+      totalDurationTextFinder =
+          find.byKey(const Key('totalSegmentsDurationTextKey'));
+      expect(
+        tester.widget<Text>(totalDurationTextFinder).data,
+        'Total duration: 4:34.3',
       );
 
       // Now, tap on 'Clear all' button to delete all comments at once
