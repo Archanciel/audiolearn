@@ -106,6 +106,7 @@ class AudioExtractorVM extends ChangeNotifier {
   void updateSegment({
     required int index,
     required AudioSegment segment,
+    bool updateAudioCommentsLst = true,
   }) {
     if (index >= 0 && index < _segments.length) {
       final AudioSegment normalizedSegment = AudioSegment(
@@ -152,10 +153,12 @@ class AudioExtractorVM extends ChangeNotifier {
       comment.soundReductionDuration = normalizedSegment.soundReductionDuration;
       comment.deleted = normalizedSegment.deleted;
 
-      _commentVMlistenTrue.updateAudioComments(
-        commentedAudio: _currentAudio,
-        updateCommentsLst: _commentsLst,
-      );
+      if (updateAudioCommentsLst) {
+        _commentVMlistenTrue.updateAudioCommentsLst(
+          commentedAudio: _currentAudio,
+          updateCommentsLst: _commentsLst,
+        );
+      }
 
       notifyListeners();
     }
@@ -188,9 +191,17 @@ class AudioExtractorVM extends ChangeNotifier {
       updateSegment(
         index: index,
         segment: segment,
+        updateAudioCommentsLst: false,
       );
       index++;
     }
+
+    // Update the comments list which was not updated during the above
+    // loop
+    _commentVMlistenTrue.updateAudioCommentsLst(
+      commentedAudio: _currentAudio,
+      updateCommentsLst: _commentsLst,
+    );
 
     _segments.clear();
 
