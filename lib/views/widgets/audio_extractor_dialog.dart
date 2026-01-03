@@ -384,6 +384,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                         children: [
                           Text(
                             "${AppLocalizations.of(context)!.totalDuration}: ${TimeFormatUtil.formatSeconds(audioExtractorVM.totalDuration)}",
+                            key: const Key('totalSegmentsDurationTextKey'),
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
