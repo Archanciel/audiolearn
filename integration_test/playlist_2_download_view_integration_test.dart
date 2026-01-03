@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:archive/archive.dart';
 import 'package:audiolearn/models/audio.dart';
+import 'package:audiolearn/models/comment.dart';
 import 'package:audiolearn/models/picture.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/audio_player_vm.dart';
@@ -39256,7 +39257,7 @@ void main() {
         tester.widget<Text>(totalDurationTextFinder).data,
         'Total duration: 5:21.3',
       );
-      
+
       // Now, delete the second comment
 
       // This opens the delete comment confirmation dialog
@@ -39611,12 +39612,85 @@ void main() {
         ],
       );
 
+      final String commentsFilePath = path.join(
+        'C:',
+        'development',
+        'flutter',
+        'audiolearn',
+        'test',
+        'data',
+        'audio',
+        'playlists',
+        '1 long music',
+        'comments',
+        '250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27.json',
+      );
 
+      // Verifying the content of the comments json file
 
+      // Comment comment = JsonDataService.loadFromFile(jsonPathFileName: commentsFilePath, type: Comment,);
+      File commentsFile = File(commentsFilePath);
 
+      final String jsonContent = commentsFile.readAsStringSync();
+      List<dynamic> commentsJson = jsonDecode(jsonContent) as List<dynamic>;
 
+      final Map<String, dynamic> firstComment =
+          commentsJson[0] as Map<String, dynamic>;
 
+      expect(firstComment['id'], 'First part_1766333790797487');
+      expect(firstComment['title'], 'First part');
+      expect(firstComment['content'], '');
+      expect(firstComment['commentStartPositionInTenthOfSeconds'], 0);
+      expect(firstComment['commentEndPositionInTenthOfSeconds'], 1810);
+      expect(firstComment['silenceDuration'], 1.0);
+      expect(firstComment['fadeInDuration'], 0.0);
+      expect(firstComment['soundReductionPosition'], 170.0);
+      expect(firstComment['soundReductionDuration'], 11.0);
+      expect(firstComment['deleted'], null);
+      expect(firstComment['creationDateTime'], '2025-12-21T17:16:30.000');
+      expect(firstComment['lastUpdateDateTime'], '2025-12-22T05:47:28.517838');
 
+      final Map<String, dynamic> secondComment =
+          commentsJson[1] as Map<String, dynamic>;
+
+      expect(secondComment['id'],
+          '1st ce qu\'Il a fait pour Moïse, Il peut le faire pour toi_1766400108231148');
+      expect(secondComment['title'],
+          '1st ce qu\'Il a fait pour Moïse, Il peut le faire pour toi');
+      expect(
+        secondComment['content'],
+        "A remplacer par 2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi which is longer.",
+      );
+      expect(secondComment['commentStartPositionInTenthOfSeconds'], 1800);
+      expect(secondComment['commentEndPositionInTenthOfSeconds'], 2346);
+      expect(secondComment['silenceDuration'], 0.0);
+      expect(secondComment['fadeInDuration'], 0.0);
+      expect(secondComment['soundReductionPosition'], 0.0);
+      expect(secondComment['soundReductionDuration'], 0.0);
+      expect(secondComment['deleted'], null,
+          reason: 'Second comment should be deleted');
+      expect(secondComment['creationDateTime'], '2025-12-22T11:41:48.000');
+      expect(secondComment['lastUpdateDateTime'], '2025-12-22T16:07:01.000');
+
+      final Map<String, dynamic> thirdComment =
+          commentsJson[2] as Map<String, dynamic>;
+
+      expect(thirdComment['id'],
+          '1st ce qu\'Il a fait pour Moïse, Il peut le faire pour toi_1766334317917836');
+      expect(thirdComment['title'],
+          '2nd ce qu\'Il a fait pour Moïse, Il peut le faire pour toi');
+      expect(thirdComment['content'], '');
+      expect(thirdComment['commentStartPositionInTenthOfSeconds'], 2361);
+      expect(thirdComment['commentEndPositionInTenthOfSeconds'], 3208);
+      expect(thirdComment['silenceDuration'], 0.0);
+      expect(thirdComment['fadeInDuration'], 9.0,
+          reason: 'Should have 9 seconds fade-in');
+      expect(thirdComment['soundReductionPosition'], 311.0);
+      expect(thirdComment['soundReductionDuration'], 9.8,
+          reason: 'Should have 9.8 seconds fade-out');
+      expect(thirdComment['deleted'], null);
+      expect(thirdComment['creationDateTime'], '2025-12-21T17:25:17.000');
+      expect(thirdComment['lastUpdateDateTime'], '2025-12-22T16:06:46.000');
 
       // Now, delete the second comment
 
@@ -40115,7 +40189,7 @@ void main() {
           3,
         ],
       );
-            
+
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
