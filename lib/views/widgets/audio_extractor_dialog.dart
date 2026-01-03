@@ -389,6 +389,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                             ),
                           ),
                           TextButton.icon(
+                            key: const Key('clearAllSegmentsButton'),
                             onPressed: () => _confirmClearSegments(
                               context,
                               audioExtractorVM,
@@ -666,6 +667,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
             child: Text(AppLocalizations.of(context)!.cancelButton),
           ),
           ElevatedButton(
+            key: const Key('confirmClearAllSegmentsButton'),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red,
             ),

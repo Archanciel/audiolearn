@@ -39798,9 +39798,9 @@ void main() {
       await tester.tap(deleteCommentButtonFinder);
       await tester.pumpAndSettle();
 
-      await _verifyAllComments(
+      await _verifyAllCommentsAfterQuittingAndCommingBackToExtracDialog(
         tester: tester,
-        commentNumberTitle: 'Comments (0)',
+        commentNumberTitleBeforeQuittingDialog: 'Comments (0)',
         audioTitle: audioTitle,
         backButtonFinder: backButtonFinder,
         audioTitleTileTextWidgetFinder: audioTitleTileTextWidgetFinder,
@@ -39956,9 +39956,9 @@ void main() {
       await tester.tap(saveEditedCommentButtonFinder);
       await tester.pumpAndSettle();
 
-      await _verifyAllComments(
+      await _verifyAllCommentsAfterQuittingAndCommingBackToExtracDialog(
         tester: tester,
-        commentNumberTitle: 'Comments (3)',
+        commentNumberTitleBeforeQuittingDialog: 'Comments (3)',
         audioTitle: audioTitle,
         backButtonFinder: backButtonFinder,
         audioTitleTileTextWidgetFinder: audioTitleTileTextWidgetFinder,
@@ -40004,6 +40004,71 @@ void main() {
         ],
       );
 
+      // Now, tap on 'Clear all' button to delete all comments at once
+      Finder clearAllCommentsButtonFinder =
+          find.byKey(const Key('clearAllSegmentsButton'));
+      await tester.tap(clearAllCommentsButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Confirm the deletion by tapping the delete button
+      deleteCommentButtonFinder =
+          find.byKey(const Key('confirmClearAllSegmentsButton'));
+      await tester.tap(deleteCommentButtonFinder);
+      await tester.pumpAndSettle();
+
+      await _verifyAllCommentsAfterQuittingAndCommingBackToExtracDialog(
+        tester: tester,
+        commentNumberTitleBeforeQuittingDialog: 'Comments (0)',
+        audioTitle: audioTitle,
+        backButtonFinder: backButtonFinder,
+        audioTitleTileTextWidgetFinder: audioTitleTileTextWidgetFinder,
+        audioTitleTileWidgetFinder: audioTitleTileWidgetFinder,
+        audioTitleTileLeadingMenuIconButton:
+            audioTitleTileLeadingMenuIconButton,
+        audioCommentsPopupMenuItem: audioCommentsPopupMenuItem,
+        audioCommentsLstFinder: audioCommentsLstFinder,
+        extractCommentsToMp3ButtonFinder: extractCommentsToMp3ButtonFinder,
+        segmentDetailsList: [
+          {
+            'number': 1,
+            'commentTitle': "First part",
+            'startPosition': '0:10.0',
+            'endPosition': '2:20.0',
+            'increaseDuration': 'Increase duration: 0:08.0',
+            'reductionPosition': 'Reduction position: 2:10.1',
+            'reductionDuration': 'Reduction duration: 0:09.9',
+            'duration': 'Duration: 2:10.0 + silence 0:05.0',
+          },
+          {
+            'number': 2,
+            'commentTitle':
+                "1st ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
+            'startPosition': '3:00.0',
+            'endPosition': '3:54.6',
+            'increaseDuration': 'Increase duration: 0:00.0',
+            'reductionPosition': 'Reduction position: 0:00.0',
+            'reductionDuration': 'Reduction duration: 0:00.0',
+            'duration': 'Duration: 0:54.6',
+          },
+          {
+            'number': 3,
+            'commentTitle':
+                "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
+            'startPosition': '3:56.1',
+            'endPosition': '5:20.8',
+            'increaseDuration': 'Increase duration: 0:09.0',
+            'reductionPosition': 'Reduction position: 5:11.0',
+            'reductionDuration': 'Reduction duration: 0:09.8',
+            'duration': 'Duration: 1:24.7',
+          },
+        ],
+        connentDeletedNumberLst: [
+          1,
+          2,
+          3,
+        ],
+      );
+            
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -40013,9 +40078,9 @@ void main() {
   });
 }
 
-Future<void> _verifyAllComments({
+Future<void> _verifyAllCommentsAfterQuittingAndCommingBackToExtracDialog({
   required WidgetTester tester,
-  required String commentNumberTitle,
+  required String commentNumberTitleBeforeQuittingDialog,
   required String audioTitle,
   required Finder backButtonFinder,
   required Finder audioTitleTileTextWidgetFinder,
@@ -40028,7 +40093,7 @@ Future<void> _verifyAllComments({
   List<int> connentDeletedNumberLst = const [],
 }) async {
   // Verify the Comments number title
-  expect(find.text(commentNumberTitle), findsOneWidget);
+  expect(find.text(commentNumberTitleBeforeQuittingDialog), findsOneWidget);
 
   // Find the back button widget
   backButtonFinder = find.byType(BackButton);
