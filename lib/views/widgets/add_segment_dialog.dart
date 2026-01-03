@@ -315,6 +315,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
           child: Text(AppLocalizations.of(context)!.cancelButton),
         ),
         ElevatedButton(
+          key: Key('saveEditedSegmentButton'),
           onPressed: _saveSegment,
           child: Text(AppLocalizations.of(context)!.saveButton),
         ),
