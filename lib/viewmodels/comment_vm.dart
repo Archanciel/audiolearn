@@ -285,7 +285,7 @@ class CommentVM extends ChangeNotifier {
   /// - The first integer is the number of modified comments.
   /// - The second integer is the number of added comments.
   /// - The third integer is the number of added comment json file.
-  List<int> updateAudioComments({
+  List<int> updateAudioCommentsLst({
     required Audio commentedAudio,
     required List<Comment> updateCommentsLst,
   }) {
