@@ -39510,8 +39510,8 @@ void main() {
       );
     });
     testWidgets(
-        '''Modify the extract comments positions and verify that this is memorized and is stored in the
-           comment json file.''', (WidgetTester tester) async {
+        '''Delete and resave the extract comments. Modify their positions and verify that this is memorized and
+           is stored in the comment json file.''', (WidgetTester tester) async {
       const String audioTitle =
           "Glorious - Laisse-moi te parler de Jésus #louange";
 
@@ -39610,6 +39610,13 @@ void main() {
           },
         ],
       );
+
+
+
+
+
+
+
 
       // Now, delete the second comment
 
