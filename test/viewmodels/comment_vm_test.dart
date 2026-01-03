@@ -868,7 +868,7 @@ void main() {
       // adding a new comment to the updated comment list
       updatedCommentLst.add(addedComment);
 
-      List<int> updateNumberLst = commentVM.updateAudioComments(
+      List<int> updateNumberLst = commentVM.updateAudioCommentsLst(
         commentedAudio: audio,
         updateCommentsLst: updatedCommentLst,
       );
@@ -931,7 +931,7 @@ void main() {
 
       updatedCommentLst.add(addedComment);
 
-      List<int> updateNumberLst = commentVM.updateAudioComments(
+      List<int> updateNumberLst = commentVM.updateAudioCommentsLst(
         commentedAudio: audio,
         updateCommentsLst: updatedCommentLst,
       );

@@ -4814,7 +4814,7 @@ class PlaylistListVM extends ChangeNotifier {
 
             // Merge/update comments (adds + updates)
             List<int> audioCommentUpdateNumberLst =
-                _commentVM.updateAudioComments(
+                _commentVM.updateAudioCommentsLst(
               commentedAudio: existingAudio,
               updateCommentsLst: zipAudioCommentsLst,
             );
@@ -5055,7 +5055,7 @@ class PlaylistListVM extends ChangeNotifier {
             );
 
             // Update the audio comments using CommentVM
-            _commentVM.updateAudioComments(
+            _commentVM.updateAudioCommentsLst(
               commentedAudio: audioToAdd,
               updateCommentsLst: zipComments,
             );
@@ -5063,7 +5063,7 @@ class PlaylistListVM extends ChangeNotifier {
             return true;
           } else {
             // Comment file already exists, just update the comments
-            _commentVM.updateAudioComments(
+            _commentVM.updateAudioCommentsLst(
               commentedAudio: audioToAdd,
               updateCommentsLst: zipComments,
             );
