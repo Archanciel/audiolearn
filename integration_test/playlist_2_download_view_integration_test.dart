@@ -39512,7 +39512,7 @@ void main() {
     });
     testWidgets(
         '''Delete and resave the extract comments. Modify their positions and verify that this is memorized and
-           is stored in the comment json file.''', (WidgetTester tester) async {
+           is correctly stored in the comment json file.''', (WidgetTester tester) async {
       const String audioTitle =
           "Glorious - Laisse-moi te parler de Jésus #louange";
 
@@ -39628,14 +39628,13 @@ void main() {
 
       // Verifying the content of the comments json file
 
-      // Comment comment = JsonDataService.loadFromFile(jsonPathFileName: commentsFilePath, type: Comment,);
       File commentsFile = File(commentsFilePath);
 
-      final String jsonContent = commentsFile.readAsStringSync();
-      List<dynamic> commentsJson = jsonDecode(jsonContent) as List<dynamic>;
+      String jsonContent = commentsFile.readAsStringSync();
+      List<dynamic> commentsLst = jsonDecode(jsonContent) as List<dynamic>;
 
-      final Map<String, dynamic> firstComment =
-          commentsJson[0] as Map<String, dynamic>;
+      Map<String, dynamic> firstComment =
+          commentsLst[0] as Map<String, dynamic>;
 
       expect(firstComment['id'], 'First part_1766333790797487');
       expect(firstComment['title'], 'First part');
@@ -39650,8 +39649,8 @@ void main() {
       expect(firstComment['creationDateTime'], '2025-12-21T17:16:30.000');
       expect(firstComment['lastUpdateDateTime'], '2025-12-22T05:47:28.517838');
 
-      final Map<String, dynamic> secondComment =
-          commentsJson[1] as Map<String, dynamic>;
+      Map<String, dynamic> secondComment =
+          commentsLst[1] as Map<String, dynamic>;
 
       expect(secondComment['id'],
           '1st ce qu\'Il a fait pour Moïse, Il peut le faire pour toi_1766400108231148');
@@ -39672,8 +39671,8 @@ void main() {
       expect(secondComment['creationDateTime'], '2025-12-22T11:41:48.000');
       expect(secondComment['lastUpdateDateTime'], '2025-12-22T16:07:01.000');
 
-      final Map<String, dynamic> thirdComment =
-          commentsJson[2] as Map<String, dynamic>;
+      Map<String, dynamic> thirdComment =
+          commentsLst[2] as Map<String, dynamic>;
 
       expect(thirdComment['id'],
           '1st ce qu\'Il a fait pour Moïse, Il peut le faire pour toi_1766334317917836');
@@ -39735,6 +39734,81 @@ void main() {
           },
         ],
       );
+
+      // Verifying the content of the comments json file
+
+      commentsFile = File(commentsFilePath);
+
+      jsonContent = commentsFile.readAsStringSync();
+      commentsLst = jsonDecode(jsonContent) as List<dynamic>;
+
+      firstComment = commentsLst[0] as Map<String, dynamic>;
+
+      expect(firstComment['id'], 'First part_1766333790797487');
+      expect(firstComment['title'], 'First part');
+      expect(firstComment['content'], '');
+      expect(firstComment['commentStartPositionInTenthOfSeconds'], 0);
+      expect(firstComment['commentEndPositionInTenthOfSeconds'], 1810);
+      expect(firstComment['silenceDuration'], 1.0);
+      expect(firstComment['fadeInDuration'], 0.0);
+      expect(firstComment['soundReductionPosition'], 170.0);
+      expect(firstComment['soundReductionDuration'], 11.0);
+      expect(firstComment['deleted'], false);
+      expect(firstComment['creationDateTime'], '2025-12-21T17:16:30.000');
+      expect(firstComment['lastUpdateDateTime'], '2025-12-22T05:47:28.517838');
+
+      secondComment = commentsLst[1] as Map<String, dynamic>;
+
+      expect(secondComment['id'],
+          '1st ce qu\'Il a fait pour Moïse, Il peut le faire pour toi_1766400108231148');
+      expect(secondComment['title'],
+          '1st ce qu\'Il a fait pour Moïse, Il peut le faire pour toi');
+      expect(
+        secondComment['content'],
+        "A remplacer par 2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi which is longer.",
+      );
+      expect(secondComment['commentStartPositionInTenthOfSeconds'], 1800);
+      expect(secondComment['commentEndPositionInTenthOfSeconds'], 2346);
+      expect(secondComment['silenceDuration'], 0.0);
+      expect(secondComment['fadeInDuration'], 0.0);
+      expect(secondComment['soundReductionPosition'], 0.0);
+      expect(secondComment['soundReductionDuration'], 0.0);
+      expect(secondComment['deleted'], true,
+          reason: 'Second comment should be deleted');
+      expect(secondComment['creationDateTime'], '2025-12-22T11:41:48.000');
+      DateTime now = DateTime.now();
+      String yearStr = now.year.toString();
+      String monthStr = now.month.toString();
+      monthStr = (monthStr.length == 1) ? "0$monthStr" : monthStr;
+      String dayStr = now.day.toString();
+      dayStr = (dayStr.length == 1) ? "0$dayStr" : dayStr;
+      String hourStr = now.hour.toString();
+      hourStr = (hourStr.length == 1) ? "0$hourStr" : hourStr;
+      String minuteStr = now.minute.toString();
+      minuteStr = (minuteStr.length == 1) ? "0$minuteStr" : minuteStr;
+      expect(secondComment['lastUpdateDateTime'],
+          contains("$yearStr-$monthStr-${dayStr}T$hourStr:$minuteStr"),
+          reason:
+              'Last update date time should be today\'s date with current hour and minute');
+
+      thirdComment = commentsLst[2] as Map<String, dynamic>;
+
+      expect(thirdComment['id'],
+          '1st ce qu\'Il a fait pour Moïse, Il peut le faire pour toi_1766334317917836');
+      expect(thirdComment['title'],
+          '2nd ce qu\'Il a fait pour Moïse, Il peut le faire pour toi');
+      expect(thirdComment['content'], '');
+      expect(thirdComment['commentStartPositionInTenthOfSeconds'], 2361);
+      expect(thirdComment['commentEndPositionInTenthOfSeconds'], 3208);
+      expect(thirdComment['silenceDuration'], 0.0);
+      expect(thirdComment['fadeInDuration'], 9.0,
+          reason: 'Should have 9 seconds fade-in');
+      expect(thirdComment['soundReductionPosition'], 311.0);
+      expect(thirdComment['soundReductionDuration'], 9.8,
+          reason: 'Should have 9.8 seconds fade-out');
+      expect(thirdComment['deleted'], false);
+      expect(thirdComment['creationDateTime'], '2025-12-21T17:25:17.000');
+      expect(thirdComment['lastUpdateDateTime'], '2025-12-22T16:06:46.000');
 
       // Find the back button widget
       Finder backButtonFinder = find.byType(BackButton);
@@ -40029,6 +40103,41 @@ void main() {
           find.byKey(const Key('saveEditedSegmentButton'));
       await tester.tap(saveEditedCommentButtonFinder);
       await tester.pumpAndSettle();
+
+      // Verifying the first modified comment in the comments json file
+
+      commentsFile = File(commentsFilePath);
+
+      jsonContent = commentsFile.readAsStringSync();
+      commentsLst = jsonDecode(jsonContent) as List<dynamic>;
+
+      firstComment = commentsLst[0] as Map<String, dynamic>;
+
+      expect(firstComment['id'], 'First part_1766333790797487');
+      expect(firstComment['title'], 'First part');
+      expect(firstComment['content'], '');
+      expect(firstComment['commentStartPositionInTenthOfSeconds'], 100);
+      expect(firstComment['commentEndPositionInTenthOfSeconds'], 1400);
+      expect(firstComment['silenceDuration'], 5.0);
+      expect(firstComment['fadeInDuration'], 8.0);
+      expect(firstComment['soundReductionPosition'], 130.1);
+      expect(firstComment['soundReductionDuration'], 9.9);
+      expect(firstComment['deleted'], false);
+      expect(firstComment['creationDateTime'], '2025-12-21T17:16:30.000');
+      now = DateTime.now();
+      yearStr = now.year.toString();
+      monthStr = now.month.toString();
+      monthStr = (monthStr.length == 1) ? "0$monthStr" : monthStr;
+      dayStr = now.day.toString();
+      dayStr = (dayStr.length == 1) ? "0$dayStr" : dayStr;
+      hourStr = now.hour.toString();
+      hourStr = (hourStr.length == 1) ? "0$hourStr" : hourStr;
+      minuteStr = now.minute.toString();
+      minuteStr = (minuteStr.length == 1) ? "0$minuteStr" : minuteStr;
+      expect(firstComment['lastUpdateDateTime'],
+          contains("$yearStr-$monthStr-${dayStr}T$hourStr:$minuteStr"),
+          reason:
+              'Last update date time should be today\'s date with current hour and minute');
 
       // Now edit the second comment to save it again without
       // modification to remove the 'Comment not included' message
