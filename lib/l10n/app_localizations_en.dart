@@ -2633,7 +2633,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get saveLocationSelectionCanceledMessage =>
-      'Error: save location selection canceled';
+      'Error: extraction location selection canceled';
 
   @override
   String get addAtLeastOneCommentMessage =>
