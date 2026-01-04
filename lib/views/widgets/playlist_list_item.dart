@@ -431,10 +431,10 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               listen: false,
             );
 
-            if (selectedFilePathName.isEmpty) {
-              // The case if the user clicked on file picker Cancel button
-              return;
-            }
+            // if (selectedFilePathName.isEmpty) {
+            //   // The case if the user clicked on file picker Cancel button
+            //   return;
+            // }
 
             showDialog<List<String>>(
               barrierDismissible:
