@@ -308,6 +308,9 @@ class AudioExtractorService {
       };
     }
 
+    // Only the not deleted segments are extracted
+    segments = segments.where((s) => !s.deleted).toList();
+
     final bitrate = (inMusicQuality) ? '192k' : '64k';
 
     if (Platform.isAndroid || Platform.isIOS) {
