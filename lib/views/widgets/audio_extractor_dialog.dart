@@ -226,8 +226,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                                     AppLocalizations.of(
                                                             context)!
                                                         .commentWasDeleted,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
+                                                    maxLines: 2,
                                                     style: const TextStyle(
                                                       fontWeight: FontWeight
                                                           .w700, // bold
@@ -242,10 +241,10 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                           Row(
                                             children: [
                                               Tooltip(
-                                               message: AppLocalizations.of(
-                                                    context)!
-                                                .commentStartPositionTooltip,
-                                              child: Text(
+                                                message: AppLocalizations.of(
+                                                        context)!
+                                                    .commentStartPositionTooltip,
+                                                child: Text(
                                                   TimeFormatUtil.formatSeconds(
                                                       segment.startPosition),
                                                   style: const TextStyle(
@@ -264,9 +263,9 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                             ],
                                           ),
                                           Tooltip(
-                                             message: AppLocalizations.of(
-                                                    context)!
-                                                .commentEndPositionTooltip,
+                                            message:
+                                                AppLocalizations.of(context)!
+                                                    .commentEndPositionTooltip,
                                             child: Text(
                                               TimeFormatUtil.formatSeconds(
                                                   segment.endPosition),
@@ -419,15 +418,16 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                     (audioExtractorVM
                             .existNotDeletedSegmentWithEndPositionGreaterThanAudioDuration())
                         ? Text(
-                          AppLocalizations.of(context)!.deleteInvalidCommentsMessage,
-                          maxLines: 2,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w700, // bold
-                          ),
-                        )
+                            AppLocalizations.of(context)!
+                                .deleteInvalidCommentsMessage,
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700, // bold
+                            ),
+                          )
                         : Column(
                             children: [
                               Row(
@@ -521,6 +521,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                         padding: const EdgeInsets.only(top: 16.0),
                         child: Text(
                           extractionResultMessage,
+                          maxLines: 2,
                           style: TextStyle(
                             color: audioExtractorVM.extractionResult.isError
                                 ? Colors.red

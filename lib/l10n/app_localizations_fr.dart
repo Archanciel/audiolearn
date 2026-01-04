@@ -2660,7 +2660,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get saveLocationSelectionCanceledMessage =>
-      'Erreur: sélection du dossier annulée';
+      'Erreur: sélection du dossier d\'extraction annulée';
 
   @override
   String get addAtLeastOneCommentMessage =>

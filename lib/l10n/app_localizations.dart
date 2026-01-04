@@ -4229,7 +4229,7 @@ abstract class AppLocalizations {
   /// No description provided for @saveLocationSelectionCanceledMessage.
   ///
   /// In en, this message translates to:
-  /// **'Error: save location selection canceled'**
+  /// **'Error: extraction location selection canceled'**
   String get saveLocationSelectionCanceledMessage;
 
   /// No description provided for @addAtLeastOneCommentMessage.
