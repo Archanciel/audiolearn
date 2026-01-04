@@ -267,7 +267,7 @@ class AudioPlayerVM extends ChangeNotifier {
   /// if _currentAudio == audio prevents that the audio slider and the
   /// audio position fields in the audio player view are not updated
   /// when playing an audio the first time after having redownloaded
-  /// it or having redownloaded several filtered audio's.
+  /// it or having redownloaded several filtered audios.
   Future<void> setCurrentAudio({
     required Audio audio,
     bool audioWasRedownloaded = false,
@@ -366,7 +366,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // if _currentAudio == audio prevents that the audio slider and the
     // audio position fields in the audio player view are not updated
     // when playing an audio the first time after having redownloaded
-    // it or having redownloaded several filtered audio's.
+    // it or having redownloaded several filtered audios.
     if (!audioWasRedownloaded && _currentAudio == audio) {
       return;
     }
@@ -1034,7 +1034,7 @@ class AudioPlayerVM extends ChangeNotifier {
       // that the audio file was deleted. This can happen when the user
       // deletes the audio file in the file explorer or when the user
       // executes the 'Restore Playlists, Comments and Settings' menu.
-      // In this situation, the displayed playlist audio's are not
+      // In this situation, the displayed playlist audios are not
       // playable (no mp3 file available).
 
       return;

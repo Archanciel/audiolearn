@@ -349,7 +349,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get infiniteBytesPerSecond => 'infinite B/sec';
 
   @override
-  String get updatePlaylistJsonFilesMenu => 'Update Playlist JSON Files';
+  String get updatePlaylistJsonFilesMenu => 'Update Playlist JSON Files ...';
 
   @override
   String get compactVideoDescription => 'Compact video description';
@@ -392,22 +392,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get playlistIsSelectedLabel => 'Playlist is selected';
 
   @override
-  String get playlistTotalAudioNumberLabel => 'Playlist total audio\'s';
+  String get playlistTotalAudioNumberLabel => 'Playlist total audios';
 
   @override
-  String get playlistPlayableAudioNumberLabel => 'Playable audio\'s';
+  String get playlistPlayableAudioNumberLabel => 'Playable audios';
 
   @override
   String get playlistPlayableAudioTotalDurationLabel =>
-      'Playable audio\'s total duration';
+      'Playable audios total duration';
 
   @override
   String get playlistPlayableAudioTotalRemainingDurationLabel =>
-      'Playable audio\'s total remaining duration';
+      'Playable audios total remaining duration';
 
   @override
   String get playlistPlayableAudioTotalSizeLabel =>
-      'Playable audio\'s total file size';
+      'Playable audios total file size';
 
   @override
   String get updatePlaylistPlayableAudioList => 'Update playable Audio\'s List';
@@ -638,7 +638,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutAppDescription =>
-      'Audio Learn allows you to download audio from videos included in Youtube playlists whose links are added to the application, or from individual Youtube videos using their URL\'s.\n\nYou can also import audio files, such as audiobooks, directly into the application or convert text into audio. This feature is particularly useful for listening to written prayers found on the Internet.\n\nIn addition to listening the audio files, Audio Learn offers the ability to add timestamped comments to each file, making it easier to replay their most interesting parts.\n\nIt is also possible to extract the parts marked by comments into a new MP3 file, which can then be shared by email or via WhatsApp, or added to an existing playlist.\n\nFinally, the app allows you to sort and filter audio files based on various criteria in order to select the listenable audio\'s.';
+      'Audio Learn allows you to download audio from videos included in Youtube playlists whose links are added to the application, or from individual Youtube videos using their URLs.\n\nYou can also import audio files, such as audiobooks, directly into the application or convert text into audio. This feature is particularly useful for listening to written prayers found on the Internet.\n\nIn addition to listening the audio files, Audio Learn offers the ability to add timestamped comments to each file, making it easier to replay their most interesting parts.\n\nIt is also possible to extract the parts marked by comments into a new MP3 file, which can then be shared by email or via WhatsApp, or added to an existing playlist.\n\nFinally, the app allows you to sort and filter audio files based on various criteria in order to select the listenable audios.';
 
   @override
   String get keepAudioEntryInSourcePlaylist =>
@@ -675,7 +675,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get downloadSelPlaylistsButtonTooltip =>
-      'Download audio\'s of the selected playlist.';
+      'Download audios of the selected playlist.';
 
   @override
   String get audioOneSelectedDialogTitle => 'Select an Audio';
@@ -735,7 +735,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String deletePlaylistDialogComment(Object audioNumber,
       Object audioCommentsNumber, Object audioPicturesNumber) {
-    return 'Deleting the playlist and its $audioNumber audio\'s, $audioCommentsNumber audio comment(s), $audioPicturesNumber audio picture(s) as well as its JSON file and its directory.';
+    return 'Deleting the playlist and its $audioNumber audios, $audioCommentsNumber audio comment(s), $audioPicturesNumber audio picture(s) as well as its JSON file and its directory.';
   }
 
   @override
@@ -745,7 +745,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setAudioPlaySpeedDialogTitle => 'Playback Speed';
 
   @override
-  String get setAudioPlaySpeedTooltip => 'Set audio\'s play speed.';
+  String get setAudioPlaySpeedTooltip => 'Set audios play speed.';
 
   @override
   String get exclude => 'Exclude ';
@@ -826,15 +826,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get updatePlaylistJsonFilesMenuTooltip =>
-      'If one or several playlist directories containing or not audio\'s were manually added or deleted in the application directory containing the playlists or if audio\'s were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files as well as the JSON file containing the application settings in order to reflect the changes in the application screens. Playlist directories located on PC can as well be copied in the Android application directory containing the playlists. Additionally, playlist directories located on Android can as well be copied in the PC application directory containing the playlists ...';
+      'If one or several playlist directories containing or not audios were manually added or deleted in the application directory containing the playlists or if audios were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files as well as the JSON file containing the application settings in order to reflect the changes in the application screens. Playlist directories located on PC can as well be copied in the Android application directory containing the playlists. Additionally, playlist directories located on Android can as well be copied in the PC application directory containing the playlists ...';
 
   @override
   String get updatePlaylistPlayableAudioListTooltip =>
-      'If audio\'s were manually deleted from the playlist directory, this functionality updates the playlist JSON file to reflect the changes in the application screen.';
+      'If audios were manually deleted from the playlist directory, this functionality updates the playlist JSON file to reflect the changes in the application screen.';
 
   @override
   String get audioPlayedInThisOrderTooltip =>
-      'Audio are played in this order. By default, the last downloaded audio\'s are at bottom of the list.';
+      'Audio are played in this order. By default, the last downloaded audios are at bottom of the list.';
 
   @override
   String get playableAudioDialogSortDescriptionTooltipBottomDownloadBefore =>
@@ -925,15 +925,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get applyToAlreadyDownloadedAudio =>
-      'Apply to already downloaded,\nimported or converted audio\'s';
+      'Apply to already downloaded,\nimported or converted audios';
 
   @override
   String get applyToAlreadyDownloadedAudioTooltip =>
-      'Apply the playback speed to audio\'s in all existing playlists. If not set, apply it only to newly added playlists.';
+      'Apply the playback speed to audios in all existing playlists. If not set, apply it only to newly added playlists.';
 
   @override
   String get applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip =>
-      'Apply the playback speed to audio\'s in the current playlist. If not set, apply it only to newly downloaded or imported audio.';
+      'Apply the playback speed to audios in the current playlist. If not set, apply it only to newly downloaded or imported audio.';
 
   @override
   String get applyToExistingPlaylist => 'Apply to existing playlists';
@@ -979,7 +979,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get excludingFutureDownloadsHelpContent =>
-      'If only the second checkbox is checked, the playback speed will not be modified for audio\'s that will be downloaded later in existing playlists. However, as mentioned previously, new playlists will use the newly defined playback speed for all downloaded audio.';
+      'If only the second checkbox is checked, the playback speed will not be modified for audios that will be downloaded later in existing playlists. However, as mentioned previously, new playlists will use the newly defined playback speed for all downloaded audio.';
 
   @override
   String get alreadyDownloadedAudiosPlaylistHelpTitle =>
@@ -1240,7 +1240,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get downloadVideoUrlsFromTextFileInPlaylistTooltip =>
-      'Download audio\'s to the playlist from video URLs listed in a text file to select. The text file must contain one video URL per line.';
+      'Download audios to the playlist from video URLs listed in a text file to select. The text file must contain one video URL per line.';
 
   @override
   String downloadAudioFromVideoUrlsInPlaylistTitle(Object title) {
@@ -1249,13 +1249,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String downloadAudioFromVideoUrlsInPlaylist(Object number) {
-    return 'Downloading $number audio\'s in selected quality.';
+    return 'Downloading $number audios in selected quality.';
   }
 
   @override
   String notRedownloadAudioFilesInPlaylistDirectory(
       Object number, Object playlistTitle) {
-    return '$number audio\'s are already contained in the target playlist \"$playlistTitle\" directory and so were not redownloaded.';
+    return '$number audios are already contained in the target playlist \"$playlistTitle\" directory and so were not redownloaded.';
   }
 
   @override
@@ -1336,7 +1336,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String confirmYoutubeChannelModifications(
       Object numberOfModifiedDownloadedAudio,
       Object numberOfModifiedPlayableAudio) {
-    return 'The Youtube channel was set in $numberOfModifiedDownloadedAudio downloaded audio\'s and in $numberOfModifiedPlayableAudio playable audio.';
+    return 'The Youtube channel was set in $numberOfModifiedDownloadedAudio downloaded audios and in $numberOfModifiedPlayableAudio playable audio.';
   }
 
   @override
@@ -1344,11 +1344,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rewindAudioToStartTooltip =>
-      'Rewind all playlist audio\'s to start position. This is useful if you wish to replay all the audio\'s.';
+      'Rewind all playlist audios to start position. This is useful if you wish to replay all the audios.';
 
   @override
   String rewindedPlayableAudioNumber(Object number) {
-    return '$number playlist audio\'s were repositioned to start and the first listenable audio was selected.';
+    return '$number playlist audios were repositioned to start and the first listenable audio was selected.';
   }
 
   @override
@@ -1367,7 +1367,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String deleteFilteredAudioConfirmationTitle(
       Object sortFilterParmsName, Object playlistTitle) {
-    return 'Delete audio\'s filtered by \"$sortFilterParmsName\" parms from playlist \"$playlistTitle\"';
+    return 'Delete audios filtered by \"$sortFilterParmsName\" parms from playlist \"$playlistTitle\"';
   }
 
   @override
@@ -1383,7 +1383,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String deleteFilteredCommentedAudioWarningTitleTwo(
       Object sortFilterParmsName, Object playlistTitle) {
-    return 'delete COMMENTED and uncommented audio\'s filtered by \"$sortFilterParmsName\" parms from playlist \"$playlistTitle\". Watch the help to solve the problem ...';
+    return 'delete COMMENTED and uncommented audios filtered by \"$sortFilterParmsName\" parms from playlist \"$playlistTitle\". Watch the help to solve the problem ...';
   }
 
   @override
@@ -1392,16 +1392,16 @@ class AppLocalizationsEn extends AppLocalizations {
       Object deleteCommentedAudioNumber,
       Object deleteAudioTotalFileSize,
       Object deleteAudioTotalDuration) {
-    return 'Total audio\'s to delete number: $deleteAudioNumber,\nCOMMENTED audio\'s to delete number: $deleteCommentedAudioNumber,\nCorresponding total file size: $deleteAudioTotalFileSize,\nCorresponding total duration: $deleteAudioTotalDuration.';
+    return 'Total audios to delete number: $deleteAudioNumber,\nCOMMENTED audios to delete number: $deleteCommentedAudioNumber,\nCorresponding total file size: $deleteAudioTotalFileSize,\nCorresponding total duration: $deleteAudioTotalDuration.';
   }
 
   @override
   String get commentedAudioDeletionHelpTitle =>
-      'How to create and use a Sort/Filter parameter to prevent deleting commented audio\'s ?';
+      'How to create and use a Sort/Filter parameter to prevent deleting commented audios ?';
 
   @override
   String get commentedAudioDeletionHelpContent =>
-      'This guide explains how to delete fully listened audio\'s that are not commented.';
+      'This guide explains how to delete fully listened audios that are not commented.';
 
   @override
   String get commentedAudioDeletionSolutionHelpTitle =>
@@ -1429,7 +1429,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commentedAudioDeletionSelectSFParmHelpTitle =>
-      'Once saved, the Sort/Filter parameter is applied to the playlist, reducing the displayed audio\'s list.';
+      'Once saved, the Sort/Filter parameter is applied to the playlist, reducing the displayed audios list.';
 
   @override
   String get commentedAudioDeletionSelectSFParmHelpContent =>
@@ -1646,11 +1646,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get startAudioDownloadDateSortFilterTooltip =>
-      'Lists all audio\'s downloaded on or after the specified start date if set.';
+      'Lists all audios downloaded on or after the specified start date if set.';
 
   @override
   String get endAudioDownloadDateSortFilterTooltip =>
-      'Lists all audio\'s downloaded on or before the specified end date if set.';
+      'Lists all audios downloaded on or before the specified end date if set.';
 
   @override
   String get startVideoUploadDateSortFilterTooltip =>
@@ -1662,19 +1662,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get startAudioDurationSortFilterTooltip =>
-      'Lists all audio\'s with a duration equal to or greater than the specified minimum duration if set.';
+      'Lists all audios with a duration equal to or greater than the specified minimum duration if set.';
 
   @override
   String get endAudioDurationSortFilterTooltip =>
-      'Lists all audio\'s with a duration equal to or less than the specified maximum duration if set.';
+      'Lists all audios with a duration equal to or less than the specified maximum duration if set.';
 
   @override
   String get startAudioFileSizeSortFilterTooltip =>
-      'Lists all audio\'s with a file size equal to or greater than the specified minimum size if set.';
+      'Lists all audios with a file size equal to or greater than the specified minimum size if set.';
 
   @override
   String get endAudioFileSizeSortFilterTooltip =>
-      'Lists all audio\'s with a file size equal to or less than the specified maximum size if set.';
+      'Lists all audios with a file size equal to or less than the specified maximum size if set.';
 
   @override
   String get valueInInitialVersionTitle => 'In initial version';
@@ -1725,7 +1725,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addPrivateYoutubePlaylist =>
-      'Trying to add a private Youtube playlist is not possible since the audio\'s of a private playlist can not be downloaded. To solve the problem, edit the playlist on Youtube and change its visibility from \"Private\" to \"Unlisted\" or to \"Public\" and then re-add it to the application.';
+      'Trying to add a private Youtube playlist is not possible since the audios of a private playlist can not be downloaded. To solve the problem, edit the playlist on Youtube and change its visibility from \"Private\" to \"Unlisted\" or to \"Public\" and then re-add it to the application.';
 
   @override
   String get addAudioPicture => 'Add Audio Picture ...';
@@ -1767,7 +1767,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String deleteFilteredAudioFromPlaylistAsWellConfirmationTitle(
       Object sortFilterParmsName, Object playlistTitle) {
-    return 'Delete audio\'s filtered by \"$sortFilterParmsName\" parms from playlist \"$playlistTitle\" as well (will be re-downloadable)';
+    return 'Delete audios filtered by \"$sortFilterParmsName\" parms from playlist \"$playlistTitle\" as well (will be re-downloadable)';
   }
 
   @override
@@ -1780,7 +1780,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String redownloadedAudioNumbersConfirmation(Object playlistTitle,
       Object redownloadedAudioNumber, Object notRedownloadedAudioNumber) {
-    return '\"$redownloadedAudioNumber\" audio\'s were redownloaded to the playlist \"$playlistTitle\". \"$notRedownloadedAudioNumber\" audio\'s were not redownloaded since they are already present in the playlist directory.';
+    return '\"$redownloadedAudioNumber\" audios were redownloaded to the playlist \"$playlistTitle\". \"$notRedownloadedAudioNumber\" audios were not redownloaded since they are already present in the playlist directory.';
   }
 
   @override
@@ -1812,7 +1812,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setPlaylistAudioQualityTooltip =>
-      'The selected audio quality will be applied to the next downloaded audio\'s. If the audio quality must be applied to the already downloaded audio\'s, those audio\'s must be deleted \"from playlist as well\" so that they will be redownloadable in the modified audio quality.';
+      'The selected audio quality will be applied to the next downloaded audios. If the audio quality must be applied to the already downloaded audios, those audios must be deleted \"from playlist as well\" so that they will be redownloadable in the modified audio quality.';
 
   @override
   String get setPlaylistAudioQualityDialogTitle => 'Playlist Audio Quality';
@@ -1913,7 +1913,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get playlistRestorationSecondHelpTitle =>
-      'After deleting the affected playlists, restore them again from the ZIP file while ensuring the \"Remove deleted audio files\" checkbox remains UNCHECKED. This step is crucial as it will allow audio files to remain available for downloading after restoration.';
+      'After deleting the affected playlists, restore them again from the ZIP file. Afterwards, you can re-download audio files that are not playable using the playlist menu \"Filtered Audios Actions ...\" and the submenu \"Redownload filtered Audios\". If the sort filter parameter is set to \"default\", all non-playable audio files will be re-downloaded. To limit which files are re-downloaded, select or define a specific sort filter parameter.';
 
   @override
   String get playlistJsonFilesUpdateDialogTitle => 'Playlist JSON Files Update';
@@ -1954,34 +1954,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get downloadedCheckbox => 'Downloaded';
 
   @override
-  String get downloadedCheckboxTooltip => 'Selecting downloaded audio\'s.';
+  String get downloadedCheckboxTooltip => 'Selecting downloaded audios.';
 
   @override
   String get importedCheckbox => 'Import.';
 
   @override
-  String get importedCheckboxTooltip => 'Selecting imported audio\'s.';
+  String get importedCheckboxTooltip => 'Selecting imported audios.';
 
   @override
   String get convertedCheckbox => 'Converted';
 
   @override
   String get convertedCheckboxTooltip =>
-      'Selecting text converted to MP3 audio\'s.';
+      'Selecting text converted to MP3 audios.';
 
   @override
   String get extractedCheckbox => 'Extracted';
 
   @override
   String get extractedCheckboxTooltip =>
-      'Selecting audio\'s created by comment(s) extraction to MP3. If necessary, ensure both \"Music qual.\" and \"Spoken q.\" checkboxes are checked.';
+      'Selecting audios created by comment(s) extraction to MP3. If necessary, ensure both \"Music qual.\" and \"Spoken q.\" checkboxes are checked.';
 
   @override
   String get restoredElementsHelpTitle => 'Restored Elements Description';
 
   @override
   String get restoredElementsHelpContent =>
-      'N playlist: number of new playlist JSON files created by the restoration.\n\nN comment: number of new comment JSON files created by the restoration. This happens only if the commented audio had no comment before the restoration. Otherwise, the new comment is added to the existing audio comment JSON file.\n\nN picture: number of new picture JSON files created by the restoration. This happens only if the pictured audio had no picture before the restoration. Otherwise, the new picture is added to the existing audio picture JSON file.\n\nN audio reference: number of playable audio elements contained in the unique or multiple new playlist json file(s) created by the restoration. If the restored playlist number is 0, then the audio reference(s) number correspond to the number of audio element(s) added to their enclosing playlist JSON file by the restoration. The restoration does not add MP3 files since no MP3 is contained in the ZIP file. The added referenced audio\'s can be downloaded after the restoration.\n\nN added comment: number of comments added by the restoration to the existing audio comment JSON files.\n\nN modified comment: number of comments modified by the restoration in the existing audio comment JSON files.';
+      'N playlist: number of new playlist JSON files created by the restoration.\n\nN comment: number of new comment JSON files created by the restoration. This happens only if the commented audio had no comment before the restoration. Otherwise, the new comment is added to the existing audio comment JSON file.\n\nN picture: number of new picture JSON files created by the restoration. This happens only if the pictured audio had no picture before the restoration. Otherwise, the new picture is added to the existing audio picture JSON file.\n\nN audio reference: number of playable audio elements contained in the unique or multiple new playlist json file(s) created by the restoration. If the restored playlist number is 0, then the audio reference(s) number correspond to the number of audio element(s) added to their enclosing playlist JSON file by the restoration. The restoration does not add MP3 files since no MP3 is contained in the ZIP file. The added referenced audios can be downloaded after the restoration.\n\nN added comment: number of comments added by the restoration to the existing audio comment JSON files.\n\nN modified comment: number of comments modified by the restoration in the existing audio comment JSON files.';
 
   @override
   String get playlistInfoDownloadAudio => 'Download audio';
@@ -2107,14 +2107,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get restorePlaylistsAudioMp3FilesFromZipTooltip =>
-      'Restoring audio\'s MP3 not yet present in the playlists from a saved ZIP file. Only the MP3 relative to the audio\'s listed in the playlists are restorable.';
+      'Restoring audios MP3 not yet present in the playlists from a saved ZIP file. Only the MP3 relative to the audios listed in the playlists are restorable.';
 
   @override
   String get audioMp3RestorationDialogTitle => 'MP3 Restoration';
 
   @override
   String get audioMp3RestorationExplanation =>
-      'Only the MP3 relative to the audio\'s listed in the playlists which are not already present in the playlists are restorable.';
+      'Only the MP3 relative to the audios listed in the playlists which are not already present in the playlists are restorable.';
 
   @override
   String get restorePlaylistAudioMp3FilesFromZipMenu =>
@@ -2122,14 +2122,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get restorePlaylistAudioMp3FilesFromZipTooltip =>
-      'Restoring audio\'s MP3 not yet present in the playlist from a saved ZIP file. Only the MP3 relative to the audio\'s listed in the playlist are restorable.';
+      'Restoring audios MP3 not yet present in the playlist from a saved ZIP file. Only the MP3 relative to the audios listed in the playlist are restorable.';
 
   @override
   String get audioMp3UniquePlaylistRestorationDialogTitle => 'MP3 Restoration';
 
   @override
   String get audioMp3UniquePlaylistRestorationExplanation =>
-      'Only the MP3 relative to the audio\'s listed in the playlist which are not already present in the playlist are restorable.';
+      'Only the MP3 relative to the audios listed in the playlist which are not already present in the playlist are restorable.';
 
   @override
   String playlistInvalidRootPathWarning(
@@ -2236,14 +2236,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get audioTitleModificationHelpContent =>
-      'For example, if in a playlist we have three audios that were downloaded in this order:\n  last\n  first\n  second\nand we want to listen to them in order according to their title, it is useful to rename the titles this way:\n  3-last\n  1-first\n  2-second\n\nThen you need to click on the \"Sort/Filter Audio ...\" menu to define a sort that you name and that sorts the audio\'s according to their title.\n\nOnce the \"Sort and Filter Parameters\" dialog is open, define the filter name in the \"Save as:\" field and open the \"Sort by:\" list. Select \"Audio title\" and then remove \"Audio downl date\". Finally, click on \"Save\".\n\nOnce this sort is defined, check that it is selected and use the \"Save Sort/Filter Parameters to Playlist ...\" menu by selecting the screen for which the sort will be applied. This way, the audios will be played in the order in which you want to listen to them.';
+      'For example, if in a playlist we have three audios that were downloaded in this order:\n  last\n  first\n  second\nand we want to listen to them in order according to their title, it is useful to rename the titles this way:\n  3-last\n  1-first\n  2-second\n\nThen you need to click on the \"Sort/Filter Audio ...\" menu to define a sort that you name and that sorts the audios according to their title.\n\nOnce the \"Sort and Filter Parameters\" dialog is open, define the filter name in the \"Save as:\" field and open the \"Sort by:\" list. Select \"Audio title\" and then remove \"Audio downl date\". Finally, click on \"Save\".\n\nOnce this sort is defined, check that it is selected and use the \"Save Sort/Filter Parameters to Playlist ...\" menu by selecting the screen for which the sort will be applied. This way, the audios will be played in the order in which you want to listen to them.';
 
   @override
   String get playlistConvertTextToAudioMenu => 'Convert Text to Audio ...';
 
   @override
   String get playlistConvertTextToAudioMenuTooltip =>
-      'Convert a text to a listenable audio which is added to the playlist. Adding positionned comments or a picture to this audio will be possible like for the other audio\'s.';
+      'Convert a text to a listenable audio which is added to the playlist. Adding positionned comments or a picture to this audio will be possible like for the other audios.';
 
   @override
   String get convertTextToAudioDialogTitle => 'Convert Text to Audio';

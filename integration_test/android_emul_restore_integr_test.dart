@@ -28,10 +28,10 @@ void main() {
           /test/audiolearn".
 
           On not empty app dir where a playlist is selected, restore Windows zip in which playlist(s)
-          corresponding to existing playlist(s) contain additional audio's to which comments and pictures
+          corresponding to existing playlist(s) contain additional audios to which comments and pictures
           are associated. This situation happens if the AudioLearn application exists on two different
           engines and the user wants to restore the playlists, comments and pictures from one computer
-          to another in order to add to the target pc or smartphone the audio's downloaded on the source
+          to another in order to add to the target pc or smartphone the audios downloaded on the source
           engine. The audio mp3 files are not added since they are not in the zip file. But the Audio
           objects are added to the existing playlist and so can be redownloaded if needed.''',
       () {
@@ -39,7 +39,7 @@ void main() {
       testWidgets(
           '''Unique playlist restore + save, not replace existing playlist. Restore unique playlist Windows zip
             containing 'S8 audio' playlist to Android application which contains 'S8 audio' and 'local'
-            playlists. The restored 'S8 audio' playlist contains additional audio's to which comments and
+            playlists. The restored 'S8 audio' playlist contains additional audios to which comments and
             pictures are associated. After restoring the playlist, the playlist is saved. First as individual
             playlist saving and then as multiple playlists saving.''', (tester) async {
         await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
@@ -233,7 +233,7 @@ void main() {
       testWidgets(
           '''Multiple playlists restore + save, not replace existing playlists. Restore multiple playlists Windows
              zip containing 'S8 audio' and 'local' playlists to Android application which contain 'S8 audio' and
-             'local' playlists. The restored 'S8 audio' and 'local' playlists contains additional audio's to which
+             'local' playlists. The restored 'S8 audio' and 'local' playlists contains additional audios to which
              comments and pictures are associated. After restoring the playlists, the playlists are saved.''', (tester) async {
         await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
           tester: tester,
@@ -406,9 +406,9 @@ void main() {
       testWidgets(
           '''Unique playlist restore, not replace existing playlist. Restore unique playlist Windows zip
             containing 'Les plus belles chansons chrétiennes' playlist to Android application which contains
-            'S8 audio' and 'local' playlists. All audio's of the restored playlist 'Les plus belles chansons
+            'S8 audio' and 'local' playlists. All audios of the restored playlist 'Les plus belles chansons
             chrétiennes' are then deleted. Afterward, the playlist 'Les plus belles chansons chrétiennes'
-            is restored again so that the deleted audio's will be re-added.''',
+            is restored again so that the deleted audios will be re-added.''',
           (tester) async {
         await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
           tester: tester,
@@ -538,7 +538,7 @@ void main() {
       testWidgets(
           '''Unique playlist restore, not replace existing playlist. Restore unique playlist Android zip
             containing 'S8 audio' playlist to Android application which contains 'S8 audio' and 'local'
-            playlists. The restored 'S8 audio' playlist contains additional audio's to which comments and
+            playlists. The restored 'S8 audio' playlist contains additional audios to which comments and
             pictures are associated.''', (tester) async {
         await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
           tester: tester,
@@ -680,7 +680,7 @@ void main() {
       testWidgets(
           '''Multiple playlists restore, not replace existing playlists. Restore multiple playlists Android
              zip containing 'S8 audio' and 'local' playlists to Android application which contain 'S8 audio'
-             and 'local' playlists. The restored 'S8 audio' and 'local' playlists contains additional audio's
+             and 'local' playlists. The restored 'S8 audio' and 'local' playlists contains additional audios
              to which comments and pictures are associated.''', (tester) async {
         await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
           tester: tester,
@@ -898,7 +898,7 @@ void main() {
           dialogTitle: 'MP3 Restoration',
           isHelpIconPresent: true,
           dialogMessage:
-              "Only the MP3 relative to the audio's listed in the playlist which are not already present in the playlist are restorable.",
+              "Only the MP3 relative to the audios listed in the playlist which are not already present in the playlist are restorable.",
           closeDialog: true,
         );
 
@@ -1191,10 +1191,10 @@ void main() {
             findsOneWidget);
       });
     });
-    group('''Import audio's functionality.''', () {
+    group('''Import audios functionality.''', () {
       testWidgets(
           '''Importing one audio test. Verify conversion warning. Then reimporting it and verify
-          the not imported warning. Normally, the imported audio's are not located in a playlist
+          the not imported warning. Normally, the imported audios are not located in a playlist
           directory !''', (WidgetTester tester) async {
         await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
           tester: tester,
@@ -1356,10 +1356,10 @@ void main() {
         await tester.pumpAndSettle();
       });
       testWidgets(
-          '''2 audio's present in the source playlist exist in the playlist which will import
-          all audio's of the source playlist. This situation will display 2 warnings, one
-          audio import confirmation and one already existing audio's not imported warning.
-          Normally, the imported audio's are not located in a playlist !''',
+          '''2 audios present in the source playlist exist in the playlist which will import
+          all audios of the source playlist. This situation will display 2 warnings, one
+          audio import confirmation and one already existing audios not imported warning.
+          Normally, the imported audios are not located in a playlist !''',
           (WidgetTester tester) async {
         await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
           tester: tester,
@@ -1493,7 +1493,7 @@ void main() {
               "Audio(s)\n\n\"$fileName_4\"\n\nNOT imported to local playlist \"$localPlaylistTitle\" since the playlist directory already contains the audio(s).",
         );
 
-        // Re-import the same audio's to verify the not imported warning\
+        // Re-import the same audios to verify the not imported warning\
 
         mockFilePicker.setSelectedFiles([
           PlatformFile(

@@ -526,13 +526,13 @@ abstract class AppLocalizations {
   /// **'Youtube playlist \"{title}\" already exists in the playlist list. Therefore, the local playlist with this title won\'t be created.'**
   String youtubePlaylistWithTitleAlreadyInListOfPlaylists(Object title);
 
-  /// Warning announcing that downloading the audio's from Youtube failed.
+  /// Warning announcing that downloading the audios from Youtube failed.
   ///
   /// In en, this message translates to:
   /// **'Downloading the audio of the video \"{videoTitle}\" from Youtube FAILED: \"{exceptionMessage}\".'**
   String downloadAudioYoutubeError(Object videoTitle, Object exceptionMessage);
 
-  /// Warning announcing that downloading the audio's from Youtube failed.
+  /// Warning announcing that downloading the audios from Youtube failed.
   ///
   /// In en, this message translates to:
   /// **'Error downloading audio from Youtube: \"{exceptionMessage}\".'**
@@ -699,7 +699,7 @@ abstract class AppLocalizations {
   /// No description provided for @updatePlaylistJsonFilesMenu.
   ///
   /// In en, this message translates to:
-  /// **'Update Playlist JSON Files'**
+  /// **'Update Playlist JSON Files ...'**
   String get updatePlaylistJsonFilesMenu;
 
   /// No description provided for @compactVideoDescription.
@@ -783,31 +783,31 @@ abstract class AppLocalizations {
   /// No description provided for @playlistTotalAudioNumberLabel.
   ///
   /// In en, this message translates to:
-  /// **'Playlist total audio\'s'**
+  /// **'Playlist total audios'**
   String get playlistTotalAudioNumberLabel;
 
   /// No description provided for @playlistPlayableAudioNumberLabel.
   ///
   /// In en, this message translates to:
-  /// **'Playable audio\'s'**
+  /// **'Playable audios'**
   String get playlistPlayableAudioNumberLabel;
 
   /// No description provided for @playlistPlayableAudioTotalDurationLabel.
   ///
   /// In en, this message translates to:
-  /// **'Playable audio\'s total duration'**
+  /// **'Playable audios total duration'**
   String get playlistPlayableAudioTotalDurationLabel;
 
   /// No description provided for @playlistPlayableAudioTotalRemainingDurationLabel.
   ///
   /// In en, this message translates to:
-  /// **'Playable audio\'s total remaining duration'**
+  /// **'Playable audios total remaining duration'**
   String get playlistPlayableAudioTotalRemainingDurationLabel;
 
   /// No description provided for @playlistPlayableAudioTotalSizeLabel.
   ///
   /// In en, this message translates to:
-  /// **'Playable audio\'s total file size'**
+  /// **'Playable audios total file size'**
   String get playlistPlayableAudioTotalSizeLabel;
 
   /// No description provided for @updatePlaylistPlayableAudioList.
@@ -1163,7 +1163,7 @@ abstract class AppLocalizations {
   /// No description provided for @aboutAppDescription.
   ///
   /// In en, this message translates to:
-  /// **'Audio Learn allows you to download audio from videos included in Youtube playlists whose links are added to the application, or from individual Youtube videos using their URL\'s.\n\nYou can also import audio files, such as audiobooks, directly into the application or convert text into audio. This feature is particularly useful for listening to written prayers found on the Internet.\n\nIn addition to listening the audio files, Audio Learn offers the ability to add timestamped comments to each file, making it easier to replay their most interesting parts.\n\nIt is also possible to extract the parts marked by comments into a new MP3 file, which can then be shared by email or via WhatsApp, or added to an existing playlist.\n\nFinally, the app allows you to sort and filter audio files based on various criteria in order to select the listenable audio\'s.'**
+  /// **'Audio Learn allows you to download audio from videos included in Youtube playlists whose links are added to the application, or from individual Youtube videos using their URLs.\n\nYou can also import audio files, such as audiobooks, directly into the application or convert text into audio. This feature is particularly useful for listening to written prayers found on the Internet.\n\nIn addition to listening the audio files, Audio Learn offers the ability to add timestamped comments to each file, making it easier to replay their most interesting parts.\n\nIt is also possible to extract the parts marked by comments into a new MP3 file, which can then be shared by email or via WhatsApp, or added to an existing playlist.\n\nFinally, the app allows you to sort and filter audio files based on various criteria in order to select the listenable audios.'**
   String get aboutAppDescription;
 
   /// No description provided for @keepAudioEntryInSourcePlaylist.
@@ -1223,7 +1223,7 @@ abstract class AppLocalizations {
   /// No description provided for @downloadSelPlaylistsButtonTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Download audio\'s of the selected playlist.'**
+  /// **'Download audios of the selected playlist.'**
   String get downloadSelPlaylistsButtonTooltip;
 
   /// No description provided for @audioOneSelectedDialogTitle.
@@ -1331,7 +1331,7 @@ abstract class AppLocalizations {
   /// Confirm message for deleting the playlist
   ///
   /// In en, this message translates to:
-  /// **'Deleting the playlist and its {audioNumber} audio\'s, {audioCommentsNumber} audio comment(s), {audioPicturesNumber} audio picture(s) as well as its JSON file and its directory.'**
+  /// **'Deleting the playlist and its {audioNumber} audios, {audioCommentsNumber} audio comment(s), {audioPicturesNumber} audio picture(s) as well as its JSON file and its directory.'**
   String deletePlaylistDialogComment(Object audioNumber,
       Object audioCommentsNumber, Object audioPicturesNumber);
 
@@ -1350,7 +1350,7 @@ abstract class AppLocalizations {
   /// No description provided for @setAudioPlaySpeedTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Set audio\'s play speed.'**
+  /// **'Set audios play speed.'**
   String get setAudioPlaySpeedTooltip;
 
   /// No description provided for @exclude.
@@ -1476,19 +1476,19 @@ abstract class AppLocalizations {
   /// No description provided for @updatePlaylistJsonFilesMenuTooltip.
   ///
   /// In en, this message translates to:
-  /// **'If one or several playlist directories containing or not audio\'s were manually added or deleted in the application directory containing the playlists or if audio\'s were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files as well as the JSON file containing the application settings in order to reflect the changes in the application screens. Playlist directories located on PC can as well be copied in the Android application directory containing the playlists. Additionally, playlist directories located on Android can as well be copied in the PC application directory containing the playlists ...'**
+  /// **'If one or several playlist directories containing or not audios were manually added or deleted in the application directory containing the playlists or if audios were manually deleted from one or several playlist directories, this functionality updates the playlist JSON files as well as the JSON file containing the application settings in order to reflect the changes in the application screens. Playlist directories located on PC can as well be copied in the Android application directory containing the playlists. Additionally, playlist directories located on Android can as well be copied in the PC application directory containing the playlists ...'**
   String get updatePlaylistJsonFilesMenuTooltip;
 
   /// No description provided for @updatePlaylistPlayableAudioListTooltip.
   ///
   /// In en, this message translates to:
-  /// **'If audio\'s were manually deleted from the playlist directory, this functionality updates the playlist JSON file to reflect the changes in the application screen.'**
+  /// **'If audios were manually deleted from the playlist directory, this functionality updates the playlist JSON file to reflect the changes in the application screen.'**
   String get updatePlaylistPlayableAudioListTooltip;
 
   /// No description provided for @audioPlayedInThisOrderTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Audio are played in this order. By default, the last downloaded audio\'s are at bottom of the list.'**
+  /// **'Audio are played in this order. By default, the last downloaded audios are at bottom of the list.'**
   String get audioPlayedInThisOrderTooltip;
 
   /// No description provided for @playableAudioDialogSortDescriptionTooltipBottomDownloadBefore.
@@ -1642,19 +1642,19 @@ abstract class AppLocalizations {
   /// No description provided for @applyToAlreadyDownloadedAudio.
   ///
   /// In en, this message translates to:
-  /// **'Apply to already downloaded,\nimported or converted audio\'s'**
+  /// **'Apply to already downloaded,\nimported or converted audios'**
   String get applyToAlreadyDownloadedAudio;
 
   /// No description provided for @applyToAlreadyDownloadedAudioTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Apply the playback speed to audio\'s in all existing playlists. If not set, apply it only to newly added playlists.'**
+  /// **'Apply the playback speed to audios in all existing playlists. If not set, apply it only to newly added playlists.'**
   String get applyToAlreadyDownloadedAudioTooltip;
 
   /// No description provided for @applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Apply the playback speed to audio\'s in the current playlist. If not set, apply it only to newly downloaded or imported audio.'**
+  /// **'Apply the playback speed to audios in the current playlist. If not set, apply it only to newly downloaded or imported audio.'**
   String get applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip;
 
   /// No description provided for @applyToExistingPlaylist.
@@ -1732,7 +1732,7 @@ abstract class AppLocalizations {
   /// No description provided for @excludingFutureDownloadsHelpContent.
   ///
   /// In en, this message translates to:
-  /// **'If only the second checkbox is checked, the playback speed will not be modified for audio\'s that will be downloaded later in existing playlists. However, as mentioned previously, new playlists will use the newly defined playback speed for all downloaded audio.'**
+  /// **'If only the second checkbox is checked, the playback speed will not be modified for audios that will be downloaded later in existing playlists. However, as mentioned previously, new playlists will use the newly defined playback speed for all downloaded audio.'**
   String get excludingFutureDownloadsHelpContent;
 
   /// No description provided for @alreadyDownloadedAudiosPlaylistHelpTitle.
@@ -2135,7 +2135,7 @@ abstract class AppLocalizations {
   /// No description provided for @downloadVideoUrlsFromTextFileInPlaylistTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Download audio\'s to the playlist from video URLs listed in a text file to select. The text file must contain one video URL per line.'**
+  /// **'Download audios to the playlist from video URLs listed in a text file to select. The text file must contain one video URL per line.'**
   String get downloadVideoUrlsFromTextFileInPlaylistTooltip;
 
   /// No description provided for @downloadAudioFromVideoUrlsInPlaylistTitle.
@@ -2147,13 +2147,13 @@ abstract class AppLocalizations {
   /// No description provided for @downloadAudioFromVideoUrlsInPlaylist.
   ///
   /// In en, this message translates to:
-  /// **'Downloading {number} audio\'s in selected quality.'**
+  /// **'Downloading {number} audios in selected quality.'**
   String downloadAudioFromVideoUrlsInPlaylist(Object number);
 
   /// No description provided for @notRedownloadAudioFilesInPlaylistDirectory.
   ///
   /// In en, this message translates to:
-  /// **'{number} audio\'s are already contained in the target playlist \"{playlistTitle}\" directory and so were not redownloaded.'**
+  /// **'{number} audios are already contained in the target playlist \"{playlistTitle}\" directory and so were not redownloaded.'**
   String notRedownloadAudioFilesInPlaylistDirectory(
       Object number, Object playlistTitle);
 
@@ -2268,10 +2268,10 @@ abstract class AppLocalizations {
   /// **'Youtube channel setting'**
   String get setYoutubeChannelMenu;
 
-  /// Confirmation message indicating how many downloaded audio's and playable audio's were modified
+  /// Confirmation message indicating how many downloaded audios and playable audios were modified
   ///
   /// In en, this message translates to:
-  /// **'The Youtube channel was set in {numberOfModifiedDownloadedAudio} downloaded audio\'s and in {numberOfModifiedPlayableAudio} playable audio.'**
+  /// **'The Youtube channel was set in {numberOfModifiedDownloadedAudio} downloaded audios and in {numberOfModifiedPlayableAudio} playable audio.'**
   String confirmYoutubeChannelModifications(
       Object numberOfModifiedDownloadedAudio,
       Object numberOfModifiedPlayableAudio);
@@ -2285,13 +2285,13 @@ abstract class AppLocalizations {
   /// No description provided for @rewindAudioToStartTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Rewind all playlist audio\'s to start position. This is useful if you wish to replay all the audio\'s.'**
+  /// **'Rewind all playlist audios to start position. This is useful if you wish to replay all the audios.'**
   String get rewindAudioToStartTooltip;
 
   /// No description provided for @rewindedPlayableAudioNumber.
   ///
   /// In en, this message translates to:
-  /// **'{number} playlist audio\'s were repositioned to start and the first listenable audio was selected.'**
+  /// **'{number} playlist audios were repositioned to start and the first listenable audio was selected.'**
   String rewindedPlayableAudioNumber(Object number);
 
   /// No description provided for @dateFormat.
@@ -2321,7 +2321,7 @@ abstract class AppLocalizations {
   /// Confirmation title for deleting filtered audio
   ///
   /// In en, this message translates to:
-  /// **'Delete audio\'s filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\"'**
+  /// **'Delete audios filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\"'**
   String deleteFilteredAudioConfirmationTitle(
       Object sortFilterParmsName, Object playlistTitle);
 
@@ -2341,14 +2341,14 @@ abstract class AppLocalizations {
   /// Warning title for deleting commented and uncommented filtered audio
   ///
   /// In en, this message translates to:
-  /// **'delete COMMENTED and uncommented audio\'s filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\". Watch the help to solve the problem ...'**
+  /// **'delete COMMENTED and uncommented audios filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\". Watch the help to solve the problem ...'**
   String deleteFilteredCommentedAudioWarningTitleTwo(
       Object sortFilterParmsName, Object playlistTitle);
 
   /// Warning message for deleting commented and uncommented filtered audio
   ///
   /// In en, this message translates to:
-  /// **'Total audio\'s to delete number: {deleteAudioNumber},\nCOMMENTED audio\'s to delete number: {deleteCommentedAudioNumber},\nCorresponding total file size: {deleteAudioTotalFileSize},\nCorresponding total duration: {deleteAudioTotalDuration}.'**
+  /// **'Total audios to delete number: {deleteAudioNumber},\nCOMMENTED audios to delete number: {deleteCommentedAudioNumber},\nCorresponding total file size: {deleteAudioTotalFileSize},\nCorresponding total duration: {deleteAudioTotalDuration}.'**
   String deleteFilteredCommentedAudioWarning(
       Object deleteAudioNumber,
       Object deleteCommentedAudioNumber,
@@ -2358,13 +2358,13 @@ abstract class AppLocalizations {
   /// No description provided for @commentedAudioDeletionHelpTitle.
   ///
   /// In en, this message translates to:
-  /// **'How to create and use a Sort/Filter parameter to prevent deleting commented audio\'s ?'**
+  /// **'How to create and use a Sort/Filter parameter to prevent deleting commented audios ?'**
   String get commentedAudioDeletionHelpTitle;
 
   /// No description provided for @commentedAudioDeletionHelpContent.
   ///
   /// In en, this message translates to:
-  /// **'This guide explains how to delete fully listened audio\'s that are not commented.'**
+  /// **'This guide explains how to delete fully listened audios that are not commented.'**
   String get commentedAudioDeletionHelpContent;
 
   /// No description provided for @commentedAudioDeletionSolutionHelpTitle.
@@ -2406,7 +2406,7 @@ abstract class AppLocalizations {
   /// No description provided for @commentedAudioDeletionSelectSFParmHelpTitle.
   ///
   /// In en, this message translates to:
-  /// **'Once saved, the Sort/Filter parameter is applied to the playlist, reducing the displayed audio\'s list.'**
+  /// **'Once saved, the Sort/Filter parameter is applied to the playlist, reducing the displayed audios list.'**
   String get commentedAudioDeletionSelectSFParmHelpTitle;
 
   /// No description provided for @commentedAudioDeletionSelectSFParmHelpContent.
@@ -2451,7 +2451,7 @@ abstract class AppLocalizations {
   /// **'Delete filtered Audio\'s ...'**
   String get deleteFilteredAudio;
 
-  /// Confirmation message indicating how many audio's were moved and unmoved
+  /// Confirmation message indicating how many audios were moved and unmoved
   ///
   /// In en, this message translates to:
   /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from Youtube playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) were moved from which {movedCommentedAudioNumber} were commented, and {unmovedAudioNumber} audio(s) were unmoved.'**
@@ -2463,7 +2463,7 @@ abstract class AppLocalizations {
       Object movedCommentedAudioNumber,
       Object unmovedAudioNumber);
 
-  /// Confirmation message indicating how many audio's were moved and unmoved
+  /// Confirmation message indicating how many audios were moved and unmoved
   ///
   /// In en, this message translates to:
   /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from Youtube playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) were moved from which {movedCommentedAudioNumber} were commented, and {unmovedAudioNumber} audio(s) were unmoved.'**
@@ -2475,7 +2475,7 @@ abstract class AppLocalizations {
       Object movedCommentedAudioNumber,
       Object unmovedAudioNumber);
 
-  /// Confirmation message indicating how many audio's were moved and unmoved
+  /// Confirmation message indicating how many audios were moved and unmoved
   ///
   /// In en, this message translates to:
   /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from local playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) were moved from which {movedCommentedAudioNumber} were commented, and {unmovedAudioNumber} audio(s) were unmoved.'**
@@ -2487,7 +2487,7 @@ abstract class AppLocalizations {
       Object movedCommentedAudioNumber,
       Object unmovedAudioNumber);
 
-  /// Confirmation message indicating how many audio's were moved and unmoved
+  /// Confirmation message indicating how many audios were moved and unmoved
   ///
   /// In en, this message translates to:
   /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from local playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) were moved from which {movedCommentedAudioNumber} were commented, and {unmovedAudioNumber} audio(s) were unmoved.'**
@@ -2499,7 +2499,7 @@ abstract class AppLocalizations {
       Object movedCommentedAudioNumber,
       Object unmovedAudioNumber);
 
-  /// Confirmation message indicating how many audio's were copied and not copied
+  /// Confirmation message indicating how many audios were copied and not copied
   ///
   /// In en, this message translates to:
   /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from Youtube playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) were copied from which {copiedCommentedAudioNumber} were commented, and {notCopiedAudioNumber} audio(s) were not copied.'**
@@ -2511,7 +2511,7 @@ abstract class AppLocalizations {
       Object copiedCommentedAudioNumber,
       Object notCopiedAudioNumber);
 
-  /// Confirmation message indicating how many audio's were copied and not copied
+  /// Confirmation message indicating how many audios were copied and not copied
   ///
   /// In en, this message translates to:
   /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from Youtube playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) were copied from which {copiedCommentedAudioNumber} were commented, and {notCopiedAudioNumber} audio(s) were not copied.'**
@@ -2523,7 +2523,7 @@ abstract class AppLocalizations {
       Object copiedCommentedAudioNumber,
       Object notCopiedAudioNumber);
 
-  /// Confirmation message indicating how many audio's were copied and not copied
+  /// Confirmation message indicating how many audios were copied and not copied
   ///
   /// In en, this message translates to:
   /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from local playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) were copied from which {copiedCommentedAudioNumber} were commented, and {notCopiedAudioNumber} audio(s) were not copied.'**
@@ -2535,7 +2535,7 @@ abstract class AppLocalizations {
       Object copiedCommentedAudioNumber,
       Object notCopiedAudioNumber);
 
-  /// Confirmation message indicating how many audio's were copied and not copied
+  /// Confirmation message indicating how many audios were copied and not copied
   ///
   /// In en, this message translates to:
   /// **'Applying Sort/Filter parms \"{sortedFilterParmsName}\", from local playlist \"{sourcePlaylistTitle}\" to local playlist \"{targetPlaylistTitle}\", {copiedAudioNumber} audio(s) were copied from which {copiedCommentedAudioNumber} were commented, and {notCopiedAudioNumber} audio(s) were not copied.'**
@@ -2683,13 +2683,13 @@ abstract class AppLocalizations {
   /// No description provided for @startAudioDownloadDateSortFilterTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Lists all audio\'s downloaded on or after the specified start date if set.'**
+  /// **'Lists all audios downloaded on or after the specified start date if set.'**
   String get startAudioDownloadDateSortFilterTooltip;
 
   /// No description provided for @endAudioDownloadDateSortFilterTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Lists all audio\'s downloaded on or before the specified end date if set.'**
+  /// **'Lists all audios downloaded on or before the specified end date if set.'**
   String get endAudioDownloadDateSortFilterTooltip;
 
   /// No description provided for @startVideoUploadDateSortFilterTooltip.
@@ -2707,25 +2707,25 @@ abstract class AppLocalizations {
   /// No description provided for @startAudioDurationSortFilterTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Lists all audio\'s with a duration equal to or greater than the specified minimum duration if set.'**
+  /// **'Lists all audios with a duration equal to or greater than the specified minimum duration if set.'**
   String get startAudioDurationSortFilterTooltip;
 
   /// No description provided for @endAudioDurationSortFilterTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Lists all audio\'s with a duration equal to or less than the specified maximum duration if set.'**
+  /// **'Lists all audios with a duration equal to or less than the specified maximum duration if set.'**
   String get endAudioDurationSortFilterTooltip;
 
   /// No description provided for @startAudioFileSizeSortFilterTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Lists all audio\'s with a file size equal to or greater than the specified minimum size if set.'**
+  /// **'Lists all audios with a file size equal to or greater than the specified minimum size if set.'**
   String get startAudioFileSizeSortFilterTooltip;
 
   /// No description provided for @endAudioFileSizeSortFilterTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Lists all audio\'s with a file size equal to or less than the specified maximum size if set.'**
+  /// **'Lists all audios with a file size equal to or less than the specified maximum size if set.'**
   String get endAudioFileSizeSortFilterTooltip;
 
   /// No description provided for @valueInInitialVersionTitle.
@@ -2821,7 +2821,7 @@ abstract class AppLocalizations {
   /// No description provided for @addPrivateYoutubePlaylist.
   ///
   /// In en, this message translates to:
-  /// **'Trying to add a private Youtube playlist is not possible since the audio\'s of a private playlist can not be downloaded. To solve the problem, edit the playlist on Youtube and change its visibility from \"Private\" to \"Unlisted\" or to \"Public\" and then re-add it to the application.'**
+  /// **'Trying to add a private Youtube playlist is not possible since the audios of a private playlist can not be downloaded. To solve the problem, edit the playlist on Youtube and change its visibility from \"Private\" to \"Unlisted\" or to \"Public\" and then re-add it to the application.'**
   String get addPrivateYoutubePlaylist;
 
   /// No description provided for @addAudioPicture.
@@ -2887,7 +2887,7 @@ abstract class AppLocalizations {
   /// Confirmation title for deleting filtered audio
   ///
   /// In en, this message translates to:
-  /// **'Delete audio\'s filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\" as well (will be re-downloadable)'**
+  /// **'Delete audios filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\" as well (will be re-downloadable)'**
   String deleteFilteredAudioFromPlaylistAsWellConfirmationTitle(
       Object sortFilterParmsName, Object playlistTitle);
 
@@ -2906,7 +2906,7 @@ abstract class AppLocalizations {
   /// Confirmation title for redownloading filtered audio
   ///
   /// In en, this message translates to:
-  /// **'\"{redownloadedAudioNumber}\" audio\'s were redownloaded to the playlist \"{playlistTitle}\". \"{notRedownloadedAudioNumber}\" audio\'s were not redownloaded since they are already present in the playlist directory.'**
+  /// **'\"{redownloadedAudioNumber}\" audios were redownloaded to the playlist \"{playlistTitle}\". \"{notRedownloadedAudioNumber}\" audios were not redownloaded since they are already present in the playlist directory.'**
   String redownloadedAudioNumbersConfirmation(Object playlistTitle,
       Object redownloadedAudioNumber, Object notRedownloadedAudioNumber);
 
@@ -2957,7 +2957,7 @@ abstract class AppLocalizations {
   /// No description provided for @setPlaylistAudioQualityTooltip.
   ///
   /// In en, this message translates to:
-  /// **'The selected audio quality will be applied to the next downloaded audio\'s. If the audio quality must be applied to the already downloaded audio\'s, those audio\'s must be deleted \"from playlist as well\" so that they will be redownloadable in the modified audio quality.'**
+  /// **'The selected audio quality will be applied to the next downloaded audios. If the audio quality must be applied to the already downloaded audios, those audios must be deleted \"from playlist as well\" so that they will be redownloadable in the modified audio quality.'**
   String get setPlaylistAudioQualityTooltip;
 
   /// No description provided for @setPlaylistAudioQualityDialogTitle.
@@ -3116,7 +3116,7 @@ abstract class AppLocalizations {
   /// No description provided for @playlistRestorationSecondHelpTitle.
   ///
   /// In en, this message translates to:
-  /// **'After deleting the affected playlists, restore them again from the ZIP file while ensuring the \"Remove deleted audio files\" checkbox remains UNCHECKED. This step is crucial as it will allow audio files to remain available for downloading after restoration.'**
+  /// **'After deleting the affected playlists, restore them again from the ZIP file. Afterwards, you can re-download audio files that are not playable using the playlist menu \"Filtered Audios Actions ...\" and the submenu \"Redownload filtered Audios\". If the sort filter parameter is set to \"default\", all non-playable audio files will be re-downloaded. To limit which files are re-downloaded, select or define a specific sort filter parameter.'**
   String get playlistRestorationSecondHelpTitle;
 
   /// No description provided for @playlistJsonFilesUpdateDialogTitle.
@@ -3182,7 +3182,7 @@ abstract class AppLocalizations {
   /// No description provided for @downloadedCheckboxTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Selecting downloaded audio\'s.'**
+  /// **'Selecting downloaded audios.'**
   String get downloadedCheckboxTooltip;
 
   /// No description provided for @importedCheckbox.
@@ -3194,7 +3194,7 @@ abstract class AppLocalizations {
   /// No description provided for @importedCheckboxTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Selecting imported audio\'s.'**
+  /// **'Selecting imported audios.'**
   String get importedCheckboxTooltip;
 
   /// No description provided for @convertedCheckbox.
@@ -3206,7 +3206,7 @@ abstract class AppLocalizations {
   /// No description provided for @convertedCheckboxTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Selecting text converted to MP3 audio\'s.'**
+  /// **'Selecting text converted to MP3 audios.'**
   String get convertedCheckboxTooltip;
 
   /// No description provided for @extractedCheckbox.
@@ -3218,7 +3218,7 @@ abstract class AppLocalizations {
   /// No description provided for @extractedCheckboxTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Selecting audio\'s created by comment(s) extraction to MP3. If necessary, ensure both \"Music qual.\" and \"Spoken q.\" checkboxes are checked.'**
+  /// **'Selecting audios created by comment(s) extraction to MP3. If necessary, ensure both \"Music qual.\" and \"Spoken q.\" checkboxes are checked.'**
   String get extractedCheckboxTooltip;
 
   /// No description provided for @restoredElementsHelpTitle.
@@ -3230,7 +3230,7 @@ abstract class AppLocalizations {
   /// No description provided for @restoredElementsHelpContent.
   ///
   /// In en, this message translates to:
-  /// **'N playlist: number of new playlist JSON files created by the restoration.\n\nN comment: number of new comment JSON files created by the restoration. This happens only if the commented audio had no comment before the restoration. Otherwise, the new comment is added to the existing audio comment JSON file.\n\nN picture: number of new picture JSON files created by the restoration. This happens only if the pictured audio had no picture before the restoration. Otherwise, the new picture is added to the existing audio picture JSON file.\n\nN audio reference: number of playable audio elements contained in the unique or multiple new playlist json file(s) created by the restoration. If the restored playlist number is 0, then the audio reference(s) number correspond to the number of audio element(s) added to their enclosing playlist JSON file by the restoration. The restoration does not add MP3 files since no MP3 is contained in the ZIP file. The added referenced audio\'s can be downloaded after the restoration.\n\nN added comment: number of comments added by the restoration to the existing audio comment JSON files.\n\nN modified comment: number of comments modified by the restoration in the existing audio comment JSON files.'**
+  /// **'N playlist: number of new playlist JSON files created by the restoration.\n\nN comment: number of new comment JSON files created by the restoration. This happens only if the commented audio had no comment before the restoration. Otherwise, the new comment is added to the existing audio comment JSON file.\n\nN picture: number of new picture JSON files created by the restoration. This happens only if the pictured audio had no picture before the restoration. Otherwise, the new picture is added to the existing audio picture JSON file.\n\nN audio reference: number of playable audio elements contained in the unique or multiple new playlist json file(s) created by the restoration. If the restored playlist number is 0, then the audio reference(s) number correspond to the number of audio element(s) added to their enclosing playlist JSON file by the restoration. The restoration does not add MP3 files since no MP3 is contained in the ZIP file. The added referenced audios can be downloaded after the restoration.\n\nN added comment: number of comments added by the restoration to the existing audio comment JSON files.\n\nN modified comment: number of comments modified by the restoration in the existing audio comment JSON files.'**
   String get restoredElementsHelpContent;
 
   /// No description provided for @playlistInfoDownloadAudio.
@@ -3404,7 +3404,7 @@ abstract class AppLocalizations {
   /// No description provided for @restorePlaylistsAudioMp3FilesFromZipTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Restoring audio\'s MP3 not yet present in the playlists from a saved ZIP file. Only the MP3 relative to the audio\'s listed in the playlists are restorable.'**
+  /// **'Restoring audios MP3 not yet present in the playlists from a saved ZIP file. Only the MP3 relative to the audios listed in the playlists are restorable.'**
   String get restorePlaylistsAudioMp3FilesFromZipTooltip;
 
   /// No description provided for @audioMp3RestorationDialogTitle.
@@ -3416,7 +3416,7 @@ abstract class AppLocalizations {
   /// No description provided for @audioMp3RestorationExplanation.
   ///
   /// In en, this message translates to:
-  /// **'Only the MP3 relative to the audio\'s listed in the playlists which are not already present in the playlists are restorable.'**
+  /// **'Only the MP3 relative to the audios listed in the playlists which are not already present in the playlists are restorable.'**
   String get audioMp3RestorationExplanation;
 
   /// No description provided for @restorePlaylistAudioMp3FilesFromZipMenu.
@@ -3428,7 +3428,7 @@ abstract class AppLocalizations {
   /// No description provided for @restorePlaylistAudioMp3FilesFromZipTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Restoring audio\'s MP3 not yet present in the playlist from a saved ZIP file. Only the MP3 relative to the audio\'s listed in the playlist are restorable.'**
+  /// **'Restoring audios MP3 not yet present in the playlist from a saved ZIP file. Only the MP3 relative to the audios listed in the playlist are restorable.'**
   String get restorePlaylistAudioMp3FilesFromZipTooltip;
 
   /// No description provided for @audioMp3UniquePlaylistRestorationDialogTitle.
@@ -3440,7 +3440,7 @@ abstract class AppLocalizations {
   /// No description provided for @audioMp3UniquePlaylistRestorationExplanation.
   ///
   /// In en, this message translates to:
-  /// **'Only the MP3 relative to the audio\'s listed in the playlist which are not already present in the playlist are restorable.'**
+  /// **'Only the MP3 relative to the audios listed in the playlist which are not already present in the playlist are restorable.'**
   String get audioMp3UniquePlaylistRestorationExplanation;
 
   /// No description provided for @playlistInvalidRootPathWarning.
@@ -3593,7 +3593,7 @@ abstract class AppLocalizations {
   /// No description provided for @audioTitleModificationHelpContent.
   ///
   /// In en, this message translates to:
-  /// **'For example, if in a playlist we have three audios that were downloaded in this order:\n  last\n  first\n  second\nand we want to listen to them in order according to their title, it is useful to rename the titles this way:\n  3-last\n  1-first\n  2-second\n\nThen you need to click on the \"Sort/Filter Audio ...\" menu to define a sort that you name and that sorts the audio\'s according to their title.\n\nOnce the \"Sort and Filter Parameters\" dialog is open, define the filter name in the \"Save as:\" field and open the \"Sort by:\" list. Select \"Audio title\" and then remove \"Audio downl date\". Finally, click on \"Save\".\n\nOnce this sort is defined, check that it is selected and use the \"Save Sort/Filter Parameters to Playlist ...\" menu by selecting the screen for which the sort will be applied. This way, the audios will be played in the order in which you want to listen to them.'**
+  /// **'For example, if in a playlist we have three audios that were downloaded in this order:\n  last\n  first\n  second\nand we want to listen to them in order according to their title, it is useful to rename the titles this way:\n  3-last\n  1-first\n  2-second\n\nThen you need to click on the \"Sort/Filter Audio ...\" menu to define a sort that you name and that sorts the audios according to their title.\n\nOnce the \"Sort and Filter Parameters\" dialog is open, define the filter name in the \"Save as:\" field and open the \"Sort by:\" list. Select \"Audio title\" and then remove \"Audio downl date\". Finally, click on \"Save\".\n\nOnce this sort is defined, check that it is selected and use the \"Save Sort/Filter Parameters to Playlist ...\" menu by selecting the screen for which the sort will be applied. This way, the audios will be played in the order in which you want to listen to them.'**
   String get audioTitleModificationHelpContent;
 
   /// No description provided for @playlistConvertTextToAudioMenu.
@@ -3605,7 +3605,7 @@ abstract class AppLocalizations {
   /// No description provided for @playlistConvertTextToAudioMenuTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Convert a text to a listenable audio which is added to the playlist. Adding positionned comments or a picture to this audio will be possible like for the other audio\'s.'**
+  /// **'Convert a text to a listenable audio which is added to the playlist. Adding positionned comments or a picture to this audio will be possible like for the other audios.'**
   String get playlistConvertTextToAudioMenuTooltip;
 
   /// No description provided for @convertTextToAudioDialogTitle.
@@ -4070,7 +4070,7 @@ abstract class AppLocalizations {
   /// **'The modified playlist title \"{playlistTitle}\" can not contain any comma. Please correct the title and retry ...'**
   String invalidModifiedPlaylistTitle(Object playlistTitle);
 
-  /// Warning announcing that importing the audio's from mp4 file failed.
+  /// Warning announcing that importing the audios from mp4 file failed.
   ///
   /// In en, this message translates to:
   /// **'Importing the audio of the mp4 video \"{videoTitle}\" FAILED: \"{exceptionMessage}\".'**

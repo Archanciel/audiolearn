@@ -661,7 +661,7 @@ void main() {
       expect(Directory(testPlaylistTwoPicturePath).existsSync(), true);
     });
     test(
-        '''Remove pictures from several audio's. Before, pictures were added to those audio's
+        '''Remove pictures from several audios. Before, pictures were added to those audios
            located in two different playlists. Check the audio json picture content as well as
            the application picture-audio map content.''', () {
       final File pictureAudioMapFile = File(appPictureAudioMapFilePathName);
@@ -1033,7 +1033,7 @@ void main() {
       expect(audioPictureFileNamesNoExtLst.length, 0);
     });
     test(
-        '''After adding to two audio's in same playlist then removing pictures ...''',
+        '''After adding to two audios in same playlist then removing pictures ...''',
         () {
       // Add a first picture to the playlist two second audio
       pictureVM.addPictureToAudio(

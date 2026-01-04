@@ -696,7 +696,7 @@ class AudioDownloadVM extends ChangeNotifier {
         // since the updated playlist is returned. Since its title
         // is not new, it will not be added to the orderedTitleLst
         // in the SettingsDataService json file, which would cause
-        // a bug when filtering audio's of a playlist
+        // a bug when filtering audios of a playlist
         return updatedPlaylist;
       }
 
@@ -2610,7 +2610,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
   /// Physically deletes the audio file from the audio playlist
   /// directory and removes the Audio from the playlist playable
-  /// audio list. The deleted audio's remain in the downloaded
+  /// audio list. The deleted audios remain in the downloaded
   /// audio list.
   ///
   /// The playlist json file is of course updated.

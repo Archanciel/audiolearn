@@ -141,7 +141,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "YouTube Video URL's",
+          "YouTube Video URLs",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: kSliderThumbColorInLightMode,
@@ -161,7 +161,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
               ),
             ),
             child: const Text(
-              "Save URL's to file",
+              "Save URLs to file",
             ), // Save URL list to file
           ),
           const SizedBox(

@@ -96,7 +96,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
       // Using the currentAudioTitleNotifier is very useful in the
       // case the audio player view is opened by clicking on the
       // audio player view button when the current selected playlist
-      // has audio's, but without any selected audio's. If the user
+      // has audios, but without any selected audios. If the user
       // click on the 'No selected audio' title to open the audio
       // playable list dialog and select an available audio, without
       // using currentAudioTitleNotifier, the left appbar menu will

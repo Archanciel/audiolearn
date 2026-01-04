@@ -1142,7 +1142,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       // The current audio title is used to update the slider
       // and positions values when the audio title changes.
       // This is useful in the situation when selecting a playlist
-      // which has several audio's, but none being current. When
+      // which has several audios, but none being current. When
       // the user tap on the audio player view icon, then click
       // on the 'No audio selected' title and then select an audio
       // whose position is at the beginning, the remaining duration

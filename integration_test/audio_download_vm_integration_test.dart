@@ -176,7 +176,7 @@ Future<void> main() async {
       );
 
       // Now typing on the download playlist button to download the
-      // 2 video audio's present the created playlist.
+      // 2 video audios present the created playlist.
       await tester.tap(find.byKey(const Key('download_sel_playlist_button')));
       await tester.pumpAndSettle();
 
@@ -342,7 +342,7 @@ Future<void> main() async {
       );
 
       // Now typing on the download playlist button to download the
-      // 2 video audio's present the created playlist.
+      // 2 video audios present the created playlist.
       await tester.tap(find.byKey(const Key('download_sel_playlist_button')));
       await tester.pumpAndSettle();
 
@@ -475,7 +475,7 @@ Future<void> main() async {
       );
 
       // Now typing on the download playlist button to download the
-      // new video audio's present the recreated playlist.
+      // new video audios present the recreated playlist.
       await tester.tap(find.byKey(const Key('download_sel_playlist_button')));
       await tester.pumpAndSettle();
 
@@ -977,13 +977,13 @@ Future<void> main() async {
   group('''Download recreated playlist with short audio. Those tests are used to
            test recreating the playlist with the same name. Recreating a playlist
            with an identical name avoids to loose time removing from the original
-           playlist the referenced videos. The recreated playlist audio's are
+           playlist the referenced videos. The recreated playlist audios are
            downloaded in the same dir than the original playlist. The original
            playlist json file is updated with the recreated playlist id and url
            as well as with the newly downloaded audio.''', () {
     testWidgets(
         '''Adding recreated playlist with 2 new short audio: the initial playlist
-           has 1st and 2nd audio's already downloaded.''',
+           has 1st and 2nd audios already downloaded.''',
         (WidgetTester tester) async {
       // Necessary in case the previous test failed and so did not
       // delete the its playlist dir
@@ -1070,7 +1070,7 @@ Future<void> main() async {
       );
 
       // Now typing on the download playlist button to download the
-      // new video audio's present the recreated playlist.
+      // new video audios present the recreated playlist.
       await tester.tap(find.byKey(const Key('download_sel_playlist_button')));
       await tester.pumpAndSettle();
 
@@ -1111,7 +1111,7 @@ Future<void> main() async {
     testWidgets(
         '''Adding recreated playlist with 2 new short audio. In the initial playlist,
            the 1st audio was deleted from playlist as well, the 2nd audio was simply
-           deleted. None of the deleted audio's will be redownloadable since they are
+           deleted. None of the deleted audios will be redownloadable since they are
            not in the recreated playlist.''', (WidgetTester tester) async {
       // Necessary in case the previous test failed and so did not
       // delete the its playlist dir
@@ -1198,7 +1198,7 @@ Future<void> main() async {
       );
 
       // Now typing on the download playlist button to download the
-      // new video audio's present the recreated playlist.
+      // new video audios present the recreated playlist.
       await tester.tap(find.byKey(const Key('download_sel_playlist_button')));
       await tester.pumpAndSettle();
 

@@ -228,7 +228,7 @@ class PlaylistListVM extends ChangeNotifier {
   String _selectedPlaylistTitleBeforeApplyingSearchSentence = '';
 
   // This notifier is used to update the list of playlists
-  // or the list of audio's in the playlist download view.
+  // or the list of audios in the playlist download view.
   final ValueNotifier<String?> youtubeLinkOrSearchSentenceNotifier =
       ValueNotifier<String?>(null);
 
@@ -1133,9 +1133,9 @@ class PlaylistListVM extends ChangeNotifier {
   /// This method is called when the user executes the playlist submenu 'Delete
   /// filtered Audio's ...' after having selected (and defined) a named Sort/Filter
   /// parameters. For example, it makes sense to define a filter only parameters
-  /// which select fully listened audio's which are not commented. With this filter
+  /// which select fully listened audios which are not commented. With this filter
   /// parameters applied to the playlist, using the playlist menu 'Delete filtered
-  /// Audio ...' deletes the audio files and removes the deleted audio's from the
+  /// Audio ...' deletes the audio files and removes the deleted audios from the
   /// playlist playable audio list.
   void deleteSortFilteredAudioLstAndTheirCommentsAndPicture() {
     List<Audio> filteredAudioToDelete =
@@ -1163,7 +1163,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// This method is called when the user executes the playlist submenu 'Re-download
   /// filtered Audio's' after having selected (and defined) a named Sort/Filter
   /// parameters. For example, it makes sense to define a filter only parameters
-  /// which select audio's which are commented. With this filter parameters applied
+  /// which select audios which are commented. With this filter parameters applied
   /// to the playlist, using the playlist menu 'Redownload filtered Audio's'
   /// redownload the audio files which were deleted, setting the file names to
   /// the initial downloaded file name.
@@ -1219,7 +1219,7 @@ class PlaylistListVM extends ChangeNotifier {
       // to true prevents that the audio slider and the audio position
       // fields in the audio player view are not updated when playing
       // an audio the first time after having redownloaded it or having
-      // redownloaded several filtered audio's.
+      // redownloaded several filtered audios.
       audioPlayerVMlistenFalse.setCurrentAudio(
         audio: filteredAudioToRedownload[0],
         audioWasRedownloaded: true,
@@ -1302,7 +1302,7 @@ class PlaylistListVM extends ChangeNotifier {
       // to true prevents that the audio slider and the audio position
       // fields in the audio player view are not updated when playing
       // an audio the first time after having redownloaded it or having
-      // redownloaded several filtered audio's.
+      // redownloaded several filtered audios.
       audioPlayerVMlistenFalse.setCurrentAudio(
         audio: audio,
         audioWasRedownloaded: true,
@@ -1318,9 +1318,9 @@ class PlaylistListVM extends ChangeNotifier {
   /// which select fully listened audio which are not commented. With this filter
   /// parameters applied to the playlist, using the playlist menu 'Delete filtered
   /// Audio's from Playlist as well ...' deletes the audio files and removes the
-  /// deleted audio's from both the playlist downloaded and playable audio lists.
+  /// deleted audios from both the playlist downloaded and playable audio lists.
   ///
-  /// The consequence is that the deleted audio's will later be re-downloaded.
+  /// The consequence is that the deleted audios will later be re-downloaded.
   void deleteSortFilteredAudioLstFromPlaylistAsWell() {
     List<Audio> filteredAudioToDelete =
         _sortedFilteredSelectedPlaylistPlayableAudioLst!;
@@ -1335,9 +1335,9 @@ class PlaylistListVM extends ChangeNotifier {
   /// This method is called when the user executes the playlist submenu 'Move
   /// filtered Audio's ...' after having selected (and defined) a named Sort/Filter
   /// parameters. Using the playlist menu 'Move filtered Audio's ...' moves the
-  /// audio files to the target playlist directory, removes the moved audio's from
+  /// audio files to the target playlist directory, removes the moved audios from
   /// the source playlist playable audio list and add them to the target playlist
-  /// playable audio list. The moved audio's remain in the source playlist downloaded
+  /// playable audio list. The moved audios remain in the source playlist downloaded
   /// audio list and so will not be redownloaded !
   ///
   /// Returned list: [
@@ -1402,7 +1402,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// filtered Audio's ...' after having selected (and defined) a named Sort/Filter
   /// parameters. Using the playlist menu 'Copy filtered Audio's ...' copies the
   /// audio files to the target playlist directory and add them to the target
-  /// playlist playable audio list. The copied audio's remain in the source playlist
+  /// playlist playable audio list. The copied audios remain in the source playlist
   /// downloaded audio list and in its playable audio list !
   ///
   /// Returned list: [
@@ -2648,7 +2648,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// the playlists.
   ///
   /// Updating the playlists audio play speed only implies that
-  /// the next downloaded audio's of this playlist will be set
+  /// the next downloaded audios of this playlist will be set
   /// to the audioPlaySpeed value.
   ///
   /// The method modifies the playlist default play speed in the
@@ -4458,7 +4458,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// When restoring playlists from a zip file this method deletes existing playlists
   /// which are not contained in the zip file. However, a playlist is only deleted
   /// its creation date time is before the zip file creation date time or if the newest
-  /// audio download date time of its audio's or the last text to speech comment is before
+  /// audio download date time of its audios or the last text to speech comment is before
   /// the zip file creation date time.
   ///
   /// This method is called with doReplaceExistingPlaylists checkbox set to true or
@@ -4558,7 +4558,7 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   /// When restoring playlists from a zip file in situation where the playlists
-  /// are not replaced by the zip playlists, this method adds audio's of playlists
+  /// are not replaced by the zip playlists, this method adds audios of playlists
   /// corresponding to existing playlists which are available in the zip file and
   /// are not already present in the existing playlists.
   ///
@@ -6230,7 +6230,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// Move an audio to a specific position in its enclosing playlist's playable
   /// audio list.
   ///
-  /// The audio's whose validVideoTitle position number is equal to or greater than
+  /// The audios whose validVideoTitle position number is equal to or greater than
   /// the specified position will have their position number incremented by 1.
   ///
   /// Position numbering: 1 = last audio in list, 2 = second to last, etc.
