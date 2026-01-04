@@ -111,12 +111,12 @@ enum WarningMessageType {
   confirmCopiedNotCopiedAudioNumber, // The case if the user clicked on
   // Copy Filtered Audio to Playlist ... menu item
 
-  rewindedPlayableAudioToStart, // The case if the playable audio's
+  rewindedPlayableAudioToStart, // The case if the playable audios
   // were rewinded to start position. This happens when the user clicks
   // on the Rewind Audio to Start playlist menu item.
 
   redownloadedAudioNumbersConfirmation, // The case if the sort
-  // filtered deleted audio's were redownloaded. This happens when
+  // filtered deleted audios were redownloaded. This happens when
   // the user clicks on the playlist submenu 'Redownload filtered
   // Audio's'.
 

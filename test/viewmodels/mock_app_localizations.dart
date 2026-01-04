@@ -1173,7 +1173,7 @@ class MockAppLocalizations extends AppLocalizations {
   String downloadAudioFromVideoUrlsInPlaylist(
     Object number,
   ) =>
-      "Downloading $number audio's in selected quality.";
+      "Downloading $number audios in selected quality.";
 
   @override
   String notRedownloadAudioFilesInPlaylistDirectory(
@@ -1693,7 +1693,7 @@ class MockAppLocalizations extends AppLocalizations {
     Object audioCommentsNumber,
     Object audioPicturesNumber,
   ) =>
-      "Deleting the playlist and its $audioNumber audio's, $audioCommentsNumber audio comments as well as its JSON file and its directory.";
+      "Deleting the playlist and its $audioNumber audios, $audioCommentsNumber audio comments as well as its JSON file and its directory.";
 
   @override
   String get chapterAudioTitleLabel => "Chapter Audio title";
@@ -1747,7 +1747,7 @@ class MockAppLocalizations extends AppLocalizations {
     Object sortFilterParmsName,
     Object playlistTitle,
   ) =>
-      "Delete audio's filtered by \"$sortFilterParmsName\" parms from playlist \"$playlistTitle\" as well";
+      "Delete audios filtered by \"$sortFilterParmsName\" parms from playlist \"$playlistTitle\" as well";
 
   @override
   String get deleteFilteredAudioFromPlaylistAsWell =>
@@ -1766,7 +1766,7 @@ class MockAppLocalizations extends AppLocalizations {
     Object playlistTitle,
     Object notRedownloadedAudioNumber,
   ) =>
-      "\"$redownloadedAudioNumber\" audio's were redownloaded to the playlist \"$playlistTitle\". \"$notRedownloadedAudioNumber\" audio's were not redownloaded since they are already present in the playlist directory.";
+      "\"$redownloadedAudioNumber\" audios were redownloaded to the playlist \"$playlistTitle\". \"$notRedownloadedAudioNumber\" audios were not redownloaded since they are already present in the playlist directory.";
 
   @override
   String get redownloadDeletedAudio => "Redownload deleted Audio";
@@ -1824,7 +1824,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get setPlaylistAudioQualityTooltip =>
-      "The audio quality set will be applied to the next downloaded audio's. If the audio quality must be applied to the already download audio's, those audio's must be deleted from playlist as well so that they will be redownloaded in the changed audio quality.";
+      "The audio quality set will be applied to the next downloaded audios. If the audio quality must be applied to the already download audios, those audios must be deleted from playlist as well so that they will be redownloaded in the changed audio quality.";
 
   @override
   String get setPlaylistAudioQualityDialogTitle => "Playlist Audio Quality";
@@ -1920,7 +1920,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get updatePlaylistJsonFilesHelpContent =>
-      "Les actions manuelles d‚crites ci-dessous d‚signent des actions acconplies en-dehors de l'application. En effet, si l'on supprime ou ajoute des playlists en utilisant les fonctionnalit‚ correspondantes de l'application, eh bien l'‚tat de l'application est totalement mis … jour et l'utilisation de la fonction de mise … jour des fichiers playlist JSON n'est pas du tout n‚cessaire. Mˆme remarque pour l'ajout ou la suppression des audio's.";
+      "Les actions manuelles d‚crites ci-dessous d‚signent des actions acconplies en-dehors de l'application. En effet, si l'on supprime ou ajoute des playlists en utilisant les fonctionnalit‚ correspondantes de l'application, eh bien l'‚tat de l'application est totalement mis … jour et l'utilisation de la fonction de mise … jour des fichiers playlist JSON n'est pas du tout n‚cessaire. Mˆme remarque pour l'ajout ou la suppression des audios.";
 
   @override
   String get playlistRestorationHelpTitle => "";
@@ -1987,7 +1987,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get savePlaylistsAudioMp3FilesToZipMenu =>
-      "Save Playlists audio's Mp3 to Zip File ...";
+      "Save Playlists audios Mp3 to Zip File ...";
 
   @override
   String get savePlaylistsAudioMp3FilesToZipTooltip =>
@@ -2109,7 +2109,7 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get audioMp3RestorationExplanation =>
-      "Only the MP3 relative to the audio's listed in the playlists and which are not already present in the playlists are restorable.";
+      "Only the MP3 relative to the audios listed in the playlists and which are not already present in the playlists are restorable.";
 
   @override
   String get restorePlaylistAudioMp3FilesFromZipMenu =>
@@ -2117,14 +2117,14 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get restorePlaylistAudioMp3FilesFromZipTooltip =>
-      "Restoring audio's MP3 not yet present in the playlist from a saved ZIP file. Only the MP3 relative to the audio's listed in the playlist are restorable.";
+      "Restoring audios MP3 not yet present in the playlist from a saved ZIP file. Only the MP3 relative to the audios listed in the playlist are restorable.";
 
   @override
   String get audioMp3UniquePlaylistRestorationDialogTitle => "MP3 Restoration";
 
   @override
   String get audioMp3UniquePlaylistRestorationExplanation =>
-      "Only the MP3 relative to the audio's listed in the playlist and which are not already present in the playlist are restorable.";
+      "Only the MP3 relative to the audios listed in the playlist and which are not already present in the playlist are restorable.";
 
   @override
   String playlistInvalidRootPathWarning(
@@ -2240,14 +2240,14 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get audioTitleModificationHelpContent =>
-      "N playlist: number of new playlist JSON files created by the restoration. comment: number of new comment JSON files created by the restoration. This happens only if the commented audio had no comment before the restoration. Otherwise, the new comment is added to the existing audio comment JSON file.picture: number of new picture JSON files created by the restoration. This happens only if the pictured audio had no picture before the restoration. Otherwise, the new picture is added to the existing audio picture JSON file.audio reference: number of audio elements contained in the unique or multiple new playlist json file(s) created by the restoration. If the restored playlist number is 0, then the audio reference(s) number correspond to the number of audio element(s) added to their enclosing playlist JSON file by the restoration. The restoration does not add MP3 files since no MP3 is contained in the ZIP file. The added referenced audio's can be downloaded after the restoration. added comment: number of comments added by the restoration to the existing audio comment JSON files.modified comment: number of comments modified by the restoration in the existing audio comment JSON files.";
+      "N playlist: number of new playlist JSON files created by the restoration. comment: number of new comment JSON files created by the restoration. This happens only if the commented audio had no comment before the restoration. Otherwise, the new comment is added to the existing audio comment JSON file.picture: number of new picture JSON files created by the restoration. This happens only if the pictured audio had no picture before the restoration. Otherwise, the new picture is added to the existing audio picture JSON file.audio reference: number of audio elements contained in the unique or multiple new playlist json file(s) created by the restoration. If the restored playlist number is 0, then the audio reference(s) number correspond to the number of audio element(s) added to their enclosing playlist JSON file by the restoration. The restoration does not add MP3 files since no MP3 is contained in the ZIP file. The added referenced audios can be downloaded after the restoration. added comment: number of comments added by the restoration to the existing audio comment JSON files.modified comment: number of comments modified by the restoration in the existing audio comment JSON files.";
 
   @override
   String get playlistConvertTextToAudioMenu => "Convert Text to Audio ...";
 
   @override
   String get playlistConvertTextToAudioMenuTooltip =>
-      "Convert a text to a listenable audio which is added to the playlist. Adding positionned comments or a picture to this audio will be possible like for the other audio's.";
+      "Convert a text to a listenable audio which is added to the playlist. Adding positionned comments or a picture to this audio will be possible like for the other audios.";
 
   @override
   String get convertTextToAudioDialogTitle => "Convert Text to Audio";
@@ -2870,20 +2870,20 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get convertedCheckboxTooltip =>
-      "Selecting text converted to MP3 audio's.";
+      "Selecting text converted to MP3 audios.";
 
   @override
   String get extractedCheckbox => "Extracted";
 
   @override
   String get extractedCheckboxTooltip =>
-      "Selecting audio's created by comment(s) extraction to MP3.";
+      "Selecting audios created by comment(s) extraction to MP3.";
 
   @override
-  String get importedCheckboxTooltip => "Selecting imported audio's.";
+  String get importedCheckboxTooltip => "Selecting imported audios.";
 
   @override
-  String get downloadedCheckboxTooltip => "Selecting downloaded audio's.";
+  String get downloadedCheckboxTooltip => "Selecting downloaded audios.";
 
   @override
   String get commentWasDeleted => "Comment not included";

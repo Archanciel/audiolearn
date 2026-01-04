@@ -38,17 +38,17 @@ void main() {
         audio: selectedPlaylistAudioList[0],
       );
 
-      // obtain the current audio's initial position
+      // obtain the current audios initial position
       Duration currentAudioInitialPosition = audioPlayerVM.currentAudioPosition;
 
-      // change the current audio's play position
+      // change the current audios play position
 
       int forwardChangePosition = 38;
       await audioPlayerVM.changeAudioPlayPosition(
           posOrNegPositionDurationChange:
               Duration(seconds: forwardChangePosition));
 
-      // obtain the current audio's changed position
+      // obtain the current audios changed position
       Duration currentAudioChangedPosition = audioPlayerVM.currentAudioPosition;
 
       expect(
@@ -59,7 +59,7 @@ void main() {
       // undo the change
       audioPlayerVM.undo();
 
-      // obtain the current audio's position after the undo
+      // obtain the current audios position after the undo
       Duration currentAudioPositionAfterUndo =
           audioPlayerVM.currentAudioPosition;
 
@@ -69,7 +69,7 @@ void main() {
       // redo the change
       audioPlayerVM.redo();
 
-      // obtain the current audio's position after the redo
+      // obtain the current audios position after the redo
       Duration currentAudioPositionAfterRedo =
           audioPlayerVM.currentAudioPosition;
 
@@ -99,17 +99,17 @@ void main() {
         audio: selectedPlaylistAudioList[0],
       );
 
-      // obtain the current audio's initial position
+      // obtain the current audios initial position
       Duration currentAudioInitialPosition = audioPlayerVM.currentAudioPosition;
 
-      // change the current audio's play position
+      // change the current audios play position
 
       int backwardChangePosition = -100;
       await audioPlayerVM.changeAudioPlayPosition(
           posOrNegPositionDurationChange:
               Duration(seconds: backwardChangePosition));
 
-      // obtain the current audio's changed position
+      // obtain the current audios changed position
       Duration currentAudioChangedPosition = audioPlayerVM.currentAudioPosition;
 
       expect(
@@ -120,7 +120,7 @@ void main() {
       // undo the change
       audioPlayerVM.undo();
 
-      // obtain the current audio's position after the undo
+      // obtain the current audios position after the undo
       Duration currentAudioPositionAfterUndo =
           audioPlayerVM.currentAudioPosition;
 
@@ -130,7 +130,7 @@ void main() {
       // redo the change
       audioPlayerVM.redo();
 
-      // obtain the current audio's position after the redo
+      // obtain the current audios position after the redo
       Duration currentAudioPositionAfterRedo =
           audioPlayerVM.currentAudioPosition;
 
@@ -162,10 +162,10 @@ void main() {
         audio: selectedPlaylistAudioList[0],
       );
 
-      // obtain the current audio's initial position
+      // obtain the current audios initial position
       Duration currentAudioInitialPosition = audioPlayerVM.currentAudioPosition;
 
-      // change three times the current audio's play position
+      // change three times the current audios play position
 
       int forwardChangePositionOne = 18;
       await audioPlayerVM.changeAudioPlayPosition(
@@ -182,7 +182,7 @@ void main() {
           posOrNegPositionDurationChange:
               Duration(seconds: forwardChangePositionTwo));
 
-      // obtain the current audio's changed position
+      // obtain the current audios changed position
       Duration currentAudioChangedPosition = audioPlayerVM.currentAudioPosition;
 
       expect(
@@ -195,7 +195,7 @@ void main() {
       // undo the last change
       audioPlayerVM.undo();
 
-      // obtain the current audio's position after the first undo
+      // obtain the current audios position after the first undo
       Duration currentAudioPositionAfterFirstUndo =
           audioPlayerVM.currentAudioPosition;
 
@@ -208,7 +208,7 @@ void main() {
       // redo the change
       audioPlayerVM.redo();
 
-      // obtain the current audio's position after the first redo
+      // obtain the current audios position after the first redo
       Duration currentAudioPositionAfterFirstRedo =
           audioPlayerVM.currentAudioPosition;
 
@@ -242,10 +242,10 @@ void main() {
         audio: selectedPlaylistAudioList[0],
       );
 
-      // obtain the current audio's initial position
+      // obtain the current audios initial position
       Duration currentAudioInitialPosition = audioPlayerVM.currentAudioPosition;
 
-      // change three times the current audio's play position
+      // change three times the current audios play position
 
       int forwardChangePositionOne = 18;
       await audioPlayerVM.changeAudioPlayPosition(
@@ -262,7 +262,7 @@ void main() {
           posOrNegPositionDurationChange:
               Duration(seconds: forwardChangePositionTwo));
 
-      // obtain the current audio's changed position
+      // obtain the current audios changed position
       Duration currentAudioChangedPosition = audioPlayerVM.currentAudioPosition;
 
       expect(
@@ -276,7 +276,7 @@ void main() {
       audioPlayerVM.undo();
       audioPlayerVM.undo();
 
-      // obtain the current audio's position after the two undo's
+      // obtain the current audios position after the two undo's
       Duration currentAudioPositionAfterTwoUndo =
           audioPlayerVM.currentAudioPosition;
 
@@ -286,7 +286,7 @@ void main() {
       // redo the previous change
       audioPlayerVM.redo();
 
-      // obtain the current audio's position after the first redo
+      // obtain the current audios position after the first redo
       Duration currentAudioPositionAfterFirstRedo =
           audioPlayerVM.currentAudioPosition;
 
@@ -298,7 +298,7 @@ void main() {
       // redo the last change
       audioPlayerVM.redo();
 
-      // obtain the current audio's position after the second redo
+      // obtain the current audios position after the second redo
       Duration currentAudioPositionAfterSecondRedo =
           audioPlayerVM.currentAudioPosition;
 
@@ -332,11 +332,11 @@ void main() {
         audio: selectedPlaylistAudioList[0],
       );
 
-      // obtain the current audio's initial position
+      // obtain the current audios initial position
       Duration currentAudioInitialPosition =
           audioPlayerVM.currentAudioPosition; // 600
 
-      // change three times the current audio's play position
+      // change three times the current audios play position
 
       int forwardChangePositionOne = 18;
       await audioPlayerVM.changeAudioPlayPosition(
@@ -353,7 +353,7 @@ void main() {
           posOrNegPositionDurationChange:
               Duration(seconds: forwardChangePositionTwo)); // 720
 
-      // obtain the current audio's changed position
+      // obtain the current audios changed position
       Duration currentAudioChangedPosition = audioPlayerVM.currentAudioPosition;
 
       expect(
@@ -373,7 +373,7 @@ void main() {
           posOrNegPositionDurationChange:
               Duration(seconds: forwardChangePositionThree));
 
-      // obtain the current audio's position after
+      // obtain the current audios position after
       // the undo and the new command
       Duration currentAudioPositionAfterUndoAndCommand =
           audioPlayerVM.currentAudioPosition;
@@ -384,7 +384,7 @@ void main() {
       // redo the last forward change (forward two)
       audioPlayerVM.redo();
 
-      // obtain the current audio's position after the redoing
+      // obtain the current audios position after the redoing
       // the last forward change (forward two)
       Duration currentAudioPositionAfterRedo =
           audioPlayerVM.currentAudioPosition;
@@ -400,7 +400,7 @@ void main() {
       audioPlayerVM.undo(); // 640
       audioPlayerVM.undo(); // 700
 
-      // obtain the current audio's position after the second redo
+      // obtain the current audios position after the second redo
       Duration currentAudioPositionAfterThreeUndo =
           audioPlayerVM.currentAudioPosition;
 
@@ -432,17 +432,17 @@ void main() {
         audio: selectedPlaylistAudioList[0],
       );
 
-      // obtain the current audio's initial position
+      // obtain the current audios initial position
       Duration currentAudioInitialPosition =
           audioPlayerVM.currentAudioPosition; // 600
 
-      // change the current audio's play slider position
+      // change the current audios play slider position
 
       int forwardNewSliderPosition = 700;
       audioPlayerVM.goToAudioPlayPosition(
           durationPosition: Duration(seconds: forwardNewSliderPosition));
 
-      // obtain the current audio's changed position
+      // obtain the current audios changed position
       Duration currentAudioChangedPosition = audioPlayerVM.currentAudioPosition;
 
       expect(
@@ -453,7 +453,7 @@ void main() {
       // undo the change
       audioPlayerVM.undo();
 
-      // obtain the current audio's position after the undo
+      // obtain the current audios position after the undo
       Duration currentAudioPositionAfterUndo =
           audioPlayerVM.currentAudioPosition;
 
@@ -463,7 +463,7 @@ void main() {
       // redo the change
       audioPlayerVM.redo();
 
-      // obtain the current audio's position after the redo
+      // obtain the current audios position after the redo
       Duration currentAudioPositionAfterRedo =
           audioPlayerVM.currentAudioPosition;
 
@@ -490,17 +490,17 @@ void main() {
         audio: selectedPlaylistAudioList[0],
       );
 
-      // obtain the current audio's initial position
+      // obtain the current audios initial position
       Duration currentAudioInitialPosition =
           audioPlayerVM.currentAudioPosition; // 600
 
-      // change the current audio's play slider position
+      // change the current audios play slider position
 
       int backwardNewSliderPosition = 540;
       audioPlayerVM.goToAudioPlayPosition(
           durationPosition: Duration(seconds: backwardNewSliderPosition));
 
-      // obtain the current audio's changed position
+      // obtain the current audios changed position
       Duration currentAudioChangedPosition = audioPlayerVM.currentAudioPosition;
 
       expect(
@@ -511,7 +511,7 @@ void main() {
       // undo the change
       audioPlayerVM.undo();
 
-      // obtain the current audio's position after the undo
+      // obtain the current audios position after the undo
       Duration currentAudioPositionAfterUndo =
           audioPlayerVM.currentAudioPosition;
 
@@ -521,7 +521,7 @@ void main() {
       // redo the change
       audioPlayerVM.redo();
 
-      // obtain the current audio's position after the redo
+      // obtain the current audios position after the redo
       Duration currentAudioPositionAfterRedo =
           audioPlayerVM.currentAudioPosition;
 
@@ -553,11 +553,11 @@ void main() {
         audio: selectedPlaylistAudioList[0],
       );
 
-      // obtain the current audio's initial position
+      // obtain the current audios initial position
       Duration currentAudioInitialPosition =
           audioPlayerVM.currentAudioPosition; // 600
 
-      // change three times the current audio's play slider position
+      // change three times the current audios play slider position
 
       int forwardNewSliderPositionOne = 700;
       audioPlayerVM.goToAudioPlayPosition(
@@ -571,7 +571,7 @@ void main() {
       audioPlayerVM.goToAudioPlayPosition(
           durationPosition: Duration(seconds: forwardNewSliderPositionTwo));
 
-      // obtain the current audio's changed position
+      // obtain the current audios changed position
       Duration currentAudioChangedPosition =
           audioPlayerVM.currentAudioPosition; // 720
 
@@ -583,7 +583,7 @@ void main() {
       // undo the last change
       audioPlayerVM.undo();
 
-      // obtain the current audio's position after the first undo
+      // obtain the current audios position after the first undo
       Duration currentAudioPositionAfterFirstUndo =
           audioPlayerVM.currentAudioPosition; // 640
 
@@ -592,7 +592,7 @@ void main() {
       // redo the change
       audioPlayerVM.redo();
 
-      // obtain the current audio's position after the first redo
+      // obtain the current audios position after the first redo
       Duration currentAudioPositionAfterFirstRedo =
           audioPlayerVM.currentAudioPosition; // 720
 
@@ -624,11 +624,11 @@ void main() {
         audio: selectedPlaylistAudioList[0],
       );
 
-      // obtain the current audio's initial position
+      // obtain the current audios initial position
       Duration currentAudioInitialPosition =
           audioPlayerVM.currentAudioPosition; // 600
 
-      // change three times the current audio's slider play position
+      // change three times the current audios slider play position
 
       int forwardNewSliderPositionOne = 700;
       audioPlayerVM.goToAudioPlayPosition(
@@ -642,7 +642,7 @@ void main() {
       audioPlayerVM.goToAudioPlayPosition(
           durationPosition: Duration(seconds: forwardNewSliderPositionTwo));
 
-      // obtain the current audio's changed position
+      // obtain the current audios changed position
       Duration currentAudioChangedPosition =
           audioPlayerVM.currentAudioPosition; // 720
 
@@ -655,7 +655,7 @@ void main() {
       audioPlayerVM.undo(); // undo 720 --> 640
       audioPlayerVM.undo(); // undo 640 --> 700
 
-      // obtain the current audio's position after the two undo's
+      // obtain the current audios position after the two undo's
       Duration currentAudioPositionAfterTwoUndo =
           audioPlayerVM.currentAudioPosition; // 700
 
@@ -664,7 +664,7 @@ void main() {
       // redo the previous change
       audioPlayerVM.redo(); // redo 640 --> 640
 
-      // obtain the current audio's position after the first redo
+      // obtain the current audios position after the first redo
       Duration currentAudioPositionAfterFirstRedo =
           audioPlayerVM.currentAudioPosition; // 640
 
@@ -676,7 +676,7 @@ void main() {
       // redo the last change
       audioPlayerVM.redo(); // redo 720 --> 720
 
-      // obtain the current audio's position after the second redo
+      // obtain the current audios position after the second redo
       Duration currentAudioPositionAfterSecondRedo =
           audioPlayerVM.currentAudioPosition; // 720
 
@@ -708,11 +708,11 @@ void main() {
         audio: selectedPlaylistAudioList[0],
       );
 
-      // obtain the current audio's initial position
+      // obtain the current audios initial position
       Duration currentAudioInitialPosition =
           audioPlayerVM.currentAudioPosition; // 600
 
-      // change three times the current audio's play position
+      // change three times the current audios play position
 
       int forwardNewSliderPositionOne = 700;
       audioPlayerVM.goToAudioPlayPosition(
@@ -726,7 +726,7 @@ void main() {
       audioPlayerVM.goToAudioPlayPosition(
           durationPosition: Duration(seconds: forwardNewSliderPositionTwo));
 
-      // obtain the current audio's changed position
+      // obtain the current audios changed position
       Duration currentAudioChangedPosition =
           audioPlayerVM.currentAudioPosition; // 720
 
@@ -743,7 +743,7 @@ void main() {
       audioPlayerVM.goToAudioPlayPosition(
           durationPosition: Duration(seconds: forwardNewSliderPositionThree));
 
-      // obtain the current audio's position after
+      // obtain the current audios position after
       // the undo and the new slider command
       Duration currentAudioPositionAfterUndoAndNewSliderCommand =
           audioPlayerVM.currentAudioPosition; // 825
@@ -754,7 +754,7 @@ void main() {
       // redo the last slider forward change (forward two)
       audioPlayerVM.redo(); // redo 720 --> 720
 
-      // obtain the current audio's position after the redoing
+      // obtain the current audios position after the redoing
       // the last forward change (forward two)
       Duration currentAudioPositionAfterRedo =
           audioPlayerVM.currentAudioPosition; // 720
@@ -770,7 +770,7 @@ void main() {
       audioPlayerVM.undo(); // 825 --> 640
       audioPlayerVM.undo(); // 640 --> 700
 
-      // obtain the current audio's position after the second redo
+      // obtain the current audios position after the second redo
       Duration currentAudioPositionAfterThreeUndo =
           audioPlayerVM.currentAudioPosition; // 700
 
@@ -802,13 +802,13 @@ void main() {
         audio: selectedPlaylistAudioList[0],
       );
 
-      // change one time the current audio's play position
+      // change one time the current audios play position
 
       int forwardNewSliderPositionOne = 720;
       audioPlayerVM.goToAudioPlayPosition(
           durationPosition: Duration(seconds: forwardNewSliderPositionOne));
 
-      // check the current audio's changed position
+      // check the current audios changed position
       expect(audioPlayerVM.currentAudioPosition.inSeconds, 720);
 
       // undo the first slider forward change
@@ -820,7 +820,7 @@ void main() {
       audioPlayerVM.goToAudioPlayPosition(
           durationPosition: Duration(seconds: backwardNewSliderPositionTwo));
 
-      // check the current audio's position after the first undo and the
+      // check the current audios position after the first undo and the
       // new slider backward command
       expect(audioPlayerVM.currentAudioPosition.inSeconds, 560);
 
@@ -828,20 +828,20 @@ void main() {
       // command did not affect the redoing of the first undone slider change
       audioPlayerVM.redo(); // redo 720 --> 720
 
-      // check the current audio's position after the redoing the first
+      // check the current audios position after the redoing the first
       // forward change (forward one)
       expect(audioPlayerVM.currentAudioPosition.inSeconds, 720);
 
       // undo the redone first forward change (forward one)
       audioPlayerVM.undo(); // 720 --> 600
 
-      // check the current audio's position after the first undo
+      // check the current audios position after the first undo
       expect(audioPlayerVM.currentAudioPosition.inSeconds, 351);
 
       // redo the first slider change
       audioPlayerVM.redo(); // redo 720 --> 720
 
-      // check the current audio's position after the redo
+      // check the current audios position after the redo
       expect(audioPlayerVM.currentAudioPosition.inSeconds, 720);
 
       // Purge the test playlist directory so that the created test
@@ -867,13 +867,13 @@ void main() {
         audio: selectedPlaylistAudioList[0],
       );
 
-      // change one time the current audio's play position
+      // change one time the current audios play position
 
       int forwardNewSliderPositionOne = 720;
       audioPlayerVM.goToAudioPlayPosition(
           durationPosition: Duration(seconds: forwardNewSliderPositionOne));
 
-      // check the current audio's changed position
+      // check the current audios changed position
       expect(audioPlayerVM.currentAudioPosition.inSeconds, 720);
 
       // undo the first slider forward change
@@ -885,7 +885,7 @@ void main() {
       audioPlayerVM.goToAudioPlayPosition(
           durationPosition: Duration(seconds: backwardNewSliderPositionTwo));
 
-      // check the current audio's position after the first undo and the
+      // check the current audios position after the first undo and the
       // new slider backward command
       expect(audioPlayerVM.currentAudioPosition.inSeconds, 560);
 
@@ -893,7 +893,7 @@ void main() {
       // command did not affect the redoing of the first undone slider change
       audioPlayerVM.redo(); // redo 720 --> 720
 
-      // check the current audio's position after the redoing the first
+      // check the current audios position after the redoing the first
       // forward change (forward one)
       expect(audioPlayerVM.currentAudioPosition.inSeconds, 720);
 
@@ -904,13 +904,13 @@ void main() {
       // backward command
       audioPlayerVM.undo(); // 600 --> 600
 
-      // check the current audio's position after the first undo
+      // check the current audios position after the first undo
       expect(audioPlayerVM.currentAudioPosition.inSeconds, 351);
 
       // redo the first slider change
       audioPlayerVM.redo(); // redo 560 --> 560
 
-      // check the current audio's position after the redo
+      // check the current audios position after the redo
       expect(audioPlayerVM.currentAudioPosition.inSeconds, 560);
 
       // Purge the test playlist directory so that the created test
@@ -938,11 +938,11 @@ void main() {
         audio: selectedPlaylistAudioList[0],
       );
 
-      // obtain the current audio's initial position
+      // obtain the current audios initial position
       Duration currentAudioInitialPosition =
           audioPlayerVM.currentAudioPosition; // 600
 
-      // change the current audio's play slider position to 3
+      // change the current audios play slider position to 3
       // seconds
 
       int backwardNewSliderPositionThreeSeconds = 3;
@@ -950,7 +950,7 @@ void main() {
           durationPosition:
               Duration(seconds: backwardNewSliderPositionThreeSeconds));
 
-      // obtain the current audio's new position
+      // obtain the current audios new position
       Duration currentAudioNewPosition =
           audioPlayerVM.currentAudioPosition; // 3
 
@@ -959,14 +959,14 @@ void main() {
               currentAudioNewPosition.inSeconds,
           348);
 
-      // change the current audio's play position minus 1 minute
+      // change the current audios play position minus 1 minute
 
       int backwardChangePositionOneMinute = -60;
       await audioPlayerVM.changeAudioPlayPosition(
           posOrNegPositionDurationChange:
               Duration(seconds: backwardChangePositionOneMinute));
 
-      // obtain the current audio's changed position (0 second)
+      // obtain the current audios changed position (0 second)
       currentAudioNewPosition = audioPlayerVM.currentAudioPosition;
 
       expect(currentAudioNewPosition.inSeconds, 0);
@@ -974,7 +974,7 @@ void main() {
       // undo the change
       audioPlayerVM.undo();
 
-      // obtain the current audio's position after the undo
+      // obtain the current audios position after the undo
       Duration currentAudioPositionAfterUndo =
           audioPlayerVM.currentAudioPosition;
 
@@ -1003,11 +1003,11 @@ void main() {
         audio: selectedPlaylistAudioList[0],
       );
 
-      // obtain the current audio's initial position
+      // obtain the current audios initial position
       Duration currentAudioInitialPosition =
           audioPlayerVM.currentAudioPosition; // 600
 
-      // change the current audio's play slider position to 3
+      // change the current audios play slider position to 3
       // seconds
 
       int backwardNewSliderPositionThreeSeconds = 3;
@@ -1015,7 +1015,7 @@ void main() {
           durationPosition:
               Duration(seconds: backwardNewSliderPositionThreeSeconds));
 
-      // obtain the current audio's new position
+      // obtain the current audios new position
       Duration currentAudioNewPosition =
           audioPlayerVM.currentAudioPosition; // 3
 
@@ -1024,14 +1024,14 @@ void main() {
               currentAudioNewPosition.inSeconds,
           348);
 
-      // change the current audio's play position minus 1 minute
+      // change the current audios play position minus 1 minute
 
       int backwardChangePositionTenSeconds = -10;
       await audioPlayerVM.changeAudioPlayPosition(
           posOrNegPositionDurationChange:
               Duration(seconds: backwardChangePositionTenSeconds));
 
-      // obtain the current audio's changed position (0 second)
+      // obtain the current audios changed position (0 second)
       currentAudioNewPosition = audioPlayerVM.currentAudioPosition;
 
       expect(currentAudioNewPosition.inSeconds, 0);
@@ -1039,7 +1039,7 @@ void main() {
       // undo the change
       audioPlayerVM.undo();
 
-      // obtain the current audio's position after the undo
+      // obtain the current audios position after the undo
       Duration currentAudioPositionAfterUndo =
           audioPlayerVM.currentAudioPosition;
 
@@ -1068,7 +1068,7 @@ void main() {
         audio: selectedPlaylistAudioList[0],
       );
 
-      // change the current audio's play slider position to 3
+      // change the current audios play slider position to 3
       // seconds
 
       int forwardNewSliderPositionTwentyMinutesTwentyFiveSeconds = 1225;
@@ -1076,20 +1076,20 @@ void main() {
           durationPosition: Duration(
               seconds: forwardNewSliderPositionTwentyMinutesTwentyFiveSeconds));
 
-      // obtain the current audio's new position
+      // obtain the current audios new position
       Duration currentAudioNewPosition =
           audioPlayerVM.currentAudioPosition; // 20 minutes 25 secs = 1225 secs
 
       expect(currentAudioNewPosition.inSeconds, 1225);
 
-      // change the current audio's play position plus 1 minute
+      // change the current audios play position plus 1 minute
 
       int backwardChangePositionOneMinute = 60;
       await audioPlayerVM.changeAudioPlayPosition(
           posOrNegPositionDurationChange:
               Duration(seconds: backwardChangePositionOneMinute));
 
-      // obtain the current audio's changed position (audio duration)
+      // obtain the current audios changed position (audio duration)
       currentAudioNewPosition = audioPlayerVM.currentAudioPosition;
 
       expect(currentAudioNewPosition.inSeconds,
@@ -1098,7 +1098,7 @@ void main() {
       // undo the change
       audioPlayerVM.undo();
 
-      // obtain the current audio's position after the undo
+      // obtain the current audios position after the undo
       Duration currentAudioPositionAfterUndo =
           audioPlayerVM.currentAudioPosition;
 
@@ -1127,7 +1127,7 @@ void main() {
         audio: selectedPlaylistAudioList[0],
       );
 
-      // change the current audio's play slider position to 3
+      // change the current audios play slider position to 3
       // seconds
 
       int forwardNewSliderPositionTwentyMinutesTwentyFiveSeconds = 1225;
@@ -1135,20 +1135,20 @@ void main() {
           durationPosition: Duration(
               seconds: forwardNewSliderPositionTwentyMinutesTwentyFiveSeconds));
 
-      // obtain the current audio's new position
+      // obtain the current audios new position
       Duration currentAudioNewPosition =
           audioPlayerVM.currentAudioPosition; // 20 minutes 25 secs = 1225 secs
 
       expect(currentAudioNewPosition.inSeconds, 1225);
 
-      // change the current audio's play position plus 1 minute
+      // change the current audios play position plus 1 minute
 
       int forwardChangePositionTenSeconds = 10;
       await audioPlayerVM.changeAudioPlayPosition(
           posOrNegPositionDurationChange:
               Duration(seconds: forwardChangePositionTenSeconds));
 
-      // obtain the current audio's changed position (audio duration)
+      // obtain the current audios changed position (audio duration)
       currentAudioNewPosition = audioPlayerVM.currentAudioPosition;
 
       expect(currentAudioNewPosition.inSeconds,
@@ -1157,7 +1157,7 @@ void main() {
       // undo the change
       audioPlayerVM.undo();
 
-      // obtain the current audio's position after the undo
+      // obtain the current audios position after the undo
       Duration currentAudioPositionAfterUndo =
           audioPlayerVM.currentAudioPosition;
 
@@ -1224,7 +1224,7 @@ void main() {
         audio: selectedPlaylistAudioList[0],
       );
 
-      // obtain the current audio's initial position
+      // obtain the current audios initial position
       Duration currentAudioInitialPosition =
           audioPlayerVM.currentAudioPosition; // 600
 
@@ -1232,7 +1232,7 @@ void main() {
 
       await audioPlayerVM.skipToStart();
 
-      // obtain the current audio's changed position
+      // obtain the current audios changed position
       Duration currentAudioChangedPosition = audioPlayerVM.currentAudioPosition;
 
       expect(currentAudioChangedPosition.inSeconds, 0);
@@ -1240,7 +1240,7 @@ void main() {
       // undo the change
       audioPlayerVM.undo();
 
-      // obtain the current audio's position after the undo
+      // obtain the current audios position after the undo
       Duration currentAudioPositionAfterUndo =
           audioPlayerVM.currentAudioPosition;
 
@@ -1250,7 +1250,7 @@ void main() {
       // redo the change
       audioPlayerVM.redo();
 
-      // obtain the current audio's position after the redo
+      // obtain the current audios position after the redo
       Duration currentAudioPositionAfterRedo =
           audioPlayerVM.currentAudioPosition;
 
@@ -1283,12 +1283,12 @@ void main() {
 
       await audioPlayerVM.skipToStart();
 
-      // obtain the current audio's changed position
+      // obtain the current audios changed position
       Duration currentAudioChangedPosition = audioPlayerVM.currentAudioPosition;
 
       expect(currentAudioChangedPosition.inSeconds, 0);
 
-      // change the current audio's play position from the start
+      // change the current audios play position from the start
       // to 100 seconds
 
       int forwardChangePosition = 100;
@@ -1296,7 +1296,7 @@ void main() {
           posOrNegPositionDurationChange:
               Duration(seconds: forwardChangePosition));
 
-      // obtain the current audio's changed position
+      // obtain the current audios changed position
       currentAudioChangedPosition = audioPlayerVM.currentAudioPosition;
 
       expect(
@@ -1306,7 +1306,7 @@ void main() {
 
       await audioPlayerVM.skipToStart();
 
-      // obtain the current audio's changed position
+      // obtain the current audios changed position
       currentAudioChangedPosition = audioPlayerVM.currentAudioPosition;
 
       expect(currentAudioChangedPosition.inSeconds, 0);
@@ -1321,7 +1321,7 @@ void main() {
       // undo forward change to 100 seconds
       audioPlayerVM.undo();
 
-      // obtain the current audio's position after the second undo
+      // obtain the current audios position after the second undo
       Duration currentAudioPositionAfterUndo =
           audioPlayerVM.currentAudioPosition;
 
@@ -1337,7 +1337,7 @@ void main() {
       // redo the first skip to start
       audioPlayerVM.redo();
 
-      // obtain the current audio's position after the redo
+      // obtain the current audios position after the redo
       Duration currentAudioPositionAfterRedo =
           audioPlayerVM.currentAudioPosition;
 
@@ -1346,7 +1346,7 @@ void main() {
       // redo the first forward change to 100 seconds
       audioPlayerVM.redo();
 
-      // obtain the current audio's position after the redo
+      // obtain the current audios position after the redo
       currentAudioPositionAfterRedo = audioPlayerVM.currentAudioPosition;
 
       expect(currentAudioPositionAfterRedo.inSeconds, 100);
@@ -1374,7 +1374,7 @@ void main() {
         audio: selectedPlaylistAudioList[0],
       );
 
-      // obtain the current audio's initial position
+      // obtain the current audios initial position
       Duration currentAudioInitialPosition =
           audioPlayerVM.currentAudioPosition; // 600
 
@@ -1382,7 +1382,7 @@ void main() {
 
       await audioPlayerVM.skipToEndAndPlay();
 
-      // obtain the current audio's changed position
+      // obtain the current audios changed position
       Duration currentAudioChangedPosition = audioPlayerVM.currentAudioPosition;
 
       expect(currentAudioChangedPosition.inSeconds,
@@ -1391,7 +1391,7 @@ void main() {
       // undo the change
       audioPlayerVM.undo();
 
-      // obtain the current audio's position after the undo
+      // obtain the current audios position after the undo
       Duration currentAudioPositionAfterUndo =
           audioPlayerVM.currentAudioPosition;
 
@@ -1401,7 +1401,7 @@ void main() {
       // redo the change
       audioPlayerVM.redo();
 
-      // obtain the current audio's position after the redo
+      // obtain the current audios position after the redo
       Duration currentAudioPositionAfterRedo =
           audioPlayerVM.currentAudioPosition;
 
@@ -1435,7 +1435,7 @@ void main() {
 
       await audioPlayerVM.skipToEndAndPlay();
 
-      // obtain the current audio's changed position
+      // obtain the current audios changed position
       Duration currentAudioChangedPosition = audioPlayerVM.currentAudioPosition;
 
       int currentAudioTotalDurationInSeconds =
@@ -1444,7 +1444,7 @@ void main() {
       expect(currentAudioChangedPosition.inSeconds,
           currentAudioTotalDurationInSeconds);
 
-      // change the current audio's play position from the start
+      // change the current audios play position from the start
       // to 100 seconds
 
       int backwardChangePosition = -100;
@@ -1453,7 +1453,7 @@ void main() {
           posOrNegPositionDurationChange:
               Duration(seconds: backwardChangePosition));
 
-      // obtain the current audio's changed position
+      // obtain the current audios changed position
       currentAudioChangedPosition = audioPlayerVM.currentAudioPosition;
 
       expect(currentAudioChangedPosition.inSeconds,
@@ -1463,7 +1463,7 @@ void main() {
 
       await audioPlayerVM.skipToEndAndPlay();
 
-      // obtain the current audio's changed position
+      // obtain the current audios changed position
       currentAudioChangedPosition = audioPlayerVM.currentAudioPosition;
 
       expect(currentAudioChangedPosition.inSeconds,
@@ -1480,7 +1480,7 @@ void main() {
       // undo backward change to -100 seconds
       audioPlayerVM.undo();
 
-      // obtain the current audio's position after the second undo
+      // obtain the current audios position after the second undo
       Duration currentAudioPositionAfterUndo =
           audioPlayerVM.currentAudioPosition;
 
@@ -1497,7 +1497,7 @@ void main() {
       // redo the first skip to end
       audioPlayerVM.redo();
 
-      // obtain the current audio's position after the redo
+      // obtain the current audios position after the redo
       Duration currentAudioPositionAfterRedo =
           audioPlayerVM.currentAudioPosition;
 
@@ -1507,7 +1507,7 @@ void main() {
       // redo the first backward change to -100 seconds
       audioPlayerVM.redo();
 
-      // obtain the current audio's position after the redo
+      // obtain the current audios position after the redo
       currentAudioPositionAfterRedo = audioPlayerVM.currentAudioPosition;
 
       expect(currentAudioPositionAfterRedo.inSeconds,

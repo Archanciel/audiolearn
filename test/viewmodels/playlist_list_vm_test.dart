@@ -1573,7 +1573,7 @@ void main() {
         their picture from selected playlist. Audio's are deleted from the playable
         list only.''', () {
     test(
-        '''Filtered by 'listenedNoCom' Sort/filtered parms audio's deletion.''',
+        '''Filtered by 'listenedNoCom' Sort/filtered parms audios deletion.''',
         () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -1756,7 +1756,7 @@ void main() {
         downloaded and the playable lists so that they can be redownloaded.''',
       () {
     test(
-        '''Filtered by 'listenedComNoCom' Sort/filtered parms audio's deletion.''',
+        '''Filtered by 'listenedComNoCom' Sort/filtered parms audios deletion.''',
         () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -2406,7 +2406,7 @@ void main() {
       );
     });
   });
-  group('''Delete playlist with pictured audio's''', () {
+  group('''Delete playlist with pictured audios''', () {
     test(
         '''First copy test data. Then verify ordered playlist titles and playlist
           selection as well as pictureAudioMap json content. Then delete playlist

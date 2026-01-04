@@ -265,7 +265,7 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String downloadAudioYoutubeErrorDueToLiveVideoInPlaylist(
       Object playlistTitle, Object liveVideoString) {
-    return 'Erreur de téléchargement audio Youtube. La playlist \"$playlistTitle\" contient une video live qui provoque l\'échec du téléchargement des audio\'s de la playlist. Pour résoudre le problème, après avoir téléchargé l\'audio de la vidéo live comme expliqué ci-dessous, supprimez la vidéo live de la playlist puis redémarrez l\'application et rééssayez.\n\nL\'URL de la vidéo live contient cet élément: \"$liveVideoString\". Afin d\'ajouter l\'audio de cette vidéo live à la playlist \"$playlistTitle\", téléchargez-la séparément en tant que vidéo unique en l\'ajoutant à playlist \"$playlistTitle\".';
+    return 'Erreur de téléchargement audio Youtube. La playlist \"$playlistTitle\" contient une video live qui provoque l\'échec du téléchargement des audios de la playlist. Pour résoudre le problème, après avoir téléchargé l\'audio de la vidéo live comme expliqué ci-dessous, supprimez la vidéo live de la playlist puis redémarrez l\'application et rééssayez.\n\nL\'URL de la vidéo live contient cet élément: \"$liveVideoString\". Afin d\'ajouter l\'audio de cette vidéo live à la playlist \"$playlistTitle\", téléchargez-la séparément en tant que vidéo unique en l\'ajoutant à playlist \"$playlistTitle\".';
   }
 
   @override
@@ -351,7 +351,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get updatePlaylistJsonFilesMenu =>
-      'Mettre à jour les fichiers playlist JSON';
+      'Mettre à jour les fichiers playlist JSON ...';
 
   @override
   String get compactVideoDescription => 'Description vidéo compacte';
@@ -393,10 +393,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get playlistIsSelectedLabel => 'Playlist sélectionnée';
 
   @override
-  String get playlistTotalAudioNumberLabel => 'Nombre audio\'s total';
+  String get playlistTotalAudioNumberLabel => 'Nombre audios total';
 
   @override
-  String get playlistPlayableAudioNumberLabel => 'Nombre audio\'s jouables';
+  String get playlistPlayableAudioNumberLabel => 'Nombre audios jouables';
 
   @override
   String get playlistPlayableAudioTotalDurationLabel =>
@@ -412,11 +412,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get updatePlaylistPlayableAudioList =>
-      'Mettre à jour la liste des audio\'s jouables';
+      'Mettre à jour la liste des audios jouables';
 
   @override
   String updatedPlayableAudioLst(Object number, Object title) {
-    return 'La liste des audio\'s jouables de la playlist \"$title\" a été mise à jour. $number audio ont été supprimés.';
+    return 'La liste des audios jouables de la playlist \"$title\" a été mise à jour. $number audio ont été supprimés.';
   }
 
   @override
@@ -641,7 +641,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get aboutAppDescription =>
-      'Audio Learn vous permet de télécharger l\'audio de vidéos présentes dans des playlists Youtube ajoutées à l\'application, ou l\'audio d\'une vidéo Youtube individuelle à partir de son lien.\n\nVous pouvez également importer des fichiers audio, comme des livres audio, directement dans l\'application ou convertir du texte en audio. Cette fonctionalité est particulièrement utile pour pouvoir écouter des prières écrites trouvées sur Internet.\n\nEn plus de l\'écoute des fichiers audio, Audio Learn offre la possibilité d\'ajouter des commentaires positionnés à chaque fichier, facilitant ainsi la réécoute des passages les plus intéressants.\n\nIl est en outre possible d\'extraire les parties positionnées par les commentaires dans un nouveau fichier MP3 qui peut ensuite être partagé, par email ou via WhatsApp, ou être ajouté à une playlist existante.\n\nEnfin, l\'application permet de trier et filtrer les fichiers audio selon de nombreux critères afin de sélectionner les audio\'s à écouter.';
+      'Audio Learn vous permet de télécharger l\'audio de vidéos présentes dans des playlists Youtube ajoutées à l\'application, ou l\'audio d\'une vidéo Youtube individuelle à partir de son lien.\n\nVous pouvez également importer des fichiers audio, comme des livres audio, directement dans l\'application ou convertir du texte en audio. Cette fonctionalité est particulièrement utile pour pouvoir écouter des prières écrites trouvées sur Internet.\n\nEn plus de l\'écoute des fichiers audio, Audio Learn offre la possibilité d\'ajouter des commentaires positionnés à chaque fichier, facilitant ainsi la réécoute des passages les plus intéressants.\n\nIl est en outre possible d\'extraire les parties positionnées par les commentaires dans un nouveau fichier MP3 qui peut ensuite être partagé, par email ou via WhatsApp, ou être ajouté à une playlist existante.\n\nEnfin, l\'application permet de trier et filtrer les fichiers audio selon de nombreux critères afin de sélectionner les audios à écouter.';
 
   @override
   String get keepAudioEntryInSourcePlaylist =>
@@ -678,7 +678,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get downloadSelPlaylistsButtonTooltip =>
-      'Télécharger les audio\'s de la playlist sélectionnée.';
+      'Télécharger les audios de la playlist sélectionnée.';
 
   @override
   String get audioOneSelectedDialogTitle => 'Sélectionnez un\naudio';
@@ -752,7 +752,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Définir la vitesse de lecture de l\'audio.';
 
   @override
-  String get exclude => 'Exclure les audio\'s ';
+  String get exclude => 'Exclure les audios ';
 
   @override
   String get fullyPlayed => 'terminés';
@@ -790,11 +790,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get andSentencesTooltip =>
-      'Sélectionne les audio\'s qui contiennent tous les mots ou phrases listés.';
+      'Sélectionne les audios qui contiennent tous les mots ou phrases listés.';
 
   @override
   String get orSentencesTooltip =>
-      'Sélectionne les audio\'s qui contienneoptionsnt l\'un des mots ou phrases listés.';
+      'Sélectionne les audios qui contienneoptionsnt l\'un des mots ou phrases listés.';
 
   @override
   String get searchInVideoCompactDescriptionTooltip =>
@@ -830,15 +830,15 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get updatePlaylistJsonFilesMenuTooltip =>
-      'Si un ou plusieurs répertoires de playlists contenant ou non des audio\'s ont été ajoutés ou supprimés manuellement dans le répertoire contenant les playlists de l\'application ou si des audio\'s ont été supprimés manuellement d\'un ou de plusieurs répertoires de playlist, cette fonctionnalité met à jour les fichiers JSON des playlists ainsi que le fichier JSON contenant les paramètres de l\'application afin de refléter les changements dans les écrans de l\'application. Des répertoires de playlist localisés sur un PC peuvent également être copiés dans le répertoire contenant les playlists de l\'application Android. De même, des répertoires de playlist localisés dans Android peuvent également être copiés dans le répertoire contenant les playlists de l\'application PC ...';
+      'Si un ou plusieurs répertoires de playlists contenant ou non des audios ont été ajoutés ou supprimés manuellement dans le répertoire contenant les playlists de l\'application ou si des audios ont été supprimés manuellement d\'un ou de plusieurs répertoires de playlist, cette fonctionnalité met à jour les fichiers JSON des playlists ainsi que le fichier JSON contenant les paramètres de l\'application afin de refléter les changements dans les écrans de l\'application. Des répertoires de playlist localisés sur un PC peuvent également être copiés dans le répertoire contenant les playlists de l\'application Android. De même, des répertoires de playlist localisés dans Android peuvent également être copiés dans le répertoire contenant les playlists de l\'application PC ...';
 
   @override
   String get updatePlaylistPlayableAudioListTooltip =>
-      'Si des audio\'s ont été supprimés manuellement du répertoire de la playlist, cette fonctionnalité met à jour les fichiers JSON de la playlist afin de refléter les changements dans l\'écran de l\'application.';
+      'Si des audios ont été supprimés manuellement du répertoire de la playlist, cette fonctionnalité met à jour les fichiers JSON de la playlist afin de refléter les changements dans l\'écran de l\'application.';
 
   @override
   String get audioPlayedInThisOrderTooltip =>
-      'Les audio\'s sont joués dans cet ordre. Par défaut, les derniers audio\'s téléchargés sont en bas de la liste.';
+      'Les audios sont joués dans cet ordre. Par défaut, les derniers audios téléchargés sont en bas de la liste.';
 
   @override
   String get playableAudioDialogSortDescriptionTooltipBottomDownloadBefore =>
@@ -858,27 +858,28 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get playableAudioDialogSortDescriptionTooltipTopDurationBigger =>
-      'Les audio\'s en haut ont une durée plus longue que ceux d\'en bas.';
+      'Les audios en haut ont une durée plus longue que ceux d\'en bas.';
 
   @override
   String get playableAudioDialogSortDescriptionTooltipTopDurationSmaller =>
-      'Les audio\'s en haut ont une durée plus courte que ceux d\'en bas.';
+      'Les audios en haut ont une durée plus courte que ceux d\'en bas.';
 
   @override
   String get playableAudioDialogSortDescriptionTooltipTopRemainingDurationBigger =>
-      'Les audio\'s en haut ont une durée d\'écoute restante plus longue que ceux d\'en bas.';
+      'Les audios en haut ont une durée d\'écoute restante plus longue que ceux d\'en bas.';
 
   @override
   String get playableAudioDialogSortDescriptionTooltipTopRemainingDurationSmaller =>
-      'Les audio\'s en haut ont une durée d\'écoute restante plus courte que ceux d\'en bas.';
+      'Les audios en haut ont une durée d\'écoute restante plus courte que ceux d\'en bas.';
 
   @override
-  String get playableAudioDialogSortDescriptionTooltipTopLastListenedDateTimeBigger =>
-      'Les audio\'s en haut ont été écoutés plus récemment que ceux d\'en bas.';
+  String
+      get playableAudioDialogSortDescriptionTooltipTopLastListenedDateTimeBigger =>
+          'Les audios en haut ont été écoutés plus récemment que ceux d\'en bas.';
 
   @override
   String get playableAudioDialogSortDescriptionTooltipTopLastListenedDateTimeSmaller =>
-      'Les audio\'s en haut ont été écoutés moins récemment que ceux d\'en bas.';
+      'Les audios en haut ont été écoutés moins récemment que ceux d\'en bas.';
 
   @override
   String get saveAs => 'Enregistrer sous:';
@@ -929,15 +930,15 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get applyToAlreadyDownloadedAudio =>
-      'Appliquer aux audio\'s déjà\ntéléchargés, importés ou\nconvertis';
+      'Appliquer aux audios déjà\ntéléchargés, importés ou\nconvertis';
 
   @override
   String get applyToAlreadyDownloadedAudioTooltip =>
-      'Appliquer la vitesse de lecture aux audio\'s dans toutes les playlists existantes. Si non défini, l\'appliquer uniquement aux nouvelles playlists ajoutées.';
+      'Appliquer la vitesse de lecture aux audios dans toutes les playlists existantes. Si non défini, l\'appliquer uniquement aux nouvelles playlists ajoutées.';
 
   @override
   String get applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip =>
-      'Appliquer la vitesse de lecture aux audio\'s de la playlist actuelle. Si non défini, l\'appliquer uniquement aux audio\'s nouvellement téléchargés ou importés.';
+      'Appliquer la vitesse de lecture aux audios de la playlist actuelle. Si non défini, l\'appliquer uniquement aux audios nouvellement téléchargés ou importés.';
 
   @override
   String get applyToExistingPlaylist => 'Appliquer aux playlists\nexistantes';
@@ -984,11 +985,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get excludingFutureDownloadsHelpContent =>
-      'Si seule la deuxième case est cochée, la vitesse de lecture des audio\'s qui seront téléchargés ultérieurement ne sera pas modifiée dans les playlists existantes. Toutefois, comme mentionné précédemment, les nouvelles playlists utiliseront la vitesse de lecture nouvellement définie pour tous les audio\'s téléchargés.';
+      'Si seule la deuxième case est cochée, la vitesse de lecture des audios qui seront téléchargés ultérieurement ne sera pas modifiée dans les playlists existantes. Toutefois, comme mentionné précédemment, les nouvelles playlists utiliseront la vitesse de lecture nouvellement définie pour tous les audios téléchargés.';
 
   @override
   String get alreadyDownloadedAudiosPlaylistHelpTitle =>
-      'Appliquer aux audio\'s déjà téléchargés ou importés';
+      'Appliquer aux audios déjà téléchargés ou importés';
 
   @override
   String get alreadyDownloadedAudiosPlaylistHelpContent =>
@@ -1003,7 +1004,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get playlistCommentsDialogTitle =>
-      'Commentaires des audio\'s de la playlist';
+      'Commentaires des audios de la playlist';
 
   @override
   String get addPositionedCommentTooltip =>
@@ -1082,7 +1083,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get commentUpdateDateTooltip => 'Date de mise à jour du commentaire';
 
   @override
-  String get playlistCommentMenu => 'Commentaires des audio\'s ...';
+  String get playlistCommentMenu => 'Commentaires des audios ...';
 
   @override
   String get modifyAudioTitle => 'Modifier le titre de l\'audio ...';
@@ -1136,15 +1137,15 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get playlistImportAudioMenu => 'Importer des audio\'s ...';
+  String get playlistImportAudioMenu => 'Importer des audios ...';
 
   @override
   String get playlistImportAudioMenuTooltip =>
-      'Importer des audio\'s MP3 ou des vidéos MP4 converties en audio\'s MP3 dans la playlist afin de pouvoir les écouter ainsi qu\'y ajouter des commentaires positionnés et des photos.';
+      'Importer des audios MP3 ou des vidéos MP4 converties en audios MP3 dans la playlist afin de pouvoir les écouter ainsi qu\'y ajouter des commentaires positionnés et des photos.';
 
   @override
   String get setPlaylistAudioPlaySpeedTooltip =>
-      'Définir la vitesse de lecture audio pour les prochains audio téléchargés dans la playlist ainsi que pour les audio\'s existants.';
+      'Définir la vitesse de lecture audio pour les prochains audio téléchargés dans la playlist ainsi que pour les audios existants.';
 
   @override
   String audioNotImportedToLocalPlaylist(
@@ -1244,26 +1245,26 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get downloadVideoUrlsFromTextFileInPlaylist =>
-      'Télécharger les URL depuis un fichier ...';
+      'Télécharger les URLs depuis un fichier ...';
 
   @override
   String get downloadVideoUrlsFromTextFileInPlaylistTooltip =>
-      'Téléchargez les audio\'s dans la playlist à partir des URL vidéo répertoriées dans un fichier texte à sélectionner. Le fichier texte doit contenir une URL par ligne.';
+      'Téléchargez les audios dans la playlist à partir des URLs vidéo répertoriées dans un fichier texte à sélectionner. Le fichier texte doit contenir une URL par ligne.';
 
   @override
   String downloadAudioFromVideoUrlsInPlaylistTitle(Object title) {
-    return 'Télécharger les audio\'s des videos dans la playlist \"$title\"';
+    return 'Télécharger les audios des videos dans la playlist \"$title\"';
   }
 
   @override
   String downloadAudioFromVideoUrlsInPlaylist(Object number) {
-    return 'Téléchargement de $number audio\'s en qualité sélectionnée.';
+    return 'Téléchargement de $number audios en qualité sélectionnée.';
   }
 
   @override
   String notRedownloadAudioFilesInPlaylistDirectory(
       Object number, Object playlistTitle) {
-    return '$number audio\'s sont déjà contenus dans le répertoire de la playlist cible \"$playlistTitle\" et n\'ont donc pas été re-téléchargés.';
+    return '$number audios sont déjà contenus dans le répertoire de la playlist cible \"$playlistTitle\" et n\'ont donc pas été re-téléchargés.';
   }
 
   @override
@@ -1311,10 +1312,10 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get playlistAudioCommentsLabel => 'Commentaires des audio\'s';
+  String get playlistAudioCommentsLabel => 'Commentaires des audios';
 
   @override
-  String get playlistAudioPicturesLabel => 'Photos des audio\'s';
+  String get playlistAudioPicturesLabel => 'Photos des audios';
 
   @override
   String get listenedOn => 'Écouté le';
@@ -1348,15 +1349,15 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get rewindAudioToStart => 'Repositionner les audio\'s au début';
+  String get rewindAudioToStart => 'Repositionner les audios au début';
 
   @override
   String get rewindAudioToStartTooltip =>
-      'Repositionner tous les audio\'s de la playlist au début. Cela est utile si vous souhaitez réécouter tous les audio\'s.';
+      'Repositionner tous les audios de la playlist au début. Cela est utile si vous souhaitez réécouter tous les audios.';
 
   @override
   String rewindedPlayableAudioNumber(Object number) {
-    return '$number audio\'s de la playlist ont été repositionnés au début et le premier audio écoutable a été selectionné.';
+    return '$number audios de la playlist ont été repositionnés au début et le premier audio écoutable a été selectionné.';
   }
 
   @override
@@ -1375,13 +1376,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String deleteFilteredAudioConfirmationTitle(
       Object sortFilterParmsName, Object playlistTitle) {
-    return 'Supprimer les audio\'s filtrés par le paramètre \"$sortFilterParmsName\" dans la playlist \"$playlistTitle\"';
+    return 'Supprimer les audios filtrés par le paramètre \"$sortFilterParmsName\" dans la playlist \"$playlistTitle\"';
   }
 
   @override
   String deleteFilteredAudioConfirmation(Object deleteAudioNumber,
       Object deleteAudioTotalFileSize, Object deleteAudioTotalDuration) {
-    return 'Nombre d\'audio\'s à supprimer: $deleteAudioNumber,\nTaille totale correspondante: $deleteAudioTotalFileSize,\nDurée totale correspondante: $deleteAudioTotalDuration.';
+    return 'Nombre d\'audios à supprimer: $deleteAudioNumber,\nTaille totale correspondante: $deleteAudioTotalFileSize,\nDurée totale correspondante: $deleteAudioTotalDuration.';
   }
 
   @override
@@ -1391,7 +1392,7 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String deleteFilteredCommentedAudioWarningTitleTwo(
       Object sortFilterParmsName, Object playlistTitle) {
-    return 'des audio\'s COMMENTÉS et non commentés filtrés par le paramètre \"$sortFilterParmsName\" dans la playlist \"$playlistTitle\". Consultez l\'aide pour résoudre le problème.';
+    return 'des audios COMMENTÉS et non commentés filtrés par le paramètre \"$sortFilterParmsName\" dans la playlist \"$playlistTitle\". Consultez l\'aide pour résoudre le problème.';
   }
 
   @override
@@ -1405,11 +1406,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get commentedAudioDeletionHelpTitle =>
-      'Comment créer et utiliser un paramètre de tri/filtrage pour éviter de supprimer les audio\'s commentés ?';
+      'Comment créer et utiliser un paramètre de tri/filtrage pour éviter de supprimer les audios commentés ?';
 
   @override
   String get commentedAudioDeletionHelpContent =>
-      'Ce guide explique comment supprimer les audio\'s entièrement écoutés qui ne sont pas commentés.';
+      'Ce guide explique comment supprimer les audios entièrement écoutés qui ne sont pas commentés.';
 
   @override
   String get commentedAudioDeletionSolutionHelpTitle =>
@@ -1425,7 +1426,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get commentedAudioDeletionOpenSFDialogHelpContent =>
-      'Cliquez sur l\'icône de menu à droite dans la vue de téléchargement des audio\'s, puis sélectionnez \"Trier/Filtrer audio ...\".';
+      'Cliquez sur l\'icône de menu à droite dans la vue de téléchargement des audios, puis sélectionnez \"Trier/Filtrer audio ...\".';
 
   @override
   String get commentedAudioDeletionCreateSFParmHelpTitle =>
@@ -1437,7 +1438,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get commentedAudioDeletionSelectSFParmHelpTitle =>
-      'Une fois enregistré, le paramètre de tri/filtrage est appliqué à la playlist, réduisant la liste affichée des audio\'s.';
+      'Une fois enregistré, le paramètre de tri/filtrage est appliqué à la playlist, réduisant la liste affichée des audios.';
 
   @override
   String get commentedAudioDeletionSelectSFParmHelpContent =>
@@ -1445,25 +1446,25 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get commentedAudioDeletionApplyingNewSFParmHelpTitle =>
-      'Enfin recliquez sur le bouton \"Playlists\" afin de réafficher la liste des playlists, ouvrez le menu de la playlist source et cliquez sur \"Traiter les audio\'s filtrés ...\" puis sur \"Supprimer les audio\'ss filtrés ...\".';
+      'Enfin recliquez sur le bouton \"Playlists\" afin de réafficher la liste des playlists, ouvrez le menu de la playlist source et cliquez sur \"Traiter les audios filtrés ...\" puis sur \"Supprimer les audio\'ss filtrés ...\".';
 
   @override
   String get commentedAudioDeletionApplyingNewSFParmHelpContent =>
-      'Cette fois, puisqu\'un paramètre de tri/filtrage correct est appliqué, aucun avertissement ne sera affiché lors de la suppression des audio\'s sélectionnés non commentés.';
+      'Cette fois, puisqu\'un paramètre de tri/filtrage correct est appliqué, aucun avertissement ne sera affiché lors de la suppression des audios sélectionnés non commentés.';
 
   @override
-  String get filteredAudioActions => 'Traiter les audio\'s filtrés ...';
+  String get filteredAudioActions => 'Traiter les audios filtrés ...';
 
   @override
   String get moveFilteredAudio =>
-      'Déplacer les audio\'s filtrés dans une playlist ...';
+      'Déplacer les audios filtrés dans une playlist ...';
 
   @override
   String get copyFilteredAudio =>
-      'Copier les audio\'s filtrés dans une playlist ...';
+      'Copier les audios filtrés dans une playlist ...';
 
   @override
-  String get deleteFilteredAudio => 'Supprimer les audio\'s filtrés ...';
+  String get deleteFilteredAudio => 'Supprimer les audios filtrés ...';
 
   @override
   String confirmMovedUnmovedAudioNumberFromYoutubeToYoutubePlaylist(
@@ -1737,7 +1738,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get addPrivateYoutubePlaylist =>
-      'Ajouter une playlist YouTube privée n\'est pas possible car les audio\'s d\'une playlist privée ne peuvent pas être téléchargés. Pour résoudre le problème, éditez la playlist sur YouTube et changez sa confidentialité de \"Privée\" à \"Non répertoriée\" ou à \"Publique\", puis réajoutez-la à l\'application.';
+      'Ajouter une playlist YouTube privée n\'est pas possible car les audios d\'une playlist privée ne peuvent pas être téléchargés. Pour résoudre le problème, éditez la playlist sur YouTube et changez sa confidentialité de \"Privée\" à \"Non répertoriée\" ou à \"Publique\", puis réajoutez-la à l\'application.';
 
   @override
   String get addAudioPicture => 'Ajouter une photo à l\'audio ...';
@@ -1774,29 +1775,29 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get deleteFilteredAudioFromPlaylistAsWell =>
-      'Supprimer les audio\'s filtrés de la playlist également ...';
+      'Supprimer les audios filtrés de la playlist également ...';
 
   @override
   String deleteFilteredAudioFromPlaylistAsWellConfirmationTitle(
       Object sortFilterParmsName, Object playlistTitle) {
-    return 'Supprimer les audio\'s filtrés par le paramètre \"$sortFilterParmsName\" de la playlist \"$playlistTitle\" également (pourront être re-téléchargés)';
+    return 'Supprimer les audios filtrés par le paramètre \"$sortFilterParmsName\" de la playlist \"$playlistTitle\" également (pourront être re-téléchargés)';
   }
 
   @override
-  String get redownloadFilteredAudio => 'Re-télécharger les audio\'s filtrés';
+  String get redownloadFilteredAudio => 'Retélécharger les audios filtrés';
 
   @override
   String get redownloadFilteredAudioTooltip =>
-      'Les audio\'s filtrés sont re-téléchargés sous leurs noms de fichiers d\'origine.';
+      'Les audios filtrés sont re-téléchargés sous leurs noms de fichiers d\'origine.';
 
   @override
   String redownloadedAudioNumbersConfirmation(Object playlistTitle,
       Object redownloadedAudioNumber, Object notRedownloadedAudioNumber) {
-    return '\"$redownloadedAudioNumber\" audio\'s ont été re-téléchargés dans la playlist \"$playlistTitle\". \"$notRedownloadedAudioNumber\" audio\'s n\'ont pas été re-téléchargés du fait qu\'ils sont déjà presents dans le répertoire de la playlist.';
+    return '\"$redownloadedAudioNumber\" audios ont été re-téléchargés dans la playlist \"$playlistTitle\". \"$notRedownloadedAudioNumber\" audios n\'ont pas été re-téléchargés du fait qu\'ils sont déjà presents dans le répertoire de la playlist.';
   }
 
   @override
-  String get redownloadDeletedAudio => 'Re-télécharger l\'audio supprimé';
+  String get redownloadDeletedAudio => 'Retélécharger l\'audio supprimé';
 
   @override
   String redownloadedAudioConfirmation(
@@ -1920,15 +1921,15 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get playlistRestorationFirstHelpTitle =>
-      'Situation particuliaire où, après avoir restauré les playlists à partir d\'un fichier ZIP, vous avez exécuté la fonction de mise à jour des fichiers playlist JSON en ayant activé la case à cocher \"Effacer les fichiers audio supprimés\". Comme lors de la restauration à partir d\'un fichier ZIP les fichiers audio ne sont pas restaurés, en applicant la fonction de mise à jour avec l\'effacement des fichiers audio activé, les audio\'s ne sont plus disponibles dans l\'application pour être re-téléchargés.';
+      'Situation particuliaire où, après avoir restauré les playlists à partir d\'un fichier ZIP, vous avez exécuté la fonction de mise à jour des fichiers playlist JSON en ayant activé la case à cocher \"Effacer les fichiers audio supprimés\". Comme lors de la restauration à partir d\'un fichier ZIP les fichiers audio ne sont pas restaurés, en applicant la fonction de mise à jour avec l\'effacement des fichiers audio activé, les audios ne sont plus disponibles dans l\'application pour être re-téléchargés.';
 
   @override
   String get playlistRestorationFirstHelpContent =>
-      'Pour résoudre ce problème, supprimez les playlists impactées par l\'effacement de leurs audio\'s. Deux moyens de suppression peuvent être utilisés:\n\n1 - Suppression dans l\'application\nChaque playlist dispose d\'un menu. Son dernier élément \"Supprimer la playlist ...\" permet d\'effectuer la suppression.\n\n2 - Suppression manuelle\nSi le nombre de playlists est élevé, il est plus productif de se rendre dans le répertoire de l\'application qui contient les playlists, de sélectionner les playlists à effacer et de supprimer le groupe sélectionné.';
+      'Pour résoudre ce problème, supprimez les playlists impactées par l\'effacement de leurs audios. Deux moyens de suppression peuvent être utilisés:\n\n1 - Suppression dans l\'application\nChaque playlist dispose d\'un menu. Son dernier élément \"Supprimer la playlist ...\" permet d\'effectuer la suppression.\n\n2 - Suppression manuelle\nSi le nombre de playlists est élevé, il est plus productif de se rendre dans le répertoire de l\'application qui contient les playlists, de sélectionner les playlists à effacer et de supprimer le groupe sélectionné.';
 
   @override
   String get playlistRestorationSecondHelpTitle =>
-      'Une fois les playlists affectées supprimées, restaurez-les à nouveau à partir du fichier ZIP en vous assurant que la case \"Effacer les fichiers audio supprimés\" reste DÉCOCHÉE. Cette étape est cruciale car elle permettra aux fichiers audio de rester disponibles pour le téléchargement après la restauration.';
+      'Une fois les playlists affectées supprimées, restaurez-les à nouveau à partir du fichier ZIP. Ensuite, vous pouvez retélécharger les fichiers audio non lisibles via le menu de la playlist \"Traiter audios filtrés\" puis le sous-menu \"Retélécharger les audios filtrés\". Si le paramètre de filtre de tri \"défaut\" est sélectionné, tous les fichiers audio non lisibles seront retéléchargés. Pour limiter les fichiers retéléchargés, sélectionnez ou définissez un paramètre de filtre de tri spécifique.';
 
   @override
   String get playlistJsonFilesUpdateDialogTitle =>
@@ -1959,7 +1960,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get saveUniquePlaylistCommentsAndPicturesToZipTooltip =>
-      'Sauvegarde la playlist, les commentaires et les photos de ses audio\'s dans un fichier ZIP. Seuls les fichiers JSON et JPG sont copiés. Les fichiers MP3 ne sont pas inclus.';
+      'Sauvegarde la playlist, les commentaires et les photos de ses audios dans un fichier ZIP. Seuls les fichiers JSON et JPG sont copiés. Les fichiers MP3 ne sont pas inclus.';
 
   @override
   String savedUniquePlaylistToZip(Object filePathName) {
@@ -1970,28 +1971,27 @@ class AppLocalizationsFr extends AppLocalizations {
   String get downloadedCheckbox => 'Téléchargé';
 
   @override
-  String get downloadedCheckboxTooltip =>
-      'Selectionne les audio\'s téléchargés.';
+  String get downloadedCheckboxTooltip => 'Selectionne les audios téléchargés.';
 
   @override
   String get importedCheckbox => 'Importé';
 
   @override
-  String get importedCheckboxTooltip => 'Selectionne les audio\'s importés.';
+  String get importedCheckboxTooltip => 'Selectionne les audios importés.';
 
   @override
   String get convertedCheckbox => 'Converti';
 
   @override
   String get convertedCheckboxTooltip =>
-      'Selectionne les audio\'s contenant un texte converti en MP3.';
+      'Selectionne les audios contenant un texte converti en MP3.';
 
   @override
   String get extractedCheckbox => 'Extrait';
 
   @override
   String get extractedCheckboxTooltip =>
-      'Selectionne les audio\'s créés par l\'extraction de commentaire(s) en MP3. Si nécessaire, assurez-vous que les deux cases \"Qual. musicale\" et \"Q orale\" sont cochées.';
+      'Selectionne les audios créés par l\'extraction de commentaire(s) en MP3. Si nécessaire, assurez-vous que les deux cases \"Qual. musicale\" et \"Q orale\" sont cochées.';
 
   @override
   String get restoredElementsHelpTitle => 'Description des éléments restaurés';
@@ -2008,7 +2008,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get savePlaylistsAudioMp3FilesToZipMenu =>
-      'Sauver les audio\'s MP3 des playlists dans des fichiers ZIP ...';
+      'Sauver les audios MP3 des playlists dans des fichiers ZIP ...';
 
   @override
   String get savePlaylistsAudioMp3FilesToZipTooltip =>
@@ -2042,7 +2042,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get savePlaylistAudioMp3FilesToZipMenu =>
-      'Sauver les audio\'s MP3 de la playlist dans 1 ou n fichier(s) ZIP ...';
+      'Sauver les audios MP3 de la playlist dans 1 ou n fichier(s) ZIP ...';
 
   @override
   String get savePlaylistAudioMp3FilesToZipTooltip =>
@@ -2122,26 +2122,26 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get restorePlaylistsAudioMp3FilesFromZipMenu =>
-      'Restaurer les audio\'s MP3 des playlists depuis un ou plusieurs fichier(s) ZIP ...';
+      'Restaurer les audios MP3 des playlists depuis un ou plusieurs fichier(s) ZIP ...';
 
   @override
   String get restorePlaylistsAudioMp3FilesFromZipTooltip =>
-      'Restaure les audio\'s MP3 des playlists à partir d\'un fichier ZIP préalablement sauvé. Seuls les fichiers MP3 qui correspondent aux audio\'s listés dans les playlists et qui ne sont pas déjà présents dans ces playlists sont restaurés.';
+      'Restaure les audios MP3 des playlists à partir d\'un fichier ZIP préalablement sauvé. Seuls les fichiers MP3 qui correspondent aux audios listés dans les playlists et qui ne sont pas déjà présents dans ces playlists sont restaurés.';
 
   @override
   String get audioMp3RestorationDialogTitle => 'Restauration des MP3';
 
   @override
   String get audioMp3RestorationExplanation =>
-      'Seuls les fichiers MP3 qui correspondent aux audio\'s listés dans les playlists et qui ne sont pas déjà présents dans les playlists sont restaurés.';
+      'Seuls les fichiers MP3 qui correspondent aux audios listés dans les playlists et qui ne sont pas déjà présents dans les playlists sont restaurés.';
 
   @override
   String get restorePlaylistAudioMp3FilesFromZipMenu =>
-      'Restaurer les audio\'s MP3 de la playlist depuis un ou plusieurs fichier(s) ZIP ...';
+      'Restaurer les audios MP3 de la playlist depuis un ou plusieurs fichier(s) ZIP ...';
 
   @override
   String get restorePlaylistAudioMp3FilesFromZipTooltip =>
-      'Restaure les audio\'s MP3 de la playlist à partir d\'un fichier ZIP préalablement sauvé. Seuls les fichiers MP3 qui correspondent aux audio\'s listés dans la playlist et qui ne sont pas déjà présents dans cette playlist sont restaurés.';
+      'Restaure les audios MP3 de la playlist à partir d\'un fichier ZIP préalablement sauvé. Seuls les fichiers MP3 qui correspondent aux audios listés dans la playlist et qui ne sont pas déjà présents dans cette playlist sont restaurés.';
 
   @override
   String get audioMp3UniquePlaylistRestorationDialogTitle =>
@@ -2149,7 +2149,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get audioMp3UniquePlaylistRestorationExplanation =>
-      'Seuls les fichiers MP3 qui correspondent aux audio\'s listés dans la playlist et qui ne sont pas déjà présents dans cette playlist sont restaurés.';
+      'Seuls les fichiers MP3 qui correspondent aux audios listés dans la playlist et qui ne sont pas déjà présents dans cette playlist sont restaurés.';
 
   @override
   String playlistInvalidRootPathWarning(
@@ -2241,7 +2241,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get obtainMostRecentAudioDownloadDateTimeTooltip =>
-      'Trouve la date de téléchargement audio la plus récente parmi toutes les playlists. Utilisez cette date lors de la création de sauvegardes ZIP avec le menu \'Sauver les audio\'s MP3 des playlists dans des fichiers ZIP\' pour ne capturer que les fichiers audio les plus récents afin de les restaurer dans cette version de l\'application.';
+      'Trouve la date de téléchargement audio la plus récente parmi toutes les playlists. Utilisez cette date lors de la création de sauvegardes ZIP avec le menu \'Sauver les audios MP3 des playlists dans des fichiers ZIP\' pour ne capturer que les fichiers audio les plus récents afin de les restaurer dans cette version de l\'application.';
 
   @override
   String get displayNewestAudioDownloadDateTimeTitle =>
@@ -2259,7 +2259,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get audioTitleModificationHelpContent =>
-      'Par exemple, si dans une playlist on dispose de trois audio\'s qui ont été téléchargés dans cet ordre:\n  dernier\n  premier\n  deuxième\net que l\'on souhaite écouter dans l\'ordre en rapport avec leur titre, il est utile de renommer les titres de cette manière:\n  3-dernier\n  1-premier\n  2-deuxième\n\nEnsuite il faut cliquer sur le menu \"Trier/filtrer audio ...\" afin de définir un tri que l\'on nomme et qui trie les audios selon leur titre.\n\nUne fois le dialogue \"Paramètres tri et filtre\" ouvert, définir le nom du filtre dans le champ \"Enregistrer sous:\" et ouvrir la liste \"Trier par:\". Sélectionner \"Titre audio\" et ensuite supprimer \"Date téléch audio\". Enfin, cliquer sur \"Sauver\".\n\nUne fois que ce tri est défini, on vérifie qu\'il est sélectionné et l\'on utilise le menu \"Sauvegarder les paramètres tri/filtre dans la playlist ...\" en sélectionnant l\'écran pour lequel le tri sera appliqué. Ainsi, les audios seront joués dans l\'ordre dans lequel on souhaite les écouter.';
+      'Par exemple, si dans une playlist on dispose de trois audios qui ont été téléchargés dans cet ordre:\n  dernier\n  premier\n  deuxième\net que l\'on souhaite écouter dans l\'ordre en rapport avec leur titre, il est utile de renommer les titres de cette manière:\n  3-dernier\n  1-premier\n  2-deuxième\n\nEnsuite il faut cliquer sur le menu \"Trier/filtrer audio ...\" afin de définir un tri que l\'on nomme et qui trie les audios selon leur titre.\n\nUne fois le dialogue \"Paramètres tri et filtre\" ouvert, définir le nom du filtre dans le champ \"Enregistrer sous:\" et ouvrir la liste \"Trier par:\". Sélectionner \"Titre audio\" et ensuite supprimer \"Date téléch audio\". Enfin, cliquer sur \"Sauver\".\n\nUne fois que ce tri est défini, on vérifie qu\'il est sélectionné et l\'on utilise le menu \"Sauvegarder les paramètres tri/filtre dans la playlist ...\" en sélectionnant l\'écran pour lequel le tri sera appliqué. Ainsi, les audios seront joués dans l\'ordre dans lequel on souhaite les écouter.';
 
   @override
   String get playlistConvertTextToAudioMenu =>
@@ -2267,7 +2267,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get playlistConvertTextToAudioMenuTooltip =>
-      'Convertir un texte en audio écoutable qui est ajouté à la playlist. Comme pour les autres audio\'s, il sera possible d\'ajouter des commentaires positionnés ou une image à cet audio.';
+      'Convertir un texte en audio écoutable qui est ajouté à la playlist. Comme pour les autres audios, il sera possible d\'ajouter des commentaires positionnés ou une image à cet audio.';
 
   @override
   String get convertTextToAudioDialogTitle => 'Convertir le texte en audio';
@@ -2475,7 +2475,7 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String confirmAudioFromPlaylistDeletion(
       Object audioTitle, Object playlistTitle) {
-    return 'Supprimez l\'audio \"$audioTitle\" de la playlist \"$playlistTitle\" définie sur le site Youtube, sinon l\'audio sera téléchargé à nouveau lors du prochain téléchargement de la playlist. Ou alors cliquez sur \"Annuler\" et choisissez \"Supprimer l\'audio ...\" au lieu de \"Supprimer l\'audio de la playlist également ...\". Ainsi, l\'audio sera supprimé de la liste des audio\'s jouables, mais restera dans la liste des audio\'s téléchargés, ce qui évitera son re-téléchargement.';
+    return 'Supprimez l\'audio \"$audioTitle\" de la playlist \"$playlistTitle\" définie sur le site Youtube, sinon l\'audio sera téléchargé à nouveau lors du prochain téléchargement de la playlist. Ou alors cliquez sur \"Annuler\" et choisissez \"Supprimer l\'audio ...\" au lieu de \"Supprimer l\'audio de la playlist également ...\". Ainsi, l\'audio sera supprimé de la liste des audios jouables, mais restera dans la liste des audios téléchargés, ce qui évitera son re-téléchargement.';
   }
 
   @override
@@ -2524,11 +2524,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get playableAudioDialogSortDescriptionTooltipTopLastCommentDateTimeBigger =>
-      'Le dernier commentaire des audio\'s en haut a été plus récemment créé ou modifié que le dernier commentaire des audio\'s d\'en bas.';
+      'Le dernier commentaire des audios en haut a été plus récemment créé ou modifié que le dernier commentaire des audios d\'en bas.';
 
   @override
   String get playableAudioDialogSortDescriptionTooltipTopLastCommentDateTimeSmaller =>
-      'Le dernier commentaire des audio\'s en haut a été moins récemment créé ou modifié que le dernier commentaire des audio\'s d\'en bas.';
+      'Le dernier commentaire des audios en haut a été moins récemment créé ou modifié que le dernier commentaire des audios d\'en bas.';
 
   @override
   String get audioStateNoComment => 'Non commenté';
@@ -2583,7 +2583,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get addPositionToAudioTitleMenu =>
-      'Ajouter la position au titre des audio\'s';
+      'Ajouter la position au titre des audios';
 
   @override
   String get moveAudioToPositionMenu => 'Déplacer l\'audio à la position ...';

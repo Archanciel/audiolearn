@@ -1930,7 +1930,7 @@ class IntegrationTestUtil {
   ///
   /// [playlistAudioPictureJsonFileNameLst] is the list of json files names
   /// created in the playlist picture directory [playlistPictureJsonFilesDir].
-  /// Example: if the playlist has 3 audio's of which 2 were modified with one
+  /// Example: if the playlist has 3 audios of which 2 were modified with one
   /// or more pictures, the [playlistAudioPictureJsonFileNameLst] has 2 json
   /// files names.
   ///

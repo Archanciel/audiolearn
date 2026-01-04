@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:archive/archive.dart';
 import 'package:audiolearn/models/audio.dart';
-import 'package:audiolearn/models/comment.dart';
 import 'package:audiolearn/models/picture.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/audio_player_vm.dart';
@@ -3872,7 +3871,7 @@ void main() {
       });
     });
     group(
-        '''Use a search word to select audio's and start moving or copying one audio
+        '''Use a search word to select audios and start moving or copying one audio
           verifying the displayed target playlists is not filtered by the search
           sentence.''', () {
       testWidgets(
@@ -4121,7 +4120,7 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Rewind all 'S8 audio" playlist audio's to start position
+      // Rewind all 'S8 audio" playlist audios to start position
       await _tapOnRewindPlaylistAudioToStartPositionMenu(
         tester: tester,
         playlistToRewindTitle: youtubePlaylistToRewindTitle,
@@ -4232,7 +4231,7 @@ void main() {
 
       const String youtubePlaylistToRewindTitle = 'S8 audio';
 
-      // Rewind all 'S8 audio" playlist audio's to start position
+      // Rewind all 'S8 audio" playlist audios to start position
       await _tapOnRewindPlaylistAudioToStartPositionMenu(
         tester: tester,
         playlistToRewindTitle: youtubePlaylistToRewindTitle,
@@ -6295,7 +6294,7 @@ void main() {
         await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
           tester: tester,
           confirmDialogTitleOne:
-              "Delete audio's filtered by \"$sortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\"",
+              "Delete audios filtered by \"$sortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\"",
           confirmDialogMessage:
               "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
           confirmOrCancelAction: true, // Confirm button is tapped
@@ -6585,7 +6584,7 @@ void main() {
         await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
           tester: tester,
           confirmDialogTitleOne:
-              "Delete audio's filtered by \"$sortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\"",
+              "Delete audios filtered by \"$sortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\"",
           confirmDialogMessage:
               "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
           confirmOrCancelAction: true, // Confirm button is tapped
@@ -6873,7 +6872,7 @@ void main() {
         await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
           tester: tester,
           confirmDialogTitleOne:
-              "Delete audio's filtered by \"$sortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\"",
+              "Delete audios filtered by \"$sortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\"",
           confirmDialogMessage:
               "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
           confirmOrCancelAction: true, // Confirm button is tapped
@@ -7219,7 +7218,7 @@ void main() {
         await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
           tester: tester,
           confirmDialogTitleOne:
-              "Delete audio's filtered by \"$sortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\"",
+              "Delete audios filtered by \"$sortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\"",
           confirmDialogMessage:
               "Audio's to delete number: 2,\nCorresponding total file size: 9.96 MB,\nCorresponding total duration: 00:27:14.",
           confirmOrCancelAction: true, // Confirm button is tapped
@@ -7539,9 +7538,9 @@ void main() {
           tester: tester,
           confirmDialogTitleOne: 'WARNING: you are going to',
           confirmDialogTitleTwo:
-              "delete COMMENTED and uncommented audio's filtered by \"$sortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\". Watch the help to solve the problem ...",
+              "delete COMMENTED and uncommented audios filtered by \"$sortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\". Watch the help to solve the problem ...",
           confirmDialogMessage:
-              "Total audio's to delete number: 4,\nCOMMENTED audio's to delete number: 2,\nCorresponding total file size: 21.86 MB,\nCorresponding total duration: 00:59:45.",
+              "Total audios to delete number: 4,\nCOMMENTED audios to delete number: 2,\nCorresponding total file size: 21.86 MB,\nCorresponding total duration: 00:59:45.",
           isHelpIconPresent: true,
           confirmOrCancelAction: true, // Confirm button is tapped
         );
@@ -7881,9 +7880,9 @@ void main() {
           tester: tester,
           confirmDialogTitleOne: 'WARNING: you are going to',
           confirmDialogTitleTwo:
-              "delete COMMENTED and uncommented audio's filtered by \"$defaultSortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\". Watch the help to solve the problem ...",
+              "delete COMMENTED and uncommented audios filtered by \"$defaultSortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\". Watch the help to solve the problem ...",
           confirmDialogMessage:
-              "Total audio's to delete number: 7,\nCOMMENTED audio's to delete number: 3,\nCorresponding total file size: 31.99 MB,\nCorresponding total duration: 01:27:27.",
+              "Total audios to delete number: 7,\nCOMMENTED audios to delete number: 3,\nCorresponding total file size: 31.99 MB,\nCorresponding total duration: 01:27:27.",
           isHelpIconPresent: true,
           confirmOrCancelAction: true, // Confirm button is tapped
         );
@@ -9584,7 +9583,7 @@ void main() {
           currentAudioSubTitle: currentAudioSubTitle,
         );
 
-        // Verifying the moved audio's to which a picture is associated
+        // Verifying the moved audios to which a picture is associated
 
         const String pictureFileNameOne =
             "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.json";
@@ -11714,7 +11713,7 @@ void main() {
           currentAudioSubTitle: currentAudioSubTitle,
         );
 
-        // Verifying the copied audio's to which a picture is associated
+        // Verifying the copied audios to which a picture is associated
 
         const String pictureFileNameOne =
             "240701-163607-La surpopulation mondiale par Jancovici et Barrau 23-12-03.json";
@@ -13063,7 +13062,7 @@ void main() {
     group('App settings set speed test', () {
       testWidgets(
           '''Modify playback speed without selecting existing playlists or already downloaded or imported
-            audio's. Finally, create a new playlist and verify that its audio play speed is equal to the
+            audios. Finally, create a new playlist and verify that its audio play speed is equal to the
             modified playback speed.''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
@@ -13192,7 +13191,7 @@ void main() {
       });
       testWidgets(
           '''Modify playback speed with selecting existing playlists and without selecting already
-            downloaded or imported audio's. Finally, create a new playlist and verify that its audio
+            downloaded or imported audios. Finally, create a new playlist and verify that its audio
             play speed is equal to the modified playback speed.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
@@ -13326,7 +13325,7 @@ void main() {
       });
       testWidgets(
           '''Modify playback speed without selecting existing playlists and with selecting already
-            downloaded or imported audio's. Finally, create a new playlist and verify that its audio
+            downloaded or imported audios. Finally, create a new playlist and verify that its audio
             play speed is equal to the modified playback speed.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
@@ -13525,7 +13524,7 @@ void main() {
       });
       testWidgets(
           '''Modify playback speed with selecting existing playlists and with selecting already
-            downloaded or imported audio's. Finally, create a new playlist and verify that its audio
+            downloaded or imported audios. Finally, create a new playlist and verify that its audio
             play speed is equal to the modified playback speed.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
@@ -19378,7 +19377,7 @@ void main() {
               is selected to Windows application containing 'A restaurer' and 'local' playlists
               in which 'local' is selected.
               
-              Then, select a SF parm and redownload the filtered audio's. Finally, redownload an
+              Then, select a SF parm and redownload the filtered audios. Finally, redownload an
               individual not playable audio.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
@@ -19747,7 +19746,7 @@ void main() {
             // await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
             //   tester: tester,
             //   confirmDialogTitleOne:
-            //       "Delete audio's filtered by \"\" parms from playlist \"\"",
+            //       "Delete audios filtered by \"\" parms from playlist \"\"",
             //   confirmDialogMessage:
             //       "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
             //   confirmOrCancelAction: true, // Confirm button is tapped
@@ -19822,7 +19821,7 @@ void main() {
 
             // Verify the content of the 'S8 audio' playlist dir
             // and comments and pictures dir after redownloading
-            // filtered audio's by 'commented_7MB' SF parms as well
+            // filtered audios by 'commented_7MB' SF parms as well
             // as redownloading single audio 'Interview de Chat GPT
             // - IA, intelligence, philosophie, géopolitique,
             // post-vérité...'.
@@ -19855,7 +19854,7 @@ void main() {
               is selected to Windows application containing 'A restaurer' and 'local' playlists
               in which 'local' is selected.
               
-              Then, select a SF parm and redownload the filtered audio's. Finally, redownload an
+              Then, select a SF parm and redownload the filtered audios. Finally, redownload an
               individual not playable audio.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
@@ -20208,7 +20207,7 @@ void main() {
             // await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
             //   tester: tester,
             //   confirmDialogTitleOne:
-            //       "Delete audio's filtered by \"\" parms from playlist \"\"",
+            //       "Delete audios filtered by \"\" parms from playlist \"\"",
             //   confirmDialogMessage:
             //       "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
             //   confirmOrCancelAction: true, // Confirm button is tapped
@@ -20283,7 +20282,7 @@ void main() {
 
             // Verify the content of the 'S8 audio' playlist dir
             // and comments and pictures dir after redownloading
-            // filtered audio's by 'commented_7MB' SF parms as well
+            // filtered audios by 'commented_7MB' SF parms as well
             // as redownloading single audio 'Interview de Chat GPT
             // - IA, intelligence, philosophie, géopolitique,
             // post-vérité...'.
@@ -20321,7 +20320,7 @@ void main() {
               in which 'local' is selected. After restoration, 'local' remains selected and 'S8 audio'
               is not selected anymore.
               
-              Then, select a SF parm and redownload the filtered audio's. Finally, redownload an
+              Then, select a SF parm and redownload the filtered audios. Finally, redownload an
               individual not playable audio.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
@@ -20513,7 +20512,7 @@ void main() {
               in which 'local' is selected. After restoration, 'local' remains selected and 'S8 audio'
               is not selected anymore.
               
-              Then, select a SF parm and redownload the filtered audio's. Finally, redownload an
+              Then, select a SF parm and redownload the filtered audios. Finally, redownload an
               individual not playable audio.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
@@ -20668,7 +20667,7 @@ void main() {
               in which the 'local' playlist was unselected. After restoration, since 'local' was
               selected in the zip file, it will be reselected.
               
-              Then, select a SF parm and redownload the filtered audio's. Finally, redownload an
+              Then, select a SF parm and redownload the filtered audios. Finally, redownload an
               individual not playable audio.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
@@ -21052,7 +21051,7 @@ void main() {
             // await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
             //   tester: tester,
             //   confirmDialogTitleOne:
-            //       "Delete audio's filtered by \"\" parms from playlist \"\"",
+            //       "Delete audios filtered by \"\" parms from playlist \"\"",
             //   confirmDialogMessage:
             //       "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
             //   confirmOrCancelAction: true, // Confirm button is tapped
@@ -21127,7 +21126,7 @@ void main() {
 
             // Verify the content of the 'S8 audio' playlist dir
             // and comments and pictures dir after redownloading
-            // filtered audio's by 'commented_7MB' SF parms as well
+            // filtered audios by 'commented_7MB' SF parms as well
             // as redownloading single audio 'Interview de Chat GPT
             // - IA, intelligence, philosophie, géopolitique,
             // post-vérité...'.
@@ -21175,7 +21174,7 @@ void main() {
               was selected in the zip file, since the existing playlists are not replaced, no
               playlist will be selected.
 
-              Then, select a SF parm and redownload the filtered audio's. Finally, redownload an
+              Then, select a SF parm and redownload the filtered audios. Finally, redownload an
               individual not playable audio.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
@@ -21562,7 +21561,7 @@ void main() {
             // await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
             //   tester: tester,
             //   confirmDialogTitleOne:
-            //       "Delete audio's filtered by \"\" parms from playlist \"\"",
+            //       "Delete audios filtered by \"\" parms from playlist \"\"",
             //   confirmDialogMessage:
             //       "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
             //   confirmOrCancelAction: true, // Confirm button is tapped
@@ -21637,7 +21636,7 @@ void main() {
 
             // Verify the content of the 'S8 audio' playlist dir
             // and comments and pictures dir after redownloading
-            // filtered audio's by 'commented_7MB' SF parms as well
+            // filtered audios by 'commented_7MB' SF parms as well
             // as redownloading single audio 'Interview de Chat GPT
             // - IA, intelligence, philosophie, géopolitique,
             // post-vérité...'.
@@ -21675,7 +21674,7 @@ void main() {
               which 'local' was unselected. After restoration, 'S8 audio' will be selected since it
               was selected in the zip file.
               
-              Then, select a SF parm and redownload the filtered audio's. Finally, redownload an
+              Then, select a SF parm and redownload the filtered audios. Finally, redownload an
               individual not playable audio.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
@@ -21875,7 +21874,7 @@ void main() {
               in which 'local' was unselected. After restoration, 'S8 audio' will be selected since
               it was selected in the zip file.
               
-              Then, select a SF parm and redownload the filtered audio's. Finally, redownload an
+              Then, select a SF parm and redownload the filtered audios. Finally, redownload an
               individual not playable audio.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
@@ -22031,17 +22030,17 @@ void main() {
       });
       group(
           '''On not empty app dir where a playlist is selected, restore Windows zip in which playlist(s)
-          corresponding to existing playlist(s) contain additional audio's to which comments and pictures
+          corresponding to existing playlist(s) contain additional audios to which comments and pictures
           are associated. This situation happens if the AudioLearn application exists on two different
           engines and the user wants to restore the playlists, comments and pictures from one computer
-          to another in order to add to the target pc or smartphone the audio's downloaded on the source
+          to another in order to add to the target pc or smartphone the audios downloaded on the source
           engine. The audio mp3 files are not added since they are not in the zip file. But the Audio
           objects are added to the existing playlist and so can be redownloaded if needed.''',
           () {
         testWidgets(
             '''Unique playlist restore, not replace existing playlist. Restore unique playlist Windows zip
             containing 'S8 audio' playlist to Windows application which contains 'S8 audio' and 'local'
-            playlists. The restored 'S8 audio' playlist contains additional audio's to which comments and
+            playlists. The restored 'S8 audio' playlist contains additional audios to which comments and
             pictures are associated.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
@@ -22170,7 +22169,7 @@ void main() {
         testWidgets(
             '''Multiple playlists restore, not replace existing playlists. Restore multiple playlists Windows
              zip containing 'S8 audio' and 'local' playlists to Windows application which contain 'S8 audio'
-             and 'local' playlists. The restored 'S8 audio' and 'local' playlists contains additional audio's
+             and 'local' playlists. The restored 'S8 audio' and 'local' playlists contains additional audios
              to which comments and pictures are associated.''',
             (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
@@ -23810,7 +23809,7 @@ void main() {
           testWidgets(
               '''Restore not replace unique playlist. Not replacing existing playlist. Restore
             unique playlist Windows zip containing 'Restore- short - test - playlist' playlist with
-            3 short audio's to empty Windows application. Then redownload the restored audio in
+            3 short audios to empty Windows application. Then redownload the restored audio in
             2 ways: redownload sort/filtered audio and redownload single audio.''',
               (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
@@ -23970,7 +23969,7 @@ void main() {
             );
 
             // Define a sort/filter parms in order to be able to select the
-            // audio's which will be redoenloaded
+            // audios which will be redoenloaded
 
             // Open the audio popup menu
             await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
@@ -24160,7 +24159,7 @@ void main() {
           testWidgets(
               '''Restore replace unique playlist. Replacing existing playlist. Restore unique
             playlist Windows zip containing 'Restore- short - test - playlist' playlist with 3
-            short audio's to empty Windows application. Then redownload the restored audio in
+            short audios to empty Windows application. Then redownload the restored audio in
             2 ways: redownload sort/filtered audio and redownload single audio.''',
               (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
@@ -24320,7 +24319,7 @@ void main() {
             );
 
             // Define a sort/filter parms in order to be able to select the
-            // audio's which will be redoenloaded
+            // audios which will be redoenloaded
 
             // Open the audio popup menu
             await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
@@ -24511,7 +24510,7 @@ void main() {
           testWidgets(
               '''Restore not replace unique playlist. Not replacing existing playlist. Restore unique
             playlist Windows zip containing 'Local restore- short - test - playlist' playlist with 3 short
-            audio's to empty Windows application. Then redownload the restored audio in 2 ways:
+            audios to empty Windows application. Then redownload the restored audio in 2 ways:
             redownload sort/filtered audio and redownload single audio.''',
               (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
@@ -24671,7 +24670,7 @@ void main() {
             );
 
             // Define a sort/filter parms in order to be able to select the
-            // audio's which will be redoenloaded
+            // audios which will be redoenloaded
 
             // Open the audio popup menu
             await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
@@ -24860,7 +24859,7 @@ void main() {
           testWidgets(
               '''Restore replace unique playlist. Replacing existing playlist. Restore unique
             playlist Windows zip containing 'Local restore- short - test - playlist' playlist with 3
-            short audio's to empty Windows application. Then redownload the restored audio in
+            short audios to empty Windows application. Then redownload the restored audio in
             2 ways: redownload sort/filtered audio and redownload single audio.''',
               (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
@@ -25020,7 +25019,7 @@ void main() {
             );
 
             // Define a sort/filter parms in order to be able to select the
-            // audio's which will be redoenloaded
+            // audios which will be redoenloaded
 
             // Open the audio popup menu
             await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
@@ -27813,7 +27812,7 @@ void main() {
           testWidgets(
               '''Restore not replace unique playlist. Not replacing existing playlist. Restore
             unique playlist Android zip containing 'Restore- short - test - playlist' playlist with
-            3 short audio's to empty Windows application. Then redownload the restored audio in
+            3 short audios to empty Windows application. Then redownload the restored audio in
             2 ways: redownload sort/filtered audio and redownload single audio.''',
               (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
@@ -27973,7 +27972,7 @@ void main() {
             );
 
             // Define a sort/filter parms in order to be able to select the
-            // audio's which will be redoenloaded
+            // audios which will be redoenloaded
 
             // Open the audio popup menu
             await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
@@ -28162,7 +28161,7 @@ void main() {
           testWidgets(
               '''Restore replace unique playlist. Replacing existing playlist. Restore unique
             playlist Android zip containing 'Restore- short - test - playlist' playlist with 3
-            short audio's to empty Windows application. Then redownload the restored audio in
+            short audios to empty Windows application. Then redownload the restored audio in
             2 ways: redownload sort/filtered audio and redownload single audio.''',
               (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
@@ -28323,7 +28322,7 @@ void main() {
             );
 
             // Define a sort/filter parms in order to be able to select the
-            // audio's which will be redoenloaded
+            // audios which will be redoenloaded
 
             // Open the audio popup menu
             await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
@@ -29305,17 +29304,17 @@ void main() {
       });
       group(
           '''On not empty app dir where a playlist is selected, restore Android zip in which playlist(s)
-          corresponding to existing playlist(s) contain additional audio's to which comments and pictures
+          corresponding to existing playlist(s) contain additional audios to which comments and pictures
           are associated. This situation happens if the AudioLearn application exists on two different
           engines and the user wants to restore the playlists, comments and pictures from one computer
-          to another in order to add to the target pc or smartphone the audio's downloaded on the source
+          to another in order to add to the target pc or smartphone the audios downloaded on the source
           engine. The audio mp3 files are not added since they are not in the zip file. But the Audio
           objects are added to the existing playlist and so can be redownloaded if needed.''',
           () {
         testWidgets(
             '''Unique playlist restore, not replace existing playlist. Restore unique playlist Android zip
             containing 'S8 audio' playlist to Windows application which contains 'S8 audio' and 'local'
-            playlists. The restored 'S8 audio' playlist contains additional audio's to which comments and
+            playlists. The restored 'S8 audio' playlist contains additional audios to which comments and
             pictures are associated.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
@@ -29467,7 +29466,7 @@ void main() {
         testWidgets(
             '''Multiple playlists restore, not replace existing playlists. Restore multiple playlists Android
              zip containing 'S8 audio' and 'local' playlists to Windows application which contain 'S8 audio'
-             and 'local' playlists. The restored 'S8 audio' and 'local' playlists contains additional audio's
+             and 'local' playlists. The restored 'S8 audio' and 'local' playlists contains additional audios
              to which comments and pictures are associated.''',
             (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
@@ -30739,10 +30738,10 @@ void main() {
         () {
       testWidgets(
           '''After restoring initial audiolearn target application containing 4 playlists as well as
-          restoring their mp3, restore the source playlist in which 2 audio's present in the target
+          restoring their mp3, restore the source playlist in which 2 audios present in the target
           playlists were deleted and in which 2 playlists were deleted. Finally, re-restore the initial
           audiolearn target application containing 4 playlists without setting the "Replace existing
-          playlists" checkbox to true as well as re-restore their mp3 to verify that after 2 audio's
+          playlists" checkbox to true as well as re-restore their mp3 to verify that after 2 audios
           and 2 playlists were deletd, it is not possible to restore totally the initial audiolearn
           application.''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
@@ -30869,7 +30868,7 @@ void main() {
           fileExtension: 'mp3',
         );
 
-        // Restore the source playlist in which 2 audio's
+        // Restore the source playlist in which 2 audios
         // present in the target playlists were deleted and
         // in which 2 playlists ("local_1", "local_2") not
         // present in the ZIP were deleted
@@ -30902,7 +30901,7 @@ void main() {
         );
 
         // Verify the MP3 files in the playlists not deleted after
-        // 2 audio's were deleted
+        // 2 audios were deleted
         IntegrationTestUtil.verifyFilesPresence(
           expectedFileNamesLst: [
             "250812-162925-NOUVEAU CHAPITRE POUR ETHEREUM - L'IDÉE GÉNIALE DE VITALIK! ACTUS CRYPTOMONNAIES 13_12 23-12-13.mp3",
@@ -31011,11 +31010,11 @@ void main() {
         );
       });
       testWidgets(
-          '''Restore the source playlist in which 2 audio's present in the target playlists were deleted
+          '''Restore the source playlist in which 2 audios present in the target playlists were deleted
           and in which 2 playlists were deleted after restoring initial audiolearn target application
           containing 4 playlists as well as restoring their mp3, . Finally, re-restore the initial
           audiolearn target application containing 4 playlists WITH setting the "Replace existing
-          playlists" checkbox to TRUE as well as re-restore their mp3 to verify that after 2 audio's
+          playlists" checkbox to TRUE as well as re-restore their mp3 to verify that after 2 audios
           and 2 playlists were deletd, IT IS NOW POSSIBLE to restore totally the initial audiolearn
           application.''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
@@ -31137,7 +31136,7 @@ void main() {
           fileExtension: 'mp3',
         );
 
-        // Restore the source playlist in which 2 audio's
+        // Restore the source playlist in which 2 audios
         // present in the target playlists were deleted and
         // in which 2 playlists ("local_1", "local_2") not
         // present in the ZIP were deleted
@@ -31170,7 +31169,7 @@ void main() {
         );
 
         // Verify the MP3 files in the playlists not deleted after
-        // 2 audio's were deleted
+        // 2 audios were deleted
 
         IntegrationTestUtil.verifyFilesPresence(
           expectedFileNamesLst: [
@@ -31385,7 +31384,7 @@ void main() {
       });
       testWidgets(
           '''After restoring initial audiolearn target application containing 4 playlists as well as
-          restoring their mp3, restore the source playlist in which 2 audio's present in the target
+          restoring their mp3, restore the source playlist in which 2 audios present in the target
           playlists were deleted, 2 playlists were deleted and 2 playlists were added.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
@@ -31507,7 +31506,7 @@ void main() {
           fileExtension: 'mp3',
         );
 
-        // Restore the source playlist in which 2 audio's
+        // Restore the source playlist in which 2 audios
         // present in the target playlists were deleted and
         // in which 2 playlists ("local_1", "local_2") not
         // present in the ZIP were deleted and in which 2
@@ -31541,7 +31540,7 @@ void main() {
         );
 
         // Verify the MP3 files in the playlists not deleted after
-        // 2 audio's were deleted
+        // 2 audios were deleted
 
         IntegrationTestUtil.verifyFilesPresence(
           expectedFileNamesLst: [
@@ -31571,7 +31570,7 @@ void main() {
         );
       });
       testWidgets(
-          '''Restore the unique playlist zip in which 1 audio's present in the corresponding target
+          '''Restore the unique playlist zip in which 1 audios present in the corresponding target
           playlist was deleted after restoring initial audiolearn target application containing 4
           playlists as well as restoring their mp3.''',
           (WidgetTester tester) async {
@@ -31757,8 +31756,8 @@ void main() {
         );
       });
       testWidgets(
-          '''Restore the source playlist with 2 new comments and 2 new pictures in which 2 audio's present
-          in the target playlists were deleted and 2 audio's were added as well as 2 playlists were deleted.
+          '''Restore the source playlist with 2 new comments and 2 new pictures in which 2 audios present
+          in the target playlists were deleted and 2 audios were added as well as 2 playlists were deleted.
           This is done after restoring initial audiolearn target application containing 4 playlists as well
           as restoring their mp3.''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
@@ -31972,8 +31971,8 @@ void main() {
           fileExtension: 'mp3',
         );
 
-        // Restore the source playlist in which 2 audio's present
-        // in the target playlists were deleted, 2 audio's were added
+        // Restore the source playlist in which 2 audios present
+        // in the target playlists were deleted, 2 audios were added
         // and in which 2 playlists ("local_1", "local_2") not
         // present in the ZIP were deleted
 
@@ -32137,7 +32136,7 @@ void main() {
         );
 
         // Verify the MP3 files in the playlists not deleted after
-        // 2 audio's were deleted
+        // 2 audios were deleted
 
         IntegrationTestUtil.verifyFilesPresence(
           expectedFileNamesLst: [
@@ -32387,7 +32386,7 @@ void main() {
         '''Restore Playlist Audio's MP3 from Zip File ... playlist item menu selecting a unique playlist
            MP3 zip file. First, on empty app dir, restore unique playlist Windows zip containing 
            urgent_actus_17-12-2023 playlist and then restore unique playlist MP3 zip file containing the
-           audio's of this playlist. The restored audio's are playable.''',
+           audios of this playlist. The restored audios are playable.''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -32439,8 +32438,8 @@ void main() {
       );
 
       // Now creating a 'Playable' sort filter parmeter
-      // in order to hide the not playable audio's. After
-      // restoring the MP3 files, all audio's of the playlist
+      // in order to hide the not playable audios. After
+      // restoring the MP3 files, all audios of the playlist
       // will be playable and so will be displayed.
 
       const String saveAsTitle = 'Playable';
@@ -32453,7 +32452,7 @@ void main() {
         saveAsTitle: saveAsTitle,
       );
 
-      // Verifying the playable audio's number before restoring
+      // Verifying the playable audios number before restoring
       // the MP3 files of the playlist
 
       // Find the audio list widget using its key
@@ -32492,7 +32491,7 @@ void main() {
         tester: tester,
         dialogTitle: 'MP3 Restoration',
         dialogMessage:
-            "Only the MP3 relative to the audio's listed in the playlist which are not already present in the playlist are restorable.",
+            "Only the MP3 relative to the audios listed in the playlist which are not already present in the playlist are restorable.",
         closeDialog: true,
       );
 
@@ -32520,7 +32519,7 @@ void main() {
         isWarningConfirming: true,
       );
 
-      // Verifying the playable audio's number after restoring
+      // Verifying the playable audios number after restoring
       // the MP3 files of the playlist
 
       // Find the audio list widget using its key
@@ -32546,7 +32545,7 @@ void main() {
         '''Restore Playlist Audio's MP3 from Zip File ... playlist item menu selecting a multiple
            playlists MP3 zip file. First, on empty app dir, restore unique playlist Windows zip
            containing urgent_actus_17-12-2023 playlist and then restore multiple playlist MP3 zip
-           file containing the audio's of this playlist and of another playlist. The restored audio's
+           file containing the audios of this playlist and of another playlist. The restored audios
            are playable.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -32598,8 +32597,8 @@ void main() {
       );
 
       // Now creating a 'Playable' sort filter parmeter
-      // in order to hide the not playable audio's. After
-      // restoring the MP3 files, all audio's of the playlist
+      // in order to hide the not playable audios. After
+      // restoring the MP3 files, all audios of the playlist
       // will be playable and so will be displayed.
 
       const String saveAsTitle = 'Playable';
@@ -32612,7 +32611,7 @@ void main() {
         saveAsTitle: saveAsTitle,
       );
 
-      // Verifying the playable audio's number before restoring
+      // Verifying the playable audios number before restoring
       // the MP3 files of the playlist
 
       // Find the audio list widget using its key
@@ -32651,7 +32650,7 @@ void main() {
         tester: tester,
         dialogTitle: 'MP3 Restoration',
         dialogMessage:
-            "Only the MP3 relative to the audio's listed in the playlist which are not already present in the playlist are restorable.",
+            "Only the MP3 relative to the audios listed in the playlist which are not already present in the playlist are restorable.",
         closeDialog: true,
       );
 
@@ -32667,7 +32666,7 @@ void main() {
         isWarningConfirming: true,
       );
 
-      // Verifying the playable audio's number after restoring
+      // Verifying the playable audios number after restoring
       // the MP3 files of the playlist
 
       // Find the audio list widget using its key
@@ -32693,7 +32692,7 @@ void main() {
         '''Restore Playlists Audio's MP3 from Zip File ... appbar item menu selecting a directory
            containing multiple MP3 zip files. First, on empty app dir, restore unique playlist
            Windows zip containing urgent_actus_17-12-2023 playlist and then restore MP3 zip files
-           containing the audio's of this playlist and of other playlists. The restored audio's are
+           containing the audios of this playlist and of other playlists. The restored audios are
            playable.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -32745,8 +32744,8 @@ void main() {
       );
 
       // Now creating a 'Playable' sort filter parmeter
-      // in order to hide the not playable audio's. After
-      // restoring the MP3 files, all audio's of the playlist
+      // in order to hide the not playable audios. After
+      // restoring the MP3 files, all audios of the playlist
       // will be playable and so will be displayed.
 
       const String saveAsTitle = 'Playable';
@@ -32759,7 +32758,7 @@ void main() {
         saveAsTitle: saveAsTitle,
       );
 
-      // Verifying the playable audio's number before restoring
+      // Verifying the playable audios number before restoring
       // the MP3 files of the playlist
 
       // Find the audio list widget using its key
@@ -32794,7 +32793,7 @@ void main() {
         tester: tester,
         dialogTitle: 'MP3 Restoration',
         dialogMessage:
-            "Only the MP3 relative to the audio's listed in the playlists which are not already present in the playlists are restorable.",
+            "Only the MP3 relative to the audios listed in the playlists which are not already present in the playlists are restorable.",
         closeDialog: true,
       );
 
@@ -32810,7 +32809,7 @@ void main() {
         isWarningConfirming: true,
       );
 
-      // Verifying the playable audio's number after restoring
+      // Verifying the playable audios number after restoring
       // the MP3 files of the playlist
 
       // Find the audio list widget using its key
@@ -32836,7 +32835,7 @@ void main() {
         '''Restore Playlists Audio's MP3 from Zip File ... appbar item menu selecting a directory containing
            multiple MP3 zip files. First, on empty app dir, restore unique playlist Windows zip ontaining
            urgent_actus_17-12-2023 playlist and then restore multiple playlists MP3 zip files containing the
-           audio's of this playlist as well as other playlists. The restored audio's are playable.''',
+           audios of this playlist as well as other playlists. The restored audios are playable.''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -32888,8 +32887,8 @@ void main() {
       );
 
       // Now creating a 'Playable' sort filter parmeter
-      // in order to hide the not playable audio's. After
-      // restoring the MP3 files, all audio's of the playlist
+      // in order to hide the not playable audios. After
+      // restoring the MP3 files, all audios of the playlist
       // will be playable and so will be displayed.
 
       const String saveAsTitle = 'Playable';
@@ -32902,7 +32901,7 @@ void main() {
         saveAsTitle: saveAsTitle,
       );
 
-      // Verifying the playable audio's number before restoring
+      // Verifying the playable audios number before restoring
       // the MP3 files of the playlist
 
       // Find the audio list widget using its key
@@ -32937,7 +32936,7 @@ void main() {
         tester: tester,
         dialogTitle: 'MP3 Restoration',
         dialogMessage:
-            "Only the MP3 relative to the audio's listed in the playlists which are not already present in the playlists are restorable.",
+            "Only the MP3 relative to the audios listed in the playlists which are not already present in the playlists are restorable.",
         closeDialog: true,
       );
 
@@ -32953,7 +32952,7 @@ void main() {
         isWarningConfirming: true,
       );
 
-      // Verifying the playable audio's number after restoring
+      // Verifying the playable audios number after restoring
       // the MP3 files of the playlist
 
       // Find the audio list widget using its key
@@ -32979,7 +32978,7 @@ void main() {
         '''Restore Playlists Audio's MP3 from Zip File ... appbar item menu selecting a selecting a
            directory containing multiple MP3 zip files. First, on empty app dir, restore 2 playlists
            Windows zip containing urgent_actus_17-12-2023 and local playlist and then restore multiple
-           playlists MP3 zip files containing the audio's of this playlist. The restored audio's are
+           playlists MP3 zip files containing the audios of this playlist. The restored audios are
            playable.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -33029,8 +33028,8 @@ void main() {
       );
 
       // Now creating a 'Playable' sort filter parmeter
-      // in order to hide the not playable audio's. After
-      // restoring the MP3 files, all audio's of the playlist
+      // in order to hide the not playable audios. After
+      // restoring the MP3 files, all audios of the playlist
       // will be playable and so will be displayed.
 
       const String saveAsTitle = 'Playable';
@@ -33043,7 +33042,7 @@ void main() {
         saveAsTitle: saveAsTitle,
       );
 
-      // Verifying the playable audio's number before restoring
+      // Verifying the playable audios number before restoring
       // the MP3 files of the playlist
 
       // Find the audio list widget using its key
@@ -33078,7 +33077,7 @@ void main() {
         tester: tester,
         dialogTitle: 'MP3 Restoration',
         dialogMessage:
-            "Only the MP3 relative to the audio's listed in the playlists which are not already present in the playlists are restorable.",
+            "Only the MP3 relative to the audios listed in the playlists which are not already present in the playlists are restorable.",
         closeDialog: true,
       );
 
@@ -33094,7 +33093,7 @@ void main() {
         isWarningConfirming: true,
       );
 
-      // Verifying the playable audio's number after restoring
+      // Verifying the playable audios number after restoring
       // the MP3 files of the playlist
 
       // Find the audio list widget using its key
@@ -33171,7 +33170,7 @@ void main() {
           tester: tester,
           dialogTitle: 'MP3 Restoration',
           dialogMessage:
-              "Only the MP3 relative to the audio's listed in the playlists which are not already present in the playlists are restorable.",
+              "Only the MP3 relative to the audios listed in the playlists which are not already present in the playlists are restorable.",
           closeDialog: true,
         );
 
@@ -33245,7 +33244,7 @@ void main() {
           tester: tester,
           dialogTitle: 'MP3 Restoration',
           dialogMessage:
-              "Only the MP3 relative to the audio's listed in the playlist which are not already present in the playlist are restorable.",
+              "Only the MP3 relative to the audios listed in the playlist which are not already present in the playlist are restorable.",
           closeDialog: true,
         );
 
@@ -33322,7 +33321,7 @@ void main() {
           tester: tester,
           dialogTitle: 'MP3 Restoration',
           dialogMessage:
-              "Only the MP3 relative to the audio's listed in the playlists which are not already present in the playlists are restorable.",
+              "Only the MP3 relative to the audios listed in the playlists which are not already present in the playlists are restorable.",
           closeDialog: true,
         );
 
@@ -33401,7 +33400,7 @@ void main() {
           tester: tester,
           dialogTitle: 'MP3 Restoration',
           dialogMessage:
-              "Only the MP3 relative to the audio's listed in the playlist which are not already present in the playlist are restorable.",
+              "Only the MP3 relative to the audios listed in the playlist which are not already present in the playlist are restorable.",
           closeDialog: true,
         );
 
@@ -33478,7 +33477,7 @@ void main() {
           tester: tester,
           dialogTitle: 'MP3 Restoration',
           dialogMessage:
-              "Only the MP3 relative to the audio's listed in the playlists which are not already present in the playlists are restorable.",
+              "Only the MP3 relative to the audios listed in the playlists which are not already present in the playlists are restorable.",
           closeDialog: true,
         );
 
@@ -33558,7 +33557,7 @@ void main() {
           tester: tester,
           dialogTitle: 'MP3 Restoration',
           dialogMessage:
-              "Only the MP3 relative to the audio's listed in the playlists which are not already present in the playlists are restorable.",
+              "Only the MP3 relative to the audios listed in the playlists which are not already present in the playlists are restorable.",
           closeDialog: true,
         );
 
@@ -33635,7 +33634,7 @@ void main() {
           tester: tester,
           dialogTitle: 'MP3 Restoration',
           dialogMessage:
-              "Only the MP3 relative to the audio's listed in the playlist which are not already present in the playlist are restorable.",
+              "Only the MP3 relative to the audios listed in the playlist which are not already present in the playlist are restorable.",
           closeDialog: true,
         );
 
@@ -33717,7 +33716,7 @@ void main() {
           tester: tester,
           dialogTitle: 'MP3 Restoration',
           dialogMessage:
-              "Only the MP3 relative to the audio's listed in the playlist which are not already present in the playlist are restorable.",
+              "Only the MP3 relative to the audios listed in the playlist which are not already present in the playlist are restorable.",
           closeDialog: true,
         );
 
@@ -35260,10 +35259,10 @@ void main() {
       );
     });
   });
-  group('''Import audio's functionality.''', () {
+  group('''Import audios functionality.''', () {
     testWidgets(
         '''Importing one text to speech audio test. Verify conversion warning. Then reimporting
-          it and verify the not imported warning. Normally, the imported audio's are not located
+          it and verify the not imported warning. Normally, the imported audios are not located
           in a playlist directory !''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -35369,10 +35368,10 @@ void main() {
       );
     });
     testWidgets(
-        '''2 audio's present in the source playlist exist in the playlist which will import
-          all audio's of the source playlist. This situation will display 2 warnings, a
-          audio import confirmation and a already existing audio's not imported warning.
-          Normally, the imported audio's are not located in a playlist !''',
+        '''2 audios present in the source playlist exist in the playlist which will import
+          all audios of the source playlist. This situation will display 2 warnings, a
+          audio import confirmation and a already existing audios not imported warning.
+          Normally, the imported audios are not located in a playlist !''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -35451,7 +35450,7 @@ void main() {
             "Audio(s)\n\n\"$fileName_3\",\n\"$fileName_4\"\n\nNOT imported to local playlist \"$localPlaylistTitle\" since the playlist directory already contains the audio(s).",
       );
 
-      // Re-import the same audio's to verify the not imported warning\
+      // Re-import the same audios to verify the not imported warning\
 
       mockFilePicker.setSelectedFiles([
         PlatformFile(
@@ -38632,9 +38631,9 @@ void main() {
       );
     });
     testWidgets(
-        '''For already positioned audio's, execute a first time the Audio item menu "Move
+        '''For already positioned audios, execute a first time the Audio item menu "Move
            Audio to Position". Then on another positioned audio, execute the same item menu.
-           The result is that the two moved audio's are positioned with a position difference
+           The result is that the two moved audios are positioned with a position difference
            of 1 which is correct.''', (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -42134,7 +42133,7 @@ Future<void> _tapOnRewindPlaylistAudioToStartPositionMenu({
   await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
     tester: tester,
     warningDialogMessage:
-        "$numberOfRewindedAudio playlist audio's were repositioned to start and the first listenable audio was selected.",
+        "$numberOfRewindedAudio playlist audios were repositioned to start and the first listenable audio was selected.",
     isWarningConfirming: true,
   );
 }
@@ -42195,7 +42194,7 @@ Future<void> _tapOnDownloadURLsFromTextFileMenu({
     tester: tester,
     dialogTitle:
         "Download video audio to playlist \"$playlistToDownloadInTitle\"",
-    dialogMessage: "Downloading 2 audio's in selected quality.",
+    dialogMessage: "Downloading 2 audios in selected quality.",
   );
 
   // Verify the checkbox state

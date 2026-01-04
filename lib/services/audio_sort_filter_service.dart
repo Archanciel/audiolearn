@@ -89,7 +89,7 @@ class AudioSortFilterService {
           // function is coded to compare titles containing a chapter
           // number, the case for audio files representing audio book
           // chapters which were imported. If the titles of downloaded
-          // audio's are compared and two titles, one containing a chapter
+          // audios are compared and two titles, one containing a chapter
           // number and the other containing no number, are compared, in
           // order to avoid compareTo exception, the title strings are
           // compared instead of the chapter number.
@@ -1201,7 +1201,7 @@ class AudioSortFilterService {
 
     // If the 'Partially listened' checkbox was set to false (by
     // default it is set to true), the returned audio list
-    // does not contain audio's that are partially listened.
+    // does not contain audios that are partially listened.
     if (!audioSortFilterParameters.filterPartiallyListened) {
       filteredAudios = filteredAudios.where((audio) {
         return !audio.isPartiallyListened();
@@ -1210,7 +1210,7 @@ class AudioSortFilterService {
 
     // If the 'Not listened' checkbox was set to false (by
     // default it is set to true), the returned audio list
-    // only contains already filtered audio's that are fully
+    // only contains already filtered audios that are fully
     // or partially listened.
     if (!audioSortFilterParameters.filterNotListened) {
       filteredAudios = filteredAudios.where((audio) {

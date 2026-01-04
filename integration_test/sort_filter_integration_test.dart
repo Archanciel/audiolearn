@@ -6092,7 +6092,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
              open sort filter audio dialog. Then creating an ascending unamed
              sort/filter parms and apply it. Then verifying that a Sort/filter
              dropdown button item has been created with the title 'applied' as
-             well as its tooltip which displays the Sort/filter audio's number
+             well as its tooltip which displays the Sort/filter audios number
              and is applied to the playlist download view list of audio. Then,
              going to the audio player view and click on the current audio title
              in order to open the audio playable list dialog.Then go back to the
@@ -6407,7 +6407,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         });
         testWidgets(
             '''Verifying the Sort/filter dropdown list items tooltips which displays the Sort/filter
-               name and its audio's number.''', (WidgetTester tester) async {
+               name and its audios number.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -7085,7 +7085,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         group('''Bug fix tests''', () {
           testWidgets(
               '''In playlist expanded situation, define an unamed SF parm with a filter
-               string value and apply it. Several audio's are selected and the audio list is
+               string value and apply it. Several audios are selected and the audio list is
                not empty. Then click on the "Playlist" button to shrink the list of playlists.
                This caused a bug.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
@@ -7159,7 +7159,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           });
           testWidgets(
               '''In playlist expanded situation, define an unamed SF parm with a filter
-               string value and apply it. No audio's are selected and the audio list is
+               string value and apply it. No audios are selected and the audio list is
                empty. Then click on the "Playlist" button to shrink the list of playlists.
                This caused a bug.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
@@ -7233,7 +7233,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           });
           testWidgets(
               '''In playlist expanded situation, define a named SF parm with a filter
-               string value and apply it. Several audio's are selected and the audio list is
+               string value and apply it. Several audios are selected and the audio list is
                not empty. Then click on the "Playlist" button to shrink the list of playlists.
                This caused a bug.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
@@ -7313,7 +7313,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           });
           testWidgets(
               '''In playlist expanded situation, define a named SF parm with a filter
-               string value and apply it. No audio's are selected and the audio list is
+               string value and apply it. No audios are selected and the audio list is
                empty. Then click on the "Playlist" button to shrink the list of playlists.
                This caused a bug.''', (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
@@ -7393,7 +7393,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           });
           testWidgets(
               '''In audio player view, define an unamed SF parm with a filter string value and
-               apply it. Verify the selected audio's in the playable audio list dialog. then
+               apply it. Verify the selected audios in the playable audio list dialog. then
                go to the playlist download view whose playlist list is expanded and thrink the
                playlist list. Then ensure that the "applied" SF parms is not present in the dropdown
                button items.''', (WidgetTester tester) async {
@@ -7514,9 +7514,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           });
           testWidgets(
               '''In audio player view, define a named SF parm with a filter string value and
-               save it. Verify the selected audio's in the playable audio list dialog. then
+               save it. Verify the selected audios in the playable audio list dialog. then
                go to the playlist download view whosevplaylist list is expanded and thrink the
-               playlist list. Then select the "Musk" SF parms and verify the selected audio's''',
+               playlist list. Then select the "Musk" SF parms and verify the selected audios''',
               (WidgetTester tester) async {
             // Purge the test playlist directory if it exists so that the
             // playlist list is empty
@@ -9120,7 +9120,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         const String playlistTitle = "MaValTest";
 
         testWidgets(
-            '''In playlist list hidden situation, after having downloaded 2 audio's,
+            '''In playlist list hidden situation, after having downloaded 2 audios,
                select a sort/filter named parms in the dropdown button list and
                save it to the current playlist.''',
             (WidgetTester tester) async {
@@ -9144,7 +9144,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Now typing on the download playlist button to download the
-          // 2 video audio's present the playlist.
+          // 2 video audios present the playlist.
           await tester
               .tap(find.byKey(const Key('download_sel_playlist_button')));
           await tester.pumpAndSettle();
@@ -9213,7 +9213,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
         testWidgets(
-            '''In playlist list expand situation, download 2 audio's from the 'Maria Valtorta'
+            '''In playlist list expand situation, download 2 audios from the 'Maria Valtorta'
                playlist. Then hide the list of playlists and select a sort/filter named parms in
                the dropdown button list. Then expand the list of playlists and save the SF parms to
                the current playlist.''', (WidgetTester tester) async {
@@ -9237,7 +9237,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Now typing on the download playlist button to download the
-          // 2 video audio's present the created playlist.
+          // 2 video audios present the created playlist.
           await tester
               .tap(find.byKey(const Key('download_sel_playlist_button')));
           await tester.pumpAndSettle();
@@ -9320,9 +9320,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         testWidgets(
             '''After selecting the restored 'MaValTest' playlist and hiding the
                list of playlist, select the 'Not playable' SF which filters the not
-               playable audio's. Then extend the list of playlists in order to redownload
-               the 'Not playable' filtered audio's. Verify the now empty displayed
-               audio list (empty since the redownloaded audio's are now playable) as
+               playable audios. Then extend the list of playlists in order to redownload
+               the 'Not playable' filtered audios. Verify the now empty displayed
+               audio list (empty since the redownloaded audios are now playable) as
                well as the possibility of saving the named sort/filter parms to the
                playlist views.''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
@@ -9384,7 +9384,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Select the 'Not playable' sort/filter parms in order to redownload
-          // the not playable audio's
+          // the not playable audios
           await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
             tester: tester,
             sortFilterParmsName: notPlayableSortFilterParmsName,
@@ -9422,7 +9422,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           // 'default' sort/filter parms selected
           // const String defaultTitle = 'default';
           // // Select the 'Not playable' sort/filter parms in order to redownload
-          // // the not playable audio's
+          // // the not playable audios
           // await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
           //   tester: tester,
           //   sortFilterParmsName: defaultTitle,
@@ -9509,7 +9509,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         testWidgets(
             '''Hiding the list of playlist after selecting the restored 'MaValTTest'
                playlist and select the 'Not playable' SF which filters the not
-               playable audio's. Redownload only the 'Really short video' audio.
+               playable audios. Redownload only the 'Really short video' audio.
                Verify the displayed audio list which contains only one not yet
                redownloaded audio as well as the possibility of saving the named
                sort/filter parms to the playlist views.''',

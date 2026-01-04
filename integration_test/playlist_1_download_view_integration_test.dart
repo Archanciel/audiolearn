@@ -2001,7 +2001,7 @@ void main() {
       // Tap the 'Download All' button to download the selected playlist.
       // This download fails because YoutubeExplode can not access to
       // internet in integration tests in order to download the
-      // audio's.
+      // audios.
       await tester.tap(find.byKey(const Key('download_sel_playlist_button')));
       await tester.pumpAndSettle();
 
@@ -2463,7 +2463,7 @@ void main() {
       await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
         tester: tester,
         warningDialogMessage:
-            "Trying to add a private Youtube playlist is not possible since the audio's of a private playlist can not be downloaded. To solve the problem, edit the playlist on Youtube and change its visibility from \"Private\" to \"Unlisted\" or to \"Public\" and then re-add it to the application.",
+            "Trying to add a private Youtube playlist is not possible since the audios of a private playlist can not be downloaded. To solve the problem, edit the playlist on Youtube and change its visibility from \"Private\" to \"Unlisted\" or to \"Public\" and then re-add it to the application.",
         isWarningConfirming: false,
       );
 
@@ -2808,7 +2808,7 @@ void main() {
           .widget<Text>(find.byKey(const Key('confirmationDialogMessageKey')));
 
       expect(deletePlaylistDialogMesageWidget.data,
-          "Deleting the playlist and its 3 audio's, 2 audio comment(s), 4 audio picture(s) as well as its JSON file and its directory.");
+          "Deleting the playlist and its 3 audios, 2 audio comment(s), 4 audio picture(s) as well as its JSON file and its directory.");
 
       // Now find the confirm button of the delete playlist confirm
       // dialog and tap on it
@@ -8565,7 +8565,7 @@ void main() {
         confirmActionDialogTitle:
             "Confirmez la suppression de l'audio \"$copiedAudioTitle\" de la playlist Youtube",
         confirmActionDialogMessagePossibleLst: [
-          "Supprimez l'audio \"$copiedAudioTitle\" de la playlist \"$youtubeAudioTargetPlaylistTitle\" définie sur le site Youtube, sinon l'audio sera téléchargé à nouveau lors du prochain téléchargement de la playlist. Ou alors cliquez sur \"Annuler\" et choisissez \"Supprimer l'audio ...\" au lieu de \"Supprimer l'audio de la playlist également ...\". Ainsi, l'audio sera supprimé de la liste des audio's jouables, mais restera dans la liste des audio's téléchargés, ce qui évitera son re-téléchargement.",
+          "Supprimez l'audio \"$copiedAudioTitle\" de la playlist \"$youtubeAudioTargetPlaylistTitle\" définie sur le site Youtube, sinon l'audio sera téléchargé à nouveau lors du prochain téléchargement de la playlist. Ou alors cliquez sur \"Annuler\" et choisissez \"Supprimer l'audio ...\" au lieu de \"Supprimer l'audio de la playlist également ...\". Ainsi, l'audio sera supprimé de la liste des audios jouables, mais restera dans la liste des audios téléchargés, ce qui évitera son re-téléchargement.",
         ],
         closeDialogWithConfirmButton: true,
       );
@@ -8948,7 +8948,7 @@ void main() {
         confirmActionDialogTitle:
             "Confirmez la suppression de l'audio \"$copiedAudioTitle\" de la playlist Youtube",
         confirmActionDialogMessagePossibleLst: [
-          "Supprimez l'audio \"$copiedAudioTitle\" de la playlist \"$youtubeAudioTargetPlaylistTitle\" définie sur le site Youtube, sinon l'audio sera téléchargé à nouveau lors du prochain téléchargement de la playlist. Ou alors cliquez sur \"Annuler\" et choisissez \"Supprimer l'audio ...\" au lieu de \"Supprimer l'audio de la playlist également ...\". Ainsi, l'audio sera supprimé de la liste des audio's jouables, mais restera dans la liste des audio's téléchargés, ce qui évitera son re-téléchargement.",
+          "Supprimez l'audio \"$copiedAudioTitle\" de la playlist \"$youtubeAudioTargetPlaylistTitle\" définie sur le site Youtube, sinon l'audio sera téléchargé à nouveau lors du prochain téléchargement de la playlist. Ou alors cliquez sur \"Annuler\" et choisissez \"Supprimer l'audio ...\" au lieu de \"Supprimer l'audio de la playlist également ...\". Ainsi, l'audio sera supprimé de la liste des audios jouables, mais restera dans la liste des audios téléchargés, ce qui évitera son re-téléchargement.",
         ],
         closeDialogWithConfirmButton: true,
       );
@@ -16062,7 +16062,7 @@ void main() {
         confirmDialogTitleOne:
             'Delete Youtube Playlist "$youtubePlaylistToDeleteTitle"',
         confirmDialogMessage:
-            "Deleting the playlist and its 2 audio's, 0 audio comment(s), 1 audio picture(s) as well as its JSON file and its directory.",
+            "Deleting the playlist and its 2 audios, 0 audio comment(s), 1 audio picture(s) as well as its JSON file and its directory.",
         confirmOrCancelAction: true, // Confirm button is tapped
       );
 
@@ -16582,7 +16582,7 @@ void main() {
         confirmDialogTitleOne:
             'Delete Local Playlist "$localPlaylistToDeleteTitle"',
         confirmDialogMessage:
-            "Deleting the playlist and its 0 audio's, 0 audio comment(s), 0 audio picture(s) as well as its JSON file and its directory.",
+            "Deleting the playlist and its 0 audios, 0 audio comment(s), 0 audio picture(s) as well as its JSON file and its directory.",
         confirmOrCancelAction: true, // Confirm button is tapped
       );
 

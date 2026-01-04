@@ -751,8 +751,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
 
         if (start >= 0 &&
             end > start &&
-            audioExtractorVM.audioFile.duration > 0 &&
-            end <= audioExtractorVM.audioFile.duration) {
+            audioExtractorVM.audioFile.duration > 0) {
           double silence = comment.silenceDuration;
 
           if (silence == 0.0) {
