@@ -482,4 +482,29 @@ class AudioExtractorVM extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  bool existNotDeletedSegmentWithEndPositionGreaterThanAudioDuration(
+  ) {
+    final double audioDuration = _currentAudio.audioDuration.inMilliseconds / 1000;
+
+    for (final segment in _segments) {
+      if (!segment.deleted && segment.endPosition > audioDuration) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  int segmentsNotDeletedNumber() {
+    int count = 0;
+
+    for (final segment in _segments) {
+      if (!segment.deleted) {
+        count++;
+      }
+    }
+
+    return count;
+  }
 }
