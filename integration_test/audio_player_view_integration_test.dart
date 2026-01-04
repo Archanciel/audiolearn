@@ -4034,7 +4034,9 @@ void main() {
           find.text(toSelectAudioTitle); // 3 fois où un économiste m'a ...
 
       await tester.tap(toSelectAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // check the current audios position
       expect(find.text('10:00'), findsOneWidget);
@@ -4063,7 +4065,9 @@ void main() {
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-      await tester.pumpAndSettle(const Duration(milliseconds: 2000));
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // check the current audios changed position
       final Finder audioPlayerViewAudioPositionFinder =
@@ -4569,7 +4573,9 @@ void main() {
           find.text(toSelectAudioTitle);
 
       await tester.tap(toSelectAudioListTileTextWidgetFinder);
-      await tester.pumpAndSettle();
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
 
       // check the current audios position
       expect(find.text('10:00'), findsOneWidget);
@@ -4598,8 +4604,10 @@ void main() {
 
       // Now close the comment list dialog
       await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-      await tester.pumpAndSettle();
-
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+      
       // check the current audios changed position
       final Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
