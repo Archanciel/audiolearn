@@ -4489,6 +4489,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This comment was previously removed from the \"Comments in MP3\" list so it is not included in the extracted MP3. To include it again, edit the comment and save it.'**
   String get commentWasDeletedTooltip;
+
+  /// No description provided for @deleteInvalidCommentsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete invalid comment(s) with end position greater than audio duration.'**
+  String get deleteInvalidCommentsMessage;
 }
 
 class _AppLocalizationsDelegate

@@ -241,13 +241,18 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                               : const SizedBox.shrink(),
                                           Row(
                                             children: [
-                                              Text(
-                                                TimeFormatUtil.formatSeconds(
-                                                    segment.startPosition),
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 14,
-                                                  color: Colors.white70,
+                                              Tooltip(
+                                               message: AppLocalizations.of(
+                                                    context)!
+                                                .commentStartPositionTooltip,
+                                              child: Text(
+                                                  TimeFormatUtil.formatSeconds(
+                                                      segment.startPosition),
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 14,
+                                                    color: Colors.white70,
+                                                  ),
                                                 ),
                                               ),
                                               const Icon(
@@ -258,13 +263,18 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                               ),
                                             ],
                                           ),
-                                          Text(
-                                            TimeFormatUtil.formatSeconds(
-                                                segment.endPosition),
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 14,
-                                              color: Colors.white70,
+                                          Tooltip(
+                                             message: AppLocalizations.of(
+                                                    context)!
+                                                .commentEndPositionTooltip,
+                                            child: Text(
+                                              TimeFormatUtil.formatSeconds(
+                                                  segment.endPosition),
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14,
+                                                color: Colors.white70,
+                                              ),
                                             ),
                                           ),
                                           const SizedBox(height: 2),
@@ -406,79 +416,104 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                       ),
                     ],
                     const SizedBox(height: 16),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton(
-                          key: const Key('extractMp3Button'),
-                          onPressed:
-                              audioExtractorVM.extractionResult.isProcessing
-                                  ? null
-                                  : () => _extractMP3(context: context),
-                          child: Text(
-                            AppLocalizations.of(context)!.extractMp3Button,
+                    (audioExtractorVM
+                            .existNotDeletedSegmentWithEndPositionGreaterThanAudioDuration())
+                        ? Text(
+                          AppLocalizations.of(context)!.deleteInvalidCommentsMessage,
+                          maxLines: 2,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w700, // bold
                           ),
-                        ),
-                        createCheckboxRowFunction(
-                          // displaying music quality checkbox
-                          checkBoxWidgetKey:
-                              const Key('musicalQualityCheckBox'),
-                          context: context,
-                          label:
-                              AppLocalizations.of(context)!.inMusicQualityLabel,
-                          value: _extractInMusicQuality,
-                          onChangedFunction: (bool? value) {
-                            setState(() {
-                              _extractInMusicQuality = value ?? false;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        createCheckboxRowFunction(
-                          // displaying music quality checkbox
-                          checkBoxWidgetKey: const Key('onDirectoryCheckBox'),
-                          context: context,
-                          label: AppLocalizations.of(context)!.inDirectoryLabel,
-                          labelTooltip: AppLocalizations.of(context)!
-                              .inDirectoryLabelTooltip,
-                          value: _extractInDirectory,
-                          onChangedFunction: (bool? value) {
-                            setState(() {
-                              _extractInDirectory = value ?? false;
-                              _extractInPlaylist = !_extractInDirectory;
-                            });
+                        )
+                        : Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  ElevatedButton(
+                                    key: const Key('extractMp3Button'),
+                                    onPressed: audioExtractorVM
+                                            .extractionResult.isProcessing
+                                        ? null
+                                        : () => _extractMP3(context: context),
+                                    child: Text(
+                                      AppLocalizations.of(context)!
+                                          .extractMp3Button,
+                                    ),
+                                  ),
+                                  createCheckboxRowFunction(
+                                    // displaying music quality checkbox
+                                    checkBoxWidgetKey:
+                                        const Key('musicalQualityCheckBox'),
+                                    context: context,
+                                    label: AppLocalizations.of(context)!
+                                        .inMusicQualityLabel,
+                                    value: _extractInMusicQuality,
+                                    onChangedFunction: (bool? value) {
+                                      setState(() {
+                                        _extractInMusicQuality = value ?? false;
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  createCheckboxRowFunction(
+                                    // displaying music quality checkbox
+                                    checkBoxWidgetKey:
+                                        const Key('onDirectoryCheckBox'),
+                                    context: context,
+                                    label: AppLocalizations.of(context)!
+                                        .inDirectoryLabel,
+                                    labelTooltip: AppLocalizations.of(context)!
+                                        .inDirectoryLabelTooltip,
+                                    value: _extractInDirectory,
+                                    onChangedFunction: (bool? value) {
+                                      setState(() {
+                                        _extractInDirectory = value ?? false;
+                                        _extractInPlaylist =
+                                            !_extractInDirectory;
+                                      });
 
-                            if (!_extractInDirectory) {
-                              // Clear the directory not selected error
-                              audioExtractorVM.setError('');
-                            }
-                          },
-                        ),
-                        createCheckboxRowFunction(
-                          // displaying music quality checkbox
-                          checkBoxWidgetKey: const Key('inPlaylistCheckBox'),
-                          context: context,
-                          label: AppLocalizations.of(context)!.inPlaylistLabel,
-                          labelTooltip: AppLocalizations.of(context)!
-                              .inPlaylistLabelTooltip,
-                          value: _extractInPlaylist,
-                          onChangedFunction: (bool? value) {
-                            setState(() {
-                              _extractInPlaylist = value ?? false;
-                              _extractInDirectory = !_extractInPlaylist;
-                            });
+                                      if (!_extractInDirectory) {
+                                        // Clear the directory not selected error
+                                        audioExtractorVM.setError('');
+                                      }
+                                    },
+                                  ),
+                                  createCheckboxRowFunction(
+                                    // displaying music quality checkbox
+                                    checkBoxWidgetKey:
+                                        const Key('inPlaylistCheckBox'),
+                                    context: context,
+                                    label: AppLocalizations.of(context)!
+                                        .inPlaylistLabel,
+                                    labelTooltip: AppLocalizations.of(context)!
+                                        .inPlaylistLabelTooltip,
+                                    value: _extractInPlaylist,
+                                    onChangedFunction: (bool? value) {
+                                      setState(() {
+                                        _extractInPlaylist = value ?? false;
+                                        _extractInDirectory =
+                                            !_extractInPlaylist;
+                                      });
 
-                            // Clear the directory not selected error
-                            audioExtractorVM.setError('');
-                          },
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
+                                      // Clear the directory not selected error
+                                      audioExtractorVM.setError('');
+                                    },
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 16),
+                            ],
+                          ),
                     if (audioExtractorVM.extractionResult.isProcessing)
                       const Center(child: CircularProgressIndicator()),
                     if (audioExtractorVM.extractionResult.hasMessage)
@@ -854,19 +889,21 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
     String extractedMp3FileName;
 
     if (_extractInDirectory) {
+      int extractedSegmentsNumber = audioExtractorVM.segmentsNotDeletedNumber();
+
       if (audioExtractorVM.multiInputs.isNotEmpty) {
         final totalSegs = audioExtractorVM.multiInputs.fold<int>(
           0,
           (n, i) => n + i.segments.length,
         );
         extractedMp3FileName = '${base}_multi_${totalSegs}_comments.mp3';
-      } else if (audioExtractorVM.segments.length == 1) {
+      } else if (extractedSegmentsNumber == 1) {
         extractedMp3FileName =
             '$base from ${TimeFormatUtil.formatSeconds(audioExtractorVM.segments[0].startPosition)} '
             'to ${TimeFormatUtil.formatSeconds(audioExtractorVM.segments[0].endPosition)}.mp3';
       } else {
         extractedMp3FileName =
-            '${base}_${audioExtractorVM.segments.length}_comments.mp3';
+            '${base}_${extractedSegmentsNumber}_comments.mp3';
       }
 
       if (_extractInMusicQuality) {

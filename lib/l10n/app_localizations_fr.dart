@@ -2821,4 +2821,8 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get commentWasDeletedTooltip =>
       'Ce commentaire a été précédemment supprimé de la liste \"Commentaires->MP3\" et n’est donc pas inclus dans le MP3 extrait. Pour l’inclure à nouveau, éditez le commentaire et sauvez-le.';
+
+  @override
+  String get deleteInvalidCommentsMessage =>
+      'Supprimez le/les commentaire(s) invalide(s) en raison de leur position finale supérieure à la durée de l\'audio';
 }

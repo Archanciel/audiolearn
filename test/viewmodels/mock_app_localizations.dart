@@ -2891,4 +2891,8 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get commentWasDeletedTooltip =>
       "This comment was previously deleted from the Comments in MP3 list in order to be not included in the extracted MP3. To instead include it, edit it and save it.";
+
+  @override
+  String get deleteInvalidCommentsMessage =>
+      "Delete invalid comment(s) with end position greater than audio duration.";
 }
