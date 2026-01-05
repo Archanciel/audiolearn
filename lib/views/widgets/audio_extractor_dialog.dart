@@ -27,12 +27,13 @@ import 'help_dialog.dart';
 import 'playlist_one_selectable_dialog.dart';
 
 class AudioExtractorDialog extends StatefulWidget {
-  final SettingsDataService settingsDataService = SettingsDataService();
+  final SettingsDataService settingsDataService;
   final Audio currentAudio;
   final CommentVM commentVMlistenTrue;
 
-  AudioExtractorDialog({
+  const AudioExtractorDialog({
     super.key,
+    required this.settingsDataService,
     required this.currentAudio,
     required this.commentVMlistenTrue,
   });
@@ -439,7 +440,11 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                                     onPressed: audioExtractorVM
                                             .extractionResult.isProcessing
                                         ? null
-                                        : () => _extractMP3(context: context),
+                                        : () => _extractMP3(
+                                              context: context,
+                                              settingsDataService:
+                                                  widget.settingsDataService,
+                                            ),
                                     child: Text(
                                       AppLocalizations.of(context)!
                                           .extractMp3Button,
@@ -642,8 +647,13 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              audioPlayerVM.errorMessage,
-              style: const TextStyle(color: Colors.red, fontSize: 12),
+              audioPlayerVM.errorMessage.replaceFirst(
+                  'File does not exist',
+                  AppLocalizations.of(context)!.fileNotExistError),
+              style: const TextStyle(
+                color: Colors.red,
+                fontSize: 12,
+              ),
               textAlign: TextAlign.center,
             ),
           ),
@@ -842,7 +852,10 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
     }
   }
 
-  Future<void> _extractMP3({required BuildContext context}) async {
+  Future<void> _extractMP3({
+    required BuildContext context,
+    required SettingsDataService settingsDataService,
+  }) async {
     final AudioExtractorVM audioExtractorVM = context.read<AudioExtractorVM>();
     final ExtractMp3AudioPlayerVM audioPlayerVM =
         context.read<ExtractMp3AudioPlayerVM>();
@@ -927,9 +940,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
     String? extractedMp3DestinationDir;
     Playlist? targetPlaylist;
 
-    if (_extractInDirectory) {
-      extractedMp3DestinationDir = await FilePicker.platform.getDirectoryPath();
-    } else {
+    if (!_extractInDirectory) {
       // Showing the dialog enabling to select the playlist where to add
       // the audio containing the extracted MP3 as well as the corresponding
       // comments
@@ -982,26 +993,12 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
     }
 
     if (_extractInDirectory) {
-      if (extractedMp3DestinationDir == null) {
-        audioExtractorVM.setError(
-            // This error is cleared when user set 'In playlist' checkbox
-            AppLocalizations.of(context)!.saveLocationSelectionCanceledMessage);
-
-        return;
-      } else {
-        final String outputPath =
-            '$extractedMp3DestinationDir${Platform.pathSeparator}$extractedMp3FileName';
-
-        if (audioExtractorVM.multiInputs.isNotEmpty) {
-          await audioExtractorVM.extractMP3Multi(outputPath);
-        } else {
           await audioExtractorVM.extractMP3ToDirectory(
+            settingsDataService: settingsDataService,
             inMusicQuality: _extractInMusicQuality,
-            outputPathFileName: outputPath,
+            extractedMp3FileName: extractedMp3FileName,
           );
         }
-      }
-    }
   }
 
   Future<void> _playExtractedFile(

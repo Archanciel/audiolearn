@@ -198,10 +198,12 @@ class CommentDeleteConfirmActionDialog extends StatelessWidget {
 /// Additionally, a button 'plus' is displayed to add a new
 /// positionned comment.
 class CommentListAddDialog extends StatefulWidget {
+  final SettingsDataService settingsDataService;
   final Audio currentAudio;
 
   const CommentListAddDialog({
     super.key,
+    required this.settingsDataService,
     required this.currentAudio,
   });
 
@@ -212,6 +214,7 @@ class CommentListAddDialog extends StatefulWidget {
   /// **ENHANCED**: Now supports auto-refresh when audio changes and callback when closed
   static void showCommentDialog({
     required BuildContext context,
+    required SettingsDataService settingsDataservice,
     required Audio currentAudio,
     bool isCalledByAudioListItem = false,
     VoidCallback? onClosed, // **NEW**: Optional callback when dialog is closed
@@ -241,6 +244,7 @@ class CommentListAddDialog extends StatefulWidget {
             Center(
               child: Builder(builder: (context) {
                 return AutoRefreshCommentDialog(
+                  settingsDataService: settingsDataservice,
                   initialAudio: currentAudio,
                   isCalledByAudioListItem: isCalledByAudioListItem,
                 );
@@ -265,18 +269,23 @@ class _CommentListAddDialogState extends State<CommentListAddDialog> {
   Widget build(BuildContext context) {
     // This is just a simple wrapper that displays the current audio content
     // The actual auto-refresh logic is handled in AutoRefreshCommentDialog
-    return _CommentListAddDialogContent(currentAudio: widget.currentAudio);
+    return _CommentListAddDialogContent(
+      settingsDataService: widget.settingsDataService,
+      currentAudio: widget.currentAudio,
+    );
   }
 }
 
 /// **NEW**: Auto-refreshing wrapper for CommentListAddDialog
 /// This widget listens for audio changes and automatically updates the dialog content
 class AutoRefreshCommentDialog extends StatefulWidget {
+  final SettingsDataService settingsDataService;
   final Audio initialAudio;
   final bool isCalledByAudioListItem;
 
   const AutoRefreshCommentDialog({
     super.key,
+    required this.settingsDataService,
     required this.initialAudio,
     this.isCalledByAudioListItem = false,
   });
@@ -383,6 +392,7 @@ class _AutoRefreshCommentDialogState extends State<AutoRefreshCommentDialog> {
   Widget build(BuildContext context) {
     // Build the actual dialog content with the current audio
     return _CommentListAddDialogContent(
+      settingsDataService: widget.settingsDataService,
       currentAudio: _currentAudio,
       isCalledByAudioListItem: widget.isCalledByAudioListItem,
     );
@@ -391,6 +401,7 @@ class _AutoRefreshCommentDialogState extends State<AutoRefreshCommentDialog> {
 
 /// **NEW**: Extracted dialog content as a separate widget for better organization
 class _CommentListAddDialogContent extends StatefulWidget {
+  final SettingsDataService settingsDataService;
   final Audio currentAudio;
 
   // If true, avoids the presence of the minimize comment list add
@@ -399,6 +410,7 @@ class _CommentListAddDialogContent extends StatefulWidget {
   final bool isCalledByAudioListItem;
 
   const _CommentListAddDialogContent({
+    required this.settingsDataService,
     required this.currentAudio,
     this.isCalledByAudioListItem = false,
   });
@@ -695,6 +707,7 @@ class _CommentListAddDialogContentState
                           // closing when tapping outside the dialog
                           builder: (BuildContext context) {
                             return AudioExtractorDialog(
+                              settingsDataService: widget.settingsDataService,
                               currentAudio: currentAudio,
                               commentVMlistenTrue: commentVMlistenTrue,
                             );
@@ -1153,6 +1166,7 @@ class _CommentListAddDialogContentState
       // Instanciating CommentAddEditDialog without passing a comment
       // opens it in 'add' mode
       builder: (context) => CommentAddEditDialog(
+        settingsDataService: widget.settingsDataService,
         callerDialog: CallerDialog.commentListAddDialog,
         commentableAudio: currentAudio,
         comment: comment,

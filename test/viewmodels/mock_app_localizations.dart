@@ -2713,10 +2713,6 @@ class MockAppLocalizations extends AppLocalizations {
   String get extractMp3Button => "Extract MP3";
 
   @override
-  String get saveLocationSelectionCanceledMessage =>
-      "Save location selection canceled";
-
-  @override
   String get addAtLeastOneCommentMessage => "Please add at least one comment";
 
   @override
@@ -2895,4 +2891,7 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get deleteInvalidCommentsMessage =>
       "Delete invalid comment(s) with end position greater than audio duration.";
+
+  @override
+  String get fileNotExistError => "File does not exist";
 }

@@ -293,6 +293,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         itemBuilder: (BuildContext context, int index) {
           final audio = _selectedPlaylistPlayableAudioLst[index];
           return AudioListItem(
+            settingsDataService: widget.settingsDataService,
             audio: audio,
             isAudioCurrent:
                 (currentAudio != null) ? audio == currentAudio : false,

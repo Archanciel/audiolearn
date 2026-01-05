@@ -1,6 +1,7 @@
 // dart file located in lib\views
 
 import 'package:audiolearn/models/sort_filter_parameters.dart';
+import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/utils/date_time_util.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:audiolearn/viewmodels/picture_vm.dart';
@@ -10,17 +11,17 @@ import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import '../../l10n/app_localizations.dart';
 
-import '../../../models/audio.dart';
-import '../../../utils/ui_util.dart';
+import '../../models/audio.dart';
 import '../../models/comment.dart';
 import '../../models/help_item.dart';
 import '../../models/playlist.dart';
-import '../../viewmodels/audio_player_vm.dart';
-import '../../../viewmodels/playlist_list_vm.dart';
+import '../../utils/ui_util.dart';
 import '../../utils/duration_expansion.dart';
-import '../../constants.dart';
+import '../../viewmodels/audio_player_vm.dart';
+import '../../viewmodels/playlist_list_vm.dart';
 import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
+import '../../constants.dart';
 import '../screen_mixin.dart';
 import 'confirm_action_dialog.dart';
 import 'audio_info_dialog.dart';
@@ -39,6 +40,7 @@ import 'audio_modification_dialog.dart';
 /// the play icon button, the screen switches to the AudioPlayerView
 /// screen and the passed {onPageChangedFunction} is executed.
 class AudioListItem extends StatelessWidget with ScreenMixin {
+  final SettingsDataService settingsDataService;
   final Audio audio;
 
   final WarningMessageVM warningMessageVM;
@@ -53,6 +55,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
 
   AudioListItem({
     super.key,
+    required this.settingsDataService,
     required this.audio,
     required bool isAudioCurrent,
     required this.warningMessageVM,
@@ -289,6 +292,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
           case AudioPopupMenuAction.audioComment:
             CommentListAddDialog.showCommentDialog(
               context: context,
+              settingsDataservice: settingsDataService,
               currentAudio: audio,
               isCalledByAudioListItem: true,
             );

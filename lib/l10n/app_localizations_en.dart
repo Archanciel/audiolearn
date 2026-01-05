@@ -2632,10 +2632,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get extractMp3Button => 'Extract MP3';
 
   @override
-  String get saveLocationSelectionCanceledMessage =>
-      'Error: extraction location selection canceled';
-
-  @override
   String get addAtLeastOneCommentMessage =>
       'Please add at least one comment to the audio';
 
@@ -2792,4 +2788,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get deleteInvalidCommentsMessage =>
       'Delete invalid comment(s) with end position greater than audio duration.';
+
+  @override
+  String get fileNotExistError => 'File does not exist';
 }

@@ -1585,7 +1585,6 @@
   "totalDuration": "Durée totale",
   "clearAllButton": "Tout enlever",
   "extractMp3Button": "Extraire le MP3",
-  "saveLocationSelectionCanceledMessage": "Erreur: sélection du dossier d'extraction annulée",
   "addAtLeastOneCommentMessage": "Veuillez ajouter au moins un commentaire à l'audio",
   "noCommentFoundInAudioMessage": "Aucun commentaire trouvé dans l'audio",
   "inMusicQualityLabel": "En qualité musicale",
@@ -1629,5 +1628,6 @@
   "extractedAudioNotAddedToPlaylistMessage": "L’audio extrait n’a pas été ajouté à la playlist \"{targetPlaylist}\" car il existe déjà en elle. Pour résoudre ce problème, veuillez supprimer l’audio extrait existant avant de relancer l’extraction.",
   "commentWasDeleted": "Commentaire non inclu",
   "commentWasDeletedTooltip": "Ce commentaire a été précédemment supprimé de la liste \"Commentaires->MP3\" et n’est donc pas inclus dans le MP3 extrait. Pour l’inclure à nouveau, éditez le commentaire et sauvez-le.",
-  "deleteInvalidCommentsMessage": "Supprimez le/les commentaire(s) invalide(s) en raison de leur position finale supérieure à la durée de l'audio"
+  "deleteInvalidCommentsMessage": "Supprimez le/les commentaire(s) invalide(s) en raison de leur position finale supérieure à la durée de l'audio",
+  "fileNotExistError": "Le fichier n'existe pas"
 }
