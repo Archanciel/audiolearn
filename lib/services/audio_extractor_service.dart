@@ -1,5 +1,6 @@
 // lib/services/audio_extractor_service.dart
 import 'dart:io';
+import 'package:ffmpeg_kit_flutter_new/ffmpeg_session.dart';
 import 'package:logger/logger.dart';
 
 // Android/iOS via plugin
@@ -347,11 +348,11 @@ class AudioExtractorService {
       final parts = <String>[];
 
       for (int i = 0; i < segments.length; i++) {
-        final s = segments[i];
+        final AudioSegment s = segments[i];
 
         // Step 1: Extract segment without any filters
         // This ensures we get a clean file with timestamps starting at 0
-        final tempSegPath = '${tmp.path}/temp_seg_$i.mp3';
+        final String tempSegPath = '${tmp.path}/temp_seg_$i.mp3';
 
         final extractCmd = [
           '-ss',
@@ -403,7 +404,7 @@ class AudioExtractorService {
             '-y',
           ].join(' ');
 
-          final reencodeSess = await FFmpegKit.execute(reencodeCmd);
+          final FFmpegSession reencodeSess = await FFmpegKit.execute(reencodeCmd);
           if (!ReturnCode.isSuccess(
             await reencodeSess.getReturnCode(),
           )) {
