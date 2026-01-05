@@ -25,6 +25,7 @@ enum CallerDialog {
 /// The edit mode is activated when a comment is passed to the
 /// widget constructor. Else, the widget is in add mode.
 class CommentAddEditDialog extends StatefulWidget {
+  final SettingsDataService settingsDataService;
   final CallerDialog callerDialog;
   final Comment? comment;
   final bool isAddMode;
@@ -32,6 +33,7 @@ class CommentAddEditDialog extends StatefulWidget {
 
   const CommentAddEditDialog({
     super.key,
+    required this.settingsDataService,
     required this.callerDialog,
     required this.commentableAudio,
     this.comment,
@@ -787,6 +789,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
     // add dialog.
     CommentListAddDialog.showCommentDialog(
       context: context,
+      settingsDataservice: widget.settingsDataService,
       currentAudio: widget.commentableAudio,
     );
 

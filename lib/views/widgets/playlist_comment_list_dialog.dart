@@ -29,10 +29,12 @@ import 'comment_add_edit_dialog.dart';
 /// Adding a new positionned comment is only possible in the
 /// CommentListAddDialog.
 class PlaylistCommentListDialog extends StatefulWidget {
+  final SettingsDataService settingsDataService;
   final Playlist currentPlaylist;
 
   const PlaylistCommentListDialog({
     super.key,
+    required this.settingsDataService,
     required this.currentPlaylist,
   });
 
@@ -651,6 +653,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
       // instanciating CommentAddEditDialog without
       // passing a comment opens it in 'add' mode
       builder: (context) => CommentAddEditDialog(
+        settingsDataService: widget.settingsDataService,
         callerDialog: CallerDialog.playlistCommentListAddDialog,
         commentableAudio: currentAudio,
         comment: comment,

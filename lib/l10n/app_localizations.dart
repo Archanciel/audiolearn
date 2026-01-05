@@ -4226,12 +4226,6 @@ abstract class AppLocalizations {
   /// **'Extract MP3'**
   String get extractMp3Button;
 
-  /// No description provided for @saveLocationSelectionCanceledMessage.
-  ///
-  /// In en, this message translates to:
-  /// **'Error: extraction location selection canceled'**
-  String get saveLocationSelectionCanceledMessage;
-
   /// No description provided for @addAtLeastOneCommentMessage.
   ///
   /// In en, this message translates to:
@@ -4495,6 +4489,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete invalid comment(s) with end position greater than audio duration.'**
   String get deleteInvalidCommentsMessage;
+
+  /// No description provided for @fileNotExistError.
+  ///
+  /// In en, this message translates to:
+  /// **'File does not exist'**
+  String get fileNotExistError;
 }
 
 class _AppLocalizationsDelegate

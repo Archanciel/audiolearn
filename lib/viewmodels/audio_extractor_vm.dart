@@ -1,7 +1,10 @@
 // lib/viewmodels/audio_extractor_vm.dart
 import 'dart:io';
 
+import 'package:audiolearn/constants.dart';
+import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:flutter/foundation.dart';
+import 'package:path/path.dart' as path;
 
 import '../models/audio.dart';
 import '../models/comment.dart';
@@ -214,18 +217,31 @@ class AudioExtractorVM extends ChangeNotifier {
   }
 
   Future<void> extractMP3ToDirectory({
+    required SettingsDataService settingsDataService,
     required bool inMusicQuality,
-    required String outputPath,
+    required String extractedMp3FileName,
   }) async {
     try {
       // Necessary so that the CircularProgressIndicator is displayed
       // in the audio extractor dialog
       startProcessing();
 
+      final String actualTargetDir =
+        "${settingsDataService.get(settingType: SettingType.dataLocation, settingSubType: DataLocation.appSettingsPath)}${path.separator}$kSavedPlaylistsDirName${path.separator}MP3";
+
+      final Directory targetDirectory = Directory(actualTargetDir);
+
+      if (!targetDirectory.existsSync()) {
+        targetDirectory.createSync(recursive: true);
+      }
+
+      final String outputPathFileName =
+          "$actualTargetDir${path.separator}$extractedMp3FileName";
+
       final Map<String, dynamic> result =
           await AudioExtractorService.extractAudioSegments(
         inputPath: _audioFile.path!,
-        outputPath: outputPath,
+        outputPathFileName: outputPathFileName,
         segments: _segments,
         inMusicQuality: inMusicQuality,
       );
@@ -257,16 +273,15 @@ class AudioExtractorVM extends ChangeNotifier {
     required bool inMusicQuality,
     required double totalDuration,
   }) async {
+    final String outputPathFileName =
+        '${targetPlaylist.downloadPath}${Platform.pathSeparator}$extractedMp3FileName';
+
     try {
       // Necessary so that the CircularProgressIndicator is displayed
       // in the audio extractor dialog
       startProcessing();
 
-      final String outputPath =
-          '${targetPlaylist.downloadPath}${Platform.pathSeparator}$extractedMp3FileName';
-      final File outputFile = File(outputPath);
-
-      if (outputFile.existsSync()) {
+      if (File(outputPathFileName).existsSync()) {
         // the case if the audio file to add already exist in the target
         // playlist directory
         return false;
@@ -275,7 +290,7 @@ class AudioExtractorVM extends ChangeNotifier {
       final Map<String, dynamic> result =
           await AudioExtractorService.extractAudioSegments(
         inputPath: _audioFile.path!,
-        outputPath: outputPath,
+        outputPathFileName: outputPathFileName,
         segments: _segments,
         inMusicQuality: inMusicQuality,
       );
@@ -298,8 +313,7 @@ class AudioExtractorVM extends ChangeNotifier {
     await audioDownloadVMlistenFalse.addExtractedAudioFileToPlaylist(
       currentAudio: currentAudio,
       targetPlaylist: targetPlaylist,
-      filePathNameToAdd:
-          '${targetPlaylist.downloadPath}${Platform.pathSeparator}$extractedMp3FileName',
+      filePathNameToAdd: outputPathFileName,
       inMusicQuality: inMusicQuality,
       totalDuration: totalDuration,
     );
@@ -483,9 +497,9 @@ class AudioExtractorVM extends ChangeNotifier {
     }
   }
 
-  bool existNotDeletedSegmentWithEndPositionGreaterThanAudioDuration(
-  ) {
-    final double audioDuration = _currentAudio.audioDuration.inMilliseconds / 1000;
+  bool existNotDeletedSegmentWithEndPositionGreaterThanAudioDuration() {
+    final double audioDuration =
+        _currentAudio.audioDuration.inMilliseconds / 1000;
 
     for (final segment in _segments) {
       if (!segment.deleted && segment.endPosition > audioDuration) {

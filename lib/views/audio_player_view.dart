@@ -766,6 +766,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                   // Using the enhanced method that supports auto-refresh and callbacks
                   CommentListAddDialog.showCommentDialog(
                     context: context,
+                    settingsDataservice: widget.settingsDataService,
                     currentAudio: currentAudio!,
                     onClosed: () {
                       // **NEW**: Track when comment dialog is closed

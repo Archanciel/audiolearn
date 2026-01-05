@@ -381,6 +381,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   false, // This line prevents the dialog from closing when
               //            tapping outside the dialog
               builder: (context) => PlaylistCommentListDialog(
+                settingsDataService: settingsDataService,
                 currentPlaylist: playlist,
               ),
             );

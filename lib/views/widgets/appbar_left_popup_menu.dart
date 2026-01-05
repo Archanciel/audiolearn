@@ -256,6 +256,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 // add dialog.
                 CommentListAddDialog.showCommentDialog(
                   context: context,
+                  settingsDataservice: settingsDataService,
                   currentAudio: audio,
                 );
 

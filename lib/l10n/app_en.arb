@@ -1178,7 +1178,6 @@
   "totalDuration": "Total duration",
   "clearAllButton": "Clear all",
   "extractMp3Button": "Extract MP3",
-  "saveLocationSelectionCanceledMessage": "Error: extraction location selection canceled",
   "addAtLeastOneCommentMessage": "Please add at least one comment to the audio",
   "noCommentFoundInAudioMessage": "No comment found in the audio",
   "inMusicQualityLabel": "In music quality",
@@ -1222,5 +1221,6 @@
   "extractedAudioNotAddedToPlaylistMessage": "The extracted audio was not added to the \"{targetPlaylist}\" playlist because it already exists in it. To resolve this, please delete the existing extracted audio before running the extraction again.",
   "commentWasDeleted": "Comment not included",
   "commentWasDeletedTooltip": "This comment was previously removed from the \"Comments in MP3\" list so it is not included in the extracted MP3. To include it again, edit the comment and save it.",
-  "deleteInvalidCommentsMessage": "Delete invalid comment(s) with end position greater than audio duration."
+  "deleteInvalidCommentsMessage": "Delete invalid comment(s) with end position greater than audio duration.",
+  "fileNotExistError": "File does not exist"
 }
