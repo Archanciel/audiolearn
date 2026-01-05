@@ -296,7 +296,7 @@ class AudioExtractorService {
 
   static Future<Map<String, dynamic>> extractAudioSegments({
     required String inputPath,
-    required String outputPath,
+    required String outputPathFileName,
     required List<AudioSegment> segments,
     required bool inMusicQuality,
     String? encoderBitrate,
@@ -317,14 +317,14 @@ class AudioExtractorService {
     if (Platform.isAndroid || Platform.isIOS) {
       return _extractSegmentsMobile(
         inputPath: inputPath,
-        outputPath: outputPath,
+        outputPath: outputPathFileName,
         segments: segments,
         encoderBitrate: bitrate,
       );
     } else if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
       return _extractSegmentsDesktop(
         inputPath: inputPath,
-        outputPath: outputPath,
+        outputPath: outputPathFileName,
         segments: segments,
         encoderBitrate: bitrate,
       );
