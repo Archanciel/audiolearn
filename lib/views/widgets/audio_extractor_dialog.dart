@@ -997,7 +997,7 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
         } else {
           await audioExtractorVM.extractMP3ToDirectory(
             inMusicQuality: _extractInMusicQuality,
-            outputPath: outputPath,
+            outputPathFileName: outputPath,
           );
         }
       }
