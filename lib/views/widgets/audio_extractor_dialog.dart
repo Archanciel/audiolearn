@@ -521,7 +521,6 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                         padding: const EdgeInsets.only(top: 16.0),
                         child: Text(
                           extractionResultMessage,
-                          maxLines: 2,
                           style: TextStyle(
                             color: audioExtractorVM.extractionResult.isError
                                 ? Colors.red
