@@ -92,9 +92,9 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
     final commentId = widget.existingSegment?.commentId ?? '';
     final commentTitle = widget.existingSegment?.commentTitle ?? '';
 
-    if (start < 0 || start >= widget.maxDuration) {
+    if (start < 0 || start > widget.maxDuration - 0.1) {
       _showError(
-        "${AppLocalizations.of(context)!.startPositionError} ${TimeFormatUtil.formatSeconds(widget.maxDuration - 0.1)}.",
+        "${AppLocalizations.of(context)!.startPositionError(TimeFormatUtil.formatSeconds(widget.maxDuration - 0.1))}.",
       );
       return;
     }

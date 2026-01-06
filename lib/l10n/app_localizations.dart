@@ -4331,8 +4331,8 @@ abstract class AppLocalizations {
   /// No description provided for @startPositionError.
   ///
   /// In en, this message translates to:
-  /// **'Start position must be between 0 and'**
-  String get startPositionError;
+  /// **'Start position must be between 0 and {inclusive} inclusive'**
+  String startPositionError(Object inclusive);
 
   /// No description provided for @negativeSilenceDurationError.
   ///
