@@ -2752,9 +2752,6 @@ class MockAppLocalizations extends AppLocalizations {
       "Duration to fade volume from 100% to 0%";
 
   @override
-  String get startPositionError => "Start position must be between 0 and";
-
-  @override
   String get endPositionError =>
       "End position must be after start and not exceed";
 
@@ -2899,4 +2896,10 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get errorTitle => "Error";
+
+  @override
+  String startPositionError(
+    Object inclusive,
+  ) =>
+      "Start position must be between 0 and $inclusive inclusive";
 }

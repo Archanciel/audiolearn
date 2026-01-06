@@ -1601,7 +1601,7 @@
   "fadeStartPositionHelperText": "Position où le volume commence à diminuer",
   "fadeDurationLabel": "Durée de la diminution (h:mm:ss.d)",
   "fadeDurationHelperText": "Durée pour faire baisser le volume de 100% à 0%",
-  "startPositionError": "La position de début doit être comprise entre 0 et",
+  "startPositionError": "La position de début doit être comprise entre 0 et {inclusive}",
   "endPositionError": "La position de fin doit être après le début sans dépasser",
   "negativeSilenceDurationError": "La durée du silence doit être positive",
   "negativeSoundDurationError": "La durée de la baisse du son ne peut pas être négative",

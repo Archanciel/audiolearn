@@ -1195,7 +1195,7 @@
   "fadeDurationLabel": "Fade duration (h:mm:ss.t)",
   "fadeDurationHelperText": "Duration to fade volume from 100% to 0%",
   "endPositionError": "End position must be after start and not exceed",
-  "startPositionError": "Start position must be between 0 and",
+  "startPositionError": "Start position must be between 0 and {inclusive} inclusive",
   "negativeSilenceDurationError": "Silence duration cannot be negative",
   "negativeSoundDurationError": "Sound reduction duration cannot be negative",
   "negativeSoundPositionError": "Sound reduction position must be within the comment (>= start position)",

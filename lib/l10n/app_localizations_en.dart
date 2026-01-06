@@ -2691,7 +2691,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'End position must be after start and not exceed';
 
   @override
-  String get startPositionError => 'Start position must be between 0 and';
+  String startPositionError(Object inclusive) {
+    return 'Start position must be between 0 and $inclusive inclusive';
+  }
 
   @override
   String get negativeSilenceDurationError =>

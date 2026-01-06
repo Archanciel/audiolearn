@@ -9,7 +9,6 @@ import 'package:audiolearn/viewmodels/audio_extractor_vm.dart';
 import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:audiolearn/viewmodels/extract_mp3_audio_player_vm.dart';
 import 'package:audiolearn/views/widgets/add_segment_dialog.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../l10n/app_localizations.dart';
@@ -939,7 +938,6 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
       extractedMp3FileName,
     );
 
-    String? extractedMp3DestinationDir;
     Playlist? targetPlaylist;
 
     if (!_extractInDirectory) {
