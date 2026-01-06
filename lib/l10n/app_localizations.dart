@@ -4325,7 +4325,7 @@ abstract class AppLocalizations {
   /// No description provided for @endPositionError.
   ///
   /// In en, this message translates to:
-  /// **'End position must be after start and not exceed'**
+  /// **'End position must be after start position and not exceed'**
   String get endPositionError;
 
   /// No description provided for @startPositionError.

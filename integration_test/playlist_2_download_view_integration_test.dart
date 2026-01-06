@@ -40360,7 +40360,7 @@ void main() {
       // Verify the Comments number title
       expect(find.text('Comments (3)'), findsOneWidget);
 
-      // Verify the pesence of the invalid comment error message
+      // Verify the presence of the invalid comment error message
       expect(
         find.text(
             "Delete invalid comment(s) with end position greater than audio duration which is 2:56.8."),
@@ -40394,7 +40394,7 @@ void main() {
       // Verify the Comments number title
       expect(find.text('Comments (2)'), findsOneWidget);
 
-      // Verify the pesence of the invalid comment error message
+      // Verify the presence of the invalid comment error message
       expect(
         find.text(
             "Delete invalid comment(s) with end position greater than audio duration which is 2:56.8."),
@@ -40419,54 +40419,8 @@ void main() {
       // Verify the Comments number title
       expect(find.text('Comments (1)'), findsOneWidget);
 
-      // Verify the presence of the Extract MP3 button
-      expect(
-        find.byKey(const Key('extractMp3Button')),
-        findsOneWidget,
-      );
-
-      // Verify the presence and the value of the 'In music
-      // quality' checkbox
-      Finder musicalQualityCheckBoxFinder =
-          find.byKey(const Key('musicalQualityCheckBox'));
-      expect(
-        musicalQualityCheckBoxFinder,
-        findsOneWidget,
-      );
-      Checkbox checkboxWidget =
-          tester.widget<Checkbox>(musicalQualityCheckBoxFinder);
-      expect(
-        checkboxWidget.value,
-        isTrue,
-      );
-
-      // Verify the presence and the value of the 'In directory'
-      // checkbox
-      Finder onDirectoryCheckBoxFinder =
-          find.byKey(const Key('onDirectoryCheckBox'));
-      expect(
-        onDirectoryCheckBoxFinder,
-        findsOneWidget,
-      );
-      checkboxWidget = tester.widget<Checkbox>(onDirectoryCheckBoxFinder);
-      expect(
-        checkboxWidget.value,
-        isTrue,
-      );
-
-      // Verify the presence and the value of the 'In playlist'
-      // checkbox
-      Finder inPlaylistCheckBoxFinder =
-          find.byKey(const Key('inPlaylistCheckBox'));
-      expect(
-        inPlaylistCheckBoxFinder,
-        findsOneWidget,
-      );
-      checkboxWidget = tester.widget<Checkbox>(inPlaylistCheckBoxFinder);
-      expect(
-        checkboxWidget.value,
-        isFalse,
-      );
+      // Verify the presence of the Extract MP3 elements
+      _verifyPresenceOfExtractMp3Widgets(tester);
 
       // Find the back button widget
       Finder backButtonFinder = find.byType(BackButton);
@@ -40550,7 +40504,8 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Verify the presence of the 'Comment not included' message
+      // Verify the presence of the 'Comment not included' 3rd
+      // comment message
       Finder commentNotIncludedMessageFinder =
           find.byKey(const Key('commentDeletedTextKey_3'));
       expect(
@@ -40568,12 +40523,44 @@ void main() {
       Finder saveEditedCommentButtonFinder =
           find.byKey(const Key('saveEditedSegmentButton'));
       await tester.tap(saveEditedCommentButtonFinder);
-      await tester.pump();
       await tester.pumpAndSettle();
-      // Verify the presence of the invalid comment error message
+
+      // Verify the displayed AlertDialog for invalid comment
+
+      // Verify the presence of the invalid comment error title
+      Finder segmentErrorDialogTextFinder = find.byKey(const Key('segmentErrorDialogTitleKey'));
       expect(
-        find.text("Start position must be between 0 and 2:56.8."),
-        findsWidgets,
+        tester.widget<Text>(segmentErrorDialogTextFinder).data,
+        'Error',
+      );
+
+      // Verify the presence of the invalid comment error message
+      segmentErrorDialogTextFinder = find.byKey(const Key('segmentErrorDialogMessageKey'));
+      expect(
+        tester.widget<Text>(segmentErrorDialogTextFinder).data,
+        'Start position must be between 0 and 2:56.7 inclusive.',
+      );
+
+      // Tap the Ok button to close the invalid comment error
+      // dialog
+      Finder segmentErrorDialogOkButtonFinder =
+          find.byKey(const Key('segmentErrorDialogOkButtonKey'));
+      await tester.tap(segmentErrorDialogOkButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Quit the comment edition by tapping the Cancel button
+      Finder cancelEditedCommentButtonFinder =
+          find.byKey(const Key('cancelEditedSegmentButton'));
+      await tester.tap(cancelEditedCommentButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the presence of the remaining 'Comment not included'
+      // message
+      commentNotIncludedMessageFinder =
+          find.byKey(const Key('commentDeletedTextKey_3'));
+      expect(
+        tester.widget<Text>(commentNotIncludedMessageFinder).data,
+        'Comment not included',
       );
 
       // Necessary to drag up vertically to make visible the
@@ -40584,6 +40571,74 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      // Verify the presence of the 'Comment not included' 2nd
+      // comment message
+      commentNotIncludedMessageFinder =
+          find.byKey(const Key('commentDeletedTextKey_2'));
+      expect(
+        tester.widget<Text>(commentNotIncludedMessageFinder).data,
+        'Comment not included',
+      );
+
+      // This opens the edit 2nd comment dialog
+      editCommentIconButtonFinder =
+          find.byKey(const Key('editSegmentButtonKey_2'));
+      await tester.tap(editCommentIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Confirm the comment edition by tapping the save button
+      saveEditedCommentButtonFinder =
+          find.byKey(const Key('saveEditedSegmentButton'));
+      await tester.tap(saveEditedCommentButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the displayed AlertDialog for invalid comment
+
+      // Verify the presence of the invalid comment error message
+      segmentErrorDialogTextFinder = find.byKey(const Key('segmentErrorDialogMessageKey'));
+      expect(
+        tester.widget<Text>(segmentErrorDialogTextFinder).data,
+        'End position must be after start position and not exceed 2:56.8.',
+      );
+
+      // Tap the Ok button to close the invalid comment error
+      // dialog
+      segmentErrorDialogOkButtonFinder =
+          find.byKey(const Key('segmentErrorDialogOkButtonKey'));
+      await tester.tap(segmentErrorDialogOkButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Now modify the end position to 2:50.0
+      Finder commentEndPositionTextFieldFinder =
+          find.byKey(const Key('endPositionTextField'));
+      await tester.tap(commentEndPositionTextFieldFinder);
+      await tester.enterText(commentEndPositionTextFieldFinder, '2:50.0');
+      await tester.pumpAndSettle();
+
+      // Confirm the comment edition by tapping the save button
+      saveEditedCommentButtonFinder =
+          find.byKey(const Key('saveEditedSegmentButton'));
+      await tester.tap(saveEditedCommentButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the absence of the remaining 'Comment not included'
+      // message
+      expect(
+        find.byKey(const Key('commentDeletedTextKey_2')),
+        findsNothing,
+      );
+
+      // Verify the total duration text
+      totalDurationTextFinder =
+          find.byKey(const Key('totalSegmentsDurationTextKey'));
+      expect(
+        tester.widget<Text>(totalDurationTextFinder).data,
+        'Total duration: 2:37.8',
+      );
+
+      // Verify the presence of the Extract MP3 elements
+      _verifyPresenceOfExtractMp3Widgets(tester);
+
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -40591,6 +40646,58 @@ void main() {
       );
     });
   });
+}
+
+void _verifyPresenceOfExtractMp3Widgets(WidgetTester tester) {
+  
+  // Verify the presence of the Extract MP3 button
+  expect(
+    find.byKey(const Key('extractMp3Button')),
+    findsOneWidget,
+  );
+  
+  // Verify the presence and the value of the 'In music
+  // quality' checkbox
+  Finder musicalQualityCheckBoxFinder =
+      find.byKey(const Key('musicalQualityCheckBox'));
+  expect(
+    musicalQualityCheckBoxFinder,
+    findsOneWidget,
+  );
+  Checkbox checkboxWidget =
+      tester.widget<Checkbox>(musicalQualityCheckBoxFinder);
+  expect(
+    checkboxWidget.value,
+    isTrue,
+  );
+  
+  // Verify the presence and the value of the 'In directory'
+  // checkbox
+  Finder onDirectoryCheckBoxFinder =
+      find.byKey(const Key('onDirectoryCheckBox'));
+  expect(
+    onDirectoryCheckBoxFinder,
+    findsOneWidget,
+  );
+  checkboxWidget = tester.widget<Checkbox>(onDirectoryCheckBoxFinder);
+  expect(
+    checkboxWidget.value,
+    isTrue,
+  );
+  
+  // Verify the presence and the value of the 'In playlist'
+  // checkbox
+  Finder inPlaylistCheckBoxFinder =
+      find.byKey(const Key('inPlaylistCheckBox'));
+  expect(
+    inPlaylistCheckBoxFinder,
+    findsOneWidget,
+  );
+  checkboxWidget = tester.widget<Checkbox>(inPlaylistCheckBoxFinder);
+  expect(
+    checkboxWidget.value,
+    isFalse,
+  );
 }
 
 Future<void> _verifyAllCommentsAfterQuittingAndCommingBackToExtracDialog({
