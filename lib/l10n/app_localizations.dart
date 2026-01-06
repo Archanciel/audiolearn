@@ -4427,7 +4427,7 @@ abstract class AppLocalizations {
   /// No description provided for @inDirectoryLabelTooltip.
   ///
   /// In en, this message translates to:
-  /// **'The created MP3 is stored in the selected directory.'**
+  /// **'The created MP3 is stored in the \"audiolearn/saved/MP3\" directory.'**
   String get inDirectoryLabelTooltip;
 
   /// No description provided for @inPlaylistLabel.

@@ -39174,7 +39174,7 @@ void main() {
       await _verifyAndPlayExtractedMp3Method(
         tester: tester,
         extractionSuccessMessage:
-            'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
+            'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
         extractionPlayingMessage:
             'Playing: musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
       );

@@ -1211,7 +1211,7 @@
   "fadeInDurationHelperText": "Duration to fade volume from 0% to 100% at comment start",
   "extractedMp3Saved": "Extracted MP3 saved to",
   "inDirectoryLabel": "In directory",
-  "inDirectoryLabelTooltip": "The created MP3 is stored in the selected directory.",
+  "inDirectoryLabelTooltip": "The created MP3 is stored in the \"audiolearn/saved/MP3\" directory.",
   "inPlaylistLabel": "In playlist",
   "inPlaylistLabelTooltip": "An audio containing the created MP3 and its associated comment(s) is added to the selected playlist.",
   "noPlaylistSelectedForExtractedMp3LocationWarning": "No playlist selected for the addition of the audio containing the extracted MP3. Select one playlist and retry ...",

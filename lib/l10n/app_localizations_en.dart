@@ -2751,7 +2751,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get inDirectoryLabelTooltip =>
-      'The created MP3 is stored in the selected directory.';
+      'The created MP3 is stored in the \"audiolearn/saved/MP3\" directory.';
 
   @override
   String get inPlaylistLabel => 'In playlist';
