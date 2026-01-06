@@ -176,12 +176,14 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
               Icon(Icons.error_outline, color: Colors.red, size: 32),
               const SizedBox(width: 8),
               Text(
+                key: Key('segmentErrorDialogTitleKey'),
                 AppLocalizations.of(context)!.errorTitle,
                 style: TextStyle(color: Colors.red),
               ),
             ],
           ),
           content: Text(
+            key: Key('segmentErrorDialogMessageKey'),
             message,
             style: const TextStyle(
               fontSize: 16,
@@ -191,9 +193,10 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
           ),
           actions: [
             TextButton(
+              key: Key('segmentErrorDialogOkButtonKey'),
               onPressed: () => Navigator.of(context).pop(),
               child: Text(
-                'OK',
+                'Ok',
                 style: TextStyle(
                   color: Colors.red,
                   fontWeight: FontWeight.bold,
@@ -340,6 +343,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
       ),
       actions: [
         TextButton(
+          key: Key('cancelEditedSegmentButton'),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(AppLocalizations.of(context)!.cancelButton),
         ),

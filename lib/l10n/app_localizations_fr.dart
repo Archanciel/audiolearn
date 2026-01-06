@@ -2717,7 +2717,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get endPositionError =>
-      'La position de fin doit être après le début sans dépasser';
+      'La position de fin doit être après la position de début sans dépasser';
 
   @override
   String startPositionError(Object inclusive) {
