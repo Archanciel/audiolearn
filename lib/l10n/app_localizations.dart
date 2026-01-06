@@ -4487,8 +4487,8 @@ abstract class AppLocalizations {
   /// No description provided for @deleteInvalidCommentsMessage.
   ///
   /// In en, this message translates to:
-  /// **'Delete invalid comment(s) with end position greater than audio duration.'**
-  String get deleteInvalidCommentsMessage;
+  /// **'Delete invalid comment(s) with end position greater than audio duration which is {audioDuration}.'**
+  String deleteInvalidCommentsMessage(Object audioDuration);
 
   /// No description provided for @fileNotExistError.
   ///

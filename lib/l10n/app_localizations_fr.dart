@@ -1414,7 +1414,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get commentedAudioDeletionSolutionHelpTitle =>
-      'La solution est de créer un paramètre de tri/filtrage pour sélectionner uniquement les audio\'ss entièrement écoutés et non commentés';
+      'La solution est de créer un paramètre de tri/filtrage pour sélectionner uniquement les audios entièrement écoutés et non commentés';
 
   @override
   String get commentedAudioDeletionSolutionHelpContent =>
@@ -1446,7 +1446,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get commentedAudioDeletionApplyingNewSFParmHelpTitle =>
-      'Enfin recliquez sur le bouton \"Playlists\" afin de réafficher la liste des playlists, ouvrez le menu de la playlist source et cliquez sur \"Traiter les audios filtrés ...\" puis sur \"Supprimer les audio\'ss filtrés ...\".';
+      'Enfin recliquez sur le bouton \"Playlists\" afin de réafficher la liste des playlists, ouvrez le menu de la playlist source et cliquez sur \"Traiter les audios filtrés ...\" puis sur \"Supprimer les audios filtrés ...\".';
 
   @override
   String get commentedAudioDeletionApplyingNewSFParmHelpContent =>
@@ -1658,11 +1658,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get startAudioDownloadDateSortFilterTooltip =>
-      'Si seule la date de début du téléchargement est définie, tous les audio\'ss téléchargés à partir de la date définie seront listés.';
+      'Si seule la date de début du téléchargement est définie, tous les audios téléchargés à partir de la date définie seront listés.';
 
   @override
   String get endAudioDownloadDateSortFilterTooltip =>
-      'Si seule la date de fin du téléchargement est définie, tous les audio\'ss téléchargés jusqu\'à la date définie seront listés.';
+      'Si seule la date de fin du téléchargement est définie, tous les audios téléchargés jusqu\'à la date définie seront listés.';
 
   @override
   String get startVideoUploadDateSortFilterTooltip =>
@@ -1674,19 +1674,19 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get startAudioDurationSortFilterTooltip =>
-      'Si seule la durée minimale est définie, tous les audio\'ss d\'une durée égale ou supérieure à la valeur définie seront listés.';
+      'Si seule la durée minimale est définie, tous les audios d\'une durée égale ou supérieure à la valeur définie seront listés.';
 
   @override
   String get endAudioDurationSortFilterTooltip =>
-      'Si seule la durée maximale est définie, tous les audio\'ss d\'une durée égale ou inférieure à la valeur définie seront listés.';
+      'Si seule la durée maximale est définie, tous les audios d\'une durée égale ou inférieure à la valeur définie seront listés.';
 
   @override
   String get startAudioFileSizeSortFilterTooltip =>
-      'Si seule la taille minimale du fichier est définie, tous les audio\'ss d\'une taille égale ou supérieure à la valeur définie seront listés.';
+      'Si seule la taille minimale du fichier est définie, tous les audios d\'une taille égale ou supérieure à la valeur définie seront listés.';
 
   @override
   String get endAudioFileSizeSortFilterTooltip =>
-      'Si seule la taille maximale du fichier est définie, tous les audio\'ss d\'une taille égale ou inférieure à la valeur définie seront listés.';
+      'Si seule la taille maximale du fichier est définie, tous les audios d\'une taille égale ou inférieure à la valeur définie seront listés.';
 
   @override
   String get valueInInitialVersionTitle => 'En version initiale';
@@ -2819,8 +2819,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce commentaire a été précédemment supprimé de la liste \"Commentaires->MP3\" et n’est donc pas inclus dans le MP3 extrait. Pour l’inclure à nouveau, éditez le commentaire et sauvez-le.';
 
   @override
-  String get deleteInvalidCommentsMessage =>
-      'Supprimez le/les commentaire(s) invalide(s) en raison de leur position finale supérieure à la durée de l\'audio';
+  String deleteInvalidCommentsMessage(Object audioDuration) {
+    return 'Supprimez le/les commentaire(s) invalide(s) en raison de leur position finale supérieure à la durée de l\'audio, laquelle est $audioDuration.';
+  }
 
   @override
   String get fileNotExistError => 'Le fichier n\'existe pas';
