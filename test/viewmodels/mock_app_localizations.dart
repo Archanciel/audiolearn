@@ -2896,4 +2896,7 @@ class MockAppLocalizations extends AppLocalizations {
     Object audioDuration,
   ) =>
       "Delete invalid comment(s) with end position greater than audio duration which is $audioDuration.";
+
+  @override
+  String get errorTitle => "Error";
 }

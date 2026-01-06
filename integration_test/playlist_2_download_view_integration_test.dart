@@ -40360,12 +40360,11 @@ void main() {
       // Verify the Comments number title
       expect(find.text('Comments (3)'), findsOneWidget);
 
-      // Verify the invalid comment error message
-      Finder invalidCommentErrorTextMessageFinder =
-          find.byKey(const Key('deleteInvalidCommentsMessageKey'));
+      // Verify the pesence of the invalid comment error message
       expect(
-        tester.widget<Text>(invalidCommentErrorTextMessageFinder).data,
-        "Delete invalid comment(s) with end position greater than audio duration which is 2:56.8.",
+        find.text(
+            "Delete invalid comment(s) with end position greater than audio duration which is 2:56.8."),
+        findsOneWidget,
       );
 
       // Now, delete the third comment whose end position is greater
@@ -40395,12 +40394,11 @@ void main() {
       // Verify the Comments number title
       expect(find.text('Comments (2)'), findsOneWidget);
 
-      // Verify the invalid comment error message
-      invalidCommentErrorTextMessageFinder =
-          find.byKey(const Key('deleteInvalidCommentsMessageKey'));
+      // Verify the pesence of the invalid comment error message
       expect(
-        tester.widget<Text>(invalidCommentErrorTextMessageFinder).data,
-        "Delete invalid comment(s) with end position greater than audio duration which is 2:56.8.",
+        find.text(
+            "Delete invalid comment(s) with end position greater than audio duration which is 2:56.8."),
+        findsOneWidget,
       );
 
       // Now, delete the second comment whose end position is greater
@@ -40450,8 +40448,7 @@ void main() {
         onDirectoryCheckBoxFinder,
         findsOneWidget,
       );
-      checkboxWidget =
-          tester.widget<Checkbox>(onDirectoryCheckBoxFinder);
+      checkboxWidget = tester.widget<Checkbox>(onDirectoryCheckBoxFinder);
       expect(
         checkboxWidget.value,
         isTrue,
@@ -40548,7 +40545,8 @@ void main() {
       // third comment
       await tester.drag(
         find.byType(AudioExtractorDialog),
-        const Offset(0, 300), // Negative value for vertical drag to scroll down
+        const Offset(
+            0, -300), // Negative value for vertical drag to scroll down
       );
       await tester.pumpAndSettle();
 
@@ -40556,7 +40554,7 @@ void main() {
       Finder commentNotIncludedMessageFinder =
           find.byKey(const Key('commentDeletedTextKey_3'));
       expect(
-        tester.widget<Text>(commentNotIncludedMessageFinder).data,  
+        tester.widget<Text>(commentNotIncludedMessageFinder).data,
         'Comment not included',
       );
 
@@ -40570,6 +40568,20 @@ void main() {
       Finder saveEditedCommentButtonFinder =
           find.byKey(const Key('saveEditedSegmentButton'));
       await tester.tap(saveEditedCommentButtonFinder);
+      await tester.pump();
+      await tester.pumpAndSettle();
+      // Verify the presence of the invalid comment error message
+      expect(
+        find.text("Start position must be between 0 and 2:56.8."),
+        findsWidgets,
+      );
+
+      // Necessary to drag up vertically to make visible the
+      // second comment
+      await tester.drag(
+        find.byType(AudioExtractorDialog),
+        const Offset(0, 300), // Negative value for vertical drag to scroll down
+      );
       await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test

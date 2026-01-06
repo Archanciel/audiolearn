@@ -1194,8 +1194,8 @@
   "fadeStartPositionHelperText": "Position where volume starts fading to 0",
   "fadeDurationLabel": "Fade duration (h:mm:ss.t)",
   "fadeDurationHelperText": "Duration to fade volume from 100% to 0%",
-  "startPositionError": "Start position must be between 0 and",
   "endPositionError": "End position must be after start and not exceed",
+  "startPositionError": "Start position must be between 0 and",
   "negativeSilenceDurationError": "Silence duration cannot be negative",
   "negativeSoundDurationError": "Sound reduction duration cannot be negative",
   "negativeSoundPositionError": "Sound reduction position must be within the comment (>= start position)",
@@ -1222,5 +1222,6 @@
   "commentWasDeleted": "Comment not included",
   "commentWasDeletedTooltip": "This comment was previously removed from the \"Comments in MP3\" list so it is not included in the extracted MP3. To include it again, edit the comment and save it.",
   "deleteInvalidCommentsMessage": "Delete invalid comment(s) with end position greater than audio duration which is {audioDuration}.",
-  "fileNotExistError": "File does not exist"
+  "fileNotExistError": "File does not exist",
+  "errorTitle": "Error"
 }

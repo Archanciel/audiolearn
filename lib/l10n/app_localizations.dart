@@ -4322,17 +4322,17 @@ abstract class AppLocalizations {
   /// **'Duration to fade volume from 100% to 0%'**
   String get fadeDurationHelperText;
 
-  /// No description provided for @startPositionError.
-  ///
-  /// In en, this message translates to:
-  /// **'Start position must be between 0 and'**
-  String get startPositionError;
-
   /// No description provided for @endPositionError.
   ///
   /// In en, this message translates to:
   /// **'End position must be after start and not exceed'**
   String get endPositionError;
+
+  /// No description provided for @startPositionError.
+  ///
+  /// In en, this message translates to:
+  /// **'Start position must be between 0 and'**
+  String get startPositionError;
 
   /// No description provided for @negativeSilenceDurationError.
   ///
@@ -4495,6 +4495,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'File does not exist'**
   String get fileNotExistError;
+
+  /// No description provided for @errorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get errorTitle;
 }
 
 class _AppLocalizationsDelegate
