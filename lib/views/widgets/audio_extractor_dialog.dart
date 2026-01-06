@@ -420,8 +420,8 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                             .existNotDeletedSegmentWithEndPositionGreaterThanAudioDuration())
                         ? Text(
                             AppLocalizations.of(context)!
-                                .deleteInvalidCommentsMessage,
-                            maxLines: 2,
+                                .deleteInvalidCommentsMessage(TimeFormatUtil.formatSeconds(widget.currentAudio.audioDuration.inMilliseconds / 1000.0)),
+                            maxLines: 4,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.red,

@@ -2889,9 +2889,11 @@ class MockAppLocalizations extends AppLocalizations {
       "This comment was previously deleted from the Comments in MP3 list in order to be not included in the extracted MP3. To instead include it, edit it and save it.";
 
   @override
-  String get deleteInvalidCommentsMessage =>
-      "Delete invalid comment(s) with end position greater than audio duration.";
+  String get fileNotExistError => "File does not exist";
 
   @override
-  String get fileNotExistError => "File does not exist";
+  String deleteInvalidCommentsMessage(
+    Object audioDuration,
+  ) =>
+      "Delete invalid comment(s) with end position greater than audio duration which is $audioDuration.";
 }
