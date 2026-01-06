@@ -39151,15 +39151,6 @@ void main() {
       expect(checkboxWidget.value, isFalse,
           reason: 'A playlist checkbox is selected.');
 
-      // Replace the platform instance with your mock
-      MockFilePicker mockFilePicker = MockFilePicker();
-      FilePicker.platform = mockFilePicker;
-
-      // Setting the path value returned by the FilePicker mock.
-      mockFilePicker.setPathToSelect(
-        pathToSelectStr: kApplicationPathWindowsTest,
-      );
-
       // Now, type on the Extract MP3 button
       final Finder extractMp3ButtonFinder =
           find.byKey(const Key('extractMp3Button'));
@@ -39511,7 +39502,8 @@ void main() {
     });
     testWidgets(
         '''Delete and resave the extract comments. Modify their positions and verify that this is memorized and
-           is correctly stored in the comment json file.''', (WidgetTester tester) async {
+           is correctly stored in the comment json file.''',
+        (WidgetTester tester) async {
       const String audioTitle =
           "Glorious - Laisse-moi te parler de Jésus #louange";
 
@@ -40305,17 +40297,17 @@ void main() {
       );
     });
     testWidgets(
-        '''Invalid comments with durations greater than audio duration.''', (WidgetTester tester) async {
-      const String audioTitle =
-          "Jésus, c'est le plus beau nom";
+        '''Invalid comments with durations greater than audio duration.''',
+        (WidgetTester tester) async {
+      const String audioTitle = "Jésus, c'est le plus beau nom";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
         savedTestDataDirName: 'extract_comments_to_mp3_test',
-        selectedPlaylistTitle: '1 music with invalid comments',
+        selectedPlaylistTitle: '1 music with invalid comment',
       );
 
-      // First, find the '1 music with invalid comments' playlist audio ListTile Text widget
+      // First, find the '1 music with invalid comment' playlist audio ListTile Text widget
       Finder audioTitleTileTextWidgetFinder = find.text(audioTitle);
 
       // Then obtain the audio ListTile widget enclosing the Text widget
@@ -40368,128 +40360,28 @@ void main() {
       // Verify the Comments number title
       expect(find.text('Comments (3)'), findsOneWidget);
 
-      await IntegrationTestUtil.checkExtractionCommentDetails(
-        tester: tester,
-        segmentDetailsList: [
-          {
-            'number': 1,
-            'commentTitle': "First part",
-            'startPosition': '0:00.0',
-            'endPosition': '3:01.0',
-            'increaseDuration': 'Increase duration: 0:00.0',
-            'reductionPosition': 'Reduction position: 2:50.0',
-            'reductionDuration': 'Reduction duration: 0:11.0',
-            'duration': 'Duration: 3:01.0 + silence 0:01.0',
-          },
-          {
-            'number': 2,
-            'commentTitle':
-                "1st ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
-            'startPosition': '3:00.0',
-            'endPosition': '3:54.6',
-            'increaseDuration': 'Increase duration: 0:00.0',
-            'reductionPosition': 'Reduction position: 0:00.0',
-            'reductionDuration': 'Reduction duration: 0:00.0',
-            'duration': 'Duration: 0:54.6',
-          },
-          {
-            'number': 3,
-            'commentTitle':
-                "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
-            'startPosition': '3:56.1',
-            'endPosition': '5:20.8',
-            'increaseDuration': 'Increase duration: 0:09.0',
-            'reductionPosition': 'Reduction position: 5:11.0',
-            'reductionDuration': 'Reduction duration: 0:09.8',
-            'duration': 'Duration: 1:24.7',
-          },
-        ],
-      );
-
-      final String commentsFilePath = path.join(
-        'C:',
-        'development',
-        'flutter',
-        'audiolearn',
-        'test',
-        'data',
-        'audio',
-        'playlists',
-        '1 long music',
-        'comments',
-        '250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27.json',
-      );
-
-      // Verifying the content of the comments json file
-
-      File commentsFile = File(commentsFilePath);
-
-      String jsonContent = commentsFile.readAsStringSync();
-      List<dynamic> commentsLst = jsonDecode(jsonContent) as List<dynamic>;
-
-      Map<String, dynamic> firstComment =
-          commentsLst[0] as Map<String, dynamic>;
-
-      expect(firstComment['id'], 'First part_1766333790797487');
-      expect(firstComment['title'], 'First part');
-      expect(firstComment['content'], '');
-      expect(firstComment['commentStartPositionInTenthOfSeconds'], 0);
-      expect(firstComment['commentEndPositionInTenthOfSeconds'], 1810);
-      expect(firstComment['silenceDuration'], 1.0);
-      expect(firstComment['fadeInDuration'], 0.0);
-      expect(firstComment['soundReductionPosition'], 170.0);
-      expect(firstComment['soundReductionDuration'], 11.0);
-      expect(firstComment['deleted'], null);
-      expect(firstComment['creationDateTime'], '2025-12-21T17:16:30.000');
-      expect(firstComment['lastUpdateDateTime'], '2025-12-22T05:47:28.517838');
-
-      Map<String, dynamic> secondComment =
-          commentsLst[1] as Map<String, dynamic>;
-
-      expect(secondComment['id'],
-          '1st ce qu\'Il a fait pour Moïse, Il peut le faire pour toi_1766400108231148');
-      expect(secondComment['title'],
-          '1st ce qu\'Il a fait pour Moïse, Il peut le faire pour toi');
+      // Verify the pesence of the invalid comment error message
       expect(
-        secondComment['content'],
-        "A remplacer par 2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi which is longer.",
+        find.text(
+            "Delete invalid comment(s) with end position greater than audio duration which is 2:56.8."),
+        findsOneWidget,
       );
-      expect(secondComment['commentStartPositionInTenthOfSeconds'], 1800);
-      expect(secondComment['commentEndPositionInTenthOfSeconds'], 2346);
-      expect(secondComment['silenceDuration'], 0.0);
-      expect(secondComment['fadeInDuration'], 0.0);
-      expect(secondComment['soundReductionPosition'], 0.0);
-      expect(secondComment['soundReductionDuration'], 0.0);
-      expect(secondComment['deleted'], null,
-          reason: 'Second comment should be deleted');
-      expect(secondComment['creationDateTime'], '2025-12-22T11:41:48.000');
-      expect(secondComment['lastUpdateDateTime'], '2025-12-22T16:07:01.000');
 
-      Map<String, dynamic> thirdComment =
-          commentsLst[2] as Map<String, dynamic>;
+      // Now, delete the third comment whose end position is greater
+      // than the audio duration
 
-      expect(thirdComment['id'],
-          '1st ce qu\'Il a fait pour Moïse, Il peut le faire pour toi_1766334317917836');
-      expect(thirdComment['title'],
-          '2nd ce qu\'Il a fait pour Moïse, Il peut le faire pour toi');
-      expect(thirdComment['content'], '');
-      expect(thirdComment['commentStartPositionInTenthOfSeconds'], 2361);
-      expect(thirdComment['commentEndPositionInTenthOfSeconds'], 3208);
-      expect(thirdComment['silenceDuration'], 0.0);
-      expect(thirdComment['fadeInDuration'], 9.0,
-          reason: 'Should have 9 seconds fade-in');
-      expect(thirdComment['soundReductionPosition'], 311.0);
-      expect(thirdComment['soundReductionDuration'], 9.8,
-          reason: 'Should have 9.8 seconds fade-out');
-      expect(thirdComment['deleted'], null);
-      expect(thirdComment['creationDateTime'], '2025-12-21T17:25:17.000');
-      expect(thirdComment['lastUpdateDateTime'], '2025-12-22T16:06:46.000');
-
-      // Now, delete the second comment
+      // Necessary to drag down vertically to make visible the third
+      // comment
+      await tester.drag(
+        find.byType(AudioExtractorDialog),
+        const Offset(
+            0, -300), // Negative value for vertical drag to scroll down
+      );
+      await tester.pumpAndSettle();
 
       // This opens the delete comment confirmation dialog
       Finder deleteCommentIconButtonFinder =
-          find.byKey(const Key('deleteSegmentButtonKey_2'));
+          find.byKey(const Key('deleteSegmentButtonKey_3'));
       await tester.tap(deleteCommentIconButtonFinder);
       await tester.pumpAndSettle();
 
@@ -40502,107 +40394,79 @@ void main() {
       // Verify the Comments number title
       expect(find.text('Comments (2)'), findsOneWidget);
 
-      await IntegrationTestUtil.checkExtractionCommentDetails(
-        tester: tester,
-        segmentDetailsList: [
-          {
-            'number': 1,
-            'commentTitle': "First part",
-            'startPosition': '0:00.0',
-            'endPosition': '3:01.0',
-            'increaseDuration': 'Increase duration: 0:00.0',
-            'reductionPosition': 'Reduction position: 2:50.0',
-            'reductionDuration': 'Reduction duration: 0:11.0',
-            'duration': 'Duration: 3:01.0 + silence 0:01.0',
-          },
-          {
-            'number': 2,
-            'commentTitle':
-                "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
-            'startPosition': '3:56.1',
-            'endPosition': '5:20.8',
-            'increaseDuration': 'Increase duration: 0:09.0',
-            'reductionPosition': 'Reduction position: 5:11.0',
-            'reductionDuration': 'Reduction duration: 0:09.8',
-            'duration': 'Duration: 1:24.7',
-          },
-        ],
-      );
-
-      // Verifying the content of the comments json file
-
-      commentsFile = File(commentsFilePath);
-
-      jsonContent = commentsFile.readAsStringSync();
-      commentsLst = jsonDecode(jsonContent) as List<dynamic>;
-
-      firstComment = commentsLst[0] as Map<String, dynamic>;
-
-      expect(firstComment['id'], 'First part_1766333790797487');
-      expect(firstComment['title'], 'First part');
-      expect(firstComment['content'], '');
-      expect(firstComment['commentStartPositionInTenthOfSeconds'], 0);
-      expect(firstComment['commentEndPositionInTenthOfSeconds'], 1810);
-      expect(firstComment['silenceDuration'], 1.0);
-      expect(firstComment['fadeInDuration'], 0.0);
-      expect(firstComment['soundReductionPosition'], 170.0);
-      expect(firstComment['soundReductionDuration'], 11.0);
-      expect(firstComment['deleted'], false);
-      expect(firstComment['creationDateTime'], '2025-12-21T17:16:30.000');
-      expect(firstComment['lastUpdateDateTime'], '2025-12-22T05:47:28.517838');
-
-      secondComment = commentsLst[1] as Map<String, dynamic>;
-
-      expect(secondComment['id'],
-          '1st ce qu\'Il a fait pour Moïse, Il peut le faire pour toi_1766400108231148');
-      expect(secondComment['title'],
-          '1st ce qu\'Il a fait pour Moïse, Il peut le faire pour toi');
+      // Verify the pesence of the invalid comment error message
       expect(
-        secondComment['content'],
-        "A remplacer par 2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi which is longer.",
+        find.text(
+            "Delete invalid comment(s) with end position greater than audio duration which is 2:56.8."),
+        findsOneWidget,
       );
-      expect(secondComment['commentStartPositionInTenthOfSeconds'], 1800);
-      expect(secondComment['commentEndPositionInTenthOfSeconds'], 2346);
-      expect(secondComment['silenceDuration'], 0.0);
-      expect(secondComment['fadeInDuration'], 0.0);
-      expect(secondComment['soundReductionPosition'], 0.0);
-      expect(secondComment['soundReductionDuration'], 0.0);
-      expect(secondComment['deleted'], true,
-          reason: 'Second comment should be deleted');
-      expect(secondComment['creationDateTime'], '2025-12-22T11:41:48.000');
-      DateTime now = DateTime.now();
-      String yearStr = now.year.toString();
-      String monthStr = now.month.toString();
-      monthStr = (monthStr.length == 1) ? "0$monthStr" : monthStr;
-      String dayStr = now.day.toString();
-      dayStr = (dayStr.length == 1) ? "0$dayStr" : dayStr;
-      String hourStr = now.hour.toString();
-      hourStr = (hourStr.length == 1) ? "0$hourStr" : hourStr;
-      String minuteStr = now.minute.toString();
-      minuteStr = (minuteStr.length == 1) ? "0$minuteStr" : minuteStr;
-      expect(secondComment['lastUpdateDateTime'],
-          contains("$yearStr-$monthStr-${dayStr}T$hourStr:$minuteStr"),
-          reason:
-              'Last update date time should be today\'s date with current hour and minute');
 
-      thirdComment = commentsLst[2] as Map<String, dynamic>;
+      // Now, delete the second comment whose end position is greater
+      // than the audio duration
 
-      expect(thirdComment['id'],
-          '1st ce qu\'Il a fait pour Moïse, Il peut le faire pour toi_1766334317917836');
-      expect(thirdComment['title'],
-          '2nd ce qu\'Il a fait pour Moïse, Il peut le faire pour toi');
-      expect(thirdComment['content'], '');
-      expect(thirdComment['commentStartPositionInTenthOfSeconds'], 2361);
-      expect(thirdComment['commentEndPositionInTenthOfSeconds'], 3208);
-      expect(thirdComment['silenceDuration'], 0.0);
-      expect(thirdComment['fadeInDuration'], 9.0,
-          reason: 'Should have 9 seconds fade-in');
-      expect(thirdComment['soundReductionPosition'], 311.0);
-      expect(thirdComment['soundReductionDuration'], 9.8,
-          reason: 'Should have 9.8 seconds fade-out');
-      expect(thirdComment['deleted'], false);
-      expect(thirdComment['creationDateTime'], '2025-12-21T17:25:17.000');
-      expect(thirdComment['lastUpdateDateTime'], '2025-12-22T16:06:46.000');
+      // This opens the delete comment confirmation dialog
+      deleteCommentIconButtonFinder =
+          find.byKey(const Key('deleteSegmentButtonKey_2'));
+      await tester.tap(deleteCommentIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Confirm the deletion by tapping the delete button
+      deleteCommentButtonFinder =
+          find.byKey(const Key('confirmDeleteSegmentButton'));
+      await tester.tap(deleteCommentButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the Comments number title
+      expect(find.text('Comments (1)'), findsOneWidget);
+
+      // Verify the presence of the Extract MP3 button
+      expect(
+        find.byKey(const Key('extractMp3Button')),
+        findsOneWidget,
+      );
+
+      // Verify the presence and the value of the 'In music
+      // quality' checkbox
+      Finder musicalQualityCheckBoxFinder =
+          find.byKey(const Key('musicalQualityCheckBox'));
+      expect(
+        musicalQualityCheckBoxFinder,
+        findsOneWidget,
+      );
+      Checkbox checkboxWidget =
+          tester.widget<Checkbox>(musicalQualityCheckBoxFinder);
+      expect(
+        checkboxWidget.value,
+        isTrue,
+      );
+
+      // Verify the presence and the value of the 'In directory'
+      // checkbox
+      Finder onDirectoryCheckBoxFinder =
+          find.byKey(const Key('onDirectoryCheckBox'));
+      expect(
+        onDirectoryCheckBoxFinder,
+        findsOneWidget,
+      );
+      checkboxWidget = tester.widget<Checkbox>(onDirectoryCheckBoxFinder);
+      expect(
+        checkboxWidget.value,
+        isTrue,
+      );
+
+      // Verify the presence and the value of the 'In playlist'
+      // checkbox
+      Finder inPlaylistCheckBoxFinder =
+          find.byKey(const Key('inPlaylistCheckBox'));
+      expect(
+        inPlaylistCheckBoxFinder,
+        findsOneWidget,
+      );
+      checkboxWidget = tester.widget<Checkbox>(inPlaylistCheckBoxFinder);
+      expect(
+        checkboxWidget.value,
+        isFalse,
+      );
 
       // Find the back button widget
       Finder backButtonFinder = find.byType(BackButton);
@@ -40615,11 +40479,12 @@ void main() {
       // Now re-open the audio extractor dialog to verify that the
       // deleted comment is still present
 
-      // First, find the '1 long music' playlist audio ListTile Text widget
+      // First, find the '1 music with invalid comment' playlist
+      // audio ListTile Text widget
       audioTitleTileTextWidgetFinder = find.text(audioTitle);
 
-      // Then obtain the audio ListTile widget enclosing the Text widget
-      // by finding its ancestor
+      // Then obtain the audio ListTile widget enclosing the Text
+      // widget by finding its ancestor
       audioTitleTileWidgetFinder = find.ancestor(
         of: audioTitleTileTextWidgetFinder,
         matching: find.byType(ListTile),
@@ -40670,286 +40535,14 @@ void main() {
           find.byKey(const Key('totalSegmentsDurationTextKey'));
       expect(
         tester.widget<Text>(totalDurationTextFinder).data,
-        'Total duration: 4:26.7',
+        'Total duration: 1:12.8',
       );
 
       // Verify the Comments number commentTitle
       expect(find.text('Comments (3)'), findsOneWidget);
 
-      await IntegrationTestUtil.checkExtractionCommentDetails(
-        tester: tester,
-        segmentDetailsList: [
-          {
-            'number': 1,
-            'commentTitle': "First part",
-            'startPosition': '0:00.0',
-            'endPosition': '3:01.0',
-            'increaseDuration': 'Increase duration: 0:00.0',
-            'reductionPosition': 'Reduction position: 2:50.0',
-            'reductionDuration': 'Reduction duration: 0:11.0',
-            'duration': 'Duration: 3:01.0 + silence 0:01.0',
-          },
-          {
-            'number': 2,
-            'commentTitle':
-                "1st ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
-            'startPosition': '3:00.0',
-            'endPosition': '3:54.6',
-            'increaseDuration': 'Increase duration: 0:00.0',
-            'reductionPosition': 'Reduction position: 0:00.0',
-            'reductionDuration': 'Reduction duration: 0:00.0',
-            'duration': 'Duration: 0:54.6',
-          },
-          {
-            'number': 3,
-            'commentTitle':
-                "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
-            'startPosition': '3:56.1',
-            'endPosition': '5:20.8',
-            'increaseDuration': 'Increase duration: 0:09.0',
-            'reductionPosition': 'Reduction position: 5:11.0',
-            'reductionDuration': 'Reduction duration: 0:09.8',
-            'duration': 'Duration: 1:24.7',
-          },
-        ],
-        connentDeletedNumberLst: [
-          2,
-        ],
-      );
-
-      // Now, delete all comments
-
-      // Necessary to drag up vertically to make visible the delete
-      // icon button of the 1st comment
-      await tester.drag(
-        find.byType(AudioExtractorDialog),
-        const Offset(0, 300), // Negative value for vertical drag to scroll down
-      );
-      await tester.pumpAndSettle();
-
-      // This opens the delete 1st comment confirmation dialog
-      deleteCommentIconButtonFinder =
-          find.byKey(const Key('deleteSegmentButtonKey_1'));
-      await tester.tap(deleteCommentIconButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Confirm the 1st deletion by tapping the delete button
-      deleteCommentButtonFinder =
-          find.byKey(const Key('confirmDeleteSegmentButton'));
-      await tester.tap(deleteCommentButtonFinder);
-      await tester.pumpAndSettle();
-
-      // This opens the delete 2nd comment confirmation dialog
-      deleteCommentIconButtonFinder =
-          find.byKey(const Key('deleteSegmentButtonKey_1'));
-      await tester.tap(deleteCommentIconButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Confirm the 2nd deletion by tapping the delete button
-      deleteCommentButtonFinder =
-          find.byKey(const Key('confirmDeleteSegmentButton'));
-      await tester.tap(deleteCommentButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Necessary to drag down vertically to make visible the delete
-      // icon button of the 3rd comment
-      await tester.drag(
-        find.byType(AudioExtractorDialog),
-        const Offset(0, 300), // Negative value for vertical drag to scroll down
-      );
-      await tester.pumpAndSettle();
-
-      // This opens the delete 3rd comment confirmation dialog
-      deleteCommentIconButtonFinder =
-          find.byKey(const Key('deleteSegmentButtonKey_1'));
-      await tester.tap(deleteCommentIconButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Confirm the 3rd deletion by tapping the delete button
-      deleteCommentButtonFinder =
-          find.byKey(const Key('confirmDeleteSegmentButton'));
-      await tester.tap(deleteCommentButtonFinder);
-      await tester.pumpAndSettle();
-
-      await _verifyAllCommentsAfterQuittingAndCommingBackToExtracDialog(
-        tester: tester,
-        commentNumberTitleBeforeQuittingDialog: 'Comments (0)',
-        audioTitle: audioTitle,
-        backButtonFinder: backButtonFinder,
-        audioTitleTileTextWidgetFinder: audioTitleTileTextWidgetFinder,
-        audioTitleTileWidgetFinder: audioTitleTileWidgetFinder,
-        audioTitleTileLeadingMenuIconButton:
-            audioTitleTileLeadingMenuIconButton,
-        audioCommentsPopupMenuItem: audioCommentsPopupMenuItem,
-        audioCommentsLstFinder: audioCommentsLstFinder,
-        extractCommentsToMp3ButtonFinder: extractCommentsToMp3ButtonFinder,
-        segmentDetailsList: [
-          {
-            'number': 1,
-            'commentTitle': "First part",
-            'startPosition': '0:00.0',
-            'endPosition': '3:01.0',
-            'increaseDuration': 'Increase duration: 0:00.0',
-            'reductionPosition': 'Reduction position: 2:50.0',
-            'reductionDuration': 'Reduction duration: 0:11.0',
-            'duration': 'Duration: 3:01.0 + silence 0:01.0',
-          },
-          {
-            'number': 2,
-            'commentTitle':
-                "1st ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
-            'startPosition': '3:00.0',
-            'endPosition': '3:54.6',
-            'increaseDuration': 'Increase duration: 0:00.0',
-            'reductionPosition': 'Reduction position: 0:00.0',
-            'reductionDuration': 'Reduction duration: 0:00.0',
-            'duration': 'Duration: 0:54.6',
-          },
-          {
-            'number': 3,
-            'commentTitle':
-                "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
-            'startPosition': '3:56.1',
-            'endPosition': '5:20.8',
-            'increaseDuration': 'Increase duration: 0:09.0',
-            'reductionPosition': 'Reduction position: 5:11.0',
-            'reductionDuration': 'Reduction duration: 0:09.8',
-            'duration': 'Duration: 1:24.7',
-          },
-        ],
-        connentDeletedNumberLst: [
-          1,
-          2,
-          3,
-        ],
-      );
-
-      // Verify the total duration text
-      totalDurationTextFinder =
-          find.byKey(const Key('totalSegmentsDurationTextKey'));
-      expect(
-        tester.widget<Text>(totalDurationTextFinder).data,
-        'Total duration: 0:00.0',
-      );
-
-      // Now edit the 'First part' comment to modify its start and
-      // end positions, its increase duration and reduction position
-      // and duration
-
-      // Necessary to drag up vertically to make visible the edit
-      // icon button of the 1st comment
-      await tester.drag(
-        find.byType(AudioExtractorDialog),
-        const Offset(0, 300), // Negative value for vertical drag to scroll down
-      );
-      await tester.pumpAndSettle();
-
-      // This opens the edit comment confirmation dialog
-      Finder editCommentIconButtonFinder =
-          find.byKey(const Key('editSegmentButtonKey_1'));
-      await tester.tap(editCommentIconButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Now, modify the start position to 0:10.0
-      Finder commentStartPositionTextFieldFinder =
-          find.byKey(const Key('startPositionTextField'));
-      await tester.tap(commentStartPositionTextFieldFinder);
-      await tester.enterText(commentStartPositionTextFieldFinder, '0:10.0');
-      await tester.pumpAndSettle();
-
-      // Modify the end position to 2:20.0
-      Finder commentEndPositionTextFieldFinder =
-          find.byKey(const Key('endPositionTextField'));
-      await tester.tap(commentEndPositionTextFieldFinder);
-      await tester.enterText(commentEndPositionTextFieldFinder, '2:20.0');
-      await tester.pumpAndSettle();
-
-      // Modify the silence duration to 0:05.0
-      Finder commentSilenceDurationTextFieldFinder =
-          find.byKey(const Key('silenceDurationTextField'));
-      await tester.tap(commentSilenceDurationTextFieldFinder);
-      await tester.enterText(commentSilenceDurationTextFieldFinder, '0:05.0');
-      await tester.pumpAndSettle();
-
-      // Modify the fade-in duration to 0:08.0
-      Finder commentFadeInDurationTextFieldFinder =
-          find.byKey(const Key('fadeInDurationTextField'));
-      await tester.tap(commentFadeInDurationTextFieldFinder);
-      await tester.enterText(commentFadeInDurationTextFieldFinder, '0:08.0');
-      await tester.pumpAndSettle();
-
-      // Modify the reduction position to 2:10.1
-      Finder commentReductionPositionTextFieldFinder =
-          find.byKey(const Key('soundReductionPositionTextField'));
-      await tester.tap(commentReductionPositionTextFieldFinder);
-      await tester.enterText(commentReductionPositionTextFieldFinder, '2:10.1');
-      await tester.pumpAndSettle();
-
-      // Modify the reduction duration to 0:09.9
-      Finder commentReductionDurationTextFieldFinder =
-          find.byKey(const Key('soundReductionDurationTextField'));
-      await tester.tap(commentReductionDurationTextFieldFinder);
-      await tester.enterText(commentReductionDurationTextFieldFinder, '0:09.9');
-      await tester.pumpAndSettle();
-
-      // Confirm the comment edition by tapping the save button
-      Finder saveEditedCommentButtonFinder =
-          find.byKey(const Key('saveEditedSegmentButton'));
-      await tester.tap(saveEditedCommentButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Verifying the first modified comment in the comments json file
-
-      commentsFile = File(commentsFilePath);
-
-      jsonContent = commentsFile.readAsStringSync();
-      commentsLst = jsonDecode(jsonContent) as List<dynamic>;
-
-      firstComment = commentsLst[0] as Map<String, dynamic>;
-
-      expect(firstComment['id'], 'First part_1766333790797487');
-      expect(firstComment['title'], 'First part');
-      expect(firstComment['content'], '');
-      expect(firstComment['commentStartPositionInTenthOfSeconds'], 100);
-      expect(firstComment['commentEndPositionInTenthOfSeconds'], 1400);
-      expect(firstComment['silenceDuration'], 5.0);
-      expect(firstComment['fadeInDuration'], 8.0);
-      expect(firstComment['soundReductionPosition'], 130.1);
-      expect(firstComment['soundReductionDuration'], 9.9);
-      expect(firstComment['deleted'], false);
-      expect(firstComment['creationDateTime'], '2025-12-21T17:16:30.000');
-      now = DateTime.now();
-      yearStr = now.year.toString();
-      monthStr = now.month.toString();
-      monthStr = (monthStr.length == 1) ? "0$monthStr" : monthStr;
-      dayStr = now.day.toString();
-      dayStr = (dayStr.length == 1) ? "0$dayStr" : dayStr;
-      hourStr = now.hour.toString();
-      hourStr = (hourStr.length == 1) ? "0$hourStr" : hourStr;
-      minuteStr = now.minute.toString();
-      minuteStr = (minuteStr.length == 1) ? "0$minuteStr" : minuteStr;
-      expect(firstComment['lastUpdateDateTime'],
-          contains("$yearStr-$monthStr-${dayStr}T$hourStr:$minuteStr"),
-          reason:
-              'Last update date time should be today\'s date with current hour and minute');
-
-      // Now edit the second comment to save it again without
-      // modification to remove the 'Comment not included' message
-
-      // This opens the edit comment confirmation dialog
-      editCommentIconButtonFinder =
-          find.byKey(const Key('editSegmentButtonKey_2'));
-      await tester.tap(editCommentIconButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Confirm the comment edition by tapping the save button
-      saveEditedCommentButtonFinder =
-          find.byKey(const Key('saveEditedSegmentButton'));
-      await tester.tap(saveEditedCommentButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Necessary to drag down vertically to make visible the edit
-      // icon button of the 3rd comment
+      // Necessary to drag down vertically to make visible the
+      // third comment
       await tester.drag(
         find.byType(AudioExtractorDialog),
         const Offset(
@@ -40957,141 +40550,39 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Now edit the third comment to save it again without
-      // modification to remove the 'Comment not included' message
+      // Verify the presence of the 'Comment not included' message
+      Finder commentNotIncludedMessageFinder =
+          find.byKey(const Key('commentDeletedTextKey_3'));
+      expect(
+        tester.widget<Text>(commentNotIncludedMessageFinder).data,
+        'Comment not included',
+      );
 
-      // This opens the edit comment confirmation dialog
-      editCommentIconButtonFinder =
+      // This opens the edit 3rd comment dialog
+      Finder editCommentIconButtonFinder =
           find.byKey(const Key('editSegmentButtonKey_3'));
       await tester.tap(editCommentIconButtonFinder);
       await tester.pumpAndSettle();
 
       // Confirm the comment edition by tapping the save button
-      saveEditedCommentButtonFinder =
+      Finder saveEditedCommentButtonFinder =
           find.byKey(const Key('saveEditedSegmentButton'));
       await tester.tap(saveEditedCommentButtonFinder);
+      await tester.pump();
       await tester.pumpAndSettle();
-
-      await _verifyAllCommentsAfterQuittingAndCommingBackToExtracDialog(
-        tester: tester,
-        commentNumberTitleBeforeQuittingDialog: 'Comments (3)',
-        audioTitle: audioTitle,
-        backButtonFinder: backButtonFinder,
-        audioTitleTileTextWidgetFinder: audioTitleTileTextWidgetFinder,
-        audioTitleTileWidgetFinder: audioTitleTileWidgetFinder,
-        audioTitleTileLeadingMenuIconButton:
-            audioTitleTileLeadingMenuIconButton,
-        audioCommentsPopupMenuItem: audioCommentsPopupMenuItem,
-        audioCommentsLstFinder: audioCommentsLstFinder,
-        extractCommentsToMp3ButtonFinder: extractCommentsToMp3ButtonFinder,
-        segmentDetailsList: [
-          {
-            'number': 1,
-            'commentTitle': "First part",
-            'startPosition': '0:10.0',
-            'endPosition': '2:20.0',
-            'increaseDuration': 'Increase duration: 0:08.0',
-            'reductionPosition': 'Reduction position: 2:10.1',
-            'reductionDuration': 'Reduction duration: 0:09.9',
-            'duration': 'Duration: 2:10.0 + silence 0:05.0',
-          },
-          {
-            'number': 2,
-            'commentTitle':
-                "1st ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
-            'startPosition': '3:00.0',
-            'endPosition': '3:54.6',
-            'increaseDuration': 'Increase duration: 0:00.0',
-            'reductionPosition': 'Reduction position: 0:00.0',
-            'reductionDuration': 'Reduction duration: 0:00.0',
-            'duration': 'Duration: 0:54.6',
-          },
-          {
-            'number': 3,
-            'commentTitle':
-                "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
-            'startPosition': '3:56.1',
-            'endPosition': '5:20.8',
-            'increaseDuration': 'Increase duration: 0:09.0',
-            'reductionPosition': 'Reduction position: 5:11.0',
-            'reductionDuration': 'Reduction duration: 0:09.8',
-            'duration': 'Duration: 1:24.7',
-          },
-        ],
-      );
-
-      // Verify the total duration text
-      totalDurationTextFinder =
-          find.byKey(const Key('totalSegmentsDurationTextKey'));
+      // Verify the presence of the invalid comment error message
       expect(
-        tester.widget<Text>(totalDurationTextFinder).data,
-        'Total duration: 4:34.3',
+        find.text("Start position must be between 0 and 2:56.8."),
+        findsWidgets,
       );
 
-      // Now, tap on 'Clear all' button to delete all comments at once
-      Finder clearAllCommentsButtonFinder =
-          find.byKey(const Key('clearAllSegmentsButton'));
-      await tester.tap(clearAllCommentsButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Confirm the deletion by tapping the delete button
-      deleteCommentButtonFinder =
-          find.byKey(const Key('confirmClearAllSegmentsButton'));
-      await tester.tap(deleteCommentButtonFinder);
-      await tester.pumpAndSettle();
-
-      await _verifyAllCommentsAfterQuittingAndCommingBackToExtracDialog(
-        tester: tester,
-        commentNumberTitleBeforeQuittingDialog: 'Comments (0)',
-        audioTitle: audioTitle,
-        backButtonFinder: backButtonFinder,
-        audioTitleTileTextWidgetFinder: audioTitleTileTextWidgetFinder,
-        audioTitleTileWidgetFinder: audioTitleTileWidgetFinder,
-        audioTitleTileLeadingMenuIconButton:
-            audioTitleTileLeadingMenuIconButton,
-        audioCommentsPopupMenuItem: audioCommentsPopupMenuItem,
-        audioCommentsLstFinder: audioCommentsLstFinder,
-        extractCommentsToMp3ButtonFinder: extractCommentsToMp3ButtonFinder,
-        segmentDetailsList: [
-          {
-            'number': 1,
-            'commentTitle': "First part",
-            'startPosition': '0:10.0',
-            'endPosition': '2:20.0',
-            'increaseDuration': 'Increase duration: 0:08.0',
-            'reductionPosition': 'Reduction position: 2:10.1',
-            'reductionDuration': 'Reduction duration: 0:09.9',
-            'duration': 'Duration: 2:10.0 + silence 0:05.0',
-          },
-          {
-            'number': 2,
-            'commentTitle':
-                "1st ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
-            'startPosition': '3:00.0',
-            'endPosition': '3:54.6',
-            'increaseDuration': 'Increase duration: 0:00.0',
-            'reductionPosition': 'Reduction position: 0:00.0',
-            'reductionDuration': 'Reduction duration: 0:00.0',
-            'duration': 'Duration: 0:54.6',
-          },
-          {
-            'number': 3,
-            'commentTitle':
-                "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
-            'startPosition': '3:56.1',
-            'endPosition': '5:20.8',
-            'increaseDuration': 'Increase duration: 0:09.0',
-            'reductionPosition': 'Reduction position: 5:11.0',
-            'reductionDuration': 'Reduction duration: 0:09.8',
-            'duration': 'Duration: 1:24.7',
-          },
-        ],
-        connentDeletedNumberLst: [
-          1,
-          2,
-          3,
-        ],
+      // Necessary to drag up vertically to make visible the
+      // second comment
+      await tester.drag(
+        find.byType(AudioExtractorDialog),
+        const Offset(0, 300), // Negative value for vertical drag to scroll down
       );
+      await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub

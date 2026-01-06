@@ -2687,11 +2687,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Duration to fade volume from 100% to 0%';
 
   @override
-  String get startPositionError => 'Start position must be between 0 and';
-
-  @override
   String get endPositionError =>
       'End position must be after start and not exceed';
+
+  @override
+  String get startPositionError => 'Start position must be between 0 and';
 
   @override
   String get negativeSilenceDurationError =>
@@ -2792,4 +2792,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fileNotExistError => 'File does not exist';
+
+  @override
+  String get errorTitle => 'Error';
 }

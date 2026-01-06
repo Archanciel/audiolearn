@@ -2716,12 +2716,12 @@ class AppLocalizationsFr extends AppLocalizations {
       'Durée pour faire baisser le volume de 100% à 0%';
 
   @override
-  String get startPositionError =>
-      'La position de début doit être comprise entre 0 et';
-
-  @override
   String get endPositionError =>
       'La position de fin doit être après le début sans dépasser';
+
+  @override
+  String get startPositionError =>
+      'La position de début doit être comprise entre 0 et';
 
   @override
   String get negativeSilenceDurationError =>
@@ -2825,4 +2825,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get fileNotExistError => 'Le fichier n\'existe pas';
+
+  @override
+  String get errorTitle => 'Erreur';
 }

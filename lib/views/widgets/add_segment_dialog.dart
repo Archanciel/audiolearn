@@ -94,54 +94,58 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
 
     if (start < 0 || start >= widget.maxDuration) {
       _showError(
-        "${AppLocalizations.of(context)!.startPositionError} ${TimeFormatUtil.formatSeconds(widget.maxDuration)}",
+        "${AppLocalizations.of(context)!.startPositionError} ${TimeFormatUtil.formatSeconds(widget.maxDuration - 0.1)}.",
       );
       return;
     }
     if (end <= start || end > widget.maxDuration) {
       _showError(
-        "${AppLocalizations.of(context)!.endPositionError} ${TimeFormatUtil.formatSeconds(widget.maxDuration)}",
+        "${AppLocalizations.of(context)!.endPositionError} ${TimeFormatUtil.formatSeconds(widget.maxDuration)}.",
       );
       return;
     }
     if (silence < 0) {
-      _showError(AppLocalizations.of(context)!.negativeSilenceDurationError);
+      _showError(
+          "${AppLocalizations.of(context)!.negativeSilenceDurationError}.");
       return;
     }
     if (fadeInDuration < 0) {
       // NEW validation
-      _showError(AppLocalizations.of(context)!.fadeInDurationError);
+      _showError("${AppLocalizations.of(context)!.fadeInDurationError}.");
       return;
     }
     final segmentDuration = end - start;
     if (fadeInDuration > segmentDuration) {
       // NEW validation
       _showError(
-          AppLocalizations.of(context)!.fadeInExceedsCommentDurationError);
+          "${AppLocalizations.of(context)!.fadeInExceedsCommentDurationError}.");
       return;
     }
     if (soundReductionDuration < 0) {
-      _showError(AppLocalizations.of(context)!.negativeSoundDurationError);
+      _showError(
+          "${AppLocalizations.of(context)!.negativeSoundDurationError}.");
       return;
     }
     // Validate sound reduction position
     if (soundReductionPosition > 0 && soundReductionDuration > 0) {
       if (soundReductionPosition < start) {
-        _showError(AppLocalizations.of(context)!.negativeSoundPositionError);
+        _showError(
+            "${AppLocalizations.of(context)!.negativeSoundPositionError}.");
         return;
       }
       if (soundReductionPosition >= end) {
-        _showError(AppLocalizations.of(context)!.soundPositionBeyondEndError);
+        _showError(
+            "${AppLocalizations.of(context)!.soundPositionBeyondEndError}.");
         return;
       }
       if (soundReductionPosition + soundReductionDuration > end) {
-        _showError(AppLocalizations.of(context)!
-            .soundPositionPlusDurationBeyondEndError);
+        _showError(
+            "${AppLocalizations.of(context)!.soundPositionPlusDurationBeyondEndError}.");
         return;
       }
     }
     if (commentTitle.isEmpty) {
-      _showError(AppLocalizations.of(context)!.emptyTitleError);
+      _showError("${AppLocalizations.of(context)!.emptyTitleError}.");
       return;
     }
 
@@ -163,17 +167,42 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
   }
 
   void _showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          message,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w800,
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Row(
+            children: [
+              Icon(Icons.error_outline, color: Colors.red, size: 32),
+              const SizedBox(width: 8),
+              Text(
+                AppLocalizations.of(context)!.errorTitle,
+                style: TextStyle(color: Colors.red),
+              ),
+            ],
           ),
-        ),
-        backgroundColor: Colors.red,
-      ),
+          content: Text(
+            message,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.red
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(
+                'OK',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
