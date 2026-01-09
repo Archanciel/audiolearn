@@ -987,7 +987,8 @@ void main() {
       // and the playlist list will not be filled with the
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName: "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -1017,22 +1018,24 @@ void main() {
       );
 
       List<String> expectedZipContent = [
-        "Empty\\Empty.json",
-        "local\\local.json",
-        "local_comment\\local_comment.json",
-        "local_delete_comment\\comments\\240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
-        "local_delete_comment\\local_delete_comment.json",
-        "S8 audio\\comments\\240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.json",
-        "S8 audio\\comments\\240701-163521-Jancovici m'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json",
-        "S8 audio\\comments\\240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json",
-        "S8 audio\\comments\\New file name.json",
-        "S8 audio\\S8 audio.json",
-        "settings.json",
+        '1 long music\\1 long music.json',
+        '1 long music\\1 long music__.json',
+        '1 long music\\comments\\240701-163521-Jancovici m\'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json',
+        'Empty\\Empty.json',
+        'local\\local.json',
+        'local_comment\\local_comment.json',
+        'local_delete_comment\\comments\\240701-163521-Jancovici m\'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json',
+        'local_delete_comment\\local_delete_comment.json',
+        'S8 audio\\comments\\240528-130636-Interview de Chat GPT  - IA, intelligence, philosophie, géopolitique, post-vérité... 24-01-12.json',
+        'S8 audio\\comments\\240701-163521-Jancovici m\'explique l’importance des ordres de grandeur face au changement climatique 22-06-12.json',
+        'S8 audio\\comments\\240722-081104-Quand Aurélien Barrau va dans une école de management 23-09-10.json',
+        'S8 audio\\comments\\New file name.json',
+        'S8 audio\\S8 audio.json',
+        'settings.json'
       ];
 
       List<String> zipFilePathNamesLst = await DirUtil.listPathFileNamesInZip(
-        zipFilePathName:
-            savedZipFilePathName,
+        zipFilePathName: savedZipFilePathName,
       );
 
       expect(
@@ -1069,7 +1072,8 @@ void main() {
       // and the playlist list will not be filled with the
       // playlists available in the download app test dir
       await settingsDataService.loadSettingsFromFile(
-          settingsJsonPathFileName: "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
 
       WarningMessageVM warningMessageVM = WarningMessageVM();
 
@@ -1572,8 +1576,7 @@ void main() {
   group('''Delete Sort/Filtered audio physically as well as their comments and
         their picture from selected playlist. Audio's are deleted from the playable
         list only.''', () {
-    test(
-        '''Filtered by 'listenedNoCom' Sort/filtered parms audios deletion.''',
+    test('''Filtered by 'listenedNoCom' Sort/filtered parms audios deletion.''',
         () async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -2336,7 +2339,7 @@ void main() {
         settingsDataService: settingsDataService,
       );
 
-      const List<String> initialOrderedPlaylistTitles = [
+      List<String> initialOrderedPlaylistTitles = [
         "Empty",
         "local",
         "local_comment",
@@ -2362,11 +2365,11 @@ void main() {
         playlistTitleOrderPathFileName: "",
       );
 
-      const List<String> modifiedOrderedPlaylistTitles = [
-        "audio_learn_test_download_2_small_videos",
-        "audio_player_view_2_shorts_test",
-        "local_3",
-        "local_audio_playlist_2",
+      List<String> modifiedOrderedPlaylistTitles = [
+        'audio_learn_test_download_2_small_videos',
+        'audio_player_view_2_shorts_test',
+        'local_3',
+        'local_audio_playlist_2'
       ];
 
       const String modifiedRootSelectedPlaylistTitle = 'local_3';
@@ -2391,13 +2394,22 @@ void main() {
         playlistTitleOrderPathFileName: "",
       );
 
+      initialOrderedPlaylistTitles = [
+        'local_delete_comment',
+        '1 long music',
+        'Empty',
+        'local',
+        'local_comment',
+        'S8 audio'
+      ];
+
       // Verify the resetted initial playlist data
       _verifyOrderedTitlesAndPlaylistSelection(
           settingsDataService: settingsDataService,
           playlistListVM: playlistListVM,
           playlistDownloadRootPath: initialPlaylistRootPath,
           orderedPlaylistTitles: initialOrderedPlaylistTitles,
-          selectedPlaylistTitle: initialRootSelectedPlaylistTitle);
+          selectedPlaylistTitle: '1 long music');
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub

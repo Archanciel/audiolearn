@@ -3788,10 +3788,10 @@ void main() {
         // Enter the two letters of the 'no' search word.
 
         // Select the text field
-        Finder youtubeUrlOrSearchTextFieldyoutubeUrlOrSearchTextField =
+        Finder youtubeUrlOrSearchTextField =
             find.byKey(const Key('youtubeUrlOrSearchTextField'));
         await tester.tap(
-          youtubeUrlOrSearchTextFieldyoutubeUrlOrSearchTextField,
+          youtubeUrlOrSearchTextField,
         );
         await tester.pumpAndSettle();
 
@@ -3845,7 +3845,7 @@ void main() {
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst: playlistsTitles,
-          firstAudioListTileIndex: 5,
+          firstAudioListTileIndex: 4,
         );
 
         // And verify the displayd audio titles list
@@ -36439,7 +36439,7 @@ void main() {
       // Tap on the 'Select existing file' button
       await _selectExistingMp3File(
         tester: tester,
-        replaceFFileButtonFinder: replaceFFileButtonFinder,
+        replaceFileButtonFinder: replaceFFileButtonFinder,
         mp3FileNameTextFieldFinder: mp3FileNameTextFieldFinder,
         enteredFileNameNoExt: enteredFileNameNoExt,
       );
@@ -36505,7 +36505,7 @@ void main() {
       // Tap on the 'Select existing file' button
       await _selectExistingMp3File(
         tester: tester,
-        replaceFFileButtonFinder: replaceFFileButtonFinder,
+        replaceFileButtonFinder: replaceFFileButtonFinder,
         mp3FileNameTextFieldFinder: mp3FileNameTextFieldFinder,
         enteredFileNameNoExt: enteredFileNameNoExt,
       );
@@ -40867,14 +40867,14 @@ void main() {
 
 Future<void> _selectExistingMp3File({
   required WidgetTester tester,
-  required Finder replaceFFileButtonFinder,
+  required Finder replaceFileButtonFinder,
   required Finder mp3FileNameTextFieldFinder,
   required String enteredFileNameNoExt,
 }) async {
   // Tap on the 'Select existing file' button
-  replaceFFileButtonFinder =
+  replaceFileButtonFinder =
       find.byKey(const Key('select_mp3_file_to_replace_button_key'));
-  await tester.tap(replaceFFileButtonFinder);
+  await tester.tap(replaceFileButtonFinder);
   await tester.pumpAndSettle();
 
   // Select the 'convertedAudio.mp3' checkbox
