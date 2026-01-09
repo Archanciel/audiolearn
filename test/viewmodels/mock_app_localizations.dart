@@ -2902,4 +2902,11 @@ class MockAppLocalizations extends AppLocalizations {
     Object inclusive,
   ) =>
       "Start position must be between 0 and $inclusive inclusive";
+
+  @override
+  String get selectMp3FileToReplace => "Select the MP3 file to replace";
+
+  @override
+  String get selectMp3FileToReplaceTooltip =>
+      "Useful if you modified the text to convert to audio or if you changed the selected voice and you wish to replace the existing MP3 file.";
 }

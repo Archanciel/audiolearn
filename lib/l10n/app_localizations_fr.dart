@@ -2321,6 +2321,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get enterMp3FileName => 'Entrer le nom du fichier MP3';
 
   @override
+  String get selectMp3FileToReplace => 'Sélection d\'un fichier existant';
+
+  @override
+  String get selectMp3FileToReplaceTooltip =>
+      'Utilisez cette option si vous avez modifié le texte à convertir en audio ou changé la voix sélectionnée et que vous souhaitez remplacer le fichier MP3 existant.';
+
+  @override
   String get myMp3FileName => 'nom de fichier';
 
   @override

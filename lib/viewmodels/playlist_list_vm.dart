@@ -6227,6 +6227,20 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<String> getConvertedAudioFileNamesInPlaylist({
+    required Playlist playlist,
+  }) {
+    List<String> convertedAudioFileNames = [];
+
+    for (Audio audio in playlist.playableAudioLst) {
+      if (audio.audioType == AudioType.textToSpeech) {
+        convertedAudioFileNames.add(audio.audioFileName);
+      }
+    }
+
+    return convertedAudioFileNames;
+  }
+
   /// Move an audio to a specific position in its enclosing playlist's playable
   /// audio list.
   ///

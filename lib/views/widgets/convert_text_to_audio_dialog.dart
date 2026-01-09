@@ -1,5 +1,6 @@
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
+import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:flutter/material.dart';
 import '../../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -10,13 +11,13 @@ import '../../models/text_to_mp3_audio_file.dart';
 import '../../models/help_item.dart';
 import '../../models/playlist.dart';
 import '../../models/sort_filter_parameters.dart';
+import '../../viewmodels/theme_provider_vm.dart';
 import '../../viewmodels/audio_player_vm.dart';
 import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/text_to_speech_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
 import '../../services/settings_data_service.dart';
-import '../../viewmodels/theme_provider_vm.dart';
 import 'confirm_action_dialog.dart';
 import 'help_dialog.dart';
 
@@ -98,7 +99,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
       context,
       listen: false,
     );
-    TextToSpeechVM textToSpeechVMlistenTrue = Provider.of<TextToSpeechVM>(
+    final TextToSpeechVM textToSpeechVMlistenTrue = Provider.of<TextToSpeechVM>(
       context,
       listen: true,
     );
@@ -187,8 +188,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                                 Text(
-                                  AppLocalizations.of(context)!
-                                      .creatingMp3,
+                                  AppLocalizations.of(context)!.creatingMp3,
                                   textAlign: TextAlign.center,
                                   style: kDialogTitlesStyle,
                                   key: const Key('conversionTextKey'),
@@ -226,10 +226,11 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
         ),
         actions: [
           _buildActionButtonsLine(
-              context: context,
-              themeProviderVM: themeProviderVM,
-              dateFormatVMlistenFalse: dateFormatVMlistenFalse,
-              textToSpeechVMlistenTrue: textToSpeechVMlistenTrue),
+            context: context,
+            themeProviderVM: themeProviderVM,
+            dateFormatVMlistenFalse: dateFormatVMlistenFalse,
+            textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
+          ),
         ],
       ),
     );
@@ -568,11 +569,20 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
     required AudioDownloadVM audioDownloadVMlistenFalse,
     required Playlist targetPlaylist,
   }) async {
+    final PlaylistListVM playlistListVMlistenFalse =
+        Provider.of<PlaylistListVM>(
+      context,
+      listen: false,
+    );
     final TextEditingController fileNameController = TextEditingController();
+    final List<String> existingMp3FileNames =
+        playlistListVMlistenFalse.getConvertedAudioFileNamesInPlaylist(
+      playlist: targetPlaylist,
+    );
 
     final fileName = await showDialog<String>(
       context: context,
-      barrierDismissible: false, // Prevent close by tapping outside
+      barrierDismissible: false,
       builder: (context) => AlertDialog(
         title: Text(AppLocalizations.of(context)!.mp3FileName),
         content: Column(
@@ -581,6 +591,42 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
           children: [
             Text(AppLocalizations.of(context)!.enterMp3FileName),
             SizedBox(height: 16),
+            (existingMp3FileNames.isEmpty)
+                ? const SizedBox.shrink() // ← Renders nothing
+                : Center(
+                    child: Column(
+                      children: [
+                        Tooltip(
+                          message: AppLocalizations.of(context)!
+                              .selectMp3FileToReplaceTooltip,
+                          child: ElevatedButton(
+                            key: const Key(
+                                'select_mp3_file_to_replace_button_key'),
+                            onPressed: () async {
+                              // Show selection dialog
+                              final selectedFileName = await showDialog<String>(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (dialogContext) =>
+                                    _Mp3FileSelectionDialog(
+                                  mp3FileNames: existingMp3FileNames,
+                                ),
+                              );
+
+                              // If a file was selected, update the TextField
+                              if (selectedFileName != null &&
+                                  selectedFileName.isNotEmpty) {
+                                fileNameController.text = selectedFileName;
+                              }
+                            },
+                            child: Text(AppLocalizations.of(context)!
+                                .selectMp3FileToReplace),
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                      ],
+                    ),
+                  ),
             TextField(
               key: const Key('mp3FileNameTextFieldKey'),
               controller: fileNameController,
@@ -665,7 +711,8 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
         clearEndLineChars: _clearEndLineChars,
       );
 
-      TextToMp3AudioFile? currentAudioFile = textToSpeechVMlistenTrue.currentAudioFile;
+      TextToMp3AudioFile? currentAudioFile =
+          textToSpeechVMlistenTrue.currentAudioFile;
 
       if (currentAudioFile != null) {
         if (!context.mounted) return;
@@ -786,4 +833,76 @@ class FilterAndSortAudioParameters {
   })  : _videoTitleAndDescriptionSearchWords =
             videoTitleAndDescriptionSearchWords,
         _sortingOptionLst = sortingOptionLst;
+}
+
+class _Mp3FileSelectionDialog extends StatefulWidget {
+  final List<String> mp3FileNames;
+
+  const _Mp3FileSelectionDialog({
+    required this.mp3FileNames,
+  });
+
+  @override
+  State<_Mp3FileSelectionDialog> createState() =>
+      _Mp3FileSelectionDialogState();
+}
+
+class _Mp3FileSelectionDialogState extends State<_Mp3FileSelectionDialog> {
+  String? _selectedFileName;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(AppLocalizations.of(context)!.selectMp3FileToReplace),
+      content: SizedBox(
+        width: double.maxFinite,
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: widget.mp3FileNames.length,
+          itemBuilder: (context, index) {
+            final fileName = widget.mp3FileNames[index];
+            final isSelected = _selectedFileName == fileName;
+
+            return CheckboxListTile(
+              key: Key('mp3_file_checkbox_$index'),
+              title: Text(fileName),
+              value: isSelected,
+              onChanged: (bool? value) {
+                setState(() {
+                  if (value == true) {
+                    _selectedFileName = fileName;
+                  } else {
+                    _selectedFileName = null;
+                  }
+                });
+              },
+              controlAffinity: ListTileControlAffinity.leading,
+            );
+          },
+        ),
+      ),
+      actions: [
+        ElevatedButton(
+          key: const Key('confirm_selection_button_key'),
+          onPressed: _selectedFileName != null
+              ? () {
+                  // Remove .mp3 extension if present
+                  final nameWithoutExtension =
+                      _selectedFileName!.endsWith('.mp3')
+                          ? _selectedFileName!
+                              .substring(0, _selectedFileName!.length - 4)
+                          : _selectedFileName;
+                  Navigator.of(context).pop(nameWithoutExtension);
+                }
+              : null, // Button disabled when nothing selected
+          child: Text(AppLocalizations.of(context)!.confirmButton),
+        ),
+        TextButton(
+          key: const Key('cancel_selection_button_key'),
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(AppLocalizations.of(context)!.cancelButton),
+        ),
+      ],
+    );
+  }
 }
