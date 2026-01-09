@@ -17821,7 +17821,7 @@ void main() {
               "Nouvelle description des éléments restaurés {{{{ avec 4 secondes de pause. Et une fin de phrase.");
           await tester.pump();
 
-          // Now click on Create MP3 button to create the audio
+          // Now click on 'Create MP3' button to create the audio
           Finder createMP3ButtonFinder =
               find.byKey(const Key('create_audio_file_button'));
           await tester.tap(createMP3ButtonFinder);
@@ -17835,7 +17835,7 @@ void main() {
               mp3FileNameTextFieldFinder, enteredFileNameNoExt);
           await tester.pumpAndSettle();
 
-          // Tap on the create mp3 button
+          // Tap on the 'Create MP3' button
           Finder saveMP3FileButton =
               find.byKey(const Key('create_mp3_button_key'));
           await tester.tap(saveMP3FileButton);
@@ -18234,7 +18234,7 @@ void main() {
               "Nouvelle description des éléments restaurés {{{{ avec 4 secondes de pause. Et une fin de phrase.");
           await tester.pump();
 
-          // Now click on Create MP3 button to create the audio
+          // Now click on 'Create MP3' button to create the audio
           Finder createMP3ButtonFinder =
               find.byKey(const Key('create_audio_file_button'));
           await tester.tap(createMP3ButtonFinder);
@@ -18248,7 +18248,7 @@ void main() {
               mp3FileNameTextFieldFinder, enteredFileNameNoExt);
           await tester.pumpAndSettle();
 
-          // Tap on the create mp3 button
+          // Tap on the 'Create MP3' button
           Finder saveMP3FileButton =
               find.byKey(const Key('create_mp3_button_key'));
           await tester.tap(saveMP3FileButton);
@@ -18648,7 +18648,7 @@ void main() {
               "Nouvelle description des éléments restaurés {{{{ avec 4 secondes de pause. Et une fin de phrase.");
           await tester.pump();
 
-          // Now click on Create MP3 button to create the audio
+          // Now click on 'Create MP3' button to create the audio
           Finder createMP3ButtonFinder =
               find.byKey(const Key('create_audio_file_button'));
           await tester.tap(createMP3ButtonFinder);
@@ -18662,7 +18662,7 @@ void main() {
               mp3FileNameTextFieldFinder, enteredFileNameNoExt);
           await tester.pumpAndSettle();
 
-          // Tap on the create mp3 button
+          // Tap on the 'Create MP3' button
           Finder saveMP3FileButton =
               find.byKey(const Key('create_mp3_button_key'));
           await tester.tap(saveMP3FileButton);
@@ -19041,7 +19041,7 @@ void main() {
               "Nouvelle description des éléments restaurés {{{{ avec 4 secondes de pause. Et une fin de phrase.");
           await tester.pump();
 
-          // Now click on Create MP3 button to create the audio
+          // Now click on 'Create MP3' button to create the audio
           Finder createMP3ButtonFinder =
               find.byKey(const Key('create_audio_file_button'));
           await tester.tap(createMP3ButtonFinder);
@@ -19055,7 +19055,7 @@ void main() {
               mp3FileNameTextFieldFinder, enteredFileNameNoExt);
           await tester.pumpAndSettle();
 
-          // Tap on the create mp3 button
+          // Tap on the 'Create MP3' button
           Finder saveMP3FileButton =
               find.byKey(const Key('create_mp3_button_key'));
           await tester.tap(saveMP3FileButton);
@@ -35358,7 +35358,7 @@ void main() {
         audioSubTitlesAcceptableLst: [
           '0:00:19.3 155 KB imported on ${DateFormat('dd/MM/yyyy').format(importDateTime)} at ${DateFormat('HH:mm').format(importDateTime)}', // this is the imported date time
         ],
-        firstAudioListTileIndex: 2,
+        firstAudioListTileIndex: 3,
       );
 
       // Purge the test playlist directory so that the created test
@@ -35947,7 +35947,7 @@ void main() {
       Icon finalIcon = (finalButtonRow.children[0] as Icon);
       expect(finalIcon.icon, Icons.volume_up); // Back to Listen icon
 
-      // Now click on Create MP3 button to create the audio
+      // Now click on 'Create MP3' button to create the audio
       Finder createMP3ButtonFinder =
           find.byKey(const Key('create_audio_file_button'));
       await tester.tap(createMP3ButtonFinder);
@@ -35982,7 +35982,7 @@ void main() {
 
       DateTime now = DateTime.now();
 
-      // Tap on the create mp3 button
+      // Tap on the 'Create MP3' button
       Finder saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
       await tester.tap(saveMP3FileButton);
       await Future.delayed(const Duration(seconds: 2));
@@ -36148,7 +36148,7 @@ void main() {
       await tester.tap(feminineCheckbox);
       await tester.pump();
 
-      // Now click on Create MP3 button to create the audio
+      // Now click on 'Create MP3' button to create the audio
       createMP3ButtonFinder = find.byKey(const Key('create_audio_file_button'));
       await tester.tap(createMP3ButtonFinder);
       await tester.pumpAndSettle();
@@ -36162,7 +36162,7 @@ void main() {
 
       now = DateTime.now();
 
-      // Tap on the create mp3 button
+      // Tap on the 'Create MP3' button
       saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
       await tester.tap(saveMP3FileButton);
       await Future.delayed(const Duration(seconds: 2));
@@ -36340,6 +36340,220 @@ void main() {
       );
     });
     testWidgets(
+        '''After adding a text to speech audio, redo a text to speech conversion with a different text
+          and save it to the same MP3 file name using the button enabling to select the file in which to
+          replace the converted text to audio.''', (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      const String localEmptyPlaylistTitle = 'empty';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'import_audios_integr_test',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      // Open the convert text to audio dialog
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: localEmptyPlaylistTitle,
+        playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+      );
+
+      // Now enter a text to convert
+
+      String initialTextToConvertStr = "{{ un {{{ deux { trois.";
+      Finder textFieldFinder = find.byKey(const Key('textToConvertTextField'));
+
+      await tester.enterText(textFieldFinder, initialTextToConvertStr);
+      await tester.pump();
+
+      // Now click on 'Create MP3' button to create the audio
+      Finder createMP3ButtonFinder =
+          find.byKey(const Key('create_audio_file_button'));
+      await tester.tap(createMP3ButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the absence of the 'Select existing file' button since
+      // this is the first time we create the text to speech audio
+      expect(
+        find.text('Select existing file'),
+        findsNothing,
+      );
+
+      const String enteredFileNameNoExt = 'convertedAudio';
+      Finder mp3FileNameTextFieldFinder =
+          find.byKey(const Key('textToConvertTextField'));
+
+      await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+      await tester.pump();
+
+      // Tap on the 'Create MP3' button
+      Finder saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
+      await tester.tap(saveMP3FileButton);
+      await Future.delayed(const Duration(seconds: 2));
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas added to local playlist \"$localEmptyPlaylistTitle\".",
+        isWarningConfirming: true,
+      );
+
+      // Now replace the text to convert
+
+      initialTextToConvertStr = "un deux trois.";
+      textFieldFinder = find.byKey(const Key('textToConvertTextField'));
+
+      await tester.enterText(textFieldFinder, initialTextToConvertStr);
+      await tester.pump();
+
+      // Now click on 'Create MP3' button to create the audio
+      createMP3ButtonFinder = find.byKey(const Key('create_audio_file_button'));
+      await tester.tap(createMP3ButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Tap on the 'Select existing file' button
+      Finder replaceFFileButtonFinder =
+          find.byKey(const Key('select_mp3_file_to_replace_button_key'));
+      await tester.tap(replaceFFileButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Type on 'Cancel' button
+
+      Finder cancelSelectFileButtonFinder =
+          find.byKey(const Key('cancel_selection_button_key'));
+      await tester.tap(cancelSelectFileButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Now reclick on the 'Create MP3' button to create the audio
+      createMP3ButtonFinder = find.byKey(const Key('create_audio_file_button'));
+      await tester.tap(createMP3ButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Tap on the 'Select existing file' button
+      await _selectExistingMp3File(
+        tester: tester,
+        replaceFFileButtonFinder: replaceFFileButtonFinder,
+        mp3FileNameTextFieldFinder: mp3FileNameTextFieldFinder,
+        enteredFileNameNoExt: enteredFileNameNoExt,
+      );
+
+      // Tap on the 'Create MP3' button
+      saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
+      await tester.tap(saveMP3FileButton);
+      await Future.delayed(const Duration(seconds: 2));
+      await tester.pumpAndSettle();
+
+      // Now check the confirm dialog which indicates that the saved
+      // file name already exist and ask to confirm or cancel the
+      // save operation.
+      await IntegrationTestUtil.verifyConfirmActionDialog(
+        tester: tester,
+        confirmActionDialogTitle:
+            "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$localEmptyPlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
+        confirmActionDialogMessagePossibleLst: [""],
+        closeDialogWithConfirmButton: true,
+      );
+
+      await Future.delayed(const Duration(seconds: 2));
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in local playlist \"$localEmptyPlaylistTitle\".",
+        isWarningConfirming: true,
+      );
+
+      // Now close the convert text to audio dialog by tapping
+      // the Cancel button
+      Finder cancelButtonFinder =
+          find.byKey(const Key('convertTextToAudioCloseButton'));
+      await tester.tap(cancelButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Now, reopen the convert text to audio dialog
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: localEmptyPlaylistTitle,
+        playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+      );
+
+      // Now enter a new text to convert
+      const String nextTextToConvertStr = "un deux trois quatre.";
+      await tester.enterText(textFieldFinder, nextTextToConvertStr);
+      await tester.pump();
+
+      // Tap the feminine checkbox to change the voice
+
+      Finder feminineCheckbox = find.byKey(const Key('femineVoiceCheckbox'));
+
+      await tester.tap(feminineCheckbox);
+      await tester.pump();
+
+      // Now click on 'Create MP3' button to create the audio
+      createMP3ButtonFinder = find.byKey(const Key('create_audio_file_button'));
+      await tester.tap(createMP3ButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Tap on the 'Select existing file' button
+      await _selectExistingMp3File(
+        tester: tester,
+        replaceFFileButtonFinder: replaceFFileButtonFinder,
+        mp3FileNameTextFieldFinder: mp3FileNameTextFieldFinder,
+        enteredFileNameNoExt: enteredFileNameNoExt,
+      );
+
+      await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+      await tester.pump();
+
+      // Tap on the 'Create MP3' button
+      saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
+      await tester.tap(saveMP3FileButton);
+      await Future.delayed(const Duration(seconds: 2));
+      await tester.pumpAndSettle();
+
+      // Now check the confirm dialog which indicates that the saved
+      // file name already exist and ask to confirm or cancel the
+      // save operation.
+      await IntegrationTestUtil.verifyConfirmActionDialog(
+        tester: tester,
+        confirmActionDialogTitle:
+            "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$localEmptyPlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
+        confirmActionDialogMessagePossibleLst: [""],
+        closeDialogWithConfirmButton: true,
+      );
+
+      await Future.delayed(const Duration(seconds: 2));
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in local playlist \"$localEmptyPlaylistTitle\".",
+        isWarningConfirming: true,
+      );
+
+      // Now close the convert text to audio dialog by tapping
+      // the Cancel button
+      cancelButtonFinder =
+          find.byKey(const Key('convertTextToAudioCloseButton'));
+      await tester.tap(cancelButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
         '''On unselected playlist, add a text to speech audio. Verify the text to speech dialog appearance.
           Then enter a text with case ( { ) characters. Verify the Listen Create MP3 button state. Listen and
           Stop the text. Then listen the full text and verify the listen duration after which the Stop
@@ -36412,7 +36626,7 @@ void main() {
       Icon listenIcon = (listenButtonRow.children[0] as Icon);
       expect(listenIcon.icon, Icons.volume_up); // Back to Listen icon
 
-      // Now click on Create MP3 button to create the audio
+      // Now click on 'Create MP3' button to create the audio
       Finder createMP3ButtonFinder =
           find.byKey(const Key('create_audio_file_button'));
       await tester.tap(createMP3ButtonFinder);
@@ -36447,7 +36661,7 @@ void main() {
 
       DateTime now = DateTime.now();
 
-      // Tap on the create mp3 button
+      // Tap on the 'Create MP3' button
       Finder saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
       await tester.tap(saveMP3FileButton);
       await Future.delayed(const Duration(seconds: 2));
@@ -36616,7 +36830,7 @@ void main() {
       await tester.tap(feminineCheckbox);
       await tester.pump();
 
-      // Now click on Create MP3 button to create the audio
+      // Now click on 'Create MP3' button to create the audio
       createMP3ButtonFinder = find.byKey(const Key('create_audio_file_button'));
       await tester.tap(createMP3ButtonFinder);
       await tester.pumpAndSettle();
@@ -36628,7 +36842,7 @@ void main() {
       await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
       await tester.pump();
 
-      // Tap on the create mp3 button
+      // Tap on the 'Create MP3' button
       saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
       await tester.tap(saveMP3FileButton);
       await Future.delayed(const Duration(seconds: 2));
@@ -36845,7 +37059,7 @@ void main() {
       await tester.enterText(textFieldFinder, testText);
       await tester.pump();
 
-      // Now click on Create MP3 button to create the audio
+      // Now click on 'Create MP3' button to create the audio
       Finder createMP3ButtonFinder =
           find.byKey(const Key('create_audio_file_button'));
       await tester.tap(createMP3ButtonFinder);
@@ -36860,7 +37074,7 @@ void main() {
 
       DateTime now = DateTime.now();
 
-      // Tap on the create mp3 button
+      // Tap on the 'Create MP3' button
       Finder saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
       await tester.tap(saveMP3FileButton);
       await Future.delayed(const Duration(seconds: 2));
@@ -36944,7 +37158,7 @@ void main() {
       await tester.tap(removeLineBreaksCheckbox);
       await tester.pumpAndSettle();
 
-      // Now click on Create MP3 button to create the audio
+      // Now click on 'Create MP3' button to create the audio
       Finder createMP3ButtonFinder =
           find.byKey(const Key('create_audio_file_button'));
       await tester.tap(createMP3ButtonFinder);
@@ -36959,7 +37173,7 @@ void main() {
 
       DateTime now = DateTime.now();
 
-      // Tap on the create mp3 button
+      // Tap on the 'Create MP3' button
       Finder saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
       await tester.tap(saveMP3FileButton);
       await Future.delayed(const Duration(seconds: 2));
@@ -37057,7 +37271,7 @@ void main() {
       // Verify that the text was entered
       expect(find.text(testText), findsOneWidget);
 
-      // Now click on Create MP3 button to create the audio
+      // Now click on 'Create MP3' button to create the audio
       Finder createMP3ButtonFinder =
           find.byKey(const Key('create_audio_file_button'));
       await tester.tap(createMP3ButtonFinder);
@@ -37072,7 +37286,7 @@ void main() {
 
       const String conversionTextValue = 'Creating MP3';
 
-      // Tap on the create mp3 button
+      // Tap on the 'Create MP3' button
       Finder saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
       await tester.tap(saveMP3FileButton);
 
@@ -37131,7 +37345,7 @@ void main() {
       await tester.enterText(textFieldFinder, nextTextToConvertStr);
       await tester.pump();
 
-      // Now click on Create MP3 button to create the audio
+      // Now click on 'Create MP3' button to create the audio
       createMP3ButtonFinder = find.byKey(const Key('create_audio_file_button'));
 
       createMP3ButtonFinder = find.byKey(const Key('create_audio_file_button'));
@@ -37148,7 +37362,7 @@ void main() {
       await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
       await tester.pump();
 
-      // Tap on the create mp3 button
+      // Tap on the 'Create MP3' button
       saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
       await tester.tap(saveMP3FileButton);
       await Future.delayed(const Duration(seconds: 2));
@@ -40528,14 +40742,16 @@ void main() {
       // Verify the displayed AlertDialog for invalid comment
 
       // Verify the presence of the invalid comment error title
-      Finder segmentErrorDialogTextFinder = find.byKey(const Key('segmentErrorDialogTitleKey'));
+      Finder segmentErrorDialogTextFinder =
+          find.byKey(const Key('segmentErrorDialogTitleKey'));
       expect(
         tester.widget<Text>(segmentErrorDialogTextFinder).data,
         'Error',
       );
 
       // Verify the presence of the invalid comment error message
-      segmentErrorDialogTextFinder = find.byKey(const Key('segmentErrorDialogMessageKey'));
+      segmentErrorDialogTextFinder =
+          find.byKey(const Key('segmentErrorDialogMessageKey'));
       expect(
         tester.widget<Text>(segmentErrorDialogTextFinder).data,
         'Start position must be between 0 and 2:56.7 inclusive.',
@@ -40595,7 +40811,8 @@ void main() {
       // Verify the displayed AlertDialog for invalid comment
 
       // Verify the presence of the invalid comment error message
-      segmentErrorDialogTextFinder = find.byKey(const Key('segmentErrorDialogMessageKey'));
+      segmentErrorDialogTextFinder =
+          find.byKey(const Key('segmentErrorDialogMessageKey'));
       expect(
         tester.widget<Text>(segmentErrorDialogTextFinder).data,
         'End position must be after start position and not exceed 2:56.8.',
@@ -40648,14 +40865,48 @@ void main() {
   });
 }
 
+Future<void> _selectExistingMp3File({
+  required WidgetTester tester,
+  required Finder replaceFFileButtonFinder,
+  required Finder mp3FileNameTextFieldFinder,
+  required String enteredFileNameNoExt,
+}) async {
+  // Tap on the 'Select existing file' button
+  replaceFFileButtonFinder =
+      find.byKey(const Key('select_mp3_file_to_replace_button_key'));
+  await tester.tap(replaceFFileButtonFinder);
+  await tester.pumpAndSettle();
+
+  // Select the 'convertedAudio.mp3' checkbox
+
+  Finder selectConvertedAudioFileCheckboxFinder =
+      find.text('$enteredFileNameNoExt.mp3');
+
+  await tester.tap(selectConvertedAudioFileCheckboxFinder);
+  await tester.pumpAndSettle();
+
+  // Now, tap on the 'Confirm' button to confirm the file selection
+  Finder confirmSelectFileButtonFinder =
+      find.byKey(const Key('confirm_selection_button_key'));
+  await tester.tap(confirmSelectFileButtonFinder);
+  await tester.pumpAndSettle();
+
+  // Verify that the 'convertedAudio' file name text was entered in the
+  // MP3 file name TextField
+  mp3FileNameTextFieldFinder = find.byKey(const Key('mp3FileNameTextFieldKey'));
+  expect(
+    (tester.widget(mp3FileNameTextFieldFinder) as TextField).controller!.text,
+    enteredFileNameNoExt,
+  );
+}
+
 void _verifyPresenceOfExtractMp3Widgets(WidgetTester tester) {
-  
   // Verify the presence of the Extract MP3 button
   expect(
     find.byKey(const Key('extractMp3Button')),
     findsOneWidget,
   );
-  
+
   // Verify the presence and the value of the 'In music
   // quality' checkbox
   Finder musicalQualityCheckBoxFinder =
@@ -40670,7 +40921,7 @@ void _verifyPresenceOfExtractMp3Widgets(WidgetTester tester) {
     checkboxWidget.value,
     isTrue,
   );
-  
+
   // Verify the presence and the value of the 'In directory'
   // checkbox
   Finder onDirectoryCheckBoxFinder =
@@ -40684,11 +40935,10 @@ void _verifyPresenceOfExtractMp3Widgets(WidgetTester tester) {
     checkboxWidget.value,
     isTrue,
   );
-  
+
   // Verify the presence and the value of the 'In playlist'
   // checkbox
-  Finder inPlaylistCheckBoxFinder =
-      find.byKey(const Key('inPlaylistCheckBox'));
+  Finder inPlaylistCheckBoxFinder = find.byKey(const Key('inPlaylistCheckBox'));
   expect(
     inPlaylistCheckBoxFinder,
     findsOneWidget,
