@@ -41,7 +41,8 @@ void main() {
             containing 'S8 audio' playlist to Android application which contains 'S8 audio' and 'local'
             playlists. The restored 'S8 audio' playlist contains additional audios to which comments and
             pictures are associated. After restoring the playlist, the playlist is saved. First as individual
-            playlist saving and then as multiple playlists saving.''', (tester) async {
+            playlist saving and then as multiple playlists saving.''',
+          (tester) async {
         await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
           tester: tester,
           tapOnPlaylistToggleButton: false,
@@ -234,7 +235,8 @@ void main() {
           '''Multiple playlists restore + save, not replace existing playlists. Restore multiple playlists Windows
              zip containing 'S8 audio' and 'local' playlists to Android application which contain 'S8 audio' and
              'local' playlists. The restored 'S8 audio' and 'local' playlists contains additional audios to which
-             comments and pictures are associated. After restoring the playlists, the playlists are saved.''', (tester) async {
+             comments and pictures are associated. After restoring the playlists, the playlists are saved.''',
+          (tester) async {
         await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
           tester: tester,
           tapOnPlaylistToggleButton: false,
@@ -2512,9 +2514,36 @@ void main() {
         await tester.tap(createMP3ButtonFinder);
         await tester.pumpAndSettle();
 
-        // Enter the same mp3 file name as before
+        // Tap on the 'Select existing file' button
+        final Finder replaceFileButtonFinder =
+            find.byKey(const Key('select_mp3_file_to_replace_button_key'));
+        await tester.tap(replaceFileButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Select the 'convertedAudio.mp3' checkbox
+
+        Finder selectConvertedAudioFileCheckboxFinder =
+            find.text('$enteredFileNameNoExt.mp3');
+
+        await tester.tap(selectConvertedAudioFileCheckboxFinder);
+        await tester.pumpAndSettle();
+
+        // Now, tap on the 'Confirm' button to confirm the file selection
+        Finder confirmSelectFileButtonFinder =
+            find.byKey(const Key('confirm_selection_button_key'));
+        await tester.tap(confirmSelectFileButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Verify that the 'convertedAudio' file name text was entered in the
+        // MP3 file name TextField
         mp3FileNameTextFieldFinder =
-            find.byKey(const Key('textToConvertTextField'));
+            find.byKey(const Key('mp3FileNameTextFieldKey'));
+        expect(
+          (tester.widget(mp3FileNameTextFieldFinder) as TextField)
+              .controller!
+              .text,
+          enteredFileNameNoExt,
+        );
 
         await tester.enterText(
             mp3FileNameTextFieldFinder, enteredFileNameNoExt);
