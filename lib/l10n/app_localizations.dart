@@ -3698,6 +3698,18 @@ abstract class AppLocalizations {
   /// **'Enter the MP3 file name'**
   String get enterMp3FileName;
 
+  /// No description provided for @selectMp3FileToReplace.
+  ///
+  /// In en, this message translates to:
+  /// **'Select existing file'**
+  String get selectMp3FileToReplace;
+
+  /// No description provided for @selectMp3FileToReplaceTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Use this option if you have modified the text to be converted to audio or changed the selected voice and want to replace the existing MP3 file.'**
+  String get selectMp3FileToReplaceTooltip;
+
   /// No description provided for @myMp3FileName.
   ///
   /// In en, this message translates to:

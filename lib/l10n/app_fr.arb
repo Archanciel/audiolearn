@@ -1415,6 +1415,8 @@
   "stopListeningTextButtonTooltip": "Arrêter la lecture utilisant la voix sélectionnée.",
   "mp3FileName": "Nom du fichier MP3",
   "enterMp3FileName": "Entrer le nom du fichier MP3",
+  "selectMp3FileToReplace": "Sélection d'un fichier existant",
+  "selectMp3FileToReplaceTooltip": "Utilisez cette option si vous avez modifié le texte à convertir en audio ou changé la voix sélectionnée et que vous souhaitez remplacer le fichier MP3 existant.",
   "myMp3FileName": "nom de fichier",
   "createMP3": "Créer MP3",
   "audioImportedFromTextToSpeechToLocalPlaylist": "L'audio créé par la conversion de texte en MP3\n\n{importedAudioFileNames}\n\na été {replacedOrAdded} la playlist locale \"{toPlaylistTitle}\".",
