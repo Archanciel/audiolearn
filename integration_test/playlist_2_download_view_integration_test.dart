@@ -3845,7 +3845,7 @@ void main() {
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst: playlistsTitles,
-          firstAudioListTileIndex: 4,
+          firstAudioListTileIndex: 5,
         );
 
         // And verify the displayd audio titles list
@@ -36010,7 +36010,7 @@ void main() {
           '0:00:07.0 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
           '0:00:07.0 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
         ],
-        firstAudioListTileIndex: 4,
+        firstAudioListTileIndex: 5,
       );
 
       // Go to the audio player view and verify the audio position
@@ -36205,7 +36205,7 @@ void main() {
           '0:00:00.8 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
           '0:00:00.8 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
         ],
-        firstAudioListTileIndex: 3,
+        firstAudioListTileIndex: 4,
       );
 
       // Go to the audio player view and verify the audio position
@@ -36695,7 +36695,7 @@ void main() {
           '0:00:07.0 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
           '0:00:07.0 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
         ],
-        firstAudioListTileIndex: 2,
+        firstAudioListTileIndex: 3,
       );
 
       // Verifying all audio info dialog fields related of the
@@ -36891,7 +36891,7 @@ void main() {
           '0:00:00.8 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
           '0:00:00.8 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
         ],
-        firstAudioListTileIndex: 2,
+        firstAudioListTileIndex: 3,
       );
 
       // Verifying all audio info dialog fields related of the
@@ -37099,7 +37099,7 @@ void main() {
           '0:00:14.6 117 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
           '0:00:14.6 117 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
         ],
-        firstAudioListTileIndex: 4,
+        firstAudioListTileIndex: 5,
       );
 
       // Purge the test playlist directory so that the created test
@@ -37199,7 +37199,7 @@ void main() {
           '0:00:13.0 104 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
           '0:00:13.0 104 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
         ],
-        firstAudioListTileIndex: 4,
+        firstAudioListTileIndex: 5,
       );
 
       // Purge the test playlist directory so that the created test
