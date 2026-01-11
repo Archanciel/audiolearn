@@ -188,7 +188,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
-              color: Colors.red
+              color: Colors.red,
             ),
           ),
           actions: [
@@ -216,6 +216,8 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
         widget.existingSegment != null
             ? AppLocalizations.of(context)!.editCommentDialogTitle
             : AppLocalizations.of(context)!.addCommentDialogTitle,
+        textAlign: TextAlign.center,
+        maxLines: 2,
       ),
       content: SingleChildScrollView(
         child: Column(
@@ -342,15 +344,20 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
         ),
       ),
       actions: [
-        TextButton(
-          key: Key('cancelEditedSegmentButton'),
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(AppLocalizations.of(context)!.cancelButton),
-        ),
-        ElevatedButton(
-          key: Key('saveEditedSegmentButton'),
-          onPressed: _saveSegment,
-          child: Text(AppLocalizations.of(context)!.saveButton),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              key: Key('saveEditedSegmentButton'),
+              onPressed: _saveSegment,
+              child: Text(AppLocalizations.of(context)!.saveButton),
+            ),
+            TextButton(
+              key: Key('cancelEditedSegmentButton'),
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(AppLocalizations.of(context)!.cancelButton),
+            ),
+          ],
         ),
       ],
     );
