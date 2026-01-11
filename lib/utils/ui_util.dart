@@ -293,6 +293,8 @@ class UiUtil {
           title: Text(
             key: const Key('selectFileOrDirDialogTitle'),
             dialogTitle,
+            textAlign: TextAlign.center,
+            maxLines: 2,
           ),
           content: Text(
             key: const Key('selectFileOrDirDialogContent'),
