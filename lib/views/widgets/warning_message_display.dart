@@ -686,16 +686,11 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _displayWarningDialog(
             context: _context,
-            message: (audioVideoTitle.isNotEmpty)
-                ? AppLocalizations.of(context)!
-                    .deleteAudioFromPlaylistAswellWarning(
-                    audioVideoTitle,
-                    playlistTitle,
-                  )
-                : AppLocalizations.of(context)!
-                    .deleteMultipleAudiosFromPlaylistAswellWarning(
-                    playlistTitle,
-                  ),
+            message: AppLocalizations.of(context)!
+                .deleteAudioFromPlaylistAswellWarning(
+              audioVideoTitle,
+              playlistTitle,
+            ),
             warningMessageVM: _warningMessageVM,
             themeProviderVM: themeProviderVM,
           );
