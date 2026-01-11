@@ -672,6 +672,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                         key: const Key('audioSpeedButtonText'),
                         currentSpeedStr,
                         textAlign: TextAlign.center,
+                        maxLines: 2,
                         style: (areAudioButtonsEnabled)
                             ? (themeProviderVM.currentTheme == AppTheme.dark)
                                 ? kTextButtonStyleDarkMode
@@ -866,8 +867,9 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                   String audioSortFilterParametersName =
                       filterSortAudioAndParmLst[2];
 
-                  if (audioSortFilterParametersName == AppLocalizations.of(context)!
-                            .sortFilterParametersAppliedName) {
+                  if (audioSortFilterParametersName ==
+                      AppLocalizations.of(context)!
+                          .sortFilterParametersAppliedName) {
                     // User clicked on Apply button. In this case, the sort filter
                     // parms name is not defined and not saved to the playlist.
                     return;
@@ -938,7 +940,8 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 // The user clicked on Remove, not on Cancel button and
                 // at least one checkbox was selected ...
 
-                playlistListVMlistenFalse.removeAudioSortFilterParmsFromPlaylist(
+                playlistListVMlistenFalse
+                    .removeAudioSortFilterParmsFromPlaylist(
                   fromPlaylistDownloadView: isForPlaylistDownloadView,
                   fromAudioPlayerView: isForAudioPlayerView,
                 );
@@ -1347,6 +1350,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                       child: const Text(
                         '1 m',
                         textAlign: TextAlign.center,
+                        maxLines: 2,
                         style: kPositionButtonTextStyle,
                       ),
                     ),
@@ -1361,6 +1365,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                       child: const Text(
                         '10 s',
                         textAlign: TextAlign.center,
+                        maxLines: 2,
                         style: kPositionButtonTextStyle,
                       ),
                     ),
@@ -1375,6 +1380,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                       child: const Text(
                         '10 s',
                         textAlign: TextAlign.center,
+                        maxLines: 2,
                         style: kPositionButtonTextStyle,
                       ),
                     ),
@@ -1389,6 +1395,7 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                       child: const Text(
                         '1 m',
                         textAlign: TextAlign.center,
+                        maxLines: 2,
                         style: kPositionButtonTextStyle,
                       ),
                     ),

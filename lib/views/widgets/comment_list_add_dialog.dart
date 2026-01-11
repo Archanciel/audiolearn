@@ -596,7 +596,7 @@ class _CommentListAddDialogContentState
       },
       child: AlertDialog(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // The FittedBox will scale the text to fit the available space
             Flexible(
@@ -606,6 +606,8 @@ class _CommentListAddDialogContentState
                 child: Text(
                   AppLocalizations.of(context)!.commentsDialogTitle,
                   style: Theme.of(context).textTheme.titleLarge,
+                  textAlign: TextAlign.center, // Centered multi lines text
+                  maxLines: 2,
                 ),
               ),
             ),

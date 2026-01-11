@@ -115,6 +115,8 @@ class _PlaylistOneSelectableDialogState
         title: Text(
           key: const Key('playlistOneSelectableDialogTitleKey'),
           AppLocalizations.of(context)!.playlistOneSelectedDialogTitle,
+          textAlign: TextAlign.center, // Centered multi lines text
+          maxLines: 2,
         ),
         actionsPadding: kDialogActionsPadding,
         content: SizedBox(
@@ -181,32 +183,37 @@ class _PlaylistOneSelectableDialogState
           ),
         ),
         actions: [
-          TextButton(
-            key: const Key('confirmButton'),
-            onPressed: () {
-              _handleConfirmButtonPressed(
-                playlistVMlistnedFalse: playlistVMlistenFalse,
-              );
-            },
-            child: Text(AppLocalizations.of(context)!.confirmButton,
-                style: (themeProvider.currentTheme == AppTheme.dark)
-                    ? kTextButtonStyleDarkMode
-                    : kTextButtonStyleLightMode),
-          ),
-          TextButton(
-            key: const Key('cancelButton'),
-            onPressed: () {
-              // Fixes bug which happened when downloading a single
-              // video audio and clicking on the cancel button of
-              // the single selection playlist dialog. Without
-              // this fix, the confirm dialog was displayed although
-              // the user clicked on the cancel button.
-              Navigator.of(context).pop("cancel");
-            },
-            child: Text(AppLocalizations.of(context)!.cancelButton,
-                style: (themeProvider.currentTheme == AppTheme.dark)
-                    ? kTextButtonStyleDarkMode
-                    : kTextButtonStyleLightMode),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                key: const Key('confirmButton'),
+                onPressed: () {
+                  _handleConfirmButtonPressed(
+                    playlistVMlistnedFalse: playlistVMlistenFalse,
+                  );
+                },
+                child: Text(AppLocalizations.of(context)!.confirmButton,
+                    style: (themeProvider.currentTheme == AppTheme.dark)
+                        ? kTextButtonStyleDarkMode
+                        : kTextButtonStyleLightMode),
+              ),
+              TextButton(
+                key: const Key('cancelButton'),
+                onPressed: () {
+                  // Fixes bug which happened when downloading a single
+                  // video audio and clicking on the cancel button of
+                  // the single selection playlist dialog. Without
+                  // this fix, the confirm dialog was displayed although
+                  // the user clicked on the cancel button.
+                  Navigator.of(context).pop("cancel");
+                },
+                child: Text(AppLocalizations.of(context)!.cancelButton,
+                    style: (themeProvider.currentTheme == AppTheme.dark)
+                        ? kTextButtonStyleDarkMode
+                        : kTextButtonStyleLightMode),
+              ),
+            ],
           ),
         ],
       ),
@@ -235,7 +242,8 @@ class _PlaylistOneSelectableDialogState
           return;
         }
         break;
-      case PlaylistOneSelectableDialogUsedFor.fromCommentsExtractedMp3AddedToPlaylist:
+      case PlaylistOneSelectableDialogUsedFor
+            .fromCommentsExtractedMp3AddedToPlaylist:
         if (_selectedPlaylist == null) {
           widget.warningMessageVM.isNoPlaylistSelectedForExtractedMp3Location();
           return;

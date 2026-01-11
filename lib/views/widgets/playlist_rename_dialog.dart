@@ -97,12 +97,14 @@ class _PlaylistRenameDialogState extends State<PlaylistRenameDialog>
       },
       child: AlertDialog(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Flexible(
               child: Text(
                 key: const Key('playlistRenameDialogTitleKey'),
                 titleStr,
+                textAlign: TextAlign.center,
+                maxLines: 2,
               ),
             ),
             if (widget.helpItemsLst.isNotEmpty)
@@ -148,39 +150,45 @@ class _PlaylistRenameDialogState extends State<PlaylistRenameDialog>
           ),
         ),
         actions: [
-          TextButton(
-            key: const Key('playlistRenameButton'),
-            onPressed: _playlistNameTextEditingController.text.trim().isEmpty
-                ? null // This disables the button
-                : () {
-                    if (_renamePlaylist(context)) {
-                      Navigator.of(context)
-                          .pop(_playlistNameTextEditingController.text);
-                    } // else, if playlist title was not changed or if the title
-                    //   is already used or if the title is invalid, does not
-                    //   close the dialog
-                  },
-            child: Text(
-              AppLocalizations.of(context)!.renamePlaylistButton,
-              style: _playlistNameTextEditingController.text.trim().isEmpty
-                  ? const TextStyle(
-                      fontSize: kTextButtonFontSize) // Disabled style
-                  : (themeProviderVM.currentTheme == AppTheme.dark)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                key: const Key('playlistRenameButton'),
+                onPressed:
+                    _playlistNameTextEditingController.text.trim().isEmpty
+                        ? null // This disables the button
+                        : () {
+                            if (_renamePlaylist(context)) {
+                              Navigator.of(context)
+                                  .pop(_playlistNameTextEditingController.text);
+                            } // else, if playlist title was not changed or if the title
+                            //   is already used or if the title is invalid, does not
+                            //   close the dialog
+                          },
+                child: Text(
+                  AppLocalizations.of(context)!.renamePlaylistButton,
+                  style: _playlistNameTextEditingController.text.trim().isEmpty
+                      ? const TextStyle(
+                          fontSize: kTextButtonFontSize) // Disabled style
+                      : (themeProviderVM.currentTheme == AppTheme.dark)
+                          ? kTextButtonStyleDarkMode
+                          : kTextButtonStyleLightMode,
+                ),
+              ),
+              TextButton(
+                key: const Key('playlistRenameCancelButton'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  AppLocalizations.of(context)!.cancelButton,
+                  style: (themeProviderVM.currentTheme == AppTheme.dark)
                       ? kTextButtonStyleDarkMode
                       : kTextButtonStyleLightMode,
-            ),
-          ),
-          TextButton(
-            key: const Key('playlistRenameCancelButton'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text(
-              AppLocalizations.of(context)!.cancelButton,
-              style: (themeProviderVM.currentTheme == AppTheme.dark)
-                  ? kTextButtonStyleDarkMode
-                  : kTextButtonStyleLightMode,
-            ),
+                ),
+              ),
+            ],
           ),
         ],
       ),

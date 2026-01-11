@@ -118,11 +118,13 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
       child: AlertDialog(
         // executing the same code as in the 'Ok' TextButton
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
               child: Text(
                 AppLocalizations.of(context)!.setAudioPlaySpeedDialogTitle,
+                textAlign: TextAlign.center, // Centered multi lines text
+                maxLines: 2,
               ),
             ),
             (!widget.updateCurrentPlayAudioSpeed)
@@ -180,48 +182,53 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
           ),
         ),
         actions: <Widget>[
-          TextButton(
-            key: const Key('okButtonKey'),
-            child: Text(
-              'Ok',
-              style: (themeProviderVM.currentTheme == AppTheme.dark)
-                  ? kTextButtonStyleDarkMode
-                  : kTextButtonStyleLightMode,
-            ),
-            onPressed: () {
-              // Updates the audio play speed value in the audio speed
-              // text button displayed in the audio player view
-              audioPlayerVMlistenFalse.currentAudioPlaySpeedNotifier.value =
-                  _audioPlaySpeed;
-              audioPlayerVMlistenFalse.wasPlaySpeedNotifierChanged = true;
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                key: const Key('okButtonKey'),
+                child: Text(
+                  'Ok',
+                  style: (themeProviderVM.currentTheme == AppTheme.dark)
+                      ? kTextButtonStyleDarkMode
+                      : kTextButtonStyleLightMode,
+                ),
+                onPressed: () {
+                  // Updates the audio play speed value in the audio speed
+                  // text button displayed in the audio player view
+                  audioPlayerVMlistenFalse.currentAudioPlaySpeedNotifier.value =
+                      _audioPlaySpeed;
+                  audioPlayerVMlistenFalse.wasPlaySpeedNotifierChanged = true;
 
-              Navigator.of(context).pop([
-                _audioPlaySpeed,
-                _applyToExistingPlaylist,
-                _applyToAudioAlreadyDownloaded,
-              ]);
-            },
-          ),
-          TextButton(
-            key: const Key('cancelButtonKey'),
-            child: Text(
-              AppLocalizations.of(context)!.cancelButton,
-              style: (themeProviderVM.currentTheme == AppTheme.dark)
-                  ? kTextButtonStyleDarkMode
-                  : kTextButtonStyleLightMode,
-            ),
-            onPressed: () async {
-              // restoring the previous audio play speed when
-              // cancel button is pressed. Otherwise, the audio
-              // play speed is changed even if the user presses
-              // the cancel button.
-              await _setPlaybackSpeed(
-                audioPlayerVMlistenedFalse: audioPlayerVMlistenFalse,
-                newValue: widget.audioPlaySpeed,
-              );
+                  Navigator.of(context).pop([
+                    _audioPlaySpeed,
+                    _applyToExistingPlaylist,
+                    _applyToAudioAlreadyDownloaded,
+                  ]);
+                },
+              ),
+              TextButton(
+                key: const Key('cancelButtonKey'),
+                child: Text(
+                  AppLocalizations.of(context)!.cancelButton,
+                  style: (themeProviderVM.currentTheme == AppTheme.dark)
+                      ? kTextButtonStyleDarkMode
+                      : kTextButtonStyleLightMode,
+                ),
+                onPressed: () async {
+                  // restoring the previous audio play speed when
+                  // cancel button is pressed. Otherwise, the audio
+                  // play speed is changed even if the user presses
+                  // the cancel button.
+                  await _setPlaybackSpeed(
+                    audioPlayerVMlistenedFalse: audioPlayerVMlistenFalse,
+                    newValue: widget.audioPlaySpeed,
+                  );
 
-              Navigator.of(context).pop();
-            },
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
           ),
         ],
       ),
@@ -306,7 +313,8 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
           key: const Key('minusButtonKey'),
           icon: const Icon(Icons.remove),
           onPressed: () async {
-            double newSpeed = (_audioPlaySpeed == 1.25) ? 1.2 : _audioPlaySpeed - 0.1;
+            double newSpeed =
+                (_audioPlaySpeed == 1.25) ? 1.2 : _audioPlaySpeed - 0.1;
             if (newSpeed >= 0.5) {
               await _setPlaybackSpeed(
                 audioPlayerVMlistenedFalse: audioPlayerVMlistenFalse,
@@ -349,7 +357,8 @@ class _AudioSetSpeedDialogState extends State<AudioSetSpeedDialog>
           key: const Key('plusButtonKey'),
           icon: const Icon(Icons.add),
           onPressed: () async {
-            double newSpeed = (_audioPlaySpeed == 1.25) ? 1.3 : _audioPlaySpeed + 0.1;
+            double newSpeed =
+                (_audioPlaySpeed == 1.25) ? 1.3 : _audioPlaySpeed + 0.1;
             if (newSpeed <= 2.0) {
               await _setPlaybackSpeed(
                 audioPlayerVMlistenedFalse: audioPlayerVMlistenFalse,

@@ -92,6 +92,8 @@ class _PlaylistAddDialogState extends State<PlaylistAddDialog>
           (widget.playlistUrl.isNotEmpty)
               ? AppLocalizations.of(context)!.addYoutubePlaylistDialogTitle
               : AppLocalizations.of(context)!.addLocalPlaylistDialogTitle,
+          textAlign: TextAlign.center, // Centered multi lines text
+          maxLines: 2,
         ),
         actionsPadding: kDialogActionsPadding,
         content: SingleChildScrollView(
@@ -134,37 +136,42 @@ class _PlaylistAddDialogState extends State<PlaylistAddDialog>
           ),
         ),
         actions: [
-          TextButton(
-            key: const Key('addPlaylistConfirmDialogAddButton'),
-            onPressed: () async {
-              dynamic isYoutubePlaylistAdded = await _addPlaylist(
-                context: context,
-              );
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                key: const Key('addPlaylistConfirmDialogAddButton'),
+                onPressed: () async {
+                  dynamic isYoutubePlaylistAdded = await _addPlaylist(
+                    context: context,
+                  );
 
-              if (isYoutubePlaylistAdded == null) {
-                return;
-              }
+                  if (isYoutubePlaylistAdded == null) {
+                    return;
+                  }
 
-              Navigator.of(context).pop(isYoutubePlaylistAdded);
-            },
-            child: Text(
-              AppLocalizations.of(context)!.add,
-              style: (themeProviderVM.currentTheme == AppTheme.dark)
-                  ? kTextButtonStyleDarkMode
-                  : kTextButtonStyleLightMode,
-            ),
-          ),
-          TextButton(
-            key: const Key('addPlaylistConfirmDialogCancelButton'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text(
-              AppLocalizations.of(context)!.cancelButton,
-              style: (themeProviderVM.currentTheme == AppTheme.dark)
-                  ? kTextButtonStyleDarkMode
-                  : kTextButtonStyleLightMode,
-            ),
+                  Navigator.of(context).pop(isYoutubePlaylistAdded);
+                },
+                child: Text(
+                  AppLocalizations.of(context)!.add,
+                  style: (themeProviderVM.currentTheme == AppTheme.dark)
+                      ? kTextButtonStyleDarkMode
+                      : kTextButtonStyleLightMode,
+                ),
+              ),
+              TextButton(
+                key: const Key('addPlaylistConfirmDialogCancelButton'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  AppLocalizations.of(context)!.cancelButton,
+                  style: (themeProviderVM.currentTheme == AppTheme.dark)
+                      ? kTextButtonStyleDarkMode
+                      : kTextButtonStyleLightMode,
+                ),
+              ),
+            ],
           ),
         ],
       ),

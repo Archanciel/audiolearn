@@ -117,7 +117,11 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
     // Since it is necessary that Enter can be used in comment text field
     // to add a new line, using KeyListener and FocusNode must be avoided.
     return AlertDialog(
-      title: Text(AppLocalizations.of(context)!.commentDialogTitle),
+      title: Text(
+        AppLocalizations.of(context)!.commentDialogTitle,
+        textAlign: TextAlign.center, // Centered multi lines text
+        maxLines: 2,
+      ),
       content: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,6 +160,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                   key: const Key('commentedAudioTitleText'),
                   widget.commentableAudio.validVideoTitle,
                   textAlign: TextAlign.center,
+                  maxLines: 2,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -714,6 +719,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                 child: Text(
                   currentAudioPositionStr,
                   textAlign: TextAlign.center,
+                  maxLines: 2,
                   style: (themeProviderVM.currentTheme == AppTheme.dark)
                       ? kTextButtonStyleDarkMode
                       : kTextButtonStyleLightMode,

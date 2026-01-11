@@ -15,7 +15,10 @@ class HelpMainDialog extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           AppLocalizations.of(context)!.helpMainTitle,
+          textAlign: TextAlign.center,
+          maxLines: 2,
         ),
+        centerTitle: true,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,8 +41,10 @@ class HelpMainDialog extends StatelessWidget {
                     _buildMenuItem(
                       context: context,
                       icon: Icons.key,
-                      title: AppLocalizations.of(context)!.helpAudioLearnIntroductionTitle,
-                      subtitle: AppLocalizations.of(context)!.helpAudioLearnIntroductionSubTitle,
+                      title: AppLocalizations.of(context)!
+                          .helpAudioLearnIntroductionTitle,
+                      subtitle: AppLocalizations.of(context)!
+                          .helpAudioLearnIntroductionSubTitle,
                       onTap: () {
                         // Navigate to Account settings or show details
                       },
@@ -47,8 +52,10 @@ class HelpMainDialog extends StatelessWidget {
                     _buildMenuItem(
                       context: context,
                       icon: Icons.key,
-                      title: AppLocalizations.of(context)!.helpLocalPlaylistTitle,
-                      subtitle: AppLocalizations.of(context)!.helpLocalPlaylistSubTitle,
+                      title:
+                          AppLocalizations.of(context)!.helpLocalPlaylistTitle,
+                      subtitle: AppLocalizations.of(context)!
+                          .helpLocalPlaylistSubTitle,
                       onTap: () {
                         // Navigate to Account settings or show details
                       },
@@ -56,8 +63,10 @@ class HelpMainDialog extends StatelessWidget {
                     _buildMenuItem(
                       context: context,
                       icon: Icons.key,
-                      title: AppLocalizations.of(context)!.helpPlaylistMenuTitle,
-                      subtitle: AppLocalizations.of(context)!.helpPlaylistMenuSubTitle,
+                      title:
+                          AppLocalizations.of(context)!.helpPlaylistMenuTitle,
+                      subtitle: AppLocalizations.of(context)!
+                          .helpPlaylistMenuSubTitle,
                       onTap: () {
                         // Navigate to Account settings or show details
                       },
@@ -66,7 +75,8 @@ class HelpMainDialog extends StatelessWidget {
                       context: context,
                       icon: Icons.key,
                       title: AppLocalizations.of(context)!.helpAudioMenuTitle,
-                      subtitle: AppLocalizations.of(context)!.helpAudioMenuSubTitle,
+                      subtitle:
+                          AppLocalizations.of(context)!.helpAudioMenuSubTitle,
                       onTap: () {
                         // Navigate to Account settings or show details
                       },

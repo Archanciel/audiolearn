@@ -40,7 +40,10 @@ class BatterySettingsDialog extends StatelessWidget with ScreenMixin {
         appBar: AppBar(
           title: Text(
             AppLocalizations.of(context)!.batteryParameters,
+            textAlign: TextAlign.center,
+            maxLines: 2,
           ),
+          centerTitle: true,
         ),
         body: SingleChildScrollView(
           child: Padding(

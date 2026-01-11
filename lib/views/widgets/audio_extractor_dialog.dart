@@ -114,7 +114,10 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
         appBar: AppBar(
           title: Text(
             AppLocalizations.of(context)!.audioExtractorDialogTitle,
+            textAlign: TextAlign.center, // Centered multi lines text
+            maxLines: 2,
           ),
+          centerTitle: true,
           actions: [
             IconButton(
               icon: IconTheme(
@@ -418,10 +421,14 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
                     (audioExtractorVM
                             .existNotDeletedSegmentWithEndPositionGreaterThanAudioDuration())
                         ? Text(
-                            key: const Key(
-                                'deleteInvalidCommentsMessageKey'),
+                            key: const Key('deleteInvalidCommentsMessageKey'),
                             AppLocalizations.of(context)!
-                                .deleteInvalidCommentsMessage(TimeFormatUtil.formatSeconds(widget.currentAudio.audioDuration.inMilliseconds / 1000.0)),
+                                .deleteInvalidCommentsMessage(
+                                    TimeFormatUtil.formatSeconds(widget
+                                            .currentAudio
+                                            .audioDuration
+                                            .inMilliseconds /
+                                        1000.0)),
                             maxLines: 4,
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -642,20 +649,21 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
               fontSize: 12,
             ),
             textAlign: TextAlign.center,
+            maxLines: 2,
           ),
         ],
         if (audioPlayerVM.hasError)
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              audioPlayerVM.errorMessage.replaceFirst(
-                  'File does not exist',
+              audioPlayerVM.errorMessage.replaceFirst('File does not exist',
                   AppLocalizations.of(context)!.fileNotExistError),
               style: const TextStyle(
                 color: Colors.red,
                 fontSize: 12,
               ),
               textAlign: TextAlign.center,
+              maxLines: 2,
             ),
           ),
       ],
@@ -993,12 +1001,12 @@ class _AudioExtractorDialogState extends State<AudioExtractorDialog>
     }
 
     if (_extractInDirectory) {
-          await audioExtractorVM.extractMP3ToDirectory(
-            settingsDataService: settingsDataService,
-            inMusicQuality: _extractInMusicQuality,
-            extractedMp3FileName: extractedMp3FileName,
-          );
-        }
+      await audioExtractorVM.extractMP3ToDirectory(
+        settingsDataService: settingsDataService,
+        inMusicQuality: _extractInMusicQuality,
+        extractedMp3FileName: extractedMp3FileName,
+      );
+    }
   }
 
   Future<void> _playExtractedFile(
