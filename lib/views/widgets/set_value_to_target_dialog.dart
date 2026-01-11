@@ -157,13 +157,15 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
       },
       child: AlertDialog(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Flexible(
               child: Text(
                 key: const Key('setValueToTargetDialogTitleKey'),
                 widget.dialogTitle,
                 style: Theme.of(context).textTheme.headlineSmall,
+                textAlign: TextAlign.center, // Centered multi lines text
+                maxLines: 2,
               ),
             ),
             if (widget.helpItemsLst.isNotEmpty)
@@ -225,29 +227,34 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
           ),
         ),
         actions: [
-          TextButton(
-            key: const Key('setValueToTargetOkButton'),
-            onPressed: () {
-              _executeFinalOperation(context);
-            },
-            child: Text(
-              'Ok',
-              style: (themeProviderVM.currentTheme == AppTheme.dark)
-                  ? kTextButtonStyleDarkMode
-                  : kTextButtonStyleLightMode,
-            ),
-          ),
-          TextButton(
-            key: const Key('setValueToTargetCancelButton'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text(
-              AppLocalizations.of(context)!.cancelButton,
-              style: (themeProviderVM.currentTheme == AppTheme.dark)
-                  ? kTextButtonStyleDarkMode
-                  : kTextButtonStyleLightMode,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                key: const Key('setValueToTargetOkButton'),
+                onPressed: () {
+                  _executeFinalOperation(context);
+                },
+                child: Text(
+                  'Ok',
+                  style: (themeProviderVM.currentTheme == AppTheme.dark)
+                      ? kTextButtonStyleDarkMode
+                      : kTextButtonStyleLightMode,
+                ),
+              ),
+              TextButton(
+                key: const Key('setValueToTargetCancelButton'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  AppLocalizations.of(context)!.cancelButton,
+                  style: (themeProviderVM.currentTheme == AppTheme.dark)
+                      ? kTextButtonStyleDarkMode
+                      : kTextButtonStyleLightMode,
+                ),
+              ),
+            ],
           ),
         ],
       ),

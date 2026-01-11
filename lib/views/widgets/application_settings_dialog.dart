@@ -114,7 +114,10 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
         appBar: AppBar(
           title: Text(
             AppLocalizations.of(context)!.appSettingsDialogTitle,
+            textAlign: TextAlign.center,
+            maxLines: 2,
           ),
+          centerTitle: true,
         ),
         body: Column(
           children: [
@@ -331,7 +334,8 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
         barrierDismissible: false,
         builder: (BuildContext context) {
           return ConfirmActionDialog(
-            actionFunction: () => ConfirmActionDialog.choosenConfirmAction, // Return ConfirmAction
+            actionFunction: () => ConfirmActionDialog
+                .choosenConfirmAction, // Return ConfirmAction
             actionFunctionArgs: [],
             dialogTitleOne:
                 AppLocalizations.of(context)!.restorePlaylistTitlesOrderTitle,
@@ -355,7 +359,8 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
             .updatePlaylistRootPathAndSavePlaylistTitleOrder(
           actualPlaylistRootPath: settingsDataServicePlaylistRootPath,
           modifiedPlaylistRootPath: _applicationDialogPlaylistRootPath,
-          playlistTitleOrderPathFileName: '', // empty string means do not restore the
+          playlistTitleOrderPathFileName:
+              '', // empty string means do not restore the
           //                                     previously saved playlist title order
           //                                     since the Cancel button was clicked
         );
@@ -365,7 +370,8 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
       playlistListVMlistenFalse.updatePlaylistRootPathAndSavePlaylistTitleOrder(
         actualPlaylistRootPath: settingsDataServicePlaylistRootPath,
         modifiedPlaylistRootPath: _applicationDialogPlaylistRootPath,
-        playlistTitleOrderPathFileName: '', // empty string means do not restore the
+        playlistTitleOrderPathFileName:
+            '', // empty string means do not restore the
         //                                     previously saved playlist title order
         //                                     which does not exist
       );
@@ -430,6 +436,7 @@ class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
                   child: Text(
                     '${_audioPlaySpeed.toStringAsFixed(2)}x',
                     textAlign: TextAlign.center,
+                    maxLines: 2,
                     style: (themeProviderVM.currentTheme == AppTheme.dark)
                         ? kTextButtonStyleDarkMode
                         : kTextButtonStyleLightMode,

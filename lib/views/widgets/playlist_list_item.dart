@@ -357,24 +357,11 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             );
             break;
           case PlaylistPopupMenuAction.displayPlaylistAudioComments:
-            if (playlistListVMlistenFalse.getSelectedPlaylists().isEmpty ||
-                playlistListVMlistenFalse.getSelectedPlaylists()[0] !=
-                    playlist) {
-              // the case if the user opens the playlist audio
-              // comment dialog on a playlist which is not currently
-              // selected
-              playlistListVMlistenFalse.setPlaylistSelection(
-                playlistSelectedOrUnselected: playlist,
-                isPlaylistSelected: true,
-              );
-              String snackBarMessage = AppLocalizations.of(context)!
-                  .playlistSelectedSnackBarMessage(playlist.title);
-              ScaffoldMessenger.of(context).showSnackBar(
-                ApplicationSnackBar(
-                  message: snackBarMessage,
-                ),
-              );
-            }
+            _selectPlaylistAndDisplaySnackbar(
+              context: context,
+              playlistListVMlistenFalse: playlistListVMlistenFalse,
+            );
+
             showDialog<void>(
               context: context,
               barrierDismissible:
@@ -804,6 +791,29 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
     });
   }
 
+  void _selectPlaylistAndDisplaySnackbar({
+    required BuildContext context,
+    required PlaylistListVM playlistListVMlistenFalse,
+  }) {
+    if (playlistListVMlistenFalse.getSelectedPlaylists().isEmpty ||
+        playlistListVMlistenFalse.getSelectedPlaylists()[0] != playlist) {
+      // the case if the user opens the playlist audio
+      // comment dialog on a playlist which is not currently
+      // selected
+      playlistListVMlistenFalse.setPlaylistSelection(
+        playlistSelectedOrUnselected: playlist,
+        isPlaylistSelected: true,
+      );
+      String snackBarMessage = AppLocalizations.of(context)!
+          .playlistSelectedSnackBarMessage(playlist.title);
+      ScaffoldMessenger.of(context).showSnackBar(
+        ApplicationSnackBar(
+          message: snackBarMessage,
+        ),
+      );
+    }
+  }
+
   void _showFilteredAudioActionsMenu({
     required BuildContext context,
     required PlaylistListVM playlistListVMlistenFalse,
@@ -1015,6 +1025,11 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             });
             break;
           case FilteredAudioAction.deleteFilteredAudio:
+            _selectPlaylistAndDisplaySnackbar(
+              context: context,
+              playlistListVMlistenFalse: playlistListVMlistenFalse,
+            );
+
             // Content of the list:
             //  [
             //    numberOfDeletedAudio,
@@ -1156,6 +1171,11 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             }
             break;
           case FilteredAudioAction.deleteFilteredAudioFromPlaylistAsWell:
+            _selectPlaylistAndDisplaySnackbar(
+              context: context,
+              playlistListVMlistenFalse: playlistListVMlistenFalse,
+            );
+
             // Content of the list:
             //  [
             //    numberOfDeletedAudio,
@@ -1179,7 +1199,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   AppLocalizations.of(context)!.sortFilterParametersDefaultName;
             }
 
-            showDialog<void>(
+            showDialog<dynamic>(
               context: context,
               barrierDismissible:
                   false, // This line prevents the dialog from closing when
@@ -1206,11 +1226,38 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                       seconds: deletedAudioNumberLst[3] ~/ 10,
                     ), // total audio duration
                   ),
+                  // warningFunction: warningMessageVMlistenFalse
+                  //     .setDeleteAudioFromPlaylistAswellTitle,
+                  // warningFunctionArgs: [
+                  //   playlist.title,
+                  //   '',
+                  // ], // empty audioVideoTitle
                 );
               },
-            );
+            ).then((resultMap) {
+              if (resultMap == null) {
+                return;
+              }
+
+              if (resultMap case ConfirmAction.cancel) {
+                return;
+              }
+
+              if (playlist.playlistType == PlaylistType.youtube) {
+                warningMessageVMlistenFalse
+                    .setDeleteAudioFromPlaylistAswellTitle(
+                  deleteAudioFromPlaylistAswellTitle: playlist.title,
+                  deleteAudioFromPlaylistAswellAudioVideoTitle: '',
+                );
+              }
+            });
             break;
           case FilteredAudioAction.redownloadFilteredAudio:
+            _selectPlaylistAndDisplaySnackbar(
+              context: context,
+              playlistListVMlistenFalse: playlistListVMlistenFalse,
+            );
+
             // You cannot await here, but you can trigger an
             // action which will not block the widget tree
             // rendering.
@@ -1237,7 +1284,6 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               //   the no internet warning thrown by AudioDownloadVM.
               //   notifyDownloadError() can be displayed..
             });
-
             break;
         }
       }

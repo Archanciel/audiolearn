@@ -470,7 +470,11 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     );
     return Center(
       child: AlertDialog(
-        title: Text(AppLocalizations.of(context)!.sortFilterDialogTitle),
+        title: Text(
+          AppLocalizations.of(context)!.sortFilterDialogTitle,
+          textAlign: TextAlign.center, // Centered multi lines text
+          maxLines: 2,
+        ),
         actionsPadding:
             // reduces the top vertical space between the buttons
             // and the content

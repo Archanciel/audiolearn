@@ -686,11 +686,16 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _displayWarningDialog(
             context: _context,
-            message: AppLocalizations.of(context)!
-                .deleteAudioFromPlaylistAswellWarning(
-              audioVideoTitle,
-              playlistTitle,
-            ),
+            message: (audioVideoTitle.isNotEmpty)
+                ? AppLocalizations.of(context)!
+                    .deleteAudioFromPlaylistAswellWarning(
+                    audioVideoTitle,
+                    playlistTitle,
+                  )
+                : AppLocalizations.of(context)!
+                    .deleteMultipleAudiosFromPlaylistAswellWarning(
+                    playlistTitle,
+                  ),
             warningMessageVM: _warningMessageVM,
             themeProviderVM: themeProviderVM,
           );
@@ -1764,12 +1769,14 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         },
         child: AlertDialog(
           title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Flexible(
                 child: Text(
                   key: const Key('warningDialogTitle'),
                   alertDialogTitle,
+                  textAlign: TextAlign.center, // Centered multi lines text
+                  maxLines: 2,
                 ),
               ),
               if (helpItemsLst.isNotEmpty)

@@ -94,12 +94,14 @@ class _MoveAudioToPositionDialogState extends State<MoveAudioToPositionDialog>
       },
       child: AlertDialog(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Flexible(
               child: Text(
                 key: const Key('audioPositionMoveDialogTitleKey'),
                 titleStr,
+                textAlign: TextAlign.center, // Centered multi lines text
+                maxLines: 2,
               ),
             ),
             if (widget.helpItemsLst.isNotEmpty)

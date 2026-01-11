@@ -72,6 +72,7 @@
   "deleteAudio": "Supprimer l'audio ...",
   "deleteAudioFromPlaylistAswell": "Supprimer l'audio de la playlist également ...",
   "deleteAudioFromPlaylistAswellWarning": "Supprimez l'audio \"{audioTitle}\" de la playlist \"{playlistTitle}\" se trouvant sur Youtube, sinon l'audio sera téléchargé à nouveau lors du prochain téléchargement de la playlist.",
+  "deleteMultipleAudiosFromPlaylistAswellWarning": "Supprimez les audios effacés de la playlist \"{playlistTitle}\" se trouvant sur Youtube, sinon les audios supprimés seront téléchargés à nouveau lors du prochain téléchargement de la playlist.",
   "warningDialogTitle": "AVERTISSEMENT",
   "updatedPlaylistUrlTitle": "L'URL de la playlist Youtube \"{title}\" a été mise à jour. La playlist peut être téléchargée avec sa nouvelle URL.",
   "@updatedPlaylistUrlTitle": {

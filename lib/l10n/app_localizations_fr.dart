@@ -203,6 +203,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String deleteMultipleAudiosFromPlaylistAswellWarning(Object playlistTitle) {
+    return 'Supprimez les audios effacés de la playlist \"$playlistTitle\" se trouvant sur Youtube, sinon les audios supprimés seront téléchargés à nouveau lors du prochain téléchargement de la playlist.';
+  }
+
+  @override
   String get warningDialogTitle => 'AVERTISSEMENT';
 
   @override

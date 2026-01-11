@@ -47,7 +47,11 @@ class HelpDialog extends StatelessWidget with ScreenMixin {
         }
       },
       child: AlertDialog(
-        title: Text(AppLocalizations.of(context)!.helpDialogTitle),
+        title: Text(
+          AppLocalizations.of(context)!.helpDialogTitle,
+          textAlign: TextAlign.center,
+          maxLines: 2,
+        ),
         actionsPadding: kDialogActionsPadding,
         content: SingleChildScrollView(
           child: ListBody(

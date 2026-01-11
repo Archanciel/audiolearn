@@ -115,16 +115,16 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
 
     return Center(
       child: AlertDialog(
-        // title:
-        //     Text(AppLocalizations.of(context)!.convertTextToAudioDialogTitle),
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Flexible(
               child: Text(
+                key: const Key('convertTextToAudioDialogTitleKey'),
                 AppLocalizations.of(context)!.convertTextToAudioDialogTitle,
                 style: Theme.of(context).textTheme.headlineSmall,
-                key: const Key('convertTextToAudioDialogTitleKey'),
+                textAlign: TextAlign.center, // Centered multi lines text
+                maxLines: 2,
               ),
             ),
             IconButton(
@@ -190,6 +190,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                                 Text(
                                   AppLocalizations.of(context)!.creatingMp3,
                                   textAlign: TextAlign.center,
+                                  maxLines: 2,
                                   style: kDialogTitlesStyle,
                                   key: const Key('conversionTextKey'),
                                 ),
@@ -206,6 +207,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                             AppLocalizations.of(context)!
                                 .conversionVoiceSelection,
                             textAlign: TextAlign.center,
+                            maxLines: 2,
                             style: kDialogTitlesStyle,
                             key: const Key('voiceSelectionTitleKey'),
                           ),
@@ -584,13 +586,15 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context)!.mp3FileName),
+        title: Text(
+          AppLocalizations.of(context)!.mp3FileName,
+          textAlign: TextAlign.center, // Centered multi lines text
+          maxLines: 2,
+        ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(AppLocalizations.of(context)!.enterMp3FileName),
-            SizedBox(height: 16),
             (existingMp3FileNames.isEmpty)
                 ? const SizedBox.shrink() // ← Renders nothing
                 : Center(
@@ -619,14 +623,20 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                                 fileNameController.text = selectedFileName;
                               }
                             },
-                            child: Text(AppLocalizations.of(context)!
-                                .selectMp3FileToReplace),
+                            child: Text(
+                              AppLocalizations.of(context)!
+                                  .selectMp3FileToReplace,
+                              textAlign:
+                                  TextAlign.center, // Centered multi lines text
+                            ),
                           ),
                         ),
-                        SizedBox(height: 16),
                       ],
                     ),
                   ),
+            SizedBox(height: 16),
+            Text(AppLocalizations.of(context)!.enterMp3FileName),
+            SizedBox(height: 16),
             TextField(
               key: const Key('mp3FileNameTextFieldKey'),
               controller: fileNameController,
@@ -640,20 +650,25 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
           ],
         ),
         actions: [
-          ElevatedButton(
-            key: const Key('create_mp3_button_key'),
-            onPressed: () {
-              final name = fileNameController.text.trim();
-              if (name.isNotEmpty) {
-                Navigator.of(context).pop(name);
-              }
-            },
-            child: Text(AppLocalizations.of(context)!.createMP3),
-          ),
-          TextButton(
-            key: const Key('cancel_mp3_creation_button_key'),
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(AppLocalizations.of(context)!.cancelButton),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                key: const Key('create_mp3_button_key'),
+                onPressed: () {
+                  final name = fileNameController.text.trim();
+                  if (name.isNotEmpty) {
+                    Navigator.of(context).pop(name);
+                  }
+                },
+                child: Text(AppLocalizations.of(context)!.createMP3),
+              ),
+              TextButton(
+                key: const Key('cancel_mp3_creation_button_key'),
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text(AppLocalizations.of(context)!.cancelButton),
+              ),
+            ],
           ),
         ],
       ),
@@ -853,7 +868,11 @@ class _Mp3FileSelectionDialogState extends State<_Mp3FileSelectionDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(AppLocalizations.of(context)!.selectMp3FileToReplace),
+      title: Text(
+        AppLocalizations.of(context)!.selectMp3FileToReplace,
+        textAlign: TextAlign.center, // Centered multi lines text
+        maxLines: 2,
+      ),
       content: SizedBox(
         width: double.maxFinite,
         child: ListView.builder(

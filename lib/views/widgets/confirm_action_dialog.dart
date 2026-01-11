@@ -10,7 +10,10 @@ import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import 'help_dialog.dart';
 
-enum ConfirmAction { cancel, confirm }
+enum ConfirmAction {
+  cancel,
+  confirm,
+}
 
 /// This dialog asks for confirmation before executing an action. The action is
 /// passed as a function [actionFunction] with its argument values added to the
@@ -31,12 +34,12 @@ class ConfirmActionDialog extends StatefulWidget {
   final List<HelpItem> helpItemsLst;
 
   final bool dialogTitleOneReducedFontSize;
-  
+
   /// Creates a ConfirmActionDialog.
   /// The [actionFunction] is the function to be executed when the user
   /// confirms the action. The [actionFunctionArgs] are the arguments to be
   /// passed to the [actionFunction].
-  /// 
+  ///
   /// Here's an example of how to pass an async function as [actionFunction]:
   /// actionFunction: () async {
   ///   await playlistListVMlistenFalse
@@ -45,7 +48,7 @@ class ConfirmActionDialog extends StatefulWidget {
   ///           targetDir: targetSaveDirectoryPath,
   ///           fromAudioDownloadDateTime:
   ///           parseDateTimeOrDateStrUsinAppDateFormat!,
-  ///   
+  ///
   ///   // Handle any post-execution logic here
   ///   // Pass [] as [actionFunctionArgs] since no arguments are needed.
   /// },
@@ -117,6 +120,8 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
                               fontSize: kConfirmActionDialogSmallerFontSize,
                             )
                         : Theme.of(context).textTheme.headlineSmall,
+                    textAlign: TextAlign.center,
+                    maxLines: 10,
                   ),
                 ),
                 if (widget.helpItemsLst.isNotEmpty)
@@ -147,6 +152,8 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
                 widget.dialogTitleTwo,
                 key: const Key('confirmDialogTitleTwoKey'),
                 style: Theme.of(context).textTheme.headlineSmall,
+                textAlign: TextAlign.center,
+                maxLines: 12,
               ),
           ],
         ),
@@ -157,21 +164,28 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
           ),
         ),
         actions: <Widget>[
-          TextButton(
-            key: const Key('confirmButton'),
-            onPressed: () {
-              ConfirmActionDialog.choosenConfirmAction = ConfirmAction.confirm;
-              _applyConfirm(context);
-            },
-            child: Text(AppLocalizations.of(context)!.confirmButton),
-          ),
-          TextButton(
-            key: const Key('cancelButtonKey'),
-            onPressed: () {
-              ConfirmActionDialog.choosenConfirmAction = ConfirmAction.cancel;
-              Navigator.of(context).pop(ConfirmAction.cancel);
-            },
-            child: Text(AppLocalizations.of(context)!.cancelButton),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                key: const Key('confirmButton'),
+                onPressed: () {
+                  ConfirmActionDialog.choosenConfirmAction =
+                      ConfirmAction.confirm;
+                  _applyConfirm(context);
+                },
+                child: Text(AppLocalizations.of(context)!.confirmButton),
+              ),
+              TextButton(
+                key: const Key('cancelButtonKey'),
+                onPressed: () {
+                  ConfirmActionDialog.choosenConfirmAction =
+                      ConfirmAction.cancel;
+                  Navigator.of(context).pop(ConfirmAction.cancel);
+                },
+                child: Text(AppLocalizations.of(context)!.cancelButton),
+              ),
+            ],
           ),
         ],
       ),
@@ -186,12 +200,20 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
       widget.actionFunctionArgs,
     );
 
-    if (widget.warningFunction != null) {
-      // If the warning function was passed, execute it with
-      // arguments
-      Function.apply(widget.warningFunction!, widget.warningFunctionArgs);
-    }
+    // Not working
+    // if (widget.warningFunction != null) {
+    //   // If the warning function was passed, execute it with
+    //   // arguments
+    //   Function.apply(
+    //     widget.warningFunction!,
+    //     widget.warningFunctionArgs,
+    //   );
+    // }
 
-    Navigator.of(context).pop(returnedResult);
+    if (returnedResult == null) {
+      Navigator.of(context).pop(ConfirmAction.confirm);
+    } else {
+      Navigator.of(context).pop(returnedResult);
+    }
   }
 }

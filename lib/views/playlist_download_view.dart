@@ -565,6 +565,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                       .currentDownloadingAudio.validVideoTitle,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center, // Centered multi lines text
+                  maxLines: 2,
                 ),
                 const SizedBox(height: 10.0),
                 LinearProgressIndicator(
@@ -585,6 +586,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     .currentDownloadingAudio.validVideoTitle,
                 style: const TextStyle(fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center, // Centered multi lines text
+                maxLines: 2,
               ),
               const SizedBox(height: 10.0),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -610,6 +612,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 audioDownloadVMlistenTrue.mp4ConvertingToMp3FileName,
                 style: const TextStyle(fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center, // Centered multi lines text
+                maxLines: 2,
               ),
               const SizedBox(height: 10.0),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -657,6 +660,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                       : AppLocalizations.of(context)!
                           .savingMultiplePlaylistsAudioMp3,
                   textAlign: TextAlign.center, // Centered multi lines text
+                  maxLines: 2,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10.0),
@@ -699,6 +703,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                     audioMp3RestorationCurrentPlaylistName,
                   ),
                   textAlign: TextAlign.center, // Centered multi lines text
+                  maxLines: 2,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10.0),
@@ -719,7 +724,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       },
     );
   }
-
 
   /// Builds the second line of the playlist download view. This line
   /// contains the playlists toggle button, the sort filter dropdown
@@ -1088,9 +1092,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         }
       }
     }
-    
-    if (sortFilterAppliedMenuItemNameCorrespondingToLanguage ==
-        "appliqué") {
+
+    if (sortFilterAppliedMenuItemNameCorrespondingToLanguage == "appliqué") {
       if (playlistListVMlistenFalse.deleteAudioSortFilterParameters(
               audioSortFilterParametersName: "applied") !=
           null) {

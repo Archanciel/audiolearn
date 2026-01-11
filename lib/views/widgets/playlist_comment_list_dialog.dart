@@ -110,6 +110,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                 (audioSFparmsName.isNotEmpty)
                     ? '${AppLocalizations.of(context)!.playlistCommentsDialogTitle} ($audioSFparmsName)'
                     : AppLocalizations.of(context)!.playlistCommentsDialogTitle,
+                textAlign: TextAlign.center,
                 maxLines: 2,
                 softWrap: true,
               ),

@@ -2909,4 +2909,10 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get selectMp3FileToReplaceTooltip =>
       "Useful if you modified the text to convert to audio or if you changed the selected voice and you wish to replace the existing MP3 file.";
+
+  @override
+  String deleteMultipleAudiosFromPlaylistAswellWarning(
+    Object playlistTitle,
+  ) =>
+      "If the deleted audios remain in the \"$playlistTitle\" playlist located on Youtube, they will be downloaded again the next time you download the playlist !";
 }

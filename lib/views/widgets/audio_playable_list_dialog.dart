@@ -105,6 +105,7 @@ class _AudioPlayableListDialogState extends State<AudioPlayableListDialog>
           builder: (context, playlistListVMlistenTrue, child) {
         return AlertDialog(
           title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Tooltip(
                 message: _determineDialogTitleAudioSortTooltip(

@@ -135,12 +135,14 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
       },
       child: AlertDialog(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Flexible(
               child: Text(
                 key: const Key('audioModificationDialogTitleKey'),
                 titleStr,
+                textAlign: TextAlign.center,
+                maxLines: 2,
               ),
             ),
             if (widget.helpItemsLst.isNotEmpty)
@@ -194,37 +196,45 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
           ),
         ),
         actions: [
-          TextButton(
-            key: const Key('audioModificationButton'),
-            onPressed:
-                _audioModificationTextEditingController.text.trim().isEmpty
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                key: const Key('audioModificationButton'),
+                onPressed: _audioModificationTextEditingController.text
+                        .trim()
+                        .isEmpty
                     ? null // This disables the button
                     : () {
                         _handleAudioModification(context);
                         Navigator.of(context)
                             .pop(_audioModificationTextEditingController.text);
                       },
-            child: Text(
-              modificationButtonStr,
-              style: _audioModificationTextEditingController.text.trim().isEmpty
-                  ? const TextStyle(
-                      fontSize: kTextButtonFontSize) // Disabled style
-                  : (themeProviderVM.currentTheme == AppTheme.dark)
+                child: Text(
+                  modificationButtonStr,
+                  style: _audioModificationTextEditingController.text
+                          .trim()
+                          .isEmpty
+                      ? const TextStyle(
+                          fontSize: kTextButtonFontSize) // Disabled style
+                      : (themeProviderVM.currentTheme == AppTheme.dark)
+                          ? kTextButtonStyleDarkMode
+                          : kTextButtonStyleLightMode,
+                ),
+              ),
+              TextButton(
+                key: const Key('audioModificationCancelButton'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  AppLocalizations.of(context)!.cancelButton,
+                  style: (themeProviderVM.currentTheme == AppTheme.dark)
                       ? kTextButtonStyleDarkMode
                       : kTextButtonStyleLightMode,
-            ),
-          ),
-          TextButton(
-            key: const Key('audioModificationCancelButton'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text(
-              AppLocalizations.of(context)!.cancelButton,
-              style: (themeProviderVM.currentTheme == AppTheme.dark)
-                  ? kTextButtonStyleDarkMode
-                  : kTextButtonStyleLightMode,
-            ),
+                ),
+              ),
+            ],
           ),
         ],
       ),

@@ -70,7 +70,11 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
         }
       },
       child: AlertDialog(
-        title: Text(AppLocalizations.of(context)!.playlistInfoDialogTitle),
+        title: Text(
+          AppLocalizations.of(context)!.playlistInfoDialogTitle,
+          textAlign: TextAlign.center,
+          maxLines: 2,
+        ),
         actionsPadding: kDialogActionsPadding,
         content: SingleChildScrollView(
           child: ListBody(
@@ -104,7 +108,8 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                       AppLocalizations.of(context)!.playlistDownloadPathLabel,
                   value: playlist.downloadPath),
               createInfoRowFunction(
-                  valueTextWidgetKey: Key('playlist_last_download_date_time_key'),
+                  valueTextWidgetKey:
+                      Key('playlist_last_download_date_time_key'),
                   context: context,
                   label: AppLocalizations.of(context)!
                       .playlistLastDownloadDateTimeLabel,

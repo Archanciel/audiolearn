@@ -203,6 +203,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String deleteMultipleAudiosFromPlaylistAswellWarning(Object playlistTitle) {
+    return 'If the deleted audios remain in the \"$playlistTitle\" playlist located on Youtube, they will be downloaded again the next time you download the playlist !';
+  }
+
+  @override
   String get warningDialogTitle => 'WARNING';
 
   @override
