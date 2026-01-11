@@ -2915,4 +2915,7 @@ class MockAppLocalizations extends AppLocalizations {
     Object playlistTitle,
   ) =>
       "If the deleted audios remain in the \"$playlistTitle\" playlist located on Youtube, they will be downloaded again the next time you download the playlist !";
+
+  @override
+  String get replaceMp3FileDialogTitle => "MP3 File Replacement";
 }

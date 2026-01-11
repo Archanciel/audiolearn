@@ -2809,4 +2809,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorTitle => 'Error';
+
+  @override
+  String get replaceMp3FileDialogTitle => 'MP3 File Replacement';
 }

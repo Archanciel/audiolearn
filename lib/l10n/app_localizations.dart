@@ -4519,6 +4519,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error'**
   String get errorTitle;
+
+  /// No description provided for @replaceMp3FileDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'MP3 File Replacement'**
+  String get replaceMp3FileDialogTitle;
 }
 
 class _AppLocalizationsDelegate
