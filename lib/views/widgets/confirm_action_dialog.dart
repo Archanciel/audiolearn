@@ -34,6 +34,7 @@ class ConfirmActionDialog extends StatefulWidget {
   final List<HelpItem> helpItemsLst;
 
   final bool dialogTitleOneReducedFontSize;
+  final bool dialogTitleTwoReducedFontSize;
 
   /// Creates a ConfirmActionDialog.
   /// The [actionFunction] is the function to be executed when the user
@@ -58,6 +59,7 @@ class ConfirmActionDialog extends StatefulWidget {
     required this.dialogTitleOne,
     this.dialogTitleOneReducedFontSize = false,
     this.dialogTitleTwo = '',
+    this.dialogTitleTwoReducedFontSize = false,
     required this.dialogContent,
     this.warningFunction,
     this.warningFunctionArgs = const [],
@@ -109,7 +111,7 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Flexible(
                   child: Text(
@@ -148,12 +150,23 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
               ],
             ),
             if (widget.dialogTitleTwo.isNotEmpty)
-              Text(
-                widget.dialogTitleTwo,
-                key: const Key('confirmDialogTitleTwoKey'),
-                style: Theme.of(context).textTheme.headlineSmall,
-                textAlign: TextAlign.center,
-                maxLines: 12,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: Text(
+                      widget.dialogTitleTwo,
+                      key: const Key('confirmDialogTitleTwoKey'),
+                      style: (widget.dialogTitleTwoReducedFontSize)
+                          ? Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                fontSize: kConfirmActionDialogSmallerFontSize,
+                              )
+                          : Theme.of(context).textTheme.headlineSmall,
+                      textAlign: TextAlign.center,
+                      maxLines: 12,
+                    ),
+                  ),
+                ],
               ),
           ],
         ),
