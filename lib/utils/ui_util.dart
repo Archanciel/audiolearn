@@ -571,6 +571,8 @@ class UiUtil {
         if (result == ConfirmAction.cancel) {
           nextAudio = audioToDelete;
           wasCancelButtonPressed = true;
+        } else if (result == ConfirmAction.confirm) {
+          wasCancelButtonPressed = false;
         } else {
           nextAudio = result as Audio?;
         }
@@ -601,6 +603,8 @@ class UiUtil {
           if (result == ConfirmAction.cancel) {
             nextAudio = audioToDelete;
             wasCancelButtonPressed = true;
+          } else if (result == ConfirmAction.confirm) {
+            wasCancelButtonPressed = false;
           } else {
             nextAudio = result as Audio?;
           }
@@ -632,6 +636,9 @@ class UiUtil {
         ).then((result) {
           if (result == ConfirmAction.cancel) {
             nextAudio = audioToDelete;
+            wasCancelButtonPressed = true;
+          } else if (result == ConfirmAction.confirm) {
+            wasCancelButtonPressed = false;
           } else {
             nextAudio = result as Audio?;
           }
