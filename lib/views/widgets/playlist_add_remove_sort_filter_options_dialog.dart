@@ -78,6 +78,8 @@ class _PlaylistAddRemoveSortFilterOptionsDialogState
               : AppLocalizations.of(context)!
                   .removeSortFilterOptionsFromPlaylistDialogTitle(
                       widget.sortFilterParmsName),
+          textAlign: TextAlign.center,
+          maxLines: 2,
         ),
         actionsPadding: kDialogActionsPadding,
         content: SingleChildScrollView(
@@ -101,31 +103,37 @@ class _PlaylistAddRemoveSortFilterOptionsDialogState
           ),
         ),
         actions: [
-          TextButton(
-            key: const Key('saveSortFilterOptionsToPlaylistSaveButton'),
-            onPressed: () async {
-              Navigator.of(context).pop(_displayConfirmAndCreateReturnedLst());
-            },
-            child: Text(
-              (widget.isSaveApplied)
-                  ? AppLocalizations.of(context)!.saveButton
-                  : AppLocalizations.of(context)!.removeButton,
-              style: (themeProviderVM.currentTheme == AppTheme.dark)
-                  ? kTextButtonStyleDarkMode
-                  : kTextButtonStyleLightMode,
-            ),
-          ),
-          TextButton(
-            key: const Key('sortFilterOptionsToPlaylistCancelButton'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text(
-              AppLocalizations.of(context)!.cancelButton,
-              style: (themeProviderVM.currentTheme == AppTheme.dark)
-                  ? kTextButtonStyleDarkMode
-                  : kTextButtonStyleLightMode,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                key: const Key('saveSortFilterOptionsToPlaylistSaveButton'),
+                onPressed: () async {
+                  Navigator.of(context)
+                      .pop(_displayConfirmAndCreateReturnedLst());
+                },
+                child: Text(
+                  (widget.isSaveApplied)
+                      ? AppLocalizations.of(context)!.saveButton
+                      : AppLocalizations.of(context)!.removeButton,
+                  style: (themeProviderVM.currentTheme == AppTheme.dark)
+                      ? kTextButtonStyleDarkMode
+                      : kTextButtonStyleLightMode,
+                ),
+              ),
+              TextButton(
+                key: const Key('sortFilterOptionsToPlaylistCancelButton'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  AppLocalizations.of(context)!.cancelButton,
+                  style: (themeProviderVM.currentTheme == AppTheme.dark)
+                      ? kTextButtonStyleDarkMode
+                      : kTextButtonStyleLightMode,
+                ),
+              ),
+            ],
           ),
         ],
       ),

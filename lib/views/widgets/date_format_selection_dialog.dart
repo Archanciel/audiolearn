@@ -98,6 +98,8 @@ class _DateFormatSelectionDialogState extends State<DateFormatSelectionDialog>
         title: Text(
           key: const Key('dateFormatSelectionDialogTitleKey'),
           AppLocalizations.of(context)!.dateFormatSelectionDialogTitle,
+          textAlign: TextAlign.center,
+          maxLines: 2,
         ),
         actionsPadding: kDialogActionsPadding,
         content: SizedBox(
@@ -141,32 +143,37 @@ class _DateFormatSelectionDialogState extends State<DateFormatSelectionDialog>
           // situation of downloading a single video audio. This solves a
           // bug and is tested by 'Verifying with partial download of single
           // video audio' integration test
-          TextButton(
-            key: const Key('confirmButton'),
-            onPressed: () {
-              _handleConfirmButtonPressed(
-                dateFormatVMlistenFalse: dateFormatVMlistenFalse,
-              );
-            },
-            child: Text(AppLocalizations.of(context)!.confirmButton,
-                style: (themeProvider.currentTheme == AppTheme.dark)
-                    ? kTextButtonStyleDarkMode
-                    : kTextButtonStyleLightMode),
-          ),
-          TextButton(
-            key: const Key('cancelButton'),
-            onPressed: () {
-              // Fixes bug which happened when downloading a single
-              // video audio and clicking on the cancel button of
-              // the single selection playlist dialog. Without
-              // this fix, the confirm dialog was displayed although
-              // the user clicked on the cancel button.
-              Navigator.of(context).pop("cancel");
-            },
-            child: Text(AppLocalizations.of(context)!.cancelButton,
-                style: (themeProvider.currentTheme == AppTheme.dark)
-                    ? kTextButtonStyleDarkMode
-                    : kTextButtonStyleLightMode),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                key: const Key('confirmButton'),
+                onPressed: () {
+                  _handleConfirmButtonPressed(
+                    dateFormatVMlistenFalse: dateFormatVMlistenFalse,
+                  );
+                },
+                child: Text(AppLocalizations.of(context)!.confirmButton,
+                    style: (themeProvider.currentTheme == AppTheme.dark)
+                        ? kTextButtonStyleDarkMode
+                        : kTextButtonStyleLightMode),
+              ),
+              TextButton(
+                key: const Key('cancelButton'),
+                onPressed: () {
+                  // Fixes bug which happened when downloading a single
+                  // video audio and clicking on the cancel button of
+                  // the single selection playlist dialog. Without
+                  // this fix, the confirm dialog was displayed although
+                  // the user clicked on the cancel button.
+                  Navigator.of(context).pop("cancel");
+                },
+                child: Text(AppLocalizations.of(context)!.cancelButton,
+                    style: (themeProvider.currentTheme == AppTheme.dark)
+                        ? kTextButtonStyleDarkMode
+                        : kTextButtonStyleLightMode),
+              ),
+            ],
           ),
         ],
       ),
