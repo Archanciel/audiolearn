@@ -567,59 +567,84 @@ class UiUtil {
             ),
           );
         },
-      ).then((result) async {
+      ).then((result) {
         if (result == ConfirmAction.cancel) {
           nextAudio = audioToDelete;
           wasCancelButtonPressed = true;
-        } else if (result == ConfirmAction.confirm) {
-          // Handle commented audio for YouTube playlists
-          if (audioToDeleteCommentLst.isNotEmpty) {
-            await showDialog<dynamic>(
-              context: context,
-              builder: (BuildContext context) {
-                return ConfirmActionDialog(
-                  actionFunction: UiUtil.deleteAudioFromPlaylistAsWell,
-                  actionFunctionArgs: [
-                    playlistListVMlistenFalse,
-                    audioToDelete,
-                    audioLearnAppViewType,
-                  ],
-                  dialogTitleOne: UiUtil.createDeleteCommentedAudioDialogTitle(
-                    context: context,
-                    audioToDelete: audioToDelete,
-                  ),
-                  dialogContent: AppLocalizations.of(context)!
-                      .confirmCommentedAudioDeletionComment(
-                          audioToDeleteCommentLst.length),
-                );
-              },
-            ).then((result) {
-              if (result == ConfirmAction.cancel) {
-                nextAudio = audioToDelete;
-                wasCancelButtonPressed = true;
-              } else if (result == ConfirmAction.confirm){
-                if (audioToDeletePlaylist.playlistType ==
-                    PlaylistType.youtube) {
-                  warningMessageVM.setDeleteAudioFromPlaylistAswellTitle(
-                    deleteAudioFromPlaylistAswellTitle:
-                        audioToDeletePlaylist.title,
-                    deleteAudioFromPlaylistAswellAudioVideoTitle:
-                        audioToDelete.validVideoTitle,
-                  );
-                }
-              }
-            });
-          } else {
-            if (audioToDeletePlaylist.playlistType == PlaylistType.youtube) {
-              warningMessageVM.setDeleteAudioFromPlaylistAswellTitle(
-                deleteAudioFromPlaylistAswellTitle: audioToDeletePlaylist.title,
-                deleteAudioFromPlaylistAswellAudioVideoTitle:
-                    audioToDelete.validVideoTitle,
-              );
-            }
-          }
+        } else {
+          nextAudio = result as Audio?;
         }
       });
+
+      // Handle commented audio for YouTube playlists
+      if (audioToDeleteCommentLst.isNotEmpty && nextAudio != audioToDelete) {
+        await showDialog<dynamic>(
+          context: context,
+          builder: (BuildContext context) {
+            return ConfirmActionDialog(
+              actionFunction: UiUtil.deleteAudioFromPlaylistAsWell,
+              actionFunctionArgs: [
+                playlistListVMlistenFalse,
+                audioToDelete,
+                audioLearnAppViewType,
+              ],
+              dialogTitleOne: UiUtil.createDeleteCommentedAudioDialogTitle(
+                context: context,
+                audioToDelete: audioToDelete,
+              ),
+              dialogContent: AppLocalizations.of(context)!
+                  .confirmCommentedAudioDeletionComment(
+                      audioToDeleteCommentLst.length),
+            );
+          },
+        ).then((result) {
+          if (result == ConfirmAction.cancel) {
+            nextAudio = audioToDelete;
+            wasCancelButtonPressed = true;
+          } else {
+            nextAudio = result as Audio?;
+          }
+        });
+      }
+    } else if (wasCancelButtonPressed == false) {
+      // The playlist is local or the audio is imported or converted
+      // text to speech
+      if (audioToDeleteCommentLst.isNotEmpty) {
+        await showDialog<dynamic>(
+          context: context,
+          builder: (BuildContext context) {
+            return ConfirmActionDialog(
+              actionFunction: UiUtil.deleteAudioFromPlaylistAsWell,
+              actionFunctionArgs: [
+                playlistListVMlistenFalse,
+                audioToDelete,
+                audioLearnAppViewType,
+              ],
+              dialogTitleOne: UiUtil.createDeleteCommentedAudioDialogTitle(
+                context: context,
+                audioToDelete: audioToDelete,
+              ),
+              dialogContent: AppLocalizations.of(context)!
+                  .confirmCommentedAudioDeletionComment(
+                      audioToDeleteCommentLst.length),
+            );
+          },
+        ).then((result) {
+          if (result == ConfirmAction.cancel) {
+            nextAudio = audioToDelete;
+          } else {
+            nextAudio = result as Audio?;
+          }
+        });
+      } else {
+        // For local playlists without comments, handle deletion directly
+        nextAudio = UiUtil.deleteAudioFromPlaylistAsWellIfNoCommentExist(
+          playlistListVMlistenFalse,
+          audioToDelete,
+          audioToDeleteCommentLst,
+          audioLearnAppViewType,
+        );
+      }
     }
 
     if (wasCancelButtonPressed) {
@@ -630,6 +655,16 @@ class UiUtil {
       context: context,
       nextAudio: nextAudio,
     );
+
+    Playlist playlist = audioToDelete.enclosingPlaylist!;
+
+    if (playlist.playlistType == PlaylistType.youtube &&
+        audioToDelete.audioType == AudioType.downloaded) {
+      warningMessageVM.setDeleteAudioFromPlaylistAswellTitle(
+          deleteAudioFromPlaylistAswellTitle: playlist.title,
+          deleteAudioFromPlaylistAswellAudioVideoTitle:
+              audioToDelete.originalVideoTitle);
+    }
 
     // This method only calls the PlaylistListVM notifyListeners()
     // method so that the playlist download view current audio is
