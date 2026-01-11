@@ -200,11 +200,6 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
       widget.actionFunctionArgs,
     );
 
-    if (widget.warningFunction != null) {
-      // If the warning function was passed, execute it with
-      // arguments
-      Function.apply(widget.warningFunction!, widget.warningFunctionArgs);
-    }
     // Not working
     // if (widget.warningFunction != null) {
     //   // If the warning function was passed, execute it with
@@ -215,6 +210,10 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
     //   );
     // }
 
-     Navigator.of(context).pop(returnedResult);
+    if (returnedResult == null) {
+      Navigator.of(context).pop(ConfirmAction.confirm);
+    } else {
+      Navigator.of(context).pop(returnedResult);
+    }
   }
 }

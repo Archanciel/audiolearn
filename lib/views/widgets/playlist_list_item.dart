@@ -1199,7 +1199,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   AppLocalizations.of(context)!.sortFilterParametersDefaultName;
             }
 
-            showDialog<void>(
+            showDialog<dynamic>(
               context: context,
               barrierDismissible:
                   false, // This line prevents the dialog from closing when
@@ -1226,9 +1226,31 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                       seconds: deletedAudioNumberLst[3] ~/ 10,
                     ), // total audio duration
                   ),
+                  // warningFunction: warningMessageVMlistenFalse
+                  //     .setDeleteAudioFromPlaylistAswellTitle,
+                  // warningFunctionArgs: [
+                  //   playlist.title,
+                  //   '',
+                  // ], // empty audioVideoTitle
                 );
               },
-            );
+            ).then((resultMap) {
+              if (resultMap == null) {
+                return;
+              }
+
+              if (resultMap case ConfirmAction.cancel) {
+                return;
+              }
+
+              if (playlist.playlistType == PlaylistType.youtube) {
+                warningMessageVMlistenFalse
+                    .setDeleteAudioFromPlaylistAswellTitle(
+                  deleteAudioFromPlaylistAswellTitle: playlist.title,
+                  deleteAudioFromPlaylistAswellAudioVideoTitle: '',
+                );
+              }
+            });
             break;
           case FilteredAudioAction.redownloadFilteredAudio:
             _selectPlaylistAndDisplaySnackbar(
