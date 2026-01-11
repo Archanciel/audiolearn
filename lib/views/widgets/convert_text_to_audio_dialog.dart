@@ -696,13 +696,13 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
             return ConfirmActionDialog(
               actionFunction: returnConfirmAction,
               actionFunctionArgs: [],
-              dialogTitleOne:
+              dialogTitleOne: AppLocalizations.of(context)!.replaceMp3FileDialogTitle,
+              dialogTitleOneReducedFontSize: true,
+              dialogContent:
                   AppLocalizations.of(context)!.replaceExistingAudioInPlaylist(
                 fileName,
                 targetPlaylist.title,
               ),
-              dialogTitleOneReducedFontSize: true,
-              dialogContent: "",
             );
           },
         ).then((result) {

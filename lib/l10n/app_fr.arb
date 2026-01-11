@@ -1633,5 +1633,6 @@
   "commentWasDeletedTooltip": "Ce commentaire a été précédemment supprimé de la liste \"Commentaires->MP3\" et n’est donc pas inclus dans le MP3 extrait. Pour l’inclure à nouveau, éditez le commentaire et sauvez-le.",
   "deleteInvalidCommentsMessage": "Supprimez le/les commentaire(s) invalide(s) en raison de leur position finale supérieure à la durée de l'audio, laquelle est {audioDuration}.",
   "fileNotExistError": "Le fichier n'existe pas",
-  "errorTitle": "Erreur"
+  "errorTitle": "Erreur",
+  "replaceMp3FileDialogTitle": "Remplacement du fichier MP3"
 }
