@@ -532,9 +532,23 @@ class CommentVM extends ChangeNotifier {
       playlist: playlist,
     );
 
-    for (List<Comment> audioComments in playlistAudiosCommentsMap.values) {
+    List<String> playableAudioFileNamesLst = playlist.playableAudioLst.map((e) {
+      return e.audioFileName
+          .substring(0, e.audioFileName.length - 4); // Remove .mp3
+    }).toList();
+
+    Map<String, List<Comment>> playlistPlayableAudiosCommentsMap =
+        Map.fromEntries(playlistAudiosCommentsMap.entries
+            .where((entry) => playableAudioFileNamesLst.contains(entry.key)));
+
+    for (List<Comment> audioComments
+        in playlistPlayableAudiosCommentsMap.values) {
       commentNumber += audioComments.length;
     }
+
+    // for (List<Comment> audioComments in playlistAudiosCommentsMap.values) {
+    //   commentNumber += audioComments.length;
+    // }
 
     return commentNumber;
   }
