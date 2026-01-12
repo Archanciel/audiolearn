@@ -178,7 +178,7 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                   label:
                       AppLocalizations.of(context)!.playlistAudioCommentsLabel,
                   value: commentVMlistenFalse
-                      .getPlaylistAudioCommentNumber(
+                      .getPlaylistPlayableAudioCommentNumber(
                         playlist: playlist,
                       )
                       .toString()),
