@@ -522,7 +522,7 @@ class CommentVM extends ChangeNotifier {
     );
   }
 
-  int getPlaylistAudioCommentNumber({
+  int getPlaylistPlayableAudioCommentNumber({
     required Playlist playlist,
   }) {
     int commentNumber = 0;
