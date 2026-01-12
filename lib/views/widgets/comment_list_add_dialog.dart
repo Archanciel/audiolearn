@@ -117,7 +117,7 @@ class CommentDialogManager {
 class CommentDeleteConfirmActionDialog extends StatelessWidget {
   final Function actionFunction;
   final List<dynamic> actionFunctionArgs;
-  final String dialogTitleOne;
+  final String dialogTitle;
   final String dialogContent;
   final VoidCallback? onCancel; // Nouvelle propriété pour gérer l'annulation
 
@@ -125,7 +125,7 @@ class CommentDeleteConfirmActionDialog extends StatelessWidget {
     super.key,
     required this.actionFunction,
     required this.actionFunctionArgs,
-    required this.dialogTitleOne,
+    required this.dialogTitle,
     required this.dialogContent,
     this.onCancel, // Paramètre optionnel pour gérer l'annulation
   });
@@ -137,52 +137,59 @@ class CommentDeleteConfirmActionDialog extends StatelessWidget {
     return AlertDialog(
       title: Text(
         key: const Key('dialogTitle'),
-        dialogTitleOne,
+        dialogTitle,
+        textAlign: TextAlign.center,
+        maxLines: 2,
       ),
       content: Text(
         key: const Key('dialogContent'),
         dialogContent,
       ),
       actions: <Widget>[
-        TextButton(
-          key: const Key('confirmButton'),
-          child: Text(
-            AppLocalizations.of(context)!.confirmButton,
-            style: (isDarkTheme)
-                ? kTextButtonStyleDarkMode
-                : kTextButtonStyleLightMode,
-          ),
-          onPressed: () async {
-            // Exécuter la fonction d'action avec les arguments
-            if (actionFunctionArgs.isNotEmpty) {
-              await Function.apply(actionFunction, actionFunctionArgs);
-            } else {
-              await actionFunction();
-            }
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+              key: const Key('confirmButton'),
+              child: Text(
+                AppLocalizations.of(context)!.confirmButton,
+                style: (isDarkTheme)
+                    ? kTextButtonStyleDarkMode
+                    : kTextButtonStyleLightMode,
+              ),
+              onPressed: () async {
+                // Exécuter la fonction d'action avec les arguments
+                if (actionFunctionArgs.isNotEmpty) {
+                  await Function.apply(actionFunction, actionFunctionArgs);
+                } else {
+                  await actionFunction();
+                }
 
-            // Si nous n'utilisons pas le callback onCancel, fermer avec Navigator
-            if (onCancel == null) {
-              Navigator.of(context).pop();
-            }
-            // Sinon, l'overlay sera fermé par la fonction actionFunction modifiée
-          },
-        ),
-        TextButton(
-          key: const Key('cancelButtonKey'),
-          child: Text(
-            AppLocalizations.of(context)!.cancelButton,
-            style: (isDarkTheme)
-                ? kTextButtonStyleDarkMode
-                : kTextButtonStyleLightMode,
-          ),
-          onPressed: () {
-            // Si onCancel existe, l'appeler, sinon utiliser Navigator.pop
-            if (onCancel != null) {
-              onCancel!();
-            } else {
-              Navigator.of(context).pop();
-            }
-          },
+                // Si nous n'utilisons pas le callback onCancel, fermer avec Navigator
+                if (onCancel == null) {
+                  Navigator.of(context).pop();
+                }
+                // Sinon, l'overlay sera fermé par la fonction actionFunction modifiée
+              },
+            ),
+            TextButton(
+              key: const Key('cancelButtonKey'),
+              child: Text(
+                AppLocalizations.of(context)!.cancelButton,
+                style: (isDarkTheme)
+                    ? kTextButtonStyleDarkMode
+                    : kTextButtonStyleLightMode,
+              ),
+              onPressed: () {
+                // Si onCancel existe, l'appeler, sinon utiliser Navigator.pop
+                if (onCancel != null) {
+                  onCancel!();
+                } else {
+                  Navigator.of(context).pop();
+                }
+              },
+            ),
+          ],
         ),
       ],
     );
@@ -1208,7 +1215,7 @@ class _CommentListAddDialogContentState
               comment.id,
               currentAudio,
             ],
-            dialogTitleOne:
+            dialogTitle:
                 AppLocalizations.of(context)!.deleteCommentConfirnTitle,
             dialogContent: AppLocalizations.of(context)!
                 .deleteCommentConfirnBody(comment.title),
