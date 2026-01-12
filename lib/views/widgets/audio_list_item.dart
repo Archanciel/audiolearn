@@ -486,6 +486,9 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
               // will remains null.
               await showDialog<dynamic>(
                 context: context,
+                barrierDismissible:
+                    false, // This line prevents the dialog from closing when
+                //        tapping outside the dialog
                 builder: (BuildContext context) {
                   return ConfirmActionDialog(
                     actionFunction: UiUtil.deleteAudio,
