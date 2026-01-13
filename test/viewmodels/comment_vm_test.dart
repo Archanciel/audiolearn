@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:audiolearn/models/audio.dart';
@@ -286,26 +287,36 @@ void main() {
       // calling loadAudioComments in situation where comment file
       // exists and has 3 comments
 
-      Playlist playlistS8 = Playlist(
-        id: "PLzwWSJNcZTMSVHGopMEjlfR7i5qtqbW99",
-        url:
-            "https://youtube.com/playlist?list=PLzwWSJNcZTMSVHGopMEjlfR7i5qtqbW99&si=9KC7VsVt5JIUvNYN",
-        title: 'S8 audio',
-        playlistType: PlaylistType.youtube,
-        playlistQuality: PlaylistQuality.voice,
-      );
+      dynamic jsonDecode(
+        String source, {
+        Object? reviver(Object? key, Object? value)?,
+      }) =>
+          json.decode(source, reviver: reviver);
 
-      playlistS8.downloadPath =
+      String playlistJsonPath =
+          "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio${path.separator}S8 audio.json";
+      File playlistJsonFile = File(playlistJsonPath);
+      String playlistJsonContent = playlistJsonFile.readAsStringSync();
+      Map<String, dynamic> playlistJsonMap = jsonDecode(playlistJsonContent);
+      Playlist playlistS8FromJson = Playlist.fromJson(playlistJsonMap);
+
+      // Correcting the download path which is wrong in the test JSON file
+      playlistS8FromJson.downloadPath = 
           "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio";
+
+      expect(
+        playlistS8FromJson.downloadPath,
+        "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio",
+      );
 
       // Deleting comment file used in another test
       DirUtil.deleteFileIfExist(
           pathFileName:
-              "${playlistS8.downloadPath}${path.separator}$kCommentDirName${path.separator}New file name.json");
+              "${playlistS8FromJson.downloadPath}${path.separator}$kCommentDirName${path.separator}New file name.json");
 
       Map<String, List<Comment>> playlistAudiosCommentsMap =
           commentVM.getPlaylistAudioComments(
-        playlist: playlistS8,
+        playlist: playlistS8FromJson,
       );
 
       List<String> audioFileNamesLst = playlistAudiosCommentsMap.keys.toList();
@@ -331,7 +342,7 @@ void main() {
 
       expect(
           commentVM.getPlaylistAudioCommentNumber(
-            playlist: playlistS8,
+            playlist: playlistS8FromJson,
           ),
           10);
 
@@ -757,7 +768,7 @@ void main() {
       );
 
       DateTime commentModificationDateTime =
-        DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now());
+          DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now());
       commentToModify.lastUpdateDateTime = commentModificationDateTime;
 
       // now loading the comment list from the comment file
@@ -1199,18 +1210,16 @@ void validateComment(Comment actualComment, Comment expectedComment) {
       expectedComment.commentStartPositionInTenthOfSeconds);
   expect(actualComment.commentEndPositionInTenthOfSeconds,
       expectedComment.commentEndPositionInTenthOfSeconds);
-  expect(actualComment.silenceDuration,
-      expectedComment.silenceDuration);
-  expect(actualComment.fadeInDuration,
-      expectedComment.fadeInDuration);
+  expect(actualComment.silenceDuration, expectedComment.silenceDuration);
+  expect(actualComment.fadeInDuration, expectedComment.fadeInDuration);
   expect(actualComment.soundReductionPosition,
       expectedComment.soundReductionPosition);
   expect(actualComment.soundReductionDuration,
       expectedComment.soundReductionDuration);
-  expect(actualComment.deleted,
-      expectedComment.deleted);
+  expect(actualComment.deleted, expectedComment.deleted);
   expect(actualComment.creationDateTime, expectedComment.creationDateTime);
-  expect(actualComment.lastUpdateDateTime, expectedComment.lastUpdateDateTime);}
+  expect(actualComment.lastUpdateDateTime, expectedComment.lastUpdateDateTime);
+}
 
 Audio createAudio({
   required String playlistTitle,
