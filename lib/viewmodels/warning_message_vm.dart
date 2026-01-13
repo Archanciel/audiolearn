@@ -206,6 +206,8 @@ enum WarningMessageType {
   // Audio MP3 to Zip File' menu item located in the playlist popup menu and
   // selects a directory containing multiple zip files.
 
+  commentFilesDeletion, // Will be removed.
+
   restoreAppDataFromZip, // The case if the user clicks on the
   // 'Restore Playlist, Comments and Settings from Zip File' menu
   // item located in the appbar leading popup menu.
@@ -625,7 +627,8 @@ class WarningMessageVM extends ChangeNotifier {
     _newFileName = newFileName;
     _isCommentFileRenamed = isCommentFileRenamed;
     _isPictureFileRenamed = isPictureFileRenamed;
-    warningMessageType = WarningMessageType.renameAudioAndAssociatedFilesConfirm;
+    warningMessageType =
+        WarningMessageType.renameAudioAndAssociatedFilesConfirm;
 
     // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
     notifyListeners();
@@ -695,8 +698,7 @@ class WarningMessageVM extends ChangeNotifier {
   }) {
     _playlistWithTitleAlreadyExist = playlistTitle;
 
-    warningMessageType =
-        WarningMessageType.playlistWithTitleAlreadyExist;
+    warningMessageType = WarningMessageType.playlistWithTitleAlreadyExist;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();
@@ -790,7 +792,8 @@ class WarningMessageVM extends ChangeNotifier {
   }
 
   void isNoPlaylistSelectedForExtractedMp3Location() {
-    warningMessageType = WarningMessageType.noPlaylistSelectedForExtractedMp3Location;
+    warningMessageType =
+        WarningMessageType.noPlaylistSelectedForExtractedMp3Location;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();
@@ -995,10 +998,25 @@ class WarningMessageVM extends ChangeNotifier {
     // if (restoredPlaylistTitles.isNotEmpty) {
     //   _wasIndividualPlaylistMp3ZipUsed = restoredPlaylistTitles.length == 1;
     // } else {
-      _wasIndividualPlaylistMp3ZipUsed = false;
+    _wasIndividualPlaylistMp3ZipUsed = false;
     // }
 
     warningMessageType = WarningMessageType.restoringAudioMp3FromMultipleZips;
+
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  List<String> _deletedCommentFilesLst = [];
+  List<String> get deletedCommentFilesLst => _deletedCommentFilesLst;
+
+  /// Displays a confirmation message after restoring MP3 files from multiple ZIP files.
+  void confirmCommentFilesDeletion({
+    required List<String> deletedCommentFilesLst,
+  }) {
+    _deletedCommentFilesLst = deletedCommentFilesLst;
+
+    warningMessageType = WarningMessageType.commentFilesDeletion;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();
@@ -1028,21 +1046,20 @@ class WarningMessageVM extends ChangeNotifier {
       _deletedExistingPlaylistTitlesLst;
   int _deletedCommentNumber = 0;
   int get deletedCommentNumber => _deletedCommentNumber;
-  void confirmRestorationFromZip({
-    required String zipFilePathName,
-    required List<String> playlistTitlesLst,
-    required int audioReferencesNumber,
-    required int commentJsonFilesNumber,
-    required int updatedCommentNumber,
-    required int addedCommentNumber,
-    required int pictureJsonFilesNumber,
-    required int pictureJpgFilesNumber,
-    required List<String> deletedAudioTitlesLst,
-    required bool wasIndividualPlaylistRestored,
-    required bool newPlaylistsAddedAtEndOfPlaylistLst,
-    required List<String> deletedExistingPlaylistTitlesLst,
-    required int deletedCommentNumber
-  }) {
+  void confirmRestorationFromZip(
+      {required String zipFilePathName,
+      required List<String> playlistTitlesLst,
+      required int audioReferencesNumber,
+      required int commentJsonFilesNumber,
+      required int updatedCommentNumber,
+      required int addedCommentNumber,
+      required int pictureJsonFilesNumber,
+      required int pictureJpgFilesNumber,
+      required List<String> deletedAudioTitlesLst,
+      required bool wasIndividualPlaylistRestored,
+      required bool newPlaylistsAddedAtEndOfPlaylistLst,
+      required List<String> deletedExistingPlaylistTitlesLst,
+      required int deletedCommentNumber}) {
     _zipFilePathName = zipFilePathName;
     _playlistTitlesLst = playlistTitlesLst;
     _audioReferencesNumber = audioReferencesNumber;

@@ -4525,6 +4525,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'MP3 File Replacement'**
   String get replaceMp3FileDialogTitle;
+
+  /// No description provided for @confirmCommentFilesDeletion.
+  ///
+  /// In en, this message translates to:
+  /// **'Those unused comment files were deleted:\n{deletedLst}'**
+  String confirmCommentFilesDeletion(Object deletedLst);
 }
 
 class _AppLocalizationsDelegate

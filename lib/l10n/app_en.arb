@@ -1227,5 +1227,6 @@
   "deleteInvalidCommentsMessage": "Delete invalid comment(s) with end position greater than audio duration which is {audioDuration}.",
   "fileNotExistError": "File does not exist",
   "errorTitle": "Error",
-  "replaceMp3FileDialogTitle": "MP3 File Replacement"
+  "replaceMp3FileDialogTitle": "MP3 File Replacement",
+  "confirmCommentFilesDeletion": "Those unused comment files were deleted:\n{deletedLst}"
 }
