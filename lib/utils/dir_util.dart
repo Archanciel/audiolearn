@@ -397,6 +397,15 @@ class DirUtil {
     }
   }
 
+  static String getPlaylistNameFromPath({
+    required String pathFileName,
+  }) {
+    List<String> segments = path.split(path.normalize(pathFileName));
+    int index = segments.indexOf('playlists');
+
+    return segments[index + 1];
+  }
+
   /// Returns the list of deleted file names.
   static List<String> deleteFilesInDir({
     required String directoryPath,
