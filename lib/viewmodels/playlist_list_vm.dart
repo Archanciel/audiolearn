@@ -1130,6 +1130,14 @@ class PlaylistListVM extends ChangeNotifier {
         .toList();
   }
 
+  Playlist getPlaylistByTitle({
+    required String playlistTitle,
+  }) {
+    return _listOfSelectablePlaylists.firstWhere(
+      (playlist) => playlist.title == playlistTitle,
+    );
+  }
+
   /// This method is called when the user executes the playlist submenu 'Delete
   /// filtered Audio's ...' after having selected (and defined) a named Sort/Filter
   /// parameters. For example, it makes sense to define a filter only parameters
@@ -4350,9 +4358,24 @@ class PlaylistListVM extends ChangeNotifier {
           !destinationPathFileName.contains(kPictureAudioMapFileName)) {
         // Second condition guarantees that the picture json files
         // number is correctly calculated.
+
         if (destinationPathFileName.contains(kCommentDirName) &&
             !File(destinationPathFileName).existsSync()) {
-          restoredCommentsJsonNumber++;
+          final String playlistTitle = DirUtil.getPlaylistNameFromPath(
+            pathFileName: destinationPathFileName,
+          );
+          final Playlist playlist = getPlaylistByTitle(
+            playlistTitle: playlistTitle,
+          );
+          final String audioFileName =
+              "${path.basenameWithoutExtension(destinationPathFileName)}.mp3";
+
+          if (playlist.playableAudioLst
+              .any((audio) => audio.audioFileName == audioFileName)) {
+            restoredCommentsJsonNumber++;
+          } else {
+            continue;
+          }
         } else if (destinationPathFileName.contains(kPictureDirName)) {
           if (destinationPathFileName.endsWith('.jpg')) {
             if (outputFile.existsSync()) {
@@ -4773,12 +4796,16 @@ class PlaylistListVM extends ChangeNotifier {
           );
         }
       } else {
-        // The audio already exists in the existing playlist.
-        // Retrieve the existing audio instance.
-        Audio existingAudio = existingPlaylist.downloadedAudioLst.firstWhere(
+        // The audio already exists in the existing playlist downloadedAudioLst.
+        // Retrieve the existing audio instance in the playableAudioLst.
+        Audio existingAudio = existingPlaylist.playableAudioLst.firstWhere(
           (audio) => audio.audioFileName == zipAudio.audioFileName,
         );
 
+        if (existingAudio == null) {
+          continue;
+        }
+        
         // ------------------ COMMENT RESTORATION ------------------
         String audioCommentFileName =
             zipAudio.audioFileName.replaceAll('.mp3', '.json');
