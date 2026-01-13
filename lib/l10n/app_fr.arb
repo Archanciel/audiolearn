@@ -1634,5 +1634,6 @@
   "deleteInvalidCommentsMessage": "Supprimez le/les commentaire(s) invalide(s) en raison de leur position finale supérieure à la durée de l'audio, laquelle est {audioDuration}.",
   "fileNotExistError": "Le fichier n'existe pas",
   "errorTitle": "Erreur",
-  "replaceMp3FileDialogTitle": "Remplacement du fichier MP3"
+  "replaceMp3FileDialogTitle": "Remplacement du fichier MP3",
+  "confirmCommentFilesDeletion": "Ces fichiers de commentaire non utilisés ont été supprimés::\n{deletedLst}"
 }

@@ -330,7 +330,7 @@ void main() {
       expect(commentsLst.length, 10);
 
       expect(
-          commentVM.getPlaylistPlayableAudioCommentNumber(
+          commentVM.getPlaylistAudioCommentNumber(
             playlist: playlistS8,
           ),
           10);

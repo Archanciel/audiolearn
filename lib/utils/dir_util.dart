@@ -397,6 +397,39 @@ class DirUtil {
     }
   }
 
+  /// Returns the list of deleted file names.
+  static List<String> deleteFilesInDir({
+    required String directoryPath,
+    required List<String> fileNamesLst,
+  }) {
+    List<String> deletedFileNamesLst = [];
+    final directory = Directory(directoryPath);
+
+    if (!directory.existsSync()) {
+      logger.i('Directory does not exist: $directoryPath');
+      return deletedFileNamesLst;
+    }
+
+    for (var fileName in fileNamesLst) {
+      final filePath = path.join(directoryPath, fileName);
+      final file = File(filePath);
+
+      if (file.existsSync()) {
+        try {
+          file.deleteSync();
+          deletedFileNamesLst.add(fileName);
+          logger.i('Deleted: $fileName');
+        } catch (e) {
+          logger.i('Error deleting $fileName: $e');
+        }
+      } else {
+        logger.i('File not found: $fileName');
+      }
+    }
+
+    return deletedFileNamesLst;
+  }
+
   static void deleteMp3FilesInDir({
     required String filePath,
   }) {

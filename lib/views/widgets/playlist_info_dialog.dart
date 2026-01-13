@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/picture_vm.dart';
+import '../../viewmodels/warning_message_vm.dart';
 import '/../utils/duration_expansion.dart';
 import '../../constants.dart';
 import '../../models/playlist.dart';
@@ -32,6 +33,11 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
     final ThemeProviderVM themeProviderVM =
         Provider.of<ThemeProviderVM>(context); // by default, listen is true
     final DateFormatVM dateFormatVMlistenFalse = Provider.of<DateFormatVM>(
+      context,
+      listen: false,
+    );
+    final WarningMessageVM warningMessageVMlistenFalse =
+        Provider.of<WarningMessageVM>(
       context,
       listen: false,
     );
@@ -178,7 +184,7 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                   label:
                       AppLocalizations.of(context)!.playlistAudioCommentsLabel,
                   value: commentVMlistenFalse
-                      .getPlaylistPlayableAudioCommentNumber(
+                      .getPlaylistAudioCommentNumber(
                         playlist: playlist,
                       )
                       .toString()),
@@ -241,6 +247,15 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                   : kTextButtonStyleLightMode,
             ),
             onPressed: () {
+              if (commentVMlistenFalse.wereCommentsDeleted()) {
+                // Ensures that the warning message about deleted comment files
+                // is shown when the dialog is opened.
+                warningMessageVMlistenFalse.confirmCommentFilesDeletion(
+                    deletedCommentFilesLst:
+                        commentVMlistenFalse.getDeletedAudioCommentFileNamesLst(
+                  playlist: playlist,
+                ));
+              }
               Navigator.of(context).pop();
             },
           ),

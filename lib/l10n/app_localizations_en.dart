@@ -2812,4 +2812,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get replaceMp3FileDialogTitle => 'MP3 File Replacement';
+
+  @override
+  String confirmCommentFilesDeletion(Object deletedLst) {
+    return 'Those unused comment files were deleted:\n$deletedLst';
+  }
 }

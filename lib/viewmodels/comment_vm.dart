@@ -59,6 +59,9 @@ class CommentVM extends ChangeNotifier {
   final ValueNotifier<Audio?> commentDialogRefreshNotifier =
       ValueNotifier<Audio?>(null);
 
+  // To delete
+  List<String> _deletedFileNamesLst = [];
+
   CommentVM();
 
   @override
@@ -485,10 +488,10 @@ class CommentVM extends ChangeNotifier {
   Map<String, List<Comment>> getPlaylistAudioComments({
     required Playlist playlist,
   }) {
-    String playlistPath = playlist.downloadPath;
     Map<String, List<Comment>> playlistAudiosCommentsMap = {};
 
-    String commentPath = "$playlistPath${path.separator}$kCommentDirName";
+    String commentPath =
+        "${playlist.downloadPath}${path.separator}$kCommentDirName";
 
     List<String> commentFileNamesLst = DirUtil.listFileNamesInDir(
       directoryPath: commentPath,
@@ -522,7 +525,7 @@ class CommentVM extends ChangeNotifier {
     );
   }
 
-  int getPlaylistPlayableAudioCommentNumber({
+  int getPlaylistAudioCommentNumber({
     required Playlist playlist,
   }) {
     int commentNumber = 0;
@@ -532,26 +535,57 @@ class CommentVM extends ChangeNotifier {
       playlist: playlist,
     );
 
+// To delete from here once all invalid comments are no longer restored
     List<String> playableAudioFileNamesLst = playlist.playableAudioLst.map((e) {
       return e.audioFileName
           .substring(0, e.audioFileName.length - 4); // Remove .mp3
     }).toList();
 
-    Map<String, List<Comment>> playlistPlayableAudiosCommentsMap =
-        Map.fromEntries(playlistAudiosCommentsMap.entries
-            .where((entry) => playableAudioFileNamesLst.contains(entry.key)));
+    Set<String> playableAudioFileNamesSet = playableAudioFileNamesLst.toSet();
 
-    for (List<Comment> audioComments
-        in playlistPlayableAudiosCommentsMap.values) {
+    List<String> audioCommentFilesToDelete = playlistAudiosCommentsMap.keys
+        .where((key) => !playableAudioFileNamesSet.contains(key))
+        .map((key) => '$key.json')
+        .toList();
+
+    String commentPath =
+        "${playlist.downloadPath}${path.separator}$kCommentDirName";
+
+    if (audioCommentFilesToDelete.isNotEmpty) {
+      _deletedFileNamesLst = DirUtil.deleteFilesInDir(
+        directoryPath: commentPath,
+        fileNamesLst: audioCommentFilesToDelete,
+      );
+    }
+
+    playlistAudiosCommentsMap = getPlaylistAudioComments(
+      playlist: playlist,
+    );
+// To delete till here
+
+    for (List<Comment> audioComments in playlistAudiosCommentsMap.values) {
       commentNumber += audioComments.length;
     }
 
-    // for (List<Comment> audioComments in playlistAudiosCommentsMap.values) {
-    //   commentNumber += audioComments.length;
-    // }
-
     return commentNumber;
   }
+
+  /// To delete from here once all invalid comments are no longer restored
+
+  bool wereCommentsDeleted() {
+    return _deletedFileNamesLst.isNotEmpty;
+  }
+
+  List<String> getDeletedAudioCommentFileNamesLst({
+    required Playlist playlist,
+  }) {
+    List<String> commentFileNamesLst = _deletedFileNamesLst;
+    _deletedFileNamesLst = [];
+
+    return commentFileNamesLst;
+  }
+
+  /// To delete till here
 
   /// Method called when te user clicks on play icon of a comment listed in
   /// the playlist comment list dialog. In this case, playing a comment from there

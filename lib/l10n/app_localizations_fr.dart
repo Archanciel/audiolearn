@@ -2844,4 +2844,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get replaceMp3FileDialogTitle => 'Remplacement du fichier MP3';
+
+  @override
+  String confirmCommentFilesDeletion(Object deletedLst) {
+    return 'Ces fichiers de commentaire non utilisés ont été supprimés::\n$deletedLst';
+  }
 }
