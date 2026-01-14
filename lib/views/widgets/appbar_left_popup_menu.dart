@@ -481,6 +481,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                   ).then((result) {
                     if (result == ConfirmAction.cancel) {
                       nextAudio = audioToDelete;
+                    } else if (result == ConfirmAction.confirm) {
                     } else {
                       nextAudio = result as Audio?;
                     }
