@@ -32549,7 +32549,7 @@ void main() {
         );
       });
       testWidgets(
-          '''After deleting 1 audio, unique playlist restore, not replace existing playlist.  Restore
+          '''After deleting 1 audio, unique playlist restore, not replace existing playlist. Restore
             unique playlist Windows zip containing 'lo' playlist to Windows application which contains
             'lo' playlist.''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
@@ -32617,9 +32617,9 @@ void main() {
         await tester.tap(audioCommentsPopupMenuItem);
         await tester.pumpAndSettle();
 
-      // Tap on the confirm button to delete the audio
-      await tester.tap(find.byKey(const Key('confirmButton')));
-      await tester.pumpAndSettle();
+        // Tap on the confirm button to delete the audio
+        await tester.tap(find.byKey(const Key('confirmButton')));
+        await tester.pumpAndSettle();
 
         String restorableZipFilePathName =
             '$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}lo_3_playable_audios_3_commentedJson.zip';
@@ -32644,6 +32644,477 @@ void main() {
           tester: tester,
           warningDialogMessage:
               'Restored 0 playlist saved individually, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "$restorableZipFilePathName".',
+          isWarningConfirming: true,
+          warningTitle: 'CONFIRMATION',
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''After deleting 4 comments on 2 playlists, multiple playlists restore, not replace existing
+            playlists. Restore multiple playlists Windows zip containing 'lo' and 'Chants sur Dieu ou Jésus'
+            playlists to Windows application which contains 'lo' and 'Chants sur Dieu ou Jésus' playlists.''',
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}restoring_comment_json_after_audio_deletion",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        await app.main();
+        await tester.pumpAndSettle();
+
+        String audioTitle = "bon";
+
+        // First, find the local playlist audio ListTile Text widget
+        Finder audioTitleTileTextWidgetFinder = find.text(audioTitle);
+
+        // Then obtain the audio ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        Finder audioTitleTileWidgetFinder = find.ancestor(
+          of: audioTitleTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now we want to tap the popup menu of the audioTitle ListTile
+
+        // Find the leading menu icon button of the audioTitle ListTile
+        // and tap on it
+        Finder audioTitleTileLeadingMenuIconButton = find.descendant(
+          of: audioTitleTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(audioTitleTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
+
+        // Now find the 'Audio Comments ...' popup menu item and
+        // tap on it
+        Finder audioCommentsPopupMenuItem =
+            find.byKey(const Key("popup_menu_audio_comment"));
+
+        await tester.tap(audioCommentsPopupMenuItem);
+        await tester.pumpAndSettle();
+
+        // Verify that the audio comments list of the dialog has 3 comment
+        // items
+
+        Finder audioCommentsLstFinder = find.byKey(const Key(
+          'audioCommentsListKey',
+        ));
+
+        // Ensure the list has three child widgets
+        expect(
+          tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+          3,
+        );
+
+        // Now delete the last comment item whose title is 'Second'
+
+        // Find the delete icon button of the comment item and tap on it
+        Finder deleteCommentIconButtonFinder = find
+            .descendant(
+              of: audioCommentsLstFinder,
+              matching: find.byKey(const Key('deleteCommentIconButton')),
+            )
+            .last;
+        await tester.tap(deleteCommentIconButtonFinder);
+        await tester.pumpAndSettle();
+
+        String commentTitle = 'Second';
+
+        // Verify the delete comment dialog message
+        expect(
+            find.text("Deleting comment \"$commentTitle\"."), findsOneWidget);
+
+        // Confirm the deletion of the comment
+        await tester.tap(find.byKey(const Key('confirmButton')));
+        await tester.pumpAndSettle();
+
+        // Now delete the last comment item whose title is 'First'
+
+        // Find the delete icon button of the comment item and tap on it
+        deleteCommentIconButtonFinder = find
+            .descendant(
+              of: audioCommentsLstFinder,
+              matching: find.byKey(const Key('deleteCommentIconButton')),
+            )
+            .last;
+        await tester.tap(deleteCommentIconButtonFinder);
+        await tester.pumpAndSettle();
+
+        commentTitle = 'First';
+
+        // Verify the delete comment dialog message
+        expect(
+            find.text("Deleting comment \"$commentTitle\"."), findsOneWidget);
+
+        // Confirm the deletion of the comment
+        await tester.tap(find.byKey(const Key('confirmButton')));
+        await tester.pumpAndSettle();
+
+        // Close the audio comments dialog
+        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.pumpAndSettle();
+
+        // Select the Youtube 'Chants sur Dieu ou Jésus' playlist
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: 'Chants sur Dieu ou Jésus',
+        );
+
+        audioTitle =
+            "Omraam Mikhaël Aïvanhov - Prayer - My God I offer You my heart!";
+
+        // First, find the Youtube playlist first audio ListTile Text widget
+        audioTitleTileTextWidgetFinder = find.text(audioTitle);
+
+        // Then obtain the audio ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        audioTitleTileWidgetFinder = find.ancestor(
+          of: audioTitleTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now we want to tap the popup menu of the audioTitle ListTile
+
+        // Find the leading menu icon button of the audioTitle ListTile
+        // and tap on it
+        audioTitleTileLeadingMenuIconButton = find.descendant(
+          of: audioTitleTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(audioTitleTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
+
+        // Now find the 'Audio Comments ...' popup menu item and
+        // tap on it
+        audioCommentsPopupMenuItem =
+            find.byKey(const Key("popup_menu_audio_comment"));
+
+        await tester.tap(audioCommentsPopupMenuItem);
+        await tester.pumpAndSettle();
+
+        // Verify that the audio comments list of the dialog has 2 comment
+        // items
+
+        audioCommentsLstFinder = find.byKey(const Key(
+          'audioCommentsListKey',
+        ));
+
+        // Ensure the list has two child widgets
+        expect(
+          tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+          2,
+        );
+
+        // Now delete the last comment item whose title is "Mon Dieu, je
+        // T'adore !". The audio has 2 comments and one is deleted.
+
+        // Find the delete icon button of the comment item and tap on it
+        deleteCommentIconButtonFinder = find
+            .descendant(
+              of: audioCommentsLstFinder,
+              matching: find.byKey(const Key('deleteCommentIconButton')),
+            )
+            .last;
+        await tester.tap(deleteCommentIconButtonFinder);
+        await tester.pumpAndSettle();
+
+        commentTitle = "Mon Dieu, je T'adore !";
+
+        // Verify the delete comment dialog message
+        expect(
+            find.text("Deleting comment \"$commentTitle\"."), findsOneWidget);
+
+        // Confirm the deletion of the comment
+        await tester.tap(find.byKey(const Key('confirmButton')));
+        await tester.pumpAndSettle();
+
+        // Close the audio comments dialog
+        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.pumpAndSettle();
+
+        audioTitle =
+            "Omraam Mikhaël Aïvanhov  'I will live according to love!'";
+
+        // First, find the Youtube playlist first audio ListTile Text widget
+        audioTitleTileTextWidgetFinder = find.text(audioTitle);
+
+        // Then obtain the audio ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        audioTitleTileWidgetFinder = find.ancestor(
+          of: audioTitleTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now we want to tap the popup menu of the audioTitle ListTile
+
+        // Find the leading menu icon button of the audioTitle ListTile
+        // and tap on it
+        audioTitleTileLeadingMenuIconButton = find.descendant(
+          of: audioTitleTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(audioTitleTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
+
+        // Now find the 'Audio Comments ...' popup menu item and
+        // tap on it
+        audioCommentsPopupMenuItem =
+            find.byKey(const Key("popup_menu_audio_comment"));
+
+        await tester.tap(audioCommentsPopupMenuItem);
+        await tester.pumpAndSettle();
+
+        // Verify that the audio comments list of the dialog has 1 comment
+        // items
+
+        audioCommentsLstFinder = find.byKey(const Key(
+          'audioCommentsListKey',
+        ));
+
+        // Ensure the list has two child widgets
+        expect(
+          tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+          1,
+        );
+
+        // Now delete the unique comment item whose title is 'A changé
+        // ma vie'. Deleting the unique comment will result in 'Restored 0
+        // playlist, 1 comment and ...' message since deleting the unique
+        // comment deletes the comment JSON file.
+
+        // Find the delete icon button of the comment item and tap on it
+        deleteCommentIconButtonFinder = find.descendant(
+          of: audioCommentsLstFinder,
+          matching: find.byKey(const Key('deleteCommentIconButton')),
+        );
+        await tester.tap(deleteCommentIconButtonFinder);
+        await tester.pumpAndSettle();
+
+        commentTitle = 'A changé ma vie';
+
+        // Verify the delete comment dialog message
+        expect(
+            find.text("Deleting comment \"$commentTitle\"."), findsOneWidget);
+
+        // Confirm the deletion of the comment
+        await tester.tap(find.byKey(const Key('confirmButton')));
+        await tester.pumpAndSettle();
+
+        // Close the audio comments dialog
+        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.pumpAndSettle();
+
+        // Execute the 'Restore Playlists, Comments and Settings from Zip
+        // File ...' menu
+
+        String restorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}audioLearn_2026-01-14_18_13_04.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 163840),
+        ]);
+
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylistsNotContainedInZip: false,
+        );
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              'Restored 0 playlist, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 3 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "$restorableZipFilePathName".',
+          isWarningConfirming: true,
+          warningTitle: 'CONFIRMATION',
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''After deleting 2 audios - 1 in each playlist -, multiple playlists restore, not replace
+            existing playlist. Restore multiple playlists Windows zip containing 'lo' and 'Chants sur
+            Dieu ou Jésus' playlists.''', (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}restoring_comment_json_after_audio_deletion",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        await app.main();
+        await tester.pumpAndSettle();
+
+        String audioTitle = "bon";
+
+        // First, find the local playlist audio ListTile Text widget
+        Finder audioTitleTileTextWidgetFinder = find.text(audioTitle);
+
+        // Then obtain the audio ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        Finder audioTitleTileWidgetFinder = find.ancestor(
+          of: audioTitleTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now we want to tap the popup menu of the audioTitle ListTile
+
+        // Find the leading menu icon button of the audioTitle ListTile
+        // and tap on it
+        Finder audioTitleTileLeadingMenuIconButton = find.descendant(
+          of: audioTitleTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(audioTitleTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
+
+        // Now find the 'Delete Audio ...' popup menu item and
+        // tap on it
+        Finder audioCommentsPopupMenuItem =
+            find.byKey(const Key("popup_menu_delete_audio"));
+
+        await tester.tap(audioCommentsPopupMenuItem);
+        await tester.pumpAndSettle();
+
+        // Tap on the confirm button to delete the audio
+        await tester.tap(find.byKey(const Key('confirmButton')));
+        await tester.pumpAndSettle();
+
+
+
+
+        // Select the Youtube 'Chants sur Dieu ou Jésus' playlist
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: 'Chants sur Dieu ou Jésus',
+        );
+
+        audioTitle = "Omraam Mikhaël Aïvanhov  'I will live according to love!'";
+
+        // First, find the local playlist audio ListTile Text widget
+        audioTitleTileTextWidgetFinder = find.text(audioTitle);
+
+        // Then obtain the audio ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        audioTitleTileWidgetFinder = find.ancestor(
+          of: audioTitleTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now we want to tap the popup menu of the audioTitle ListTile
+
+        // Find the leading menu icon button of the audioTitle ListTile
+        // and tap on it
+        audioTitleTileLeadingMenuIconButton = find.descendant(
+          of: audioTitleTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(audioTitleTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
+
+        // Now find the 'Delete Audio ...' popup menu item and
+        // tap on it
+        audioCommentsPopupMenuItem =
+            find.byKey(const Key("popup_menu_delete_audio"));
+
+        await tester.tap(audioCommentsPopupMenuItem);
+        await tester.pumpAndSettle();
+
+        // Tap on the confirm button to delete the audio
+        await tester.tap(find.byKey(const Key('confirmButton')));
+        await tester.pumpAndSettle();
+
+        String restorableZipFilePathName =
+            '$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}audioLearn_2026-01-14_18_13_04.zip';
+
+        mockFilePicker.setSelectedFiles([
+          PlatformFile(
+              name: restorableZipFilePathName,
+              path: restorableZipFilePathName,
+              size: 163840),
+        ]);
+
+        // Execute the 'Restore Playlists, Comments and Settings from Zip
+        // File ...' menu
+        await IntegrationTestUtil.executeRestorePlaylists(
+          tester: tester,
+          doReplaceExistingPlaylists: false,
+          doDeleteExistingPlaylistsNotContainedInZip: false,
+        );
+
+        // Verify the displayed warning confirmation dialog
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              'Restored 0 playlist, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "$restorableZipFilePathName".',
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );
