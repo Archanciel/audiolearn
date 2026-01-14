@@ -1130,10 +1130,10 @@ class PlaylistListVM extends ChangeNotifier {
         .toList();
   }
 
-  Playlist getPlaylistByTitle({
+  Playlist? getPlaylistByTitle({
     required String playlistTitle,
   }) {
-    return _listOfSelectablePlaylists.firstWhere(
+    return _listOfSelectablePlaylists.firstWhereOrNull(
       (playlist) => playlist.title == playlistTitle,
     );
   }
@@ -4361,20 +4361,32 @@ class PlaylistListVM extends ChangeNotifier {
 
         if (destinationPathFileName.contains(kCommentDirName) &&
             !File(destinationPathFileName).existsSync()) {
-          final String playlistTitle = DirUtil.getPlaylistNameFromPath(
-            pathFileName: destinationPathFileName,
-          );
-          final Playlist playlist = getPlaylistByTitle(
-            playlistTitle: playlistTitle,
-          );
-          final String audioFileName =
-              "${path.basenameWithoutExtension(destinationPathFileName)}.mp3";
+          if (!doReplaceExistingPlaylists) {
+            final String playlistTitle = DirUtil.getPlaylistNameFromPath(
+              pathFileName: destinationPathFileName,
+            );
+            final Playlist? playlist = getPlaylistByTitle(
+              playlistTitle: playlistTitle,
+            );
 
-          if (playlist.playableAudioLst
-              .any((audio) => audio.audioFileName == audioFileName)) {
-            restoredCommentsJsonNumber++;
+            if (playlist != null) {
+              final String audioFileName =
+                  "${path.basenameWithoutExtension(destinationPathFileName)}.mp3";
+
+              if (playlist.playableAudioLst
+                  .any((audio) => audio.audioFileName == audioFileName)) {
+                restoredCommentsJsonNumber++;
+              } else {
+                continue;
+              }
+            } else {
+              // Case where the playlist is added by the restoration
+              restoredCommentsJsonNumber++;
+            }
           } else {
-            continue;
+            // In mode 'replace existing playlists', all comment
+            // json files are restored.
+            restoredCommentsJsonNumber++;
           }
         } else if (destinationPathFileName.contains(kPictureDirName)) {
           if (destinationPathFileName.endsWith('.jpg')) {
@@ -4797,15 +4809,16 @@ class PlaylistListVM extends ChangeNotifier {
         }
       } else {
         // The audio already exists in the existing playlist downloadedAudioLst.
-        // Retrieve the existing audio instance in the playableAudioLst.
-        Audio existingAudio = existingPlaylist.playableAudioLst.firstWhere(
+        // Try to retrieve the existing audio instance in the playableAudioLst.
+        Audio? existingAudio =
+            existingPlaylist.playableAudioLst.firstWhereOrNull(
           (audio) => audio.audioFileName == zipAudio.audioFileName,
         );
 
         if (existingAudio == null) {
           continue;
         }
-        
+
         // ------------------ COMMENT RESTORATION ------------------
         String audioCommentFileName =
             zipAudio.audioFileName.replaceAll('.mp3', '.json');
