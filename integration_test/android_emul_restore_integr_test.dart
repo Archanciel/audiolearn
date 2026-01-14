@@ -2022,10 +2022,9 @@ void main() {
         // save operation.
         await IntegrationTestUtil.verifyConfirmActionDialog(
           tester: tester,
-          confirmActionDialogTitle:
-              "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$selectedYoutubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
+          confirmActionDialogTitle: "MP3 File Replacement",
           confirmActionDialogMessagePossibleLst: [
-            "",
+            "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$selectedYoutubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
           ],
           closeDialogWithConfirmButton: true,
         );
@@ -2560,10 +2559,9 @@ void main() {
         // save operation.
         await IntegrationTestUtil.verifyConfirmActionDialog(
           tester: tester,
-          confirmActionDialogTitle:
-              "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$unselectedLocalPlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
+          confirmActionDialogTitle: "MP3 File Replacement",
           confirmActionDialogMessagePossibleLst: [
-            "",
+            "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$unselectedLocalPlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
           ],
           closeDialogWithConfirmButton: true,
         );
