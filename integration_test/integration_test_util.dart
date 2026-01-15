@@ -29,7 +29,7 @@ import 'package:audiolearn/viewmodels/theme_provider_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
 import 'package:audiolearn/views/screen_mixin.dart';
 import 'package:audiolearn/views/widgets/audio_playable_list_dialog.dart';
-import 'package:audiolearn/views/widgets/warning_message_display.dart';
+import 'package:audiolearn/views/widgets/warning_message_display_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/services/settings_data_service.dart';

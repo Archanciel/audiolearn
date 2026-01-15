@@ -22,7 +22,7 @@ import 'package:audiolearn/services/json_data_service.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
-import 'package:audiolearn/views/widgets/warning_message_display.dart';
+import 'package:audiolearn/views/widgets/warning_message_display_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_list_item.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/utils/dir_util.dart';

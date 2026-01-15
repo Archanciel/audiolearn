@@ -8,7 +8,7 @@ import 'package:audiolearn/views/widgets/audio_sort_filter_dialog.dart';
 import 'package:audiolearn/views/widgets/confirm_action_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_add_remove_sort_filter_options_dialog.dart';
-import 'package:audiolearn/views/widgets/warning_message_display.dart';
+import 'package:audiolearn/views/widgets/warning_message_display_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -13,7 +13,7 @@ import '../services/settings_data_service.dart';
 import '../viewmodels/audio_player_vm.dart';
 import '../viewmodels/theme_provider_vm.dart';
 import '../viewmodels/warning_message_vm.dart';
-import 'widgets/warning_message_display.dart';
+import 'widgets/warning_message_display_dialog.dart';
 
 enum MultipleIconType {
   iconOne,
