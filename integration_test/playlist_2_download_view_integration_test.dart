@@ -41263,7 +41263,7 @@ void main() {
       );
     });
     testWidgets(
-        '''Invalid comments with durations greater than audio duration.''',
+        '''Invalid comments with durations greater than audio duration. ''',
         (WidgetTester tester) async {
       const String audioTitle = "Jésus, c'est le plus beau nom";
 
