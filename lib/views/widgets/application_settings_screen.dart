@@ -16,20 +16,20 @@ import '../../viewmodels/theme_provider_vm.dart';
 import 'audio_set_speed_dialog.dart';
 import 'confirm_action_dialog.dart';
 
-class ApplicationSettingsDialog extends StatefulWidget {
+class ApplicationSettingsScreen extends StatefulWidget {
   final SettingsDataService settingsDataService;
 
-  const ApplicationSettingsDialog({
+  const ApplicationSettingsScreen({
     required this.settingsDataService,
     super.key,
   });
 
   @override
-  State<ApplicationSettingsDialog> createState() =>
-      _ApplicationSettingsDialogState();
+  State<ApplicationSettingsScreen> createState() =>
+      _ApplicationSettingsScreenState();
 }
 
-class _ApplicationSettingsDialogState extends State<ApplicationSettingsDialog>
+class _ApplicationSettingsScreenState extends State<ApplicationSettingsScreen>
     with ScreenMixin {
   late double _audioPlaySpeed;
   bool _applyAudioPlaySpeedToExistingPlaylists = false;

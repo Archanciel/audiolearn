@@ -11,7 +11,7 @@ import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
 import 'package:audiolearn/viewmodels/warning_message_vm.dart';
-import 'package:audiolearn/views/widgets/audio_extractor_dialog.dart';
+import 'package:audiolearn/views/widgets/audio_extractor_screen.dart';
 import 'package:audiolearn/views/widgets/audio_sort_filter_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_rename_dialog.dart';
 import 'package:audiolearn/views/widgets/set_value_to_target_dialog.dart';
@@ -40885,7 +40885,7 @@ void main() {
       // Necessary to drag up vertically to make visible the delete
       // icon button of the 1st comment
       await tester.drag(
-        find.byType(AudioExtractorDialog),
+        find.byType(AudioExtractorScreen),
         const Offset(0, 300), // Negative value for vertical drag to scroll down
       );
       await tester.pumpAndSettle();
@@ -40917,7 +40917,7 @@ void main() {
       // Necessary to drag down vertically to make visible the delete
       // icon button of the 3rd comment
       await tester.drag(
-        find.byType(AudioExtractorDialog),
+        find.byType(AudioExtractorScreen),
         const Offset(0, 300), // Negative value for vertical drag to scroll down
       );
       await tester.pumpAndSettle();
@@ -41002,7 +41002,7 @@ void main() {
       // Necessary to drag up vertically to make visible the edit
       // icon button of the 1st comment
       await tester.drag(
-        find.byType(AudioExtractorDialog),
+        find.byType(AudioExtractorScreen),
         const Offset(0, 300), // Negative value for vertical drag to scroll down
       );
       await tester.pumpAndSettle();
@@ -41114,7 +41114,7 @@ void main() {
       // Necessary to drag down vertically to make visible the edit
       // icon button of the 3rd comment
       await tester.drag(
-        find.byType(AudioExtractorDialog),
+        find.byType(AudioExtractorScreen),
         const Offset(
             0, -300), // Negative value for vertical drag to scroll down
       );
@@ -41339,7 +41339,7 @@ void main() {
       // Necessary to drag down vertically to make visible the third
       // comment
       await tester.drag(
-        find.byType(AudioExtractorDialog),
+        find.byType(AudioExtractorScreen),
         const Offset(
             0, -300), // Negative value for vertical drag to scroll down
       );
@@ -41464,7 +41464,7 @@ void main() {
       // Necessary to drag down vertically to make visible the
       // third comment
       await tester.drag(
-        find.byType(AudioExtractorDialog),
+        find.byType(AudioExtractorScreen),
         const Offset(
             0, -300), // Negative value for vertical drag to scroll down
       );
@@ -41534,7 +41534,7 @@ void main() {
       // Necessary to drag up vertically to make visible the
       // second comment
       await tester.drag(
-        find.byType(AudioExtractorDialog),
+        find.byType(AudioExtractorScreen),
         const Offset(0, 300), // Negative value for vertical drag to scroll down
       );
       await tester.pumpAndSettle();
@@ -41802,7 +41802,7 @@ Future<void> _verifyAndPlayExtractedMp3Method({
   );
 
   await tester.drag(
-    find.byType(AudioExtractorDialog),
+    find.byType(AudioExtractorScreen),
     const Offset(0, -200), // Negative value for vertical drag to scroll down
   );
   await tester.pumpAndSettle();
@@ -41826,7 +41826,7 @@ Future<void> _verifyAndPlayExtractedMp3Method({
   await tester.pumpAndSettle();
 
   await tester.drag(
-    find.byType(AudioExtractorDialog),
+    find.byType(AudioExtractorScreen),
     const Offset(0, -200), // Negative value for vertical drag to scroll down
   );
   await tester.pumpAndSettle();
