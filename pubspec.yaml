@@ -92,3 +92,6 @@ flutter:
   assets:
     - lib/l10n/
     - assets/images/
+    - assets/audio/
+    - assets/help/french/playlist_usage/help_content.json
+    - assets/help/french/playlist_usage/images/
