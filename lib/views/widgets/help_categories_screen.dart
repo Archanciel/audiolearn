@@ -93,13 +93,13 @@ class HelpCategoriesScreen extends StatelessWidget {
                     width: 50,
                     height: 50,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor.withOpacity(0.1),
+                      color: Theme.of(context).primaryColor.withOpacity(0.4),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Icon(
                       category.icon,
                       size: 28,
-                      color: Theme.of(context).primaryColor,
+                      color: Colors.blue[700],
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -123,7 +123,7 @@ class HelpCategoriesScreen extends StatelessWidget {
                 category.description,
                 style: TextStyle(
                   fontSize: 14,
-                  color: Colors.grey[600],
+                  color: Colors.grey[400],
                   height: 1.4,
                 ),
               ),
