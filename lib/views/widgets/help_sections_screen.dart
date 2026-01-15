@@ -106,13 +106,14 @@ class HelpSectionsScreen extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
+                color: Colors.black,
               ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             const Text(
               'Sélectionnez une section pour commencer',
-              style: TextStyle(fontSize: 14, color: Colors.black54),
+              style: TextStyle(fontSize: 14, color: Colors.black),
               textAlign: TextAlign.center,
             ),
           ],
@@ -141,13 +142,13 @@ class HelpSectionsScreen extends StatelessWidget {
                 width: 60,
                 height: 60,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor.withOpacity(0.1),
+                  color: Theme.of(context).primaryColor.withOpacity(0.4),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
                   section.icon,
                   size: 30,
-                  color: Theme.of(context).primaryColor,
+                  color: Colors.blue[700],
                 ),
               ),
               const SizedBox(width: 16),
@@ -169,7 +170,7 @@ class HelpSectionsScreen extends StatelessWidget {
                       section.description,
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.grey[600],
+                        color: Colors.grey[400],
                       ),
                     ),
                     const SizedBox(height: 8),
