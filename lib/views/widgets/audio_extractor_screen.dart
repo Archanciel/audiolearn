@@ -25,12 +25,12 @@ import '../../viewmodels/theme_provider_vm.dart';
 import 'help_dialog.dart';
 import 'playlist_one_selectable_dialog.dart';
 
-class AudioExtractorDialog extends StatefulWidget {
+class AudioExtractorScreen extends StatefulWidget {
   final SettingsDataService settingsDataService;
   final Audio currentAudio;
   final CommentVM commentVMlistenTrue;
 
-  const AudioExtractorDialog({
+  const AudioExtractorScreen({
     super.key,
     required this.settingsDataService,
     required this.currentAudio,
@@ -38,10 +38,10 @@ class AudioExtractorDialog extends StatefulWidget {
   });
 
   @override
-  State<AudioExtractorDialog> createState() => _AudioExtractorDialogState();
+  State<AudioExtractorScreen> createState() => _AudioExtractorScreenState();
 }
 
-class _AudioExtractorDialogState extends State<AudioExtractorDialog>
+class _AudioExtractorScreenState extends State<AudioExtractorScreen>
     with ScreenMixin {
   late final List<HelpItem> _helpItemsLst;
   late final ScrollController _segmentsScrollController;

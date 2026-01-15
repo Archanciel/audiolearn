@@ -21,7 +21,7 @@ import '../../viewmodels/audio_player_vm.dart';
 import '../screen_mixin.dart';
 import 'battery_settings_dialog.dart';
 import 'confirm_action_dialog.dart';
-import 'application_settings_dialog.dart';
+import 'application_settings_screen.dart';
 import 'audio_info_dialog.dart';
 import 'audio_modification_dialog.dart';
 import 'comment_list_add_dialog.dart';
@@ -638,7 +638,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
               barrierDismissible: false, // This line prevents the dialog from
               // closing when tapping outside the dialog
               builder: (BuildContext context) {
-                return ApplicationSettingsDialog(
+                return ApplicationSettingsScreen(
                   settingsDataService: settingsDataService,
                 );
               },

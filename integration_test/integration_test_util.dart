@@ -4,7 +4,7 @@ import 'package:audiolearn/l10n/app_localizations.dart';
 import 'package:audiolearn/models/picture.dart';
 import 'package:audiolearn/viewmodels/picture_vm.dart';
 import 'package:audiolearn/views/my_home_page.dart';
-import 'package:audiolearn/views/widgets/audio_extractor_dialog.dart';
+import 'package:audiolearn/views/widgets/audio_extractor_screen.dart';
 import 'package:audiolearn/views/widgets/audio_info_dialog.dart';
 import 'package:audiolearn/views/widgets/confirm_action_dialog.dart';
 import 'package:audiolearn/views/widgets/playlist_comment_list_dialog.dart';
@@ -2888,7 +2888,7 @@ class IntegrationTestUtil {
       if (segmentDetails.containsKey('number')) {
         if (deletedCommentNumber > 2) {
           await tester.drag(
-            find.byType(AudioExtractorDialog),
+            find.byType(AudioExtractorScreen),
             const Offset(
                 0, -300), // Negative value for vertical drag to scroll down
           );

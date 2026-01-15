@@ -1,5 +1,5 @@
 import 'package:audiolearn/views/widgets/date_format_selection_dialog.dart';
-import 'package:audiolearn/views/widgets/help_main_dialog.dart';
+import 'package:audiolearn/views/widgets/help_categories_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -83,7 +83,7 @@ class AppBarRightPopupMenu extends StatelessWidget {
               barrierDismissible: false, // This line prevents the dialog from
               // closing when tapping outside the dialog
               builder: (BuildContext context) {
-                return HelpMainDialog();
+                return HelpCategoriesScreen();
               },
             );
             break;

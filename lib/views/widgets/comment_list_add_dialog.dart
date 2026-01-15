@@ -16,7 +16,7 @@ import '../../viewmodels/date_format_vm.dart';
 import '../../viewmodels/picture_vm.dart';
 import '../../viewmodels/theme_provider_vm.dart';
 import '../screen_mixin.dart';
-import 'audio_extractor_dialog.dart';
+import 'audio_extractor_screen.dart';
 import 'comment_add_edit_dialog.dart';
 
 /// A global manager class for handling comment dialog overlays throughout the application.
@@ -715,7 +715,7 @@ class _CommentListAddDialogContentState
                               false, // This line prevents the dialog from
                           // closing when tapping outside the dialog
                           builder: (BuildContext context) {
-                            return AudioExtractorDialog(
+                            return AudioExtractorScreen(
                               settingsDataService: widget.settingsDataService,
                               currentAudio: currentAudio,
                               commentVMlistenTrue: commentVMlistenTrue,
