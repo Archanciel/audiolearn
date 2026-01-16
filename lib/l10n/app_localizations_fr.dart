@@ -1200,7 +1200,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get downloadSingleVideoAudioAtMusicQuality =>
-      'Télécharger l\'audio de la vidéo à qualité musicale';
+      'Télécharger l\'audio de la vidéo en qualité musicale';
 
   @override
   String get videoTitleNotWrittenInOccidentalLettersWarning =>
