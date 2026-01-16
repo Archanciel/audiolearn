@@ -4,21 +4,21 @@
     "sectionId": "create_playlist",
     "imagePath": "assets/help/french/playlist_usage/images/step_01.jpg",
     "title": "Choisir une vidéo YouTube",
-    "description": "Choisir une vidéo Youtube à inclure dans une nouvelle playlist qui sera ajoutée dans l'application AudioLearn. Comme indiqué ci-dessous, cliquer sur Enregistrer."
+    "description": "Choisissez une vidéo Youtube à inclure dans une nouvelle playlist qui sera ajoutée dans l'application AudioLearn. Comme indiqué ci-dessous, cliquez sur Enregistrer."
   },
   {
     "stepNumber": 2,
     "sectionId": "create_playlist",
     "imagePath": "assets/help/french/playlist_usage/images/step_02.jpg",
     "title": "Choisir la playlist",
-    "description": "Pour créer la playlist, choisir Nouvelle playlist ci-dessous."
+    "description": "Pour créer la playlist, choisissez Nouvelle playlist ci-dessous."
   },
   {
     "stepNumber": 3,
     "sectionId": "create_playlist",
     "imagePath": "assets/help/french/playlist_usage/images/step_03.jpg",
     "title": "Définir le nom et la visibilité",
-    "description": "Définir le nom de la nouvelle playlist, ici 'Prières chrétiennes'. Ce qui est très important, c'est de remplacer 'Privée' par 'Non répertoriée' ou 'Publique' faute de quoi la playlist ne sera pas téléchargeable par AudioLearn."
+    "description": "Définissez le nom de la nouvelle playlist, ici 'Prières chrétiennes'. Ce qui est très important, c'est de remplacer 'Privée' par 'Non répertoriée' ou 'Publique' faute de quoi la playlist ne sera pas téléchargeable par AudioLearn."
   },
   {
     "stepNumber": 4,
@@ -39,14 +39,14 @@
     "sectionId": "create_playlist",
     "imagePath": "assets/help/french/playlist_usage/images/step_06.jpg",
     "title": "Localiser votre playlist",
-    "description": "Après avoir défini la nouvelle playlist Youtube, il est possible de l'ajouter dans l'application AudioLearn. Cliquer sur ses trois points verticaux pour afficher son menu."
+    "description": "Après avoir défini la nouvelle playlist Youtube, il est possible de l'ajouter dans l'application AudioLearn. Cliquez sur ses trois points verticaux pour afficher son menu."
   },
   {
     "stepNumber": 7,
     "sectionId": "create_playlist",
     "imagePath": "assets/help/french/playlist_usage/images/step_07.jpg",
     "title": "Cliquer sur Partager",
-    "description": "Cliquer sur le menu 'Partager' pour obtenir le lien de la playlist."
+    "description": "Cliquez sur le menu 'Partager' pour obtenir le lien de la playlist."
   },
   {
     "stepNumber": 8,
@@ -60,14 +60,14 @@
     "sectionId": "create_playlist",
     "imagePath": "assets/help/french/playlist_usage/images/step_09.jpg",
     "title": "Ouvrir AudioLearn",
-    "description": "Après avoir copié le lien de la playlist Youtube, ouvrez l’application AudioLearn et collez le lien dans le champ lien Youtube. Appuyez sur ce champ avec votre doigt pour faire apparaître le menu Coller et cliquez sur lui."
+    "description": "Après avoir copié le lien de la playlist Youtube, ouvrez l’application AudioLearn et collez le lien dans le champ Lien Youtube. Appuyez sur ce champ avec votre doigt pour faire apparaître le menu Coller et cliquez sur lui."
   },
   {
     "stepNumber": 10,
     "sectionId": "create_playlist",
     "imagePath": "assets/help/french/playlist_usage/images/step_10.jpg",
-    "title": "Lien collé",
-    "description": "Une fois le lien de la playlist Youtube copié dans le champ lien Youtube, cliquez sur le bouton 'Ajout' afin d'ajouter la référence de la playlist Youtube dans l'application."
+    "title": "Lien coller",
+    "description": "Une fois le lien de la playlist Youtube copié dans le champ Lien Youtube, cliquez sur le bouton 'Ajout' afin d'ajouter la référence de la playlist Youtube dans l'application."
   },
   {
     "stepNumber": 11,
@@ -150,7 +150,7 @@
     "stepNumber": 22,
     "sectionId": "download_single",
     "imagePath": "assets/help/french/playlist_usage/images/step_22.jpg",
-    "title": "Collez le lien dans le champ lien Youtube",
+    "title": "Collez le lien dans le champ Lien Youtube",
     "description": ""
   },
   {
@@ -158,14 +158,14 @@
     "sectionId": "download_single",
     "imagePath": "assets/help/french/playlist_usage/images/step_23.jpg",
     "title": "Télécharger l'unique vidéo",
-    "description": "Une fois le lien présent dans le champ lien Youtube, cliquez sur le bouton 'flèche vers le bas Un' utilisé pour télécharger un unique audio."
+    "description": "Une fois le lien présent dans le champ LLien Youtube, cliquez sur le bouton 'flèche vers le bas Un' utilisé pour télécharger un unique audio."
   },
   {
     "stepNumber": 24,
     "sectionId": "download_single",
     "imagePath": "assets/help/french/playlist_usage/images/step_24.jpg",
     "title": "Choix de la playlist de destination",
-    "description": "Et choisissez la playlist AudioLearn dans laquelle l’audio de l’unique vidéo sera téléchargé. En fonction de la playlist sélectionnée, la case à cocher qualité musicale est activée ou non. Si la case à cocher n’est pas active mais que l’on désire télécharger l’audio en qualité musicale dans une playlist en qualité orale, il suffit de cliquer sur la case à cocher qualité musicale. Ensuite, cliquez sur le bouton Confirmer."
+    "description": "Et choisissez la playlist AudioLearn dans laquelle l’audio de l’unique vidéo sera téléchargé. En fonction de la playlist sélectionnée, la case à cocher qualité musicale est activée ou non. Si la case à cocher n’est pas active mais que l’on désire télécharger l’audio en qualité musicale dans une playlist en qualité orale, il suffit de cliquer sur la case à cocher Télécharger l'audio de la vidéo en qualité musicale. Ensuite, cliquez sur le bouton Confirmer."
   },
   {
     "stepNumber": 25,
