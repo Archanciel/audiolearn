@@ -95,3 +95,5 @@ flutter:
     - assets/audio/
     - assets/help/french/playlist_usage/help_content.json
     - assets/help/french/playlist_usage/images/
+    - assets/help/french/text_to_speech_conversion/help_content.json
+    - assets/help/french/text_to_speech_conversion/images/
