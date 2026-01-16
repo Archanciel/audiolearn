@@ -613,7 +613,7 @@
   "importedAudioDateTimeLabel": "Date/heure importation",
   "sortFilterParametersAppliedName": "appliqué",
   "lastListenedDateTime": "Date/heure dernière écoute",
-  "downloadSingleVideoAudioAtMusicQuality": "Télécharger l'audio de la vidéo à qualité musicale",
+  "downloadSingleVideoAudioAtMusicQuality": "Télécharger l'audio de la vidéo en qualité musicale",
   "videoTitleNotWrittenInOccidentalLettersWarning": "Le titre original de la vidéo n'étant pas écrit en caractères occidentaux, le titre audio est vide. Vous pouvez utiliser le menu audio 'Modifier le titre de l'audio ...' pour définir un titre valide. Même remarque pour améliorer le nom du fichier audio ...",
   "renameCommentFileNameAlreadyUsed": "Le nom du fichier de commentaires \"{fileName}.json\" est déjà utilisé dans le même répertoire de commentaires. Il est donc impossible de renommer le fichier audio avec le nom \"{fileName}.mp3\".",
   "renameFileNameInvalid": "Le nom du fichier audio \"{fileName}\" n'a pas d'extension mp3 et n'est donc pas valide.",
