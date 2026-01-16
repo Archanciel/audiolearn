@@ -8,7 +8,7 @@ import '../models/help_section.dart';
 
 class HelpGuideViewModel extends ChangeNotifier {
   final String jsonFilePath;
-  
+
   List<HelpStep> _allSteps = [];
   List<HelpSection> _sections = [];
   bool _isLoading = true;
@@ -31,38 +31,63 @@ class HelpGuideViewModel extends ChangeNotifier {
     if (jsonFilePath.contains('playlist_usage')) {
       _sections = [
         HelpSection(
-          id: 'create_playlist',
-          title: 'Créer une Playlist YouTube',
-          description: 'Apprenez à créer une playlist YouTube Non répertoriée ou Publique',
+          id: "create_playlist",
+          title: "Créer une playlist YouTube",
+          description:
+              "Apprenez à créer une playlist YouTube Non répertoriée ou Publique.",
           icon: Icons.playlist_add,
           startStep: 1,
           endStep: 13,
         ),
         HelpSection(
-          id: 'download_playlist',
-          title: 'Télécharger la Playlist',
-          description: 'Téléchargez les audios de votre playlist dans l\'application',
+          id: "download_playlist",
+          title: "Télécharger la playlist",
+          description:
+              "Téléchargez les audios de votre playlist dans l'application.",
           icon: Icons.download,
           startStep: 14,
           endStep: 19,
         ),
         HelpSection(
-          id: 'download_single',
-          title: 'Télécharger une Vidéo Unique',
-          description: 'Téléchargez l\'audio d\'une seule vidéo YouTube',
+          id: "download_single",
+          title: "Télécharger une vidéo unique",
+          description: "Téléchargez l'audio d'une seule vidéo YouTube.",
           icon: Icons.video_library,
           startStep: 20,
           endStep: 26,
         ),
       ];
     }
-    // Sections pour "Menu Playlist"
-    else if (jsonFilePath.contains('menu_playlist')) {
+    // Sections pour menu "Convertir un texte en audio"
+    else if (jsonFilePath.contains("text_to_speech_conversion")) {
       _sections = [
         HelpSection(
-          id: 'playlist_operations',
-          title: 'Opérations sur les Playlists',
-          description: 'Gérer, modifier et supprimer vos playlists',
+          id: "first_conversion",
+          title: "Première conversion d'un texte en audio",
+          description:
+              "Apprenez à convertir un texte en audio dans une playlist existante.",
+          icon: Icons.playlist_add,
+          startStep: 1,
+          endStep: 13,
+        ),
+        HelpSection(
+          id: "conversion_replacement",
+          title: "Remplacer une conversion existante par un texte modifié ou converti via une autre voix",
+          description:
+              "Si l'écoute de l'audio ne vous convient pas, modifiez le texte et/ou convertissez-le à nouveau en utilisant une voix différente.",
+          icon: Icons.download,
+          startStep: 14,
+          endStep: 19,
+        ),
+      ];
+    }
+    // Sections pour "Menu Playlist"
+    else if (jsonFilePath.contains("menu_playlist")) {
+      _sections = [
+        HelpSection(
+          id: "playlist_operations",
+          title: "Opérations sur les Playlists",
+          description: "Gérer, modifier et supprimer vos playlists",
           icon: Icons.playlist_play,
           startStep: 1,
           endStep: 10,
@@ -70,12 +95,12 @@ class HelpGuideViewModel extends ChangeNotifier {
       ];
     }
     // Sections pour "Menu Audio"
-    else if (jsonFilePath.contains('menu_audio')) {
+    else if (jsonFilePath.contains("menu_audio")) {
       _sections = [
         HelpSection(
-          id: 'audio_controls',
-          title: 'Contrôles Audio',
-          description: 'Lecture, pause et navigation dans les audios',
+          id: "audio_controls",
+          title: "Contrôles Audio",
+          description: "Lecture, pause et navigation dans les audios",
           icon: Icons.audiotrack,
           startStep: 1,
           endStep: 10,
