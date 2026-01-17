@@ -2328,12 +2328,6 @@ class MockAppLocalizations extends AppLocalizations {
   String get speech => "Text";
 
   @override
-  String convertTextToAudioHelpTitle(
-    Object brace_1,
-  ) =>
-      "$brace_1 Usage";
-
-  @override
   String convertTextToAudioHelpContent(
     Object brace_1,
     Object brace_2,

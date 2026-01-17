@@ -3770,19 +3770,6 @@ abstract class AppLocalizations {
   /// **'Text'**
   String get speech;
 
-  /// No description provided for @convertTextToAudioHelpTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Using the {brace_1} character which adds 1 second of silence'**
-  String convertTextToAudioHelpTitle(Object brace_1);
-
-  /// No description provided for @convertTextToAudioHelpContent.
-  ///
-  /// In en, this message translates to:
-  /// **'{brace_1}A text with a character that introduces a 1-second silence. At the beginning of the text, 2 seconds of silence are added. {brace_2} Before this sentence, 4 seconds of silence are introduced. {brace_3} Here, one second of silence. This character was chosen because it is not normally used in writing.'**
-  String convertTextToAudioHelpContent(
-      Object brace_1, Object brace_2, Object brace_3);
-
   /// No description provided for @textToSpeech.
   ///
   /// In en, this message translates to:
