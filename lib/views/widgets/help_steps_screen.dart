@@ -1,31 +1,61 @@
-// lib/views/help_steps_screen.dart
+// lib/views/widgets/help_steps_screen.dart
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/help_step.dart';
+import '../../services/help_data_service.dart';
 import '../../viewmodels/help_page_viewmodel.dart';
 import 'help_step_page.dart';
 import 'page_indicator.dart';
 import 'navigation_buttons.dart';
 
-class HelpStepsScreen extends StatelessWidget {
+class HelpStepsScreen extends StatefulWidget {
   final List<HelpStep> steps;
   final String sectionTitle;
   final int initialPage;
+  final String categoryId;
+  final String sectionId;
 
   const HelpStepsScreen({
     super.key,
     required this.steps,
     required this.sectionTitle,
+    required this.categoryId,
+    required this.sectionId,
     this.initialPage = 0,
   });
+
+  @override
+  State<HelpStepsScreen> createState() => _HelpStepsScreenState();
+}
+
+class _HelpStepsScreenState extends State<HelpStepsScreen> {
+  final HelpDataService _helpDataService = HelpDataService();
+
+  @override
+  void dispose() {
+    // Sauvegarder la position actuelle en quittant
+    _saveCurrentPosition();
+    super.dispose();
+  }
+
+  void _saveCurrentPosition() {
+    final viewModel = context.read<HelpPageViewModel>();
+    final currentStep = viewModel.currentStep;
+
+    _helpDataService.saveLastHelpPosition(
+      categoryId: widget.categoryId,
+      sectionId: widget.sectionId,
+      stepNumber: currentStep.stepNumber,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => HelpPageViewModel(
-        steps: steps,
-        initialPage: initialPage,
+        steps: widget.steps,
+        initialPage: widget.initialPage,
       ),
       child: Consumer<HelpPageViewModel>(
         builder: (context, viewModel, child) {
@@ -36,7 +66,7 @@ class HelpStepsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    sectionTitle,
+                    widget.sectionTitle,
                     style: const TextStyle(fontSize: 16),
                   ),
                   Text(
@@ -56,7 +86,10 @@ class HelpStepsScreen extends StatelessWidget {
                 ),
                 IconButton(
                   icon: const Icon(Icons.close),
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () {
+                    _saveCurrentPosition();
+                    Navigator.pop(context);
+                  },
                 ),
               ],
             ),
@@ -66,9 +99,17 @@ class HelpStepsScreen extends StatelessWidget {
                 Expanded(
                   child: PageView.builder(
                     controller: viewModel.pageController,
-                    itemCount: steps.length,
+                    itemCount: widget.steps.length,
+                    onPageChanged: (index) {
+                      // Sauvegarder automatiquement quand on change de page
+                      _helpDataService.saveLastHelpPosition(
+                        categoryId: widget.categoryId,
+                        sectionId: widget.sectionId,
+                        stepNumber: widget.steps[index].stepNumber,
+                      );
+                    },
                     itemBuilder: (context, index) {
-                      return HelpStepPage(step: steps[index]);
+                      return HelpStepPage(step: widget.steps[index]);
                     },
                   ),
                 ),
@@ -85,7 +126,10 @@ class HelpStepsScreen extends StatelessWidget {
                   isLastPage: viewModel.isLastPage,
                   onPrevious: viewModel.previousPage,
                   onNext: viewModel.nextPage,
-                  onClose: () => Navigator.pop(context),
+                  onClose: () {
+                    _saveCurrentPosition();
+                    Navigator.pop(context);
+                  },
                 ),
               ],
             ),
@@ -100,11 +144,11 @@ class HelpStepsScreen extends StatelessWidget {
       context: context,
       builder: (context) {
         return ListView.builder(
-          itemCount: steps.length,
+          itemCount: widget.steps.length,
           itemBuilder: (context, index) {
-            final step = steps[index];
+            final step = widget.steps[index];
             final isCurrentStep = index == viewModel.currentPage;
-            
+
             return ListTile(
               leading: CircleAvatar(
                 backgroundColor: isCurrentStep
@@ -121,7 +165,8 @@ class HelpStepsScreen extends StatelessWidget {
               title: Text(
                 step.title,
                 style: TextStyle(
-                  fontWeight: isCurrentStep ? FontWeight.bold : FontWeight.normal,
+                  fontWeight:
+                      isCurrentStep ? FontWeight.bold : FontWeight.normal,
                 ),
               ),
               trailing: isCurrentStep
@@ -132,6 +177,12 @@ class HelpStepsScreen extends StatelessWidget {
                   : null,
               onTap: () {
                 viewModel.jumpToPage(index);
+                // Sauvegarder la nouvelle position
+                _helpDataService.saveLastHelpPosition(
+                  categoryId: widget.categoryId,
+                  sectionId: widget.sectionId,
+                  stepNumber: step.stepNumber,
+                );
                 Navigator.pop(context);
               },
             );

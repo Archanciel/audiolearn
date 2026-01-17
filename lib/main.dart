@@ -10,6 +10,7 @@ import 'l10n/app_localizations.dart';
 import 'package:window_size/window_size.dart';
 
 import 'constants.dart';
+import 'services/help_data_service.dart';
 import 'viewmodels/picture_vm.dart';
 import 'viewmodels/playlist_list_vm.dart';
 import 'viewmodels/audio_download_vm.dart';
@@ -59,6 +60,10 @@ Future<void> main() async {
     settingsJsonPathFileName:
         '$applicationPath${Platform.pathSeparator}$kSettingsFileName',
   );
+
+  // Initialize HelpDataService. This must be done before using it.
+  await HelpDataService().initialize();
+  await HelpDataService().clearLastHelpPosition();
 
   // Run the app
   runApp(MainApp(

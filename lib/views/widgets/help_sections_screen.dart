@@ -81,9 +81,8 @@ class HelpSectionsScreen extends StatelessWidget {
       children: [
         _buildHeader(),
         const SizedBox(height: 24),
-        ...viewModel.sections.map((section) => 
-          _buildSectionCard(context, viewModel, section)
-        ),
+        ...viewModel.sections
+            .map((section) => _buildSectionCard(context, viewModel, section)),
       ],
     );
   }
@@ -152,7 +151,7 @@ class HelpSectionsScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 16),
-              
+
               // Contenu de la section
               Expanded(
                 child: Column(
@@ -195,7 +194,7 @@ class HelpSectionsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              
+
               // Flèche
               Icon(
                 Icons.arrow_forward_ios,
@@ -214,13 +213,15 @@ class HelpSectionsScreen extends StatelessWidget {
     HelpSection section,
   ) {
     final steps = viewModel.getStepsForSection(section.id);
-    
+
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => HelpStepsScreen(
           steps: steps,
           sectionTitle: section.title,
+          categoryId: category.id, // Passer l'ID de la catégorie
+          sectionId: section.id, // Passer l'ID de la section
         ),
       ),
     );

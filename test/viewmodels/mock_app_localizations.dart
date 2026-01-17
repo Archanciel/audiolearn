@@ -2328,14 +2328,6 @@ class MockAppLocalizations extends AppLocalizations {
   String get speech => "Text";
 
   @override
-  String convertTextToAudioHelpContent(
-    Object brace_1,
-    Object brace_2,
-    Object brace_3,
-  ) =>
-      "$brace_1 A text with a character that introduces a 1-second silence. At the beginning of the text, 2 seconds of silence are added. $brace_2 Before this sentence, 4 seconds of silence are introduced. $brace_3 This character was chosen because it is not normally used in writing. It is also not converted to audio.";
-
-  @override
   String textToConvert(
     Object brace_1,
   ) =>

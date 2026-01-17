@@ -1,3 +1,5 @@
+import 'package:audiolearn/services/help_data_service.dart';
+import 'package:audiolearn/utils/ui_util.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:audiolearn/viewmodels/playlist_list_vm.dart';
@@ -20,6 +22,7 @@ import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
 import '../../services/settings_data_service.dart';
 import 'confirm_action_dialog.dart';
+import 'help_categories_screen.dart';
 import 'help_dialog.dart';
 import 'help_sections_screen.dart';
 
@@ -141,21 +144,13 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                 ),
               ),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HelpSectionsScreen(
-                      category: HelpCategory(
-                        id: "text_to_speech_conversion",
-                        title: "Conversion de texte en audio",
-                        description:
-                            "Convertir un texte en audio. Par exemple, transformer une prière écrite en prière écoutable.",
-                        icon: Icons.play_circle_outline,
-                        jsonFilePath:
-                            "assets/help/french/text_to_speech_conversion/help_content.json",
-                      ),
-                    ),
-                  ),
+                UiUtil.displayHelp(
+                  context: context,
+                  categoryId: "text_to_speech_conversion",
+                  categoryIdTitle:
+                      "Conversion de texte en audio",
+                  categoryIdDescription:
+                      "Convertir un texte en audio. Par exemple, transformer une prière écrite en prière écoutable."
                 );
               },
             ),
