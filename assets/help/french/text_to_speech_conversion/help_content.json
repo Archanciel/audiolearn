@@ -59,126 +59,63 @@
     "stepNumber": 9,
     "sectionId": "first_conversion",
     "imagePath": "assets/help/french/text_to_speech_conversion/images/step_10.jpg",
-    "title": "Fermer l'écran de conversion",
+    "title": "Fermez l'écran de conversion",
     "description": "Ensuite, cliquez sur Fermer afin d’aller vérifier l’audio généré."
   },
   {
     "stepNumber": 10,
     "sectionId": "first_conversion",
     "imagePath": "assets/help/french/text_to_speech_conversion/images/step_11.jpg",
-    "title": "Écouter l’audio généré",
+    "title": "Écoute de l’audio généré",
     "description": "Cliquez sur l’icône bleue pour écouter l’audio généré. Cela vous conduit à l’écran de lecture audio."
   },
   {
     "stepNumber": 11,
     "sectionId": "conversion_replacement",
     "imagePath": "assets/help/french/text_to_speech_conversion/images/step_12.jpg",
-    "title": "Modifier le texte ou la voix utilisée",
+    "title": "Modification du texte ou de la voix utilisée",
     "description": "Si maintenant vous souhaitez modifier le texte ou changer la voix utilisée pour sa conversion, cliquez sur l’icône affichant les commentaires de l’audio."
   },
   {
     "stepNumber": 12,
     "sectionId": "conversion_replacement",
-    "imagePath": "assets/help/french/text_to_speech_conversion/images/step_12.jpg",
-    "title": "Puis cliquez sur Ok",
-    "description": ""
+    "imagePath": "assets/help/french/text_to_speech_conversion/images/step_13.jpg",
+    "title": "Cliquez sur Paroles pour copier le commentaire",
+    "description": "Ce commentaire a été ajouté lors de la conversion du texte en audio. En cliquant sur Paroles, vous éditez le commentaire et ainsi pouvez le copier."
   },
   {
     "stepNumber": 13,
     "sectionId": "conversion_replacement",
-    "imagePath": "assets/help/french/text_to_speech_conversion/images/step_13.jpg",
-    "title": "Vider le champ lien",
-    "description": "Maintenant, il est possible de vider le champ lien Youtube en cliquant sur le bouton mis en évidence ci-dessous."
+    "imagePath": "assets/help/french/text_to_speech_conversion/images/step_14.jpg",
+    "title": "Sélectionner et copier le texte",
+    "description": "En appuyant avec le doigt sur le texte, vous affichez le menu ci-dessous. Cliquez sur l’icône bleue des 3 points verticaux. Cela vous affiche le menu Tout sélectionner. Après avoir cliqué sur Tout sélectionner, cliquez sur Copier. Une fois la copie effectuée, vous pouvez cliquer sur Annuler afin de fermer le commentaire."
   },
   {
     "stepNumber": 14,
     "sectionId": "conversion_replacement",
-    "imagePath": "assets/help/french/text_to_speech_conversion/images/step_14.jpg",
-    "title": "Télécharger la playlist",
-    "description": "Maintenant que la playlist ajoutée 'Prières chrétiennes' est sélectionnée, en cliquant sur le bouton 'flèche vers le bas Playlist', les audios de la ou des vidéos contenues dans la playlist Youtube vont être téléchargés dans l'application AudioLearn."
+    "imagePath": "assets/help/french/text_to_speech_conversion/images/step_18.jpg",
+    "title": "Retour à l’écran de conversion",
+    "description": "Puis cliquez sur Fermer et ensuite sur l’icône qui vous dirige sur l’écran d’affichage ou téléchargement des playlists."
   },
   {
     "stepNumber": 15,
     "sectionId": "conversion_replacement",
-    "imagePath": "assets/help/french/text_to_speech_conversion/images/step_15.jpg",
-    "title": "Téléchargement en cours",
-    "description": "L'image ci-dessous montre le téléchargement d'un audio et sa conversion en mp3."
+    "imagePath": "assets/help/french/text_to_speech_conversion/images/step_19.jpg",
+    "title": "Coller le texte et créer un nouvel audio",
+    "description": "Après avoir sélectionné sur la playlist Text audio le menu Convertir un texte en audio ..,, collez le texte copié auparavant et corrigez-le si nécessaire. Dans cet exemple, 2 { ont été ajoutées au début pour intégrer 2 secondes de silence. Sélectionnez ensuite la voix féminine et cliquez sur Créer MP3."
   },
   {
     "stepNumber": 16,
     "sectionId": "conversion_replacement",
-    "imagePath": "assets/help/french/text_to_speech_conversion/images/step_16.jpg",
-    "title": "Ajout d'une nouvelle vidéo",
-    "description": "La prochaine image démontre comment ajouter une nouvelle vidéo Youtube dans la playlist Youtube (ajoutée auparavant dans l’application). Cliquez sur le menu de points verticaux de la vidéo à ajouter."
+    "imagePath": "assets/help/french/text_to_speech_conversion/images/step_21.jpg",
+    "title": "Remplacer le fichier MP3 existant",
+    "description": "Cliquez sur le bouton Sélection d’un fichier existant afin de choisir le fichier contenant l’audio à remplacer. Cliquez sur la bonne case à cocher puis sur le bouton Confirmer. Le nom du fichier sélectionné a été copié au bon endroit. Cliquez maintenant sur le bouton Créer MP3."
   },
   {
     "stepNumber": 17,
     "sectionId": "conversion_replacement",
-    "imagePath": "assets/help/french/text_to_speech_conversion/images/step_17.jpg",
-    "title": "Sélectionnez Enregistrer dans une playlist",
-    "description": ""
-  },
-  {
-    "stepNumber": 18,
-    "sectionId": "download_playlist",
-    "imagePath": "assets/help/french/text_to_speech_conversion/images/step_18.jpg",
-    "title": "Sélectionnez Prières chrétiennes",
-    "description": ""
-  },
-  {
-    "stepNumber": 19,
-    "sectionId": "download_playlist",
-    "imagePath": "assets/help/french/text_to_speech_conversion/images/step_19.jpg",
-    "title": "Retournez dans AudioLearn",
-    "description": "Ensuite, allez dans AudioLearn et cliquez sur le bouton de téléchargement de playlist."
-  },
-  {
-    "stepNumber": 20,
-    "sectionId": "download_single",
-    "imagePath": "assets/help/french/text_to_speech_conversion/images/step_20.jpg",
-    "title": "Partager une vidéo unique",
-    "description": "L’exemple suivant démontre comment télécharger l’audio d’une vidéo unique non présente dans une de nos playlist. Cliquez sur la flèche de partage de la vidéo ci-dessous."
-  },
-  {
-    "stepNumber": 21,
-    "sectionId": "download_single",
-    "imagePath": "assets/help/french/text_to_speech_conversion/images/step_21.jpg",
-    "title": "Choisissez le menu Copier le lien",
-    "description": ""
-  },
-  {
-    "stepNumber": 22,
-    "sectionId": "download_single",
-    "imagePath": "assets/help/french/text_to_speech_conversion/images/step_22.jpg",
-    "title": "Collez le lien dans le champ Lien Youtube",
-    "description": ""
-  },
-  {
-    "stepNumber": 23,
-    "sectionId": "download_single",
-    "imagePath": "assets/help/french/text_to_speech_conversion/images/step_23.jpg",
-    "title": "Télécharger l'unique vidéo",
-    "description": "Une fois le lien présent dans le champ LLien Youtube, cliquez sur le bouton 'flèche vers le bas Un' utilisé pour télécharger un unique audio."
-  },
-  {
-    "stepNumber": 24,
-    "sectionId": "download_single",
     "imagePath": "assets/help/french/text_to_speech_conversion/images/step_24.jpg",
-    "title": "Choix de la playlist de destination",
-    "description": "Et choisissez la playlist AudioLearn dans laquelle l’audio de l’unique vidéo sera téléchargé. En fonction de la playlist sélectionnée, la case à cocher qualité musicale est activée ou non. Si la case à cocher n’est pas active mais que l’on désire télécharger l’audio en qualité musicale dans une playlist en qualité orale, il suffit de cliquer sur la case à cocher Télécharger l'audio de la vidéo en qualité musicale. Ensuite, cliquez sur le bouton Confirmer."
-  },
-  {
-    "stepNumber": 25,
-    "sectionId": "download_single",
-    "imagePath": "assets/help/french/text_to_speech_conversion/images/step_25.jpg",
-    "title": "Cliquez ensuite sur Ok",
-    "description": ""
-  },
-  {
-    "stepNumber": 26,
-    "sectionId": "download_single",
-    "imagePath": "assets/help/french/text_to_speech_conversion/images/step_26.jpg",
-    "title": "Audio téléchargé",
-    "description": "Maintenant l’audio a été téléchargé dans la playlist sélectionnée."
+    "title": "Confirmation du remplacement",
+    "description": "Confirmez le remplacement du fichier MP3 puis cliquez sur le bouton Ok."
   }
 ]
