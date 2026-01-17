@@ -74,6 +74,7 @@ dependencies:
   stack_trace: ^1.12.1
   web: ^1.1.1
   code_builder: ^4.11.1
+  shared_preferences: ^2.5.4
 
 
 dev_dependencies:

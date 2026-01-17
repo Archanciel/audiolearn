@@ -12,11 +12,15 @@ import 'package:path_provider/path_provider.dart';
 import '../constants.dart';
 import '../models/audio.dart';
 import '../models/comment.dart';
+import '../models/help_category.dart';
+import '../services/help_data_service.dart';
 import '../viewmodels/audio_player_vm.dart';
 import '../viewmodels/date_format_vm.dart';
 import '../viewmodels/playlist_list_vm.dart';
 import '../viewmodels/warning_message_vm.dart';
 import '../views/widgets/confirm_action_dialog.dart';
+import '../views/widgets/help_categories_screen.dart';
+import '../views/widgets/help_sections_screen.dart';
 import 'dir_util.dart';
 
 class StorageUtil {
@@ -731,6 +735,48 @@ class UiUtil {
       audioLearnAppViewType: audioLearnAppViewType,
       audio: audio,
     );
+  }
+
+  static void displayHelp({
+    required BuildContext context,
+    required String categoryId,
+    required String categoryIdTitle,
+    required String categoryIdDescription,
+  }) {
+    HelpDataService helpDataService = HelpDataService();
+    String? lastHelpCategoryId = helpDataService.getLastHelpCategoryId();
+
+    if (lastHelpCategoryId != null &&
+        lastHelpCategoryId == categoryId) {
+      // Enable the user to to go to the last viewed help step
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false, // This line prevents the dialog from
+        // closing when tapping outside the dialog
+        builder: (BuildContext context) {
+          return HelpCategoriesScreen();
+        },
+      );
+    } else {
+      // Display the help section for text to speech conversion
+      // without showing the help history button
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HelpSectionsScreen(
+            category: HelpCategory(
+              id: categoryId,
+              title: categoryIdTitle,
+              description:
+                  categoryIdDescription,
+              icon: Icons.play_circle_outline,
+              jsonFilePath:
+                  "assets/help/french/$categoryId/help_content.json",
+            ),
+          ),
+        ),
+      );
+    }
   }
 
   /// Public method passed to the ConfirmActionDialog to be executd
