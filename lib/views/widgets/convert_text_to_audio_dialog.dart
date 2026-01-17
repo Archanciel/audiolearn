@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../../constants.dart';
 import '../../models/audio.dart';
+import '../../models/help_category.dart';
 import '../../models/text_to_mp3_audio_file.dart';
 import '../../models/help_item.dart';
 import '../../models/playlist.dart';
@@ -20,6 +21,7 @@ import '../screen_mixin.dart';
 import '../../services/settings_data_service.dart';
 import 'confirm_action_dialog.dart';
 import 'help_dialog.dart';
+import 'help_sections_screen.dart';
 
 class ConvertTextToAudioDialog extends StatefulWidget {
   final Playlist targetPlaylist;
@@ -139,17 +141,20 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                 ),
               ),
               onPressed: () {
-                showDialog<void>(
-                  context: context,
-                  builder: (context) => HelpDialog(
-                    helpItemsLst: [
-                      HelpItem(
-                        helpTitle: AppLocalizations.of(context)!
-                            .convertTextToAudioHelpTitle(('{')),
-                        helpContent: AppLocalizations.of(context)!
-                            .convertTextToAudioHelpContent('{{', '{{{{', '{'),
-                      )
-                    ],
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HelpSectionsScreen(
+                      category: HelpCategory(
+                        id: "text_to_speech_conversion",
+                        title: "Conversion de texte en audio",
+                        description:
+                            "Convertir un texte en audio. Par exemple, transformer une prière écrite en prière écoutable.",
+                        icon: Icons.play_circle_outline,
+                        jsonFilePath:
+                            "assets/help/french/text_to_speech_conversion/help_content.json",
+                      ),
+                    ),
                   ),
                 );
               },
@@ -696,7 +701,8 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
             return ConfirmActionDialog(
               actionFunction: returnConfirmAction,
               actionFunctionArgs: [],
-              dialogTitleOne: AppLocalizations.of(context)!.replaceMp3FileDialogTitle,
+              dialogTitleOne:
+                  AppLocalizations.of(context)!.replaceMp3FileDialogTitle,
               dialogTitleOneReducedFontSize: true,
               dialogContent:
                   AppLocalizations.of(context)!.replaceExistingAudioInPlaylist(

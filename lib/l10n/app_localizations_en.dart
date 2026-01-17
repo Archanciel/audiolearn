@@ -2345,17 +2345,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get speech => 'Text';
 
   @override
-  String convertTextToAudioHelpTitle(Object brace_1) {
-    return 'Using the $brace_1 character which adds 1 second of silence';
-  }
-
-  @override
-  String convertTextToAudioHelpContent(
-      Object brace_1, Object brace_2, Object brace_3) {
-    return '${brace_1}A text with a character that introduces a 1-second silence. At the beginning of the text, 2 seconds of silence are added. $brace_2 Before this sentence, 4 seconds of silence are introduced. $brace_3 Here, one second of silence. This character was chosen because it is not normally used in writing.';
-  }
-
-  @override
   String get textToSpeech => 'converted';
 
   @override
