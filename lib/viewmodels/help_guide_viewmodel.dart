@@ -52,7 +52,7 @@ class HelpGuideViewModel extends ChangeNotifier {
           id: "download_single",
           title: "Télécharger une vidéo unique",
           description: "Téléchargez l'audio d'une seule vidéo YouTube.",
-          icon: Icons.video_library,
+          icon: Icons.download_for_offline,
           startStep: 20,
           endStep: 26,
         ),
@@ -66,7 +66,7 @@ class HelpGuideViewModel extends ChangeNotifier {
           title: "Première conversion d'un texte en audio",
           description:
               "Apprenez à convertir un texte en audio dans une playlist existante.",
-          icon: Icons.playlist_add,
+          icon: Icons.play_circle_outline,
           startStep: 1,
           endStep: 13,
         ),
@@ -75,7 +75,7 @@ class HelpGuideViewModel extends ChangeNotifier {
           title: "Remplacer une conversion existante par un texte modifié ou converti via une autre voix",
           description:
               "Si l'écoute de l'audio ne vous convient pas, modifiez le texte et/ou convertissez-le à nouveau en utilisant une voix différente.",
-          icon: Icons.download,
+          icon: Icons.play_circle,
           startStep: 14,
           endStep: 19,
         ),
