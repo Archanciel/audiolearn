@@ -28,7 +28,7 @@ Future<void> main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); // Ensure Flutter bindings are initialized.
 
-  bool isTest = false; // Must be set to false instead of true before
+  bool isTest = true; // Must be set to false instead of true before
   //                     generating the Android as well as the Windows
   //                     version of the app so that the app accesses the
   //                     correct application directory and not the test
