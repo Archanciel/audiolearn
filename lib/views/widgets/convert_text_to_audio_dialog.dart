@@ -145,13 +145,11 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
               ),
               onPressed: () {
                 UiUtil.displayHelp(
-                  context: context,
-                  categoryId: "text_to_speech_conversion",
-                  categoryIdTitle:
-                      "Conversion de texte en audio",
-                  categoryIdDescription:
-                      "Convertir un texte en audio. Par exemple, transformer une prière écrite en prière écoutable."
-                );
+                    context: context,
+                    categoryId: "text_to_speech_conversion",
+                    categoryIdTitle: "Conversion de texte en audio",
+                    categoryIdDescription:
+                        "Convertir un texte en audio. Par exemple, transformer une prière écrite en prière écoutable.");
               },
             ),
           ],
@@ -547,6 +545,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
               ? null
               : () => _showFileNameDialog(
                     context: context,
+                    themeProviderVM: themeProviderVM,
                     textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
                     audioDownloadVMlistenFalse: audioDownloadVMlistenFalse,
                     targetPlaylist: widget.targetPlaylist,
@@ -567,6 +566,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
 
   Future<void> _showFileNameDialog({
     required BuildContext context,
+    required ThemeProviderVM themeProviderVM,
     required TextToSpeechVM textToSpeechVMlistenTrue,
     required AudioDownloadVM audioDownloadVMlistenFalse,
     required Playlist targetPlaylist,
@@ -586,10 +586,37 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        title: Text(
-          AppLocalizations.of(context)!.mp3FileName,
-          textAlign: TextAlign.center, // Centered multi lines text
-          maxLines: 2,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Flexible(
+              child: Text(
+                AppLocalizations.of(context)!.mp3FileName,
+                textAlign: TextAlign.center, // Centered multi lines text
+                maxLines: 2,
+              ),
+            ),
+            IconButton(
+              icon: IconTheme(
+                data: (themeProviderVM.currentTheme == AppTheme.dark
+                        ? ScreenMixin.themeDataDark
+                        : ScreenMixin.themeDataLight)
+                    .iconTheme,
+                child: const Icon(
+                  Icons.help_outline,
+                  size: 40.0,
+                ),
+              ),
+              onPressed: () {
+                UiUtil.displayHelp(
+                    context: context,
+                    categoryId: "text_to_speech_conversion",
+                    categoryIdTitle: "Conversion de texte en audio",
+                    categoryIdDescription:
+                        "Convertir un texte en audio. Par exemple, transformer une prière écrite en prière écoutable.");
+              },
+            ),
+          ],
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -613,6 +640,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                                 barrierDismissible: false,
                                 builder: (dialogContext) =>
                                     _Mp3FileSelectionDialog(
+                                  themeProviderVM: themeProviderVM,
                                   mp3FileNames: existingMp3FileNames,
                                 ),
                               );
@@ -852,9 +880,11 @@ class FilterAndSortAudioParameters {
 }
 
 class _Mp3FileSelectionDialog extends StatefulWidget {
+  final ThemeProviderVM themeProviderVM;
   final List<String> mp3FileNames;
 
   const _Mp3FileSelectionDialog({
+    required this.themeProviderVM,
     required this.mp3FileNames,
   });
 
@@ -869,10 +899,37 @@ class _Mp3FileSelectionDialogState extends State<_Mp3FileSelectionDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(
-        AppLocalizations.of(context)!.selectMp3FileToReplace,
-        textAlign: TextAlign.center, // Centered multi lines text
-        maxLines: 2,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Flexible(
+            child: Text(
+              AppLocalizations.of(context)!.selectMp3FileToReplace,
+              textAlign: TextAlign.center, // Centered multi lines text
+              maxLines: 2,
+            ),
+          ),
+          IconButton(
+            icon: IconTheme(
+              data: (widget.themeProviderVM.currentTheme == AppTheme.dark
+                      ? ScreenMixin.themeDataDark
+                      : ScreenMixin.themeDataLight)
+                  .iconTheme,
+              child: const Icon(
+                Icons.help_outline,
+                size: 40.0,
+              ),
+            ),
+            onPressed: () {
+              UiUtil.displayHelp(
+                  context: context,
+                  categoryId: "text_to_speech_conversion",
+                  categoryIdTitle: "Conversion de texte en audio",
+                  categoryIdDescription:
+                      "Convertir un texte en audio. Par exemple, transformer une prière écrite en prière écoutable.");
+            },
+          ),
+        ],
       ),
       content: SizedBox(
         width: double.maxFinite,
