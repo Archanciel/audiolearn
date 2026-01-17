@@ -16,9 +16,9 @@ class HelpCategoriesViewModel extends ChangeNotifier {
     _categories.addAll([
       HelpCategory(
         id: "introduction",
-        title: "Introduction d'Audio Learn",
-        description: "Définir, ajouter et télécharger une playlist YouTube",
-        icon: Icons.play_circle_outline,
+        title: "Introduction de l'application Audio Learn",
+        description: "Définir, ajouter et télécharger une playlist YouTube.",
+        icon: Icons.download,
         jsonFilePath: "assets/help/french/playlist_usage/help_content.json",
       ),
       HelpCategory(
@@ -30,22 +30,22 @@ class HelpCategoriesViewModel extends ChangeNotifier {
       ),
       HelpCategory(
         id: "playlist_local",
-        title: "Playlist locale",
-        description: "Définir et utiliser une playlist locale",
-        icon: Icons.playlist_play,
+        title: "Ajout d'une playlist locale",
+        description: "Définir et utiliser une playlist locale.",
+        icon: Icons.playlist_add,
         jsonFilePath: "assets/help/french/playlist_local_usage/help_content.json",
       ),
       HelpCategory(
         id: "menu_playlist",
         title: "Menu playlist",
-        description: "Fonctionnalités du menu playlist",
+        description: "Fonctionnalités du menu playlist.",
         icon: Icons.playlist_play,
         jsonFilePath: "assets/help/french/menu_playlist/help_content.json",
       ),
       HelpCategory(
         id: "menu_audio",
         title: "Menu audio",
-        description: "Fonctionnalités du menu audio",
+        description: "Fonctionnalités du menu audio.",
         icon: Icons.audiotrack,
         jsonFilePath: "assets/help/french/menu_audio/help_content.json",
       ),
