@@ -677,7 +677,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                     border: OutlineInputBorder(),
                     suffixText: '.mp3',
                   ),
-                  autofocus: true,
+                  autofocus: false,
                 ),
               ],
             ),
