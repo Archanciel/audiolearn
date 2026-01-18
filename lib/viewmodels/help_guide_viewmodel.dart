@@ -68,7 +68,7 @@ class HelpGuideViewModel extends ChangeNotifier {
               "Apprenez à convertir un texte en audio dans une playlist existante.",
           icon: Icons.play_circle_outline,
           startStep: 1,
-          endStep: 13,
+          endStep: 10,
         ),
         HelpSection(
           id: "conversion_replacement",
@@ -76,8 +76,8 @@ class HelpGuideViewModel extends ChangeNotifier {
           description:
               "Si l'écoute de l'audio ne vous convient pas, modifiez le texte et/ou convertissez-le à nouveau en utilisant une voix différente.",
           icon: Icons.play_circle,
-          startStep: 14,
-          endStep: 19,
+          startStep: 11,
+          endStep: 17,
         ),
       ];
     }
