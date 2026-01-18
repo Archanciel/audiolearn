@@ -31,6 +31,13 @@ class HelpStepsScreen extends StatefulWidget {
 
 class _HelpStepsScreenState extends State<HelpStepsScreen> {
   final HelpDataService _helpDataService = HelpDataService();
+  int _lastKnownPage = 0; // ✅ Stocker la page actuelle ici
+
+  @override
+  void initState() {
+    super.initState();
+    _lastKnownPage = widget.initialPage;
+  }
 
   @override
   void dispose() {
@@ -40,14 +47,16 @@ class _HelpStepsScreenState extends State<HelpStepsScreen> {
   }
 
   void _saveCurrentPosition() {
-    final viewModel = context.read<HelpPageViewModel>();
-    final currentStep = viewModel.currentStep;
-
+    // ✅ Utiliser _lastKnownPage au lieu de context.read
     _helpDataService.saveLastHelpPosition(
       categoryId: widget.categoryId,
       sectionId: widget.sectionId,
-      stepNumber: currentStep.stepNumber,
+      stepNumber: widget.steps[_lastKnownPage].stepNumber,
     );
+  }
+
+  void _updateLastKnownPage(int page) {
+    _lastKnownPage = page;
   }
 
   @override
@@ -103,6 +112,9 @@ class _HelpStepsScreenState extends State<HelpStepsScreen> {
                     controller: viewModel.pageController,
                     itemCount: widget.steps.length,
                     onPageChanged: (index) {
+                      // ✅ Mettre à jour _lastKnownPage
+                      _updateLastKnownPage(index);
+                      
                       // Sauvegarder automatiquement quand on change de page
                       _helpDataService.saveLastHelpPosition(
                         categoryId: widget.categoryId,
@@ -179,6 +191,9 @@ class _HelpStepsScreenState extends State<HelpStepsScreen> {
                   : null,
               onTap: () {
                 viewModel.jumpToPage(index);
+                // ✅ Mettre à jour _lastKnownPage
+                _updateLastKnownPage(index);
+                
                 // Sauvegarder la nouvelle position
                 _helpDataService.saveLastHelpPosition(
                   categoryId: widget.categoryId,
