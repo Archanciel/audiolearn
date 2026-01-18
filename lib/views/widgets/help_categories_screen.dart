@@ -21,7 +21,11 @@ class HelpCategoriesScreen extends StatelessWidget {
       create: (_) => HelpCategoriesViewModel(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Aide Audio Learn'),
+          title: const Text(
+            'Aide AudioLearn',
+            textAlign: TextAlign.center,
+            maxLines: 2,
+          ),
           centerTitle: true,
           elevation: 2,
         ),
@@ -69,7 +73,7 @@ class HelpCategoriesScreen extends StatelessWidget {
       child: Column(
         children: [
           const Text(
-            'Consultez l\'aide d\'introduction d\'Audio Learn lors de votre première utilisation de l\'application afin de l\'initialiser correctement.',
+            'Consultez l\'aide d\'introduction d\'AudioLearn lors de votre première utilisation de l\'application afin de l\'initialiser correctement.',
             style: TextStyle(
               color: Colors.white,
               fontSize: 16,

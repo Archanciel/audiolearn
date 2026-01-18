@@ -23,7 +23,11 @@ class HelpSectionsScreen extends StatelessWidget {
       ),
       child: Scaffold(
         appBar: AppBar(
-          title: Text(category.title),
+          title: Text(
+            category.title,
+            textAlign: TextAlign.center,
+            maxLines: 2,
+          ),
           centerTitle: true,
           elevation: 2,
         ),

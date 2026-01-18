@@ -643,7 +643,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutAppDescription =>
-      'Audio Learn allows you to download audio from videos included in Youtube playlists whose links are added to the application, or from individual Youtube videos using their URLs.\n\nYou can also import audio files, such as audiobooks, directly into the application or convert text into audio. This feature is particularly useful for listening to written prayers found on the Internet.\n\nIn addition to listening the audio files, Audio Learn offers the ability to add timestamped comments to each file, making it easier to replay their most interesting parts.\n\nIt is also possible to extract the parts marked by comments into a new MP3 file, which can then be shared by email or via WhatsApp, or added to an existing playlist.\n\nFinally, the app allows you to sort and filter audio files based on various criteria in order to select the listenable audios.';
+      'AudioLearn allows you to download audio from videos included in Youtube playlists whose links are added to the application, or from individual Youtube videos using their URLs.\n\nYou can also import audio files, such as audiobooks, directly into the application or convert text into audio. This feature is particularly useful for listening to written prayers found on the Internet.\n\nIn addition to listening the audio files, AudioLearn offers the ability to add timestamped comments to each file, making it easier to replay their most interesting parts.\n\nIt is also possible to extract the parts marked by comments into a new MP3 file, which can then be shared by email or via WhatsApp, or added to an existing playlist.\n\nFinally, the app allows you to sort and filter audio files based on various criteria in order to select the listenable audios.';
 
   @override
   String get keepAudioEntryInSourcePlaylist =>
@@ -1697,14 +1697,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get emptyDate => 'empty';
 
   @override
-  String get helpMainTitle => 'Audio Learn Help';
+  String get helpMainTitle => 'AudioLearn Help';
 
   @override
   String get helpMainIntroduction =>
-      'Consult the Audio Learn Introduction Help the first time you use the application in order to initialize it correctly !';
+      'Consult the AudioLearn Introduction Help the first time you use the application in order to initialize it correctly !';
 
   @override
-  String get helpAudioLearnIntroductionTitle => 'Audio Learn Introduction';
+  String get helpAudioLearnIntroductionTitle => 'AudioLearn Introduction';
 
   @override
   String get helpAudioLearnIntroductionSubTitle =>
