@@ -746,8 +746,7 @@ class UiUtil {
     HelpDataService helpDataService = HelpDataService();
     String? lastHelpCategoryId = helpDataService.getLastHelpCategoryId();
 
-    if (lastHelpCategoryId != null &&
-        lastHelpCategoryId == categoryId) {
+    if (lastHelpCategoryId != null && lastHelpCategoryId == categoryId) {
       // Enable the user to to go to the last viewed help step
       showDialog<void>(
         context: context,
@@ -767,11 +766,9 @@ class UiUtil {
             category: HelpCategory(
               id: categoryId,
               title: categoryIdTitle,
-              description:
-                  categoryIdDescription,
+              description: categoryIdDescription,
               icon: Icons.play_circle_outline,
-              jsonFilePath:
-                  "assets/help/french/$categoryId/help_content.json",
+              jsonFilePath: "assets/help/french/$categoryId/help_content.json",
             ),
           ),
         ),
