@@ -1652,14 +1652,14 @@ class MockAppLocalizations extends AppLocalizations {
   String get help => "Help ...";
 
   @override
-  String get helpMainTitle => "Audio Learn Help";
+  String get helpMainTitle => "AudioLearn Help";
 
   @override
   String get helpMainIntroduction =>
       "Consulting the Audio Player Introduction Help is necessary the first time you use the application.";
 
   @override
-  String get helpAudioLearnIntroductionTitle => "Audio Learn Introduction";
+  String get helpAudioLearnIntroductionTitle => "AudioLearn Introduction";
 
   @override
   String get helpAudioLearnIntroductionSubTitle =>

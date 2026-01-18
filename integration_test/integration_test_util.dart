@@ -2014,7 +2014,7 @@ class IntegrationTestUtil {
       // Due to the not working integration test which prevents the
       // audio picture to be displayed, we open and close the playable
       // audio list dialog. This will cause the added picture to be
-      // displayed. When a picture is added manually in the Audio Learn
+      // displayed. When a picture is added manually in the AudioLearn
       // application, the picture IS displayed after the 'Add Audio
       // Picture' menu was executed !
 
@@ -2395,7 +2395,7 @@ class IntegrationTestUtil {
         child: Consumer2<ThemeProviderVM, LanguageProviderVM>(
           builder: (context, themeProvider, languageProvider, child) {
             return MaterialApp(
-              title: 'Audio Learn',
+              title: 'AudioLearn',
               locale: (forcedLocale == null)
                   ? languageProvider.currentLocale
                   : forcedLocale,

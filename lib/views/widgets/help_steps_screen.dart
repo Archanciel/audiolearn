@@ -63,11 +63,13 @@ class _HelpStepsScreenState extends State<HelpStepsScreen> {
             backgroundColor: Colors.black,
             appBar: AppBar(
               title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     widget.sectionTitle,
                     style: const TextStyle(fontSize: 16),
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
                   ),
                   Text(
                     'Étape ${viewModel.currentPage + 1}/${viewModel.totalPages}',

@@ -187,7 +187,7 @@ class MainApp extends StatelessWidget with ScreenMixin {
       child: Consumer2<ThemeProviderVM, LanguageProviderVM>(
         builder: (context, themeProvider, languageProvider, child) {
           return MaterialApp(
-            title: 'Audio Learn',
+            title: 'AudioLearn',
             // title: AppLocalizations.of(context)!.title,
             locale: languageProvider.currentLocale,
             localizationsDelegates: AppLocalizations.localizationsDelegates,

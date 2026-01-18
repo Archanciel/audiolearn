@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-const String kApplicationName = "Audio Learn";
+const String kApplicationName = "AudioLearn";
 const String kApplicationVersion = "2.7.51";
 
 enum PopupMenuButtonType {

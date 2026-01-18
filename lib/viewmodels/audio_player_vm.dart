@@ -764,7 +764,7 @@ class AudioPlayerVM extends ChangeNotifier {
   /// Timer to determine when the comment to play will end. If no value
   /// is provided, the AudioPlayerVM Timer will not be started. Using a
   /// Timer is the only way to enable a playing comment to be ended if
-  /// the Audio Learn application is in the background or if the
+  /// the AudioLearn application is in the background or if the
   /// smartphone is turned off.
   Future<void> playCurrentAudio({
     bool rewindAudioPositionBasedOnPauseDuration = true,
@@ -823,7 +823,7 @@ class AudioPlayerVM extends ChangeNotifier {
       await _audioPlayer.setPlaybackRate(_currentAudio!.audioPlaySpeed);
 
       // Starting a Timer if this is a comment in order to enable
-      // the comment to be ended if the Audio Learn application is in
+      // the comment to be ended if the AudioLearn application is in
       // the background or if the smartphone is turned off.
       if (_commentEndPositionInTenthOfSeconds != -1) {
         _startCommentEndTimer();

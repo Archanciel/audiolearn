@@ -16,7 +16,7 @@ class HelpCategoriesViewModel extends ChangeNotifier {
     _categories.addAll([
       HelpCategory(
         id: "introduction",
-        title: "Introduction de l'application Audio Learn",
+        title: "Introduction de l'application AudioLearn",
         description: "Définir, ajouter et télécharger une playlist YouTube.",
         icon: Icons.download,
         jsonFilePath: "assets/help/french/playlist_usage/help_content.json",

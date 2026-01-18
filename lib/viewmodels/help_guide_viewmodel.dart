@@ -27,7 +27,7 @@ class HelpGuideViewModel extends ChangeNotifier {
   }
 
   void _initializeSections() {
-    // Sections pour "Introduction d'Audio Learn" (playlist_usage)
+    // Sections pour "Introduction d'AudioLearn" (playlist_usage)
     if (jsonFilePath.contains('playlist_usage')) {
       _sections = [
         HelpSection(
@@ -72,7 +72,7 @@ class HelpGuideViewModel extends ChangeNotifier {
         ),
         HelpSection(
           id: "conversion_replacement",
-          title: "Remplacer une conversion existante par un texte modifié ou converti via une autre voix",
+          title: "Remplacer la conversion (texte et/ou voix modifiés)",
           description:
               "Si l'écoute de l'audio ne vous convient pas, modifiez le texte et/ou convertissez-le à nouveau en utilisant une voix différente.",
           icon: Icons.play_circle,
