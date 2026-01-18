@@ -10,7 +10,7 @@
     "stepNumber": 2,
     "sectionId": "create_playlist",
     "imagePath": "assets/help/french/playlist_usage/images/step_02.jpg",
-    "title": "Choisir la playlist",
+    "title": "Création d'une playlist",
     "description": "Pour créer la playlist, choisissez Nouvelle playlist ci-dessous."
   },
   {
@@ -32,7 +32,7 @@
     "sectionId": "create_playlist",
     "imagePath": "assets/help/french/playlist_usage/images/step_05.jpg",
     "title": "Accéder à votre espace YouTube",
-    "description": "Maintenant, redémarrez YouTube et cliquez sur le bouton 'Vous' situé tout en bas qui vous entraîne sur votre espace Youtube."
+    "description": "Maintenant, redémarrez YouTube et cliquez sur le bouton 'Vous' situé tout en bas qui vous entraîne sur votre espace Youtube. Vous pourrez accéder à la playlist créée précédemment, laquelle se trouve dans la liste de vos playlists."
   },
   {
     "stepNumber": 6,
@@ -59,22 +59,22 @@
     "stepNumber": 9,
     "sectionId": "create_playlist",
     "imagePath": "assets/help/french/playlist_usage/images/step_09.jpg",
-    "title": "Ouvrir AudioLearn",
-    "description": "Après avoir copié le lien de la playlist Youtube, ouvrez l’application AudioLearn et collez le lien dans le champ Lien Youtube. Appuyez sur ce champ avec votre doigt pour faire apparaître le menu Coller et cliquez sur lui."
+    "title": "Quitter l'aide",
+    "description": "Après avoir copié le lien de la playlist Youtube, quittez l'aide et collez le lien dans le champ Lien Youtube. Appuyez sur ce champ avec votre doigt pour faire apparaître le menu Coller et cliquez sur lui. Ensuite, retournez dans l'aide afin de voir les étapes suivantes."
   },
   {
     "stepNumber": 10,
     "sectionId": "create_playlist",
     "imagePath": "assets/help/french/playlist_usage/images/step_10.jpg",
     "title": "Lien coller",
-    "description": "Une fois le lien de la playlist Youtube copié dans le champ Lien Youtube, cliquez sur le bouton 'Ajout' afin d'ajouter la référence de la playlist Youtube dans l'application."
+    "description": "Une fois le lien de la playlist Youtube copié dans le champ Lien Youtube, cliquez sur le bouton Ajout afin d'ajouter la référence de la playlist Youtube dans l'application."
   },
   {
     "stepNumber": 11,
     "sectionId": "create_playlist",
     "imagePath": "assets/help/french/playlist_usage/images/step_11.jpg",
     "title": "Choisir la qualité",
-    "description": "Comme dans cet exemple la playlist 'Prières chrétiennes' va contenir des chants chrétiens, il est recommandé de choisir 'Qualité musicale' afin que les audios téléchargés soient de meilleure qualité. Pour les audios vocaux, choisir 'Qualité musicale' est inutile et consommerait plus d'énergie. Cliquez sur Ajouter."
+    "description": "Comme dans cet exemple la playlist 'Prières chrétiennes' va contenir des chants chrétiens, il est recommandé de choisir Qualité musicale afin que les audios téléchargés soient de meilleure qualité. Pour les audios vocaux, évitez de sélectionner Qualité musicale car cela consommerait inutilement plus d'énergie. Cliquez ensuite sur Ajouter."
   },
   {
     "stepNumber": 12,
