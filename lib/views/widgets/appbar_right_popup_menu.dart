@@ -94,7 +94,7 @@ class AppBarRightPopupMenu extends StatelessWidget {
               builder: (BuildContext context) {
                 bool isDarkTheme = themeProvider.currentTheme == AppTheme.dark;
                 AboutDialog aboutDialog = AboutDialog(
-                  applicationName: kApplicationName,
+                  applicationName:  kApplicationNameForAboutView,
                   applicationVersion: kApplicationVersion, // ✅ Using version from pubspec.yam
                   applicationIcon:
                       Image.asset('assets/images/ic_launcher_cleaner_72.png'),
