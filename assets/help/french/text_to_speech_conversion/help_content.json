@@ -117,5 +117,26 @@
     "imagePath": "assets/help/french/text_to_speech_conversion/images/step_24.jpg",
     "title": "Confirmation du remplacement",
     "description": "Confirmez le remplacement du fichier MP3 puis cliquez sur le bouton Ok."
+  },
+  {
+    "stepNumber": 18,
+    "sectionId": "conversion_replacement",
+    "imagePath": "",
+    "title": "Fermer l'écran",
+    "description": "Après avoir cliqué sur Fermer, vous pouvez écouter l’audio remplacé et si nécessaire le recréer."
+  },
+  {
+    "stepNumber": 19,
+    "sectionId": "erreur_de_prononciation",
+    "imagePath": "assets/help/french/text_to_speech_conversion/images/step_25.jpg",
+    "title": "Identifier une erreur de prononciation",
+    "description": "Cela peut arriver que certains mots ne sont pas prononcés correctement. C’est le cas ici du mot guidance prononcé “gaidance” par la voix masculine ou féminine. La prochaine étape montre un moyen de résoudre le problème."
+  },
+  {
+    "stepNumber": 20,
+    "sectionId": "erreur_de_prononciation",
+    "imagePath": "assets/help/french/text_to_speech_conversion/images/step_26.jpg",
+    "title": "Modifiez le mot mal prononcé",
+    "description": "Après plusieurs essais, cette modification du mot guidance est prononcée correctement. Pas en cliquant sur Écouter, mais en créant le MP3 et en écoutant l’audio créé."
   }
 ]
