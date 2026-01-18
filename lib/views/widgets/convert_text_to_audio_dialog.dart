@@ -592,7 +592,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
             Flexible(
               child: Text(
                 AppLocalizations.of(context)!.mp3FileName,
-                textAlign: TextAlign.center, // Centered multi lines text
+                textAlign: TextAlign.center,
                 maxLines: 2,
               ),
             ),
@@ -618,64 +618,70 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
             ),
           ],
         ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            (existingMp3FileNames.isEmpty)
-                ? const SizedBox.shrink() // ← Renders nothing
-                : Center(
-                    child: Column(
-                      children: [
-                        Tooltip(
-                          message: AppLocalizations.of(context)!
-                              .selectMp3FileToReplaceTooltip,
-                          child: ElevatedButton(
-                            key: const Key(
-                                'select_mp3_file_to_replace_button_key'),
-                            onPressed: () async {
-                              // Show selection dialog
-                              final selectedFileName = await showDialog<String>(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (dialogContext) =>
-                                    _Mp3FileSelectionDialog(
-                                  themeProviderVM: themeProviderVM,
-                                  mp3FileNames: existingMp3FileNames,
-                                ),
-                              );
-
-                              // If a file was selected, update the TextField
-                              if (selectedFileName != null &&
-                                  selectedFileName.isNotEmpty) {
-                                fileNameController.text = selectedFileName;
-                              }
-                            },
-                            child: Text(
-                              AppLocalizations.of(context)!
-                                  .selectMp3FileToReplace,
-                              textAlign:
-                                  TextAlign.center, // Centered multi lines text
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-            SizedBox(height: 16),
-            Text(AppLocalizations.of(context)!.enterMp3FileName),
-            SizedBox(height: 16),
-            TextField(
-              key: const Key('mp3FileNameTextFieldKey'),
-              controller: fileNameController,
-              decoration: InputDecoration(
-                hintText: AppLocalizations.of(context)!.myMp3FileName,
-                border: OutlineInputBorder(),
-                suffixText: '.mp3',
-              ),
-              autofocus: true,
+        // ✅ Envelopper le contenu dans SingleChildScrollView
+        content: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
             ),
-          ],
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                (existingMp3FileNames.isEmpty)
+                    ? const SizedBox.shrink()
+                    : Center(
+                        child: Column(
+                          children: [
+                            Tooltip(
+                              message: AppLocalizations.of(context)!
+                                  .selectMp3FileToReplaceTooltip,
+                              child: ElevatedButton(
+                                key: const Key(
+                                    'select_mp3_file_to_replace_button_key'),
+                                onPressed: () async {
+                                  final selectedFileName =
+                                      await showDialog<String>(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (dialogContext) =>
+                                        _Mp3FileSelectionDialog(
+                                      themeProviderVM: themeProviderVM,
+                                      mp3FileNames: existingMp3FileNames,
+                                    ),
+                                  );
+
+                                  if (selectedFileName != null &&
+                                      selectedFileName.isNotEmpty) {
+                                    fileNameController.text = selectedFileName;
+                                  }
+                                },
+                                child: Text(
+                                  AppLocalizations.of(context)!
+                                      .selectMp3FileToReplace,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                SizedBox(height: 16),
+                Text(AppLocalizations.of(context)!.enterMp3FileName),
+                SizedBox(height: 16),
+                TextField(
+                  key: const Key('mp3FileNameTextFieldKey'),
+                  controller: fileNameController,
+                  decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.myMp3FileName,
+                    border: OutlineInputBorder(),
+                    suffixText: '.mp3',
+                  ),
+                  autofocus: true,
+                ),
+              ],
+            ),
+          ),
         ),
         actions: [
           Row(

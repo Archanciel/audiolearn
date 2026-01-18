@@ -72,12 +72,21 @@ class HelpGuideViewModel extends ChangeNotifier {
         ),
         HelpSection(
           id: "conversion_replacement",
-          title: "Remplacer la conversion (texte et/ou voix modifiés)",
+          title: "Remplacer la conversion (texte et voix modifiés)",
           description:
               "Si l'écoute de l'audio ne vous convient pas, modifiez le texte et/ou convertissez-le à nouveau en utilisant une voix différente.",
           icon: Icons.play_circle,
           startStep: 11,
-          endStep: 17,
+          endStep: 18,
+        ),
+        HelpSection(
+          id: "erreur_de_prononciation",
+          title: "Résoudre une erreur de prononciation",
+          description:
+              "Si l'écoute de l'audio vous remarquez qu'un mot est mal prononcé, voici un exemple de solution.",
+          icon: Icons.play_circle,
+          startStep: 19,
+          endStep: 20,
         ),
       ];
     }
