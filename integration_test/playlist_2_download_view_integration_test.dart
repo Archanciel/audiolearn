@@ -41385,7 +41385,8 @@ void main() {
       // Verify the Comments number title
       expect(find.text('Comments (1)'), findsOneWidget);
 
-      // Verify the presence of the Extract MP3 elements
+      // Verify the presence of the Extract MP3 elements(Extract
+      // MP3 button and 3 checkboxes)
       _verifyPresenceOfExtractMp3Widgets(tester);
 
       // Find the back button widget
