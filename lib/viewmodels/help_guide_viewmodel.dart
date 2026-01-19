@@ -58,6 +58,29 @@ class HelpGuideViewModel extends ChangeNotifier {
         ),
       ];
     }
+    // Sections pour "Introduction d'AudioLearn" (playlist_usage)
+    else if (jsonFilePath.contains('playlist_local_usage')) {
+      _sections = [
+        HelpSection(
+          id: "create_playlist",
+          title: "Créer une playlist locale",
+          description:
+              "Apprenez à créer une playlist locale.",
+          icon: Icons.playlist_add,
+          startStep: 1,
+          endStep: 4,
+        ),
+        HelpSection(
+          id: "local_playlist_utility",
+          title: "Utilité des playlists locales",
+          description:
+              "Description de l'usage des playlists locales.",
+          icon: Icons.playlist_play_rounded,
+          startStep: 5,
+          endStep: 7,
+        ),
+      ];
+    }
     // Sections pour menu "Convertir un texte en audio"
     else if (jsonFilePath.contains("text_to_speech_conversion")) {
       _sections = [
@@ -84,7 +107,7 @@ class HelpGuideViewModel extends ChangeNotifier {
           title: "Résoudre une erreur de prononciation",
           description:
               "Si l'écoute de l'audio vous remarquez qu'un mot est mal prononcé, voici un exemple de solution.",
-          icon: Icons.play_circle,
+          icon: Icons.play_lesson,
           startStep: 19,
           endStep: 20,
         ),

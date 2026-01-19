@@ -22,18 +22,18 @@ class HelpCategoriesViewModel extends ChangeNotifier {
         jsonFilePath: "assets/help/french/playlist_usage/help_content.json",
       ),
       HelpCategory(
+        id: "playlist_local",
+        title: "Créer une playlist locale",
+        description: "Définir et utiliser une playlist locale.",
+        icon: Icons.playlist_add,
+        jsonFilePath: "assets/help/french/playlist_local_usage/help_content.json",
+      ),
+      HelpCategory(
         id: "text_to_speech_conversion",
         title: "Conversion de texte en audio",
         description: "Convertir un texte en audio. Par exemple, transformer une prière écrite en prière écoutable.",
         icon: Icons.play_circle_outline,
         jsonFilePath: "assets/help/french/text_to_speech_conversion/help_content.json",
-      ),
-      HelpCategory(
-        id: "playlist_local",
-        title: "Ajout d'une playlist locale",
-        description: "Définir et utiliser une playlist locale.",
-        icon: Icons.playlist_add,
-        jsonFilePath: "assets/help/french/playlist_local_usage/help_content.json",
       ),
       HelpCategory(
         id: "menu_playlist",
