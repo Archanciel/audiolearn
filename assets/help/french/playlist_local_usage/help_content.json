@@ -1,0 +1,51 @@
+[
+  {
+    "stepNumber": 1,
+    "sectionId": "create_playlist",
+    "imagePath": "assets/help/french/playlist_local_usage/images/step_01.jpg",
+    "title": "Accéder au dialogue de création de playlist locale",
+    "description": "Cliquez sur le bouton Ajout. Le champ 'Lien Youtube ou recherche' doit être vide !"
+  },
+  {
+    "stepNumber": 2,
+    "sectionId": "create_playlist",
+    "imagePath": "assets/help/french/playlist_local_usage/images/step_02.jpg",
+    "title": "Nommer la playlist locale",
+    "description": "Entrez le nom de la playlist. Si la playlist locale va également contenir des chants, sélectionnez la case à cocher Qualité musicale. Cliquez ensuite sur le bouton Ajouter."
+  },
+  {
+    "stepNumber": 3,
+    "sectionId": "create_playlist",
+    "imagePath": "assets/help/french/playlist_local_usage/images/step_03.jpg",
+    "title": "Confirmation de la création de la playlist locale",
+    "description": "La confirmation de la création s’affiche, indiquant que la nouvelle playlist figure à la fin de la liste des playlists. Cliquez sur Ok et trouvez la playlist."
+  },
+  {
+    "stepNumber": 4,
+    "sectionId": "create_playlist",
+    "imagePath": "assets/help/french/playlist_local_usage/images/step_04.jpg",
+    "title": "Modifier la position de la playlist locale",
+    "description": "Si vous souhaitez positionner la nouvelle playlist au début de la liste des playlists, cliquez sur l’icône flèche vers le bas. Comme la playlist se trouve en dernière position, elle sera déplacée en première position. Ensuite, en cliquant sur l’une ou l’autre icône, vous modifierez la position de la playlist."
+  },
+  {
+    "stepNumber": 5,
+    "sectionId": "local_playlist_utility",
+    "imagePath": "assets/help/french/playlist_local_usage/images/step_05.jpg",
+    "title": "Contenir des audios importés",
+    "description": "Par exemple, si vous disposez de livres en version audio, vous pouvez les importer dans une ou plusieurs playlists locales. L'avantage sera que vous pourrez ensuite ajouter des commentaires positionnés à ses audios et extraire ces commentaires dans un fichier MP3 résumant l'audio."
+  },
+  {
+    "stepNumber": 6,
+    "sectionId": "local_playlist_utility",
+    "imagePath": "assets/help/french/playlist_local_usage/images/step_06.jpg",
+    "title": "Contenir des textes convertis en audio",
+    "description": "Consultez l'aide concernant cette foncionnalité."
+  },
+  {
+    "stepNumber": 7,
+    "sectionId": "local_playlist_utility",
+    "imagePath": "",
+    "title": "Contenir des audios créés par l'extraction des parties positionnées par des commentaires",
+    "description": "Consultez l'aide concernant cette fonctionnalité."
+  }
+]
