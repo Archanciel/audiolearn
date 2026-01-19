@@ -41578,6 +41578,12 @@ void main() {
       await tester.tap(segmentErrorDialogOkButtonFinder);
       await tester.pumpAndSettle();
 
+      // This opens the edit 1st comment dialog
+      editCommentIconButtonFinder =
+          find.byKey(const Key('editSegmentButtonKey_2'));
+      await tester.tap(editCommentIconButtonFinder);
+      await tester.pumpAndSettle();
+
       // Now modify the end position to 2:50.0
       Finder commentEndPositionTextFieldFinder =
           find.byKey(const Key('endPositionTextField'));
@@ -41604,6 +41610,150 @@ void main() {
       expect(
         tester.widget<Text>(totalDurationTextFinder).data,
         'Total duration: 2:37.8',
+      );
+
+      // Verify the presence of the Extract MP3 elements
+      _verifyPresenceOfExtractMp3Widgets(tester);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Remaining errors test. ''',
+        (WidgetTester tester) async {
+      const String audioTitle = "Jésus, c'est le plus beau nom";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'extract_comments_to_mp3_test',
+        selectedPlaylistTitle: '1 music with invalid comment',
+      );
+
+      // First, find the '1 music with invalid comment' playlist audio ListTile Text widget
+      Finder audioTitleTileTextWidgetFinder = find.text(audioTitle);
+
+      // Then obtain the audio ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      Finder audioTitleTileWidgetFinder = find.ancestor(
+        of: audioTitleTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now we want to tap the popup menu of the audioTitle ListTile
+
+      // Find the leading menu icon button of the audioTitle ListTile
+      // and tap on it
+      Finder audioTitleTileLeadingMenuIconButton = find.descendant(
+        of: audioTitleTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(audioTitleTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the 'Audio Comments ...' popup menu item and
+      // tap on it
+      Finder audioCommentsPopupMenuItem =
+          find.byKey(const Key("popup_menu_audio_comment"));
+
+      await tester.tap(audioCommentsPopupMenuItem);
+      await tester.pumpAndSettle();
+
+      Finder audioCommentsLstFinder = find.byKey(const Key(
+        'audioCommentsListKey',
+      ));
+
+      // Now open the extract comments to MP3 dialog
+
+      // Find the extract comments to MP3 text button of the comment
+      // add dialog and tap on it
+      Finder extractCommentsToMp3ButtonFinder =
+          find.byKey(const Key('extractCommentsToMp3TextButton'));
+      await tester.tap(extractCommentsToMp3ButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Now, delete the third comment whose end position is greater
+      // than the audio duration
+
+      // Necessary to drag down vertically to make visible the third
+      // comment
+      await tester.drag(
+        find.byType(AudioExtractorScreen),
+        const Offset(
+            0, -300), // Negative value for vertical drag to scroll down
+      );
+      await tester.pumpAndSettle();
+
+      // This opens the delete comment confirmation dialog
+      Finder deleteCommentIconButtonFinder =
+          find.byKey(const Key('deleteSegmentButtonKey_3'));
+      await tester.tap(deleteCommentIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Confirm the deletion by tapping the delete button
+      Finder deleteCommentButtonFinder =
+          find.byKey(const Key('confirmDeleteSegmentButton'));
+      await tester.tap(deleteCommentButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Now, delete the second comment whose end position is greater
+      // than the audio duration
+
+      // This opens the delete comment confirmation dialog
+      deleteCommentIconButtonFinder =
+          find.byKey(const Key('deleteSegmentButtonKey_2'));
+      await tester.tap(deleteCommentIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Confirm the deletion by tapping the delete button
+      deleteCommentButtonFinder =
+          find.byKey(const Key('confirmDeleteSegmentButton'));
+      await tester.tap(deleteCommentButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the Comments number title
+      expect(find.text('Comments (1)'), findsOneWidget);
+
+      // Verify the presence of the Extract MP3 elements(Extract
+      // MP3 button and 3 checkboxes)
+      _verifyPresenceOfExtractMp3Widgets(tester);
+
+      // This opens the edit 1st comment dialog
+      Finder editCommentIconButtonFinder =
+          find.byKey(const Key('editSegmentButtonKey_1'));
+      await tester.tap(editCommentIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Now modify the end position to 2:50.0
+      Finder commentEndPositionTextFieldFinder =
+          find.byKey(const Key('endPositionTextField'));
+      await tester.tap(commentEndPositionTextFieldFinder);
+      await tester.enterText(commentEndPositionTextFieldFinder, '2:50.0');
+      await tester.pumpAndSettle();
+
+      // Confirm the comment edition by tapping the save button
+      Finder saveEditedCommentButtonFinder =
+          find.byKey(const Key('saveEditedSegmentButton'));
+      await tester.tap(saveEditedCommentButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Verify the absence of the remaining 'Comment not included'
+      // message
+      expect(
+        find.byKey(const Key('commentDeletedTextKey_1')),
+        findsNothing,
+      );
+
+      // Verify the total duration text
+      Finder totalDurationTextFinder =
+          find.byKey(const Key('totalSegmentsDurationTextKey'));
+      expect(
+        tester.widget<Text>(totalDurationTextFinder).data,
+        'Total duration: 2:50.0',
       );
 
       // Verify the presence of the Extract MP3 elements
