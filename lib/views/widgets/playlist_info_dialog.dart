@@ -247,15 +247,6 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
                   : kTextButtonStyleLightMode,
             ),
             onPressed: () {
-              if (commentVMlistenFalse.wereCommentsDeleted()) {
-                // Ensures that the warning message about deleted comment files
-                // is shown when the dialog is opened.
-                warningMessageVMlistenFalse.confirmCommentFilesDeletion(
-                    deletedCommentFilesLst:
-                        commentVMlistenFalse.getDeletedAudioCommentFileNamesLst(
-                  playlist: playlist,
-                ));
-              }
               Navigator.of(context).pop();
             },
           ),

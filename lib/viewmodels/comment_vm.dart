@@ -59,9 +59,6 @@ class CommentVM extends ChangeNotifier {
   final ValueNotifier<Audio?> commentDialogRefreshNotifier =
       ValueNotifier<Audio?>(null);
 
-  // To delete
-  List<String> _deletedFileNamesLst = [];
-
   CommentVM();
 
   @override
@@ -535,57 +532,12 @@ class CommentVM extends ChangeNotifier {
       playlist: playlist,
     );
 
-// To delete from here once all invalid comments are no longer restored
-    List<String> playableAudioFileNamesLst = playlist.playableAudioLst.map((e) {
-      return e.audioFileName
-          .substring(0, e.audioFileName.length - 4); // Remove .mp3
-    }).toList();
-
-    Set<String> playableAudioFileNamesSet = playableAudioFileNamesLst.toSet();
-
-    List<String> audioCommentFilesToDelete = playlistAudiosCommentsMap.keys
-        .where((key) => !playableAudioFileNamesSet.contains(key))
-        .map((key) => '$key.json')
-        .toList();
-
-    String commentPath =
-        "${playlist.downloadPath}${path.separator}$kCommentDirName";
-
-    if (audioCommentFilesToDelete.isNotEmpty) {
-      _deletedFileNamesLst = DirUtil.deleteFilesInDir(
-        directoryPath: commentPath,
-        fileNamesLst: audioCommentFilesToDelete,
-      );
-    }
-
-    playlistAudiosCommentsMap = getPlaylistAudioComments(
-      playlist: playlist,
-    );
-// To delete till here
-
     for (List<Comment> audioComments in playlistAudiosCommentsMap.values) {
       commentNumber += audioComments.length;
     }
 
     return commentNumber;
   }
-
-  /// To delete from here once all invalid comments are no longer restored
-
-  bool wereCommentsDeleted() {
-    return _deletedFileNamesLst.isNotEmpty;
-  }
-
-  List<String> getDeletedAudioCommentFileNamesLst({
-    required Playlist playlist,
-  }) {
-    List<String> commentFileNamesLst = _deletedFileNamesLst;
-    _deletedFileNamesLst = [];
-
-    return commentFileNamesLst;
-  }
-
-  /// To delete till here
 
   /// Method called when te user clicks on play icon of a comment listed in
   /// the playlist comment list dialog. In this case, playing a comment from there

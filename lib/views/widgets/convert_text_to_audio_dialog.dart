@@ -1,4 +1,3 @@
-import 'package:audiolearn/services/help_data_service.dart';
 import 'package:audiolearn/utils/ui_util.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
@@ -9,9 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../constants.dart';
 import '../../models/audio.dart';
-import '../../models/help_category.dart';
 import '../../models/text_to_mp3_audio_file.dart';
-import '../../models/help_item.dart';
 import '../../models/playlist.dart';
 import '../../models/sort_filter_parameters.dart';
 import '../../viewmodels/theme_provider_vm.dart';
@@ -22,9 +19,6 @@ import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
 import '../../services/settings_data_service.dart';
 import 'confirm_action_dialog.dart';
-import 'help_categories_screen.dart';
-import 'help_dialog.dart';
-import 'help_sections_screen.dart';
 
 class ConvertTextToAudioDialog extends StatefulWidget {
   final Playlist targetPlaylist;
