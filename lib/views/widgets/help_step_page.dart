@@ -19,9 +19,11 @@ class HelpStepPage extends StatelessWidget {
         children: [
           // Conteneur avec titre et description
           _buildDescriptionContainer(context),
-          
-          // Image (capture d'écran)
-          _buildImageViewer(context),
+
+          // Image (capture d'écran) - ✅ Afficher seulement si imagePath n'est pas vide
+          (step.imagePath.isNotEmpty)
+              ? _buildImageViewer(context)
+              : const SizedBox.shrink(),
         ],
       ),
     );
@@ -160,26 +162,28 @@ class HelpStepPage extends StatelessWidget {
             ),
           ),
 
-          // Astuce pour zoomer
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Icon(
-                Icons.zoom_in,
-                size: 16,
-                color: Colors.grey[500],
-              ),
-              const SizedBox(width: 6),
-              Text(
-                'Pincez pour zoomer sur l\'image',
-                style: TextStyle(
+          // Astuce pour zoomer - ✅ Afficher seulement si il y a une image
+          if (step.imagePath.isNotEmpty) ...[
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Icon(
+                  Icons.zoom_in,
+                  size: 16,
                   color: Colors.grey[500],
-                  fontSize: 12,
-                  fontStyle: FontStyle.italic,
                 ),
-              ),
-            ],
-          ),
+                const SizedBox(width: 6),
+                Text(
+                  'Pincez pour zoomer sur l\'image',
+                  style: TextStyle(
+                    color: Colors.grey[500],
+                    fontSize: 12,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ],
       ),
     );
