@@ -2904,8 +2904,4 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get replaceMp3FileDialogTitle => "MP3 File Replacement";
-
-  @override
-  String confirmCommentFilesDeletion(Object deletedLst,) =>
-      "Deleted comment file names$deletedLst";
 }

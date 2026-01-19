@@ -206,8 +206,6 @@ enum WarningMessageType {
   // Audio MP3 to Zip File' menu item located in the playlist popup menu and
   // selects a directory containing multiple zip files.
 
-  commentFilesDeletion, // Will be removed.
-
   restoreAppDataFromZip, // The case if the user clicks on the
   // 'Restore Playlist, Comments and Settings from Zip File' menu
   // item located in the appbar leading popup menu.
@@ -1002,21 +1000,6 @@ class WarningMessageVM extends ChangeNotifier {
     // }
 
     warningMessageType = WarningMessageType.restoringAudioMp3FromMultipleZips;
-
-    // Causes the display warning message widget to be displayed.
-    notifyListeners();
-  }
-
-  List<String> _deletedCommentFilesLst = [];
-  List<String> get deletedCommentFilesLst => _deletedCommentFilesLst;
-
-  /// Displays a confirmation message after restoring MP3 files from multiple ZIP files.
-  void confirmCommentFilesDeletion({
-    required List<String> deletedCommentFilesLst,
-  }) {
-    _deletedCommentFilesLst = deletedCommentFilesLst;
-
-    warningMessageType = WarningMessageType.commentFilesDeletion;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();

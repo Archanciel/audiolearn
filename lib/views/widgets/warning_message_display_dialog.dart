@@ -1451,31 +1451,6 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
-      case WarningMessageType.commentFilesDeletion:
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          String confirmCommentFilesDeletionMessage = '';
-          String deletedCommentFilesLst = '';
-
-          for (String commentFileName
-              in _warningMessageVM.deletedCommentFilesLst) {
-            deletedCommentFilesLst += '\n- $commentFileName';
-          }
-
-          confirmCommentFilesDeletionMessage =
-              AppLocalizations.of(context)!.confirmCommentFilesDeletion(
-            deletedCommentFilesLst,
-          );
-
-          _displayWarningDialog(
-            context: _context,
-            message: confirmCommentFilesDeletionMessage,
-            warningMessageVM: _warningMessageVM,
-            themeProviderVM: themeProviderVM,
-            warningMode: WarningMode.confirm,
-          );
-        });
-
-        return const SizedBox.shrink();
       case WarningMessageType.restoreAppDataFromZip:
         WidgetsBinding.instance.addPostFrameCallback((_) {
           String restoredAppDataFromZipMessage;
