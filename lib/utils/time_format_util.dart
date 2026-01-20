@@ -10,18 +10,15 @@ class TimeFormatUtil {
   /// Format h:mm:ss.t en se basant sur des dixièmes entiers
   static String formatSeconds(double seconds) {
     if (!seconds.isFinite) seconds = 0.0;
-
     // Quantification à 0.1 s
     final int tenthsTotal = (seconds * 10).round();
-
     final int totalSeconds = tenthsTotal ~/ 10; // partie entière en secondes
-    final int tenths = tenthsTotal % 10;       // reste en dixièmes 0..9
-
+    final int tenths = tenthsTotal % 10; // reste en dixièmes 0..9
     final int hours = totalSeconds ~/ 3600;
     final int minutes = (totalSeconds % 3600) ~/ 60;
     final int secs = totalSeconds % 60;
-
-    final String mm = hours > 0 ? minutes.toString().padLeft(2, '0') : '$minutes';
+    final String mm =
+        hours > 0 ? minutes.toString().padLeft(2, '0') : '$minutes';
     final String ss = secs.toString().padLeft(2, '0');
     final String h = hours > 0 ? '$hours:' : '';
     return '$h$mm:$ss.$tenths';
@@ -40,17 +37,21 @@ class TimeFormatUtil {
     final s = input.trim();
     if (s.isEmpty) return 0.0;
 
+    // ✅ Détecter et mémoriser le signe négatif
+    bool isNegative = s.startsWith('-');
+    String workingString = isNegative ? s.substring(1) : s;
+
     // Pas de colon → nombre brut, puis normaliser
-    if (!s.contains(':')) {
-      final v = double.tryParse(s) ?? 0.0;
-      return normalizeToTenths(v);
+    if (!workingString.contains(':')) {
+      final v = double.tryParse(workingString) ?? 0.0;
+      final result = normalizeToTenths(v);
+      return isNegative ? -result : result;
     }
 
     try {
       double total = 0.0;
-
       // Sépare la partie fractionnaire, en gardant uniquement les chiffres
-      final parts = s.split('.');
+      final parts = workingString.split('.');
       final main = parts[0];
       double frac = 0.0;
       if (parts.length > 1 && parts[1].isNotEmpty) {
@@ -77,7 +78,9 @@ class TimeFormatUtil {
         total = sec + frac;
       }
 
-      return normalizeToTenths(total);
+      final result = normalizeToTenths(total);
+      // ✅ Appliquer le signe négatif au résultat final
+      return isNegative ? -result : result;
     } catch (_) {
       return 0.0;
     }
