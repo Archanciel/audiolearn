@@ -41728,6 +41728,7 @@ void main() {
       // the error message
       await _verifyExistenceOfErrorMessage(
         tester: tester,
+        positionTextFieldKey: 'startPositionTextField',
         enteredValue: '-0:00.1',
         expectedErrorMessage:
             'Start position must be between 0 and 2:56.7 inclusive.',
@@ -41737,6 +41738,7 @@ void main() {
       // the error message
       await _verifyExistenceOfErrorMessage(
         tester: tester,
+        positionTextFieldKey: 'startPositionTextField',
         enteredValue: '-0:01.0',
         expectedErrorMessage:
             'Start position must be between 0 and 2:56.7 inclusive.',
@@ -41746,6 +41748,7 @@ void main() {
       // the error message
       await _verifyExistenceOfErrorMessage(
         tester: tester,
+        positionTextFieldKey: 'startPositionTextField',
         enteredValue: '-0:10.0',
         expectedErrorMessage:
             'Start position must be between 0 and 2:56.7 inclusive.',
@@ -41755,10 +41758,83 @@ void main() {
       // the error message
       await _verifyExistenceOfErrorMessage(
         tester: tester,
+        positionTextFieldKey: 'startPositionTextField',
         enteredValue: '-1:00.0',
         expectedErrorMessage:
             'Start position must be between 0 and 2:56.7 inclusive.',
       );
+
+      // Now modify the start position to -0:00.0 and verify
+      // that the error message is not displayed. Since no error
+      // message is displayed, the edit segment dialog is closed
+      // and so must be re-opened again to continue the tests
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'startPositionTextField',
+        enteredValue: '-0:00.0',
+        expectedErrorMessage: '',
+      );
+
+      // Re-opens the edit 1st comment dialog which was closed
+      // after entering -0:00.0 as start position
+      editCommentIconButtonFinder =
+          find.byKey(const Key('editSegmentButtonKey_1'));
+      await tester.tap(editCommentIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Now modify the silence duration to -0:00.1 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'silenceDurationTextField',
+        enteredValue: '-0:00.1',
+        expectedErrorMessage: 'Silence duration cannot be negative.',
+      );
+
+      // Now modify the silence duration to -0:01.0 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'silenceDurationTextField',
+        enteredValue: '-0:01.0',
+        expectedErrorMessage: 'Silence duration cannot be negative.',
+      );
+
+      // Now modify the silence duration to -0:10.0 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'silenceDurationTextField',
+        enteredValue: '-0:10.0',
+        expectedErrorMessage: 'Silence duration cannot be negative.',
+      );
+
+      // Now modify the silence duration to -1:00.0 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'silenceDurationTextField',
+        enteredValue: '-1:00.0',
+        expectedErrorMessage: 'Silence duration cannot be negative.',
+      );
+
+      // Now modify the silnceposition to -0:00.0 and verify
+      // that the error message is not displayed. Since no error
+      // message is displayed, the edit segment dialog is closed
+      // and so must be re-opened again to continue the tests
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'silenceDurationTextField',
+        enteredValue: '-0:00.0',
+        expectedErrorMessage: '',
+      );
+
+      // Re-opens the edit 1st comment dialog which was closed
+      // after entering -0:00.0 as start position
+      editCommentIconButtonFinder =
+          find.byKey(const Key('editSegmentButtonKey_1'));
+      await tester.tap(editCommentIconButtonFinder);
+      await tester.pumpAndSettle();
 
       // Verify the presence of the Extract MP3 elements
       _verifyPresenceOfExtractMp3Widgets(tester);
@@ -41774,11 +41850,12 @@ void main() {
 
 Future<void> _verifyExistenceOfErrorMessage({
   required WidgetTester tester,
+  required String positionTextFieldKey,
   required String enteredValue,
   required String expectedErrorMessage,
 }) async {
   Finder commentStartPositionTextFieldFinder =
-      find.byKey(const Key('startPositionTextField'));
+      find.byKey(Key(positionTextFieldKey));
   await tester.tap(commentStartPositionTextFieldFinder);
   await tester.enterText(commentStartPositionTextFieldFinder, enteredValue);
   await tester.pumpAndSettle();
@@ -41788,6 +41865,15 @@ Future<void> _verifyExistenceOfErrorMessage({
       find.byKey(const Key('saveEditedSegmentButton'));
   await tester.tap(saveEditedCommentButtonFinder);
   await tester.pumpAndSettle();
+
+  if (expectedErrorMessage.isEmpty) {
+    // Verify the absence of the invalid comment error message
+    expect(
+      find.byKey(const Key('segmentErrorDialogMessageKey')),
+      findsNothing,
+    );
+    return;
+  }
 
   // Verify the presence of the invalid comment error message
   Finder segmentErrorDialogTextFinder =
