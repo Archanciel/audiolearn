@@ -1,5 +1,6 @@
 // lib/views/widgets/add_segment_dialog.dart
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/audio_segment.dart';
 import '../../utils/time_format_util.dart';
@@ -210,156 +211,181 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text(
-        widget.existingSegment != null
-            ? AppLocalizations.of(context)!.editCommentDialogTitle
-            : AppLocalizations.of(context)!.addCommentDialogTitle,
-        textAlign: TextAlign.center,
-        maxLines: 2,
-      ),
-      content: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              widget.existingSegment!.commentTitle,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontWeight: FontWeight.w700, // bold
-                fontSize: 15,
-              ),
-              maxLines: 4,
+    return Actions(
+      actions: {
+        ActivateIntent: CallbackAction<ActivateIntent>(
+          onInvoke: (_) {
+            _saveSegment();
+            return null;
+          },
+        ),
+      },
+      child: Shortcuts(
+        shortcuts: const {
+          SingleActivator(LogicalKeyboardKey.enter): ActivateIntent(),
+          SingleActivator(LogicalKeyboardKey.numpadEnter): ActivateIntent(),
+        },
+        child: Focus(
+          autofocus: true,
+          child: AlertDialog(
+            title: Text(
+              widget.existingSegment != null
+                  ? AppLocalizations.of(context)!.editCommentDialogTitle
+                  : AppLocalizations.of(context)!.addCommentDialogTitle,
+              textAlign: TextAlign.center,
+              maxLines: 2,
             ),
-            const SizedBox(height: 12),
-            (widget.existingSegment!.deleted)
-                ? Container(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: Tooltip(
-                      message: AppLocalizations.of(context)!
-                          .commentWasDeletedTooltip,
-                      child: Text(
-                        AppLocalizations.of(context)!.commentWasDeleted,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700, // bold
-                          fontSize: 14,
-                          fontStyle: FontStyle.italic,
-                          color: Colors.red,
-                        ),
-                      ),
+            content: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.existingSegment!.commentTitle,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w700, // bold
+                      fontSize: 15,
                     ),
-                  )
-                : const SizedBox.shrink(),
-            Text(
-              // Displays the total audio duration
-              "${AppLocalizations.of(context)!.maxDuration}: ${TimeFormatUtil.formatSeconds(widget.maxDuration)}",
-            ),
-            const SizedBox(height: 8),
-            TextField(
-              key: const Key('startPositionTextField'),
-              controller: _startPositionController,
-              inputFormatters: [TimeTextInputFormatter()],
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.startPositionLabel,
-                hintText: '0:00.0',
-                border: OutlineInputBorder(),
+                    maxLines: 4,
+                  ),
+                  const SizedBox(height: 12),
+                  (widget.existingSegment!.deleted)
+                      ? Container(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: Tooltip(
+                            message: AppLocalizations.of(context)!
+                                .commentWasDeletedTooltip,
+                            child: Text(
+                              AppLocalizations.of(context)!.commentWasDeleted,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700, // bold
+                                fontSize: 14,
+                                fontStyle: FontStyle.italic,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                  Text(
+                    // Displays the total audio duration
+                    "${AppLocalizations.of(context)!.maxDuration}: ${TimeFormatUtil.formatSeconds(widget.maxDuration)}",
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    key: const Key('startPositionTextField'),
+                    controller: _startPositionController,
+                    inputFormatters: [TimeTextInputFormatter()],
+                    decoration: InputDecoration(
+                      labelText:
+                          AppLocalizations.of(context)!.startPositionLabel,
+                      hintText: '0:00.0',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    key: const Key('endPositionTextField'),
+                    controller: _endPositionController,
+                    inputFormatters: [TimeTextInputFormatter()],
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.endPositionLabel,
+                      hintText: '0:00.0',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    key: const Key('silenceDurationTextField'),
+                    controller: _silenceDurationController,
+                    inputFormatters: [TimeTextInputFormatter()],
+                    decoration: InputDecoration(
+                      labelText:
+                          AppLocalizations.of(context)!.silenceDurationLabel,
+                      hintText: '0:00.0',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    AppLocalizations.of(context)!.volumeFadeInOptional,
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    key: const Key('fadeInDurationTextField'),
+                    controller: _fadeInDurationController,
+                    inputFormatters: [TimeTextInputFormatter()],
+                    decoration: InputDecoration(
+                      labelText:
+                          AppLocalizations.of(context)!.fadeInDurationLabel,
+                      hintText: '0:00.0',
+                      border: OutlineInputBorder(),
+                      helperText: AppLocalizations.of(context)!
+                          .fadeInDurationHelperText,
+                      helperMaxLines: 2,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    AppLocalizations.of(context)!.volumeFadeOutOptional,
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    key: const Key('soundReductionPositionTextField'),
+                    controller: _soundReductionPositionController,
+                    inputFormatters: [TimeTextInputFormatter()],
+                    decoration: InputDecoration(
+                      labelText:
+                          AppLocalizations.of(context)!.fadeStartPositionLabel,
+                      hintText: AppLocalizations.of(context)!
+                          .fadeStartPositionHintText,
+                      border: OutlineInputBorder(),
+                      helperText: AppLocalizations.of(context)!
+                          .fadeStartPositionHelperText,
+                      helperMaxLines: 2,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    key: const Key('soundReductionDurationTextField'),
+                    controller: _soundReductionDurationController,
+                    inputFormatters: [TimeTextInputFormatter()],
+                    decoration: InputDecoration(
+                      labelText:
+                          AppLocalizations.of(context)!.fadeDurationLabel,
+                      hintText: "0:00.0",
+                      border: OutlineInputBorder(),
+                      helperText:
+                          AppLocalizations.of(context)!.fadeDurationHelperText,
+                      helperMaxLines: 2,
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 12),
-            TextField(
-              key: const Key('endPositionTextField'),
-              controller: _endPositionController,
-              inputFormatters: [TimeTextInputFormatter()],
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.endPositionLabel,
-                hintText: '0:00.0',
-                border: OutlineInputBorder(),
+            actions: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    key: Key('saveEditedSegmentButton'),
+                    onPressed: _saveSegment,
+                    child: Text(AppLocalizations.of(context)!.saveButton),
+                  ),
+                  TextButton(
+                    key: Key('cancelEditedSegmentButton'),
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text(AppLocalizations.of(context)!.cancelButton),
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              key: const Key('silenceDurationTextField'),
-              controller: _silenceDurationController,
-              inputFormatters: [TimeTextInputFormatter()],
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.silenceDurationLabel,
-                hintText: '0:00.0',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              AppLocalizations.of(context)!.volumeFadeInOptional,
-            ),
-            const SizedBox(height: 8),
-            TextField(
-              key: const Key('fadeInDurationTextField'),
-              controller: _fadeInDurationController,
-              inputFormatters: [TimeTextInputFormatter()],
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.fadeInDurationLabel,
-                hintText: '0:00.0',
-                border: OutlineInputBorder(),
-                helperText:
-                    AppLocalizations.of(context)!.fadeInDurationHelperText,
-                helperMaxLines: 2,
-              ),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              AppLocalizations.of(context)!.volumeFadeOutOptional,
-            ),
-            const SizedBox(height: 8),
-            TextField(
-              key: const Key('soundReductionPositionTextField'),
-              controller: _soundReductionPositionController,
-              inputFormatters: [TimeTextInputFormatter()],
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.fadeStartPositionLabel,
-                hintText:
-                    AppLocalizations.of(context)!.fadeStartPositionHintText,
-                border: OutlineInputBorder(),
-                helperText:
-                    AppLocalizations.of(context)!.fadeStartPositionHelperText,
-                helperMaxLines: 2,
-              ),
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              key: const Key('soundReductionDurationTextField'),
-              controller: _soundReductionDurationController,
-              inputFormatters: [TimeTextInputFormatter()],
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.fadeDurationLabel,
-                hintText: "0:00.0",
-                border: OutlineInputBorder(),
-                helperText:
-                    AppLocalizations.of(context)!.fadeDurationHelperText,
-                helperMaxLines: 2,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-      actions: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              key: Key('saveEditedSegmentButton'),
-              onPressed: _saveSegment,
-              child: Text(AppLocalizations.of(context)!.saveButton),
-            ),
-            TextButton(
-              key: Key('cancelEditedSegmentButton'),
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text(AppLocalizations.of(context)!.cancelButton),
-            ),
-          ],
-        ),
-      ],
     );
   }
 }
