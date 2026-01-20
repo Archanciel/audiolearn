@@ -10,6 +10,7 @@ import 'package:audiolearn/viewmodels/comment_vm.dart';
 import 'package:audiolearn/viewmodels/extract_mp3_audio_player_vm.dart';
 import 'package:audiolearn/views/widgets/add_segment_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../../l10n/app_localizations.dart';
 
@@ -677,32 +678,72 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
   }) {
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        title: Text(AppLocalizations.of(context)!.deleteCommentDialogTitle),
-        content: Text(
-          AppLocalizations.of(context)!.deleteCommentExplanation,
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(AppLocalizations.of(context)!.cancelButton),
-          ),
-          ElevatedButton(
-            key: const Key('confirmDeleteSegmentButton'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-            ),
-            onPressed: () {
-              audioExtractorVM.removeSegment(
-                segmentToRemoveIndex: segmentToDeleteIndex,
+      builder: (dialogContext) => Actions(
+        // Using Actions to enable clicking on Enter to apply the
+        // action of clicking on the 'Delete' button
+        actions: {
+          ActivateIntent: CallbackAction<ActivateIntent>(
+            onInvoke: (_) {
+              // executing the same code as in the 'Delete'
+              // TextButton onPressed callback
+              _applyDelete(
+                dialogContext: dialogContext,
+                audioExtractorVM: audioExtractorVM,
+                segmentToDeleteIndex: segmentToDeleteIndex,
               );
-              Navigator.of(context).pop();
+              return null;
             },
-            child: Text(AppLocalizations.of(context)!.delete),
           ),
-        ],
+        },
+        child: Shortcuts(
+          shortcuts: const {
+            SingleActivator(LogicalKeyboardKey.enter): ActivateIntent(),
+            SingleActivator(LogicalKeyboardKey.numpadEnter): ActivateIntent(),
+          },
+          child: Focus(
+            autofocus: true,
+            child: AlertDialog(
+              title:
+                  Text(AppLocalizations.of(context)!.deleteCommentDialogTitle),
+              content: Text(
+                AppLocalizations.of(context)!.deleteCommentExplanation,
+              ),
+              actions: [
+                ElevatedButton(
+                  key: const Key('confirmDeleteSegmentButton'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                  ),
+                  onPressed: () {
+                    _applyDelete(
+                      dialogContext: dialogContext,
+                      audioExtractorVM: audioExtractorVM,
+                      segmentToDeleteIndex: segmentToDeleteIndex,
+                    );
+                  },
+                  child: Text(AppLocalizations.of(context)!.delete),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.of(dialogContext).pop(),
+                  child: Text(AppLocalizations.of(context)!.cancelButton),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
+  }
+
+  void _applyDelete({
+    required BuildContext dialogContext,
+    required AudioExtractorVM audioExtractorVM,
+    required int segmentToDeleteIndex,
+  }) {
+    audioExtractorVM.removeSegment(
+      segmentToRemoveIndex: segmentToDeleteIndex,
+    );
+    Navigator.of(dialogContext).pop();
   }
 
   void _confirmClearSegments(
