@@ -211,7 +211,6 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
     return Actions(
       actions: {

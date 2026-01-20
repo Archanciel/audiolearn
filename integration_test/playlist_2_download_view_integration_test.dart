@@ -33046,16 +33046,14 @@ void main() {
         await tester.tap(find.byKey(const Key('confirmButton')));
         await tester.pumpAndSettle();
 
-
-
-
         // Select the Youtube 'Chants sur Dieu ou Jésus' playlist
         await IntegrationTestUtil.selectPlaylist(
           tester: tester,
           playlistToSelectTitle: 'Chants sur Dieu ou Jésus',
         );
 
-        audioTitle = "Omraam Mikhaël Aïvanhov  'I will live according to love!'";
+        audioTitle =
+            "Omraam Mikhaël Aïvanhov  'I will live according to love!'";
 
         // First, find the local playlist audio ListTile Text widget
         audioTitleTileTextWidgetFinder = find.text(audioTitle);
@@ -41621,9 +41619,7 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets(
-        '''Remaining errors test. ''',
-        (WidgetTester tester) async {
+    testWidgets('''Remaining errors test. ''', (WidgetTester tester) async {
       const String audioTitle = "Jésus, c'est le plus beau nom";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
@@ -41728,32 +41724,40 @@ void main() {
       await tester.tap(editCommentIconButtonFinder);
       await tester.pumpAndSettle();
 
-      // Now modify the end position to 2:50.0
-      Finder commentEndPositionTextFieldFinder =
-          find.byKey(const Key('endPositionTextField'));
-      await tester.tap(commentEndPositionTextFieldFinder);
-      await tester.enterText(commentEndPositionTextFieldFinder, '2:50.0');
-      await tester.pumpAndSettle();
-
-      // Confirm the comment edition by tapping the save button
-      Finder saveEditedCommentButtonFinder =
-          find.byKey(const Key('saveEditedSegmentButton'));
-      await tester.tap(saveEditedCommentButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Verify the absence of the remaining 'Comment not included'
-      // message
-      expect(
-        find.byKey(const Key('commentDeletedTextKey_1')),
-        findsNothing,
+      // Now modify the start position to -0:00.1 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        enteredValue: '-0:00.1',
+        expectedErrorMessage:
+            'Start position must be between 0 and 2:56.7 inclusive.',
       );
 
-      // Verify the total duration text
-      Finder totalDurationTextFinder =
-          find.byKey(const Key('totalSegmentsDurationTextKey'));
-      expect(
-        tester.widget<Text>(totalDurationTextFinder).data,
-        'Total duration: 2:50.0',
+      // Now modify the start position to -0:01.0 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        enteredValue: '-0:01.0',
+        expectedErrorMessage:
+            'Start position must be between 0 and 2:56.7 inclusive.',
+      );
+
+      // Now modify the start position to -0:10.0 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        enteredValue: '-0:10.0',
+        expectedErrorMessage:
+            'Start position must be between 0 and 2:56.7 inclusive.',
+      );
+
+      // Now modify the start position to -1:00.0 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        enteredValue: '-1:00.0',
+        expectedErrorMessage:
+            'Start position must be between 0 and 2:56.7 inclusive.',
       );
 
       // Verify the presence of the Extract MP3 elements
@@ -41766,6 +41770,38 @@ void main() {
       );
     });
   });
+}
+
+Future<void> _verifyExistenceOfErrorMessage({
+  required WidgetTester tester,
+  required String enteredValue,
+  required String expectedErrorMessage,
+}) async {
+  Finder commentStartPositionTextFieldFinder =
+      find.byKey(const Key('startPositionTextField'));
+  await tester.tap(commentStartPositionTextFieldFinder);
+  await tester.enterText(commentStartPositionTextFieldFinder, enteredValue);
+  await tester.pumpAndSettle();
+
+  // Confirm the comment edition by tapping the save button
+  Finder saveEditedCommentButtonFinder =
+      find.byKey(const Key('saveEditedSegmentButton'));
+  await tester.tap(saveEditedCommentButtonFinder);
+  await tester.pumpAndSettle();
+
+  // Verify the presence of the invalid comment error message
+  Finder segmentErrorDialogTextFinder =
+      find.byKey(const Key('segmentErrorDialogMessageKey'));
+  expect(
+    tester.widget<Text>(segmentErrorDialogTextFinder).data,
+    expectedErrorMessage,
+  );
+
+  // Tap the Ok button to close the invalid comment error
+  Finder segmentErrorDialogOkButtonFinder =
+      find.byKey(const Key('segmentErrorDialogOkButtonKey'));
+  await tester.tap(segmentErrorDialogOkButtonFinder);
+  await tester.pumpAndSettle();
 }
 
 Future<void> _selectExistingMp3File({
