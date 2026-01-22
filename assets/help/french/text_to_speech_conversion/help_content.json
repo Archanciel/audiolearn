@@ -71,69 +71,76 @@
   },
   {
     "stepNumber": 11,
+    "sectionId": "first_conversion",
+    "imagePath": "assets/help/french/text_to_speech_conversion/images/step_11_2.jpg",
+    "title": "Réglage de la vitesse de lecture",
+    "description": "Les prières converties en audio s'écoutent de manière plus inspirante si l'on réduit la vitesse de lecture. Cliquez sur le bouton 1.00x et sélectionnez une vitesse plus lente. En cliquant sur + ou -, il est possible d'augmenter ou de réduire la vitesse de lecture."
+  },
+  {
+    "stepNumber": 12,
     "sectionId": "conversion_replacement",
     "imagePath": "assets/help/french/text_to_speech_conversion/images/step_12.jpg",
     "title": "Modification du texte ou de la voix utilisée",
     "description": "Si maintenant vous souhaitez modifier le texte ou changer la voix utilisée pour sa conversion, cliquez sur l’icône affichant les commentaires de l’audio."
   },
   {
-    "stepNumber": 12,
+    "stepNumber": 13,
     "sectionId": "conversion_replacement",
     "imagePath": "assets/help/french/text_to_speech_conversion/images/step_13.jpg",
     "title": "Cliquez sur Paroles pour copier le commentaire",
     "description": "Ce commentaire a été ajouté lors de la conversion du texte en audio. En cliquant sur Paroles, vous éditez le commentaire et ainsi pouvez le copier."
   },
   {
-    "stepNumber": 13,
+    "stepNumber": 14,
     "sectionId": "conversion_replacement",
     "imagePath": "assets/help/french/text_to_speech_conversion/images/step_14.jpg",
     "title": "Sélectionner et copier le texte",
     "description": "En appuyant avec le doigt sur le texte, vous affichez le menu ci-dessous. Cliquez sur l’icône bleue des 3 points verticaux. Cela vous affiche le menu Tout sélectionner. Après avoir cliqué sur Tout sélectionner, cliquez sur Copier. Une fois la copie effectuée, vous pouvez cliquer sur Annuler afin de fermer le commentaire."
   },
   {
-    "stepNumber": 14,
+    "stepNumber": 15,
     "sectionId": "conversion_replacement",
     "imagePath": "assets/help/french/text_to_speech_conversion/images/step_18.jpg",
     "title": "Retour à l’écran de conversion",
     "description": "Puis cliquez sur Fermer et ensuite sur l’icône qui vous dirige sur l’écran d’affichage ou téléchargement des playlists."
   },
   {
-    "stepNumber": 15,
+    "stepNumber": 16,
     "sectionId": "conversion_replacement",
     "imagePath": "assets/help/french/text_to_speech_conversion/images/step_19.jpg",
     "title": "Coller le texte et créer un nouvel audio",
     "description": "Après avoir sélectionné sur la playlist Text audio le menu Convertir un texte en audio ..,, collez le texte copié auparavant et corrigez-le si nécessaire. Dans cet exemple, 2 { ont été ajoutées au début pour intégrer 2 secondes de silence. Sélectionnez ensuite la voix féminine et cliquez sur Créer MP3."
   },
   {
-    "stepNumber": 16,
+    "stepNumber": 17,
     "sectionId": "conversion_replacement",
     "imagePath": "assets/help/french/text_to_speech_conversion/images/step_21.jpg",
     "title": "Remplacer le fichier MP3 existant",
     "description": "Cliquez sur le bouton Sélection d’un fichier existant afin de choisir le fichier contenant l’audio à remplacer. Cliquez sur la bonne case à cocher puis sur le bouton Confirmer. Le nom du fichier sélectionné a été copié au bon endroit. Cliquez maintenant sur le bouton Créer MP3."
   },
   {
-    "stepNumber": 17,
+    "stepNumber": 18,
     "sectionId": "conversion_replacement",
     "imagePath": "assets/help/french/text_to_speech_conversion/images/step_24.jpg",
     "title": "Confirmation du remplacement",
     "description": "Confirmez le remplacement du fichier MP3 puis cliquez sur le bouton Ok."
   },
   {
-    "stepNumber": 18,
+    "stepNumber": 19,
     "sectionId": "conversion_replacement",
     "imagePath": "",
     "title": "Fermer l'écran",
     "description": "Après avoir cliqué sur Fermer, vous pouvez écouter l’audio remplacé et si nécessaire le recréer."
   },
   {
-    "stepNumber": 19,
+    "stepNumber": 20,
     "sectionId": "erreur_de_prononciation",
     "imagePath": "assets/help/french/text_to_speech_conversion/images/step_25.jpg",
     "title": "Identifier une erreur de prononciation",
     "description": "Cela peut arriver que certains mots ne sont pas prononcés correctement. C’est le cas ici du mot guidance prononcé “gaidance” par la voix masculine ou féminine. La prochaine étape montre un moyen de résoudre le problème."
   },
   {
-    "stepNumber": 20,
+    "stepNumber": 21,
     "sectionId": "erreur_de_prononciation",
     "imagePath": "assets/help/french/text_to_speech_conversion/images/step_26.jpg",
     "title": "Modifiez le mot mal prononcé",

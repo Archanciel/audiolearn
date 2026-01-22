@@ -91,7 +91,7 @@ class HelpGuideViewModel extends ChangeNotifier {
               "Apprenez à convertir un texte en audio dans une playlist existante.",
           icon: Icons.play_circle_outline,
           startStep: 1,
-          endStep: 10,
+          endStep: 11,
         ),
         HelpSection(
           id: "conversion_replacement",
@@ -99,8 +99,8 @@ class HelpGuideViewModel extends ChangeNotifier {
           description:
               "Si l'écoute de l'audio ne vous convient pas, modifiez le texte et/ou convertissez-le à nouveau en utilisant une voix différente.",
           icon: Icons.play_circle,
-          startStep: 11,
-          endStep: 18,
+          startStep: 12,
+          endStep: 19,
         ),
         HelpSection(
           id: "erreur_de_prononciation",
@@ -108,8 +108,8 @@ class HelpGuideViewModel extends ChangeNotifier {
           description:
               "Si l'écoute de l'audio vous remarquez qu'un mot est mal prononcé, voici un exemple de solution.",
           icon: Icons.play_lesson,
-          startStep: 19,
-          endStep: 20,
+          startStep: 20,
+          endStep: 21,
         ),
       ];
     }
