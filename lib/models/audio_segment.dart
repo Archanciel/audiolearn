@@ -2,6 +2,7 @@
 class AudioSegment {
   final double startPosition;
   final double endPosition;
+  final double playSpeed;
   final double silenceDuration;
   final double fadeInDuration; // NEW: Fade-in at segment start (volume 0→100%)
   final double soundReductionPosition;
@@ -13,6 +14,7 @@ class AudioSegment {
   AudioSegment({
     required this.startPosition,
     required this.endPosition,
+    this.playSpeed = 1.0,
     this.silenceDuration = 0.0,
     this.fadeInDuration = 0.0, // NEW: Default no fade-in
     this.soundReductionPosition = 0.0,
@@ -27,6 +29,7 @@ class AudioSegment {
   AudioSegment copyWith({
     double? startPosition,
     double? endPosition,
+    double? playSpeed,
     double? silenceDuration,
     double? fadeInDuration, // NEW
     double? soundReductionPosition,
@@ -38,6 +41,7 @@ class AudioSegment {
     return AudioSegment(
       startPosition: startPosition ?? this.startPosition,
       endPosition: endPosition ?? this.endPosition,
+      playSpeed: playSpeed ?? this.playSpeed,
       silenceDuration: silenceDuration ?? this.silenceDuration,
       fadeInDuration: fadeInDuration ?? this.fadeInDuration, // NEW
       soundReductionPosition:
@@ -53,6 +57,7 @@ class AudioSegment {
   Map<String, dynamic> toMap() => {
         'startPosition': startPosition,
         'endPosition': endPosition,
+        'playSpeed': playSpeed,
         'silenceDuration': silenceDuration,
         'fadeInDuration': fadeInDuration, // NEW
         'soundReductionPosition': soundReductionPosition,
@@ -66,6 +71,7 @@ class AudioSegment {
     return AudioSegment(
       startPosition: (map['startPosition'] as num).toDouble(),
       endPosition: (map['endPosition'] as num).toDouble(),
+      playSpeed: (map['playSpeed'] as num?)?.toDouble() ?? 1.0,
       silenceDuration: (map['silenceDuration'] as num?)?.toDouble() ?? 0.0,
       fadeInDuration: (map['fadeInDuration'] as num?)?.toDouble() ?? 0.0, // NEW
       soundReductionPosition:

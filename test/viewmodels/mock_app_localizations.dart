@@ -2904,4 +2904,17 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get replaceMp3FileDialogTitle => "MP3 File Replacement";
+
+  @override
+  String get extractAudioPlaySpeed => "playSpeed";
+
+  @override
+  String get extractAudioPlaySpeedTooltip =>
+      "Defines the play speed of this comment audio extraction part";
+
+  @override
+  String get invalidPlaySpeedError => "The defined play speed is not usable";
+
+  @override
+  String get playSpeedLabel => "Play speed";
 }
